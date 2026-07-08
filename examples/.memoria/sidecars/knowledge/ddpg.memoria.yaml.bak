@@ -1,0 +1,43 @@
+schema_version: 1
+file: knowledge/ddpg.md
+description: 用于连续动作空间的深度确定性策略梯度
+knowledge_points:
+- id: ddpg
+  name: DDPG
+  range:
+    start:
+      snippet: '# DDPG'
+      line_hint: 1
+    end:
+      snippet: DDPG 基于 Q-Learning 和策略梯度的思想，是深度强化学习在连续控制领域的里程碑。后续改进包括 TD3（Twin Delayed
+        DDPG）和 SA
+      line_hint: 63
+- id: actor-网络
+  name: Actor 网络
+  range:
+    start:
+      snippet: '## Actor 网络'
+      line_hint: 11
+    end:
+      snippet: '- 隐藏层：2-3 层全连接，ReLU 激活，Batch Normalization'
+      line_hint: 25
+- id: critic-网络
+  name: Critic 网络
+  range:
+    start:
+      snippet: '## Critic 网络'
+      line_hint: 30
+    end:
+      snippet: '- 输出：标量 Q 值'
+      line_hint: 45
+- id: 经验回放
+  name: 经验回放
+  range:
+    start:
+      snippet: '## 经验回放'
+      line_hint: 47
+    end:
+      snippet: DDPG 基于 Q-Learning 和策略梯度的思想，是深度强化学习在连续控制领域的里程碑。后续改进包括 TD3（Twin Delayed
+        DDPG）和 SA
+      line_hint: 63
+links: []

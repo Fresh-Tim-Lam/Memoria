@@ -1,0 +1,562 @@
+"""M0 前端 API 桥接层（与桌面壳解耦）。"""
+
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+from memoria.services.document import DocumentService
+from memoria.storage.ui_settings import load_ui_settings, save_ui_settings, settings_path
+
+if TYPE_CHECKING:
+    from memoria.app.shell.host import WindowHost
+
+
+class M0API:
+    """暴露给前端 JS 的 API；异常转为 status dict。"""
+
+    def __init__(
+        self, kb_path: str | None = None, host: WindowHost | None = None
+    ) -> None:
+        self._svc = DocumentService(kb_path=kb_path)
+        self._host = host
+
+    @property
+    def kb_path(self) -> str | None:
+        return self._svc.kb_path
+
+    @kb_path.setter
+    def kb_path(self, path: str | None) -> None:
+        if path:
+            self._svc.set_kb_path(path)
+        else:
+            self._svc.kb_path = None
+
+    @property
+    def frameless(self) -> bool:
+        return bool(self._host and self._host.frameless)
+
+    def select_directory(self) -> str:
+        if self._host is None:
+            return ""
+        path = self._host.pick_directory()
+        if path:
+            self._svc.set_kb_path(path)
+            return path
+        return ""
+
+    def set_kb_path(self, path: str) -> dict:
+        try:
+            self._svc.set_kb_path(path)
+            return {"status": "ok", "path": path}
+        except FileNotFoundError as e:
+            return {"status": "error", "message": str(e)}
+
+    def get_kb_path(self) -> str:
+        return self._svc.kb_path or ""
+
+    def get_remembered_kb_path(self) -> str:
+        from memoria.storage.ui_settings import resolve_last_kb_path
+
+        path = resolve_last_kb_path()
+        return path or ""
+
+    def close_kb(self) -> dict:
+        self._svc.close_kb()
+        return {"status": "ok"}
+
+    def list_files(self) -> dict:
+        try:
+            return {"status": "ok", "files": self._svc.list_files()}
+        except RuntimeError as e:
+            return {"status": "error", "message": str(e)}
+
+    def load_document(self, rel_path: str) -> dict:
+        try:
+            return self._svc.load_document(rel_path)
+        except (RuntimeError, FileNotFoundError) as e:
+            return {"status": "error", "message": str(e)}
+
+    def confirm_kp_range(
+        self,
+        rel_path: str,
+        kp_id: str,
+        name: str,
+        start_line: int,
+        end_line: int,
+    ) -> dict:
+        try:
+            return self._svc.confirm_kp_range(
+                rel_path, kp_id, name, start_line, end_line
+            )
+        except (RuntimeError, FileNotFoundError) as e:
+            return {"status": "error", "message": str(e)}
+
+    def check_kp_id(self, kp_id: str, rel_path: str = "") -> dict:
+        try:
+            return self._svc.check_kp_id(kp_id, rel_path or None)
+        except RuntimeError as e:
+            return {"status": "error", "message": str(e), "available": False}
+
+    def search(
+        self,
+        query: str,
+        scope: str = "kb",
+        limit: int = 20,
+        modes: str | None = None,
+        rel_path: str = "",
+    ) -> dict:
+        try:
+            return self._svc.search_api(
+                query,
+                scope=scope,
+                limit=limit,
+                modes=modes,
+                rel_path=rel_path or None,
+            )
+        except RuntimeError as e:
+            return {"status": "error", "message": str(e)}
+
+    def suggest_kp_merge(self, kp_id: str, rel_path: str = "") -> dict:
+        try:
+            return self._svc.suggest_kp_merge_api(kp_id, rel_path or None)
+        except RuntimeError as e:
+            return {"status": "error", "message": str(e), "available": False}
+
+    def suggest_tags(self, rel_path: str, kp_id: str, limit: int = 8) -> dict:
+        try:
+            return self._svc.suggest_tags_api(rel_path, kp_id, limit=limit)
+        except RuntimeError as e:
+            return {"status": "error", "message": str(e), "available": False}
+
+    def suggest_description(self, rel_path: str, kp_id: str) -> dict:
+        try:
+            return self._svc.suggest_description_api(rel_path, kp_id)
+        except RuntimeError as e:
+            return {"status": "error", "message": str(e), "available": False}
+
+    def suggest_group_labels(self, groups: list) -> dict:
+        try:
+            return self._svc.suggest_group_labels_api(groups or [])
+        except RuntimeError as e:
+            return {"status": "error", "message": str(e)}
+
+    def pick_snippet_line(
+        self,
+        rel_path: str,
+        kp_id: str,
+        which: str,
+        line_number: int,
+    ) -> dict:
+        try:
+            return self._svc.pick_snippet_line(rel_path, kp_id, which, line_number)
+        except (RuntimeError, FileNotFoundError) as e:
+            return {"status": "error", "message": str(e)}
+
+    def update_kp(
+        self,
+        rel_path: str,
+        kp_id: str,
+        name: str | None = None,
+        tags: list[str] | None = None,
+        description: str | None = None,
+        tag_candidates: list | None = None,
+    ) -> dict:
+        try:
+            kwargs: dict = {}
+            if name is not None:
+                kwargs["name"] = name
+            if tags is not None:
+                kwargs["tags"] = tags
+            if description is not None:
+                kwargs["description"] = description
+            if tag_candidates is not None:
+                kwargs["tag_candidates"] = tag_candidates
+            if not kwargs:
+                return {"status": "error", "message": "无更新字段"}
+            return self._svc.update_kp(rel_path, kp_id, **kwargs)
+        except (RuntimeError, FileNotFoundError) as e:
+            return {"status": "error", "message": str(e)}
+
+    def delete_kp(self, rel_path: str, kp_id: str) -> dict:
+        try:
+            return self._svc.delete_kp(rel_path, kp_id)
+        except (RuntimeError, FileNotFoundError) as e:
+            return {"status": "error", "message": str(e)}
+
+    def rename_kp_id(self, old_id: str, new_id: str) -> dict:
+        try:
+            return self._svc.rename_kp_id(old_id, new_id)
+        except RuntimeError as e:
+            return {"status": "error", "message": str(e)}
+
+    def resolve_link(self, target_id: str) -> dict:
+        try:
+            return self._svc.resolve_link(target_id)
+        except RuntimeError as e:
+            return {"status": "error", "message": str(e)}
+
+    def resolve_links(self, target_ids: list[str]) -> dict:
+        try:
+            return self._svc.resolve_links(target_ids)
+        except RuntimeError as e:
+            return {"status": "error", "message": str(e)}
+
+    def get_link_targets(self) -> dict:
+        try:
+            return self._svc.get_link_targets()
+        except RuntimeError as e:
+            return {"status": "error", "message": str(e)}
+
+    def get_graph_data(self) -> dict:
+        try:
+            return self._svc.get_graph_data()
+        except RuntimeError as e:
+            return {"status": "error", "message": str(e)}
+
+    def get_graph_audit(self) -> dict:
+        try:
+            return self._svc.get_graph_audit()
+        except RuntimeError as e:
+            return {"status": "error", "message": str(e)}
+
+    def build_kb(self) -> dict:
+        try:
+            return self._svc.build_kb()
+        except RuntimeError as e:
+            return {"status": "error", "message": str(e)}
+
+    def validate_kb(self) -> dict:
+        try:
+            return self._svc.validate_kb()
+        except RuntimeError as e:
+            return {"status": "error", "message": str(e)}
+
+    def sync_manifest(self) -> dict:
+        try:
+            return self._svc.sync_manifest()
+        except RuntimeError as e:
+            return {"status": "error", "message": str(e)}
+
+    def sync_pending(self) -> dict:
+        try:
+            return self._svc.sync_pending()
+        except RuntimeError as e:
+            return {"status": "error", "message": str(e)}
+
+    def repair_path_cascade(self, apply: bool = False) -> dict:
+        try:
+            return self._svc.repair_path_cascade(apply=apply)
+        except RuntimeError as e:
+            return {"status": "error", "message": str(e)}
+
+    def get_kb_pending(self) -> dict:
+        try:
+            return self._svc.get_kb_pending()
+        except RuntimeError as e:
+            return {"status": "error", "message": str(e)}
+
+    def dismiss_pending(self, pending_id: str) -> dict:
+        try:
+            return self._svc.dismiss_pending(pending_id)
+        except RuntimeError as e:
+            return {"status": "error", "message": str(e)}
+
+    def save_link_route(
+        self,
+        rel_path: str,
+        anchor_text: str,
+        target_ids: list[str],
+        display_text: str = "",
+        edge_type: str = "",
+        source_id: str = "",
+        old_anchor_text: str = "",
+        old_display_text: str = "",
+        occurrence: int = 0,
+        update_markdown: bool = True,
+        pool_ids: list[str] | None = None,
+        target_edges: dict | None = None,
+        relevance: float | None = None,
+    ) -> dict:
+        try:
+            return self._svc.save_link_route(
+                rel_path,
+                anchor_text,
+                target_ids,
+                display_text=display_text or None,
+                edge_type=edge_type or None,
+                target_edges=target_edges,
+                relevance=relevance,
+                source_id=source_id or None,
+                old_anchor_text=old_anchor_text or None,
+                old_display_text=old_display_text or None,
+                occurrence=occurrence,
+                update_markdown=update_markdown,
+                pool_ids=pool_ids,
+            )
+        except (RuntimeError, FileNotFoundError, ValueError) as e:
+            return {"status": "error", "message": str(e)}
+
+    def delete_link_route(
+        self,
+        rel_path: str,
+        anchor_text: str,
+        occurrence: int = 0,
+    ) -> dict:
+        try:
+            return self._svc.delete_link_route(
+                rel_path, anchor_text, occurrence=occurrence
+            )
+        except (RuntimeError, FileNotFoundError) as e:
+            return {"status": "error", "message": str(e)}
+
+    def remove_link(
+        self,
+        rel_path: str,
+        anchor_text: str,
+        display_text: str = "",
+        edge_hint: str = "",
+        occurrence: int = 0,
+    ) -> dict:
+        try:
+            return self._svc.remove_link(
+                rel_path,
+                anchor_text,
+                display_text=display_text or None,
+                edge_hint=edge_hint or None,
+                occurrence=occurrence,
+            )
+        except (RuntimeError, FileNotFoundError) as e:
+            return {"status": "error", "message": str(e)}
+
+    def scan_link_text_matches(
+        self,
+        rel_path: str,
+        anchor_text: str,
+        search_options: dict | None = None,
+    ) -> dict:
+        try:
+            return self._svc.scan_link_text_matches_api(
+                rel_path, anchor_text, search_options=search_options
+            )
+        except (RuntimeError, FileNotFoundError) as e:
+            return {"status": "error", "message": str(e)}
+
+    def suggest_link_anchor_texts(
+        self,
+        rel_path: str,
+        query: str,
+        search_options: dict | None = None,
+    ) -> dict:
+        try:
+            return self._svc.suggest_link_anchor_texts_api(
+                rel_path, query, search_options=search_options
+            )
+        except (RuntimeError, FileNotFoundError) as e:
+            return {"status": "error", "message": str(e)}
+
+    def detach_link_instance(
+        self,
+        rel_path: str,
+        anchor_text: str,
+        line_number: int,
+    ) -> dict:
+        try:
+            return self._svc.detach_link_instance(rel_path, anchor_text, line_number)
+        except (RuntimeError, FileNotFoundError) as e:
+            return {"status": "error", "message": str(e)}
+
+    def apply_link_instances(
+        self,
+        rel_path: str,
+        anchor_text: str,
+        target_ids: list[str],
+        selected_lines: list[int],
+        display_text: str = "",
+        edge_type: str = "",
+        source_id: str = "",
+        old_anchor_text: str = "",
+        occurrence: int = 0,
+        pool_ids: list[str] | None = None,
+        search_options: dict | None = None,
+        target_edges: dict | None = None,
+        relevance: float | None = None,
+    ) -> dict:
+        try:
+            return self._svc.apply_link_instances(
+                rel_path,
+                anchor_text,
+                target_ids,
+                selected_lines,
+                display_text=display_text or None,
+                edge_type=edge_type or None,
+                target_edges=target_edges,
+                relevance=relevance,
+                source_id=source_id or None,
+                old_anchor_text=old_anchor_text or None,
+                occurrence=occurrence,
+                pool_ids=pool_ids,
+                search_options=search_options,
+            )
+        except (RuntimeError, FileNotFoundError, ValueError) as e:
+            return {"status": "error", "message": str(e)}
+
+    def wrap_text_as_link(
+        self,
+        rel_path: str,
+        selected_text: str,
+        anchor_text: str,
+        target_ids: list[str] | None = None,
+        display_text: str = "",
+        edge_type: str = "",
+        source_id: str = "",
+        target_edges: dict | None = None,
+        relevance: float | None = None,
+    ) -> dict:
+        try:
+            return self._svc.wrap_text_as_link(
+                rel_path,
+                selected_text,
+                anchor_text,
+                target_ids=target_ids,
+                display_text=display_text or None,
+                edge_type=edge_type or None,
+                target_edges=target_edges,
+                source_id=source_id or None,
+                relevance=relevance,
+            )
+        except (RuntimeError, FileNotFoundError, ValueError) as e:
+            return {"status": "error", "message": str(e)}
+
+    def suggest_link_relevance(
+        self,
+        rel_path: str,
+        anchor_text: str,
+        target_id: str = "",
+        target_ids: list[str] | None = None,
+        edge_type: str = "",
+        source_id: str = "",
+    ) -> dict:
+        try:
+            return self._svc.suggest_link_relevance_api(
+                rel_path,
+                anchor_text,
+                target_id=target_id,
+                target_ids=target_ids,
+                edge_type=edge_type or None,
+                source_id=source_id or None,
+            )
+        except RuntimeError as e:
+            return {"status": "error", "message": str(e)}
+
+    def get_ui_settings(self) -> dict:
+        try:
+            path = settings_path()
+            root = path.parent.parent
+            rel = path.relative_to(root).as_posix() if path.is_relative_to(root) else path.name
+            return {
+                "status": "ok",
+                "settings": load_ui_settings(),
+                "config_dir": str(path.parent),
+                "settings_file": str(path),
+                "settings_rel": rel,
+            }
+        except OSError as e:
+            return {"status": "error", "message": str(e)}
+
+    def get_window_chrome(self) -> dict:
+        host = self._host
+        return {
+            "status": "ok",
+            "frameless": bool(host and host.frameless),
+            "maximized": bool(host and host.maximized),
+            "shell": host.kind if host else "none",
+            "min_width": 900,
+            "min_height": 600,
+        }
+
+    def window_resize_to(self, width: int, height: int, anchor: str) -> dict:
+        if self._host is None:
+            return {"status": "error", "message": "窗口不可用"}
+        w = max(900, int(width))
+        h = max(600, int(height))
+        try:
+            self._host.resize(w, h, str(anchor or "se"))
+            return {"status": "ok"}
+        except Exception as e:
+            return {"status": "error", "message": str(e)}
+
+    def window_move_to(self, x: int, y: int) -> dict:
+        if self._host is None:
+            return {"status": "error", "message": "窗口不可用"}
+        try:
+            self._host.move_to(int(x), int(y))
+            return {"status": "ok"}
+        except Exception as e:
+            return {"status": "error", "message": str(e)}
+
+    def window_start_move(self) -> dict:
+        if self._host is None:
+            return {"status": "error", "message": "窗口不可用"}
+        try:
+            self._host.start_move()
+            return {"status": "ok"}
+        except Exception as e:
+            return {"status": "error", "message": str(e)}
+
+    def window_restore_from_drag(
+        self, screen_x: float, screen_y: float, ratio_x: float
+    ) -> dict:
+        if self._host is None:
+            return {"status": "error", "message": "窗口不可用"}
+        if not self._host.maximized:
+            return {"status": "ok", "maximized": False}
+        try:
+            px, py, w, h = self._host.restore_from_drag(
+                screen_x, screen_y, ratio_x
+            )
+            return {
+                "status": "ok",
+                "maximized": False,
+                "x": px,
+                "y": py,
+                "width": w,
+                "height": h,
+            }
+        except Exception as e:
+            return {"status": "error", "message": str(e)}
+
+    def window_minimize(self) -> dict:
+        if self._host is None:
+            return {"status": "error", "message": "窗口不可用"}
+        try:
+            self._host.minimize()
+            return {"status": "ok"}
+        except Exception as e:
+            return {"status": "error", "message": str(e)}
+
+    def window_toggle_maximize(self) -> dict:
+        if self._host is None:
+            return {"status": "error", "message": "窗口不可用"}
+        try:
+            maximized = self._host.toggle_maximize()
+            return {"status": "ok", "maximized": maximized}
+        except Exception as e:
+            return {"status": "error", "message": str(e)}
+
+    def window_close(self) -> dict:
+        if self._host is None:
+            return {"status": "error", "message": "窗口不可用"}
+        try:
+            self._host.close()
+            return {"status": "ok"}
+        except Exception as e:
+            return {"status": "error", "message": str(e)}
+
+    def save_ui_settings(self, partial: dict) -> dict:
+        try:
+            if not isinstance(partial, dict):
+                return {"status": "error", "message": "settings 须为对象"}
+            merged = save_ui_settings(partial)
+            return {"status": "ok", "settings": merged}
+        except OSError as e:
+            return {"status": "error", "message": str(e)}

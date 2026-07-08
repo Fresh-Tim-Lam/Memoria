@@ -1,0 +1,111 @@
+schema_version: 1
+updated_at: '2026-07-08T02:42:24.504609+00:00'
+items:
+- pending_id: 50b31f9332b55586
+  file: fixtures/m3_create_kb/blank.md
+  kind: heading
+  name: 可选标题
+  range:
+    start:
+      snippet: '## 可选标题'
+      line_hint: 5
+    end:
+      snippet: 标题扫描会出现在配置窗「待确认」Tab。
+      line_hint: 7
+  status: pending
+- pending_id: c6f8cd8a34c57974
+  file: fixtures/m3_pending_kb/module1.md
+  kind: heading
+  name: 章节
+  range:
+    start:
+      snippet: '## 章节'
+      line_hint: 3
+    end:
+      snippet: 第二段内容。
+      line_hint: 13
+  status: pending
+- pending_id: 6c1b10b45a84c62f
+  file: fixtures/m3_pending_kb/module1.md
+  kind: heading
+  name: 小节
+  range:
+    start:
+      snippet: '### 小节'
+      line_hint: 5
+    end:
+      snippet: 第二段内容。
+      line_hint: 13
+  status: pending
+- pending_id: db36e37fd0e9568e
+  file: fixtures/m3_pending_kb/module1.md
+  kind: heading
+  name: 知识点1-1
+  range:
+    start:
+      snippet: '#### 知识点1-1'
+      line_hint: 7
+    end:
+      snippet: 第一段内容。
+      line_hint: 9
+  status: pending
+- pending_id: 2a2291948b409087
+  file: fixtures/m3_pending_kb/module1.md
+  kind: heading
+  name: 知识点1-2
+  range:
+    start:
+      snippet: '#### 知识点1-2'
+      line_hint: 11
+    end:
+      snippet: 第二段内容。
+      line_hint: 13
+  status: pending
+- pending_id: 049d323461c433c6
+  file: fixtures/m3_pending_kb/module1.md
+  kind: heading
+  name: 另一章
+  range:
+    start:
+      snippet: '## 另一章'
+      line_hint: 15
+    end:
+      snippet: 独立四级标题内容。
+      line_hint: 19
+  status: pending
+- pending_id: b9bcdd2830a96fd4
+  file: fixtures/m3_pending_kb/module1.md
+  kind: heading
+  name: 知识点2-1
+  range:
+    start:
+      snippet: '#### 知识点2-1'
+      line_hint: 17
+    end:
+      snippet: 独立四级标题内容。
+      line_hint: 19
+  status: pending
+- pending_id: 992d55894587236e
+  file: fixtures/m4_merge_kb/typo-pair.md
+  kind: heading
+  name: 注意力机制
+  range:
+    start:
+      snippet: '## 注意力机制'
+      line_hint: 5
+    end:
+      snippet: 标准写法。
+      line_hint: 7
+  status: pending
+- pending_id: fcd8b0cd21d21cb7
+  file: fixtures/m4_merge_kb/typo-pair.md
+  kind: heading
+  name: 注意力机制
+  range:
+    start:
+      snippet: '## 注意力机制'
+      line_hint: 9
+    end:
+      snippet: 常见笔误写法。
+      line_hint: 11
+  status: pending

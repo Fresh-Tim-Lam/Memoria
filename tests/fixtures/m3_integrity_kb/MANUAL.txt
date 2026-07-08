@@ -1,0 +1,30 @@
+# M3 完整性测试知识库
+
+专门用于 M3 配置完整性（L3/L4）的**负例 + 正例**混合库。请勿与 `examples/` 混用。
+
+## 打开方式
+
+1. 启动 `python app_m0.py`
+2. 工具栏 **打开** → 选择本目录：  
+   `tests/fixtures/m3_integrity_kb`（仓库根目录下的相对路径）
+3. 打开后应自动校验；也可点 **检查** 查看完整问题列表
+
+## 场景一览
+
+| 文件 | 场景 | 预期级别 |
+|------|------|----------|
+| `ok-clean.md` | 基准合法文件 | 无问题 |
+| `dup-a.md` + `dup-b.md` | 跨文件重复 KP id `shared-dup-id` | **错误** |
+| `bad-target.md` | links 指向不存在的 id | **错误** |
+| `orphan-md.md` | 有 md、无侧车 | **警告** |
+| `orphan-only.md`（仅侧车） | 有侧车、无 md | **警告** |
+| `range-broken.md` | range snippet 无法在正文重定位 | **警告** |
+| `file-mismatch.md` | 侧车 `file:` 与路径不一致 | **警告** |
+| `wikilink-gap.md` | 正文 `[[]]` 未写入 sidecar links | 图谱 audit **警告** |
+
+## 自动化测试
+
+```powershell
+$env:PYTHONPATH="src"
+python -m pytest tests/unit/fixtures/test_m3_integrity_kb.py -v
+```

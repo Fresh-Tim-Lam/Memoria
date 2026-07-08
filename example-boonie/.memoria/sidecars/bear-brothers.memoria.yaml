@@ -1,0 +1,102 @@
+schema_version: 1
+file: bear-brothers.md
+knowledge_points:
+- id: xiong-da
+  name: 熊大
+  range:
+    start:
+      snippet: '## 熊大'
+      line_hint: 1
+    end:
+      snippet: '[[熊大]]是哥哥，机智沉稳，善于预判[[光头强]]的伐木计划。口头禅：「熊大我呀，可是很聪明的」。'
+      line_hint: 3
+- id: xiong-er
+  name: 熊二
+  range:
+    start:
+      snippet: '## 熊二'
+      line_hint: 5
+    end:
+      snippet: '[[熊二]]是弟弟，憨厚贪吃、力大无穷，常因蜂蜜耽误正事。他的单纯有时能软化[[光头强]]。'
+      line_hint: 7
+- id: protect-forest
+  name: 保护森林
+  range:
+    start:
+      snippet: '## 保护森林'
+      line_hint: 9
+    end:
+      snippet: '[[熊兄弟]]的使命是[[保护森林]]、阻止[[光头强]]砍树，维护[[狗熊岭]]的生态。方式从游击骚扰到与[[光头强]]暂时合作，应对偷猎者或灾害。'
+      line_hint: 11
+links:
+- anchor_text: 熊大
+  occurrence: 0
+  targets:
+  - xiong-da
+  edge_type: reference
+  instances:
+  - line: 3
+    wrapped: true
+  source_id: xiong-da
+- anchor_text: 光头强
+  occurrence: 0
+  targets: &id001
+  - guang-tou-qiang
+  edge_type: reference
+  instances:
+  - line: 3
+    wrapped: true
+  source_id: xiong-da
+- anchor_text: 熊二
+  occurrence: 0
+  targets:
+  - xiong-er
+  edge_type: reference
+  instances:
+  - line: 7
+    wrapped: true
+  source_id: xiong-er
+- anchor_text: 光头强
+  occurrence: 0
+  targets: *id001
+  edge_type: reference
+  instances:
+  - line: 7
+    wrapped: true
+  source_id: xiong-er
+- anchor_text: 熊兄弟
+  occurrence: 0
+  targets:
+  - xiong-da
+  - xiong-er
+  edge_type: reference
+  instances:
+  - line: 11
+    wrapped: true
+  source_id: protect-forest
+- anchor_text: 保护森林
+  occurrence: 0
+  targets:
+  - protect-forest
+  edge_type: reference
+  instances:
+  - line: 11
+    wrapped: true
+  source_id: protect-forest
+- anchor_text: 光头强
+  occurrence: 0
+  targets: *id001
+  edge_type: reference
+  instances:
+  - line: 11
+    wrapped: true
+  source_id: protect-forest
+- anchor_text: 狗熊岭
+  occurrence: 0
+  targets:
+  - gou-xiong-ling
+  edge_type: reference
+  instances:
+  - line: 11
+    wrapped: true
+  source_id: protect-forest

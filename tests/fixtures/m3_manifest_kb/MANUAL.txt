@@ -1,0 +1,20 @@
+# manifest 测试库
+
+打开本目录后首次检查会生成 `.memoria/manifest.yaml`。
+
+## T1 基线
+
+1. 打开 → **检查**
+2. 应见「首次打开：已建立 manifest 基线」
+
+## T2 外部改 md
+
+1. 用编辑器改 `blank.md` 内容（不通过 Memoria 保存）
+2. **检查** → 应警告「Markdown 内容与 manifest 不一致」
+3. 点 **同步 manifest** → 警告消失
+
+## T3 新增文件
+
+1. 在目录新建 `new.md`
+2. **检查** → 应警告「新增 Markdown」
+3. **同步 manifest**

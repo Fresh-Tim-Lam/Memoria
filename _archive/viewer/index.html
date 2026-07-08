@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memoria</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='28' font-size='28'>📖</text></svg>">
+    <link rel="stylesheet" href="css/memoria.css">
+    <link rel="stylesheet" href="lib/katex.min.css">
+</head>
+<body>
+    <div id="app">
+        <!-- 顶部工具栏（VSCode 风格） -->
+        <header id="toolbar">
+            <div class="toolbar-left">
+                <span class="logo">Memoria</span>
+            </div>
+            <div class="toolbar-center">
+                <button id="btn-open" title="选择知识库">打开</button>
+                <button id="btn-build" title="构建索引">构建</button>
+                <button id="btn-check" title="检查引用">检查</button>
+                <button id="btn-config" title="配置窗口（知识点与链接管理）" disabled>配置</button>
+                <div class="dropdown-wrapper">
+                    <button id="btn-advanced" title="高级设置">高级 ▾</button>
+                    <div id="advanced-dropdown" class="dropdown-menu hidden">
+                        <div class="menu-item menu-item-action" data-action="settings">
+                            <span>设置</span>
+                            <span class="menu-hint">搜索阈值</span>
+                        </div>
+                        <div class="menu-item menu-item-action" data-action="theme">
+                            <span>主题色</span>
+                            <span class="menu-hint">界面配色</span>
+                        </div>
+                    </div>
+                </div>
+                <span id="kb-status" class="status-text">未选择知识库</span>
+            </div>
+            <div class="toolbar-right">
+                <div class="search-wrapper">
+                    <input type="text" id="search-box" placeholder="语义搜索..." disabled>
+                    <button id="btn-search-menu" title="搜索模式" disabled>▾</button>
+                    <div id="search-menu" class="dropdown-menu hidden">
+                        <label class="menu-item">
+                            <input type="checkbox" id="chk-keyword-search" checked>
+                            <span>知识点搜索</span>
+                            <span class="menu-hint">语义 + 模糊匹配</span>
+                        </label>
+                        <label class="menu-item">
+                            <input type="checkbox" id="chk-content-search">
+                            <span>内容搜索</span>
+                            <span class="menu-hint">在正文里搜</span>
+                        </label>
+                    </div>
+                </div>
+                <button id="btn-ai-search" title="AI 语义搜索" disabled>AI</button>
+            </div>
+        </header>
+
+        <!-- 主体区域 -->
+        <main id="main">
+            <!-- 侧边栏：图谱 -->
+            <aside id="sidebar">
+                <div id="sidebar-resizer"></div>
+                <!-- 群组选择栏 -->
+                <div id="group-bar">
+                    <div id="group-tabs"></div>
+                </div>
+                <div id="graph-top-bar">
+                    <button class="graph-mode-btn active" data-mode="free-force">Free</button>
+                    <button class="graph-mode-btn" data-mode="radial">Radial</button>
+                    <button class="graph-mode-btn" data-mode="top-down">Top-Down</button>
+                    <span class="graph-sep"></span>
+                    <button class="graph-dim-btn active" data-dim="2d">2D</button>
+                    <button class="graph-dim-btn" data-dim="3d">3D</button>
+                </div>
+                <div id="graph-container">
+                    <svg id="graph-svg"></svg>
+                    <div id="graph-3d-container"></div>
+                </div>
+                <div id="graph-controls">
+                    <button id="btn-graph-zoom-in">+</button>
+                    <button id="btn-graph-zoom-out">-</button>
+                    <button id="btn-graph-reset">⟲</button>
+                </div>
+            </aside>
+
+            <!-- 内容区 -->
+            <section id="content">
+                <!-- 标签页栏 -->
+                <div id="tab-bar">
+                    <div id="tabs"></div>
+                </div>
+                <!-- 渲染区 -->
+                <div id="viewer"></div>
+            </section>
+        </main>
+
+        <!-- 底部状态栏 -->
+        <footer id="status-bar">
+            <span id="status-info">就绪</span>
+            <span id="warnings-link" class="issues-link hidden" title="点击查看编译器警告">⚠ <span id="warnings-count">0</span> 个警告</span>
+            <span id="issues-link" class="issues-link hidden" title="点击查看问题文件">⚠ <span id="issues-count">0</span> 个问题</span>
+        </footer>
+
+        <!-- AI 建议面板（浮动） -->
+        <div id="ai-panel" class="hidden">
+            <div class="ai-panel-header">
+                <span>AI 建议</span>
+                <button id="btn-ai-close">✕</button>
+            </div>
+            <div id="ai-content"></div>
+        </div>
+
+        <!-- 搜索结果面板（浮动） -->
+        <div id="search-panel" class="hidden">
+            <div class="search-panel-header">
+                <span>搜索结果</span>
+                <button id="btn-search-close">✕</button>
+            </div>
+            <div id="search-results"></div>
+        </div>
+
+        <!-- 创建新节点对话框 -->
+        <div id="createnode-overlay" class="modal-overlay hidden"></div>
+        <div id="createnode-panel" class="hidden">
+            <div class="review-panel-header">
+                <span>创建新节点</span>
+                <button id="btn-createnode-close">✕</button>
+            </div>
+            <div id="createnode-content">
+                <div class="issue-editor">
+                    <label class="issue-field">
+                        <span>id*:</span>
+                        <input type="text" id="createnode-id" placeholder="不含空格和[]{}, 如 my-node">
+                    </label>
+                    <label class="issue-field">
+                        <span>title:</span>
+                        <input type="text" id="createnode-title" placeholder="显示标题（默认用 id）">
+                    </label>
+                    <label class="issue-field">
+                        <span>tags:</span>
+                        <input type="text" id="createnode-tags" placeholder="逗号分隔，如 rl, actor-critic">
+                    </label>
+                    <label class="issue-field" style="flex-direction:column;align-items:stretch">
+                        <span>正文（可选）:</span>
+                        <textarea id="createnode-body" rows="4" placeholder="# 标题&#10;&#10;正文内容..." style="margin-top:4px"></textarea>
+                    </label>
+                </div>
+                <div class="issues-footer">
+                    <button id="btn-createnode-submit" class="primary-btn">创建并打开</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 虚链重定向推荐对话框 -->
+        <div id="redirect-overlay" class="modal-overlay hidden"></div>
+        <div id="redirect-panel" class="hidden">
+            <div class="review-panel-header">
+                <span>虚链重定向推荐</span>
+                <button id="btn-redirect-close">✕</button>
+            </div>
+            <div id="redirect-content"></div>
+        </div>
+
+        <!-- 冗余文件选择弹窗 -->
+        <div id="duplicate-overlay" class="modal-overlay hidden"></div>
+        <div id="duplicate-panel" class="hidden">
+            <div class="review-panel-header">
+                <span>选择要打开的文件</span>
+                <button id="btn-duplicate-close">✕</button>
+            </div>
+            <div id="duplicate-content"></div>
+        </div>
+
+        <!-- 链接建议面板（居中模态） -->
+        <!-- 已合并到配置窗口，移除旧面板 -->
+
+        <!-- 设置面板（居中模态窗口） -->
+        <div id="advanced-overlay" class="modal-overlay hidden"></div>
+        <div id="advanced-panel" class="hidden">
+            <div class="review-panel-header">
+                <span>设置</span>
+                <button id="btn-advanced-close">✕</button>
+            </div>
+            <div id="advanced-content">
+                <div class="advanced-section">
+                    <h3>搜索过滤阈值</h3>
+                    <p class="advanced-desc">相似度低于此值的语义搜索结果将被过滤。范围 0.0~1.0，默认 0.2。</p>
+                    <div class="threshold-control">
+                        <input type="range" id="threshold-slider" min="0" max="1" step="0.05" value="0.2">
+                        <span id="threshold-value">0.20</span>
+                    </div>
+                    <div class="threshold-presets">
+                        <button class="preset-btn" data-value="0.1">宽松 0.1</button>
+                        <button class="preset-btn" data-value="0.2">默认 0.2</button>
+                        <button class="preset-btn" data-value="0.35">适中 0.35</button>
+                        <button class="preset-btn" data-value="0.5">严格 0.5</button>
+                    </div>
+                </div>
+                <button id="btn-save-advanced" class="primary-btn">保存</button>
+            </div>
+        </div>
+
+        <!-- 主题色面板（居中模态窗口） -->
+        <div id="theme-overlay" class="modal-overlay hidden"></div>
+        <div id="theme-panel" class="hidden">
+            <div class="review-panel-header">
+                <span>主题色</span>
+                <button id="btn-theme-close">✕</button>
+            </div>
+            <div class="theme-panel-content">
+                <p class="advanced-desc">选择应用的强调色，影响按钮、链接、状态栏等。点击即时预览。</p>
+                <div class="theme-colors" id="theme-colors">
+                    <div class="color-swatch active" style="background: #007acc" data-color="#007acc" title="Blue"></div>
+                    <div class="color-swatch" style="background: #4ec9b0" data-color="#4ec9b0" title="Teal"></div>
+                    <div class="color-swatch" style="background: #c586c0" data-color="#c586c0" title="Purple"></div>
+                    <div class="color-swatch" style="background: #dcdcaa" data-color="#dcdcaa" title="Yellow"></div>
+                    <div class="color-swatch" style="background: #ce9178" data-color="#ce9178" title="Orange"></div>
+                    <div class="color-swatch" style="background: #f14c4c" data-color="#f14c4c" title="Red"></div>
+                    <div class="color-swatch" style="background: #6a9955" data-color="#6a9955" title="Green"></div>
+                </div>
+                <div class="theme-custom">
+                    <label for="theme-custom-input">自定义颜色:</label>
+                    <input type="color" id="theme-custom-input" value="#007acc">
+                </div>
+                <button id="btn-save-theme" class="primary-btn">保存</button>
+            </div>
+        </div>
+
+        <!-- 问题文件面板（居中模态） -->
+        <div id="issues-overlay" class="modal-overlay hidden"></div>
+        <div id="issues-panel" class="hidden">
+            <div class="review-panel-header">
+                <span>问题文件 (<span id="issues-panel-count">0</span>)</span>
+                <button id="btn-issues-close">✕</button>
+            </div>
+            <div id="issues-list" class="issues-list"></div>
+            <div class="issues-footer">
+                <button id="btn-issues-rebuild" class="primary-btn">修复后重新构建</button>
+            </div>
+        </div>
+
+        <!-- 编译器警告面板（居中模态） -->
+        <div id="warnings-overlay" class="modal-overlay hidden"></div>
+        <div id="warnings-panel" class="hidden">
+            <div class="review-panel-header">
+                <span>编译器警告 (<span id="warnings-panel-count">0</span>)</span>
+                <button id="btn-warnings-close">✕</button>
+            </div>
+            <div id="warnings-list" class="issues-list"></div>
+            <div class="issues-footer">
+                <button id="btn-warnings-ok" class="primary-btn">关闭</button>
+            </div>
+        </div>
+
+        <!-- 配置窗口（三栏布局：文件树 | 编辑区 | 帮助） -->
+        <div id="config-overlay" class="modal-overlay hidden"></div>
+        <div id="config-panel" class="hidden config-window">
+            <div class="review-panel-header">
+                <span>配置窗口 - 知识点与链接管理</span>
+                <button id="btn-config-close">✕</button>
+            </div>
+            <div class="config-body">
+                <!-- 左栏：文件树 -->
+                <div class="config-sidebar">
+                    <div class="config-sidebar-header">文件列表</div>
+                    <div id="config-file-list" class="config-file-list"></div>
+                </div>
+                <!-- 中栏：编辑区 -->
+                <div class="config-main">
+                    <div id="config-editor" class="config-editor">
+                        <p class="config-empty-hint">请从左侧选择一个文件</p>
+                    </div>
+                </div>
+            </div>
+            <div class="config-footer">
+                <button class="btn-cancel" id="btn-config-cancel">取消</button>
+                <button class="btn-save" id="btn-config-save">保存并重建</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 第三方库 -->
+    <script src="lib/marked.min.js"></script>
+    <script src="lib/katex.min.js"></script>
+    <script src="lib/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <!-- 应用脚本 -->
+    <script src="js/app.js"></script>
+    <script src="js/graph.js"></script>
+    <script src="js/graph-3d.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/advanced.js"></script>
+    <script src="js/issues.js"></script>
+    <script src="js/dialog.js"></script>
+    <script src="js/createnode.js"></script>
+    <script src="js/redirect.js"></script>
+    <script src="js/linkmenu.js"></script>
+    <script src="js/config.js"></script>
+</body>
+</html>

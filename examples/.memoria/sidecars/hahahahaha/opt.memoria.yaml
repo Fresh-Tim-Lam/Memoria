@@ -1,0 +1,19 @@
+schema_version: 1
+file: hahahahaha/opt.md
+description: M2 性能优化说明（Worker / 八叉树）
+knowledge_points:
+- id: opt-worker
+  name: Worker 化布局
+  range:
+    start:
+      snippet: '## Worker 化布局'
+    end:
+      snippet: 压测里 500 节点 warmup ~5s、模拟 ~12s，就是 **Worker 化** 要解决的典型场景。
+- id: opt-octree
+  name: 3D 拾取八叉树
+  range:
+    start:
+      snippet: '## 3D 拾取八叉树'
+    end:
+      snippet: 若你准备做其中一项，通常先做 **Worker 布局**，因为对 2D/3D 和 500+ 节点卡顿帮助更直接；八叉树在节点数 &lt; 200 时收益较小，上千节点时更明显。
+links: []

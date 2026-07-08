@@ -1,0 +1,92 @@
+schema_version: 1
+file: attention.md
+description: 注意力机制的数学基础
+knowledge_points:
+- id: attention
+  name: 注意力机制
+  range:
+    start:
+      snippet: '# 注意力机制'
+      line_hint: 1
+    end:
+      snippet: Transformer 将注意力机制推到了极致，去除了 RNN 结构，完全基于注意力进行序列建模。
+      line_hint: 94
+  tags:
+  - 机器学习
+  description: ''
+  tag_candidates:
+  - tag: nlp
+    source: system
+    score: 20.0
+- id: query-key-value
+  name: Query-Key-Value
+  range:
+    start:
+      snippet: '## Query-Key-Value'
+      line_hint: 9
+    end:
+      snippet: QKV 框架的优势在于它提供了一种统一而灵活的注意力计算范式，计算复杂度为 $O(n^2)$，其中 $n$ 是序列长度，这也是后续许多工作试图优化的方向。
+      line_hint: 66
+- id: 相似度计算
+  name: 相似度计算
+  range:
+    start:
+      snippet: '### 相似度计算'
+      line_hint: 19
+    end:
+      snippet: 其中缩放点积是 Transformer 使用的形式，在效果和效率之间取得了最佳平衡。
+      line_hint: 34
+- id: 权重归一化
+  name: 权重归一化
+  range:
+    start:
+      snippet: '### 权重归一化'
+      line_hint: 36
+    end:
+      snippet: '- **概率解释**：输出可以解释为"模型关注位置 $i$ 的概率"'
+      line_hint: 49
+- id: 加权求和
+  name: 加权求和
+  range:
+    start:
+      snippet: '### 加权求和'
+      line_hint: 51
+    end:
+      snippet: QKV 框架的优势在于它提供了一种统一而灵活的注意力计算范式，计算复杂度为 $O(n^2)$，其中 $n$ 是序列长度，这也是后续许多工作试图优化的方向。
+      line_hint: 66
+- id: softmax-归一化
+  name: Softmax 归一化
+  range:
+    start:
+      snippet: '## Softmax 归一化'
+      line_hint: 68
+    end:
+      snippet: Transformer 将注意力机制推到了极致，去除了 RNN 结构，完全基于注意力进行序列建模。
+      line_hint: 94
+links:
+- anchor_text: transformer
+  occurrence: 0
+  targets:
+  - transformer
+  edge_type: extend
+  instances:
+  - line: 7
+    wrapped: true
+  source_id: attention
+- anchor_text: bert
+  occurrence: 0
+  targets:
+  - bert
+  edge_type: extend
+  instances:
+  - line: 7
+    wrapped: true
+  source_id: attention
+- anchor_text: 视觉系统
+  occurrence: 0
+  targets: []
+  edge_type: reference
+  instances:
+  - line: 5
+    wrapped: true
+  source_id: attention

@@ -1,0 +1,51 @@
+schema_version: 1
+file: bert.md
+description: BERT 预训练语言模型
+knowledge_points:
+- id: bert
+  name: BERT
+  range:
+    start:
+      snippet: '# BERT'
+      line_hint: 1
+    end:
+      snippet: BERT 在 11 项 NLP 基准测试上达到了 SOTA，开创了"预训练-微调"的范式。它的成功催生了大量后续工作，包括 RoBERTa、ALBERT、ELE
+      line_hint: 46
+  tags:
+  - pre-training
+  - nlp
+  - bert
+  - 机器学习
+  - bErt
+  - BeRt
+  - beRT
+  description: BERT（Bidirectional Encoder Representations from Transformers，Devlin
+    et al.
+- id: 掩码语言模型
+  name: 掩码语言模型
+  range:
+    start:
+      snippet: '## 掩码语言模型'
+      line_hint: 13
+    end:
+      snippet: $15\%$ 的遮蔽率是经过实验验证的平衡点——太高则上下文信息不足，太低则训练信号太少。
+      line_hint: 30
+- id: 下一句预测
+  name: 下一句预测
+  range:
+    start:
+      snippet: '## 下一句预测'
+      line_hint: 32
+    end:
+      snippet: BERT 在 11 项 NLP 基准测试上达到了 SOTA，开创了"预训练-微调"的范式。它的成功催生了大量后续工作，包括 RoBERTa、ALBERT、ELE
+      line_hint: 46
+links:
+- anchor_text: transformer
+  occurrence: 0
+  targets:
+  - transformer
+  edge_type: reference
+  instances:
+  - line: 3
+    wrapped: true
+  source_id: bert

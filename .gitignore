@@ -1,0 +1,31 @@
+# Memoria 构建产物
+build/
+packaging/build/
+packaging/dist/
+Package/*
+!Package/.gitkeep
+/config/ui-settings.json
+*.exe
+*.obj
+*.o
+*.pdb
+*.ilk
+
+# Python
+__pycache__/
+*.pyc
+*.pyd
+.venv/
+venv/
+
+# IDE
+.vscode/
+.idea/
+*.user
+
+# 模型缓存
+models/
+*.bin
+
+# 用户知识库（示例除外）
+# examples/ 下的 nodes 可以提交，其他不入库

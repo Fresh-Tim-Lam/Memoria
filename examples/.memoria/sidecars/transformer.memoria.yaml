@@ -1,0 +1,78 @@
+schema_version: 1
+file: transformer.md
+description: Transformer 自注意力架构
+knowledge_points:
+- id: transformer
+  name: Transformer 架构
+  range:
+    start:
+      snippet: '# [[Transformer]] 架构'
+      line_hint: 1
+    end:
+      snippet: BERT 和 GPT 是 [[Transformer]] 的两大应用方向。BERT 使用 Encoder 部分，擅长理解任务；GPT
+        使用 Decoder 部分
+      line_hint: 78
+- id: 自注意力机制
+  name: 自注意力机制
+  range:
+    start:
+      snippet: '## 自注意力机制'
+      line_hint: 17
+    end:
+      snippet: 自注意力的计算复杂度为 $O(n^2 d)$，其中 $n$ 是序列长度，$d$ 是维度。对于长序列，这会成为瓶颈。后续工作如 Linformer、Perform
+      line_hint: 33
+- id: 多头注意力
+  name: 多头注意力
+  range:
+    start:
+      snippet: '## 多头注意力'
+      line_hint: 35
+    end:
+      snippet: 在实践中，注意力头的可视化显示，不同的头确实学到了不同的模式：有的头关注相邻词，有的头关注语法结构，有的头关注长距离依赖。
+      line_hint: 56
+- id: 位置编码
+  name: 位置编码
+  range:
+    start:
+      snippet: '## 位置编码'
+      line_hint: 58
+    end:
+      snippet: BERT 和 GPT 是 [[Transformer]] 的两大应用方向。BERT 使用 Encoder 部分，擅长理解任务；GPT
+        使用 Decoder 部分
+      line_hint: 78
+links:
+- anchor_text: Transformer
+  occurrence: 0
+  targets:
+  - transformer
+  instances:
+  - line: 1
+    wrapped: true
+  - line: 3
+    wrapped: false
+  - line: 3
+    wrapped: true
+  - line: 5
+    wrapped: true
+  - line: 19
+    wrapped: true
+  - line: 60
+    wrapped: true
+  - line: 62
+    wrapped: true
+  - line: 78
+    wrapped: true
+  pool:
+  - transformer
+  source_id: 自注意力机制
+  excluded: []
+  edge_type: reference
+- anchor_text: bert
+  occurrence: 0
+  targets:
+  - bert
+  edge_type: extend
+  instances:
+  - line: 3
+    wrapped: true
+  source_id: transformer

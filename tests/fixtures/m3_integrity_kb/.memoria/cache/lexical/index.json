@@ -1,0 +1,629 @@
+{
+  "schema_version": 3,
+  "built_at": "2026-07-07T14:19:03.663825+00:00",
+  "record_count": 7,
+  "token_count": 62,
+  "records": [
+    {
+      "kp_id": "bad-target-kp",
+      "file": "bad-target.md",
+      "name": "错误目标",
+      "tags": [],
+      "kp_description": "",
+      "file_description": "",
+      "body_excerpt": "# 错误目标"
+    },
+    {
+      "kp_id": "shared-dup-id",
+      "file": "dup-a.md",
+      "name": "重复 A",
+      "tags": [],
+      "kp_description": "",
+      "file_description": "",
+      "body_excerpt": "# 重复 ID A"
+    },
+    {
+      "kp_id": "shared-dup-id",
+      "file": "dup-b.md",
+      "name": "重复 B",
+      "tags": [],
+      "kp_description": "",
+      "file_description": "",
+      "body_excerpt": "# 重复 ID B"
+    },
+    {
+      "kp_id": "file-mismatch-kp",
+      "file": "file-mismatch.md",
+      "name": "路径不一致",
+      "tags": [],
+      "kp_description": "",
+      "file_description": "",
+      "body_excerpt": "# 路径不一致"
+    },
+    {
+      "kp_id": "ok-kp",
+      "file": "ok-clean.md",
+      "name": "正常知识点",
+      "tags": [],
+      "kp_description": "",
+      "file_description": "M3 测试 — 合法基准",
+      "body_excerpt": "# 正常基准"
+    },
+    {
+      "kp_id": "range-broken-kp",
+      "file": "range-broken.md",
+      "name": "Range 失效",
+      "tags": [],
+      "kp_description": "",
+      "file_description": "",
+      "body_excerpt": "# Range 已改"
+    },
+    {
+      "kp_id": "wikilink-gap-kp",
+      "file": "wikilink-gap.md",
+      "name": "Wikilink 缺口",
+      "tags": [],
+      "kp_description": "",
+      "file_description": "",
+      "body_excerpt": "# Wikilink 缺口"
+    }
+  ],
+  "inverted": {
+    "bad-target-kp": [
+      {
+        "r": 0,
+        "f": "id"
+      }
+    ],
+    "bad": [
+      {
+        "r": 0,
+        "f": "id"
+      }
+    ],
+    "target": [
+      {
+        "r": 0,
+        "f": "id"
+      }
+    ],
+    "kp": [
+      {
+        "r": 0,
+        "f": "id"
+      },
+      {
+        "r": 3,
+        "f": "id"
+      },
+      {
+        "r": 4,
+        "f": "id"
+      },
+      {
+        "r": 5,
+        "f": "id"
+      },
+      {
+        "r": 6,
+        "f": "id"
+      }
+    ],
+    "错误": [
+      {
+        "r": 0,
+        "f": "name"
+      },
+      {
+        "r": 0,
+        "f": "body"
+      }
+    ],
+    "目标": [
+      {
+        "r": 0,
+        "f": "name"
+      },
+      {
+        "r": 0,
+        "f": "body"
+      }
+    ],
+    "cuowumubiao": [
+      {
+        "r": 0,
+        "f": "name"
+      },
+      {
+        "r": 0,
+        "f": "pinyin_name"
+      },
+      {
+        "r": 0,
+        "f": "body"
+      }
+    ],
+    "错误目标": [
+      {
+        "r": 0,
+        "f": "name"
+      }
+    ],
+    "#": [
+      {
+        "r": 0,
+        "f": "body"
+      },
+      {
+        "r": 1,
+        "f": "body"
+      },
+      {
+        "r": 2,
+        "f": "body"
+      },
+      {
+        "r": 3,
+        "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      }
+    ],
+    "# 错误目标": [
+      {
+        "r": 0,
+        "f": "body"
+      }
+    ],
+    "shared-dup-id": [
+      {
+        "r": 1,
+        "f": "id"
+      },
+      {
+        "r": 2,
+        "f": "id"
+      }
+    ],
+    "shared": [
+      {
+        "r": 1,
+        "f": "id"
+      },
+      {
+        "r": 2,
+        "f": "id"
+      }
+    ],
+    "dup": [
+      {
+        "r": 1,
+        "f": "id"
+      },
+      {
+        "r": 2,
+        "f": "id"
+      }
+    ],
+    "id": [
+      {
+        "r": 1,
+        "f": "id"
+      },
+      {
+        "r": 1,
+        "f": "body"
+      },
+      {
+        "r": 2,
+        "f": "id"
+      },
+      {
+        "r": 2,
+        "f": "body"
+      }
+    ],
+    "重复": [
+      {
+        "r": 1,
+        "f": "name"
+      },
+      {
+        "r": 1,
+        "f": "body"
+      },
+      {
+        "r": 2,
+        "f": "name"
+      },
+      {
+        "r": 2,
+        "f": "body"
+      }
+    ],
+    "a": [
+      {
+        "r": 1,
+        "f": "name"
+      },
+      {
+        "r": 1,
+        "f": "body"
+      }
+    ],
+    "chongfu": [
+      {
+        "r": 1,
+        "f": "name"
+      },
+      {
+        "r": 1,
+        "f": "pinyin_name"
+      },
+      {
+        "r": 1,
+        "f": "body"
+      },
+      {
+        "r": 2,
+        "f": "name"
+      },
+      {
+        "r": 2,
+        "f": "pinyin_name"
+      },
+      {
+        "r": 2,
+        "f": "body"
+      }
+    ],
+    "重复 a": [
+      {
+        "r": 1,
+        "f": "name"
+      }
+    ],
+    "# 重复 id a": [
+      {
+        "r": 1,
+        "f": "body"
+      }
+    ],
+    "b": [
+      {
+        "r": 2,
+        "f": "name"
+      },
+      {
+        "r": 2,
+        "f": "body"
+      }
+    ],
+    "重复 b": [
+      {
+        "r": 2,
+        "f": "name"
+      }
+    ],
+    "# 重复 id b": [
+      {
+        "r": 2,
+        "f": "body"
+      }
+    ],
+    "file-mismatch-kp": [
+      {
+        "r": 3,
+        "f": "id"
+      }
+    ],
+    "file": [
+      {
+        "r": 3,
+        "f": "id"
+      }
+    ],
+    "mismatch": [
+      {
+        "r": 3,
+        "f": "id"
+      }
+    ],
+    "路径": [
+      {
+        "r": 3,
+        "f": "name"
+      },
+      {
+        "r": 3,
+        "f": "body"
+      }
+    ],
+    "不": [
+      {
+        "r": 3,
+        "f": "name"
+      },
+      {
+        "r": 3,
+        "f": "body"
+      }
+    ],
+    "一致": [
+      {
+        "r": 3,
+        "f": "name"
+      },
+      {
+        "r": 3,
+        "f": "body"
+      }
+    ],
+    "lujingbuyizhi": [
+      {
+        "r": 3,
+        "f": "name"
+      },
+      {
+        "r": 3,
+        "f": "pinyin_name"
+      },
+      {
+        "r": 3,
+        "f": "body"
+      }
+    ],
+    "路径不一致": [
+      {
+        "r": 3,
+        "f": "name"
+      }
+    ],
+    "# 路径不一致": [
+      {
+        "r": 3,
+        "f": "body"
+      }
+    ],
+    "ok-kp": [
+      {
+        "r": 4,
+        "f": "id"
+      }
+    ],
+    "ok": [
+      {
+        "r": 4,
+        "f": "id"
+      }
+    ],
+    "正常": [
+      {
+        "r": 4,
+        "f": "name"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "知识点": [
+      {
+        "r": 4,
+        "f": "name"
+      }
+    ],
+    "zhengchangzhishidian": [
+      {
+        "r": 4,
+        "f": "name"
+      },
+      {
+        "r": 4,
+        "f": "pinyin_name"
+      }
+    ],
+    "正常知识点": [
+      {
+        "r": 4,
+        "f": "name"
+      }
+    ],
+    "m3": [
+      {
+        "r": 4,
+        "f": "file_description"
+      }
+    ],
+    "测试": [
+      {
+        "r": 4,
+        "f": "file_description"
+      }
+    ],
+    "—": [
+      {
+        "r": 4,
+        "f": "file_description"
+      }
+    ],
+    "合法": [
+      {
+        "r": 4,
+        "f": "file_description"
+      }
+    ],
+    "基准": [
+      {
+        "r": 4,
+        "f": "file_description"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "ceshihefajizhun": [
+      {
+        "r": 4,
+        "f": "file_description"
+      }
+    ],
+    "m3 测试 — 合法基准": [
+      {
+        "r": 4,
+        "f": "file_description"
+      }
+    ],
+    "zhengchangjizhun": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "# 正常基准": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "range-broken-kp": [
+      {
+        "r": 5,
+        "f": "id"
+      }
+    ],
+    "range": [
+      {
+        "r": 5,
+        "f": "id"
+      },
+      {
+        "r": 5,
+        "f": "name"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "broken": [
+      {
+        "r": 5,
+        "f": "id"
+      }
+    ],
+    "失效": [
+      {
+        "r": 5,
+        "f": "name"
+      }
+    ],
+    "shixiao": [
+      {
+        "r": 5,
+        "f": "name"
+      },
+      {
+        "r": 5,
+        "f": "pinyin_name"
+      }
+    ],
+    "range 失效": [
+      {
+        "r": 5,
+        "f": "name"
+      }
+    ],
+    "已改": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "yigai": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "# range 已改": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "wikilink-gap-kp": [
+      {
+        "r": 6,
+        "f": "id"
+      }
+    ],
+    "wikilink": [
+      {
+        "r": 6,
+        "f": "id"
+      },
+      {
+        "r": 6,
+        "f": "name"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      }
+    ],
+    "gap": [
+      {
+        "r": 6,
+        "f": "id"
+      }
+    ],
+    "缺口": [
+      {
+        "r": 6,
+        "f": "name"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      }
+    ],
+    "quekou": [
+      {
+        "r": 6,
+        "f": "name"
+      },
+      {
+        "r": 6,
+        "f": "pinyin_name"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      }
+    ],
+    "wikilink 缺口": [
+      {
+        "r": 6,
+        "f": "name"
+      }
+    ],
+    "# wikilink 缺口": [
+      {
+        "r": 6,
+        "f": "body"
+      }
+    ]
+  }
+}

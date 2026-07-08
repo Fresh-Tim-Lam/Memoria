@@ -1,0 +1,56 @@
+# M3 id 重命名测试知识库
+
+用于验证 **KP id 全库迁移**：侧车 edges/links + 正文 `[[…]]` 联动。
+
+## 打开方式
+
+`python app_m0.py` → **打开** → 选择 `tests/fixtures/m3_rename_kb`
+
+## 初始状态
+
+| 文件 | 内容 |
+|------|------|
+| `alpha.md` | 定义 KP `rename-me`；含 `[[rename-me]]` |
+| `beta.md` | edges/links 指向 `rename-me`；含 `[[rename-me|旧显示名]]` |
+
+## 交互测试步骤
+
+### T1 重命名 id（主流程）
+
+1. 打开 `alpha.md`
+2. 侧栏点击 KP **待重命名知识点** → 弹窗 → **身份** 页签
+3. 将 id 改为 `renamed-kp`，保存
+4. 确认对话框 → 应成功
+
+**预期：**
+- `alpha.md` 侧车 KP id 变为 `renamed-kp`
+- `alpha.md` 正文 `[[rename-me]]` → `[[renamed-kp|rename-me]]`（显示仍为 rename-me）
+- `beta.md` 侧车 links.targets / edges.targets 变为 `renamed-kp`
+- `beta.md` 正文 `[[rename-me|旧显示名]]` → `[[renamed-kp|旧显示名]]`
+- **检查** 面板：0 错误（orphan/重复/target 不存在均不应出现）
+- 2D 图谱：`renamed-kp` 节点存在，与 `beta-local` 仍有边
+
+### T2 重复 id 拒绝
+
+1. **退出** 后重新打开本库（或 undo 手动改回 `rename-me` 再测）
+2. 尝试把 `rename-me` 改成 `beta-local`
+
+**预期：** 报错「目标 id 已存在」，侧车不被破坏
+
+### T3 仅改名称（回归）
+
+1. 身份页签只改名称、不改 id → 保存
+
+**预期：** 不触发全库迁移，仅更新 name
+
+## 自动化测试
+
+```powershell
+$env:PYTHONPATH="src"
+python -m pytest tests/unit/fixtures/test_m3_rename_kb.py -v
+```
+
+## 与 m3_integrity_kb 的关系
+
+- `m3_integrity_kb`：校验 / 检查面板负例
+- `m3_rename_kb`：id 迁移正例（本库）

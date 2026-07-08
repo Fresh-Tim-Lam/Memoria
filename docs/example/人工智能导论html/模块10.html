@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人工智能引论 · 模块10：人工智能应用</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            svg: { fontCache: 'global' },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            },
+            startup: { typeset: true }
+        };
+    </script>
+    <script>
+        (function () {
+            var sources = [
+                'mathjax-tex-svg.js',
+                'https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-svg.js',
+                'https://cdn.staticfile.org/mathjax/3.2.2/es5/tex-svg.js',
+                'https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js',
+                'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js',
+                'https://unpkg.com/mathjax@3.2.2/es5/tex-svg.js'
+            ];
+            function load(i) {
+                if (i >= sources.length) {
+                    console.error('MathJax: 所有源加载失败');
+                    var d = document.createElement('div');
+                    d.style.cssText = 'position:fixed;top:0;left:0;right:0;padding:10px;background:#fff3cd;color:#856404;border-bottom:1px solid #ffeeba;z-index:99999;font-size:14px;text-align:center;';
+                    d.textContent = '⚠️ 数学公式渲染库加载失败，请检查网络或确认 mathjax-tex-svg.js 存在';
+                    (document.body || document.documentElement).appendChild(d);
+                    return;
+                }
+                var s = document.createElement('script');
+                s.src = sources[i];
+                s.onload = function () { console.log('MathJax loaded:', sources[i]); };
+                s.onerror = function () {
+                    console.warn('MathJax failed:', sources[i]);
+                    if (s.parentNode) s.parentNode.removeChild(s);
+                    load(i + 1);
+                };
+                document.head.appendChild(s);
+            }
+            load(0);
+        })();
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #f8f9fb;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            padding: 40px 20px;
+            color: #1e2a3a;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 18px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+            padding: 50px 55px;
+        }
+        h1 {
+            font-size: 30px;
+            font-weight: 700;
+            border-left: 6px solid #2a6df4;
+            padding-left: 18px;
+            margin-bottom: 8px;
+            color: #0b1e33;
+        }
+        .subhead {
+            font-size: 16px;
+            color: #5b6f87;
+            margin-bottom: 40px;
+            padding-left: 24px;
+            border-bottom: 1px solid #eef2f7;
+            padding-bottom: 18px;
+        }
+        .module-badge {
+            display: inline-block;
+            background: #eef4ff;
+            color: #1f5cdb;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 4px 16px;
+            border-radius: 30px;
+            margin-bottom: 18px;
+        }
+        .table-wrap {
+            background: #f7f9fc;
+            border-radius: 14px;
+            padding: 18px 20px 14px 20px;
+            margin-bottom: 42px;
+            border: 1px solid #e6edf5;
+            overflow-x: auto;
+        }
+        .table-wrap table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 15px;
+        }
+        .table-wrap th {
+            text-align: left;
+            font-weight: 600;
+            color: #1f3a5f;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #d0dcee;
+        }
+        .table-wrap td {
+            padding: 8px 0;
+            border-bottom: 1px solid #e6edf5;
+            vertical-align: top;
+        }
+        .table-wrap tr:last-child td { border-bottom: none; }
+        .table-wrap .highlight {
+            background: #f0f6ff;
+            border-radius: 6px;
+            padding: 2px 8px;
+            font-weight: 500;
+            color: #0050b3;
+        }
+        .knowledge-item {
+            margin-bottom: 52px;
+            border-bottom: 1px solid #eef2f7;
+            padding-bottom: 36px;
+        }
+        .knowledge-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .knowledge-title {
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .knowledge-title .id {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1f5cdb;
+            background: #e9effa;
+            padding: 2px 14px;
+            border-radius: 30px;
+        }
+        .knowledge-title .name {
+            font-size: 22px;
+            font-weight: 700;
+            color: #0b1e33;
+        }
+        .knowledge-title .table-ref {
+            font-size: 14px;
+            color: #5b6f87;
+            background: #f0f3f8;
+            padding: 2px 14px;
+            border-radius: 30px;
+            font-weight: 400;
+        }
+        .section {
+            margin-top: 16px;
+            padding-left: 6px;
+        }
+        .section h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1f3a5f;
+            margin: 18px 0 8px 0;
+            padding-bottom: 2px;
+            border-bottom: 1px dashed #dce4ed;
+        }
+        .section h4:first-of-type { margin-top: 4px; }
+        .section p {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #1e2a3a;
+            margin: 8px 0 10px 0;
+        }
+        .section ul, .section ol {
+            margin: 8px 0 12px 24px;
+            font-size: 15px;
+            line-height: 1.8;
+            color: #1e2a3a;
+        }
+        .section li { margin-bottom: 6px; }
+        .section .src {
+            font-size: 14px;
+            color: #5b6f87;
+            background: #f3f6fb;
+            padding: 2px 14px;
+            border-radius: 30px;
+            display: inline-block;
+            margin: 6px 0 10px 0;
+        }
+        .formula-box {
+            background: #f5f8fe;
+            border-left: 4px solid #2a6df4;
+            padding: 14px 20px;
+            margin: 14px 0 12px 0;
+            border-radius: 0 10px 10px 0;
+            font-size: 15px;
+            overflow-x: auto;
+        }
+        @media (max-width: 720px) {
+            .container { padding: 28px 18px; }
+            .knowledge-title .name { font-size: 19px; }
+            .table-wrap { padding: 12px 10px; }
+            .table-wrap table { font-size: 14px; }
+        }
+        .footer-note {
+            margin-top: 40px;
+            padding-top: 22px;
+            border-top: 1px solid #e6edf5;
+            font-size: 14px;
+            color: #5b6f87;
+            text-align: center;
+        }
+        .warning-box {
+            background: #fff8e6;
+            border-left: 4px solid #f5a623;
+            padding: 12px 18px;
+            margin: 12px 0 8px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 15px;
+        }
+        .MathJax { font-size: 105%; }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="module-badge">📘 模块 10</div>
+    <h1>人工智能应用</h1>
+    <div class="subhead">
+        对应表格原文：介绍和实现自然语言中的机器翻译、视觉理解中的图像分类、机器人中的行为控制、科学计算以及语言大模型等具体例子。
+    </div>
+
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr><th>表格原文（模块10）</th><th>知识点编号与标题</th><th>覆盖状态</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>介绍语言大模型</td><td>知识点10-1：语言基础模型（大模型）的发展与建模</td><td><span class="highlight">✅ 已覆盖</span></td></tr>
+                <tr><td>介绍语言大模型</td><td>知识点10-2：提示学习、指令微调与人类反馈强化学习（RLHF）</td><td><span class="highlight">✅ 已覆盖</span></td></tr>
+                <tr><td>介绍自然语言中的机器翻译</td><td>知识点10-3：自然语言中的机器翻译</td><td><span class="highlight">✅ 已覆盖</span></td></tr>
+                <tr><td>介绍视觉理解中的图像分类</td><td>知识点10-4：图像分类与视觉对象定位</td><td><span class="highlight">✅ 已覆盖</span></td></tr>
+                <tr><td>介绍机器人中的行为控制</td><td>知识点10-5：机器人中的行为控制</td><td><span class="highlight">✅ 已覆盖</span></td></tr>
+                <tr><td>介绍科学计算</td><td>知识点10-6：科学计算——物理约束下的神经网络（PINN）</td><td><span class="highlight">✅ 已覆盖</span></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ===== 知识点10-1 ===== -->
+    <div class="knowledge-item">
+        <div class="knowledge-title">
+            <span class="id">知识点 10-1</span>
+            <span class="name">语言基础模型（大模型）的发展与建模</span>
+            <span class="table-ref">对应表格“语言大模型”</span>
+        </div>
+        <div class="section">
+            <span class="src">📄 位置来源：第289-295页（10.1.1-10.1.2节），第1-6页</span>
+            <h4>1. NLP范式的三次转变</h4>
+            <ul>
+                <li><strong>早期</strong>：为每个任务分别设计模型（碎片化，重复劳动）。</li>
+                <li><strong>中期</strong>：<strong>预训练模型 + 微调</strong>（BERT、GPT等）。</li>
+                <li><strong>当前</strong>：<strong>预训练 + 提示学习 + 预测</strong>（不调整参数，设计提示激活模型知识）。</li>
+            </ul>
+
+            <h4>2. 语言大模型的建模</h4>
+            <p>\[
+            P(w_1, w_2, \dots, w_T) = \prod_{i=1}^{T} P(w_i \mid w_1, w_2, \dots, w_{i-1})
+            \]</p>
+
+            <h4>3. 三种预训练语言模型架构</h4>
+            <ul>
+                <li><strong>编码模型（Encoder-Only）</strong>：BERT、RoBERTa —— 掩码语言模型（MLM）—— 自然语言理解</li>
+                <li><strong>解码模型（Decoder-Only）</strong>：GPT-2、GPT-3 —— 自回归语言模型 —— 自然语言生成</li>
+                <li><strong>编码-解码模型</strong>：BART、T5 —— 序列到序列 —— 同时支持理解和生成</li>
+            </ul>
+
+            <h4>4. Transformer处理示例（“项庄舞剑、意在沛公”）</h4>
+            <ul>
+                <li>步骤：内嵌向量 → Query/Key/Value → 关联度 → softmax归一化 → 自注意力输出</li>
+                <li><strong>GPT-3架构</strong>：50,275个单词词向量 + 96个堆叠Transformer + 前馈神经网络</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ===== 知识点10-2 ===== -->
+    <div class="knowledge-item">
+        <div class="knowledge-title">
+            <span class="id">知识点 10-2</span>
+            <span class="name">提示学习、指令微调与人类反馈强化学习（RLHF）</span>
+            <span class="table-ref">对应表格“语言大模型”</span>
+        </div>
+        <div class="section">
+            <span class="src">📄 位置来源：第295-300页（10.1.3节后半部分），第6-10页</span>
+            <h4>1. 提示学习</h4>
+            <ul>
+                <li>将各种NLP任务转化为语言模型预训练任务（完型填空或文字接龙）。</li>
+                <li><strong>缺点</strong>：依赖设计高质量提示；难以完成零样本学习。</li>
+            </ul>
+
+            <h4>2. 指令微调</h4>
+            <ul>
+                <li>将NLP任务转化为<strong>生成式指令数据集</strong>，基于指令数据集<strong>微调模型参数</strong>。</li>
+                <li>目标：让模型理解人类意图，对齐人类指令。</li>
+            </ul>
+
+            <h4>3. RLHF（基于人类反馈的强化学习）</h4>
+            <ul>
+                <li><strong>阶段一：训练奖励模型</strong>——收集问题，生成多个回答，人工排序（而非打分）。</li>
+            </ul>
+            <p>\[
+            \text{loss}(\theta) = -\frac{1}{C_K^2} \mathbb{E}_{(x, y_w, y_l) \sim D} \left[ \log(\sigma(r_\theta(x, y_w) - r_\theta(x, y_l))) \right]
+            \]</p>
+            <ul>
+                <li><strong>阶段二：PPO算法优化</strong>——让SFT模型回答新问题，奖励模型打分，用PPO微调。</li>
+            </ul>
+            <p>\[
+            \text{objective}(\phi) = \mathbb{E}_{(x,y) \sim D_{\text{RL}}} \left[ r_\theta(x,y) - \beta \log\left( \frac{\pi_\phi^{\text{RL}}(y|x)}{\pi^{\text{SFT}}(y|x)} \right) \right] + \gamma \mathbb{E}_{x \sim D_{\text{pretrain}}} [\log(\pi_\phi^{\text{RL}})]
+            \]</p>
+        </div>
+    </div>
+
+    <!-- ===== 知识点10-3 ===== -->
+    <div class="knowledge-item">
+        <div class="knowledge-title">
+            <span class="id">知识点 10-3</span>
+            <span class="name">自然语言中的机器翻译</span>
+            <span class="table-ref">对应表格“自然语言中的机器翻译”</span>
+        </div>
+        <div class="section">
+            <span class="src">📄 位置来源：第300-303页（10.2节全文），第11-13页</span>
+            <h4>1. 非深度学习方法</h4>
+            <ul>
+                <li><strong>基于文法的机器翻译</strong>：利用语言学规则，解析→生成。优点：可控、规范；缺点：形成大规模文法规则困难。</li>
+                <li><strong>基于统计的机器翻译（SMT）</strong>：利用大规模双语语料库学习统计规律。训练→解码。</li>
+            </ul>
+
+            <h4>2. 深度学习方法——编码器-解码器模型</h4>
+            <ul>
+                <li><strong>编码器</strong>：将源语言每个单词编码为词向量+上下文，最后时刻的隐藏状态作为整体表示。</li>
+                <li><strong>解码器</strong>：将编码器的最终隐藏状态作为输入，逐步生成目标语言单词（\<SOS\> → 逐词预测 → \<EOS\>）。</li>
+                <li><strong>训练</strong>：使用对齐的语料，<strong>交叉熵损失函数</strong> + <strong>误差反向传播</strong>。</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ===== 知识点10-4 ===== -->
+    <div class="knowledge-item">
+        <div class="knowledge-title">
+            <span class="id">知识点 10-4</span>
+            <span class="name">图像分类与视觉对象定位</span>
+            <span class="table-ref">对应表格“视觉理解中的图像分类”</span>
+        </div>
+        <div class="section">
+            <span class="src">📄 位置来源：第303-305页（10.3节全文），第14-15页</span>
+            <h4>1. 任务定义</h4>
+            <ul>
+                <li><strong>图像分类</strong>：将一幅图像识别归属为 $K$ 个类别中的某一个。</li>
+                <li><strong>视觉对象定位</strong>：识别关键物体，同时确定其<strong>位置</strong>（输出包围盒 bounding box）。</li>
+            </ul>
+
+            <h4>2. 基于CNN的解决方案</h4>
+            <ul>
+                <li><strong>卷积操作</strong>：提取特征（纹理、边缘、角点等），层层递进、逐层抽象。</li>
+                <li><strong>池化操作</strong>：最大池化或平均池化，对特征图进行约减。</li>
+                <li><strong>分类任务</strong>：softmax激活函数输出所有类别的概率分布。</li>
+                <li><strong>定位任务</strong>：参考<strong>Faster R-CNN</strong>（区域候选网络RPN + 感兴趣区域池化RoI Pooling），输出包围盒四维坐标。</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ===== 知识点10-5 ===== -->
+    <div class="knowledge-item">
+        <div class="knowledge-title">
+            <span class="id">知识点 10-5</span>
+            <span class="name">机器人中的行为控制</span>
+            <span class="table-ref">对应表格“机器人中的行为控制”</span>
+        </div>
+        <div class="section">
+            <span class="src">📄 位置来源：第313-316页（10.7节全文），第19-22页</span>
+            <h4>1. 机器人完成任务的基本流程</h4>
+            <ul>
+                <li><strong>感知（Perception）</strong>：多源传感器获取信息（相机、激光雷达、IMU、GPS等）。</li>
+                <li><strong>状态估计（State Estimation）</strong>：计算机视觉算法感知环境。</li>
+                <li><strong>规划（Planning）</strong>：生成路径和轨迹（RRT、非线性最优控制等）。</li>
+                <li><strong>控制（Control）</strong>：低阶控制器执行动作。</li>
+            </ul>
+
+            <h4>2. 机器人操作任务</h4>
+            <ul>
+                <li>示例：机械臂物体抓取 → 感知图像 → 状态估计（6自由度姿态） → 坐标转换 → 抓取动作规划。</li>
+            </ul>
+
+            <h4>3. 机器人导航任务</h4>
+            <ul>
+                <li><strong>传统方法</strong>：感知 → 建图 → 路径规划 → 轨迹执行。</li>
+                <li><strong>强化学习方法</strong>：将建图到规划部分用神经网络替代，端到端学习策略。</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ===== 知识点10-6 ===== -->
+    <div class="knowledge-item">
+        <div class="knowledge-title">
+            <span class="id">知识点 10-6</span>
+            <span class="name">科学计算——物理约束下的神经网络（PINN）</span>
+            <span class="table-ref">对应表格“科学计算”</span>
+        </div>
+        <div class="section">
+            <span class="src">📄 位置来源：第309-311页（10.5节全文），第17-19页</span>
+            <h4>1. 科学智能（AI4Science）</h4>
+            <ul>
+                <li>将深度学习模型作为科学计算的模拟器，用数学物理方程约束训练结果。</li>
+                <li><strong>特点</strong>：数据来源于采样与模拟（额外标注需求少）；计算速度相比传统数值方法<strong>提升数个数量级</strong>。</li>
+            </ul>
+
+            <h4>2. PINN（物理约束下的神经网络）</h4>
+            <ul>
+                <li><strong>提出者</strong>：Raissi等，2017。</li>
+                <li>用神经网络拟合微分方程的解函数 $u(t, x; \theta)$，以<strong>数据与物理驱动</strong>方式求解非线性偏微分方程。</li>
+            </ul>
+
+            <h4>3. PINN的约束与损失函数</h4>
+            <ul>
+                <li><strong>微分方程约束（PDE）</strong>：$\mathcal{N}(t, x; \hat{u}(t, x; \theta)) = 0$</li>
+                <li><strong>初始条件（IC）</strong>：$\mathcal{I}(x; \hat{u}(0, x; \theta)) = 0$</li>
+                <li><strong>边界条件（BC）</strong>：$\mathcal{B}(t, x; \hat{u}(t, x; \theta)) = 0$</li>
+            </ul>
+            <p>\[
+            \mathcal{L}(\theta) = w_{\text{PDE}} \mathcal{L}_{\text{PDE}} + w_{\text{IC}} \mathcal{L}_{\text{IC}} + w_{\text{BC}} \mathcal{L}_{\text{BC}} + w_{\text{Data}} \mathcal{L}_{\text{Data}}
+            \]</p>
+
+            <h4>4. 引入专业知识的其他方法</h4>
+            <ul>
+                <li><strong>图神经网络（GNN）用于分子</strong>：原子→结点，化学键→边，用于分子性质预测、分子设计。</li>
+                <li><strong>自监督训练</strong>：如AlphaFold中的多序列比对掩码恢复。</li>
+                <li>应用领域：物理仿真、化学合成、蛋白质结构预测（AlphaFold）、药物虚拟筛选、新材料合成、天气预测。</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        🎉 模块10全部知识点整理完毕 · 全部10个模块已完整输出
+    </div>
+</div>
+</body>
+</html>

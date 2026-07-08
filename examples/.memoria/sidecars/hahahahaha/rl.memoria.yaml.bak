@@ -1,0 +1,73 @@
+schema_version: 1
+file: hahahahaha/rl.md
+description: 强化学习基础概念
+knowledge_points:
+- id: rl
+  name: 强化学习基础概念
+  range:
+    start:
+      snippet: '# 强化学习基础概念'
+      line_hint: 1
+    end:
+      snippet: 其中 $\gamma \in [0, 1)$ 是折扣因子，控制对未来奖励的重视程度。$\gamma \to 0$ 意味着目光短浅，$\gamma
+        \to 1$
+      line_hint: 52
+- id: 智能体与环境
+  name: 智能体与环境
+  range:
+    start:
+      snippet: '## 智能体与环境'
+      line_hint: 12
+    end:
+      snippet: '- **Model-free**：直接从经验中学习，无需模型（如 Q-Learning、REINFORCE）'
+      line_hint: 30
+- id: 奖励函数
+  name: 奖励函数
+  range:
+    start:
+      snippet: '## 奖励函数'
+      line_hint: 32
+    end:
+      snippet: 其中 $\gamma \in [0, 1)$ 是折扣因子，控制对未来奖励的重视程度。$\gamma \to 0$ 意味着目光短浅，$\gamma
+        \to 1$
+      line_hint: 52
+links:
+- anchor_text: 独立
+  occurrence: 0
+  targets:
+  - nothing
+  pool:
+  - nothing
+  instances:
+  - line: 8
+    wrapped: true
+  excluded: []
+  edge_type: reference
+  source_id: rl
+- anchor_text: mdp
+  occurrence: 0
+  targets:
+  - mdp
+  edge_type: reference
+  instances:
+  - line: 3
+    wrapped: true
+  source_id: rl
+- anchor_text: q-learning
+  occurrence: 0
+  targets:
+  - q-learning
+  edge_type: extend
+  instances:
+  - line: 10
+    wrapped: true
+  source_id: rl
+- anchor_text: policy-gradient
+  occurrence: 0
+  targets:
+  - policy-gradient
+  edge_type: extend
+  instances:
+  - line: 10
+    wrapped: true
+  source_id: rl

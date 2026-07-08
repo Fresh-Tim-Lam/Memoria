@@ -1,0 +1,465 @@
+{
+  "nodes": [
+    {
+      "id": "attention",
+      "title": "注意力机制",
+      "file": "attention.md",
+      "weight": 1.0,
+      "tags": [
+        "deep-learning",
+        "mechanism"
+      ]
+    },
+    {
+      "id": "qkv",
+      "title": "Query-Key-Value",
+      "file": "attention.md",
+      "weight": 0.8,
+      "tags": []
+    },
+    {
+      "id": "qkv-scoring",
+      "title": "相似度计算",
+      "file": "attention.md",
+      "weight": 0.4,
+      "tags": []
+    },
+    {
+      "id": "softmax",
+      "title": "Softmax 归一化",
+      "file": "attention.md",
+      "weight": 0.5,
+      "tags": []
+    },
+    {
+      "id": "bert",
+      "title": "BERT",
+      "file": "bert.md",
+      "weight": 1.0,
+      "tags": [
+        "nlp",
+        "pre-training",
+        "encoder"
+      ]
+    },
+    {
+      "id": "mlm",
+      "title": "掩码语言模型",
+      "file": "bert.md",
+      "weight": 0.8,
+      "tags": []
+    },
+    {
+      "id": "nsp",
+      "title": "下一句预测",
+      "file": "bert.md",
+      "weight": 0.7,
+      "tags": []
+    },
+    {
+      "id": "ddpg",
+      "title": "DDPG",
+      "file": "ddpg.md",
+      "weight": 1.0,
+      "tags": [
+        "actor-critic",
+        "continuous-action",
+        "off-policy"
+      ]
+    },
+    {
+      "id": "ddpg-actor",
+      "title": "Actor 网络",
+      "file": "ddpg.md",
+      "weight": 0.7,
+      "tags": []
+    },
+    {
+      "id": "ddpg-critic",
+      "title": "Critic 网络",
+      "file": "ddpg.md",
+      "weight": 0.7,
+      "tags": []
+    },
+    {
+      "id": "experience-replay",
+      "title": "经验回放",
+      "file": "ddpg.md",
+      "weight": 0.6,
+      "tags": []
+    },
+    {
+      "id": "mdp",
+      "title": "马尔可夫决策过程",
+      "file": "mdp.md",
+      "weight": 1.0,
+      "tags": [
+        "reinforcement-learning",
+        "markov",
+        "fundamentals"
+      ]
+    },
+    {
+      "id": "bellman",
+      "title": "贝尔曼方程",
+      "file": "mdp.md",
+      "weight": 0.8,
+      "tags": [
+        "dynamic-programming"
+      ]
+    },
+    {
+      "id": "policy-gradient",
+      "title": "策略梯度",
+      "file": "policy-gradient.md",
+      "weight": 1.0,
+      "tags": [
+        "on-policy",
+        "actor-critic"
+      ]
+    },
+    {
+      "id": "reinforce",
+      "title": "REINFORCE 算法",
+      "file": "policy-gradient.md",
+      "weight": 0.7,
+      "tags": []
+    },
+    {
+      "id": "actor-critic",
+      "title": "Actor-Critic 框架",
+      "file": "policy-gradient.md",
+      "weight": 0.8,
+      "tags": []
+    },
+    {
+      "id": "q-learning",
+      "title": "Q-Learning 算法",
+      "file": "q-learning.md",
+      "weight": 1.0,
+      "tags": [
+        "td-learning",
+        "value-function",
+        "off-policy"
+      ]
+    },
+    {
+      "id": "epsilon-greedy",
+      "title": "ε-greedy 探索策略",
+      "file": "q-learning.md",
+      "weight": 0.6,
+      "tags": []
+    },
+    {
+      "id": "rl",
+      "title": "强化学习基础概念",
+      "file": "rl.md",
+      "weight": 1.0,
+      "tags": [
+        "reinforcement-learning",
+        "fundamentals"
+      ]
+    },
+    {
+      "id": "rl-agent",
+      "title": "智能体与环境",
+      "file": "rl.md",
+      "weight": 0.7,
+      "tags": []
+    },
+    {
+      "id": "rl-reward",
+      "title": "奖励函数",
+      "file": "rl.md",
+      "weight": 0.6,
+      "tags": []
+    },
+    {
+      "id": "transformer",
+      "title": "Transformer 架构",
+      "file": "transformer.md",
+      "weight": 1.0,
+      "tags": [
+        "nlp",
+        "attention",
+        "deep-learning",
+        "sequence-modeling"
+      ]
+    },
+    {
+      "id": "self-attention",
+      "title": "自注意力机制",
+      "file": "transformer.md",
+      "weight": 0.9,
+      "tags": []
+    },
+    {
+      "id": "multi-head-attention",
+      "title": "多头注意力",
+      "file": "transformer.md",
+      "weight": 0.8,
+      "tags": []
+    },
+    {
+      "id": "positional-encoding",
+      "title": "位置编码",
+      "file": "transformer.md",
+      "weight": 0.6,
+      "tags": []
+    }
+  ],
+  "links": [
+    {
+      "source": "attention",
+      "target": "transformer",
+      "type": "extend",
+      "strength": "weak",
+      "text": "transformer"
+    },
+    {
+      "source": "attention",
+      "target": "bert",
+      "type": "extend",
+      "strength": "weak",
+      "text": "bert"
+    },
+    {
+      "source": "bert",
+      "target": "transformer",
+      "type": "prerequisite",
+      "strength": "weak",
+      "text": "transformer"
+    },
+    {
+      "source": "ddpg",
+      "target": "q-learning",
+      "type": "prerequisite",
+      "strength": "weak",
+      "text": "q-learning"
+    },
+    {
+      "source": "ddpg",
+      "target": "policy-gradient",
+      "type": "prerequisite",
+      "strength": "weak",
+      "text": "policy-gradient"
+    },
+    {
+      "source": "mdp",
+      "target": "bellman",
+      "type": "reference",
+      "strength": "weak",
+      "text": "bellman"
+    },
+    {
+      "source": "bellman",
+      "target": "q-learning",
+      "type": "extend",
+      "strength": "weak",
+      "text": "q-learning"
+    },
+    {
+      "source": "bellman",
+      "target": "policy-gradient",
+      "type": "extend",
+      "strength": "weak",
+      "text": "policy-gradient"
+    },
+    {
+      "source": "policy-gradient",
+      "target": "q-learning",
+      "type": "analogy",
+      "strength": "weak",
+      "text": "q-learning"
+    },
+    {
+      "source": "policy-gradient",
+      "target": "rl",
+      "type": "prerequisite",
+      "strength": "weak",
+      "text": "rl"
+    },
+    {
+      "source": "policy-gradient",
+      "target": "ddpg",
+      "type": "extend",
+      "strength": "weak",
+      "text": "ddpg"
+    },
+    {
+      "source": "q-learning",
+      "target": "mdp",
+      "type": "prerequisite",
+      "strength": "weak",
+      "text": "mdp"
+    },
+    {
+      "source": "q-learning",
+      "target": "rl",
+      "type": "prerequisite",
+      "strength": "weak",
+      "text": "rl"
+    },
+    {
+      "source": "q-learning",
+      "target": "ddpg",
+      "type": "extend",
+      "strength": "weak",
+      "text": "ddpg"
+    },
+    {
+      "source": "rl",
+      "target": "mdp",
+      "type": "prerequisite",
+      "strength": "weak",
+      "text": "mdp"
+    },
+    {
+      "source": "rl",
+      "target": "q-learning",
+      "type": "extend",
+      "strength": "weak",
+      "text": "q-learning"
+    },
+    {
+      "source": "rl",
+      "target": "policy-gradient",
+      "type": "extend",
+      "strength": "weak",
+      "text": "policy-gradient"
+    },
+    {
+      "source": "transformer",
+      "target": "attention",
+      "type": "prerequisite",
+      "strength": "weak",
+      "text": "attention"
+    },
+    {
+      "source": "transformer",
+      "target": "bert",
+      "type": "extend",
+      "strength": "weak",
+      "text": "bert"
+    },
+    {
+      "source": "attention",
+      "target": "qkv",
+      "type": "contain",
+      "strength": "strong",
+      "text": ""
+    },
+    {
+      "source": "attention",
+      "target": "softmax",
+      "type": "contain",
+      "strength": "strong",
+      "text": ""
+    },
+    {
+      "source": "qkv",
+      "target": "qkv-scoring",
+      "type": "contain",
+      "strength": "strong",
+      "text": ""
+    },
+    {
+      "source": "bert",
+      "target": "mlm",
+      "type": "contain",
+      "strength": "strong",
+      "text": ""
+    },
+    {
+      "source": "bert",
+      "target": "nsp",
+      "type": "contain",
+      "strength": "strong",
+      "text": ""
+    },
+    {
+      "source": "ddpg",
+      "target": "ddpg-actor",
+      "type": "contain",
+      "strength": "strong",
+      "text": ""
+    },
+    {
+      "source": "ddpg",
+      "target": "ddpg-critic",
+      "type": "contain",
+      "strength": "strong",
+      "text": ""
+    },
+    {
+      "source": "ddpg",
+      "target": "experience-replay",
+      "type": "contain",
+      "strength": "strong",
+      "text": ""
+    },
+    {
+      "source": "mdp",
+      "target": "bellman",
+      "type": "contain",
+      "strength": "strong",
+      "text": ""
+    },
+    {
+      "source": "policy-gradient",
+      "target": "reinforce",
+      "type": "contain",
+      "strength": "strong",
+      "text": ""
+    },
+    {
+      "source": "policy-gradient",
+      "target": "actor-critic",
+      "type": "contain",
+      "strength": "strong",
+      "text": ""
+    },
+    {
+      "source": "q-learning",
+      "target": "epsilon-greedy",
+      "type": "contain",
+      "strength": "strong",
+      "text": ""
+    },
+    {
+      "source": "rl",
+      "target": "rl-agent",
+      "type": "contain",
+      "strength": "strong",
+      "text": ""
+    },
+    {
+      "source": "rl",
+      "target": "rl-reward",
+      "type": "contain",
+      "strength": "strong",
+      "text": ""
+    },
+    {
+      "source": "transformer",
+      "target": "self-attention",
+      "type": "contain",
+      "strength": "strong",
+      "text": ""
+    },
+    {
+      "source": "transformer",
+      "target": "multi-head-attention",
+      "type": "contain",
+      "strength": "strong",
+      "text": ""
+    },
+    {
+      "source": "transformer",
+      "target": "positional-encoding",
+      "type": "contain",
+      "strength": "strong",
+      "text": ""
+    }
+  ]
+}

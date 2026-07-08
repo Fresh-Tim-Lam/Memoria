@@ -1,0 +1,5 @@
+[console_scripts]
+memoria = memoria.cli.main:main
+memoria-build = memoria.app.build:main
+memoria-m0 = memoria.app.desktop:main
+memoria-m0-release = memoria.app.shell.pyqt6:main

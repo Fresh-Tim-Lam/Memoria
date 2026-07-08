@@ -1,0 +1,20 @@
+schema_version: 1
+file: wikilink-gap.md
+knowledge_points:
+- id: wikilink-gap-kp
+  name: Wikilink 缺口
+  range:
+    start:
+      snippet: '# Wikilink 缺口'
+    end:
+      snippet: 另有一个已配置的 [[ok-anchor]]。
+links:
+- anchor_text: ok-anchor
+  occurrence: 0
+  targets:
+  - ok-kp
+  edge_type: reference
+  instances:
+  - line: 5
+    wrapped: true
+  source_id: wikilink-gap-kp

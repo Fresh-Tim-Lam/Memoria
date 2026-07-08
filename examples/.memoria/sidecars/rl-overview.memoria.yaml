@@ -1,0 +1,30 @@
+schema_version: 1
+file: rl-overview.md
+description: 子目录示例 — RL 学习路径概览
+knowledge_points:
+- id: rl-overview
+  name: RL 概览
+  range:
+    start:
+      snippet: '# RL 概览（子目录示例）'
+      line_hint: 1
+    end:
+      snippet: 详见同目录外的 `mdp.md`、`q-learning.md`。
+      line_hint: 13
+edges:
+- type: reference
+  source_id: rl-overview
+  targets:
+  - mdp
+  - 贝尔曼方程
+  relevance: 0.85
+links:
+- anchor_text: mdp
+  occurrence: 0
+  targets:
+  - mdp
+  edge_type: reference
+  instances:
+  - line: 5
+    wrapped: true
+  source_id: rl-overview

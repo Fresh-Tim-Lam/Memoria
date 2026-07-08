@@ -1,0 +1,44 @@
+app.js:5 pywebview API ready
+favicon.ico:1  Failed to load resource: the server responded with a status of 404 (Not Found)
+app.js:102 Warnings: (5) ['Broken citation: ddpg -> [[policy-gradient]] (line 16)', 'Broken citation: ddpg -> [[td3]] (line 17)', 'Broken citation: rl-overview -> [[policy-gradient]] (line 14)', 'Broken citation: transformer -> [[bert]] (line 13)', 'Broken citation: transformer -> [[gpt]] (line 13)']
+d3.min.js:2 Uncaught (in promise) Error: node not found: policy-gradient
+    at Yc (d3.min.js:2:102583)
+    at h (d3.min.js:2:232576)
+    at l.initialize (d3.min.js:2:233061)
+    at p (d3.min.js:2:236157)
+    at Object.force (d3.min.js:2:236803)
+    at renderGraph (graph.js:32:10)
+    at buildIndex (app.js:108:13)
+    at async HTMLButtonElement.openDirectory (app.js:81:9)
+Yc @ d3.min.js:2
+h @ d3.min.js:2
+l.initialize @ d3.min.js:2
+p @ d3.min.js:2
+force @ d3.min.js:2
+renderGraph @ graph.js:32
+buildIndex @ app.js:108
+await in buildIndex
+openDirectory @ app.js:81
+app.js:102 Warnings: (5) ['Broken citation: ddpg -> [[policy-gradient]] (line 16)', 'Broken citation: ddpg -> [[td3]] (line 17)', 'Broken citation: rl-overview -> [[policy-gradient]] (line 14)', 'Broken citation: transformer -> [[bert]] (line 13)', 'Broken citation: transformer -> [[gpt]] (line 13)']
+d3.min.js:2 Uncaught (in promise) Error: node not found: policy-gradient
+    at Yc (d3.min.js:2:102583)
+    at h (d3.min.js:2:232576)
+    at l.initialize (d3.min.js:2:233061)
+    at p (d3.min.js:2:236157)
+    at Object.force (d3.min.js:2:236803)
+    at renderGraph (graph.js:32:10)
+    at HTMLButtonElement.buildIndex (app.js:108:13)
+Yc @ d3.min.js:2
+h @ d3.min.js:2
+l.initialize @ d3.min.js:2
+p @ d3.min.js:2
+force @ d3.min.js:2
+renderGraph @ graph.js:32
+buildIndex @ app.js:108
+app.js:132 Broken citations (5):
+  [ERROR] ddpg -> [[policy-gradient]] (line 16)
+  [ERROR] ddpg -> [[td3]] (line 17)
+  [ERROR] rl-overview -> [[policy-gradient]] (line 14)
+  [ERROR] transformer -> [[bert]] (line 13)
+  [ERROR] transformer -> [[gpt]] (line 13)
+

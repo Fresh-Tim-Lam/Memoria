@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人工智能引论 · 模块3：搜索探寻与问题求解</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            svg: { fontCache: 'global' },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            },
+            startup: { typeset: true }
+        };
+    </script>
+    <script>
+        (function () {
+            var sources = [
+                'mathjax-tex-svg.js',
+                'https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-svg.js',
+                'https://cdn.staticfile.org/mathjax/3.2.2/es5/tex-svg.js',
+                'https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js',
+                'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js',
+                'https://unpkg.com/mathjax@3.2.2/es5/tex-svg.js'
+            ];
+            function load(i) {
+                if (i >= sources.length) {
+                    console.error('MathJax: 所有源加载失败');
+                    var d = document.createElement('div');
+                    d.style.cssText = 'position:fixed;top:0;left:0;right:0;padding:10px;background:#fff3cd;color:#856404;border-bottom:1px solid #ffeeba;z-index:99999;font-size:14px;text-align:center;';
+                    d.textContent = '⚠️ 数学公式渲染库加载失败，请检查网络或确认 mathjax-tex-svg.js 存在';
+                    (document.body || document.documentElement).appendChild(d);
+                    return;
+                }
+                var s = document.createElement('script');
+                s.src = sources[i];
+                s.onload = function () { console.log('MathJax loaded:', sources[i]); };
+                s.onerror = function () {
+                    console.warn('MathJax failed:', sources[i]);
+                    if (s.parentNode) s.parentNode.removeChild(s);
+                    load(i + 1);
+                };
+                document.head.appendChild(s);
+            }
+            load(0);
+        })();
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #f8f9fb;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            padding: 40px 20px;
+            color: #1e2a3a;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 18px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+            padding: 50px 55px;
+        }
+        h1 {
+            font-size: 30px;
+            font-weight: 700;
+            border-left: 6px solid #2a6df4;
+            padding-left: 18px;
+            margin-bottom: 8px;
+            color: #0b1e33;
+        }
+        .subhead {
+            font-size: 16px;
+            color: #5b6f87;
+            margin-bottom: 40px;
+            padding-left: 24px;
+            border-bottom: 1px solid #eef2f7;
+            padding-bottom: 18px;
+        }
+        .module-badge {
+            display: inline-block;
+            background: #eef4ff;
+            color: #1f5cdb;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 4px 16px;
+            border-radius: 30px;
+            margin-bottom: 18px;
+        }
+        .table-wrap {
+            background: #f7f9fc;
+            border-radius: 14px;
+            padding: 18px 20px 14px 20px;
+            margin-bottom: 42px;
+            border: 1px solid #e6edf5;
+            overflow-x: auto;
+        }
+        .table-wrap table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 15px;
+        }
+        .table-wrap th {
+            text-align: left;
+            font-weight: 600;
+            color: #1f3a5f;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #d0dcee;
+        }
+        .table-wrap td {
+            padding: 8px 0;
+            border-bottom: 1px solid #e6edf5;
+            vertical-align: top;
+        }
+        .table-wrap tr:last-child td { border-bottom: none; }
+        .table-wrap .highlight {
+            background: #f0f6ff;
+            border-radius: 6px;
+            padding: 2px 8px;
+            font-weight: 500;
+            color: #0050b3;
+        }
+        .knowledge-item {
+            margin-bottom: 52px;
+            border-bottom: 1px solid #eef2f7;
+            padding-bottom: 36px;
+        }
+        .knowledge-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .knowledge-title {
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .knowledge-title .id {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1f5cdb;
+            background: #e9effa;
+            padding: 2px 14px;
+            border-radius: 30px;
+        }
+        .knowledge-title .name {
+            font-size: 22px;
+            font-weight: 700;
+            color: #0b1e33;
+        }
+        .knowledge-title .table-ref {
+            font-size: 14px;
+            color: #5b6f87;
+            background: #f0f3f8;
+            padding: 2px 14px;
+            border-radius: 30px;
+            font-weight: 400;
+        }
+        .section {
+            margin-top: 16px;
+            padding-left: 6px;
+        }
+        .section h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1f3a5f;
+            margin: 18px 0 8px 0;
+            padding-bottom: 2px;
+            border-bottom: 1px dashed #dce4ed;
+        }
+        .section h4:first-of-type { margin-top: 4px; }
+        .section p {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #1e2a3a;
+            margin: 8px 0 10px 0;
+        }
+        .section ul, .section ol {
+            margin: 8px 0 12px 24px;
+            font-size: 15px;
+            line-height: 1.75;
+            color: #1e2a3a;
+        }
+        .section li { margin-bottom: 6px; }
+        .section .src {
+            font-size: 14px;
+            color: #5b6f87;
+            background: #f3f6fb;
+            padding: 2px 14px;
+            border-radius: 30px;
+            display: inline-block;
+            margin: 6px 0 10px 0;
+        }
+        .formula-box {
+            background: #f5f8fe;
+            border-left: 4px solid #2a6df4;
+            padding: 14px 20px;
+            margin: 14px 0 12px 0;
+            border-radius: 0 10px 10px 0;
+            font-family: "Courier New", Consolas, monospace;
+            font-size: 15px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+            color: #0b1e33;
+        }
+        .grid-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px 30px;
+            margin: 10px 0 6px 0;
+        }
+        @media (max-width: 720px) {
+            .container { padding: 28px 18px; }
+            .grid-2col { grid-template-columns: 1fr; }
+            .knowledge-title .name { font-size: 19px; }
+            .table-wrap { padding: 12px 10px; }
+            .table-wrap table { font-size: 14px; }
+        }
+        .footer-note {
+            margin-top: 40px;
+            padding-top: 22px;
+            border-top: 1px solid #e6edf5;
+            font-size: 14px;
+            color: #5b6f87;
+            text-align: center;
+        }
+        .warning-box {
+            background: #fff8e6;
+            border-left: 4px solid #f5a623;
+            padding: 12px 18px;
+            margin: 12px 0 8px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="module-badge">📘 模块 3</div>
+    <h1>搜索探寻与问题求解</h1>
+    <div class="subhead">
+        对应表格原文：介绍贪婪最佳优先搜索、启发式搜索A*搜索、搜索算法的性能分析、Minimax搜索、Alpha-Beta剪枝搜索和蒙特卡洛树搜索。
+    </div>
+
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr><th>表格原文（模块3）</th><th>知识点编号与标题</th><th>覆盖状态</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>搜索算法的性能分析</td><td>知识点3-1：搜索基本概念与性能评价指标</td><td><span class="highlight">✅ 已覆盖</span></td></tr>
+                <tr><td>介绍贪婪最佳优先搜索</td><td>知识点3-2：贪婪最佳优先搜索（Greedy Best-First Search）</td><td><span class="highlight">✅ 已覆盖</span></td></tr>
+                <tr><td>介绍启发式搜索A*搜索</td><td>知识点3-3：A*搜索算法</td><td><span class="highlight">✅ 已覆盖</span></td></tr>
+                <tr><td>介绍Minimax搜索</td><td>知识点3-4：最小最大搜索（Minimax Search）</td><td><span class="highlight">✅ 已覆盖</span></td></tr>
+                <tr><td>介绍Alpha-Beta剪枝搜索</td><td>知识点3-5：Alpha-Beta剪枝搜索</td><td><span class="highlight">✅ 已覆盖</span></td></tr>
+                <tr><td>介绍蒙特卡洛树搜索</td><td>知识点3-6：蒙特卡洛树搜索（MCTS）</td><td><span class="highlight">✅ 已覆盖</span></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ===== 知识点3-1 ===== -->
+    <div class="knowledge-item">
+        <div class="knowledge-title">
+            <span class="id">知识点 3-1</span>
+            <span class="name">搜索基本概念与性能评价指标</span>
+            <span class="table-ref">对应表格“搜索算法的性能分析”</span>
+        </div>
+        <div class="section">
+            <span class="src">📄 位置来源：第61-64页（3.1节全文），第81-84页</span>
+            <h4>1. 搜索的基本术语</h4>
+            <ul>
+                <li><strong>状态（state）</strong>：对搜索算法和搜索环境当前所处情形的描述信息。</li>
+                <li><strong>初始状态</strong>：算法刚开始所在状态。</li>
+                <li><strong>终止状态（目标状态）</strong>：完成任务时所在状态。</li>
+                <li><strong>动作（action）</strong>：算法从一个状态转移到另一个状态所采取的行为。</li>
+                <li><strong>路径（path）</strong>：执行一系列动作后得到的状态序列。</li>
+                <li><strong>代价（cost）</strong>：一条路径对应的开销（如时间、距离等）。</li>
+                <li><strong>目标测试（goal test）</strong>：判断状态s是否为目标状态。</li>
+            </ul>
+
+            <h4>2. 搜索树的概念</h4>
+            <p><strong>搜索树</strong>：用一棵树来记录算法所探索的路径。每个结点用一个状态标记。<br>
+            <strong>⚠️ 重要区别</strong>：同一个状态标号可能在搜索树中出现多次，但它们属于<strong>不同结点</strong>，因为从根结点到达它们所经过的路径不同。</p>
+
+            <h4>3. 搜索算法的四大评价指标</h4>
+            <ul>
+                <li><strong>完备性（Completeness）</strong>：当问题存在解时，算法是否能保证找到一个解。</li>
+                <li><strong>最优性（Optimality）</strong>：搜索算法是否能保证找到的第一个解是<strong>最优解</strong>。</li>
+                <li><strong>时间复杂度（Time Complexity）</strong>：找到一条搜索路径所需的时间。</li>
+                <li><strong>空间复杂度（Space Complexity）</strong>：算法运行时所需的内存空间。</li>
+            </ul>
+
+            <h4>4. 复杂度分析的典型变量（表3.1）</h4>
+            <ul>
+                <li><strong>\(b\)</strong>：分支因子，搜索树中每个结点的最大分支数目。</li>
+                <li><strong>\(d\)</strong>：根结点到最浅目标结点的路径长度。</li>
+                <li><strong>\(m\)</strong>：搜索树中路径的最大可能长度。</li>
+                <li><strong>\(n\)</strong>：状态空间中的状态数量。</li>
+            </ul>
+
+            <h4>5. 环路问题与剪枝</h4>
+            <p>如果不剪枝，算法可能陷入无限循环（如 A→B→A→B→…）。<br>
+            <strong>解决方法</strong>：对可能产生环路的结点进行剪枝。排除环路对算法找到最优解不产生负面影响，因为任意包含环路的路径都可以用一条不含环路且代价更小或相等的路径代替。</p>
+        </div>
+    </div>
+
+    <!-- ===== 知识点3-2 ===== -->
+    <div class="knowledge-item">
+        <div class="knowledge-title">
+            <span class="id">知识点 3-2</span>
+            <span class="name">贪婪最佳优先搜索（Greedy Best-First Search）</span>
+            <span class="table-ref">对应表格“贪婪最佳优先搜索”</span>
+        </div>
+        <div class="section">
+            <span class="src">📄 位置来源：第65-67页（3.2节全文），第85-87页</span>
+            <h4>1. 启发式搜索与无信息搜索的区别</h4>
+            <ul>
+                <li><strong>无信息搜索</strong>：不利用额外信息（如BFS、DFS）。</li>
+                <li><strong>有信息搜索（启发式搜索）</strong>：利用能够辅助算法做出决策的额外信息（<strong>启发信息</strong>）。</li>
+            </ul>
+
+            <h4>2. 启发函数与评价函数</h4>
+            <ul>
+                <li><strong>启发函数 \(h(n)\)</strong>：估计从结点 \(n\) 到目标结点还须付出多少代价。</li>
+                <li><strong>评价函数 \(f(n)\)</strong>：决定搜索算法在边缘结点集合中下一步选择哪个结点。</li>
+                <li><strong>贪婪最佳优先搜索的定义</strong>：\(f(n) = h(n)\)，每次总是<strong>“贪婪地”</strong>选择离目标结点代价最小的结点进行扩展。</li>
+            </ul>
+
+            <h4>3. 教材示例（图3.4）</h4>
+            <ul>
+                <li>从A出发，扩展得到B(10)、D(12)、E(7) → 选E</li>
+                <li>扩展E，得到H(3)、G(5)、I(6) → 选H</li>
+                <li>扩展H，得到J(3)、F(8) → 选J</li>
+                <li>找到路径：<strong>A→E→H→J→K</strong>（代价为17）</li>
+            </ul>
+
+            <h4>4. 性能分析</h4>
+            <ul>
+                <li><strong>完备性</strong>：采用排除环路的剪枝方法时，是<strong>完备的</strong>。</li>
+                <li><strong>最优性</strong>：<strong>不是最优的</strong>（找到的路径不是最短路径）。</li>
+                <li><strong>时间复杂度</strong>：最坏 \(O(b^m)\)</li>
+                <li><strong>空间复杂度</strong>：最坏 \(O(b^m)\)</li>
+            </ul>
+            <div class="warning-box">
+                <strong>⚠️ 关键结论</strong>：该路径<strong>不是最短路径</strong>。实际上最短路径为 <strong>A→E→G→K</strong>（代价14）。贪婪最佳优先搜索由于只关注到目标的估计距离，忽视了从起点到当前结点的实际代价。
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 知识点3-3 ===== -->
+    <div class="knowledge-item">
+        <div class="knowledge-title">
+            <span class="id">知识点 3-3</span>
+            <span class="name">A*搜索算法</span>
+            <span class="table-ref">对应表格“启发式搜索A*搜索”</span>
+        </div>
+        <div class="section">
+            <span class="src">📄 位置来源：第67-71页（3.3节全文），第87-91页</span>
+            <h4>1. A*算法的核心思想</h4>
+            <ul>
+                <li><strong>评价函数定义</strong>：\(f(n) = g(n) + h(n)\)</li>
+                <li>\(g(n)\)：从起始结点到结点 \(n\) 的<strong>实际路径代价</strong></li>
+                <li>\(h(n)\)：从结点 \(n\) 到目标结点的<strong>估计代价</strong>（启发函数）</li>
+            </ul>
+
+            <h4>2. 教材示例（图3.5）</h4>
+            <ul>
+                <li>贪婪最佳优先搜索选择扩展J（h(J)=3最小）</li>
+                <li>A*算法选择扩展G（f(G)=4+5=9，小于f(J)=14+3=17）</li>
+                <li><strong>找到最短路径：A→E→G→K（代价14）</strong></li>
+            </ul>
+
+            <h4>3. 可容性（Admissible）</h4>
+            <p>对任意结点 \(n\)，有 <strong>\(h(n) \le h^*(n)\)</strong>。即启发函数<strong>不会过高估计</strong>从n到目标的代价。</p>
+
+            <h4>4. 一致性（Consistency，也称单调性）</h4>
+            <p><strong>\(h(n) \le c(n, a, n') + h(n')\)</strong>，即三角不等式。<br>
+            <strong>重要结论</strong>：一致性 ⇒ 可容性。</p>
+
+            <h4>5. A*算法的最优性</h4>
+            <p><strong>定理</strong>：如果启发函数是<strong>可容的</strong>，则A*算法满足<strong>最优性</strong>。<br>
+            <strong>完备性条件</strong>：①分支数量有限；②单步代价有正下界；③启发函数有下界。</p>
+        </div>
+    </div>
+
+    <!-- ===== 知识点3-4 ===== -->
+    <div class="knowledge-item">
+        <div class="knowledge-title">
+            <span class="id">知识点 3-4</span>
+            <span class="name">最小最大搜索（Minimax Search）</span>
+            <span class="table-ref">对应表格“Minimax搜索”</span>
+        </div>
+        <div class="section">
+            <span class="src">📄 位置来源：第71-74页（3.4节全文），第92-95页</span>
+            <h4>1. 对抗搜索的适用场景</h4>
+            <ul>
+                <li>信息确定、全局可观察、竞争对手轮流行动、<strong>零和（zero-sum）</strong>假设下的<strong>二人博弈</strong>。</li>
+                <li><strong>零和博弈</strong>：一方获得收益必然意味着另一方遭受损失。</li>
+            </ul>
+
+            <h4>2. 核心术语</h4>
+            <ul>
+                <li><strong>玩家MAX</strong>：以最大化得分为目标的玩家。</li>
+                <li><strong>玩家MIN</strong>：以最小化得分为目标的玩家。</li>
+                <li><strong>终局得分 \(utility(s)\)</strong>：终局状态s下MAX的得分。</li>
+            </ul>
+
+            <h4>3. Minimax递归定义</h4>
+            <div class="formula-box">
+                Minimax(s) = 
+                <ul>
+                    <li>utility(s)，若 terminal_test(s) 为真</li>
+                    <li>max{Minimax(result(s,a))}，若 player(s)=MAX</li>
+                    <li>min{Minimax(result(s,a))}，若 player(s)=MIN</li>
+                </ul>
+            </div>
+
+            <h4>4. 性能分析</h4>
+            <ul>
+                <li><strong>完备性</strong>：搜索树有限时，必然在有限时间内终止。</li>
+                <li><strong>最优性</strong>：对手理性时，得到的解是最优的。</li>
+                <li><strong>时间复杂度</strong>：\(O(b^m)\)</li>
+                <li><strong>空间复杂度</strong>：\(O(bm)\)</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ===== 知识点3-5 ===== -->
+    <div class="knowledge-item">
+        <div class="knowledge-title">
+            <span class="id">知识点 3-5</span>
+            <span class="name">Alpha-Beta剪枝搜索</span>
+            <span class="table-ref">对应表格“Alpha-Beta剪枝搜索”</span>
+        </div>
+        <div class="section">
+            <span class="src">📄 位置来源：第75-80页（3.5节全文），第96-101页</span>
+            <h4>1. 核心思想</h4>
+            <p>在保证与Minimax得到<strong>同样搜索结果</strong>的前提下，<strong>剪去不影响最终结果的分支</strong>。</p>
+
+            <h4>2. α值（Alpha）和β值（Beta）</h4>
+            <ul>
+                <li><strong>α</strong>：MAX结点<strong>当前已知的最好下界</strong>（MAX至少能获得的分值）</li>
+                <li><strong>β</strong>：MIN结点<strong>当前已知的最好上界</strong>（MIN至多能允许的分值）</li>
+            </ul>
+
+            <h4>3. 剪枝的两种情况</h4>
+            <ul>
+                <li><strong>α剪枝</strong>：MIN结点值 ≤ 祖先MAX结点的α值 → 剪枝</li>
+                <li><strong>β剪枝</strong>：MAX结点值 ≥ 祖先MIN结点的β值 → 剪枝</li>
+            </ul>
+
+            <h4>4. 性能分析</h4>
+            <ul>
+                <li><strong>最优情况</strong>：时间复杂度可降至 \(O(b^{m/2})\)</li>
+                <li><strong>最坏情况</strong>：剪枝效果为零，复杂度仍为 \(O(b^m)\)</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ===== 知识点3-6 ===== -->
+    <div class="knowledge-item">
+        <div class="knowledge-title">
+            <span class="id">知识点 3-6</span>
+            <span class="name">蒙特卡洛树搜索（MCTS）</span>
+            <span class="table-ref">对应表格“蒙特卡洛树搜索”</span>
+        </div>
+        <div class="section">
+            <span class="src">📄 位置来源：第80-91页（3.6节全文），第102-113页</span>
+            <h4>1. 探索与利用的困境（多臂赌博机问题）</h4>
+            <ul>
+                <li><strong>利用（Exploitation）</strong>：选择当前收益最高的摇臂</li>
+                <li><strong>探索（Exploration）</strong>：尝试其他摇臂以获得更准确的估计</li>
+            </ul>
+
+            <h4>2. UCB1算法</h4>
+            <p>\[
+            l_t = \arg\max_i \left( \bar{x}_{i, T(i,t-1)} + C \sqrt{\frac{2\ln t}{T(i,t-1)}} \right)
+            \]</p>
+
+            <h4>3. MCTS的四步循环</h4>
+            <ol>
+                <li><strong>选择（Selection）</strong>：从根结点开始，使用UCB1策略向下递归选择子结点。</li>
+                <li><strong>扩展（Expansion）</strong>：如果当前结点不是终止结点，随机扩展一个未被扩展过的后继结点。</li>
+                <li><strong>模拟（Simulation）</strong>：从新结点出发，使用简单策略（如随机策略）模拟后续博弈直到终局。</li>
+                <li><strong>反向传播（Backpropagation）</strong>：用模拟结果更新路径上所有结点的统计信息（总奖励和访问次数）。</li>
+            </ol>
+
+            <h4>4. UCT公式</h4>
+            <p>\[
+            \text{UCB}(v') = \frac{Q(v')}{N(v')} + C \sqrt{\frac{2\ln N(v)}{N(v')}}
+            \]</p>
+
+            <h4>5. MCTS的主要优势</h4>
+            <ul>
+                <li>不依赖穷尽式枚举，基于<strong>采样</strong>决定搜索树的扩展方式。</li>
+                <li>既能保证搜索效率，又能通过蒙特卡洛模拟准确评估每个分支的优劣。</li>
+                <li>特别适用于搜索空间极大（如围棋）的场景。</li>
+            </ul>
+
+            <div class="warning-box">
+                <strong>⚠️ 反向传播特殊规则</strong>：在对抗搜索中，MIN层结点的总分要<strong>减去</strong>终局得分（因为MIN选择最小化得分的动作）；MAX层结点<strong>加上</strong>终局得分。
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        📚 模块3全部知识点整理完毕 · 请确认后输出下一模块
+    </div>
+</div>
+</body>
+</html>

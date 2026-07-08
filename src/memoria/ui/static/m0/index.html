@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memoria M1</title>
+  <link rel="icon" href="/icons/Memoria.ico" type="image/x-icon">
+  <link rel="stylesheet" href="/theme/memoria.css">
+  <link rel="stylesheet" href="/m0/css/m0.css">
+  <script>
+    window.MathJax = {
+      tex: {
+        packages: { "[+]": ["ams", "boldsymbol", "mathtools", "physics", "unicode", "noerrors", "noundefined", "color", "cancel", "bbox"] },
+        inlineMath: [["$", "$"], ["\\(", "\\)"]],
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]],
+        processEscapes: true,
+        processEnvironments: true,
+        processRefs: true,
+        tags: "ams",
+      },
+      options: {
+        skipHtmlTags: ["script", "noscript", "style", "textarea", "pre", "code"],
+        renderActions: { addMenu: [0, "", ""] },
+      },
+      startup: { typeset: false },
+      chtml: { scale: 1, minScale: 0.5, matchFontHeight: true },
+    };
+  </script>
+  <script defer src="/vendor/marked.min.js"></script>
+  <script defer src="/vendor/mathjax/es5/tex-chtml-full.js"></script>
+</head>
+<body>
+  <div id="app">
+    <div id="toolbar">
+      <div class="toolbar-left pywebview-drag-region">
+        <span class="toolbar-brand">
+          <img class="logo-icon" src="/icons/Memoria.ico" alt="" decoding="async">
+          <span class="logo">Memoria</span>
+        </span>
+        <span class="m0-badge">M1</span>
+      </div>
+      <div class="toolbar-actions">
+        <button id="btn-nav-back" class="m0-nav-btn" title="后退 (Alt+←)" disabled>←</button>
+        <button id="btn-nav-forward" class="m0-nav-btn" title="前进 (Alt+→)" disabled>→</button>
+        <button id="btn-open" title="打开知识库">打开</button>
+        <button id="btn-refresh" title="刷新">刷新</button>
+        <button id="btn-build" type="button" title="构建：同步链接配置并生成图谱">构建</button>
+        <span class="m0-toolbar-btn-wrap">
+          <button id="btn-check" type="button" title="知识库完整性检查">检查</button>
+          <span id="btn-check-badge" class="m0-toolbar-badge hidden" aria-hidden="true"></span>
+        </span>
+        <button id="btn-settings" type="button" title="设置">设置</button>
+      </div>
+      <div class="m0-titlebar-drag-spacer pywebview-drag-region" aria-hidden="true"></div>
+      <div class="toolbar-search-wrap">
+        <div id="toolbar-search-scope" class="m0-toolbar-search-scope" role="switch" tabindex="0" aria-label="搜索范围">
+          <button type="button" id="toolbar-search-scope-kb" class="m0-toolbar-search-scope-btn active" title="搜索全库">全库</button>
+          <button type="button" id="toolbar-search-scope-file" class="m0-toolbar-search-scope-btn" title="仅当前文件">文件</button>
+        </div>
+        <div class="m0-toolbar-search-field">
+          <input
+            type="search"
+            id="toolbar-search"
+            class="m0-toolbar-search"
+            placeholder="搜索知识点、标签…"
+            autocomplete="off"
+            spellcheck="false"
+            title="全局搜索（Ctrl+K · Shift+Enter 仅当前文件）"
+          />
+          <div id="toolbar-search-panel" class="m0-toolbar-search-panel hidden" aria-live="polite"></div>
+        </div>
+      </div>
+      <div class="m0-titlebar-drag-spacer m0-titlebar-drag-spacer--after pywebview-drag-region" aria-hidden="true"></div>
+      <div class="toolbar-right">
+        <span id="kb-indicator-wrap" class="kb-indicator-wrap hidden">
+          <span id="kb-indicator" class="kb-indicator pywebview-drag-region" title="当前知识库路径（可拖拽移动窗口）"></span>
+          <button id="btn-kb-close" type="button" class="m0-btn primary m0-btn--sm m0-kb-exit" title="关闭知识库，返回欢迎页">退出</button>
+        </span>
+        <div id="window-controls" class="m0-window-controls hidden" aria-label="窗口控制">
+          <button type="button" id="btn-win-minimize" class="m0-win-btn m0-win-btn--min" title="最小化" aria-label="最小化"></button>
+          <button type="button" id="btn-win-maximize" class="m0-win-btn m0-win-btn--max" title="最大化" aria-label="最大化"></button>
+          <button type="button" id="btn-win-close" class="m0-win-btn m0-win-btn--close" title="关闭" aria-label="关闭"></button>
+        </div>
+      </div>
+    </div>
+
+    <div id="main">
+      <aside id="m0-sidebar">
+        <div id="sidebar-resizer"></div>
+        <div class="m0-sidebar-tabs-wrap">
+          <div class="m0-config-tabs m0-sidebar-nav-tabs" role="tablist" aria-label="资源管理器">
+            <button type="button" class="m0-config-tab active" data-sidebar-tab="files" role="tab" aria-selected="true">文件 <span class="m0-tab-count" id="sidebar-tab-count-files">0</span></button>
+            <button type="button" class="m0-config-tab" data-sidebar-tab="graph2d" role="tab" aria-selected="false">2D <span class="m0-tab-count" id="sidebar-tab-count-graph2d">0</span></button>
+            <button type="button" class="m0-config-tab" data-sidebar-tab="graph3d" role="tab" aria-selected="false">3D <span class="m0-tab-count" id="sidebar-tab-count-graph3d">0</span></button>
+          </div>
+        </div>
+        <div id="sidebar-graph-group-bar" class="m0-graph-group-bar hidden" aria-hidden="true">
+          <div id="sidebar-graph-group-tabs" class="m0-graph-group-tabs"></div>
+        </div>
+        <div id="sidebar-body-split" class="m0-sidebar-body-split">
+          <div id="sidebar-nav-panel" class="m0-panel m0-sidebar-nav-panel">
+            <div id="sidebar-view-files" class="m0-sidebar-view" data-sidebar-view="files">
+              <div id="file-tree"></div>
+            </div>
+            <div id="sidebar-view-graph2d" class="m0-sidebar-view hidden" data-sidebar-view="graph2d">
+              <div id="graph-2d-root" class="m0-graph-root"></div>
+              <div id="graph-2d-hint" class="m0-graph-hint m0-graph-hint--overlay m0-muted"><span class="m0-muted">滚轮缩放 · 拖空白平移 · 点击跳转</span></div>
+            </div>
+            <div id="sidebar-view-graph3d" class="m0-sidebar-view hidden" data-sidebar-view="graph3d">
+              <div id="graph-3d-root" class="m0-graph-root"></div>
+              <div id="graph-3d-hint" class="m0-graph-hint m0-graph-hint--overlay m0-muted"><span class="m0-muted">左键旋转 · 滚轮缩放 · 点击跳转</span></div>
+            </div>
+          </div>
+          <div id="sidebar-nav-kp-resizer" class="m0-graph-panel-resizer m0-sidebar-kp-resizer" title="拖拽调整上方面板与知识点列表占比"></div>
+          <div id="sidebar-kp-block" class="m0-sidebar-kp-block">
+            <div class="sidebar-toolbar m0-kp-toolbar">
+              <span class="m0-kp-toolbar-label">知识点</span>
+              <span id="kp-count" class="m0-muted"></span>
+              <div class="m0-kp-toolbar-actions">
+                <button type="button" id="btn-config" class="m0-config-btn" title="文件总配置（知识点与链接）">配置</button>
+                <button type="button" id="btn-kp-new" class="m0-config-btn" title="新建知识点（当前文件）">新建</button>
+              </div>
+            </div>
+            <div id="kp-list" class="m0-panel m0-kp-panel"></div>
+          </div>
+        </div>
+      </aside>
+
+      <div id="content">
+        <div id="tab-bar">
+          <div id="tabs"></div>
+        </div>
+        <div id="viewer">
+          <div id="welcome">
+            <h1>Memoria M1</h1>
+            <p>snippet range · 链接跳转 · 导航栈</p>
+            <button id="btn-welcome-open">打开知识库</button>
+          </div>
+          <div id="editor-wrap" class="hidden">
+            <div id="editor-header">
+              <span id="file-title"></span>
+              <span id="file-meta" class="m0-muted"></span>
+              <div class="m0-view-toggle" role="tablist" aria-label="视图模式">
+                <button type="button" class="m0-view-btn active" data-view="source" title="源码">源码</button>
+                <button type="button" class="m0-view-btn" data-view="preview" title="Markdown 预览">预览</button>
+                <button type="button" class="m0-view-btn" data-view="split" title="分栏">分栏</button>
+              </div>
+            </div>
+            <div id="preview-status" class="hidden"></div>
+            <div id="editor-split" class="view-source">
+              <div id="editor-pane" class="m0-pane">
+                <div id="editor" class="m0-editor"></div>
+              </div>
+              <div id="preview-pane" class="m0-pane">
+                <div id="preview" class="m0-preview markdown-body"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="status-bar">
+      <span id="status-info">就绪</span>
+      <span id="status-stats"></span>
+    </div>
+    <div id="m0-flash-host" aria-live="polite"></div>
+  </div>
+
+  <div id="kp-modal" class="m0-modal hidden">
+    <div class="m0-modal-backdrop"></div>
+    <div class="m0-modal-box m0-modal-tabbed" id="kp-modal-box">
+      <div class="m0-modal-header">
+        <span id="kp-title">知识点配置</span>
+        <button id="kp-close" class="m0-icon-btn" title="关闭">×</button>
+      </div>
+      <div id="kp-body" class="m0-modal-body"></div>
+      <div class="m0-modal-footer m0-kp-modal-footer m0-btn-bar">
+        <button type="button" id="kp-delete" class="m0-btn danger m0-kp-delete-btn">删除知识点</button>
+        <span class="m0-modal-footer-spacer"></span>
+        <button type="button" class="m0-btn secondary" id="kp-cancel">取消</button>
+        <button type="button" class="m0-btn primary" id="kp-save" title="确定">确定</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="config-modal" class="m0-modal hidden">
+    <div class="m0-modal-backdrop"></div>
+    <div class="m0-modal-box m0-modal-tabbed" id="config-modal-box">
+      <div class="m0-modal-header">
+        <span id="config-title">文件配置</span>
+        <button id="config-close" class="m0-icon-btn" title="关闭">×</button>
+      </div>
+      <div id="config-body" class="m0-modal-body"></div>
+      <div class="m0-modal-footer m0-btn-bar">
+        <button type="button" class="m0-btn secondary" id="config-close-btn">关闭</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="assist-modal" class="m0-modal hidden">
+    <div class="m0-modal-backdrop"></div>
+    <div class="m0-modal-box m0-modal-assist" id="assist-modal-box">
+      <div class="m0-modal-header">
+        <span id="assist-title">定位辅助</span>
+        <button id="assist-close" class="m0-icon-btn" title="关闭">×</button>
+      </div>
+      <div id="assist-body" class="m0-modal-body m0-modal-body-assist"></div>
+      <div class="m0-modal-footer m0-btn-bar">
+        <button type="button" class="m0-btn secondary" id="assist-cancel">取消</button>
+        <button type="button" class="m0-btn primary" id="assist-confirm">确认</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="check-modal" class="m0-modal hidden">
+    <div class="m0-modal-backdrop"></div>
+    <div class="m0-modal-box m0-modal-check">
+      <div class="m0-modal-header">
+        <span>知识库检查</span>
+        <button id="check-close" type="button" class="m0-icon-btn" title="关闭">×</button>
+      </div>
+      <div id="check-body" class="m0-modal-body m0-check-body"></div>
+      <div class="m0-modal-footer m0-btn-bar">
+        <button type="button" class="m0-btn secondary" id="check-rerun">重新检查</button>
+        <span class="m0-modal-footer-spacer"></span>
+        <button type="button" class="m0-btn primary" id="check-dismiss">关闭</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="settings-modal" class="m0-modal hidden">
+    <div class="m0-modal-backdrop"></div>
+    <div class="m0-modal-box m0-modal-settings">
+      <div class="m0-modal-header">
+        <span>设置</span>
+        <button id="settings-close" type="button" class="m0-icon-btn" title="关闭">×</button>
+      </div>
+      <div id="settings-tabs" class="m0-settings-tabs-wrap"></div>
+      <div id="settings-body" class="m0-modal-body m0-settings-body"></div>
+      <p id="settings-config-path" class="m0-muted m0-settings-config-path" hidden></p>
+      <div class="m0-modal-footer m0-btn-bar">
+        <button type="button" class="m0-btn secondary" id="settings-reset">恢复默认</button>
+        <span class="m0-modal-footer-spacer"></span>
+        <button type="button" class="m0-btn primary" id="settings-dismiss">关闭</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="link-modal" class="m0-modal hidden">
+    <div class="m0-modal-backdrop"></div>
+    <div class="m0-modal-box">
+      <div class="m0-modal-header">
+        <span id="link-title">选择跳转目标</span>
+        <button id="link-close" class="m0-icon-btn" title="关闭">×</button>
+      </div>
+      <div id="link-body" class="m0-modal-body"></div>
+      <div class="m0-modal-footer m0-btn-bar">
+        <span id="link-hint" class="m0-muted m0-link-hint"></span>
+        <button type="button" class="m0-btn secondary hidden" id="link-config-view">查看全部链接</button>
+        <button type="button" class="m0-btn secondary" id="link-cancel">取消</button>
+        <button type="button" class="m0-btn primary hidden" id="link-save">保存</button>
+        <button type="button" class="m0-btn primary hidden" id="link-save-jump">保存并跳转</button>
+        <button type="button" class="m0-btn primary" id="link-confirm" disabled>确认跳转</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/m0/lib/three.min.js"></script>
+  <script src="/m0/lib/OrbitControls.js"></script>
+  <script src="/m0/js/graph-label.js"></script>
+  <script src="/m0/js/graph-groups.js"></script>
+  <script src="/m0/js/graph-engine.js"></script>
+  <script src="/m0/js/graph-layout-sim-core.js"></script>
+  <script src="/m0/js/graph-layout-2d.js"></script>
+  <script src="/m0/js/graph-layout-3d.js"></script>
+  <script src="/m0/js/graph-layout-worker-bridge.js"></script>
+  <script src="/m0/js/graph-octree.js"></script>
+  <script src="/m0/js/graph-view-2d.js"></script>
+  <script src="/m0/js/graph-view-3d.js"></script>
+  <script src="/m0/js/graph-settings.js"></script>
+  <script src="/m0/js/check-settings.js"></script>
+  <script src="/m0/js/search-settings.js"></script>
+  <script src="/vendor/qwebchannel.js"></script>
+  <script src="/m0/js/bridge.js"></script>
+  <script src="/m0/js/window-chrome.js"></script>
+  <script src="/m0/js/math-normalize.js"></script>
+  <script src="/m0/js/nav-stack.js"></script>
+  <script src="/m0/js/markdown-preview.js"></script>
+  <script src="/m0/js/link-context-menu.js"></script>
+  <script src="/m0/js/kp-context-menu.js"></script>
+  <script src="/m0/js/app.js"></script>
+</body>
+</html>

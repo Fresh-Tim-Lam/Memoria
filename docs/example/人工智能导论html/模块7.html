@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人工智能引论 · 模块7：人工智能博弈</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            svg: { fontCache: 'global' },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            },
+            startup: { typeset: true }
+        };
+    </script>
+    <script>
+        (function () {
+            var sources = [
+                'mathjax-tex-svg.js',
+                'https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-svg.js',
+                'https://cdn.staticfile.org/mathjax/3.2.2/es5/tex-svg.js',
+                'https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js',
+                'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js',
+                'https://unpkg.com/mathjax@3.2.2/es5/tex-svg.js'
+            ];
+            function load(i) {
+                if (i >= sources.length) {
+                    console.error('MathJax: 所有源加载失败');
+                    var d = document.createElement('div');
+                    d.style.cssText = 'position:fixed;top:0;left:0;right:0;padding:10px;background:#fff3cd;color:#856404;border-bottom:1px solid #ffeeba;z-index:99999;font-size:14px;text-align:center;';
+                    d.textContent = '⚠️ 数学公式渲染库加载失败，请检查网络或确认 mathjax-tex-svg.js 存在';
+                    (document.body || document.documentElement).appendChild(d);
+                    return;
+                }
+                var s = document.createElement('script');
+                s.src = sources[i];
+                s.onload = function () { console.log('MathJax loaded:', sources[i]); };
+                s.onerror = function () {
+                    console.warn('MathJax failed:', sources[i]);
+                    if (s.parentNode) s.parentNode.removeChild(s);
+                    load(i + 1);
+                };
+                document.head.appendChild(s);
+            }
+            load(0);
+        })();
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #f8f9fb;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            padding: 40px 20px;
+            color: #1e2a3a;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 18px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+            padding: 50px 55px;
+        }
+        h1 {
+            font-size: 30px;
+            font-weight: 700;
+            border-left: 6px solid #2a6df4;
+            padding-left: 18px;
+            margin-bottom: 8px;
+            color: #0b1e33;
+        }
+        .subhead {
+            font-size: 16px;
+            color: #5b6f87;
+            margin-bottom: 40px;
+            padding-left: 24px;
+            border-bottom: 1px solid #eef2f7;
+            padding-bottom: 18px;
+        }
+        .module-badge {
+            display: inline-block;
+            background: #eef4ff;
+            color: #1f5cdb;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 4px 16px;
+            border-radius: 30px;
+            margin-bottom: 18px;
+        }
+        .table-wrap {
+            background: #f7f9fc;
+            border-radius: 14px;
+            padding: 18px 20px 14px 20px;
+            margin-bottom: 42px;
+            border: 1px solid #e6edf5;
+            overflow-x: auto;
+        }
+        .table-wrap table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 15px;
+        }
+        .table-wrap th {
+            text-align: left;
+            font-weight: 600;
+            color: #1f3a5f;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #d0dcee;
+        }
+        .table-wrap td {
+            padding: 8px 0;
+            border-bottom: 1px solid #e6edf5;
+            vertical-align: top;
+        }
+        .table-wrap tr:last-child td { border-bottom: none; }
+        .table-wrap .highlight {
+            background: #f0f6ff;
+            border-radius: 6px;
+            padding: 2px 8px;
+            font-weight: 500;
+            color: #0050b3;
+        }
+        .knowledge-item {
+            margin-bottom: 52px;
+            border-bottom: 1px solid #eef2f7;
+            padding-bottom: 36px;
+        }
+        .knowledge-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .knowledge-title {
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .knowledge-title .id {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1f5cdb;
+            background: #e9effa;
+            padding: 2px 14px;
+            border-radius: 30px;
+        }
+        .knowledge-title .name {
+            font-size: 22px;
+            font-weight: 700;
+            color: #0b1e33;
+        }
+        .knowledge-title .table-ref {
+            font-size: 14px;
+            color: #5b6f87;
+            background: #f0f3f8;
+            padding: 2px 14px;
+            border-radius: 30px;
+            font-weight: 400;
+        }
+        .section {
+            margin-top: 16px;
+            padding-left: 6px;
+        }
+        .section h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1f3a5f;
+            margin: 18px 0 8px 0;
+            padding-bottom: 2px;
+            border-bottom: 1px dashed #dce4ed;
+        }
+        .section h4:first-of-type { margin-top: 4px; }
+        .section p {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #1e2a3a;
+            margin: 8px 0 10px 0;
+        }
+        .section ul, .section ol {
+            margin: 8px 0 12px 24px;
+            font-size: 15px;
+            line-height: 1.8;
+            color: #1e2a3a;
+        }
+        .section li { margin-bottom: 6px; }
+        .section .src {
+            font-size: 14px;
+            color: #5b6f87;
+            background: #f3f6fb;
+            padding: 2px 14px;
+            border-radius: 30px;
+            display: inline-block;
+            margin: 6px 0 10px 0;
+        }
+        .formula-box {
+            background: #f5f8fe;
+            border-left: 4px solid #2a6df4;
+            padding: 14px 20px;
+            margin: 14px 0 12px 0;
+            border-radius: 0 10px 10px 0;
+            font-size: 15px;
+            overflow-x: auto;
+        }
+        .grid-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px 30px;
+            margin: 10px 0 6px 0;
+        }
+        @media (max-width: 720px) {
+            .container { padding: 28px 18px; }
+            .grid-2col { grid-template-columns: 1fr; }
+            .knowledge-title .name { font-size: 19px; }
+            .table-wrap { padding: 12px 10px; }
+            .table-wrap table { font-size: 14px; }
+        }
+        .footer-note {
+            margin-top: 40px;
+            padding-top: 22px;
+            border-top: 1px solid #e6edf5;
+            font-size: 14px;
+            color: #5b6f87;
+            text-align: center;
+        }
+        .warning-box {
+            background: #fff8e6;
+            border-left: 4px solid #f5a623;
+            padding: 12px 18px;
+            margin: 12px 0 8px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 15px;
+        }
+        .MathJax {
+            font-size: 105%;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="module-badge">📘 模块 7</div>
+    <h1>人工智能博弈</h1>
+    <div class="subhead">
+        对应表格原文：介绍纳什均衡等博弈论概念、博弈策略求解算法和博弈规则设计。
+    </div>
+
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr><th>表格原文（模块7）</th><th>知识点编号与标题</th><th>覆盖状态</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>介绍纳什均衡等博弈论概念</td><td>知识点7-1：博弈论基本概念与分类</td><td><span class="highlight">✅ 已覆盖</span></td></tr>
+                <tr><td>介绍纳什均衡等博弈论概念</td><td>知识点7-2：纳什均衡与囚徒困境</td><td><span class="highlight">✅ 已覆盖</span></td></tr>
+                <tr><td>介绍纳什均衡等博弈论概念</td><td>知识点7-3：混合策略与纳什均衡求解</td><td><span class="highlight">✅ 已覆盖</span></td></tr>
+                <tr><td>介绍博弈策略求解算法</td><td>知识点7-4：遗憾最小化算法与虚拟遗憾最小化（CFR）</td><td><span class="highlight">✅ 已覆盖</span></td></tr>
+                <tr><td>介绍博弈策略求解算法</td><td>知识点7-5：安全子博弈</td><td><span class="highlight">✅ 已覆盖</span></td></tr>
+                <tr><td>介绍博弈规则设计</td><td>知识点7-6：双边匹配——Gale-Shapley算法</td><td><span class="highlight">✅ 已覆盖</span></td></tr>
+                <tr><td>介绍博弈规则设计</td><td>知识点7-7：单边匹配——Top Trading Cycle（TTC）算法</td><td><span class="highlight">✅ 已覆盖</span></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ===== 知识点7-1 ===== -->
+    <div class="knowledge-item">
+        <div class="knowledge-title">
+            <span class="id">知识点 7-1</span>
+            <span class="name">博弈论基本概念与分类</span>
+            <span class="table-ref">对应表格“纳什均衡等博弈论概念”</span>
+        </div>
+        <div class="section">
+            <span class="src">📄 位置来源：第227-230页（7.1.1-7.1.3节），第1-5页</span>
+            <h4>1. 博弈论的起源</h4>
+            <ul>
+                <li><strong>古代博弈思想</strong>：《论语·阳货》“不有博弈者乎？为之，犹贤乎已”；东汉马融《围棋赋》“三尺之局兮，为战斗场”。</li>
+                <li><strong>田忌赛马</strong>：以己之长，攻彼之短——用下等马对齐王上等马，上等马对中等马，中等马对下等马，以2:1获胜。</li>
+                <li><strong>现代博弈论奠基</strong>：1944年，冯·诺依曼与摩根斯特恩合著 <strong>《博弈论与经济行为》</strong>。</li>
+            </ul>
+
+            <h4>2. 博弈论的核心术语</h4>
+            <ul>
+                <li><strong>玩家（Player）</strong>：博弈的决策主体，完全理性</li>
+                <li><strong>策略（Strategy）</strong>：参与者可采取的行动方案</li>
+                <li><strong>纯策略 vs 混合策略</strong>：确定选择 vs 按概率随机选择</li>
+                <li><strong>收益（Payoff）</strong>：不同局势下参与者得到的利益</li>
+            </ul>
+
+            <h4>3. 博弈的分类</h4>
+            <ul>
+                <li><strong>按是否允许合作</strong>：合作博弈 vs 非合作博弈</li>
+                <li><strong>按决策时间</strong>：静态博弈 vs 动态博弈</li>
+                <li><strong>按信息了解程度</strong>：完全信息 vs 不完全信息；完美信息 vs 不完美信息</li>
+                <li><strong>按收益总和</strong>：零和博弈 vs 非零和博弈</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ===== 知识点7-2 ===== -->
+    <div class="knowledge-item">
+        <div class="knowledge-title">
+            <span class="id">知识点 7-2</span>
+            <span class="name">纳什均衡与囚徒困境</span>
+            <span class="table-ref">对应表格“纳什均衡等博弈论概念”</span>
+        </div>
+        <div class="section">
+            <span class="src">📄 位置来源：第228-231页（7.1.2-7.1.4节），第4-8页</span>
+            <h4>1. 囚徒困境</h4>
+            <ul>
+                <li><strong>提出者</strong>：梅里尔·弗勒德和梅尔文·德雷舍，1950年；塔克以“囚徒方式”阐述。</li>
+                <li><strong>核心结论</strong>：两人都认罪是<strong>均衡解</strong>，但不是<strong>最优解</strong>（最优解是两人都沉默）。</li>
+                <li><strong>启示</strong>：<strong>个人最佳选择 ≠ 团体最佳选择</strong>。</li>
+            </ul>
+
+            <h4>2. 纳什均衡</h4>
+            <ul>
+                <li><strong>提出者</strong>：约翰·纳什，1950年博士论文，1994年诺贝尔经济学奖。</li>
+                <li><strong>定义</strong>：参与者作出的一种策略组合，在该策略组合中，<strong>任何参与者单独改变策略都不会得到好处</strong>。</li>
+            </ul>
+
+            <h4>3. 纳什定理</h4>
+            <ul>
+                <li><strong>内容</strong>：任何有限策略下的博弈都<strong>必定存在一个混合策略纳什均衡</strong>。</li>
+            </ul>
+
+            <h4>4. 策梅洛定理</h4>
+            <ul>
+                <li><strong>内容</strong>：对于任意一个<strong>有限步的双人完全信息零和动态博弈</strong>，一定存在<strong>先手必胜策略、后手必胜策略或双方保平策略</strong>。</li>
+                <li><strong>意义</strong>：为Minimax搜索提供了理论基础。</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ===== 知识点7-3 ===== -->
+    <div class="knowledge-item">
+        <div class="knowledge-title">
+            <span class="id">知识点 7-3</span>
+            <span class="name">混合策略与纳什均衡求解</span>
+            <span class="table-ref">对应表格“纳什均衡等博弈论概念”</span>
+        </div>
+        <div class="section">
+            <span class="src">📄 位置来源：第230-231页（7.1.4节），第8-9页</span>
+            <h4>1. 教材示例：雇主-雇员的监督博弈</h4>
+            <ul>
+                <li><strong>参数</strong>：$H$（不偷懒付出）、$V$（贡献）、$W$（工资）、$C$（检查成本）、$F$（罚金）</li>
+                <li><strong>混合策略</strong>：$\alpha$（雇主检查概率）、$\beta$（雇员偷懒概率）</li>
+            </ul>
+
+            <h4>2. 纳什均衡求解结果</h4>
+            <ul>
+                <li>雇主检查概率：$\alpha = \frac{H}{F}$</li>
+                <li>雇员偷懒概率：$\beta = \frac{C}{W+F}$</li>
+                <li>雇主最优工资：$W = \sqrt{CV} - F$</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ===== 知识点7-4 ===== -->
+    <div class="knowledge-item">
+        <div class="knowledge-title">
+            <span class="id">知识点 7-4</span>
+            <span class="name">遗憾最小化算法与虚拟遗憾最小化（CFR）</span>
+            <span class="table-ref">对应表格“博弈策略求解算法”</span>
+        </div>
+        <div class="section">
+            <span class="src">📄 位置来源：第233-239页（7.2.1-7.2.2节），第11-16页</span>
+            <h4>1. 遗憾值定义</h4>
+            <p>\[
+            \text{Regret}_i^T(\sigma'_i) = \sum_{t=1}^T \left( u_i(\sigma'_i, \sigma_{-i}^t) - u_i(\sigma^t) \right)
+            \]</p>
+
+            <h4>2. 虚拟遗憾最小化（CFR）</h4>
+            <ul>
+                <li><strong>提出者</strong>：Zinkevich等，2007。</li>
+                <li>将遗憾最小化推广到<strong>序贯决策（多步博弈）</strong>。</li>
+                <li><strong>信息集</strong>：博弈树中的中间结点，包含状态及到达该结点的所有历史行动。</li>
+            </ul>
+
+            <h4>3. 虚拟价值</h4>
+            <p>\[
+            v_i(\sigma, h) = \sum_{z \in Z} \pi_{-i}^\sigma(h) \cdot \pi^\sigma(h, z) \cdot u_i(z)
+            \]</p>
+
+            <h4>4. 教材示例：库恩扑克</h4>
+            <ul>
+                <li>双人有限注扑克，牌值1、2、3各一张。</li>
+                <li>CFR迭代后得到12个信息集的均衡策略（表7.9）。</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ===== 知识点7-5 ===== -->
+    <div class="knowledge-item">
+        <div class="knowledge-title">
+            <span class="id">知识点 7-5</span>
+            <span class="name">安全子博弈</span>
+            <span class="table-ref">对应表格“博弈策略求解算法”</span>
+        </div>
+        <div class="section">
+            <span class="src">📄 位置来源：第241-243页（7.2.3节全文），第17-19页</span>
+            <h4>1. 核心结论</h4>
+            <ul>
+                <li><strong>完全信息博弈</strong>：子博弈搜索适用。</li>
+                <li><strong>非完全信息博弈</strong>：直接搜索子博弈空间<strong>不适用</strong>——即使是不能到达的分支对当前子博弈也有影响。</li>
+            </ul>
+
+            <h4>2. 安全子博弈的定义</h4>
+            <ul>
+                <li>在子博弈求解中得到的结果，一定<strong>不差于</strong>全局近似解法。</li>
+                <li>通过虚拟价值的估计找到安全子博弈（Brown等，2018）。</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ===== 知识点7-6 ===== -->
+    <div class="knowledge-item">
+        <div class="knowledge-title">
+            <span class="id">知识点 7-6</span>
+            <span class="name">双边匹配——Gale-Shapley算法</span>
+            <span class="table-ref">对应表格“博弈规则设计”</span>
+        </div>
+        <div class="section">
+            <span class="src">📄 位置来源：第243-245页（7.3.1-7.3.2节），第19-21页</span>
+            <h4>1. 稳定婚姻问题</h4>
+            <ul>
+                <li>给定$n$名男性和$n$名女性的严格偏好顺序，寻找<strong>稳定匹配</strong>。</li>
+                <li><strong>稳定匹配</strong>：不存在未达成匹配的两人，彼此都更倾向于对方而不是当前的匹配对象。</li>
+            </ul>
+
+            <h4>2. Gale-Shapley算法流程</h4>
+            <ol>
+                <li>单身男性向<strong>最喜欢</strong>的女性表白。</li>
+                <li>收到表白的女性从所有表白者中选择最喜欢的男性，<strong>暂时匹配</strong>。</li>
+                <li>未匹配的男性继续向<strong>没有拒绝过他的</strong>女性表白。</li>
+                <li>若女性已匹配但更喜欢新表白者，则<strong>替换</strong>之前匹配的男性。</li>
+                <li>循环迭代，直到所有人都成功匹配。</li>
+            </ol>
+
+            <h4>3. 算法特点</h4>
+            <ul>
+                <li><strong>总是能找到稳定匹配</strong></li>
+                <li>对<strong>主动方（男性）</strong>有利</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ===== 知识点7-7 ===== -->
+    <div class="knowledge-item">
+        <div class="knowledge-title">
+            <span class="id">知识点 7-7</span>
+            <span class="name">单边匹配——Top Trading Cycle（TTC）算法</span>
+            <span class="table-ref">对应表格“博弈规则设计”</span>
+        </div>
+        <div class="section">
+            <span class="src">📄 位置来源：第246-247页（7.3.3节），第21-22页</span>
+            <h4>1. TTC算法流程</h4>
+            <ol>
+                <li>记录每个标的物的初始占有者。</li>
+                <li>每个交易者指向<strong>最喜欢</strong>的标的物；从每个标的物指向其<strong>占有者</strong>。</li>
+                <li>形成的有向图中必存在<strong>交易圈</strong>，圈中交易者各自获得指向的标的物，离开市场。</li>
+                <li>从剩余交易者和标的物中重复匹配，直到无法形成交易圈。</li>
+            </ol>
+
+            <h4>2. 教材示例</h4>
+            <ul>
+                <li>四位同学A、B、C、D匹配床位1、2、3、4。</li>
+                <li>第一轮交易圈：A→1→D→4→A（A得1，D得4）。</li>
+                <li>第二轮：B→2→C→2（C得2，B得3）。</li>
+                <li><strong>最终结果</strong>：A→1，B→3，C→2，D→4。</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        📚 模块7全部知识点整理完毕 · 请确认后输出下一模块
+    </div>
+</div>
+</body>
+</html>

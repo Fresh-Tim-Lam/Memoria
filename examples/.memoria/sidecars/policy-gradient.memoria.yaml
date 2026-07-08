@@ -1,0 +1,59 @@
+schema_version: 1
+file: policy-gradient.md
+description: 策略梯度方法
+knowledge_points:
+- id: policy-gradient
+  name: 策略梯度
+  range:
+    start:
+      snippet: '# 策略梯度'
+      line_hint: 1
+    end:
+      snippet: DDPG 是 Actor-Critic 在连续动作空间上的扩展，使用确定性策略梯度而非随机策略梯度。
+      line_hint: 66
+- id: reinforce-算法
+  name: REINFORCE 算法
+  range:
+    start:
+      snippet: '## REINFORCE 算法'
+      line_hint: 18
+    end:
+      snippet: 3. **因果性**：只使用从 $t$ 时刻开始的回报，不使用 $t$ 之前的回报
+      line_hint: 44
+- id: actor-critic-框架
+  name: Actor-Critic 框架
+  range:
+    start:
+      snippet: '## Actor-Critic 框架'
+      line_hint: 46
+    end:
+      snippet: DDPG 是 Actor-Critic 在连续动作空间上的扩展，使用确定性策略梯度而非随机策略梯度。
+      line_hint: 66
+links:
+- anchor_text: q-learning
+  occurrence: 0
+  targets:
+  - q-learning
+  edge_type: reference
+  instances:
+  - line: 3
+    wrapped: true
+  source_id: policy-gradient
+- anchor_text: rl
+  occurrence: 0
+  targets:
+  - rl
+  edge_type: reference
+  instances:
+  - line: 3
+    wrapped: true
+  source_id: policy-gradient
+- anchor_text: ddpg
+  occurrence: 0
+  targets:
+  - ddpg
+  edge_type: extend
+  instances:
+  - line: 3
+    wrapped: true
+  source_id: policy-gradient

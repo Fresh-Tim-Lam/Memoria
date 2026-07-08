@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人工智能引论 · 模块2：知识表达与推理</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            svg: { fontCache: 'global' },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            },
+            startup: { typeset: true }
+        };
+    </script>
+    <script>
+        (function () {
+            var sources = [
+                'mathjax-tex-svg.js',
+                'https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-svg.js',
+                'https://cdn.staticfile.org/mathjax/3.2.2/es5/tex-svg.js',
+                'https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js',
+                'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js',
+                'https://unpkg.com/mathjax@3.2.2/es5/tex-svg.js'
+            ];
+            function load(i) {
+                if (i >= sources.length) {
+                    console.error('MathJax: 所有源加载失败');
+                    var d = document.createElement('div');
+                    d.style.cssText = 'position:fixed;top:0;left:0;right:0;padding:10px;background:#fff3cd;color:#856404;border-bottom:1px solid #ffeeba;z-index:99999;font-size:14px;text-align:center;';
+                    d.textContent = '⚠️ 数学公式渲染库加载失败，请检查网络或确认 mathjax-tex-svg.js 存在';
+                    (document.body || document.documentElement).appendChild(d);
+                    return;
+                }
+                var s = document.createElement('script');
+                s.src = sources[i];
+                s.onload = function () { console.log('MathJax loaded:', sources[i]); };
+                s.onerror = function () {
+                    console.warn('MathJax failed:', sources[i]);
+                    if (s.parentNode) s.parentNode.removeChild(s);
+                    load(i + 1);
+                };
+                document.head.appendChild(s);
+            }
+            load(0);
+        })();
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f8f9fb;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            padding: 40px 20px;
+            color: #1e2a3a;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 18px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+            padding: 50px 55px;
+        }
+
+        h1 {
+            font-size: 30px;
+            font-weight: 700;
+            border-left: 6px solid #2a6df4;
+            padding-left: 18px;
+            margin-bottom: 8px;
+            color: #0b1e33;
+        }
+
+        .subhead {
+            font-size: 16px;
+            color: #5b6f87;
+            margin-bottom: 40px;
+            padding-left: 24px;
+            border-bottom: 1px solid #eef2f7;
+            padding-bottom: 18px;
+        }
+
+        .module-badge {
+            display: inline-block;
+            background: #eef4ff;
+            color: #1f5cdb;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 4px 16px;
+            border-radius: 30px;
+            letter-spacing: 0.3px;
+            margin-bottom: 18px;
+        }
+
+        .table-wrap {
+            background: #f7f9fc;
+            border-radius: 14px;
+            padding: 18px 20px 14px 20px;
+            margin-bottom: 42px;
+            border: 1px solid #e6edf5;
+            overflow-x: auto;
+        }
+
+        .table-wrap table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 15px;
+        }
+
+        .table-wrap th {
+            text-align: left;
+            font-weight: 600;
+            color: #1f3a5f;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #d0dcee;
+        }
+
+        .table-wrap td {
+            padding: 8px 0;
+            border-bottom: 1px solid #e6edf5;
+            vertical-align: top;
+        }
+
+        .table-wrap tr:last-child td {
+            border-bottom: none;
+        }
+
+        .table-wrap .highlight {
+            background: #f0f6ff;
+            border-radius: 6px;
+            padding: 2px 8px;
+            font-weight: 500;
+            color: #0050b3;
+        }
+
+        .knowledge-item {
+            margin-bottom: 52px;
+            border-bottom: 1px solid #eef2f7;
+            padding-bottom: 36px;
+        }
+
+        .knowledge-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .knowledge-title {
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .knowledge-title .id {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1f5cdb;
+            background: #e9effa;
+            padding: 2px 14px;
+            border-radius: 30px;
+        }
+
+        .knowledge-title .name {
+            font-size: 22px;
+            font-weight: 700;
+            color: #0b1e33;
+        }
+
+        .knowledge-title .table-ref {
+            font-size: 14px;
+            color: #5b6f87;
+            background: #f0f3f8;
+            padding: 2px 14px;
+            border-radius: 30px;
+            font-weight: 400;
+        }
+
+        .section {
+            margin-top: 16px;
+            padding-left: 6px;
+        }
+
+        .section h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1f3a5f;
+            margin: 18px 0 8px 0;
+            padding-bottom: 2px;
+            border-bottom: 1px dashed #dce4ed;
+        }
+
+        .section h4:first-of-type {
+            margin-top: 4px;
+        }
+
+        .section p {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #1e2a3a;
+            margin: 8px 0 10px 0;
+        }
+
+        .section ul,
+        .section ol {
+            margin: 8px 0 12px 24px;
+            font-size: 15px;
+            line-height: 1.75;
+            color: #1e2a3a;
+        }
+
+        .section li {
+            margin-bottom: 6px;
+        }
+
+        .section .src {
+            font-size: 14px;
+            color: #5b6f87;
+            background: #f3f6fb;
+            padding: 2px 14px;
+            border-radius: 30px;
+            display: inline-block;
+            margin: 6px 0 10px 0;
+        }
+
+        .formula-box {
+            background: #f5f8fe;
+            border-left: 4px solid #2a6df4;
+            padding: 14px 20px;
+            margin: 14px 0 12px 0;
+            border-radius: 0 10px 10px 0;
+            font-family: "Courier New", Consolas, monospace;
+            font-size: 15px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+            color: #0b1e33;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #eef4ff;
+            color: #1f5cdb;
+            font-size: 13px;
+            padding: 0 12px;
+            border-radius: 30px;
+            font-weight: 500;
+            margin-right: 4px;
+        }
+
+        .grid-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px 30px;
+            margin: 10px 0 6px 0;
+        }
+
+        @media (max-width: 720px) {
+            .container {
+                padding: 28px 18px;
+            }
+            .grid-2col {
+                grid-template-columns: 1fr;
+            }
+            .knowledge-title .name {
+                font-size: 19px;
+            }
+            .table-wrap {
+                padding: 12px 10px;
+            }
+            .table-wrap table {
+                font-size: 14px;
+            }
+        }
+
+        .footer-note {
+            margin-top: 40px;
+            padding-top: 22px;
+            border-top: 1px solid #e6edf5;
+            font-size: 14px;
+            color: #5b6f87;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="module-badge">📘 模块 2</div>
+    <h1>知识表达与推理</h1>
+    <div class="subhead">
+        对应表格原文：介绍知识表示方法、一阶谓词逻辑推理、知识图谱推理和因果推理基础。
+    </div>
+
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr><th>表格原文（模块2）</th><th>知识点编号与标题</th><th>覆盖状态</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>介绍知识表示方法</td><td>知识点2-1：知识表示方法概述</td><td><span class="highlight">✅ 已覆盖</span></td></tr>
+                <tr><td>介绍一阶谓词逻辑推理</td><td>知识点2-2：命题逻辑基础</td><td><span class="highlight">✅ 已覆盖</span></td></tr>
+                <tr><td>介绍一阶谓词逻辑推理</td><td>知识点2-3：谓词逻辑与一阶谓词逻辑推理</td><td><span class="highlight">✅ 已覆盖</span></td></tr>
+                <tr><td>介绍知识图谱推理</td><td>知识点2-4：知识图谱推理概述</td><td><span class="highlight">✅ 已覆盖</span></td></tr>
+                <tr><td>介绍知识图谱推理</td><td>知识点2-5：FOIL归纳推理算法</td><td><span class="highlight">✅ 已覆盖</span></td></tr>
+                <tr><td>介绍知识图谱推理</td><td>知识点2-6：路径排序推理算法（PRA）</td><td><span class="highlight">✅ 已覆盖</span></td></tr>
+                <tr><td>介绍知识图谱推理</td><td>知识点2-7：分布式表示下的知识推理</td><td><span class="highlight">✅ 已覆盖</span></td></tr>
+                <tr><td>介绍因果推理基础</td><td>知识点2-8：概率推理——贝叶斯网络</td><td><span class="highlight">✅ 已覆盖</span></td></tr>
+                <tr><td>介绍因果推理基础</td><td>知识点2-9：概率推理——马尔可夫逻辑网络</td><td><span class="highlight">✅ 已覆盖</span></td></tr>
+                <tr><td>介绍因果推理基础</td><td>知识点2-10：因果推理基础（因果图、do算子、因果效应、反事实推理）</td><td><span class="highlight">✅ 已覆盖</span></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ===== 知识点2-1 ===== -->
+    <div class="knowledge-item">
+        <div class="knowledge-title">
+            <span class="id">知识点 2-1</span>
+            <span class="name">知识表示方法概述</span>
+            <span class="table-ref">对应表格“知识表示方法”</span>
+        </div>
+        <div class="section">
+            <span class="src">📄 位置来源：第23页（2.1节全文），第40页</span>
+            <h4>1. 知识的定义与认知基础</h4>
+            <p><strong>认知（cognition）</strong> 来源于拉丁语 cognitio，表示<strong>学习和知识</strong>。古希腊哲学认为，人类理解世界的途径源于 <strong>“学习技能”</strong> 和 <strong>“解释已得知识”</strong> 两种途径，从而“开始知道”。<br>
+            <strong>认知最重要的表现是分类</strong>：一个人对周围事物的分类越细致、周全，明晰事物之间的边界和联系，那么认知就越清晰。<br>
+            <strong>规范化的知识</strong>（如概念、属性和关系等）是认知的<strong>基石和燃料</strong>，基于规范化知识可形成对感知对象的辨识和分类。</p>
+
+            <h4>2. 知识表示的历史渊源</h4>
+            <p><strong>13世纪末，拉蒙·柳利（Ramon Llull）</strong> 提出了对知识进行规范化描述的 <strong>“知识树”（tree of knowledge）</strong> 或 <strong>“科学树”（tree of science）</strong>，这是目前最早的一种对知识进行规范化表示的努力。<br>
+            这种知识树表示方法深刻影响了<strong>莱布尼茨</strong>所提出的 <strong>“人类思想字母表”（alphabet of human thought）</strong>：对规范化表达的知识按照规则进行组合等操作，就可构造思想机器，实现思维的计算。</p>
+
+            <h4>3. 现代意义的知识表示方法（教材列举）</h4>
+            <ul>
+                <li><strong>命题逻辑</strong>（见2.2节）</li>
+                <li><strong>谓词逻辑</strong>（见2.3节）</li>
+                <li><strong>产生式规则（production rule）</strong>：推理规则的集合，每条规则包含前提（IF）和动作（THEN）两部分</li>
+                <li><strong>框架（frame）表示法</strong>：1974年由明斯基（Minsky）提出。框架是描述对象属性的结构数据，由若干个<strong>“槽”（slot）</strong>结构组成，每个槽又可分为若干个<strong>“侧面”（facet）</strong>，侧面通常是一个属性值</li>
+                <li><strong>知识图谱（knowledge graph）</strong>（见2.4节）</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ===== 知识点2-2 ===== -->
+    <div class="knowledge-item">
+        <div class="knowledge-title">
+            <span class="id">知识点 2-2</span>
+            <span class="name">命题逻辑基础</span>
+            <span class="table-ref">对应表格“一阶谓词逻辑推理”的前提知识</span>
+        </div>
+        <div class="section">
+            <span class="src">📄 位置来源：第23-27页（2.2节全文），第40-44页</span>
+            <h4>1. 命题的定义与分类</h4>
+            <p><strong>定义2.1 命题</strong>：是一个能确定为<strong>真</strong>或为<strong>假</strong>的陈述句。<br>
+            <strong>原子命题（简单命题）</strong>：不包含其他命题作为其组成部分的命题（定义2.2）。<br>
+            <strong>复合命题</strong>：通过命题联结词对已有命题进行组合得到的命题（定义2.3）。</p>
+
+            <h4>2. 五种主要的命题联结词（表2.1）</h4>
+            <ul>
+                <li><strong>与（and）</strong>：\(p \land q\)（p且q）——命题<strong>合取</strong></li>
+                <li><strong>或（or）</strong>：\(p \lor q\)（p或q）——命题<strong>析取</strong></li>
+                <li><strong>非（not）</strong>：\(\lnot p\)（非p）——命题<strong>否定</strong></li>
+                <li><strong>条件（conditional）</strong>：\(p \rightarrow q\)（如果p，则q）——命题<strong>蕴涵</strong></li>
+                <li><strong>双向条件（biconditional）</strong>：\(p \leftrightarrow q\)（p当且仅当q）——命题<strong>双向蕴涵</strong></li>
+            </ul>
+
+            <h4>3. 真值表（表2.2）</h4>
+            <p><strong>⚠️ 关键注意</strong>：条件命题 \(p \rightarrow q\) 中，<strong>当前件 \(p\) 为假时，无论后件 \(q\) 取何值，复合命题恒为真</strong>。这是因为 \(p \rightarrow q\) 定义的是蕴涵关系（\(p\) 是 \(q\) 的子集），\(p\) 不成立相当于空集，而空集是任何集合的子集。</p>
+
+            <h4>4. 逻辑等价（定义2.4）与常用等价公式（表2.3）</h4>
+            <ul>
+                <li>\((\alpha \rightarrow \beta) \equiv \lnot \alpha \lor \beta\) —— <strong>蕴涵消除</strong></li>
+                <li>\(\lnot(\alpha \land \beta) \equiv (\lnot \alpha \lor \lnot \beta)\) —— <strong>德摩根定律</strong></li>
+                <li>\(\lnot(\alpha \lor \beta) \equiv (\lnot \alpha \land \lnot \beta)\) —— <strong>德摩根定律</strong></li>
+                <li>\((\alpha \rightarrow \beta) \equiv \lnot \beta \rightarrow \lnot \alpha\) —— <strong>逆否命题</strong></li>
+            </ul>
+
+            <h4>5. 命题逻辑中的推理规则（归结法）</h4>
+            <ul>
+                <li><strong>假言推理（modus ponens）</strong>：\(\alpha \rightarrow \beta\)，\(\alpha \Rightarrow \beta\)</li>
+                <li><strong>与消解（and-elimination）</strong>：\(\alpha_1 \land \alpha_2 \land \dots \land \alpha_n \Rightarrow \alpha_i\)</li>
+                <li><strong>与导入（and-introduction）</strong>：\(\alpha_1, \alpha_2, \dots, \alpha_n \Rightarrow \alpha_1 \land \alpha_2 \land \dots \land \alpha_n\)</li>
+                <li><strong>归结法（resolution）</strong>：\(\alpha \lor \beta\)，\(\lnot \beta \lor \gamma \Rightarrow \alpha \lor \gamma\)</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ===== 知识点2-3 ===== -->
+    <div class="knowledge-item">
+        <div class="knowledge-title">
+            <span class="id">知识点 2-3</span>
+            <span class="name">谓词逻辑与一阶谓词逻辑推理</span>
+            <span class="table-ref">对应表格“一阶谓词逻辑推理”</span>
+        </div>
+        <div class="section">
+            <span class="src">📄 位置来源：第28-33页（2.3节全文），第45-51页</span>
+            <h4>1. 命题逻辑的局限性与谓词逻辑的引入</h4>
+            <p>命题逻辑无法表达局部与整体、一般与个别的关系。<br>
+            <strong>例2.5 苏格拉底三段论</strong>：命题逻辑无法进行 \(\alpha \land \beta \rightarrow \gamma\) 的推理，因为需要表达个体、群体和关系等内在语义。<br>
+            <strong>解决办法</strong>：引入<strong>谓词逻辑</strong>，分离主语（个体或群体）和谓语（关系）。</p>
+
+            <h4>2. 谓词逻辑的三个基本要素</h4>
+            <ul>
+                <li><strong>个体（定义2.5）</strong>：所研究领域中可以独立存在的具体或抽象概念。
+                    <ul><li><strong>个体常量</strong>：具体的个体，如“张三”“1”</li><li><strong>个体变量</strong>：抽象的个体，常用 \(x, y, z\) 表示</li></ul>
+                </li>
+                <li><strong>谓词（定义2.6）</strong>：用来刻画个体属性或描述个体之间关系存在性的元素，其值为真或假。
+                    <ul><li><strong>一元谓词</strong>：如 \(P(x): x\) 是质数</li><li><strong>多元谓词</strong>：如 \(Father(x, y): x\) 是 \(y\) 的父亲</li></ul>
+                </li>
+                <li><strong>函数与谓词的区别</strong>：函数从定义域到<strong>值域（个体）</strong>的映射；谓词从定义域到 <strong>{true, false}</strong> 的映射。</li>
+            </ul>
+
+            <h4>3. 量词</h4>
+            <ul>
+                <li><strong>全称量词（定义2.7）</strong>：\(\forall\)，表示“一切的”“所有的”</li>
+                <li><strong>存在量词（定义2.8）</strong>：\(\exists\)，表示“存在”“有一个”</li>
+                <li><strong>全称量词与存在量词的德摩根关系（定理2.1）</strong>：\((\forall x)P(x) \equiv \lnot(\exists x)\lnot P(x)\)</li>
+            </ul>
+
+            <h4>4. 合式公式（谓词公式）</h4>
+            <ul>
+                <li><strong>项（定义2.11）</strong>：描述对象的逻辑表达式。常量符号、变量符号是项；函数符号作用在项上的结果也是项。</li>
+                <li><strong>原子谓词公式（定义2.12）</strong>：\(P(t_1, t_2, \dots, t_n)\)</li>
+                <li><strong>合式公式（定义2.13）</strong>：由逻辑联结词和原子公式构成的复杂语句，由以下规则递归定义。</li>
+            </ul>
+
+            <h4>5. 谓词逻辑的推理规则</h4>
+            <ul>
+                <li><strong>全称量词消去（UI）</strong>：\((\forall x)A(x) \Rightarrow A(y)\) 或 \(A(c)\)</li>
+                <li><strong>全称量词引入（UG）</strong>：\(A(y) \Rightarrow (\forall x)A(x)\)</li>
+                <li><strong>存在量词消去（EI）</strong>：\((\exists x)A(x) \Rightarrow A(c)\)（要求 \(c\) 是全新的常量符号）</li>
+                <li><strong>存在量词引入（EG）</strong>：\(A(c) \Rightarrow (\exists x)A(x)\)</li>
+            </ul>
+
+            <h4>6. 苏格拉底三段论的谓词逻辑证明（例2.11）</h4>
+            <ul>
+                <li>设 \(F(x): x\) 是人，\(G(x): x\) 是要死的，\(a\) 是苏格拉底。</li>
+                <li>前提：\((\forall x)(F(x) \rightarrow G(x))\)，\(F(a)\)；结论：\(G(a)\)</li>
+                <li>证明过程使用UI和假言推理，两步完成。</li>
+            </ul>
+
+            <h4>7. 专家系统——谓词逻辑的应用</h4>
+            <p><strong>专家系统</strong>由<strong>知识库</strong>和<strong>推理机</strong>组成。著名专家系统：<strong>EXSYS</strong>（第一个商用）、<strong>Siri</strong>（智能语音）、<strong>MYCIN</strong>（智能诊断）。</p>
+        </div>
+    </div>
+
+    <!-- ===== 知识点2-4 ===== -->
+    <div class="knowledge-item">
+        <div class="knowledge-title">
+            <span class="id">知识点 2-4</span>
+            <span class="name">知识图谱推理概述</span>
+            <span class="table-ref">对应表格“知识图谱推理”</span>
+        </div>
+        <div class="section">
+            <span class="src">📄 位置来源：第34-36页（2.4节前言及图2.1），第51-52页</span>
+            <h4>1. 知识图谱的定义与基本结构</h4>
+            <p><strong>知识图谱（knowledge graph）</strong>由<strong>有向图（directed graph）</strong>构成，用于描述现实世界中<strong>实体</strong>及<strong>实体之间的关系</strong>。<br>
+            <strong>三元组表示</strong>：形如 <strong>&lt;left_node, relation, right_node&gt;</strong> 的三元组形式，可表示为一阶逻辑（FOL）的形式。</p>
+
+            <h4>2. 知识图谱推理的核心问题</h4>
+            <p><strong>关系推理</strong>是统计关系学习研究的基本问题。<br>
+            <strong>示例</strong>：从三元组 <strong>&lt;奥巴马，出生地，夏威夷&gt;</strong> 和 <strong>&lt;夏威夷，属于，美国&gt;</strong>，可推理得到 <strong>&lt;奥巴马，国籍，美国&gt;</strong>。</p>
+
+            <h4>3. 教材示例：家庭关系知识图谱（图2.1）</h4>
+            <p>现有关系：<strong>Couple(James, David)</strong>、<strong>Mother(James, Ann)</strong>、<strong>Mother(James, Mike)</strong>、<strong>Sibling(Ann, Mike)</strong>。<br>
+            可定义推理规则：\((\forall x)(\forall y)(\forall z)(Mother(z,y) \land Couple(x,z) \rightarrow Father(x,y))\)。<br>
+            已知 <strong>Mother(James, Ann)</strong> 和 <strong>Couple(David, James)</strong>，可推理得到 <strong>Father(David, Ann)</strong>。</p>
+        </div>
+    </div>
+
+    <!-- ===== 知识点2-5 ===== -->
+    <div class="knowledge-item">
+        <div class="knowledge-title">
+            <span class="id">知识点 2-5</span>
+            <span class="name">FOIL归纳推理算法</span>
+            <span class="table-ref">对应表格“知识图谱推理”</span>
+        </div>
+        <div class="section">
+            <span class="src">📄 位置来源：第35-40页（2.4.1节全文），第52-56页</span>
+            <h4>1. FOIL算法的背景与定位</h4>
+            <p><strong>ILP（归纳逻辑程序设计）</strong>是机器学习和逻辑程序设计交叉领域的研究内容。<br>
+            <strong>FOIL（First Order Inductive Learner）</strong> 由昆兰（Quinlan）于1990年提出，通过<strong>序贯覆盖</strong>学习推理规则。</p>
+
+            <h4>2. FOIL算法的输入</h4>
+            <ul>
+                <li><strong>目标谓词 \(P\)</strong>：需要推断规则的结论，也称<strong>规则头</strong></li>
+                <li><strong>正例集合 \(E^+\)</strong>：目标谓词为真的实例</li>
+                <li><strong>反例集合 \(E^-\)</strong>：从知识图谱中构造（不能对未知关系构造反例）</li>
+                <li><strong>背景知识</strong>：目标谓词以外的其他谓词实例化结果</li>
+            </ul>
+
+            <h4>3. FOIL_Gain信息增益评估准则</h4>
+            <p>\[
+            \text{FOIL\_Gain} = m_{+} \times \left( \log_2 \frac{m_{+}}{m_{+} + m_{-}} - \log_2 \frac{n_{+}}{n_{+} + n_{-}} \right)
+            \]</p>
+            <ul>
+                <li>\(n_{+}, n_{-}\)：旧推理规则覆盖的正例数和反例数</li>
+                <li>\(m_{+}, m_{-}\)：加入新前提约束谓词后，新推理规则覆盖的正例数和反例数</li>
+                <li>当 \(m_{+} = 0\) 时，FOIL_Gain 记为 <strong>NA（not available）</strong></li>
+            </ul>
+
+            <h4>4. 教材例2.13（家庭关系图谱上的完整FOIL执行过程）</h4>
+            <ul>
+                <li><strong>第一轮迭代</strong>：从空规则开始，尝试每个背景知识谓词，<strong>Couple(x, z)</strong> 的FOIL_Gain最大，被选中。</li>
+                <li><strong>第二轮迭代</strong>：继续尝试加入约束谓词，<strong>Mother(z, y)</strong> 被选中。</li>
+                <li><strong>最终规则</strong>：\(\text{Father}(x, y) \leftarrow \text{Couple}(x, z) \land \text{Mother}(z, y)\)</li>
+            </ul>
+
+            <h4>5. FOIL的“归纳+演绎”双重推理模式</h4>
+            <p><strong>归纳学习</strong>：从实例（正例、反例、背景知识样例）出发，学习得到一般性推理规则。<br>
+            <strong>演绎推理</strong>：学得推理规则后，将规则中的变量赋予具体实例，得到新知识。</p>
+        </div>
+    </div>
+
+    <!-- ===== 知识点2-6 ===== -->
+    <div class="knowledge-item">
+        <div class="knowledge-title">
+            <span class="id">知识点 2-6</span>
+            <span class="name">路径排序推理算法（PRA）</span>
+            <span class="table-ref">对应表格“知识图谱推理”</span>
+        </div>
+        <div class="section">
+            <span class="src">📄 位置来源：第40-41页（2.4.2节全文），第57-58页</span>
+            <h4>1. PRA的核心思想</h4>
+            <p>将实体之间的<strong>关联路径作为特征</strong>，学习得到目标关系的<strong>分类器</strong>。</p>
+
+            <h4>2. PRA的三步工作流程</h4>
+            <ol>
+                <li><strong>特征抽取</strong>：生成并选择路径特征集合（随机游走、广度优先搜索、深度优先搜索）</li>
+                <li><strong>特征计算</strong>：计算每个训练样例的特征值 \(P(s \to t; \pi_i)\)（概率、布尔值或频次）</li>
+                <li><strong>分类器训练</strong>：根据训练样例的特征值，为目标关系训练分类器</li>
+            </ol>
+
+            <h4>3. 教材例2.14（家庭关系图谱上的PRA执行过程）</h4>
+            <ul>
+                <li><strong>目标关系</strong>：Father</li>
+                <li><strong>训练样例</strong>：(David, Mike) 为正例；(David, James)、(James, Ann)、(James, Mike) 为负例</li>
+                <li><strong>采样的4条路径</strong>：Couple、Father→Mother⁻¹、Mother→Sibling、Couple→Father</li>
+                <li><strong>特征向量</strong>（4维）：(David, Mike)→[1,0,0,0]；(David, James)→[0,1,0,0]；(James, Ann)→[0,0,1,0]；(James, Mike)→[0,0,1,1]</li>
+                <li><strong>预测</strong>：对于 (David, Ann)，特征向量 [1,0,0,0] 输入分类器，若输出+1，则推理出 Father(David, Ann)。</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ===== 知识点2-7 ===== -->
+    <div class="knowledge-item">
+        <div class="knowledge-title">
+            <span class="id">知识点 2-7</span>
+            <span class="name">分布式表示下的知识推理</span>
+            <span class="table-ref">对应表格“知识图谱推理”</span>
+        </div>
+        <div class="section">
+            <span class="src">📄 位置来源：第41页（2.4.3节全文），第58页</span>
+            <h4>1. 核心思想</h4>
+            <p>受<strong>词向量（word2vec）</strong>启发，将知识图谱中的<strong>结点（实体）</strong>和<strong>关系</strong>均映射到连续数值空间中，得到<strong>分布式表示（distributed representation）</strong>。</p>
+
+            <h4>2. 核心建模方法</h4>
+            <p>给定三元组 <strong>Father(David, Mike)</strong>：<br>
+            学习 <strong>David</strong>、<strong>Mike</strong> 和 <strong>Father</strong> 的分布式向量表示，学习度量函数 \(\psi\)，使得 \(\text{David} + \text{Father} \approx \text{Mike}\)。</p>
+
+            <h4>3. 推理应用</h4>
+            <p>给定任意两个结点，计算 \(\psi(\text{left\_node} + \text{relation}, \text{right\_node})\)，若取值小于阈值，则推理出关系成立。</p>
+        </div>
+    </div>
+
+    <!-- ===== 知识点2-8 ===== -->
+    <div class="knowledge-item">
+        <div class="knowledge-title">
+            <span class="id">知识点 2-8</span>
+            <span class="name">概率推理——贝叶斯网络</span>
+            <span class="table-ref">对应表格“因果推理基础”的前置知识</span>
+        </div>
+        <div class="section">
+            <span class="src">📄 位置来源：第41-43页（2.5节前言及2.5.1节），第58-60页</span>
+            <h4>1. 概率图模型的引入</h4>
+            <p><strong>概率图（probabilistic graph）</strong>：用概率描述两个相连结点之间的关联，而非假设影响一定会100%发生。<br>
+            概率图模型分为两大类：<strong>贝叶斯网络</strong>（有向无环图）和<strong>马尔可夫网络</strong>（无向图）。</p>
+
+            <h4>2. 贝叶斯网络的定义</h4>
+            <p>图2.3给出了一个贝叶斯网络示例，刻画了<strong>多云</strong>、<strong>洒水车</strong>、<strong>下雨</strong>和<strong>路湿</strong>四个因素之间的相互影响。<br>
+            <strong>局部马尔可夫性</strong>：在给定一个结点的<strong>父结点</strong>的情况下，该结点有条件地独立于它的<strong>非后代结点</strong>。</p>
+
+            <h4>3. 联合分布的因子分解</h4>
+            <p>\[
+            P(C, S, R, W) = P(C) \times P(S|C) \times P(R|C) \times P(W|S, R)
+            \]</p>
+
+            <h4>4. 概率推理计算示例</h4>
+            <ul>
+                <li>计算 \(P(\text{下雨}, \text{洒水车}, \text{路湿} \mid \text{多云}) = 0.0792\)</li>
+                <li>计算 \(P(\text{路湿} \mid \text{非多云}, \text{下雨}) = 0.945\)</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ===== 知识点2-9 ===== -->
+    <div class="knowledge-item">
+        <div class="knowledge-title">
+            <span class="id">知识点 2-9</span>
+            <span class="name">概率推理——马尔可夫逻辑网络</span>
+            <span class="table-ref">对应表格“因果推理基础”的前置知识</span>
+        </div>
+        <div class="section">
+            <span class="src">📄 位置来源：第43-45页（2.5.2节全文），第60-62页</span>
+            <h4>1. MLN = 马尔可夫网络 + 一阶逻辑</h4>
+            <p>由多明戈斯（Domingos）和理查森（Richardson）首次提出，是一种<strong>统计关系学习</strong>模型。</p>
+
+            <h4>2. MLN的基本建模方式</h4>
+            <p>给定规则集合，给每条规则赋予权重：</p>
+            <p>\[
+            P(x) = \frac{1}{Z} \exp \left( \sum_i w_i \times n_i(x) \right)
+            \]</p>
+
+            <h4>3. 教材计算示例（第44-45页）</h4>
+            <ul>
+                <li>规则及权重：\(w_1=1\)（indoor∨outdoor），\(w_2=9\)（¬(indoor∧outdoor)），\(w_3=5\)（¬rain∨indoor），\(w_4=7\)（¬lightshow∨outdoor）</li>
+                <li>计算断言 <strong>indoor ∧ ¬outdoor</strong> 的概率：加权得分 = 1+9+5+0 = 15</li>
+                <li>\(P(\text{indoor} \land \lnot\text{outdoor}) = \frac{1}{Z} e^{15}\)</li>
+            </ul>
+
+            <h4>4. MLN与贝叶斯网络的区别</h4>
+            <ul>
+                <li><strong>MLN</strong>：<strong>无向图</strong>，刻画谓词命题之间的<strong>组合</strong>关系</li>
+                <li><strong>贝叶斯网络</strong>：<strong>有向图（DAG）</strong>，刻画变量之间的<strong>依赖</strong>关系</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ===== 知识点2-10 ===== -->
+    <div class="knowledge-item">
+        <div class="knowledge-title">
+            <span class="id">知识点 2-10</span>
+            <span class="name">因果推理基础（因果图、do算子、因果效应、反事实推理）</span>
+            <span class="table-ref">对应表格“因果推理基础”</span>
+        </div>
+        <div class="section">
+            <span class="src">📄 位置来源：第45-56页（2.6节全文），第62-73页</span>
+            <h4>1. 辛普森悖论（Simpson's Paradox）</h4>
+            <p>在总体样本上成立的某种关系，在分组样本中却不一定成立甚至相反。<br>
+            教材表2.9和表2.10：总体上看不用药恢复率（83%）高于用药恢复率（78%），但按性别分组后，用药患者恢复率（男性93%、女性73%）均高于不用药患者（男性87%、女性69%）。<br>
+            <strong>根本原因</strong>：存在<strong>第三个变量</strong>（混淆变量）导致了虚假关联。</p>
+
+            <h4>2. 关联关系的三种来源（图2.5）</h4>
+            <ul>
+                <li><strong>因果关联</strong>：一个变量是另一个变量的原因</li>
+                <li><strong>混淆关联</strong>：两个变量存在共同的原因变量</li>
+                <li><strong>选择关联</strong>：两个变量存在共同的结果变量（选择偏差）</li>
+            </ul>
+
+            <h4>3. 因果图（Causal Diagram）与联合分布分解</h4>
+            <p><strong>提出者</strong>：朱迪亚·珀尔（Judea Pearl），1995年。<br>
+            <strong>联合分布分解公式</strong>：\[
+            P(x_1, x_2, \dots, x_d) = \prod_{j=1}^{d} P(x_j \mid x_{pa(j)})
+            \]</p>
+
+            <h4>4. do算子与因果干预</h4>
+            <ul>
+                <li><strong>\(P(Y=y \mid X=x)\)</strong>：发现 \(X=x\) 时 \(Y=y\) 的概率（<strong>观测</strong>）</li>
+                <li><strong>\(P(Y=y \mid do(X=x))\)</strong>：对 \(X\) 进行<strong>干预</strong>，固定其值为 \(x\) 时 \(Y=y\) 的概率（<strong>因果</strong>）</li>
+            </ul>
+
+            <h4>5. 因果效应差（ACE）与调整公式</h4>
+            <p>\[
+            \text{ACE} = P(Y=1 \mid do(X=1)) - P(Y=1 \mid do(X=0))
+            \]<br>
+            <strong>调整公式</strong>：\[
+            P(Y=y \mid do(X=x)) = \sum_z P(Y=y \mid X=x, Z=z) P(Z=z)
+            \]</p>
+
+            <h4>6. 反事实推理三步骤</h4>
+            <ol>
+                <li><strong>溯因（Abduction）</strong>：利用现有证据 \(E\) 确定环境 \(U\)（外生变量）</li>
+                <li><strong>动作（Action）</strong>：修改模型，将 \(X\) 的等式替换为 \(X=x\)</li>
+                <li><strong>预测（Prediction）</strong>：利用修正模型和环境 \(U\) 计算反事实 \(Y_x(U)\) 的值</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        📚 模块2全部知识点整理完毕 · 请确认后输出下一模块
+    </div>
+</div>
+</body>
+</html>

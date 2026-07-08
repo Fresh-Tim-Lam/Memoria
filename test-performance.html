@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图谱引擎性能测试</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        #test-container {
+            width: 100vw;
+            height: 100vh;
+        }
+        #stats-panel {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(30, 30, 30, 0.95);
+            border: 1px solid #3c3c3c;
+            padding: 15px;
+            font-size: 12px;
+            line-height: 1.6;
+            z-index: 1000;
+            max-width: 200px;
+        }
+        .stat-label {
+            color: #808080;
+        }
+        .stat-value {
+            color: #4ec9b0;
+            font-weight: bold;
+        }
+        #controls {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background: rgba(30, 30, 30, 0.95);
+            border: 1px solid #3c3c3c;
+            padding: 15px;
+            font-size: 12px;
+            z-index: 1000;
+            max-width: 300px;
+        }
+        #controls button {
+            background: #0e639c;
+            color: #fff;
+            border: none;
+            padding: 6px 12px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        #controls button:hover {
+            background: #1177bb;
+        }
+        #controls input[type="number"] {
+            width: 60px;
+            padding: 4px;
+            border: 1px solid #3c3c3c;
+            background: #2d2d2d;
+            color: #d4d4d4;
+            margin-right: 10px;
+        }
+        #controls input[type="range"] {
+            width: 120px;
+            margin-right: 8px;
+        }
+        .param-group {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        .param-group label {
+            width: 100px;
+            color: #808080;
+        }
+        .param-value {
+            width: 50px;
+            color: #4ec9b0;
+            font-weight: bold;
+        }
+        #history-panel {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(30, 30, 30, 0.95);
+            border: 1px solid #3c3c3c;
+            padding: 15px;
+            font-size: 11px;
+            z-index: 1000;
+            max-width: 400px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        #history-panel h4 {
+            margin: 0 0 8px 0;
+            color: #4ec9b0;
+        }
+        .history-entry {
+            margin-bottom: 4px;
+            color: #d4d4d4;
+        }
+        .history-time {
+            color: #808080;
+            margin-right: 8px;
+        }
+        .history-param {
+            color: #ce9178;
+        }
+        .history-value {
+            color: #4ec9b0;
+        }
+    </style>
+</head>
+<body>
+    <div id="test-container"></div>
+
+    <div id="stats-panel">
+        <div><span class="stat-label">节点数：</span><span class="stat-value" id="node-count">0</span></div>
+        <div><span class="stat-label">边数：</span><span class="stat-value" id="link-count">0</span></div>
+        <div><span class="stat-label">帧率：</span><span class="stat-value" id="fps">0</span> fps</div>
+        <div><span class="stat-label">Tick耗时：</span><span class="stat-value" id="tick-time">0</span> ms</div>
+        <div><span class="stat-label">弹簧耗时：</span><span class="stat-value" id="spring-time">0</span> ms</div>
+        <div><span class="stat-label">碰撞耗时：</span><span class="stat-value" id="collision-time">0</span> ms</div>
+        <div><span class="stat-label">渲染耗时：</span><span class="stat-value" id="render-time">0</span> ms</div>
+        <div><span class="stat-label">Alpha：</span><span class="stat-value" id="alpha">1.0</span></div>
+        <div><span class="stat-label">状态：</span><span class="stat-value" id="status">未启动</span></div>
+    </div>
+
+    <div id="controls">
+        <div style="margin-bottom: 10px;">
+            <label>节点数：</label>
+            <input type="number" id="node-input" value="100" min="10" max="5000">
+            <label>边密度：</label>
+            <input type="number" id="density-input" value="3" min="1" max="10">
+        </div>
+        
+        <hr style="border: 0; border-top: 1px solid #3c3c3c; margin: 10px 0;">
+        
+        <div class="param-group">
+            <label>弹簧强度：</label>
+            <input type="range" id="link-strength" min="0.01" max="1" step="0.01" value="0.1">
+            <span class="param-value" id="link-strength-value">0.10</span>
+        </div>
+        <div class="param-group">
+            <label>弹簧距离：</label>
+            <input type="range" id="link-distance" min="50" max="300" step="10" value="150">
+            <span class="param-value" id="link-distance-value">150</span>
+        </div>
+        <div class="param-group">
+            <label>中心引力：</label>
+            <input type="range" id="center-strength" min="0.001" max="0.1" step="0.001" value="0.02">
+            <span class="param-value" id="center-strength-value">0.020</span>
+        </div>
+        <div class="param-group">
+            <label>速度衰减：</label>
+            <input type="range" id="velocity-decay" min="0.1" max="0.9" step="0.05" value="0.7">
+            <span class="param-value" id="velocity-decay-value">0.70</span>
+        </div>
+        <div class="param-group">
+            <label>碰撞半径：</label>
+            <input type="range" id="collision-radius" min="10" max="80" step="5" value="30">
+            <span class="param-value" id="collision-radius-value">30</span>
+        </div>
+        <div class="param-group">
+            <label>碰撞强度：</label>
+            <input type="range" id="collision-strength" min="0.01" max="1" step="0.01" value="0.1">
+            <span class="param-value" id="collision-strength-value">0.10</span>
+        </div>
+        <div class="param-group">
+            <label>斥力强度：</label>
+            <input type="range" id="repulsion-strength" min="-200" max="0" step="1" value="-50">
+            <span class="param-value" id="repulsion-strength-value">-50</span>
+        </div>
+        <div class="param-group">
+            <label>Barnes-Hut θ：</label>
+            <input type="range" id="theta" min="0.1" max="1" step="0.1" value="0.5">
+            <span class="param-value" id="theta-value">0.50</span>
+        </div>
+        
+        <hr style="border: 0; border-top: 1px solid #3c3c3c; margin: 10px 0;">
+        
+        <button id="btn-start">启动测试</button>
+        <button id="btn-stop">停止</button>
+        <button id="btn-restart">重启模拟</button>
+        <button id="btn-apply">应用参数</button>
+        <button id="btn-reset">重置参数</button>
+        <button id="btn-auto-test">自动测试</button>
+    </div>
+
+    <div id="history-panel">
+        <h4>参数调整历史</h4>
+        <div id="history-list"></div>
+    </div>
+
+    <script type="module">
+        console.log('[TEST] Start testing module loading...');
+
+        // 参数调整历史记录
+        const paramHistory = [];
+        const historyList = document.getElementById('history-list');
+
+        function addHistoryEntry(paramName, oldValue, newValue) {
+            const time = new Date().toLocaleTimeString();
+            const entry = {
+                time,
+                paramName,
+                oldValue,
+                newValue,
+            };
+            paramHistory.push(entry);
+
+            // 显示在页面上
+            const div = document.createElement('div');
+            div.className = 'history-entry';
+            div.innerHTML = `<span class="history-time">${time}</span> <span class="history-param">${paramName}</span>: <span class="history-value">${oldValue}</span> → <span class="history-value">${newValue}</span>`;
+            historyList.appendChild(div);
+
+            // 保存到 localStorage
+            localStorage.setItem('forceParamsHistory', JSON.stringify(paramHistory));
+
+            console.log('[PARAM]', paramName, 'changed:', oldValue, '→', newValue);
+        }
+
+        // 参数滑块绑定
+        const paramInputs = {
+            linkStrength: document.getElementById('link-strength'),
+            linkDistance: document.getElementById('link-distance'),
+            centerStrength: document.getElementById('center-strength'),
+            velocityDecay: document.getElementById('velocity-decay'),
+            collisionRadius: document.getElementById('collision-radius'),
+            collisionStrength: document.getElementById('collision-strength'),
+            repulsionStrength: document.getElementById('repulsion-strength'),
+            theta: document.getElementById('theta'),
+        };
+
+        const paramValues = {
+            linkStrength: document.getElementById('link-strength-value'),
+            linkDistance: document.getElementById('link-distance-value'),
+            centerStrength: document.getElementById('center-strength-value'),
+            velocityDecay: document.getElementById('velocity-decay-value'),
+            collisionRadius: document.getElementById('collision-radius-value'),
+            collisionStrength: document.getElementById('collision-strength-value'),
+            repulsionStrength: document.getElementById('repulsion-strength-value'),
+            theta: document.getElementById('theta-value'),
+        };
+
+        // 加载历史参数
+        const savedHistory = localStorage.getItem('forceParamsHistory');
+        if (savedHistory) {
+            try {
+                const history = JSON.parse(savedHistory);
+                history.forEach(entry => {
+                    paramHistory.push(entry);
+                    const div = document.createElement('div');
+                    div.className = 'history-entry';
+                    div.innerHTML = `<span class="history-time">${entry.time}</span> <span class="history-param">${entry.paramName}</span>: <span class="history-value">${entry.oldValue}</span> → <span class="history-value">${entry.newValue}</span>`;
+                    historyList.appendChild(div);
+                });
+                console.log('[TEST] Loaded', history.length, 'history entries');
+            } catch (e) {
+                console.warn('[TEST] Failed to load history:', e);
+            }
+        }
+
+        // 滑块事件
+        for (const [name, input] of Object.entries(paramInputs)) {
+            input.addEventListener('input', () => {
+                const value = parseFloat(input.value);
+                paramValues[name].textContent = value.toFixed(name === 'linkDistance' ? 0 : (name === 'centerStrength' ? 3 : 2));
+            });
+
+            input.addEventListener('change', () => {
+                const oldValue = parseFloat(input.dataset.oldValue || input.defaultValue);
+                const newValue = parseFloat(input.value);
+                if (oldValue !== newValue) {
+                    const displayName = {
+                        linkStrength: '弹簧强度',
+                        linkDistance: '弹簧距离',
+                        centerStrength: '中心引力',
+                        velocityDecay: '速度衰减',
+                        collisionRadius: '碰撞半径',
+                        collisionStrength: '碰撞强度',
+                        repulsionStrength: '斥力强度',
+                        theta: 'Barnes-Hut θ',
+                    }[name];
+                    addHistoryEntry(displayName, oldValue.toFixed(2), newValue.toFixed(2));
+                    input.dataset.oldValue = newValue;
+                }
+            });
+
+            // 初始化 oldValue
+            input.dataset.oldValue = input.value;
+        }
+
+        // 性能统计
+        const stats = {
+            nodeCount: 0,
+            linkCount: 0,
+            fps: 0,
+            tickTime: 0,
+            springTime: 0,
+            collisionTime: 0,
+            renderTime: 0,
+            alpha: 1.0,
+            status: '未启动',
+            frameCount: 0,
+            lastTime: performance.now(),
+        };
+
+        // FPS 计算
+        function updateFPS() {
+            const now = performance.now();
+            const elapsed = now - stats.lastTime;
+            stats.frameCount++;
+
+            if (elapsed >= 1000) {
+                stats.fps = Math.round(stats.frameCount * 1000 / elapsed);
+                stats.frameCount = 0;
+                stats.lastTime = now;
+                updateStatsDisplay();
+            }
+
+            requestAnimationFrame(updateFPS);
+        }
+        updateFPS();
+
+        // 更新显示
+        function updateStatsDisplay() {
+            document.getElementById('node-count').textContent = stats.nodeCount;
+            document.getElementById('link-count').textContent = stats.linkCount;
+            document.getElementById('fps').textContent = stats.fps;
+            document.getElementById('tick-time').textContent = stats.tickTime.toFixed(2);
+            document.getElementById('spring-time').textContent = stats.springTime.toFixed(2);
+            document.getElementById('collision-time').textContent = stats.collisionTime.toFixed(2);
+            document.getElementById('render-time').textContent = stats.renderTime.toFixed(2);
+            document.getElementById('alpha').textContent = stats.alpha.toFixed(4);
+            document.getElementById('status').textContent = stats.status;
+        }
+
+        // 生成随机图谱
+        function generateRandomGraph(nodeCount, linkDensity) {
+            const nodes = [];
+            const links = [];
+            const existingEdges = new Set();
+
+            for (let i = 0; i < nodeCount; i++) {
+                nodes.push({
+                    id: `node-${i}`,
+                    title: `节点${i}`,
+                    file: `test-${i % 10}.md`,
+                    weight: Math.random(),
+                    tags: [],
+                });
+            }
+
+            const edgeTypes = ['reference', 'prerequisite', 'extend', 'analogy', 'contain'];
+            for (let i = 0; i < nodeCount; i++) {
+                const numLinks = Math.floor(Math.random() * linkDensity) + 1;
+                for (let j = 0; j < numLinks; j++) {
+                    const target = Math.floor(Math.random() * nodeCount);
+                    if (target !== i) {
+                        const edgeKey = `${Math.min(i, target)}-${Math.max(i, target)}`;
+                        if (!existingEdges.has(edgeKey)) {
+                            existingEdges.add(edgeKey);
+                            links.push({
+                                source: `node-${i}`,
+                                target: `node-${target}`,
+                                type: edgeTypes[Math.floor(Math.random() * edgeTypes.length)],
+                                strength: Math.random() > 0.3 ? 'strong' : 'weak',
+                            });
+                        }
+                    }
+                }
+            }
+
+            return { nodes, links };
+        }
+
+        // 全局引擎
+        let engine = null;
+
+        // 获取当前参数
+        function getCurrentParams() {
+            return {
+                linkStrength: parseFloat(paramInputs.linkStrength.value),
+                linkDistance: parseFloat(paramInputs.linkDistance.value),
+                centerStrength: parseFloat(paramInputs.centerStrength.value),
+                velocityDecay: parseFloat(paramInputs.velocityDecay.value),
+                collisionRadius: parseFloat(paramInputs.collisionRadius.value),
+                collisionStrength: parseFloat(paramInputs.collisionStrength.value),
+                repulsionStrength: parseFloat(paramInputs.repulsionStrength?.value || -50),
+                theta: parseFloat(paramInputs.theta?.value || 0.5),
+            };
+        }
+
+        // 初始化引擎
+        async function initEngine() {
+            console.log('[TEST] initEngine called');
+
+            const container = document.getElementById('test-container');
+            container.innerHTML = '';
+            console.log('[TEST] Container cleared');
+
+            try {
+                const { GraphEngine } = await import('./src/viewer/js/graph/graph-engine.js');
+                console.log('[TEST] GraphEngine imported successfully');
+
+                engine = new GraphEngine();
+                console.log('[TEST] GraphEngine instance created');
+
+                engine.init('test-container', null);
+                console.log('[TEST] engine.init called');
+
+                // 监听 InteractionCoordinator tick
+                if (engine.coordinator) {
+                    engine.coordinator.onTick((positions, alpha, perf) => {
+                        if (perf) {
+                            stats.tickTime = perf.tickTime || 0;
+                            stats.springTime = perf.springTime || 0;
+                            stats.collisionTime = perf.collisionTime || 0;
+                        }
+                        stats.alpha = alpha;
+                        stats.status = alpha > 0.01 ? '运行中' : '已完成';
+                        updateStatsDisplay();
+                    });
+                    console.log('[TEST] InteractionCoordinator.onTick listener set');
+                } else {
+                    console.warn('[TEST] No coordinator found');
+                }
+
+            } catch (e) {
+                console.error('[TEST] Module import FAILED:', e);
+                stats.status = '模块加载失败';
+                updateStatsDisplay();
+            }
+        }
+
+        // 启动测试
+        document.getElementById('btn-start').addEventListener('click', async () => {
+            console.log('[TEST] btn-start clicked');
+
+            const nodeCount = parseInt(document.getElementById('node-input').value) || 100;
+            const linkDensity = parseInt(document.getElementById('density-input').value) || 3;
+
+            await initEngine();
+
+            if (!engine) {
+                console.error('[TEST] Engine not initialized');
+                return;
+            }
+
+            const graph = generateRandomGraph(nodeCount, linkDensity);
+            stats.nodeCount = graph.nodes.length;
+            stats.linkCount = graph.links.length;
+            stats.status = '加载中';
+
+            console.log('[TEST] Generated graph:', stats.nodeCount, 'nodes,', stats.linkCount, 'links');
+
+            // 应用当前参数
+            const params = getCurrentParams();
+            console.log('[TEST] Applying params:', params);
+            if (engine.coordinator && engine.coordinator.forceEngine) {
+                engine.coordinator.forceEngine.setParams(params);
+            }
+
+            engine.loadGraph(graph);
+            console.log('[TEST] loadGraph called');
+
+            updateStatsDisplay();
+        });
+
+        // 停止
+        document.getElementById('btn-stop').addEventListener('click', () => {
+            if (engine && engine.coordinator && engine.coordinator.forceEngine) {
+                engine.coordinator.forceEngine.stop();
+                stats.status = '已停止';
+                updateStatsDisplay();
+            }
+        });
+
+        // 重启
+        document.getElementById('btn-restart').addEventListener('click', () => {
+            if (engine && engine.coordinator && engine.coordinator.forceEngine) {
+                engine.coordinator.forceEngine.restart();
+                stats.status = '重启中';
+                updateStatsDisplay();
+            }
+        });
+
+        // 应用参数
+        document.getElementById('btn-apply').addEventListener('click', () => {
+            if (!engine || !engine.coordinator || !engine.coordinator.forceEngine) {
+                console.warn('[TEST] Engine not ready');
+                return;
+            }
+
+            const params = getCurrentParams();
+            console.log('[TEST] Applying params:', params);
+            engine.coordinator.forceEngine.setParams(params);
+
+            // 轻微激活模拟器
+            engine.coordinator.forceEngine.restart();
+            stats.status = '参数已应用';
+            updateStatsDisplay();
+        });
+
+        // 重置参数
+        document.getElementById('btn-reset').addEventListener('click', () => {
+            const defaults = {
+                linkStrength: 0.1,
+                linkDistance: 150,
+                centerStrength: 0.02,
+                velocityDecay: 0.4,
+                collisionRadius: 30,
+                collisionStrength: 0.1,
+                repulsionStrength: -50,
+                theta: 0.5,
+            };
+
+            for (const [name, value] of Object.entries(defaults)) {
+                paramInputs[name].value = value;
+                paramInputs[name].dataset.oldValue = value;
+                paramValues[name].textContent = value.toFixed(name === 'linkDistance' ? 0 : (name === 'centerStrength' ? 3 : 2));
+            }
+
+            addHistoryEntry('重置参数', '自定义', '默认值');
+
+            if (engine && engine.coordinator && engine.coordinator.forceEngine) {
+                engine.coordinator.forceEngine.setParams(defaults);
+            }
+
+            console.log('[TEST] Params reset to defaults');
+        });
+
+        // 自动测试：模拟拖拽
+        document.getElementById('btn-auto-test').addEventListener('click', () => {
+            if (!engine || !engine.coordinator) {
+                console.error('[TEST] Engine not ready');
+                return;
+            }
+
+            console.log('[TEST] Starting auto-test: simulating drag');
+
+            const forceEngine = engine.coordinator.forceEngine;
+            const renderer = engine.coordinator.renderer2D;
+
+            // 获取第一个节点
+            const nodes = renderer.nodes;
+            if (nodes.length === 0) {
+                console.error('[TEST] No nodes available');
+                return;
+            }
+
+            const testNodeId = nodes[0].id;
+            console.log('[TEST] Testing node:', testNodeId);
+
+            // 记录位置历史
+            const history = [];
+            let tickCount = 0;
+            const maxTicks = 200;
+
+            // 模拟拖拽路径：从原点缓慢移动到 (100, 100)
+            const startPos = { x: 0, y: 0 };
+            const endPos = { x: 100, y: 100 };
+            const duration = 100; // ticks
+
+            // 监听 tick 记录数据
+            const tickListener = (positions, alpha) => {
+                const pos = positions.get(testNodeId);
+                if (pos) {
+                    history.push({
+                        tick: tickCount,
+                        alpha: alpha,
+                        x: pos.x,
+                        y: pos.y,
+                        dx: tickCount > 0 ? pos.x - history[history.length - 1].x : 0,
+                        dy: tickCount > 0 ? pos.y - history[history.length - 1].y : 0,
+                    });
+                }
+
+                // 前 100 ticks 模拟拖拽
+                if (tickCount < duration) {
+                    const progress = tickCount / duration;
+                    const targetX = startPos.x + (endPos.x - startPos.x) * progress;
+                    const targetY = startPos.y + (endPos.y - startPos.y) * progress;
+
+                    // 通过 ForceEngine 设置固定位置
+                    forceEngine.dragMove(testNodeId, { x: targetX, y: targetY });
+                } else if (tickCount === duration) {
+                    // 释放拖拽
+                    forceEngine.dragEnd(testNodeId);
+                    console.log('[TEST] Drag released at tick', tickCount);
+                }
+
+                tickCount++;
+
+                if (tickCount >= maxTicks) {
+                    // 停止监听并输出报告
+                    engine.coordinator.onTick = null;
+                    console.log('[TEST] Auto-test complete. Position history:');
+
+                    // 计算统计数据
+                    let maxDX = 0, maxDY = 0, totalMovement = 0;
+                    for (let i = 1; i < history.length; i++) {
+                        maxDX = Math.max(maxDX, Math.abs(history[i].dx));
+                        maxDY = Math.max(maxDY, Math.abs(history[i].dy));
+                        totalMovement += Math.sqrt(history[i].dx ** 2 + history[i].dy ** 2);
+                    }
+
+                    console.log('[TEST] Stats - maxDX:', maxDX.toFixed(3), 'maxDY:', maxDY.toFixed(3), 'totalMovement:', totalMovement.toFixed(3));
+                    console.log('[TEST] Last 20 positions:');
+                    for (let i = Math.max(0, history.length - 20); i < history.length; i++) {
+                        console.log(`[TEST] tick ${history[i].tick}: (${history[i].x.toFixed(2)}, ${history[i].y.toFixed(2)}) dx=${history[i].dx.toFixed(3)} dy=${history[i].dy.toFixed(3)} alpha=${history[i].alpha.toFixed(4)}`);
+                    }
+                }
+            };
+
+            // 设置 tick 监听
+            engine.coordinator.onTick = tickListener;
+
+            // 确保模拟器正在运行
+            forceEngine.restart();
+        });
+
+        // 初始显示
+        updateStatsDisplay();
+        console.log('[TEST] Initial stats display updated');
+    </script>
+</body>
+</html>

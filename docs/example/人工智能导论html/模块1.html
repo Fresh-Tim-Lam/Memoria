@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人工智能引论 · 模块1：人工智能发展历史</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            svg: { fontCache: 'global' },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            },
+            startup: { typeset: true }
+        };
+    </script>
+    <script>
+        (function () {
+            var sources = [
+                'mathjax-tex-svg.js',
+                'https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-svg.js',
+                'https://cdn.staticfile.org/mathjax/3.2.2/es5/tex-svg.js',
+                'https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js',
+                'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js',
+                'https://unpkg.com/mathjax@3.2.2/es5/tex-svg.js'
+            ];
+            function load(i) {
+                if (i >= sources.length) {
+                    console.error('MathJax: 所有源加载失败');
+                    var d = document.createElement('div');
+                    d.style.cssText = 'position:fixed;top:0;left:0;right:0;padding:10px;background:#fff3cd;color:#856404;border-bottom:1px solid #ffeeba;z-index:99999;font-size:14px;text-align:center;';
+                    d.textContent = '⚠️ 数学公式渲染库加载失败，请检查网络或确认 mathjax-tex-svg.js 存在';
+                    (document.body || document.documentElement).appendChild(d);
+                    return;
+                }
+                var s = document.createElement('script');
+                s.src = sources[i];
+                s.onload = function () { console.log('MathJax loaded:', sources[i]); };
+                s.onerror = function () {
+                    console.warn('MathJax failed:', sources[i]);
+                    if (s.parentNode) s.parentNode.removeChild(s);
+                    load(i + 1);
+                };
+                document.head.appendChild(s);
+            }
+            load(0);
+        })();
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f8f9fb;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            padding: 40px 20px;
+            color: #1e2a3a;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 18px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+            padding: 50px 55px;
+        }
+
+        h1 {
+            font-size: 30px;
+            font-weight: 700;
+            border-left: 6px solid #2a6df4;
+            padding-left: 18px;
+            margin-bottom: 8px;
+            color: #0b1e33;
+        }
+
+        .subhead {
+            font-size: 16px;
+            color: #5b6f87;
+            margin-bottom: 40px;
+            padding-left: 24px;
+            border-bottom: 1px solid #eef2f7;
+            padding-bottom: 18px;
+        }
+
+        .module-badge {
+            display: inline-block;
+            background: #eef4ff;
+            color: #1f5cdb;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 4px 16px;
+            border-radius: 30px;
+            letter-spacing: 0.3px;
+            margin-bottom: 18px;
+        }
+
+        .table-wrap {
+            background: #f7f9fc;
+            border-radius: 14px;
+            padding: 18px 20px 14px 20px;
+            margin-bottom: 42px;
+            border: 1px solid #e6edf5;
+        }
+
+        .table-wrap table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 15px;
+        }
+
+        .table-wrap th {
+            text-align: left;
+            font-weight: 600;
+            color: #1f3a5f;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #d0dcee;
+        }
+
+        .table-wrap td {
+            padding: 8px 0;
+            border-bottom: 1px solid #e6edf5;
+            vertical-align: top;
+        }
+
+        .table-wrap tr:last-child td {
+            border-bottom: none;
+        }
+
+        .table-wrap .highlight {
+            background: #f0f6ff;
+            border-radius: 6px;
+            padding: 2px 8px;
+            font-weight: 500;
+            color: #0050b3;
+        }
+
+        .knowledge-item {
+            margin-bottom: 52px;
+            border-bottom: 1px solid #eef2f7;
+            padding-bottom: 36px;
+        }
+
+        .knowledge-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .knowledge-title {
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .knowledge-title .id {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1f5cdb;
+            background: #e9effa;
+            padding: 2px 14px;
+            border-radius: 30px;
+        }
+
+        .knowledge-title .name {
+            font-size: 22px;
+            font-weight: 700;
+            color: #0b1e33;
+        }
+
+        .knowledge-title .table-ref {
+            font-size: 14px;
+            color: #5b6f87;
+            background: #f0f3f8;
+            padding: 2px 14px;
+            border-radius: 30px;
+            font-weight: 400;
+        }
+
+        .section {
+            margin-top: 16px;
+            padding-left: 6px;
+        }
+
+        .section h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1f3a5f;
+            margin: 18px 0 8px 0;
+            padding-bottom: 2px;
+            border-bottom: 1px dashed #dce4ed;
+        }
+
+        .section h4:first-of-type {
+            margin-top: 4px;
+        }
+
+        .section p {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #1e2a3a;
+            margin: 8px 0 10px 0;
+        }
+
+        .section ul,
+        .section ol {
+            margin: 8px 0 12px 24px;
+            font-size: 15px;
+            line-height: 1.75;
+            color: #1e2a3a;
+        }
+
+        .section li {
+            margin-bottom: 6px;
+        }
+
+        .section .src {
+            font-size: 14px;
+            color: #5b6f87;
+            background: #f3f6fb;
+            padding: 2px 14px;
+            border-radius: 30px;
+            display: inline-block;
+            margin: 6px 0 10px 0;
+        }
+
+        .formula-box {
+            background: #f5f8fe;
+            border-left: 4px solid #2a6df4;
+            padding: 14px 20px;
+            margin: 14px 0 12px 0;
+            border-radius: 0 10px 10px 0;
+            font-family: "Courier New", Consolas, monospace;
+            font-size: 15px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+            color: #0b1e33;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #eef4ff;
+            color: #1f5cdb;
+            font-size: 13px;
+            padding: 0 12px;
+            border-radius: 30px;
+            font-weight: 500;
+            margin-right: 4px;
+        }
+
+        .grid-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px 30px;
+            margin: 10px 0 6px 0;
+        }
+
+        @media (max-width: 720px) {
+            .container {
+                padding: 28px 18px;
+            }
+            .grid-2col {
+                grid-template-columns: 1fr;
+            }
+            .knowledge-title .name {
+                font-size: 19px;
+            }
+            .table-wrap {
+                padding: 12px 10px;
+            }
+            .table-wrap table {
+                font-size: 14px;
+            }
+        }
+
+        .footer-note {
+            margin-top: 40px;
+            padding-top: 22px;
+            border-top: 1px solid #e6edf5;
+            font-size: 14px;
+            color: #5b6f87;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- 模块标题 -->
+    <div class="module-badge">📘 模块 1</div>
+    <h1>人工智能发展历史</h1>
+    <div class="subhead">
+        对应表格原文：介绍可计算理论、图灵机模型和图灵测试、人工智能主流算法（符号主义、连接主义和行为主义）、中外人工智能发展重要事件。
+    </div>
+
+    <!-- 表格对应关系 -->
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr><th>表格原文（模块1）</th><th>知识点编号与标题</th><th>覆盖状态</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>介绍可计算理论</td><td>知识点1-1：可计算理论的起源与形式化纲领（希尔伯特、哥德尔）</td><td><span class="highlight">✅ 已覆盖</span></td></tr>
+                <tr><td>介绍可计算理论</td><td>知识点1-2：可计算理论的机械实现——图灵机模型</td><td><span class="highlight">✅ 已覆盖</span></td></tr>
+                <tr><td>介绍图灵机模型</td><td>（合并于知识点1-2）</td><td><span class="highlight">✅ 已覆盖</span></td></tr>
+                <tr><td>介绍图灵测试</td><td>知识点1-3：图灵测试——智能的哲学判断标准</td><td><span class="highlight">✅ 已覆盖</span></td></tr>
+                <tr><td>介绍人工智能主流算法（符号主义、连接主义和行为主义）</td><td>知识点1-4：人工智能五大主流算法与方法</td><td><span class="highlight">✅ 已覆盖</span></td></tr>
+                <tr><td>介绍中外人工智能发展重要事件</td><td>知识点1-5：中外人工智能发展重要事件脉络</td><td><span class="highlight">✅ 已覆盖</span></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ========== 知识点1-1 ========== -->
+    <div class="knowledge-item">
+        <div class="knowledge-title">
+            <span class="id">知识点 1-1</span>
+            <span class="name">可计算理论的起源与形式化纲领（希尔伯特、哥德尔）</span>
+            <span class="table-ref">对应表格“可计算理论”</span>
+        </div>
+        <div class="section">
+            <span class="src">📄 位置来源：第3-4页（1.2节前半部分），第19-20页</span>
+
+            <h4>1. 从自然语言到形式化语言的转变</h4>
+            <p>早期数学概念用自然语言描述（如《庄子·天下篇》“一尺之棰，日取其半，万世不竭”对极限的描述，亚里士多德三段论）。为解决自然语言不精确的问题，研究人员开始用<strong>形式化语言（符号系统）</strong>来刻画数学概念。例如，勾股定理可形式化表示为：<br>
+            \(\forall \Delta \in\) 直角三角形，\(x\)、\(y\)和\(z\)分别是\(\Delta\)的两条直角边和斜边，则 \(x^{2}+y^{2}=z^{2}\)。</p>
+
+            <h4>2. 形式化系统的三大核心性质</h4>
+            <ul>
+                <li><strong>完备性</strong>：所有能够从该形式化系统推导出来的知识，都可以从这个系统推导出来。</li>
+                <li><strong>一致性（自治性/非矛盾性）</strong>：所有可推导出来的知识，不会同时推导出它的否定（如不会同时推出 \(A \ge 0\) 和 \(A < 0\)）。</li>
+                <li><strong>可判定性</strong>：对于形式化系统推导得到的任何知识，存在算法可在有限步内判定其为真或为假。</li>
+            </ul>
+
+            <h4>3. 希尔伯特纲领（1900年）</h4>
+            <p>德国数学家大卫·希尔伯特在1900年巴黎第二届国际数学会议上提出23个重要数学难题，其中<strong>第二个问题</strong>就是“证明算术公理的相容性”（即一致性）。希尔伯特希望构建起有效的形式化大厦，使得<strong>推理过程能够像算术运算一样“自动计算”</strong>。</p>
+
+            <h4>4. 哥德尔不完全性定理（1931年）</h4>
+            <p>哥德尔发表论文《论数学原理及有关系统中不可判定命题》，指出：<strong>任何表达力足够强的形式化系统（递归可枚举）都不可能同时具有一致性和完备性</strong>，且该系统本身的一致性无法在系统内被证明。<br>
+            <strong>历史冲击</strong>：该定理说明有些数学问题是<strong>不可判定（不可计算）</strong>的（如费马大定理在当时的不可判定性）。它直接回应并部分驳斥了希尔伯特的乐观形式化计划，标志着“可计算理论”的哲学边界被划定。</p>
+        </div>
+    </div>
+
+    <!-- ========== 知识点1-2 ========== -->
+    <div class="knowledge-item">
+        <div class="knowledge-title">
+            <span class="id">知识点 1-2</span>
+            <span class="name">可计算理论的机械实现——图灵机模型</span>
+            <span class="table-ref">对应表格“可计算理论”与“图灵机模型”</span>
+        </div>
+        <div class="section">
+            <span class="src">📄 位置来源：第4-6页（1.2节后半部分），第20-21页</span>
+
+            <h4>1. 三种等价的可计算模型</h4>
+            <p>哥德尔提出了<strong>原始递归函数</strong>；丘奇提出了 <strong>λ演算（λ-calculus）</strong>；图灵提出了<strong>图灵机模型</strong>。三者虽然在形式上完全不同，但在功能上<strong>完全等效</strong>：任何可计算函数均可通过这三种方式完成计算，任何不可计算函数均无法通过它们完成计算。</p>
+
+            <h4>2. 图灵机的物理结构（机械化载体）</h4>
+            <ul>
+                <li><strong>无限长纸带</strong>：两端无限延伸，纸带上有连续排列的可擦写小方格，用于存放计算任务所需的数据、程序指令或置空。</li>
+                <li><strong>读写控制指针（读写头）</strong>：从左到右依次扫过纸带方格，读取信息或写入结果。</li>
+                <li><strong>程序控制器</strong>：事先存储若干指令集，根据读写头读入的信息触发对应指令。</li>
+            </ul>
+
+            <h4>3. 图灵机的运行机制（自动计算过程）</h4>
+            <p>读写指针从纸带读入信息 → 触发程序控制器中的对应指令 → 执行操作并<strong>将计算结果写回纸带方格</strong> → 指针移动到下一格 → 如此<strong>周而复始</strong>，直至计算结束（<strong>图灵停机</strong>）。一旦停机，纸带上最终记载的信息就是该计算任务的最终结果。</p>
+
+            <h4>4. 教材中的具体计算示例：<code>gcd(24, 16) × 10 + 17 = 97</code></h4>
+            <p>图灵机先读入 <code>gcd(24, 16)</code> → 触发最大公因数指令，得到8 → 依次触发乘法指令（×10）和加法指令（+17）→ 最终在纸带方格中留下 <strong>97</strong> 这一计算结果，随后图灵机停机。该示例说明了：凡是能在<strong>有限步骤内停机</strong>的任务，即为可计算的任务。</p>
+
+            <h4>5. 丘奇-图灵论题（Church-Turing Thesis）</h4>
+            <p><strong>核心论断</strong>：凡是可计算的函数都<strong>可以</strong>用图灵机计算；反之，任何不可计算的函数都<strong>无法</strong>通过图灵机完成计算。<br>
+            <strong>历史贡献</strong>：图灵机模型成为了<strong>现代计算机（冯·诺依曼体系结构）的理论模型</strong>，为人工智能领域提供了最根本的“机器载体”。图灵因此被公认为“理论计算机之父”，计算机学界最高奖——<strong>图灵奖</strong>即以他的名字命名。</p>
+        </div>
+    </div>
+
+    <!-- ========== 知识点1-3 ========== -->
+    <div class="knowledge-item">
+        <div class="knowledge-title">
+            <span class="id">知识点 1-3</span>
+            <span class="name">图灵测试——智能的哲学判断标准</span>
+            <span class="table-ref">对应表格“图灵测试”</span>
+        </div>
+        <div class="section">
+            <span class="src">📄 位置来源：第1页（绪论章首页引言后），第17页（AI定义段）</span>
+
+            <h4>1. 图灵测试的核心思想</h4>
+            <p>图灵测试由艾伦·图灵在1950年提出，是<strong>判断机器是否具备智能</strong>的一种哲学性、操作性标准。<br>
+            <strong>测试方式</strong>：一名人类评判员通过文本终端同时与一台机器和一个人进行对话。评判员不知道哪一端是机器、哪一端是人。如果评判员在多次测试后<strong>无法可靠地区分机器和人</strong>，则称该机器通过了图灵测试，即被认为具有智能。</p>
+
+            <h4>2. 图灵测试在教材中的定位</h4>
+            <p>教材在绪论开头引用了大卫·希尔伯特的名言“我们必须知道，我们必将知道”，随后引入人工智能的定义，将图灵测试作为<strong>衡量机器是否达到人类智能水平</strong>的一种标杆性概念。虽然教材在正文中没有用大篇幅展开图灵测试的详细操作流程，但它作为<strong>人工智能的起源性思想实验</strong>，与图灵机模型共同构成了图灵在“可计算”与“可智能”两个层面上的奠基性贡献。</p>
+
+            <h4>3. 图灵测试与图灵机的关系</h4>
+            <ul>
+                <li><strong>图灵机</strong>回答的是 <strong>“什么可以被计算”</strong>（机械自动化计算的理论边界）。</li>
+                <li><strong>图灵测试</strong>回答的是 <strong>“什么可以被认为是智能”</strong>（机器行为与人类行为不可区分的评判标准）。</li>
+            </ul>
+            <p>二者共同构成了图灵对人工智能学科的双重奠基：<strong>计算载体（图灵机）+ 智能判据（图灵测试）</strong>。</p>
+
+            <h4>4. 图灵测试的后续影响与争议</h4>
+            <p>图灵测试为后来的<strong>人机交互</strong>、<strong>对话系统</strong>和<strong>大语言模型（如ChatGPT/GPT系列）</strong>的评估提供了思想源头。教材在绪论中提到，即使当前以GPT为代表的大模型在某些任务上通过了表面意义上的图灵测试，它们仍然<strong>无法通过自身思考达到更高层次的智能</strong>，与具有自我学习、直觉推理和自适应能力的通用人工智能（AGI）仍存在明显差距。</p>
+        </div>
+    </div>
+
+    <!-- ========== 知识点1-4 ========== -->
+    <div class="knowledge-item">
+        <div class="knowledge-title">
+            <span class="id">知识点 1-4</span>
+            <span class="name">人工智能五大主流算法与方法（含符号主义、连接主义和行为主义）</span>
+            <span class="table-ref">对应表格“符号主义、连接主义和行为主义”</span>
+        </div>
+        <div class="section">
+            <span class="src">📄 位置来源：第6-8页（1.3节“智能计算方法”），第22-28页</span>
+
+            <div class="grid-2col">
+                <div>
+                    <h4 style="border:none; margin-top:0;">🧠 逻辑推理（符号主义）</h4>
+                    <p><strong>核心思想</strong>：将概念符号化，从若干判断（前提）出发推得新判断（结论），强调演绎、归纳与因果推理。<br>
+                    <strong>代表技术</strong>：专家系统、谓词逻辑、知识图谱推理、三段论。</p>
+                </div>
+                <div>
+                    <h4 style="border:none; margin-top:0;">🔍 搜索求解</h4>
+                    <p><strong>核心思想</strong>：依据已有信息在解空间中寻找满足约束条件的答案。<br>
+                    <strong>代表技术</strong>：贪婪最佳优先搜索、A*搜索、Minimax搜索、蒙特卡洛树搜索。</p>
+                </div>
+                <div>
+                    <h4 style="border:none; margin-top:0;">📊 机器学习（连接主义）</h4>
+                    <p><strong>核心思想</strong>：从数据出发，学习数据中所蕴含的模式，利用学习到的模式对未知数据进行识别/分类。<br>
+                    <strong>代表技术</strong>：监督学习、无监督学习、深度学习（CNN/RNN等）。</p>
+                </div>
+                <div>
+                    <h4 style="border:none; margin-top:0;">🎯 强化学习（行为主义）</h4>
+                    <p><strong>核心思想</strong>：智能体与环境交互，根据环境反馈的奖惩不断调整行动策略，完成序贯决策任务。<br>
+                    <strong>代表技术</strong>：Q学习、深度Q网络（DQN）、Actor-Critic算法。</p>
+                </div>
+                <div style="grid-column: 1 / -1;">
+                    <h4 style="border:none; margin-top:0;">⚔️ 博弈对抗（决策智能）</h4>
+                    <p><strong>核心思想</strong>：多个带有相互竞争性质的主体，以“求取均衡解”为核心进行对抗，推动机器学习从“最优解”向“均衡解”迈进。<br>
+                    <strong>代表技术</strong>：纳什均衡、虚拟遗憾最小化（CFR）、多智能体博弈。</p>
+                </div>
+            </div>
+
+            <h4>各方法之间的互补关系（教材原文强调）</h4>
+            <ul>
+                <li>逻辑推理解释性强，但难以拓展；</li>
+                <li>搜索方法能在已有答案中进行查找，但容易陷入机械式匹配；</li>
+                <li>数据驱动模型善于预测识别，但其过程难以理解；</li>
+                <li>强化学习能探索未知空间，但依赖策略学习；</li>
+                <li>博弈对抗在完全信息条件下表现优良，但难以找到非完全信息条件下的通用框架。</li>
+            </ul>
+            <p>教材明确指出：<strong>解决现实问题时，一般需要综合使用多种机器学习算法</strong>，例如AlphaGo就是深度学习 + 强化学习 + 蒙特卡洛树搜索的综合体。</p>
+        </div>
+    </div>
+
+    <!-- ========== 知识点1-5 ========== -->
+    <div class="knowledge-item">
+        <div class="knowledge-title">
+            <span class="id">知识点 1-5</span>
+            <span class="name">中外人工智能发展重要事件脉络</span>
+            <span class="table-ref">对应表格“中外人工智能发展重要事件”</span>
+        </div>
+        <div class="section">
+            <span class="src">📄 位置来源：第10-11页（1.4节“新一代人工智能”），第11页（1.5节），以及第18页（延伸阅读）</span>
+
+            <h4>国际AI发展重要历史节点（教材提及）</h4>
+            <ul>
+                <li><strong>13世纪末</strong>：拉蒙·柳利提出 <strong>“知识树”</strong>（tree of knowledge）——最早对知识进行规范化描述的努力。</li>
+                <li><strong>17世纪</strong>：莱布尼茨提出 <strong>“人类思想字母表”</strong>——认为对规范化表达的知识按规则组合，就可构造思想机器。</li>
+                <li><strong>1937年</strong>：图灵发表《论数字计算在决断难题中的应用》——提出图灵机模型，为现代计算机理论模型奠基。</li>
+                <li><strong>1950年</strong>：图灵提出 <strong>“图灵测试”</strong>——提出衡量机器智能的操作性标准。</li>
+                <li><strong>1955年</strong>：麦卡锡等四人撰写达特茅斯项目建议书——<strong>首次使用“Artificial Intelligence”术语</strong>。</li>
+                <li><strong>1956年夏天</strong>：达特茅斯会议召开——AI正式登台。</li>
+                <li><strong>1969年</strong>：明斯基与佩珀特出版《感知机》——指出单层感知机无法解决XOR问题，神经网络陷入低谷。</li>
+                <li><strong>1986年</strong>：鲁梅尔哈特与欣顿完善<strong>误差反向传播算法</strong>——神经网络复兴。</li>
+                <li><strong>1997年</strong>：IBM深蓝战胜国际象棋冠军卡斯帕罗夫——搜索+剪枝在完全信息博弈中的重大胜利。</li>
+                <li><strong>2006年</strong>：欣顿提出<strong>深度信念网络</strong>——首次使用“深度学习”术语。</li>
+                <li><strong>2016年</strong>：AlphaGo 4:1战胜李世石——深度学习+强化学习+蒙特卡洛树搜索的组合。</li>
+                <li><strong>2017年</strong>：Transformer模型发表——引入自注意力机制，成为大模型核心架构基础。</li>
+                <li><strong>2019年起</strong>：GPT系列大模型（GPT-3等）——参数从1.17亿跃升至1750亿。</li>
+            </ul>
+
+            <h4>中国AI发展重要事件（教材提及）</h4>
+            <ul>
+                <li><strong>2015年12月</strong>：中国工程院批准启动 <strong>“中国人工智能2.0发展战略研究”</strong> 重大咨询研究项目。</li>
+                <li><strong>2016年5月</strong>：项目组上报《建议我国启动“中国人工智能2.0”重大科技计划》报告。</li>
+                <li><strong>2017年7月</strong>：国务院印发 <strong>《新一代人工智能发展规划》</strong>——中国首份AI系统性战略规划，提出五大技术形态（大数据智能、跨媒体智能、群体智能、混合增强智能、自主智能系统）。</li>
+                <li><strong>2021年底</strong>：教育部启动 <strong>“101计划”</strong>（计算机领域本科教育教学改革试点）——《人工智能引论》为其12门核心课程之一。</li>
+                <li><strong>2023年</strong>：浙江大学联合高等教育出版社发布面向AI教育的大模型 <strong>“智海-三乐”</strong>（“三乐”出自《孟子》“得天下英才而教育之，三乐也”）。</li>
+            </ul>
+
+            <h4>教材对AI发展的总体判断（新一代AI的三大驱动力）</h4>
+            <ul>
+                <li><strong>信息环境巨变</strong>：世界从“物理世界-人类社会”（PH）二元空间，演变为 <strong>“信息空间-物理世界-人类社会”</strong>（CPH）三元空间结构。</li>
+                <li><strong>社会需求扩大</strong>：AI研究从学术牵引迅速转化为需求牵引（智能城市、智能医疗、智能交通等）。</li>
+                <li><strong>目标理念转变</strong>：AI从“造人制脑”走向“赋能社会”，从“用计算机模拟人的智能”拓展为 <strong>“机器+人”</strong>、<strong>“机器+人+网络”</strong>、<strong>“机器+人+网络+物”</strong>的更复杂智能系统。</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        📚 本模块知识点整理完毕 · 下一模块请等待输出
+    </div>
+
+</div>
+</body>
+</html>

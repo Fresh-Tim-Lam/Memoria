@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人工智能引论 · 模块8：人工智能伦理与安全</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            svg: { fontCache: 'global' },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            },
+            startup: { typeset: true }
+        };
+    </script>
+    <script>
+        (function () {
+            var sources = [
+                'mathjax-tex-svg.js',
+                'https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-svg.js',
+                'https://cdn.staticfile.org/mathjax/3.2.2/es5/tex-svg.js',
+                'https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js',
+                'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js',
+                'https://unpkg.com/mathjax@3.2.2/es5/tex-svg.js'
+            ];
+            function load(i) {
+                if (i >= sources.length) {
+                    console.error('MathJax: 所有源加载失败');
+                    var d = document.createElement('div');
+                    d.style.cssText = 'position:fixed;top:0;left:0;right:0;padding:10px;background:#fff3cd;color:#856404;border-bottom:1px solid #ffeeba;z-index:99999;font-size:14px;text-align:center;';
+                    d.textContent = '⚠️ 数学公式渲染库加载失败，请检查网络或确认 mathjax-tex-svg.js 存在';
+                    (document.body || document.documentElement).appendChild(d);
+                    return;
+                }
+                var s = document.createElement('script');
+                s.src = sources[i];
+                s.onload = function () { console.log('MathJax loaded:', sources[i]); };
+                s.onerror = function () {
+                    console.warn('MathJax failed:', sources[i]);
+                    if (s.parentNode) s.parentNode.removeChild(s);
+                    load(i + 1);
+                };
+                document.head.appendChild(s);
+            }
+            load(0);
+        })();
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #f8f9fb;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            padding: 40px 20px;
+            color: #1e2a3a;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 18px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+            padding: 50px 55px;
+        }
+        h1 {
+            font-size: 30px;
+            font-weight: 700;
+            border-left: 6px solid #2a6df4;
+            padding-left: 18px;
+            margin-bottom: 8px;
+            color: #0b1e33;
+        }
+        .subhead {
+            font-size: 16px;
+            color: #5b6f87;
+            margin-bottom: 40px;
+            padding-left: 24px;
+            border-bottom: 1px solid #eef2f7;
+            padding-bottom: 18px;
+        }
+        .module-badge {
+            display: inline-block;
+            background: #eef4ff;
+            color: #1f5cdb;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 4px 16px;
+            border-radius: 30px;
+            margin-bottom: 18px;
+        }
+        .table-wrap {
+            background: #f7f9fc;
+            border-radius: 14px;
+            padding: 18px 20px 14px 20px;
+            margin-bottom: 42px;
+            border: 1px solid #e6edf5;
+            overflow-x: auto;
+        }
+        .table-wrap table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 15px;
+        }
+        .table-wrap th {
+            text-align: left;
+            font-weight: 600;
+            color: #1f3a5f;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #d0dcee;
+        }
+        .table-wrap td {
+            padding: 8px 0;
+            border-bottom: 1px solid #e6edf5;
+            vertical-align: top;
+        }
+        .table-wrap tr:last-child td { border-bottom: none; }
+        .table-wrap .highlight {
+            background: #f0f6ff;
+            border-radius: 6px;
+            padding: 2px 8px;
+            font-weight: 500;
+            color: #0050b3;
+        }
+        .knowledge-item {
+            margin-bottom: 52px;
+            border-bottom: 1px solid #eef2f7;
+            padding-bottom: 36px;
+        }
+        .knowledge-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .knowledge-title {
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .knowledge-title .id {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1f5cdb;
+            background: #e9effa;
+            padding: 2px 14px;
+            border-radius: 30px;
+        }
+        .knowledge-title .name {
+            font-size: 22px;
+            font-weight: 700;
+            color: #0b1e33;
+        }
+        .knowledge-title .table-ref {
+            font-size: 14px;
+            color: #5b6f87;
+            background: #f0f3f8;
+            padding: 2px 14px;
+            border-radius: 30px;
+            font-weight: 400;
+        }
+        .section {
+            margin-top: 16px;
+            padding-left: 6px;
+        }
+        .section h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1f3a5f;
+            margin: 18px 0 8px 0;
+            padding-bottom: 2px;
+            border-bottom: 1px dashed #dce4ed;
+        }
+        .section h4:first-of-type { margin-top: 4px; }
+        .section p {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #1e2a3a;
+            margin: 8px 0 10px 0;
+        }
+        .section ul, .section ol {
+            margin: 8px 0 12px 24px;
+            font-size: 15px;
+            line-height: 1.8;
+            color: #1e2a3a;
+        }
+        .section li { margin-bottom: 6px; }
+        .section .src {
+            font-size: 14px;
+            color: #5b6f87;
+            background: #f3f6fb;
+            padding: 2px 14px;
+            border-radius: 30px;
+            display: inline-block;
+            margin: 6px 0 10px 0;
+        }
+        .formula-box {
+            background: #f5f8fe;
+            border-left: 4px solid #2a6df4;
+            padding: 14px 20px;
+            margin: 14px 0 12px 0;
+            border-radius: 0 10px 10px 0;
+            font-size: 15px;
+            overflow-x: auto;
+        }
+        .grid-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px 30px;
+            margin: 10px 0 6px 0;
+        }
+        @media (max-width: 720px) {
+            .container { padding: 28px 18px; }
+            .grid-2col { grid-template-columns: 1fr; }
+            .knowledge-title .name { font-size: 19px; }
+            .table-wrap { padding: 12px 10px; }
+            .table-wrap table { font-size: 14px; }
+        }
+        .footer-note {
+            margin-top: 40px;
+            padding-top: 22px;
+            border-top: 1px solid #e6edf5;
+            font-size: 14px;
+            color: #5b6f87;
+            text-align: center;
+        }
+        .warning-box {
+            background: #fff8e6;
+            border-left: 4px solid #f5a623;
+            padding: 12px 18px;
+            margin: 12px 0 8px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 15px;
+        }
+        .MathJax {
+            font-size: 105%;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="module-badge">📘 模块 8</div>
+    <h1>人工智能伦理与安全</h1>
+    <div class="subhead">
+        对应表格原文：介绍可信人工智能、人工智能可解释性和算法攻击与防守。
+    </div>
+
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr><th>表格原文（模块8）</th><th>知识点编号与标题</th><th>覆盖状态</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>介绍可信人工智能</td><td>知识点8-1：人工智能伦理与可信人工智能</td><td><span class="highlight">✅ 已覆盖</span></td></tr>
+                <tr><td>介绍人工智能可解释性</td><td>知识点8-2：人工智能可解释性</td><td><span class="highlight">✅ 已覆盖</span></td></tr>
+                <tr><td>介绍算法攻击与防守</td><td>知识点8-3：人工智能模型安全——对抗攻击</td><td><span class="highlight">✅ 已覆盖</span></td></tr>
+                <tr><td>介绍算法攻击与防守</td><td>知识点8-4：人工智能模型安全——数据投毒与后门攻击</td><td><span class="highlight">✅ 已覆盖</span></td></tr>
+                <tr><td>介绍算法攻击与防守</td><td>知识点8-5：人工智能模型安全——防御方法与隐私保护</td><td><span class="highlight">✅ 已覆盖</span></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ===== 知识点8-1 ===== -->
+    <div class="knowledge-item">
+        <div class="knowledge-title">
+            <span class="id">知识点 8-1</span>
+            <span class="name">人工智能伦理与可信人工智能</span>
+            <span class="table-ref">对应表格“可信人工智能”</span>
+        </div>
+        <div class="section">
+            <span class="src">📄 位置来源：第257-258页（8.1节全文），第1-2页</span>
+            <h4>1. 伦理的概念起源</h4>
+            <ul>
+                <li><strong>伦理</strong>：来源于希腊语“道德”和拉丁语“风俗”的组合，刻画人与人的言行道德与准则。</li>
+                <li>中文“伦”有三重含义：①辈分次第关系；②音乐与伦理、美与善的相通性；③类。</li>
+            </ul>
+
+            <h4>2. 科技的双重属性</h4>
+            <ul>
+                <li>科技具有<strong>技术属性</strong>和<strong>社会属性</strong>。</li>
+                <li><strong>科林格里奇困境</strong>：技术的早期阶段无法预见其社会后果；当不良后果变得明显时，控制已变得极端困难。</li>
+                <li><strong>世界结构演变</strong>：从“物理世界-人类社会”（PH）演变为 <strong>“信息空间-物理世界-人类社会”</strong>（CPH）三元空间。</li>
+            </ul>
+
+            <h4>3. 可信人工智能</h4>
+            <ul>
+                <li>必须确保把<strong>人类价值观、道德观和法律法规</strong>贯穿于人工智能的产品和服务。</li>
+                <li>赋予人工智能<strong>社会属性</strong>，推动“普遍智能”更好地惠及社会大众。</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ===== 知识点8-2 ===== -->
+    <div class="knowledge-item">
+        <div class="knowledge-title">
+            <span class="id">知识点 8-2</span>
+            <span class="name">人工智能可解释性</span>
+            <span class="table-ref">对应表格“人工智能可解释性”</span>
+        </div>
+        <div class="section">
+            <span class="src">📄 位置来源：第266-267页（8.3节全文），第10-11页</span>
+            <h4>1. 定义</h4>
+            <ul>
+                <li><strong>可解释人工智能（XAI）</strong>：智能体如何<strong>有效解释自己的行为过程机制和任务结果原因</strong>，取得人类用户的信任。</li>
+                <li>与<strong>黑盒式AI</strong>相反——后者无法给出过程和结果的合理性描述。</li>
+            </ul>
+
+            <h4>2. 符号主义 vs 联结主义</h4>
+            <ul>
+                <li><strong>符号主义</strong>：以逻辑推理为基础，可给出清晰的推理过程（如苏格拉底三段论）。</li>
+                <li><strong>联结主义（深度学习）</strong>：以概率输出为基础，难以在任务结果与推理计算过程之间建立清晰联系。</li>
+            </ul>
+
+            <h4>3. 可解释性的研究方向</h4>
+            <ul>
+                <li><strong>中层特征语义可解释性</strong>：神经网络中层特征是否表达了明确语义？</li>
+                <li><strong>决策逻辑可解释性</strong>：能否为神经网络的决策结果给予语义逻辑上的解释？</li>
+                <li><strong>基于可解释性的中层对端学习</strong>：利用中层语义信息，在弱监督条件下迁移和诊断模型。</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ===== 知识点8-3 ===== -->
+    <div class="knowledge-item">
+        <div class="knowledge-title">
+            <span class="id">知识点 8-3</span>
+            <span class="name">人工智能模型安全——对抗攻击</span>
+            <span class="table-ref">对应表格“算法攻击与防守”</span>
+        </div>
+        <div class="section">
+            <span class="src">📄 位置来源：第258-261页（8.2节及8.2.1节前半部分），第3-5页</span>
+            <h4>1. 对抗攻击</h4>
+            <ul>
+                <li><strong>定义</strong>：在输入样本中添加人眼无法察觉的细微干扰，导致模型以高置信度给出错误识别结果。</li>
+                <li><strong>严重后果</strong>：自动驾驶中将“禁止通行”识别为“加速通过”。</li>
+            </ul>
+
+            <h4>2. FGSM（快速梯度符号法）</h4>
+            <p>\[
+            x' = x + \eta \cdot \text{sign}(\nabla_x f(x))
+            \]</p>
+            <ul>
+                <li>利用模型梯度信息<strong>一步</strong>生成对抗样本。</li>
+            </ul>
+
+            <h4>3. PGD（投影梯度法）</h4>
+            <p>\[
+            x'_{k+1} = \text{Proj}\{x'_k + \alpha \cdot \text{sign}(\nabla_x f(x'_k))\}
+            \]</p>
+            <ul>
+                <li>将FGSM扩展为<strong>迭代</strong> $k$ 次的方法。</li>
+                <li>至今是对抗样本社区常用的评估基线。</li>
+            </ul>
+
+            <h4>4. 白盒攻击 vs 黑盒攻击</h4>
+            <ul>
+                <li><strong>白盒攻击</strong>：攻击者知道模型参数和梯度信息。</li>
+                <li><strong>黑盒攻击</strong>：攻击者无法获得模型参数（基于迁移性或基于查询）。</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ===== 知识点8-4 ===== -->
+    <div class="knowledge-item">
+        <div class="knowledge-title">
+            <span class="id">知识点 8-4</span>
+            <span class="name">人工智能模型安全——数据投毒与后门攻击</span>
+            <span class="table-ref">对应表格“算法攻击与防守”</span>
+        </div>
+        <div class="section">
+            <span class="src">📄 位置来源：第261-263页（8.2.1节后半部分），第5-7页</span>
+            <h4>1. 数据投毒攻击</h4>
+            <ul>
+                <li><strong>攻击阶段</strong>：数据收集阶段。</li>
+                <li><strong>类型</strong>：标签反转投毒攻击 vs 干净样本投毒攻击。</li>
+                <li><strong>目标</strong>：干扰模型训练，降低模型整体性能。</li>
+            </ul>
+
+            <h4>2. 后门攻击</h4>
+            <ul>
+                <li><strong>定义</strong>：在模型中植入后门，正常输入正常输出，添加后门触发器时产生恶意输出。</li>
+                <li><strong>示例</strong>：交通信号灯识别中，添加矩形触发器将“停车”识别为“限速80km/h”。</li>
+                <li>可在<strong>数据收集、模型训练、模型部署</strong>任何阶段进行。</li>
+            </ul>
+
+            <h4>3. 数据投毒与后门攻击的区别</h4>
+            <ul>
+                <li>后门攻击是数据投毒攻击的<strong>特殊实现</strong>。</li>
+                <li>数据投毒目标：<strong>降低整体性能</strong>；后门攻击目标：<strong>植入特定行为</strong>。</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ===== 知识点8-5 ===== -->
+    <div class="knowledge-item">
+        <div class="knowledge-title">
+            <span class="id">知识点 8-5</span>
+            <span class="name">人工智能模型安全——防御方法与隐私保护</span>
+            <span class="table-ref">对应表格“算法攻击与防守”</span>
+        </div>
+        <div class="section">
+            <span class="src">📄 位置来源：第263-266页（8.2.2-8.2.3节），第7-10页</span>
+            <h4>1. 对抗攻击的防御</h4>
+            <ul>
+                <li><strong>测试阶段防御</strong>：引入随机性（输入随机变化、中间层添加随机噪声）。</li>
+                <li><strong>训练阶段防御</strong>：<strong>对抗训练</strong>（内层生成对抗样本，外层训练模型参数），被证明是至今最有效的防御方法之一。</li>
+            </ul>
+
+            <h4>2. 数据投毒攻击的防御</h4>
+            <ul>
+                <li><strong>投毒样本检测</strong>：特征空间k近邻检测、影响函数检测。</li>
+                <li><strong>模型稳健性增强</strong>：SGD优化器、差分隐私SGD（DP-SGD）。</li>
+            </ul>
+
+            <h4>3. 后门攻击的防御</h4>
+            <ul>
+                <li><strong>输入样本触发器防御</strong>：ONION（检测语言困惑度变化去除触发器）。</li>
+                <li><strong>模型内嵌后门防御</strong>：使用本地干净样本重新训练，利用深度学习的<strong>灾难性遗忘</strong>。</li>
+            </ul>
+
+            <h4>4. 隐私保护</h4>
+            <ul>
+                <li><strong>差分隐私</strong>：对数据添加干扰噪声，保护用户隐私。2017年获哥德尔奖。</li>
+                <li><strong>同态加密</strong>：允许在密文条件下进行安全计算。</li>
+                <li><strong>安全多方计算</strong>：无可信第三方条件下安全计算约定函数。</li>
+            </ul>
+
+            <h4>5. 差分隐私的数学定义</h4>
+            <p>\[
+            \Pr[M(D) \in O] \le e^\epsilon \Pr[M(D') \in O] + \delta
+            \]</p>
+            <ul>
+                <li>$\epsilon$：隐私预算（越小保护越强）。</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        📚 模块8全部知识点整理完毕 · 请确认后输出下一模块
+    </div>
+</div>
+</body>
+</html>

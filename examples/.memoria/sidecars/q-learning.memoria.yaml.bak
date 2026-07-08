@@ -1,0 +1,59 @@
+schema_version: 1
+file: q-learning.md
+description: Q-Learning 时序差分算法
+knowledge_points:
+- id: q-learning
+  name: Q-Learning 算法
+  range:
+    start:
+      snippet: '# Q-Learning 算法'
+      line_hint: 1
+    end:
+      snippet: DQN 将 Q-Learning 与深度网络结合，而 DDPG 将其扩展到连续动作空间。
+      line_hint: 53
+- id: ε-greedy-探索策略
+  name: ε-greedy 探索策略
+  range:
+    start:
+      snippet: '## ε-greedy 探索策略'
+      line_hint: 31
+    end:
+      snippet: DQN 将 Q-Learning 与深度网络结合，而 DDPG 将其扩展到连续动作空间。
+      line_hint: 53
+- id: ε
+  name: ε
+  range:
+    start:
+      snippet: $\varepsilon$ 的选择很关键：
+      line_hint: 38
+    end:
+      snippet: '- 常见做法：$\varepsilon$ 从 1.0 线性衰减到 0.1'
+      line_hint: 41
+links:
+- anchor_text: mdp
+  occurrence: 0
+  targets:
+  - mdp
+  edge_type: reference
+  instances:
+  - line: 5
+    wrapped: true
+  source_id: q-learning
+- anchor_text: rl
+  occurrence: 0
+  targets:
+  - rl
+  edge_type: reference
+  instances:
+  - line: 5
+    wrapped: true
+  source_id: q-learning
+- anchor_text: ddpg
+  occurrence: 0
+  targets:
+  - ddpg
+  edge_type: extend
+  instances:
+  - line: 5
+    wrapped: true
+  source_id: q-learning
