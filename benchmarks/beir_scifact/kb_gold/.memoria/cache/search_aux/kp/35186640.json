@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "35186640",
+  "source_fingerprint": "300f4747d69c8e3b5f099159386f2d63",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "35186640",
+    "interaction-between-broad-spectrum-antibiotics-and-the-combined-oral-contraceptive-pill.-a-literature-review."
+  ],
+  "key_phrases": [
+    "interaction",
+    "between",
+    "broad",
+    "spectrum",
+    "antibiotics",
+    "combined",
+    "oral",
+    "contraceptive"
+  ],
+  "summary_1l": "Interaction between broad-spectrum antibiotics and the combined oral contraceptive pill.",
+  "query_hits": [],
+  "embed_text": "35186640 Interaction between broad-spectrum antibiotics and the combined oral contraceptive pill. A literature review. science scifact There is considerable variation in opinion about the importance of drug interactions between the combined oral contraceptive pill (COCP) and broad-spectrum antibiotics. Clinical practice varies widely, especially between doctors in Europe… 35186640 interaction-between-broad-spectrum-antibiotics-and-the-combined-oral-contraceptive-pill.-a-literature-review. interaction between broad spectrum antibiotics combined oral contraceptive Interaction between broad-spectrum antibiotics and the combined oral contraceptive pill. Interaction between broad-spectrum antibiotics and the combined oral contraceptive pill. A literature review. There is considerable variation in opinion about the importance of drug interactions between the combined oral contraceptive pill (COCP) and broad-spectrum antibiotics. Clinical practice varies widely, especially between doctors in Europe and those in the US. Rifampicin and griseofulvin induce hepatic enzymes and do appear to have a genuine interaction with the COCP, leading to reduced efficacy. The situation with the broad-spectrum antibiotics is less clear. There are relatively few prospective studies of the pharmacokinetics of concurrent COCP and antibiotic use and few, if any, demonstrate a convincing basis for any reduced contraceptive efficacy. There is evidence, however, tha",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.037717+00:00"
+}

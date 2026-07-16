@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7583161",
+  "source_fingerprint": "8b6df47de23930b329aef827365f9758",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7583161",
+    "heterotopic-of-bone-marrow.-analysis-of-precursor-cells-for-osteogenic-and-hematopoietic-tissues."
+  ],
+  "key_phrases": [
+    "heterotopic",
+    "bone",
+    "marrow",
+    "analysis",
+    "precursor",
+    "cells",
+    "osteogenic",
+    "hematopoietic"
+  ],
+  "summary_1l": "Heterotopic of bone marrow.",
+  "query_hits": [],
+  "embed_text": "7583161 Heterotopic of bone marrow. Analysis of precursor cells for osteogenic and hematopoietic tissues. science scifact In semisyngeneic heterotopic bone marrow transplants the donor or recipient origin of cells of osteogenic and hematopoietic tissues was identified by chromosome markers (T6) and by reverse transplantation into the initial donor line. In… 7583161 heterotopic-of-bone-marrow.-analysis-of-precursor-cells-for-osteogenic-and-hematopoietic-tissues. heterotopic bone marrow analysis precursor cells osteogenic hematopoietic Heterotopic of bone marrow. Heterotopic of bone marrow. Analysis of precursor cells for osteogenic and hematopoietic tissues. In semisyngeneic heterotopic bone marrow transplants the donor or recipient origin of cells of osteogenic and hematopoietic tissues was identified by chromosome markers (T6) and by reverse transplantation into the initial donor line. In syngeneic and semisyngeneic grafts of bone marrow under the renal capsule bone and bone marrow are formed. In allogeneic grafts only bone is formed; this bone is subsequently resorbed. In 14-month semisyngeneic transplants the bone marrow consists of recipient cells. This is true for both the proliferating pool and the stem cells of hematopoietic tissue. At the same time, osteogenic precursor cells and bone tissue in these transplants are of donor origin. A dis",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.730908+00:00"
+}

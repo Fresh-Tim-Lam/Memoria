@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2159648",
+  "source_fingerprint": "b74dbc14f95b411f41764cae39ec2b68",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2159648",
+    "bone-loss-and-vascular-calcification:-a-bi-directional-interplay?"
+  ],
+  "key_phrases": [
+    "bone",
+    "loss",
+    "vascular",
+    "calcification",
+    "bi",
+    "directional",
+    "interplay",
+    "vc"
+  ],
+  "summary_1l": "Bone loss and vascular calcification: A bi-directional interplay?",
+  "query_hits": [],
+  "embed_text": "2159648 Bone loss and vascular calcification: A bi-directional interplay? science scifact Vascular calcification (VC) represents a recognized adverse predictor for cardiovascular morbidity and mortality. Previously considered passive and degenerative, VC is now recognized as an active process that resembles bone formation, and… 2159648 bone-loss-and-vascular-calcification:-a-bi-directional-interplay? bone loss vascular calcification bi directional interplay vc Bone loss and vascular calcification: A bi-directional interplay? Bone loss and vascular calcification: A bi-directional interplay? Vascular calcification (VC) represents a recognized adverse predictor for cardiovascular morbidity and mortality. Previously considered passive and degenerative, VC is now recognized as an active process that resembles bone formation, and shares a number of histopathological features, mineral composition, and initiation mechanisms with bone development and metabolism. Oxidative stress and inflammation are key factors in both VC and osteoporosis (OP). Biochemical factors known to be primarily involved in the healthy bone metabolism also regulate VC. These biomarkers include vitamin D, osteoprotegerin, osteopontin, matrix Gla protein, cathepsin K, fibroblast growth factor-23, and fetuin-A. A better understanding of this highly",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.468539+00:00"
+}

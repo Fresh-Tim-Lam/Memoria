@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3730196",
+  "source_fingerprint": "f9f45e65fc2d4c2b0aad4682abf788e9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3730196",
+    "long-non-coding-rna-hottip-promotes-bcl-2-expression-and-induces-chemoresistance-in-small-cell-lung-cancer-by-sponging-mir-216a"
+  ],
+  "key_phrases": [
+    "long",
+    "non",
+    "coding",
+    "rna",
+    "hottip",
+    "promotes",
+    "bcl",
+    "expression"
+  ],
+  "summary_1l": "Despite progress in treatment of small cell lung cancer (SCLC), its mult",
+  "query_hits": [],
+  "embed_text": "3730196 Long non-coding RNA HOTTIP promotes BCL-2 expression and induces chemoresistance in small cell lung cancer by sponging miR-216a science scifact Despite progress in treatment of small cell lung cancer (SCLC), its multidrug chemoresistance and poor prognosis still remain. Recently, we globally assessed long non-coding RNAs (lncRNAs) for contributions to SCLC chemoresistance using… 3730196 long-non-coding-rna-hottip-promotes-bcl-2-expression-and-induces-chemoresistance-in-small-cell-lung-cancer-by-sponging-mir-216a long non coding rna hottip promotes bcl expression Despite progress in treatment of small cell lung cancer (SCLC), its mult Long non-coding RNA HOTTIP promotes BCL-2 expression and induces chemoresistance in small cell lung cancer by sponging miR-216a Despite progress in treatment of small cell lung cancer (SCLC), its multidrug chemoresistance and poor prognosis still remain. Recently, we globally assessed long non-coding RNAs (lncRNAs) for contributions to SCLC chemoresistance using microarray data, in vitro and in vivo assays. Here we reported that HOTTIP, encoding a lncRNA that is frequently amplified in SCLC, was associated with SCLC cell chemosensitivity, proliferation, and poor prognosis of SCLC patients. Moreover, mechanistic investigations showed that HOTTIP functioned as an oncogene in SCLC progression by binding miR-216a and abrogating its tumor-suppressive function in this setting. On the other hand,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.366606+00:00"
+}

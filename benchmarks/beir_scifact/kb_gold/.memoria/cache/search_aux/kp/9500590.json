@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9500590",
+  "source_fingerprint": "b1c21f39215fc7b01cbbaf4f53b304e5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9500590",
+    "extrathymic-generation-of-regulatory-t-cells-in-placental-mammals-mitigates-maternal-fetal-conflict"
+  ],
+  "key_phrases": [
+    "extrathymic",
+    "generation",
+    "regulatory",
+    "cells",
+    "placental",
+    "mammals",
+    "mitigates",
+    "maternal"
+  ],
+  "summary_1l": "Regulatory T (Treg) cells, whose differentiation and function are controlled by X chromosome-encoded",
+  "query_hits": [],
+  "embed_text": "9500590 Extrathymic Generation of Regulatory T Cells in Placental Mammals Mitigates Maternal-Fetal Conflict science scifact Regulatory T (Treg) cells, whose differentiation and function are controlled by X chromosome-encoded transcription factor Foxp3, are generated in the thymus (tTreg) and extrathymically (peripheral, pTreg), and their deficiency results in… 9500590 extrathymic-generation-of-regulatory-t-cells-in-placental-mammals-mitigates-maternal-fetal-conflict extrathymic generation regulatory cells placental mammals mitigates maternal Regulatory T (Treg) cells, whose differentiation and function are controlled by X chromosome-encoded Extrathymic Generation of Regulatory T Cells in Placental Mammals Mitigates Maternal-Fetal Conflict Regulatory T (Treg) cells, whose differentiation and function are controlled by X chromosome-encoded transcription factor Foxp3, are generated in the thymus (tTreg) and extrathymically (peripheral, pTreg), and their deficiency results in fatal autoimmunity. Here, we demonstrate that a Foxp3 enhancer, conserved noncoding sequence 1 (CNS1), essential for pTreg but dispensable for tTreg cell generation, is present only in placental mammals. CNS1 is largely composed of mammalian-wide interspersed repeats (MIR) that have undergone retrotransposition during early mammalian radiation. During pregnancy, pTreg cells specific to a model paternal alloantigen were generated in a CNS1-dependent manner an",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.045921+00:00"
+}

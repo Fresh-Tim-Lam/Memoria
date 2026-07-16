@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "38131471",
+  "source_fingerprint": "f4664b22ccba7b0c344dccc5f10dad21",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "38131471",
+    "molecular-mechanisms-of-mammalian-dna-repair-and-the-dna-damage-checkpoints."
+  ],
+  "key_phrases": [
+    "molecular",
+    "mechanisms",
+    "mammalian",
+    "dna",
+    "repair",
+    "damage",
+    "checkpoints",
+    "relatively"
+  ],
+  "summary_1l": "Molecular mechanisms of mammalian DNA repair and the DNA damage checkpoints.",
+  "query_hits": [],
+  "embed_text": "38131471 Molecular mechanisms of mammalian DNA repair and the DNA damage checkpoints. science scifact DNA damage is a relatively common event in the life of a cell and may lead to mutation, cancer, and cellular or organismic death. Damage to DNA induces several cellular responses that enable the cell either to eliminate or cope with the… 38131471 molecular-mechanisms-of-mammalian-dna-repair-and-the-dna-damage-checkpoints. molecular mechanisms mammalian dna repair damage checkpoints relatively Molecular mechanisms of mammalian DNA repair and the DNA damage checkpoints. Molecular mechanisms of mammalian DNA repair and the DNA damage checkpoints. DNA damage is a relatively common event in the life of a cell and may lead to mutation, cancer, and cellular or organismic death. Damage to DNA induces several cellular responses that enable the cell either to eliminate or cope with the damage or to activate a programmed cell death process, presumably to eliminate cells with potentially catastrophic mutations. These DNA damage response reactions include: (a) removal of DNA damage and restoration of the continuity of the DNA duplex; (b) activation of a DNA damage checkpoint, which arrests cell cycle progression so as to allow for repair and prevention of the transmission of damaged or incompletely replicated chromosomes; (c) transcriptional response, which causes c",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.211597+00:00"
+}

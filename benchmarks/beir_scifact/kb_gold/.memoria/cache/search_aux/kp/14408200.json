@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14408200",
+  "source_fingerprint": "436d50b5b1ef28b18a497e06c2409f90",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14408200",
+    "epidemiology-of-staphylococcus-aureus-blood-and-skin-and-soft-tissue-infections-in-the-us-military-health-system,-2005-2010."
+  ],
+  "key_phrases": [
+    "epidemiology",
+    "staphylococcus",
+    "aureus",
+    "blood",
+    "skin",
+    "soft",
+    "tissue",
+    "infections"
+  ],
+  "summary_1l": "Epidemiology of Staphylococcus aureus blood and skin and soft tissue infections in the US military health system, 2005-2010.",
+  "query_hits": [],
+  "embed_text": "14408200 Epidemiology of Staphylococcus aureus blood and skin and soft tissue infections in the US military health system, 2005-2010. science scifact CONTEXT Rates of hospital-onset methicillin-resistant Staphylococcus aureus (MRSA) infections are reported as decreasing, but recent rates of community-onset S. aureus infections are less known. OBJECTIVES To characterize the overall and… 14408200 epidemiology-of-staphylococcus-aureus-blood-and-skin-and-soft-tissue-infections-in-the-us-military-health-system,-2005-2010. epidemiology staphylococcus aureus blood skin soft tissue infections Epidemiology of Staphylococcus aureus blood and skin and soft tissue infections in the US military health system, 2005-2010. Epidemiology of Staphylococcus aureus blood and skin and soft tissue infections in the US military health system, 2005-2010. CONTEXT Rates of hospital-onset methicillin-resistant Staphylococcus aureus (MRSA) infections are reported as decreasing, but recent rates of community-onset S. aureus infections are less known. OBJECTIVES To characterize the overall and annual incidence rates of community-onset and hospital-onset S. aureus bacteremia and skin and soft tissue infections (SSTIs) in a national health care system and to evaluate trends in the incidence rates of S. aureus bacteremia and SSTIs and the proportion due to MRSA. DESIGN, SETTING, AND PARTICIPANTS Observational study of all Department of Defense TRICARE beneficiaries from January 2005 through December 2010. Medical record datab",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.838763+00:00"
+}

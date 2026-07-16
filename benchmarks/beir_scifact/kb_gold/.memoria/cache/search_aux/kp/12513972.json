@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12513972",
+  "source_fingerprint": "aa8d2d591dac31d86fe46fb431d4e1b2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12513972",
+    "echocardiographic-evidence-of-innate-aortopathy-in-the-human-intracranial-aneurysm"
+  ],
+  "key_phrases": [
+    "echocardiographic",
+    "evidence",
+    "innate",
+    "aortopathy",
+    "human",
+    "intracranial",
+    "aneurysm",
+    "background"
+  ],
+  "summary_1l": "BACKGROUND Intracranial aneurysm (IA) is significantly more prevalent in patients with coarctation of the aorta or bi",
+  "query_hits": [],
+  "embed_text": "12513972 Echocardiographic Evidence of Innate Aortopathy in the Human Intracranial Aneurysm science scifact BACKGROUND Intracranial aneurysm (IA) is significantly more prevalent in patients with coarctation of the aorta or bicuspid aortic valve than in the general population, suggesting a common pathophysiology connecting IA and aortopathy.… 12513972 echocardiographic-evidence-of-innate-aortopathy-in-the-human-intracranial-aneurysm echocardiographic evidence innate aortopathy human intracranial aneurysm background BACKGROUND Intracranial aneurysm (IA) is significantly more prevalent in patients with coarctation of the aorta or bi Echocardiographic Evidence of Innate Aortopathy in the Human Intracranial Aneurysm BACKGROUND Intracranial aneurysm (IA) is significantly more prevalent in patients with coarctation of the aorta or bicuspid aortic valve than in the general population, suggesting a common pathophysiology connecting IA and aortopathy. Here, we analyzed echocardiographic aortic root dimension (ARD) in patients with IA to confirm this possibility. METHODS From January 2008 to December 2010, 260 consecutive patients with IA who were admitted to our institution for coil embolization or for acute stroke management and who also underwent echocardiography were enrolled. We hypothesized that patients with large, ruptured, or multiple IAs are more likely to harbor co-prevalent aortopathy as measured by ARD compared t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:08.490559+00:00"
+}

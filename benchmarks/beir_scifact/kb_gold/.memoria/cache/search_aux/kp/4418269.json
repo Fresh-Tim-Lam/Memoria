@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "4418269",
+  "source_fingerprint": "ff5360d669b235f26e4e4dc3c67744bf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4418269"
+  ],
+  "key_phrases": [
+    "specificity",
+    "sensory",
+    "motor",
+    "connections",
+    "encoded",
+    "by",
+    "sema3e",
+    "plxnd1"
+  ],
+  "summary_1l": "Spinal reflexes are mediated by synaptic connections between sensory afferents and motor neurons.",
+  "query_hits": [],
+  "embed_text": "4418269 Specificity of sensory–motor connections encoded by Sema3e–Plxnd1 recognition science scifact Spinal reflexes are mediated by synaptic connections between sensory afferents and motor neurons. The organization of these circuits shows several levels of specificity. Only certain classes of proprioceptive sensory neurons make direct,… 4418269 specificity sensory motor connections encoded by sema3e plxnd1 Spinal reflexes are mediated by synaptic connections between sensory afferents and motor neurons. Specificity of sensory–motor connections encoded by Sema3e–Plxnd1 recognition Spinal reflexes are mediated by synaptic connections between sensory afferents and motor neurons. The organization of these circuits shows several levels of specificity. Only certain classes of proprioceptive sensory neurons make direct, monosynaptic connections with motor neurons. Those that do are bound by rules of motor pool specificity: they form strong connections with motor neurons supplying the same muscle, but avoid motor pools supplying antagonistic muscles. This pattern of connectivity is initially accurate and is maintained in the absence of activity, implying that wiring specificity relies on the matching of recognition molecules on the surface of sensory and motor neurons. However, determinants of fi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.908858+00:00"
+}

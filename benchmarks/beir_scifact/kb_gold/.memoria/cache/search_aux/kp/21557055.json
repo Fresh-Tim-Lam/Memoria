@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21557055",
+  "source_fingerprint": "d57b432f826edaf5a178822bd366736d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21557055",
+    "transcriptional-regulation-by-p53-through-intrinsic-dna/chromatin-binding-and-site-directed-cofactor-recruitment."
+  ],
+  "key_phrases": [
+    "transcriptional",
+    "regulation",
+    "by",
+    "p53",
+    "through",
+    "intrinsic",
+    "dna",
+    "chromatin"
+  ],
+  "summary_1l": "Transcriptional regulation by p53 through intrinsic DNA/chromatin binding and site-directed cofactor recruitment.",
+  "query_hits": [],
+  "embed_text": "21557055 Transcriptional regulation by p53 through intrinsic DNA/chromatin binding and site-directed cofactor recruitment. science scifact The tumor suppressor protein, p53, plays a critical role in mediating cellular response to stress signals by regulating genes involved in cell cycle arrest and apoptosis. p53 is believed to be inactive for DNA binding unless its C terminus… 21557055 transcriptional-regulation-by-p53-through-intrinsic-dna/chromatin-binding-and-site-directed-cofactor-recruitment. transcriptional regulation by p53 through intrinsic dna chromatin Transcriptional regulation by p53 through intrinsic DNA/chromatin binding and site-directed cofactor recruitment. Transcriptional regulation by p53 through intrinsic DNA/chromatin binding and site-directed cofactor recruitment. The tumor suppressor protein, p53, plays a critical role in mediating cellular response to stress signals by regulating genes involved in cell cycle arrest and apoptosis. p53 is believed to be inactive for DNA binding unless its C terminus is modified or structurally altered. We show that unmodified p53 actively binds to two sites at -1.4 and -2.3 kb within the chromatin-assembled p21 promoter and requires the C terminus and the histone acetyltransferase, p300, for transcription. Acetylation of the C terminus by p300 is not necessary for binding or promoter activation. Instead, p300 acetylates p53-bound nucleosomes in the p21 promoter with spreading to the TATA box. Thus, p53 i",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.358656+00:00"
+}

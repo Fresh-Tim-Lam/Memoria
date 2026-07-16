@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11939159",
+  "source_fingerprint": "d430d6e6dd156c652b5026a07fc6ba99",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11939159",
+    "association-between-influenza-vaccination-and-cardiovascular-outcomes-in-high-risk-patients:-a-meta-analysis."
+  ],
+  "key_phrases": [
+    "association",
+    "between",
+    "influenza",
+    "vaccination",
+    "cardiovascular",
+    "outcomes",
+    "high",
+    "risk"
+  ],
+  "summary_1l": "Association between influenza vaccination and cardiovascular outcomes in high-risk patients: a meta-analysis.",
+  "query_hits": [],
+  "embed_text": "11939159 Association between influenza vaccination and cardiovascular outcomes in high-risk patients: a meta-analysis. science scifact IMPORTANCE Among nontraditional cardiovascular risk factors, recent influenzalike infection is associated with fatal and nonfatal atherothrombotic events. OBJECTIVES To determine if influenza vaccination is associated with prevention of… 11939159 association-between-influenza-vaccination-and-cardiovascular-outcomes-in-high-risk-patients:-a-meta-analysis. association between influenza vaccination cardiovascular outcomes high risk Association between influenza vaccination and cardiovascular outcomes in high-risk patients: a meta-analysis. Association between influenza vaccination and cardiovascular outcomes in high-risk patients: a meta-analysis. IMPORTANCE Among nontraditional cardiovascular risk factors, recent influenzalike infection is associated with fatal and nonfatal atherothrombotic events. OBJECTIVES To determine if influenza vaccination is associated with prevention of cardiovascular events. DATA SOURCES AND STUDY SELECTION A systematic review and meta-analysis of MEDLINE (1946-August 2013), EMBASE (1947-August 2013), and the Cochrane Library Central Register of Controlled Trials (inception-August 2013) for randomized clinical trials (RCTs) comparing influenza vaccine vs placebo or control in patients at high risk of cardiovascular disease, reporting cardiovascular outcomes either as efficacy or safety events. DAT",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:07.486647+00:00"
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "34905328",
+  "source_fingerprint": "e073210e3277dd3f4242072f7e13cace",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "34905328"
+  ],
+  "key_phrases": [
+    "membrane",
+    "association",
+    "cd3",
+    "signaling",
+    "domain",
+    "required",
+    "optimal",
+    "cell"
+  ],
+  "summary_1l": "Membrane association of the CD3ε signaling domain is required for optimal T cell development and function.",
+  "query_hits": [],
+  "embed_text": "34905328 Membrane association of the CD3ε signaling domain is required for optimal T cell development and function. science scifact The TCR:CD3 complex transduces signals that are critical for optimal T cell development and adaptive immunity. In resting T cells, the CD3ε cytoplasmic tail associates with the plasma membrane via a proximal basic-rich stretch (BRS). In… 34905328 membrane association cd3 signaling domain required optimal cell Membrane association of the CD3ε signaling domain is required for optimal T cell development and function. Membrane association of the CD3ε signaling domain is required for optimal T cell development and function. The TCR:CD3 complex transduces signals that are critical for optimal T cell development and adaptive immunity. In resting T cells, the CD3ε cytoplasmic tail associates with the plasma membrane via a proximal basic-rich stretch (BRS). In this study, we show that mice lacking a functional CD3ε-BRS exhibited substantial reductions in thymic cellularity and limited CD4- CD8- double-negative (DN) 3 to DN4 thymocyte transition, because of enhanced DN4 TCR signaling resulting in increased cell death and TCR downregulation in all subsequent populations. Furthermore, positive, but not negative, T cell selection was affected in mice lacking a functional CD3ε-BRS, which led to limited peripheral",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.812162+00:00"
+}

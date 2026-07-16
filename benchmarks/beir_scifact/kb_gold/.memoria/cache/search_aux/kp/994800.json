@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "994800",
+  "source_fingerprint": "344e6b3ef71ccccdc0580586d3391d88",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "994800",
+    "tcr-ligand-density-and-affinity-determine-peripheral-induction-of-foxp3-in-vivo"
+  ],
+  "key_phrases": [
+    "tcr",
+    "ligand",
+    "density",
+    "affinity",
+    "determine",
+    "peripheral",
+    "induction",
+    "foxp3"
+  ],
+  "summary_1l": "T cell receptor (TCR) ligation is required for the extrathymic differentiation of forkhead box p3(+) (Foxp3(+)) regulato",
+  "query_hits": [],
+  "embed_text": "994800 TCR ligand density and affinity determine peripheral induction of Foxp3 in vivo science scifact T cell receptor (TCR) ligation is required for the extrathymic differentiation of forkhead box p3(+) (Foxp3(+)) regulatory T cells. Several lines of evidence indicate that weak TCR stimulation favors induction of Foxp3 in the periphery;… 994800 tcr-ligand-density-and-affinity-determine-peripheral-induction-of-foxp3-in-vivo tcr ligand density affinity determine peripheral induction foxp3 T cell receptor (TCR) ligation is required for the extrathymic differentiation of forkhead box p3(+) (Foxp3(+)) regulato TCR ligand density and affinity determine peripheral induction of Foxp3 in vivo T cell receptor (TCR) ligation is required for the extrathymic differentiation of forkhead box p3(+) (Foxp3(+)) regulatory T cells. Several lines of evidence indicate that weak TCR stimulation favors induction of Foxp3 in the periphery; however, it remains to be determined how TCR ligand potency influences this process. We characterized the density and affinity of TCR ligand favorable for Foxp3 induction and found that a low dose of a strong agonist resulted in maximal induction of Foxp3 in vivo. Initial Foxp3 induction by weak agonist peptide could be enhanced by disruption of TCR-peptide major histocompatibility complex (pMHC) interactions or alteration of peptide dose. However, time course experiments reveal",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:06.136792+00:00"
+}

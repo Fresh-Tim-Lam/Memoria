@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20999249",
+  "source_fingerprint": "d8ee156ae743b61d67dd35d78fb41036",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20999249",
+    "imported-malaria-in-children:-a-national-surveillance-in-the-netherlands-and-a-review-of-european-studies."
+  ],
+  "key_phrases": [
+    "imported",
+    "malaria",
+    "children",
+    "national",
+    "surveillance",
+    "netherlands",
+    "review",
+    "european"
+  ],
+  "summary_1l": "Imported malaria in children: a national surveillance in the Netherlands and a review of European studies.",
+  "query_hits": [],
+  "embed_text": "20999249 Imported malaria in children: a national surveillance in the Netherlands and a review of European studies. science scifact BACKGROUND Falciparum malaria or malaria tropica is one of the leading causes of childhood mortality worldwide. Malaria-related deaths occur mainly in sub-Saharan Africa, where an estimated 365 million clinical cases of Plasmodium… 20999249 imported-malaria-in-children:-a-national-surveillance-in-the-netherlands-and-a-review-of-european-studies. imported malaria children national surveillance netherlands review european Imported malaria in children: a national surveillance in the Netherlands and a review of European studies. Imported malaria in children: a national surveillance in the Netherlands and a review of European studies. BACKGROUND Falciparum malaria or malaria tropica is one of the leading causes of childhood mortality worldwide. Malaria-related deaths occur mainly in sub-Saharan Africa, where an estimated 365 million clinical cases of Plasmodium falciparum malaria occur each year. In Europe, imported malaria cases occur due to returning travellers or immigration mostly from African countries. Children are more at risk than adults. The objective of this study was to identify high risk groups for imported childhood malaria in Europe in order to guide development of strategies for prevention, early recognition and management. METHODS In the period May 2003-January 2005 we reviewed all cases of paediatr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.250812+00:00"
+}

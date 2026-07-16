@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "46328296",
+  "source_fingerprint": "3bb8fa1fff2c01d1cc0446a9e4a149c7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "46328296",
+    "reduced-plasma-concentrations-of-nitrogen-oxide-in-individuals-with-essential-hypertension."
+  ],
+  "key_phrases": [
+    "reduced",
+    "plasma",
+    "concentrations",
+    "nitrogen",
+    "oxide",
+    "individuals",
+    "with",
+    "essential"
+  ],
+  "summary_1l": "Reduced plasma concentrations of nitrogen oxide in individuals with essential hypertension.",
+  "query_hits": [],
+  "embed_text": "46328296 Reduced plasma concentrations of nitrogen oxide in individuals with essential hypertension. science scifact Patients with essential hypertension exhibit blunted endothelium-dependent vasodilator responses, which may be largely attributable to reduced bioactivity of nitric oxide (NO). Therefore, we measured the end product of NO, nitrate plus… 46328296 reduced-plasma-concentrations-of-nitrogen-oxide-in-individuals-with-essential-hypertension. reduced plasma concentrations nitrogen oxide individuals with essential Reduced plasma concentrations of nitrogen oxide in individuals with essential hypertension. Reduced plasma concentrations of nitrogen oxide in individuals with essential hypertension. Patients with essential hypertension exhibit blunted endothelium-dependent vasodilator responses, which may be largely attributable to reduced bioactivity of nitric oxide (NO). Therefore, we measured the end product of NO, nitrate plus nitrite (nitrogen oxide), and examined the relationship between the degree of hypertension and plasma nitrate plus nitrite levels in patients with essential hypertension. The combined plasma concentration of nitrate plus nitrite, end products of NO metabolism, was reduced in individuals with essential hypertension relative to that in control subjects (15.7+/-1.1 versus 22.8+/-1.4 mmol x L(-1), P<.001); individuals with borderline hypertension showed values that were i",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.755334+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10698739",
+  "source_fingerprint": "cbc52d1171fa9babf236777417ff9297",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10698739",
+    "modulation-of-mitochondrial-function-and-morphology-by-interaction-of-omi/htra2-with-the-mitochondrial-fusion-factor-opa1."
+  ],
+  "key_phrases": [
+    "modulation",
+    "mitochondrial",
+    "function",
+    "morphology",
+    "by",
+    "interaction",
+    "omi",
+    "htra2"
+  ],
+  "summary_1l": "Modulation of mitochondrial function and morphology by interaction of Omi/HtrA2 with the mitochondrial fusion factor OPA1.",
+  "query_hits": [],
+  "embed_text": "10698739 Modulation of mitochondrial function and morphology by interaction of Omi/HtrA2 with the mitochondrial fusion factor OPA1. science scifact Loss of Omi/HtrA2 function leads to nerve cell loss in mouse models and has been linked to neurodegeneration in Parkinson's and Huntington's disease. Omi/HtrA2 is a serine protease released as a pro-apoptotic factor from the mitochondrial… 10698739 modulation-of-mitochondrial-function-and-morphology-by-interaction-of-omi/htra2-with-the-mitochondrial-fusion-factor-opa1. modulation mitochondrial function morphology by interaction omi htra2 Modulation of mitochondrial function and morphology by interaction of Omi/HtrA2 with the mitochondrial fusion factor OPA1. Modulation of mitochondrial function and morphology by interaction of Omi/HtrA2 with the mitochondrial fusion factor OPA1. Loss of Omi/HtrA2 function leads to nerve cell loss in mouse models and has been linked to neurodegeneration in Parkinson's and Huntington's disease. Omi/HtrA2 is a serine protease released as a pro-apoptotic factor from the mitochondrial intermembrane space into the cytosol. Under physiological conditions, Omi/HtrA2 is thought to be involved in protection against cellular stress, but the cytological and molecular mechanisms are not clear. Omi/HtrA2 deficiency caused an accumulation of reactive oxygen species and reduced mitochondrial membrane potential. In Omi/HtrA2 knockout mouse embryonic fibroblasts, as well as in Omi/HtrA2 silenced human HeLa cells and Drosophila",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.904413+00:00"
+}

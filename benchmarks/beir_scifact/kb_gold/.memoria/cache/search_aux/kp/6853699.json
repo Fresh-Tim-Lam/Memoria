@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6853699",
+  "source_fingerprint": "9723ee0c2150986244337000e190a717",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6853699",
+    "macrophages-in-the-pathogenesis-of-atherosclerosis"
+  ],
+  "key_phrases": [
+    "macrophages",
+    "pathogenesis",
+    "atherosclerosis",
+    "accumulation",
+    "apolipoprotein",
+    "lipoproteins",
+    "matrix",
+    "beneath"
+  ],
+  "summary_1l": "In atherosclerosis, the accumulation of apolipoprotein B-lipoproteins in the matrix beneath the endothelial cell layer of blood vessels leads to the",
+  "query_hits": [],
+  "embed_text": "6853699 Macrophages in the Pathogenesis of Atherosclerosis science scifact In atherosclerosis, the accumulation of apolipoprotein B-lipoproteins in the matrix beneath the endothelial cell layer of blood vessels leads to the recruitment of monocytes, the cells of the immune system that give rise to macrophages and… 6853699 macrophages-in-the-pathogenesis-of-atherosclerosis macrophages pathogenesis atherosclerosis accumulation apolipoprotein lipoproteins matrix beneath In atherosclerosis, the accumulation of apolipoprotein B-lipoproteins in the matrix beneath the endothelial cell layer of blood vessels leads to the Macrophages in the Pathogenesis of Atherosclerosis In atherosclerosis, the accumulation of apolipoprotein B-lipoproteins in the matrix beneath the endothelial cell layer of blood vessels leads to the recruitment of monocytes, the cells of the immune system that give rise to macrophages and dendritic cells. Macrophages derived from these recruited monocytes participate in a maladaptive, nonresolving inflammatory response that expands the subendothelial layer due to the accumulation of cells, lipid, and matrix. Some lesions subsequently form a necrotic core, triggering acute thrombotic vascular disease, including myocardial infarction, stroke, and sudden cardiac death. This Review discusses the central roles of macrophages in each of these stages of disease pathogenesis.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.867259+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1103795",
+  "source_fingerprint": "0cd2b106731fc7f6b6b61b3b9ef287e4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1103795",
+    "a-common-mechanism-of-cellular-death-induced-by-bactericidal-antibiotics"
+  ],
+  "key_phrases": [
+    "common",
+    "mechanism",
+    "cellular",
+    "death",
+    "induced",
+    "by",
+    "bactericidal",
+    "antibiotics"
+  ],
+  "summary_1l": "Antibiotic mode-of-action classification is based upon drug-target interaction and whether the resultant inhibition of cellular",
+  "query_hits": [],
+  "embed_text": "1103795 A Common Mechanism of Cellular Death Induced by Bactericidal Antibiotics science scifact Antibiotic mode-of-action classification is based upon drug-target interaction and whether the resultant inhibition of cellular function is lethal to bacteria. Here we show that the three major classes of bactericidal antibiotics,… 1103795 a-common-mechanism-of-cellular-death-induced-by-bactericidal-antibiotics common mechanism cellular death induced by bactericidal antibiotics Antibiotic mode-of-action classification is based upon drug-target interaction and whether the resultant inhibition of cellular A Common Mechanism of Cellular Death Induced by Bactericidal Antibiotics Antibiotic mode-of-action classification is based upon drug-target interaction and whether the resultant inhibition of cellular function is lethal to bacteria. Here we show that the three major classes of bactericidal antibiotics, regardless of drug-target interaction, stimulate the production of highly deleterious hydroxyl radicals in Gram-negative and Gram-positive bacteria, which ultimately contribute to cell death. We also show, in contrast, that bacteriostatic drugs do not produce hydroxyl radicals. We demonstrate that the mechanism of hydroxyl radical formation induced by bactericidal antibiotics is the end product of an oxidative damage cellular death pathway involving the tricarboxylic acid cycle, a transient",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:06.261619+00:00"
+}

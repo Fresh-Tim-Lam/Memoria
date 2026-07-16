@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3360421",
+  "source_fingerprint": "95b4933e9d4c8fb14a9f1fea4cb5a023",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3360421",
+    "embryonic-stem-cell-lines-from-human-blastocysts:-somatic-differentiation-in-vitro"
+  ],
+  "key_phrases": [
+    "embryonic",
+    "stem",
+    "cell",
+    "lines",
+    "from",
+    "human",
+    "blastocysts",
+    "somatic"
+  ],
+  "summary_1l": "We describe the derivation of pluripotent embryonic stem (ES) cells from human blastocysts.",
+  "query_hits": [],
+  "embed_text": "3360421 Embryonic stem cell lines from human blastocysts: somatic differentiation in vitro science scifact We describe the derivation of pluripotent embryonic stem (ES) cells from human blastocysts. Two diploid ES cell lines have been cultivated in vitro for extended periods while maintaining expression of markers characteristic of pluripotent… 3360421 embryonic-stem-cell-lines-from-human-blastocysts:-somatic-differentiation-in-vitro embryonic stem cell lines from human blastocysts somatic We describe the derivation of pluripotent embryonic stem (ES) cells from human blastocysts. Embryonic stem cell lines from human blastocysts: somatic differentiation in vitro We describe the derivation of pluripotent embryonic stem (ES) cells from human blastocysts. Two diploid ES cell lines have been cultivated in vitro for extended periods while maintaining expression of markers characteristic of pluripotent primate cells. Human ES cells express the transcription factor Oct-4, essential for development of pluripotential cells in the mouse. When grafted into SCID mice, both lines give rise to teratomas containing derivatives of all three embryonic germ layers. Both cell lines differentiate in vitro into extraembryonic and somatic cell lineages. Neural progenitor cells may be isolated from differentiating ES cell cultures and induced to form mature neurons. Embryonic stem cells p",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.539330+00:00"
+}

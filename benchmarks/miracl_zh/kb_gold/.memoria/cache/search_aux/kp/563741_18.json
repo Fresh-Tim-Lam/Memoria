@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "kp_id": "563741#18",
+  "source_fingerprint": "0f3b9c537e600f3c4a6daeffcaed67f6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "天主教會",
+    "天主教墨西哥城總教區",
+    "有限承认国家列表"
+  ],
+  "aliases": [
+    "563741#18"
+  ],
+  "key_phrases": [
+    "因信",
+    "稱義",
+    "天主教",
+    "承认",
+    "信仰",
+    "力量",
+    "但是",
+    "不是"
+  ],
+  "summary_1l": "天主教承认信仰的力量，但是这不是得救的充分条件。",
+  "query_hits": [],
+  "embed_text": "563741#18 因信稱義 因信稱義 天主教承认信仰的力量，但是这不是得救的充分条件。天主教教导人称义靠着信心，但也要靠着行为（善工、守律法）得救，《天主教教理》多處指出兩者俱備才是完滿的信仰： 天主教會 天主教墨西哥城總教區 有限承认国家列表 563741#18 因信 稱義 天主教 承认 信仰 力量 但是 不是 天主教承认信仰的力量，但是这不是得救的充分条件。 因信稱義 天主教承认信仰的力量，但是这不是得救的充分条件。天主教教导人称义靠着信心，但也要靠着行为（善工、守律法）得救，《天主教教理》多處指出兩者俱備才是完滿的信仰：",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:20:43.683636+00:00"
+}

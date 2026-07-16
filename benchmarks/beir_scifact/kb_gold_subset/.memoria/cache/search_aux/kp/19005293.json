@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19005293",
+  "source_fingerprint": "e5c9069061388bc270721fdabab3f1f7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19005293",
+    "memory-cd4+-t-cells-induce-innate-responses-independently-of-pathogen"
+  ],
+  "key_phrases": [
+    "memory",
+    "cd4",
+    "cells",
+    "induce",
+    "innate",
+    "responses",
+    "independently",
+    "pathogen"
+  ],
+  "summary_1l": "Inflammation induced by recognition of pathogen-associated molecular patterns markedly affects subsequent adaptive responses.",
+  "query_hits": [],
+  "embed_text": "19005293 Memory CD4+ T cells induce innate responses independently of pathogen science scifact Inflammation induced by recognition of pathogen-associated molecular patterns markedly affects subsequent adaptive responses. We asked whether the adaptive immune system can also affect the character and magnitude of innate inflammatory… 19005293 memory-cd4+-t-cells-induce-innate-responses-independently-of-pathogen memory cd4 cells induce innate responses independently pathogen Inflammation induced by recognition of pathogen-associated molecular patterns markedly affects subsequent adaptive responses. Memory CD4+ T cells induce innate responses independently of pathogen Inflammation induced by recognition of pathogen-associated molecular patterns markedly affects subsequent adaptive responses. We asked whether the adaptive immune system can also affect the character and magnitude of innate inflammatory responses. We found that the response of memory, but not naive, CD4+ T cells enhances production of multiple innate inflammatory cytokines and chemokines (IICs) in the lung and that, during influenza infection, this leads to early control of virus. Memory CD4+ T cell–induced IICs and viral control require cognate antigen recognition and are optimal when memory cells are either T helper type 1 (TH1) or TH17 polarized but are independent of interferon-γ (IFN-γ) and tumor necrosis factor-α (",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:12.141789+00:00"
+}

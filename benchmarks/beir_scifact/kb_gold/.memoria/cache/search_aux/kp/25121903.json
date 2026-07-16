@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25121903",
+  "source_fingerprint": "a43d4c4aac86d11f19e1185ac3597a6b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25121903",
+    "cancer-treatment-and-survivorship-statistics,-2014."
+  ],
+  "key_phrases": [
+    "cancer",
+    "treatment",
+    "survivorship",
+    "statistics",
+    "2014",
+    "number",
+    "survivors",
+    "continues"
+  ],
+  "summary_1l": "Cancer treatment and survivorship statistics, 2014.",
+  "query_hits": [],
+  "embed_text": "25121903 Cancer treatment and survivorship statistics, 2014. science scifact The number of cancer survivors continues to increase due to the aging and growth of the population and improvements in early detection and treatment. In order for the public health community to better serve these survivors, the American… 25121903 cancer-treatment-and-survivorship-statistics,-2014. cancer treatment survivorship statistics 2014 number survivors continues Cancer treatment and survivorship statistics, 2014. Cancer treatment and survivorship statistics, 2014. The number of cancer survivors continues to increase due to the aging and growth of the population and improvements in early detection and treatment. In order for the public health community to better serve these survivors, the American Cancer Society and the National Cancer Institute collaborated to estimate the number of current and future cancer survivors using data from the Surveillance, Epidemiology, and End Results (SEER) program registries. In addition, current treatment patterns for the most common cancer types are described based on information in the National Cancer Data Base and the SEER and SEER-Medicare linked databases; treatment-related side effects are also briefly described. Nearly 14.5 million Americans with a history of",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.028686+00:00"
+}

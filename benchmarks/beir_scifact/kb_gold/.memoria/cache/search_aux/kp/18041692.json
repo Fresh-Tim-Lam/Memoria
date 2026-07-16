@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18041692",
+  "source_fingerprint": "566de15340e01c1443fb3cc04acbff21",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18041692",
+    "rho-gtpase-signalling-in-cell-migration"
+  ],
+  "key_phrases": [
+    "rho",
+    "gtpase",
+    "signalling",
+    "cell",
+    "migration",
+    "cells",
+    "migrate",
+    "multiple"
+  ],
+  "summary_1l": "Cells migrate in multiple different ways depending on their environment, which includes the extracellular matrix composition, interactions with other cells, and",
+  "query_hits": [],
+  "embed_text": "18041692 Rho GTPase signalling in cell migration science scifact Cells migrate in multiple different ways depending on their environment, which includes the extracellular matrix composition, interactions with other cells, and chemical stimuli. For all types of cell migration, Rho GTPases play a central… 18041692 rho-gtpase-signalling-in-cell-migration rho gtpase signalling cell migration cells migrate multiple Cells migrate in multiple different ways depending on their environment, which includes the extracellular matrix composition, interactions with other cells, and Rho GTPase signalling in cell migration Cells migrate in multiple different ways depending on their environment, which includes the extracellular matrix composition, interactions with other cells, and chemical stimuli. For all types of cell migration, Rho GTPases play a central role, although the relative contribution of each Rho GTPase depends on the environment and cell type. Here, I review recent advances in our understanding of how Rho GTPases contribute to different types of migration, comparing lamellipodium-driven versus bleb-driven migration modes. I also describe how cells migrate across the endothelium. In addition to Rho, Rac and Cdc42, which are well known to regulate migration, I discuss the roles of other less-well characterized members of the Rho family.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.690535+00:00"
+}

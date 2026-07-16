@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15319019",
+  "source_fingerprint": "deeb9353e9e5aa8b6499c0fc93cc27a1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15319019",
+    "n348i-in-the-connection-domain-of-hiv-1-reverse-transcriptase-confers-zidovudine-and-nevirapine-resistance"
+  ],
+  "key_phrases": [
+    "n348i",
+    "connection",
+    "domain",
+    "hiv",
+    "reverse",
+    "transcriptase",
+    "confers",
+    "zidovudine"
+  ],
+  "summary_1l": "Background The catalytically active 66-kDa subunit of the human immunodeficiency virus type 1",
+  "query_hits": [],
+  "embed_text": "15319019 N348I in the Connection Domain of HIV-1 Reverse Transcriptase Confers Zidovudine and Nevirapine Resistance science scifact Background The catalytically active 66-kDa subunit of the human immunodeficiency virus type 1 (HIV-1) reverse transcriptase (RT) consists of DNA polymerase, connection, and ribonuclease H (RNase H) domains. Almost all known RT inhibitor… 15319019 n348i-in-the-connection-domain-of-hiv-1-reverse-transcriptase-confers-zidovudine-and-nevirapine-resistance n348i connection domain hiv reverse transcriptase confers zidovudine Background The catalytically active 66-kDa subunit of the human immunodeficiency virus type 1 N348I in the Connection Domain of HIV-1 Reverse Transcriptase Confers Zidovudine and Nevirapine Resistance Background The catalytically active 66-kDa subunit of the human immunodeficiency virus type 1 (HIV-1) reverse transcriptase (RT) consists of DNA polymerase, connection, and ribonuclease H (RNase H) domains. Almost all known RT inhibitor resistance mutations identified to date map to the polymerase domain of the enzyme. However, the connection and RNase H domains are not routinely analysed in clinical samples and none of the genotyping assays available for patient management sequence the entire RT coding region. The British Columbia Centre for Excellence in HIV/AIDS (the Centre) genotypes clinical isolates up to codon 400 in RT, and our retrospective statistical analyses of the Centre’",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.322132+00:00"
+}

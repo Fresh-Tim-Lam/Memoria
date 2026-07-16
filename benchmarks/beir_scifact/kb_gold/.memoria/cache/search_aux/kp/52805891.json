@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "52805891",
+  "source_fingerprint": "54ec6611a09fdf3727340a73c7e1ae6b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "52805891",
+    "gut-microbiota-is-a-key-modulator-of-insulin-resistance-in-tlr-2-knockout-mice"
+  ],
+  "key_phrases": [
+    "gut",
+    "microbiota",
+    "key",
+    "modulator",
+    "insulin",
+    "resistance",
+    "tlr",
+    "knockout"
+  ],
+  "summary_1l": "Environmental factors and host genetics interact to control the gut microbiota, which may have a role in the development",
+  "query_hits": [],
+  "embed_text": "52805891 Gut Microbiota Is a Key Modulator of Insulin Resistance in TLR 2 Knockout Mice science scifact Environmental factors and host genetics interact to control the gut microbiota, which may have a role in the development of obesity and insulin resistance. TLR2-deficient mice, under germ-free conditions, are protected from diet-induced… 52805891 gut-microbiota-is-a-key-modulator-of-insulin-resistance-in-tlr-2-knockout-mice gut microbiota key modulator insulin resistance tlr knockout Environmental factors and host genetics interact to control the gut microbiota, which may have a role in the development Gut Microbiota Is a Key Modulator of Insulin Resistance in TLR 2 Knockout Mice Environmental factors and host genetics interact to control the gut microbiota, which may have a role in the development of obesity and insulin resistance. TLR2-deficient mice, under germ-free conditions, are protected from diet-induced insulin resistance. It is possible that the presence of gut microbiota could reverse the phenotype of an animal, inducing insulin resistance in an animal genetically determined to have increased insulin sensitivity, such as the TLR2 KO mice. In the present study, we investigated the influence of gut microbiota on metabolic parameters, glucose tolerance, insulin sensitivity, and signaling of TLR2-deficient mice. We investigated the gut microbiota (by metagenomics), the metabolic c",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.750015+00:00"
+}

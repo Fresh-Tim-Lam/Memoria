@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12271486",
+  "source_fingerprint": "d0b939d496bcae3df6754ee71c2470be",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12271486",
+    "motifmap:-integrative-genome-wide-maps-of-regulatory-motif-sites-for-model-species"
+  ],
+  "key_phrases": [
+    "motifmap",
+    "integrative",
+    "genome",
+    "wide",
+    "maps",
+    "regulatory",
+    "motif",
+    "sites"
+  ],
+  "summary_1l": "BACKGROUND A central challenge of biology is to map and understand gene regulation on a genome-wide scale.",
+  "query_hits": [],
+  "embed_text": "12271486 MotifMap: integrative genome-wide maps of regulatory motif sites for model species science scifact BACKGROUND A central challenge of biology is to map and understand gene regulation on a genome-wide scale. For any given genome, only a small fraction of the regulatory elements embedded in the DNA sequence have been characterized, and… 12271486 motifmap:-integrative-genome-wide-maps-of-regulatory-motif-sites-for-model-species motifmap integrative genome wide maps regulatory motif sites BACKGROUND A central challenge of biology is to map and understand gene regulation on a genome-wide scale. MotifMap: integrative genome-wide maps of regulatory motif sites for model species BACKGROUND A central challenge of biology is to map and understand gene regulation on a genome-wide scale. For any given genome, only a small fraction of the regulatory elements embedded in the DNA sequence have been characterized, and there is great interest in developing computational methods to systematically map all these elements and understand their relationships. Such computational efforts, however, are significantly hindered by the overwhelming size of non-coding regions and the statistical variability and complex spatial organizations of regulatory elements and interactions. Genome-wide catalogs of regulatory elements for all model species simply do not yet exist. RESULTS The MotifMap system uses da",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:08.642978+00:00"
+}

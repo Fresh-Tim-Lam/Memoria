@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36178047",
+  "source_fingerprint": "e8b0f616684ef75232a6204e2463e5fe",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36178047",
+    "decrease-of-learning-capacity-in-offspring-with-increasing-paternal-age-in-the-rat."
+  ],
+  "key_phrases": [
+    "decrease",
+    "learning",
+    "capacity",
+    "offspring",
+    "with",
+    "increasing",
+    "paternal",
+    "age"
+  ],
+  "summary_1l": "Decrease of learning capacity in offspring with increasing paternal age in the rat.",
+  "query_hits": [],
+  "embed_text": "36178047 Decrease of learning capacity in offspring with increasing paternal age in the rat. science scifact The same 15 male Wistar rats at the ages of 2.5, 6, 10, 14, 18, and 22 months were successively randomly mated with 2.5-month-old females. In a separate experiment, 15 male Wistar rats at the age of 2.5 months and 15 at the age of 23… 36178047 decrease-of-learning-capacity-in-offspring-with-increasing-paternal-age-in-the-rat. decrease learning capacity offspring with increasing paternal age Decrease of learning capacity in offspring with increasing paternal age in the rat. Decrease of learning capacity in offspring with increasing paternal age in the rat. The same 15 male Wistar rats at the ages of 2.5, 6, 10, 14, 18, and 22 months were successively randomly mated with 2.5-month-old females. In a separate experiment, 15 male Wistar rats at the age of 2.5 months and 15 at the age of 23 months were simultaneously randomly mated with 2.5-month-old females. Offspring were evaluated in regard to the mean number per litter, sex ratio, frequency of gross external malformations, growth pattern, and mortality in the first 13 weeks of life and reproductive capacity at 13 weeks of age. They were also evaluated for spontaneous activity and emotionality with an open field test and for learning capacity with an avoidance conditioning test, both carried out between 10 and",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.940939+00:00"
+}

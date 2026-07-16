@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21383026",
+  "source_fingerprint": "5ff1a3f6ad0aa1484310cc9d0c968224",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21383026",
+    "genes-required-for-mycobacterial-growth-defined-by-high-density-mutagenesis."
+  ],
+  "key_phrases": [
+    "genes",
+    "required",
+    "mycobacterial",
+    "growth",
+    "defined",
+    "by",
+    "high",
+    "density"
+  ],
+  "summary_1l": "Genes required for mycobacterial growth defined by high density mutagenesis.",
+  "query_hits": [],
+  "embed_text": "21383026 Genes required for mycobacterial growth defined by high density mutagenesis. science scifact Despite over a century of research, tuberculosis remains a leading cause of infectious death worldwide. Faced with increasing rates of drug resistance, the identification of genes that are required for the growth of this organism should… 21383026 genes-required-for-mycobacterial-growth-defined-by-high-density-mutagenesis. genes required mycobacterial growth defined by high density Genes required for mycobacterial growth defined by high density mutagenesis. Genes required for mycobacterial growth defined by high density mutagenesis. Despite over a century of research, tuberculosis remains a leading cause of infectious death worldwide. Faced with increasing rates of drug resistance, the identification of genes that are required for the growth of this organism should provide new targets for the design of antimycobacterial agents. Here, we describe the use of transposon site hybridization (TraSH) to comprehensively identify the genes required by the causative agent, Mycobacterium tuberculosis, for optimal growth. These genes include those that can be assigned to essential pathways as well as many of unknown function. The genes important for the growth of M. tuberculosis are largely conserved in the degenerate genome of the leprosy bacillus, Myco",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.979114+00:00"
+}

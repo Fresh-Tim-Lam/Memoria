@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22703082",
+  "source_fingerprint": "baa2e81d2438c55cb1fb9e5742b3cf67",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22703082",
+    "helicobacter-pylori-infection-triggers-aberrant-expression-of-activation-induced-cytidine-deaminase-in-gastric-epithelium"
+  ],
+  "key_phrases": [
+    "helicobacter",
+    "pylori",
+    "infection",
+    "triggers",
+    "aberrant",
+    "expression",
+    "activation",
+    "induced"
+  ],
+  "summary_1l": "Infection with Helicobacter pylori (H.",
+  "query_hits": [],
+  "embed_text": "22703082 Helicobacter pylori infection triggers aberrant expression of activation-induced cytidine deaminase in gastric epithelium science scifact Infection with Helicobacter pylori (H. pylori) is a risk factor for the development of gastric cancer. Here we show that infection of gastric epithelial cells with 'cag' pathogenicity island (cagPAI)-positive H. pylori induced aberrant… 22703082 helicobacter-pylori-infection-triggers-aberrant-expression-of-activation-induced-cytidine-deaminase-in-gastric-epithelium helicobacter pylori infection triggers aberrant expression activation induced Infection with Helicobacter pylori (H. Helicobacter pylori infection triggers aberrant expression of activation-induced cytidine deaminase in gastric epithelium Infection with Helicobacter pylori (H. pylori) is a risk factor for the development of gastric cancer. Here we show that infection of gastric epithelial cells with 'cag' pathogenicity island (cagPAI)-positive H. pylori induced aberrant expression of activation-induced cytidine deaminase (AID), a member of the cytidine-deaminase family that acts as a DNA- and RNA-editing enzyme, via the IκB kinase–dependent nuclear factor-κB activation pathway. H. pylori–mediated upregulation of AID resulted in the accumulation of nucleotide alterations in the TP53 tumor suppressor gene in gastric cells in vitro. Our findings provide evidence that aberrant AID expression caused by H. pyl",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.229397+00:00"
+}

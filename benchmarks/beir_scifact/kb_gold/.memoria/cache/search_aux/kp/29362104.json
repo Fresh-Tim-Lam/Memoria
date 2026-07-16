@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29362104",
+  "source_fingerprint": "4d82aa57f602bad95d625846808f5785",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29362104",
+    "inhibition-of-receptor-mediated-calcium-influx-in-t-cells-by-unsaturated-non-esterified-fatty-acids."
+  ],
+  "key_phrases": [
+    "inhibition",
+    "receptor",
+    "mediated",
+    "calcium",
+    "influx",
+    "cells",
+    "by",
+    "unsaturated"
+  ],
+  "summary_1l": "Inhibition of receptor-mediated calcium influx in T cells by unsaturated non-esterified fatty acids.",
+  "query_hits": [],
+  "embed_text": "29362104 Inhibition of receptor-mediated calcium influx in T cells by unsaturated non-esterified fatty acids. science scifact The effect of omega-3, omega-6 and omega-9 unsaturated fatty acids (UFAs) on receptor-mediated Ca2+ entry was investigated in a T-cell line (JURKAT) by using anti-CD3 antibodies (OKT3) to induce intracellular Ca2+ [( Ca2+]i) increase and… 29362104 inhibition-of-receptor-mediated-calcium-influx-in-t-cells-by-unsaturated-non-esterified-fatty-acids. inhibition receptor mediated calcium influx cells by unsaturated Inhibition of receptor-mediated calcium influx in T cells by unsaturated non-esterified fatty acids. Inhibition of receptor-mediated calcium influx in T cells by unsaturated non-esterified fatty acids. The effect of omega-3, omega-6 and omega-9 unsaturated fatty acids (UFAs) on receptor-mediated Ca2+ entry was investigated in a T-cell line (JURKAT) by using anti-CD3 antibodies (OKT3) to induce intracellular Ca2+ [( Ca2+]i) increase and Ca2+ influx. All the UFAs, as well as Ni2+ ions and 12-O-tetradecanoylphorbol 13-acetate, decreased the OKT3-induced sustained [Ca2+]i increase to basal levels. Although non-esterified fatty acids activate protein kinase C (PKC) [McPhail, Clayton & Snyderman (1984) Science 224, 622-624; Murakami, Chan & Routtenberg (1986) J. Biol. Chem. 261, 15424-15429], studies using H-7 and analysis of the PKC-dependent phosphorylation of 19 and 80 kDa marker substrates",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.803056+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4319174",
+  "source_fingerprint": "cf88c3cd7342c3bad1cbe7b293e5fea6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4319174",
+    "alternatively-activated-macrophages-produce-catecholamines-to-sustain-adaptive-thermogenesis"
+  ],
+  "key_phrases": [
+    "alternatively",
+    "activated",
+    "macrophages",
+    "produce",
+    "catecholamines",
+    "sustain",
+    "adaptive",
+    "thermogenesis"
+  ],
+  "summary_1l": "All homeotherms use thermogenesis to maintain their core body temperature, ensuring that cellular functions",
+  "query_hits": [],
+  "embed_text": "4319174 Alternatively activated macrophages produce catecholamines to sustain adaptive thermogenesis science scifact All homeotherms use thermogenesis to maintain their core body temperature, ensuring that cellular functions and physiological processes can continue in cold environments. In the prevailing model of thermogenesis, when the hypothalamus… 4319174 alternatively-activated-macrophages-produce-catecholamines-to-sustain-adaptive-thermogenesis alternatively activated macrophages produce catecholamines sustain adaptive thermogenesis All homeotherms use thermogenesis to maintain their core body temperature, ensuring that cellular functions Alternatively activated macrophages produce catecholamines to sustain adaptive thermogenesis All homeotherms use thermogenesis to maintain their core body temperature, ensuring that cellular functions and physiological processes can continue in cold environments. In the prevailing model of thermogenesis, when the hypothalamus senses cold temperatures it triggers sympathetic discharge, resulting in the release of noradrenaline in brown adipose tissue and white adipose tissue. Acting via the β(3)-adrenergic receptors, noradrenaline induces lipolysis in white adipocytes, whereas it stimulates the expression of thermogenic genes, such as PPAR-γ coactivator 1a (Ppargc1a), uncoupling protein 1 (Ucp1) and acyl-CoA synthetase long-chain family member 1 (Acsl1), in brown adipocytes. However, the pr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.537287+00:00"
+}

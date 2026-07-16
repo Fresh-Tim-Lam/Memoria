@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14581009",
+  "source_fingerprint": "2322088edb3d9e03304ba167f49631b2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14581009",
+    "microrna-regulation-of-cbx7-mediates-a-switch-of-polycomb-orthologs-during-esc-differentiation"
+  ],
+  "key_phrases": [
+    "microrna",
+    "regulation",
+    "cbx7",
+    "mediates",
+    "switch",
+    "polycomb",
+    "orthologs",
+    "during"
+  ],
+  "summary_1l": "The Polycomb Group (PcG) of chromatin modifiers regulates pluripotency and differentiation.",
+  "query_hits": [],
+  "embed_text": "14581009 MicroRNA Regulation of Cbx7 Mediates a Switch of Polycomb Orthologs during ESC Differentiation science scifact The Polycomb Group (PcG) of chromatin modifiers regulates pluripotency and differentiation. Mammalian genomes encode multiple homologs of the Polycomb repressive complex 1 (PRC1) components, including five orthologs of the Drosophila… 14581009 microrna-regulation-of-cbx7-mediates-a-switch-of-polycomb-orthologs-during-esc-differentiation microrna regulation cbx7 mediates switch polycomb orthologs during The Polycomb Group (PcG) of chromatin modifiers regulates pluripotency and differentiation. MicroRNA Regulation of Cbx7 Mediates a Switch of Polycomb Orthologs during ESC Differentiation The Polycomb Group (PcG) of chromatin modifiers regulates pluripotency and differentiation. Mammalian genomes encode multiple homologs of the Polycomb repressive complex 1 (PRC1) components, including five orthologs of the Drosophila Polycomb protein (Cbx2, Cbx4, Cbx6, Cbx7, and Cbx8). We have identified Cbx7 as the primary Polycomb ortholog of PRC1 complexes in embryonic stem cells (ESCs). The expression of Cbx7 is downregulated during ESC differentiation, preceding the upregulation of Cbx2, Cbx4, and Cbx8, which are directly repressed by Cbx7. Ectopic expression of Cbx7 inhibits differentiation and X chromosome inactivation and enhances ESC self-renewal. Conversely, Cbx7 knockdown induces diffe",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.226277+00:00"
+}

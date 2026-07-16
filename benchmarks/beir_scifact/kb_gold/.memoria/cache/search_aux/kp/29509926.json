@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "29509926",
+  "source_fingerprint": "5559446a5b7ae436fd0fe00286c10c0a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29509926"
+  ],
+  "key_phrases": [
+    "high",
+    "density",
+    "lipoproteins",
+    "exert",
+    "pro",
+    "inflammatory",
+    "effects",
+    "macrophages"
+  ],
+  "summary_1l": "High-Density Lipoproteins Exert Pro-inflammatory Effects on Macrophages via Passive Cholesterol Depletion and PKC-NF-κB/STAT1-IRF1 Signaling.",
+  "query_hits": [],
+  "embed_text": "29509926 High-Density Lipoproteins Exert Pro-inflammatory Effects on Macrophages via Passive Cholesterol Depletion and PKC-NF-κB/STAT1-IRF1 Signaling. science scifact Membrane cholesterol modulates a variety of cell signaling pathways and functions. While cholesterol depletion by high-density lipoproteins (HDLs) has potent anti-inflammatory effects in various cell types, its effects on inflammatory… 29509926 high density lipoproteins exert pro inflammatory effects macrophages High-Density Lipoproteins Exert Pro-inflammatory Effects on Macrophages via Passive Cholesterol Depletion and PKC-NF-κB/STAT1-IRF1 Signaling. High-Density Lipoproteins Exert Pro-inflammatory Effects on Macrophages via Passive Cholesterol Depletion and PKC-NF-κB/STAT1-IRF1 Signaling. Membrane cholesterol modulates a variety of cell signaling pathways and functions. While cholesterol depletion by high-density lipoproteins (HDLs) has potent anti-inflammatory effects in various cell types, its effects on inflammatory responses in macrophages remain elusive. Here we show overt pro-inflammatory effects of HDL-mediated passive cholesterol depletion and lipid raft disruption in murine and human primary macrophages in vitro. These pro-inflammatory effects were confirmed in vivo in peritoneal macrophages from apoA-I transgenic mice, which have elevated HDL levels. In line with these findings, the innate immune responses required for clear",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.005299+00:00"
+}

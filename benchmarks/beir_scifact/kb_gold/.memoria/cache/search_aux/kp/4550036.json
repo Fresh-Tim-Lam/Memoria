@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4550036",
+  "source_fingerprint": "4c1691a9ce6ce36645553f18af6275df",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4550036",
+    "risk-of-gestational-hypertension-in-relation-to-folic-acid-supplementation-during-pregnancy."
+  ],
+  "key_phrases": [
+    "risk",
+    "gestational",
+    "hypertension",
+    "relation",
+    "folic",
+    "acid",
+    "supplementation",
+    "during"
+  ],
+  "summary_1l": "Risk of gestational hypertension in relation to folic acid supplementation during pregnancy.",
+  "query_hits": [],
+  "embed_text": "4550036 Risk of gestational hypertension in relation to folic acid supplementation during pregnancy. science scifact The authors investigated the association between folic acid supplementation and gestational hypertension. The study population included women with nonmalformed infants in the United States and Canada who were participating in the Slone… 4550036 risk-of-gestational-hypertension-in-relation-to-folic-acid-supplementation-during-pregnancy. risk gestational hypertension relation folic acid supplementation during Risk of gestational hypertension in relation to folic acid supplementation during pregnancy. Risk of gestational hypertension in relation to folic acid supplementation during pregnancy. The authors investigated the association between folic acid supplementation and gestational hypertension. The study population included women with nonmalformed infants in the United States and Canada who were participating in the Slone Epidemiology Center Birth Defects Study between 1993 and 2000. Women were interviewed within 6 months after delivery about sociodemographic and medical factors, the occurrence of hypertension with or without preeclampsia, and multivitamin use in pregnancy. Relative risks, adjusted for weight, parity, twin pregnancy, diabetes, smoking, education, and family income, were estimated using Cox regression models. Of 2,100 women, 204 (9.7%) reported gestational hypertension",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.449010+00:00"
+}

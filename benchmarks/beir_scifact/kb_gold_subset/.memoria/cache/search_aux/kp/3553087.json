@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3553087",
+  "source_fingerprint": "b7c7aebb24a9bb9eb0b8a154e8721127",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3553087",
+    "mitochondrial-iron-chelation-ameliorates-cigarette-smoke-induced-bronchitis-and-emphysema-in-mice"
+  ],
+  "key_phrases": [
+    "mitochondrial",
+    "iron",
+    "chelation",
+    "ameliorates",
+    "cigarette",
+    "smoke",
+    "induced",
+    "bronchitis"
+  ],
+  "summary_1l": "Chronic obstructive pulmonary disease (COPD) is linked to both cigarette smoking and genetic determina",
+  "query_hits": [],
+  "embed_text": "3553087 Mitochondrial iron chelation ameliorates cigarette-smoke induced bronchitis and emphysema in mice science scifact Chronic obstructive pulmonary disease (COPD) is linked to both cigarette smoking and genetic determinants. We have previously identified iron-responsive element-binding protein 2 (IRP2) as an important COPD susceptibility gene and have… 3553087 mitochondrial-iron-chelation-ameliorates-cigarette-smoke-induced-bronchitis-and-emphysema-in-mice mitochondrial iron chelation ameliorates cigarette smoke induced bronchitis Chronic obstructive pulmonary disease (COPD) is linked to both cigarette smoking and genetic determina Mitochondrial iron chelation ameliorates cigarette-smoke induced bronchitis and emphysema in mice Chronic obstructive pulmonary disease (COPD) is linked to both cigarette smoking and genetic determinants. We have previously identified iron-responsive element-binding protein 2 (IRP2) as an important COPD susceptibility gene and have shown that IRP2 protein is increased in the lungs of individuals with COPD. Here we demonstrate that mice deficient in Irp2 were protected from cigarette smoke (CS)-induced experimental COPD. By integrating RNA immunoprecipitation followed by sequencing (RIP-seq), RNA sequencing (RNA-seq), and gene expression and functional enrichment clustering analysis, we identified Irp2 as a regulator of mitochondrial function in the lungs of mice. Irp2 increased mitochondri",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:13.091519+00:00"
+}

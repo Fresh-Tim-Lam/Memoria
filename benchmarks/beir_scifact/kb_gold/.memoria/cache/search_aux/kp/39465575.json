@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "39465575",
+  "source_fingerprint": "9cc20a40c8977c4b15b23ed0db7d3911",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "39465575",
+    "direct-reprogramming-of-fibroblasts-into-neural-stem-cells-by-defined-factors."
+  ],
+  "key_phrases": [
+    "direct",
+    "reprogramming",
+    "fibroblasts",
+    "into",
+    "neural",
+    "stem",
+    "cells",
+    "by"
+  ],
+  "summary_1l": "Direct reprogramming of fibroblasts into neural stem cells by defined factors.",
+  "query_hits": [],
+  "embed_text": "39465575 Direct reprogramming of fibroblasts into neural stem cells by defined factors. science scifact Recent studies have shown that defined sets of transcription factors can directly reprogram differentiated somatic cells to a different differentiated cell type without passing through a pluripotent state, but the restricted proliferative… 39465575 direct-reprogramming-of-fibroblasts-into-neural-stem-cells-by-defined-factors. direct reprogramming fibroblasts into neural stem cells by Direct reprogramming of fibroblasts into neural stem cells by defined factors. Direct reprogramming of fibroblasts into neural stem cells by defined factors. Recent studies have shown that defined sets of transcription factors can directly reprogram differentiated somatic cells to a different differentiated cell type without passing through a pluripotent state, but the restricted proliferative and lineage potential of the resulting cells limits the scope of their potential applications. Here we show that a combination of transcription factors (Brn4/Pou3f4, Sox2, Klf4, c-Myc, plus E47/Tcf3) induces mouse fibroblasts to directly acquire a neural stem cell identity-which we term as induced neural stem cells (iNSCs). Direct reprogramming of fibroblasts into iNSCs is a gradual process in which the donor transcriptional program is silenced over time. iNSCs exhibit cell mor",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.655218+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9591368",
+  "source_fingerprint": "c736c42b68114be0e70f65fc168c8eb0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9591368",
+    "the-m/gp5-glycoprotein-complex-of-porcine-reproductive-and-respiratory-syndrome-virus-binds-the-sialoadhesin-receptor-in-a-sialic-acid-dependent-manner"
+  ],
+  "key_phrases": [
+    "gp5",
+    "glycoprotein",
+    "complex",
+    "porcine",
+    "reproductive",
+    "respiratory",
+    "syndrome",
+    "virus"
+  ],
+  "summary_1l": "The porcine reproductive and respiratory syndrom",
+  "query_hits": [],
+  "embed_text": "9591368 The M/GP5 Glycoprotein Complex of Porcine Reproductive and Respiratory Syndrome Virus Binds the Sialoadhesin Receptor in a Sialic Acid-Dependent Manner science scifact The porcine reproductive and respiratory syndrome virus (PRRSV) is a major threat to swine health worldwide and is considered the most significant viral disease in the swine industry today. In past years, studies on the entry of the virus… 9591368 the-m/gp5-glycoprotein-complex-of-porcine-reproductive-and-respiratory-syndrome-virus-binds-the-sialoadhesin-receptor-in-a-sialic-acid-dependent-manner gp5 glycoprotein complex porcine reproductive respiratory syndrome virus The porcine reproductive and respiratory syndrom The M/GP5 Glycoprotein Complex of Porcine Reproductive and Respiratory Syndrome Virus Binds the Sialoadhesin Receptor in a Sialic Acid-Dependent Manner The porcine reproductive and respiratory syndrome virus (PRRSV) is a major threat to swine health worldwide and is considered the most significant viral disease in the swine industry today. In past years, studies on the entry of the virus into its host cell have led to the identification of a number of essential virus receptors and entry mediators. However, viral counterparts for these molecules have remained elusive and this has made rational development of new generation vaccines impossible. The main objective of this study was to identify the viral counterparts for sialoadhesin, a crucial PRRSV receptor on macrophages. For this purpose,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.303701+00:00"
+}

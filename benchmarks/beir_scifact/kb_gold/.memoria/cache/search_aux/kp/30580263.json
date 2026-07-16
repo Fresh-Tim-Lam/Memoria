@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "30580263",
+  "source_fingerprint": "1d5bb647aac4d7e48f27383a5a91b7c3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "30580263",
+    "differential-expression-of-bcl-2-in-intestinal-epithelia.-correlation-with-attenuation-of-apoptosis-in-colonic-crypts-and-the-incidence-of-colonic-neoplasia."
+  ],
+  "key_phrases": [
+    "differential",
+    "expression",
+    "bcl",
+    "intestinal",
+    "epithelia",
+    "correlation",
+    "with",
+    "attenuation"
+  ],
+  "summary_1l": "Differential expression of bcl-2 in intestinal epithelia.",
+  "query_hits": [],
+  "embed_text": "30580263 Differential expression of bcl-2 in intestinal epithelia. Correlation with attenuation of apoptosis in colonic crypts and the incidence of colonic neoplasia. science scifact The cell-positional incidence of both spontaneous and damage-induced apoptosis of epithelial cells was assessed in longitudinal sections of the crypts of small intestine and colon of BDF1 mice. This was compared, using… 30580263 differential-expression-of-bcl-2-in-intestinal-epithelia.-correlation-with-attenuation-of-apoptosis-in-colonic-crypts-and-the-incidence-of-colonic-neoplasia. differential expression bcl intestinal epithelia correlation with attenuation Differential expression of bcl-2 in intestinal epithelia. Differential expression of bcl-2 in intestinal epithelia. Correlation with attenuation of apoptosis in colonic crypts and the incidence of colonic neoplasia. The cell-positional incidence of both spontaneous and damage-induced apoptosis of epithelial cells was assessed in longitudinal sections of the crypts of small intestine and colon of BDF1 mice. This was compared, using immunohistochemistry, with the pattern of expression of bcl-2, a suppressor of apoptosis. In the small intestine, apoptosis was maximal around cell position 4 from the base of the crypt; this closely corresponds to the position considered to contain the stem cells. In the colon, however, apoptosis was not confined to the area considered to harbour the stem cells (position 1 and 2). Instead, apoptosis was attenuated and",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.809666+00:00"
+}

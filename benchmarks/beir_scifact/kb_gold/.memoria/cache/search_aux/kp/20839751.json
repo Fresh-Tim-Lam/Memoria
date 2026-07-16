@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20839751",
+  "source_fingerprint": "6a4211217e375f4eeef8494bc9959d95",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20839751",
+    "apoptosis-in-breast-cancer:-relationship-with-other-pathological-parameters."
+  ],
+  "key_phrases": [
+    "apoptosis",
+    "breast",
+    "cancer",
+    "relationship",
+    "with",
+    "other",
+    "pathological",
+    "parameters"
+  ],
+  "summary_1l": "Apoptosis in breast cancer: relationship with other pathological parameters.",
+  "query_hits": [],
+  "embed_text": "20839751 Apoptosis in breast cancer: relationship with other pathological parameters. science scifact Apoptosis is a frequent phenomenon in breast cancer and it can be detected by light microscopy in conventional histopathological sections or by special staining techniques. The number of apoptotic cells as a percentage of cells present, or… 20839751 apoptosis-in-breast-cancer:-relationship-with-other-pathological-parameters. apoptosis breast cancer relationship with other pathological parameters Apoptosis in breast cancer: relationship with other pathological parameters. Apoptosis in breast cancer: relationship with other pathological parameters. Apoptosis is a frequent phenomenon in breast cancer and it can be detected by light microscopy in conventional histopathological sections or by special staining techniques. The number of apoptotic cells as a percentage of cells present, or the number of apoptotic cells per square millimetre of neoplastic tissue, is usually described as the apoptotic index (AI). In breast cancer, the AI is not related to tumour size, axillary lymph node metastasis or distant metastasis at diagnosis. It is greater in invasive ductal carcinomas than in other histological types. High AI is also related to high histological grade, high nuclear grade, comedo-type necrosis, lack of tubule formation, and dense infiltration of the tumour b",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.000781+00:00"
+}

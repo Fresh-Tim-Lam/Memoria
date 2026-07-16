@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "30226988",
+  "source_fingerprint": "1ecec8fa9b71f7813497ef649465713f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "30226988",
+    "cancer-survival-increases-in-europe,-but-international-differences-remain-wide."
+  ],
+  "key_phrases": [
+    "cancer",
+    "survival",
+    "increases",
+    "europe",
+    "but",
+    "international",
+    "differences",
+    "remain"
+  ],
+  "summary_1l": "Cancer survival increases in Europe, but international differences remain wide.",
+  "query_hits": [],
+  "embed_text": "30226988 Cancer survival increases in Europe, but international differences remain wide. science scifact The EUROCARE project analysed cancer survival data from 45 population-based cancer registries in 17 European countries, revealing wide international differences in cancer survival. We calculated 5-year relative survival for 1836287… 30226988 cancer-survival-increases-in-europe,-but-international-differences-remain-wide. cancer survival increases europe but international differences remain Cancer survival increases in Europe, but international differences remain wide. Cancer survival increases in Europe, but international differences remain wide. The EUROCARE project analysed cancer survival data from 45 population-based cancer registries in 17 European countries, revealing wide international differences in cancer survival. We calculated 5-year relative survival for 1836287 patients diagnosed with one of 13 cancers during the period 1978-1989. The data, from 20 cancer registries in 13 countries, were grouped into four regions: Finland, Sweden, Iceland (Northern Europe); Denmark, England and Scotland (UK and Denmark); France, The Netherlands, Germany, Italy and Switzerland (Western Europe); Estonia and Poland (Eastern Europe), and broken down into four periods (1978-1980, 1981-1983, 1984-1986, 1987-1989). For each cancer, mean European and regional survi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.514949+00:00"
+}

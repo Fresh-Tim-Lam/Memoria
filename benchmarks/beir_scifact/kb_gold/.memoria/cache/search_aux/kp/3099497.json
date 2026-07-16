@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3099497",
+  "source_fingerprint": "6e783bba092c03b9a6b1721b120df914",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3099497",
+    "how-many-images-are-in-an-auditory-scene?"
+  ],
+  "key_phrases": [
+    "how",
+    "many",
+    "images",
+    "auditory",
+    "scene",
+    "if",
+    "consists",
+    "spatially"
+  ],
+  "summary_1l": "How many images are in an auditory scene?",
+  "query_hits": [],
+  "embed_text": "3099497 How many images are in an auditory scene? science scifact If an auditory scene consists of many spatially separated sound sources, how many sound sources can be processed by the auditory system? Experiment I determined how many speech sources could be localized simultaneously on the azimuth… 3099497 how-many-images-are-in-an-auditory-scene? how many images auditory scene if consists spatially How many images are in an auditory scene? How many images are in an auditory scene? If an auditory scene consists of many spatially separated sound sources, how many sound sources can be processed by the auditory system? Experiment I determined how many speech sources could be localized simultaneously on the azimuth plane. Different words were played from multiple loudspeakers, and listeners reported the total number of sound sources and their individual locations. In experiment II the accuracy of localizing one speech source in a mixture of multiple speech sources was determined. An extra sound source was added to an existing set of sound sources, and the task was to localize that extra source. In experiment III the setup and task were the same as in experiment I, except that the sounds were tones. The results showed that the max",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.237022+00:00"
+}

@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "kp_id": "6110532#1",
+  "source_fingerprint": "e6a2626b8de4775689c420652997a359",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "中子发现史"
+  ],
+  "aliases": [
+    "6110532#1"
+  ],
+  "key_phrases": [
+    "kindle",
+    "自助",
+    "出版",
+    "2007",
+    "年底",
+    "首次",
+    "公测",
+    "在此期间"
+  ],
+  "summary_1l": "2007年底，Kindle自助出版首次公测。",
+  "query_hits": [],
+  "embed_text": "6110532#1 Kindle自助出版 Kindle自助出版 2007年底，Kindle自助出版首次公测。在此期间，亚马逊通过电子邮件与广告的方式来吸引作者加盟。2009年12月5日，在《纽约时报》的采访里，亚马逊CEO杰弗里·贝索斯透露说，Kindle电子书的销售收入中，亚马逊只会保留65%，而剩下的35%将分给亚马逊的作者和出版商。许多人发现，苹果商店会将70％的版税分给APP发布者，在此之后，亚马逊表示他们也会将70％的版税分给作者和出版商。 中子发现史 6110532#1 kindle 自助 出版 2007 年底 首次 公测 在此期间 2007年底，Kindle自助出版首次公测。 Kindle自助出版 2007年底，Kindle自助出版首次公测。在此期间，亚马逊通过电子邮件与广告的方式来吸引作者加盟。2009年12月5日，在《纽约时报》的采访里，亚马逊CEO杰弗里·贝索斯透露说，Kindle电子书的销售收入中，亚马逊只会保留65%，而剩下的35%将分给亚马逊的作者和出版商。许多人发现，苹果商店会将70％的版税分给APP发布者，在此之后，亚马逊表示他们也会将70％的版税分给作者和出版商。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:22:51.727800+00:00"
+}

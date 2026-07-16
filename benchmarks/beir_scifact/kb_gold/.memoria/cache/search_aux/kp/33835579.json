@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "33835579",
+  "source_fingerprint": "4e8f4803688805a097c49da26c77aad1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "33835579",
+    "pathology-of-postprimary-tuberculosis-in-humans-and-mice:-contradiction-of-long-held-beliefs."
+  ],
+  "key_phrases": [
+    "pathology",
+    "postprimary",
+    "tuberculosis",
+    "humans",
+    "mice",
+    "contradiction",
+    "long",
+    "held"
+  ],
+  "summary_1l": "Pathology of postprimary tuberculosis in humans and mice: contradiction of long-held beliefs.",
+  "query_hits": [],
+  "embed_text": "33835579 Pathology of postprimary tuberculosis in humans and mice: contradiction of long-held beliefs. science scifact Tuberculosis remains one of the world's leading infectious causes of death. Approximately 80% of all disease is due to postprimary (secondary) tuberculosis in the lung. Unfortunately, tissues of developing lesions are seldom available and… 33835579 pathology-of-postprimary-tuberculosis-in-humans-and-mice:-contradiction-of-long-held-beliefs. pathology postprimary tuberculosis humans mice contradiction long held Pathology of postprimary tuberculosis in humans and mice: contradiction of long-held beliefs. Pathology of postprimary tuberculosis in humans and mice: contradiction of long-held beliefs. Tuberculosis remains one of the world's leading infectious causes of death. Approximately 80% of all disease is due to postprimary (secondary) tuberculosis in the lung. Unfortunately, tissues of developing lesions are seldom available and there are no recognized models of postprimary tuberculosis. In the preantibiotic era when tissues were more abundant, several investigators described early postprimary tuberculosis as a lipid pneumonia quite different from the caseating granulomas commonly described today. We used histopathologic, immunohistochemical and acid fast stains to examine tissues from several people with untreated primary and postprimary tuberculosis and compared the findings with those",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.736627+00:00"
+}

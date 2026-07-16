@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8538916",
+  "source_fingerprint": "a59046984605cf2b66d25dde6e66d0c4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8538916",
+    "the-cytosolic-chaperonin-cct/tric-and-cancer-cell-proliferation"
+  ],
+  "key_phrases": [
+    "cytosolic",
+    "chaperonin",
+    "cct",
+    "tric",
+    "cancer",
+    "cell",
+    "proliferation",
+    "molecular"
+  ],
+  "summary_1l": "The molecular chaperone CCT/TRiC plays a central role in maintaining cellular proteostasis as it mediates the folding of the major cytos",
+  "query_hits": [],
+  "embed_text": "8538916 The Cytosolic Chaperonin CCT/TRiC and Cancer Cell Proliferation science scifact The molecular chaperone CCT/TRiC plays a central role in maintaining cellular proteostasis as it mediates the folding of the major cytoskeletal proteins tubulins and actins. CCT/TRiC is also involved in the oncoprotein cyclin E, the Von… 8538916 the-cytosolic-chaperonin-cct/tric-and-cancer-cell-proliferation cytosolic chaperonin cct tric cancer cell proliferation molecular The molecular chaperone CCT/TRiC plays a central role in maintaining cellular proteostasis as it mediates the folding of the major cytos The Cytosolic Chaperonin CCT/TRiC and Cancer Cell Proliferation The molecular chaperone CCT/TRiC plays a central role in maintaining cellular proteostasis as it mediates the folding of the major cytoskeletal proteins tubulins and actins. CCT/TRiC is also involved in the oncoprotein cyclin E, the Von Hippel-Lindau tumour suppressor protein, cyclin B and p21(ras) folding which strongly suggests that it is involved in cell proliferation and tumor genesis. To assess the involvement of CCT/TRiC in tumor genesis, we quantified its expression levels and activity in 18 cancer, one non-cancer human cell lines and a non-cancer human liver. We show that the expression levels of CCT/TRiC in cancer cell lines are higher than that in normal cells. However, CCT/TRiC activity does not always correlate wit",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.965047+00:00"
+}

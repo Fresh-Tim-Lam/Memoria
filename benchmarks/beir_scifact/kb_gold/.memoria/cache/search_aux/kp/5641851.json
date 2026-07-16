@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5641851",
+  "source_fingerprint": "0935aa20a91c283e201d89ea08abcc3e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5641851",
+    "social-and-geographical-factors-affecting-access-to-treatment-of-colorectal-cancer:-a-cancer-registry-study"
+  ],
+  "key_phrases": [
+    "social",
+    "geographical",
+    "factors",
+    "affecting",
+    "access",
+    "treatment",
+    "colorectal",
+    "cancer"
+  ],
+  "summary_1l": "OBJECTIVE Cancer outcomes vary between and within countries with patients from deprived back",
+  "query_hits": [],
+  "embed_text": "5641851 Social and geographical factors affecting access to treatment of colorectal cancer: a cancer registry study science scifact OBJECTIVE Cancer outcomes vary between and within countries with patients from deprived backgrounds known to have inferior survival. The authors set out to explore the effect of deprivation in relation to the accessibility of hospitals… 5641851 social-and-geographical-factors-affecting-access-to-treatment-of-colorectal-cancer:-a-cancer-registry-study social geographical factors affecting access treatment colorectal cancer OBJECTIVE Cancer outcomes vary between and within countries with patients from deprived back Social and geographical factors affecting access to treatment of colorectal cancer: a cancer registry study OBJECTIVE Cancer outcomes vary between and within countries with patients from deprived backgrounds known to have inferior survival. The authors set out to explore the effect of deprivation in relation to the accessibility of hospitals offering diagnostic and therapeutic services on stage at presentation and receipt of treatment. DESIGN Analysis of a Cancer Registry Database. Data included stage and treatment details from the first 6 months. The socioeconomic status of the immediate area of residence and the travel time from home to hospital was derived from the postcode. SETTING Population-based study of patients resident in a large area in the north of England. PARTICIPANTS 39 619",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.773541+00:00"
+}

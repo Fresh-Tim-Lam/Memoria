@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "40232172",
+  "source_fingerprint": "72a0cc8f73e740d0296057b2dc13510f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "40232172",
+    "triglyceride-depletion-of-brown-adipose-tissue-enables-analysis-of-mitochondrial-respiratory-function-in-permeabilized-biopsies."
+  ],
+  "key_phrases": [
+    "triglyceride",
+    "depletion",
+    "brown",
+    "adipose",
+    "tissue",
+    "enables",
+    "analysis",
+    "mitochondrial"
+  ],
+  "summary_1l": "Triglyceride depletion of brown adipose tissue enables analysis of mitochondrial respiratory function in permeabilized biopsies.",
+  "query_hits": [],
+  "embed_text": "40232172 Triglyceride depletion of brown adipose tissue enables analysis of mitochondrial respiratory function in permeabilized biopsies. science scifact The research on mitochondrial functions in adipocytes has increasingly evidenced that mitochondria plays an important role in the onset and/or progression of obesity and related pathologies. Mitochondrial function in brown adipose tissue… 40232172 triglyceride-depletion-of-brown-adipose-tissue-enables-analysis-of-mitochondrial-respiratory-function-in-permeabilized-biopsies. triglyceride depletion brown adipose tissue enables analysis mitochondrial Triglyceride depletion of brown adipose tissue enables analysis of mitochondrial respiratory function in permeabilized biopsies. Triglyceride depletion of brown adipose tissue enables analysis of mitochondrial respiratory function in permeabilized biopsies. The research on mitochondrial functions in adipocytes has increasingly evidenced that mitochondria plays an important role in the onset and/or progression of obesity and related pathologies. Mitochondrial function in brown adipose tissue (BAT) has been classically assessed by measuring either the levels/activity of mitochondrial enzymes, or the respiration in isolated mitochondria. Isolation of mitochondria is not advantageous because it demands significant time and amount of tissue and, as tissue homogenates, disrupts biochemical and physical connections of mitochondria within the cell. Here, we described a new and efficient protocol to analyze the mitochondrial",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.364184+00:00"
+}

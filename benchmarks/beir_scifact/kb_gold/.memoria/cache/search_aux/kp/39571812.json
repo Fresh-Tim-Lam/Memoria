@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "39571812",
+  "source_fingerprint": "6b976d40a729357bb59e1bc78359b580",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "39571812",
+    "congenital-hypogonadotropic-hypogonadism:-a-trait-shared-by-several-complex-neurodevelopmental-disorders."
+  ],
+  "key_phrases": [
+    "congenital",
+    "hypogonadotropic",
+    "hypogonadism",
+    "trait",
+    "shared",
+    "by",
+    "several",
+    "complex"
+  ],
+  "summary_1l": "Congenital Hypogonadotropic Hypogonadism: A Trait Shared by Several Complex Neurodevelopmental Disorders.",
+  "query_hits": [],
+  "embed_text": "39571812 Congenital Hypogonadotropic Hypogonadism: A Trait Shared by Several Complex Neurodevelopmental Disorders. science scifact Reproductive function depends on the activity of the gonadotropic axis, which is controlled by a hypothalamic neural network whose main function is to regulate the secretion of gonadotropin-releasing hormone (GnRH). This endocrine network… 39571812 congenital-hypogonadotropic-hypogonadism:-a-trait-shared-by-several-complex-neurodevelopmental-disorders. congenital hypogonadotropic hypogonadism trait shared by several complex Congenital Hypogonadotropic Hypogonadism: A Trait Shared by Several Complex Neurodevelopmental Disorders. Congenital Hypogonadotropic Hypogonadism: A Trait Shared by Several Complex Neurodevelopmental Disorders. Reproductive function depends on the activity of the gonadotropic axis, which is controlled by a hypothalamic neural network whose main function is to regulate the secretion of gonadotropin-releasing hormone (GnRH). This endocrine network is not mature at birth, and several phases of activation-inactivation of the gonadotropic axis are necessary for its normal development. The postnatal maturation of the GnRH network lies under the control of a neurodevelopmental program that starts in fetal life and ends at puberty. There are many clinical situations in which this program is interrupted, leading to congenital hypogonadotropic hypogonadism (CHH) and an absence of puberty. For many year",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.777873+00:00"
+}

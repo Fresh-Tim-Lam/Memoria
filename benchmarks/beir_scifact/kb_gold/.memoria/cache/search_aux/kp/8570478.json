@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8570478",
+  "source_fingerprint": "69999e2787da5bfe777cf0bd21b42411",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8570478",
+    "in-vivo-microtubules-are-copolymers-of-available-beta-tubulin-isotypes:-localization-of-each-of-six-vertebrate-beta-tubulin-isotypes-using-polyclonal-antibodies-elicited-by-synthetic-peptide-antigens"
+  ],
+  "key_phrases": [
+    "vivo",
+    "microtubules",
+    "copolymers",
+    "available",
+    "beta",
+    "tubulin",
+    "isotypes",
+    "localization"
+  ],
+  "summary_1l": "In vivo microtubules are copolymers of available beta-tubulin isotypes: localization of each of six vertebrate beta-tubulin isotypes using polyclonal antibodies elicited by synthetic peptide antigens",
+  "query_hits": [],
+  "embed_text": "8570478 In vivo microtubules are copolymers of available beta-tubulin isotypes: localization of each of six vertebrate beta-tubulin isotypes using polyclonal antibodies elicited by synthetic peptide antigens science scifact beta-Tubulin is encoded in the genomes of higher animals by a small multigene family comprising approximately seven functional genes. These genes produce a family of closely related, but distinct polypeptide isotypes that are distinguished… 8570478 in-vivo-microtubules-are-copolymers-of-available-beta-tubulin-isotypes:-localization-of-each-of-six-vertebrate-beta-tubulin-isotypes-using-polyclonal-antibodies-elicited-by-synthetic-peptide-antigens vivo microtubules copolymers available beta tubulin isotypes localization In vivo microtubules are copolymers of available beta-tubulin isotypes: localization of each of six vertebrate beta-tubulin isotypes using polyclonal antibodies elicited by synthetic peptide antigens In vivo microtubules are copolymers of available beta-tubulin isotypes: localization of each of six vertebrate beta-tubulin isotypes using polyclonal antibodies elicited by synthetic peptide antigens beta-Tubulin is encoded in the genomes of higher animals by a small multigene family comprising approximately seven functional genes. These genes produce a family of closely related, but distinct polypeptide isotypes that are distinguished principally by sequences within the approximately 15 carboxy-terminal amino acid residues. By immunizing rabbits with chemically synthesized peptides corresponding to these variable domain sequences, we have now prepared polyclonal antibodies specific for each of six distinct isotypes. Specificity of each antiserum has been demonstrated unambiguously by anti",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.076858+00:00"
+}

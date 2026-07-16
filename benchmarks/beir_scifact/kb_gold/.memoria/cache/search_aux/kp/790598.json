@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "790598",
+  "source_fingerprint": "863133da43b520b360a0a67afaf16b14",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "790598"
+  ],
+  "key_phrases": [
+    "bayh",
+    "dole",
+    "act",
+    "university",
+    "research",
+    "development",
+    "this",
+    "paper"
+  ],
+  "summary_1l": "This paper examines the relationship between university research and development (R&D) activities and the Bayh-Dole Act.",
+  "query_hits": [],
+  "embed_text": "790598 The Bayh–Dole Act and university research and development science scifact This paper examines the relationship between university research and development (R&D) activities and the Bayh-Dole Act. This act made it much easier for universities to obtain patents from research funded by the federal government and may… 790598 bayh dole act university research development this paper This paper examines the relationship between university research and development (R&D) activities and the Bayh-Dole Act. The Bayh–Dole Act and university research and development This paper examines the relationship between university research and development (R&D) activities and the Bayh-Dole Act. This act made it much easier for universities to obtain patents from research funded by the federal government and may have provided universities with an incentive to alter their R&D activities. The Act may provide an incentive to reduce basic research (which does not generate licensing fees) and increase applied research (which does generate patents and licensing fees). In addition, industry might be more willing to fund university R&D projects since the results would now be easier to patent. This paper differs from the existing literature which uses patent data (a measure of research output) by using research an",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.419148+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6540064",
+  "source_fingerprint": "d13a5b3453761a85097500a74b432f2c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6540064",
+    "effects-of-pcsk9-inhibition-with-alirocumab-on-lipoprotein-metabolism-in-healthy-humans"
+  ],
+  "key_phrases": [
+    "effects",
+    "pcsk9",
+    "inhibition",
+    "with",
+    "alirocumab",
+    "lipoprotein",
+    "metabolism",
+    "healthy"
+  ],
+  "summary_1l": "BACKGROUND Alirocumab, a monoclonal antibody to proprotein convertase subtilisin/kexin type 9 (PCSK9), lowers pl",
+  "query_hits": [],
+  "embed_text": "6540064 Effects of PCSK9 Inhibition With Alirocumab on Lipoprotein Metabolism in Healthy Humans science scifact BACKGROUND Alirocumab, a monoclonal antibody to proprotein convertase subtilisin/kexin type 9 (PCSK9), lowers plasma low-density lipoprotein (LDL) cholesterol and apolipoprotein B100 (apoB). Although studies in mice and cells have… 6540064 effects-of-pcsk9-inhibition-with-alirocumab-on-lipoprotein-metabolism-in-healthy-humans effects pcsk9 inhibition with alirocumab lipoprotein metabolism healthy BACKGROUND Alirocumab, a monoclonal antibody to proprotein convertase subtilisin/kexin type 9 (PCSK9), lowers pl Effects of PCSK9 Inhibition With Alirocumab on Lipoprotein Metabolism in Healthy Humans BACKGROUND Alirocumab, a monoclonal antibody to proprotein convertase subtilisin/kexin type 9 (PCSK9), lowers plasma low-density lipoprotein (LDL) cholesterol and apolipoprotein B100 (apoB). Although studies in mice and cells have identified increased hepatic LDL receptors as the basis for LDL lowering by PCSK9 inhibitors, there have been no human studies characterizing the effects of PCSK9 inhibitors on lipoprotein metabolism. In particular, it is not known whether inhibition of PCSK9 has any effects on very low-density lipoprotein or intermediate-density lipoprotein (IDL) metabolism. Inhibition of PCSK9 also results in reductions of plasma lipoprotein (a) levels. The regulation of plasma Lp(a) levels,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.155201+00:00"
+}

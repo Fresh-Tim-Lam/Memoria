@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22682497",
+  "source_fingerprint": "6baacf79b4c822812844bc2a6b5b4ad2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22682497",
+    "purkinje-cell-compartments-in-the-reeler-mutant-mouse-as-revealed-by-zebrin-ii-and-90-acetylated-glycolipid-antigen-expression"
+  ],
+  "key_phrases": [
+    "purkinje",
+    "cell",
+    "compartments",
+    "reeler",
+    "mutant",
+    "mouse",
+    "as",
+    "revealed"
+  ],
+  "summary_1l": "The cerebellum is organized into a series of parasagittally aligned bands",
+  "query_hits": [],
+  "embed_text": "22682497 Purkinje cell compartments in the reeler mutant mouse as revealed by Zebrin II and 90-acetylated glycolipid antigen expression science scifact The cerebellum is organized into a series of parasagittally aligned bands that may be revealed histologically in the adult mouse by largely complementary immunostaining of Purkinje cell sets with the monoclonal antibodies Zebrin II (ZII;… 22682497 purkinje-cell-compartments-in-the-reeler-mutant-mouse-as-revealed-by-zebrin-ii-and-90-acetylated-glycolipid-antigen-expression purkinje cell compartments reeler mutant mouse as revealed The cerebellum is organized into a series of parasagittally aligned bands Purkinje cell compartments in the reeler mutant mouse as revealed by Zebrin II and 90-acetylated glycolipid antigen expression The cerebellum is organized into a series of parasagittally aligned bands that may be revealed histologically in the adult mouse by largely complementary immunostaining of Purkinje cell sets with the monoclonal antibodies Zebrin II (ZII; antigen:aldolase C) and P-path (PP; antigen:90-acetyl glycolipids). We compared the normal staining pattern using these markers and an antibody to calbindin with that found in the reeler mutants (rl/rl), in which most Purkinje cell migration is halted beneath the cerebellar white matter. The results revealed that Purkinje cells in reeler mutants, despite their ectopic location in large subcortical masses, show a clear tendency to d",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.196866+00:00"
+}

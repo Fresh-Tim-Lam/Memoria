@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5144381",
+  "source_fingerprint": "8cf0eb40e6cb4110d0c943ff54a551d9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5144381",
+    "molecular-model-of-the-human-26s-proteasome."
+  ],
+  "key_phrases": [
+    "molecular",
+    "model",
+    "human",
+    "26s",
+    "proteasome",
+    "plays",
+    "fundamental",
+    "role"
+  ],
+  "summary_1l": "Molecular model of the human 26S proteasome.",
+  "query_hits": [],
+  "embed_text": "5144381 Molecular model of the human 26S proteasome. science scifact The 26S proteasome plays a fundamental role in eukaryotic homeostasis by undertaking the highly controlled degradation of a wide range of proteins, including key cellular regulators such as those controlling cell-cycle progression and… 5144381 molecular-model-of-the-human-26s-proteasome. molecular model human 26s proteasome plays fundamental role Molecular model of the human 26S proteasome. Molecular model of the human 26S proteasome. The 26S proteasome plays a fundamental role in eukaryotic homeostasis by undertaking the highly controlled degradation of a wide range of proteins, including key cellular regulators such as those controlling cell-cycle progression and apoptosis. Here we report the structure of the human 26S proteasome determined by cryo-electron microscopy and single-particle analysis, with secondary structure elements identified both in the 20S proteolytic core region and in the 19S regulatory particle. We have used this information together with crystal structures, homology models, and other biochemical information to construct a molecular model of the complete 26S proteasome. This model allows for a detailed description of the 20S core within the 26S proteaso",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.250311+00:00"
+}

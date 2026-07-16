@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5172048",
+  "source_fingerprint": "29897e53872530519990648ba988e4bf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5172048",
+    "focal-adhesion-kinase-links-mechanical-force-to-skin-fibrosis-via-inflammatory-signaling"
+  ],
+  "key_phrases": [
+    "focal",
+    "adhesion",
+    "kinase",
+    "links",
+    "mechanical",
+    "force",
+    "skin",
+    "fibrosis"
+  ],
+  "summary_1l": "Exuberant fibroproliferation is a common complication after injury for reasons that are not well understood.",
+  "query_hits": [],
+  "embed_text": "5172048 Focal adhesion kinase links mechanical force to skin fibrosis via inflammatory signaling science scifact Exuberant fibroproliferation is a common complication after injury for reasons that are not well understood. One key component of wound repair that is often overlooked is mechanical force, which regulates cell-matrix interactions through… 5172048 focal-adhesion-kinase-links-mechanical-force-to-skin-fibrosis-via-inflammatory-signaling focal adhesion kinase links mechanical force skin fibrosis Exuberant fibroproliferation is a common complication after injury for reasons that are not well understood. Focal adhesion kinase links mechanical force to skin fibrosis via inflammatory signaling Exuberant fibroproliferation is a common complication after injury for reasons that are not well understood. One key component of wound repair that is often overlooked is mechanical force, which regulates cell-matrix interactions through intracellular focal adhesion components, including focal adhesion kinase (FAK). Here we report that FAK is activated after cutaneous injury and that this process is potentiated by mechanical loading. Fibroblast-specific FAK knockout mice have substantially less inflammation and fibrosis than control mice in a model of hypertrophic scar formation. We show that FAK acts through extracellular-related kinase (ERK) to mechanically trigger the secretion of monocyte chemoattr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.347726+00:00"
+}

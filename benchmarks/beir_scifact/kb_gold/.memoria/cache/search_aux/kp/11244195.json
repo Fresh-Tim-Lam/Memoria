@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11244195",
+  "source_fingerprint": "8a544fa29f40657f73288d9354afad11",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11244195",
+    "star:-ultrafast-universal-rna-seq-aligner."
+  ],
+  "key_phrases": [
+    "star",
+    "ultrafast",
+    "universal",
+    "rna",
+    "seq",
+    "aligner",
+    "motivation",
+    "accurate"
+  ],
+  "summary_1l": "STAR: ultrafast universal RNA-seq aligner.",
+  "query_hits": [],
+  "embed_text": "11244195 STAR: ultrafast universal RNA-seq aligner. science scifact MOTIVATION Accurate alignment of high-throughput RNA-seq data is a challenging and yet unsolved problem because of the non-contiguous transcript structure, relatively short read lengths and constantly increasing throughput of the… 11244195 star:-ultrafast-universal-rna-seq-aligner. star ultrafast universal rna seq aligner motivation accurate STAR: ultrafast universal RNA-seq aligner. STAR: ultrafast universal RNA-seq aligner. MOTIVATION Accurate alignment of high-throughput RNA-seq data is a challenging and yet unsolved problem because of the non-contiguous transcript structure, relatively short read lengths and constantly increasing throughput of the sequencing technologies. Currently available RNA-seq aligners suffer from high mapping error rates, low mapping speed, read length limitation and mapping biases. RESULTS To align our large (>80 billon reads) ENCODE Transcriptome RNA-seq dataset, we developed the Spliced Transcripts Alignment to a Reference (STAR) software based on a previously undescribed RNA-seq alignment algorithm that uses sequential maximum mappable seed search in uncompressed suffix arrays followed by seed clustering and stitching procedure. STAR out",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:06.160033+00:00"
+}

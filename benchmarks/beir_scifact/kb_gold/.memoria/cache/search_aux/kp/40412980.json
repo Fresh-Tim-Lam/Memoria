@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "40412980",
+  "source_fingerprint": "2556ef3e7e669f3f8590cbe192e4c3bc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "40412980",
+    "the-activity-of-sirna-in-mammalian-cells-is-related-to-structural-target-accessibility:-a-comparison-with-antisense-oligonucleotides."
+  ],
+  "key_phrases": [
+    "activity",
+    "sirna",
+    "mammalian",
+    "cells",
+    "related",
+    "structural",
+    "target",
+    "accessibility"
+  ],
+  "summary_1l": "The activity of siRNA in mammalian cells is related to structural target accessibility: a comparison with antisense oligonucleotides.",
+  "query_hits": [],
+  "embed_text": "40412980 The activity of siRNA in mammalian cells is related to structural target accessibility: a comparison with antisense oligonucleotides. science scifact The biological activity of siRNA seems to be influenced by local characteristics of the target RNA, including local RNA folding. Here, we investigated quantitatively the relationship between local target accessibility and the extent of… 40412980 the-activity-of-sirna-in-mammalian-cells-is-related-to-structural-target-accessibility:-a-comparison-with-antisense-oligonucleotides. activity sirna mammalian cells related structural target accessibility The activity of siRNA in mammalian cells is related to structural target accessibility: a comparison with antisense oligonucleotides. The activity of siRNA in mammalian cells is related to structural target accessibility: a comparison with antisense oligonucleotides. The biological activity of siRNA seems to be influenced by local characteristics of the target RNA, including local RNA folding. Here, we investigated quantitatively the relationship between local target accessibility and the extent of inhibition of the target gene by siRNA. Target accessibility was assessed by a computational approach that had been shown earlier to be consistent with experimental probing of target RNA. Two sites of ICAM-1 mRNA predicted to serve as accessible motifs and one site predicted to adopt an inaccessible structure were chosen to test siRNA constructs for suppression of ICAM-1 gene expression in ECV304 cells. The local target-depend",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.532173+00:00"
+}

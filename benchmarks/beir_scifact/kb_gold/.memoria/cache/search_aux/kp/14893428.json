@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14893428",
+  "source_fingerprint": "f10ccdbb1fff07186cbe5b0fd4c45546",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14893428",
+    "in-vivo-electroporation-in-the-embryonic-mouse-central-nervous-system"
+  ],
+  "key_phrases": [
+    "vivo",
+    "electroporation",
+    "embryonic",
+    "mouse",
+    "central",
+    "nervous",
+    "system",
+    "this"
+  ],
+  "summary_1l": "This protocol describes a basic method for in vivo electroporation in the nervous system of embryonic mice.",
+  "query_hits": [],
+  "embed_text": "14893428 In vivo electroporation in the embryonic mouse central nervous system science scifact This protocol describes a basic method for in vivo electroporation in the nervous system of embryonic mice. Delivery of electric pulses following microinjection of DNA into the brain ventricle or the spinal cord central canal enables… 14893428 in-vivo-electroporation-in-the-embryonic-mouse-central-nervous-system vivo electroporation embryonic mouse central nervous system this This protocol describes a basic method for in vivo electroporation in the nervous system of embryonic mice. In vivo electroporation in the embryonic mouse central nervous system This protocol describes a basic method for in vivo electroporation in the nervous system of embryonic mice. Delivery of electric pulses following microinjection of DNA into the brain ventricle or the spinal cord central canal enables efficient transfection of genes into the nervous system. Transfection is facilitated by forceps-type electrodes, which hold the uterus and/or the yolk sac containing the embryo. More than ten embryos in a single pregnant mouse can be operated on within 30 min. More than 90% of operated embryos survive and more than 90% of these survivors express the transfected genes appropriately. Gene expression in neurons persists for a long time, even at postnatal stages, after electroporation. Thus, thi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.848063+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15435343",
+  "source_fingerprint": "f93e6fb9e756c24f0a053cf1fcd23d7b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15435343",
+    "the-inflammasome-component-nlrp3-impairs-antitumor-vaccine-by-enhancing-the-accumulation-of-tumor-associated-myeloid-derived-suppressor-cells."
+  ],
+  "key_phrases": [
+    "inflammasome",
+    "component",
+    "nlrp3",
+    "impairs",
+    "antitumor",
+    "vaccine",
+    "by",
+    "enhancing"
+  ],
+  "summary_1l": "The inflammasome component NLRP3 impairs antitumor vaccine by enhancing the accumulation of tumor-associated myeloid-derived suppressor cells.",
+  "query_hits": [],
+  "embed_text": "15435343 The inflammasome component NLRP3 impairs antitumor vaccine by enhancing the accumulation of tumor-associated myeloid-derived suppressor cells. science scifact The inflammasome is a proteolysis complex that generates the active forms of the proinflammatory cytokines interleukin (IL)-1β and IL-18. Inflammasome activation is mediated by NLR proteins that respond to microbial and nonmicrobial… 15435343 the-inflammasome-component-nlrp3-impairs-antitumor-vaccine-by-enhancing-the-accumulation-of-tumor-associated-myeloid-derived-suppressor-cells. inflammasome component nlrp3 impairs antitumor vaccine by enhancing The inflammasome component NLRP3 impairs antitumor vaccine by enhancing the accumulation of tumor-associated myeloid-derived suppressor cells. The inflammasome component NLRP3 impairs antitumor vaccine by enhancing the accumulation of tumor-associated myeloid-derived suppressor cells. The inflammasome is a proteolysis complex that generates the active forms of the proinflammatory cytokines interleukin (IL)-1β and IL-18. Inflammasome activation is mediated by NLR proteins that respond to microbial and nonmicrobial stimuli. Among NLRs, NLRP3 senses the widest array of stimuli and enhances adaptive immunity. However, its role in antitumor immunity is unknown. Therefore, we evaluated the function of the NLRP3 inflammasome in the immune response using dendritic cell vaccination against the poorly immunogenic melanoma cell line B16-F10. Vaccination of Nlrp3(-/-) mice led to a relative 4-fold improvement in survival relative to control",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.562982+00:00"
+}

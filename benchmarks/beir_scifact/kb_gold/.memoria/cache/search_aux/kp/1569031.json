@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1569031",
+  "source_fingerprint": "440af5b4f61cfdfcde59527f573523f0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1569031",
+    "rnase-h-and-postreplication-repair-protect-cells-from-ribonucleotides-incorporated-in-dna"
+  ],
+  "key_phrases": [
+    "rnase",
+    "postreplication",
+    "repair",
+    "protect",
+    "cells",
+    "from",
+    "ribonucleotides",
+    "incorporated"
+  ],
+  "summary_1l": "The chemical identity and integrity of the genome is challenged by the incorporation of ribonucleoside triphos",
+  "query_hits": [],
+  "embed_text": "1569031 RNase H and Postreplication Repair Protect Cells from Ribonucleotides Incorporated in DNA science scifact The chemical identity and integrity of the genome is challenged by the incorporation of ribonucleoside triphosphates (rNTPs) in place of deoxyribonucleoside triphosphates (dNTPs) during replication. Misincorporation is limited by the… 1569031 rnase-h-and-postreplication-repair-protect-cells-from-ribonucleotides-incorporated-in-dna rnase postreplication repair protect cells from ribonucleotides incorporated The chemical identity and integrity of the genome is challenged by the incorporation of ribonucleoside triphos RNase H and Postreplication Repair Protect Cells from Ribonucleotides Incorporated in DNA The chemical identity and integrity of the genome is challenged by the incorporation of ribonucleoside triphosphates (rNTPs) in place of deoxyribonucleoside triphosphates (dNTPs) during replication. Misincorporation is limited by the selectivity of DNA replicases. We show that accumulation of ribonucleoside monophosphates (rNMPs) in the genome causes replication stress and has toxic consequences, particularly in the absence of RNase H1 and RNase H2, which remove rNMPs. We demonstrate that postreplication repair (PRR) pathways-MMS2-dependent template switch and Pol ζ-dependent bypass-are crucial for tolerating the presence of rNMPs in the chromosomes; indeed, we show that Pol ζ efficiently replicates o",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.123920+00:00"
+}

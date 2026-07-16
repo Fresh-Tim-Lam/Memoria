@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18261004",
+  "source_fingerprint": "9ae686dd848d750c71eb2f13ab8c45bb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18261004",
+    "expression-and-purification-of-recombinant-methylated-hbha-in-mycobacterium-smegmatis."
+  ],
+  "key_phrases": [
+    "expression",
+    "purification",
+    "recombinant",
+    "methylated",
+    "hbha",
+    "mycobacterium",
+    "smegmatis",
+    "heparin"
+  ],
+  "summary_1l": "Expression and purification of recombinant methylated HBHA in Mycobacterium smegmatis.",
+  "query_hits": [],
+  "embed_text": "18261004 Expression and purification of recombinant methylated HBHA in Mycobacterium smegmatis. science scifact The Heparin-Binding Haemagglutinin (HBHA) is a mycobacterial adhesin involved in the dissemination of Mycobacterium tuberculosis from the site of primary infection and a potential candidate for the development of a new vaccine against… 18261004 expression-and-purification-of-recombinant-methylated-hbha-in-mycobacterium-smegmatis. expression purification recombinant methylated hbha mycobacterium smegmatis heparin Expression and purification of recombinant methylated HBHA in Mycobacterium smegmatis. Expression and purification of recombinant methylated HBHA in Mycobacterium smegmatis. The Heparin-Binding Haemagglutinin (HBHA) is a mycobacterial adhesin involved in the dissemination of Mycobacterium tuberculosis from the site of primary infection and a potential candidate for the development of a new vaccine against tuberculosis. Methylation of HBHA is a novel post-translational event that imparts important immunological properties to the protein. Since recombinant HBHA expressed in Escherichia coli is not methylated, we investigated the possibility of producing recombinant methylated HBHA in fast growing mycobacteria for use in immunological and biochemical studies. The complete coding sequence of HBHA was cloned in the plasmid pMV206, under the control of a strong promoter (hsp60) or",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.998319+00:00"
+}

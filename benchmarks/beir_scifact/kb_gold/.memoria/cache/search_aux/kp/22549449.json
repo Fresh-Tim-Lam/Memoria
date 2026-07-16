@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22549449",
+  "source_fingerprint": "0175dafdb7dbfbc85cca263673ae2355",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22549449",
+    "decreased-neurogenesis-after-cholinergic-forebrain-lesion-in-the-adult-rat."
+  ],
+  "key_phrases": [
+    "decreased",
+    "neurogenesis",
+    "after",
+    "cholinergic",
+    "forebrain",
+    "lesion",
+    "adult",
+    "rat"
+  ],
+  "summary_1l": "Decreased neurogenesis after cholinergic forebrain lesion in the adult rat.",
+  "query_hits": [],
+  "embed_text": "22549449 Decreased neurogenesis after cholinergic forebrain lesion in the adult rat. science scifact Adult neurogenesis has been shown to be regulated by a multitude of extracellular cues, including hormones, growth factors, and neurotransmitters. The cholinergic system of the basal forebrain is one of the key transmitter systems for… 22549449 decreased-neurogenesis-after-cholinergic-forebrain-lesion-in-the-adult-rat. decreased neurogenesis after cholinergic forebrain lesion adult rat Decreased neurogenesis after cholinergic forebrain lesion in the adult rat. Decreased neurogenesis after cholinergic forebrain lesion in the adult rat. Adult neurogenesis has been shown to be regulated by a multitude of extracellular cues, including hormones, growth factors, and neurotransmitters. The cholinergic system of the basal forebrain is one of the key transmitter systems for learning and memory. Because adult neurogenesis has been implicated in cognitive performance, the present work aims at defining the role of cholinergic input for adult neurogenesis by using an immunotoxic lesion approach. The immunotoxin 192IgG-saporin was infused into the lateral ventricle of adult rats to selectively lesion cholinergic neurons of the cholinergic basal forebrain (CBF), which project to the two main regions of adult neurogenesis: the dentate gyrus and the olfactory bu",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.042291+00:00"
+}

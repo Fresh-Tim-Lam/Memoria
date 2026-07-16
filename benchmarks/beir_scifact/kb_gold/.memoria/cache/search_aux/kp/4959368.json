@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4959368",
+  "source_fingerprint": "52636fa515c1a04e2ce0d26442188a87",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4959368",
+    "elevation-of-circulating-branched-chain-amino-acids-is-an-early-event-in-human-pancreatic-adenocarcinoma-development"
+  ],
+  "key_phrases": [
+    "elevation",
+    "circulating",
+    "branched",
+    "chain",
+    "amino",
+    "acids",
+    "early",
+    "event"
+  ],
+  "summary_1l": "Most patients with pancreatic ductal adenocarcinoma (PDAC) are diagnosed with advan",
+  "query_hits": [],
+  "embed_text": "4959368 Elevation of circulating branched-chain amino acids is an early event in human pancreatic adenocarcinoma development science scifact Most patients with pancreatic ductal adenocarcinoma (PDAC) are diagnosed with advanced disease and survive less than 12 months. PDAC has been linked with obesity and glucose intolerance, but whether changes in circulating metabolites are… 4959368 elevation-of-circulating-branched-chain-amino-acids-is-an-early-event-in-human-pancreatic-adenocarcinoma-development elevation circulating branched chain amino acids early event Most patients with pancreatic ductal adenocarcinoma (PDAC) are diagnosed with advan Elevation of circulating branched-chain amino acids is an early event in human pancreatic adenocarcinoma development Most patients with pancreatic ductal adenocarcinoma (PDAC) are diagnosed with advanced disease and survive less than 12 months. PDAC has been linked with obesity and glucose intolerance, but whether changes in circulating metabolites are associated with early cancer progression is unknown. To better understand metabolic derangements associated with early disease, we profiled metabolites in prediagnostic plasma from individuals with pancreatic cancer (cases) and matched controls from four prospective cohort studies. We find that elevated plasma levels of branched-chain amino acids (BCAAs) are associated with a greater than twofold increased risk of future pancreatic cancer di",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.893447+00:00"
+}

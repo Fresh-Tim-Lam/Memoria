@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10314816",
+  "source_fingerprint": "1514ea575dc88c5fa4ebecde7657d9e8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10314816",
+    "the-ascendancy-of-amblyomma-americanum-as-a-vector-of-pathogens-affecting-humans-in-the-united-states."
+  ],
+  "key_phrases": [
+    "ascendancy",
+    "amblyomma",
+    "americanum",
+    "as",
+    "vector",
+    "pathogens",
+    "affecting",
+    "humans"
+  ],
+  "summary_1l": "The ascendancy of Amblyomma americanum as a vector of pathogens affecting humans in the United States.",
+  "query_hits": [],
+  "embed_text": "10314816 The ascendancy of Amblyomma americanum as a vector of pathogens affecting humans in the United States. science scifact Until the 1990s, Amblyomma americanum was regarded primarily as a nuisance species, but a tick of minor importance as a vector of zoonotic pathogens affecting humans. With the recent discoveries of Ehrlichia chaffeensis, Ehrlichia ewingii,… 10314816 the-ascendancy-of-amblyomma-americanum-as-a-vector-of-pathogens-affecting-humans-in-the-united-states. ascendancy amblyomma americanum as vector pathogens affecting humans The ascendancy of Amblyomma americanum as a vector of pathogens affecting humans in the United States. The ascendancy of Amblyomma americanum as a vector of pathogens affecting humans in the United States. Until the 1990s, Amblyomma americanum was regarded primarily as a nuisance species, but a tick of minor importance as a vector of zoonotic pathogens affecting humans. With the recent discoveries of Ehrlichia chaffeensis, Ehrlichia ewingii, and \"Borrelia lonestari,\" the public health relevance of lone star ticks is no longer in question. During the next 25 years, the number of cases of human disease caused by A. americanum-associated pathogens will probably increase. Based on current trajectories and historic precedents, the increase will be primarily driven by biological and environmental factors that alter the geographic distribution and intensity of transmission of zoonotic pathogens. S",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:04.575828+00:00"
+}

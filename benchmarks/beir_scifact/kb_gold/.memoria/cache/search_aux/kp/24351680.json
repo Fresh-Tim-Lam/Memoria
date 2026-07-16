@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24351680",
+  "source_fingerprint": "ebaa91f76d0fef277e037f172cf74c7d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24351680",
+    "telomeres-and-telomerase:-more-than-the-end-of-the-line"
+  ],
+  "key_phrases": [
+    "telomeres",
+    "telomerase",
+    "more",
+    "than",
+    "end",
+    "line",
+    "early",
+    "studies"
+  ],
+  "summary_1l": "Early studies of telomerase suggested that telomeres are maintained by an elegant but relatively simple and highly conserved mechanism of telome",
+  "query_hits": [],
+  "embed_text": "24351680 Telomeres and telomerase: more than the end of the line science scifact Early studies of telomerase suggested that telomeres are maintained by an elegant but relatively simple and highly conserved mechanism of telomerase-mediated replication. As we learn more, it has become clear that the mechanism is elegant… 24351680 telomeres-and-telomerase:-more-than-the-end-of-the-line telomeres telomerase more than end line early studies Early studies of telomerase suggested that telomeres are maintained by an elegant but relatively simple and highly conserved mechanism of telome Telomeres and telomerase: more than the end of the line Early studies of telomerase suggested that telomeres are maintained by an elegant but relatively simple and highly conserved mechanism of telomerase-mediated replication. As we learn more, it has become clear that the mechanism is elegant but not as simple as first thought. It is also evident that, although many species use similar, sometimes identical, DNA sequences for telomeres, these species express their own individuality in the way they regulate these sequences and, perhaps, in the additional tasks that they have imposed on their telomeric DNA. The striking similarities between telomeres in different species have revealed much about chromosome ends; the differences are proving to be equally informative. In addition to the differ",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.335709+00:00"
+}

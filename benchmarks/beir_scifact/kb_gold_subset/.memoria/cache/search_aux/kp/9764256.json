@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9764256",
+  "source_fingerprint": "dc5289b7432b56d53851323b508f7eb1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9764256",
+    "human-papillomavirus-testing-for-the-detection-of-high-grade-cervical-intraepithelial-neoplasia-and-cancer:-final-results-of-the-pobascam-randomised-controlled-trial."
+  ],
+  "key_phrases": [
+    "human",
+    "papillomavirus",
+    "testing",
+    "detection",
+    "high",
+    "grade",
+    "cervical",
+    "intraepithelial"
+  ],
+  "summary_1l": "Human papillomavirus testing for the detection of high-grade cervical intraepithelial neoplasia and cancer: final results of the POBASCAM randomised controlled trial.",
+  "query_hits": [],
+  "embed_text": "9764256 Human papillomavirus testing for the detection of high-grade cervical intraepithelial neoplasia and cancer: final results of the POBASCAM randomised controlled trial. science scifact BACKGROUND Human papillomavirus (HPV) testing is more sensitive for the detection of high-grade cervical lesions than is cytology, but detection of HPV by DNA screening in two screening rounds 5 years apart has not been assessed. The aim… 9764256 human-papillomavirus-testing-for-the-detection-of-high-grade-cervical-intraepithelial-neoplasia-and-cancer:-final-results-of-the-pobascam-randomised-controlled-trial. human papillomavirus testing detection high grade cervical intraepithelial Human papillomavirus testing for the detection of high-grade cervical intraepithelial neoplasia and cancer: final results of the POBASCAM randomised controlled trial. Human papillomavirus testing for the detection of high-grade cervical intraepithelial neoplasia and cancer: final results of the POBASCAM randomised controlled trial. BACKGROUND Human papillomavirus (HPV) testing is more sensitive for the detection of high-grade cervical lesions than is cytology, but detection of HPV by DNA screening in two screening rounds 5 years apart has not been assessed. The aim of this study was to assess whether HPV DNA testing in the first screen decreases detection of cervical intraepithelial neoplasia (CIN) grade 3 or worse, CIN grade 2 or worse, and cervical cancer in the second screening. METHODS In this randomised trial, women aged 29-56 years participating in the cervical screening programme in the Netherlands were randomly assigned to receive HPV DNA (GP5+/",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:14.127184+00:00"
+}

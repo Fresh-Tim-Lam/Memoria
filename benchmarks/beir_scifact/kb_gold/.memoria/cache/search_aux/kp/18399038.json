@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18399038",
+  "source_fingerprint": "81ef818a85ed6358a7b9fa2e454f53d8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18399038",
+    "establishment-of-human-ipsc-based-models-for-the-study-and-targeting-of-glioma-initiating-cells"
+  ],
+  "key_phrases": [
+    "establishment",
+    "human",
+    "ipsc",
+    "based",
+    "models",
+    "study",
+    "targeting",
+    "glioma"
+  ],
+  "summary_1l": "Glioma tumour-initiating cells (GTICs) can originate upon the transformation of neural progenitor cells",
+  "query_hits": [],
+  "embed_text": "18399038 Establishment of human iPSC-based models for the study and targeting of glioma initiating cells science scifact Glioma tumour-initiating cells (GTICs) can originate upon the transformation of neural progenitor cells (NPCs). Studies on GTICs have focused on primary tumours from which GTICs could be isolated and the use of human embryonic material.… 18399038 establishment-of-human-ipsc-based-models-for-the-study-and-targeting-of-glioma-initiating-cells establishment human ipsc based models study targeting glioma Glioma tumour-initiating cells (GTICs) can originate upon the transformation of neural progenitor cells Establishment of human iPSC-based models for the study and targeting of glioma initiating cells Glioma tumour-initiating cells (GTICs) can originate upon the transformation of neural progenitor cells (NPCs). Studies on GTICs have focused on primary tumours from which GTICs could be isolated and the use of human embryonic material. Recently, the somatic genomic landscape of human gliomas has been reported. RTK (receptor tyrosine kinase) and p53 signalling were found dysregulated in ∼90% and 86% of all primary tumours analysed, respectively. Here we report on the use of human-induced pluripotent stem cells (hiPSCs) for modelling gliomagenesis. Dysregulation of RTK and p53 signalling in hiPSC-derived NPCs (iNPCs) recapitulates GTIC properties in vitro. In vivo transplantation of transformed i",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.225979+00:00"
+}

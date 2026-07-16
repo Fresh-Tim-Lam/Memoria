@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5002665",
+  "source_fingerprint": "e1449905fbfb01e30b55b5fe9fd9025d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5002665",
+    "the-embryonic-cell-lineage-of-the-nematode-caenorhabditis-elegans."
+  ],
+  "key_phrases": [
+    "embryonic",
+    "cell",
+    "lineage",
+    "nematode",
+    "caenorhabditis",
+    "elegans",
+    "has",
+    "been"
+  ],
+  "summary_1l": "The embryonic cell lineage of the nematode Caenorhabditis elegans.",
+  "query_hits": [],
+  "embed_text": "5002665 The embryonic cell lineage of the nematode Caenorhabditis elegans. science scifact The embryonic cell lineage of Caenorhabditis elegans has been traced from zygote to newly hatched larva, with the result that the entire cell lineage of this organism is now known. During embryogenesis 671 cells are generated; in the… 5002665 the-embryonic-cell-lineage-of-the-nematode-caenorhabditis-elegans. embryonic cell lineage nematode caenorhabditis elegans has been The embryonic cell lineage of the nematode Caenorhabditis elegans. The embryonic cell lineage of the nematode Caenorhabditis elegans. The embryonic cell lineage of Caenorhabditis elegans has been traced from zygote to newly hatched larva, with the result that the entire cell lineage of this organism is now known. During embryogenesis 671 cells are generated; in the hermaphrodite 113 of these (in the male 111) undergo programmed death and the remainder either differentiate terminally or become postembryonic blast cells. The embryonic lineage is highly invariant, as are the fates of the cells to which it gives rise. In spite of the fixed relationship between cell ancestry and cell fate, the correlation between them lacks much obvious pattern. Thus, although most neurons arise from the embryonic ectoderm, some are produced by the mesoderm and a few are siste",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.001906+00:00"
+}

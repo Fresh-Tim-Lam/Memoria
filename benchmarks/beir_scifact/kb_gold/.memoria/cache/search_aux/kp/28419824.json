@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "28419824",
+  "source_fingerprint": "86f44d3a33bb261c108bfc4f5d967cfb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "28419824",
+    "drug-induced-refractory-headache--clinical-features-and-management."
+  ],
+  "key_phrases": [
+    "drug",
+    "induced",
+    "refractory",
+    "headache",
+    "--",
+    "clinical",
+    "features",
+    "management"
+  ],
+  "summary_1l": "Drug induced refractory headache--clinical features and management.",
+  "query_hits": [],
+  "embed_text": "28419824 Drug induced refractory headache--clinical features and management. science scifact Two hundred patients who were taking daily symptomatic or immediate relief medications, often in excessive quantities, yet suffering from daily or near daily severe headaches were studied. One hundred and sixteen (58%) of them were also… 28419824 drug-induced-refractory-headache--clinical-features-and-management. drug induced refractory headache -- clinical features management Drug induced refractory headache--clinical features and management. Drug induced refractory headache--clinical features and management. Two hundred patients who were taking daily symptomatic or immediate relief medications, often in excessive quantities, yet suffering from daily or near daily severe headaches were studied. One hundred and sixteen (58%) of them were also taking concomitant prophylactic medications and they were ineffective. Low tyramine, low caffeine dietary instructions and biofeedback training were given to all patients. The effect of continuing symptomatic medications, discontinuing symptomatic medications, and adding or changing prophylactic medications were studied in the various treatment groups. It is concluded that; 1.) Daily use of symptomatic or immediate relief medications result in chronic daily headache. 2.) Discontinuing daily",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.982265+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1686881",
+  "source_fingerprint": "c64ad96bc34329339ee8e42db9e2e54f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1686881",
+    "myocardial-muscarinic-receptor-upregulation-and-normal-response-to-isoproterenol-in-denervated-hearts-by-familial-amyloid-polyneuropathy."
+  ],
+  "key_phrases": [
+    "myocardial",
+    "muscarinic",
+    "receptor",
+    "upregulation",
+    "normal",
+    "response",
+    "isoproterenol",
+    "denervated"
+  ],
+  "summary_1l": "Myocardial muscarinic receptor upregulation and normal response to isoproterenol in denervated hearts by familial amyloid polyneuropathy.",
+  "query_hits": [],
+  "embed_text": "1686881 Myocardial muscarinic receptor upregulation and normal response to isoproterenol in denervated hearts by familial amyloid polyneuropathy. science scifact BACKGROUND Patients with familial amyloid polyneuropathy, a rare hereditary form of amyloidosis, have progressive autonomic neuropathy. The disease usually does not induce heart failure but is associated with sudden death, conduction… 1686881 myocardial-muscarinic-receptor-upregulation-and-normal-response-to-isoproterenol-in-denervated-hearts-by-familial-amyloid-polyneuropathy. myocardial muscarinic receptor upregulation normal response isoproterenol denervated Myocardial muscarinic receptor upregulation and normal response to isoproterenol in denervated hearts by familial amyloid polyneuropathy. Myocardial muscarinic receptor upregulation and normal response to isoproterenol in denervated hearts by familial amyloid polyneuropathy. BACKGROUND Patients with familial amyloid polyneuropathy, a rare hereditary form of amyloidosis, have progressive autonomic neuropathy. The disease usually does not induce heart failure but is associated with sudden death, conduction disturbances, and an increased risk of complications during anesthesia. Although cardiac sympathetic denervation has been clearly demonstrated, the postsynaptic status of the cardiac autonomic nervous system remains unelucidated. METHODS AND RESULTS Twenty-one patients were studied (age, 39+/-11 years; normal coronary arteries; left ventricular ejection fraction 68+/-9%). To evaluate the density and affinity constants of myo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.978032+00:00"
+}

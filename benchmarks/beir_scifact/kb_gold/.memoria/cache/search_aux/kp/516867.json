@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "516867",
+  "source_fingerprint": "7da5c687a71a777004792929f651cab7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "516867",
+    "candida-albicans,-a-distinctive-fungal-model-for-cellular-aging-study"
+  ],
+  "key_phrases": [
+    "candida",
+    "albicans",
+    "distinctive",
+    "fungal",
+    "model",
+    "cellular",
+    "aging",
+    "study"
+  ],
+  "summary_1l": "The unicellular eukaryotic organisms represent the popular model systems to understand aging in eukaryotes.",
+  "query_hits": [],
+  "embed_text": "516867 Candida albicans, a distinctive fungal model for cellular aging study science scifact The unicellular eukaryotic organisms represent the popular model systems to understand aging in eukaryotes. Candida albicans, a polymorphic fungus, appears to be another distinctive unicellular aging model in addition to the budding yeast… 516867 candida-albicans,-a-distinctive-fungal-model-for-cellular-aging-study candida albicans distinctive fungal model cellular aging study The unicellular eukaryotic organisms represent the popular model systems to understand aging in eukaryotes. Candida albicans, a distinctive fungal model for cellular aging study The unicellular eukaryotic organisms represent the popular model systems to understand aging in eukaryotes. Candida albicans, a polymorphic fungus, appears to be another distinctive unicellular aging model in addition to the budding yeast Saccharomyces cerevisiae and fission yeast Schizosaccharomyces pombe. The two types of Candida cells, yeast (blastospore) form and hyphal (filamentous) form, have similar replicative lifespan. Taking the advantage of morphologic changes, we are able to obtain cells of different ages. Old Candida cells tend to accumulate glycogen and oxidatively damaged proteins. Deletion of the SIR2 gene causes a decrease of lifespan, while insertion of an extra copy of SIR2 extends lifespan, indicating",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.323539+00:00"
+}

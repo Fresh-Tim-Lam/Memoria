@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "33127778",
+  "source_fingerprint": "a35cc34cd54fbdb0d4abcf8c8f958459",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "33127778",
+    "early-gastric-cancer-and-dysplasia."
+  ],
+  "key_phrases": [
+    "early",
+    "gastric",
+    "cancer",
+    "dysplasia",
+    "since",
+    "concept",
+    "was",
+    "first"
+  ],
+  "summary_1l": "Early gastric cancer and dysplasia.",
+  "query_hits": [],
+  "embed_text": "33127778 Early gastric cancer and dysplasia. science scifact Since the concept of early gastric cancer was first described in Japan in 1962, its treatment has evolved from curative surgical resection to endoscopic resection, initially with polypectomy to more recently with endoscopic submucosal… 33127778 early-gastric-cancer-and-dysplasia. early gastric cancer dysplasia since concept was first Early gastric cancer and dysplasia. Early gastric cancer and dysplasia. Since the concept of early gastric cancer was first described in Japan in 1962, its treatment has evolved from curative surgical resection to endoscopic resection, initially with polypectomy to more recently with endoscopic submucosal dissection. As worldwide experience with these endoscopic techniques evolve and gain acceptance, studies have confirmed its comparable effectiveness with historical surgical outcomes in carefully selected patients. The criteria for endoscopic resection have expanded to offer more patients improved quality of life, avoiding the morbidity and mortality associated with surgery. This article summarizes the evolutional role of endoscopic and surgical therapy in early gastric cancer.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.228683+00:00"
+}

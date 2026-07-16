@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "29015485",
+  "source_fingerprint": "c41a759d934d2d44cbcbd590b18316ec",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29015485"
+  ],
+  "key_phrases": [
+    "tlr",
+    "mediated",
+    "innate",
+    "production",
+    "ifn",
+    "by",
+    "cd8",
+    "cells"
+  ],
+  "summary_1l": "TLR-Mediated Innate Production of IFN-γ by CD8+ T Cells Is Independent of Glycolysis.",
+  "query_hits": [],
+  "embed_text": "29015485 TLR-Mediated Innate Production of IFN-γ by CD8+ T Cells Is Independent of Glycolysis. science scifact CD8(+) T cells can respond to unrelated infections in an Ag-independent manner. This rapid innate-like immune response allows Ag-experienced T cells to alert other immune cell types to pathogenic intruders. In this study, we show that… 29015485 tlr mediated innate production ifn by cd8 cells TLR-Mediated Innate Production of IFN-γ by CD8+ T Cells Is Independent of Glycolysis. TLR-Mediated Innate Production of IFN-γ by CD8+ T Cells Is Independent of Glycolysis. CD8(+) T cells can respond to unrelated infections in an Ag-independent manner. This rapid innate-like immune response allows Ag-experienced T cells to alert other immune cell types to pathogenic intruders. In this study, we show that murine CD8(+) T cells can sense TLR2 and TLR7 ligands, resulting in rapid production of IFN-γ but not of TNF-α and IL-2. Importantly, Ag-experienced T cells activated by TLR ligands produce sufficient IFN-γ to augment the activation of macrophages. In contrast to Ag-specific reactivation, TLR-dependent production of IFN-γ by CD8(+) T cells relies exclusively on newly synthesized transcripts without inducing mRNA stability. Furthermore, transcription of IFN-γ upon TLR trigger",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.500760+00:00"
+}

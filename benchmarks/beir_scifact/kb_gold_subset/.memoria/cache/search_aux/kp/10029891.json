@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10029891",
+  "source_fingerprint": "5ea1d0e2db329bce7a71a6c57555d4d8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10029891",
+    "th2-cytokine-response-in-major-depressive-disorder-patients-before-treatment"
+  ],
+  "key_phrases": [
+    "th2",
+    "cytokine",
+    "response",
+    "major",
+    "depressive",
+    "disorder",
+    "patients",
+    "before"
+  ],
+  "summary_1l": "In Major Depressive Disorder (MDD), the neuroendocrine and immune systems interactions are impaired.",
+  "query_hits": [],
+  "embed_text": "10029891 Th2 cytokine response in Major Depressive Disorder patients before treatment science scifact In Major Depressive Disorder (MDD), the neuroendocrine and immune systems interactions are impaired. We investigated the pro/anti-inflammatory Th1/Th2 cytokine balance in MDD patients and in non-depressed control group. The MDD subjects… 10029891 th2-cytokine-response-in-major-depressive-disorder-patients-before-treatment th2 cytokine response major depressive disorder patients before In Major Depressive Disorder (MDD), the neuroendocrine and immune systems interactions are impaired. Th2 cytokine response in Major Depressive Disorder patients before treatment In Major Depressive Disorder (MDD), the neuroendocrine and immune systems interactions are impaired. We investigated the pro/anti-inflammatory Th1/Th2 cytokine balance in MDD patients and in non-depressed control group. The MDD subjects showed higher levels of cortisol and TNF-alpha, increased CD3+CD8+ and NK percentages, diminished B cell counts and no significant variations in CD3+CD4+ lymphocyte. Moreover, higher levels of IL-4 and IL-13 (Th2) and significantly lower measurements of IL-2 and IFN-gamma (Th1) cytokines were also observed in the MDD group. Overall, we propose that all these changes could be related to the elevated cortisol levels seen in the MDD patients. Further studies are necessary to explore t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.224255+00:00"
+}

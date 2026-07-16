@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29231620",
+  "source_fingerprint": "863e995ee7a42793182fe61f609fd3ca",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29231620",
+    "disturbances-in-the-positioning,-proliferation-and-apoptosis-of-neural-progenitors-contribute-to-subcortical-band-heterotopia-formation."
+  ],
+  "key_phrases": [
+    "disturbances",
+    "positioning",
+    "proliferation",
+    "apoptosis",
+    "neural",
+    "progenitors",
+    "contribute",
+    "subcortical"
+  ],
+  "summary_1l": "Disturbances in the positioning, proliferation and apoptosis of neural progenitors contribute to subcortical band heterotopia formation.",
+  "query_hits": [],
+  "embed_text": "29231620 Disturbances in the positioning, proliferation and apoptosis of neural progenitors contribute to subcortical band heterotopia formation. science scifact Cortical malformations are commonly associated with intractable epilepsy and other developmental disorders. Our studies utilize the tish rat, a spontaneously occurring genetic model of subcortical band heterotopia (SBH) associated with… 29231620 disturbances-in-the-positioning,-proliferation-and-apoptosis-of-neural-progenitors-contribute-to-subcortical-band-heterotopia-formation. disturbances positioning proliferation apoptosis neural progenitors contribute subcortical Disturbances in the positioning, proliferation and apoptosis of neural progenitors contribute to subcortical band heterotopia formation. Disturbances in the positioning, proliferation and apoptosis of neural progenitors contribute to subcortical band heterotopia formation. Cortical malformations are commonly associated with intractable epilepsy and other developmental disorders. Our studies utilize the tish rat, a spontaneously occurring genetic model of subcortical band heterotopia (SBH) associated with epilepsy, to evaluate the developmental events underlying SBH formation in the neocortex. Our results demonstrate that Pax6(+) and Tbr2(+) progenitors are mislocalized in tish(+/-) and tish(-/-)- neocortex throughout neurogenesis. In addition, mislocalized tish(-/-) progenitors possess a longer cell cycle than wild type or normally-positioned tish(-/-) progenitors, owing to a lengthened G(2)+M+G(1) time. This mislocalizatio",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.721499+00:00"
+}

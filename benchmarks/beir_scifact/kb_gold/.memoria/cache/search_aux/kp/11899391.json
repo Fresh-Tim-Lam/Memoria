@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11899391",
+  "source_fingerprint": "cab242977c2f8a6905f38b8b8a9e75c1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11899391",
+    "type-1-diabetes-associated-il2ra-variation-lowers-il-2-signaling-and-contributes-to-diminished-cd4+cd25+-regulatory-t-cell-function."
+  ],
+  "key_phrases": [
+    "type",
+    "diabetes",
+    "associated",
+    "il2ra",
+    "variation",
+    "lowers",
+    "il",
+    "signaling"
+  ],
+  "summary_1l": "Type 1 diabetes-associated IL2RA variation lowers IL-2 signaling and contributes to diminished CD4+CD25+ regulatory T cell function.",
+  "query_hits": [],
+  "embed_text": "11899391 Type 1 diabetes-associated IL2RA variation lowers IL-2 signaling and contributes to diminished CD4+CD25+ regulatory T cell function. science scifact Numerous reports have demonstrated that CD4(+)CD25(+) regulatory T cells (Tregs) from individuals with a range of human autoimmune diseases, including type 1 diabetes, are deficient in their ability to control autologous proinflammatory… 11899391 type-1-diabetes-associated-il2ra-variation-lowers-il-2-signaling-and-contributes-to-diminished-cd4+cd25+-regulatory-t-cell-function. type diabetes associated il2ra variation lowers il signaling Type 1 diabetes-associated IL2RA variation lowers IL-2 signaling and contributes to diminished CD4+CD25+ regulatory T cell function. Type 1 diabetes-associated IL2RA variation lowers IL-2 signaling and contributes to diminished CD4+CD25+ regulatory T cell function. Numerous reports have demonstrated that CD4(+)CD25(+) regulatory T cells (Tregs) from individuals with a range of human autoimmune diseases, including type 1 diabetes, are deficient in their ability to control autologous proinflammatory responses when compared with nondiseased, control individuals. Treg dysfunction could be a primary, causal event or may result from perturbations in the immune system during disease development. Polymorphisms in genes associated with Treg function, such as IL2RA, confer a higher risk of autoimmune disease. Although this suggests a primary role for defective Tregs in autoimmunity, a link between IL2RA gene polymorphisms and Tre",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:07.340867+00:00"
+}

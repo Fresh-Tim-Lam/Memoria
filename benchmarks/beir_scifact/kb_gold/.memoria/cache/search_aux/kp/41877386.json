@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "41877386",
+  "source_fingerprint": "d9b1734cfc3bda8a7b28226e3b9e75fc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "41877386",
+    "kruppel-like-factor-klf10-targets-transforming-growth-factor-beta1-to-regulate-cd4(+)cd25(-)-t-cells-and-t-regulatory-cells."
+  ],
+  "key_phrases": [
+    "kruppel",
+    "like",
+    "factor",
+    "klf10",
+    "targets",
+    "transforming",
+    "growth",
+    "beta1"
+  ],
+  "summary_1l": "Kruppel-like factor KLF10 targets transforming growth factor-beta1 to regulate CD4(+)CD25(-) T cells and T regulatory cells.",
+  "query_hits": [],
+  "embed_text": "41877386 Kruppel-like factor KLF10 targets transforming growth factor-beta1 to regulate CD4(+)CD25(-) T cells and T regulatory cells. science scifact CD4(+)CD25(+) regulatory T cells (T regs) play a major role in the maintenance of self-tolerance and immune suppression, although the mechanisms controlling T reg development and suppressor function remain incompletely understood. Herein,… 41877386 kruppel-like-factor-klf10-targets-transforming-growth-factor-beta1-to-regulate-cd4(+)cd25(-)-t-cells-and-t-regulatory-cells. kruppel like factor klf10 targets transforming growth beta1 Kruppel-like factor KLF10 targets transforming growth factor-beta1 to regulate CD4(+)CD25(-) T cells and T regulatory cells. Kruppel-like factor KLF10 targets transforming growth factor-beta1 to regulate CD4(+)CD25(-) T cells and T regulatory cells. CD4(+)CD25(+) regulatory T cells (T regs) play a major role in the maintenance of self-tolerance and immune suppression, although the mechanisms controlling T reg development and suppressor function remain incompletely understood. Herein, we provide evidence that Kruppel-like factor 10 (KLF10/TIEG1) constitutes an important regulator of T regulatory cell suppressor function and CD4(+)CD25(-) T cell activation through distinct mechanisms involving transforming growth factor (TGF)-beta1 and Foxp3. KLF10 overexpressing CD4(+)CD25(-) T cells induced both TGF-beta1 and Foxp3 expression, an effect associated with reduced T-Bet (Th1 marker) and Gata3 (Th2 marker) mRNA expre",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.639839+00:00"
+}

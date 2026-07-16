@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27822315",
+  "source_fingerprint": "aa79a9ae58e35bebc12d25820e74b7ad",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27822315",
+    "liver-receptor-homolog-1-regulates-the-transcription-of-steroidogenic-enzymes-and-induces-the-differentiation-of-mesenchymal-stem-cells-into-steroidogenic-cells."
+  ],
+  "key_phrases": [
+    "liver",
+    "receptor",
+    "homolog",
+    "regulates",
+    "transcription",
+    "steroidogenic",
+    "enzymes",
+    "induces"
+  ],
+  "summary_1l": "Liver receptor homolog-1 regulates the transcription of steroidogenic enzymes and induces the differentiation of mesenchymal stem cells into steroidogenic cells.",
+  "query_hits": [],
+  "embed_text": "27822315 Liver receptor homolog-1 regulates the transcription of steroidogenic enzymes and induces the differentiation of mesenchymal stem cells into steroidogenic cells. science scifact Steroidogenic factor-1 (SF-1, also known as Ad4BP) has been demonstrated to be a primary transcriptional regulator of steroidogenic-related genes. However, mRNA for liver receptor homolog-1 (LRH-1), which together with SF-1, belongs to the… 27822315 liver-receptor-homolog-1-regulates-the-transcription-of-steroidogenic-enzymes-and-induces-the-differentiation-of-mesenchymal-stem-cells-into-steroidogenic-cells. liver receptor homolog regulates transcription steroidogenic enzymes induces Liver receptor homolog-1 regulates the transcription of steroidogenic enzymes and induces the differentiation of mesenchymal stem cells into steroidogenic cells. Liver receptor homolog-1 regulates the transcription of steroidogenic enzymes and induces the differentiation of mesenchymal stem cells into steroidogenic cells. Steroidogenic factor-1 (SF-1, also known as Ad4BP) has been demonstrated to be a primary transcriptional regulator of steroidogenic-related genes. However, mRNA for liver receptor homolog-1 (LRH-1), which together with SF-1, belongs to the NR5A nuclear receptor family, is expressed at much higher levels than SF-1 mRNA in the human gonad. In our previous studies, we demonstrated that SF-1 induced the differentiation of bone marrow-derived mesenchymal stem cells (MSCs) into steroidogenic cells such as Leydig or adrenocortical cells. The introduction of LRH-1 into human MSCs (hMSCs) with the aid of cAMP also induced the expression of",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.335817+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2958458",
+  "source_fingerprint": "9c0466a0adeff72b9c906fe8159d1b9e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2958458",
+    "endocrine-regulation-of-human-fetal-growth:-the-role-of-the-mother,-placenta,-and-fetus."
+  ],
+  "key_phrases": [
+    "endocrine",
+    "regulation",
+    "human",
+    "fetal",
+    "growth",
+    "role",
+    "mother",
+    "placenta"
+  ],
+  "summary_1l": "Endocrine regulation of human fetal growth: the role of the mother, placenta, and fetus.",
+  "query_hits": [],
+  "embed_text": "2958458 Endocrine regulation of human fetal growth: the role of the mother, placenta, and fetus. science scifact The environment in which the fetus develops is critical for its survival and long-term health. The regulation of normal human fetal growth involves many multidirectional interactions between the mother, placenta, and fetus. The mother… 2958458 endocrine-regulation-of-human-fetal-growth:-the-role-of-the-mother,-placenta,-and-fetus. endocrine regulation human fetal growth role mother placenta Endocrine regulation of human fetal growth: the role of the mother, placenta, and fetus. Endocrine regulation of human fetal growth: the role of the mother, placenta, and fetus. The environment in which the fetus develops is critical for its survival and long-term health. The regulation of normal human fetal growth involves many multidirectional interactions between the mother, placenta, and fetus. The mother supplies nutrients and oxygen to the fetus via the placenta. The fetus influences the provision of maternal nutrients via the placental production of hormones that regulate maternal metabolism. The placenta is the site of exchange between mother and fetus and regulates fetal growth via the production and metabolism of growth-regulating hormones such as IGFs and glucocorticoids. Adequate trophoblast invasion in early pregnancy and increased uteroplacental blood flow ensure",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.064975+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11336632",
+  "source_fingerprint": "b1a99607cc4c03242e8be172dbc04d52",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11336632",
+    "crispr-interference-limits-horizontal-gene-transfer-in-staphylococci-by-targeting-dna"
+  ],
+  "key_phrases": [
+    "crispr",
+    "interference",
+    "limits",
+    "horizontal",
+    "gene",
+    "transfer",
+    "staphylococci",
+    "by"
+  ],
+  "summary_1l": "Horizontal gene transfer (HGT) in bacteria and archaea occurs through phage transduction, transformation, or conju",
+  "query_hits": [],
+  "embed_text": "11336632 CRISPR Interference Limits Horizontal Gene Transfer in Staphylococci by Targeting DNA science scifact Horizontal gene transfer (HGT) in bacteria and archaea occurs through phage transduction, transformation, or conjugation, and the latter is particularly important for the spread of antibiotic resistance. Clustered, regularly interspaced,… 11336632 crispr-interference-limits-horizontal-gene-transfer-in-staphylococci-by-targeting-dna crispr interference limits horizontal gene transfer staphylococci by Horizontal gene transfer (HGT) in bacteria and archaea occurs through phage transduction, transformation, or conju CRISPR Interference Limits Horizontal Gene Transfer in Staphylococci by Targeting DNA Horizontal gene transfer (HGT) in bacteria and archaea occurs through phage transduction, transformation, or conjugation, and the latter is particularly important for the spread of antibiotic resistance. Clustered, regularly interspaced, short palindromic repeat (CRISPR) loci confer sequence-directed immunity against phages. A clinical isolate of Staphylococcus epidermidis harbors a CRISPR spacer that matches the nickase gene present in nearly all staphylococcal conjugative plasmids. Here we show that CRISPR interference prevents conjugation and plasmid transformation in S. epidermidis. Insertion of a self-splicing intron into nickase blocks interference despite the reconstitution of the target sequence i",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:06.712007+00:00"
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "18557974",
+  "source_fingerprint": "ec162c4f7c1a95bc62705e06af9bc5ca",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18557974"
+  ],
+  "key_phrases": [
+    "british",
+    "journal",
+    "nutrition",
+    "2003",
+    "89",
+    "295",
+    "301",
+    "authors"
+  ],
+  "summary_1l": "British Journal of Nutrition (2003), 89, 295–301 q The Authors 2003 DOI: 10.",
+  "query_hits": [],
+  "embed_text": "18557974 British Journal of Nutrition (2003), 89, 295–301 q The Authors 2003 DOI: 10.1079/BJN2002776 Plasma homocysteine concentration is decreased by dietary intervention* science scifact High plasma total homocysteine (tHcy) concentration is reported to be a risk factor for vascular diseases. We investigated the extent to which serum folate and plasma tHcy respond to a high intake of natural folate from food. Thirty-seven… 18557974 british journal nutrition 2003 89 295 301 authors British Journal of Nutrition (2003), 89, 295–301 q The Authors 2003 DOI: 10. British Journal of Nutrition (2003), 89, 295–301 q The Authors 2003 DOI: 10.1079/BJN2002776 Plasma homocysteine concentration is decreased by dietary intervention* High plasma total homocysteine (tHcy) concentration is reported to be a risk factor for vascular diseases. We investigated the extent to which serum folate and plasma tHcy respond to a high intake of natural folate from food. Thirty-seven healthy females volunteered t o participate in a crossover dietary intervention. The study included a baseline period and two 5-week diet periods (low- and high-folate diets) with a 3-week washout in between. The low-folate diet contained one serving of both vegetables and fruit/d, while during the high-folate diet the subjects ate at least seven servings of vegetables, berries, and citrus frui",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.430634+00:00"
+}

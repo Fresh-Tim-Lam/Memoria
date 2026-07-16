@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25901598",
+  "source_fingerprint": "867753bd10e5319f4084ada58faeedc7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25901598",
+    "an-acetylation-switch-in-p53-mediates-holo-tfiid-recruitment."
+  ],
+  "key_phrases": [
+    "acetylation",
+    "switch",
+    "p53",
+    "mediates",
+    "holo",
+    "tfiid",
+    "recruitment",
+    "posttranslational"
+  ],
+  "summary_1l": "An acetylation switch in p53 mediates holo-TFIID recruitment.",
+  "query_hits": [],
+  "embed_text": "25901598 An acetylation switch in p53 mediates holo-TFIID recruitment. science scifact Posttranslational modifications mediate important regulatory functions in biology. The acetylation of the p53 transcription factor, for example, promotes transcriptional activation of target genes including p21. Here we show that the… 25901598 an-acetylation-switch-in-p53-mediates-holo-tfiid-recruitment. acetylation switch p53 mediates holo tfiid recruitment posttranslational An acetylation switch in p53 mediates holo-TFIID recruitment. An acetylation switch in p53 mediates holo-TFIID recruitment. Posttranslational modifications mediate important regulatory functions in biology. The acetylation of the p53 transcription factor, for example, promotes transcriptional activation of target genes including p21. Here we show that the acetylation of two lysine residues in p53 promotes recruitment of the TFIID subunit TAF1 to the p21 promoter through its bromodomains. UV irradiation of cells diacetylates p53 at lysines 373 and 382, which in turn recruits TAF1 to a distal p53-binding site on the p21 promoter prior to looping to the core promoter. Disruption of acetyl-p53/bromodomain interaction inhibits TAF1 recruitment to both the distal p53-binding site and the core promoter. Further, the TFIID subunits TAF4, TAF5, and TBP are de",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.702263+00:00"
+}

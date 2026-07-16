@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2810997",
+  "source_fingerprint": "563fb008c9c63d8908a55e9418f15ebd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2810997",
+    "efficient-mitochondrial-genome-editing-by-crispr/cas9"
+  ],
+  "key_phrases": [
+    "efficient",
+    "mitochondrial",
+    "genome",
+    "editing",
+    "by",
+    "crispr",
+    "cas9",
+    "clustered"
+  ],
+  "summary_1l": "The Clustered Regularly Interspaced Short Palindromic Repeats (CRISPR)/Cas9 system has been widely used for nuclear DNA editing to generate mutati",
+  "query_hits": [],
+  "embed_text": "2810997 Efficient Mitochondrial Genome Editing by CRISPR/Cas9 science scifact The Clustered Regularly Interspaced Short Palindromic Repeats (CRISPR)/Cas9 system has been widely used for nuclear DNA editing to generate mutations or correct specific disease alleles. Despite its flexible application, it has not been… 2810997 efficient-mitochondrial-genome-editing-by-crispr/cas9 efficient mitochondrial genome editing by crispr cas9 clustered The Clustered Regularly Interspaced Short Palindromic Repeats (CRISPR)/Cas9 system has been widely used for nuclear DNA editing to generate mutati Efficient Mitochondrial Genome Editing by CRISPR/Cas9 The Clustered Regularly Interspaced Short Palindromic Repeats (CRISPR)/Cas9 system has been widely used for nuclear DNA editing to generate mutations or correct specific disease alleles. Despite its flexible application, it has not been determined if CRISPR/Cas9, originally identified as a bacterial defense system against virus, can be targeted to mitochondria for mtDNA editing. Here, we show that regular FLAG-Cas9 can localize to mitochondria to edit mitochondrial DNA with sgRNAs targeting specific loci of the mitochondrial genome. Expression of FLAG-Cas9 together with gRNA targeting Cox1 and Cox3 leads to cleavage of the specific mtDNA loci. In addition, we observed disruption of mitochondrial protein homeostasis following mtDNA trunc",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.592630+00:00"
+}

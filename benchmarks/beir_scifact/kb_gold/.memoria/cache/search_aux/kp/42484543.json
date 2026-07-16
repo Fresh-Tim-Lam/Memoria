@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "42484543",
+  "source_fingerprint": "2045574e820263534f795df6c582f3db",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "42484543",
+    "the-transcriptome-profile-of-human-embryonic-stem-cells-as-defined-by-sage."
+  ],
+  "key_phrases": [
+    "transcriptome",
+    "profile",
+    "human",
+    "embryonic",
+    "stem",
+    "cells",
+    "as",
+    "defined"
+  ],
+  "summary_1l": "The transcriptome profile of human embryonic stem cells as defined by SAGE.",
+  "query_hits": [],
+  "embed_text": "42484543 The transcriptome profile of human embryonic stem cells as defined by SAGE. science scifact Human embryonic stem (ES) cell lines that have the ability to self-renew and differentiate into specific cell types have been established. The molecular mechanisms for self-renewal and differentiation, however, are poorly understood. We… 42484543 the-transcriptome-profile-of-human-embryonic-stem-cells-as-defined-by-sage. transcriptome profile human embryonic stem cells as defined The transcriptome profile of human embryonic stem cells as defined by SAGE. The transcriptome profile of human embryonic stem cells as defined by SAGE. Human embryonic stem (ES) cell lines that have the ability to self-renew and differentiate into specific cell types have been established. The molecular mechanisms for self-renewal and differentiation, however, are poorly understood. We determined the transcriptome profiles for two proprietary human ES cell lines (HES3 and HES4, ES Cell International), and compared them with murine ES cells and other human tissues. Human and mouse ES cells appear to share a number of expressed gene products although there are numerous notable differences, including an inactive leukemia inhibitory factor pathway and the high preponderance of several important genes like POU5F1 and SOX2 in human ES cells. We have established a list o",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.068191+00:00"
+}

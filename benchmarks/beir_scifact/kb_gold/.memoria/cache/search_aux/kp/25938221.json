@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25938221",
+  "source_fingerprint": "a6894c60cea386ec2120e7b71bdbb5a8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25938221",
+    "the-spectrum-of-retinopathy-in-adults-with-plasmodium-falciparum-malaria"
+  ],
+  "key_phrases": [
+    "spectrum",
+    "retinopathy",
+    "adults",
+    "with",
+    "plasmodium",
+    "falciparum",
+    "malaria",
+    "specific"
+  ],
+  "summary_1l": "A specific retinopathy has been described in African children with cerebral malaria, but in adults this has not been extensivel",
+  "query_hits": [],
+  "embed_text": "25938221 The spectrum of retinopathy in adults with Plasmodium falciparum malaria science scifact A specific retinopathy has been described in African children with cerebral malaria, but in adults this has not been extensively studied. Since the structure and function of the retinal vasculature greatly resembles the cerebral… 25938221 the-spectrum-of-retinopathy-in-adults-with-plasmodium-falciparum-malaria spectrum retinopathy adults with plasmodium falciparum malaria specific A specific retinopathy has been described in African children with cerebral malaria, but in adults this has not been extensivel The spectrum of retinopathy in adults with Plasmodium falciparum malaria A specific retinopathy has been described in African children with cerebral malaria, but in adults this has not been extensively studied. Since the structure and function of the retinal vasculature greatly resembles the cerebral vasculature, study of retinal changes can reveal insights into the pathophysiology of cerebral malaria. A detailed observational study of malarial retinopathy in Bangladeshi adults was performed using high-definition portable retinal photography. Retinopathy was present in 17/27 adults (63%) with severe malaria and 14/20 adults (70%) with cerebral malaria. Moderate or severe retinopathy was more frequent in cerebral malaria (11/20, 55%) than in uncomplicated malaria (3/15, 20%; P=0.039), bacte",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.762244+00:00"
+}

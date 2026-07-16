@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21141798",
+  "source_fingerprint": "a51c788d46df2d5ef4035f0c08172497",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21141798",
+    "characterization-of-a-murine-monoclonal-antibody-to-cryptococcus-neoformans-polysaccharide-that-is-a-candidate-for-human-therapeutic-studies."
+  ],
+  "key_phrases": [
+    "characterization",
+    "murine",
+    "monoclonal",
+    "antibody",
+    "cryptococcus",
+    "neoformans",
+    "polysaccharide",
+    "that"
+  ],
+  "summary_1l": "Characterization of a murine monoclonal antibody to Cryptococcus neoformans polysaccharide that is a candidate for human therapeutic studies.",
+  "query_hits": [],
+  "embed_text": "21141798 Characterization of a murine monoclonal antibody to Cryptococcus neoformans polysaccharide that is a candidate for human therapeutic studies. science scifact The murine monoclonal antibody (MAb) 18B7 [immunoglobulin G1(kappa)] is in preclinical development for treatment of Cryptococcus neoformans infections. In anticipation of its use in humans, we defined the serological and biological… 21141798 characterization-of-a-murine-monoclonal-antibody-to-cryptococcus-neoformans-polysaccharide-that-is-a-candidate-for-human-therapeutic-studies. characterization murine monoclonal antibody cryptococcus neoformans polysaccharide that Characterization of a murine monoclonal antibody to Cryptococcus neoformans polysaccharide that is a candidate for human therapeutic studies. Characterization of a murine monoclonal antibody to Cryptococcus neoformans polysaccharide that is a candidate for human therapeutic studies. The murine monoclonal antibody (MAb) 18B7 [immunoglobulin G1(kappa)] is in preclinical development for treatment of Cryptococcus neoformans infections. In anticipation of its use in humans, we defined the serological and biological properties of MAb 18B7 in detail. Structural comparison to the related protective MAb 2H1 revealed conservation of the antigen binding site despite several amino acid differences. MAb 18B7 was shown by immunofluorescence and agglutination studies to bind to all four serotypes of C. neoformans, opsonize C. neoformans serotypes A and D, enhance human and mouse effector cell antifungal activity, and activate the complement pa",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.425740+00:00"
+}

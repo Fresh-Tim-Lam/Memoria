@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2679511",
+  "source_fingerprint": "22cfeee69690dedc8498445cb16c2676",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2679511",
+    "the-blm-helicase-contributes-to-telomere-maintenance-through-processing-of-late-replicating-intermediate-structures"
+  ],
+  "key_phrases": [
+    "blm",
+    "helicase",
+    "contributes",
+    "telomere",
+    "maintenance",
+    "through",
+    "processing",
+    "late"
+  ],
+  "summary_1l": "Werner's syndrome (WS) and Bloom's syndrome (BS) are cancer predisposition disorders",
+  "query_hits": [],
+  "embed_text": "2679511 The BLM helicase contributes to telomere maintenance through processing of late-replicating intermediate structures science scifact Werner's syndrome (WS) and Bloom's syndrome (BS) are cancer predisposition disorders caused by loss of function of the RecQ helicases WRN or BLM, respectively. BS and WS are characterized by replication defects, hyperrecombination events… 2679511 the-blm-helicase-contributes-to-telomere-maintenance-through-processing-of-late-replicating-intermediate-structures blm helicase contributes telomere maintenance through processing late Werner's syndrome (WS) and Bloom's syndrome (BS) are cancer predisposition disorders The BLM helicase contributes to telomere maintenance through processing of late-replicating intermediate structures Werner's syndrome (WS) and Bloom's syndrome (BS) are cancer predisposition disorders caused by loss of function of the RecQ helicases WRN or BLM, respectively. BS and WS are characterized by replication defects, hyperrecombination events and chromosomal aberrations, which are hallmarks of cancer. Inefficient replication of the G-rich telomeric strand contributes to chromosome aberrations in WS cells, demonstrating a link between WRN, telomeres and genomic stability. Herein, we provide evidence that BLM also contributes to chromosome-end maintenance. Telomere defects (TDs) are observed in BLM-deficient cells at an elevated frequency, which is similar to cells lacking a functio",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.139526+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8247469",
+  "source_fingerprint": "87a9bc4461fd14f0f2c04bac9afdef32",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8247469",
+    "the-viral-and-cellular-microrna-targetome-in-lymphoblastoid-cell-lines"
+  ],
+  "key_phrases": [
+    "viral",
+    "cellular",
+    "microrna",
+    "targetome",
+    "lymphoblastoid",
+    "cell",
+    "lines",
+    "epstein"
+  ],
+  "summary_1l": "Epstein-Barr virus (EBV) is a ubiquitous human herpesvirus linked to a number of B cell cancers and lymphoproliferative disorders",
+  "query_hits": [],
+  "embed_text": "8247469 The Viral and Cellular MicroRNA Targetome in Lymphoblastoid Cell Lines science scifact Epstein-Barr virus (EBV) is a ubiquitous human herpesvirus linked to a number of B cell cancers and lymphoproliferative disorders. During latent infection, EBV expresses 25 viral pre-microRNAs (miRNAs) and induces the expression of… 8247469 the-viral-and-cellular-microrna-targetome-in-lymphoblastoid-cell-lines viral cellular microrna targetome lymphoblastoid cell lines epstein Epstein-Barr virus (EBV) is a ubiquitous human herpesvirus linked to a number of B cell cancers and lymphoproliferative disorders The Viral and Cellular MicroRNA Targetome in Lymphoblastoid Cell Lines Epstein-Barr virus (EBV) is a ubiquitous human herpesvirus linked to a number of B cell cancers and lymphoproliferative disorders. During latent infection, EBV expresses 25 viral pre-microRNAs (miRNAs) and induces the expression of specific host miRNAs, such as miR-155 and miR-21, which potentially play a role in viral oncogenesis. To date, only a limited number of EBV miRNA targets have been identified; thus, the role of EBV miRNAs in viral pathogenesis and/or lymphomagenesis is not well defined. Here, we used photoactivatable ribonucleoside-enhanced crosslinking and immunoprecipitation (PAR-CLIP) combined with deep sequencing and computational analysis to comprehensively examine the viral and cellular miRNA targetome",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.170278+00:00"
+}

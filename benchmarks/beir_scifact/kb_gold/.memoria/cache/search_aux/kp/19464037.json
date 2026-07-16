@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19464037",
+  "source_fingerprint": "fe4f7848b6e1885406f23c0e0b8607a8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19464037",
+    "hospital-and-1-year-survival-of-patients-admitted-to-intensive-care-units-with-acute-exacerbation-of-chronic-obstructive-pulmonary-disease."
+  ],
+  "key_phrases": [
+    "hospital",
+    "year",
+    "survival",
+    "patients",
+    "admitted",
+    "intensive",
+    "care",
+    "units"
+  ],
+  "summary_1l": "Hospital and 1-year survival of patients admitted to intensive care units with acute exacerbation of chronic obstructive pulmonary disease.",
+  "query_hits": [],
+  "embed_text": "19464037 Hospital and 1-year survival of patients admitted to intensive care units with acute exacerbation of chronic obstructive pulmonary disease. science scifact OBJECTIVE To describe outcomes and identify variables associated with hospital and 1-year survival for patients admitted to an intensive care unit (ICU) with an acute exacerbation of chronic obstructive pulmonary disease (COPD). DESIGN… 19464037 hospital-and-1-year-survival-of-patients-admitted-to-intensive-care-units-with-acute-exacerbation-of-chronic-obstructive-pulmonary-disease. hospital year survival patients admitted intensive care units Hospital and 1-year survival of patients admitted to intensive care units with acute exacerbation of chronic obstructive pulmonary disease. Hospital and 1-year survival of patients admitted to intensive care units with acute exacerbation of chronic obstructive pulmonary disease. OBJECTIVE To describe outcomes and identify variables associated with hospital and 1-year survival for patients admitted to an intensive care unit (ICU) with an acute exacerbation of chronic obstructive pulmonary disease (COPD). DESIGN Prospective, multicenter, inception cohort study. SETTING Forty-two ICUs at 40 US hospitals. PATIENTS A total of 362 admissions for COPD exacerbation selected from the Acute Physiology and Chronic Health Evaluation (APACHE) III database of 17,440 ICU admissions. MEASUREMENTS AND RESULTS Hospital mortality for the 362 admissions was 24%. For the 167 patients aged 65 years or older, mortality was 30% at hospital discharge,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.594443+00:00"
+}

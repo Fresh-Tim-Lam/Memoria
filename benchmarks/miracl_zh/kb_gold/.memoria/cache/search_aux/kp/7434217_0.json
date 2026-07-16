@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7434217#0",
+  "source_fingerprint": "60613f264a0b2a1bb917697c4d32caa4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "山东省足球代表队"
+  ],
+  "aliases": [
+    "7434217#0"
+  ],
+  "key_phrases": [
+    "王光文",
+    "山东省",
+    "滕县",
+    "沈阳铁路局",
+    "局长",
+    "wangguangwenwangguangwenshandongshengtengxianrenshenyangtielujujuzhang",
+    "王光文 王光文，山东省滕县人。沈阳铁路局局长。"
+  ],
+  "summary_1l": "王光文，山东省滕县人。",
+  "query_hits": [],
+  "embed_text": "7434217#0 王光文 王光文 王光文，山东省滕县人。沈阳铁路局局长。 山东省足球代表队 7434217#0 王光文 山东省 滕县 沈阳铁路局 局长 wangguangwenwangguangwenshandongshengtengxianrenshenyangtielujujuzhang 王光文 王光文，山东省滕县人。沈阳铁路局局长。 王光文，山东省滕县人。 王光文 王光文，山东省滕县人。沈阳铁路局局长。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:23:19.343858+00:00"
+}

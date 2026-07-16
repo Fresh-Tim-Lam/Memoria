@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36950726",
+  "source_fingerprint": "1626cdecab02850960c8c1578aec034d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36950726",
+    "loss-of-5-hydroxymethylcytosine-and-ten-eleven-translocation-2-protein-expression-in-malignant-melanoma."
+  ],
+  "key_phrases": [
+    "loss",
+    "hydroxymethylcytosine",
+    "ten",
+    "eleven",
+    "translocation",
+    "protein",
+    "expression",
+    "malignant"
+  ],
+  "summary_1l": "Loss of 5-hydroxymethylcytosine and ten-eleven translocation 2 protein expression in malignant melanoma.",
+  "query_hits": [],
+  "embed_text": "36950726 Loss of 5-hydroxymethylcytosine and ten-eleven translocation 2 protein expression in malignant melanoma. science scifact Several research groups have recently reported on markedly reduced levels of 5-hydroxymethylcytosine (5hmC) in human breast, liver, lung, pancreatic, colon, prostate, brain, and myeloid cancers. We studied benign compound nevi (BCN, n=17),… 36950726 loss-of-5-hydroxymethylcytosine-and-ten-eleven-translocation-2-protein-expression-in-malignant-melanoma. loss hydroxymethylcytosine ten eleven translocation protein expression malignant Loss of 5-hydroxymethylcytosine and ten-eleven translocation 2 protein expression in malignant melanoma. Loss of 5-hydroxymethylcytosine and ten-eleven translocation 2 protein expression in malignant melanoma. Several research groups have recently reported on markedly reduced levels of 5-hydroxymethylcytosine (5hmC) in human breast, liver, lung, pancreatic, colon, prostate, brain, and myeloid cancers. We studied benign compound nevi (BCN, n=17), dysplastic compound nevi (DCN, n=15), superficial spreading melanomas [SSM, stratified in <1 mm (n=19) and >4 mm (n=18) Breslow tumor thickness], and cutaneous metastatic disease (CMD, n=24). Immunohistochemistry included specific antibodies against 5hmC, 5-methylcytosine (5mC), and ten-eleven translocation 2 protein (TET2). Immunohistological scoring showed significantly (P<0.0001) higher median 5hmC levels in BCN and DCN than in thin SSM, thick SSM,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:43.912808+00:00"
+}

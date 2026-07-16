@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10958594",
+  "source_fingerprint": "5430234c970040959d5d48a1a65e8fa7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10958594",
+    "nationwide-trends-in-incidence,-treatment-and-survival-of-colorectal-cancer-patients-with-synchronous-metastases"
+  ],
+  "key_phrases": [
+    "nationwide",
+    "trends",
+    "incidence",
+    "treatment",
+    "survival",
+    "colorectal",
+    "cancer",
+    "patients"
+  ],
+  "summary_1l": "The aim of this study was to determine trends in incidence, treatment and survival of c",
+  "query_hits": [],
+  "embed_text": "10958594 Nationwide trends in incidence, treatment and survival of colorectal cancer patients with synchronous metastases science scifact The aim of this study was to determine trends in incidence, treatment and survival of colorectal cancer (CRC) patients with synchronous metastases (Stage IV) in the Netherlands. This nationwide population-based study included 160,278… 10958594 nationwide-trends-in-incidence,-treatment-and-survival-of-colorectal-cancer-patients-with-synchronous-metastases nationwide trends incidence treatment survival colorectal cancer patients The aim of this study was to determine trends in incidence, treatment and survival of c Nationwide trends in incidence, treatment and survival of colorectal cancer patients with synchronous metastases The aim of this study was to determine trends in incidence, treatment and survival of colorectal cancer (CRC) patients with synchronous metastases (Stage IV) in the Netherlands. This nationwide population-based study included 160,278 patients diagnosed with CRC between 1996 and 2011. We evaluated changes in stage distribution, location of synchronous metastases and treatment in four consecutive periods, using Chi square tests for trend. Median survival in months was determined, using Kaplan–Meier analysis. The proportion of Stage IV CRC patients (n = 33,421) increased from 19 % (1996–1999) to 23 % (2008–2011, p < 0.001). This was predominantly due to a major increase in the inci",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:05.723182+00:00"
+}

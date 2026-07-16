@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14853989",
+  "source_fingerprint": "4451e53addc4346cbd2fd91ba27e3e74",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14853989",
+    "neutrophil-extracellular-chromatin-traps-connect-innate-immune-response-to-autoimmunity"
+  ],
+  "key_phrases": [
+    "neutrophil",
+    "extracellular",
+    "chromatin",
+    "traps",
+    "connect",
+    "innate",
+    "immune",
+    "response"
+  ],
+  "summary_1l": "Autoantibodies to DNA and histones (chromatin) are the defining antigen specificity in systemic lupus erythemato",
+  "query_hits": [],
+  "embed_text": "14853989 Neutrophil extracellular chromatin traps connect innate immune response to autoimmunity science scifact Autoantibodies to DNA and histones (chromatin) are the defining antigen specificity in systemic lupus erythematosus (SLE) and related musculoskeletal disorders but the mechanisms responsible for their induction remain mysterious. That… 14853989 neutrophil-extracellular-chromatin-traps-connect-innate-immune-response-to-autoimmunity neutrophil extracellular chromatin traps connect innate immune response Autoantibodies to DNA and histones (chromatin) are the defining antigen specificity in systemic lupus erythemato Neutrophil extracellular chromatin traps connect innate immune response to autoimmunity Autoantibodies to DNA and histones (chromatin) are the defining antigen specificity in systemic lupus erythematosus (SLE) and related musculoskeletal disorders but the mechanisms responsible for their induction remain mysterious. That situation rapidly changed once neutrophil extracellular chromatin traps (NETs) were discovered and observed to play a conserved role in innate immune responses to a broad variety of microbial pathogens. At the center of an infectious process, neutrophils exert various antimicrobial defenses, including the release of nuclear chromatin into the extracellular space. The externalized NETs, a complex meshwork of nuclear chromatin and antimicrobial proteins, serve to immobilize",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.781811+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6712836",
+  "source_fingerprint": "71e59580378af53122bdb1b7a2047ec9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6712836",
+    "mid49-and-mid51,-new-components-of-the-mitochondrial-fission-machinery."
+  ],
+  "key_phrases": [
+    "mid49",
+    "mid51",
+    "new",
+    "components",
+    "mitochondrial",
+    "fission",
+    "machinery",
+    "mitochondria"
+  ],
+  "summary_1l": "MiD49 and MiD51, new components of the mitochondrial fission machinery.",
+  "query_hits": [],
+  "embed_text": "6712836 MiD49 and MiD51, new components of the mitochondrial fission machinery. science scifact Mitochondria form intricate networks through fission and fusion events. Here, we identify mitochondrial dynamics proteins of 49 and 51 kDa (MiD49 and MiD51, respectively) anchored in the mitochondrial outer membrane. MiD49/51 form foci and… 6712836 mid49-and-mid51,-new-components-of-the-mitochondrial-fission-machinery. mid49 mid51 new components mitochondrial fission machinery mitochondria MiD49 and MiD51, new components of the mitochondrial fission machinery. MiD49 and MiD51, new components of the mitochondrial fission machinery. Mitochondria form intricate networks through fission and fusion events. Here, we identify mitochondrial dynamics proteins of 49 and 51 kDa (MiD49 and MiD51, respectively) anchored in the mitochondrial outer membrane. MiD49/51 form foci and rings around mitochondria similar to the fission mediator dynamin-related protein 1 (Drp1). MiD49/51 directly recruit Drp1 to the mitochondrial surface, whereas their knockdown reduces Drp1 association, leading to unopposed fusion. Overexpression of MiD49/51 seems to sequester Drp1 from functioning at mitochondria and cause fused tubules to associate with actin. Thus, MiD49/51 are new mediators of mitochondrial division affecting Drp1 action at mitochondria.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.491371+00:00"
+}

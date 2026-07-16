@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8891333",
+  "source_fingerprint": "0177c76554e6c3397e0d264f36a8477e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8891333",
+    "targeted-therapy-for-cancer-stem-cells:-the-patched-pathway-and-abc-transporters"
+  ],
+  "key_phrases": [
+    "targeted",
+    "therapy",
+    "cancer",
+    "stem",
+    "cells",
+    "patched",
+    "pathway",
+    "abc"
+  ],
+  "summary_1l": "Data from certain leukemias as well as brain and breast cancer indicate that there is a small population of tumor cells",
+  "query_hits": [],
+  "embed_text": "8891333 Targeted therapy for cancer stem cells: the patched pathway and ABC transporters science scifact Data from certain leukemias as well as brain and breast cancer indicate that there is a small population of tumor cells with ‘stem cell’ characteristics and the capacity for self-renewal. The self-renewing cells have many of the properties… 8891333 targeted-therapy-for-cancer-stem-cells:-the-patched-pathway-and-abc-transporters targeted therapy cancer stem cells patched pathway abc Data from certain leukemias as well as brain and breast cancer indicate that there is a small population of tumor cells Targeted therapy for cancer stem cells: the patched pathway and ABC transporters Data from certain leukemias as well as brain and breast cancer indicate that there is a small population of tumor cells with ‘stem cell’ characteristics and the capacity for self-renewal. The self-renewing cells have many of the properties of normal stem cells and have been termed ‘cancer stem cells’. These cancer stem cells make up as few as 1% of the cells in a tumor, making them difficult to detect and study. Like normal stem cells, cancer stem cells have a number of properties permitting them to survive traditional cancer chemotherapy and radiation therapy. These cells express high levels of ATP-binding cassette (ABC) drug transporters, providing for a level of resistance; are relatively quiescent; have hi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.915867+00:00"
+}

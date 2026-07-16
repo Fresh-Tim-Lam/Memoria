@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "368506",
+  "source_fingerprint": "00fc19c100859cf30d16269a4dade702",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "368506",
+    "generation-of-mice-with-a-conditional-allele-for-the-p75(ntr)-neurotrophin-receptor-gene."
+  ],
+  "key_phrases": [
+    "generation",
+    "mice",
+    "with",
+    "conditional",
+    "allele",
+    "p75",
+    "ntr",
+    "neurotrophin"
+  ],
+  "summary_1l": "Generation of mice with a conditional allele for the p75(NTR) neurotrophin receptor gene.",
+  "query_hits": [],
+  "embed_text": "368506 Generation of mice with a conditional allele for the p75(NTR) neurotrophin receptor gene. science scifact The p75(NTR) neurotrophin receptor has been implicated in multiple biological and pathological processes. While significant advances have recently been made in understanding the physiologic role of p75(NTR) , many details and aspects… 368506 generation-of-mice-with-a-conditional-allele-for-the-p75(ntr)-neurotrophin-receptor-gene. generation mice with conditional allele p75 ntr neurotrophin Generation of mice with a conditional allele for the p75(NTR) neurotrophin receptor gene. Generation of mice with a conditional allele for the p75(NTR) neurotrophin receptor gene. The p75(NTR) neurotrophin receptor has been implicated in multiple biological and pathological processes. While significant advances have recently been made in understanding the physiologic role of p75(NTR) , many details and aspects remain to be determined. This is in part because the two existing knockout mouse models (Exons 3 or 4 deleted, respectively), both display features that defy definitive conclusions. Here we describe the generation of mice that carry a conditional p75(NTR) (p75(NTR-FX) ) allele made by flanking Exons 4-6, which encode the transmembrane and all cytoplasmic domains, by loxP sites. To validate this novel conditional allele, both neural crest-specific p75(NTR) /Wnt1-Cre mutant",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:43.787586+00:00"
+}

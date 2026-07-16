@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2272614",
+  "source_fingerprint": "9811cf46b0ffbc889c1f49101e86e8bf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2272614",
+    "reduced-nf1-expression-confers-resistance-to-egfr-inhibition-in-lung-cancer."
+  ],
+  "key_phrases": [
+    "reduced",
+    "nf1",
+    "expression",
+    "confers",
+    "resistance",
+    "egfr",
+    "inhibition",
+    "lung"
+  ],
+  "summary_1l": "Reduced NF1 expression confers resistance to EGFR inhibition in lung cancer.",
+  "query_hits": [],
+  "embed_text": "2272614 Reduced NF1 expression confers resistance to EGFR inhibition in lung cancer. science scifact Activating mutations in the EGF receptor (EGFR) are associated with clinical responsiveness to EGFR tyrosine kinase inhibitors (TKI), such as erlotinib and gefitinib. However, resistance eventually arises, often due to a second EGFR… 2272614 reduced-nf1-expression-confers-resistance-to-egfr-inhibition-in-lung-cancer. reduced nf1 expression confers resistance egfr inhibition lung Reduced NF1 expression confers resistance to EGFR inhibition in lung cancer. Reduced NF1 expression confers resistance to EGFR inhibition in lung cancer. Activating mutations in the EGF receptor (EGFR) are associated with clinical responsiveness to EGFR tyrosine kinase inhibitors (TKI), such as erlotinib and gefitinib. However, resistance eventually arises, often due to a second EGFR mutation, most commonly T790M. Through a genome-wide siRNA screen in a human lung cancer cell line and analyses of murine mutant EGFR-driven lung adenocarcinomas, we found that erlotinib resistance was associated with reduced expression of neurofibromin, the RAS GTPase-activating protein encoded by the NF1 gene. Erlotinib failed to fully inhibit RAS-ERK signaling when neurofibromin levels were reduced. Treatment of neurofibromin-deficient lung cancers with a MAP-ERK kinase (MEK) inhibi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.289704+00:00"
+}

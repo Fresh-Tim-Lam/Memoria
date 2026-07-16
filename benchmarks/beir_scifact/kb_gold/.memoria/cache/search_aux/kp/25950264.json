@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25950264",
+  "source_fingerprint": "2f4c8b7aae301628a3c3bdc079d4e8ac",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25950264",
+    "a-three-dimensional-cell-biology-model-of-human-hepatocellular-carcinoma-in-vitro"
+  ],
+  "key_phrases": [
+    "three",
+    "dimensional",
+    "cell",
+    "biology",
+    "model",
+    "human",
+    "hepatocellular",
+    "carcinoma"
+  ],
+  "summary_1l": "We established an in vitro 3-D model of metastatic hepatocellular carcinoma (HCC) by culturing MHCC97H cells on molecu",
+  "query_hits": [],
+  "embed_text": "25950264 A three-dimensional cell biology model of human hepatocellular carcinoma in vitro science scifact We established an in vitro 3-D model of metastatic hepatocellular carcinoma (HCC) by culturing MHCC97H cells on molecular scaffolds within a rotating wall vessel bioreactor. Morphological and biochemical analyses revealed that the 3-D HCC… 25950264 a-three-dimensional-cell-biology-model-of-human-hepatocellular-carcinoma-in-vitro three dimensional cell biology model human hepatocellular carcinoma We established an in vitro 3-D model of metastatic hepatocellular carcinoma (HCC) by culturing MHCC97H cells on molecu A three-dimensional cell biology model of human hepatocellular carcinoma in vitro We established an in vitro 3-D model of metastatic hepatocellular carcinoma (HCC) by culturing MHCC97H cells on molecular scaffolds within a rotating wall vessel bioreactor. Morphological and biochemical analyses revealed that the 3-D HCC model mirrored many clinical pathological features of HCC in vivo, including cancer cell morphology, tissue ultrastructure, protein production and secretion, glucose metabolism, tissue-specific gene expression, and apoptosis. Xenografts into livers of nude mice resulted in tumorigenesis and distant metastasis. This 3-D HCC spheroid is a promising model for HCC tumor biology, anticancer drug screening, and for the establishment of HCC animal models.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.808286+00:00"
+}

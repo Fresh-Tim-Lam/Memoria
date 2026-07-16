@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36432234",
+  "source_fingerprint": "e7d89e8cab3046bca3d0ea0c838d3b8f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36432234",
+    "wedelolactone-induces-growth-of-breast-cancer-cells-by-stimulation-of-estrogen-receptor-signalling."
+  ],
+  "key_phrases": [
+    "wedelolactone",
+    "induces",
+    "growth",
+    "breast",
+    "cancer",
+    "cells",
+    "by",
+    "stimulation"
+  ],
+  "summary_1l": "Wedelolactone induces growth of breast cancer cells by stimulation of estrogen receptor signalling.",
+  "query_hits": [],
+  "embed_text": "36432234 Wedelolactone induces growth of breast cancer cells by stimulation of estrogen receptor signalling. science scifact Wedelolactone, a plant coumestan, was shown to act as anti-cancer agent for breast and prostate carcinomas in vitro and in vivo targeting multiple cellular proteins including androgen receptors, 5-lipoxygenase and topoisomerase IIα. It is… 36432234 wedelolactone-induces-growth-of-breast-cancer-cells-by-stimulation-of-estrogen-receptor-signalling. wedelolactone induces growth breast cancer cells by stimulation Wedelolactone induces growth of breast cancer cells by stimulation of estrogen receptor signalling. Wedelolactone induces growth of breast cancer cells by stimulation of estrogen receptor signalling. Wedelolactone, a plant coumestan, was shown to act as anti-cancer agent for breast and prostate carcinomas in vitro and in vivo targeting multiple cellular proteins including androgen receptors, 5-lipoxygenase and topoisomerase IIα. It is cytotoxic to breast, prostate, pituitary and myeloma cancer cell lines in vitro at μM concentrations. In this study, however, a novel biological activity of nM dose of wedelolactone was demonstrated. Wedelolactone acts as agonist of estrogen receptors (ER) α and β as demonstrated by transactivation of estrogen response element (ERE) in cells transiently expressing either ERα or ERβ and by molecular docking of this coumestan into ligand binding pocket of bot",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:43.229843+00:00"
+}

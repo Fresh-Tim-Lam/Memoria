@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "41790911",
+  "source_fingerprint": "6126dd10703f41c0d085eab103fa116c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "41790911",
+    "wnt5a-regulates-adipose-tissue-angiogenesis-via-antiangiogenic-vegf-a165b-in-obese-humans."
+  ],
+  "key_phrases": [
+    "wnt5a",
+    "regulates",
+    "adipose",
+    "tissue",
+    "angiogenesis",
+    "via",
+    "antiangiogenic",
+    "vegf"
+  ],
+  "summary_1l": "WNT5A regulates adipose tissue angiogenesis via antiangiogenic VEGF-A165b in obese humans.",
+  "query_hits": [],
+  "embed_text": "41790911 WNT5A regulates adipose tissue angiogenesis via antiangiogenic VEGF-A165b in obese humans. science scifact Experimental studies have suggested that Wingless-related integration site 5A (WNT5A) is a proinflammatory secreted protein that is associated with metabolic dysfunction in obesity. Impaired angiogenesis in fat depots has been implicated… 41790911 wnt5a-regulates-adipose-tissue-angiogenesis-via-antiangiogenic-vegf-a165b-in-obese-humans. wnt5a regulates adipose tissue angiogenesis via antiangiogenic vegf WNT5A regulates adipose tissue angiogenesis via antiangiogenic VEGF-A165b in obese humans. WNT5A regulates adipose tissue angiogenesis via antiangiogenic VEGF-A165b in obese humans. Experimental studies have suggested that Wingless-related integration site 5A (WNT5A) is a proinflammatory secreted protein that is associated with metabolic dysfunction in obesity. Impaired angiogenesis in fat depots has been implicated in the development of adipose tissue capillary rarefaction, hypoxia, inflammation, and metabolic dysfunction. We have recently demonstrated that impaired adipose tissue angiogenesis is associated with overexpression of antiangiogenic factor VEGF-A165b in human fat and the systemic circulation. In the present study, we postulated that upregulation of WNT5A is associated with angiogenic dysfunction and examined its role in regulating VEGF-A165b expression in human obes",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.605734+00:00"
+}

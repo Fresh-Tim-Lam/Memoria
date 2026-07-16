@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3943235",
+  "source_fingerprint": "1cc3446884e347efd9aba87bd2af7d88",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3943235",
+    "beta-adrenergic-blockade-decreases-the-immunomodulatory-effects-of-social-disruption-stress"
+  ],
+  "key_phrases": [
+    "beta",
+    "adrenergic",
+    "blockade",
+    "decreases",
+    "immunomodulatory",
+    "effects",
+    "social",
+    "disruption"
+  ],
+  "summary_1l": "During physiological or psychological stress, catecholamines produced by the sympathetic nervous system (SNS",
+  "query_hits": [],
+  "embed_text": "3943235 Beta adrenergic blockade decreases the immunomodulatory effects of social disruption stress science scifact During physiological or psychological stress, catecholamines produced by the sympathetic nervous system (SNS) regulate the immune system. Previous studies report that the activation of β-adrenergic receptors (βARs) mediates the actions of… 3943235 beta-adrenergic-blockade-decreases-the-immunomodulatory-effects-of-social-disruption-stress beta adrenergic blockade decreases immunomodulatory effects social disruption During physiological or psychological stress, catecholamines produced by the sympathetic nervous system (SNS Beta adrenergic blockade decreases the immunomodulatory effects of social disruption stress During physiological or psychological stress, catecholamines produced by the sympathetic nervous system (SNS) regulate the immune system. Previous studies report that the activation of β-adrenergic receptors (βARs) mediates the actions of catecholamines and increases pro-inflammatory cytokine production in a number of different cell types. The impact of the SNS on the immune modulation of social defeat has not been examined. The following studies were designed to determine whether SNS activation during social disruption stress (SDR) influences anxiety-like behavior as well as the activation, priming, and glucocorticoid resistance of splenocytes after social stress. CD-1 mice were exposed to one, thr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.606891+00:00"
+}

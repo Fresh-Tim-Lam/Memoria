@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26297042",
+  "source_fingerprint": "246f9b59f525d158d3be88e527b255dc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26297042",
+    "redox-regulation-of-cell-migration-and-adhesion."
+  ],
+  "key_phrases": [
+    "redox",
+    "regulation",
+    "cell",
+    "migration",
+    "adhesion",
+    "reactive",
+    "oxygen",
+    "species"
+  ],
+  "summary_1l": "Redox regulation of cell migration and adhesion.",
+  "query_hits": [],
+  "embed_text": "26297042 Redox regulation of cell migration and adhesion. science scifact Reactive oxygen species (ROS), particularly hydrogen peroxide, and the proteins that regulate them play important roles in the migration and adhesion of cells. Stimulation of cell surface receptors with growth factors and chemoattractants… 26297042 redox-regulation-of-cell-migration-and-adhesion. redox regulation cell migration adhesion reactive oxygen species Redox regulation of cell migration and adhesion. Redox regulation of cell migration and adhesion. Reactive oxygen species (ROS), particularly hydrogen peroxide, and the proteins that regulate them play important roles in the migration and adhesion of cells. Stimulation of cell surface receptors with growth factors and chemoattractants generates ROS, which relay signals from the cell surface to key signaling proteins inside the cell. ROS act within cells to promote migration and also in nonmigrating cells to influence the behavior of migrating cells. Hydrogen peroxide has also been suggested to act as a chemoattractant in its own right, drawing immune cells to wounds. We discuss recent progress made towards understanding how organisms use ROS, and to what degree they depend on them, during the related processes of cell migration and adhes",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.598527+00:00"
+}

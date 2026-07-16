@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "30471052",
+  "source_fingerprint": "ad6e4216a88f683a420e25bced7b5ca6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "30471052",
+    "neurogenin3:-a-master-regulator-of-pancreatic-islet-differentiation-and-regeneration."
+  ],
+  "key_phrases": [
+    "neurogenin3",
+    "master",
+    "regulator",
+    "pancreatic",
+    "islet",
+    "differentiation",
+    "regeneration",
+    "basic"
+  ],
+  "summary_1l": "Neurogenin3: a master regulator of pancreatic islet differentiation and regeneration.",
+  "query_hits": [],
+  "embed_text": "30471052 Neurogenin3: a master regulator of pancreatic islet differentiation and regeneration. science scifact The basic helix-loop-helix transcription factor neurogenin-3 (Ngn3, Neurog3) is critical for the development of the endocrine cells of the islets. Either disrupted or forced expression of Ngn3 early in mouse pancreas development abrogates… 30471052 neurogenin3:-a-master-regulator-of-pancreatic-islet-differentiation-and-regeneration. neurogenin3 master regulator pancreatic islet differentiation regeneration basic Neurogenin3: a master regulator of pancreatic islet differentiation and regeneration. Neurogenin3: a master regulator of pancreatic islet differentiation and regeneration. The basic helix-loop-helix transcription factor neurogenin-3 (Ngn3, Neurog3) is critical for the development of the endocrine cells of the islets. Either disrupted or forced expression of Ngn3 early in mouse pancreas development abrogates the formation of islets. The successive waves of Ngn3 expression that occur during the primary and secondary transitions of endocrine cell development temporally determine the four distinct endocrine cell lineages, α, β, PP, and δ cells that express glucagon, insulin, pancreatic polypeptide, and somatostatin, respectively. During islet regeneration after injury of the adult mouse pancreas, such as by duct ligation or streptozotocin, Ngn3 is activated in duct-associated s",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.691075+00:00"
+}

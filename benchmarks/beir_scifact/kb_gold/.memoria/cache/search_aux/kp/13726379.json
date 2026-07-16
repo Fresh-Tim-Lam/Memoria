@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13726379",
+  "source_fingerprint": "b2d76ee9ce77eeddcbb0653949666a1d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13726379",
+    "coronary-heart-disease-in-south-asians-overseas:-a-review."
+  ],
+  "key_phrases": [
+    "coronary",
+    "heart",
+    "disease",
+    "south",
+    "asians",
+    "overseas",
+    "review",
+    "rates"
+  ],
+  "summary_1l": "Coronary heart disease in south Asians overseas: a review.",
+  "query_hits": [],
+  "embed_text": "13726379 Coronary heart disease in south Asians overseas: a review. science scifact Coronary heart disease rates have been reported in several parts of the world to be unusually high in people originating from the Indian subcontinent. High coronary disease rates appear to be common to South Asian groups of different… 13726379 coronary-heart-disease-in-south-asians-overseas:-a-review. coronary heart disease south asians overseas review rates Coronary heart disease in south Asians overseas: a review. Coronary heart disease in south Asians overseas: a review. Coronary heart disease rates have been reported in several parts of the world to be unusually high in people originating from the Indian subcontinent. High coronary disease rates appear to be common to South Asian groups of different geographical origin, religion, and language. This presents a challenge to the understanding of coronary heart disease: the high rates in South Asians are not explained on the basis of elevated serum cholesterol, smoking or hypertension. Low plasma HDL cholesterol, high plasma triglyceride levels and high prevalence of non-insulin-dependent diabetes have been consistently found in South Asians overseas: this probably reflects an underlying state of insulin resistance. Further studies are needed to deter",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.782417+00:00"
+}

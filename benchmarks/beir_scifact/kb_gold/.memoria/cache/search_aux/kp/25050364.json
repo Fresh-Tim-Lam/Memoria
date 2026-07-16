@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25050364",
+  "source_fingerprint": "631754f8a2fc8822d36c6c10bb03b07c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25050364",
+    "interleukin-18-null-mutation-increases-weight-and-food-intake-and-reduces-energy-expenditure-and-lipid-substrate-utilization-in-high-fat-diet-fed-mice"
+  ],
+  "key_phrases": [
+    "interleukin",
+    "18",
+    "null",
+    "mutation",
+    "increases",
+    "weight",
+    "food",
+    "intake"
+  ],
+  "summary_1l": "OBJECTIVE The proinflammatory cytokine interleuki",
+  "query_hits": [],
+  "embed_text": "25050364 Interleukin-18 null mutation increases weight and food intake and reduces energy expenditure and lipid substrate utilization in high-fat diet fed mice science scifact OBJECTIVE The proinflammatory cytokine interleukin-18 (IL-18) putatively modulates food intake and energy metabolism, but the effects of IL-18 in high-fat diet fed animals are unknown. Whether IL-18 alters basal metabolic rate or metabolic… 25050364 interleukin-18-null-mutation-increases-weight-and-food-intake-and-reduces-energy-expenditure-and-lipid-substrate-utilization-in-high-fat-diet-fed-mice interleukin 18 null mutation increases weight food intake OBJECTIVE The proinflammatory cytokine interleuki Interleukin-18 null mutation increases weight and food intake and reduces energy expenditure and lipid substrate utilization in high-fat diet fed mice OBJECTIVE The proinflammatory cytokine interleukin-18 (IL-18) putatively modulates food intake and energy metabolism, but the effects of IL-18 in high-fat diet fed animals are unknown. Whether IL-18 alters basal metabolic rate or metabolic processes of living is unknown. Here, we tested the hypothesis that IL-18 modulates weight gain, energy intake, whole-body energy expenditure, and utilization of lipid as a fuel substrate in high-fat diet fed mice. METHODS Food intake, whole-body metabolism, and motor activity of IL-18 knockout mice were compared to those of wildtype littermates; anorectic effects of intracerebroventricular IL-18 administr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.886297+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "33370",
+  "source_fingerprint": "eb975f135f2fb9a46777fcea4fbb2e90",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "33370",
+    "targeting-a20-decreases-glioma-stem-cell-survival-and-tumor-growth"
+  ],
+  "key_phrases": [
+    "targeting",
+    "a20",
+    "decreases",
+    "glioma",
+    "stem",
+    "cell",
+    "survival",
+    "tumor"
+  ],
+  "summary_1l": "Glioblastomas are deadly cancers that display a functional cellular hierarchy maintained by self-renewing glioblastoma stem cells (GS",
+  "query_hits": [],
+  "embed_text": "33370 Targeting A20 Decreases Glioma Stem Cell Survival and Tumor Growth science scifact Glioblastomas are deadly cancers that display a functional cellular hierarchy maintained by self-renewing glioblastoma stem cells (GSCs). GSCs are regulated by molecular pathways distinct from the bulk tumor that may be useful therapeutic… 33370 targeting-a20-decreases-glioma-stem-cell-survival-and-tumor-growth targeting a20 decreases glioma stem cell survival tumor Glioblastomas are deadly cancers that display a functional cellular hierarchy maintained by self-renewing glioblastoma stem cells (GS Targeting A20 Decreases Glioma Stem Cell Survival and Tumor Growth Glioblastomas are deadly cancers that display a functional cellular hierarchy maintained by self-renewing glioblastoma stem cells (GSCs). GSCs are regulated by molecular pathways distinct from the bulk tumor that may be useful therapeutic targets. We determined that A20 (TNFAIP3), a regulator of cell survival and the NF-kappaB pathway, is overexpressed in GSCs relative to non-stem glioblastoma cells at both the mRNA and protein levels. To determine the functional significance of A20 in GSCs, we targeted A20 expression with lentiviral-mediated delivery of short hairpin RNA (shRNA). Inhibiting A20 expression decreased GSC growth and survival through mechanisms associated with decreased cell-cycle progression and decreased pho",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:12.999018+00:00"
+}

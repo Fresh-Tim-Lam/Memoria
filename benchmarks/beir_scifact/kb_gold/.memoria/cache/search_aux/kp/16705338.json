@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16705338",
+  "source_fingerprint": "77aa2f6fd4e25e66404f2319b390398a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16705338",
+    "prediction-of-chemical-protein-interactions-network-with-weighted-network-based-inference-method"
+  ],
+  "key_phrases": [
+    "prediction",
+    "chemical",
+    "protein",
+    "interactions",
+    "network",
+    "with",
+    "weighted",
+    "based"
+  ],
+  "summary_1l": "Chemical-protein interaction (CPI) is the central topic of target identification and drug discovery.",
+  "query_hits": [],
+  "embed_text": "16705338 Prediction of Chemical-Protein Interactions Network with Weighted Network-Based Inference Method science scifact Chemical-protein interaction (CPI) is the central topic of target identification and drug discovery. However, large scale determination of CPI is a big challenge for in vitro or in vivo experiments, while in silico prediction shows great… 16705338 prediction-of-chemical-protein-interactions-network-with-weighted-network-based-inference-method prediction chemical protein interactions network with weighted based Chemical-protein interaction (CPI) is the central topic of target identification and drug discovery. Prediction of Chemical-Protein Interactions Network with Weighted Network-Based Inference Method Chemical-protein interaction (CPI) is the central topic of target identification and drug discovery. However, large scale determination of CPI is a big challenge for in vitro or in vivo experiments, while in silico prediction shows great advantages due to low cost and high accuracy. On the basis of our previous drug-target interaction prediction via network-based inference (NBI) method, we further developed node- and edge-weighted NBI methods for CPI prediction here. Two comprehensive CPI bipartite networks extracted from ChEMBL database were used to evaluate the methods, one containing 17,111 CPI pairs between 4,741 compounds and 97 G protein-coupled receptors, the other including 13,648 CPI p",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.676825+00:00"
+}

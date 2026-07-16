@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12871002",
+  "source_fingerprint": "c85464ca8c857823aca93ac50c6723c0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12871002",
+    "cde-1-affects-chromosome-segregation-through-uridylation-of-csr-1-bound-sirnas"
+  ],
+  "key_phrases": [
+    "cde",
+    "affects",
+    "chromosome",
+    "segregation",
+    "through",
+    "uridylation",
+    "csr",
+    "bound"
+  ],
+  "summary_1l": "We have studied the function of a conserved germline-specific nucleotidyltransferase protein, CDE-1, in RNAi and chromoso",
+  "query_hits": [],
+  "embed_text": "12871002 CDE-1 Affects Chromosome Segregation through Uridylation of CSR-1-Bound siRNAs science scifact We have studied the function of a conserved germline-specific nucleotidyltransferase protein, CDE-1, in RNAi and chromosome segregation in C. elegans. CDE-1 localizes specifically to mitotic chromosomes in embryos. This localization… 12871002 cde-1-affects-chromosome-segregation-through-uridylation-of-csr-1-bound-sirnas cde affects chromosome segregation through uridylation csr bound We have studied the function of a conserved germline-specific nucleotidyltransferase protein, CDE-1, in RNAi and chromoso CDE-1 Affects Chromosome Segregation through Uridylation of CSR-1-Bound siRNAs We have studied the function of a conserved germline-specific nucleotidyltransferase protein, CDE-1, in RNAi and chromosome segregation in C. elegans. CDE-1 localizes specifically to mitotic chromosomes in embryos. This localization requires the RdRP EGO-1, which physically interacts with CDE-1, and the Argonaute protein CSR-1. We found that CDE-1 is required for the uridylation of CSR-1 bound siRNAs, and that in the absence of CDE-1 these siRNAs accumulate to inappropriate levels, accompanied by defects in both meiotic and mitotic chromosome segregation. Elevated siRNA levels are associated with erroneous gene silencing, most likely through the inappropriate loading of CSR-1 siRNAs into other Argonaute proteins",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:09.784908+00:00"
+}

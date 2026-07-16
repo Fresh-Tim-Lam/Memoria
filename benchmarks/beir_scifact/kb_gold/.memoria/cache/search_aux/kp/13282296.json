@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13282296",
+  "source_fingerprint": "9524dd19957f6cb321f820ff315f6ca5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13282296",
+    "hypoglycemic-episodes-and-risk-of-dementia-in-older-patients-with-type-2-diabetes-mellitus."
+  ],
+  "key_phrases": [
+    "hypoglycemic",
+    "episodes",
+    "risk",
+    "dementia",
+    "older",
+    "patients",
+    "with",
+    "type"
+  ],
+  "summary_1l": "Hypoglycemic episodes and risk of dementia in older patients with type 2 diabetes mellitus.",
+  "query_hits": [],
+  "embed_text": "13282296 Hypoglycemic episodes and risk of dementia in older patients with type 2 diabetes mellitus. science scifact CONTEXT Although acute hypoglycemia may be associated with cognitive impairment in children with type 1 diabetes, no studies to date have evaluated whether hypoglycemia is a risk factor for dementia in older patients with type 2 diabetes.… 13282296 hypoglycemic-episodes-and-risk-of-dementia-in-older-patients-with-type-2-diabetes-mellitus. hypoglycemic episodes risk dementia older patients with type Hypoglycemic episodes and risk of dementia in older patients with type 2 diabetes mellitus. Hypoglycemic episodes and risk of dementia in older patients with type 2 diabetes mellitus. CONTEXT Although acute hypoglycemia may be associated with cognitive impairment in children with type 1 diabetes, no studies to date have evaluated whether hypoglycemia is a risk factor for dementia in older patients with type 2 diabetes. OBJECTIVE To determine if hypoglycemic episodes severe enough to require hospitalization are associated with an increased risk of dementia in a population of older patients with type 2 diabetes followed up for 27 years. DESIGN, SETTING, AND PATIENTS A longitudinal cohort study from 1980-2007 of 16,667 patients with a mean age of 65 years and type 2 diabetes who are members of an integrated health care delivery system in northern California. MAIN OUTCOME MEASURE Hyp",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:09.955388+00:00"
+}

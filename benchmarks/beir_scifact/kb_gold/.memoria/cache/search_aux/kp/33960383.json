@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "33960383",
+  "source_fingerprint": "b5b168bae5d5fb8f298bd9f6fc2abec9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "33960383",
+    "the-role-of-oral-antidiabetic-agents:-why-and-when-to-use-an-early-phase-insulin-secretion-agent-in-type-ii-diabetes-mellitus"
+  ],
+  "key_phrases": [
+    "role",
+    "oral",
+    "antidiabetic",
+    "agents",
+    "why",
+    "when",
+    "use",
+    "early"
+  ],
+  "summary_1l": "Abstract Evidence obtained in the 1990's strongly supports the notion that",
+  "query_hits": [],
+  "embed_text": "33960383 The role of oral antidiabetic agents: why and when to use an early-phase insulin secretion agent in Type II diabetes mellitus science scifact Abstract Evidence obtained in the 1990's strongly supports the notion that glycaemic control is important not only in Type I (insulin-dependent), but also in Type II (non-insulin-dependent) diabetes mellitus. Although measurement of HbA1c… 33960383 the-role-of-oral-antidiabetic-agents:-why-and-when-to-use-an-early-phase-insulin-secretion-agent-in-type-ii-diabetes-mellitus role oral antidiabetic agents why when use early Abstract Evidence obtained in the 1990's strongly supports the notion that The role of oral antidiabetic agents: why and when to use an early-phase insulin secretion agent in Type II diabetes mellitus Abstract Evidence obtained in the 1990's strongly supports the notion that glycaemic control is important not only in Type I (insulin-dependent), but also in Type II (non-insulin-dependent) diabetes mellitus. Although measurement of HbA1c is the standard for assessing the effect of glucose control in the occurrence and prevention of diabetic sequelae, more recent evidence indicates that other glucose parameters are also important. Postchallenge and postprandial hyperglycaemic peaks seem to be prospective determinants of vascular damage in early Type II diabetes. Currently, there is no overall accepted standard approach for the pharmacological management of Type II d",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.882524+00:00"
+}

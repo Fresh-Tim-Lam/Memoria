@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "38873881",
+  "source_fingerprint": "d6d6be04dbde09fe28f77eea837f1157",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "38873881",
+    "child-maltreatment,-other-trauma-exposure,-and-posttraumatic-symptomatology-among-children-with-oppositional-defiant-and-attention-deficit-hyperactivity-disorders."
+  ],
+  "key_phrases": [
+    "child",
+    "maltreatment",
+    "other",
+    "trauma",
+    "exposure",
+    "posttraumatic",
+    "symptomatology",
+    "among"
+  ],
+  "summary_1l": "Child maltreatment, other trauma exposure, and posttraumatic symptomatology among children with oppositional defiant and attention deficit hyperactivity disorders.",
+  "query_hits": [],
+  "embed_text": "38873881 Child maltreatment, other trauma exposure, and posttraumatic symptomatology among children with oppositional defiant and attention deficit hyperactivity disorders. science scifact Consecutive child psychiatric outpatient admissions with disruptive behavior or adjustment disorders were assessed by validated instruments for trauma exposure and posttraumatic stress disorder (PTSD) symptoms and other psychopathology.… 38873881 child-maltreatment,-other-trauma-exposure,-and-posttraumatic-symptomatology-among-children-with-oppositional-defiant-and-attention-deficit-hyperactivity-disorders. child maltreatment other trauma exposure posttraumatic symptomatology among Child maltreatment, other trauma exposure, and posttraumatic symptomatology among children with oppositional defiant and attention deficit hyperactivity disorders. Child maltreatment, other trauma exposure, and posttraumatic symptomatology among children with oppositional defiant and attention deficit hyperactivity disorders. Consecutive child psychiatric outpatient admissions with disruptive behavior or adjustment disorders were assessed by validated instruments for trauma exposure and posttraumatic stress disorder (PTSD) symptoms and other psychopathology. Four reliably diagnosed groups were defined in a retrospective case-control design: Attention Deficit Hyperactivity Disorder (ADHD), Oppositional Defiant Disorder (ODD), comorbid ADHD-ODD, and adjustment disorder controls. ODD and (although to a lesser extent) ADHD were associated with a history of physical or sexual maltreatment. PTSD symptoms were most severe if (a) ADHD and maltreatment co-occ",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.087822+00:00"
+}

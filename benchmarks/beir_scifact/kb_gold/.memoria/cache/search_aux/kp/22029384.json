@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22029384",
+  "source_fingerprint": "29815dc1a3dd4954a6cc8a739356c2bb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22029384",
+    "rna-editing-in-brain-controls-a-determinant-of-ion-flow-in-glutamate-gated-channels."
+  ],
+  "key_phrases": [
+    "rna",
+    "editing",
+    "brain",
+    "controls",
+    "determinant",
+    "ion",
+    "flow",
+    "glutamate"
+  ],
+  "summary_1l": "RNA editing in brain controls a determinant of ion flow in glutamate-gated channels.",
+  "query_hits": [],
+  "embed_text": "22029384 RNA editing in brain controls a determinant of ion flow in glutamate-gated channels. science scifact L-glutamate, the principal excitatory transmitter in the brain, gates ion channels mediating fast neurotransmission. Subunit components of two related classes of glutamate receptor channels have been characterized by cDNA cloning and shown… 22029384 rna-editing-in-brain-controls-a-determinant-of-ion-flow-in-glutamate-gated-channels. rna editing brain controls determinant ion flow glutamate RNA editing in brain controls a determinant of ion flow in glutamate-gated channels. RNA editing in brain controls a determinant of ion flow in glutamate-gated channels. L-glutamate, the principal excitatory transmitter in the brain, gates ion channels mediating fast neurotransmission. Subunit components of two related classes of glutamate receptor channels have been characterized by cDNA cloning and shown to carry either an arginine or a glutamine residue in a defined position of their putative channel-forming segment. The arginine residue in this segment profoundly alters, and dominates, the properties of ion flow, as demonstrated for one channel class. We now show that the genomic DNA sequences encoding the particular channel segment of all subunits harbor a glutamine codon (CAG), even though an arginine codon (CGG) is found in mRNAs of three subunits. Multiple genes an",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.127735+00:00"
+}

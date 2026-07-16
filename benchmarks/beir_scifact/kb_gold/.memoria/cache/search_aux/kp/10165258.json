@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10165258",
+  "source_fingerprint": "cffdced11ecbc797c320c9e28c0be071",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10165258",
+    "gata-3-regulates-hematopoietic-stem-cell-maintenance-and-cell-cycle-entry."
+  ],
+  "key_phrases": [
+    "gata",
+    "regulates",
+    "hematopoietic",
+    "stem",
+    "cell",
+    "maintenance",
+    "cycle",
+    "entry"
+  ],
+  "summary_1l": "GATA-3 regulates hematopoietic stem cell maintenance and cell-cycle entry.",
+  "query_hits": [],
+  "embed_text": "10165258 GATA-3 regulates hematopoietic stem cell maintenance and cell-cycle entry. science scifact Maintaining hematopoietic stem cell (HSC) quiescence is a critical property for the life-long generation of blood cells. Approximately 75% of cells in a highly enriched long-term repopulating HSC (LT-HSC) pool… 10165258 gata-3-regulates-hematopoietic-stem-cell-maintenance-and-cell-cycle-entry. gata regulates hematopoietic stem cell maintenance cycle entry GATA-3 regulates hematopoietic stem cell maintenance and cell-cycle entry. GATA-3 regulates hematopoietic stem cell maintenance and cell-cycle entry. Maintaining hematopoietic stem cell (HSC) quiescence is a critical property for the life-long generation of blood cells. Approximately 75% of cells in a highly enriched long-term repopulating HSC (LT-HSC) pool (Lin(-)Sca1(+)c-Kit(hi)CD150(+)CD48(-)) are quiescent, with only a small percentage of the LT-HSCs in cycle. Transcription factor GATA-3 is known to be vital for the development of T cells at multiple stages in the thymus and for Th2 differentiation in the peripheral organs. Although it is well documented that GATA-3 is expressed in HSCs, a role for GATA-3 in any prethymic progenitor cell has not been established. In the present study, we show that Gata3-null mutant mice generate fewer LT-HSCs and that fewer G",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T12:34:53.416581+00:00"
+}

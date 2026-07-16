@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "kp_id": "5416805#0",
+  "source_fingerprint": "2e43b417ff107d9ea585ca917ad3554c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "英雄联盟：激斗峡谷",
+    "英雄",
+    "欧洲体育杂志联盟",
+    "2015年歐霸盃決賽",
+    "南美洲国家联盟",
+    "腾讯动漫",
+    "腾讯相关争议"
+  ],
+  "aliases": [
+    "5416805#0"
+  ],
+  "key_phrases": [
+    "王者",
+    "荣耀",
+    "榮耀",
+    "英雄",
+    "战迹",
+    "2015",
+    "联盟",
+    "10"
+  ],
+  "summary_1l": "《王者榮耀》（《英雄战迹》（2015年7月）、《王者联盟》（2015年10月））简称「HOK」（Honor Of Kings）是由腾讯旗下天美工作室群L1工作室开发并运行在iOS、Android平台的多人在线快节奏竞技游戏。",
+  "query_hits": [],
+  "embed_text": "5416805#0 王者荣耀 王者荣耀 《王者榮耀》（《英雄战迹》（2015年7月）、《王者联盟》（2015年10月））简称「HOK」（Honor Of Kings）是由腾讯旗下天美工作室群L1工作室开发并运行在iOS、Android平台的多人在线快节奏竞技游戏。 英雄联盟：激斗峡谷 英雄 欧洲体育杂志联盟 2015年歐霸盃決賽 南美洲国家联盟 腾讯动漫 腾讯相关争议 5416805#0 王者 荣耀 榮耀 英雄 战迹 2015 联盟 10 《王者榮耀》（《英雄战迹》（2015年7月）、《王者联盟》（2015年10月））简称「HOK」（Honor Of Kings）是由腾讯旗下天美工作室群L1工作室开发并运行在iOS、Android平台的多人在线快节奏竞技游戏。 王者荣耀 《王者榮耀》（《英雄战迹》（2015年7月）、《王者联盟》（2015年10月））简称「HOK」（Honor Of Kings）是由腾讯旗下天美工作室群L1工作室开发并运行在iOS、Android平台的多人在线快节奏竞技游戏。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:22:28.535189+00:00"
+}

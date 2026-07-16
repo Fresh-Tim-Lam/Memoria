@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17119869",
+  "source_fingerprint": "30fefe1fd5996b623178a1c14d242b15",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17119869",
+    "a-bipotential-precursor-population-for-pancreas-and-liver-within-the-embryonic-endoderm."
+  ],
+  "key_phrases": [
+    "bipotential",
+    "precursor",
+    "population",
+    "pancreas",
+    "liver",
+    "within",
+    "embryonic",
+    "endoderm"
+  ],
+  "summary_1l": "A bipotential precursor population for pancreas and liver within the embryonic endoderm.",
+  "query_hits": [],
+  "embed_text": "17119869 A bipotential precursor population for pancreas and liver within the embryonic endoderm. science scifact The pancreas emerges independently from dorsal and ventral domains of embryonic gut endoderm. Gene inactivation experiments in mice have identified factors required for dorsal pancreas development, but factors that initiate the ventral… 17119869 a-bipotential-precursor-population-for-pancreas-and-liver-within-the-embryonic-endoderm. bipotential precursor population pancreas liver within embryonic endoderm A bipotential precursor population for pancreas and liver within the embryonic endoderm. A bipotential precursor population for pancreas and liver within the embryonic endoderm. The pancreas emerges independently from dorsal and ventral domains of embryonic gut endoderm. Gene inactivation experiments in mice have identified factors required for dorsal pancreas development, but factors that initiate the ventral pancreas have remained elusive. In this study, we investigated the hypothesis that the emergence of the ventral pancreas is related to the emergence of the liver. We find that the liver and ventral pancreas are specified at the same time and in the same general domain of cells. Using embryo tissue explantation experiments, we find that the default fate of the ventral foregut endoderm is to activate the pancreas gene program. FGF signalling from the cardiac mesoderm diver",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.347107+00:00"
+}

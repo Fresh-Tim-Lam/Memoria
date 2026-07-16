@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20602517",
+  "source_fingerprint": "77a518fb25b3b3b92978aef4f7e21123",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20602517",
+    "melatonin-and-the-circadian-regulation-of-sleep-initiation,-consolidation,-structure,-and-the-sleep-eeg."
+  ],
+  "key_phrases": [
+    "melatonin",
+    "circadian",
+    "regulation",
+    "sleep",
+    "initiation",
+    "consolidation",
+    "structure",
+    "eeg"
+  ],
+  "summary_1l": "Melatonin and the circadian regulation of sleep initiation, consolidation, structure, and the sleep EEG.",
+  "query_hits": [],
+  "embed_text": "20602517 Melatonin and the circadian regulation of sleep initiation, consolidation, structure, and the sleep EEG. science scifact The endogenous circadian rhythm of melatonin, driven by the suprachiasmatic nucleus, exhibits a close association with the endogenous circadian component of the sleep propensity rhythm and the endogenous circadian component of the… 20602517 melatonin-and-the-circadian-regulation-of-sleep-initiation,-consolidation,-structure,-and-the-sleep-eeg. melatonin circadian regulation sleep initiation consolidation structure eeg Melatonin and the circadian regulation of sleep initiation, consolidation, structure, and the sleep EEG. Melatonin and the circadian regulation of sleep initiation, consolidation, structure, and the sleep EEG. The endogenous circadian rhythm of melatonin, driven by the suprachiasmatic nucleus, exhibits a close association with the endogenous circadian component of the sleep propensity rhythm and the endogenous circadian component of the variation in electroencephalogram (EEG) oscillations such as sleep spindles and slow waves. This association is maintained even when the sleep-wake cycle is desynchronized from the endogenous circadian rhythm of melatonin. Administration of melatonin during the day increases daytime sleep propensity as indexed by both the latency to sleep onset and sleep consolidation. The EEG during daytime sleep after melatonin administration exhibits characteristics reminis",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.556992+00:00"
+}

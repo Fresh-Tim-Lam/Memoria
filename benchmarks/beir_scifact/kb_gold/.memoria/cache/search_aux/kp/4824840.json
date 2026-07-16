@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4824840",
+  "source_fingerprint": "a81bedb7245ec5029a37911dbfb9fb59",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4824840",
+    "incidence-and-trends-of-sepsis-in-us-hospitals-using-clinical-vs-claims-data,-2009-2014"
+  ],
+  "key_phrases": [
+    "incidence",
+    "trends",
+    "sepsis",
+    "us",
+    "hospitals",
+    "using",
+    "clinical",
+    "vs"
+  ],
+  "summary_1l": "Importance Estimates from claims-based analyses suggest that the incidence of sepsis is increasing and mortality",
+  "query_hits": [],
+  "embed_text": "4824840 Incidence and Trends of Sepsis in US Hospitals Using Clinical vs Claims Data, 2009-2014 science scifact Importance Estimates from claims-based analyses suggest that the incidence of sepsis is increasing and mortality rates from sepsis are decreasing. However, estimates from claims data may lack clinical fidelity and can be affected by… 4824840 incidence-and-trends-of-sepsis-in-us-hospitals-using-clinical-vs-claims-data,-2009-2014 incidence trends sepsis us hospitals using clinical vs Importance Estimates from claims-based analyses suggest that the incidence of sepsis is increasing and mortality Incidence and Trends of Sepsis in US Hospitals Using Clinical vs Claims Data, 2009-2014 Importance Estimates from claims-based analyses suggest that the incidence of sepsis is increasing and mortality rates from sepsis are decreasing. However, estimates from claims data may lack clinical fidelity and can be affected by changing diagnosis and coding practices over time. Objective To estimate the US national incidence of sepsis and trends using detailed clinical data from the electronic health record (EHR) systems of diverse hospitals. Design, Setting, and Population Retrospective cohort study of adult patients admitted to 409 academic, community, and federal hospitals from 2009-2014. Exposures Sepsis was identified using clinical indicators of presumed infection and concurrent acute organ d",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.498683+00:00"
+}

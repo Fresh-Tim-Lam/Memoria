@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "4407385",
+  "source_fingerprint": "5d0d363bda0e41d7ee720527f84841b8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4407385"
+  ],
+  "key_phrases": [
+    "specific",
+    "amyloid",
+    "protein",
+    "assembly",
+    "brain",
+    "impairs",
+    "memory",
+    "function"
+  ],
+  "summary_1l": "Memory function often declines with age, and is believed to deteriorate initially because of changes in synaptic function rather than",
+  "query_hits": [],
+  "embed_text": "4407385 A specific amyloid-β protein assembly in the brain impairs memory science scifact Memory function often declines with age, and is believed to deteriorate initially because of changes in synaptic function rather than loss of neurons. Some individuals then go on to develop Alzheimer's disease with neurodegeneration. Here… 4407385 specific amyloid protein assembly brain impairs memory function Memory function often declines with age, and is believed to deteriorate initially because of changes in synaptic function rather than A specific amyloid-β protein assembly in the brain impairs memory Memory function often declines with age, and is believed to deteriorate initially because of changes in synaptic function rather than loss of neurons. Some individuals then go on to develop Alzheimer's disease with neurodegeneration. Here we use Tg2576 mice, which express a human amyloid-β precursor protein (APP) variant linked to Alzheimer's disease, to investigate the cause of memory decline in the absence of neurodegeneration or amyloid-β protein amyloidosis. Young Tg2576 mice (< 6 months old) have normal memory and lack neuropathology, middle-aged mice (6–14 months old) develop memory deficits without neuronal loss, and old mice (> 14 months old) form abundant neuritic plaques containing amyloid-β (refs 3–6). We found th",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.720758+00:00"
+}

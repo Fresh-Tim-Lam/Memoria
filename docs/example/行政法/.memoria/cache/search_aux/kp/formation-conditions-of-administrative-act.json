@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "kp_id": "formation-conditions-of-administrative-act",
+  "source_fingerprint": "8266afcaddf01c83e05e998ce08bf570",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "formation-conditions-of-administrative-act"
+  ],
+  "key_phrases": [
+    "行政",
+    "主体",
+    "xingzhengzhuti",
+    "行政主体"
+  ],
+  "summary_1l": "行政主体",
+  "query_hits": [],
+  "embed_text": "formation-conditions-of-administrative-act 行政行为成立合法的一般条件 formation-conditions-of-administrative-act 行政 主体 xingzhengzhuti 行政主体 行政主体 行政主体",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-15T12:51:06.224587+00:00"
+}

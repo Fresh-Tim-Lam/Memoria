@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19752008",
+  "source_fingerprint": "3e78f8e447e6d4f3b464480786ac3357",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19752008",
+    "a-specific-inhibitor-of-phosphatidylinositol-3-kinase,-2-(4-morpholinyl)-8-phenyl-4h-1-benzopyran-4-one-(ly294002)."
+  ],
+  "key_phrases": [
+    "specific",
+    "inhibitor",
+    "phosphatidylinositol",
+    "kinase",
+    "morpholinyl",
+    "phenyl",
+    "4h",
+    "benzopyran"
+  ],
+  "summary_1l": "A specific inhibitor of phosphatidylinositol 3-kinase, 2-(4-morpholinyl)-8-phenyl-4H-1-benzopyran-4-one (LY294002).",
+  "query_hits": [],
+  "embed_text": "19752008 A specific inhibitor of phosphatidylinositol 3-kinase, 2-(4-morpholinyl)-8-phenyl-4H-1-benzopyran-4-one (LY294002). science scifact Phosphatidylinositol (PtdIns) 3-kinase is an enzyme implicated in growth factor signal transduction by associating with receptor and nonreceptor tyrosine kinases, including the platelet-derived growth factor receptor. Inhibitors of PtdIns… 19752008 a-specific-inhibitor-of-phosphatidylinositol-3-kinase,-2-(4-morpholinyl)-8-phenyl-4h-1-benzopyran-4-one-(ly294002). specific inhibitor phosphatidylinositol kinase morpholinyl phenyl 4h benzopyran A specific inhibitor of phosphatidylinositol 3-kinase, 2-(4-morpholinyl)-8-phenyl-4H-1-benzopyran-4-one (LY294002). A specific inhibitor of phosphatidylinositol 3-kinase, 2-(4-morpholinyl)-8-phenyl-4H-1-benzopyran-4-one (LY294002). Phosphatidylinositol (PtdIns) 3-kinase is an enzyme implicated in growth factor signal transduction by associating with receptor and nonreceptor tyrosine kinases, including the platelet-derived growth factor receptor. Inhibitors of PtdIns 3-kinase could potentially give a better understanding of the function and regulatory mechanisms of the enzyme. Quercetin, a naturally occurring bioflavinoid, was previously shown to inhibit PtdIns 3-kinase with an IC50 of 1.3 microgram/ml (3.8 microM); inhibition appeared to be directed at the ATP-binding site of the kinase. Analogs of quercetin were investigated as PtdIns 3-kinase inhibitors, with the most potent ones exhibiting IC50 value",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.121579+00:00"
+}

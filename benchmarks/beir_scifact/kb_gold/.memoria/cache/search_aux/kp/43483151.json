@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "43483151",
+  "source_fingerprint": "08a3009be1fee6d5861956f19dff22cb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "43483151",
+    "qt-and-qtc-dispersion-are-accurate-predictors-of-cardiac-death-in-newly-diagnosed-non-insulin-dependent-diabetes:-cohort-study."
+  ],
+  "key_phrases": [
+    "qt",
+    "qtc",
+    "dispersion",
+    "accurate",
+    "predictors",
+    "cardiac",
+    "death",
+    "newly"
+  ],
+  "summary_1l": "QT and QTc dispersion are accurate predictors of cardiac death in newly diagnosed non-insulin dependent diabetes: cohort study.",
+  "query_hits": [],
+  "embed_text": "43483151 QT and QTc dispersion are accurate predictors of cardiac death in newly diagnosed non-insulin dependent diabetes: cohort study. science scifact Patients with non-insulin dependent diabetes mellitus have an excess risk of dying from cardiovascular disease. One small study suggested that a prolonged QT interval could predict cardiac death in patients with diabetic nephropathy who… 43483151 qt-and-qtc-dispersion-are-accurate-predictors-of-cardiac-death-in-newly-diagnosed-non-insulin-dependent-diabetes:-cohort-study. qt qtc dispersion accurate predictors cardiac death newly QT and QTc dispersion are accurate predictors of cardiac death in newly diagnosed non-insulin dependent diabetes: cohort study. QT and QTc dispersion are accurate predictors of cardiac death in newly diagnosed non-insulin dependent diabetes: cohort study. Patients with non-insulin dependent diabetes mellitus have an excess risk of dying from cardiovascular disease. One small study suggested that a prolonged QT interval could predict cardiac death in patients with diabetic nephropathy who have received insulin treatment. The question now is whether the same is true in newly diagnosed diabetes in patients who have no apparent complications. In addition, QT dispersion, a new but related electrocardiographic variable, predicts cardiac death in patients who have chronic heart failure, peripheral vascular disease, or essential hypertension.1–3 We investigated whether it also predicted cardiac death in diabetic patients.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.983273+00:00"
+}

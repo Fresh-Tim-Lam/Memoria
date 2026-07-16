@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2328272",
+  "source_fingerprint": "df5c037d2f15a3845f822d85cc44f625",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2328272",
+    "cancer-survivorship-research:-the-challenge-of-recruiting-adult-long-term-cancer-survivors-from-a-cooperative-clinical-trials-group"
+  ],
+  "key_phrases": [
+    "cancer",
+    "survivorship",
+    "research",
+    "challenge",
+    "recruiting",
+    "adult",
+    "long",
+    "term"
+  ],
+  "summary_1l": "INTRODUCTION With the growing number of adult cancer survivors, ther",
+  "query_hits": [],
+  "embed_text": "2328272 Cancer survivorship research: the challenge of recruiting adult long term cancer survivors from a cooperative clinical trials group science scifact INTRODUCTION With the growing number of adult cancer survivors, there is increasing need for information that links potential late and long term effects with specific treatment regimens. Few adult cancer patients are treated on clinical… 2328272 cancer-survivorship-research:-the-challenge-of-recruiting-adult-long-term-cancer-survivors-from-a-cooperative-clinical-trials-group cancer survivorship research challenge recruiting adult long term INTRODUCTION With the growing number of adult cancer survivors, ther Cancer survivorship research: the challenge of recruiting adult long term cancer survivors from a cooperative clinical trials group INTRODUCTION With the growing number of adult cancer survivors, there is increasing need for information that links potential late and long term effects with specific treatment regimens. Few adult cancer patients are treated on clinical trials; however, patients previously enrolled in these trials are an important source of information about treatment-related late effects. METHODS Focusing on colorectal cancer survivors, we used the database from five phase III randomized clinical trials from the National Surgical Adjuvant Breast & Bowel Project (NSABP) to recruit and enroll long term survivors in a study of late health outcomes and quality of life. We describ",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.178554+00:00"
+}

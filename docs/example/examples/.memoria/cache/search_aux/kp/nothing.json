@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "kp_id": "nothing",
+  "source_fingerprint": "3c939ebabff68a6f03dc313f11767265",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "nothing"
+  ],
+  "key_phrases": [
+    "nothing"
+  ],
+  "summary_1l": "Nothing",
+  "query_hits": [],
+  "embed_text": "nothing Nothing 占位 nothing nothing Nothing Nothing",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T03:38:46.456417+00:00"
+}

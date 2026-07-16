@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "43048059",
+  "source_fingerprint": "67a00322e06a986b2e5c73c8f03ff917",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "43048059",
+    "hydrogen-sulfide-interacts-with-nitric-oxide-in-the-heart:-possible-involvement-of-nitroxyl."
+  ],
+  "key_phrases": [
+    "hydrogen",
+    "sulfide",
+    "interacts",
+    "with",
+    "nitric",
+    "oxide",
+    "heart",
+    "possible"
+  ],
+  "summary_1l": "Hydrogen sulfide interacts with nitric oxide in the heart: possible involvement of nitroxyl.",
+  "query_hits": [],
+  "embed_text": "43048059 Hydrogen sulfide interacts with nitric oxide in the heart: possible involvement of nitroxyl. science scifact AIMS The present study aims to investigate the interaction between nitric oxide (NO) and hydrogen sulfide (H(2)S), the two important gaseous mediators in rat hearts. METHODS AND RESULTS Intracellular calcium in isolated cardiomyocytes was… 43048059 hydrogen-sulfide-interacts-with-nitric-oxide-in-the-heart:-possible-involvement-of-nitroxyl. hydrogen sulfide interacts with nitric oxide heart possible Hydrogen sulfide interacts with nitric oxide in the heart: possible involvement of nitroxyl. Hydrogen sulfide interacts with nitric oxide in the heart: possible involvement of nitroxyl. AIMS The present study aims to investigate the interaction between nitric oxide (NO) and hydrogen sulfide (H(2)S), the two important gaseous mediators in rat hearts. METHODS AND RESULTS Intracellular calcium in isolated cardiomyocytes was measured with a spectrofluorometric method using Fura-2. Myocyte contractility was measured with a video edge system. NaHS (50 µM, an H(2)S donor) had no significant effect on the resting calcium level, electrically induced (EI) calcium transients, and cell contractility in ventricular myocytes. Stimulating endogenous NO production with l-arginine or exogenous application of NO donors [sodium nitroprusside (SNP) and 2-(N,N-diethylamino)-diazenolate-2-oxide] decrea",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.407375+00:00"
+}

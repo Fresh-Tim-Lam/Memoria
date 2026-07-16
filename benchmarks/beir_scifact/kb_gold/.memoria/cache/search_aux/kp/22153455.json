@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "22153455",
+  "source_fingerprint": "d95662b56f9b8a3c9b76b62b9e5a90a7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22153455"
+  ],
+  "key_phrases": [
+    "myeloid",
+    "hypoxia",
+    "inducible",
+    "factor",
+    "kr",
+    "ppel",
+    "like",
+    "pathway"
+  ],
+  "summary_1l": "A myeloid hypoxia-inducible factor 1α-Krüppel-like factor 2 pathway regulates gram-positive endotoxin-mediated sepsis.",
+  "query_hits": [],
+  "embed_text": "22153455 A myeloid hypoxia-inducible factor 1α-Krüppel-like factor 2 pathway regulates gram-positive endotoxin-mediated sepsis. science scifact Although gram-positive infections account for the majority of cases of sepsis, the molecular mechanisms underlying their effects remains poorly understood. We investigated how cell wall components of gram-positive bacteria contribute to… 22153455 myeloid hypoxia inducible factor kr ppel like pathway A myeloid hypoxia-inducible factor 1α-Krüppel-like factor 2 pathway regulates gram-positive endotoxin-mediated sepsis. A myeloid hypoxia-inducible factor 1α-Krüppel-like factor 2 pathway regulates gram-positive endotoxin-mediated sepsis. Although gram-positive infections account for the majority of cases of sepsis, the molecular mechanisms underlying their effects remains poorly understood. We investigated how cell wall components of gram-positive bacteria contribute to the development of sepsis. Experimental observations derived from cultured primary macrophages and the cell line indicate that gram-positive bacterial endotoxins induce hypoxia-inducible factor 1α (HIF-1α) mRNA and protein expression. Inoculation of live or heat-inactivated gram-positive bacteria with macrophages induced HIF-1 transcriptional activity in macrophages. Concordant with these results, myeloid deficiency of HIF-1α attenuated gra",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.324351+00:00"
+}

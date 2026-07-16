@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "54561709",
+  "source_fingerprint": "eff42a4aab144b252544d5d517f28e74",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "54561709",
+    "genetic-variability-in-a-frozen-batch-of-mcf-7-cells-invisible-in-routine-authentication-affecting-cell-function"
+  ],
+  "key_phrases": [
+    "genetic",
+    "variability",
+    "frozen",
+    "batch",
+    "mcf",
+    "cells",
+    "invisible",
+    "routine"
+  ],
+  "summary_1l": "Common recommendations for cell line authentication, annotation and quality control fal",
+  "query_hits": [],
+  "embed_text": "54561709 Genetic variability in a frozen batch of MCF-7 cells invisible in routine authentication affecting cell function science scifact Common recommendations for cell line authentication, annotation and quality control fall short addressing genetic heterogeneity. Within the Human Toxome Project, we demonstrate that there can be marked cellular and phenotypic heterogeneity… 54561709 genetic-variability-in-a-frozen-batch-of-mcf-7-cells-invisible-in-routine-authentication-affecting-cell-function genetic variability frozen batch mcf cells invisible routine Common recommendations for cell line authentication, annotation and quality control fal Genetic variability in a frozen batch of MCF-7 cells invisible in routine authentication affecting cell function Common recommendations for cell line authentication, annotation and quality control fall short addressing genetic heterogeneity. Within the Human Toxome Project, we demonstrate that there can be marked cellular and phenotypic heterogeneity in a single batch of the human breast adenocarcinoma cell line MCF-7 obtained directly from a cell bank that are invisible with the usual cell authentication by short tandem repeat (STR) markers. STR profiling just fulfills the purpose of authentication testing, which is to detect significant cross-contamination and cell line misidentification. Heterogeneity needs to be examined using additional methods. This heterogeneity can have serious con",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.350793+00:00"
+}

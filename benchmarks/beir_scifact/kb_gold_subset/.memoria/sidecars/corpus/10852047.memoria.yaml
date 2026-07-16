@@ -1,0 +1,24 @@
+schema_version: 1
+file: corpus/10852047.md
+knowledge_points:
+- id: '10852047'
+  name: WK175, a novel antitumor agent, decreases the intracellular nicotinamide adenine
+    dinucleotide concentration and induces the apoptotic cascade in human leukemia
+    cells.
+  tags:
+  - science
+  - scifact
+  description: We recently developed a class of novel antitumor agents that elicit
+    a potent growth-inhibitory response in many tumor cells cultured in vitro. WK175,
+    a member of this class, was chosen as a model compound that showed strong in vitro…
+  range:
+    start:
+      line_hint: 1
+      snippet: '# WK175, a novel antitumor agent, decreases the intracellular nicotinamide
+        adenine dinucleotide concentration and induces the apoptotic cascade in human
+        leukemia cells.'
+    end:
+      line_hint: 3
+      snippet: imply that decreased NAD(+) concentration initiates the apoptotic cascade,
+        resulting in the antitumor effect of WK175.
+links: []

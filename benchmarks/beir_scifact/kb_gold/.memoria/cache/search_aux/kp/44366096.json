@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "44366096",
+  "source_fingerprint": "2bbe5babb3306e65d18f5be6da5ba870",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "44366096",
+    "rig-i-mediated-antiviral-responses-to-single-stranded-rna-bearing-5'-phosphates."
+  ],
+  "key_phrases": [
+    "rig",
+    "mediated",
+    "antiviral",
+    "responses",
+    "single",
+    "stranded",
+    "rna",
+    "bearing"
+  ],
+  "summary_1l": "RIG-I-mediated antiviral responses to single-stranded RNA bearing 5'-phosphates.",
+  "query_hits": [],
+  "embed_text": "44366096 RIG-I-mediated antiviral responses to single-stranded RNA bearing 5'-phosphates. science scifact Double-stranded RNA (dsRNA) produced during viral replication is believed to be the critical trigger for activation of antiviral immunity mediated by the RNA helicase enzymes retinoic acid-inducible gene I (RIG-I) and melanoma… 44366096 rig-i-mediated-antiviral-responses-to-single-stranded-rna-bearing-5'-phosphates. rig mediated antiviral responses single stranded rna bearing RIG-I-mediated antiviral responses to single-stranded RNA bearing 5'-phosphates. RIG-I-mediated antiviral responses to single-stranded RNA bearing 5'-phosphates. Double-stranded RNA (dsRNA) produced during viral replication is believed to be the critical trigger for activation of antiviral immunity mediated by the RNA helicase enzymes retinoic acid-inducible gene I (RIG-I) and melanoma differentiation-associated gene 5 (MDA5). We showed that influenza A virus infection does not generate dsRNA and that RIG-I is activated by viral genomic single-stranded RNA (ssRNA) bearing 5'-phosphates. This is blocked by the influenza protein nonstructured protein 1 (NS1), which is found in a complex with RIG-I in infected cells. These results identify RIG-I as a ssRNA sensor and potential target of viral immune evasion and suggest that its ability to sense 5'-phosphorylated RNA evolv",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.258646+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4444861",
+  "source_fingerprint": "58a8559128ff8ee651f722af43f2afa7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4444861",
+    "replication-fork-stability-confers-chemoresistance-in-brca-deficient-cells"
+  ],
+  "key_phrases": [
+    "replication",
+    "fork",
+    "stability",
+    "confers",
+    "chemoresistance",
+    "brca",
+    "deficient",
+    "cells"
+  ],
+  "summary_1l": "Cells deficient in the Brca1 and Brca2 genes have reduced capacity to repair DNA double-strand breaks by homologous recombina",
+  "query_hits": [],
+  "embed_text": "4444861 Replication Fork Stability Confers Chemoresistance in BRCA-deficient Cells science scifact Cells deficient in the Brca1 and Brca2 genes have reduced capacity to repair DNA double-strand breaks by homologous recombination and consequently are hypersensitive to DNA-damaging agents, including cisplatin and poly(ADP-ribose)… 4444861 replication-fork-stability-confers-chemoresistance-in-brca-deficient-cells replication fork stability confers chemoresistance brca deficient cells Cells deficient in the Brca1 and Brca2 genes have reduced capacity to repair DNA double-strand breaks by homologous recombina Replication Fork Stability Confers Chemoresistance in BRCA-deficient Cells Cells deficient in the Brca1 and Brca2 genes have reduced capacity to repair DNA double-strand breaks by homologous recombination and consequently are hypersensitive to DNA-damaging agents, including cisplatin and poly(ADP-ribose) polymerase (PARP) inhibitors. Here we show that loss of the MLL3/4 complex protein, PTIP, protects Brca1/2-deficient cells from DNA damage and rescues the lethality of Brca2-deficient embryonic stem cells. However, PTIP deficiency does not restore homologous recombination activity at double-strand breaks. Instead, its absence inhibits the recruitment of the MRE11 nuclease to stalled replication forks, which in turn protects nascent DNA strands from extensive degradation. More generally, ac",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.339922+00:00"
+}

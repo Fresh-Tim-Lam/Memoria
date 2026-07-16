@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36713289",
+  "source_fingerprint": "f0a39ea823012c1786af1998ade98bd2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36713289",
+    "genome-architecture,-rearrangements-and-genomic-disorders."
+  ],
+  "key_phrases": [
+    "genome",
+    "architecture",
+    "rearrangements",
+    "genomic",
+    "disorders",
+    "increasing",
+    "number",
+    "human"
+  ],
+  "summary_1l": "Genome architecture, rearrangements and genomic disorders.",
+  "query_hits": [],
+  "embed_text": "36713289 Genome architecture, rearrangements and genomic disorders. science scifact An increasing number of human diseases are recognized to result from recurrent DNA rearrangements involving unstable genomic regions. These are termed genomic disorders, in which the clinical phenotype is a consequence of abnormal dosage… 36713289 genome-architecture,-rearrangements-and-genomic-disorders. genome architecture rearrangements genomic disorders increasing number human Genome architecture, rearrangements and genomic disorders. Genome architecture, rearrangements and genomic disorders. An increasing number of human diseases are recognized to result from recurrent DNA rearrangements involving unstable genomic regions. These are termed genomic disorders, in which the clinical phenotype is a consequence of abnormal dosage of gene(s) located within the rearranged genomic fragments. Both inter- and intrachromosomal rearrangements are facilitated by the presence of region-specific low-copy repeats (LCRs) and result from nonallelic homologous recombination (NAHR) between paralogous genomic segments. LCRs usually span approximately 10-400 kb of genomic DNA, share >or= 97% sequence identity, and provide the substrates for homologous recombination, thus predisposing the region to rearrangements. Moreover, it has been sugge",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:43.659136+00:00"
+}

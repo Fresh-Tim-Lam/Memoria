@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "18174210",
+  "source_fingerprint": "07896b50d9e56222d9c9bd68d8075faf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18174210"
+  ],
+  "key_phrases": [
+    "increased",
+    "microerythrocyte",
+    "count",
+    "homozygous",
+    "+-",
+    "thalassaemia",
+    "contributes",
+    "protection"
+  ],
+  "summary_1l": "BACKGROUND The heritable haemoglobinopathy alpha(+)-thalassaemia is caused by t",
+  "query_hits": [],
+  "embed_text": "18174210 Increased Microerythrocyte Count in Homozygous α+-Thalassaemia Contributes to Protection against Severe Malarial Anaemia science scifact BACKGROUND The heritable haemoglobinopathy alpha(+)-thalassaemia is caused by the reduced synthesis of alpha-globin chains that form part of normal adult haemoglobin (Hb). Individuals homozygous for alpha(+)-thalassaemia have microcytosis… 18174210 increased microerythrocyte count homozygous +- thalassaemia contributes protection BACKGROUND The heritable haemoglobinopathy alpha(+)-thalassaemia is caused by t Increased Microerythrocyte Count in Homozygous α+-Thalassaemia Contributes to Protection against Severe Malarial Anaemia BACKGROUND The heritable haemoglobinopathy alpha(+)-thalassaemia is caused by the reduced synthesis of alpha-globin chains that form part of normal adult haemoglobin (Hb). Individuals homozygous for alpha(+)-thalassaemia have microcytosis and an increased erythrocyte count. Alpha(+)-thalassaemia homozygosity confers considerable protection against severe malaria, including severe malarial anaemia (SMA) (Hb concentration < 50 g/l), but does not influence parasite count. We tested the hypothesis that the erythrocyte indices associated with alpha(+)-thalassaemia homozygosity provide a haematological benefit during acute malaria. METHODS AND FINDINGS Data from children livin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.858689+00:00"
+}

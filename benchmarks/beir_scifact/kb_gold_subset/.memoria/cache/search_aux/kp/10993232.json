@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10993232",
+  "source_fingerprint": "3bcddbbdfda6eaa2c459f422f5c851e3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10993232",
+    "cell-death-from-antibiotics-without-the-involvement-of-reactive-oxygen-species."
+  ],
+  "key_phrases": [
+    "cell",
+    "death",
+    "from",
+    "antibiotics",
+    "without",
+    "involvement",
+    "reactive",
+    "oxygen"
+  ],
+  "summary_1l": "Cell death from antibiotics without the involvement of reactive oxygen species.",
+  "query_hits": [],
+  "embed_text": "10993232 Cell death from antibiotics without the involvement of reactive oxygen species. science scifact Recent observations have suggested that classic antibiotics kill bacteria by stimulating the formation of reactive oxygen species (ROS). If true, this notion might guide new strategies to improve antibiotic efficacy. In this study, the… 10993232 cell-death-from-antibiotics-without-the-involvement-of-reactive-oxygen-species. cell death from antibiotics without involvement reactive oxygen Cell death from antibiotics without the involvement of reactive oxygen species. Cell death from antibiotics without the involvement of reactive oxygen species. Recent observations have suggested that classic antibiotics kill bacteria by stimulating the formation of reactive oxygen species (ROS). If true, this notion might guide new strategies to improve antibiotic efficacy. In this study, the model was directly tested. Contrary to the hypothesis, antibiotic treatment did not accelerate the formation of hydrogen peroxide in Escherichia coli and did not elevate intracellular free iron, an essential reactant for the production of lethal damage. Lethality persisted in the absence of oxygen, and DNA repair mutants were not hypersensitive, undermining the idea that toxicity arose from oxidative DNA lesions. We conclude that these antibiotic exposures did not produce ROS and",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:06.149551+00:00"
+}

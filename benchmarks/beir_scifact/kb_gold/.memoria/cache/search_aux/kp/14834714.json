@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14834714",
+  "source_fingerprint": "0cc304181926e6551f55bdecc21d090c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14834714",
+    "gene-therapy-of-arthritis-with-tcr-isolated-from-the-inflamed-paw."
+  ],
+  "key_phrases": [
+    "gene",
+    "therapy",
+    "arthritis",
+    "with",
+    "tcr",
+    "isolated",
+    "from",
+    "inflamed"
+  ],
+  "summary_1l": "Gene therapy of arthritis with TCR isolated from the inflamed paw.",
+  "query_hits": [],
+  "embed_text": "14834714 Gene therapy of arthritis with TCR isolated from the inflamed paw. science scifact In recent years, the treatment of autoimmune diseases has been significantly advanced by the use of biological agents. However, some biologics are accompanied with severe side effects, including tuberculosis and other types of infection.… 14834714 gene-therapy-of-arthritis-with-tcr-isolated-from-the-inflamed-paw. gene therapy arthritis with tcr isolated from inflamed Gene therapy of arthritis with TCR isolated from the inflamed paw. Gene therapy of arthritis with TCR isolated from the inflamed paw. In recent years, the treatment of autoimmune diseases has been significantly advanced by the use of biological agents. However, some biologics are accompanied with severe side effects, including tuberculosis and other types of infection. There is thus a critical need for nonsystemic and lesion-specific methods of delivering these therapeutic agents. We attempted to treat a mouse model of arthritis by using T cells that expressed a regulatory molecule and were specifically directed to the inflamed paw. To this end, we first identified the TCR alphabeta genes accumulating in the inflamed paw of mice with collagen-induced arthritis (CIA) by a combination of single-strand chain polymorphism analysis of TCR and single-cell sorti",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.738318+00:00"
+}

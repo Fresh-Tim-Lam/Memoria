@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14180565",
+  "source_fingerprint": "989da3b7f096cb0fd4ff9648ec753f8c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14180565",
+    "expression-profile-of-genes-modulated-by-aloe-emodin-in-human-u87-glioblastoma-cells."
+  ],
+  "key_phrases": [
+    "expression",
+    "profile",
+    "genes",
+    "modulated",
+    "by",
+    "aloe",
+    "emodin",
+    "human"
+  ],
+  "summary_1l": "Expression profile of genes modulated by Aloe emodin in human U87 glioblastoma cells.",
+  "query_hits": [],
+  "embed_text": "14180565 Expression profile of genes modulated by Aloe emodin in human U87 glioblastoma cells. science scifact Glioblastoma, the most aggressive and malignant form of glioma, appears to be resistant to various chemotherapeutic agents. Hence, approaches have been intensively investigated to targeti specific molecular pathways involved in… 14180565 expression-profile-of-genes-modulated-by-aloe-emodin-in-human-u87-glioblastoma-cells. expression profile genes modulated by aloe emodin human Expression profile of genes modulated by Aloe emodin in human U87 glioblastoma cells. Expression profile of genes modulated by Aloe emodin in human U87 glioblastoma cells. Glioblastoma, the most aggressive and malignant form of glioma, appears to be resistant to various chemotherapeutic agents. Hence, approaches have been intensively investigated to targeti specific molecular pathways involved in glioblastoma development and progression. Aloe emodin is believed to modulate the expression of several genes in cancer cells. We aimed to understand the molecular mechanisms underlying the therapeutic effect of Aloe emodin on gene expression profiles in the human U87 glioblastoma cell line utilizing microarray technology. The gene expression analysis revealed that a total of 8,226 gene alterations out of 28,869 genes were detected after treatment with 58.6 μg/ml for 24 hours. Out",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.274686+00:00"
+}

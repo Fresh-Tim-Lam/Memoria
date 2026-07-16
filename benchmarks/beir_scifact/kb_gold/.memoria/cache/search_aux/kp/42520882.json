@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "42520882",
+  "source_fingerprint": "057c874841d97d0ac3993659c3793fbf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "42520882"
+  ],
+  "key_phrases": [
+    "slipped",
+    "ctg",
+    "cag",
+    "repeats",
+    "can",
+    "be",
+    "correctly",
+    "repaired"
+  ],
+  "summary_1l": "Expansion of (CTG)•(CAG) repeats, the cause of 14 or more diseases, is presumed to arise through esca",
+  "query_hits": [],
+  "embed_text": "42520882 Slipped (CTG)•(CAG) repeats can be correctly repaired, escape repair or undergo error-prone repair science scifact Expansion of (CTG)•(CAG) repeats, the cause of 14 or more diseases, is presumed to arise through escaped repair of slipped DNAs. We report the fidelity of slipped-DNA repair using human cell extracts and DNAs with slip-outs of (CAG)20 or… 42520882 slipped ctg cag repeats can be correctly repaired Expansion of (CTG)•(CAG) repeats, the cause of 14 or more diseases, is presumed to arise through esca Slipped (CTG)•(CAG) repeats can be correctly repaired, escape repair or undergo error-prone repair Expansion of (CTG)•(CAG) repeats, the cause of 14 or more diseases, is presumed to arise through escaped repair of slipped DNAs. We report the fidelity of slipped-DNA repair using human cell extracts and DNAs with slip-outs of (CAG)20 or (CTG)20. Three outcomes occurred: correct repair, escaped repair and error-prone repair. The choice of repair path depended on nick location and slip-out composition (CAG or CTG). A new form of error-prone repair was detected whereby excess repeats were incompletely excised, constituting a previously unknown path to generate expansions but not deletions. Neuron-like cell extracts yielded each of the three repair outcomes, supporting a role for these processes",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.090459+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "37673301",
+  "source_fingerprint": "13a22339875c097a6427287c410ce85b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "37673301",
+    "peptide-and-non-peptide-g-protein-coupled-receptors-(gpcrs)-in-skeletal-muscle."
+  ],
+  "key_phrases": [
+    "peptide",
+    "non",
+    "protein",
+    "coupled",
+    "receptors",
+    "gpcrs",
+    "skeletal",
+    "muscle"
+  ],
+  "summary_1l": "Peptide and non-peptide G-protein coupled receptors (GPCRs) in skeletal muscle.",
+  "query_hits": [],
+  "embed_text": "37673301 Peptide and non-peptide G-protein coupled receptors (GPCRs) in skeletal muscle. science scifact G-protein coupled receptors (GPCRs) represent a large class of cell surface receptors that mediate a multitude of functions. Over the years, a number of GPCRs and ancillary proteins have been shown to be expressed in skeletal muscle.… 37673301 peptide-and-non-peptide-g-protein-coupled-receptors-(gpcrs)-in-skeletal-muscle. peptide non protein coupled receptors gpcrs skeletal muscle Peptide and non-peptide G-protein coupled receptors (GPCRs) in skeletal muscle. Peptide and non-peptide G-protein coupled receptors (GPCRs) in skeletal muscle. G-protein coupled receptors (GPCRs) represent a large class of cell surface receptors that mediate a multitude of functions. Over the years, a number of GPCRs and ancillary proteins have been shown to be expressed in skeletal muscle. Unlike the case with other muscle tissues like cardiac and vascular smooth muscle cells, there has been little attempt at systematically analyzing GPCRs in skeletal muscle. Here we have compiled all the GPCRs that are expressed in skeletal muscle. In addition, we review the known function of these receptors in both skeletal muscle tissue and in cultured skeletal muscle cells.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.755294+00:00"
+}

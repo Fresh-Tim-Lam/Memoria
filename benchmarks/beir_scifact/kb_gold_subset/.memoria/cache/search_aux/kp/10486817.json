@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10486817",
+  "source_fingerprint": "bfb9770d30df38c31374ff2218b251e0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10486817",
+    "cellular-nucleic-acid-binding-protein-suppresses-tumor-cell-metastasis-and-induces-tumor-cell-death-by-downregulating-heterogeneous-ribonucleoprotein-k-in-fibrosarcoma-cells."
+  ],
+  "key_phrases": [
+    "cellular",
+    "nucleic",
+    "acid",
+    "binding",
+    "protein",
+    "suppresses",
+    "tumor",
+    "cell"
+  ],
+  "summary_1l": "Cellular nucleic acid binding protein suppresses tumor cell metastasis and induces tumor cell death by downregulating heterogeneous ribonucleoprotein K in fibrosarcoma cells.",
+  "query_hits": [],
+  "embed_text": "10486817 Cellular nucleic acid binding protein suppresses tumor cell metastasis and induces tumor cell death by downregulating heterogeneous ribonucleoprotein K in fibrosarcoma cells. science scifact BACKGROUND Cellular nucleic acid binding protein (CNBP) has been implicated in vertebrate craniofacial development and in myotonic dystrophy type 2 (DM2) and sporadic inclusion body myositis (sIBM) human diseases by controlling cell… 10486817 cellular-nucleic-acid-binding-protein-suppresses-tumor-cell-metastasis-and-induces-tumor-cell-death-by-downregulating-heterogeneous-ribonucleoprotein-k-in-fibrosarcoma-cells. cellular nucleic acid binding protein suppresses tumor cell Cellular nucleic acid binding protein suppresses tumor cell metastasis and induces tumor cell death by downregulating heterogeneous ribonucleoprotein K in fibrosarcoma cells. Cellular nucleic acid binding protein suppresses tumor cell metastasis and induces tumor cell death by downregulating heterogeneous ribonucleoprotein K in fibrosarcoma cells. BACKGROUND Cellular nucleic acid binding protein (CNBP) has been implicated in vertebrate craniofacial development and in myotonic dystrophy type 2 (DM2) and sporadic inclusion body myositis (sIBM) human diseases by controlling cell proliferation and survival to mediate neural crest expansion. CNBP has been found to bind single-stranded nucleic acid and promote rearrangements of nucleic acid secondary structure in an ATP-independent manner, acting as a nucleic acid chaperone. METHODS A variety of methods were used, including cell viability assays, wound-scratch assays, chemotaxis assays, invasion assays, circular dich",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.598370+00:00"
+}

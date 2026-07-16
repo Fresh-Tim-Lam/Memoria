@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29981186",
+  "source_fingerprint": "ade555562724366d93e8da4a423bf0d1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29981186",
+    "venous-thrombosis-in-cancer-patients:-insights-from-the-frontline-survey."
+  ],
+  "key_phrases": [
+    "venous",
+    "thrombosis",
+    "cancer",
+    "patients",
+    "insights",
+    "from",
+    "frontline",
+    "survey"
+  ],
+  "summary_1l": "Venous thrombosis in cancer patients: insights from the FRONTLINE survey.",
+  "query_hits": [],
+  "embed_text": "29981186 Venous thrombosis in cancer patients: insights from the FRONTLINE survey. science scifact BACKGROUND Venous thromboembolism (VTE) is a common complication in cancer patients and a significant cause of morbidity and mortality. However, little information is available on oncologists' perceptions of the risk of VTE and its… 29981186 venous-thrombosis-in-cancer-patients:-insights-from-the-frontline-survey. venous thrombosis cancer patients insights from frontline survey Venous thrombosis in cancer patients: insights from the FRONTLINE survey. Venous thrombosis in cancer patients: insights from the FRONTLINE survey. BACKGROUND Venous thromboembolism (VTE) is a common complication in cancer patients and a significant cause of morbidity and mortality. However, little information is available on oncologists' perceptions of the risk of VTE and its management. The Fundamental Research in Oncology and Thrombosis (FRONTLINE) study is the first comprehensive global survey of thrombosis and cancer. The study was designed to collect data on the perceived risk and patterns of practice with regard to VTE in cancer patients undergoing surgical and medical management of their malignancy and to provide information on international and regional practice patterns, allowing for the design of research studies to answer the concerns of practicing c",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.336674+00:00"
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "421#2",
+  "source_fingerprint": "eb42149c3ab4b9ea5bf3406dfb7958e0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "421#2"
+  ],
+  "key_phrases": [
+    "海南省",
+    "海南",
+    "全省",
+    "陸地",
+    "總面",
+    "積约",
+    "3.54",
+    "平方公里"
+  ],
+  "summary_1l": "海南全省陸地總面積约3.",
+  "query_hits": [],
+  "embed_text": "421#2 海南省 海南省 海南全省陸地總面積约3.54萬平方公里，其中本岛陸地面積3.39萬平方公里，约占海南省陆地面积的95%；全省海洋总面积约220万平方公里，南海诸岛领海面积210万平方公里，约占海南省海洋面积的95%。 421#2 海南省 海南 全省 陸地 總面 積约 3.54 平方公里 海南全省陸地總面積约3. 海南省 海南全省陸地總面積约3.54萬平方公里，其中本岛陸地面積3.39萬平方公里，约占海南省陆地面积的95%；全省海洋总面积约220万平方公里，南海诸岛领海面积210万平方公里，约占海南省海洋面积的95%。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:17:48.605643+00:00"
+}

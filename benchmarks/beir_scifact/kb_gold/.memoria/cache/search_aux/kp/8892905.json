@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "8892905",
+  "source_fingerprint": "de273fa6e19ae38f48344909a899c60a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8892905"
+  ],
+  "key_phrases": [
+    "increased",
+    "vivo",
+    "amyloid",
+    "42",
+    "production",
+    "exchange",
+    "loss",
+    "presenilin"
+  ],
+  "summary_1l": "Increased in vivo amyloid-β42 production, exchange, and loss in presenilin mutation carriers.",
+  "query_hits": [],
+  "embed_text": "8892905 Increased in vivo amyloid-β42 production, exchange, and loss in presenilin mutation carriers. science scifact Alzheimer's disease (AD) is hypothesized to be caused by an overproduction or reduced clearance of amyloid-β (Aβ) peptide. Autosomal dominant AD (ADAD) caused by mutations in the presenilin (PSEN) gene have been postulated to result from… 8892905 increased vivo amyloid 42 production exchange loss presenilin Increased in vivo amyloid-β42 production, exchange, and loss in presenilin mutation carriers. Increased in vivo amyloid-β42 production, exchange, and loss in presenilin mutation carriers. Alzheimer's disease (AD) is hypothesized to be caused by an overproduction or reduced clearance of amyloid-β (Aβ) peptide. Autosomal dominant AD (ADAD) caused by mutations in the presenilin (PSEN) gene have been postulated to result from increased production of Aβ42 compared to Aβ40 in the central nervous system (CNS). This has been demonstrated in rodent models of ADAD but not in human mutation carriers. We used compartmental modeling of stable isotope labeling kinetic (SILK) studies in human carriers of PSEN mutations and related noncarriers to evaluate the pathophysiological effects of PSEN1 and PSEN2 mutations on the production and turnover of Aβ isoforms. We compared these findings by mutatio",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.929167+00:00"
+}

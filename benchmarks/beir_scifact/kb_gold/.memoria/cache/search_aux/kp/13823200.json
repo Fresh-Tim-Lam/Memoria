@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "13823200",
+  "source_fingerprint": "88ae749f21d60f023f0c5acdb1110a54",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13823200"
+  ],
+  "key_phrases": [
+    "nitrite",
+    "protects",
+    "against",
+    "morbidity",
+    "mortality",
+    "associated",
+    "with",
+    "tnf"
+  ],
+  "summary_1l": "Nitrite (NO(2)(-)), previously viewed as a physiologically in",
+  "query_hits": [],
+  "embed_text": "13823200 Nitrite protects against morbidity and mortality associated with TNF- or LPS-induced shock in a soluble guanylate cyclase–dependent manner science scifact Nitrite (NO(2)(-)), previously viewed as a physiologically inert metabolite and biomarker of the endogenous vasodilator NO, was recently identified as an important biological NO reservoir in vasculature and tissues, where it contributes to… 13823200 nitrite protects against morbidity mortality associated with tnf Nitrite (NO(2)(-)), previously viewed as a physiologically in Nitrite protects against morbidity and mortality associated with TNF- or LPS-induced shock in a soluble guanylate cyclase–dependent manner Nitrite (NO(2)(-)), previously viewed as a physiologically inert metabolite and biomarker of the endogenous vasodilator NO, was recently identified as an important biological NO reservoir in vasculature and tissues, where it contributes to hypoxic signaling, vasodilation, and cytoprotection after ischemia-reperfusion injury. Reduction of nitrite to NO may occur enzymatically at low pH and oxygen tension by deoxyhemoglobin, deoxymyoglobin, xanthine oxidase, mitochondrial complexes, or NO synthase (NOS). We show that nitrite treatment, in sharp contrast with the worsening effect of NOS inhibition, significantly attenuates hypothermia, mitochondrial damage",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.129076+00:00"
+}

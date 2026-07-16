@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22973574",
+  "source_fingerprint": "ddb9bc16123b0088222ef166a3693d4c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22973574",
+    "a-lineage-of-myeloid-cells-independent-of-myb-and-hematopoietic-stem-cells."
+  ],
+  "key_phrases": [
+    "lineage",
+    "myeloid",
+    "cells",
+    "independent",
+    "myb",
+    "hematopoietic",
+    "stem",
+    "macrophages"
+  ],
+  "summary_1l": "A lineage of myeloid cells independent of Myb and hematopoietic stem cells.",
+  "query_hits": [],
+  "embed_text": "22973574 A lineage of myeloid cells independent of Myb and hematopoietic stem cells. science scifact Macrophages and dendritic cells (DCs) are key components of cellular immunity and are thought to originate and renew from hematopoietic stem cells (HSCs). However, some macrophages develop in the embryo before the appearance of definitive… 22973574 a-lineage-of-myeloid-cells-independent-of-myb-and-hematopoietic-stem-cells. lineage myeloid cells independent myb hematopoietic stem macrophages A lineage of myeloid cells independent of Myb and hematopoietic stem cells. A lineage of myeloid cells independent of Myb and hematopoietic stem cells. Macrophages and dendritic cells (DCs) are key components of cellular immunity and are thought to originate and renew from hematopoietic stem cells (HSCs). However, some macrophages develop in the embryo before the appearance of definitive HSCs. We thus reinvestigated macrophage development. We found that the transcription factor Myb was required for development of HSCs and all CD11b(high) monocytes and macrophages, but was dispensable for yolk sac (YS) macrophages and for the development of YS-derived F4/80(bright) macrophages in several tissues, such as liver Kupffer cells, epidermal Langerhans cells, and microglia--cell populations that all can persist in adult mice independently of HSCs. These results define a l",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.661036+00:00"
+}

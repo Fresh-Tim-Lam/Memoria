@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "45218443",
+  "source_fingerprint": "fcb6eb12846c5c3267d8f4aea9db346b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "45218443",
+    "thalassemia-and-malaria:-new-insights-into-an-old-problem."
+  ],
+  "key_phrases": [
+    "thalassemia",
+    "malaria",
+    "new",
+    "insights",
+    "into",
+    "old",
+    "problem",
+    "hemoglobinopathies"
+  ],
+  "summary_1l": "Thalassemia and malaria: new insights into an old problem.",
+  "query_hits": [],
+  "embed_text": "45218443 Thalassemia and malaria: new insights into an old problem. science scifact The hemoglobinopathies are probably the world's most common genetic diseases: The World Health Organization has estimated that at least 5% of the population are carriers for one or other of the most serious forms, the alpha- and… 45218443 thalassemia-and-malaria:-new-insights-into-an-old-problem. thalassemia malaria new insights into old problem hemoglobinopathies Thalassemia and malaria: new insights into an old problem. Thalassemia and malaria: new insights into an old problem. The hemoglobinopathies are probably the world's most common genetic diseases: The World Health Organization has estimated that at least 5% of the population are carriers for one or other of the most serious forms, the alpha- and beta-thalassemias and the structural variant hemoglobins S, C, and E, which are found at polymorphic frequencies in many countries. All these hemoglobinopathies are believed to provide protection against malaria, and it is thought that, in malarial regions of the world, natural selection has been responsible for elevating and maintaining their gene frequencies, an idea first proposed 50 years ago by J.B.S. Haldane. Epidemiological studies undertaken in the 1950s on hemoglobin S in Africa provided support fo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.235715+00:00"
+}

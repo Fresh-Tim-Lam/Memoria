@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9285396",
+  "source_fingerprint": "626a94033e59fd4372be675fa7222279",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9285396",
+    "the-role-of-red-cell-distribution-width-in-the-prognosis-of-patients-with-gastric-cancer."
+  ],
+  "key_phrases": [
+    "role",
+    "red",
+    "cell",
+    "distribution",
+    "width",
+    "prognosis",
+    "patients",
+    "with"
+  ],
+  "summary_1l": "The role of red cell distribution width in the prognosis of patients with gastric cancer.",
+  "query_hits": [],
+  "embed_text": "9285396 The role of red cell distribution width in the prognosis of patients with gastric cancer. science scifact BACKGROUND Although the red cell distribution width (RDW) has been reported as a reliable predictor of prognosis in several types of cancer, to our knowledge the prognostic value of RDW in gastric carcinoma has not been studied, so far.… 9285396 the-role-of-red-cell-distribution-width-in-the-prognosis-of-patients-with-gastric-cancer. role red cell distribution width prognosis patients with The role of red cell distribution width in the prognosis of patients with gastric cancer. The role of red cell distribution width in the prognosis of patients with gastric cancer. BACKGROUND Although the red cell distribution width (RDW) has been reported as a reliable predictor of prognosis in several types of cancer, to our knowledge the prognostic value of RDW in gastric carcinoma has not been studied, so far. OBJECTIVE We aimed to investigate the role of red cell distribution width (RDW) in predicting prognosis in gastric cancer patients. METHODS All gastric cancer patients who underwent curative surgery (n= 172, 110M/62F) over a five-year study period were evaluated. Data on demographics, preoperative RDW levels, tumor characteristics (early stage: I and II, advanced stage: IIIA-B-C), disease-free (DFS) and overall survival (OS) were retrospectively reviewed. Patients were",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.649447+00:00"
+}

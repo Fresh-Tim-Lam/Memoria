@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9254550",
+  "source_fingerprint": "c9cbc848a92dc8c53b311b82c4d4038c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9254550",
+    "age-as-a-risk-factor-for-thrombocytopenia-and-anaemia-in-children-treated-for-acute-uncomplicated-falciparum-malaria."
+  ],
+  "key_phrases": [
+    "age",
+    "as",
+    "risk",
+    "factor",
+    "thrombocytopenia",
+    "anaemia",
+    "children",
+    "treated"
+  ],
+  "summary_1l": "Age as a risk factor for thrombocytopenia and anaemia in children treated for acute uncomplicated falciparum malaria.",
+  "query_hits": [],
+  "embed_text": "9254550 Age as a risk factor for thrombocytopenia and anaemia in children treated for acute uncomplicated falciparum malaria. science scifact BACKGROUND & OBJECTIVES Anaemia is commonly observed in children with malaria, but reports on leucocyte and platelet count abnormalities associated with malaria are inconsistent. This study examined the effect of age, gender, parasite… 9254550 age-as-a-risk-factor-for-thrombocytopenia-and-anaemia-in-children-treated-for-acute-uncomplicated-falciparum-malaria. age as risk factor thrombocytopenia anaemia children treated Age as a risk factor for thrombocytopenia and anaemia in children treated for acute uncomplicated falciparum malaria. Age as a risk factor for thrombocytopenia and anaemia in children treated for acute uncomplicated falciparum malaria. BACKGROUND & OBJECTIVES Anaemia is commonly observed in children with malaria, but reports on leucocyte and platelet count abnormalities associated with malaria are inconsistent. This study examined the effect of age, gender, parasite density and temperature on haematological parameters in children with acute uncomplicated malaria. METHODS Haematological parameters were determined in children with acute uncomplicated malaria, and these were correlated with age, sex, temperature and parasite density. Statistical analysis was done using SAS 9.1. RESULTS Six hundred and ninety five children with acute uncomplicated malaria participated in the study. The mean age was 51.7 month",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.549670+00:00"
+}

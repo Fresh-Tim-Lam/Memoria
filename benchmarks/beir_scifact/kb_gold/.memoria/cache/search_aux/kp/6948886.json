@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6948886",
+  "source_fingerprint": "16a4f861ba17bb1290d627937db7ae14",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6948886",
+    "dynamic-epigenetic-regulation-of-glioblastoma-tumorigenicity-through-lsd1-modulation-of-myc-expression."
+  ],
+  "key_phrases": [
+    "dynamic",
+    "epigenetic",
+    "regulation",
+    "glioblastoma",
+    "tumorigenicity",
+    "through",
+    "lsd1",
+    "modulation"
+  ],
+  "summary_1l": "Dynamic epigenetic regulation of glioblastoma tumorigenicity through LSD1 modulation of MYC expression.",
+  "query_hits": [],
+  "embed_text": "6948886 Dynamic epigenetic regulation of glioblastoma tumorigenicity through LSD1 modulation of MYC expression. science scifact The available evidence suggests that the lethality of glioblastoma is driven by small subpopulations of cells that self-renew and exhibit tumorigenicity. It remains unclear whether tumorigenicity exists as a static property of a few cells… 6948886 dynamic-epigenetic-regulation-of-glioblastoma-tumorigenicity-through-lsd1-modulation-of-myc-expression. dynamic epigenetic regulation glioblastoma tumorigenicity through lsd1 modulation Dynamic epigenetic regulation of glioblastoma tumorigenicity through LSD1 modulation of MYC expression. Dynamic epigenetic regulation of glioblastoma tumorigenicity through LSD1 modulation of MYC expression. The available evidence suggests that the lethality of glioblastoma is driven by small subpopulations of cells that self-renew and exhibit tumorigenicity. It remains unclear whether tumorigenicity exists as a static property of a few cells or as a dynamically acquired property. We used tumor-sphere and xenograft formation as assays for tumorigenicity and examined subclones isolated from established and primary glioblastoma lines. Our results indicate that glioblastoma tumorigenicity is largely deterministic, yet the property can be acquired spontaneously at low frequencies. Further, these dynamic transitions are governed by epigenetic reprogramming through the lysine-specific demethylase",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.054925+00:00"
+}

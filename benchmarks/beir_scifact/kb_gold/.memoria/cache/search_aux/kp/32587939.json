@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "32587939",
+  "source_fingerprint": "40e2f51fbc42a96094c21d1b09454530",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "32587939",
+    "wolfram-syndrome-1-and-adenylyl-cyclase-8-interact-at-the-plasma-membrane-to-regulate-insulin-production-and-secretion"
+  ],
+  "key_phrases": [
+    "wolfram",
+    "syndrome",
+    "adenylyl",
+    "cyclase",
+    "interact",
+    "at",
+    "plasma",
+    "membrane"
+  ],
+  "summary_1l": "Endoplasmic reticulum (ER) stress causes pancreatic β-cell dysfunction and contri",
+  "query_hits": [],
+  "embed_text": "32587939 Wolfram syndrome 1 and adenylyl cyclase 8 interact at the plasma membrane to regulate insulin production and secretion science scifact Endoplasmic reticulum (ER) stress causes pancreatic β-cell dysfunction and contributes to β-cell loss and the progression of type 2 diabetes. Wolfram syndrome 1 (WFS1) has been shown to be an important regulator of the ER stress signalling… 32587939 wolfram-syndrome-1-and-adenylyl-cyclase-8-interact-at-the-plasma-membrane-to-regulate-insulin-production-and-secretion wolfram syndrome adenylyl cyclase interact at plasma membrane Endoplasmic reticulum (ER) stress causes pancreatic β-cell dysfunction and contri Wolfram syndrome 1 and adenylyl cyclase 8 interact at the plasma membrane to regulate insulin production and secretion Endoplasmic reticulum (ER) stress causes pancreatic β-cell dysfunction and contributes to β-cell loss and the progression of type 2 diabetes. Wolfram syndrome 1 (WFS1) has been shown to be an important regulator of the ER stress signalling pathway; however, its role in β-cell function remains unclear. Here we provide evidence that WFS1 is essential for glucose- and glucagon-like peptide 1 (GLP-1)-stimulated cyclic AMP production and regulation of insulin biosynthesis and secretion. Stimulation with glucose causes WFS1 translocation from the ER to the plasma membrane, where it forms a complex with adenylyl cyclase 8 (AC8), an essential cAMP-generating enzyme in the β-cell t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.674069+00:00"
+}

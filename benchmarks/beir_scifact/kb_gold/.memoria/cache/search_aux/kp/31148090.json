@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "31148090",
+  "source_fingerprint": "3eba25be65f18334c7f813304127adf1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "31148090",
+    "two-classes-of-endogenous-small-rnas-in-tetrahymena-thermophila."
+  ],
+  "key_phrases": [
+    "two",
+    "classes",
+    "endogenous",
+    "small",
+    "rnas",
+    "tetrahymena",
+    "thermophila",
+    "function"
+  ],
+  "summary_1l": "Two classes of endogenous small RNAs in Tetrahymena thermophila.",
+  "query_hits": [],
+  "embed_text": "31148090 Two classes of endogenous small RNAs in Tetrahymena thermophila. science scifact Endogenous small RNAs function in RNA interference (RNAi) pathways to guide RNA cleavage, translational repression, or methylation of DNA or chromatin. In Tetrahymena thermophila, developmentally regulated DNA elimination is governed by an… 31148090 two-classes-of-endogenous-small-rnas-in-tetrahymena-thermophila. two classes endogenous small rnas tetrahymena thermophila function Two classes of endogenous small RNAs in Tetrahymena thermophila. Two classes of endogenous small RNAs in Tetrahymena thermophila. Endogenous small RNAs function in RNA interference (RNAi) pathways to guide RNA cleavage, translational repression, or methylation of DNA or chromatin. In Tetrahymena thermophila, developmentally regulated DNA elimination is governed by an RNAi mechanism involving approximately 27-30-nucleotide (nt) RNAs. Here we characterize the sequence features of the approximately 27-30-nt RNAs and a approximately 23-24-nt RNA class representing a second RNAi pathway. The approximately 23-24-nt RNAs accumulate strain-specifically manner and map to the genome in clusters that are antisense to predicted genes. These findings reveal the existence of distinct endogenous RNAi pathways in the unicellular T. thermophila, a complexity previously",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.342612+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "30774694",
+  "source_fingerprint": "8000550a7fe76bf79202d3504cc3115a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "30774694",
+    "t-helper-2-cytokines-inhibit-autophagic-control-of-intracellular-mycobacterium-tuberculosis."
+  ],
+  "key_phrases": [
+    "helper",
+    "cytokines",
+    "inhibit",
+    "autophagic",
+    "control",
+    "intracellular",
+    "mycobacterium",
+    "tuberculosis"
+  ],
+  "summary_1l": "T helper 2 cytokines inhibit autophagic control of intracellular Mycobacterium tuberculosis.",
+  "query_hits": [],
+  "embed_text": "30774694 T helper 2 cytokines inhibit autophagic control of intracellular Mycobacterium tuberculosis. science scifact Autophagy is a recently recognized immune effector mechanism against intracellular pathogens. The role of autophagy in innate immunity has been well established, but the extent of its regulation by the adaptive immune response is less well… 30774694 t-helper-2-cytokines-inhibit-autophagic-control-of-intracellular-mycobacterium-tuberculosis. helper cytokines inhibit autophagic control intracellular mycobacterium tuberculosis T helper 2 cytokines inhibit autophagic control of intracellular Mycobacterium tuberculosis. T helper 2 cytokines inhibit autophagic control of intracellular Mycobacterium tuberculosis. Autophagy is a recently recognized immune effector mechanism against intracellular pathogens. The role of autophagy in innate immunity has been well established, but the extent of its regulation by the adaptive immune response is less well understood. The T helper 1 (Th1) cell cytokine IFN-gamma induces autophagy in macrophages to eliminate Mycobacterium tuberculosis. Here, we report that Th2 cytokines affect autophagy in macrophages and their ability to control intracellular M. tuberculosis. IL-4 and IL-13 abrogated autophagy and autophagy-mediated killing of intracellular mycobacteria in murine and human macrophages. Inhibition of starvation-induced autophagy by IL-4 and IL-13 was dependent on Ak",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:12.891860+00:00"
+}

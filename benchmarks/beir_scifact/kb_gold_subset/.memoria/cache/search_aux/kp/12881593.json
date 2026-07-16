@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12881593",
+  "source_fingerprint": "8cb7c33b9d5ad503499efdc151b2195a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12881593",
+    "fine-tuning-in-regulation-of-clp-protein-content-in-bacillus-subtilis."
+  ],
+  "key_phrases": [
+    "fine",
+    "tuning",
+    "regulation",
+    "clp",
+    "protein",
+    "content",
+    "bacillus",
+    "subtilis"
+  ],
+  "summary_1l": "Fine-tuning in regulation of Clp protein content in Bacillus subtilis.",
+  "query_hits": [],
+  "embed_text": "12881593 Fine-tuning in regulation of Clp protein content in Bacillus subtilis. science scifact Clp-controlled proteolysis in Bacillus subtilis seems to play a substantial role, particularly under stress conditions. Calibrated Western blot analyses were used to estimate the approximate numbers of heat-inducible Clp molecules within a… 12881593 fine-tuning-in-regulation-of-clp-protein-content-in-bacillus-subtilis. fine tuning regulation clp protein content bacillus subtilis Fine-tuning in regulation of Clp protein content in Bacillus subtilis. Fine-tuning in regulation of Clp protein content in Bacillus subtilis. Clp-controlled proteolysis in Bacillus subtilis seems to play a substantial role, particularly under stress conditions. Calibrated Western blot analyses were used to estimate the approximate numbers of heat-inducible Clp molecules within a single cell. According to these numbers, the different Clp ATPases do not seem to compete for the proteolytic subunit ClpP. Coimmunoprecipitation experiments revealed the predicted specific ClpX-ClpP, ClpC-ClpP, and ClpE-ClpP interactions. ClpE and ClpX are rapidly degraded in wild-type cells during permanent heat stress but remained almost stable in a clpP mutant, suggesting ClpP-dependent degradation. In particular, ClpCP appeared to be involved in the degradation of the short-lived",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:09.834495+00:00"
+}

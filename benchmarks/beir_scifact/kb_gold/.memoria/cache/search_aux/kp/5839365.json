@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5839365",
+  "source_fingerprint": "0f2592cccbe8406eb65690e1f46f3e13",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5839365",
+    "anti-obesity-drugs:-past,-present-and-future"
+  ],
+  "key_phrases": [
+    "anti",
+    "obesity",
+    "drugs",
+    "past",
+    "present",
+    "future",
+    "ideal",
+    "drug"
+  ],
+  "summary_1l": "The ideal anti-obesity drug would produce sustained weight loss with minimal side effects.",
+  "query_hits": [],
+  "embed_text": "5839365 Anti-obesity drugs: past, present and future science scifact The ideal anti-obesity drug would produce sustained weight loss with minimal side effects. The mechanisms that regulate energy balance have substantial built-in redundancy, overlap considerably with other physiological functions, and are… 5839365 anti-obesity-drugs:-past,-present-and-future anti obesity drugs past present future ideal drug The ideal anti-obesity drug would produce sustained weight loss with minimal side effects. Anti-obesity drugs: past, present and future The ideal anti-obesity drug would produce sustained weight loss with minimal side effects. The mechanisms that regulate energy balance have substantial built-in redundancy, overlap considerably with other physiological functions, and are influenced by social, hedonic and psychological factors that limit the effectiveness of pharmacological interventions. It is therefore unsurprising that anti-obesity drug discovery programmes have been littered with false starts, failures in clinical development, and withdrawals due to adverse effects that were not fully appreciated at the time of launch. Drugs that target pathways in metabolic tissues, such as adipocytes, liver and skeletal muscle, have shown potential in preclinical studies but none has yet re",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.298871+00:00"
+}

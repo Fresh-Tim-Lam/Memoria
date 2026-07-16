@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "37328025",
+  "source_fingerprint": "7fec9f4492906dc86e9801ded7a0c165",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "37328025",
+    "the-werner-and-bloom-syndrome-proteins-help-resolve-replication-blockage-by-converting-(regressed)-holliday-junctions-to-functional-replication-forks."
+  ],
+  "key_phrases": [
+    "werner",
+    "bloom",
+    "syndrome",
+    "proteins",
+    "help",
+    "resolve",
+    "replication",
+    "blockage"
+  ],
+  "summary_1l": "The Werner and Bloom syndrome proteins help resolve replication blockage by converting (regressed) holliday junctions to functional replication forks.",
+  "query_hits": [],
+  "embed_text": "37328025 The Werner and Bloom syndrome proteins help resolve replication blockage by converting (regressed) holliday junctions to functional replication forks. science scifact Cells cope with blockage of replication fork progression in a manner that allows DNA synthesis to be completed and genomic instability minimized. Models for resolution of blocked replication involve fork regression to form Holliday… 37328025 the-werner-and-bloom-syndrome-proteins-help-resolve-replication-blockage-by-converting-(regressed)-holliday-junctions-to-functional-replication-forks. werner bloom syndrome proteins help resolve replication blockage The Werner and Bloom syndrome proteins help resolve replication blockage by converting (regressed) holliday junctions to functional replication forks. The Werner and Bloom syndrome proteins help resolve replication blockage by converting (regressed) holliday junctions to functional replication forks. Cells cope with blockage of replication fork progression in a manner that allows DNA synthesis to be completed and genomic instability minimized. Models for resolution of blocked replication involve fork regression to form Holliday junction structures. The human RecQ helicases WRN and BLM (deficient in Werner and Bloom syndromes, respectively) are critical for maintaining genomic stability and thought to function in accurate resolution of replication blockage. Consistent with this notion, WRN and BLM localize to sites of blocked replication after certain DNA-damaging treatments and exhibit enhanced activity on replication and recombination i",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.388228+00:00"
+}

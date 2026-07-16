@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "991137",
+  "source_fingerprint": "9d14826dd889d0cd2e8bb1d4224ad940",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "991137",
+    "the-descent-of-memory-t-cell-subsets"
+  ],
+  "key_phrases": [
+    "descent",
+    "memory",
+    "cell",
+    "subsets",
+    "immune",
+    "system",
+    "has",
+    "evolved"
+  ],
+  "summary_1l": "The immune system has evolved by continuously increasing its complexity to provide the host with an advantage over infectious agents.",
+  "query_hits": [],
+  "embed_text": "991137 The descent of memory T-cell subsets science scifact The immune system has evolved by continuously increasing its complexity to provide the host with an advantage over infectious agents. The development of immunological memory engenders long-lasting protection and lengthens the lifespan of… 991137 the-descent-of-memory-t-cell-subsets descent memory cell subsets immune system has evolved The immune system has evolved by continuously increasing its complexity to provide the host with an advantage over infectious agents. The descent of memory T-cell subsets The immune system has evolved by continuously increasing its complexity to provide the host with an advantage over infectious agents. The development of immunological memory engenders long-lasting protection and lengthens the lifespan of the host. The generation of subsets of memory T cells with distinct homing and functional properties increases our defensive capabilities. However, the developmental relationship of memory T-cell subsets is a matter of debate. In this Opinion article, in light of recent developments, we suggest that it is probable that two distinct lineages comprise the memory CD8+ T-cell population generated in response to infection.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:06.086558+00:00"
+}

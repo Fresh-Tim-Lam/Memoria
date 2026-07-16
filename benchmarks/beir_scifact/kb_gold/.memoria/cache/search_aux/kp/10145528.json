@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10145528",
+  "source_fingerprint": "fd8ec5835f9959ea7a19beaff3cfa81f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10145528",
+    "global-analysis-of-atm-polymorphism-reveals-significant-functional-constraint."
+  ],
+  "key_phrases": [
+    "global",
+    "analysis",
+    "atm",
+    "polymorphism",
+    "reveals",
+    "significant",
+    "functional",
+    "constraint"
+  ],
+  "summary_1l": "Global analysis of ATM polymorphism reveals significant functional constraint.",
+  "query_hits": [],
+  "embed_text": "10145528 Global analysis of ATM polymorphism reveals significant functional constraint. science scifact ATM, the gene that is mutated in ataxia-telangiectasia, is associated with cerebellar degeneration, abnormal proliferation of small blood vessels, and cancer. These clinically important manifestations have stimulated interest in defining… 10145528 global-analysis-of-atm-polymorphism-reveals-significant-functional-constraint. global analysis atm polymorphism reveals significant functional constraint Global analysis of ATM polymorphism reveals significant functional constraint. Global analysis of ATM polymorphism reveals significant functional constraint. ATM, the gene that is mutated in ataxia-telangiectasia, is associated with cerebellar degeneration, abnormal proliferation of small blood vessels, and cancer. These clinically important manifestations have stimulated interest in defining the sequence variation in the ATM gene. Therefore, we undertook a comprehensive survey of sequence variation in ATM in diverse human populations. The protein-encoding exons of the gene (9,168 bp) and the adjacent intron and untranslated sequences (14,661 bp) were analyzed in 93 individuals from seven major human populations. In addition, the coding sequence was analyzed in one chimpanzee, one gorilla, one orangutan, and one Old World monkey. In human ATM, 88 variant sites were d",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T12:34:31.770856+00:00"
+}

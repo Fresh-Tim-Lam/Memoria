@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "37138639",
+  "source_fingerprint": "475080dd087aabdc95f75b65a4e3f798",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "37138639",
+    "the-ikk-complex,-a-central-regulator-of-nf-kappab-activation."
+  ],
+  "key_phrases": [
+    "ikk",
+    "complex",
+    "central",
+    "regulator",
+    "nf",
+    "kappab",
+    "activation",
+    "kinase"
+  ],
+  "summary_1l": "The IKK complex, a central regulator of NF-kappaB activation.",
+  "query_hits": [],
+  "embed_text": "37138639 The IKK complex, a central regulator of NF-kappaB activation. science scifact The IKK kinase complex is the core element of the NF-kappaB cascade. It is essentially made of two kinases (IKKalpha and IKKbeta) and a regulatory subunit, NEMO/IKKgamma. Additional components may exist, transiently or permanently, but… 37138639 the-ikk-complex,-a-central-regulator-of-nf-kappab-activation. ikk complex central regulator nf kappab activation kinase The IKK complex, a central regulator of NF-kappaB activation. The IKK complex, a central regulator of NF-kappaB activation. The IKK kinase complex is the core element of the NF-kappaB cascade. It is essentially made of two kinases (IKKalpha and IKKbeta) and a regulatory subunit, NEMO/IKKgamma. Additional components may exist, transiently or permanently, but their characterization is still unsure. In addition, it has been shown that two separate NF-kappaB pathways exist, depending on the activating signal and the cell type, the canonical (depending on IKKbeta and NEMO) and the noncanonical pathway (depending solely on IKKalpha). The main question, which is still only partially answered, is to understand how an NF-kappaB activating signal leads to the activation of the kinase subunits, allowing them to phosphorylate their targets and eventually induce",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.157503+00:00"
+}

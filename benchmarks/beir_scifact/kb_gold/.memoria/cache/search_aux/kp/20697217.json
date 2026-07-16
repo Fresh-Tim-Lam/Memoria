@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20697217",
+  "source_fingerprint": "dc56185a9b554076697a5f7a998c4b24",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20697217",
+    "symptoms-of-hypoglycemia-in-children-with-iddm."
+  ],
+  "key_phrases": [
+    "symptoms",
+    "hypoglycemia",
+    "children",
+    "with",
+    "iddm",
+    "objective",
+    "examine",
+    "insulin"
+  ],
+  "summary_1l": "Symptoms of hypoglycemia in children with IDDM.",
+  "query_hits": [],
+  "embed_text": "20697217 Symptoms of hypoglycemia in children with IDDM. science scifact OBJECTIVE To examine the symptoms of hypoglycemia in children with insulin-dependent diabetes, from the perspective both of the child and of the child's parents, and to compare the symptom reporting of the diabetic children with that of… 20697217 symptoms-of-hypoglycemia-in-children-with-iddm. symptoms hypoglycemia children with iddm objective examine insulin Symptoms of hypoglycemia in children with IDDM. Symptoms of hypoglycemia in children with IDDM. OBJECTIVE To examine the symptoms of hypoglycemia in children with insulin-dependent diabetes, from the perspective both of the child and of the child's parents, and to compare the symptom reporting of the diabetic children with that of adult diabetic patients. RESEARCH DESIGN AND METHODS Interviews were conducted with 100 parents and 43 of their children. The frequency and intensity of symptoms of hypoglycemia were documented using a structured interview and classified into groups using Principal Components Analysis (PCA). RESULTS Diabetic children and their parents showed close agreement concerning the relative frequency and the intensity of symptoms reported. PCA of the symptom reports showed that diabetic children and their parents identi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.794442+00:00"
+}

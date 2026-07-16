@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "kp_id": "83228#13",
+  "source_fingerprint": "148a35c0221f62c1099ffe027ef438e6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "中国国家女子足球队",
+    "拉各斯马拉松",
+    "重庆一小时经济圈"
+  ],
+  "aliases": [
+    "83228#13"
+  ],
+  "key_phrases": [
+    "马拉松",
+    "女子",
+    "世界纪录",
+    "小时",
+    "14",
+    "肯尼亚",
+    "选手",
+    "布里"
+  ],
+  "summary_1l": "女子马拉松的世界纪录是2小时14分4秒，由肯尼亚选手布里吉德·科斯盖在上创造。",
+  "query_hits": [],
+  "embed_text": "83228#13 马拉松 马拉松 女子马拉松的世界纪录是2小时14分4秒，由肯尼亚选手布里吉德·科斯盖在上创造。 中国国家女子足球队 拉各斯马拉松 重庆一小时经济圈 83228#13 马拉松 女子 世界纪录 小时 14 肯尼亚 选手 布里 女子马拉松的世界纪录是2小时14分4秒，由肯尼亚选手布里吉德·科斯盖在上创造。 马拉松 女子马拉松的世界纪录是2小时14分4秒，由肯尼亚选手布里吉德·科斯盖在上创造。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:19:18.482785+00:00"
+}

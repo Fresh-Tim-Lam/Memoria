@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17911973",
+  "source_fingerprint": "458dcfb8362e680521e0c45e5aab81f1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17911973",
+    "natural-mutagenesis-of-human-genomes-by-endogenous-retrotransposons"
+  ],
+  "key_phrases": [
+    "natural",
+    "mutagenesis",
+    "human",
+    "genomes",
+    "by",
+    "endogenous",
+    "retrotransposons",
+    "two"
+  ],
+  "summary_1l": "Two abundant classes of mobile elements, namely Alu and L1 elements, continue to generate new retrotransposon insertions in human ge",
+  "query_hits": [],
+  "embed_text": "17911973 Natural Mutagenesis of Human Genomes by Endogenous Retrotransposons science scifact Two abundant classes of mobile elements, namely Alu and L1 elements, continue to generate new retrotransposon insertions in human genomes. Estimates suggest that these elements have generated millions of new germline insertions in… 17911973 natural-mutagenesis-of-human-genomes-by-endogenous-retrotransposons natural mutagenesis human genomes by endogenous retrotransposons two Two abundant classes of mobile elements, namely Alu and L1 elements, continue to generate new retrotransposon insertions in human ge Natural Mutagenesis of Human Genomes by Endogenous Retrotransposons Two abundant classes of mobile elements, namely Alu and L1 elements, continue to generate new retrotransposon insertions in human genomes. Estimates suggest that these elements have generated millions of new germline insertions in individual human genomes worldwide. Unfortunately, current technologies are not capable of detecting most of these young insertions, and the true extent of germline mutagenesis by endogenous human retrotransposons has been difficult to examine. Here, we describe technologies for detecting these young retrotransposon insertions and demonstrate that such insertions indeed are abundant in human populations. We also found that new somatic L1 insertions occur at high frequencies in human lung cancer g",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.416593+00:00"
+}

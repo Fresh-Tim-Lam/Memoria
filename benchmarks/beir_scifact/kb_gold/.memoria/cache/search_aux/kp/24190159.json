@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24190159",
+  "source_fingerprint": "2a6140c3fae49a14cd34d15314e69a82",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24190159",
+    "mutated-kras-results-in-overexpression-of-dusp4,-a-map-kinase-phosphatase,-and-smyd3,-a-histone-methyltransferase,-in-rectal-carcinomas."
+  ],
+  "key_phrases": [
+    "mutated",
+    "kras",
+    "results",
+    "overexpression",
+    "dusp4",
+    "map",
+    "kinase",
+    "phosphatase"
+  ],
+  "summary_1l": "Mutated KRAS results in overexpression of DUSP4, a MAP-kinase phosphatase, and SMYD3, a histone methyltransferase, in rectal carcinomas.",
+  "query_hits": [],
+  "embed_text": "24190159 Mutated KRAS results in overexpression of DUSP4, a MAP-kinase phosphatase, and SMYD3, a histone methyltransferase, in rectal carcinomas. science scifact Mutations of the KRAS oncogene are predictive for resistance to treatment with antibodies against the epithelial growth factor receptor in patients with colorectal cancer. Overcoming this therapeutic dilemma could potentially be achieved… 24190159 mutated-kras-results-in-overexpression-of-dusp4,-a-map-kinase-phosphatase,-and-smyd3,-a-histone-methyltransferase,-in-rectal-carcinomas. mutated kras results overexpression dusp4 map kinase phosphatase Mutated KRAS results in overexpression of DUSP4, a MAP-kinase phosphatase, and SMYD3, a histone methyltransferase, in rectal carcinomas. Mutated KRAS results in overexpression of DUSP4, a MAP-kinase phosphatase, and SMYD3, a histone methyltransferase, in rectal carcinomas. Mutations of the KRAS oncogene are predictive for resistance to treatment with antibodies against the epithelial growth factor receptor in patients with colorectal cancer. Overcoming this therapeutic dilemma could potentially be achieved by the introduction of drugs that inhibit signaling pathways that are activated by KRAS mutations. To identify comprehensively such signaling pathways, we profiled pretreatment biopsies and normal mucosa from 65 patients with locally advanced rectal cancer-30 of which carried mutated KRAS-using global gene expression microarrays. By comparing all tumor tissues exclusively to matched normal mucosa, we could improve assay s",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.949283+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "35085326",
+  "source_fingerprint": "cbdd33ad076a3f2660b2ad47c9336658",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "35085326",
+    "svpa,-a-novel-surface-virulence-associated-protein-required-for-intracellular-survival-of-listeria-monocytogenes."
+  ],
+  "key_phrases": [
+    "svpa",
+    "novel",
+    "surface",
+    "virulence",
+    "associated",
+    "protein",
+    "required",
+    "intracellular"
+  ],
+  "summary_1l": "SvpA, a novel surface virulence-associated protein required for intracellular survival of Listeria monocytogenes.",
+  "query_hits": [],
+  "embed_text": "35085326 SvpA, a novel surface virulence-associated protein required for intracellular survival of Listeria monocytogenes. science scifact A previously unknown protein, designated SvpA (surface virulence-associated protein) and implicated in the virulence of the intracellular pathogen Listeria monocytogenes, was identified. This 64 kDa protein, encoded by svpA, is both… 35085326 svpa,-a-novel-surface-virulence-associated-protein-required-for-intracellular-survival-of-listeria-monocytogenes. svpa novel surface virulence associated protein required intracellular SvpA, a novel surface virulence-associated protein required for intracellular survival of Listeria monocytogenes. SvpA, a novel surface virulence-associated protein required for intracellular survival of Listeria monocytogenes. A previously unknown protein, designated SvpA (surface virulence-associated protein) and implicated in the virulence of the intracellular pathogen Listeria monocytogenes, was identified. This 64 kDa protein, encoded by svpA, is both secreted in culture supernatants and surface-exposed, as shown by immunogold labelling of whole bacteria with an anti-SvpA antibody. Analysis of the peptide sequence revealed that SvpA contains a leader peptide, a predicted C-terminal transmembrane region and a positively charged tail resembling that of the surface protein ActA, suggesting that SvpA might partially reassociate with the bacterial surface by its C-terminal membrane anchor. An allelic",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.959562+00:00"
+}

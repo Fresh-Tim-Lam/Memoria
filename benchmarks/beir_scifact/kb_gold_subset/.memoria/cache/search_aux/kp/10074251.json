@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10074251",
+  "source_fingerprint": "5cd6bda0b5d509831122d218fdde9c1d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10074251",
+    "protoplasmic-astrocytes-in-ca1-stratum-radiatum-occupy-separate-anatomical-domains."
+  ],
+  "key_phrases": [
+    "protoplasmic",
+    "astrocytes",
+    "ca1",
+    "stratum",
+    "radiatum",
+    "occupy",
+    "separate",
+    "anatomical"
+  ],
+  "summary_1l": "Protoplasmic astrocytes in CA1 stratum radiatum occupy separate anatomical domains.",
+  "query_hits": [],
+  "embed_text": "10074251 Protoplasmic astrocytes in CA1 stratum radiatum occupy separate anatomical domains. science scifact Protoplasmic astrocytes are increasingly thought to interact extensively with neuronal elements in the brain and to influence their activity. Recent reports have also begun to suggest that physiologically, and perhaps functionally, diverse… 10074251 protoplasmic-astrocytes-in-ca1-stratum-radiatum-occupy-separate-anatomical-domains. protoplasmic astrocytes ca1 stratum radiatum occupy separate anatomical Protoplasmic astrocytes in CA1 stratum radiatum occupy separate anatomical domains. Protoplasmic astrocytes in CA1 stratum radiatum occupy separate anatomical domains. Protoplasmic astrocytes are increasingly thought to interact extensively with neuronal elements in the brain and to influence their activity. Recent reports have also begun to suggest that physiologically, and perhaps functionally, diverse forms of these cells may be present in the CNS. Our current understanding of astrocyte form and distribution is based predominantly on studies that used the astrocytic marker glial fibrillary acidic protein (GFAP) and on studies using metal-impregnation techniques. The prevalent opinion, based on studies using these methods, is that astrocytic processes overlap extensively and primarily share the underlying neuropil. However, both of these techniques have serious shortcom",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.274164+00:00"
+}

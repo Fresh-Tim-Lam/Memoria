@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11250124",
+  "source_fingerprint": "2b199df5ef60c9f4165f880b3635e173",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11250124",
+    "ap-1/sigma1b-adaptin-mediates-endosomal-synaptic-vesicle-recycling,-learning-and-memory."
+  ],
+  "key_phrases": [
+    "ap",
+    "sigma1b",
+    "adaptin",
+    "mediates",
+    "endosomal",
+    "synaptic",
+    "vesicle",
+    "recycling"
+  ],
+  "summary_1l": "AP-1/sigma1B-adaptin mediates endosomal synaptic vesicle recycling, learning and memory.",
+  "query_hits": [],
+  "embed_text": "11250124 AP-1/sigma1B-adaptin mediates endosomal synaptic vesicle recycling, learning and memory. science scifact Synaptic vesicle recycling involves AP-2/clathrin-mediated endocytosis, but it is not known whether the endosomal pathway is also required. Mice deficient in the tissue-specific AP-1-sigma1B complex have impaired synaptic vesicle recycling… 11250124 ap-1/sigma1b-adaptin-mediates-endosomal-synaptic-vesicle-recycling,-learning-and-memory. ap sigma1b adaptin mediates endosomal synaptic vesicle recycling AP-1/sigma1B-adaptin mediates endosomal synaptic vesicle recycling, learning and memory. AP-1/sigma1B-adaptin mediates endosomal synaptic vesicle recycling, learning and memory. Synaptic vesicle recycling involves AP-2/clathrin-mediated endocytosis, but it is not known whether the endosomal pathway is also required. Mice deficient in the tissue-specific AP-1-sigma1B complex have impaired synaptic vesicle recycling in hippocampal synapses. The ubiquitously expressed AP-1-sigma1A complex mediates protein sorting between the trans-Golgi network and early endosomes. Vertebrates express three sigma1 subunit isoforms: A, B and C. The expressions of sigma1A and sigma1B are highest in the brain. Synaptic vesicle reformation in cultured neurons from sigma1B-deficient mice is reduced upon stimulation, and large endosomal intermediates accumulate. The sigma1B-deficient mice have reduced",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:06.185222+00:00"
+}

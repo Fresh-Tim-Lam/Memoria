@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "33339202",
+  "source_fingerprint": "cdcd82b4a2819fe5a63a9c557abaeb90",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "33339202",
+    "desferrioxamine-treatment-of-porphyria-cutanea-tarda-in-a-patient-with-hiv-and-chronic-renal-failure."
+  ],
+  "key_phrases": [
+    "desferrioxamine",
+    "treatment",
+    "porphyria",
+    "cutanea",
+    "tarda",
+    "patient",
+    "with",
+    "hiv"
+  ],
+  "summary_1l": "Desferrioxamine treatment of porphyria cutanea tarda in a patient with HIV and chronic renal failure.",
+  "query_hits": [],
+  "embed_text": "33339202 Desferrioxamine treatment of porphyria cutanea tarda in a patient with HIV and chronic renal failure. science scifact Porphyria cutanea tarda (PCT) can occur in HIV patients. Current evidence suggests that HIV infection may interfere with the hepatic cytochrome oxidase system, leading to porphyrin metabolism impairment. Moreover, chronic hemodialysis in… 33339202 desferrioxamine-treatment-of-porphyria-cutanea-tarda-in-a-patient-with-hiv-and-chronic-renal-failure. desferrioxamine treatment porphyria cutanea tarda patient with hiv Desferrioxamine treatment of porphyria cutanea tarda in a patient with HIV and chronic renal failure. Desferrioxamine treatment of porphyria cutanea tarda in a patient with HIV and chronic renal failure. Porphyria cutanea tarda (PCT) can occur in HIV patients. Current evidence suggests that HIV infection may interfere with the hepatic cytochrome oxidase system, leading to porphyrin metabolism impairment. Moreover, chronic hemodialysis in renal failure may be a risk factor for PCT. In addition to the contributory factors for PCT associated to HIV infection, it is possible that porphyrin accumulation secondary to renal failure may play a role in the expression of this disease. We report a case of PCT in an HIV-1 infected patient under blood dialysis, refractory to antimalarials and controlled with desferrioxamine.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.317831+00:00"
+}

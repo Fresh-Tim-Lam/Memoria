@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13072112",
+  "source_fingerprint": "90a4e5b3f7c17c12327adb54f3953cda",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13072112",
+    "distinction-and-relationship-between-elongation-rate-and-processivity-of-rna-polymerase-ii-in-vivo."
+  ],
+  "key_phrases": [
+    "distinction",
+    "relationship",
+    "between",
+    "elongation",
+    "rate",
+    "processivity",
+    "rna",
+    "polymerase"
+  ],
+  "summary_1l": "Distinction and relationship between elongation rate and processivity of RNA polymerase II in vivo.",
+  "query_hits": [],
+  "embed_text": "13072112 Distinction and relationship between elongation rate and processivity of RNA polymerase II in vivo. science scifact A number of proteins and drugs have been implicated in the process of transcriptional elongation by RNA polymerase (Pol) II, but the factors that govern the elongation rate (nucleotide additions per min) and processivity (nucleotide… 13072112 distinction-and-relationship-between-elongation-rate-and-processivity-of-rna-polymerase-ii-in-vivo. distinction relationship between elongation rate processivity rna polymerase Distinction and relationship between elongation rate and processivity of RNA polymerase II in vivo. Distinction and relationship between elongation rate and processivity of RNA polymerase II in vivo. A number of proteins and drugs have been implicated in the process of transcriptional elongation by RNA polymerase (Pol) II, but the factors that govern the elongation rate (nucleotide additions per min) and processivity (nucleotide additions per initiation event) in vivo are poorly understood. Here, we show that a mutation in the Rpb2 subunit of Pol II reduces both the elongation rate and processivity in vivo. In contrast, none of the putative elongation factors tested affect the elongation rate, although mutations in the THO complex and in Spt4 significantly reduce processivity. The drugs 6-azauracil and mycophenolic acid reduce both the elongation rate and processivity, and this processiv",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:09.606995+00:00"
+}

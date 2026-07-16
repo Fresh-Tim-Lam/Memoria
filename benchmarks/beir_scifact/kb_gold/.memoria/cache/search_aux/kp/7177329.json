@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "7177329",
+  "source_fingerprint": "c5a1ff3825ab138ab84155c158e8eb89",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7177329"
+  ],
+  "key_phrases": [
+    "evolution",
+    "hiv",
+    "glycan",
+    "dependent",
+    "broadly",
+    "neutralizing",
+    "antibody",
+    "epitope"
+  ],
+  "summary_1l": "Neutralizing antibodies are likely to play a crucial part in a preventative HIV-1 vaccine.",
+  "query_hits": [],
+  "embed_text": "7177329 Evolution of an HIV glycan–dependent broadly neutralizing antibody epitope through immune escape science scifact Neutralizing antibodies are likely to play a crucial part in a preventative HIV-1 vaccine. Although efforts to elicit broadly cross-neutralizing (BCN) antibodies by vaccination have been unsuccessful, a minority of individuals naturally… 7177329 evolution hiv glycan dependent broadly neutralizing antibody epitope Neutralizing antibodies are likely to play a crucial part in a preventative HIV-1 vaccine. Evolution of an HIV glycan–dependent broadly neutralizing antibody epitope through immune escape Neutralizing antibodies are likely to play a crucial part in a preventative HIV-1 vaccine. Although efforts to elicit broadly cross-neutralizing (BCN) antibodies by vaccination have been unsuccessful, a minority of individuals naturally develop these antibodies after many years of infection. How such antibodies arise, and the role of viral evolution in shaping these responses, is unknown. Here we show, in two HIV-1–infected individuals who developed BCN antibodies targeting the glycan at Asn332 on the gp120 envelope, that this glycan was absent on the initial infecting virus. However, this BCN epitope evolved within 6 months, through immune escape from earlier strain-specific antibodies that re",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.702692+00:00"
+}

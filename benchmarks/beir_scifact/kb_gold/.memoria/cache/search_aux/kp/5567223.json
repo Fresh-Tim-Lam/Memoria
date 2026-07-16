@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5567223",
+  "source_fingerprint": "24a04323193d173e80628158380a7da7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5567223",
+    "plasticity-of-epithelial-stem-cells-in-tissue-regeneration"
+  ],
+  "key_phrases": [
+    "plasticity",
+    "epithelial",
+    "stem",
+    "cells",
+    "tissue",
+    "regeneration",
+    "tissues",
+    "rely"
+  ],
+  "summary_1l": "Tissues rely upon stem cells for homeostasis and repair.",
+  "query_hits": [],
+  "embed_text": "5567223 Plasticity of epithelial stem cells in tissue regeneration science scifact Tissues rely upon stem cells for homeostasis and repair. Recent studies show that the fate and multilineage potential of epithelial stem cells can change depending on whether a stem cell exists within its resident niche and responds to… 5567223 plasticity-of-epithelial-stem-cells-in-tissue-regeneration plasticity epithelial stem cells tissue regeneration tissues rely Tissues rely upon stem cells for homeostasis and repair. Plasticity of epithelial stem cells in tissue regeneration Tissues rely upon stem cells for homeostasis and repair. Recent studies show that the fate and multilineage potential of epithelial stem cells can change depending on whether a stem cell exists within its resident niche and responds to normal tissue homeostasis, whether it is mobilized to repair a wound, or whether it is taken from its niche and challenged to de novo tissue morphogenesis after transplantation. In this Review, we discuss how different populations of naturally lineage-restricted stem cells and committed progenitors can display remarkable plasticity and reversibility and reacquire long-term self-renewing capacities and multilineage differentiation potential during physiological and regenerative conditions. We also dis",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.629088+00:00"
+}

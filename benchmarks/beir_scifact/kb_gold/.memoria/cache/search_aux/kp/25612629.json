@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25612629",
+  "source_fingerprint": "1a01443b9a0fd1f123a879f0da32d11c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25612629",
+    "patent-ductus-arteriosus:-are-current-neonatal-treatment-options-better-or-worse-than-no-treatment-at-all?"
+  ],
+  "key_phrases": [
+    "patent",
+    "ductus",
+    "arteriosus",
+    "current",
+    "neonatal",
+    "treatment",
+    "options",
+    "better"
+  ],
+  "summary_1l": "Patent ductus arteriosus: are current neonatal treatment options better or worse than no treatment at all?",
+  "query_hits": [],
+  "embed_text": "25612629 Patent ductus arteriosus: are current neonatal treatment options better or worse than no treatment at all? science scifact Although a moderate-sized patent ductus arteriosus (PDA) needs to be closed by the time a child is 1-2 years old, there is great uncertainty about whether it needs to be closed during the neonatal period. Although 95% of neonatologists… 25612629 patent-ductus-arteriosus:-are-current-neonatal-treatment-options-better-or-worse-than-no-treatment-at-all? patent ductus arteriosus current neonatal treatment options better Patent ductus arteriosus: are current neonatal treatment options better or worse than no treatment at all? Patent ductus arteriosus: are current neonatal treatment options better or worse than no treatment at all? Although a moderate-sized patent ductus arteriosus (PDA) needs to be closed by the time a child is 1-2 years old, there is great uncertainty about whether it needs to be closed during the neonatal period. Although 95% of neonatologists believe that a moderate-sized PDA should be closed if it persists in infants (born before 28 weeks) who still require mechanical ventilation, the number of neonatologists who treat a PDA when it occurs in infants who do not require mechanical ventilation varies widely. Both the high likelihood of spontaneous ductus closure and the absence of randomized controlled trials, specifically addressing the risks and benefits of neonatal ductus closure, add to t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.012623+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10273147",
+  "source_fingerprint": "b7e77bba130314397bea1fe0d55f6d29",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10273147",
+    "a-functionally-characterized-test-set-of-human-induced-pluripotent-stem-cells"
+  ],
+  "key_phrases": [
+    "functionally",
+    "characterized",
+    "test",
+    "set",
+    "human",
+    "induced",
+    "pluripotent",
+    "stem"
+  ],
+  "summary_1l": "Human induced pluripotent stem cells (iPSCs) present exciting opportunities for studying development and for in vitro dise",
+  "query_hits": [],
+  "embed_text": "10273147 A functionally characterized test set of human induced pluripotent stem cells science scifact Human induced pluripotent stem cells (iPSCs) present exciting opportunities for studying development and for in vitro disease modeling. However, reported variability in the behavior of iPSCs has called their utility into question. We… 10273147 a-functionally-characterized-test-set-of-human-induced-pluripotent-stem-cells functionally characterized test set human induced pluripotent stem Human induced pluripotent stem cells (iPSCs) present exciting opportunities for studying development and for in vitro dise A functionally characterized test set of human induced pluripotent stem cells Human induced pluripotent stem cells (iPSCs) present exciting opportunities for studying development and for in vitro disease modeling. However, reported variability in the behavior of iPSCs has called their utility into question. We established a test set of 16 iPSC lines from seven individuals of varying age, sex and health status, and extensively characterized the lines with respect to pluripotency and the ability to terminally differentiate. Under standardized procedures in two independent laboratories, 13 of the iPSC lines gave rise to functional motor neurons with a range of efficiencies similar to that of human embryonic stem cells (ESCs). Although three iPSC lines were resistant to neural differentiation,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.405287+00:00"
+}

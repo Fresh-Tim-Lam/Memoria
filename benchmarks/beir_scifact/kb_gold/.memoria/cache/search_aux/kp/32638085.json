@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "32638085",
+  "source_fingerprint": "e9654ae11353872ee8d1011771ae34cc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "32638085",
+    "histone-acetylation-and-deacetylation-in-yeast"
+  ],
+  "key_phrases": [
+    "histone",
+    "acetylation",
+    "deacetylation",
+    "yeast",
+    "saccharomyces",
+    "cerevisiae",
+    "occur",
+    "by"
+  ],
+  "summary_1l": "Histone acetylation and deacetylation in the yeast Saccharomyces cerevisiae occur by targeting acetyltransferase and deacetylase enzymes to gene promoter",
+  "query_hits": [],
+  "embed_text": "32638085 Histone acetylation and deacetylation in yeast science scifact Histone acetylation and deacetylation in the yeast Saccharomyces cerevisiae occur by targeting acetyltransferase and deacetylase enzymes to gene promoters and, in an untargeted and global manner, by affecting most nucleosomes. Recently,… 32638085 histone-acetylation-and-deacetylation-in-yeast histone acetylation deacetylation yeast saccharomyces cerevisiae occur by Histone acetylation and deacetylation in the yeast Saccharomyces cerevisiae occur by targeting acetyltransferase and deacetylase enzymes to gene promoter Histone acetylation and deacetylation in yeast Histone acetylation and deacetylation in the yeast Saccharomyces cerevisiae occur by targeting acetyltransferase and deacetylase enzymes to gene promoters and, in an untargeted and global manner, by affecting most nucleosomes. Recently, new roles for histone acetylation have been uncovered, not only in transcription but also in DNA replication, repair and heterochromatin formation. Interestingly, specific acetylatable lysines can function as binding sites for regulatory factors. Moreover, histone deacetylation is not only repressive but can be required for gene activity.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.705698+00:00"
+}

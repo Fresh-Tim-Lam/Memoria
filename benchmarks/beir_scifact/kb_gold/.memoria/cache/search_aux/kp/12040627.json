@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12040627",
+  "source_fingerprint": "2698eb1e7ce52f9a7d1b2b7e9fdfe8bf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12040627",
+    "the-histone-acetyltransferase-mof-is-a-key-regulator-of-the-embryonic-stem-cell-core-transcriptional-network."
+  ],
+  "key_phrases": [
+    "histone",
+    "acetyltransferase",
+    "mof",
+    "key",
+    "regulator",
+    "embryonic",
+    "stem",
+    "cell"
+  ],
+  "summary_1l": "The histone acetyltransferase MOF is a key regulator of the embryonic stem cell core transcriptional network.",
+  "query_hits": [],
+  "embed_text": "12040627 The histone acetyltransferase MOF is a key regulator of the embryonic stem cell core transcriptional network. science scifact Pluripotent embryonic stem cells (ESCs) maintain self-renewal and the potential for rapid response to differentiation cues. Both ESC features are subject to epigenetic regulation. Here we show that the histone acetyltransferase Mof plays… 12040627 the-histone-acetyltransferase-mof-is-a-key-regulator-of-the-embryonic-stem-cell-core-transcriptional-network. histone acetyltransferase mof key regulator embryonic stem cell The histone acetyltransferase MOF is a key regulator of the embryonic stem cell core transcriptional network. The histone acetyltransferase MOF is a key regulator of the embryonic stem cell core transcriptional network. Pluripotent embryonic stem cells (ESCs) maintain self-renewal and the potential for rapid response to differentiation cues. Both ESC features are subject to epigenetic regulation. Here we show that the histone acetyltransferase Mof plays an essential role in the maintenance of ESC self-renewal and pluripotency. ESCs with Mof deletion lose characteristic morphology, alkaline phosphatase (AP) staining, and differentiation potential. They also have aberrant expression of the core transcription factors Nanog, Oct4, and Sox2. Importantly, the phenotypes of Mof null ESCs can be partially suppressed by Nanog overexpression, supporting the idea that Mof functions as an upstream regulator o",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:07.679992+00:00"
+}

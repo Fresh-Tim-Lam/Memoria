@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27437459",
+  "source_fingerprint": "66050fe3809b6404791f7aff802510dd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27437459",
+    "randomized-dose-finding-clinical-trial-of-oncolytic-immunotherapeutic-vaccinia-jx-594-in-liver-cancer"
+  ],
+  "key_phrases": [
+    "randomized",
+    "dose",
+    "finding",
+    "clinical",
+    "trial",
+    "oncolytic",
+    "immunotherapeutic",
+    "vaccinia"
+  ],
+  "summary_1l": "Oncolytic viruses and active immunotherapeutics have complementary mechanisms of action (MOA) that",
+  "query_hits": [],
+  "embed_text": "27437459 Randomized dose-finding clinical trial of oncolytic immunotherapeutic vaccinia JX-594 in liver cancer science scifact Oncolytic viruses and active immunotherapeutics have complementary mechanisms of action (MOA) that are both self amplifying in tumors, yet the impact of dose on subject outcome is unclear. JX-594 (Pexa-Vec) is an oncolytic and… 27437459 randomized-dose-finding-clinical-trial-of-oncolytic-immunotherapeutic-vaccinia-jx-594-in-liver-cancer randomized dose finding clinical trial oncolytic immunotherapeutic vaccinia Oncolytic viruses and active immunotherapeutics have complementary mechanisms of action (MOA) that Randomized dose-finding clinical trial of oncolytic immunotherapeutic vaccinia JX-594 in liver cancer Oncolytic viruses and active immunotherapeutics have complementary mechanisms of action (MOA) that are both self amplifying in tumors, yet the impact of dose on subject outcome is unclear. JX-594 (Pexa-Vec) is an oncolytic and immunotherapeutic vaccinia virus. To determine the optimal JX-594 dose in subjects with advanced hepatocellular carcinoma (HCC), we conducted a randomized phase 2 dose-finding trial (n = 30). Radiologists infused low- or high-dose JX-594 into liver tumors (days 1, 15 and 29); infusions resulted in acute detectable intravascular JX-594 genomes. Objective intrahepatic Modified Response Evaluation Criteria in Solid Tumors (mRECIST) (15%) and Choi (62%) response rates an",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.899573+00:00"
+}

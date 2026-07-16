@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4961038",
+  "source_fingerprint": "1d2741180eb316ddef36ef1acf4d9458",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4961038",
+    "effective-use-of-pi3k-and-mek-inhibitors-to-treat-mutant-k-ras-g12d-and-pik3ca-h1047r-murine-lung-cancers"
+  ],
+  "key_phrases": [
+    "effective",
+    "use",
+    "pi3k",
+    "mek",
+    "inhibitors",
+    "treat",
+    "mutant",
+    "ras"
+  ],
+  "summary_1l": "Somatic mutations that activate phosphoinositide 3-kinase (PI3K) have been identified in the p",
+  "query_hits": [],
+  "embed_text": "4961038 Effective Use of PI3K and MEK Inhibitors to Treat Mutant K-Ras G12D and PIK3CA H1047R Murine Lung Cancers science scifact Somatic mutations that activate phosphoinositide 3-kinase (PI3K) have been identified in the p110-alpha catalytic subunit (encoded by PIK3CA). They are most frequently observed in two hotspots: the helical domain (E545K and E542K) and the… 4961038 effective-use-of-pi3k-and-mek-inhibitors-to-treat-mutant-k-ras-g12d-and-pik3ca-h1047r-murine-lung-cancers effective use pi3k mek inhibitors treat mutant ras Somatic mutations that activate phosphoinositide 3-kinase (PI3K) have been identified in the p Effective Use of PI3K and MEK Inhibitors to Treat Mutant K-Ras G12D and PIK3CA H1047R Murine Lung Cancers Somatic mutations that activate phosphoinositide 3-kinase (PI3K) have been identified in the p110-alpha catalytic subunit (encoded by PIK3CA). They are most frequently observed in two hotspots: the helical domain (E545K and E542K) and the kinase domain (H1047R). Although the p110-alpha mutants are transforming in vitro, their oncogenic potential has not been assessed in genetically engineered mouse models. Furthermore, clinical trials with PI3K inhibitors have recently been initiated, and it is unknown if their efficacy will be restricted to specific, genetically defined malignancies. In this study, we engineered a mouse model of lung adenocarcinomas initiated and maintained by express",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:13.516203+00:00"
+}

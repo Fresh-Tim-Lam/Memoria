@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24307695",
+  "source_fingerprint": "49dc72a308ac31bc8197eb69110338ed",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24307695",
+    "genetic-analysis-of-an-ars-element-from-the-fission-yeast-schizosaccharomyces-pombe."
+  ],
+  "key_phrases": [
+    "genetic",
+    "analysis",
+    "ars",
+    "element",
+    "from",
+    "fission",
+    "yeast",
+    "schizosaccharomyces"
+  ],
+  "summary_1l": "Genetic analysis of an ARS element from the fission yeast Schizosaccharomyces pombe.",
+  "query_hits": [],
+  "embed_text": "24307695 Genetic analysis of an ARS element from the fission yeast Schizosaccharomyces pombe. science scifact ARS (autonomously replicating sequence) elements are DNA fragments that can function as origins of DNA replication in yeast. We report the first fine-structure analysis of ars1, an ARS element of the fission yeast Schizosaccharomyces… 24307695 genetic-analysis-of-an-ars-element-from-the-fission-yeast-schizosaccharomyces-pombe. genetic analysis ars element from fission yeast schizosaccharomyces Genetic analysis of an ARS element from the fission yeast Schizosaccharomyces pombe. Genetic analysis of an ARS element from the fission yeast Schizosaccharomyces pombe. ARS (autonomously replicating sequence) elements are DNA fragments that can function as origins of DNA replication in yeast. We report the first fine-structure analysis of ars1, an ARS element of the fission yeast Schizosaccharomyces pombe. Characterization of a series of nested deletion mutations indicated that the minimal fragment of DNA encompassing ars1 is surprisingly large. No fragment < 650 bp retained significant ARS activity. Analysis of deletion and substitution mutations scanning the entire minimal ars1 identified a single essential 50 bp fragment (segment 1). Only one other 50 bp mutation reduced activity as much as 5-fold and most deletions were without effect. Thus, the minimal ars1 is compos",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.176885+00:00"
+}

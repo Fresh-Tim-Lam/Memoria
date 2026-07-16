@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13025574",
+  "source_fingerprint": "2f1f60b83949787a69b775dac3b7fb65",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13025574",
+    "cancer-risks-attributable-to-low-doses-of-ionizing-radiation:-assessing-what-we-really-know."
+  ],
+  "key_phrases": [
+    "cancer",
+    "risks",
+    "attributable",
+    "low",
+    "doses",
+    "ionizing",
+    "radiation",
+    "assessing"
+  ],
+  "summary_1l": "Cancer risks attributable to low doses of ionizing radiation: assessing what we really know.",
+  "query_hits": [],
+  "embed_text": "13025574 Cancer risks attributable to low doses of ionizing radiation: assessing what we really know. science scifact High doses of ionizing radiation clearly produce deleterious consequences in humans, including, but not exclusively, cancer induction. At very low radiation doses the situation is much less clear, but the risks of low-dose radiation are of… 13025574 cancer-risks-attributable-to-low-doses-of-ionizing-radiation:-assessing-what-we-really-know. cancer risks attributable low doses ionizing radiation assessing Cancer risks attributable to low doses of ionizing radiation: assessing what we really know. Cancer risks attributable to low doses of ionizing radiation: assessing what we really know. High doses of ionizing radiation clearly produce deleterious consequences in humans, including, but not exclusively, cancer induction. At very low radiation doses the situation is much less clear, but the risks of low-dose radiation are of societal importance in relation to issues as varied as screening tests for cancer, the future of nuclear power, occupational radiation exposure, frequent-flyer risks, manned space exploration, and radiological terrorism. We review the difficulties involved in quantifying the risks of low-dose radiation and address two specific questions. First, what is the lowest dose of x- or gamma-radiation for which good evidence exists of increased cancer risks in humans? The",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:10.147647+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "502797",
+  "source_fingerprint": "affe95e2f93aa53276772393f64b0f06",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "502797",
+    "chemical-approaches-to-stem-cell-biology-and-therapeutics."
+  ],
+  "key_phrases": [
+    "chemical",
+    "approaches",
+    "stem",
+    "cell",
+    "biology",
+    "therapeutics",
+    "small",
+    "molecules"
+  ],
+  "summary_1l": "Chemical approaches to stem cell biology and therapeutics.",
+  "query_hits": [],
+  "embed_text": "502797 Chemical approaches to stem cell biology and therapeutics. science scifact Small molecules that modulate stem cell fate and function offer significant opportunities that will allow the full realization of the therapeutic potential of stem cells. Rational design and screening for small molecules have identified… 502797 chemical-approaches-to-stem-cell-biology-and-therapeutics. chemical approaches stem cell biology therapeutics small molecules Chemical approaches to stem cell biology and therapeutics. Chemical approaches to stem cell biology and therapeutics. Small molecules that modulate stem cell fate and function offer significant opportunities that will allow the full realization of the therapeutic potential of stem cells. Rational design and screening for small molecules have identified useful compounds to probe fundamental mechanisms of stem cell self-renewal, differentiation, and reprogramming and have facilitated the development of cell-based therapies and therapeutic drugs targeting endogenous stem and progenitor cells for repair and regeneration. Here, we will discuss recent scientific and therapeutic progress, as well as new perspectives and future challenges for using chemical approaches in stem cell biology and regenerative medicine.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.031677+00:00"
+}

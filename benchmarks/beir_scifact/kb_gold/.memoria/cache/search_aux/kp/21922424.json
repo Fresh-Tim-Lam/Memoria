@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21922424",
+  "source_fingerprint": "330ab25c71509dd91e4bbe898c24c443",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21922424",
+    "the-lim-domain-containing-homeo-box-gene-xlim-1-is-expressed-specifically-in-the-organizer-region-of-xenopus-gastrula-embryos."
+  ],
+  "key_phrases": [
+    "lim",
+    "domain",
+    "containing",
+    "homeo",
+    "box",
+    "gene",
+    "xlim",
+    "expressed"
+  ],
+  "summary_1l": "The LIM domain-containing homeo box gene Xlim-1 is expressed specifically in the organizer region of Xenopus gastrula embryos.",
+  "query_hits": [],
+  "embed_text": "21922424 The LIM domain-containing homeo box gene Xlim-1 is expressed specifically in the organizer region of Xenopus gastrula embryos. science scifact A novel cysteine-rich motif, named LIM, has been identified in the homeo box genes lin-11, Isl-1, and mec-3; the mec-3 and lin-11 genes determine cell lineages in Caenorhabditis elegans. We isolated LIM class homeo box genes from Xenopus… 21922424 the-lim-domain-containing-homeo-box-gene-xlim-1-is-expressed-specifically-in-the-organizer-region-of-xenopus-gastrula-embryos. lim domain containing homeo box gene xlim expressed The LIM domain-containing homeo box gene Xlim-1 is expressed specifically in the organizer region of Xenopus gastrula embryos. The LIM domain-containing homeo box gene Xlim-1 is expressed specifically in the organizer region of Xenopus gastrula embryos. A novel cysteine-rich motif, named LIM, has been identified in the homeo box genes lin-11, Isl-1, and mec-3; the mec-3 and lin-11 genes determine cell lineages in Caenorhabditis elegans. We isolated LIM class homeo box genes from Xenopus laevis that are closely related to lin-11 and mec-3 in the LIM and homeo domains. This paper deals with one of these genes, Xlim-1. Xlim-1 mRNA is found at low abundance in the unfertilized egg, has a major expression phase at the gastrula stage, decreases, and rises again during the tadpole stage. In adult tissues the brain shows the highest abundance, by far, of Xlim-1 mRNA. The maternal and late expression phases of the Xlim-1 g",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.929538+00:00"
+}

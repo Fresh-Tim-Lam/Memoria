@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1791714",
+  "source_fingerprint": "92836bedbddc384801ff1d46a5069de8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1791714",
+    "spatiotemporal-regulation-of-epithelial-mesenchymal-transition-is-essential-for-squamous-cell-carcinoma-metastasis."
+  ],
+  "key_phrases": [
+    "spatiotemporal",
+    "regulation",
+    "epithelial",
+    "mesenchymal",
+    "transition",
+    "essential",
+    "squamous",
+    "cell"
+  ],
+  "summary_1l": "Spatiotemporal regulation of epithelial-mesenchymal transition is essential for squamous cell carcinoma metastasis.",
+  "query_hits": [],
+  "embed_text": "1791714 Spatiotemporal regulation of epithelial-mesenchymal transition is essential for squamous cell carcinoma metastasis. science scifact Epithelial-mesenchymal transition (EMT) is implicated in converting stationary epithelial tumor cells into motile mesenchymal cells during metastasis. However, the involvement of EMT in metastasis is still controversial, due to the lack of… 1791714 spatiotemporal-regulation-of-epithelial-mesenchymal-transition-is-essential-for-squamous-cell-carcinoma-metastasis. spatiotemporal regulation epithelial mesenchymal transition essential squamous cell Spatiotemporal regulation of epithelial-mesenchymal transition is essential for squamous cell carcinoma metastasis. Spatiotemporal regulation of epithelial-mesenchymal transition is essential for squamous cell carcinoma metastasis. Epithelial-mesenchymal transition (EMT) is implicated in converting stationary epithelial tumor cells into motile mesenchymal cells during metastasis. However, the involvement of EMT in metastasis is still controversial, due to the lack of a mesenchymal phenotype in human carcinoma metastases. Using a spontaneous squamous cell carcinoma mouse model, we show that activation of the EMT-inducing transcription factor Twist1 is sufficient to promote carcinoma cells to undergo EMT and disseminate into blood circulation. Importantly, in distant sites, turning off Twist1 to allow reversion of EMT is essential for disseminated tumor cells to proliferate and form metastases. Our study",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.451307+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24760136",
+  "source_fingerprint": "c0ded0414509934364c3160184ee6a57",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24760136",
+    "a-naturally-occurring-mouse-model-of-x-linked-congenital-stationary-night-blindness."
+  ],
+  "key_phrases": [
+    "naturally",
+    "occurring",
+    "mouse",
+    "model",
+    "linked",
+    "congenital",
+    "stationary",
+    "night"
+  ],
+  "summary_1l": "A naturally occurring mouse model of X-linked congenital stationary night blindness.",
+  "query_hits": [],
+  "embed_text": "24760136 A naturally occurring mouse model of X-linked congenital stationary night blindness. science scifact PURPOSE To describe a naturally occurring X-linked recessive mutation, no b-wave (nob), that compromises visual transmission between photoreceptors and second-order neurons in mice. METHODS Affected mice were identified by recording the… 24760136 a-naturally-occurring-mouse-model-of-x-linked-congenital-stationary-night-blindness. naturally occurring mouse model linked congenital stationary night A naturally occurring mouse model of X-linked congenital stationary night blindness. A naturally occurring mouse model of X-linked congenital stationary night blindness. PURPOSE To describe a naturally occurring X-linked recessive mutation, no b-wave (nob), that compromises visual transmission between photoreceptors and second-order neurons in mice. METHODS Affected mice were identified by recording the light-evoked response of the retina, the electroretinogram (ERG). To evaluate visual transmission, cortical potentials were recorded with a scalp electrode. The inheritance pattern for nob was defined by breeding nob animals with normal mice. Retinal histologic analysis was performed by light microscopy. RESULTS Although the photoreceptor-mediated ERG component (a-wave) was normal in nob mice, the major response component reflecting postreceptoral neuronal activity (b-wave)",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.252796+00:00"
+}

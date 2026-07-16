@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "kp_id": "1825315#0",
+  "source_fingerprint": "a9f1d7ae223cf46704c098e0d9a05c37",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "美国",
+    "旧金山国立海事历史公园",
+    "美国宪法历史",
+    "旧金山",
+    "中国历史",
+    "美国流行音乐",
+    "江苏历史",
+    "美国人口",
+    "美国媒体",
+    "美国法律",
+    "美国独立日",
+    "(加利福尼亚州)"
+  ],
+  "aliases": [
+    "1825315#0"
+  ],
+  "key_phrases": [
+    "旧金山",
+    "军火库",
+    "san",
+    "francisco",
+    "armory",
+    "又称",
+    "国民",
+    "警卫队"
+  ],
+  "summary_1l": "旧金山军火库（San Francisco Armory，又称旧金山国民警卫队军火库，当地人简称军火库）是一幢位于美国加利福尼亚州旧金山米慎区（Mission District）的历史建筑，曾用作美国国民警卫队的军火库，现为色情制片商Kink.",
+  "query_hits": [],
+  "embed_text": "1825315#0 旧金山军火库 旧金山军火库 旧金山军火库（San Francisco Armory，又称旧金山国民警卫队军火库，当地人简称军火库）是一幢位于美国加利福尼亚州旧金山米慎区（Mission District）的历史建筑，曾用作美国国民警卫队的军火库，现为色情制片商Kink.com的制片厂。参观者可以通过网站预约，但必须年满18岁，且要支付门票。 旧金山军火库位于旧金山第十四街（14th Street）和米慎街（Mission Street）的交汇处，门牌号是米慎街1800号。始建于1912年，完工于1914 美国 旧金山国立海事历史公园 美国宪法历史 旧金山 中国历史 美国流行音乐 江苏历史 美国人口 美国媒体 美国法律 美国独立日 (加利福尼亚州) 1825315#0 旧金山 军火库 san francisco armory 又称 国民 警卫队 旧金山军火库（San Francisco Armory，又称旧金山国民警卫队军火库，当地人简称军火库）是一幢位于美国加利福尼亚州旧金山米慎区（Mission District）的历史建筑，曾用作美国国民警卫队的军火库，现为色情制片商Kink. 旧金山军火库 旧金山军火库（San Francisco Armory，又称旧金山国民警卫队军火库，当地人简称军火库）是一幢位于美国加利福尼亚州旧金山米慎区（Mission District）的历史建筑，曾用作美国国民警卫队的军火库，现为色情制片商Kink.com的制片厂。参观者可以通过网站预约，但必须年满18岁，且要支付门票。 旧金山军火库位于旧金山第十四街（14th Street）和米慎街（Mission Street）的交汇处，门牌号是米慎街1800号。始建于1912年，完工于1914年，是一座摩尔复兴风格的城堡建筑，最初用作美国国民警卫队的军火库及兵工厂，以替代原位于西增区（Western Addition）、毁于1906年旧金山大地震的旧军火库。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:21:39.911096+00:00"
+}

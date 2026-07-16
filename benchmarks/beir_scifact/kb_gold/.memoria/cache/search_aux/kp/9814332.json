@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9814332",
+  "source_fingerprint": "83f323c20e1390ada18bbcbb807cf470",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9814332",
+    "ldl-inhibits-the-mediation-of-cholesterol-efflux-from-macrophage-foam-cells-by-apoa-i-containing-lipoproteins.-a-putative-mechanism-for-foam-cell-formation."
+  ],
+  "key_phrases": [
+    "ldl",
+    "inhibits",
+    "mediation",
+    "cholesterol",
+    "efflux",
+    "from",
+    "macrophage",
+    "foam"
+  ],
+  "summary_1l": "LDL inhibits the mediation of cholesterol efflux from macrophage foam cells by apoA-I-containing lipoproteins.",
+  "query_hits": [],
+  "embed_text": "9814332 LDL inhibits the mediation of cholesterol efflux from macrophage foam cells by apoA-I-containing lipoproteins. A putative mechanism for foam cell formation. science scifact Although the accumulation of cholesterol in macrophages appears to be an initial step in atherogenesis, low-density lipoprotein (LDL), a major risk factor for atherosclerosis, does not promote cholesterol accumulation in macrophages in its… 9814332 ldl-inhibits-the-mediation-of-cholesterol-efflux-from-macrophage-foam-cells-by-apoa-i-containing-lipoproteins.-a-putative-mechanism-for-foam-cell-formation. ldl inhibits mediation cholesterol efflux from macrophage foam LDL inhibits the mediation of cholesterol efflux from macrophage foam cells by apoA-I-containing lipoproteins. LDL inhibits the mediation of cholesterol efflux from macrophage foam cells by apoA-I-containing lipoproteins. A putative mechanism for foam cell formation. Although the accumulation of cholesterol in macrophages appears to be an initial step in atherogenesis, low-density lipoprotein (LDL), a major risk factor for atherosclerosis, does not promote cholesterol accumulation in macrophages in its native form. On the other hand, apolipoprotein (apo) A-I-containing lipoprotein removes cholesterol from cholesterol-loaded macrophages (foam cells) and prevents cholesterol from accumulating in the cells. We examined the effect of LDL on cholesterol removal by two species of apoA-I-containing lipoproteins, one containing only apoA-I (LpA-I) and the other containing apoA-I and apoA-II (LpA-I/A-II). W",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.910253+00:00"
+}

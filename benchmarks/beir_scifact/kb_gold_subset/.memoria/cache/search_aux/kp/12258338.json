@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12258338",
+  "source_fingerprint": "64ee2b189e78863db79d461a70f532fc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12258338",
+    "pharmacist-participation-on-physician-rounds-and-adverse-drug-events-in-the-intensive-care-unit."
+  ],
+  "key_phrases": [
+    "pharmacist",
+    "participation",
+    "physician",
+    "rounds",
+    "adverse",
+    "drug",
+    "events",
+    "intensive"
+  ],
+  "summary_1l": "Pharmacist participation on physician rounds and adverse drug events in the intensive care unit.",
+  "query_hits": [],
+  "embed_text": "12258338 Pharmacist participation on physician rounds and adverse drug events in the intensive care unit. science scifact CONTEXT Pharmacist review of medication orders in the intensive care unit (ICU) has been shown to prevent errors, and pharmacist consultation has reduced drug costs. However, whether pharmacist participation in the ICU at the time of drug… 12258338 pharmacist-participation-on-physician-rounds-and-adverse-drug-events-in-the-intensive-care-unit. pharmacist participation physician rounds adverse drug events intensive Pharmacist participation on physician rounds and adverse drug events in the intensive care unit. Pharmacist participation on physician rounds and adverse drug events in the intensive care unit. CONTEXT Pharmacist review of medication orders in the intensive care unit (ICU) has been shown to prevent errors, and pharmacist consultation has reduced drug costs. However, whether pharmacist participation in the ICU at the time of drug prescribing reduces adverse events has not been studied. OBJECTIVE To measure the effect of pharmacist participation on medical rounds in the ICU on the rate of preventable adverse drug events (ADEs) caused by ordering errors. DESIGN Before-after comparison between phase 1 (baseline) and phase 2 (after intervention implemented) and phase 2 comparison with a control unit that did not receive the intervention. SETTING A medical ICU (study unit) and a coronary ca",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:08.605980+00:00"
+}

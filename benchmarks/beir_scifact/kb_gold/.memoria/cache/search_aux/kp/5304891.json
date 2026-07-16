@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5304891",
+  "source_fingerprint": "f29e97383082b25c4dcf741349236475",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5304891",
+    "inter-individual-variability-and-genetic-influences-on-cytokine-responses-to-bacteria-and-fungi"
+  ],
+  "key_phrases": [
+    "inter",
+    "individual",
+    "variability",
+    "genetic",
+    "influences",
+    "cytokine",
+    "responses",
+    "bacteria"
+  ],
+  "summary_1l": "Little is known about the inter-individual variation of cytokine responses to different pathogens in hea",
+  "query_hits": [],
+  "embed_text": "5304891 Inter-individual variability and genetic influences on cytokine responses to bacteria and fungi science scifact Little is known about the inter-individual variation of cytokine responses to different pathogens in healthy individuals. To systematically describe cytokine responses elicited by distinct pathogens and to determine the effect of genetic… 5304891 inter-individual-variability-and-genetic-influences-on-cytokine-responses-to-bacteria-and-fungi inter individual variability genetic influences cytokine responses bacteria Little is known about the inter-individual variation of cytokine responses to different pathogens in hea Inter-individual variability and genetic influences on cytokine responses to bacteria and fungi Little is known about the inter-individual variation of cytokine responses to different pathogens in healthy individuals. To systematically describe cytokine responses elicited by distinct pathogens and to determine the effect of genetic variation on cytokine production, we profiled cytokines produced by peripheral blood mononuclear cells from 197 individuals of European origin from the 200 Functional Genomics (200FG) cohort in the Human Functional Genomics Project (http://www.humanfunctionalgenomics.org), obtained over three different years. We compared bacteria- and fungi-induced cytokine profiles and found that most cytokine responses were organized around a physiological response to specific",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.948834+00:00"
+}

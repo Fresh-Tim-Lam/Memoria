@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "44674301",
+  "source_fingerprint": "9f45c30dfbfd9c9dd8a8bdbfae41c54b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "44674301",
+    "establishment-of-a-cell-line-(npc/hk1)-from-a-differentiated-squamous-carcinoma-of-the-nasopharynx."
+  ],
+  "key_phrases": [
+    "establishment",
+    "cell",
+    "line",
+    "npc",
+    "hk1",
+    "from",
+    "differentiated",
+    "squamous"
+  ],
+  "summary_1l": "Establishment of a cell line (NPC/HK1) from a differentiated squamous carcinoma of the nasopharynx.",
+  "query_hits": [],
+  "embed_text": "44674301 Establishment of a cell line (NPC/HK1) from a differentiated squamous carcinoma of the nasopharynx. science scifact A long-term cell culture epithelioid cell line was established from a recurrent squamous carcinoma of the nasopharynx of a Chinese male 17 1/2 years after radiation therapy. The cell line, designated NPC/HK1, has been passed 72 times over… 44674301 establishment-of-a-cell-line-(npc/hk1)-from-a-differentiated-squamous-carcinoma-of-the-nasopharynx. establishment cell line npc hk1 from differentiated squamous Establishment of a cell line (NPC/HK1) from a differentiated squamous carcinoma of the nasopharynx. Establishment of a cell line (NPC/HK1) from a differentiated squamous carcinoma of the nasopharynx. A long-term cell culture epithelioid cell line was established from a recurrent squamous carcinoma of the nasopharynx of a Chinese male 17 1/2 years after radiation therapy. The cell line, designated NPC/HK1, has been passed 72 times over a period 1 year. The cells have been shown by light and electron microscopies to be of the squamous epithelial type. When they were transplanted subcutaneously into the back of athymic nude BALB/c (nu/nu) mice, tumors developed at the sites of inoculation, which on histological examination were shown to be well-differentiated squamous carcinomas, similar in morphology to the recurrent human tumor from which they were derived. Karyotypic analysis of cells fr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.847943+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11117498",
+  "source_fingerprint": "53060c9200041570bf08bc74473c0053",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11117498",
+    "the-cost-effectiveness-of-stereotactic-radiosurgery-versus-surgical-resection-in-the-treatment-of-solitary-metastatic-brain-tumors."
+  ],
+  "key_phrases": [
+    "cost",
+    "effectiveness",
+    "stereotactic",
+    "radiosurgery",
+    "versus",
+    "surgical",
+    "resection",
+    "treatment"
+  ],
+  "summary_1l": "The cost effectiveness of stereotactic radiosurgery versus surgical resection in the treatment of solitary metastatic brain tumors.",
+  "query_hits": [],
+  "embed_text": "11117498 The cost effectiveness of stereotactic radiosurgery versus surgical resection in the treatment of solitary metastatic brain tumors. science scifact Solitary metastatic brain tumors are the most common intracranial neoplasms encountered by neurosurgeons. Surgical resection of brain metastasis with whole brain radiotherapy (WBR) significantly increases survival in comparison with WBR… 11117498 the-cost-effectiveness-of-stereotactic-radiosurgery-versus-surgical-resection-in-the-treatment-of-solitary-metastatic-brain-tumors. cost effectiveness stereotactic radiosurgery versus surgical resection treatment The cost effectiveness of stereotactic radiosurgery versus surgical resection in the treatment of solitary metastatic brain tumors. The cost effectiveness of stereotactic radiosurgery versus surgical resection in the treatment of solitary metastatic brain tumors. Solitary metastatic brain tumors are the most common intracranial neoplasms encountered by neurosurgeons. Surgical resection of brain metastasis with whole brain radiotherapy (WBR) significantly increases survival in comparison with WBR alone. Stereotactic radiosurgery (SR) seems to provide results that are similar to those of surgical resection. To analyze the economic efficiency of these different treatments, we compared the results of surgical resection and SR as reported in the medical literature between 1974 and 1994. We included studies in which: 1) at least 75% of patients received WBR; 2) study dates were in the computed tomography era (after 1975); 3)",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:06.355774+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18676539",
+  "source_fingerprint": "c63ba85f673f2943bd1356146649d630",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18676539",
+    "impaired-fancd2-monoubiquitination-and-hypersensitivity-to-camptothecin-uniquely-characterize-fanconi-anemia-complementation-group-m."
+  ],
+  "key_phrases": [
+    "impaired",
+    "fancd2",
+    "monoubiquitination",
+    "hypersensitivity",
+    "camptothecin",
+    "uniquely",
+    "characterize",
+    "fanconi"
+  ],
+  "summary_1l": "Impaired FANCD2 monoubiquitination and hypersensitivity to camptothecin uniquely characterize Fanconi anemia complementation group M.",
+  "query_hits": [],
+  "embed_text": "18676539 Impaired FANCD2 monoubiquitination and hypersensitivity to camptothecin uniquely characterize Fanconi anemia complementation group M. science scifact FANCM is a component of the Fanconi anemia (FA) core complex and one FA patient (EUFA867) with biallelic mutations in FANCM has been described. Strikingly, we found that EUFA867 also carries biallelic mutations in FANCA. After correcting… 18676539 impaired-fancd2-monoubiquitination-and-hypersensitivity-to-camptothecin-uniquely-characterize-fanconi-anemia-complementation-group-m. impaired fancd2 monoubiquitination hypersensitivity camptothecin uniquely characterize fanconi Impaired FANCD2 monoubiquitination and hypersensitivity to camptothecin uniquely characterize Fanconi anemia complementation group M. Impaired FANCD2 monoubiquitination and hypersensitivity to camptothecin uniquely characterize Fanconi anemia complementation group M. FANCM is a component of the Fanconi anemia (FA) core complex and one FA patient (EUFA867) with biallelic mutations in FANCM has been described. Strikingly, we found that EUFA867 also carries biallelic mutations in FANCA. After correcting the FANCA defect in EUFA867 lymphoblasts, a \"clean\" FA-M cell line was generated. These cells were hypersensitive to mitomycin C, but unlike cells defective in other core complex members, FANCM(-/-) cells were proficient in monoubiquitinating FANCD2 and were sensitive to the topoisomerase inhibitor camptothecin, a feature shared only with the FA subtype D1 and N. In addition, FANCM(-/-) cells were sensitive to UV light. FANC",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.574673+00:00"
+}

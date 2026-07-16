@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "kp_id": "19997#55",
+  "source_fingerprint": "912dab3ba3ff3b092209ad8d7c08b673",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "以色列行政区划",
+    "洛杉矶音乐中心",
+    "耶路撒冷区"
+  ],
+  "aliases": [
+    "19997#55"
+  ],
+  "key_phrases": [
+    "耶路撒冷",
+    "位于",
+    "以色列",
+    "中心",
+    "公共交通",
+    "四通八达",
+    "便捷",
+    "约旦河西岸"
+  ],
+  "summary_1l": "耶路撒冷位于以色列中心，公共交通四通八达，有便捷的公共交通到以色列和约旦河西岸全境。",
+  "query_hits": [],
+  "embed_text": "19997#55 耶路撒冷 耶路撒冷 耶路撒冷位于以色列中心，公共交通四通八达，有便捷的公共交通到以色列和约旦河西岸全境。 以色列行政区划 洛杉矶音乐中心 耶路撒冷区 19997#55 耶路撒冷 位于 以色列 中心 公共交通 四通八达 便捷 约旦河西岸 耶路撒冷位于以色列中心，公共交通四通八达，有便捷的公共交通到以色列和约旦河西岸全境。 耶路撒冷 耶路撒冷位于以色列中心，公共交通四通八达，有便捷的公共交通到以色列和约旦河西岸全境。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:18:37.566993+00:00"
+}

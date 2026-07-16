@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4465735",
+  "source_fingerprint": "6b16f985883d4e75faec12b8ac4694ca",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4465735",
+    "precision-microbiome-reconstitution-restores-bile-acid-mediated-resistance-to-clostridium-difficile"
+  ],
+  "key_phrases": [
+    "precision",
+    "microbiome",
+    "reconstitution",
+    "restores",
+    "bile",
+    "acid",
+    "mediated",
+    "resistance"
+  ],
+  "summary_1l": "The gastrointestinal tracts of mammals are colonized by hundreds of microbial species that contribut",
+  "query_hits": [],
+  "embed_text": "4465735 Precision microbiome reconstitution restores bile acid mediated resistance to Clostridium difficile science scifact The gastrointestinal tracts of mammals are colonized by hundreds of microbial species that contribute to health, including colonization resistance against intestinal pathogens. Many antibiotics destroy intestinal microbial communities and… 4465735 precision-microbiome-reconstitution-restores-bile-acid-mediated-resistance-to-clostridium-difficile precision microbiome reconstitution restores bile acid mediated resistance The gastrointestinal tracts of mammals are colonized by hundreds of microbial species that contribut Precision microbiome reconstitution restores bile acid mediated resistance to Clostridium difficile The gastrointestinal tracts of mammals are colonized by hundreds of microbial species that contribute to health, including colonization resistance against intestinal pathogens. Many antibiotics destroy intestinal microbial communities and increase susceptibility to intestinal pathogens. Among these, Clostridium difficile, a major cause of antibiotic-induced diarrhoea, greatly increases morbidity and mortality in hospitalized patients. Which intestinal bacteria provide resistance to C. difficile infection and their in vivo inhibitory mechanisms remain unclear. Here we correlate loss of specific bacterial taxa with development of infection, by treating mice with different antibiotics that resu",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.789468+00:00"
+}

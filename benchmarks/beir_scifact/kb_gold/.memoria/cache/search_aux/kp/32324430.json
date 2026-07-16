@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "32324430",
+  "source_fingerprint": "1817169463c5ab9e4ab9dd06e56c54e4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "32324430",
+    "competition-between-target-sites-of-regulators-shapes-post-transcriptional-gene-regulation"
+  ],
+  "key_phrases": [
+    "competition",
+    "between",
+    "target",
+    "sites",
+    "regulators",
+    "shapes",
+    "post",
+    "transcriptional"
+  ],
+  "summary_1l": "Post-transcriptional gene regulation (PTGR) of mRNA turnover, localization and translation is mediated by mic",
+  "query_hits": [],
+  "embed_text": "32324430 Competition between target sites of regulators shapes post-transcriptional gene regulation science scifact Post-transcriptional gene regulation (PTGR) of mRNA turnover, localization and translation is mediated by microRNAs (miRNAs) and RNA-binding proteins (RBPs). These regulators exert their effects by binding to specific sequences within… 32324430 competition-between-target-sites-of-regulators-shapes-post-transcriptional-gene-regulation competition between target sites regulators shapes post transcriptional Post-transcriptional gene regulation (PTGR) of mRNA turnover, localization and translation is mediated by mic Competition between target sites of regulators shapes post-transcriptional gene regulation Post-transcriptional gene regulation (PTGR) of mRNA turnover, localization and translation is mediated by microRNAs (miRNAs) and RNA-binding proteins (RBPs). These regulators exert their effects by binding to specific sequences within their target mRNAs. Increasing evidence suggests that competition for binding is a fundamental principle of PTGR. Not only can miRNAs be sequestered and neutralized by the targets with which they interact through a process termed 'sponging', but competition between binding sites on different RNAs may also lead to regulatory crosstalk between transcripts. Here, we quantitatively model competition effects under physiological conditions and review the role of endogenous sp",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.402611+00:00"
+}

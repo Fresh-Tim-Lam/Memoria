@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "829646",
+  "source_fingerprint": "c8bdd486e4e71180dc2ccb2522fbe2e8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "829646",
+    "a-cohort-study-of-the-risk-of-cervical-intraepithelial-neoplasia-grade-2-or-3-in-relation-to-papillomavirus-infection."
+  ],
+  "key_phrases": [
+    "cohort",
+    "study",
+    "risk",
+    "cervical",
+    "intraepithelial",
+    "neoplasia",
+    "grade",
+    "relation"
+  ],
+  "summary_1l": "A cohort study of the risk of cervical intraepithelial neoplasia grade 2 or 3 in relation to papillomavirus infection.",
+  "query_hits": [],
+  "embed_text": "829646 A cohort study of the risk of cervical intraepithelial neoplasia grade 2 or 3 in relation to papillomavirus infection. science scifact BACKGROUND Human papillomavirus (HPV) has been associated with cervical intraepithelial neoplasia, but the temporal relation between the infection and the neoplasia remains unclear, as does the relative importance of the specific type of… 829646 a-cohort-study-of-the-risk-of-cervical-intraepithelial-neoplasia-grade-2-or-3-in-relation-to-papillomavirus-infection. cohort study risk cervical intraepithelial neoplasia grade relation A cohort study of the risk of cervical intraepithelial neoplasia grade 2 or 3 in relation to papillomavirus infection. A cohort study of the risk of cervical intraepithelial neoplasia grade 2 or 3 in relation to papillomavirus infection. BACKGROUND Human papillomavirus (HPV) has been associated with cervical intraepithelial neoplasia, but the temporal relation between the infection and the neoplasia remains unclear, as does the relative importance of the specific type of HPV, other sexually transmitted diseases, and other risk factors. METHODS We studied prospectively a cohort of 241 women who presented for evaluation of sexually transmitted disease and had negative cervical cytologic tests. The women were followed every four months with cytologic and colposcopic examinations of the uterine cervix and tests for HPV DNA and other sexually transmitted diseases. RESULTS Cervical intraepithelial neoplasia grad",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.264003+00:00"
+}

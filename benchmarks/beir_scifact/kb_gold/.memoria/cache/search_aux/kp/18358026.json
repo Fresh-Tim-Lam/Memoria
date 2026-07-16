@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18358026",
+  "source_fingerprint": "88c33f47e6fc34f5c94c32d3bdc94d56",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18358026",
+    "oxidative-damage-targets-complexes-containing-dna-methyltransferases,-sirt1,-and-polycomb-members-to-promoter-cpg-islands."
+  ],
+  "key_phrases": [
+    "oxidative",
+    "damage",
+    "targets",
+    "complexes",
+    "containing",
+    "dna",
+    "methyltransferases",
+    "sirt1"
+  ],
+  "summary_1l": "Oxidative damage targets complexes containing DNA methyltransferases, SIRT1, and polycomb members to promoter CpG Islands.",
+  "query_hits": [],
+  "embed_text": "18358026 Oxidative damage targets complexes containing DNA methyltransferases, SIRT1, and polycomb members to promoter CpG Islands. science scifact Cancer cells simultaneously harbor global losses and gains in DNA methylation. We demonstrate that inducing cellular oxidative stress by hydrogen peroxide treatment recruits DNA methyltransferase 1 (DNMT1) to damaged chromatin. DNMT1… 18358026 oxidative-damage-targets-complexes-containing-dna-methyltransferases,-sirt1,-and-polycomb-members-to-promoter-cpg-islands. oxidative damage targets complexes containing dna methyltransferases sirt1 Oxidative damage targets complexes containing DNA methyltransferases, SIRT1, and polycomb members to promoter CpG Islands. Oxidative damage targets complexes containing DNA methyltransferases, SIRT1, and polycomb members to promoter CpG Islands. Cancer cells simultaneously harbor global losses and gains in DNA methylation. We demonstrate that inducing cellular oxidative stress by hydrogen peroxide treatment recruits DNA methyltransferase 1 (DNMT1) to damaged chromatin. DNMT1 becomes part of a complex(es) containing DNMT3B and members of the polycomb repressive complex 4. Hydrogen peroxide treatment causes relocalization of these proteins from non-GC-rich to GC-rich areas. Key components are similarly enriched at gene promoters in an in vivo colitis model. Although high-expression genes enriched for members of the complex have histone mark and nascent transcription changes, CpG island-containing low-expression",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.159289+00:00"
+}

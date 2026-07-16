@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4457834",
+  "source_fingerprint": "46d7cebde974382ec2be345b785ae886",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4457834",
+    "human-oocytes-reprogram-adult-somatic-nuclei-of-a-type-1-diabetic-to-diploid-pluripotent-stem-cells"
+  ],
+  "key_phrases": [
+    "human",
+    "oocytes",
+    "reprogram",
+    "adult",
+    "somatic",
+    "nuclei",
+    "type",
+    "diabetic"
+  ],
+  "summary_1l": "The transfer of somatic cell nuclei into oocytes can give rise to pluripotent stem cells that are co",
+  "query_hits": [],
+  "embed_text": "4457834 Human oocytes reprogram adult somatic nuclei of a type 1 diabetic to diploid pluripotent stem cells science scifact The transfer of somatic cell nuclei into oocytes can give rise to pluripotent stem cells that are consistently equivalent to embryonic stem cells, holding promise for autologous cell replacement therapy. Although methods to induce… 4457834 human-oocytes-reprogram-adult-somatic-nuclei-of-a-type-1-diabetic-to-diploid-pluripotent-stem-cells human oocytes reprogram adult somatic nuclei type diabetic The transfer of somatic cell nuclei into oocytes can give rise to pluripotent stem cells that are co Human oocytes reprogram adult somatic nuclei of a type 1 diabetic to diploid pluripotent stem cells The transfer of somatic cell nuclei into oocytes can give rise to pluripotent stem cells that are consistently equivalent to embryonic stem cells, holding promise for autologous cell replacement therapy. Although methods to induce pluripotent stem cells from somatic cells by transcription factors are widely used in basic research, numerous differences between induced pluripotent stem cells and embryonic stem cells have been reported, potentially affecting their clinical use. Because of the therapeutic potential of diploid embryonic stem-cell lines derived from adult cells of diseased human subjects, we have systematically investigated the parameters affecting efficiency of blastocyst develop",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.554622+00:00"
+}

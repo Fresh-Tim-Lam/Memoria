@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8352137",
+  "source_fingerprint": "8f80f4882c8cdb81f792869a68ebfc7f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8352137",
+    "rapid-recent-growth-and-divergence-of-rice-nuclear-genomes."
+  ],
+  "key_phrases": [
+    "rapid",
+    "recent",
+    "growth",
+    "divergence",
+    "rice",
+    "nuclear",
+    "genomes",
+    "by"
+  ],
+  "summary_1l": "Rapid recent growth and divergence of rice nuclear genomes.",
+  "query_hits": [],
+  "embed_text": "8352137 Rapid recent growth and divergence of rice nuclear genomes. science scifact By employing the nuclear DNA of the African rice Oryza glaberrima as a reference genome, the timing, natures, mechanisms, and specificities of recent sequence evolution in the indica and japonica subspecies of Oryza sativa were identified.… 8352137 rapid-recent-growth-and-divergence-of-rice-nuclear-genomes. rapid recent growth divergence rice nuclear genomes by Rapid recent growth and divergence of rice nuclear genomes. Rapid recent growth and divergence of rice nuclear genomes. By employing the nuclear DNA of the African rice Oryza glaberrima as a reference genome, the timing, natures, mechanisms, and specificities of recent sequence evolution in the indica and japonica subspecies of Oryza sativa were identified. The data indicate that the genome sizes of both indica and japonica have increased substantially, >2% and >6%, respectively, since their divergence from a common ancestor, mainly because of the amplification of LTR-retrotransposons. However, losses of all classes of DNA sequence through unequal homologous recombination and illegitimate recombination have attenuated the growth of the rice genome. Small deletions have been particularly frequent throughout the genome. In >1 Mb of orthologous region",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.429917+00:00"
+}

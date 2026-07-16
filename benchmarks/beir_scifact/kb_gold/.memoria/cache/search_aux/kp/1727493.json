@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1727493",
+  "source_fingerprint": "ca4219d97e10c54339ce0ee7379cabea",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1727493",
+    "exosomal-transfer-of-stroma-derived-mir21-confers-paclitaxel-resistance-in-ovarian-cancer-cells-through-targeting-apaf1"
+  ],
+  "key_phrases": [
+    "exosomal",
+    "transfer",
+    "stroma",
+    "derived",
+    "mir21",
+    "confers",
+    "paclitaxel",
+    "resistance"
+  ],
+  "summary_1l": "Advanced ovarian cancer usually spreads to the visceral adipose tissue of the om",
+  "query_hits": [],
+  "embed_text": "1727493 Exosomal transfer of stroma-derived miR21 confers paclitaxel resistance in ovarian cancer cells through targeting APAF1 science scifact Advanced ovarian cancer usually spreads to the visceral adipose tissue of the omentum. However, the omental stromal cell-derived molecular determinants that modulate ovarian cancer growth have not been characterized. Here, using… 1727493 exosomal-transfer-of-stroma-derived-mir21-confers-paclitaxel-resistance-in-ovarian-cancer-cells-through-targeting-apaf1 exosomal transfer stroma derived mir21 confers paclitaxel resistance Advanced ovarian cancer usually spreads to the visceral adipose tissue of the om Exosomal transfer of stroma-derived miR21 confers paclitaxel resistance in ovarian cancer cells through targeting APAF1 Advanced ovarian cancer usually spreads to the visceral adipose tissue of the omentum. However, the omental stromal cell-derived molecular determinants that modulate ovarian cancer growth have not been characterized. Here, using next-generation sequencing technology, we identify significantly higher levels of microRNA-21 (miR21) isomiRNAs in exosomes and tissue lysates isolated from cancer-associated adipocytes (CAAs) and fibroblasts (CAFs) than in those from ovarian cancer cells. Functional studies reveal that miR21 is transferred from CAAs or CAFs to the cancer cells, where it suppresses ovarian cancer apoptosis and confers chemoresistance by binding to its direct novel",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.559430+00:00"
+}

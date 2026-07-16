@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "44801733",
+  "source_fingerprint": "44c6553a34ff27ae0a6204b7d59d2e91",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "44801733",
+    "the-role-of-the-transcription-factor-klf2-in-vascular-development-and-disease."
+  ],
+  "key_phrases": [
+    "role",
+    "transcription",
+    "factor",
+    "klf2",
+    "vascular",
+    "development",
+    "disease",
+    "zinc"
+  ],
+  "summary_1l": "The role of the transcription factor KLF2 in vascular development and disease.",
+  "query_hits": [],
+  "embed_text": "44801733 The role of the transcription factor KLF2 in vascular development and disease. science scifact The zinc-finger transcription factor KLF2 transduces the physical forces exerted by blood flow into molecular signals responsible for a wide range of biological responses. Following its initial recognition as a flow-responsive endothelial… 44801733 the-role-of-the-transcription-factor-klf2-in-vascular-development-and-disease. role transcription factor klf2 vascular development disease zinc The role of the transcription factor KLF2 in vascular development and disease. The role of the transcription factor KLF2 in vascular development and disease. The zinc-finger transcription factor KLF2 transduces the physical forces exerted by blood flow into molecular signals responsible for a wide range of biological responses. Following its initial recognition as a flow-responsive endothelial transcription factor, KLF2 is now known to be expressed in a range of cell types and to participate in a number of processes during development and disease such as endothelial homeostasis, vasoregulation, vascular growth/remodeling, and inflammation. In this review, we summarize the current understanding about KLF2 with a focus on its effects on vascular biology.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.933089+00:00"
+}

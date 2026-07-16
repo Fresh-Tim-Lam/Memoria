@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4641348",
+  "source_fingerprint": "3d20d15e4760eb1859fcb9c57740454b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4641348",
+    "ethanol-extract-of-allium-fistulosum-inhibits-development-of-non-alcoholic-fatty-liver-disease"
+  ],
+  "key_phrases": [
+    "ethanol",
+    "extract",
+    "allium",
+    "fistulosum",
+    "inhibits",
+    "development",
+    "non",
+    "alcoholic"
+  ],
+  "summary_1l": "BACKGROUND/OBJECTIVES Non-alcoholic fatty liver disease (NAFLD) is a leading cause of chronic liver disea",
+  "query_hits": [],
+  "embed_text": "4641348 Ethanol extract of Allium fistulosum inhibits development of non-alcoholic fatty liver disease science scifact BACKGROUND/OBJECTIVES Non-alcoholic fatty liver disease (NAFLD) is a leading cause of chronic liver disease and is closely associated with metabolic syndrome. In the present study, we observed the effect of ethanol extract of Allium… 4641348 ethanol-extract-of-allium-fistulosum-inhibits-development-of-non-alcoholic-fatty-liver-disease ethanol extract allium fistulosum inhibits development non alcoholic BACKGROUND/OBJECTIVES Non-alcoholic fatty liver disease (NAFLD) is a leading cause of chronic liver disea Ethanol extract of Allium fistulosum inhibits development of non-alcoholic fatty liver disease BACKGROUND/OBJECTIVES Non-alcoholic fatty liver disease (NAFLD) is a leading cause of chronic liver disease and is closely associated with metabolic syndrome. In the present study, we observed the effect of ethanol extract of Allium fistulosum (EAF) on NAFLD and have suggested the possibility of using EAF as a natural product for application in the development of a treatment for NAFLD. MATERIALS/METHODS The preventive effect on hepatic lipid accumulation was estimated by using an oleic acid (OA)-induced NAFLD model in vitro and a Western diet (high-fat high-sucrose; WD)-induced obese mouse model. Animals were divided into three groups (n = 7): normal diet group (ND), WD group, and WD plus 1% EAF",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.843476+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4363526",
+  "source_fingerprint": "c269c72b924df5a6a11779aa352fb794",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4363526",
+    "co-crystal-structure-of-the-hnf-3/fork-head-dna-recognition-motif-resembles-histone-h5"
+  ],
+  "key_phrases": [
+    "co",
+    "crystal",
+    "structure",
+    "hnf",
+    "fork",
+    "head",
+    "dna",
+    "recognition"
+  ],
+  "summary_1l": "The three-dimensional structure of an HNF-3/fork head DNA-recognition motif complexed with DNA has been determine",
+  "query_hits": [],
+  "embed_text": "4363526 Co-crystal structure of the HNF-3/fork head DNA-recognition motif resembles histone H5 science scifact The three-dimensional structure of an HNF-3/fork head DNA-recognition motif complexed with DNA has been determined by X-ray crystallography at 2.5 Å resolution. This α/β protein binds B-DNA as a monomer, through interactions with the DNA… 4363526 co-crystal-structure-of-the-hnf-3/fork-head-dna-recognition-motif-resembles-histone-h5 co crystal structure hnf fork head dna recognition The three-dimensional structure of an HNF-3/fork head DNA-recognition motif complexed with DNA has been determine Co-crystal structure of the HNF-3/fork head DNA-recognition motif resembles histone H5 The three-dimensional structure of an HNF-3/fork head DNA-recognition motif complexed with DNA has been determined by X-ray crystallography at 2.5 Å resolution. This α/β protein binds B-DNA as a monomer, through interactions with the DNA backbone and through both direct and water-mediated major and minor groove base contacts, inducing a 13° bend. The transcription factor fold is very similar to the structure of histone H5. In its amino-terminal half, three α-helices adopt a compact structure that presents the third helix to the major groove. The remainder of the protein includes a twisted, antiparallel β-structure and random coil that interacts with the minor groove.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.126814+00:00"
+}

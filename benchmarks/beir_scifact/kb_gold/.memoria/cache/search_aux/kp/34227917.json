@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "34227917",
+  "source_fingerprint": "d24f940dc4f121b21ec4419bea17c0fd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "34227917",
+    "mental-health-in-prison-populations.-a-review--with-special-emphasis-on-a-study-of-danish-prisoners-on-remand."
+  ],
+  "key_phrases": [
+    "mental",
+    "health",
+    "prison",
+    "populations",
+    "review",
+    "--",
+    "with",
+    "special"
+  ],
+  "summary_1l": "Mental health in prison populations.",
+  "query_hits": [],
+  "embed_text": "34227917 Mental health in prison populations. A review--with special emphasis on a study of Danish prisoners on remand. science scifact OBJECTIVE To review the literature on mental health and psychiatric morbidity in prison populations and relate findings to a Danish study on remand prisoners. METHOD The literature is reviewed and subdivided in the following section:… 34227917 mental-health-in-prison-populations.-a-review--with-special-emphasis-on-a-study-of-danish-prisoners-on-remand. mental health prison populations review -- with special Mental health in prison populations. Mental health in prison populations. A review--with special emphasis on a study of Danish prisoners on remand. OBJECTIVE To review the literature on mental health and psychiatric morbidity in prison populations and relate findings to a Danish study on remand prisoners. METHOD The literature is reviewed and subdivided in the following section: validity of psychometrics in prison populations, prevalence of psychiatric disorders prior to imprisonment, incidence of psychiatric disorders during imprisonment, psychopathy related to psychiatric comorbidity, dependence syndromes with special emphasis on different administrations of heroin use (smoke vs. injection). The results are compared with a longitudinal Danish study on remand prisoners in either solitary confinement (SC) or non-SC. RESULTS M",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.261207+00:00"
+}

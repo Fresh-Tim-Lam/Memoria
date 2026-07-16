@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7142113",
+  "source_fingerprint": "db3896a8aef7286ad696b358923a1a1f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7142113",
+    "visualization-of-cell-cycle-in-mouse-embryos-with-fucci2-reporter-directed-by-rosa26-promoter."
+  ],
+  "key_phrases": [
+    "visualization",
+    "cell",
+    "cycle",
+    "mouse",
+    "embryos",
+    "with",
+    "fucci2",
+    "reporter"
+  ],
+  "summary_1l": "Visualization of cell cycle in mouse embryos with Fucci2 reporter directed by Rosa26 promoter.",
+  "query_hits": [],
+  "embed_text": "7142113 Visualization of cell cycle in mouse embryos with Fucci2 reporter directed by Rosa26 promoter. science scifact Fucci technology makes possible the distinction between live cells in the G(1) and S/G(2)/M phases by dual-color imaging. This technology relies upon ubiquitylation-mediated proteolysis, and transgenic mice expressing Fucci provide a… 7142113 visualization-of-cell-cycle-in-mouse-embryos-with-fucci2-reporter-directed-by-rosa26-promoter. visualization cell cycle mouse embryos with fucci2 reporter Visualization of cell cycle in mouse embryos with Fucci2 reporter directed by Rosa26 promoter. Visualization of cell cycle in mouse embryos with Fucci2 reporter directed by Rosa26 promoter. Fucci technology makes possible the distinction between live cells in the G(1) and S/G(2)/M phases by dual-color imaging. This technology relies upon ubiquitylation-mediated proteolysis, and transgenic mice expressing Fucci provide a powerful model system with which to study the coordination of the cell cycle and development. The mice were initially generated using the CAG promoter; lines expressing the G(1) and S/G(2)/M phase probes that emitted orange (mKO2) and green (mAG) fluorescence, respectively, were separately constructed. Owing to cell type-biased strength of the CAG promoter as well as the positional effects of random transgenesis, however, we noticed some variability in Fucci expressi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.586689+00:00"
+}

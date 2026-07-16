@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29288582",
+  "source_fingerprint": "58300062fca67416cc509422a3256cc4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29288582",
+    "gitr,-a-member-of-the-tnf-receptor-superfamily,-is-costimulatory-to-mouse-t-lymphocyte-subpopulations."
+  ],
+  "key_phrases": [
+    "gitr",
+    "member",
+    "tnf",
+    "receptor",
+    "superfamily",
+    "costimulatory",
+    "mouse",
+    "lymphocyte"
+  ],
+  "summary_1l": "GITR, a member of the TNF receptor superfamily, is costimulatory to mouse T lymphocyte subpopulations.",
+  "query_hits": [],
+  "embed_text": "29288582 GITR, a member of the TNF receptor superfamily, is costimulatory to mouse T lymphocyte subpopulations. science scifact GITR (glucocorticoid-induced TNFR family related gene) is a member of the TNFR superfamily (TNFRSF) that is expressed in different cell types, including T lymphocytes. Because of a high homology in its cytoplasmic region with other known… 29288582 gitr,-a-member-of-the-tnf-receptor-superfamily,-is-costimulatory-to-mouse-t-lymphocyte-subpopulations. gitr member tnf receptor superfamily costimulatory mouse lymphocyte GITR, a member of the TNF receptor superfamily, is costimulatory to mouse T lymphocyte subpopulations. GITR, a member of the TNF receptor superfamily, is costimulatory to mouse T lymphocyte subpopulations. GITR (glucocorticoid-induced TNFR family related gene) is a member of the TNFR superfamily (TNFRSF) that is expressed in different cell types, including T lymphocytes. Because of a high homology in its cytoplasmic region with other known costimulatory members of the TNFRSF, we investigated whether GITR played a costimulatory role in T lymphocyte subpopulations. Our results show that the proliferation response of CD8+ and CD4+ peripheral T cell subpopulations was potentiated when a GITR costimulus was added to an anti-CD3 stimulus. Furthermore, expression of the main activation-induced receptor (IL-2Ralpha) and production of IL-2 and IFN-gamma were increased more with a GITR costimulus tha",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.746532+00:00"
+}

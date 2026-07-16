@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29785642",
+  "source_fingerprint": "f2b5f62d620fea396121af4a87c106c3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29785642",
+    "an-autoimmune-disease,-apeced,-caused-by-mutations-in-a-novel-gene-featuring-two-phd-type-zinc-finger-domains"
+  ],
+  "key_phrases": [
+    "autoimmune",
+    "disease",
+    "apeced",
+    "caused",
+    "by",
+    "mutations",
+    "novel",
+    "gene"
+  ],
+  "summary_1l": "Autoimmune polyendocrinopathy-candidiasis-ectodermal dystrophy (APECED) is the only descri",
+  "query_hits": [],
+  "embed_text": "29785642 An autoimmune disease, APECED, caused by mutations in a novel gene featuring two PHD-type zinc-finger domains science scifact Autoimmune polyendocrinopathy-candidiasis-ectodermal dystrophy (APECED) is the only described systemic autoimmune disease with established monogenic background, and the first autoimmune disorder localized outside the major… 29785642 an-autoimmune-disease,-apeced,-caused-by-mutations-in-a-novel-gene-featuring-two-phd-type-zinc-finger-domains autoimmune disease apeced caused by mutations novel gene Autoimmune polyendocrinopathy-candidiasis-ectodermal dystrophy (APECED) is the only descri An autoimmune disease, APECED, caused by mutations in a novel gene featuring two PHD-type zinc-finger domains Autoimmune polyendocrinopathy-candidiasis-ectodermal dystrophy (APECED) is the only described systemic autoimmune disease with established monogenic background, and the first autoimmune disorder localized outside the major histocompatibility complex (MHC) region. The primary biochemical defect in APECED is unknown. We have isolated a novel gene, AIRE, encoding for a putative nuclear protein featuring two PHD-type zinc-finger motifs, suggesting its involvement in transcriptional regulation. Five mutations in AIRE are reported in individuals with this disorder. This is the first report of a single-gene defect causing a systemic human autoimmune disease, providing a tool for exploring",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.180255+00:00"
+}

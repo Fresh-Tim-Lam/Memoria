@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "kp_id": "reconsideration-authority",
+  "source_fingerprint": "98e7be9c0ba4525b7d91d2d02ed9453f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "reconsideration-authority"
+  ],
+  "key_phrases": [
+    "行政复议",
+    "xingzhengfuyi"
+  ],
+  "summary_1l": "行政复议",
+  "query_hits": [],
+  "embed_text": "reconsideration-authority 行政复议机关 行政法 行政复议 复议机关 reconsideration-authority 行政复议 xingzhengfuyi 行政复议 行政复议",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-16T05:57:15.601158+00:00"
+}

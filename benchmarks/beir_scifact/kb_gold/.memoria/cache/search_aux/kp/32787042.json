@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "32787042",
+  "source_fingerprint": "92aaa504135c3be44eee998a1a7f10f4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "32787042",
+    "the-liverpool-uveal-melanoma-liver-metastases-pathway:-outcome-following-liver-resection."
+  ],
+  "key_phrases": [
+    "liverpool",
+    "uveal",
+    "melanoma",
+    "liver",
+    "metastases",
+    "pathway",
+    "outcome",
+    "following"
+  ],
+  "summary_1l": "The Liverpool uveal melanoma liver metastases pathway: outcome following liver resection.",
+  "query_hits": [],
+  "embed_text": "32787042 The Liverpool uveal melanoma liver metastases pathway: outcome following liver resection. science scifact AIM To determine the outcome of patients that underwent liver resection for metastases from uveal melanoma. METHODS Over a 9-year period, patients referred with uveal melanoma metastases were included. Following treatment of primary uveal… 32787042 the-liverpool-uveal-melanoma-liver-metastases-pathway:-outcome-following-liver-resection. liverpool uveal melanoma liver metastases pathway outcome following The Liverpool uveal melanoma liver metastases pathway: outcome following liver resection. The Liverpool uveal melanoma liver metastases pathway: outcome following liver resection. AIM To determine the outcome of patients that underwent liver resection for metastases from uveal melanoma. METHODS Over a 9-year period, patients referred with uveal melanoma metastases were included. Following treatment of primary uveal melanoma, high-risk patients were offered to be enrolled into a 6-monthly non-contrast liver magnetic resonance imaging (MRI) surveillance. Following detection of liver metastases, patients were staged with a contrast-enhanced (Primovist(®)) liver MRI, computer tomography (CT) of the thorax and staging laparoscopy. RESULTS 155 patients were referred with uveal melanoma liver metastases, of which 17 (11.0%) patients had liver resection and one patient was treated with",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.955722+00:00"
+}

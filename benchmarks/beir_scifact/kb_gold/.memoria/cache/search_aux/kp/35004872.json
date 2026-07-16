@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "35004872",
+  "source_fingerprint": "4e6af72f5f7f98132169ee7c09addddf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "35004872",
+    "long-crocidolite-asbestos-fibers-cause-polyploidy-by-sterically-blocking-cytokinesis."
+  ],
+  "key_phrases": [
+    "long",
+    "crocidolite",
+    "asbestos",
+    "fibers",
+    "cause",
+    "polyploidy",
+    "by",
+    "sterically"
+  ],
+  "summary_1l": "Long crocidolite asbestos fibers cause polyploidy by sterically blocking cytokinesis.",
+  "query_hits": [],
+  "embed_text": "35004872 Long crocidolite asbestos fibers cause polyploidy by sterically blocking cytokinesis. science scifact Asbestos has been described as a physical carcinogen in that its carcinogenic effects appear to be related primarily to fiber dimensions. It has been hypothesized that long asbestos fibers may interfere with chromosome distribution during… 35004872 long-crocidolite-asbestos-fibers-cause-polyploidy-by-sterically-blocking-cytokinesis. long crocidolite asbestos fibers cause polyploidy by sterically Long crocidolite asbestos fibers cause polyploidy by sterically blocking cytokinesis. Long crocidolite asbestos fibers cause polyploidy by sterically blocking cytokinesis. Asbestos has been described as a physical carcinogen in that its carcinogenic effects appear to be related primarily to fiber dimensions. It has been hypothesized that long asbestos fibers may interfere with chromosome distribution during cell division, causing genomic changes that lead to cell transformation and neoplastic progression. Using high-resolution time-lapse light microscopy and serial-section electron microscopy, we have followed individual crocidolite asbestos fibers through the later stages of cell division in LLC-MK2 epithelial cells, and have detailed for the first time their effect on cytokinesis. We found that long fibers (15-55 microgram), trapped by the cleavage furrow, sterically bloc",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.869518+00:00"
+}

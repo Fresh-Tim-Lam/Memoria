@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "927561",
+  "source_fingerprint": "a746c0ff9471d18a0fcb3fefead1f3d9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "927561",
+    "emergent-structures-and-dynamics-of-cell-colonies-by-contact-inhibition-of-locomotion"
+  ],
+  "key_phrases": [
+    "emergent",
+    "structures",
+    "dynamics",
+    "cell",
+    "colonies",
+    "by",
+    "contact",
+    "inhibition"
+  ],
+  "summary_1l": "Cells in tissues can organize into a broad spectrum of structures according to their function.",
+  "query_hits": [],
+  "embed_text": "927561 Emergent structures and dynamics of cell colonies by contact inhibition of locomotion science scifact Cells in tissues can organize into a broad spectrum of structures according to their function. Drastic changes of organization, such as epithelial-mesenchymal transitions or the formation of spheroidal aggregates, are often associated… 927561 emergent-structures-and-dynamics-of-cell-colonies-by-contact-inhibition-of-locomotion emergent structures dynamics cell colonies by contact inhibition Cells in tissues can organize into a broad spectrum of structures according to their function. Emergent structures and dynamics of cell colonies by contact inhibition of locomotion Cells in tissues can organize into a broad spectrum of structures according to their function. Drastic changes of organization, such as epithelial-mesenchymal transitions or the formation of spheroidal aggregates, are often associated either to tissue morphogenesis or to cancer progression. Here, we study the organization of cell colonies by means of simulations of self-propelled particles with generic cell-like interactions. The interplay between cell softness, cell-cell adhesion, and contact inhibition of locomotion (CIL) yields structures and collective dynamics observed in several existing tissue phenotypes. These include regular distributions of cells, dynamic cell clusters, gel-like networks, collec",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.599901+00:00"
+}

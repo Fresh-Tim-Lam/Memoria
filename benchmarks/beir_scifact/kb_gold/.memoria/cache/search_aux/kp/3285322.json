@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3285322",
+  "source_fingerprint": "09fb66bb3b5b91395b68f91f10d5f26f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3285322",
+    "clinical-and-pathologic-characteristics-of-patients-with-brca-positive-and-brca-negative-breast-cancer."
+  ],
+  "key_phrases": [
+    "clinical",
+    "pathologic",
+    "characteristics",
+    "patients",
+    "with",
+    "brca",
+    "positive",
+    "negative"
+  ],
+  "summary_1l": "Clinical and pathologic characteristics of patients with BRCA-positive and BRCA-negative breast cancer.",
+  "query_hits": [],
+  "embed_text": "3285322 Clinical and pathologic characteristics of patients with BRCA-positive and BRCA-negative breast cancer. science scifact PURPOSE Mutations in the BRCA1 and BRCA2 genes confer greater risk of developing breast cancer. We determined whether tumor pathologic features and clinical features differ in patients with and without BRCA mutations. PATIENTS AND METHODS… 3285322 clinical-and-pathologic-characteristics-of-patients-with-brca-positive-and-brca-negative-breast-cancer. clinical pathologic characteristics patients with brca positive negative Clinical and pathologic characteristics of patients with BRCA-positive and BRCA-negative breast cancer. Clinical and pathologic characteristics of patients with BRCA-positive and BRCA-negative breast cancer. PURPOSE Mutations in the BRCA1 and BRCA2 genes confer greater risk of developing breast cancer. We determined whether tumor pathologic features and clinical features differ in patients with and without BRCA mutations. PATIENTS AND METHODS Tumor pathologic features and clinical characteristics were examined in 491 women with breast cancer who underwent genetic testing for BRCA mutations between 1997 and 2006. A retrospective review of medical records was conducted to determine clinical characteristics including ethnicity, age and clinical stage at diagnosis, age at parity, number of full-term pregnancies, use of oral contraceptives and hormone replacement therapy, and BRCA mutation status",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.041162+00:00"
+}

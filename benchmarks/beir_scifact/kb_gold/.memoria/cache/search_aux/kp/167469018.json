@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "167469018",
+  "source_fingerprint": "5934417fda28d6880f298dbb57236dd3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "167469018",
+    "drink-choice:-factors-influencing-the-intention-to-drink-wine"
+  ],
+  "key_phrases": [
+    "drink",
+    "choice",
+    "factors",
+    "influencing",
+    "intention",
+    "wine",
+    "this",
+    "paper"
+  ],
+  "summary_1l": "This paper explores the reasons why consumers choose wine over other alcoholic beverages, with a focus upon the beliefs held by consumers",
+  "query_hits": [],
+  "embed_text": "167469018 Drink Choice: Factors Influencing the Intention to Drink Wine science scifact This paper explores the reasons why consumers choose wine over other alcoholic beverages, with a focus upon the beliefs held by consumers towards the behaviour of wine drinking. The research findings show that attitudes are somewhat more… 167469018 drink-choice:-factors-influencing-the-intention-to-drink-wine drink choice factors influencing intention wine this paper This paper explores the reasons why consumers choose wine over other alcoholic beverages, with a focus upon the beliefs held by consumers Drink Choice: Factors Influencing the Intention to Drink Wine This paper explores the reasons why consumers choose wine over other alcoholic beverages, with a focus upon the beliefs held by consumers towards the behaviour of wine drinking. The research findings show that attitudes are somewhat more predictive of the intention to drink wine than perceived social pressure. Nevertheless, both attitudinal and normative elements are required to adequately explain wine consumption. Despite the fact that the issue of health figured prominently amongst the salient beliefs identified in the qualitative phase of the research, the subsequent quantitative research found that drinking wine because of its purported health benefits was not a significant attitudinal or behavioural factor. Drinking wine be",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.788196+00:00"
+}

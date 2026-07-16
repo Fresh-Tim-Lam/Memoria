@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20420780",
+  "source_fingerprint": "39a05ece898886ba147670428c9cab03",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20420780",
+    "the-acf1-complex-is-required-for-dna-double-strand-break-repair-in-human-cells."
+  ],
+  "key_phrases": [
+    "acf1",
+    "complex",
+    "required",
+    "dna",
+    "double",
+    "strand",
+    "break",
+    "repair"
+  ],
+  "summary_1l": "The ACF1 complex is required for DNA double-strand break repair in human cells.",
+  "query_hits": [],
+  "embed_text": "20420780 The ACF1 complex is required for DNA double-strand break repair in human cells. science scifact DNA double-strand breaks (DSBs) are repaired via nonhomologous end-joining (NHEJ) or homologous recombination (HR), but cellular repair processes remain elusive. We show here that the ATP-dependent chromatin-remodeling factors, ACF1 and… 20420780 the-acf1-complex-is-required-for-dna-double-strand-break-repair-in-human-cells. acf1 complex required dna double strand break repair The ACF1 complex is required for DNA double-strand break repair in human cells. The ACF1 complex is required for DNA double-strand break repair in human cells. DNA double-strand breaks (DSBs) are repaired via nonhomologous end-joining (NHEJ) or homologous recombination (HR), but cellular repair processes remain elusive. We show here that the ATP-dependent chromatin-remodeling factors, ACF1 and SNF2H, accumulate rapidly at DSBs and are required for DSB repair in human cells. If the expression of ACF1 or SNF2H is suppressed, cells become extremely sensitive to X-rays and chemical treatments producing DSBs, and DSBs remain unrepaired. ACF1 interacts directly with KU70 and is required for the accumulation of KU proteins at DSBs. The KU70/80 complex becomes physically more associated with the chromatin-remodeling factors of the CHRAC complex, which includes ACF1, SNF2H, CH",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.258705+00:00"
+}

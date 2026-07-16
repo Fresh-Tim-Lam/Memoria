@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "34439544",
+  "source_fingerprint": "1608f8d7fedd53541d84ac4f5efffd0b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "34439544",
+    "examining-bcl-2-family-function-with-large-unilamellar-vesicles."
+  ],
+  "key_phrases": [
+    "examining",
+    "bcl",
+    "family",
+    "function",
+    "with",
+    "large",
+    "unilamellar",
+    "vesicles"
+  ],
+  "summary_1l": "Examining BCL-2 family function with large unilamellar vesicles.",
+  "query_hits": [],
+  "embed_text": "34439544 Examining BCL-2 family function with large unilamellar vesicles. science scifact The BCL-2 (B cell CLL/Lymphoma) family is comprised of approximately twenty proteins that collaborate to either maintain cell survival or initiate apoptosis(1). Following cellular stress (e.g., DNA damage), the pro-apoptotic BCL-2 family… 34439544 examining-bcl-2-family-function-with-large-unilamellar-vesicles. examining bcl family function with large unilamellar vesicles Examining BCL-2 family function with large unilamellar vesicles. Examining BCL-2 family function with large unilamellar vesicles. The BCL-2 (B cell CLL/Lymphoma) family is comprised of approximately twenty proteins that collaborate to either maintain cell survival or initiate apoptosis(1). Following cellular stress (e.g., DNA damage), the pro-apoptotic BCL-2 family effectors BAK (BCL-2 antagonistic killer 1) and/or BAX (BCL-2 associated X protein) become activated and compromise the integrity of the outer mitochondrial membrane (OMM), though the process referred to as mitochondrial outer membrane permeabilization (MOMP)(1). After MOMP occurs, pro-apoptotic proteins (e.g., cytochrome c) gain access to the cytoplasm, promote caspase activation, and apoptosis rapidly ensues(2). In order for BAK/BAX to induce MOMP, they require transient interactions with m",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.469332+00:00"
+}

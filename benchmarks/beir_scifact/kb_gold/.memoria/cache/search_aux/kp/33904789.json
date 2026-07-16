@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "33904789",
+  "source_fingerprint": "c3ccf4c6740ab6ff40ac9560e0b210c1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "33904789",
+    "\"sandwich\"-type-immunoassay-of-carcinoembryonic-antigen-in-patients-receiving-murine-monoclonal-antibodies-for-diagnosis-and-therapy."
+  ],
+  "key_phrases": [
+    "sandwich",
+    "type",
+    "immunoassay",
+    "carcinoembryonic",
+    "antigen",
+    "patients",
+    "receiving",
+    "murine"
+  ],
+  "summary_1l": "\"Sandwich\"-type immunoassay of carcinoembryonic antigen in patients receiving murine monoclonal antibodies for diagnosis and therapy.",
+  "query_hits": [],
+  "embed_text": "33904789 \"Sandwich\"-type immunoassay of carcinoembryonic antigen in patients receiving murine monoclonal antibodies for diagnosis and therapy. science scifact Measurements of carcinoembryonic antigen (CEA) in blood increased dramatically in some patients who were receiving injections of monoclonal antibody. CEA titers were measured with a monoclonal antibody-based double-determinant enzyme… 33904789 \"sandwich\"-type-immunoassay-of-carcinoembryonic-antigen-in-patients-receiving-murine-monoclonal-antibodies-for-diagnosis-and-therapy. sandwich type immunoassay carcinoembryonic antigen patients receiving murine \"Sandwich\"-type immunoassay of carcinoembryonic antigen in patients receiving murine monoclonal antibodies for diagnosis and therapy. \"Sandwich\"-type immunoassay of carcinoembryonic antigen in patients receiving murine monoclonal antibodies for diagnosis and therapy. Measurements of carcinoembryonic antigen (CEA) in blood increased dramatically in some patients who were receiving injections of monoclonal antibody. CEA titers were measured with a monoclonal antibody-based double-determinant enzyme immunoassay in which untreated plasma specimens were diluted with an equal volume of buffer containing mouse serum. Increasing CEA titers were accompanied by the appearance and coincident increase in titers of human antibody against mouse Ig (HAMA). Adsorption of these sera with solid-phase anti-human IgG or Protein A restored antigen titers to pretreatment values; evidently the serum factor eliciting false-positive CEA titers w",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.782335+00:00"
+}

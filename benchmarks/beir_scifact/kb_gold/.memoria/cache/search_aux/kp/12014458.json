@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12014458",
+  "source_fingerprint": "a22dfac49a55a1f6d5fcf5c67b1f420c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12014458",
+    "micromanagers-of-gene-expression:-the-potentially-widespread-influence-of-metazoan-micrornas"
+  ],
+  "key_phrases": [
+    "micromanagers",
+    "gene",
+    "expression",
+    "potentially",
+    "widespread",
+    "influence",
+    "metazoan",
+    "micrornas"
+  ],
+  "summary_1l": "We propose that the microRNA milieu, unique to each cell type, productively dampens the expression of thous",
+  "query_hits": [],
+  "embed_text": "12014458 Micromanagers of gene expression: the potentially widespread influence of metazoan microRNAs science scifact We propose that the microRNA milieu, unique to each cell type, productively dampens the expression of thousands of mRNAs and provides important context for the evolution of all metazoan mRNA sequences. For genes that should not be… 12014458 micromanagers-of-gene-expression:-the-potentially-widespread-influence-of-metazoan-micrornas micromanagers gene expression potentially widespread influence metazoan micrornas We propose that the microRNA milieu, unique to each cell type, productively dampens the expression of thous Micromanagers of gene expression: the potentially widespread influence of metazoan microRNAs We propose that the microRNA milieu, unique to each cell type, productively dampens the expression of thousands of mRNAs and provides important context for the evolution of all metazoan mRNA sequences. For genes that should not be expressed in a particular cell type, protein output is lowered to inconsequential levels. For other genes, dosage is adjusted in a manner that allows for customized expression in different cell types while achieving a more uniform level within each cell type. In these ways, the microRNAs add an extensive layer of gene control that integrates with transcriptional and other regulatory processes to expand the complexity of metazoan gene expression.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:07.601364+00:00"
+}

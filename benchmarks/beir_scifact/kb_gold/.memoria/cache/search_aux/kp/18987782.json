@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18987782",
+  "source_fingerprint": "9dcd7606109f5c12c2b8f3c6b1e61fc9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18987782",
+    "suppression-of-myc-oncogenic-activity-by-ribosomal-protein-haploinsufficiency"
+  ],
+  "key_phrases": [
+    "suppression",
+    "myc",
+    "oncogenic",
+    "activity",
+    "by",
+    "ribosomal",
+    "protein",
+    "haploinsufficiency"
+  ],
+  "summary_1l": "The Myc oncogene regulates the expression of several components of the protein synthetic machinery, including ribosomal pr",
+  "query_hits": [],
+  "embed_text": "18987782 Suppression of Myc oncogenic activity by ribosomal protein haploinsufficiency science scifact The Myc oncogene regulates the expression of several components of the protein synthetic machinery, including ribosomal proteins, initiation factors of translation, RNA polymerase III and ribosomal DNA. Whether and how increasing the… 18987782 suppression-of-myc-oncogenic-activity-by-ribosomal-protein-haploinsufficiency suppression myc oncogenic activity by ribosomal protein haploinsufficiency The Myc oncogene regulates the expression of several components of the protein synthetic machinery, including ribosomal pr Suppression of Myc oncogenic activity by ribosomal protein haploinsufficiency The Myc oncogene regulates the expression of several components of the protein synthetic machinery, including ribosomal proteins, initiation factors of translation, RNA polymerase III and ribosomal DNA. Whether and how increasing the cellular protein synthesis capacity affects the multistep process leading to cancer remains to be addressed. Here we use ribosomal protein heterozygote mice as a genetic tool to restore increased protein synthesis in Emu-Myc/+ transgenic mice to normal levels, and show that the oncogenic potential of Myc in this context is suppressed. Our findings demonstrate that the ability of Myc to increase protein synthesis directly augments cell size and is sufficient to accelerate cell cycle p",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.984086+00:00"
+}

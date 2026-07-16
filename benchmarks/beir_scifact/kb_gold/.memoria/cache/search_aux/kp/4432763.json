@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4432763",
+  "source_fingerprint": "a752a4dcaa16a8a673cf2a22e2b708dd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4432763",
+    "anthropometric-reference-data-for-international-use:-recommendations-from-a-world-health-organization-expert-committee."
+  ],
+  "key_phrases": [
+    "anthropometric",
+    "reference",
+    "data",
+    "international",
+    "use",
+    "recommendations",
+    "from",
+    "world"
+  ],
+  "summary_1l": "Anthropometric reference data for international use: recommendations from a World Health Organization Expert Committee.",
+  "query_hits": [],
+  "embed_text": "4432763 Anthropometric reference data for international use: recommendations from a World Health Organization Expert Committee. science scifact The World Health Organization (WHO) convened an Expert Committee to reevaluate the use of anthropometry at different ages for assessing health, nutrition, and social wellbeing. The Committee's task included identifying reference data for… 4432763 anthropometric-reference-data-for-international-use:-recommendations-from-a-world-health-organization-expert-committee. anthropometric reference data international use recommendations from world Anthropometric reference data for international use: recommendations from a World Health Organization Expert Committee. Anthropometric reference data for international use: recommendations from a World Health Organization Expert Committee. The World Health Organization (WHO) convened an Expert Committee to reevaluate the use of anthropometry at different ages for assessing health, nutrition, and social wellbeing. The Committee's task included identifying reference data for anthropometric indexes when appropriate, and providing guidelines on how the data should be used. For fetal growth, the Committee recommended an existing sex-specific multiracial reference. In view of the significant technical drawbacks of the current National Center for Health Statistics (NCHS)/WHO reference and its inadequacy for assessing the growth of breast-fed infants, the Committee recommended the development of a new reference con",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.222822+00:00"
+}

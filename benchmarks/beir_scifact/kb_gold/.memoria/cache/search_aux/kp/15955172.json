@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15955172",
+  "source_fingerprint": "11439bf0093ec7d11dfe93a54076c84b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15955172",
+    "transient-inactivation-of-rb-and-arf-yields-regenerative-cells-from-postmitotic-mammalian-muscle."
+  ],
+  "key_phrases": [
+    "transient",
+    "inactivation",
+    "rb",
+    "arf",
+    "yields",
+    "regenerative",
+    "cells",
+    "from"
+  ],
+  "summary_1l": "Transient inactivation of Rb and ARF yields regenerative cells from postmitotic mammalian muscle.",
+  "query_hits": [],
+  "embed_text": "15955172 Transient inactivation of Rb and ARF yields regenerative cells from postmitotic mammalian muscle. science scifact An outstanding biological question is why tissue regeneration in mammals is limited, whereas urodele amphibians and teleost fish regenerate major structures, largely by cell cycle reentry. Upon inactivation of Rb, proliferation of… 15955172 transient-inactivation-of-rb-and-arf-yields-regenerative-cells-from-postmitotic-mammalian-muscle. transient inactivation rb arf yields regenerative cells from Transient inactivation of Rb and ARF yields regenerative cells from postmitotic mammalian muscle. Transient inactivation of Rb and ARF yields regenerative cells from postmitotic mammalian muscle. An outstanding biological question is why tissue regeneration in mammals is limited, whereas urodele amphibians and teleost fish regenerate major structures, largely by cell cycle reentry. Upon inactivation of Rb, proliferation of postmitotic urodele skeletal muscle is induced, whereas in mammalian muscle this mechanism does not exist. We postulated that a tumor suppressor present in mammals but absent in regenerative vertebrates, the Ink4a product ARF (alternative reading frame), is a regeneration suppressor. Concomitant inactivation of Arf and Rb led to mammalian muscle cell cycle reentry, loss of differentiation properties, and upregulation of cytokinetic machinery. Single postmitotic myocy",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.543364+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11369420",
+  "source_fingerprint": "0e5c6f84caa1bec50177fe34106d6fd3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11369420",
+    "tetraspanin-3-is-required-for-the-development-and-propagation-of-acute-myelogenous-leukemia."
+  ],
+  "key_phrases": [
+    "tetraspanin",
+    "required",
+    "development",
+    "propagation",
+    "acute",
+    "myelogenous",
+    "leukemia",
+    "aml"
+  ],
+  "summary_1l": "Tetraspanin 3 Is Required for the Development and Propagation of Acute Myelogenous Leukemia.",
+  "query_hits": [],
+  "embed_text": "11369420 Tetraspanin 3 Is Required for the Development and Propagation of Acute Myelogenous Leukemia. science scifact Acute Myelogenous Leukemia (AML) is an aggressive cancer that strikes both adults and children and is frequently resistant to therapy. Thus, identifying signals needed for AML propagation is a critical step toward developing new approaches… 11369420 tetraspanin-3-is-required-for-the-development-and-propagation-of-acute-myelogenous-leukemia. tetraspanin required development propagation acute myelogenous leukemia aml Tetraspanin 3 Is Required for the Development and Propagation of Acute Myelogenous Leukemia. Tetraspanin 3 Is Required for the Development and Propagation of Acute Myelogenous Leukemia. Acute Myelogenous Leukemia (AML) is an aggressive cancer that strikes both adults and children and is frequently resistant to therapy. Thus, identifying signals needed for AML propagation is a critical step toward developing new approaches for treating this disease. Here, we show that Tetraspanin 3 is a target of the RNA binding protein Musashi 2, which plays a key role in AML. We generated Tspan3 knockout mice that were born without overt defects. However, Tspan3 deletion impaired leukemia stem cell self-renewal and disease propagation and markedly improved survival in mouse models of AML. Additionally, Tspan3 inhibition blocked growth of AML patient samples, suggesting that Tspan3 is also importa",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:06.791004+00:00"
+}

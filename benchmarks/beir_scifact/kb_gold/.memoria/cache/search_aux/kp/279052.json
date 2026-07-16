@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "279052",
+  "source_fingerprint": "67280b2ca2af8486893ce377d32cc0a6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "279052",
+    "genomic-imprinting-in-development,-growth,-behavior-and-stem-cells."
+  ],
+  "key_phrases": [
+    "genomic",
+    "imprinting",
+    "development",
+    "growth",
+    "behavior",
+    "stem",
+    "cells",
+    "genes"
+  ],
+  "summary_1l": "Genomic imprinting in development, growth, behavior and stem cells.",
+  "query_hits": [],
+  "embed_text": "279052 Genomic imprinting in development, growth, behavior and stem cells. science scifact Genes that are subject to genomic imprinting in mammals are preferentially expressed from a single parental allele. This imprinted expression of a small number of genes is crucial for normal development, as these genes often directly… 279052 genomic-imprinting-in-development,-growth,-behavior-and-stem-cells. genomic imprinting development growth behavior stem cells genes Genomic imprinting in development, growth, behavior and stem cells. Genomic imprinting in development, growth, behavior and stem cells. Genes that are subject to genomic imprinting in mammals are preferentially expressed from a single parental allele. This imprinted expression of a small number of genes is crucial for normal development, as these genes often directly regulate fetal growth. Recent work has also demonstrated intricate roles for imprinted genes in the brain, with important consequences on behavior and neuronal function. Finally, new studies have revealed the importance of proper expression of specific imprinted genes in induced pluripotent stem cells and in adult stem cells. As we review here, these findings highlight the complex nature and developmental importance of imprinted genes.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.436483+00:00"
+}

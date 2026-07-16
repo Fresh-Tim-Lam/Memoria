@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13953762",
+  "source_fingerprint": "85dea051cae07b0c932688f006a49853",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13953762",
+    "pich:-a-dna-translocase-specially-adapted-for-processing-anaphase-bridge-dna."
+  ],
+  "key_phrases": [
+    "pich",
+    "dna",
+    "translocase",
+    "specially",
+    "adapted",
+    "processing",
+    "anaphase",
+    "bridge"
+  ],
+  "summary_1l": "PICH: a DNA translocase specially adapted for processing anaphase bridge DNA.",
+  "query_hits": [],
+  "embed_text": "13953762 PICH: a DNA translocase specially adapted for processing anaphase bridge DNA. science scifact The Plk1-interacting checkpoint helicase (PICH) protein localizes to ultrafine anaphase bridges (UFBs) in mitosis alongside a complex of DNA repair proteins, including the Bloom's syndrome protein (BLM). However, very little is known about… 13953762 pich:-a-dna-translocase-specially-adapted-for-processing-anaphase-bridge-dna. pich dna translocase specially adapted processing anaphase bridge PICH: a DNA translocase specially adapted for processing anaphase bridge DNA. PICH: a DNA translocase specially adapted for processing anaphase bridge DNA. The Plk1-interacting checkpoint helicase (PICH) protein localizes to ultrafine anaphase bridges (UFBs) in mitosis alongside a complex of DNA repair proteins, including the Bloom's syndrome protein (BLM). However, very little is known about the function of PICH or how it is recruited to UFBs. Using a combination of microfluidics, fluorescence microscopy, and optical tweezers, we have defined the properties of PICH in an in vitro model of an anaphase bridge. We show that PICH binds with a remarkably high affinity to duplex DNA, resulting in ATP-dependent protein translocation and extension of the DNA. Most strikingly, the affinity of PICH for binding DNA increases with tension-induced DNA stretching, which mimics t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.749428+00:00"
+}

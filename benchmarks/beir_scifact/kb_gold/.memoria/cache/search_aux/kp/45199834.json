@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "45199834",
+  "source_fingerprint": "97f6560f0224b752b185559f7562ee45",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "45199834",
+    "a-plasma-membrane-component-able-to-bind-and-alter-virions-of-poliovirus-type-1:-studies-on-cell-free-alteration-using-a-simplified-assay."
+  ],
+  "key_phrases": [
+    "plasma",
+    "membrane",
+    "component",
+    "able",
+    "bind",
+    "alter",
+    "virions",
+    "poliovirus"
+  ],
+  "summary_1l": "A plasma membrane component able to bind and alter virions of poliovirus type 1: studies on cell-free alteration using a simplified assay.",
+  "query_hits": [],
+  "embed_text": "45199834 A plasma membrane component able to bind and alter virions of poliovirus type 1: studies on cell-free alteration using a simplified assay. science scifact Abstract Intact HeLa cells can bind virions of poliovirus type 1 and can subsequently convert them to altered particles by incubation at 37°. Altered particles sediment more slowly than virions, have lost VP-4, and are disrupted by sodium… 45199834 a-plasma-membrane-component-able-to-bind-and-alter-virions-of-poliovirus-type-1:-studies-on-cell-free-alteration-using-a-simplified-assay. plasma membrane component able bind alter virions poliovirus A plasma membrane component able to bind and alter virions of poliovirus type 1: studies on cell-free alteration using a simplified assay. A plasma membrane component able to bind and alter virions of poliovirus type 1: studies on cell-free alteration using a simplified assay. Abstract Intact HeLa cells can bind virions of poliovirus type 1 and can subsequently convert them to altered particles by incubation at 37°. Altered particles sediment more slowly than virions, have lost VP-4, and are disrupted by sodium dodecyl sulfate, but their RNA is intact and ribonuclease insensitive. These characteristics allow assay of altered particles and of particles that have released their RNA, using nuclease digestion with or without sodium dodecyl sulfate treatment. With this simple assay procedure, quantitative parameters of binding and alteration can be measured. The binding-altering activity can be localized in plasma membranes, and p",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.209534+00:00"
+}

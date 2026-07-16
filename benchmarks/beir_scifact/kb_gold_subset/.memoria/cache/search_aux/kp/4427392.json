@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4427392",
+  "source_fingerprint": "dc6c2d1c3fb32ddf60263db9d0090f70",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4427392",
+    "human-cardiovascular-progenitor-cells-develop-from-a-kdr+-embryonic-stem-cell-derived-population"
+  ],
+  "key_phrases": [
+    "human",
+    "cardiovascular",
+    "progenitor",
+    "cells",
+    "develop",
+    "from",
+    "kdr",
+    "embryonic"
+  ],
+  "summary_1l": "The functional heart is comprised of distinct mesoderm-derived lineages including cardiomyocytes, endot",
+  "query_hits": [],
+  "embed_text": "4427392 Human cardiovascular progenitor cells develop from a KDR+ embryonic-stem-cell-derived population science scifact The functional heart is comprised of distinct mesoderm-derived lineages including cardiomyocytes, endothelial cells and vascular smooth muscle cells. Studies in the mouse embryo and the mouse embryonic stem cell differentiation model have… 4427392 human-cardiovascular-progenitor-cells-develop-from-a-kdr+-embryonic-stem-cell-derived-population human cardiovascular progenitor cells develop from kdr embryonic The functional heart is comprised of distinct mesoderm-derived lineages including cardiomyocytes, endot Human cardiovascular progenitor cells develop from a KDR+ embryonic-stem-cell-derived population The functional heart is comprised of distinct mesoderm-derived lineages including cardiomyocytes, endothelial cells and vascular smooth muscle cells. Studies in the mouse embryo and the mouse embryonic stem cell differentiation model have provided evidence indicating that these three lineages develop from a common Flk-1+ (kinase insert domain protein receptor, also known as Kdr) cardiovascular progenitor that represents one of the earliest stages in mesoderm specification to the cardiovascular lineages. To determine whether a comparable progenitor is present during human cardiogenesis, we analysed the development of the cardiovascular lineages in human embryonic stem cell differentiation cultur",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:13.375494+00:00"
+}

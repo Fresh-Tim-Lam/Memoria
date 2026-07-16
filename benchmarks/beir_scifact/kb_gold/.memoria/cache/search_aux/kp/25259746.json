@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25259746",
+  "source_fingerprint": "dc3e31023cc7d3319e0708bfd9787dec",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25259746",
+    "increased-growth-after-long-term-oral-1alpha,25-vitamin-d3-in-childhood-renal-osteodystrophy."
+  ],
+  "key_phrases": [
+    "increased",
+    "growth",
+    "after",
+    "long",
+    "term",
+    "oral",
+    "1alpha",
+    "25"
+  ],
+  "summary_1l": "Increased growth after long-term oral 1alpha,25-vitamin D3 in childhood renal osteodystrophy.",
+  "query_hits": [],
+  "embed_text": "25259746 Increased growth after long-term oral 1alpha,25-vitamin D3 in childhood renal osteodystrophy. science scifact We evaluated oral 1,25-vitamin D3 for as long as 26 months in six prepubescent children with renal osteodystrophy previously treated with vitamin D2. Therapy was given at 14 to 41 ng per kilogram per day to correct hypocalcemia and reverse… 25259746 increased-growth-after-long-term-oral-1alpha,25-vitamin-d3-in-childhood-renal-osteodystrophy. increased growth after long term oral 1alpha 25 Increased growth after long-term oral 1alpha,25-vitamin D3 in childhood renal osteodystrophy. Increased growth after long-term oral 1alpha,25-vitamin D3 in childhood renal osteodystrophy. We evaluated oral 1,25-vitamin D3 for as long as 26 months in six prepubescent children with renal osteodystrophy previously treated with vitamin D2. Therapy was given at 14 to 41 ng per kilogram per day to correct hypocalcemia and reverse bone disease. Serum levels of 1,25-vitamin D3 were initially reduced at 15 +/- 5 pg per milliliter (mean +/- S.E.M.) and after treatment rose to 54 +/- 13. Serum calcium rose from 7.5 +/- 1.6 mg per deciliter (mean +/- S.D.) to 9.8 +/- 0.6 after one month (P less than 0.02). Alkaline phosphatase activity fell from 536 +/- 298 to 208 +/- 91 IU per liter after 12 months (P less than 0.05). Serum immunoreactive parathyroid levels fell from 900 +/- 562 microliter eq",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.233869+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14496749",
+  "source_fingerprint": "82526e13e35261d8a29c2483b230b74a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14496749",
+    "a-conserved-mst-foxo-signaling-pathway-mediates-oxidative-stress-responses-and-extends-life-span"
+  ],
+  "key_phrases": [
+    "conserved",
+    "mst",
+    "foxo",
+    "signaling",
+    "pathway",
+    "mediates",
+    "oxidative",
+    "stress"
+  ],
+  "summary_1l": "Oxidative stress influences cell survival and homeostasis, but the mechanisms underlying the biological",
+  "query_hits": [],
+  "embed_text": "14496749 A Conserved MST-FOXO Signaling Pathway Mediates Oxidative-Stress Responses and Extends Life Span science scifact Oxidative stress influences cell survival and homeostasis, but the mechanisms underlying the biological effects of oxidative stress remain to be elucidated. Here, we demonstrate that the protein kinase MST1 mediates… 14496749 a-conserved-mst-foxo-signaling-pathway-mediates-oxidative-stress-responses-and-extends-life-span conserved mst foxo signaling pathway mediates oxidative stress Oxidative stress influences cell survival and homeostasis, but the mechanisms underlying the biological A Conserved MST-FOXO Signaling Pathway Mediates Oxidative-Stress Responses and Extends Life Span Oxidative stress influences cell survival and homeostasis, but the mechanisms underlying the biological effects of oxidative stress remain to be elucidated. Here, we demonstrate that the protein kinase MST1 mediates oxidative-stress-induced cell death in primary mammalian neurons by directly activating the FOXO transcription factors. MST1 phosphorylates FOXO proteins at a conserved site within the forkhead domain that disrupts their interaction with 14-3-3 proteins, promotes FOXO nuclear translocation, and thereby induces cell death in neurons. We also extend the MST-FOXO signaling link to nematodes. Knockdown of the C. elegans MST1 ortholog CST-1 shortens life span and accelerates tissue aging",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.038094+00:00"
+}

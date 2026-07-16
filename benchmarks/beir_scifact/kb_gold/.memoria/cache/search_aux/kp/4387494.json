@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4387494",
+  "source_fingerprint": "d442580b444466d7828b100d5256140d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4387494",
+    "therapeutic-potential-of-gsk-j4,-a-histone-demethylase-kdm6b/jmjd3-inhibitor,-for-acute-myeloid-leukemia"
+  ],
+  "key_phrases": [
+    "therapeutic",
+    "potential",
+    "gsk",
+    "j4",
+    "histone",
+    "demethylase",
+    "kdm6b",
+    "jmjd3"
+  ],
+  "summary_1l": "PURPOSE Acute myeloid leukemia (AML) is a heterogeneous disease with poor outcomes.",
+  "query_hits": [],
+  "embed_text": "4387494 Therapeutic potential of GSK-J4, a histone demethylase KDM6B/JMJD3 inhibitor, for acute myeloid leukemia science scifact PURPOSE Acute myeloid leukemia (AML) is a heterogeneous disease with poor outcomes. Despite increased evidence shows that dysregulation of histone modification contributes to AML, specific drugs targeting key histone modulators are not… 4387494 therapeutic-potential-of-gsk-j4,-a-histone-demethylase-kdm6b/jmjd3-inhibitor,-for-acute-myeloid-leukemia therapeutic potential gsk j4 histone demethylase kdm6b jmjd3 PURPOSE Acute myeloid leukemia (AML) is a heterogeneous disease with poor outcomes. Therapeutic potential of GSK-J4, a histone demethylase KDM6B/JMJD3 inhibitor, for acute myeloid leukemia PURPOSE Acute myeloid leukemia (AML) is a heterogeneous disease with poor outcomes. Despite increased evidence shows that dysregulation of histone modification contributes to AML, specific drugs targeting key histone modulators are not applied in the clinical treatment of AML. Here, we investigated whether targeting KDM6B, the demethylase of tri-methylated histone H3 lysine 27 (H3K27me3), has a therapeutic potential for AML. METHODS A KDM6B-specific inhibitor, GSK-J4, was applied to treat the primary cells from AML patients and AML cell lines in vitro and in vivo. RNA-sequencing was performed to reveal the underlying mechanisms of inhibiting KDM6B for the treatment of AML. RESULTS Here",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.365013+00:00"
+}

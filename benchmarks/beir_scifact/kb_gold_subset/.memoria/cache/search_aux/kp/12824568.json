@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12824568",
+  "source_fingerprint": "afd7b6a583a160e9b2cd5d425f61e1e7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12824568",
+    "from-cell-differentiation-to-cell-collectives:-bacillus-subtilis-uses-division-of-labor-to-migrate"
+  ],
+  "key_phrases": [
+    "from",
+    "cell",
+    "differentiation",
+    "collectives",
+    "bacillus",
+    "subtilis",
+    "uses",
+    "division"
+  ],
+  "summary_1l": "The organization of cells, emerging from cell-cell interactions, can give rise to collective properti",
+  "query_hits": [],
+  "embed_text": "12824568 From Cell Differentiation to Cell Collectives: Bacillus subtilis Uses Division of Labor to Migrate science scifact The organization of cells, emerging from cell-cell interactions, can give rise to collective properties. These properties are adaptive when together cells can face environmental challenges that they separately cannot. One particular… 12824568 from-cell-differentiation-to-cell-collectives:-bacillus-subtilis-uses-division-of-labor-to-migrate from cell differentiation collectives bacillus subtilis uses division The organization of cells, emerging from cell-cell interactions, can give rise to collective properti From Cell Differentiation to Cell Collectives: Bacillus subtilis Uses Division of Labor to Migrate The organization of cells, emerging from cell-cell interactions, can give rise to collective properties. These properties are adaptive when together cells can face environmental challenges that they separately cannot. One particular challenge that is important for microorganisms is migration. In this study, we show how flagellum-independent migration is driven by the division of labor of two cell types that appear during Bacillus subtilis sliding motility. Cell collectives organize themselves into bundles (called \"van Gogh bundles\") of tightly aligned cell chains that form filamentous loops at the colony edge. We show, by time-course microscopy, that these loops migrate by pushing themselves",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:09.686822+00:00"
+}

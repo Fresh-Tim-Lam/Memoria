@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17271462",
+  "source_fingerprint": "0265ced5dadf986f099d0b976a36269d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17271462",
+    "tie2/angiopoietin-1-signaling-regulates-hematopoietic-stem-cell-quiescence-in-the-bone-marrow-niche"
+  ],
+  "key_phrases": [
+    "tie2",
+    "angiopoietin",
+    "signaling",
+    "regulates",
+    "hematopoietic",
+    "stem",
+    "cell",
+    "quiescence"
+  ],
+  "summary_1l": "The quiescent state is thought to be an indispensable property for the maintenance of hematopoietic",
+  "query_hits": [],
+  "embed_text": "17271462 Tie2/Angiopoietin-1 Signaling Regulates Hematopoietic Stem Cell Quiescence in the Bone Marrow Niche science scifact The quiescent state is thought to be an indispensable property for the maintenance of hematopoietic stem cells (HSCs). Interaction of HSCs with their particular microenvironments, known as the stem cell niches, is critical for adult… 17271462 tie2/angiopoietin-1-signaling-regulates-hematopoietic-stem-cell-quiescence-in-the-bone-marrow-niche tie2 angiopoietin signaling regulates hematopoietic stem cell quiescence The quiescent state is thought to be an indispensable property for the maintenance of hematopoietic Tie2/Angiopoietin-1 Signaling Regulates Hematopoietic Stem Cell Quiescence in the Bone Marrow Niche The quiescent state is thought to be an indispensable property for the maintenance of hematopoietic stem cells (HSCs). Interaction of HSCs with their particular microenvironments, known as the stem cell niches, is critical for adult hematopoiesis in the bone marrow (BM). Here, we demonstrate that HSCs expressing the receptor tyrosine kinase Tie2 are quiescent and antiapoptotic, and comprise a side-population (SP) of HSCs, which adhere to osteoblasts (OBs) in the BM niche. The interaction of Tie2 with its ligand Angiopoietin-1 (Ang-1) induced cobblestone formation of HSCs in vitro and maintained in vivo long-term repopulating activity of HSCs. Furthermore, Ang-1 enhanced the ability of HSCs t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.549181+00:00"
+}

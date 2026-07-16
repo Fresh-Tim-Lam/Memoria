@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15476777",
+  "source_fingerprint": "8d3e4312a8acbebc3d4a1cd3c347fd94",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15476777",
+    "chemotherapy-options-in-elderly-and-frail-patients-with-metastatic-colorectal-cancer-(mrc-focus2):-an-open-label,-randomised-factorial-trial"
+  ],
+  "key_phrases": [
+    "chemotherapy",
+    "options",
+    "elderly",
+    "frail",
+    "patients",
+    "with",
+    "metastatic",
+    "colorectal"
+  ],
+  "summary_1l": "BACKGROUND Elderly and frail patients with cancer, although",
+  "query_hits": [],
+  "embed_text": "15476777 Chemotherapy options in elderly and frail patients with metastatic colorectal cancer (MRC FOCUS2): an open-label, randomised factorial trial science scifact BACKGROUND Elderly and frail patients with cancer, although often treated with chemotherapy, are under-represented in clinical trials. We designed FOCUS2 to investigate reduced-dose chemotherapy options and to seek objective predictors of… 15476777 chemotherapy-options-in-elderly-and-frail-patients-with-metastatic-colorectal-cancer-(mrc-focus2):-an-open-label,-randomised-factorial-trial chemotherapy options elderly frail patients with metastatic colorectal BACKGROUND Elderly and frail patients with cancer, although Chemotherapy options in elderly and frail patients with metastatic colorectal cancer (MRC FOCUS2): an open-label, randomised factorial trial BACKGROUND Elderly and frail patients with cancer, although often treated with chemotherapy, are under-represented in clinical trials. We designed FOCUS2 to investigate reduced-dose chemotherapy options and to seek objective predictors of outcome in frail patients with advanced colorectal cancer. METHODS We undertook an open, 2 × 2 factorial trial in 61 UK centres for patients with previously untreated advanced colorectal cancer who were considered unfit for full-dose chemotherapy. After comprehensive health assessment (CHA), patients were randomly assigned by minimisation to: 48-h intravenous fluorouracil with levofolinate (group A); oxaliplatin and",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.655044+00:00"
+}

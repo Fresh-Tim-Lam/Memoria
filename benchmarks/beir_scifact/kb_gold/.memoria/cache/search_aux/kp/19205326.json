@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19205326",
+  "source_fingerprint": "6b2795e054268c5658357686df0a66c3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19205326",
+    "ten-years'-experience-with-alendronate-for-osteoporosis-in-postmenopausal-women."
+  ],
+  "key_phrases": [
+    "ten",
+    "years",
+    "experience",
+    "with",
+    "alendronate",
+    "osteoporosis",
+    "postmenopausal",
+    "women"
+  ],
+  "summary_1l": "Ten years' experience with alendronate for osteoporosis in postmenopausal women.",
+  "query_hits": [],
+  "embed_text": "19205326 Ten years' experience with alendronate for osteoporosis in postmenopausal women. science scifact BACKGROUND Antiresorptive agents are widely used to treat osteoporosis. We report the results of a multinational randomized, double-blind study, in which postmenopausal women with osteoporosis were treated with alendronate for up to 10… 19205326 ten-years'-experience-with-alendronate-for-osteoporosis-in-postmenopausal-women. ten years experience with alendronate osteoporosis postmenopausal women Ten years' experience with alendronate for osteoporosis in postmenopausal women. Ten years' experience with alendronate for osteoporosis in postmenopausal women. BACKGROUND Antiresorptive agents are widely used to treat osteoporosis. We report the results of a multinational randomized, double-blind study, in which postmenopausal women with osteoporosis were treated with alendronate for up to 10 years. METHODS The initial three-year phase of the study compared three daily doses of alendronate with placebo. Women in the original placebo group received alendronate in years 4 and 5 and then were discharged. Women in the original active-treatment groups continued to receive alendronate during the initial extension (years 4 and 5). In two further extensions (years 6 and 7, and 8 through 10), women who had received 5 mg or 10 mg of alendronate daily continued on the same trea",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.293491+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25677651",
+  "source_fingerprint": "57fdf8ee4f4dd1ecc018005a255dcfbe",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25677651",
+    "activation-of-liver-x-receptors-and-retinoid-x-receptors-prevents-bacterial-induced-macrophage-apoptosis."
+  ],
+  "key_phrases": [
+    "activation",
+    "liver",
+    "receptors",
+    "retinoid",
+    "prevents",
+    "bacterial",
+    "induced",
+    "macrophage"
+  ],
+  "summary_1l": "Activation of liver X receptors and retinoid X receptors prevents bacterial-induced macrophage apoptosis.",
+  "query_hits": [],
+  "embed_text": "25677651 Activation of liver X receptors and retinoid X receptors prevents bacterial-induced macrophage apoptosis. science scifact Microbe-macrophage interactions play a central role in the pathogenesis of many infections. The ability of some bacterial pathogens to induce macrophage apoptosis has been suggested to contribute to their ability to elude innate immune… 25677651 activation-of-liver-x-receptors-and-retinoid-x-receptors-prevents-bacterial-induced-macrophage-apoptosis. activation liver receptors retinoid prevents bacterial induced macrophage Activation of liver X receptors and retinoid X receptors prevents bacterial-induced macrophage apoptosis. Activation of liver X receptors and retinoid X receptors prevents bacterial-induced macrophage apoptosis. Microbe-macrophage interactions play a central role in the pathogenesis of many infections. The ability of some bacterial pathogens to induce macrophage apoptosis has been suggested to contribute to their ability to elude innate immune responses and successfully colonize the host. Here, we provide evidence that activation of liver X receptors (LXRs) and retinoid X receptors (RXRs) inhibits apoptotic responses of macrophages to macrophage colony-stimulating factor (M-CSF) withdrawal and several inducers of apoptosis. In addition, combined activation of LXR and RXR protected macrophages from apoptosis caused by infection with Bacillus anthracis, Escherichia coli, and Salmonella typhimuri",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.169066+00:00"
+}

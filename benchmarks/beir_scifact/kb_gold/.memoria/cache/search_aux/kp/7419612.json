@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7419612",
+  "source_fingerprint": "7acb5085db425033afdea2d6afe60083",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7419612",
+    "an-administrative-claims-measure-suitable-for-profiling-hospital-performance-on-the-basis-of-30-day-all-cause-readmission-rates-among-patients-with-heart-failure."
+  ],
+  "key_phrases": [
+    "administrative",
+    "claims",
+    "measure",
+    "suitable",
+    "profiling",
+    "hospital",
+    "performance",
+    "basis"
+  ],
+  "summary_1l": "An administrative claims measure suitable for profiling hospital performance on the basis of 30-day all-cause readmission rates among patients with heart failure.",
+  "query_hits": [],
+  "embed_text": "7419612 An administrative claims measure suitable for profiling hospital performance on the basis of 30-day all-cause readmission rates among patients with heart failure. science scifact BACKGROUND Readmission soon after hospital discharge is an expensive and often preventable event for patients with heart failure. We present a model approved by the National Quality Forum for the purpose of public reporting of… 7419612 an-administrative-claims-measure-suitable-for-profiling-hospital-performance-on-the-basis-of-30-day-all-cause-readmission-rates-among-patients-with-heart-failure. administrative claims measure suitable profiling hospital performance basis An administrative claims measure suitable for profiling hospital performance on the basis of 30-day all-cause readmission rates among patients with heart failure. An administrative claims measure suitable for profiling hospital performance on the basis of 30-day all-cause readmission rates among patients with heart failure. BACKGROUND Readmission soon after hospital discharge is an expensive and often preventable event for patients with heart failure. We present a model approved by the National Quality Forum for the purpose of public reporting of hospital-level readmission rates by the Centers for Medicare & Medicaid Services. METHODS AND RESULTS We developed a hierarchical logistic regression model to calculate hospital risk-standardized 30-day all-cause readmission rates for patients hospitalized with heart failure. The model was derived with the use of Medicare claims data for a 2004 cohort and validated with the use of claims and medical record",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.254124+00:00"
+}

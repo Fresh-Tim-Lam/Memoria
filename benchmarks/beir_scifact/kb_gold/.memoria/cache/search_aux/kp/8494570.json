@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8494570",
+  "source_fingerprint": "dee3b3d5c443e84a7031eeeeb5bf2e4d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8494570",
+    "characterization-of-constitutive-ctcf/cohesin-loci:-a-possible-role-in-establishing-topological-domains-in-mammalian-genomes"
+  ],
+  "key_phrases": [
+    "characterization",
+    "constitutive",
+    "ctcf",
+    "cohesin",
+    "loci",
+    "possible",
+    "role",
+    "establishing"
+  ],
+  "summary_1l": "BACKGROUND Recent studies suggested that human/mammalian genomes are divide",
+  "query_hits": [],
+  "embed_text": "8494570 Characterization of constitutive CTCF/cohesin loci: a possible role in establishing topological domains in mammalian genomes science scifact BACKGROUND Recent studies suggested that human/mammalian genomes are divided into large, discrete domains that are units of chromosome organization. CTCF, a CCCTC binding factor, has a diverse role in genome regulation including… 8494570 characterization-of-constitutive-ctcf/cohesin-loci:-a-possible-role-in-establishing-topological-domains-in-mammalian-genomes characterization constitutive ctcf cohesin loci possible role establishing BACKGROUND Recent studies suggested that human/mammalian genomes are divide Characterization of constitutive CTCF/cohesin loci: a possible role in establishing topological domains in mammalian genomes BACKGROUND Recent studies suggested that human/mammalian genomes are divided into large, discrete domains that are units of chromosome organization. CTCF, a CCCTC binding factor, has a diverse role in genome regulation including transcriptional regulation, chromosome-boundary insulation, DNA replication, and chromatin packaging. It remains unclear whether a subset of CTCF binding sites plays a functional role in establishing/maintaining chromatin topological domains. RESULTS We systematically analysed the genomic, transcriptomic and epigenetic profiles of the CTCF binding sites in 56 human cell lines from ENCODE. We identified ~24,000 CTCF sites (referred to as const",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.799440+00:00"
+}

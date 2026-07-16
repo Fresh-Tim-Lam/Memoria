@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22191759",
+  "source_fingerprint": "7df8856aebf9d06c1c1b864134ba61c8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22191759",
+    "purification-and-structural-characterization-of-bovine-cathelicidins,-precursors-of-antimicrobial-peptides."
+  ],
+  "key_phrases": [
+    "purification",
+    "structural",
+    "characterization",
+    "bovine",
+    "cathelicidins",
+    "precursors",
+    "antimicrobial",
+    "peptides"
+  ],
+  "summary_1l": "Purification and structural characterization of bovine cathelicidins, precursors of antimicrobial peptides.",
+  "query_hits": [],
+  "embed_text": "22191759 Purification and structural characterization of bovine cathelicidins, precursors of antimicrobial peptides. science scifact Cathelicidins are a novel family of antimicrobial peptide precursors from mammalian myeloid cells. They are characterized by a conserved N-terminal region while the C-terminal antimicrobial domain can vary considerably in both primary… 22191759 purification-and-structural-characterization-of-bovine-cathelicidins,-precursors-of-antimicrobial-peptides. purification structural characterization bovine cathelicidins precursors antimicrobial peptides Purification and structural characterization of bovine cathelicidins, precursors of antimicrobial peptides. Purification and structural characterization of bovine cathelicidins, precursors of antimicrobial peptides. Cathelicidins are a novel family of antimicrobial peptide precursors from mammalian myeloid cells. They are characterized by a conserved N-terminal region while the C-terminal antimicrobial domain can vary considerably in both primary sequence and length. Four cathelicidins, proBac5, proBac7, prododecapeptide and proBMAP-28, have been concurrently purified from bovine neutrophils, using simple and rapid methodologies. The correlation of ES-MS data from the purified proteins with their cDNA-deduced sequences has revealed several common features of their primary sequence, such as the presence of N-terminal 5-oxoproline (pyroglutamate) residues and two disulfide bridges in a 1-2, 3-4 ar",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.417658+00:00"
+}

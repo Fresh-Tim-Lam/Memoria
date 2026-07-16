@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7399084",
+  "source_fingerprint": "88b9af469f9ca7178f1c29724fa487cd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7399084",
+    "transcriptional-repressor-blimp-1-is-essential-for-t-cell-homeostasis-and-self-tolerance"
+  ],
+  "key_phrases": [
+    "transcriptional",
+    "repressor",
+    "blimp",
+    "essential",
+    "cell",
+    "homeostasis",
+    "self",
+    "tolerance"
+  ],
+  "summary_1l": "T cell homeostasis is crucial for a functional immune system, as the accumulation of T cells resulting from lac",
+  "query_hits": [],
+  "embed_text": "7399084 Transcriptional repressor Blimp-1 is essential for T cell homeostasis and self-tolerance science scifact T cell homeostasis is crucial for a functional immune system, as the accumulation of T cells resulting from lack of regulatory T cells or an inability to shut down immune responses can lead to inflammation and autoimmune pathology. Here we… 7399084 transcriptional-repressor-blimp-1-is-essential-for-t-cell-homeostasis-and-self-tolerance transcriptional repressor blimp essential cell homeostasis self tolerance T cell homeostasis is crucial for a functional immune system, as the accumulation of T cells resulting from lac Transcriptional repressor Blimp-1 is essential for T cell homeostasis and self-tolerance T cell homeostasis is crucial for a functional immune system, as the accumulation of T cells resulting from lack of regulatory T cells or an inability to shut down immune responses can lead to inflammation and autoimmune pathology. Here we show that Blimp-1, a transcriptional repressor that is a 'master regulator' of terminal B cell differentiation, was expressed in a subset of antigen-experienced CD4+ and CD8+ T cells. Mice reconstituted with fetal liver stem cells expressing a mutant Blimp-1 lacking the DNA-binding domain developed a lethal multiorgan inflammatory disease caused by an accumulation of effector and memory T cells. These data identify Blimp-1 as an essential regulator of T cell homeosta",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.213794+00:00"
+}

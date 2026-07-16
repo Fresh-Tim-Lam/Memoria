@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18374364",
+  "source_fingerprint": "00bc747aad6c66aac5d123b055aa6e71",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18374364",
+    "in-vivo-proliferation-and-cell-cycle-kinetics-of-long-term-self-renewing-hematopoietic-stem-cells."
+  ],
+  "key_phrases": [
+    "vivo",
+    "proliferation",
+    "cell",
+    "cycle",
+    "kinetics",
+    "long",
+    "term",
+    "self"
+  ],
+  "summary_1l": "In vivo proliferation and cell cycle kinetics of long-term self-renewing hematopoietic stem cells.",
+  "query_hits": [],
+  "embed_text": "18374364 In vivo proliferation and cell cycle kinetics of long-term self-renewing hematopoietic stem cells. science scifact A rare set of hematopoietic stem cells (HSC) must undergo a massive expansion to produce mature blood cells. The phenotypic isolation of HSC from mice offers the opportunity to determine directly their proliferation kinetics. We analyzed… 18374364 in-vivo-proliferation-and-cell-cycle-kinetics-of-long-term-self-renewing-hematopoietic-stem-cells. vivo proliferation cell cycle kinetics long term self In vivo proliferation and cell cycle kinetics of long-term self-renewing hematopoietic stem cells. In vivo proliferation and cell cycle kinetics of long-term self-renewing hematopoietic stem cells. A rare set of hematopoietic stem cells (HSC) must undergo a massive expansion to produce mature blood cells. The phenotypic isolation of HSC from mice offers the opportunity to determine directly their proliferation kinetics. We analyzed the proliferation and cell cycle kinetics of long-term self-renewing HSC (LT-HSC) in normal adult mice. At any one time, approximately 5% of LT-HSC were in S/G2/M phases of the cell cycle and another 20% were in G1 phase. BrdUrd incorporation was used to determine the rate at which different cohorts of HSC entered the cell cycle over time. About 50% of LT-HSC incorporated BrdUrd by 6 days and >90% incorporated BrdUrd by 30 days. By 6 months, 99% of LT-HSC had",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.191915+00:00"
+}

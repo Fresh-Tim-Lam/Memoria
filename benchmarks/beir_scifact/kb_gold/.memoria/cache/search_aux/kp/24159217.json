@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24159217",
+  "source_fingerprint": "19fb40fca8b85e56419fe07ad2384b0b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24159217",
+    "a-mental-health-intervention-for-schoolchildren-exposed-to-violence:-a-randomized-controlled-trial."
+  ],
+  "key_phrases": [
+    "mental",
+    "health",
+    "intervention",
+    "schoolchildren",
+    "exposed",
+    "violence",
+    "randomized",
+    "controlled"
+  ],
+  "summary_1l": "A mental health intervention for schoolchildren exposed to violence: a randomized controlled trial.",
+  "query_hits": [],
+  "embed_text": "24159217 A mental health intervention for schoolchildren exposed to violence: a randomized controlled trial. science scifact CONTEXT No randomized controlled studies have been conducted to date on the effectiveness of psychological interventions for children with symptoms of posttraumatic stress disorder (PTSD) that has resulted from personally witnessing or… 24159217 a-mental-health-intervention-for-schoolchildren-exposed-to-violence:-a-randomized-controlled-trial. mental health intervention schoolchildren exposed violence randomized controlled A mental health intervention for schoolchildren exposed to violence: a randomized controlled trial. A mental health intervention for schoolchildren exposed to violence: a randomized controlled trial. CONTEXT No randomized controlled studies have been conducted to date on the effectiveness of psychological interventions for children with symptoms of posttraumatic stress disorder (PTSD) that has resulted from personally witnessing or being personally exposed to violence. OBJECTIVE To evaluate the effectiveness of a collaboratively designed school-based intervention for reducing children's symptoms of PTSD and depression that has resulted from exposure to violence. DESIGN A randomized controlled trial conducted during the 2001-2002 academic year. SETTING AND PARTICIPANTS Sixth-grade students at 2 large middle schools in Los Angeles who reported exposure to violence and had clinical levels o",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.881619+00:00"
+}

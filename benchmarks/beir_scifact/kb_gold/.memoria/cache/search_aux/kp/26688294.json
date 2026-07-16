@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "26688294",
+  "source_fingerprint": "cf649d3d848e6e968451c44422719e96",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26688294"
+  ],
+  "key_phrases": [
+    "schizophrenia",
+    "susceptibility",
+    "pathway",
+    "neuregulin",
+    "erbb4",
+    "suppresses",
+    "src",
+    "upregulation"
+  ],
+  "summary_1l": "Hypofunction of the N-methyl D-aspartate subtype of glutamate receptor (NMDAR) is hypothesized to",
+  "query_hits": [],
+  "embed_text": "26688294 Schizophrenia susceptibility pathway neuregulin 1–ErbB4 suppresses Src upregulation of NMDA receptors science scifact Hypofunction of the N-methyl D-aspartate subtype of glutamate receptor (NMDAR) is hypothesized to be a mechanism underlying cognitive dysfunction in individuals with schizophrenia. For the schizophrenia-linked genes NRG1 and ERBB4, NMDAR… 26688294 schizophrenia susceptibility pathway neuregulin erbb4 suppresses src upregulation Hypofunction of the N-methyl D-aspartate subtype of glutamate receptor (NMDAR) is hypothesized to Schizophrenia susceptibility pathway neuregulin 1–ErbB4 suppresses Src upregulation of NMDA receptors Hypofunction of the N-methyl D-aspartate subtype of glutamate receptor (NMDAR) is hypothesized to be a mechanism underlying cognitive dysfunction in individuals with schizophrenia. For the schizophrenia-linked genes NRG1 and ERBB4, NMDAR hypofunction is thus considered a key detrimental consequence of the excessive NRG1-ErbB4 signaling found in people with schizophrenia. However, we show here that neuregulin 1β–ErbB4 (NRG1β-ErbB4) signaling does not cause general hypofunction of NMDARs. Rather, we find that, in the hippocampus and prefrontal cortex, NRG1β-ErbB4 signaling suppresses the enhancement of synaptic NMDAR currents by the nonreceptor tyrosine kinase Src. NRG1β-ErbB4 signaling prev",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.052229+00:00"
+}

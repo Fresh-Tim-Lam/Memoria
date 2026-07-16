@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14180217",
+  "source_fingerprint": "63902a355a04c1b0b14fcac07d186fc4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14180217",
+    "the-buccaneer-software-for-automated-model-building.-1.-tracing-protein-chains."
+  ],
+  "key_phrases": [
+    "buccaneer",
+    "software",
+    "automated",
+    "model",
+    "building",
+    "tracing",
+    "protein",
+    "chains"
+  ],
+  "summary_1l": "The Buccaneer software for automated model building.",
+  "query_hits": [],
+  "embed_text": "14180217 The Buccaneer software for automated model building. 1. Tracing protein chains. science scifact A new technique for the automated tracing of protein chains in experimental electron-density maps is described. The technique relies on the repeated application of an oriented electron-density likelihood target function to identify likely… 14180217 the-buccaneer-software-for-automated-model-building.-1.-tracing-protein-chains. buccaneer software automated model building tracing protein chains The Buccaneer software for automated model building. The Buccaneer software for automated model building. 1. Tracing protein chains. A new technique for the automated tracing of protein chains in experimental electron-density maps is described. The technique relies on the repeated application of an oriented electron-density likelihood target function to identify likely C(alpha) positions. This function is applied both in the location of a few promising ;seed' positions in the map and to grow those initial C(alpha) positions into extended chain fragments. Techniques for assembling the chain fragments into an initial chain trace are discussed.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.264169+00:00"
+}

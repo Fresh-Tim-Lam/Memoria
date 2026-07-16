@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21260231",
+  "source_fingerprint": "9e2b50dda2a422735baef0d09ee8a70a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21260231",
+    "validity-and-reliability-of-observational-methods-for-studying-medication-administration-errors."
+  ],
+  "key_phrases": [
+    "validity",
+    "reliability",
+    "observational",
+    "methods",
+    "studying",
+    "medication",
+    "administration",
+    "errors"
+  ],
+  "summary_1l": "Validity and reliability of observational methods for studying medication administration errors.",
+  "query_hits": [],
+  "embed_text": "21260231 Validity and reliability of observational methods for studying medication administration errors. science scifact The validity and reliability of observational methods for studying medication administration errors (MAEs) were studied. Between January and June 1998, two pharmacists observed consecutive drug administration rounds by nurses on two wards… 21260231 validity-and-reliability-of-observational-methods-for-studying-medication-administration-errors. validity reliability observational methods studying medication administration errors Validity and reliability of observational methods for studying medication administration errors. Validity and reliability of observational methods for studying medication administration errors. The validity and reliability of observational methods for studying medication administration errors (MAEs) were studied. Between January and June 1998, two pharmacists observed consecutive drug administration rounds by nurses on two wards in a U.K. hospital and recorded all MAEs identified. The observers intervened in cases of potentially harmful errors. MAE records were audited to determine the percentage of omitted doses for which a corresponding reason was documented for the observation periods and for nonobservation periods. Error rates for each drug administration round were analyzed according to whether they were for the nurse's first, second, third (and so on) observed round. Error rates",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.673117+00:00"
+}

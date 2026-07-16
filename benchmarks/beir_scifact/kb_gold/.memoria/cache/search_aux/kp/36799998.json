@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36799998",
+  "source_fingerprint": "297537fba24607461930a46383916f19",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36799998",
+    "improving-outcomes-of-acute-kidney-injury:-report-of-an-initiative"
+  ],
+  "key_phrases": [
+    "improving",
+    "outcomes",
+    "acute",
+    "kidney",
+    "injury",
+    "report",
+    "initiative",
+    "aki"
+  ],
+  "summary_1l": "Acute kidney injury (AKI) is a complex disorder comprising several etiological factors and occurring in multiple settings.",
+  "query_hits": [],
+  "embed_text": "36799998 Improving outcomes of acute kidney injury: report of an initiative science scifact Acute kidney injury (AKI) is a complex disorder comprising several etiological factors and occurring in multiple settings. The disorder has a variety of clinical manifestations that range from minimal elevation in serum creatinine level to… 36799998 improving-outcomes-of-acute-kidney-injury:-report-of-an-initiative improving outcomes acute kidney injury report initiative aki Acute kidney injury (AKI) is a complex disorder comprising several etiological factors and occurring in multiple settings. Improving outcomes of acute kidney injury: report of an initiative Acute kidney injury (AKI) is a complex disorder comprising several etiological factors and occurring in multiple settings. The disorder has a variety of clinical manifestations that range from minimal elevation in serum creatinine level to anuric renal failure. We describe the formation of a multidisciplinary collaborative network focused on AKI. This Acute Kidney Injury Network has proposed uniform standards for diagnosing and classifying AKI. These proposed standards will need to be validated in future studies, a process that will be facilitated by the Acute Kidney Injury Network, which offers a forum that encourages acquisition of knowledge to improve patient outcomes.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:43.709192+00:00"
+}

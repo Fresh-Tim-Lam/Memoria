@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "41161366",
+  "source_fingerprint": "6f5f557086d1b000eda921df3f8ff200",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "41161366",
+    "exercise-induced-asthma."
+  ],
+  "key_phrases": [
+    "exercise",
+    "induced",
+    "asthma",
+    "effect",
+    "ventilatory",
+    "function",
+    "was",
+    "studied"
+  ],
+  "summary_1l": "Exercise-induced asthma.",
+  "query_hits": [],
+  "embed_text": "41161366 Exercise-induced asthma. science scifact The effect of exercise on ventilatory function was studied in 7 patients with asthma. Three showed appreciable decrease in forced expiratory volume in one second (FEV 1) after exercise. The degree of hyperventilation produced by exercise… 41161366 exercise-induced-asthma. exercise induced asthma effect ventilatory function was studied Exercise-induced asthma. Exercise-induced asthma. The effect of exercise on ventilatory function was studied in 7 patients with asthma. Three showed appreciable decrease in forced expiratory volume in one second (FEV 1) after exercise. The degree of hyperventilation produced by exercise correlated with the postexercise decrease in FEV 1. Voluntary hyperventilation at rest produced a decrease in FEV 1 in all patients with asthma. Breathing 5.6 per cent carbon dioxide during voluntary hyperventilation instead of room air induced a larger ventilation and greater decrease in FEV1. Neither exercise nor voluntary hyperventilation had any significant effect on the FEV 1 in normal subjects and patients with chronic bronchitis. Both exercise·induced and hyperventilation-induced decrease in FEV 1 were inhibited by prior adm",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.152840+00:00"
+}

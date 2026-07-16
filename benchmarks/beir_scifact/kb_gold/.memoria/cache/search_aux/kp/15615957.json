@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15615957",
+  "source_fingerprint": "c6e8ea555415151f9b81a6398b73291c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15615957",
+    "original-article"
+  ],
+  "key_phrases": [
+    "original",
+    "article",
+    "unlabelled",
+    "fruit",
+    "vegetable",
+    "consumption",
+    "has",
+    "been"
+  ],
+  "summary_1l": "UNLABELLED Fruit and vegetable consumption has been inversely associated with the risk of chronic diseases including cancer and cardiovascular disease, with the beneficial effects att",
+  "query_hits": [],
+  "embed_text": "15615957 Original Article science scifact UNLABELLED Fruit and vegetable consumption has been inversely associated with the risk of chronic diseases including cancer and cardiovascular disease, with the beneficial effects attributed to a variety of protective antioxidants,… 15615957 original-article original article unlabelled fruit vegetable consumption has been UNLABELLED Fruit and vegetable consumption has been inversely associated with the risk of chronic diseases including cancer and cardiovascular disease, with the beneficial effects att Original Article UNLABELLED Fruit and vegetable consumption has been inversely associated with the risk of chronic diseases including cancer and cardiovascular disease, with the beneficial effects attributed to a variety of protective antioxidants, carotenoids and phytonutrients. The objective of the present study was to determine the effect of supplementation with dehydrated concentrates from mixed fruit and vegetable juices (Juice Plus+R) on serum antioxidant and folate status, plasma homocysteine levels and markers for oxidative stress and DNA damage. Japanese subjects (n=60; age 27.8 yrs; BMI 22.1) were recruited to participate in a double-blind placebo controlled study and were randomized into 2 groups of 30, matched for sex, age, BMI and smoking status (39 males, 22 smokers; 21 femal",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.961799+00:00"
+}

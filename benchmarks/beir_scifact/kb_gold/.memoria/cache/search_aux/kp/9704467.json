@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9704467",
+  "source_fingerprint": "a4f4881e30b2c8c57c0689011d0f2e2d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9704467",
+    "in-polyploid-species"
+  ],
+  "key_phrases": [
+    "polyploid",
+    "species",
+    "we",
+    "developed",
+    "yeast",
+    "gene",
+    "order",
+    "browser"
+  ],
+  "summary_1l": "We developed the Yeast Gene Order Browser (YGOB; http://wolfe.",
+  "query_hits": [],
+  "embed_text": "9704467 in polyploid species science scifact We developed the Yeast Gene Order Browser (YGOB; http://wolfe.gen.tcd.ie/ygob) to facilitate visual comparisons and computational analysis of synteny relationships in yeasts. The data presented in YGOB, currently covering seven species,… 9704467 in-polyploid-species polyploid species we developed yeast gene order browser We developed the Yeast Gene Order Browser (YGOB; http://wolfe. in polyploid species We developed the Yeast Gene Order Browser (YGOB; http://wolfe.gen.tcd.ie/ygob) to facilitate visual comparisons and computational analysis of synteny relationships in yeasts. The data presented in YGOB, currently covering seven species, are based on sets of homologous genes that have been intensively manually curated based on both sequence similarity and genomic context (synteny). We reconciled different laboratories' lists of paralogous Saccharomyces cerevisiae gene pairs formed by genome duplication (ohnologs), and present near-exhaustive lists of the ohnolog pairs retained in S. cerevisiae (551, including 22 previously unidentified), Saccharomyces castellii (599), and Candida glabrata (404).",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.607500+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13915464",
+  "source_fingerprint": "b59cde6ba1224b6e3e36b3311c9f9682",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13915464",
+    "a-new-system-for-naming-ribosomal-proteins."
+  ],
+  "key_phrases": [
+    "new",
+    "system",
+    "naming",
+    "ribosomal",
+    "proteins",
+    "described",
+    "that",
+    "authors"
+  ],
+  "summary_1l": "A new system for naming ribosomal proteins.",
+  "query_hits": [],
+  "embed_text": "13915464 A new system for naming ribosomal proteins. science scifact A system for naming ribosomal proteins is described that the authors intend to use in the future. They urge others to adopt it. The objective is to eliminate the confusion caused by the assignment of identical names to ribosomal proteins… 13915464 a-new-system-for-naming-ribosomal-proteins. new system naming ribosomal proteins described that authors A new system for naming ribosomal proteins. A new system for naming ribosomal proteins. A system for naming ribosomal proteins is described that the authors intend to use in the future. They urge others to adopt it. The objective is to eliminate the confusion caused by the assignment of identical names to ribosomal proteins from different species that are unrelated in structure and function. In the system proposed here, homologous ribosomal proteins are assigned the same name, regardless of species. It is designed so that new names are similar enough to old names to be easily recognized, but are written in a format that unambiguously identifies them as 'new system' names.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.553170+00:00"
+}

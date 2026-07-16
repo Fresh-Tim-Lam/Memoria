@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "kp_id": "1532896#5",
+  "source_fingerprint": "fafe4fcda24a49e7cbfc29ef41c14e01",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "美洲",
+    "世界主要宗教",
+    "熱帶美洲",
+    "联合国主要机构"
+  ],
+  "aliases": [
+    "1532896#5"
+  ],
+  "key_phrases": [
+    "切葉蟻",
+    "一個",
+    "成熟",
+    "群中",
+    "個體",
+    "不同",
+    "分工",
+    "主要"
+  ],
+  "summary_1l": "在一個成熟的切葉蟻群中，每隻個體都有不同的分工，主要根據其體型大小為依據來負責不同的職責。",
+  "query_hits": [],
+  "embed_text": "1532896#5 切葉蟻 切葉蟻 在一個成熟的切葉蟻群中，每隻個體都有不同的分工，主要根據其體型大小為依據來負責不同的職責。美洲切葉蟻屬與頂切葉蟻屬展現了極高的多態性，在蟻群中主要能夠分為四種階級：迷你工（minims）、小工（minors）、一般工蟻（mediae）與兵蟻（majors）。美洲切葉蟻屬各階級之間的體型大小差異較頂切葉蟻屬明顯。 美洲 世界主要宗教 熱帶美洲 联合国主要机构 1532896#5 切葉蟻 一個 成熟 群中 個體 不同 分工 主要 在一個成熟的切葉蟻群中，每隻個體都有不同的分工，主要根據其體型大小為依據來負責不同的職責。 切葉蟻 在一個成熟的切葉蟻群中，每隻個體都有不同的分工，主要根據其體型大小為依據來負責不同的職責。美洲切葉蟻屬與頂切葉蟻屬展現了極高的多態性，在蟻群中主要能夠分為四種階級：迷你工（minims）、小工（minors）、一般工蟻（mediae）與兵蟻（majors）。美洲切葉蟻屬各階級之間的體型大小差異較頂切葉蟻屬明顯。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:21:32.558432+00:00"
+}

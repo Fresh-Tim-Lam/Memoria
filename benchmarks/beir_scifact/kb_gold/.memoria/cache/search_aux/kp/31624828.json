@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "31624828",
+  "source_fingerprint": "f2d58003363b28d2f832da9dd6e37ff6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "31624828",
+    "control-of-signaling-mediated-clearance-of-apoptotic-cells-by-the-tumor-suppressor-p53"
+  ],
+  "key_phrases": [
+    "control",
+    "signaling",
+    "mediated",
+    "clearance",
+    "apoptotic",
+    "cells",
+    "by",
+    "tumor"
+  ],
+  "summary_1l": "The inefficient clearance of dying cells can lead to abnormal immune responses, such as unresolved inflammation a",
+  "query_hits": [],
+  "embed_text": "31624828 Control of signaling-mediated clearance of apoptotic cells by the tumor suppressor p53 science scifact The inefficient clearance of dying cells can lead to abnormal immune responses, such as unresolved inflammation and autoimmune conditions. We show that tumor suppressor p53 controls signaling-mediated phagocytosis of apoptotic cells… 31624828 control-of-signaling-mediated-clearance-of-apoptotic-cells-by-the-tumor-suppressor-p53 control signaling mediated clearance apoptotic cells by tumor The inefficient clearance of dying cells can lead to abnormal immune responses, such as unresolved inflammation a Control of signaling-mediated clearance of apoptotic cells by the tumor suppressor p53 The inefficient clearance of dying cells can lead to abnormal immune responses, such as unresolved inflammation and autoimmune conditions. We show that tumor suppressor p53 controls signaling-mediated phagocytosis of apoptotic cells through its target, Death Domain1α (DD1α), which suggests that p53 promotes both the proapoptotic pathway and postapoptotic events. DD1α appears to function as an engulfment ligand or receptor that engages in homophilic intermolecular interaction at intercellular junctions of apoptotic cells and macrophages, unlike other typical scavenger receptors that recognize phosphatidylserine on the surface of dead cells. DD1α-deficient mice showed in vivo defects in clearing dying cell",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.793793+00:00"
+}

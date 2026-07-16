@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23865182",
+  "source_fingerprint": "5468f7889e45adc4c2a49ad6c5b999f2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23865182",
+    "efficacy-and-tolerability-of-amitriptylinoxide-in-the-treatment-of-chronic-tension-type-headache:-a-multi-centre-controlled-study."
+  ],
+  "key_phrases": [
+    "efficacy",
+    "tolerability",
+    "amitriptylinoxide",
+    "treatment",
+    "chronic",
+    "tension",
+    "type",
+    "headache"
+  ],
+  "summary_1l": "Efficacy and tolerability of amitriptylinoxide in the treatment of chronic tension-type headache: a multi-centre controlled study.",
+  "query_hits": [],
+  "embed_text": "23865182 Efficacy and tolerability of amitriptylinoxide in the treatment of chronic tension-type headache: a multi-centre controlled study. science scifact Amitriptyline is the medication of first choice in the treatment of chronic tension-type headache. In 197 patients with chronic tension-type headache (87M and 110F with a mean age of 38 +/- 13 (18-68)) efficacy and tolerability of 60-90 mg… 23865182 efficacy-and-tolerability-of-amitriptylinoxide-in-the-treatment-of-chronic-tension-type-headache:-a-multi-centre-controlled-study. efficacy tolerability amitriptylinoxide treatment chronic tension type headache Efficacy and tolerability of amitriptylinoxide in the treatment of chronic tension-type headache: a multi-centre controlled study. Efficacy and tolerability of amitriptylinoxide in the treatment of chronic tension-type headache: a multi-centre controlled study. Amitriptyline is the medication of first choice in the treatment of chronic tension-type headache. In 197 patients with chronic tension-type headache (87M and 110F with a mean age of 38 +/- 13 (18-68)) efficacy and tolerability of 60-90 mg amitriptylinoxide (AO) were compared with 50-75 mg amitriptyline (AM) and placebo (PL) in a double-blind, parallel-group trial consisting of a four weeks' baseline phase and 12 weeks of treatment. The primary study endpoint was a reduction of at least 50% of the product of headache duration and frequency and a reduction of at least 50% in headache intensity. Statistics used were Fisher's exact test and analysis of variance. N",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.292306+00:00"
+}

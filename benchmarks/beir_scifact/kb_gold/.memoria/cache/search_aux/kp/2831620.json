@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2831620",
+  "source_fingerprint": "9bbc5844b016eb3d12829bc02a73f2f4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2831620",
+    "protein-lysine-acetylated/deacetylated-enzymes-and-the-metabolism-related-diseases"
+  ],
+  "key_phrases": [
+    "protein",
+    "lysine",
+    "acetylated",
+    "deacetylated",
+    "enzymes",
+    "metabolism",
+    "related",
+    "diseases"
+  ],
+  "summary_1l": "Lysine acetylation is a reversible posttranslational modifcation, an epigenetic phenomenon, referred to as transfer o",
+  "query_hits": [],
+  "embed_text": "2831620 Protein Lysine Acetylated/Deacetylated Enzymes and the Metabolism-Related Diseases science scifact Lysine acetylation is a reversible posttranslational modifcation, an epigenetic phenomenon, referred to as transfer of an acetyl group from acetyl CoA to lysine e- amino group of targeted protein, which is modulated by acetyltransferases… 2831620 protein-lysine-acetylated/deacetylated-enzymes-and-the-metabolism-related-diseases protein lysine acetylated deacetylated enzymes metabolism related diseases Lysine acetylation is a reversible posttranslational modifcation, an epigenetic phenomenon, referred to as transfer o Protein Lysine Acetylated/Deacetylated Enzymes and the Metabolism-Related Diseases Lysine acetylation is a reversible posttranslational modifcation, an epigenetic phenomenon, referred to as transfer of an acetyl group from acetyl CoA to lysine e- amino group of targeted protein, which is modulated by acetyltransferases (histone/ lysine (K) acetyltransferases, HATs/KATs) and deacetylases (histone/lysine (K) deacetylases, HDACs/KDACs). Lysine acetylation regulates various metabolic processes, such as fatty acid oxidation, Krebs cycle, oxidative phosphorylation, angiogenesis and so on. Thus disorders of lysine acetylation may be correlated with obesity, diabetes and cardiovascular disease, which are termed as the metabolic complication. With accumulating studies on proteomic acetylation, lysi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.843963+00:00"
+}

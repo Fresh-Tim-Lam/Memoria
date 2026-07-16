@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9171913",
+  "source_fingerprint": "49076526a0c1d5a577b0a71ba349e8ca",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9171913",
+    "risk-of-breast-cancer-in-relation-to-blood-lipids:-a-prospective-study-of-31,209-norwegian-women"
+  ],
+  "key_phrases": [
+    "risk",
+    "breast",
+    "cancer",
+    "relation",
+    "blood",
+    "lipids",
+    "prospective",
+    "study"
+  ],
+  "summary_1l": "In this prospective study, the relationship between blood lipids and breast cancer risk was examined.",
+  "query_hits": [],
+  "embed_text": "9171913 Risk of breast cancer in relation to blood lipids: a prospective study of 31,209 Norwegian women science scifact In this prospective study, the relationship between blood lipids and breast cancer risk was examined. Between 1977 and 1983, 31,209 Norwegian women, 20 to 54 years of age, attended a health screening carried out by the Norwegian National… 9171913 risk-of-breast-cancer-in-relation-to-blood-lipids:-a-prospective-study-of-31,209-norwegian-women risk breast cancer relation blood lipids prospective study In this prospective study, the relationship between blood lipids and breast cancer risk was examined. Risk of breast cancer in relation to blood lipids: a prospective study of 31,209 Norwegian women In this prospective study, the relationship between blood lipids and breast cancer risk was examined. Between 1977 and 1983, 31,209 Norwegian women, 20 to 54 years of age, attended a health screening carried out by the Norwegian National Health Screening Services. The screening consisted of a questionnaire, anthropometric measurements, and nonfasting blood drawn for analysis of total serum cholesterol (TC), triglyceride (TG), and high density lipoprotein (HDL) cholesterol. Low density lipoprotein (LDL) cholesterol was calculated by the Friedewald's formula. During the seven to 13 years of follow-up, 302 breast cancer cases were identified by linkage to the Norwegian Cancer Registry. After adjus",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.337270+00:00"
+}

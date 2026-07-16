@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8536018",
+  "source_fingerprint": "622136f4cbddac4e5a8ee4f62f6d0349",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8536018",
+    "detection-and-function-of-nitric-oxide-during-the-hypersensitive-response-in-arabidopsis-thaliana:-where-there's-a-will-there's-a-way."
+  ],
+  "key_phrases": [
+    "detection",
+    "function",
+    "nitric",
+    "oxide",
+    "during",
+    "hypersensitive",
+    "response",
+    "arabidopsis"
+  ],
+  "summary_1l": "Detection and function of nitric oxide during the hypersensitive response in Arabidopsis thaliana: where there's a will there's a way.",
+  "query_hits": [],
+  "embed_text": "8536018 Detection and function of nitric oxide during the hypersensitive response in Arabidopsis thaliana: where there's a will there's a way. science scifact Nitric oxide (NO) was identified as a key player in plant defence responses approximately 20 years ago and a large body of evidence has accumulated since then supporting its role as a signalling molecule. However, there are many… 8536018 detection-and-function-of-nitric-oxide-during-the-hypersensitive-response-in-arabidopsis-thaliana:-where-there's-a-will-there's-a-way. detection function nitric oxide during hypersensitive response arabidopsis Detection and function of nitric oxide during the hypersensitive response in Arabidopsis thaliana: where there's a will there's a way. Detection and function of nitric oxide during the hypersensitive response in Arabidopsis thaliana: where there's a will there's a way. Nitric oxide (NO) was identified as a key player in plant defence responses approximately 20 years ago and a large body of evidence has accumulated since then supporting its role as a signalling molecule. However, there are many discrepancies in current NO detection assays and the enzymatic pathways responsible for its synthesis have yet to be determined. This has provoked strong debates concerning the function of NO in plants, even questioning its existence in planta. Here we gather data obtained using the model pathosystem Arabidopsis/Pseudomonas, which confirms the production of NO during the hypersensitive response and supports is role as a trigger of h",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.953315+00:00"
+}

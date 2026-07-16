@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11840194",
+  "source_fingerprint": "bde2ba360e2fb51c2eddddc43e0b9bc8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11840194",
+    "differentiation-of-human-induced-pluripotent-stem-cells-into-smooth-muscle-cells:-two-novel-protocols"
+  ],
+  "key_phrases": [
+    "differentiation",
+    "human",
+    "induced",
+    "pluripotent",
+    "stem",
+    "cells",
+    "into",
+    "smooth"
+  ],
+  "summary_1l": "Conventional protocols for differentiating human induced-pluripotent stem cells (hiPSCs) into smoo",
+  "query_hits": [],
+  "embed_text": "11840194 Differentiation of Human Induced-Pluripotent Stem Cells into Smooth-Muscle Cells: Two Novel Protocols science scifact Conventional protocols for differentiating human induced-pluripotent stem cells (hiPSCs) into smooth-muscle cells (SMCs) can be inefficient and generally fail to yield cells with a specific SMC phenotype (i.e., contractile or synthetic… 11840194 differentiation-of-human-induced-pluripotent-stem-cells-into-smooth-muscle-cells:-two-novel-protocols differentiation human induced pluripotent stem cells into smooth Conventional protocols for differentiating human induced-pluripotent stem cells (hiPSCs) into smoo Differentiation of Human Induced-Pluripotent Stem Cells into Smooth-Muscle Cells: Two Novel Protocols Conventional protocols for differentiating human induced-pluripotent stem cells (hiPSCs) into smooth-muscle cells (SMCs) can be inefficient and generally fail to yield cells with a specific SMC phenotype (i.e., contractile or synthetic SMCs). Here, we present two novel hiPSC-SMC differentiation protocols that yield SMCs with predominantly contractile or synthetic phenotypes. Flow cytometry analyses of smooth-muscle actin (SMA) expression indicated that ~45% of the cells obtained with each protocol assumed an SMC phenotype, and that the populations could be purified to ~95% via metabolic selection. Assessments of cellular mRNA and/or protein levels indicated that SMA, myosin heavy chain II,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:07.193459+00:00"
+}

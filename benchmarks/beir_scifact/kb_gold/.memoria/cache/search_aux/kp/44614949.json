@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "44614949",
+  "source_fingerprint": "af905ee3c55028e703df504d3d1a1f07",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "44614949"
+  ],
+  "key_phrases": [
+    "skeletal",
+    "muscle",
+    "interleukin",
+    "regulates",
+    "metabolic",
+    "factors",
+    "iwat",
+    "during"
+  ],
+  "summary_1l": "OBJECTIVE To investigate the role of skeletal muscle (SkM) interleukin (IL)-6 in the regulation of ad",
+  "query_hits": [],
+  "embed_text": "44614949 Skeletal muscle interleukin‐6 regulates metabolic factors in iWAT during HFD and exercise training science scifact OBJECTIVE To investigate the role of skeletal muscle (SkM) interleukin (IL)-6 in the regulation of adipose tissue metabolism. METHODS Muscle-specific IL-6 knockout (IL-6 MKO) and IL-6(loxP/loxP) (Floxed) mice were subjected to standard… 44614949 skeletal muscle interleukin regulates metabolic factors iwat during OBJECTIVE To investigate the role of skeletal muscle (SkM) interleukin (IL)-6 in the regulation of ad Skeletal muscle interleukin‐6 regulates metabolic factors in iWAT during HFD and exercise training OBJECTIVE To investigate the role of skeletal muscle (SkM) interleukin (IL)-6 in the regulation of adipose tissue metabolism. METHODS Muscle-specific IL-6 knockout (IL-6 MKO) and IL-6(loxP/loxP) (Floxed) mice were subjected to standard rodent diet (Chow), high-fat diet (HFD), or HFD in combination with exercise training (HFD ExTr) for 16 weeks. RESULTS Total fat mass increased (P < 0.05) in both genotypes with HFD. However, HFD IL-6 MKO mice had lower (P < 0.05) inguinal adipose tissue (iWAT) mass than HFD Floxed mice. Accordingly, iWAT glucose transporter 4 (GLUT4) protein content, 5'AMP activated protein kinase (AMPK)(Thr172) phosphorylation, and fatty acid synthase (FAS) mRNA content were",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.607048+00:00"
+}

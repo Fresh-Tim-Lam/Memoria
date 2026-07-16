@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "42950029",
+  "source_fingerprint": "27637a63ac4b497406f885f43c80531c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "42950029",
+    "diagnosis-of-rotator-cuff-tears."
+  ],
+  "key_phrases": [
+    "diagnosis",
+    "rotator",
+    "cuff",
+    "tears",
+    "account",
+    "almost",
+    "50%",
+    "major"
+  ],
+  "summary_1l": "Diagnosis of rotator cuff tears.",
+  "query_hits": [],
+  "embed_text": "42950029 Diagnosis of rotator cuff tears. science scifact Rotator cuff tears account for almost 50% of major shoulder injuries but are sometimes difficult to diagnose. To aid diagnosis, we did a prospective study, comparing results of 23 clinical tests from 400 patients with and without rotator… 42950029 diagnosis-of-rotator-cuff-tears. diagnosis rotator cuff tears account almost 50% major Diagnosis of rotator cuff tears. Diagnosis of rotator cuff tears. Rotator cuff tears account for almost 50% of major shoulder injuries but are sometimes difficult to diagnose. To aid diagnosis, we did a prospective study, comparing results of 23 clinical tests from 400 patients with and without rotator cuff tears. Three simple tests were predictive for rotator cuff tear: supraspinatus weakness, weakness in external rotation, and impingement. When all three were positive, or if two tests were positive and the patient was aged 60 or older, the individual had a 98% chance of having a rotator cuff tear; combined absence of these features excluded this diagnosis.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.352903+00:00"
+}

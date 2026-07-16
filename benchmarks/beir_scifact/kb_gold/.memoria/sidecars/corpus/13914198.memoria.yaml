@@ -1,0 +1,21 @@
+schema_version: 1
+file: corpus/13914198.md
+knowledge_points:
+- id: '13914198'
+  name: Haplotype estimation using sequencing reads.
+  tags:
+  - science
+  - scifact
+  description: High-throughput sequencing technologies produce short sequence reads
+    that can contain phase information if they span two or more heterozygote genotypes.
+    This information is not routinely used by current methods that infer haplotypes
+    from…
+  range:
+    start:
+      line_hint: 1
+      snippet: '# Haplotype estimation using sequencing reads.'
+    end:
+      line_hint: 3
+      snippet: reads with high error rates (5-20 kb read with 4%-15% error per base),
+        phasing performance was substantially improved.
+links: []

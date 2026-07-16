@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8659426",
+  "source_fingerprint": "5603a7258e81a22a90fb38a77c95b1bc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8659426",
+    "cancer-chemoprevention:-a-rapidly-evolving-field"
+  ],
+  "key_phrases": [
+    "cancer",
+    "chemoprevention",
+    "rapidly",
+    "evolving",
+    "field",
+    "involves",
+    "chronic",
+    "administration"
+  ],
+  "summary_1l": "Cancer chemoprevention involves the chronic administration of a synthetic, natural or biological agent to reduce or delay the occurrence of malignancy.",
+  "query_hits": [],
+  "embed_text": "8659426 Cancer chemoprevention: a rapidly evolving field science scifact Cancer chemoprevention involves the chronic administration of a synthetic, natural or biological agent to reduce or delay the occurrence of malignancy. The potential value of this approach has been demonstrated with trials in breast,… 8659426 cancer-chemoprevention:-a-rapidly-evolving-field cancer chemoprevention rapidly evolving field involves chronic administration Cancer chemoprevention involves the chronic administration of a synthetic, natural or biological agent to reduce or delay the occurrence of malignancy. Cancer chemoprevention: a rapidly evolving field Cancer chemoprevention involves the chronic administration of a synthetic, natural or biological agent to reduce or delay the occurrence of malignancy. The potential value of this approach has been demonstrated with trials in breast, prostate and colon cancer. The paradigm for developing new chemopreventive agents has changed markedly in the last decade and now involves extensive preclinical mechanistic evaluation of agents before clinical trials are instituted and a focus on defining biomarkers of activity that can be used as early predictors of efficacy. This review will summarise the current status of the field of chemoprevention and highlight potential new developments.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.368106+00:00"
+}

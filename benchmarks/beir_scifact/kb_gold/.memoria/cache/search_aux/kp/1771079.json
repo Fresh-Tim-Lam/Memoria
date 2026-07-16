@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1771079",
+  "source_fingerprint": "c33f2c6accadda0c2a6f3fbef947f2f3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1771079",
+    "synaptic-islands-defined-by-the-territory-of-a-single-astrocyte."
+  ],
+  "key_phrases": [
+    "synaptic",
+    "islands",
+    "defined",
+    "by",
+    "territory",
+    "single",
+    "astrocyte",
+    "mammalian"
+  ],
+  "summary_1l": "Synaptic islands defined by the territory of a single astrocyte.",
+  "query_hits": [],
+  "embed_text": "1771079 Synaptic islands defined by the territory of a single astrocyte. science scifact In the mammalian brain, astrocytes modulate neuronal function, in part, by synchronizing neuronal firing and coordinating synaptic networks. Little, however, is known about how this is accomplished from a structural standpoint. To… 1771079 synaptic-islands-defined-by-the-territory-of-a-single-astrocyte. synaptic islands defined by territory single astrocyte mammalian Synaptic islands defined by the territory of a single astrocyte. Synaptic islands defined by the territory of a single astrocyte. In the mammalian brain, astrocytes modulate neuronal function, in part, by synchronizing neuronal firing and coordinating synaptic networks. Little, however, is known about how this is accomplished from a structural standpoint. To investigate the structural basis of astrocyte-mediated neuronal synchrony and synaptic coordination, the three-dimensional relationships between cortical astrocytes and neurons was investigated. Using a transgenic and viral approach to label astrocytes with enhanced green fluorescent protein, we performed a three-dimensional reconstruction of astrocytes from tissue sections or live animals in vivo. We found that cortical astrocytes occupy nonoverlapping territories similar to those described in the",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.202211+00:00"
+}

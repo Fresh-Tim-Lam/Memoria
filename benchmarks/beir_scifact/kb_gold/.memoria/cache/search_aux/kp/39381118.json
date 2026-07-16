@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "39381118",
+  "source_fingerprint": "81820e13a2c031fbdb8b8b8b0997d332",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "39381118",
+    "at-the-gates-of-death."
+  ],
+  "key_phrases": [
+    "at",
+    "gates",
+    "death",
+    "apoptosis",
+    "that",
+    "proceeds",
+    "via",
+    "mitochondrial"
+  ],
+  "summary_1l": "At the gates of death.",
+  "query_hits": [],
+  "embed_text": "39381118 At the gates of death. science scifact Apoptosis that proceeds via the mitochondrial pathway involves mitochondrial outer membrane permeabilization (MOMP), responsible for the release of cytochrome c and other proteins of the mitochondrial intermembrane space. This essential… 39381118 at-the-gates-of-death. at gates death apoptosis that proceeds via mitochondrial At the gates of death. At the gates of death. Apoptosis that proceeds via the mitochondrial pathway involves mitochondrial outer membrane permeabilization (MOMP), responsible for the release of cytochrome c and other proteins of the mitochondrial intermembrane space. This essential step is controlled and mediated by proteins of the Bcl-2 family. The proapoptotic proteins Bax and Bak are required for MOMP, while the antiapoptotic Bcl-2 proteins, including Bcl-2, Bcl-xL, Mcl-1, and others, prevent MOMP. Different proapoptotic BH3-only proteins act to interfere with the function of the antiapoptotic Bcl-2 members and/or activate Bax and Bak. Here, we discuss an emerging view, proposed by Certo et al. in this issue of Cancer Cell, on how these interactions result in MOMP and apoptosis.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.528034+00:00"
+}

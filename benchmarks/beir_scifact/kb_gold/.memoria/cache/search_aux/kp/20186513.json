@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20186513",
+  "source_fingerprint": "11cf883a0d566c3286a15ab29af1ada9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20186513",
+    "the-american-rheumatism-association-1987-revised-criteria-for-the-classification-of-rheumatoid-arthritis."
+  ],
+  "key_phrases": [
+    "american",
+    "rheumatism",
+    "association",
+    "1987",
+    "revised",
+    "criteria",
+    "classification",
+    "rheumatoid"
+  ],
+  "summary_1l": "The American Rheumatism Association 1987 revised criteria for the classification of rheumatoid arthritis.",
+  "query_hits": [],
+  "embed_text": "20186513 The American Rheumatism Association 1987 revised criteria for the classification of rheumatoid arthritis. science scifact The revised criteria for the classification of rheumatoid arthritis (RA) were formulated from a computerized analysis of 262 contemporary, consecutively studied patients with RA and 262 control subjects with rheumatic diseases other than… 20186513 the-american-rheumatism-association-1987-revised-criteria-for-the-classification-of-rheumatoid-arthritis. american rheumatism association 1987 revised criteria classification rheumatoid The American Rheumatism Association 1987 revised criteria for the classification of rheumatoid arthritis. The American Rheumatism Association 1987 revised criteria for the classification of rheumatoid arthritis. The revised criteria for the classification of rheumatoid arthritis (RA) were formulated from a computerized analysis of 262 contemporary, consecutively studied patients with RA and 262 control subjects with rheumatic diseases other than RA (non-RA). The new criteria are as follows: 1) morning stiffness in and around joints lasting at least 1 hour before maximal improvement; 2) soft tissue swelling (arthritis) of 3 or more joint areas observed by a physician; 3) swelling (arthritis) of the proximal interphalangeal, metacarpophalangeal, or wrist joints; 4) symmetric swelling (arthritis); 5) rheumatoid nodules; 6) the presence of rheumatoid factor; and 7) radiographic erosions and/or per",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.771867+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3572885",
+  "source_fingerprint": "7edb3a94ae32cf961c2f942cae7ca76a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3572885",
+    "high-somatic-mutation-and-neoantigen-burden-are-correlated-with-decreased-progression-free-survival-in-multiple-myeloma"
+  ],
+  "key_phrases": [
+    "high",
+    "somatic",
+    "mutation",
+    "neoantigen",
+    "burden",
+    "correlated",
+    "with",
+    "decreased"
+  ],
+  "summary_1l": "Tumor-specific mutations can result in immunogenic neoantigens, both of which ha",
+  "query_hits": [],
+  "embed_text": "3572885 High somatic mutation and neoantigen burden are correlated with decreased progression-free survival in multiple myeloma science scifact Tumor-specific mutations can result in immunogenic neoantigens, both of which have been correlated with responsiveness to immune checkpoint inhibitors in highly mutagenic cancers. However, early results of single-agent checkpoint… 3572885 high-somatic-mutation-and-neoantigen-burden-are-correlated-with-decreased-progression-free-survival-in-multiple-myeloma high somatic mutation neoantigen burden correlated with decreased Tumor-specific mutations can result in immunogenic neoantigens, both of which ha High somatic mutation and neoantigen burden are correlated with decreased progression-free survival in multiple myeloma Tumor-specific mutations can result in immunogenic neoantigens, both of which have been correlated with responsiveness to immune checkpoint inhibitors in highly mutagenic cancers. However, early results of single-agent checkpoint inhibitors in multiple myeloma (MM) have been underwhelming. Therefore, we sought to understand the relationship between mutation and neoantigen landscape of MM patients and responsiveness to therapies. Somatic mutation burden, neoantigen load, and response to therapy were determined using interim data from the MMRF CoMMpass study (NCT01454297) on 664 MM patients. In this population, the mean somatic and missense mutation loads were 405.84(s=608.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.549812+00:00"
+}

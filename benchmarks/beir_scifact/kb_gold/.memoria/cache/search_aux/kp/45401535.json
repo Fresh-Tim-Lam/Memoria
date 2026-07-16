@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "45401535",
+  "source_fingerprint": "56363a697e3b8d255a9eaa8c8b7abbf5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "45401535",
+    "candida-albicans-staphylococcus-aureus-polymicrobial-peritonitis-modulates-host-innate-immunity."
+  ],
+  "key_phrases": [
+    "candida",
+    "albicans",
+    "staphylococcus",
+    "aureus",
+    "polymicrobial",
+    "peritonitis",
+    "modulates",
+    "host"
+  ],
+  "summary_1l": "Candida albicans-Staphylococcus aureus polymicrobial peritonitis modulates host innate immunity.",
+  "query_hits": [],
+  "embed_text": "45401535 Candida albicans-Staphylococcus aureus polymicrobial peritonitis modulates host innate immunity. science scifact Despite advances in medical device fabrication and antimicrobial treatment therapies, fungal-bacterial polymicrobial peritonitis remains a serious complication for surgery patients, those on peritoneal dialysis, and the critically ill.… 45401535 candida-albicans-staphylococcus-aureus-polymicrobial-peritonitis-modulates-host-innate-immunity. candida albicans staphylococcus aureus polymicrobial peritonitis modulates host Candida albicans-Staphylococcus aureus polymicrobial peritonitis modulates host innate immunity. Candida albicans-Staphylococcus aureus polymicrobial peritonitis modulates host innate immunity. Despite advances in medical device fabrication and antimicrobial treatment therapies, fungal-bacterial polymicrobial peritonitis remains a serious complication for surgery patients, those on peritoneal dialysis, and the critically ill. Using a murine model of peritonitis, we have demonstrated that monomicrobial infection with Candida albicans or Staphylococcus aureus is nonlethal. However, coinfection with these same doses leads to a 40% mortality rate and increased microbial burden in the spleen and kidney by day 1 postinfection. Using a multiplex enzyme-linked immunosorbent assay, we have also identified a unique subset of innate proinflammatory cytokines (interleukin-6, granulocyte colony-st",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.327187+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17775228",
+  "source_fingerprint": "1003c1220b34f4904caae76032044415",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17775228",
+    "loss-of-imprinting-in-colorectal-cancer-linked-to-hypomethylation-of-h19-and-igf2."
+  ],
+  "key_phrases": [
+    "loss",
+    "imprinting",
+    "colorectal",
+    "cancer",
+    "linked",
+    "hypomethylation",
+    "h19",
+    "igf2"
+  ],
+  "summary_1l": "Loss of imprinting in colorectal cancer linked to hypomethylation of H19 and IGF2.",
+  "query_hits": [],
+  "embed_text": "17775228 Loss of imprinting in colorectal cancer linked to hypomethylation of H19 and IGF2. science scifact Epigenetic alterations in human cancers include global DNA hypomethylation,gene hypomethylation and promoter hypermethylation, and loss of imprinting (LOI) of the insulin-like growth factor-II gene (IGF2). A mechanism for LOI described… 17775228 loss-of-imprinting-in-colorectal-cancer-linked-to-hypomethylation-of-h19-and-igf2. loss imprinting colorectal cancer linked hypomethylation h19 igf2 Loss of imprinting in colorectal cancer linked to hypomethylation of H19 and IGF2. Loss of imprinting in colorectal cancer linked to hypomethylation of H19 and IGF2. Epigenetic alterations in human cancers include global DNA hypomethylation,gene hypomethylation and promoter hypermethylation, and loss of imprinting (LOI) of the insulin-like growth factor-II gene (IGF2). A mechanism for LOI described previously is hypermethylation of a differentially methylated region (DMR) upstream of the H19 gene, allowing activation of the normally silent maternal allele of IGF2. Here we show that this mechanism does not apply to colorectal cancers, which show hypomethylation of the H19 DMR as well as a DMR upstream of exon 3 of IGF2. This hypomethylation is found in both colorectal cancers and normal mucosa from the same patients, and in cell lines with somatic cell knockout of DNA met",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.261863+00:00"
+}

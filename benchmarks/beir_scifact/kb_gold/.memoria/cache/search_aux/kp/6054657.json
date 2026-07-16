@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6054657",
+  "source_fingerprint": "b265e2b1d009fbc7986b430bd68b9815",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6054657",
+    "highly-efficient-mirna-mediated-reprogramming-of-mouse-and-human-somatic-cells-to-pluripotency."
+  ],
+  "key_phrases": [
+    "highly",
+    "efficient",
+    "mirna",
+    "mediated",
+    "reprogramming",
+    "mouse",
+    "human",
+    "somatic"
+  ],
+  "summary_1l": "Highly efficient miRNA-mediated reprogramming of mouse and human somatic cells to pluripotency.",
+  "query_hits": [],
+  "embed_text": "6054657 Highly efficient miRNA-mediated reprogramming of mouse and human somatic cells to pluripotency. science scifact Transcription factor-based cellular reprogramming has opened the way to converting somatic cells to a pluripotent state, but has faced limitations resulting from the requirement for transcription factors and the relative inefficiency of… 6054657 highly-efficient-mirna-mediated-reprogramming-of-mouse-and-human-somatic-cells-to-pluripotency. highly efficient mirna mediated reprogramming mouse human somatic Highly efficient miRNA-mediated reprogramming of mouse and human somatic cells to pluripotency. Highly efficient miRNA-mediated reprogramming of mouse and human somatic cells to pluripotency. Transcription factor-based cellular reprogramming has opened the way to converting somatic cells to a pluripotent state, but has faced limitations resulting from the requirement for transcription factors and the relative inefficiency of the process. We show here that expression of the miR302/367 cluster rapidly and efficiently reprograms mouse and human somatic cells to an iPSC state without a requirement for exogenous transcription factors. This miRNA-based reprogramming approach is two orders of magnitude more efficient than standard Oct4/Sox2/Klf4/Myc-mediated methods. Mouse and human miR302/367 iPSCs display similar characteristics to Oct4/Sox2/Klf4/Myc-iPSCs, including pluripotency marker e",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.797217+00:00"
+}

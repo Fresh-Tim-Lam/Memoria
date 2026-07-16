@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "54440",
+  "source_fingerprint": "8b0328e1ea26cc4bb11bc3190ffe1607",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "54440",
+    "empirical-bayesian-models-for-analysing-molecular-serotyping-microarrays"
+  ],
+  "key_phrases": [
+    "empirical",
+    "bayesian",
+    "models",
+    "analysing",
+    "molecular",
+    "serotyping",
+    "microarrays",
+    "background"
+  ],
+  "summary_1l": "BACKGROUND Microarrays offer great potential as a platform for molecular diagnostics, testing clinical samples for the presence",
+  "query_hits": [],
+  "embed_text": "54440 Empirical Bayesian models for analysing molecular serotyping microarrays science scifact BACKGROUND Microarrays offer great potential as a platform for molecular diagnostics, testing clinical samples for the presence of numerous biomarkers in highly multiplexed assays. In this study applied to infectious diseases, data from a… 54440 empirical-bayesian-models-for-analysing-molecular-serotyping-microarrays empirical bayesian models analysing molecular serotyping microarrays background BACKGROUND Microarrays offer great potential as a platform for molecular diagnostics, testing clinical samples for the presence Empirical Bayesian models for analysing molecular serotyping microarrays BACKGROUND Microarrays offer great potential as a platform for molecular diagnostics, testing clinical samples for the presence of numerous biomarkers in highly multiplexed assays. In this study applied to infectious diseases, data from a microarray designed for molecular serotyping of Streptococcus pneumoniae was used, identifying the presence of any one of 91 known pneumococcal serotypes from DNA extracts. This microarray incorporated oligonucleotide probes for all known capsular polysaccharide synthesis genes and required a statistical analysis of the microarray intensity data to determine which serotype, or combination of serotypes, were present within a sample based on the combination of genes detected. RESULTS W",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.280539+00:00"
+}

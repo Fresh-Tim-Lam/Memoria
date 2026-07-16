@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24512064",
+  "source_fingerprint": "16200a57a4b1409f1ba9fb7a7d4a3244",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24512064",
+    "htlv-i/ii-associated-disease-in-england-and-wales,-1993-7:-retrospective-review-of-serology-requests."
+  ],
+  "key_phrases": [
+    "htlv",
+    "ii",
+    "associated",
+    "disease",
+    "england",
+    "wales",
+    "1993",
+    "retrospective"
+  ],
+  "summary_1l": "HTLV-I/II associated disease in England and Wales, 1993-7: retrospective review of serology requests.",
+  "query_hits": [],
+  "embed_text": "24512064 HTLV-I/II associated disease in England and Wales, 1993-7: retrospective review of serology requests. science scifact Apart from HIV two exogenous retroviruses (human T cell leukaemia viruses type I (HTLV-I) and type II (HTLV-II)) infect humans. HTLV-I infection is endemic in Japan, the Caribbean, Africa, and Melanesia and is found among immigrants from… 24512064 htlv-i/ii-associated-disease-in-england-and-wales,-1993-7:-retrospective-review-of-serology-requests. htlv ii associated disease england wales 1993 retrospective HTLV-I/II associated disease in England and Wales, 1993-7: retrospective review of serology requests. HTLV-I/II associated disease in England and Wales, 1993-7: retrospective review of serology requests. Apart from HIV two exogenous retroviruses (human T cell leukaemia viruses type I (HTLV-I) and type II (HTLV-II)) infect humans. HTLV-I infection is endemic in Japan, the Caribbean, Africa, and Melanesia and is found among immigrants from these regions in Europe. HTLV-I infection is associated with a 1-5% lifetime risk of adult T cell leukaemia/lymphoma, 1 a 0.25% lifetime risk of HTLV-I associated myelopathy, 2 and other inflammatory conditions (uveitis, alveolitis, and arthritis).1 HTLV-II infection is endemic in some native American and African peoples and among injecting drug users and has been associated with neurological disease.1 Between 1986 and 1992, 100 cases of HTLV-I associated",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:12.577710+00:00"
+}

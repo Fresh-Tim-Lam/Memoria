@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16787954",
+  "source_fingerprint": "20e23ce744e4a533be02d8adf7cb4c67",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16787954",
+    "the-association-between-sterilizing-activity-and-drug-distribution-into-tuberculosis-lesions"
+  ],
+  "key_phrases": [
+    "association",
+    "between",
+    "sterilizing",
+    "activity",
+    "drug",
+    "distribution",
+    "into",
+    "tuberculosis"
+  ],
+  "summary_1l": "Finding new treatment-shortening antibiotics to improve cure rates and curb the alarming emergence of drug",
+  "query_hits": [],
+  "embed_text": "16787954 The association between sterilizing activity and drug distribution into tuberculosis lesions science scifact Finding new treatment-shortening antibiotics to improve cure rates and curb the alarming emergence of drug resistance is the major objective of tuberculosis (TB) drug development. Using a matrix-assisted laser desorption/ionization (MALDI)… 16787954 the-association-between-sterilizing-activity-and-drug-distribution-into-tuberculosis-lesions association between sterilizing activity drug distribution into tuberculosis Finding new treatment-shortening antibiotics to improve cure rates and curb the alarming emergence of drug The association between sterilizing activity and drug distribution into tuberculosis lesions Finding new treatment-shortening antibiotics to improve cure rates and curb the alarming emergence of drug resistance is the major objective of tuberculosis (TB) drug development. Using a matrix-assisted laser desorption/ionization (MALDI) mass spectrometry imaging suite in a biosafety containment facility, we show that the key sterilizing drugs rifampicin and pyrazinamide efficiently penetrate the sites of TB infection in lung lesions. Rifampicin even accumulates in necrotic caseum, a critical lesion site where persisting tubercle bacilli reside. In contrast, moxifloxacin, which is active in vitro against a subpopulation of Mycobacterium tuberculosis that persists in specific niches under drug pre",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.830653+00:00"
+}

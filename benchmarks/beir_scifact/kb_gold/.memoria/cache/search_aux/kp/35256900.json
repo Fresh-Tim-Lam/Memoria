@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "35256900",
+  "source_fingerprint": "e3a40636c8d1f8733f6d0b30cb63d963",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "35256900",
+    "subcapsular-encounter-and-complement-dependent-transport-of-immune-complexes-by-lymph-node-b-cells"
+  ],
+  "key_phrases": [
+    "subcapsular",
+    "encounter",
+    "complement",
+    "dependent",
+    "transport",
+    "immune",
+    "complexes",
+    "by"
+  ],
+  "summary_1l": "The mechanism of B cell–antigen encounter in lymphoid tissues is incompletely understood.",
+  "query_hits": [],
+  "embed_text": "35256900 Subcapsular encounter and complement-dependent transport of immune complexes by lymph node B cells science scifact The mechanism of B cell–antigen encounter in lymphoid tissues is incompletely understood. It is also unclear how immune complexes are transported to follicular dendritic cells. Here, using real-time two-photon microscopy we noted rapid… 35256900 subcapsular-encounter-and-complement-dependent-transport-of-immune-complexes-by-lymph-node-b-cells subcapsular encounter complement dependent transport immune complexes by The mechanism of B cell–antigen encounter in lymphoid tissues is incompletely understood. Subcapsular encounter and complement-dependent transport of immune complexes by lymph node B cells The mechanism of B cell–antigen encounter in lymphoid tissues is incompletely understood. It is also unclear how immune complexes are transported to follicular dendritic cells. Here, using real-time two-photon microscopy we noted rapid delivery of immune complexes through the lymph to macrophages in the lymph node subcapsular sinus. B cells captured immune complexes by a complement receptor–dependent mechanism from macrophage processes that penetrated the follicle and transported the complexes to follicular dendritic cells. Furthermore, cognate B cells captured antigen-containing immune complexes from macrophage processes and migrated to the T zone. Our findings identify macrophages lining th",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.074380+00:00"
+}

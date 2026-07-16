@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4326318",
+  "source_fingerprint": "cf23d63dcf713f2920f8933374d3c667",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4326318",
+    "rejuvenation-of-aged-progenitor-cells-by-exposure-to-a-young-systemic-environment"
+  ],
+  "key_phrases": [
+    "rejuvenation",
+    "aged",
+    "progenitor",
+    "cells",
+    "by",
+    "exposure",
+    "young",
+    "systemic"
+  ],
+  "summary_1l": "The decline of tissue regenerative potential is a hallmark of ageing and may be due to age-related changes in tissue-s",
+  "query_hits": [],
+  "embed_text": "4326318 Rejuvenation of aged progenitor cells by exposure to a young systemic environment science scifact The decline of tissue regenerative potential is a hallmark of ageing and may be due to age-related changes in tissue-specific stem cells. A decline in skeletal muscle stem cell (satellite cell) activity due to a loss of Notch signalling… 4326318 rejuvenation-of-aged-progenitor-cells-by-exposure-to-a-young-systemic-environment rejuvenation aged progenitor cells by exposure young systemic The decline of tissue regenerative potential is a hallmark of ageing and may be due to age-related changes in tissue-s Rejuvenation of aged progenitor cells by exposure to a young systemic environment The decline of tissue regenerative potential is a hallmark of ageing and may be due to age-related changes in tissue-specific stem cells. A decline in skeletal muscle stem cell (satellite cell) activity due to a loss of Notch signalling results in impaired regeneration of aged muscle. The decline in hepatic progenitor cell proliferation owing to the formation of a complex involving cEBP-α and the chromatin remodelling factor brahma (Brm) inhibits the regenerative capacity of aged liver. To examine the influence of systemic factors on aged progenitor cells from these tissues, we established parabiotic pairings (that is, a shared circulatory system) between young and old mice (heterochronic parabioses), exposin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.729141+00:00"
+}

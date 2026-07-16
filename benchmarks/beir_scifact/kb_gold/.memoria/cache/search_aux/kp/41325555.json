@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "41325555",
+  "source_fingerprint": "096b64b83772867c15b44c5bf7684902",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "41325555",
+    "phosphoinositide-3-kinase-signalling--which-way-to-target?"
+  ],
+  "key_phrases": [
+    "phosphoinositide",
+    "kinase",
+    "signalling",
+    "--",
+    "which",
+    "way",
+    "target",
+    "abstract"
+  ],
+  "summary_1l": "Phosphoinositide 3-kinase signalling--which way to target?",
+  "query_hits": [],
+  "embed_text": "41325555 Phosphoinositide 3-kinase signalling--which way to target? science scifact Abstract Phosphoinositide 3-kinases (PI3Ks) are central to the control of cell growth, proliferation and survival, and drive the progression of tumours by activating phosphoinositide-dependent kinase, protein kinase B and the target of… 41325555 phosphoinositide-3-kinase-signalling--which-way-to-target? phosphoinositide kinase signalling -- which way target abstract Phosphoinositide 3-kinase signalling--which way to target? Phosphoinositide 3-kinase signalling--which way to target? Abstract Phosphoinositide 3-kinases (PI3Ks) are central to the control of cell growth, proliferation and survival, and drive the progression of tumours by activating phosphoinositide-dependent kinase, protein kinase B and the target of rapamycin. Other downstream effectors link PI3K to cell motility and the control of cardiovascular parameters. Current knowledge indicates that PI3Ks might qualify as drug targets for the treatment of cancer, chronic inflammation, allergy and cardiovascular failure. However, PI3Ks also modulate vital processes such as metabolic control and nutrient uptake. Here, mechanistic data and mouse phenotypic analyses are summarised, and the possible success of therapeutic inhibition of distinct PI3K isoforms",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.313518+00:00"
+}

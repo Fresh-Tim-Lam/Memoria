@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22049489",
+  "source_fingerprint": "5fe6340d1564cdf9dd924a24912e80c4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22049489",
+    "the-long-non-coding-rna-h19-derived-mir-675-modulates-human-gastric-cancer-cell-proliferation-by-targeting-tumor-suppressor-runx1."
+  ],
+  "key_phrases": [
+    "long",
+    "non",
+    "coding",
+    "rna",
+    "h19",
+    "derived",
+    "mir",
+    "675"
+  ],
+  "summary_1l": "The long non-coding RNA H19-derived miR-675 modulates human gastric cancer cell proliferation by targeting tumor suppressor RUNX1.",
+  "query_hits": [],
+  "embed_text": "22049489 The long non-coding RNA H19-derived miR-675 modulates human gastric cancer cell proliferation by targeting tumor suppressor RUNX1. science scifact The lncRNA H19 has been recently shown to be upregulated and play important roles in gastric cancer tumorigenesis. However, the precise molecular mechanism of H19 and its mature product miR-675 in the carcinogenesis of gastric cancer… 22049489 the-long-non-coding-rna-h19-derived-mir-675-modulates-human-gastric-cancer-cell-proliferation-by-targeting-tumor-suppressor-runx1. long non coding rna h19 derived mir 675 The long non-coding RNA H19-derived miR-675 modulates human gastric cancer cell proliferation by targeting tumor suppressor RUNX1. The long non-coding RNA H19-derived miR-675 modulates human gastric cancer cell proliferation by targeting tumor suppressor RUNX1. The lncRNA H19 has been recently shown to be upregulated and play important roles in gastric cancer tumorigenesis. However, the precise molecular mechanism of H19 and its mature product miR-675 in the carcinogenesis of gastric cancer remains unclear. In this study, we found that miR-675 was positively expressed with H19 and was a pivotal mediator in H19-induced gastric cancer cell growth promotion. Subsequently, the tumor suppressor Runt Domain Transcription Factor1 (RUNX1) was confirmed to be a direct target of miR-675 using a luciferase reporter assay and Western blotting analyses. A series of rescue assays indicated that RUNX1 mediated H19/miR-67-induced gas",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.171860+00:00"
+}

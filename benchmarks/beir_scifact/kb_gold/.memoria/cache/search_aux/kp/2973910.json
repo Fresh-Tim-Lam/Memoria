@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2973910",
+  "source_fingerprint": "208b7cea618f03f2f10456db9c6f5140",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2973910",
+    "endothelial-to-mesenchymal-transition-contributes-to-cardiac-fibrosis"
+  ],
+  "key_phrases": [
+    "endothelial",
+    "mesenchymal",
+    "transition",
+    "contributes",
+    "cardiac",
+    "fibrosis",
+    "associated",
+    "with"
+  ],
+  "summary_1l": "Cardiac fibrosis, associated with a decreased extent of microvasculature and with disruption of normal myocardial structures, resu",
+  "query_hits": [],
+  "embed_text": "2973910 Endothelial-to-mesenchymal transition contributes to cardiac fibrosis science scifact Cardiac fibrosis, associated with a decreased extent of microvasculature and with disruption of normal myocardial structures, results from excessive deposition of extracellular matrix, which is mediated by the recruitment of fibroblasts.… 2973910 endothelial-to-mesenchymal-transition-contributes-to-cardiac-fibrosis endothelial mesenchymal transition contributes cardiac fibrosis associated with Cardiac fibrosis, associated with a decreased extent of microvasculature and with disruption of normal myocardial structures, resu Endothelial-to-mesenchymal transition contributes to cardiac fibrosis Cardiac fibrosis, associated with a decreased extent of microvasculature and with disruption of normal myocardial structures, results from excessive deposition of extracellular matrix, which is mediated by the recruitment of fibroblasts. The source of these fibroblasts is unclear and specific anti-fibrotic therapies are not currently available. Here we show that cardiac fibrosis is associated with the emergence of fibroblasts originating from endothelial cells, suggesting an endothelial-mesenchymal transition (EndMT) similar to events that occur during formation of the atrioventricular cushion in the embryonic heart. Transforming growth factor-β1 (TGF-β1) induced endothelial cells to undergo EndMT, whereas bone morphogen",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.162595+00:00"
+}

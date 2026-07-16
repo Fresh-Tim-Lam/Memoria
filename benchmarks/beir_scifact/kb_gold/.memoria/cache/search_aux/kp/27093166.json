@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "27093166",
+  "source_fingerprint": "e3fea0f0a3ae79f9d41759cb347c1764",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27093166"
+  ],
+  "key_phrases": [
+    "ketamine",
+    "reduces",
+    "lps",
+    "induced",
+    "hmgb1",
+    "via",
+    "activation",
+    "nrf2"
+  ],
+  "summary_1l": "Ketamine reduces LPS-induced HMGB1 via activation of the Nrf2/HO-1 pathway and NF-κB suppression.",
+  "query_hits": [],
+  "embed_text": "27093166 Ketamine reduces LPS-induced HMGB1 via activation of the Nrf2/HO-1 pathway and NF-κB suppression. science scifact BACKGROUND Ketamine, as an anesthetic agent, has an anti-inflammatory effect. In the present study, we investigated whether ketamine inhibits release of high mobility group box 1 (HMGB1), a late-phase cytokine of sepsis, in… 27093166 ketamine reduces lps induced hmgb1 via activation nrf2 Ketamine reduces LPS-induced HMGB1 via activation of the Nrf2/HO-1 pathway and NF-κB suppression. Ketamine reduces LPS-induced HMGB1 via activation of the Nrf2/HO-1 pathway and NF-κB suppression. BACKGROUND Ketamine, as an anesthetic agent, has an anti-inflammatory effect. In the present study, we investigated whether ketamine inhibits release of high mobility group box 1 (HMGB1), a late-phase cytokine of sepsis, in lipopolysaccharide (LPS)-stimulated macrophages through heme oxygenase-1 (HO-1) induction. METHODS Macrophages were preincubated with various concentrations of ketamine and then treated with LPS (1 μg/mL). The cell culture supernatants were collected to measure inflammatory mediators (HMGB1, nitric oxide, tumor necrosis factor-α, and interleukin 1β) by enzyme-linked immunosorbent assay. Moreover, HO-1 protein expression, the phosphorylation and degradation of IκB-α, and the",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.465395+00:00"
+}

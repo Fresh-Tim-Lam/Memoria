@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "33387953",
+  "source_fingerprint": "3b6c269fd0e9c10c6f05d5dea5f85d50",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "33387953",
+    "mutations-in-g-protein-beta-subunits-promote-transformation-and-kinase-inhibitor-resistance"
+  ],
+  "key_phrases": [
+    "mutations",
+    "protein",
+    "beta",
+    "subunits",
+    "promote",
+    "transformation",
+    "kinase",
+    "inhibitor"
+  ],
+  "summary_1l": "Activating mutations in genes encoding G protein α (Gα) subunits occur in 4-5% of all human cancers, but onc",
+  "query_hits": [],
+  "embed_text": "33387953 Mutations in G protein beta subunits promote transformation and kinase inhibitor resistance science scifact Activating mutations in genes encoding G protein α (Gα) subunits occur in 4-5% of all human cancers, but oncogenic alterations in Gβ subunits have not been defined. Here we demonstrate that recurrent mutations in the Gβ proteins GNB1 and… 33387953 mutations-in-g-protein-beta-subunits-promote-transformation-and-kinase-inhibitor-resistance mutations protein beta subunits promote transformation kinase inhibitor Activating mutations in genes encoding G protein α (Gα) subunits occur in 4-5% of all human cancers, but onc Mutations in G protein beta subunits promote transformation and kinase inhibitor resistance Activating mutations in genes encoding G protein α (Gα) subunits occur in 4-5% of all human cancers, but oncogenic alterations in Gβ subunits have not been defined. Here we demonstrate that recurrent mutations in the Gβ proteins GNB1 and GNB2 confer cytokine-independent growth and activate canonical G protein signaling. Multiple mutations in GNB1 affect the protein interface that binds Gα subunits as well as downstream effectors and disrupt Gα interactions with the Gβγ dimer. Different mutations in Gβ proteins clustered partly on the basis of lineage; for example, all 11 GNB1 K57 mutations were in myeloid neoplasms, and seven of eight GNB1 I80 mutations were in B cell neoplasms. Expression of patien",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:13.015663+00:00"
+}

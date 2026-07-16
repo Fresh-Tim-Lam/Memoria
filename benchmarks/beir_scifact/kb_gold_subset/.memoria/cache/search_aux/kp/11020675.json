@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11020675",
+  "source_fingerprint": "34d8d5fdaae94f5355f19a1fc0412298",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11020675",
+    "thrombopoietin-induced-polyploidization-of-bone-marrow-megakaryocytes-is-due-to-a-unique-regulatory-mechanism-in-late-mitosis"
+  ],
+  "key_phrases": [
+    "thrombopoietin",
+    "induced",
+    "polyploidization",
+    "bone",
+    "marrow",
+    "megakaryocytes",
+    "due",
+    "unique"
+  ],
+  "summary_1l": "Megakaryocytes undergo a unique differentiation program, becoming polyploi",
+  "query_hits": [],
+  "embed_text": "11020675 Thrombopoietin-induced Polyploidization of Bone Marrow Megakaryocytes Is Due to a Unique Regulatory Mechanism in Late Mitosis science scifact Megakaryocytes undergo a unique differentiation program, becoming polyploid through repeated cycles of DNA synthesis without concomitant cell division. However, the mechanism underlying this polyploidization remains totally unknown. It has… 11020675 thrombopoietin-induced-polyploidization-of-bone-marrow-megakaryocytes-is-due-to-a-unique-regulatory-mechanism-in-late-mitosis thrombopoietin induced polyploidization bone marrow megakaryocytes due unique Megakaryocytes undergo a unique differentiation program, becoming polyploi Thrombopoietin-induced Polyploidization of Bone Marrow Megakaryocytes Is Due to a Unique Regulatory Mechanism in Late Mitosis Megakaryocytes undergo a unique differentiation program, becoming polyploid through repeated cycles of DNA synthesis without concomitant cell division. However, the mechanism underlying this polyploidization remains totally unknown. It has been postulated that polyploidization is due to a skipping of mitosis after each round of DNA replication. We carried out immunohistochemical studies on mouse bone marrow megakaryocytes during thrombopoietin- induced polyploidization and found that during this process megakaryocytes indeed enter mitosis and progress through normal prophase, prometaphase, metaphase, and up to anaphase A, but not to anaphase B, telophase, or cytokin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:06.218112+00:00"
+}

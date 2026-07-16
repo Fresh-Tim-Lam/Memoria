@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24700152",
+  "source_fingerprint": "8de9dcd7983ffd04cdb8dda014cae098",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24700152",
+    "linkage-with-methadone-treatment-upon-release-from-incarceration:-a-promising-opportunity."
+  ],
+  "key_phrases": [
+    "linkage",
+    "with",
+    "methadone",
+    "treatment",
+    "upon",
+    "release",
+    "from",
+    "incarceration"
+  ],
+  "summary_1l": "Linkage with methadone treatment upon release from incarceration: a promising opportunity.",
+  "query_hits": [],
+  "embed_text": "24700152 Linkage with methadone treatment upon release from incarceration: a promising opportunity. science scifact Injection drug users (IDUs) are at increased risk for HIV, viral hepatitis, and tuberculosis, and making up more than a quarter of the incarcerated population in the United States. Methadone maintenance treatment of opiate addiction is… 24700152 linkage-with-methadone-treatment-upon-release-from-incarceration:-a-promising-opportunity. linkage with methadone treatment upon release from incarceration Linkage with methadone treatment upon release from incarceration: a promising opportunity. Linkage with methadone treatment upon release from incarceration: a promising opportunity. Injection drug users (IDUs) are at increased risk for HIV, viral hepatitis, and tuberculosis, and making up more than a quarter of the incarcerated population in the United States. Methadone maintenance treatment of opiate addiction is highly effective at reducing drug use, drug-related criminal activity, and risk of HIV transmission. Recently released inmates are at particularly high risk for overdose and disease transmission. Linkage to methadone treatment immediately upon release from incarceration is a promising opportunity to combat disease transmission, facilitate reentry into the community, and reduce recidivism.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.010912+00:00"
+}

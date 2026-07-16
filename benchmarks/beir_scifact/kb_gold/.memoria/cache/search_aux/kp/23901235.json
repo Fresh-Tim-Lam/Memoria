@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "23901235",
+  "source_fingerprint": "f734768d7463dd945c110ddb95e37336",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23901235"
+  ],
+  "key_phrases": [
+    "role",
+    "interleukin",
+    "determining",
+    "lineage",
+    "fate",
+    "embryonic",
+    "rat",
+    "hippocampal"
+  ],
+  "summary_1l": "A role for interleukin-1β in determining the lineage fate of embryonic rat hippocampal neural precursor cells.",
+  "query_hits": [],
+  "embed_text": "23901235 A role for interleukin-1β in determining the lineage fate of embryonic rat hippocampal neural precursor cells. science scifact Neurogenesis occurs in the hippocampus of the developing and adult brain due to the presence of multipotent stem cells and restricted precursor cells at different stages of differentiation. It has been proposed that they may be of… 23901235 role interleukin determining lineage fate embryonic rat hippocampal A role for interleukin-1β in determining the lineage fate of embryonic rat hippocampal neural precursor cells. A role for interleukin-1β in determining the lineage fate of embryonic rat hippocampal neural precursor cells. Neurogenesis occurs in the hippocampus of the developing and adult brain due to the presence of multipotent stem cells and restricted precursor cells at different stages of differentiation. It has been proposed that they may be of potential benefit for use in cell transplantation approaches for neurodegenerative disorders and trauma. Prolonged release of interleukin-1β (IL-1β) from activated microglia has a deleterious effect on hippocampal neurons and is implicated in the impaired neurogenesis and cognitive dysfunction associated with aging, Alzheimer's disease and depression. This study assessed the effect of IL-1β on the proliferation and differentiation of embryonic rat hippoc",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.387262+00:00"
+}

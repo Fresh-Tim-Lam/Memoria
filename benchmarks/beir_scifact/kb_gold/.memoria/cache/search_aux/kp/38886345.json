@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "38886345",
+  "source_fingerprint": "3540c9aeda99d4d98b20b23d89c00622",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "38886345",
+    "use-of-a-targeted-oncolytic-poxvirus,-jx-594,-in-patients-with-refractory-primary-or-metastatic-liver-cancer:-a-phase-i-trial."
+  ],
+  "key_phrases": [
+    "use",
+    "targeted",
+    "oncolytic",
+    "poxvirus",
+    "jx",
+    "594",
+    "patients",
+    "with"
+  ],
+  "summary_1l": "Use of a targeted oncolytic poxvirus, JX-594, in patients with refractory primary or metastatic liver cancer: a phase I trial.",
+  "query_hits": [],
+  "embed_text": "38886345 Use of a targeted oncolytic poxvirus, JX-594, in patients with refractory primary or metastatic liver cancer: a phase I trial. science scifact BACKGROUND JX-594 is a targeted oncolytic poxvirus designed to selectively replicate in and destroy cancer cells with cell-cycle abnormalities and epidermal growth factor receptor (EGFR)-ras pathway activation. Direct oncolysis plus… 38886345 use-of-a-targeted-oncolytic-poxvirus,-jx-594,-in-patients-with-refractory-primary-or-metastatic-liver-cancer:-a-phase-i-trial. use targeted oncolytic poxvirus jx 594 patients with Use of a targeted oncolytic poxvirus, JX-594, in patients with refractory primary or metastatic liver cancer: a phase I trial. Use of a targeted oncolytic poxvirus, JX-594, in patients with refractory primary or metastatic liver cancer: a phase I trial. BACKGROUND JX-594 is a targeted oncolytic poxvirus designed to selectively replicate in and destroy cancer cells with cell-cycle abnormalities and epidermal growth factor receptor (EGFR)-ras pathway activation. Direct oncolysis plus granulocyte-macrophage colony-stimulating factor (GM-CSF) expression also stimulates shutdown of tumour vasculature and antitumoral immunity. We aimed to assess intratumoral injection of JX-594 in patients with refractory primary or metastatic liver cancer. METHODS Between Jan 4, 2006, and July 4, 2007, 14 patients with histologically confirmed refractory primary or metastatic liver tumours (up to 10.9 cm total diameter) that were amena",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.132745+00:00"
+}

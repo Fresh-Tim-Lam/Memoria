@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2033917",
+  "source_fingerprint": "deb44eb99916ecd074bcd37039c6104c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2033917",
+    "clathrin-is-required-for-the-function-of-the-mitotic-spindle"
+  ],
+  "key_phrases": [
+    "clathrin",
+    "required",
+    "function",
+    "mitotic",
+    "spindle",
+    "has",
+    "established",
+    "generation"
+  ],
+  "summary_1l": "Clathrin has an established function in the generation of vesicles that transfer membrane and proteins around the cell.",
+  "query_hits": [],
+  "embed_text": "2033917 Clathrin is required for the function of the mitotic spindle science scifact Clathrin has an established function in the generation of vesicles that transfer membrane and proteins around the cell. The formation of clathrin-coated vesicles occurs continuously in non-dividing cells, but is shut down during mitosis,… 2033917 clathrin-is-required-for-the-function-of-the-mitotic-spindle clathrin required function mitotic spindle has established generation Clathrin has an established function in the generation of vesicles that transfer membrane and proteins around the cell. Clathrin is required for the function of the mitotic spindle Clathrin has an established function in the generation of vesicles that transfer membrane and proteins around the cell. The formation of clathrin-coated vesicles occurs continuously in non-dividing cells, but is shut down during mitosis, when clathrin concentrates at the spindle apparatus. Here, we show that clathrin stabilizes fibres of the mitotic spindle to aid congression of chromosomes. Clathrin bound to the spindle directly by the amino-terminal domain of clathrin heavy chain. Depletion of clathrin heavy chain using RNA interference prolonged mitosis; kinetochore fibres were destabilized, leading to defective congression of chromosomes to the metaphase plate and persistent activation of the spindle checkpoint. Normal mitosi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.085550+00:00"
+}

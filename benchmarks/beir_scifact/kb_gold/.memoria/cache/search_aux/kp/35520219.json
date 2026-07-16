@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "35520219",
+  "source_fingerprint": "e21ead90b1a974454e3ad9e6f9d52d5d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "35520219",
+    "early-loss-of-interneurons-and-delayed-subunit-specific-changes-in-gaba(a)-receptor-expression-in-a-mouse-model-of-mesial-temporal-lobe-epilepsy."
+  ],
+  "key_phrases": [
+    "early",
+    "loss",
+    "interneurons",
+    "delayed",
+    "subunit",
+    "specific",
+    "changes",
+    "gaba"
+  ],
+  "summary_1l": "Early loss of interneurons and delayed subunit-specific changes in GABA(A)-receptor expression in a mouse model of mesial temporal lobe epilepsy.",
+  "query_hits": [],
+  "embed_text": "35520219 Early loss of interneurons and delayed subunit-specific changes in GABA(A)-receptor expression in a mouse model of mesial temporal lobe epilepsy. science scifact Unilateral injection of kainic acid (KA) into the dorsal hippocampus of adult mice induces spontaneous recurrent partial seizures and replicates histopathological changes observed in human mesial temporal lobe epilepsy (MTLE) (Bouilleret V… 35520219 early-loss-of-interneurons-and-delayed-subunit-specific-changes-in-gaba(a)-receptor-expression-in-a-mouse-model-of-mesial-temporal-lobe-epilepsy. early loss interneurons delayed subunit specific changes gaba Early loss of interneurons and delayed subunit-specific changes in GABA(A)-receptor expression in a mouse model of mesial temporal lobe epilepsy. Early loss of interneurons and delayed subunit-specific changes in GABA(A)-receptor expression in a mouse model of mesial temporal lobe epilepsy. Unilateral injection of kainic acid (KA) into the dorsal hippocampus of adult mice induces spontaneous recurrent partial seizures and replicates histopathological changes observed in human mesial temporal lobe epilepsy (MTLE) (Bouilleret V et al., Neuroscience 1999; 89:717-729). Alterations in pre- and postsynaptic components of GABAergic neurotransmission were investigated immunohistochemically at different time points (1-120 days) in this mouse model of MTLE. Markers of GABAergic interneurons (parvalbumin, calbindin-D28k, and calretinin), the type-1 GABA transporter (GAT1), and major GABA(A)-receptor subunits expressed in the hippocampal format",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.317380+00:00"
+}

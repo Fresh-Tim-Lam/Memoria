@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2097256",
+  "source_fingerprint": "75a61e4eccdc0c93f1a171f2594d2473",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2097256",
+    "population-density,-water-supply,-and-the-risk-of-dengue-fever-in-vietnam:-cohort-study-and-spatial-analysis"
+  ],
+  "key_phrases": [
+    "population",
+    "density",
+    "water",
+    "supply",
+    "risk",
+    "dengue",
+    "fever",
+    "vietnam"
+  ],
+  "summary_1l": "BACKGROUND Aedes aegypti, the major vector of dengue viruses, often breeds in water storage",
+  "query_hits": [],
+  "embed_text": "2097256 Population Density, Water Supply, and the Risk of Dengue Fever in Vietnam: Cohort Study and Spatial Analysis science scifact BACKGROUND Aedes aegypti, the major vector of dengue viruses, often breeds in water storage containers used by households without tap water supply, and occurs in high numbers even in dense urban areas. We analysed the interaction between… 2097256 population-density,-water-supply,-and-the-risk-of-dengue-fever-in-vietnam:-cohort-study-and-spatial-analysis population density water supply risk dengue fever vietnam BACKGROUND Aedes aegypti, the major vector of dengue viruses, often breeds in water storage Population Density, Water Supply, and the Risk of Dengue Fever in Vietnam: Cohort Study and Spatial Analysis BACKGROUND Aedes aegypti, the major vector of dengue viruses, often breeds in water storage containers used by households without tap water supply, and occurs in high numbers even in dense urban areas. We analysed the interaction between human population density and lack of tap water as a cause of dengue fever outbreaks with the aim of identifying geographic areas at highest risk. METHODS AND FINDINGS We conducted an individual-level cohort study in a population of 75,000 geo-referenced households in Vietnam over the course of two epidemics, on the basis of dengue hospital admissions (n = 3,013). We applied space-time scan statistics and mathematical models to confirm the findings.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.205191+00:00"
+}

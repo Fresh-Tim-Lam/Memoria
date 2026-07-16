@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3545805",
+  "source_fingerprint": "43e9fd99d13f310bd0231966349316ab",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3545805",
+    "tumor-specific-th17-polarized-cells-eradicate-large-established-melanoma."
+  ],
+  "key_phrases": [
+    "tumor",
+    "specific",
+    "th17",
+    "polarized",
+    "cells",
+    "eradicate",
+    "large",
+    "established"
+  ],
+  "summary_1l": "Tumor-specific Th17-polarized cells eradicate large established melanoma.",
+  "query_hits": [],
+  "embed_text": "3545805 Tumor-specific Th17-polarized cells eradicate large established melanoma. science scifact CD4+ T cells can differentiate into multiple effector subsets, but the potential roles of these subsets in anti-tumor immunity have not been fully explored. Seeking to study the impact of CD4+ T cell polarization on tumor rejection in a… 3545805 tumor-specific-th17-polarized-cells-eradicate-large-established-melanoma. tumor specific th17 polarized cells eradicate large established Tumor-specific Th17-polarized cells eradicate large established melanoma. Tumor-specific Th17-polarized cells eradicate large established melanoma. CD4+ T cells can differentiate into multiple effector subsets, but the potential roles of these subsets in anti-tumor immunity have not been fully explored. Seeking to study the impact of CD4+ T cell polarization on tumor rejection in a model mimicking human disease, we generated a new MHC class II-restricted, T-cell receptor (TCR) transgenic mouse model in which CD4+ T cells recognize a novel epitope in tyrosinase-related protein 1 (TRP-1), an antigen expressed by normal melanocytes and B16 murine melanoma. Cells could be robustly polarized into Th0, Th1, and Th17 subtypes in vitro, as evidenced by cytokine, chemokine, and adhesion molecule profiles and by surface markers, suggesting the potential for differential e",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.265351+00:00"
+}

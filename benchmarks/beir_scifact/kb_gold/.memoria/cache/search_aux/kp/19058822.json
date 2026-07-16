@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19058822",
+  "source_fingerprint": "601f33097cbc0550976e51b1acc2b861",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19058822",
+    "a-fine-scale-map-of-recombination-rates-and-hotspots-across-the-human-genome."
+  ],
+  "key_phrases": [
+    "fine",
+    "scale",
+    "map",
+    "recombination",
+    "rates",
+    "hotspots",
+    "across",
+    "human"
+  ],
+  "summary_1l": "A fine-scale map of recombination rates and hotspots across the human genome.",
+  "query_hits": [],
+  "embed_text": "19058822 A fine-scale map of recombination rates and hotspots across the human genome. science scifact Genetic maps, which document the way in which recombination rates vary over a genome, are an essential tool for many genetic analyses. We present a high-resolution genetic map of the human genome, based on statistical analyses of genetic… 19058822 a-fine-scale-map-of-recombination-rates-and-hotspots-across-the-human-genome. fine scale map recombination rates hotspots across human A fine-scale map of recombination rates and hotspots across the human genome. A fine-scale map of recombination rates and hotspots across the human genome. Genetic maps, which document the way in which recombination rates vary over a genome, are an essential tool for many genetic analyses. We present a high-resolution genetic map of the human genome, based on statistical analyses of genetic variation data, and identify more than 25,000 recombination hotspots, together with motifs and sequence contexts that play a role in hotspot activity. Differences between the behavior of recombination rates over large (megabase) and small (kilobase) scales lead us to suggest a two-stage model for recombination in which hotspots are stochastic features, within a framework in which large-scale rates are constrained.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.107294+00:00"
+}

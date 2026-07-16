@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22057077",
+  "source_fingerprint": "c7f38c43453b8ba4127c59c6a9265ee6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22057077",
+    "methylphenidate-induced-erections-in-a-prepubertal-child."
+  ],
+  "key_phrases": [
+    "methylphenidate",
+    "induced",
+    "erections",
+    "prepubertal",
+    "child",
+    "medication",
+    "used",
+    "routinely"
+  ],
+  "summary_1l": "Methylphenidate-induced erections in a prepubertal child.",
+  "query_hits": [],
+  "embed_text": "22057077 Methylphenidate-induced erections in a prepubertal child. science scifact Methylphenidate is a medication used routinely in the management of attention deficit hyperactivity disorder. We report a case of a prepubertal child who developed unwanted erections after commencing a response-adjusted dosing regimen of… 22057077 methylphenidate-induced-erections-in-a-prepubertal-child. methylphenidate induced erections prepubertal child medication used routinely Methylphenidate-induced erections in a prepubertal child. Methylphenidate-induced erections in a prepubertal child. Methylphenidate is a medication used routinely in the management of attention deficit hyperactivity disorder. We report a case of a prepubertal child who developed unwanted erections after commencing a response-adjusted dosing regimen of sustained release methylphenidate. Despite priapism being a rare adverse reaction associated with methylphenidate, physicians and parents need to be aware as it can have significant long-term complications.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.180007+00:00"
+}

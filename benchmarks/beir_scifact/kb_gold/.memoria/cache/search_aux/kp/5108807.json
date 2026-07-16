@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5108807",
+  "source_fingerprint": "dbaa40038c6f30526cdd56972d82ce2c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5108807",
+    "cntf-reverses-obesity-induced-insulin-resistance-by-activating-skeletal-muscle-ampk"
+  ],
+  "key_phrases": [
+    "cntf",
+    "reverses",
+    "obesity",
+    "induced",
+    "insulin",
+    "resistance",
+    "by",
+    "activating"
+  ],
+  "summary_1l": "Ciliary neurotrophic factor (CNTF) induces weight loss and improves glucose tolerance in humans and rodents.",
+  "query_hits": [],
+  "embed_text": "5108807 CNTF reverses obesity-induced insulin resistance by activating skeletal muscle AMPK science scifact Ciliary neurotrophic factor (CNTF) induces weight loss and improves glucose tolerance in humans and rodents. CNTF is thought to act centrally by inducing hypothalamic neurogenesis to modulate food intake and peripherally by altering… 5108807 cntf-reverses-obesity-induced-insulin-resistance-by-activating-skeletal-muscle-ampk cntf reverses obesity induced insulin resistance by activating Ciliary neurotrophic factor (CNTF) induces weight loss and improves glucose tolerance in humans and rodents. CNTF reverses obesity-induced insulin resistance by activating skeletal muscle AMPK Ciliary neurotrophic factor (CNTF) induces weight loss and improves glucose tolerance in humans and rodents. CNTF is thought to act centrally by inducing hypothalamic neurogenesis to modulate food intake and peripherally by altering hepatic gene expression, in a manner similar to that of leptin. Here, we show that CNTF signals through the CNTFRα–IL-6R–gp130β receptor complex to increase fatty-acid oxidation and reduce insulin resistance in skeletal muscle by activating AMP-activated protein kinase (AMPK), independent of signaling through the brain. Thus, our findings further show that the antiobesogenic effects of CNTF in the periphery result from direct effects on skeletal muscle, and that these peripheral",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.134790+00:00"
+}

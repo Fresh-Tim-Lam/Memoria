@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10628767",
+  "source_fingerprint": "9c8a9a8a4ca8bd128f0d951723ff3cc7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10628767",
+    "three-dimensional,-single-molecule-fluorescence-imaging-beyond-the-diffraction-limit-by-using-a-double-helix-point-spread-function."
+  ],
+  "key_phrases": [
+    "three",
+    "dimensional",
+    "single",
+    "molecule",
+    "fluorescence",
+    "imaging",
+    "beyond",
+    "diffraction"
+  ],
+  "summary_1l": "Three-dimensional, single-molecule fluorescence imaging beyond the diffraction limit by using a double-helix point spread function.",
+  "query_hits": [],
+  "embed_text": "10628767 Three-dimensional, single-molecule fluorescence imaging beyond the diffraction limit by using a double-helix point spread function. science scifact We demonstrate single-molecule fluorescence imaging beyond the optical diffraction limit in 3 dimensions with a wide-field microscope that exhibits a double-helix point spread function (DH-PSF). The DH-PSF design features high and uniform… 10628767 three-dimensional,-single-molecule-fluorescence-imaging-beyond-the-diffraction-limit-by-using-a-double-helix-point-spread-function. three dimensional single molecule fluorescence imaging beyond diffraction Three-dimensional, single-molecule fluorescence imaging beyond the diffraction limit by using a double-helix point spread function. Three-dimensional, single-molecule fluorescence imaging beyond the diffraction limit by using a double-helix point spread function. We demonstrate single-molecule fluorescence imaging beyond the optical diffraction limit in 3 dimensions with a wide-field microscope that exhibits a double-helix point spread function (DH-PSF). The DH-PSF design features high and uniform Fisher information and has 2 dominant lobes in the image plane whose angular orientation rotates with the axial (z) position of the emitter. Single fluorescent molecules in a thick polymer sample are localized in single 500-ms acquisitions with 10- to 20-nm precision over a large depth of field (2 microm) by finding the center of the 2 DH-PSF lobes. By using a photoactivatable fluorophore, repeated imaging of sparse subsets w",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:05.168988+00:00"
+}

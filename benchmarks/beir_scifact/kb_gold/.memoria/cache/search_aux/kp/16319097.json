@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16319097",
+  "source_fingerprint": "4bdf50fdc9e3d4de063046cf2a07c41d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16319097",
+    "mechanisms-of-endocytosis."
+  ],
+  "key_phrases": [
+    "mechanisms",
+    "endocytosis",
+    "endocytic",
+    "control",
+    "lipid",
+    "protein",
+    "composition",
+    "plasma"
+  ],
+  "summary_1l": "Mechanisms of endocytosis.",
+  "query_hits": [],
+  "embed_text": "16319097 Mechanisms of endocytosis. science scifact Endocytic mechanisms control the lipid and protein composition of the plasma membrane, thereby regulating how cells interact with their environments. Here, we review what is known about mammalian endocytic mechanisms, with focus on the… 16319097 mechanisms-of-endocytosis. mechanisms endocytosis endocytic control lipid protein composition plasma Mechanisms of endocytosis. Mechanisms of endocytosis. Endocytic mechanisms control the lipid and protein composition of the plasma membrane, thereby regulating how cells interact with their environments. Here, we review what is known about mammalian endocytic mechanisms, with focus on the cellular proteins that control these events. We discuss the well-studied clathrin-mediated endocytic mechanisms and dissect endocytic pathways that proceed independently of clathrin. These clathrin-independent pathways include the CLIC/GEEC endocytic pathway, arf6-dependent endocytosis, flotillin-dependent endocytosis, macropinocytosis, circular doral ruffles, phagocytosis, and trans-endocytosis. We also critically review the role of caveolae and caveolin1 in endocytosis. We highlight the roles of lipids, membrane curvature-modulat",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.109746+00:00"
+}

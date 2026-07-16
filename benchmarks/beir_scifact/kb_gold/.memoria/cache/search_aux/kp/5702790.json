@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5702790",
+  "source_fingerprint": "cc1cefb4657e83fcf46332bf178056e5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5702790",
+    "phosphate-and-r2d2-restrict-the-substrate-specificity-of-dicer-2,-an-atp-driven-ribonuclease."
+  ],
+  "key_phrases": [
+    "phosphate",
+    "r2d2",
+    "restrict",
+    "substrate",
+    "specificity",
+    "dicer",
+    "atp",
+    "driven"
+  ],
+  "summary_1l": "Phosphate and R2D2 restrict the substrate specificity of Dicer-2, an ATP-driven ribonuclease.",
+  "query_hits": [],
+  "embed_text": "5702790 Phosphate and R2D2 restrict the substrate specificity of Dicer-2, an ATP-driven ribonuclease. science scifact Drosophila Dicer-2 generates small interfering RNAs (siRNAs) from long double-stranded RNA (dsRNA), whereas Dicer-1 produces microRNAs (miRNAs) from pre-miRNA. What makes the two Dicers specific for their biological substrates? We find… 5702790 phosphate-and-r2d2-restrict-the-substrate-specificity-of-dicer-2,-an-atp-driven-ribonuclease. phosphate r2d2 restrict substrate specificity dicer atp driven Phosphate and R2D2 restrict the substrate specificity of Dicer-2, an ATP-driven ribonuclease. Phosphate and R2D2 restrict the substrate specificity of Dicer-2, an ATP-driven ribonuclease. Drosophila Dicer-2 generates small interfering RNAs (siRNAs) from long double-stranded RNA (dsRNA), whereas Dicer-1 produces microRNAs (miRNAs) from pre-miRNA. What makes the two Dicers specific for their biological substrates? We find that purified Dicer-2 can efficiently cleave pre-miRNA, but that inorganic phosphate and the Dicer-2 partner protein R2D2 inhibit pre-miRNA cleavage. Dicer-2 contains C-terminal RNase III domains that mediate RNA cleavage and an N-terminal helicase motif, whose function is unclear. We show that Dicer-2 is a dsRNA-stimulated ATPase that hydrolyzes ATP to ADP; ATP hydrolysis is required for Dicer-2 to process long dsRNA, but not pre-miRNA. Wild-type Dicer-2, but not a",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.900323+00:00"
+}

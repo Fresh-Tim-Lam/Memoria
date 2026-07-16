@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "196664003",
+  "source_fingerprint": "4d8fac0aa851df2520fd83db56a8d8d0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "196664003",
+    "signaling-architectures-that-transmit-unidirectional-information-despite-retroactivity"
+  ],
+  "key_phrases": [
+    "signaling",
+    "architectures",
+    "that",
+    "transmit",
+    "unidirectional",
+    "information",
+    "despite",
+    "retroactivity"
+  ],
+  "summary_1l": "A signaling pathway transmits information from an upstream system to downstream systems, ideally in a unidirectio",
+  "query_hits": [],
+  "embed_text": "196664003 Signaling architectures that transmit unidirectional information despite retroactivity science scifact A signaling pathway transmits information from an upstream system to downstream systems, ideally in a unidirectional fashion. A key obstacle to unidirectional transmission is retroactivity, the additional reaction flux that affects a… 196664003 signaling-architectures-that-transmit-unidirectional-information-despite-retroactivity signaling architectures that transmit unidirectional information despite retroactivity A signaling pathway transmits information from an upstream system to downstream systems, ideally in a unidirectio Signaling architectures that transmit unidirectional information despite retroactivity A signaling pathway transmits information from an upstream system to downstream systems, ideally in a unidirectional fashion. A key obstacle to unidirectional transmission is retroactivity, the additional reaction flux that affects a system once its species interact with those of downstream systems. This raises the fundamental question of whether signaling pathways have developed specialized architectures that overcome retroactivity and transmit unidirectional signals. Here, we propose a general procedure based on mathematical analysis that provides an answer to this question. Using this procedure, we analyze the ability of a variety of signaling architectures to transmit one-way (from upstream to downst",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.970811+00:00"
+}

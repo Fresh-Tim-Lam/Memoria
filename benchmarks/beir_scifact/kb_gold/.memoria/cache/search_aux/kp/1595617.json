@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1595617",
+  "source_fingerprint": "a959185c7c08808f24b1a546138540ad",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1595617",
+    "differentiation-of-trophoblast-stem-cells-into-giant-cells-is-triggered-by-p57/kip2-inhibition-of-cdk1-activity."
+  ],
+  "key_phrases": [
+    "differentiation",
+    "trophoblast",
+    "stem",
+    "cells",
+    "into",
+    "giant",
+    "triggered",
+    "by"
+  ],
+  "summary_1l": "Differentiation of trophoblast stem cells into giant cells is triggered by p57/Kip2 inhibition of CDK1 activity.",
+  "query_hits": [],
+  "embed_text": "1595617 Differentiation of trophoblast stem cells into giant cells is triggered by p57/Kip2 inhibition of CDK1 activity. science scifact Genome endoreduplication during mammalian development is a rare event for which the mechanism is unknown. It first appears when fibroblast growth factor 4 (FGF4) deprivation induces differentiation of trophoblast stem (TS) cells into the… 1595617 differentiation-of-trophoblast-stem-cells-into-giant-cells-is-triggered-by-p57/kip2-inhibition-of-cdk1-activity. differentiation trophoblast stem cells into giant triggered by Differentiation of trophoblast stem cells into giant cells is triggered by p57/Kip2 inhibition of CDK1 activity. Differentiation of trophoblast stem cells into giant cells is triggered by p57/Kip2 inhibition of CDK1 activity. Genome endoreduplication during mammalian development is a rare event for which the mechanism is unknown. It first appears when fibroblast growth factor 4 (FGF4) deprivation induces differentiation of trophoblast stem (TS) cells into the nonproliferating trophoblast giant (TG) cells required for embryo implantation. Here we show that RO3306 inhibition of cyclin-dependent protein kinase 1 (CDK1), the enzyme required to enter mitosis, induced differentiation of TS cells into TG cells. In contrast, RO3306 induced abortive endoreduplication and apoptosis in embryonic stem cells, revealing that inactivation of CDK1 triggers endoreduplication only in cells programmed to differentiate",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.554500+00:00"
+}

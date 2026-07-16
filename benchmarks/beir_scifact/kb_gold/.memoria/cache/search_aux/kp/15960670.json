@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15960670",
+  "source_fingerprint": "3edcaf91b83a2fbbd2ee09d4dc40d0e2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15960670",
+    "cenp-b-controls-centromere-formation-depending-on-the-chromatin-context"
+  ],
+  "key_phrases": [
+    "cenp",
+    "controls",
+    "centromere",
+    "formation",
+    "depending",
+    "chromatin",
+    "context",
+    "region"
+  ],
+  "summary_1l": "The centromere is a chromatin region that serves as the spindle attachment point and directs accurate inheritance of eukaryotic",
+  "query_hits": [],
+  "embed_text": "15960670 CENP-B Controls Centromere Formation Depending on the Chromatin Context science scifact The centromere is a chromatin region that serves as the spindle attachment point and directs accurate inheritance of eukaryotic chromosomes during cell divisions. However, the mechanism by which the centromere assembles and stabilizes at a… 15960670 cenp-b-controls-centromere-formation-depending-on-the-chromatin-context cenp controls centromere formation depending chromatin context region The centromere is a chromatin region that serves as the spindle attachment point and directs accurate inheritance of eukaryotic CENP-B Controls Centromere Formation Depending on the Chromatin Context The centromere is a chromatin region that serves as the spindle attachment point and directs accurate inheritance of eukaryotic chromosomes during cell divisions. However, the mechanism by which the centromere assembles and stabilizes at a specific genomic region is not clear. The de novo formation of a human/mammalian artificial chromosome (HAC/MAC) with a functional centromere assembly requires the presence of alpha-satellite DNA containing binding motifs for the centromeric CENP-B protein. We demonstrate here that de novo centromere assembly on HAC/MAC is dependent on CENP-B. In contrast, centromere formation is suppressed in cells expressing CENP-B when alpha-satellite DNA was integrated into a chromosomal site. Re",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.564712+00:00"
+}

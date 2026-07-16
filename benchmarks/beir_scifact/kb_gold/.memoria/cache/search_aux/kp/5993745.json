@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5993745",
+  "source_fingerprint": "e618465620f0ed87d331da09a6f0ceee",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5993745",
+    "plasma-soluble-corin-in-patients-with-heart-failure."
+  ],
+  "key_phrases": [
+    "plasma",
+    "soluble",
+    "corin",
+    "patients",
+    "with",
+    "heart",
+    "failure",
+    "background"
+  ],
+  "summary_1l": "Plasma soluble corin in patients with heart failure.",
+  "query_hits": [],
+  "embed_text": "5993745 Plasma soluble corin in patients with heart failure. science scifact BACKGROUND Corin is a transmembrane protease that processes natriuretic peptides in the heart. Like many membrane proteins, corin is shed from the cell surface. METHODS AND RESULTS In this study, we obtained plasma samples from healthy… 5993745 plasma-soluble-corin-in-patients-with-heart-failure. plasma soluble corin patients with heart failure background Plasma soluble corin in patients with heart failure. Plasma soluble corin in patients with heart failure. BACKGROUND Corin is a transmembrane protease that processes natriuretic peptides in the heart. Like many membrane proteins, corin is shed from the cell surface. METHODS AND RESULTS In this study, we obtained plasma samples from healthy controls and patients with heart failure (HF) and acute myocardial infarction. Soluble corin levels in plasma were measured by an ELISA method. In healthy adults (n=198), plasma corin levels were 690 pg/mL (SD, 260 pg/mL). The corin levels did not differ significantly among different age groups. In patients with HF (n=291), plasma corin levels were significantly lower compared with that of healthy controls (365 pg/mL [SD, 259]; P<0.001). The reduction in plasma corin levels seemed to correlate with the sev",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.659962+00:00"
+}

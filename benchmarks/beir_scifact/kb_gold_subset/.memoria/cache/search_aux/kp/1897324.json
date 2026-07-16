@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "1897324",
+  "source_fingerprint": "622049eb11ecdde4aa308a8c14c504dc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1897324"
+  ],
+  "key_phrases": [
+    "genetic",
+    "screen",
+    "identifies",
+    "lkb1",
+    "mark",
+    "signalling",
+    "axis",
+    "controlling"
+  ],
+  "summary_1l": "The Hippo–YAP pathway is an emerging signalling cascade involved in the regulation of stem cell activity and",
+  "query_hits": [],
+  "embed_text": "1897324 A genetic screen identifies an LKB1–MARK signalling axis controlling the Hippo–YAP pathway science scifact The Hippo–YAP pathway is an emerging signalling cascade involved in the regulation of stem cell activity and organ size. To identify components of this pathway, we performed an RNAi-based kinome screen in human cells. Our screen identified… 1897324 genetic screen identifies lkb1 mark signalling axis controlling The Hippo–YAP pathway is an emerging signalling cascade involved in the regulation of stem cell activity and A genetic screen identifies an LKB1–MARK signalling axis controlling the Hippo–YAP pathway The Hippo–YAP pathway is an emerging signalling cascade involved in the regulation of stem cell activity and organ size. To identify components of this pathway, we performed an RNAi-based kinome screen in human cells. Our screen identified several kinases not previously associated with Hippo signalling that control multiple cellular processes. One of the hits, LKB1, is a common tumour suppressor whose mechanism of action is only partially understood. We demonstrate that LKB1 acts through its substrates of the microtubule affinity-regulating kinase family to regulate the localization of the polarity determinant Scribble and the activity of the core Hippo kinases. Our data also indicate that YAP is fun",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:12.128916+00:00"
+}

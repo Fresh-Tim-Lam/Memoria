@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25842866",
+  "source_fingerprint": "0ed6c6ff7945e0086923084f8c89bf56",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25842866",
+    "in-vitro-generated-antibodies-specific-for-telomeric-guanine-quadruplex-dna-react-with-stylonychia-lemnae-macronuclei."
+  ],
+  "key_phrases": [
+    "vitro",
+    "generated",
+    "antibodies",
+    "specific",
+    "telomeric",
+    "guanine",
+    "quadruplex",
+    "dna"
+  ],
+  "summary_1l": "In vitro generated antibodies specific for telomeric guanine-quadruplex DNA react with Stylonychia lemnae macronuclei.",
+  "query_hits": [],
+  "embed_text": "25842866 In vitro generated antibodies specific for telomeric guanine-quadruplex DNA react with Stylonychia lemnae macronuclei. science scifact Most eukaryotic telomeres contain a repeating motif with stretches of guanine residues that form a 3'-terminal overhang extending beyond the telomeric duplex region. The telomeric repeat of hypotrichous ciliates, d(T(4)G(4)), forms a… 25842866 in-vitro-generated-antibodies-specific-for-telomeric-guanine-quadruplex-dna-react-with-stylonychia-lemnae-macronuclei. vitro generated antibodies specific telomeric guanine quadruplex dna In vitro generated antibodies specific for telomeric guanine-quadruplex DNA react with Stylonychia lemnae macronuclei. In vitro generated antibodies specific for telomeric guanine-quadruplex DNA react with Stylonychia lemnae macronuclei. Most eukaryotic telomeres contain a repeating motif with stretches of guanine residues that form a 3'-terminal overhang extending beyond the telomeric duplex region. The telomeric repeat of hypotrichous ciliates, d(T(4)G(4)), forms a 16-nucleotide 3'-overhang. Such sequences can adopt parallel-stranded as well as antiparallel-stranded quadruplex conformations in vitro. Although it has been proposed that guanine-quadruplex conformations may have important cellular roles including telomere function, recombination, and transcription, evidence for the existence of this DNA structure in vivo has been elusive to date. We have generated high-affinity single-chain antibody fragmen",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.599432+00:00"
+}

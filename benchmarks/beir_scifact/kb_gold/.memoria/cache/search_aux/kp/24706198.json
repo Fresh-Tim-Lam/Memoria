@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24706198",
+  "source_fingerprint": "366778ab3c6b98243c8040f22a489f2d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24706198",
+    "a-minimal-tat-system-from-a-gram-positive-organism:-a-bifunctional-tata-subunit-participates-in-discrete-tatac-and-tata-complexes."
+  ],
+  "key_phrases": [
+    "minimal",
+    "tat",
+    "system",
+    "from",
+    "gram",
+    "positive",
+    "organism",
+    "bifunctional"
+  ],
+  "summary_1l": "A minimal Tat system from a gram-positive organism: a bifunctional TatA subunit participates in discrete TatAC and TatA complexes.",
+  "query_hits": [],
+  "embed_text": "24706198 A minimal Tat system from a gram-positive organism: a bifunctional TatA subunit participates in discrete TatAC and TatA complexes. science scifact The Tat system transports folded proteins across bacterial and thylakoid membranes. In Gram-negative organisms, a TatABC substrate-binding complex and separate TatA complex are believed to coalesce to form an active translocon, with all… 24706198 a-minimal-tat-system-from-a-gram-positive-organism:-a-bifunctional-tata-subunit-participates-in-discrete-tatac-and-tata-complexes. minimal tat system from gram positive organism bifunctional A minimal Tat system from a gram-positive organism: a bifunctional TatA subunit participates in discrete TatAC and TatA complexes. A minimal Tat system from a gram-positive organism: a bifunctional TatA subunit participates in discrete TatAC and TatA complexes. The Tat system transports folded proteins across bacterial and thylakoid membranes. In Gram-negative organisms, a TatABC substrate-binding complex and separate TatA complex are believed to coalesce to form an active translocon, with all three subunits essential for translocation. Most Gram-positive organisms lack a tatB gene, indicating major differences in organization and possible differences in mode of action. Here, we have studied Tat complexes encoded by the tatAdCd genes of Bacillus subtilis. Expression of tatAdCd in an Escherichia coli tat null mutant results in efficient export of a large, cofactor-containing E. coli Tat substrate, TorA. We show that th",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.050567+00:00"
+}

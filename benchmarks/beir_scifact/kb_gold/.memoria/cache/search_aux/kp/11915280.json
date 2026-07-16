@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11915280",
+  "source_fingerprint": "08ae37e15d4ce8c28b9d0397663e776e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11915280",
+    "suppression-of-intestinal-neoplasia-by-deletion-of-dnmt3b"
+  ],
+  "key_phrases": [
+    "suppression",
+    "intestinal",
+    "neoplasia",
+    "by",
+    "deletion",
+    "dnmt3b",
+    "aberrant",
+    "gene"
+  ],
+  "summary_1l": "Aberrant gene silencing accompanied by DNA methylation is associated with neoplastic progression in many tumors that also show global loss of",
+  "query_hits": [],
+  "embed_text": "11915280 Suppression of intestinal neoplasia by deletion of Dnmt3b science scifact Aberrant gene silencing accompanied by DNA methylation is associated with neoplastic progression in many tumors that also show global loss of DNA methylation. Using conditional inactivation of de novo methyltransferase Dnmt3b in Apc(Min/+)… 11915280 suppression-of-intestinal-neoplasia-by-deletion-of-dnmt3b suppression intestinal neoplasia by deletion dnmt3b aberrant gene Aberrant gene silencing accompanied by DNA methylation is associated with neoplastic progression in many tumors that also show global loss of Suppression of intestinal neoplasia by deletion of Dnmt3b Aberrant gene silencing accompanied by DNA methylation is associated with neoplastic progression in many tumors that also show global loss of DNA methylation. Using conditional inactivation of de novo methyltransferase Dnmt3b in Apc(Min/+) mice, we demonstrate that the loss of Dnmt3b has no impact on microadenoma formation, which is considered the earliest stage of intestinal tumor formation. Nevertheless, we observed a significant decrease in the formation of macroscopic colonic adenomas. Interestingly, many large adenomas showed regions with Dnmt3b inactivation, indicating that Dnmt3b is required for initial outgrowth of macroscopic adenomas but is not required for their maintenance. These results support a role for Dnmt3b in the",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:07.394101+00:00"
+}

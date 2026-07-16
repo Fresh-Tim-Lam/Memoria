@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21330280",
+  "source_fingerprint": "790b98df9e7567b6548067ab07b6d0f9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21330280",
+    "the-spliceosome:-design-principles-of-a-dynamic-rnp-machine"
+  ],
+  "key_phrases": [
+    "spliceosome",
+    "design",
+    "principles",
+    "dynamic",
+    "rnp",
+    "machine",
+    "ribonucleoproteins",
+    "rnps"
+  ],
+  "summary_1l": "Ribonucleoproteins (RNPs) mediate key cellular functions such as gene expression and its regulation.",
+  "query_hits": [],
+  "embed_text": "21330280 The Spliceosome: Design Principles of a Dynamic RNP Machine science scifact Ribonucleoproteins (RNPs) mediate key cellular functions such as gene expression and its regulation. Whereas most RNP enzymes are stable in composition and harbor preformed active sites, the spliceosome, which removes noncoding introns… 21330280 the-spliceosome:-design-principles-of-a-dynamic-rnp-machine spliceosome design principles dynamic rnp machine ribonucleoproteins rnps Ribonucleoproteins (RNPs) mediate key cellular functions such as gene expression and its regulation. The Spliceosome: Design Principles of a Dynamic RNP Machine Ribonucleoproteins (RNPs) mediate key cellular functions such as gene expression and its regulation. Whereas most RNP enzymes are stable in composition and harbor preformed active sites, the spliceosome, which removes noncoding introns from precursor messenger RNAs (pre-mRNAs), follows fundamentally different strategies. In order to provide both accuracy to the recognition of reactive splice sites in the pre-mRNA and flexibility to the choice of splice sites during alternative splicing, the spliceosome exhibits exceptional compositional and structural dynamics that are exploited during substrate-dependent complex assembly, catalytic activation, and active site remodeling.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.856903+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "34544514",
+  "source_fingerprint": "bb51405215e7a97af063d8c5644bcc15",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "34544514",
+    "ibuprofen-for-the-treatment-of-patent-ductus-arteriosus-in-preterm-or-low-birth-weight-(or-both)-infants."
+  ],
+  "key_phrases": [
+    "ibuprofen",
+    "treatment",
+    "patent",
+    "ductus",
+    "arteriosus",
+    "preterm",
+    "low",
+    "birth"
+  ],
+  "summary_1l": "Ibuprofen for the treatment of patent ductus arteriosus in preterm or low birth weight (or both) infants.",
+  "query_hits": [],
+  "embed_text": "34544514 Ibuprofen for the treatment of patent ductus arteriosus in preterm or low birth weight (or both) infants. science scifact BACKGROUND Indomethacin is used as standard therapy to close a patent ductus arteriosus (PDA) but is associated with reduced blood flow to several organs. Ibuprofen, another cyclo-oxygenase inhibitor, may be as effective as indomethacin… 34544514 ibuprofen-for-the-treatment-of-patent-ductus-arteriosus-in-preterm-or-low-birth-weight-(or-both)-infants. ibuprofen treatment patent ductus arteriosus preterm low birth Ibuprofen for the treatment of patent ductus arteriosus in preterm or low birth weight (or both) infants. Ibuprofen for the treatment of patent ductus arteriosus in preterm or low birth weight (or both) infants. BACKGROUND Indomethacin is used as standard therapy to close a patent ductus arteriosus (PDA) but is associated with reduced blood flow to several organs. Ibuprofen, another cyclo-oxygenase inhibitor, may be as effective as indomethacin with fewer adverse effects. OBJECTIVES To determine the effectiveness and safety of ibuprofen compared with indomethacin, other cyclo-oxygenase inhibitor, placebo or no intervention for closing a patent ductus arteriosus in preterm, low birth weight, or preterm and low birth weight infants. SEARCH METHODS We searched The Cochrane Library, MEDLINE, EMBASE, Clincialtrials.gov, Controlled-trials.com, and www.abstracts2view.com/pas in May 2014. SELECTION CR",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.572473+00:00"
+}

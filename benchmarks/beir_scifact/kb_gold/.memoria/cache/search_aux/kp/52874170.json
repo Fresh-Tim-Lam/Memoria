@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "52874170",
+  "source_fingerprint": "5fd3ac657aaf8b792b82148d0aa0b343",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "52874170",
+    "how-do-i-perform-a-lumbar-puncture-and-analyze-the-results-to-diagnose-bacterial-meningitis?"
+  ],
+  "key_phrases": [
+    "how",
+    "do",
+    "perform",
+    "lumbar",
+    "puncture",
+    "analyze",
+    "results",
+    "diagnose"
+  ],
+  "summary_1l": "How do I perform a lumbar puncture and analyze the results to diagnose bacterial meningitis?",
+  "query_hits": [],
+  "embed_text": "52874170 How do I perform a lumbar puncture and analyze the results to diagnose bacterial meningitis? science scifact CONTEXT Diagnostic lumbar punctures (LPs), commonly used to rule out meningitis, are associated with adverse events. OBJECTIVE To systematically review the evidence about diagnostic LP techniques that may decrease the risk of adverse… 52874170 how-do-i-perform-a-lumbar-puncture-and-analyze-the-results-to-diagnose-bacterial-meningitis? how do perform lumbar puncture analyze results diagnose How do I perform a lumbar puncture and analyze the results to diagnose bacterial meningitis? How do I perform a lumbar puncture and analyze the results to diagnose bacterial meningitis? CONTEXT Diagnostic lumbar punctures (LPs), commonly used to rule out meningitis, are associated with adverse events. OBJECTIVE To systematically review the evidence about diagnostic LP techniques that may decrease the risk of adverse events and the evidence about test accuracy of cerebrospinal fluid (CSF) analysis in adult patients with suspected bacterial meningitis. DATA SOURCES We searched the Cochrane Library, MEDLINE (using Ovid and PubMed) from 1966 to January 2006 and EMBASE from 1980 to January 2006 without language restrictions to identify relevant studies and identified others from the bibliographies of retrieved articles. STUDY SELECTION We included randomized trials of patients aged 18",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.859362+00:00"
+}

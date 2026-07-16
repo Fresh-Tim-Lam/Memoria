@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36904081",
+  "source_fingerprint": "2b7427e852e055f816b9df113ce138d4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36904081",
+    "the-yeast-ribosomal-protein-l32-and-its-gene."
+  ],
+  "key_phrases": [
+    "yeast",
+    "ribosomal",
+    "protein",
+    "l32",
+    "its",
+    "gene",
+    "rpl32",
+    "saccharomyces"
+  ],
+  "summary_1l": "The yeast ribosomal protein L32 and its gene.",
+  "query_hits": [],
+  "embed_text": "36904081 The yeast ribosomal protein L32 and its gene. science scifact The yeast ribosomal protein gene RPL32 of Saccharomyces cerevisiae is of particular interest for two reasons: 1) it is adjacent to another ribosomal protein gene, RP29, whose divergent transcription may be driven from the same control… 36904081 the-yeast-ribosomal-protein-l32-and-its-gene. yeast ribosomal protein l32 its gene rpl32 saccharomyces The yeast ribosomal protein L32 and its gene. The yeast ribosomal protein L32 and its gene. The yeast ribosomal protein gene RPL32 of Saccharomyces cerevisiae is of particular interest for two reasons: 1) it is adjacent to another ribosomal protein gene, RP29, whose divergent transcription may be driven from the same control sequences, and 2) it appears that the splicing of its transcript is regulated by the product of the gene, ribosomal protein in L32. RPL32 has been analyzed in detail. It is essential for cell growth. Its sequence predicts L32 to be a protein of 105 amino acids, somewhat basic near the NH2 terminus, rather acidic near the COOH terminus, and homologous to ribosomal protein L30 of mammals. The reading frame has been confirmed by partial NH2-terminal analysis of L32. The nucleotide sequence also predicts an intron of",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:43.844056+00:00"
+}

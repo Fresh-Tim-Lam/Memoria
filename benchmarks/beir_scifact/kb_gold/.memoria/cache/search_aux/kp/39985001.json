@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "39985001",
+  "source_fingerprint": "0e82dd19fbfe528f344c3604a3dd8308",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "39985001",
+    "chronic-daily-headache:-long-term-prognosis-following-inpatient-treatment-with-repetitive-iv-dhe."
+  ],
+  "key_phrases": [
+    "chronic",
+    "daily",
+    "headache",
+    "long",
+    "term",
+    "prognosis",
+    "following",
+    "inpatient"
+  ],
+  "summary_1l": "Chronic daily headache: long-term prognosis following inpatient treatment with repetitive IV DHE.",
+  "query_hits": [],
+  "embed_text": "39985001 Chronic daily headache: long-term prognosis following inpatient treatment with repetitive IV DHE. science scifact We retrospectively studied the long-term (2-year) outcome of 50 consecutive patients admitted to our inpatient headache program because of chronic daily headache (CDH) associated with the overuse of analgesics, ergotamine, or both. They… 39985001 chronic-daily-headache:-long-term-prognosis-following-inpatient-treatment-with-repetitive-iv-dhe. chronic daily headache long term prognosis following inpatient Chronic daily headache: long-term prognosis following inpatient treatment with repetitive IV DHE. Chronic daily headache: long-term prognosis following inpatient treatment with repetitive IV DHE. We retrospectively studied the long-term (2-year) outcome of 50 consecutive patients admitted to our inpatient headache program because of chronic daily headache (CDH) associated with the overuse of analgesics, ergotamine, or both. They had been detoxified, given repetitive intravenous dihydroergotamine (IV DHE) and prophylactic medications as part of the program, and had become headache-free on this regimen. At the time of admission, 37 of the 50 patients had transformed migraine (TM), 12 had new daily persistent headache (NDPH), and 1 had chronic tension-type headache; 29 of the patients with TM, 7 of those with NDPH, and the single patient with chronic tension-type headache had coexistent m",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.130950+00:00"
+}

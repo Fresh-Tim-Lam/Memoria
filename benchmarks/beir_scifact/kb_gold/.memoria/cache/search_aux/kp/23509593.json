@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23509593",
+  "source_fingerprint": "09a83225276dd08884842f670447de35",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23509593",
+    "the-calcium-sensor-stim1-is-regulated-by-androgens-in-prostate-stromal-cells."
+  ],
+  "key_phrases": [
+    "calcium",
+    "sensor",
+    "stim1",
+    "regulated",
+    "by",
+    "androgens",
+    "prostate",
+    "stromal"
+  ],
+  "summary_1l": "The calcium sensor STIM1 is regulated by androgens in prostate stromal cells.",
+  "query_hits": [],
+  "embed_text": "23509593 The calcium sensor STIM1 is regulated by androgens in prostate stromal cells. science scifact BACKGROUND Prostate development and maintenance in the adult results from an interaction of stromal and glandular components. Androgens can drive this process by direct action on the stroma. We investigated whether there was a direct link… 23509593 the-calcium-sensor-stim1-is-regulated-by-androgens-in-prostate-stromal-cells. calcium sensor stim1 regulated by androgens prostate stromal The calcium sensor STIM1 is regulated by androgens in prostate stromal cells. The calcium sensor STIM1 is regulated by androgens in prostate stromal cells. BACKGROUND Prostate development and maintenance in the adult results from an interaction of stromal and glandular components. Androgens can drive this process by direct action on the stroma. We investigated whether there was a direct link between androgens and another key regulator of stromal cells, intracellular Ca2+ ([Ca2+ ]i ). METHODS Prostate stromal cells were freshly obtained and cultures derived from patients with benign prostatic hyperplasia. Gene expression in dihydrotestosterone treated and untreated cells was compared using Affymetrix gene expression arrays and Ca2+ regulated features were identified by Gene Ontology (GO). Changes in [Ca2+]i were determined in Fluo-4 loaded cells. Androgen regulation",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.599721+00:00"
+}

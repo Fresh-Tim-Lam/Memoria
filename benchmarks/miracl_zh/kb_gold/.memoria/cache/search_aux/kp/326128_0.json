@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "kp_id": "326128#0",
+  "source_fingerprint": "c4dec505a7a9e950c8dbcb1ac6bd8784",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "苏丹",
+    "(1967年)",
+    "2000年美国人口普查",
+    "2004年中国超级联赛杯",
+    "TÜV組織",
+    "三国故事",
+    "东非联邦",
+    "已解散的NBA球队列表",
+    "慈善组织",
+    "拉美和加勒比国家共同体"
+  ],
+  "aliases": [
+    "326128#0"
+  ],
+  "key_phrases": [
+    "东非",
+    "共同体",
+    "簡稱",
+    "東共體",
+    "英文",
+    "east",
+    "african",
+    "community"
+  ],
+  "summary_1l": "东非共同体（簡稱東共體；英文：East African Community，EAC）是由肯雅、乌干达、坦桑尼亚、布隆迪、卢旺达和南苏丹六个东非国家组成的区域性国际组织。",
+  "query_hits": [],
+  "embed_text": "326128#0 东非共同体 东非共同体 东非共同体（簡稱東共體；英文：East African Community，EAC）是由肯雅、乌干达、坦桑尼亚、布隆迪、卢旺达和南苏丹六个东非国家组成的区域性国际组织。该组织于1967年首次成立，1977年解散；其後在2000年由肯尼亚、乌干达和坦桑尼亚在阿鲁沙重新組織成立，总部也设于阿鲁沙。2004年，三国签订条约，成立关税同盟，于2005年1月生效。 苏丹 (1967年) 2000年美国人口普查 2004年中国超级联赛杯 TÜV組織 三国故事 东非联邦 已解散的NBA球队列表 慈善组织 拉美和加勒比国家共同体 326128#0 东非 共同体 簡稱 東共體 英文 east african community 东非共同体（簡稱東共體；英文：East African Community，EAC）是由肯雅、乌干达、坦桑尼亚、布隆迪、卢旺达和南苏丹六个东非国家组成的区域性国际组织。 东非共同体 东非共同体（簡稱東共體；英文：East African Community，EAC）是由肯雅、乌干达、坦桑尼亚、布隆迪、卢旺达和南苏丹六个东非国家组成的区域性国际组织。该组织于1967年首次成立，1977年解散；其後在2000年由肯尼亚、乌干达和坦桑尼亚在阿鲁沙重新組織成立，总部也设于阿鲁沙。2004年，三国签订条约，成立关税同盟，于2005年1月生效。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:20:18.637336+00:00"
+}

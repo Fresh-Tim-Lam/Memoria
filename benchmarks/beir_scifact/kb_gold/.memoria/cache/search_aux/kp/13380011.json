@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13380011",
+  "source_fingerprint": "2bb182e3f68b13299676a9a3c37e3753",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13380011",
+    "spare-respiratory-capacity-rather-than-oxidative-stress-regulates-glutamate-excitotoxicity-after-partial-respiratory-inhibition-of-mitochondrial-complex-i-with-rotenone."
+  ],
+  "key_phrases": [
+    "spare",
+    "respiratory",
+    "capacity",
+    "rather",
+    "than",
+    "oxidative",
+    "stress",
+    "regulates"
+  ],
+  "summary_1l": "Spare respiratory capacity rather than oxidative stress regulates glutamate excitotoxicity after partial respiratory inhibition of mitochondrial complex I with rotenone.",
+  "query_hits": [],
+  "embed_text": "13380011 Spare respiratory capacity rather than oxidative stress regulates glutamate excitotoxicity after partial respiratory inhibition of mitochondrial complex I with rotenone. science scifact Partial inhibition of mitochondrial respiratory complex I by rotenone reproduces aspects of Parkinson's disease in rodents. The hypothesis that rotenone enhancement of neuronal cell death is attributable to oxidative stress was tested in… 13380011 spare-respiratory-capacity-rather-than-oxidative-stress-regulates-glutamate-excitotoxicity-after-partial-respiratory-inhibition-of-mitochondrial-complex-i-with-rotenone. spare respiratory capacity rather than oxidative stress regulates Spare respiratory capacity rather than oxidative stress regulates glutamate excitotoxicity after partial respiratory inhibition of mitochondrial complex I with rotenone. Spare respiratory capacity rather than oxidative stress regulates glutamate excitotoxicity after partial respiratory inhibition of mitochondrial complex I with rotenone. Partial inhibition of mitochondrial respiratory complex I by rotenone reproduces aspects of Parkinson's disease in rodents. The hypothesis that rotenone enhancement of neuronal cell death is attributable to oxidative stress was tested in an acute glutamate excitotoxicity model using primary cultures of rat cerebellar granule neurons. As little as 5 nM rotenone increased mitochondrial superoxide (O2*-) levels and potentiated glutamate-induced cytoplasmic Ca2+ deregulation, the first irreversible stage of necrotic cell death. However, the potent cell-permeant O2*- trap manganese tetrakis (N-ethylpyridinium-2yl) porphyrin fai",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.132773+00:00"
+}

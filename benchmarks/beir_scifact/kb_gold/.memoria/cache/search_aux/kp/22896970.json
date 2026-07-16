@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22896970",
+  "source_fingerprint": "eace8a75ee1a323409abeb89297822fd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22896970",
+    "crystal-structure-of-the-eukaryotic-60s-ribosomal-subunit-in-complex-with-initiation-factor-6."
+  ],
+  "key_phrases": [
+    "crystal",
+    "structure",
+    "eukaryotic",
+    "60s",
+    "ribosomal",
+    "subunit",
+    "complex",
+    "with"
+  ],
+  "summary_1l": "Crystal structure of the eukaryotic 60S ribosomal subunit in complex with initiation factor 6.",
+  "query_hits": [],
+  "embed_text": "22896970 Crystal structure of the eukaryotic 60S ribosomal subunit in complex with initiation factor 6. science scifact Protein synthesis in all organisms is catalyzed by ribosomes. In comparison to their prokaryotic counterparts, eukaryotic ribosomes are considerably larger and are subject to more complex regulation. The large ribosomal subunit (60S)… 22896970 crystal-structure-of-the-eukaryotic-60s-ribosomal-subunit-in-complex-with-initiation-factor-6. crystal structure eukaryotic 60s ribosomal subunit complex with Crystal structure of the eukaryotic 60S ribosomal subunit in complex with initiation factor 6. Crystal structure of the eukaryotic 60S ribosomal subunit in complex with initiation factor 6. Protein synthesis in all organisms is catalyzed by ribosomes. In comparison to their prokaryotic counterparts, eukaryotic ribosomes are considerably larger and are subject to more complex regulation. The large ribosomal subunit (60S) catalyzes peptide bond formation and contains the nascent polypeptide exit tunnel. We present the structure of the 60S ribosomal subunit from Tetrahymena thermophila in complex with eukaryotic initiation factor 6 (eIF6), cocrystallized with the antibiotic cycloheximide (a eukaryotic-specific inhibitor of protein synthesis), at a resolution of 3.5 angstroms. The structure illustrates the complex functional architecture of the eukaryotic 60S subunit, which comprises an",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.482950+00:00"
+}

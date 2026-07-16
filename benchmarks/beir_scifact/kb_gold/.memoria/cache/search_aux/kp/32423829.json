@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "32423829",
+  "source_fingerprint": "3b606c55def2601f385b739248e2af67",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "32423829",
+    "a-cluster-randomized,-controlled-trial-of-breast-and-cervix-cancer-screening-in-mumbai,-india:-methodology-and-interim-results-after-three-rounds-of-screening."
+  ],
+  "key_phrases": [
+    "cluster",
+    "randomized",
+    "controlled",
+    "trial",
+    "breast",
+    "cervix",
+    "cancer",
+    "screening"
+  ],
+  "summary_1l": "A cluster randomized, controlled trial of breast and cervix cancer screening in Mumbai, India: methodology and interim results after three rounds of screening.",
+  "query_hits": [],
+  "embed_text": "32423829 A cluster randomized, controlled trial of breast and cervix cancer screening in Mumbai, India: methodology and interim results after three rounds of screening. science scifact Cervix and Breast cancers are the most common cancers among women worldwide and extract a large toll in developing countries. In May 1998, supported by a grant from the NCI (US), the Tata Memorial Hospital, Mumbai, India, started a… 32423829 a-cluster-randomized,-controlled-trial-of-breast-and-cervix-cancer-screening-in-mumbai,-india:-methodology-and-interim-results-after-three-rounds-of-screening. cluster randomized controlled trial breast cervix cancer screening A cluster randomized, controlled trial of breast and cervix cancer screening in Mumbai, India: methodology and interim results after three rounds of screening. A cluster randomized, controlled trial of breast and cervix cancer screening in Mumbai, India: methodology and interim results after three rounds of screening. Cervix and Breast cancers are the most common cancers among women worldwide and extract a large toll in developing countries. In May 1998, supported by a grant from the NCI (US), the Tata Memorial Hospital, Mumbai, India, started a cluster-randomized, controlled, screening-trial for cervix and breast cancer using trained primary health workers to provide health-education, visual-inspection of cervix (with 4% acetic acid-VIA) and clinical breast examination (CBE) in the screening arm, and only health education in the control arm. Four rounds of screening at 2-year intervals will be followed by 8 years of monitoring for incidence and",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.551624+00:00"
+}

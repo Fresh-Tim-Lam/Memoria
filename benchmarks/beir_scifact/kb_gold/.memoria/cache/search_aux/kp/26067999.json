@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26067999",
+  "source_fingerprint": "80f06c5d09f35d508e63586c00a83a93",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26067999",
+    "screening-for-lung-cancer:-u.s.-preventive-services-task-force-recommendation-statement"
+  ],
+  "key_phrases": [
+    "screening",
+    "lung",
+    "cancer",
+    "preventive",
+    "services",
+    "task",
+    "force",
+    "recommendation"
+  ],
+  "summary_1l": "Screening for Lung Cancer: U.",
+  "query_hits": [],
+  "embed_text": "26067999 Screening for Lung Cancer: U.S. Preventive Services Task Force Recommendation Statement science scifact The U.S. Preventive Services Task Force (USPSTF) makes recommendations about the effectiveness of specific preventive care services for patients without related signs or symptoms. It bases its recommendations on the evidence of both the… 26067999 screening-for-lung-cancer:-u.s.-preventive-services-task-force-recommendation-statement screening lung cancer preventive services task force recommendation Screening for Lung Cancer: U. Screening for Lung Cancer: U.S. Preventive Services Task Force Recommendation Statement The U.S. Preventive Services Task Force (USPSTF) makes recommendations about the effectiveness of specific preventive care services for patients without related signs or symptoms. It bases its recommendations on the evidence of both the benefits and harms of the service and an assessment of the balance. The USPSTF does not consider the costs of providing a service in this assessment. The USPSTF recognizes that clinical decisions involve more considerations than evidence alone. Clinicians should understand the evidence but individualize decision making to the specific patient or situation. Similarly, the USPSTF notes that policy and coverage decisions involve considerations in addition to the evidence of",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.244201+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10536636",
+  "source_fingerprint": "f73a251de7da73a7dbfce99f076edb09",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10536636",
+    "prevalence-and-causes-of-blindness-and-low-vision-in-southern-sudan"
+  ],
+  "key_phrases": [
+    "prevalence",
+    "causes",
+    "blindness",
+    "low",
+    "vision",
+    "southern",
+    "sudan",
+    "background"
+  ],
+  "summary_1l": "Background Blindness and low vision are thought to be common in southern Sudan.",
+  "query_hits": [],
+  "embed_text": "10536636 Prevalence and Causes of Blindness and Low Vision in Southern Sudan science scifact Background Blindness and low vision are thought to be common in southern Sudan. However, the magnitude and geographical distribution are largely unknown. We aimed to estimate the prevalence of blindness and low vision, identify the main… 10536636 prevalence-and-causes-of-blindness-and-low-vision-in-southern-sudan prevalence causes blindness low vision southern sudan background Background Blindness and low vision are thought to be common in southern Sudan. Prevalence and Causes of Blindness and Low Vision in Southern Sudan Background Blindness and low vision are thought to be common in southern Sudan. However, the magnitude and geographical distribution are largely unknown. We aimed to estimate the prevalence of blindness and low vision, identify the main causes of blindness and low vision, and estimate targets for blindness prevention programs in Mankien payam (district), southern Sudan.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.654408+00:00"
+}

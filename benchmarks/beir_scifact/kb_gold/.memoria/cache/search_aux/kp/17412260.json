@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17412260",
+  "source_fingerprint": "3185b4c9e46a8aa30d4a5e3a1dd2097c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17412260",
+    "a-complex-secretory-program-orchestrated-by-the-inflammasome-controls-paracrine-senescence"
+  ],
+  "key_phrases": [
+    "complex",
+    "secretory",
+    "program",
+    "orchestrated",
+    "by",
+    "inflammasome",
+    "controls",
+    "paracrine"
+  ],
+  "summary_1l": "Oncogene-induced senescence (OIS) is crucial for tumour suppression.",
+  "query_hits": [],
+  "embed_text": "17412260 A complex secretory program orchestrated by the inflammasome controls paracrine senescence science scifact Oncogene-induced senescence (OIS) is crucial for tumour suppression. Senescent cells implement a complex pro-inflammatory response termed the senescence-associated secretory phenotype (SASP). The SASP reinforces senescence, activates… 17412260 a-complex-secretory-program-orchestrated-by-the-inflammasome-controls-paracrine-senescence complex secretory program orchestrated by inflammasome controls paracrine Oncogene-induced senescence (OIS) is crucial for tumour suppression. A complex secretory program orchestrated by the inflammasome controls paracrine senescence Oncogene-induced senescence (OIS) is crucial for tumour suppression. Senescent cells implement a complex pro-inflammatory response termed the senescence-associated secretory phenotype (SASP). The SASP reinforces senescence, activates immune surveillance and paradoxically also has pro-tumorigenic properties. Here, we present evidence that the SASP can also induce paracrine senescence in normal cells both in culture and in human and mouse models of OIS in vivo. Coupling quantitative proteomics with small-molecule screens, we identified multiple SASP components mediating paracrine senescence, including TGF-β family ligands, VEGF, CCL2 and CCL20. Amongst them, TGF-β ligands play a major role by regulatin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.665910+00:00"
+}

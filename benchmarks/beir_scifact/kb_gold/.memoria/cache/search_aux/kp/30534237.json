@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "30534237",
+  "source_fingerprint": "aab19d7a8de7558e1fd277d714ff3773",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "30534237",
+    "gaba(b)-receptor-1-polymorphism-(g1465a)-is-associated-with-temporal-lobe-epilepsy."
+  ],
+  "key_phrases": [
+    "gaba",
+    "receptor",
+    "polymorphism",
+    "g1465a",
+    "associated",
+    "with",
+    "temporal",
+    "lobe"
+  ],
+  "summary_1l": "GABA(B) receptor 1 polymorphism (G1465A) is associated with temporal lobe epilepsy.",
+  "query_hits": [],
+  "embed_text": "30534237 GABA(B) receptor 1 polymorphism (G1465A) is associated with temporal lobe epilepsy. science scifact BACKGROUND Dysfunction of gamma-aminobutyric acid (GABA) (B) receptors has been implicated in the pathogenesis of temporal lobe epilepsy (TLE). OBJECTIVE To evaluate the genetic contribution of cloned human GABA(B) receptors to TLE.… 30534237 gaba(b)-receptor-1-polymorphism-(g1465a)-is-associated-with-temporal-lobe-epilepsy. gaba receptor polymorphism g1465a associated with temporal lobe GABA(B) receptor 1 polymorphism (G1465A) is associated with temporal lobe epilepsy. GABA(B) receptor 1 polymorphism (G1465A) is associated with temporal lobe epilepsy. BACKGROUND Dysfunction of gamma-aminobutyric acid (GABA) (B) receptors has been implicated in the pathogenesis of temporal lobe epilepsy (TLE). OBJECTIVE To evaluate the genetic contribution of cloned human GABA(B) receptors to TLE. METHODS The authors genotyped 141 patients (78 women and 63 men; mean age = 49.1 +/- 18.0 years) with nonlesional TLE and 372 age- and sex-matched normal individuals for the known polymorphism G1465A in the human GABA(B) receptor 1 [GABA(B[1])] gene. RESULTS There was a highly significant overrepresentation of the G1465A heterozygote in patients with TLE compared with controls. The A/G genotype was found in 17% of the 141 patients with TLE and in only 0.5% of the 372 controls (p",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.760903+00:00"
+}

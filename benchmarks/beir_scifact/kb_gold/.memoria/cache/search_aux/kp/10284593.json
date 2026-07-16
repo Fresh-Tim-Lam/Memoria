@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10284593",
+  "source_fingerprint": "56900aae64a81143da1070e48cb86c03",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10284593",
+    "myeloperoxidase-acts-as-a-profibrotic-mediator-of-atrial-fibrillation"
+  ],
+  "key_phrases": [
+    "myeloperoxidase",
+    "acts",
+    "as",
+    "profibrotic",
+    "mediator",
+    "atrial",
+    "fibrillation",
+    "observational"
+  ],
+  "summary_1l": "Observational clinical and ex vivo studies have established a strong association between atrial fibrillation and inflammation.",
+  "query_hits": [],
+  "embed_text": "10284593 Myeloperoxidase acts as a profibrotic mediator of atrial fibrillation science scifact Observational clinical and ex vivo studies have established a strong association between atrial fibrillation and inflammation. However, whether inflammation is the cause or the consequence of atrial fibrillation and which specific… 10284593 myeloperoxidase-acts-as-a-profibrotic-mediator-of-atrial-fibrillation myeloperoxidase acts as profibrotic mediator atrial fibrillation observational Observational clinical and ex vivo studies have established a strong association between atrial fibrillation and inflammation. Myeloperoxidase acts as a profibrotic mediator of atrial fibrillation Observational clinical and ex vivo studies have established a strong association between atrial fibrillation and inflammation. However, whether inflammation is the cause or the consequence of atrial fibrillation and which specific inflammatory mediators may increase the atria's susceptibility to fibrillation remain elusive. Here we provide experimental and clinical evidence for the mechanistic involvement of myeloperoxidase (MPO), a heme enzyme abundantly expressed by neutrophils, in the pathophysiology of atrial fibrillation. MPO-deficient mice pretreated with angiotensin II (AngII) to provoke leukocyte activation showed lower atrial tissue abundance of the MPO product 3-chlorotyrosine, reduced activity of matrix metall",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:04.528723+00:00"
+}

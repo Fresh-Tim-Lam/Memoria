@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "1022115",
+  "source_fingerprint": "2aa8c8c02b0342b6ab1f2aa2d4939b5b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1022115"
+  ],
+  "key_phrases": [
+    "il",
+    "23",
+    "responsive",
+    "innate",
+    "lymphoid",
+    "cells",
+    "increased",
+    "inflammatory"
+  ],
+  "summary_1l": "Results of experimental and genetic studies have highlighted the role of the IL-23/IL-17 axis in the pathogenesis of",
+  "query_hits": [],
+  "embed_text": "1022115 IL-23–responsive innate lymphoid cells are increased in inflammatory bowel disease science scifact Results of experimental and genetic studies have highlighted the role of the IL-23/IL-17 axis in the pathogenesis of inflammatory bowel disease (IBD). IL-23-driven inflammation has been primarily linked to Th17 cells; however, we have… 1022115 il 23 responsive innate lymphoid cells increased inflammatory Results of experimental and genetic studies have highlighted the role of the IL-23/IL-17 axis in the pathogenesis of IL-23–responsive innate lymphoid cells are increased in inflammatory bowel disease Results of experimental and genetic studies have highlighted the role of the IL-23/IL-17 axis in the pathogenesis of inflammatory bowel disease (IBD). IL-23-driven inflammation has been primarily linked to Th17 cells; however, we have recently identified a novel population of innate lymphoid cells (ILCs) in mice that produces IL-17, IL-22, and IFN-γ in response to IL-23 and mediates innate colitis. The relevance of ILC populations in human health and disease is currently poorly understood. In this study, we have analyzed the role of IL-23-responsive ILCs in the human intestine in control and IBD patients. Our results show increased expression of the Th17-associated cytokine genes IL17A and IL17F among intest",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T12:37:03.579088+00:00"
+}

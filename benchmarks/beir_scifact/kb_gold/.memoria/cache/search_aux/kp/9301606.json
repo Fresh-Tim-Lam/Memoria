@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9301606",
+  "source_fingerprint": "0f6dbe1db4361a6a45484aa98ce10516",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9301606",
+    "parathyroid-hormone-induced-e4bp4/nfil3-down-regulates-transcription-in-osteoblasts."
+  ],
+  "key_phrases": [
+    "parathyroid",
+    "hormone",
+    "induced",
+    "e4bp4",
+    "nfil3",
+    "down",
+    "regulates",
+    "transcription"
+  ],
+  "summary_1l": "Parathyroid hormone-induced E4BP4/NFIL3 down-regulates transcription in osteoblasts.",
+  "query_hits": [],
+  "embed_text": "9301606 Parathyroid hormone-induced E4BP4/NFIL3 down-regulates transcription in osteoblasts. science scifact Parathyroid hormone (PTH), a major regulator of bone metabolism, activates the PTHR1 receptor on the osteoblast plasma membrane to initiate signaling and induce transcription of primary response genes. Subsequently, primary genes with… 9301606 parathyroid-hormone-induced-e4bp4/nfil3-down-regulates-transcription-in-osteoblasts. parathyroid hormone induced e4bp4 nfil3 down regulates transcription Parathyroid hormone-induced E4BP4/NFIL3 down-regulates transcription in osteoblasts. Parathyroid hormone-induced E4BP4/NFIL3 down-regulates transcription in osteoblasts. Parathyroid hormone (PTH), a major regulator of bone metabolism, activates the PTHR1 receptor on the osteoblast plasma membrane to initiate signaling and induce transcription of primary response genes. Subsequently, primary genes with transcriptional activity regulate expression of downstream PTH targets. We have identified the adenovirus E4 promoter-binding protein/nuclear factor regulated by IL-3 (E4bp4) as a PTH-induced primary gene in osteoblasts. E4BP4 is a basic leucine zipper (bZIP) transcription factor that represses or activates transcription in non-osteoblastic cells. We report here that PTH rapidly and transiently induced E4bp4 mRNA in osteoblastic cells and that this induction did not require p",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.699658+00:00"
+}

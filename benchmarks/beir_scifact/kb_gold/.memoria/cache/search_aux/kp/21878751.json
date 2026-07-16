@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21878751",
+  "source_fingerprint": "8262260596fd79b63a0f59a95333a5ca",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21878751",
+    "mice-deficient-in-cd4-t-cells-have-only-transiently-diminished-levels-of-ifn-gamma,-yet-succumb-to-tuberculosis."
+  ],
+  "key_phrases": [
+    "mice",
+    "deficient",
+    "cd4",
+    "cells",
+    "have",
+    "only",
+    "transiently",
+    "diminished"
+  ],
+  "summary_1l": "Mice deficient in CD4 T cells have only transiently diminished levels of IFN-gamma, yet succumb to tuberculosis.",
+  "query_hits": [],
+  "embed_text": "21878751 Mice deficient in CD4 T cells have only transiently diminished levels of IFN-gamma, yet succumb to tuberculosis. science scifact CD4 T cells are important in the protective immune response against tuberculosis. Two mouse models deficient in CD4 T cells were used to examine the mechanism by which these cells participate in protection against Mycobacterium… 21878751 mice-deficient-in-cd4-t-cells-have-only-transiently-diminished-levels-of-ifn-gamma,-yet-succumb-to-tuberculosis. mice deficient cd4 cells have only transiently diminished Mice deficient in CD4 T cells have only transiently diminished levels of IFN-gamma, yet succumb to tuberculosis. Mice deficient in CD4 T cells have only transiently diminished levels of IFN-gamma, yet succumb to tuberculosis. CD4 T cells are important in the protective immune response against tuberculosis. Two mouse models deficient in CD4 T cells were used to examine the mechanism by which these cells participate in protection against Mycobacterium tuberculosis challenge. Transgenic mice deficient in either MHC class II or CD4 molecules demonstrated increased susceptibility to M. tuberculosis, compared with wild-type mice. MHC class II-/- mice were more susceptible than CD4-/- mice, as measured by survival following M. tuberculosis challenge, but the relative resistance of CD4-/- mice did not appear to be due to increased numbers of CD4-8- (double-negative) T cells. Analysis of in vivo IFN-gamma pro",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.835921+00:00"
+}

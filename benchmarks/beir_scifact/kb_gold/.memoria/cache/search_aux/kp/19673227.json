@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19673227",
+  "source_fingerprint": "4701cd7c7bd18f805291a3ca075c3edf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19673227",
+    "chemosensitivity-profile-assay-of-circulating-cancer-cells:-prognostic-and-predictive-value-in-epithelial-tumors."
+  ],
+  "key_phrases": [
+    "chemosensitivity",
+    "profile",
+    "assay",
+    "circulating",
+    "cancer",
+    "cells",
+    "prognostic",
+    "predictive"
+  ],
+  "summary_1l": "Chemosensitivity profile assay of circulating cancer cells: prognostic and predictive value in epithelial tumors.",
+  "query_hits": [],
+  "embed_text": "19673227 Chemosensitivity profile assay of circulating cancer cells: prognostic and predictive value in epithelial tumors. science scifact The prognostic value associated with the detection of circulating tumor cells (CTCs) in metastatic breast cancer by the CellSearch technology raise additional issues regarding the biological value of this information. We postulated that a… 19673227 chemosensitivity-profile-assay-of-circulating-cancer-cells:-prognostic-and-predictive-value-in-epithelial-tumors. chemosensitivity profile assay circulating cancer cells prognostic predictive Chemosensitivity profile assay of circulating cancer cells: prognostic and predictive value in epithelial tumors. Chemosensitivity profile assay of circulating cancer cells: prognostic and predictive value in epithelial tumors. The prognostic value associated with the detection of circulating tumor cells (CTCs) in metastatic breast cancer by the CellSearch technology raise additional issues regarding the biological value of this information. We postulated that a drug-resistance profile of CTCs may predict response to chemotherapy in cancer patients and therefore could be used for patient selection. One hundred 5 patients with diagnosis of carcinoma were enrolled in a prospective trial. CTCs were isolated from peripheral blood, and positive samples were evaluated for the expression of a panel of genes involved in anticancer drugs resistance. The drug-resistance profile was correlated with disease-free",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.991003+00:00"
+}

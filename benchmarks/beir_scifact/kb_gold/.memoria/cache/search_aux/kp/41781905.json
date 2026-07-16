@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "41781905",
+  "source_fingerprint": "efa7e3a9f059fd759ecd0f41ff5f8b54",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "41781905",
+    "oxidant-stress-promotes-disease-by-activating-camkii."
+  ],
+  "key_phrases": [
+    "oxidant",
+    "stress",
+    "promotes",
+    "disease",
+    "by",
+    "activating",
+    "camkii",
+    "activated"
+  ],
+  "summary_1l": "Oxidant stress promotes disease by activating CaMKII.",
+  "query_hits": [],
+  "embed_text": "41781905 Oxidant stress promotes disease by activating CaMKII. science scifact CaMKII is activated by oxidation of methionine residues residing in the regulatory domain. Oxidized CaMKII (ox-CaMKII) is now thought to participate in cardiovascular and pulmonary diseases and cancer. This invited review summarizes… 41781905 oxidant-stress-promotes-disease-by-activating-camkii. oxidant stress promotes disease by activating camkii activated Oxidant stress promotes disease by activating CaMKII. Oxidant stress promotes disease by activating CaMKII. CaMKII is activated by oxidation of methionine residues residing in the regulatory domain. Oxidized CaMKII (ox-CaMKII) is now thought to participate in cardiovascular and pulmonary diseases and cancer. This invited review summarizes current evidence for the role of ox-CaMKII in disease, considers critical knowledge gaps and suggests new areas for inquiry.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.581904+00:00"
+}

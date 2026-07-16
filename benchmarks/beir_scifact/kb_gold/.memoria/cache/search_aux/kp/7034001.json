@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7034001",
+  "source_fingerprint": "a1886daa7dd951aa0215eb59cf6ed9d8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7034001",
+    "outcome-of-multipair-donor-kidney-exchange-by-a-web-based-algorithm."
+  ],
+  "key_phrases": [
+    "outcome",
+    "multipair",
+    "donor",
+    "kidney",
+    "exchange",
+    "by",
+    "web",
+    "based"
+  ],
+  "summary_1l": "Outcome of multipair donor kidney exchange by a web-based algorithm.",
+  "query_hits": [],
+  "embed_text": "7034001 Outcome of multipair donor kidney exchange by a web-based algorithm. science scifact Donor kidney exchange is an established method to overcome incompatibility of donor-recipient pairs (DRP). A computerized algorithm was devised to exchange donor kidney and was tested in a multicenter setting. The algorithm was made… 7034001 outcome-of-multipair-donor-kidney-exchange-by-a-web-based-algorithm. outcome multipair donor kidney exchange by web based Outcome of multipair donor kidney exchange by a web-based algorithm. Outcome of multipair donor kidney exchange by a web-based algorithm. Donor kidney exchange is an established method to overcome incompatibility of donor-recipient pairs (DRP). A computerized algorithm was devised to exchange donor kidney and was tested in a multicenter setting. The algorithm was made according to the consensus of participating centers. It makes all possible exchange combinations not only between two incompatible DRP but also circularly among three DRP and selects an optimum set of exchange combinations, considering several factors that can affect the outcome of the exchanged transplant. The algorithm was implemented as a web-based program, and matching was performed five times. Fifty-three DRP were enrolled from five transplant centers. The numbers of DRP that were enrolle",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.259462+00:00"
+}

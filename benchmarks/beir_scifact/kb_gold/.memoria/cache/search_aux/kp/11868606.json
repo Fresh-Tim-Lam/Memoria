@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11868606",
+  "source_fingerprint": "62e76235848572b0f78100b4549d7959",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11868606",
+    "translocated-lps-might-cause-endotoxin-tolerance-in-circulating-monocytes-of-cystic-fibrosis-patients"
+  ],
+  "key_phrases": [
+    "translocated",
+    "lps",
+    "might",
+    "cause",
+    "endotoxin",
+    "tolerance",
+    "circulating",
+    "monocytes"
+  ],
+  "summary_1l": "Cystic Fibrosis (CF) is an inherited pleiotropic disease that results from abnormalities in the ge",
+  "query_hits": [],
+  "embed_text": "11868606 Translocated LPS Might Cause Endotoxin Tolerance in Circulating Monocytes of Cystic Fibrosis Patients science scifact Cystic Fibrosis (CF) is an inherited pleiotropic disease that results from abnormalities in the gene codes of a chloride channel. The lungs of CF patients are chronically infected by several pathogens but bacteraemia have rarely been… 11868606 translocated-lps-might-cause-endotoxin-tolerance-in-circulating-monocytes-of-cystic-fibrosis-patients translocated lps might cause endotoxin tolerance circulating monocytes Cystic Fibrosis (CF) is an inherited pleiotropic disease that results from abnormalities in the ge Translocated LPS Might Cause Endotoxin Tolerance in Circulating Monocytes of Cystic Fibrosis Patients Cystic Fibrosis (CF) is an inherited pleiotropic disease that results from abnormalities in the gene codes of a chloride channel. The lungs of CF patients are chronically infected by several pathogens but bacteraemia have rarely been reported in this pathology. Besides that, circulating monocytes in CF patients exhibit a patent Endotoxin Tolerance (ET) state since they show a significant reduction of the inflammatory response to bacterial stimulus. Despite a previous description of this phenomenon, the direct cause of ET in CF patients remains unknown. In this study we have researched the possible role of microbial/endotoxin translocation from a localized infection to the bloodstream as a",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:07.270666+00:00"
+}

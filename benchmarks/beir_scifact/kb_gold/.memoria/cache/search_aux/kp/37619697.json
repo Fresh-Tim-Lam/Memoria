@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "37619697",
+  "source_fingerprint": "17c50ee171a7655a9594382441df1ddb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "37619697",
+    "phenylpropanolamine-and-the-risk-of-hemorrhagic-stroke."
+  ],
+  "key_phrases": [
+    "phenylpropanolamine",
+    "risk",
+    "hemorrhagic",
+    "stroke",
+    "background",
+    "commonly",
+    "found",
+    "appetite"
+  ],
+  "summary_1l": "Phenylpropanolamine and the risk of hemorrhagic stroke.",
+  "query_hits": [],
+  "embed_text": "37619697 Phenylpropanolamine and the risk of hemorrhagic stroke. science scifact BACKGROUND Phenylpropanolamine is commonly found in appetite suppressants and cough or cold remedies. Case reports have linked the use of products containing phenylpropanolamine to hemorrhagic stroke, often after the first use of these… 37619697 phenylpropanolamine-and-the-risk-of-hemorrhagic-stroke. phenylpropanolamine risk hemorrhagic stroke background commonly found appetite Phenylpropanolamine and the risk of hemorrhagic stroke. Phenylpropanolamine and the risk of hemorrhagic stroke. BACKGROUND Phenylpropanolamine is commonly found in appetite suppressants and cough or cold remedies. Case reports have linked the use of products containing phenylpropanolamine to hemorrhagic stroke, often after the first use of these products. To study the association, we designed a case-control study. METHODS Men and women 18 to 49 years of age were recruited from 43 U.S. hospitals. Eligibility criteria included the occurrence of a subarachnoid or intracerebral hemorrhage within 30 days before enrollment and the absence of a previously diagnosed brain lesion. Random-digit dialing identified two matched control subjects per patient. RESULTS There were 702 patients and 1376 control subjects. For women, the adjusted odds ratio was 16.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.699263+00:00"
+}

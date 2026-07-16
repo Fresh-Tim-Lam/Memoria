@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "43192375",
+  "source_fingerprint": "b711672a942381c395fae3c360f32168",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "43192375",
+    "obesity-induces-a-phenotypic-switch-in-adipose-tissue-macrophage-polarization."
+  ],
+  "key_phrases": [
+    "obesity",
+    "induces",
+    "phenotypic",
+    "switch",
+    "adipose",
+    "tissue",
+    "macrophage",
+    "polarization"
+  ],
+  "summary_1l": "Obesity induces a phenotypic switch in adipose tissue macrophage polarization.",
+  "query_hits": [],
+  "embed_text": "43192375 Obesity induces a phenotypic switch in adipose tissue macrophage polarization. science scifact Adipose tissue macrophages (ATMs) infiltrate adipose tissue during obesity and contribute to insulin resistance. We hypothesized that macrophages migrating to adipose tissue upon high-fat feeding may differ from those that reside there… 43192375 obesity-induces-a-phenotypic-switch-in-adipose-tissue-macrophage-polarization. obesity induces phenotypic switch adipose tissue macrophage polarization Obesity induces a phenotypic switch in adipose tissue macrophage polarization. Obesity induces a phenotypic switch in adipose tissue macrophage polarization. Adipose tissue macrophages (ATMs) infiltrate adipose tissue during obesity and contribute to insulin resistance. We hypothesized that macrophages migrating to adipose tissue upon high-fat feeding may differ from those that reside there under normal diet conditions. To this end, we found a novel F4/80(+)CD11c(+) population of ATMs in adipose tissue of obese mice that was not seen in lean mice. ATMs from lean mice expressed many genes characteristic of M2 or \"alternatively activated\" macrophages, including Ym1, arginase 1, and Il10. Diet-induced obesity decreased expression of these genes in ATMs while increasing expression of genes such as those encoding TNF-alpha and iNOS that are characteristic of M1 or \"classi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.547840+00:00"
+}

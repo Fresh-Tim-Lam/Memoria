@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17055665",
+  "source_fingerprint": "e34cfda22edf33ee2db66adf5fbc8364",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17055665",
+    "genome-wide-dfoxo-targets-and-topology-of-the-transcriptomic-response-to-stress-and-insulin-signalling"
+  ],
+  "key_phrases": [
+    "genome",
+    "wide",
+    "dfoxo",
+    "targets",
+    "topology",
+    "transcriptomic",
+    "response",
+    "stress"
+  ],
+  "summary_1l": "FoxO transcription factors, inhibited by insulin/insulin-like growth factor signalling (IIS), are",
+  "query_hits": [],
+  "embed_text": "17055665 Genome-wide dFOXO targets and topology of the transcriptomic response to stress and insulin signalling science scifact FoxO transcription factors, inhibited by insulin/insulin-like growth factor signalling (IIS), are crucial players in numerous organismal processes including lifespan. Using genomic tools, we uncover over 700 direct dFOXO targets in adult… 17055665 genome-wide-dfoxo-targets-and-topology-of-the-transcriptomic-response-to-stress-and-insulin-signalling genome wide dfoxo targets topology transcriptomic response stress FoxO transcription factors, inhibited by insulin/insulin-like growth factor signalling (IIS), are Genome-wide dFOXO targets and topology of the transcriptomic response to stress and insulin signalling FoxO transcription factors, inhibited by insulin/insulin-like growth factor signalling (IIS), are crucial players in numerous organismal processes including lifespan. Using genomic tools, we uncover over 700 direct dFOXO targets in adult female Drosophila. dFOXO is directly required for transcription of several IIS components and interacting pathways, such as TOR, in the wild-type fly. The genomic locations occupied by dFOXO in adults are different from those observed in larvae or cultured cells. These locations remain unchanged upon activation by stresses or reduced IIS, but the binding is increased and additional targets activated upon genetic reduction in IIS. We identify the part of t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.241780+00:00"
+}

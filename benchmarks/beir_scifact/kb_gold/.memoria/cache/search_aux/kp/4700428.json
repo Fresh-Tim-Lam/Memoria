@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4700428",
+  "source_fingerprint": "716bc5497adeb88146576f5603f6a12a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4700428",
+    "the-effect-of-n-acetylcysteine-in-the-nucleus-accumbens-on-neurotransmission-and-relapse-to-cocaine."
+  ],
+  "key_phrases": [
+    "effect",
+    "acetylcysteine",
+    "nucleus",
+    "accumbens",
+    "neurotransmission",
+    "relapse",
+    "cocaine",
+    "background"
+  ],
+  "summary_1l": "The effect of N-acetylcysteine in the nucleus accumbens on neurotransmission and relapse to cocaine.",
+  "query_hits": [],
+  "embed_text": "4700428 The effect of N-acetylcysteine in the nucleus accumbens on neurotransmission and relapse to cocaine. science scifact BACKGROUND Relapse to cocaine seeking has been linked with low glutamate in the nucleus accumbens core (NAcore) causing potentiation of synaptic glutamate transmission from prefrontal cortex (PFC) afferents. Systemic N-acetylcysteine (NAC)… 4700428 the-effect-of-n-acetylcysteine-in-the-nucleus-accumbens-on-neurotransmission-and-relapse-to-cocaine. effect acetylcysteine nucleus accumbens neurotransmission relapse cocaine background The effect of N-acetylcysteine in the nucleus accumbens on neurotransmission and relapse to cocaine. The effect of N-acetylcysteine in the nucleus accumbens on neurotransmission and relapse to cocaine. BACKGROUND Relapse to cocaine seeking has been linked with low glutamate in the nucleus accumbens core (NAcore) causing potentiation of synaptic glutamate transmission from prefrontal cortex (PFC) afferents. Systemic N-acetylcysteine (NAC) has been shown to restore glutamate homeostasis, reduce relapse to cocaine seeking, and depotentiate PFC-NAcore synapses. Here, we examine the effects of NAC applied directly to the NAcore on relapse and neurotransmission in PFC-NAcore synapses, as well as the involvement of the metabotropic glutamate receptors 2/3 (mGluR2/3) and 5 (mGluR5). METHODS Rats were trained to self-administer cocaine for 2 weeks and following extinction received either intra-acc",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.261159+00:00"
+}

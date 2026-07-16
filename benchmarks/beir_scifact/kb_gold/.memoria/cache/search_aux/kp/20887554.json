@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20887554",
+  "source_fingerprint": "51e1b1794a4abb3d0b3a636d9c152b6f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20887554",
+    "preoperative-c-reactive-protein-predicts-mid-term-outcome-after-cardiac-surgery."
+  ],
+  "key_phrases": [
+    "preoperative",
+    "reactive",
+    "protein",
+    "predicts",
+    "mid",
+    "term",
+    "outcome",
+    "after"
+  ],
+  "summary_1l": "Preoperative C-reactive protein predicts mid-term outcome after cardiac surgery.",
+  "query_hits": [],
+  "embed_text": "20887554 Preoperative C-reactive protein predicts mid-term outcome after cardiac surgery. science scifact BACKGROUND C-reactive protein (CRP) is a known risk factor for cardiovascular events in the healthy population and in patients with coronary artery disease. High CRP levels before cardiac surgery are associated with worse short-term… 20887554 preoperative-c-reactive-protein-predicts-mid-term-outcome-after-cardiac-surgery. preoperative reactive protein predicts mid term outcome after Preoperative C-reactive protein predicts mid-term outcome after cardiac surgery. Preoperative C-reactive protein predicts mid-term outcome after cardiac surgery. BACKGROUND C-reactive protein (CRP) is a known risk factor for cardiovascular events in the healthy population and in patients with coronary artery disease. High CRP levels before cardiac surgery are associated with worse short-term outcome, but its role after discharge home remains unknown. The study objective was to evaluate the effect of CRP on short-term and mid-term outcome after cardiac surgery. METHODS From August 2000 to May 2004, values for preoperative CRP were available for 597 unselected patients undergoing cardiac operations. CRP was used to divide this cohort in two groups: a low inflammatory status (LHS) group of 354 patients with CRP of less than 0.5 mg/dL, and a high inflammatory status (HIS)",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.075889+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2053540",
+  "source_fingerprint": "b01ebecdfeed06b16f23737446bf53ce",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2053540",
+    "oncostatin-m-and-leukemia-inhibitory-factor-do-not-use-the-same-functional-receptor-in-mice."
+  ],
+  "key_phrases": [
+    "oncostatin",
+    "leukemia",
+    "inhibitory",
+    "factor",
+    "do",
+    "not",
+    "use",
+    "same"
+  ],
+  "summary_1l": "Oncostatin M and leukemia inhibitory factor do not use the same functional receptor in mice.",
+  "query_hits": [],
+  "embed_text": "2053540 Oncostatin M and leukemia inhibitory factor do not use the same functional receptor in mice. science scifact Oncostatin M (OSM) and leukemia inhibitory factor (LIF) are members of the interleukin-6 (IL-6) subfamily of cytokines that use a common signal transducer gp130. Human OSM (hOSM) and LIF share a functional high-affinity receptor that is… 2053540 oncostatin-m-and-leukemia-inhibitory-factor-do-not-use-the-same-functional-receptor-in-mice. oncostatin leukemia inhibitory factor do not use same Oncostatin M and leukemia inhibitory factor do not use the same functional receptor in mice. Oncostatin M and leukemia inhibitory factor do not use the same functional receptor in mice. Oncostatin M (OSM) and leukemia inhibitory factor (LIF) are members of the interleukin-6 (IL-6) subfamily of cytokines that use a common signal transducer gp130. Human OSM (hOSM) and LIF share a functional high-affinity receptor that is composed of gp130 and LIF receptor beta subunit (LIFRbeta). A second high-affinity receptor for hOSM was recently found to be formed by gp130 and the hOSM receptor beta subunit. However, the nature of murine OSM (mOSM) and its receptors has remained unknown. Using the recently cloned mOSM cDNA, we produced recombinant mOSM and studied its biological activity and receptor structure. Murine hematopoietic cell lines M1 and DA1.a, an embryonic stem cell line CCE, and Ba",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.466240+00:00"
+}

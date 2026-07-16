@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5252837",
+  "source_fingerprint": "665abf4a06888fbb42c4061f1421264b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5252837",
+    "cellular-roles-of-dna-topoisomerases:-a-molecular-perspective"
+  ],
+  "key_phrases": [
+    "cellular",
+    "roles",
+    "dna",
+    "topoisomerases",
+    "molecular",
+    "perspective",
+    "magicians",
+    "world"
+  ],
+  "summary_1l": "DNA topoisomerases are the magicians of the DNA world — by allowing DNA strands or double helices to pass through each other, they can sol",
+  "query_hits": [],
+  "embed_text": "5252837 Cellular roles of DNA topoisomerases: a molecular perspective science scifact DNA topoisomerases are the magicians of the DNA world — by allowing DNA strands or double helices to pass through each other, they can solve all of the topological problems of DNA in replication, transcription and other cellular… 5252837 cellular-roles-of-dna-topoisomerases:-a-molecular-perspective cellular roles dna topoisomerases molecular perspective magicians world DNA topoisomerases are the magicians of the DNA world — by allowing DNA strands or double helices to pass through each other, they can sol Cellular roles of DNA topoisomerases: a molecular perspective DNA topoisomerases are the magicians of the DNA world — by allowing DNA strands or double helices to pass through each other, they can solve all of the topological problems of DNA in replication, transcription and other cellular transactions. Extensive biochemical and structural studies over the past three decades have provided molecular models of how the various subfamilies of DNA topoisomerase manipulate DNA. In this review, the cellular roles of these enzymes are examined from a molecular point of view.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.597330+00:00"
+}

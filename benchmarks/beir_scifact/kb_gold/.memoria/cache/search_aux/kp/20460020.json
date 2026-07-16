@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20460020",
+  "source_fingerprint": "fe8b9be9d4774b4ab75b79f32c014d29",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20460020",
+    "estrogen-receptor-alpha-promotes-alternative-macrophage-activation-during-cutaneous-repair."
+  ],
+  "key_phrases": [
+    "estrogen",
+    "receptor",
+    "alpha",
+    "promotes",
+    "alternative",
+    "macrophage",
+    "activation",
+    "during"
+  ],
+  "summary_1l": "Estrogen receptor-alpha promotes alternative macrophage activation during cutaneous repair.",
+  "query_hits": [],
+  "embed_text": "20460020 Estrogen receptor-alpha promotes alternative macrophage activation during cutaneous repair. science scifact Efficient local monocyte/macrophage recruitment is critical for tissue repair. Recruited macrophages are polarized toward classical (proinflammatory) or alternative (prohealing) activation in response to cytokines, with tight temporal… 20460020 estrogen-receptor-alpha-promotes-alternative-macrophage-activation-during-cutaneous-repair. estrogen receptor alpha promotes alternative macrophage activation during Estrogen receptor-alpha promotes alternative macrophage activation during cutaneous repair. Estrogen receptor-alpha promotes alternative macrophage activation during cutaneous repair. Efficient local monocyte/macrophage recruitment is critical for tissue repair. Recruited macrophages are polarized toward classical (proinflammatory) or alternative (prohealing) activation in response to cytokines, with tight temporal regulation crucial for efficient wound repair. Estrogen acts as a potent anti-inflammatory regulator of cutaneous healing. However, an understanding of estrogen/estrogen receptor (ER) contribution to macrophage polarization and subsequent local effects on wound healing is lacking. Here we identify, to our knowledge previously unreported, a role whereby estrogen receptor α (ERα) signaling preferentially polarizes macrophages from a range of sources to an alternative phe",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.349749+00:00"
+}

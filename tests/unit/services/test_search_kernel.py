@@ -18,6 +18,8 @@ def test_search_finds_kp_by_name():
     assert hit["kp_id"] == "rename-kp"
     assert hit["file"] == "alpha.md"
     assert hit["score"] >= 65
+    assert hit.get("tier") in ("high", "medium", "low")
+    assert "query_plan" in res
 
 
 def test_search_finds_kp_by_id():

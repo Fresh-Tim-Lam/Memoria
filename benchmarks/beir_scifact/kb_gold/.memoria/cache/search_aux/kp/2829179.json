@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2829179",
+  "source_fingerprint": "cd0795b44b4be36aa2da5385d0a0b1a7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2829179",
+    "pre-eclampsia:-connecting-angiogenic-and-metabolic-pathways."
+  ],
+  "key_phrases": [
+    "pre",
+    "eclampsia",
+    "connecting",
+    "angiogenic",
+    "metabolic",
+    "pathways",
+    "hypertensive",
+    "disease"
+  ],
+  "summary_1l": "Pre-eclampsia: connecting angiogenic and metabolic pathways.",
+  "query_hits": [],
+  "embed_text": "2829179 Pre-eclampsia: connecting angiogenic and metabolic pathways. science scifact Pre-eclampsia is a hypertensive disease of pregnancy with a worldwide incidence of 5-8%. This review focuses on recent developments in pre-eclampsia research related to angiogenesis and metabolism. We first address the 'angiogenic… 2829179 pre-eclampsia:-connecting-angiogenic-and-metabolic-pathways. pre eclampsia connecting angiogenic metabolic pathways hypertensive disease Pre-eclampsia: connecting angiogenic and metabolic pathways. Pre-eclampsia: connecting angiogenic and metabolic pathways. Pre-eclampsia is a hypertensive disease of pregnancy with a worldwide incidence of 5-8%. This review focuses on recent developments in pre-eclampsia research related to angiogenesis and metabolism. We first address the 'angiogenic imbalance' theory, which hypothesizes that pre-eclampsia results from an imbalance of factors that promote or antagonize angiogenesis, such as soluble fms-like tyrosine kinase (sFlt1), 2-methoxyestradiol (2-ME) and catechol-O-methyltransferase (COMT). Next, we analyze the association between pre-eclampsia and dysfunctional metabolism of both homocysteine and placental glycogen. We hope that illuminating some of the various connections existing between angiogenesis and metabolism in pre-eclampsia will fa",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.830387+00:00"
+}

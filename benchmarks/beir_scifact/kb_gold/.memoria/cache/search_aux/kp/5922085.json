@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5922085",
+  "source_fingerprint": "8684d7adb1d0fa412e4c4109851db143",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5922085",
+    "virus-plus-susceptibility-gene-interaction-determines-crohn's-disease-gene-atg16l1-phenotypes-in-intestine"
+  ],
+  "key_phrases": [
+    "virus",
+    "plus",
+    "susceptibility",
+    "gene",
+    "interaction",
+    "determines",
+    "crohn",
+    "disease"
+  ],
+  "summary_1l": "It is unclear why disease occurs in only a small proportion of persons carrying common risk a",
+  "query_hits": [],
+  "embed_text": "5922085 Virus-Plus-Susceptibility Gene Interaction Determines Crohn's Disease Gene Atg16L1 Phenotypes in Intestine science scifact It is unclear why disease occurs in only a small proportion of persons carrying common risk alleles of disease susceptibility genes. Here we demonstrate that an interaction between a specific virus infection and a mutation in the Crohn's… 5922085 virus-plus-susceptibility-gene-interaction-determines-crohn's-disease-gene-atg16l1-phenotypes-in-intestine virus plus susceptibility gene interaction determines crohn disease It is unclear why disease occurs in only a small proportion of persons carrying common risk a Virus-Plus-Susceptibility Gene Interaction Determines Crohn's Disease Gene Atg16L1 Phenotypes in Intestine It is unclear why disease occurs in only a small proportion of persons carrying common risk alleles of disease susceptibility genes. Here we demonstrate that an interaction between a specific virus infection and a mutation in the Crohn's disease susceptibility gene Atg16L1 induces intestinal pathologies in mice. This virus-plus-susceptibility gene interaction generated abnormalities in granule packaging and unique patterns of gene expression in Paneth cells. Further, the response to injury induced by the toxic substance dextran sodium sulfate was fundamentally altered to include pathologies resembling aspects of Crohn's disease. These pathologies triggered by virus-plus-susceptibility",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.487229+00:00"
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "8903143",
+  "source_fingerprint": "e6206ef9b7bb9223aa72118347fb2b98",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8903143"
+  ],
+  "key_phrases": [
+    "basic",
+    "residues",
+    "cell",
+    "receptor",
+    "cytoplasmic",
+    "domain",
+    "mediate",
+    "membrane"
+  ],
+  "summary_1l": "Basic residues in the T-cell receptor ζ cytoplasmic domain mediate membrane association and modulate signaling.",
+  "query_hits": [],
+  "embed_text": "8903143 Basic residues in the T-cell receptor ζ cytoplasmic domain mediate membrane association and modulate signaling. science scifact The T-cell receptor (TCR) consists of a TCRαβ heterodimer, a TCRζ homodimer, and CD3γε and CD3δε heterodimers. The precise mechanism of T-cell triggering following TCR ligand engagement remains elusive. Previous studies reported that the… 8903143 basic residues cell receptor cytoplasmic domain mediate membrane Basic residues in the T-cell receptor ζ cytoplasmic domain mediate membrane association and modulate signaling. Basic residues in the T-cell receptor ζ cytoplasmic domain mediate membrane association and modulate signaling. The T-cell receptor (TCR) consists of a TCRαβ heterodimer, a TCRζ homodimer, and CD3γε and CD3δε heterodimers. The precise mechanism of T-cell triggering following TCR ligand engagement remains elusive. Previous studies reported that the cytoplasmic tail of CD3ε binds to the plasma membrane through a basic residue-rich stretch (BRS) and proposed that dissociation from the membrane is required for phosphorylation thereof. In this report we show that BRS motifs within the cytoplasmic tail of TCRζ mediate association with the plasma membrane and that TCR engagement results in TCRζ dissociation from the membrane. This dissociation requires phosphorylation of the TCRζ immunoreceptor t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.941905+00:00"
+}

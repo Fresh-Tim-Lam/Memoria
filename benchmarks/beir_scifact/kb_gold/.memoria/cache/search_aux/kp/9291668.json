@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9291668",
+  "source_fingerprint": "34c767639f24b850d0c6ed52946f9321",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9291668",
+    "dna-methylation-and-healthy-human-aging"
+  ],
+  "key_phrases": [
+    "dna",
+    "methylation",
+    "healthy",
+    "human",
+    "aging",
+    "process",
+    "results",
+    "host"
+  ],
+  "summary_1l": "The process of aging results in a host of changes at the cellular and molecular levels, which include senescence, telomere shortening, and changes in gene expre",
+  "query_hits": [],
+  "embed_text": "9291668 DNA methylation and healthy human aging science scifact The process of aging results in a host of changes at the cellular and molecular levels, which include senescence, telomere shortening, and changes in gene expression. Epigenetic patterns also change over the lifespan, suggesting that… 9291668 dna-methylation-and-healthy-human-aging dna methylation healthy human aging process results host The process of aging results in a host of changes at the cellular and molecular levels, which include senescence, telomere shortening, and changes in gene expre DNA methylation and healthy human aging The process of aging results in a host of changes at the cellular and molecular levels, which include senescence, telomere shortening, and changes in gene expression. Epigenetic patterns also change over the lifespan, suggesting that epigenetic changes may constitute an important component of the aging process. The epigenetic mark that has been most highly studied is DNA methylation, the presence of methyl groups at CpG dinucleotides. These dinucleotides are often located near gene promoters and associate with gene expression levels. Early studies indicated that global levels of DNA methylation increase over the first few years of life and then decrease beginning in late adulthood. Recently, with the advent of microarray and next-generation sequencin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.689406+00:00"
+}

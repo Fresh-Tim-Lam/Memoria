@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25419778",
+  "source_fingerprint": "fa016b509a894493e099f081df69ab32",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25419778",
+    "identification-of-senescent-cells-in-the-bone-microenvironment."
+  ],
+  "key_phrases": [
+    "identification",
+    "senescent",
+    "cells",
+    "bone",
+    "microenvironment",
+    "cellular",
+    "senescence",
+    "fundamental"
+  ],
+  "summary_1l": "Identification of Senescent Cells in the Bone Microenvironment.",
+  "query_hits": [],
+  "embed_text": "25419778 Identification of Senescent Cells in the Bone Microenvironment. science scifact Cellular senescence is a fundamental mechanism by which cells remain metabolically active yet cease dividing and undergo distinct phenotypic alterations, including upregulation of p16Ink4a , profound secretome changes, telomere shortening,… 25419778 identification-of-senescent-cells-in-the-bone-microenvironment. identification senescent cells bone microenvironment cellular senescence fundamental Identification of Senescent Cells in the Bone Microenvironment. Identification of Senescent Cells in the Bone Microenvironment. Cellular senescence is a fundamental mechanism by which cells remain metabolically active yet cease dividing and undergo distinct phenotypic alterations, including upregulation of p16Ink4a , profound secretome changes, telomere shortening, and decondensation of pericentromeric satellite DNA. Because senescent cells accumulate in multiple tissues with aging, these cells and the dysfunctional factors they secrete, termed the senescence-associated secretory phenotype (SASP), are increasingly recognized as promising therapeutic targets to prevent age-related degenerative pathologies, including osteoporosis. However, the cell type(s) within the bone microenvironment that undergoes senescence with aging in vivo has remained poorly u",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.575907+00:00"
+}

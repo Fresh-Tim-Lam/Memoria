@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "34103335",
+  "source_fingerprint": "0c26624f605352017bd0be9cc425d858",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "34103335",
+    "cytokinesis-failure-generating-tetraploids-promotes-tumorigenesis-in-p53-null-cells"
+  ],
+  "key_phrases": [
+    "cytokinesis",
+    "failure",
+    "generating",
+    "tetraploids",
+    "promotes",
+    "tumorigenesis",
+    "p53",
+    "null"
+  ],
+  "summary_1l": "A long-standing hypothesis on tumorigenesis is that cell division failure, generating genetically unstable tetraploi",
+  "query_hits": [],
+  "embed_text": "34103335 Cytokinesis failure generating tetraploids promotes tumorigenesis in p53-null cells science scifact A long-standing hypothesis on tumorigenesis is that cell division failure, generating genetically unstable tetraploid cells, facilitates the development of aneuploid malignancies. Here we test this idea by transiently blocking cytokinesis… 34103335 cytokinesis-failure-generating-tetraploids-promotes-tumorigenesis-in-p53-null-cells cytokinesis failure generating tetraploids promotes tumorigenesis p53 null A long-standing hypothesis on tumorigenesis is that cell division failure, generating genetically unstable tetraploi Cytokinesis failure generating tetraploids promotes tumorigenesis in p53-null cells A long-standing hypothesis on tumorigenesis is that cell division failure, generating genetically unstable tetraploid cells, facilitates the development of aneuploid malignancies. Here we test this idea by transiently blocking cytokinesis in p53-null (p53-/-) mouse mammary epithelial cells (MMECs), enabling the isolation of diploid and tetraploid cultures. The tetraploid cells had an increase in the frequency of whole-chromosome mis-segregation and chromosomal rearrangements. Only the tetraploid cells were transformed in vitro after exposure to a carcinogen. Furthermore, in the absence of carcinogen, only the tetraploid cells gave rise to malignant mammary epithelial cancers when transplanted subcutaneously",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.105014+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23577867",
+  "source_fingerprint": "9f336d1356dc1b9e712536ef89d54d55",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23577867",
+    "prediagnostic-levels-of-c-peptide,-igf-i,-igfbp--1,--2-and--3-and-risk-of-endometrial-cancer."
+  ],
+  "key_phrases": [
+    "prediagnostic",
+    "levels",
+    "peptide",
+    "igf",
+    "igfbp",
+    "risk",
+    "endometrial",
+    "cancer"
+  ],
+  "summary_1l": "Prediagnostic levels of C-peptide, IGF-I, IGFBP -1, -2 and -3 and risk of endometrial cancer.",
+  "query_hits": [],
+  "embed_text": "23577867 Prediagnostic levels of C-peptide, IGF-I, IGFBP -1, -2 and -3 and risk of endometrial cancer. science scifact Conditions related to chronic hyperinsulinemia, such as obesity, noninsulin dependent diabetes mellitus and polycystic ovary syndrome, are associated with an increased risk of endometrial cancer. Elevated plasma IGF-I and decreased levels… 23577867 prediagnostic-levels-of-c-peptide,-igf-i,-igfbp--1,--2-and--3-and-risk-of-endometrial-cancer. prediagnostic levels peptide igf igfbp risk endometrial cancer Prediagnostic levels of C-peptide, IGF-I, IGFBP -1, -2 and -3 and risk of endometrial cancer. Prediagnostic levels of C-peptide, IGF-I, IGFBP -1, -2 and -3 and risk of endometrial cancer. Conditions related to chronic hyperinsulinemia, such as obesity, noninsulin dependent diabetes mellitus and polycystic ovary syndrome, are associated with an increased risk of endometrial cancer. Elevated plasma IGF-I and decreased levels of IGF-binding proteins have been shown to be associated with increased risk of several cancer types that are frequent in affluent societies. We investigated for the first time in a prospective study the association of pre-diagnostic blood concentrations of C-peptide (a marker of pancreatic insulin production), IGF-I, IGFBP-1, -2 and -3 with endometrial cancer risk. A case-control study was nested within 3 cohorts in New York (USA), Umeå (Sweden) and Milan (Italy",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.739617+00:00"
+}

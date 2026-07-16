@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12892137",
+  "source_fingerprint": "128be2169a4ff716ea8e95fc70f99617",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12892137",
+    "basis-for-avid-homologous-dna-strand-exchange-by-human-rad51-and-rpa."
+  ],
+  "key_phrases": [
+    "basis",
+    "avid",
+    "homologous",
+    "dna",
+    "strand",
+    "exchange",
+    "by",
+    "human"
+  ],
+  "summary_1l": "Basis for avid homologous DNA strand exchange by human Rad51 and RPA.",
+  "query_hits": [],
+  "embed_text": "12892137 Basis for avid homologous DNA strand exchange by human Rad51 and RPA. science scifact Human Rad51 (hRad51), a member of a conserved family of general recombinases, is shown here to have an avid capability to make DNA joints between homologous DNA molecules and promote highly efficient DNA strand exchange of the paired… 12892137 basis-for-avid-homologous-dna-strand-exchange-by-human-rad51-and-rpa. basis avid homologous dna strand exchange by human Basis for avid homologous DNA strand exchange by human Rad51 and RPA. Basis for avid homologous DNA strand exchange by human Rad51 and RPA. Human Rad51 (hRad51), a member of a conserved family of general recombinases, is shown here to have an avid capability to make DNA joints between homologous DNA molecules and promote highly efficient DNA strand exchange of the paired molecules over at least 5.4 kilobase pairs. Furthermore, maximal efficiency of homologous DNA pairing and strand exchange is strongly dependent on the heterotrimeric single-stranded DNA binding factor hRPA and requires conditions that lessen interactions of the homologous duplex with the hRad51-single-stranded DNA nucleoprotein filament. The homologous DNA pairing and strand exchange system described should be valuable for dissecting the action mechanism of hRad51 and for deciphering its fun",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:09.227112+00:00"
+}

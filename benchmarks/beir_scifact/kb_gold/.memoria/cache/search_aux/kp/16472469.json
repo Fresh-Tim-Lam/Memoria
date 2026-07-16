@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16472469",
+  "source_fingerprint": "4df01b87b2ede93c78a1b1b2bf405920",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16472469",
+    "targeting-brca1-and-brca2-deficiencies-with-g-quadruplex-interacting-compounds"
+  ],
+  "key_phrases": [
+    "targeting",
+    "brca1",
+    "brca2",
+    "deficiencies",
+    "with",
+    "quadruplex",
+    "interacting",
+    "compounds"
+  ],
+  "summary_1l": "G-quadruplex (G4)-forming genomic sequences, including telomeres, represent natural replication fork barriers.",
+  "query_hits": [],
+  "embed_text": "16472469 Targeting BRCA1 and BRCA2 Deficiencies with G-Quadruplex-Interacting Compounds science scifact G-quadruplex (G4)-forming genomic sequences, including telomeres, represent natural replication fork barriers. Stalled replication forks can be stabilized and restarted by homologous recombination (HR), which also repairs DNA double-strand… 16472469 targeting-brca1-and-brca2-deficiencies-with-g-quadruplex-interacting-compounds targeting brca1 brca2 deficiencies with quadruplex interacting compounds G-quadruplex (G4)-forming genomic sequences, including telomeres, represent natural replication fork barriers. Targeting BRCA1 and BRCA2 Deficiencies with G-Quadruplex-Interacting Compounds G-quadruplex (G4)-forming genomic sequences, including telomeres, represent natural replication fork barriers. Stalled replication forks can be stabilized and restarted by homologous recombination (HR), which also repairs DNA double-strand breaks (DSBs) arising at collapsed forks. We have previously shown that HR facilitates telomere replication. Here, we demonstrate that the replication efficiency of guanine-rich (G-rich) telomeric repeats is decreased significantly in cells lacking HR. Treatment with the G4-stabilizing compound pyridostatin (PDS) increases telomere fragility in BRCA2-deficient cells, suggesting that G4 formation drives telomere instability. Remarkably, PDS reduces proliferation of HR-defective",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.323610+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24055603",
+  "source_fingerprint": "a73cd76fe6aa8eb34857d6fd882c2d8d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24055603",
+    "traditional-chinese-acupuncture-in-tension-type-headache:-a-controlled-study."
+  ],
+  "key_phrases": [
+    "traditional",
+    "chinese",
+    "acupuncture",
+    "tension",
+    "type",
+    "headache",
+    "controlled",
+    "study"
+  ],
+  "summary_1l": "Traditional Chinese acupuncture in tension-type headache: a controlled study.",
+  "query_hits": [],
+  "embed_text": "24055603 Traditional Chinese acupuncture in tension-type headache: a controlled study. science scifact Thirty patients with tension-type headache were randomly chosen to undergo a trial of traditional Chinese acupuncture and sham acupuncture. Five measures were used to assess symptom severity and treatment response: intensity, duration and… 24055603 traditional-chinese-acupuncture-in-tension-type-headache:-a-controlled-study. traditional chinese acupuncture tension type headache controlled study Traditional Chinese acupuncture in tension-type headache: a controlled study. Traditional Chinese acupuncture in tension-type headache: a controlled study. Thirty patients with tension-type headache were randomly chosen to undergo a trial of traditional Chinese acupuncture and sham acupuncture. Five measures were used to assess symptom severity and treatment response: intensity, duration and frequency of headache pain episodes, headache index and analgesic intake. The five measures were assessed during a 4 week baseline period, after 4 and 8 weeks of treatment, and 1, 6 and 12 months thereafter. Before the start of the study, each patient was administered the MMPI. Split-plot ANOVAs showed that, compared to baseline, at 1 month after the end of treatment and for the 12 month follow-up, the frequency of headache episodes, analgesic consumption and the headache index",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.716459+00:00"
+}

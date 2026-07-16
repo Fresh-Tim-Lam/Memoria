@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6128334",
+  "source_fingerprint": "1145e378b3764d204dc43b5a08d8cb89",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6128334",
+    "assessing-sequence-comparison-methods-with-reliable-structurally-identified-distant-evolutionary-relationships."
+  ],
+  "key_phrases": [
+    "assessing",
+    "sequence",
+    "comparison",
+    "methods",
+    "with",
+    "reliable",
+    "structurally",
+    "identified"
+  ],
+  "summary_1l": "Assessing sequence comparison methods with reliable structurally identified distant evolutionary relationships.",
+  "query_hits": [],
+  "embed_text": "6128334 Assessing sequence comparison methods with reliable structurally identified distant evolutionary relationships. science scifact Pairwise sequence comparison methods have been assessed using proteins whose relationships are known reliably from their structures and functions, as described in the SCOP database [Murzin, A. G., Brenner, S. E., Hubbard, T. & Chothia C.… 6128334 assessing-sequence-comparison-methods-with-reliable-structurally-identified-distant-evolutionary-relationships. assessing sequence comparison methods with reliable structurally identified Assessing sequence comparison methods with reliable structurally identified distant evolutionary relationships. Assessing sequence comparison methods with reliable structurally identified distant evolutionary relationships. Pairwise sequence comparison methods have been assessed using proteins whose relationships are known reliably from their structures and functions, as described in the SCOP database [Murzin, A. G., Brenner, S. E., Hubbard, T. & Chothia C. (1995) J. Mol. Biol. 247, 536-540]. The evaluation tested the programs BLAST [Altschul, S. F., Gish, W., Miller, W., Myers, E. W. & Lipman, D. J. (1990). J. Mol. Biol. 215, 403-410], WU-BLAST2 [Altschul, S. F. & Gish, W. (1996) Methods Enzymol. 266, 460-480], FASTA [Pearson, W. R. & Lipman, D. J. (1988) Proc. Natl. Acad. Sci. USA 85, 2444-2448], and SSEARCH [Smith, T. F. & Waterman, M. S. (1981) J. Mol. Biol. 147, 195-197] and their scoring schem",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.028340+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22185730",
+  "source_fingerprint": "28ff8e776cce8d15b9951a013f4a7e1d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22185730",
+    "pp2a-regulates-tau-phosphorylation-directly-and-also-indirectly-via-activating-gsk-3beta."
+  ],
+  "key_phrases": [
+    "pp2a",
+    "regulates",
+    "tau",
+    "phosphorylation",
+    "directly",
+    "also",
+    "indirectly",
+    "via"
+  ],
+  "summary_1l": "PP2A regulates tau phosphorylation directly and also indirectly via activating GSK-3beta.",
+  "query_hits": [],
+  "embed_text": "22185730 PP2A regulates tau phosphorylation directly and also indirectly via activating GSK-3beta. science scifact Abnormal hyperphosphorylation of tau appears to be crucial in neurofibrillary degeneration in Alzheimer's disease (AD). Previous studies suggest that a down-regulation of protein phosphatase 2A (PP2A), the major tau phosphatase in human… 22185730 pp2a-regulates-tau-phosphorylation-directly-and-also-indirectly-via-activating-gsk-3beta. pp2a regulates tau phosphorylation directly also indirectly via PP2A regulates tau phosphorylation directly and also indirectly via activating GSK-3beta. PP2A regulates tau phosphorylation directly and also indirectly via activating GSK-3beta. Abnormal hyperphosphorylation of tau appears to be crucial in neurofibrillary degeneration in Alzheimer's disease (AD). Previous studies suggest that a down-regulation of protein phosphatase 2A (PP2A), the major tau phosphatase in human brain, contributes to tau hyperphosphorylation in AD. However, the effects of PP2A down-regulation on site-specific tau hyperphosphorylation is not well understood. In the present study, we showed that PP2A dephosphorylated tau at several phosphorylation sites with different efficiencies. Among the sites studied, Thr205, Thr212, Ser214, and Ser262 were the most favorable sites, and Ser199 and Ser404 were the least favorable sites for PP2A in vitro. Inhibition of PP2A w",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.383017+00:00"
+}

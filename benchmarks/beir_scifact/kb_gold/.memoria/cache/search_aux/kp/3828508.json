@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3828508",
+  "source_fingerprint": "7d878c27e8c69170a5952e6b62ab5bc0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3828508",
+    "overweight-in-celiac-disease:-prevalence,-clinical-characteristics,-and-effect-of-a-gluten-free-diet"
+  ],
+  "key_phrases": [
+    "overweight",
+    "celiac",
+    "disease",
+    "prevalence",
+    "clinical",
+    "characteristics",
+    "effect",
+    "gluten"
+  ],
+  "summary_1l": "BACKGROUND:It is well established that a minority of celiac patients present with “classic” symptom",
+  "query_hits": [],
+  "embed_text": "3828508 Overweight in Celiac Disease: Prevalence, Clinical Characteristics, and Effect of a Gluten-Free Diet science scifact BACKGROUND:It is well established that a minority of celiac patients present with “classic” symptoms due to malabsorption. However, few studies have focussed on the distribution of body mass index (BMI) in celiac populations and its… 3828508 overweight-in-celiac-disease:-prevalence,-clinical-characteristics,-and-effect-of-a-gluten-free-diet overweight celiac disease prevalence clinical characteristics effect gluten BACKGROUND:It is well established that a minority of celiac patients present with “classic” symptom Overweight in Celiac Disease: Prevalence, Clinical Characteristics, and Effect of a Gluten-Free Diet BACKGROUND:It is well established that a minority of celiac patients present with “classic” symptoms due to malabsorption. However, few studies have focussed on the distribution of body mass index (BMI) in celiac populations and its relationship to clinical characteristics, or on its response to treatment. METHODS:We reviewed BMI measurements and other clinical and pathological characteristics from a database of 371 celiac patients diagnosed over a 10-yr period and seen by a single gastroenterologist. To assess response to gluten exclusion, we compared BMI at diagnosis and after 2 yr treatment in patients with serological support for dietary compliance. RESULTS:Mean BMI was 24.6 kg/m2 (rang",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.344672+00:00"
+}

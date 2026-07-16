@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20937018",
+  "source_fingerprint": "8bf88cac66ffa1a51058ad92adbff0a7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20937018",
+    "apolipoprotein-e:-high-avidity-binding-to-beta-amyloid-and-increased-frequency-of-type-4-allele-in-late-onset-familial-alzheimer-disease."
+  ],
+  "key_phrases": [
+    "apolipoprotein",
+    "high",
+    "avidity",
+    "binding",
+    "beta",
+    "amyloid",
+    "increased",
+    "frequency"
+  ],
+  "summary_1l": "Apolipoprotein E: high-avidity binding to beta-amyloid and increased frequency of type 4 allele in late-onset familial Alzheimer disease.",
+  "query_hits": [],
+  "embed_text": "20937018 Apolipoprotein E: high-avidity binding to beta-amyloid and increased frequency of type 4 allele in late-onset familial Alzheimer disease. science scifact Apolipoprotein E is immunochemically localized to the senile plaques, vascular amyloid, and neurofibrillary tangles of Alzheimer disease. In vitro, apolipoprotein E in cerebrospinal fluid binds to synthetic beta A4 peptide (the primary… 20937018 apolipoprotein-e:-high-avidity-binding-to-beta-amyloid-and-increased-frequency-of-type-4-allele-in-late-onset-familial-alzheimer-disease. apolipoprotein high avidity binding beta amyloid increased frequency Apolipoprotein E: high-avidity binding to beta-amyloid and increased frequency of type 4 allele in late-onset familial Alzheimer disease. Apolipoprotein E: high-avidity binding to beta-amyloid and increased frequency of type 4 allele in late-onset familial Alzheimer disease. Apolipoprotein E is immunochemically localized to the senile plaques, vascular amyloid, and neurofibrillary tangles of Alzheimer disease. In vitro, apolipoprotein E in cerebrospinal fluid binds to synthetic beta A4 peptide (the primary constituent of the senile plaque) with high avidity. Amino acids 12-28 of the beta A4 peptide are required. The gene for apolipoprotein E is located on chromosome 19q13.2, within the region previously associated with linkage of late-onset familial Alzheimer disease. Analysis of apolipoprotein E alleles in Alzheimer disease and controls demonstrated that there was a highly significant association of apolipoprotein E type 4",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.130752+00:00"
+}

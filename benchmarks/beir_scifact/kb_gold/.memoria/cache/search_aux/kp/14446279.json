@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14446279",
+  "source_fingerprint": "17bf7036781c6b9a9733a99c10c8f958",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14446279",
+    "telomere-tethering-at-the-nuclear-periphery-is-essential-for-efficient-dna-double-strand-break-repair-in-subtelomeric-region"
+  ],
+  "key_phrases": [
+    "telomere",
+    "tethering",
+    "at",
+    "nuclear",
+    "periphery",
+    "essential",
+    "efficient",
+    "dna"
+  ],
+  "summary_1l": "In the yeast Saccharomyces cerevisiae that lacks lamins, the nuclear pore c",
+  "query_hits": [],
+  "embed_text": "14446279 Telomere tethering at the nuclear periphery is essential for efficient DNA double strand break repair in subtelomeric region science scifact In the yeast Saccharomyces cerevisiae that lacks lamins, the nuclear pore complex (NPC) has been proposed to serve a role in chromatin organization. Here, using fluorescence microscopy in living cells, we show that nuclear pore proteins of… 14446279 telomere-tethering-at-the-nuclear-periphery-is-essential-for-efficient-dna-double-strand-break-repair-in-subtelomeric-region telomere tethering at nuclear periphery essential efficient dna In the yeast Saccharomyces cerevisiae that lacks lamins, the nuclear pore c Telomere tethering at the nuclear periphery is essential for efficient DNA double strand break repair in subtelomeric region In the yeast Saccharomyces cerevisiae that lacks lamins, the nuclear pore complex (NPC) has been proposed to serve a role in chromatin organization. Here, using fluorescence microscopy in living cells, we show that nuclear pore proteins of the Nup84 core complex, Nup84p, Nup145Cp, Nup120p, and Nup133p, serve to anchor telomere XI-L at the nuclear periphery. The integrity of this complex is shown to be required for repression of a URA3 gene inserted in the subtelomeric region of this chromosome end. Furthermore, altering the integrity of this complex decreases the efficiency of repair of a DNA double-strand break (DSB) only when it is generated in the subtelomeric reg",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.885832+00:00"
+}

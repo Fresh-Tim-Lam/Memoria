@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4462777",
+  "source_fingerprint": "0b60de031ef4e51fb21ad1cd2809bd25",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4462777",
+    "predicting-immunogenic-tumour-mutations-by-combining-mass-spectrometry-and-exome-sequencing"
+  ],
+  "key_phrases": [
+    "predicting",
+    "immunogenic",
+    "tumour",
+    "mutations",
+    "by",
+    "combining",
+    "mass",
+    "spectrometry"
+  ],
+  "summary_1l": "Human tumours typically harbour a remarkable number of somatic mutations.",
+  "query_hits": [],
+  "embed_text": "4462777 Predicting immunogenic tumour mutations by combining mass spectrometry and exome sequencing science scifact Human tumours typically harbour a remarkable number of somatic mutations. If presented on major histocompatibility complex class I molecules (MHCI), peptides containing these mutations could potentially be immunogenic as they should be… 4462777 predicting-immunogenic-tumour-mutations-by-combining-mass-spectrometry-and-exome-sequencing predicting immunogenic tumour mutations by combining mass spectrometry Human tumours typically harbour a remarkable number of somatic mutations. Predicting immunogenic tumour mutations by combining mass spectrometry and exome sequencing Human tumours typically harbour a remarkable number of somatic mutations. If presented on major histocompatibility complex class I molecules (MHCI), peptides containing these mutations could potentially be immunogenic as they should be recognized as ‘non-self’ neo-antigens by the adaptive immune system. Recent work has confirmed that mutant peptides can serve as T-cell epitopes. However, few mutant epitopes have been described because their discovery required the laborious screening of patient tumour-infiltrating lymphocytes for their ability to recognize antigen libraries constructed following tumour exome sequencing. We sought to simplify the discovery of immunogenic mutant peptides by characteriz",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.688944+00:00"
+}

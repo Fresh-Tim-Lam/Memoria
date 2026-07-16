@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18914652",
+  "source_fingerprint": "0b5eccf23f787651a3a583f6ebbe046e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18914652",
+    "critical-role-of-the-virus-encoded-microrna-155-ortholog-in-the-induction-of-marek's-disease-lymphomas"
+  ],
+  "key_phrases": [
+    "critical",
+    "role",
+    "virus",
+    "encoded",
+    "microrna",
+    "155",
+    "ortholog",
+    "induction"
+  ],
+  "summary_1l": "Notwithstanding the well-characterised roles of a number of oncogenes in neoplastic transformatio",
+  "query_hits": [],
+  "embed_text": "18914652 Critical Role of the Virus-Encoded MicroRNA-155 Ortholog in the Induction of Marek's Disease Lymphomas science scifact Notwithstanding the well-characterised roles of a number of oncogenes in neoplastic transformation, microRNAs (miRNAs) are increasingly implicated in several human cancers. Discovery of miRNAs in several oncogenic herpesviruses such as… 18914652 critical-role-of-the-virus-encoded-microrna-155-ortholog-in-the-induction-of-marek's-disease-lymphomas critical role virus encoded microrna 155 ortholog induction Notwithstanding the well-characterised roles of a number of oncogenes in neoplastic transformatio Critical Role of the Virus-Encoded MicroRNA-155 Ortholog in the Induction of Marek's Disease Lymphomas Notwithstanding the well-characterised roles of a number of oncogenes in neoplastic transformation, microRNAs (miRNAs) are increasingly implicated in several human cancers. Discovery of miRNAs in several oncogenic herpesviruses such as KSHV has further highlighted the potential of virus-encoded miRNAs to contribute to their oncogenic capabilities. Nevertheless, despite the identification of several possible cancer-related genes as their targets, the direct in vivo role of virus-encoded miRNAs in neoplastic diseases such as those induced by KSHV is difficult to demonstrate in the absence of suitable models. However, excellent natural disease models of rapid-onset Marek's disease (MD) lymph",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.901040+00:00"
+}

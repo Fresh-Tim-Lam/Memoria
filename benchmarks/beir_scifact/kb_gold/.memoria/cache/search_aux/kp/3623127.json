@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3623127",
+  "source_fingerprint": "5c076b76296a5aaf2132aa300c6b06f8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3623127",
+    "evidence-for-a-limit-to-human-lifespan"
+  ],
+  "key_phrases": [
+    "evidence",
+    "limit",
+    "human",
+    "lifespan",
+    "driven",
+    "by",
+    "technological",
+    "progress"
+  ],
+  "summary_1l": "Driven by technological progress, human life expectancy has increased greatly since the nineteenth century.",
+  "query_hits": [],
+  "embed_text": "3623127 Evidence for a limit to human lifespan science scifact Driven by technological progress, human life expectancy has increased greatly since the nineteenth century. Demographic evidence has revealed an ongoing reduction in old-age mortality and a rise of the maximum age at death, which may… 3623127 evidence-for-a-limit-to-human-lifespan evidence limit human lifespan driven by technological progress Driven by technological progress, human life expectancy has increased greatly since the nineteenth century. Evidence for a limit to human lifespan Driven by technological progress, human life expectancy has increased greatly since the nineteenth century. Demographic evidence has revealed an ongoing reduction in old-age mortality and a rise of the maximum age at death, which may gradually extend human longevity. Together with observations that lifespan in various animal species is flexible and can be increased by genetic or pharmaceutical intervention, these results have led to suggestions that longevity may not be subject to strict, species-specific genetic constraints. Here, by analysing global demographic data, we show that improvements in survival with age tend to decline after age 100, and that the age at death of the world’s oldest person has not increased since the 1990s. Our results stron",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:43.057989+00:00"
+}

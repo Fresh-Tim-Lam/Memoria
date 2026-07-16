@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23397658",
+  "source_fingerprint": "3b035a4c38c8b4cee79aace62cf3dc1a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23397658",
+    "fibroblast-growth-factor-21-as-an-emerging-metabolic-regulator:-clinical-perspectives."
+  ],
+  "key_phrases": [
+    "fibroblast",
+    "growth",
+    "factor",
+    "21",
+    "as",
+    "emerging",
+    "metabolic",
+    "regulator"
+  ],
+  "summary_1l": "Fibroblast growth factor 21 as an emerging metabolic regulator: clinical perspectives.",
+  "query_hits": [],
+  "embed_text": "23397658 Fibroblast growth factor 21 as an emerging metabolic regulator: clinical perspectives. science scifact Fibroblast growth factor 21 (FGF21), a metabolic hormone predominantly produced by the liver, is also expressed in adipocytes and the pancreas. It regulates glucose and lipid metabolism through pleiotropic actions in these tissues and the… 23397658 fibroblast-growth-factor-21-as-an-emerging-metabolic-regulator:-clinical-perspectives. fibroblast growth factor 21 as emerging metabolic regulator Fibroblast growth factor 21 as an emerging metabolic regulator: clinical perspectives. Fibroblast growth factor 21 as an emerging metabolic regulator: clinical perspectives. Fibroblast growth factor 21 (FGF21), a metabolic hormone predominantly produced by the liver, is also expressed in adipocytes and the pancreas. It regulates glucose and lipid metabolism through pleiotropic actions in these tissues and the brain. In mice, fasting leads to increased PPAR-α mediated expression of FGF21 in the liver where it stimulates gluconeogenesis, fatty acid oxidation, and ketogenesis, as an adaptive response to fasting and starvation. In the fed state, FGF21 acts as an autocrine factor in adipocytes, regulating the activity of PPAR-γ through a feed-forward loop mechanism. Administration of recombinant FGF21 has been shown to confer multiple metabolic benefits on insulin sensitivity, bl",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.431719+00:00"
+}

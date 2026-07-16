@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "32975424",
+  "source_fingerprint": "3da0bf45c34dc311f683070add0ed814",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "32975424",
+    "threonine-as-a-carbon-source-for-escherichia-coli."
+  ],
+  "key_phrases": [
+    "threonine",
+    "as",
+    "carbon",
+    "source",
+    "escherichia",
+    "coli",
+    "can",
+    "be"
+  ],
+  "summary_1l": "Threonine as a carbon source for Escherichia coli.",
+  "query_hits": [],
+  "embed_text": "32975424 Threonine as a carbon source for Escherichia coli. science scifact Threonine can be used aerobically as the sole source of carbon and energy by mutants of Escherichia coli K-12. The pathway used involves the conversion of threonine via threonine dehydrogenase to aminoketobutyric acid, which is further… 32975424 threonine-as-a-carbon-source-for-escherichia-coli. threonine as carbon source escherichia coli can be Threonine as a carbon source for Escherichia coli. Threonine as a carbon source for Escherichia coli. Threonine can be used aerobically as the sole source of carbon and energy by mutants of Escherichia coli K-12. The pathway used involves the conversion of threonine via threonine dehydrogenase to aminoketobutyric acid, which is further metabolized by aminoketobutyric acid ligase, forming acetyl coenzyme A and glycine. A strain devoid of serine transhydroxymethylase uses this pathway and excretes glycine as a waste product. Aminoketobutyric acid ligase activity was demonstrated after passage of crude extracts through Sephadex G100.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.120901+00:00"
+}

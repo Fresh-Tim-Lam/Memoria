@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7261402",
+  "source_fingerprint": "b980b2ec4b9357bb1c266437b5d3f9c9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7261402",
+    "pedestrian-detection-via-periodic-motion-analysis"
+  ],
+  "key_phrases": [
+    "pedestrian",
+    "detection",
+    "via",
+    "periodic",
+    "motion",
+    "analysis",
+    "we",
+    "describe"
+  ],
+  "summary_1l": "We describe algorithms for detecting pedestrians in videos acquired by infrared (and color) sensors.",
+  "query_hits": [],
+  "embed_text": "7261402 Pedestrian Detection via Periodic Motion Analysis science scifact We describe algorithms for detecting pedestrians in videos acquired by infrared (and color) sensors. Two approaches are proposed based on gait. The first employs computationally efficient periodicity measurements. Unlike other methods, it… 7261402 pedestrian-detection-via-periodic-motion-analysis pedestrian detection via periodic motion analysis we describe We describe algorithms for detecting pedestrians in videos acquired by infrared (and color) sensors. Pedestrian Detection via Periodic Motion Analysis We describe algorithms for detecting pedestrians in videos acquired by infrared (and color) sensors. Two approaches are proposed based on gait. The first employs computationally efficient periodicity measurements. Unlike other methods, it estimates a periodic motion frequency using two cascading hypothesis testing steps to filter out non-cyclic pixels so that it works well for both radial and lateral walking directions. The extraction of the period is efficient and robust with respect to sensor noise and cluttered background. In order to integrate shape and motion, we convert the cyclic pattern into a binary sequence by Maximal Principal Gait Angle (MPGA) fitting in the second method. It does not require alignment and continuously estimates",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.941174+00:00"
+}

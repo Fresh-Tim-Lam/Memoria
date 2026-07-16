@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5256564",
+  "source_fingerprint": "cda347447fec8c7a7348b84b977af864",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5256564",
+    "pharmacological-blockade-of-asct2-dependent-glutamine-transport-leads-to-anti-tumor-efficacy-in-preclinical-models"
+  ],
+  "key_phrases": [
+    "pharmacological",
+    "blockade",
+    "asct2",
+    "dependent",
+    "glutamine",
+    "transport",
+    "leads",
+    "anti"
+  ],
+  "summary_1l": "The unique metabolic demands of cancer cells underscore potentially fruitful opportun",
+  "query_hits": [],
+  "embed_text": "5256564 Pharmacological Blockade of ASCT2-dependent Glutamine Transport Leads To Anti-tumor Efficacy in Preclinical Models science scifact The unique metabolic demands of cancer cells underscore potentially fruitful opportunities for drug discovery in the era of precision medicine. However, therapeutic targeting of cancer metabolism has led to surprisingly few new drugs to… 5256564 pharmacological-blockade-of-asct2-dependent-glutamine-transport-leads-to-anti-tumor-efficacy-in-preclinical-models pharmacological blockade asct2 dependent glutamine transport leads anti The unique metabolic demands of cancer cells underscore potentially fruitful opportun Pharmacological Blockade of ASCT2-dependent Glutamine Transport Leads To Anti-tumor Efficacy in Preclinical Models The unique metabolic demands of cancer cells underscore potentially fruitful opportunities for drug discovery in the era of precision medicine. However, therapeutic targeting of cancer metabolism has led to surprisingly few new drugs to date. The neutral amino acid glutamine serves as a key intermediate in numerous metabolic processes leveraged by cancer cells, including biosynthesis, cell signaling, and oxidative protection. Herein we report the preclinical development of V-9302, a competitive small molecule antagonist of transmembrane glutamine flux that selectively and potently targets the amino acid transporter ASCT2. Pharmacological blockade of ASCT2 with V-9302 resulted",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.639652+00:00"
+}

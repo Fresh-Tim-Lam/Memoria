@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15707049",
+  "source_fingerprint": "2e1cae5c66fbb14a2d9887097d4146a9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15707049",
+    "identification-of-an-autoantigen-demonstrates-a-link-between-interstitial-lung-disease-and-a-defect-in-central-tolerance."
+  ],
+  "key_phrases": [
+    "identification",
+    "autoantigen",
+    "demonstrates",
+    "link",
+    "between",
+    "interstitial",
+    "lung",
+    "disease"
+  ],
+  "summary_1l": "Identification of an autoantigen demonstrates a link between interstitial lung disease and a defect in central tolerance.",
+  "query_hits": [],
+  "embed_text": "15707049 Identification of an autoantigen demonstrates a link between interstitial lung disease and a defect in central tolerance. science scifact Interstitial lung disease (ILD) is a common manifestation of systemic autoimmunity characterized by progressive inflammation or scarring of the lungs. Patients who develop these complications can exhibit significantly impaired gas exchange… 15707049 identification-of-an-autoantigen-demonstrates-a-link-between-interstitial-lung-disease-and-a-defect-in-central-tolerance. identification autoantigen demonstrates link between interstitial lung disease Identification of an autoantigen demonstrates a link between interstitial lung disease and a defect in central tolerance. Identification of an autoantigen demonstrates a link between interstitial lung disease and a defect in central tolerance. Interstitial lung disease (ILD) is a common manifestation of systemic autoimmunity characterized by progressive inflammation or scarring of the lungs. Patients who develop these complications can exhibit significantly impaired gas exchange that may result in hypoxemia, pulmonary hypertension, and even death. Unfortunately, little is understood about how these diseases arise, including the role of specific defects in immune tolerance. Another key question is whether autoimmune responses targeting the lung parenchyma are critical to ILD pathogenesis, including that of isolated idiopathic forms. We show that a specific defect in central tolerance brought about by mutations",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.149089+00:00"
+}

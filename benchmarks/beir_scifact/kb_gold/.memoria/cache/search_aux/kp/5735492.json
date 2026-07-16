@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5735492",
+  "source_fingerprint": "f0dedb5d3a06eeb25c0b3785602a3433",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5735492",
+    "the-epidemiology-of-sexually-transmitted-co-infections-in-hiv-positive-and-hiv-negative-african-caribbean-women-in-toronto"
+  ],
+  "key_phrases": [
+    "epidemiology",
+    "sexually",
+    "transmitted",
+    "co",
+    "infections",
+    "hiv",
+    "positive",
+    "negative"
+  ],
+  "summary_1l": "BACKGROUND HIV disproportionately affects African-Caribbean women in Canada b",
+  "query_hits": [],
+  "embed_text": "5735492 The epidemiology of sexually transmitted co-infections in HIV-positive and HIV-negative African-Caribbean women in Toronto science scifact BACKGROUND HIV disproportionately affects African-Caribbean women in Canada but the frequency and distribution of sexually transmitted infections in this community have not been previously studied. METHODS We recruited women based on HIV… 5735492 the-epidemiology-of-sexually-transmitted-co-infections-in-hiv-positive-and-hiv-negative-african-caribbean-women-in-toronto epidemiology sexually transmitted co infections hiv positive negative BACKGROUND HIV disproportionately affects African-Caribbean women in Canada b The epidemiology of sexually transmitted co-infections in HIV-positive and HIV-negative African-Caribbean women in Toronto BACKGROUND HIV disproportionately affects African-Caribbean women in Canada but the frequency and distribution of sexually transmitted infections in this community have not been previously studied. METHODS We recruited women based on HIV status through a Toronto community health centre. Participants completed a socio-behavioural questionnaire using Audio Computer Assisted Self-Interview (ACASI) and provided blood for syphilis, HIV, hepatitis B and C, herpes simplex virus type 1 (HSV-1), herpes simplex virus type 2 (HSV-2), and human cytomegalovirus (CMV) serology, urine for chlamydia and gonorrhea molecular testing and vaginal secretions for bacterial vaginosis (BV) an",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.957614+00:00"
+}

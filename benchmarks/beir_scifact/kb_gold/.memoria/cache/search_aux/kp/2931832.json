@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2931832",
+  "source_fingerprint": "36f3edb06fe19b9f7508b7ebea5c3487",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2931832",
+    "the-prognostic-impact-of-the-platelet-distribution-width-to-platelet-count-ratio-in-patients-with-breast-cancer"
+  ],
+  "key_phrases": [
+    "prognostic",
+    "impact",
+    "platelet",
+    "distribution",
+    "width",
+    "count",
+    "ratio",
+    "patients"
+  ],
+  "summary_1l": "Activated platelets promote tumor cell growth, angiogenesis, and invasion.",
+  "query_hits": [],
+  "embed_text": "2931832 The prognostic impact of the platelet distribution width-to-platelet count ratio in patients with breast cancer science scifact Activated platelets promote tumor cell growth, angiogenesis, and invasion. Platelet activity can be inferred by platelet volume indices (PVIs), which include platelet distribution width (PDW), mean platelet volume (MPV), platelet… 2931832 the-prognostic-impact-of-the-platelet-distribution-width-to-platelet-count-ratio-in-patients-with-breast-cancer prognostic impact platelet distribution width count ratio patients Activated platelets promote tumor cell growth, angiogenesis, and invasion. The prognostic impact of the platelet distribution width-to-platelet count ratio in patients with breast cancer Activated platelets promote tumor cell growth, angiogenesis, and invasion. Platelet activity can be inferred by platelet volume indices (PVIs), which include platelet distribution width (PDW), mean platelet volume (MPV), platelet distribution width-to-platelet count ratio (PDW/P), and mean platelet volume-to-platelet count ratio. Platelets and platelet-related markers, such as the platelet-to-lymphocyte ratio, have been found to be significant prognostic factors in patients with breast cancer. However, the role of PVIs for predicting survival in breast cancer remains unknown; hence, we performed this retrospective analysis of 275 patients with breast cancer. PVIs were compared wi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.759592+00:00"
+}

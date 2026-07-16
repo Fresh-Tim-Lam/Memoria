@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "327319",
+  "source_fingerprint": "5bc0273e123e8a27c65de5de73a367a4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "327319"
+  ],
+  "key_phrases": [
+    "zinc",
+    "15",
+    "ligand",
+    "discovery",
+    "everyone",
+    "many",
+    "questions",
+    "about"
+  ],
+  "summary_1l": "Many questions about the biological activity and availability of small molecules remain inaccessible to investigators who could most benefit from their answers.",
+  "query_hits": [],
+  "embed_text": "327319 ZINC 15 – Ligand Discovery for Everyone science scifact Many questions about the biological activity and availability of small molecules remain inaccessible to investigators who could most benefit from their answers. To narrow the gap between chemoinformatics and biology, we have developed a… 327319 zinc 15 ligand discovery everyone many questions about Many questions about the biological activity and availability of small molecules remain inaccessible to investigators who could most benefit from their answers. ZINC 15 – Ligand Discovery for Everyone Many questions about the biological activity and availability of small molecules remain inaccessible to investigators who could most benefit from their answers. To narrow the gap between chemoinformatics and biology, we have developed a suite of ligand annotation, purchasability, target, and biology association tools, incorporated into ZINC and meant for investigators who are not computer specialists. The new version contains over 120 million purchasable \"drug-like\" compounds--effectively all organic molecules that are for sale--a quarter of which are available for immediate delivery. ZINC connects purchasable compounds to high-value ones such as metabolites, drugs, natural products, and annotated compounds from the literature. Compounds may be acces",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.827323+00:00"
+}

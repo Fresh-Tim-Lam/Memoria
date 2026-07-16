@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "kp_id": "nlp-三件套",
+  "source_fingerprint": "ceb578c58f26799902d198b1f26b6fb4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "nlp"
+  ],
+  "aliases": [
+    "nlp-三件套"
+  ],
+  "key_phrases": [
+    "nlp",
+    "三件套",
+    "虚链",
+    "对照",
+    "frontmatter",
+    "concept",
+    "绑定",
+    "kp"
+  ],
+  "summary_1l": "虚链对照 仅有 frontmatter concept、未绑定 KP，应显示为灰色虚链。",
+  "query_hits": [],
+  "embed_text": "nlp-三件套 NLP 三件套 nlp nlp-三件套 nlp 三件套 虚链 对照 frontmatter concept 绑定 kp 虚链对照 仅有 frontmatter concept、未绑定 KP，应显示为灰色虚链。 NLP 三件套 虚链对照 仅有 frontmatter concept、未绑定 KP，应显示为灰色虚链。 相同跳转 正文直接用显示文字作目标键（须与 sidecar `anchor_text` 一致）： 未建立跳转 同一句未包装 ` `，仅为普通文本；可选中后右键「创建链接」：",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T03:38:46.889302+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24088502",
+  "source_fingerprint": "832dce72872b7d03d96fa304ffd9501f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24088502",
+    "clinical-outcomes-following-institution-of-the-canadian-universal-leukoreduction-program-for-red-blood-cell-transfusions."
+  ],
+  "key_phrases": [
+    "clinical",
+    "outcomes",
+    "following",
+    "institution",
+    "canadian",
+    "universal",
+    "leukoreduction",
+    "program"
+  ],
+  "summary_1l": "Clinical outcomes following institution of the Canadian universal leukoreduction program for red blood cell transfusions.",
+  "query_hits": [],
+  "embed_text": "24088502 Clinical outcomes following institution of the Canadian universal leukoreduction program for red blood cell transfusions. science scifact CONTEXT A number of countries have implemented a policy of universal leukoreduction of their blood supply, but the potential role of leukoreduction in decreasing postoperative mortality and infection is unclear. OBJECTIVE To evaluate… 24088502 clinical-outcomes-following-institution-of-the-canadian-universal-leukoreduction-program-for-red-blood-cell-transfusions. clinical outcomes following institution canadian universal leukoreduction program Clinical outcomes following institution of the Canadian universal leukoreduction program for red blood cell transfusions. Clinical outcomes following institution of the Canadian universal leukoreduction program for red blood cell transfusions. CONTEXT A number of countries have implemented a policy of universal leukoreduction of their blood supply, but the potential role of leukoreduction in decreasing postoperative mortality and infection is unclear. OBJECTIVE To evaluate clinical outcomes following adoption of a national universal prestorage leukoreduction program for blood transfusions. DESIGN, SETTING, AND POPULATION Retrospective before-and-after cohort study conducted from August 1998 to August 2000 in 23 academic and community hospitals throughout Canada, enrolling 14 786 patients who received red blood cell transfusions following cardiac surgery or repair of hip fracture, or who required intensive car",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.768463+00:00"
+}

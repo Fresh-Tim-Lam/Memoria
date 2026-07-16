@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19071857",
+  "source_fingerprint": "7f72cdf381f017e0cb0522e2d82e9cb6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19071857",
+    "mental-health-support-provided-throughout-the-bariatric-surgery-clinical-pathway-in-french-specialized-care-centers-for-obesity"
+  ],
+  "key_phrases": [
+    "mental",
+    "health",
+    "support",
+    "provided",
+    "throughout",
+    "bariatric",
+    "surgery",
+    "clinical"
+  ],
+  "summary_1l": "Pre-operative psychological assessment is recommended by international g",
+  "query_hits": [],
+  "embed_text": "19071857 Mental Health Support Provided Throughout the Bariatric Surgery Clinical Pathway in French Specialized Care Centers for Obesity science scifact Pre-operative psychological assessment is recommended by international guidelines for bariatric surgery candidates. Thereby, service teams caring for bariatric patients should include at least one mental health provider (e.g., a… 19071857 mental-health-support-provided-throughout-the-bariatric-surgery-clinical-pathway-in-french-specialized-care-centers-for-obesity mental health support provided throughout bariatric surgery clinical Pre-operative psychological assessment is recommended by international g Mental Health Support Provided Throughout the Bariatric Surgery Clinical Pathway in French Specialized Care Centers for Obesity Pre-operative psychological assessment is recommended by international guidelines for bariatric surgery candidates. Thereby, service teams caring for bariatric patients should include at least one mental health provider (e.g., a psychologist or psychiatrist). The objective of this study was to evaluate the psychology and psychiatry resources and practices in the 37 specialized obesity centers (CSOs) created by the French Ministry of Health. CSO coordinators were contacted by e-mail to collect general information on the centers (e.g., number of bariatric operations). Secondly, psychologists and psychiatrists of each center completed an anonymous questionnaire asses",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.119913+00:00"
+}

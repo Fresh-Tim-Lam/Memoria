@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4380004",
+  "source_fingerprint": "8c0f9ca4d1d404f964411a20e02d22d0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4380004",
+    "mesenchymal-and-haematopoietic-stem-cells-form-a-unique-bone-marrow-niche"
+  ],
+  "key_phrases": [
+    "mesenchymal",
+    "haematopoietic",
+    "stem",
+    "cells",
+    "form",
+    "unique",
+    "bone",
+    "marrow"
+  ],
+  "summary_1l": "The cellular constituents forming the haematopoietic stem cell (HSC) niche in the bone marrow are unclear, with studies implic",
+  "query_hits": [],
+  "embed_text": "4380004 Mesenchymal and haematopoietic stem cells form a unique bone marrow niche science scifact The cellular constituents forming the haematopoietic stem cell (HSC) niche in the bone marrow are unclear, with studies implicating osteoblasts, endothelial and perivascular cells. Here we demonstrate that mesenchymal stem cells (MSCs),… 4380004 mesenchymal-and-haematopoietic-stem-cells-form-a-unique-bone-marrow-niche mesenchymal haematopoietic stem cells form unique bone marrow The cellular constituents forming the haematopoietic stem cell (HSC) niche in the bone marrow are unclear, with studies implic Mesenchymal and haematopoietic stem cells form a unique bone marrow niche The cellular constituents forming the haematopoietic stem cell (HSC) niche in the bone marrow are unclear, with studies implicating osteoblasts, endothelial and perivascular cells. Here we demonstrate that mesenchymal stem cells (MSCs), identified using nestin expression, constitute an essential HSC niche component. Nestin+ MSCs contain all the bone-marrow colony-forming-unit fibroblastic activity and can be propagated as non-adherent ‘mesenspheres’ that can self-renew and expand in serial transplantations. Nestin+ MSCs are spatially associated with HSCs and adrenergic nerve fibres, and highly express HSC maintenance genes. These genes, and others triggering osteoblastic differentiation, are selectively downregulated",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.276949+00:00"
+}

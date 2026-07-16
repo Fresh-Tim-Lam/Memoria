@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "19255949",
+  "source_fingerprint": "82b3b2e75978faa4e1cc0250a57ee770",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19255949"
+  ],
+  "key_phrases": [
+    "poly",
+    "specific",
+    "ribonuclease",
+    "parn",
+    "mediates",
+    "end",
+    "maturation",
+    "telomerase"
+  ],
+  "summary_1l": "Mutations in the PARN gene (encoding poly(A)-specific ribonuclease) cause telomere diseases including fa",
+  "query_hits": [],
+  "embed_text": "19255949 Poly(A)-specific ribonuclease (PARN) mediates 3′-end maturation of the telomerase RNA component science scifact Mutations in the PARN gene (encoding poly(A)-specific ribonuclease) cause telomere diseases including familial idiopathic pulmonary fibrosis (IPF) and dyskeratosis congenita, but how PARN deficiency impairs telomere maintenance is unclear.… 19255949 poly specific ribonuclease parn mediates end maturation telomerase Mutations in the PARN gene (encoding poly(A)-specific ribonuclease) cause telomere diseases including fa Poly(A)-specific ribonuclease (PARN) mediates 3′-end maturation of the telomerase RNA component Mutations in the PARN gene (encoding poly(A)-specific ribonuclease) cause telomere diseases including familial idiopathic pulmonary fibrosis (IPF) and dyskeratosis congenita, but how PARN deficiency impairs telomere maintenance is unclear. Here, using somatic cells and induced pluripotent stem cells (iPSCs) from patients with dyskeratosis congenita with PARN mutations, we show that PARN is required for the 3′-end maturation of the telomerase RNA component (TERC). Patient-derived cells as well as immortalized cells in which PARN is disrupted show decreased levels of TERC. Deep sequencing of TERC RNA 3′ termini shows that PARN is required for removal of post-transcriptionally acquired oligo(A) tai",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.346252+00:00"
+}

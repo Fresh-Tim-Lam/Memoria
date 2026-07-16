@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "503050",
+  "source_fingerprint": "766a72c446db7bcd9f84a561969ae0db",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "503050",
+    "genome-wide-maps-of-chromatin-state-in-pluripotent-and-lineage-committed-cells"
+  ],
+  "key_phrases": [
+    "genome",
+    "wide",
+    "maps",
+    "chromatin",
+    "state",
+    "pluripotent",
+    "lineage",
+    "committed"
+  ],
+  "summary_1l": "We report the application of single-molecule-based sequencing technology for high-throughput profiling of histone modific",
+  "query_hits": [],
+  "embed_text": "503050 Genome-wide maps of chromatin state in pluripotent and lineage-committed cells science scifact We report the application of single-molecule-based sequencing technology for high-throughput profiling of histone modifications in mammalian cells. By obtaining over four billion bases of sequence from chromatin immunoprecipitated DNA, we… 503050 genome-wide-maps-of-chromatin-state-in-pluripotent-and-lineage-committed-cells genome wide maps chromatin state pluripotent lineage committed We report the application of single-molecule-based sequencing technology for high-throughput profiling of histone modific Genome-wide maps of chromatin state in pluripotent and lineage-committed cells We report the application of single-molecule-based sequencing technology for high-throughput profiling of histone modifications in mammalian cells. By obtaining over four billion bases of sequence from chromatin immunoprecipitated DNA, we generated genome-wide chromatin-state maps of mouse embryonic stem cells, neural progenitor cells and embryonic fibroblasts. We find that lysine 4 and lysine 27 trimethylation effectively discriminates genes that are expressed, poised for expression, or stably repressed, and therefore reflect cell state and lineage potential. Lysine 36 trimethylation marks primary coding and non-coding transcripts, facilitating gene annotation. Trimethylation of lysine 9 and lysine 20 is detect",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.041730+00:00"
+}

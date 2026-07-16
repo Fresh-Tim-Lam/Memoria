@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "885056",
+  "source_fingerprint": "8cdcf538782d8772dff5c8929445dd6b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "885056"
+  ],
+  "key_phrases": [
+    "summary",
+    "steroid",
+    "receptor",
+    "rna",
+    "activator",
+    "sra",
+    "only",
+    "known"
+  ],
+  "summary_1l": "Steroid receptor RNA activator (SRA), the only known RNA coactivator, augments transactivation by nuclear receptors (NRs).",
+  "query_hits": [],
+  "embed_text": "885056 Summary science scifact Steroid receptor RNA activator (SRA), the only known RNA coactivator, augments transactivation by nuclear receptors (NRs). We identified SLIRP (SRA stem-loop interacting RNA binding protein) binding to a functional substructure of SRA,… 885056 summary steroid receptor rna activator sra only known Steroid receptor RNA activator (SRA), the only known RNA coactivator, augments transactivation by nuclear receptors (NRs). Summary Steroid receptor RNA activator (SRA), the only known RNA coactivator, augments transactivation by nuclear receptors (NRs). We identified SLIRP (SRA stem-loop interacting RNA binding protein) binding to a functional substructure of SRA, STR7. SLIRP is expressed in normal and tumor tissues, contains an RNA recognition motif (RRM), represses NR transactivation in a SRA- and RRM-dependent manner, augments the effect of Tamoxifen, and modulates association of SRC-1 with SRA. SHARP, a RRM-containing corepressor, also binds STR7, augmenting repression with SLIRP. SLIRP colocalizes with SKIP (Chr14q24.3), another NR coregulator, and reduces SKIP-potentiated NR signaling. SLIRP is recruited to endogenous promoters (pS2 and metallothionein), the latter in a SRA-dependent manner, while NCoR p",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.839068+00:00"
+}

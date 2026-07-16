@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "28468276",
+  "source_fingerprint": "27be656861b61a12d3486bdd5e30822a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "28468276",
+    "breaching-the-basement-membrane:-who,-when-and-how?"
+  ],
+  "key_phrases": [
+    "breaching",
+    "basement",
+    "membrane",
+    "who",
+    "when",
+    "how",
+    "bm",
+    "specialized"
+  ],
+  "summary_1l": "Breaching the basement membrane: who, when and how?",
+  "query_hits": [],
+  "embed_text": "28468276 Breaching the basement membrane: who, when and how? science scifact The basement membrane (BM), a specialized network of extracellular matrix macromolecules, surrounds epithelial, endothelial, muscle, fat and nerve cells. During development, immune surveillance and disease states ranging from cancer to… 28468276 breaching-the-basement-membrane:-who,-when-and-how? breaching basement membrane who when how bm specialized Breaching the basement membrane: who, when and how? Breaching the basement membrane: who, when and how? The basement membrane (BM), a specialized network of extracellular matrix macromolecules, surrounds epithelial, endothelial, muscle, fat and nerve cells. During development, immune surveillance and disease states ranging from cancer to fibrosis, host cells penetrate the BM by engaging tissue-invasive programs, the identity of which remain largely undefined. Although it is commonly assumed that all cells employ similar mechanisms to cross BM barriers, accumulating evidence indicates that cells might selectively mobilize protease-dependent or -independent invasion programs. New data indicate that protease-dependent transmigration is largely reliant on a group of membrane-anchored metalloenzymes, termed the membrane-type matrix metalloprotei",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.059186+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3067015",
+  "source_fingerprint": "7bcb70eb7a52ca65a8aa1c75ecf017ff",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3067015",
+    "alcohol-intake-and-blood-pressure:-a-systematic-review-implementing-a-mendelian-randomization-approach"
+  ],
+  "key_phrases": [
+    "alcohol",
+    "intake",
+    "blood",
+    "pressure",
+    "systematic",
+    "review",
+    "implementing",
+    "mendelian"
+  ],
+  "summary_1l": "BACKGROUND Alcohol has been reported to be a common and modifiable risk factor for hypertension.",
+  "query_hits": [],
+  "embed_text": "3067015 Alcohol Intake and Blood Pressure: A Systematic Review Implementing a Mendelian Randomization Approach science scifact BACKGROUND Alcohol has been reported to be a common and modifiable risk factor for hypertension. However, observational studies are subject to confounding by other behavioural and sociodemographic factors, while clinical trials are… 3067015 alcohol-intake-and-blood-pressure:-a-systematic-review-implementing-a-mendelian-randomization-approach alcohol intake blood pressure systematic review implementing mendelian BACKGROUND Alcohol has been reported to be a common and modifiable risk factor for hypertension. Alcohol Intake and Blood Pressure: A Systematic Review Implementing a Mendelian Randomization Approach BACKGROUND Alcohol has been reported to be a common and modifiable risk factor for hypertension. However, observational studies are subject to confounding by other behavioural and sociodemographic factors, while clinical trials are difficult to implement and have limited follow-up time. Mendelian randomization can provide robust evidence on the nature of this association by use of a common polymorphism in aldehyde dehydrogenase 2 (ALDH2) as a surrogate for measuring alcohol consumption. ALDH2 encodes a major enzyme involved in alcohol metabolism. Individuals homozygous for the null variant (*2*2) experience adverse symptoms when drinking alcohol and consequently drink considerably less al",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:12.878729+00:00"
+}

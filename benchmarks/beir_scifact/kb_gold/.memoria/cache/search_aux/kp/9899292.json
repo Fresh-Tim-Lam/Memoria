@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9899292",
+  "source_fingerprint": "d2c4098729d35c7526aa590bdc4cb38c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9899292",
+    "role-of-amp-activated-protein-kinase-in-mechanism-of-metformin-action."
+  ],
+  "key_phrases": [
+    "role",
+    "amp",
+    "activated",
+    "protein",
+    "kinase",
+    "mechanism",
+    "metformin",
+    "action"
+  ],
+  "summary_1l": "Role of AMP-activated protein kinase in mechanism of metformin action.",
+  "query_hits": [],
+  "embed_text": "9899292 Role of AMP-activated protein kinase in mechanism of metformin action. science scifact Metformin is a widely used drug for treatment of type 2 diabetes with no defined cellular mechanism of action. Its glucose-lowering effect results from decreased hepatic glucose production and increased glucose utilization. Metformin's… 9899292 role-of-amp-activated-protein-kinase-in-mechanism-of-metformin-action. role amp activated protein kinase mechanism metformin action Role of AMP-activated protein kinase in mechanism of metformin action. Role of AMP-activated protein kinase in mechanism of metformin action. Metformin is a widely used drug for treatment of type 2 diabetes with no defined cellular mechanism of action. Its glucose-lowering effect results from decreased hepatic glucose production and increased glucose utilization. Metformin's beneficial effects on circulating lipids have been linked to reduced fatty liver. AMP-activated protein kinase (AMPK) is a major cellular regulator of lipid and glucose metabolism. Here we report that metformin activates AMPK in hepatocytes; as a result, acetyl-CoA carboxylase (ACC) activity is reduced, fatty acid oxidation is induced, and expression of lipogenic enzymes is suppressed. Activation of AMPK by metformin or an adenosine analogue suppresses expression of SREBP-1, a key lipogen",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:06.045157+00:00"
+}

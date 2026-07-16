@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10846815",
+  "source_fingerprint": "faa6e110255e2ac34902c9c9f5074dff",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10846815",
+    "coordinated-oscillations-in-cortical-actin-and-ca2+-correlate-with-cycles-of-vesicle-secretion"
+  ],
+  "key_phrases": [
+    "coordinated",
+    "oscillations",
+    "cortical",
+    "actin",
+    "ca2",
+    "correlate",
+    "with",
+    "cycles"
+  ],
+  "summary_1l": "The actin cortex both facilitates and hinders the exocytosis of secretory granules.",
+  "query_hits": [],
+  "embed_text": "10846815 Coordinated oscillations in cortical actin and Ca2+ correlate with cycles of vesicle secretion science scifact The actin cortex both facilitates and hinders the exocytosis of secretory granules. How cells consolidate these two opposing roles was not well understood. Here we show that antigen activation of mast cells induces oscillations in Ca(2+)… 10846815 coordinated-oscillations-in-cortical-actin-and-ca2+-correlate-with-cycles-of-vesicle-secretion coordinated oscillations cortical actin ca2 correlate with cycles The actin cortex both facilitates and hinders the exocytosis of secretory granules. Coordinated oscillations in cortical actin and Ca2+ correlate with cycles of vesicle secretion The actin cortex both facilitates and hinders the exocytosis of secretory granules. How cells consolidate these two opposing roles was not well understood. Here we show that antigen activation of mast cells induces oscillations in Ca(2+) and PtdIns(4,5)P(2) lipid levels that in turn drive cyclic recruitment of N-WASP and cortical actin level oscillations. Experimental and computational analysis argues that vesicle fusion correlates with the observed actin and Ca(2+) level oscillations. A vesicle secretion cycle starts with the capture of vesicles by actin when cortical F-actin levels are high, followed by vesicle passage through the cortex when F-actin levels are low, and vesicle fusion with the",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:06.029569+00:00"
+}

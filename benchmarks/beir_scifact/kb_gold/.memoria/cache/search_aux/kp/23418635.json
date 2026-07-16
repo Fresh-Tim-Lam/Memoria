@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23418635",
+  "source_fingerprint": "fbe4458158c3f752743ef6d9107fa310",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23418635",
+    "embryonic-stem-cells-require-wnt-proteins-to-prevent-differentiation-to-epiblast-stem-cells"
+  ],
+  "key_phrases": [
+    "embryonic",
+    "stem",
+    "cells",
+    "require",
+    "wnt",
+    "proteins",
+    "prevent",
+    "differentiation"
+  ],
+  "summary_1l": "Pluripotent stem cells exist in naive and primed states, epitomized by mouse embryonic stem cells (ESCs) and",
+  "query_hits": [],
+  "embed_text": "23418635 Embryonic stem cells require Wnt proteins to prevent differentiation to epiblast stem cells science scifact Pluripotent stem cells exist in naive and primed states, epitomized by mouse embryonic stem cells (ESCs) and the developmentally more advanced epiblast stem cells (EpiSCs; ref. ). In the naive state of ESCs, the genome has an unusual open… 23418635 embryonic-stem-cells-require-wnt-proteins-to-prevent-differentiation-to-epiblast-stem-cells embryonic stem cells require wnt proteins prevent differentiation Pluripotent stem cells exist in naive and primed states, epitomized by mouse embryonic stem cells (ESCs) and Embryonic stem cells require Wnt proteins to prevent differentiation to epiblast stem cells Pluripotent stem cells exist in naive and primed states, epitomized by mouse embryonic stem cells (ESCs) and the developmentally more advanced epiblast stem cells (EpiSCs; ref. ). In the naive state of ESCs, the genome has an unusual open conformation and possesses a minimum of repressive epigenetic marks. In contrast, EpiSCs have activated the epigenetic machinery that supports differentiation towards the embryonic cell types. The transition from naive to primed pluripotency therefore represents a pivotal event in cellular differentiation. But the signals that control this fundamental differentiation step remain unclear. We show here that paracrine and autocrine Wnt signals are essential self-renew",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.466504+00:00"
+}

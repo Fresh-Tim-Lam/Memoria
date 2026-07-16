@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "75636923",
+  "source_fingerprint": "9d0f91a4e1aa801103aec18e8864150d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "75636923",
+    "prevalence-of-the-metabolic-syndrome-among-us-adults:-findings-from-the-third-national-health-and-nutrition-examination-survey"
+  ],
+  "key_phrases": [
+    "prevalence",
+    "metabolic",
+    "syndrome",
+    "among",
+    "us",
+    "adults",
+    "findings",
+    "from"
+  ],
+  "summary_1l": "Metabolic syndrome is diagnosed when three or more of the following crite",
+  "query_hits": [],
+  "embed_text": "75636923 Prevalence of the Metabolic Syndrome Among Us Adults: Findings From the Third National Health and Nutrition Examination Survey science scifact Metabolic syndrome is diagnosed when three or more of the following criteria are met: abdominal obesity (waist circumference more than 102 cm in men and 88 cm in women); hypertriglyceridemia of 150 mg/dl or above; a high-density… 75636923 prevalence-of-the-metabolic-syndrome-among-us-adults:-findings-from-the-third-national-health-and-nutrition-examination-survey prevalence metabolic syndrome among us adults findings from Metabolic syndrome is diagnosed when three or more of the following crite Prevalence of the Metabolic Syndrome Among Us Adults: Findings From the Third National Health and Nutrition Examination Survey Metabolic syndrome is diagnosed when three or more of the following criteria are met: abdominal obesity (waist circumference more than 102 cm in men and 88 cm in women); hypertriglyceridemia of 150 mg/dl or above; a high-density lipoprotein (HDL) cholesterol level less than 40 mg/dl in men or 50 mg/dl in women; blood pressure of 130/85 mm Hg or higher; or fasting glucose of at least 110 mg/dl. Individuals with metabolic syndrome are likelier than others to develop diabetes and cardiovascular disease and have increased mortality from all causes (and from cardiovascular disease in particular). The investigators attempted to determine the prevalence of the syndrome in",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.667630+00:00"
+}

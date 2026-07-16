@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14835068",
+  "source_fingerprint": "12c2a3cab17d81c701325d8017888ff3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14835068",
+    "melatonin:-a-mitochondrial-targeting-molecule-involving-mitochondrial-protection-and-dynamics"
+  ],
+  "key_phrases": [
+    "melatonin",
+    "mitochondrial",
+    "targeting",
+    "molecule",
+    "involving",
+    "protection",
+    "dynamics",
+    "has"
+  ],
+  "summary_1l": "Melatonin has been speculated to be mainly synthesized by mitochondria.",
+  "query_hits": [],
+  "embed_text": "14835068 Melatonin: A Mitochondrial Targeting Molecule Involving Mitochondrial Protection and Dynamics science scifact Melatonin has been speculated to be mainly synthesized by mitochondria. This speculation is supported by the recent discovery that aralkylamine N-acetyltransferase/serotonin N-acetyltransferase (AANAT/SNAT) is localized in mitochondria of… 14835068 melatonin:-a-mitochondrial-targeting-molecule-involving-mitochondrial-protection-and-dynamics melatonin mitochondrial targeting molecule involving protection dynamics has Melatonin has been speculated to be mainly synthesized by mitochondria. Melatonin: A Mitochondrial Targeting Molecule Involving Mitochondrial Protection and Dynamics Melatonin has been speculated to be mainly synthesized by mitochondria. This speculation is supported by the recent discovery that aralkylamine N-acetyltransferase/serotonin N-acetyltransferase (AANAT/SNAT) is localized in mitochondria of oocytes and the isolated mitochondria generate melatonin. We have also speculated that melatonin is a mitochondria-targeted antioxidant. It accumulates in mitochondria with high concentration against a concentration gradient. This is probably achieved by an active transportation via mitochondrial melatonin transporter(s). Melatonin protects mitochondria by scavenging reactive oxygen species (ROS), inhibiting the mitochondrial permeability transition pore (MPTP),",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.748339+00:00"
+}

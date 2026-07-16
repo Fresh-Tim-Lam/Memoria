@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "22972632",
+  "source_fingerprint": "4ebb81da04acff62078bbed451fc90ba",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22972632"
+  ],
+  "key_phrases": [
+    "enhanced",
+    "pathological",
+    "angiogenesis",
+    "mice",
+    "lacking",
+    "integrin",
+    "integrins",
+    "inhibition"
+  ],
+  "summary_1l": "Inhibition of αvβ3 or αvβ5 integrin function has been reported to suppress neovascularization and tumor growth, su",
+  "query_hits": [],
+  "embed_text": "22972632 Enhanced pathological angiogenesis in mice lacking β3 integrin or β3 and β5 integrins science scifact Inhibition of αvβ3 or αvβ5 integrin function has been reported to suppress neovascularization and tumor growth, suggesting that these integrins are critical modulators of angiogenesis. Here we report that mice lacking β3 integrins or both… 22972632 enhanced pathological angiogenesis mice lacking integrin integrins inhibition Inhibition of αvβ3 or αvβ5 integrin function has been reported to suppress neovascularization and tumor growth, su Enhanced pathological angiogenesis in mice lacking β3 integrin or β3 and β5 integrins Inhibition of αvβ3 or αvβ5 integrin function has been reported to suppress neovascularization and tumor growth, suggesting that these integrins are critical modulators of angiogenesis. Here we report that mice lacking β3 integrins or both β3 and β5 integrins not only support tumorigenesis, but have enhanced tumor growth as well. Moreover, the tumors in these integrin-deficient mice display enhanced angiogenesis, strongly suggesting that neither β3 nor β5 integrins are essential for neovascularization. We also observed that angiogenic responses to hypoxia and vascular endothelial growth factor (VEGF) are augmented significantly in the absence of β3 integrins. We found no evidence that the expression or fun",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.651877+00:00"
+}

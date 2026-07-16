@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27428509",
+  "source_fingerprint": "7c133e6886aaca4b4ade5286fc77f07e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27428509",
+    "prevention-of-type-2-diabetes-mellitus-through-inhibition-of-the-renin-angiotensin-system"
+  ],
+  "key_phrases": [
+    "prevention",
+    "type",
+    "diabetes",
+    "mellitus",
+    "through",
+    "inhibition",
+    "renin",
+    "angiotensin"
+  ],
+  "summary_1l": "Type 2 diabetes mellitus is becoming a major health problem associated with excess morbidity and mortality.",
+  "query_hits": [],
+  "embed_text": "27428509 Prevention of Type 2 Diabetes Mellitus Through Inhibition of the Renin-Angiotensin System science scifact Type 2 diabetes mellitus is becoming a major health problem associated with excess morbidity and mortality. As the prevalence of type 2 diabetes is rapidly increasing, prevention of the disease should be considered as a key objective in… 27428509 prevention-of-type-2-diabetes-mellitus-through-inhibition-of-the-renin-angiotensin-system prevention type diabetes mellitus through inhibition renin angiotensin Type 2 diabetes mellitus is becoming a major health problem associated with excess morbidity and mortality. Prevention of Type 2 Diabetes Mellitus Through Inhibition of the Renin-Angiotensin System Type 2 diabetes mellitus is becoming a major health problem associated with excess morbidity and mortality. As the prevalence of type 2 diabetes is rapidly increasing, prevention of the disease should be considered as a key objective in the near future. Besides lifestyle changes, various pharmacological treatments have proven their efficacy in placebo-controlled clinical trials, including antidiabetic drugs such as metformin, acarbose and troglitazone, or antiobesity agents such as orlistat. Arterial hypertension, a clinical entity in which insulin resistance is common, is strongly associated with type 2 diabetes and may precede the disease by several years. While antihypertensive agents such as diure",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.888450+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26231129",
+  "source_fingerprint": "00dc16317f6ac3f307352913b45036e2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26231129",
+    "a-framework-for-understanding-and-targeting-residual-disease-in-oncogene-driven-solid-cancers"
+  ],
+  "key_phrases": [
+    "framework",
+    "understanding",
+    "targeting",
+    "residual",
+    "disease",
+    "oncogene",
+    "driven",
+    "solid"
+  ],
+  "summary_1l": "Molecular targeted therapy has the potential to dramatically improve survival in patients with cancer.",
+  "query_hits": [],
+  "embed_text": "26231129 A framework for understanding and targeting residual disease in oncogene-driven solid cancers science scifact Molecular targeted therapy has the potential to dramatically improve survival in patients with cancer. However, complete and durable responses to targeted therapy are rare in individuals with advanced-stage solid cancers. Even the most… 26231129 a-framework-for-understanding-and-targeting-residual-disease-in-oncogene-driven-solid-cancers framework understanding targeting residual disease oncogene driven solid Molecular targeted therapy has the potential to dramatically improve survival in patients with cancer. A framework for understanding and targeting residual disease in oncogene-driven solid cancers Molecular targeted therapy has the potential to dramatically improve survival in patients with cancer. However, complete and durable responses to targeted therapy are rare in individuals with advanced-stage solid cancers. Even the most effective targeted therapies generally do not induce a complete tumor response, resulting in residual disease and tumor progression that limits patient survival. We discuss the emerging need to more fully understand the molecular basis of residual disease as a prelude to designing therapeutic strategies to minimize or eliminate residual disease so that we can move from temporary to chronic control of disease, or a cure, for patients with advanced-stage solid cancers",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.570629+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9063688",
+  "source_fingerprint": "d4b51244cc8610821e504d48d3b8dd28",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9063688",
+    "nucleating-actin-for-invasion"
+  ],
+  "key_phrases": [
+    "nucleating",
+    "actin",
+    "invasion",
+    "cancer",
+    "cells",
+    "into",
+    "surrounding",
+    "tissue"
+  ],
+  "summary_1l": "The invasion of cancer cells into the surrounding tissue is a prerequisite and initial step in metastasis, which is the leading cause of death from cancer.",
+  "query_hits": [],
+  "embed_text": "9063688 Nucleating actin for invasion science scifact The invasion of cancer cells into the surrounding tissue is a prerequisite and initial step in metastasis, which is the leading cause of death from cancer. Invasive cell migration requires the formation of various structures, such as… 9063688 nucleating-actin-for-invasion nucleating actin invasion cancer cells into surrounding tissue The invasion of cancer cells into the surrounding tissue is a prerequisite and initial step in metastasis, which is the leading cause of death from cancer. Nucleating actin for invasion The invasion of cancer cells into the surrounding tissue is a prerequisite and initial step in metastasis, which is the leading cause of death from cancer. Invasive cell migration requires the formation of various structures, such as invadopodia and pseudopodia, which require actin assembly that is regulated by specialized actin nucleation factors. There is a large variety of different actin nucleators in human cells, such as formins, spire and Arp2/3-regulating proteins, and the list is likely to grow. Studies of the mechanisms of various actin nucleation factors that are involved in cancer cell function may ultimately provide new treatments for invasive and metastatic disease.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.121195+00:00"
+}

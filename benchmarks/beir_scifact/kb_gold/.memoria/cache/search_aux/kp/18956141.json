@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "18956141",
+  "source_fingerprint": "49473f8cbf7b757c56e136187c9872a1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18956141"
+  ],
+  "key_phrases": [
+    "nemo",
+    "prevents",
+    "rip",
+    "kinase",
+    "mediated",
+    "epithelial",
+    "cell",
+    "death"
+  ],
+  "summary_1l": "Intestinal epithelial cells (IECs) regulate gut immune homeo",
+  "query_hits": [],
+  "embed_text": "18956141 NEMO Prevents RIP Kinase 1-Mediated Epithelial Cell Death and Chronic Intestinal Inflammation by NF-κB-Dependent and -Independent Functions science scifact Intestinal epithelial cells (IECs) regulate gut immune homeostasis, and impaired epithelial responses are implicated in the pathogenesis of inflammatory bowel diseases (IBD). IEC-specific ablation of nuclear factor κB (NF-κB) essential… 18956141 nemo prevents rip kinase mediated epithelial cell death Intestinal epithelial cells (IECs) regulate gut immune homeo NEMO Prevents RIP Kinase 1-Mediated Epithelial Cell Death and Chronic Intestinal Inflammation by NF-κB-Dependent and -Independent Functions Intestinal epithelial cells (IECs) regulate gut immune homeostasis, and impaired epithelial responses are implicated in the pathogenesis of inflammatory bowel diseases (IBD). IEC-specific ablation of nuclear factor κB (NF-κB) essential modulator (NEMO) caused Paneth cell apoptosis and impaired antimicrobial factor expression in the ileum, as well as colonocyte apoptosis and microbiota-driven chronic inflammation in the colon. Combined RelA, c-Rel, and RelB deficiency in IECs caused Paneth cell apoptosis but not colitis, suggesting that NEMO prevents colon inflammation by NF-κB-independent functions. Inhibition of receptor-interacting protein kinase 1 (",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.960732+00:00"
+}

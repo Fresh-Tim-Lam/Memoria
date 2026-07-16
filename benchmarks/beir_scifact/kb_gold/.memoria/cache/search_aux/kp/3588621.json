@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3588621",
+  "source_fingerprint": "1d018bf9cbdf5a003355cf89bca9f68d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3588621",
+    "extracellular-vesicle-isolation-and-characterization:-toward-clinical-application."
+  ],
+  "key_phrases": [
+    "extracellular",
+    "vesicle",
+    "isolation",
+    "characterization",
+    "toward",
+    "clinical",
+    "application",
+    "two"
+  ],
+  "summary_1l": "Extracellular vesicle isolation and characterization: toward clinical application.",
+  "query_hits": [],
+  "embed_text": "3588621 Extracellular vesicle isolation and characterization: toward clinical application. science scifact Two broad categories of extracellular vesicles (EVs), exosomes and shed microvesicles (sMVs), which differ in size distribution as well as protein and RNA profiles, have been described. EVs are known to play key roles in cell-cell… 3588621 extracellular-vesicle-isolation-and-characterization:-toward-clinical-application. extracellular vesicle isolation characterization toward clinical application two Extracellular vesicle isolation and characterization: toward clinical application. Extracellular vesicle isolation and characterization: toward clinical application. Two broad categories of extracellular vesicles (EVs), exosomes and shed microvesicles (sMVs), which differ in size distribution as well as protein and RNA profiles, have been described. EVs are known to play key roles in cell-cell communication, acting proximally as well as systemically. This Review discusses the nature of EV subtypes, strategies for isolating EVs from both cell-culture media and body fluids, and procedures for quantifying EVs. We also discuss proteins selectively enriched in exosomes and sMVs that have the potential for use as markers to discriminate between EV subtypes, as well as various applications of EVs in clinical diagnosis.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.725876+00:00"
+}

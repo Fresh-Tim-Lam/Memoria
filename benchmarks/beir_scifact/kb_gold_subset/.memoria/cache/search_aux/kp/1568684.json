@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1568684",
+  "source_fingerprint": "26fa548a091c794720923dd2396e9407",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1568684",
+    "the-bile-acid-chenodeoxycholic-acid-increases-human-brown-adipose-tissue-activity."
+  ],
+  "key_phrases": [
+    "bile",
+    "acid",
+    "chenodeoxycholic",
+    "increases",
+    "human",
+    "brown",
+    "adipose",
+    "tissue"
+  ],
+  "summary_1l": "The Bile Acid Chenodeoxycholic Acid Increases Human Brown Adipose Tissue Activity.",
+  "query_hits": [],
+  "embed_text": "1568684 The Bile Acid Chenodeoxycholic Acid Increases Human Brown Adipose Tissue Activity. science scifact The interest in brown adipose tissue (BAT) as a target to combat metabolic disease has recently been renewed with the discovery of functional BAT in humans. In rodents, BAT can be activated by bile acids, which activate type 2… 1568684 the-bile-acid-chenodeoxycholic-acid-increases-human-brown-adipose-tissue-activity. bile acid chenodeoxycholic increases human brown adipose tissue The Bile Acid Chenodeoxycholic Acid Increases Human Brown Adipose Tissue Activity. The Bile Acid Chenodeoxycholic Acid Increases Human Brown Adipose Tissue Activity. The interest in brown adipose tissue (BAT) as a target to combat metabolic disease has recently been renewed with the discovery of functional BAT in humans. In rodents, BAT can be activated by bile acids, which activate type 2 iodothyronine deiodinase (D2) in BAT via the G-coupled protein receptor TGR5, resulting in increased oxygen consumption and energy expenditure. Here we examined the effects of oral supplementation of the bile acid chenodeoxycholic acid (CDCA) on human BAT activity. Treatment of 12 healthy female subjects with CDCA for 2 days resulted in increased BAT activity. Whole-body energy expenditure was also increased upon CDCA treatment. In vitro treatment of primary human brown adipocytes deri",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:11.600268+00:00"
+}

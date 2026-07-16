@@ -198,7 +198,7 @@
       this.transform = {
         x: w / 2 - b.cx * k,
         y: h / 2 - b.cy * k,
-        k: Math.max(0.12, k),
+        k: Math.max(this.opts.zoomMin2d ?? 0.05, k),
       };
     }
 
@@ -255,6 +255,9 @@
 
     applyOptions(partial, opts = {}) {
       Object.assign(this.opts, partial || {});
+      const zMin = this.opts.zoomMin2d ?? 0.05;
+      const zMax = this.opts.zoomMax2d ?? 8;
+      this.transform.k = Math.max(zMin, Math.min(zMax, this.transform.k));
       this.layout.applyOptions(this._layoutOptsFromView(), opts);
       if (!opts.relayout) this.draw();
     }
@@ -363,9 +366,13 @@
           const rect = this.canvas.getBoundingClientRect();
           const sx = e.clientX - rect.left;
           const sy = e.clientY - rect.top;
-          const factor = e.deltaY > 0 ? 0.9 : 1.1;
+          const sens = this.opts.zoomSensitivity2d ?? 1.0;
+          const base = e.deltaY > 0 ? 0.9 : 1.1;
+          const factor = sens !== 1 ? Math.pow(base, sens) : base;
           const k0 = this.transform.k;
-          const k1 = Math.max(0.15, Math.min(4, k0 * factor));
+          const zMin = this.opts.zoomMin2d ?? 0.05;
+          const zMax = this.opts.zoomMax2d ?? 8;
+          const k1 = Math.max(zMin, Math.min(zMax, k0 * factor));
           this.transform.x = sx - ((sx - this.transform.x) / k0) * k1;
           this.transform.y = sy - ((sy - this.transform.y) / k0) * k1;
           this.transform.k = k1;

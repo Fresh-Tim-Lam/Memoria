@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15893330",
+  "source_fingerprint": "0caa3019b0a6ae0670bf520422945cb4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15893330",
+    "sequential-domain-assembly-of-ribosomal-protein-s3-drives-40s-subunit-maturation."
+  ],
+  "key_phrases": [
+    "sequential",
+    "domain",
+    "assembly",
+    "ribosomal",
+    "protein",
+    "s3",
+    "drives",
+    "40s"
+  ],
+  "summary_1l": "Sequential domain assembly of ribosomal protein S3 drives 40S subunit maturation.",
+  "query_hits": [],
+  "embed_text": "15893330 Sequential domain assembly of ribosomal protein S3 drives 40S subunit maturation. science scifact Eukaryotic ribosomes assemble by association of ribosomal RNA with ribosomal proteins into nuclear precursor particles, which undergo a complex maturation pathway coordinated by non-ribosomal assembly factors. Here, we provide functional… 15893330 sequential-domain-assembly-of-ribosomal-protein-s3-drives-40s-subunit-maturation. sequential domain assembly ribosomal protein s3 drives 40s Sequential domain assembly of ribosomal protein S3 drives 40S subunit maturation. Sequential domain assembly of ribosomal protein S3 drives 40S subunit maturation. Eukaryotic ribosomes assemble by association of ribosomal RNA with ribosomal proteins into nuclear precursor particles, which undergo a complex maturation pathway coordinated by non-ribosomal assembly factors. Here, we provide functional insights into how successive structural re-arrangements in ribosomal protein S3 promote maturation of the 40S ribosomal subunit. We show that S3 dimerizes and is imported into the nucleus with its N-domain in a rotated conformation and associated with the chaperone Yar1. Initial assembly of S3 with 40S precursors occurs via its C-domain, while the N-domain protrudes from the 40S surface. Yar1 is replaced by the assembly factor Ltv1, thereby fixing the S3 N-domain in the rotat",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.409647+00:00"
+}

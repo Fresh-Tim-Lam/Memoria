@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5956016",
+  "source_fingerprint": "8b9537aa7563a982b563853d87c9928e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5956016",
+    "interchangeability-of-biosimilars:-a-european-perspective"
+  ],
+  "key_phrases": [
+    "interchangeability",
+    "biosimilars",
+    "european",
+    "perspective",
+    "many",
+    "best",
+    "selling",
+    "blockbuster"
+  ],
+  "summary_1l": "Many of the best-selling ‘blockbuster’ biological medicinal products are, or will soon be, facing competition from similar biological medicina",
+  "query_hits": [],
+  "embed_text": "5956016 Interchangeability of Biosimilars: A European Perspective science scifact Many of the best-selling ‘blockbuster’ biological medicinal products are, or will soon be, facing competition from similar biological medicinal products (biosimilars) in the EU. Biosimilarity is based on the comparability concept, which… 5956016 interchangeability-of-biosimilars:-a-european-perspective interchangeability biosimilars european perspective many best selling blockbuster Many of the best-selling ‘blockbuster’ biological medicinal products are, or will soon be, facing competition from similar biological medicina Interchangeability of Biosimilars: A European Perspective Many of the best-selling ‘blockbuster’ biological medicinal products are, or will soon be, facing competition from similar biological medicinal products (biosimilars) in the EU. Biosimilarity is based on the comparability concept, which has been used successfully for several decades to ensure close similarity of a biological product before and after a manufacturing change. Over the last 10 years, experience with biosimilars has shown that even complex biotechnology-derived proteins can be copied successfully. Most best-selling biologicals are used for chronic treatment. This has triggered intensive discussion on the interchangeability of a biosimilar with its reference product, with the main concern being immunogenicity. We explore",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.574056+00:00"
+}

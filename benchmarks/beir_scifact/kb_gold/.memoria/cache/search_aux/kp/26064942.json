@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26064942",
+  "source_fingerprint": "058b46dd556a4c2257cba7d137c81fbf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26064942",
+    "pgap2-mutations,-affecting-the-gpi-anchor-synthesis-pathway,-cause-hyperphosphatasia-with-mental-retardation-syndrome."
+  ],
+  "key_phrases": [
+    "pgap2",
+    "mutations",
+    "affecting",
+    "gpi",
+    "anchor",
+    "synthesis",
+    "pathway",
+    "cause"
+  ],
+  "summary_1l": "PGAP2 mutations, affecting the GPI-anchor-synthesis pathway, cause hyperphosphatasia with mental retardation syndrome.",
+  "query_hits": [],
+  "embed_text": "26064942 PGAP2 mutations, affecting the GPI-anchor-synthesis pathway, cause hyperphosphatasia with mental retardation syndrome. science scifact Recently, mutations in genes involved in the biosynthesis of the glycosylphosphatidylinositol (GPI) anchor have been identified in a new subclass of congenital disorders of glycosylation (CDGs) with a distinct spectrum of clinical… 26064942 pgap2-mutations,-affecting-the-gpi-anchor-synthesis-pathway,-cause-hyperphosphatasia-with-mental-retardation-syndrome. pgap2 mutations affecting gpi anchor synthesis pathway cause PGAP2 mutations, affecting the GPI-anchor-synthesis pathway, cause hyperphosphatasia with mental retardation syndrome. PGAP2 mutations, affecting the GPI-anchor-synthesis pathway, cause hyperphosphatasia with mental retardation syndrome. Recently, mutations in genes involved in the biosynthesis of the glycosylphosphatidylinositol (GPI) anchor have been identified in a new subclass of congenital disorders of glycosylation (CDGs) with a distinct spectrum of clinical features. To date, mutations have been identified in six genes (PIGA, PIGL, PIGM, PIGN, PIGO, and PIGV) encoding proteins in the GPI-anchor-synthesis pathway in individuals with severe neurological features, including seizures, muscular hypotonia, and intellectual disability. We developed a diagnostic gene panel for targeting all known genes encoding proteins in the GPI-anchor-synthesis pathway to screen individuals matching these features, and w",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.226649+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13464392",
+  "source_fingerprint": "c8857880c118ef2027960b16f2c7fad2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13464392",
+    "albumin-and-furosemide-therapy-in-hypoproteinemic-patients-with-acute-lung-injury."
+  ],
+  "key_phrases": [
+    "albumin",
+    "furosemide",
+    "therapy",
+    "hypoproteinemic",
+    "patients",
+    "with",
+    "acute",
+    "lung"
+  ],
+  "summary_1l": "Albumin and furosemide therapy in hypoproteinemic patients with acute lung injury.",
+  "query_hits": [],
+  "embed_text": "13464392 Albumin and furosemide therapy in hypoproteinemic patients with acute lung injury. science scifact OBJECTIVE Hypoproteinemia, fluid retention, and weight gain are associated with development of acute lung injury and mortality in critically ill patients, without proof of cause and effect. We designed a clinical trial to determine whether… 13464392 albumin-and-furosemide-therapy-in-hypoproteinemic-patients-with-acute-lung-injury. albumin furosemide therapy hypoproteinemic patients with acute lung Albumin and furosemide therapy in hypoproteinemic patients with acute lung injury. Albumin and furosemide therapy in hypoproteinemic patients with acute lung injury. OBJECTIVE Hypoproteinemia, fluid retention, and weight gain are associated with development of acute lung injury and mortality in critically ill patients, without proof of cause and effect. We designed a clinical trial to determine whether diuresis and colloid replacement in hypoproteinemic patients with acute lung injury would improve pulmonary physiology. DESIGN Prospective, randomized, double-blind, placebo-controlled trial. SETTING All adult intensive care units from two university hospitals. PATIENTS Thirty-seven mechanically-ventilated patients with acute lung injury and serum total protein </=5.0 g/dL. INTERVENTIONS Five-day protocolized regimen of 25 g of human serum albumin every 8 hrs with continuo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.305893+00:00"
+}

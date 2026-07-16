@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25732836",
+  "source_fingerprint": "ea3e9c97b6e88ee1a692c15733325bbb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25732836",
+    "circulating-tumor-cells-and-[18f]fluorodeoxyglucose-positron-emission-tomography/computed-tomography-for-outcome-prediction-in-metastatic-breast-cancer."
+  ],
+  "key_phrases": [
+    "circulating",
+    "tumor",
+    "cells",
+    "18f",
+    "fluorodeoxyglucose",
+    "positron",
+    "emission",
+    "tomography"
+  ],
+  "summary_1l": "Circulating tumor cells and [18F]fluorodeoxyglucose positron emission tomography/computed tomography for outcome prediction in metastatic breast cancer.",
+  "query_hits": [],
+  "embed_text": "25732836 Circulating tumor cells and [18F]fluorodeoxyglucose positron emission tomography/computed tomography for outcome prediction in metastatic breast cancer. science scifact PURPOSE Circulating tumor cells (CTCs) and [(18)F]fluorodeoxyglucose (FDG) positron emission tomography (PET)/computed tomography (CT) are two new promising tools for therapeutic monitoring. In this study, we compared the prognostic value… 25732836 circulating-tumor-cells-and-[18f]fluorodeoxyglucose-positron-emission-tomography/computed-tomography-for-outcome-prediction-in-metastatic-breast-cancer. circulating tumor cells 18f fluorodeoxyglucose positron emission tomography Circulating tumor cells and [18F]fluorodeoxyglucose positron emission tomography/computed tomography for outcome prediction in metastatic breast cancer. Circulating tumor cells and [18F]fluorodeoxyglucose positron emission tomography/computed tomography for outcome prediction in metastatic breast cancer. PURPOSE Circulating tumor cells (CTCs) and [(18)F]fluorodeoxyglucose (FDG) positron emission tomography (PET)/computed tomography (CT) are two new promising tools for therapeutic monitoring. In this study, we compared the prognostic value of CTC and FDG-PET/CT monitoring during systemic therapy for metastatic breast cancer (MBC). PATIENTS AND METHODS A retrospective analyses of 115 MBC patients who started a new line of therapy and who had CTC counts and FDG-PET/CT scans performed at baseline and at 9 to 12 weeks during therapy (midtherapy) was performed. Patients were categorized according to midtherapy CTC counts as favorable (ie, < five",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.275730+00:00"
+}

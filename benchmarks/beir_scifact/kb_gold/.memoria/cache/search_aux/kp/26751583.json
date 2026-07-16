@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26751583",
+  "source_fingerprint": "7e107d3bd2c2c3925f8cb86e5f7533bd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26751583",
+    "drosophila-rnai-screen-reveals-cd36-family-member-required-for-mycobacterial-infection."
+  ],
+  "key_phrases": [
+    "drosophila",
+    "rnai",
+    "screen",
+    "reveals",
+    "cd36",
+    "family",
+    "member",
+    "required"
+  ],
+  "summary_1l": "Drosophila RNAi screen reveals CD36 family member required for mycobacterial infection.",
+  "query_hits": [],
+  "embed_text": "26751583 Drosophila RNAi screen reveals CD36 family member required for mycobacterial infection. science scifact Certain pathogens, such as Mycobacterium tuberculosis, survive within the hostile intracellular environment of a macrophage. To identify host factors required for mycobacterial entry and survival within macrophages, we performed a… 26751583 drosophila-rnai-screen-reveals-cd36-family-member-required-for-mycobacterial-infection. drosophila rnai screen reveals cd36 family member required Drosophila RNAi screen reveals CD36 family member required for mycobacterial infection. Drosophila RNAi screen reveals CD36 family member required for mycobacterial infection. Certain pathogens, such as Mycobacterium tuberculosis, survive within the hostile intracellular environment of a macrophage. To identify host factors required for mycobacterial entry and survival within macrophages, we performed a genomewide RNA interference screen in Drosophila macrophage-like cells, using Mycobacterium fortuitum. We identified factors required for general phagocytosis, as well as those needed specifically for mycobacterial infection. One specific factor, Peste (Pes), is a CD36 family member required for uptake of mycobacteria, but not Escherichia coli or Staphylococcus aureus. Moreover, mammalian class B scavenger receptors (SRs) conferred uptake of bacteria into nonphagocytic cells,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.127939+00:00"
+}

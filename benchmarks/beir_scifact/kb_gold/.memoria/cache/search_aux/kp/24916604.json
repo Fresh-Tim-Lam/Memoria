@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24916604",
+  "source_fingerprint": "3b45e74ca1c6e756d33148cea6849476",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24916604",
+    "do-physicians-follow-systemic-treatment-and-funding-policy-guidelines?"
+  ],
+  "key_phrases": [
+    "do",
+    "physicians",
+    "follow",
+    "systemic",
+    "treatment",
+    "funding",
+    "policy",
+    "guidelines"
+  ],
+  "summary_1l": "Do physicians follow systemic treatment and funding policy guidelines?",
+  "query_hits": [],
+  "embed_text": "24916604 Do physicians follow systemic treatment and funding policy guidelines? science scifact BACKGROUND The use of bisphosphonates for the prevention of skeletal related events in women with bone metastases from breast cancer is well established. We undertook an evaluation of bisphosphonate use in clinical practice in three… 24916604 do-physicians-follow-systemic-treatment-and-funding-policy-guidelines? do physicians follow systemic treatment funding policy guidelines Do physicians follow systemic treatment and funding policy guidelines? Do physicians follow systemic treatment and funding policy guidelines? BACKGROUND The use of bisphosphonates for the prevention of skeletal related events in women with bone metastases from breast cancer is well established. We undertook an evaluation of bisphosphonate use in clinical practice in three Canadian cancer centres. In addition we assessed whether or not physicians at these centres are following their local treatment guidelines and funding policies. METHODS Charts and electronic files of patients who had received either clodronate or pamidronate at any time between January 2000 and December 2001 at three Canadian cancer centres were retrospectively reviewed. RESULTS There has been a marked improvement in the time between the diagnosis of bone metastases and the commencement of b",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.518411+00:00"
+}

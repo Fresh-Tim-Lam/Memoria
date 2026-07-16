@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "37207226",
+  "source_fingerprint": "520d26debb8a992f396f1a3383d66e7a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "37207226",
+    "lipid-metabolism-and-toxicity-in-the-heart."
+  ],
+  "key_phrases": [
+    "lipid",
+    "metabolism",
+    "toxicity",
+    "heart",
+    "has",
+    "both",
+    "greatest",
+    "caloric"
+  ],
+  "summary_1l": "Lipid metabolism and toxicity in the heart.",
+  "query_hits": [],
+  "embed_text": "37207226 Lipid metabolism and toxicity in the heart. science scifact The heart has both the greatest caloric needs and the most robust oxidation of fatty acids (FAs). Under pathological conditions such as obesity and type 2 diabetes, cardiac uptake and oxidation are not balanced and hearts accumulate lipid… 37207226 lipid-metabolism-and-toxicity-in-the-heart. lipid metabolism toxicity heart has both greatest caloric Lipid metabolism and toxicity in the heart. Lipid metabolism and toxicity in the heart. The heart has both the greatest caloric needs and the most robust oxidation of fatty acids (FAs). Under pathological conditions such as obesity and type 2 diabetes, cardiac uptake and oxidation are not balanced and hearts accumulate lipid potentially leading to cardiac lipotoxicity. We will first review the pathways utilized by the heart to acquire FAs from the circulation and to store triglyceride intracellularly. Then we will describe mouse models in which excess lipid accumulation causes heart dysfunction and experiments performed to alleviate this toxicity. Finally, the known relationships between heart lipid metabolism and dysfunction in humans will be summarized.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.257106+00:00"
+}

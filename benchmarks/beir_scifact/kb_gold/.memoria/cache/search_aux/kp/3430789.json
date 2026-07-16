@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3430789",
+  "source_fingerprint": "0694a1390bd2948a880835f1ed5a304c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3430789",
+    "effect-of-activated-charcoal-hemoperfusion-on-renal-function-in-patients-with-paraquat-poisoning."
+  ],
+  "key_phrases": [
+    "effect",
+    "activated",
+    "charcoal",
+    "hemoperfusion",
+    "renal",
+    "function",
+    "patients",
+    "with"
+  ],
+  "summary_1l": "Effect of activated charcoal hemoperfusion on renal function in patients with paraquat poisoning.",
+  "query_hits": [],
+  "embed_text": "3430789 Effect of activated charcoal hemoperfusion on renal function in patients with paraquat poisoning. science scifact The present study retrospectively analyzed 19 patients diagnosed with paraquat (PQ) poisoning with the aim to investigate the effect of activated charcoal hemoperfusion on renal function and PQ elimination. The results indicated that 7… 3430789 effect-of-activated-charcoal-hemoperfusion-on-renal-function-in-patients-with-paraquat-poisoning. effect activated charcoal hemoperfusion renal function patients with Effect of activated charcoal hemoperfusion on renal function in patients with paraquat poisoning. Effect of activated charcoal hemoperfusion on renal function in patients with paraquat poisoning. The present study retrospectively analyzed 19 patients diagnosed with paraquat (PQ) poisoning with the aim to investigate the effect of activated charcoal hemoperfusion on renal function and PQ elimination. The results indicated that 7 patients died and 12 survived. Non-oliguric renal failure occurred in all of the 7 patients who died. Among the 12 surviving patients, 10 had normal renal function and 2 developed non-oliguric renal failure. There was a linear correlation between plasma and urine paraquat concentration prior to and during activated charcoal hemoperfusion. The equation parameters together with the correlation coefficient on admission were as follows: Y=0.5820+1.7348X (R2=0.678; F",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.337154+00:00"
+}

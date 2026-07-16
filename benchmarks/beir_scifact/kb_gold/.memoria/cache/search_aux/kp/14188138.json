@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14188138",
+  "source_fingerprint": "e5e09caa4577c99e9fccac77db520c40",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14188138",
+    "abnormal-spine-morphology-and-enhanced-ltp-in-limk-1-knockout-mice"
+  ],
+  "key_phrases": [
+    "abnormal",
+    "spine",
+    "morphology",
+    "enhanced",
+    "ltp",
+    "limk",
+    "knockout",
+    "mice"
+  ],
+  "summary_1l": "In vitro studies indicate a role for the LIM kinase family in the regulation of cofilin phosphorylation and actin dynamics.",
+  "query_hits": [],
+  "embed_text": "14188138 Abnormal Spine Morphology and Enhanced LTP in LIMK-1 Knockout Mice science scifact In vitro studies indicate a role for the LIM kinase family in the regulation of cofilin phosphorylation and actin dynamics. In addition, abnormal expression of LIMK-1 is associated with Williams syndrome, a mental disorder with profound… 14188138 abnormal-spine-morphology-and-enhanced-ltp-in-limk-1-knockout-mice abnormal spine morphology enhanced ltp limk knockout mice In vitro studies indicate a role for the LIM kinase family in the regulation of cofilin phosphorylation and actin dynamics. Abnormal Spine Morphology and Enhanced LTP in LIMK-1 Knockout Mice In vitro studies indicate a role for the LIM kinase family in the regulation of cofilin phosphorylation and actin dynamics. In addition, abnormal expression of LIMK-1 is associated with Williams syndrome, a mental disorder with profound deficits in visuospatial cognition. However, the in vivo function of this family of kinases remains elusive. Using LIMK-1 knockout mice, we demonstrate a significant role for LIMK-1 in vivo in regulating cofilin and the actin cytoskeleton. Furthermore, we show that the knockout mice exhibited significant abnormalities in spine morphology and in synaptic function, including enhanced hippocampal long-term potentiation. The knockout mice also showed altered fear responses and spatial learning.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.294658+00:00"
+}

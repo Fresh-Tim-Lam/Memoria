@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10761515",
+  "source_fingerprint": "170533b3cc5e98b3f6a5689297bdb985",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10761515",
+    "breath-methane-in-patients-with-cancer-of-the-large-bowel."
+  ],
+  "key_phrases": [
+    "breath",
+    "methane",
+    "patients",
+    "with",
+    "cancer",
+    "large",
+    "bowel",
+    "30"
+  ],
+  "summary_1l": "Breath-methane in patients with cancer of the large bowel.",
+  "query_hits": [],
+  "embed_text": "10761515 Breath-methane in patients with cancer of the large bowel. science scifact In 30 patients with cancer of the large bowel, 24 (80%) had detectable levels of methane in their breath, compared with 25 (39%) of 64 patients with non-malignant large-bowel disease and 83 (40%) of 208 subjects without large-bowel… 10761515 breath-methane-in-patients-with-cancer-of-the-large-bowel. breath methane patients with cancer large bowel 30 Breath-methane in patients with cancer of the large bowel. Breath-methane in patients with cancer of the large bowel. In 30 patients with cancer of the large bowel, 24 (80%) had detectable levels of methane in their breath, compared with 25 (39%) of 64 patients with non-malignant large-bowel disease and 83 (40%) of 208 subjects without large-bowel disease. These findings suggest that there may be a difference in anaerobic intestinal flora between patients with cancer of the large bowel and those without the disease. This difference may antedate the development of the tumour or, alternatively, result from the tumour.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.955172+00:00"
+}

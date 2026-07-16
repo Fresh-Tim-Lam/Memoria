@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19522248",
+  "source_fingerprint": "9cb5f2d0abe6ac4da5b66ae226e0193a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19522248",
+    "cyclin-dependent-kinase-2-is-essential-for-meiosis-but-not-for-mitotic-cell-division-in-mice"
+  ],
+  "key_phrases": [
+    "cyclin",
+    "dependent",
+    "kinase",
+    "essential",
+    "meiosis",
+    "but",
+    "not",
+    "mitotic"
+  ],
+  "summary_1l": "We targeted the locus encoding the cyclin-dependent kinase 2 (CDK2) by homologous recombination in mouse em",
+  "query_hits": [],
+  "embed_text": "19522248 Cyclin-dependent kinase 2 is essential for meiosis but not for mitotic cell division in mice science scifact We targeted the locus encoding the cyclin-dependent kinase 2 (CDK2) by homologous recombination in mouse embryonic stem (ES) cells. Embryonic fibroblasts lacking CDK2 proliferate normally and become immortal after continuous passage in… 19522248 cyclin-dependent-kinase-2-is-essential-for-meiosis-but-not-for-mitotic-cell-division-in-mice cyclin dependent kinase essential meiosis but not mitotic We targeted the locus encoding the cyclin-dependent kinase 2 (CDK2) by homologous recombination in mouse em Cyclin-dependent kinase 2 is essential for meiosis but not for mitotic cell division in mice We targeted the locus encoding the cyclin-dependent kinase 2 (CDK2) by homologous recombination in mouse embryonic stem (ES) cells. Embryonic fibroblasts lacking CDK2 proliferate normally and become immortal after continuous passage in culture. Elimination of a conditional Cdk2 allele in immortal cells does not have a significant effect on proliferation. Cdk2−/− mice are viable and survive for up to two years, indicating that CDK2 is also dispensable for proliferation and survival of most cell types. But CDK2 is essential for completion of prophase I during meiotic cell division in male and female germ cells, an unforeseen role for this cell cycle kinase.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.711137+00:00"
+}

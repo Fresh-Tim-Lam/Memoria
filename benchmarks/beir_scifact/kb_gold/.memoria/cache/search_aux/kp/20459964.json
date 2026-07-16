@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20459964",
+  "source_fingerprint": "a06987de261850b8a167415ff49667ea",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20459964",
+    "circulating-mitochondrial-dna-in-serum-of-patients-with-granulomatosis-with-polyangiitis."
+  ],
+  "key_phrases": [
+    "circulating",
+    "mitochondrial",
+    "dna",
+    "serum",
+    "patients",
+    "with",
+    "granulomatosis",
+    "polyangiitis"
+  ],
+  "summary_1l": "Circulating mitochondrial DNA in serum of patients with granulomatosis with polyangiitis.",
+  "query_hits": [],
+  "embed_text": "20459964 Circulating mitochondrial DNA in serum of patients with granulomatosis with polyangiitis. science scifact Neutrophil is a key cell in pathophysiology of granulomatosis with polyangiitis. Recently, neutrophil extracellular traps were described in this disease. Mitochondrial DNA is also released during traps formation. We measured circulating… 20459964 circulating-mitochondrial-dna-in-serum-of-patients-with-granulomatosis-with-polyangiitis. circulating mitochondrial dna serum patients with granulomatosis polyangiitis Circulating mitochondrial DNA in serum of patients with granulomatosis with polyangiitis. Circulating mitochondrial DNA in serum of patients with granulomatosis with polyangiitis. Neutrophil is a key cell in pathophysiology of granulomatosis with polyangiitis. Recently, neutrophil extracellular traps were described in this disease. Mitochondrial DNA is also released during traps formation. We measured circulating cell-free mitochondrial and genomic DNA in serum of patients with granulomatosis with polyangiitis. Subjects with the disease (14 active and 11 in remission stage) and 10 healthy controls were enrolled. Quantitative real-time polymerase chain reaction (PCR) was used to measure 79 base pairs (bp) and 230 bp mtDNA fragments. Alu repeats were quantified to evaluate abundance of nuclear DNA in serum at the presence of plasmid control. Both fragments of mtDNA (79 bp and 230",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.338480+00:00"
+}

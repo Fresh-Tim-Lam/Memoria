@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11884292",
+  "source_fingerprint": "64a4de609417f0c5efb76ef3e8f1cbb8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11884292",
+    "concordance,-disease-progression,-and-heritability-of-coeliac-disease-in-italian-twins."
+  ],
+  "key_phrases": [
+    "concordance",
+    "disease",
+    "progression",
+    "heritability",
+    "coeliac",
+    "italian",
+    "twins",
+    "background"
+  ],
+  "summary_1l": "Concordance, disease progression, and heritability of coeliac disease in Italian twins.",
+  "query_hits": [],
+  "embed_text": "11884292 Concordance, disease progression, and heritability of coeliac disease in Italian twins. science scifact BACKGROUND AND AIMS We adopted the twin method to disentangle the genetic and environmental components of susceptibility to coeliac disease (CD). We estimated disease concordance rate by zygosity and HLA genotypes, discordance times,… 11884292 concordance,-disease-progression,-and-heritability-of-coeliac-disease-in-italian-twins. concordance disease progression heritability coeliac italian twins background Concordance, disease progression, and heritability of coeliac disease in Italian twins. Concordance, disease progression, and heritability of coeliac disease in Italian twins. BACKGROUND AND AIMS We adopted the twin method to disentangle the genetic and environmental components of susceptibility to coeliac disease (CD). We estimated disease concordance rate by zygosity and HLA genotypes, discordance times, progression rates to disease, and heritability. METHODS We crosslinked the Italian Twin Registry with the membership lists of the Italian Coeliac Disease Association and recruited 23 monozygotic (MZ) and 50 dizygotic (DZ) twin pairs with at least one affected member. Zygosity was assigned by DNA fingerprinting, and HLA-DQ and DR alleles were genotyped. Disease status was ascertained by antiendomysial, anti-human tissue transglutaminase antibodies, and bowel biopsy. RESULTS",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:07.735468+00:00"
+}

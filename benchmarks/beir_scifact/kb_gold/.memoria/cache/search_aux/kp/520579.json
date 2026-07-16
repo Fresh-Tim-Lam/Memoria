@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "520579",
+  "source_fingerprint": "f2406833da420e8e8dd99cb52abfb61a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "520579",
+    "plasma-vitamin-d-metabolites-and-risk-of-colorectal-cancer-in-women."
+  ],
+  "key_phrases": [
+    "plasma",
+    "vitamin",
+    "metabolites",
+    "risk",
+    "colorectal",
+    "cancer",
+    "women",
+    "objective"
+  ],
+  "summary_1l": "Plasma vitamin D metabolites and risk of colorectal cancer in women.",
+  "query_hits": [],
+  "embed_text": "520579 Plasma vitamin D metabolites and risk of colorectal cancer in women. science scifact OBJECTIVE Experimental evidence suggests that 1,25-dihydroxyvitamin D and its precursor, 25-hydroxyvitamin D [25(OH)D], may aid in the prevention of colorectal cancer. We therefore examined risk in relation to plasma concentrations of… 520579 plasma-vitamin-d-metabolites-and-risk-of-colorectal-cancer-in-women. plasma vitamin metabolites risk colorectal cancer women objective Plasma vitamin D metabolites and risk of colorectal cancer in women. Plasma vitamin D metabolites and risk of colorectal cancer in women. OBJECTIVE Experimental evidence suggests that 1,25-dihydroxyvitamin D and its precursor, 25-hydroxyvitamin D [25(OH)D], may aid in the prevention of colorectal cancer. We therefore examined risk in relation to plasma concentrations of these vitamin D metabolites. METHODS In a nested case-control study among women in the Nurses' Health Study, we identified 193 colorectal cancer cases, ages 46 to 78 years, diagnosed up to 11 years after blood collection. Two controls were matched per case on year of birth and month of blood draw. Odds ratios (OR) for risk of colorectal cancer were calculated using conditional logistic regression adjusted for body mass index, physical activity, smoking, family history, use of hormone replace",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.454376+00:00"
+}

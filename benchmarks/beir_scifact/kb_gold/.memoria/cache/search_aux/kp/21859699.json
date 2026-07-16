@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21859699",
+  "source_fingerprint": "b78d013af8201ab15508444e030e6354",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21859699",
+    "successful-three-way-kidney-paired-donation-with-cross-country-live-donor-allograft-transport."
+  ],
+  "key_phrases": [
+    "successful",
+    "three",
+    "way",
+    "kidney",
+    "paired",
+    "donation",
+    "with",
+    "cross"
+  ],
+  "summary_1l": "Successful three-way kidney paired donation with cross-country live donor allograft transport.",
+  "query_hits": [],
+  "embed_text": "21859699 Successful three-way kidney paired donation with cross-country live donor allograft transport. science scifact Providing transplantation opportunities for patients with incompatible live donors through kidney paired donation (KPD) is seen as one of the important strategies for easing the crisis in organ availability. It has been estimated that an… 21859699 successful-three-way-kidney-paired-donation-with-cross-country-live-donor-allograft-transport. successful three way kidney paired donation with cross Successful three-way kidney paired donation with cross-country live donor allograft transport. Successful three-way kidney paired donation with cross-country live donor allograft transport. Providing transplantation opportunities for patients with incompatible live donors through kidney paired donation (KPD) is seen as one of the important strategies for easing the crisis in organ availability. It has been estimated that an additional 1000-2000 transplants per year could be accomplished if a national KPD program were implemented in the United States. While most of these transplants could be arranged within the participants' local or regional area, patients with hard-to-match blood types or broad HLA sensitization would benefit from matching across larger geographic areas. In this case, either patients or organs would need to travel in order to obtain maximum benefit from a national",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.775054+00:00"
+}

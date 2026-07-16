@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17591478",
+  "source_fingerprint": "a2f93b7a0cae0ab6fdc1066866de44b8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17591478",
+    "the-immunogenicity-and-safety-of-the-live-attenuated-sa-14-14-2-japanese-encephalitis-vaccine-given-with-a-two-dose-primary-schedule-in-children"
+  ],
+  "key_phrases": [
+    "immunogenicity",
+    "safety",
+    "live",
+    "attenuated",
+    "sa",
+    "14",
+    "japanese",
+    "encephalitis"
+  ],
+  "summary_1l": "Effective and tolerable vaccination is an essential str",
+  "query_hits": [],
+  "embed_text": "17591478 The Immunogenicity and Safety of the Live-attenuated SA 14-14-2 Japanese Encephalitis Vaccine Given with a Two-dose Primary Schedule in Children science scifact Effective and tolerable vaccination is an essential strategy to prevent Japanese encephalitis (JE) in endemic areas. Although the live attenuated SA 14-14-2 JE vaccine (LAJEV) has been widely used since its introduction, the systemic data… 17591478 the-immunogenicity-and-safety-of-the-live-attenuated-sa-14-14-2-japanese-encephalitis-vaccine-given-with-a-two-dose-primary-schedule-in-children immunogenicity safety live attenuated sa 14 japanese encephalitis Effective and tolerable vaccination is an essential str The Immunogenicity and Safety of the Live-attenuated SA 14-14-2 Japanese Encephalitis Vaccine Given with a Two-dose Primary Schedule in Children Effective and tolerable vaccination is an essential strategy to prevent Japanese encephalitis (JE) in endemic areas. Although the live attenuated SA 14-14-2 JE vaccine (LAJEV) has been widely used since its introduction, the systemic data of LAJEV was very rarely available in Korea. We conducted the open-label, prospective cohort study to assess the immunogenicity and safety of this vaccine. Ninety subjects were enrolled, and LAJEV in a 2-dose primary series was given with a 12-month interval. Neutralizing antibody titers were measured before and after each vaccination, and active monitoring for adverse events was performed. After the first dose,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.972951+00:00"
+}

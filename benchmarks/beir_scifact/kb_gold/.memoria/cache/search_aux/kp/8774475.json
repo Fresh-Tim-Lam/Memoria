@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8774475",
+  "source_fingerprint": "09e63e1b01f65d88ff6243cbb17dbc49",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8774475",
+    "deregulation-of-scribble-promotes-mammary-tumorigenesis-and-reveals-a-role-for-cell-polarity-in-carcinoma"
+  ],
+  "key_phrases": [
+    "deregulation",
+    "scribble",
+    "promotes",
+    "mammary",
+    "tumorigenesis",
+    "reveals",
+    "role",
+    "cell"
+  ],
+  "summary_1l": "Loss of cell polarity proteins such as Scribble induces neoplasia in Drosophila by promoting u",
+  "query_hits": [],
+  "embed_text": "8774475 Deregulation of Scribble Promotes Mammary Tumorigenesis and Reveals a Role for Cell Polarity in Carcinoma science scifact Loss of cell polarity proteins such as Scribble induces neoplasia in Drosophila by promoting uncontrolled proliferation. In mammals, the role that polarity proteins play during tumorigenesis is not well understood. Here, we demonstrate… 8774475 deregulation-of-scribble-promotes-mammary-tumorigenesis-and-reveals-a-role-for-cell-polarity-in-carcinoma deregulation scribble promotes mammary tumorigenesis reveals role cell Loss of cell polarity proteins such as Scribble induces neoplasia in Drosophila by promoting u Deregulation of Scribble Promotes Mammary Tumorigenesis and Reveals a Role for Cell Polarity in Carcinoma Loss of cell polarity proteins such as Scribble induces neoplasia in Drosophila by promoting uncontrolled proliferation. In mammals, the role that polarity proteins play during tumorigenesis is not well understood. Here, we demonstrate that depletion of Scribble in mammary epithelia disrupts cell polarity, blocks three-dimensional morphogenesis, inhibits apoptosis, and induces dysplasia in vivo that progress to tumors after long latency. Loss of Scribble cooperates with oncogenes such as c-myc to transform epithelial cells and induce tumors in vivo by blocking activation of an apoptosis pathway. Like depletion, mislocalization of Scribble from cell-cell junction was sufficient to promo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.687654+00:00"
+}

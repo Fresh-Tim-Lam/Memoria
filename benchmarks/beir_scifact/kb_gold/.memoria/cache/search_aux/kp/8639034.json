@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8639034",
+  "source_fingerprint": "4bfd4bb3bd743e9e88d73d01b1b5e53c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8639034",
+    "human-il-10-is-produced-by-both-type-1-helper-(th1)-and-type-2-helper-(th2)-t-cell-clones-and-inhibits-their-antigen-specific-proliferation-and-cytokine-production."
+  ],
+  "key_phrases": [
+    "human",
+    "il",
+    "10",
+    "produced",
+    "by",
+    "both",
+    "type",
+    "helper"
+  ],
+  "summary_1l": "Human IL-10 is produced by both type 1 helper (Th1) and type 2 helper (Th2) T cell clones and inhibits their antigen-specific proliferation and cytokine production.",
+  "query_hits": [],
+  "embed_text": "8639034 Human IL-10 is produced by both type 1 helper (Th1) and type 2 helper (Th2) T cell clones and inhibits their antigen-specific proliferation and cytokine production. science scifact IL-10 gene transcription and IL-10 protein production was assessed in both type 1 (Th1) and type 2 (Th2) CD4+ human T cell clones by polymerase chain reaction and ELISA, respectively. Although Th2 clones apparently showed higher IL-10 mRNA… 8639034 human-il-10-is-produced-by-both-type-1-helper-(th1)-and-type-2-helper-(th2)-t-cell-clones-and-inhibits-their-antigen-specific-proliferation-and-cytokine-production. human il 10 produced by both type helper Human IL-10 is produced by both type 1 helper (Th1) and type 2 helper (Th2) T cell clones and inhibits their antigen-specific proliferation and cytokine production. Human IL-10 is produced by both type 1 helper (Th1) and type 2 helper (Th2) T cell clones and inhibits their antigen-specific proliferation and cytokine production. IL-10 gene transcription and IL-10 protein production was assessed in both type 1 (Th1) and type 2 (Th2) CD4+ human T cell clones by polymerase chain reaction and ELISA, respectively. Although Th2 clones apparently showed higher IL-10 mRNA levels, IL-10 mRNA expression was consistently found in Th1 clones, as well. Likewise, measurable IL-10 levels were found in the supernatants of both Th1 and Th2 clones. The effect of human IL-10 (h-IL-10) and viral IL-10 (v-IL-10) on the proliferative response and cytokine production by Th1 and Th2 human clones was also investigated. Addition in culture of h-IL-10 and v-IL-10 significantly r",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.307928+00:00"
+}

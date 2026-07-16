@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "45447613",
+  "source_fingerprint": "2e473973ab7752ee93fcebabfe84b18d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "45447613",
+    "effect-of-losartan-on-ambulatory-short-term-blood-pressure-variability-and-cardiovascular-remodeling-in-hypertensive-patients-on-hemodialysis."
+  ],
+  "key_phrases": [
+    "effect",
+    "losartan",
+    "ambulatory",
+    "short",
+    "term",
+    "blood",
+    "pressure",
+    "variability"
+  ],
+  "summary_1l": "Effect of losartan on ambulatory short-term blood pressure variability and cardiovascular remodeling in hypertensive patients on hemodialysis.",
+  "query_hits": [],
+  "embed_text": "45447613 Effect of losartan on ambulatory short-term blood pressure variability and cardiovascular remodeling in hypertensive patients on hemodialysis. science scifact OBJECTIVE Previous studies have shown increases in ambulatory short-term blood pressure (BP) variability to be related to cardiovascular disease. In this study, we examined whether an angiotensin II type 1 receptor blocker losartan would… 45447613 effect-of-losartan-on-ambulatory-short-term-blood-pressure-variability-and-cardiovascular-remodeling-in-hypertensive-patients-on-hemodialysis. effect losartan ambulatory short term blood pressure variability Effect of losartan on ambulatory short-term blood pressure variability and cardiovascular remodeling in hypertensive patients on hemodialysis. Effect of losartan on ambulatory short-term blood pressure variability and cardiovascular remodeling in hypertensive patients on hemodialysis. OBJECTIVE Previous studies have shown increases in ambulatory short-term blood pressure (BP) variability to be related to cardiovascular disease. In this study, we examined whether an angiotensin II type 1 receptor blocker losartan would improve ambulatory short-term BP variability in hypertensive patients on hemodialysis. METHODS Forty hypertensive patients on hemodialysis therapy were randomly assigned to the losartan treatment group (n=20) or the control treatment group (n=20). At baseline and 6 and 12 months after the treatment, 24-h ambulatory BP monitoring was performed. Echocardiography and measurements of brachial-ankle pulse wave velocity (",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.363307+00:00"
+}

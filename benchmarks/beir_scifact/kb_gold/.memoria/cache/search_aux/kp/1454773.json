@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1454773",
+  "source_fingerprint": "aefe0505734832e97e20a396c421ce5a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1454773",
+    "in-vitro-characterization-of-the-anti-pd-1-antibody-nivolumab,-bms-936558,-and-in-vivo-toxicology-in-non-human-primates."
+  ],
+  "key_phrases": [
+    "vitro",
+    "characterization",
+    "anti",
+    "pd",
+    "antibody",
+    "nivolumab",
+    "bms",
+    "936558"
+  ],
+  "summary_1l": "In vitro characterization of the anti-PD-1 antibody nivolumab, BMS-936558, and in vivo toxicology in non-human primates.",
+  "query_hits": [],
+  "embed_text": "1454773 In vitro characterization of the anti-PD-1 antibody nivolumab, BMS-936558, and in vivo toxicology in non-human primates. science scifact The programmed death-1 (PD-1) receptor serves as an immunologic checkpoint, limiting bystander tissue damage and preventing the development of autoimmunity during inflammatory responses. PD-1 is expressed by activated T cells and… 1454773 in-vitro-characterization-of-the-anti-pd-1-antibody-nivolumab,-bms-936558,-and-in-vivo-toxicology-in-non-human-primates. vitro characterization anti pd antibody nivolumab bms 936558 In vitro characterization of the anti-PD-1 antibody nivolumab, BMS-936558, and in vivo toxicology in non-human primates. In vitro characterization of the anti-PD-1 antibody nivolumab, BMS-936558, and in vivo toxicology in non-human primates. The programmed death-1 (PD-1) receptor serves as an immunologic checkpoint, limiting bystander tissue damage and preventing the development of autoimmunity during inflammatory responses. PD-1 is expressed by activated T cells and downmodulates T-cell effector functions upon binding to its ligands, PD-L1 and PD-L2, on antigen-presenting cells. In patients with cancer, the expression of PD-1 on tumor-infiltrating lymphocytes and its interaction with the ligands on tumor and immune cells in the tumor microenvironment undermine antitumor immunity and support its rationale for PD-1 blockade in cancer immunotherapy. This report details the development and characterization of n",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.162574+00:00"
+}

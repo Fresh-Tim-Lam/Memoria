@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9539248",
+  "source_fingerprint": "8f2bd094b09af29bc2287e2127942bea",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9539248",
+    "alphavirus-derived-small-rnas-modulate-pathogenesis-in-disease-vector-mosquitoes."
+  ],
+  "key_phrases": [
+    "alphavirus",
+    "derived",
+    "small",
+    "rnas",
+    "modulate",
+    "pathogenesis",
+    "disease",
+    "vector"
+  ],
+  "summary_1l": "Alphavirus-derived small RNAs modulate pathogenesis in disease vector mosquitoes.",
+  "query_hits": [],
+  "embed_text": "9539248 Alphavirus-derived small RNAs modulate pathogenesis in disease vector mosquitoes. science scifact Mosquito-borne viruses cause significant levels of morbidity and mortality in humans and domesticated animals. Maintenance of mosquito-borne viruses in nature requires a biological transmission cycle that involves alternating virus… 9539248 alphavirus-derived-small-rnas-modulate-pathogenesis-in-disease-vector-mosquitoes. alphavirus derived small rnas modulate pathogenesis disease vector Alphavirus-derived small RNAs modulate pathogenesis in disease vector mosquitoes. Alphavirus-derived small RNAs modulate pathogenesis in disease vector mosquitoes. Mosquito-borne viruses cause significant levels of morbidity and mortality in humans and domesticated animals. Maintenance of mosquito-borne viruses in nature requires a biological transmission cycle that involves alternating virus replication in a susceptible vertebrate and mosquito host. Although the vertebrate infection is acute and often associated with disease, continual transmission of these viruses in nature depends on the establishment of a persistent, nonpathogenic infection in the mosquito vector. An antiviral RNAi response has been shown to limit the replication of RNA viruses in flies. However, the importance of the RNAi pathway as an antiviral defense in mammals is unclear. Differences in the imm",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.157322+00:00"
+}

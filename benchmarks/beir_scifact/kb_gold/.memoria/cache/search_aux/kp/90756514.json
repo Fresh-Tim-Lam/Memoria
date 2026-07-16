@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "90756514",
+  "source_fingerprint": "be694a716c2fe9b1e990d4d3feb6f77e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "90756514",
+    "review-on-clinically-developing-antibiotics"
+  ],
+  "key_phrases": [
+    "review",
+    "clinically",
+    "developing",
+    "antibiotics",
+    "world",
+    "running",
+    "out",
+    "between"
+  ],
+  "summary_1l": "The world is running out of antibiotics.",
+  "query_hits": [],
+  "embed_text": "90756514 REVIEW ON CLINICALLY DEVELOPING ANTIBIOTICS science scifact The world is running out of antibiotics. Between 1940 and 1962, more than 20 new classes of antibiotics were marketed. Since then, only two new classes of antibiotics were marketed. Now, not enough analogues are reaching the market to stem… 90756514 review-on-clinically-developing-antibiotics review clinically developing antibiotics world running out between The world is running out of antibiotics. REVIEW ON CLINICALLY DEVELOPING ANTIBIOTICS The world is running out of antibiotics. Between 1940 and 1962, more than 20 new classes of antibiotics were marketed. Since then, only two new classes of antibiotics were marketed. Now, not enough analogues are reaching the market to stem the tide of antibiotic resistance, particularly among gram-negative bacteria which indicates the need of novel antibiotics for their effective action. This review describes those antibiotics in late-stage clinical development. Most of them belong to existing antibiotic classes and a few with a narrow spectrum of activity are novel compounds directed against novel targets. The reasons for some of the past failures to find new molecules and a path forward to help attract investments to fund the discovery of new a",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.129438+00:00"
+}

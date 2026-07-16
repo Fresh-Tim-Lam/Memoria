@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2380002",
+  "source_fingerprint": "03fe96e768c8893336183f0c6e6d8ee6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2380002",
+    "the-evolution-of-rnas-with-multiple-functions."
+  ],
+  "key_phrases": [
+    "evolution",
+    "rnas",
+    "with",
+    "multiple",
+    "functions",
+    "increasing",
+    "numbers",
+    "transcripts"
+  ],
+  "summary_1l": "The evolution of RNAs with multiple functions.",
+  "query_hits": [],
+  "embed_text": "2380002 The evolution of RNAs with multiple functions. science scifact Increasing numbers of transcripts have been reported to transmit both protein-coding and regulatory information. Apart from challenging our conception of the gene, this observation raises the question as to what extent this phenomenon… 2380002 the-evolution-of-rnas-with-multiple-functions. evolution rnas with multiple functions increasing numbers transcripts The evolution of RNAs with multiple functions. The evolution of RNAs with multiple functions. Increasing numbers of transcripts have been reported to transmit both protein-coding and regulatory information. Apart from challenging our conception of the gene, this observation raises the question as to what extent this phenomenon occurs across the genome and how and why such dual encoding of function has evolved in the eukaryotic genome. To address this question, we consider the evolutionary path of genes in the earliest forms of life on Earth, where it is generally regarded that proteins evolved from a cellular machinery based entirely within RNA. This led to the domination of protein-coding genes in the genomes of microorganisms, although it is likely that RNA never lost its other capacities and functionalities, as evidenced by cis-acti",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.145551+00:00"
+}

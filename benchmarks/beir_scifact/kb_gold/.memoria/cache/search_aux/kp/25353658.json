@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25353658",
+  "source_fingerprint": "15d558fb4d7da104b602496674966356",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25353658",
+    "germinal-center-t-follicular-helper-cell-il-4-production-is-dependent-on-signaling-lymphocytic-activation-molecule-receptor-(cd150)."
+  ],
+  "key_phrases": [
+    "germinal",
+    "center",
+    "follicular",
+    "helper",
+    "cell",
+    "il",
+    "production",
+    "dependent"
+  ],
+  "summary_1l": "Germinal center T follicular helper cell IL-4 production is dependent on signaling lymphocytic activation molecule receptor (CD150).",
+  "query_hits": [],
+  "embed_text": "25353658 Germinal center T follicular helper cell IL-4 production is dependent on signaling lymphocytic activation molecule receptor (CD150). science scifact CD4 T cell help is critical for the generation and maintenance of germinal centers (GCs), and T follicular helper (T(FH)) cells are the CD4 T cell subset required for this process. Signaling lymphocytic activation molecule… 25353658 germinal-center-t-follicular-helper-cell-il-4-production-is-dependent-on-signaling-lymphocytic-activation-molecule-receptor-(cd150). germinal center follicular helper cell il production dependent Germinal center T follicular helper cell IL-4 production is dependent on signaling lymphocytic activation molecule receptor (CD150). Germinal center T follicular helper cell IL-4 production is dependent on signaling lymphocytic activation molecule receptor (CD150). CD4 T cell help is critical for the generation and maintenance of germinal centers (GCs), and T follicular helper (T(FH)) cells are the CD4 T cell subset required for this process. Signaling lymphocytic activation molecule (SLAM)-associated protein (SAP [SH2D1A]) expression in CD4 T cells is essential for GC development. However, SAP-deficient mice have only a moderate defect in T(FH) differentiation, as defined by common T(FH) surface markers. CXCR5(+) T(FH) cells are found within the GC, as well as along the boundary regions of T/B cell zones. In this study, we show that GC-associated T follicular helper (GC T(FH)) cells can be identified by their coexpress",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.448061+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25589047",
+  "source_fingerprint": "17de59cdbdfddb89ee7cfa9ceed5a058",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25589047",
+    "treatment-related-mortality-with-bevacizumab-in-cancer-patients:-a-meta-analysis."
+  ],
+  "key_phrases": [
+    "treatment",
+    "related",
+    "mortality",
+    "with",
+    "bevacizumab",
+    "cancer",
+    "patients",
+    "meta"
+  ],
+  "summary_1l": "Treatment-related mortality with bevacizumab in cancer patients: a meta-analysis.",
+  "query_hits": [],
+  "embed_text": "25589047 Treatment-related mortality with bevacizumab in cancer patients: a meta-analysis. science scifact CONTEXT Fatal adverse events (FAEs) have been reported in cancer patients treated with the widely used angiogenesis inhibitor bevacizumab in combination with chemotherapy. Currently, the role of bevacizumab in treatment-related mortality… 25589047 treatment-related-mortality-with-bevacizumab-in-cancer-patients:-a-meta-analysis. treatment related mortality with bevacizumab cancer patients meta Treatment-related mortality with bevacizumab in cancer patients: a meta-analysis. Treatment-related mortality with bevacizumab in cancer patients: a meta-analysis. CONTEXT Fatal adverse events (FAEs) have been reported in cancer patients treated with the widely used angiogenesis inhibitor bevacizumab in combination with chemotherapy. Currently, the role of bevacizumab in treatment-related mortality is not clear. OBJECTIVE To perform a systematic review and meta-analysis of published randomized controlled trials (RCTs) to determine the overall risk of FAEs associated with bevacizumab. DATA SOURCES PubMed, EMBASE, and Web of Science databases as well as abstracts presented at American Society of Clinical Oncology conferences from January 1966 to October 2010 were searched to identify relevant studies. STUDY SELECTION AND DATA EXTRACTION Eligible studies included prospecti",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.943694+00:00"
+}

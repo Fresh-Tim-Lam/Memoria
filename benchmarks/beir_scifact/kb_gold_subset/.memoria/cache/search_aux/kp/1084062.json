@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1084062",
+  "source_fingerprint": "8947dbcec045d401d46ad1e1a48b0389",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1084062",
+    "activation-of-serotonin-2c-receptors-in-dopamine-neurons-inhibits-binge-like-eating-in-mice"
+  ],
+  "key_phrases": [
+    "activation",
+    "serotonin",
+    "2c",
+    "receptors",
+    "dopamine",
+    "neurons",
+    "inhibits",
+    "binge"
+  ],
+  "summary_1l": "BACKGROUND Neural networks that regulate binge eating remain to be identified, and effective treatments for",
+  "query_hits": [],
+  "embed_text": "1084062 Activation of Serotonin 2C Receptors in Dopamine Neurons Inhibits Binge-like Eating in Mice science scifact BACKGROUND Neural networks that regulate binge eating remain to be identified, and effective treatments for binge eating are limited. METHODS We combined neuroanatomic, pharmacologic, electrophysiological, Cre-lox, and chemogenetic… 1084062 activation-of-serotonin-2c-receptors-in-dopamine-neurons-inhibits-binge-like-eating-in-mice activation serotonin 2c receptors dopamine neurons inhibits binge BACKGROUND Neural networks that regulate binge eating remain to be identified, and effective treatments for Activation of Serotonin 2C Receptors in Dopamine Neurons Inhibits Binge-like Eating in Mice BACKGROUND Neural networks that regulate binge eating remain to be identified, and effective treatments for binge eating are limited. METHODS We combined neuroanatomic, pharmacologic, electrophysiological, Cre-lox, and chemogenetic approaches to investigate the functions of 5-hydroxytryptamine (5-HT) 2C receptor (5-HT2CR) expressed by dopamine (DA) neurons in the regulation of binge-like eating behavior in mice. RESULTS We showed that 5-HT stimulates DA neural activity through a 5-HT2CR-mediated mechanism, and activation of this midbrain 5-HT→DA neural circuit effectively inhibits binge-like eating behavior in mice. Notably, 5-HT medications, including fluoxetine, d-fenfluramine, and lorcaserin (a s",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:06.017294+00:00"
+}

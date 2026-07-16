@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15716328",
+  "source_fingerprint": "6b35f3937ab1c28235cfe58389250ff4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15716328",
+    "in-vivo-role-of-er-associated-peptidase-activity-in-tailoring-peptides-for-presentation-by-mhc-class-ia-and-class-ib-molecules"
+  ],
+  "key_phrases": [
+    "vivo",
+    "role",
+    "er",
+    "associated",
+    "peptidase",
+    "activity",
+    "tailoring",
+    "peptides"
+  ],
+  "summary_1l": "Endoplasmic reticulum (ER)-associated aminopeptidase (ERAP)1 has been imp",
+  "query_hits": [],
+  "embed_text": "15716328 In vivo role of ER-associated peptidase activity in tailoring peptides for presentation by MHC class Ia and class Ib molecules science scifact Endoplasmic reticulum (ER)-associated aminopeptidase (ERAP)1 has been implicated in the final proteolytic processing of peptides presented by major histocompatibility complex (MHC) class I molecules. To evaluate the in vivo role of ERAP1,… 15716328 in-vivo-role-of-er-associated-peptidase-activity-in-tailoring-peptides-for-presentation-by-mhc-class-ia-and-class-ib-molecules vivo role er associated peptidase activity tailoring peptides Endoplasmic reticulum (ER)-associated aminopeptidase (ERAP)1 has been imp In vivo role of ER-associated peptidase activity in tailoring peptides for presentation by MHC class Ia and class Ib molecules Endoplasmic reticulum (ER)-associated aminopeptidase (ERAP)1 has been implicated in the final proteolytic processing of peptides presented by major histocompatibility complex (MHC) class I molecules. To evaluate the in vivo role of ERAP1, we have generated ERAP1-deficient mice. Cell surface expression of the class Ia molecules H-2Kb and H-2Db and of the class Ib molecule Qa-2 was significantly reduced in these animals. Although cells from mutant animals exhibited reduced capacity to present several self- and foreign antigens to Kb-, Db-, or Qa-1b–restricted CD8+ cytotoxic T cells, presentation of some antigens was unaffected or significantly enhanced. Consistent wi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.159605+00:00"
+}

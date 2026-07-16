@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22159299",
+  "source_fingerprint": "2f14bb42d0909f20990839a8f150c021",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22159299",
+    "autophagy-controls-salmonella-infection-in-response-to-damage-to-the-salmonella-containing-vacuole."
+  ],
+  "key_phrases": [
+    "autophagy",
+    "controls",
+    "salmonella",
+    "infection",
+    "response",
+    "damage",
+    "containing",
+    "vacuole"
+  ],
+  "summary_1l": "Autophagy controls Salmonella infection in response to damage to the Salmonella-containing vacuole.",
+  "query_hits": [],
+  "embed_text": "22159299 Autophagy controls Salmonella infection in response to damage to the Salmonella-containing vacuole. science scifact Salmonella enterica serovar Typhimurium (S. Typhimurium) is a facultative intracellular pathogen that causes disease in a variety of hosts. S. Typhimurium actively invade host cells and typically reside within a membrane-bound compartment… 22159299 autophagy-controls-salmonella-infection-in-response-to-damage-to-the-salmonella-containing-vacuole. autophagy controls salmonella infection response damage containing vacuole Autophagy controls Salmonella infection in response to damage to the Salmonella-containing vacuole. Autophagy controls Salmonella infection in response to damage to the Salmonella-containing vacuole. Salmonella enterica serovar Typhimurium (S. Typhimurium) is a facultative intracellular pathogen that causes disease in a variety of hosts. S. Typhimurium actively invade host cells and typically reside within a membrane-bound compartment called the Salmonella-containing vacuole (SCV). The bacteria modify the fate of the SCV using two independent type III secretion systems (TTSS). TTSS are known to damage eukaryotic cell membranes and S. Typhimurium has been suggested to damage the SCV using its Salmonella pathogenicity island (SPI)-1 encoded TTSS. Here we show that this damage gives rise to an intracellular bacterial population targeted by the autophagy system during in vitro infection. App",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.336984+00:00"
+}

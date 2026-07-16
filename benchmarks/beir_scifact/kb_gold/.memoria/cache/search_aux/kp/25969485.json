@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25969485",
+  "source_fingerprint": "b5a69811fd29d3bfd87eaaf0ded3d1ac",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25969485",
+    "obesity-due-to-melanocortin-4-receptor-(mc4r)-deficiency-is-associated-with-increased-linear-growth-and-final-height,-fasting-hyperinsulinemia,-and-incompletely-suppressed-growth-hormone-secretion."
+  ],
+  "key_phrases": [
+    "obesity",
+    "due",
+    "melanocortin",
+    "receptor",
+    "mc4r",
+    "deficiency",
+    "associated",
+    "with"
+  ],
+  "summary_1l": "Obesity due to melanocortin 4 receptor (MC4R) deficiency is associated with increased linear growth and final height, fasting hyperinsulinemia, and incompletely suppressed growth hormone secretion.",
+  "query_hits": [],
+  "embed_text": "25969485 Obesity due to melanocortin 4 receptor (MC4R) deficiency is associated with increased linear growth and final height, fasting hyperinsulinemia, and incompletely suppressed growth hormone secretion. science scifact CONTEXT Melanocortin receptor 4 (MC4R) deficiency is characterized by increased linear growth greater than expected for the degree of obesity. OBJECTIVE The objective of the investigation was to study the somatotroph axis in obese… 25969485 obesity-due-to-melanocortin-4-receptor-(mc4r)-deficiency-is-associated-with-increased-linear-growth-and-final-height,-fasting-hyperinsulinemia,-and-incompletely-suppressed-growth-hormone-secretion. obesity due melanocortin receptor mc4r deficiency associated with Obesity due to melanocortin 4 receptor (MC4R) deficiency is associated with increased linear growth and final height, fasting hyperinsulinemia, and incompletely suppressed growth hormone secretion. Obesity due to melanocortin 4 receptor (MC4R) deficiency is associated with increased linear growth and final height, fasting hyperinsulinemia, and incompletely suppressed growth hormone secretion. CONTEXT Melanocortin receptor 4 (MC4R) deficiency is characterized by increased linear growth greater than expected for the degree of obesity. OBJECTIVE The objective of the investigation was to study the somatotroph axis in obese MC4R-deficient patients and equally obese controls. PATIENTS AND METHODS We obtained anthropometric measurements and insulin concentrations in 153 MC4R-deficient subjects and 1392 controls matched for age and severity of obesity. We measured fasting IGF-I, IGF-II, IGF binding protein (IGFBP)-1, IGFBP-3, and acid-labile subunit levels in a subset of 33 MC4R-deficient pa",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.834754+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4942718",
+  "source_fingerprint": "2dfe5fb3cc2bb8a7bb0532dea1af272f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4942718",
+    "high-throughput-genetic-screens-identify-a-large-and-diverse-collection-of-new-sporulation-genes-in-bacillus-subtilis"
+  ],
+  "key_phrases": [
+    "high",
+    "throughput",
+    "genetic",
+    "screens",
+    "identify",
+    "large",
+    "diverse",
+    "collection"
+  ],
+  "summary_1l": "The differentiation of the bacterium Bacillus subtilis into a dormant spore is amo",
+  "query_hits": [],
+  "embed_text": "4942718 High-Throughput Genetic Screens Identify a Large and Diverse Collection of New Sporulation Genes in Bacillus subtilis science scifact The differentiation of the bacterium Bacillus subtilis into a dormant spore is among the most well-characterized developmental pathways in biology. Classical genetic screens performed over the past half century identified scores of factors… 4942718 high-throughput-genetic-screens-identify-a-large-and-diverse-collection-of-new-sporulation-genes-in-bacillus-subtilis high throughput genetic screens identify large diverse collection The differentiation of the bacterium Bacillus subtilis into a dormant spore is amo High-Throughput Genetic Screens Identify a Large and Diverse Collection of New Sporulation Genes in Bacillus subtilis The differentiation of the bacterium Bacillus subtilis into a dormant spore is among the most well-characterized developmental pathways in biology. Classical genetic screens performed over the past half century identified scores of factors involved in every step of this morphological process. More recently, transcriptional profiling uncovered additional sporulation-induced genes required for successful spore development. Here, we used transposon-sequencing (Tn-seq) to assess whether there were any sporulation genes left to be discovered. Our screen identified 133 out of the 148 genes with known sporulation defects. Surprisingly, we discovered 24 additional genes that had no",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:13.490373+00:00"
+}

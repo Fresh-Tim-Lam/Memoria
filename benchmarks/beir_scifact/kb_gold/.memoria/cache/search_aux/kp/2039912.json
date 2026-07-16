@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2039912",
+  "source_fingerprint": "0626364c7818310a39737e80a8b5c516",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2039912",
+    "the-origin-and-neuronal-function-of-in-vivo-nonsynaptic-glutamate."
+  ],
+  "key_phrases": [
+    "origin",
+    "neuronal",
+    "function",
+    "vivo",
+    "nonsynaptic",
+    "glutamate",
+    "basal",
+    "extracellular"
+  ],
+  "summary_1l": "The origin and neuronal function of in vivo nonsynaptic glutamate.",
+  "query_hits": [],
+  "embed_text": "2039912 The origin and neuronal function of in vivo nonsynaptic glutamate. science scifact Basal extracellular glutamate sampled in vivo is present in micromolar concentrations in the extracellular space outside the synaptic cleft, and neither the origin nor the function of this glutamate is known. This report reveals that… 2039912 the-origin-and-neuronal-function-of-in-vivo-nonsynaptic-glutamate. origin neuronal function vivo nonsynaptic glutamate basal extracellular The origin and neuronal function of in vivo nonsynaptic glutamate. The origin and neuronal function of in vivo nonsynaptic glutamate. Basal extracellular glutamate sampled in vivo is present in micromolar concentrations in the extracellular space outside the synaptic cleft, and neither the origin nor the function of this glutamate is known. This report reveals that blockade of glutamate release from the cystine-glutamate antiporter produced a significant decrease (60%) in extrasynaptic glutamate levels in the rat striatum, whereas blockade of voltage-dependent Na+ and Ca2+ channels produced relatively minimal changes (0-30%). This indicates that the primary origin of in vivo extrasynaptic glutamate in the striatum arises from nonvesicular glutamate release by the cystine-glutamate antiporter. By measuring [35S]cystine uptake, it was shown that similar to",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.214964+00:00"
+}

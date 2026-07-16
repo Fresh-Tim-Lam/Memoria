@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17101262",
+  "source_fingerprint": "c8ab1fd606bb059821ba0cca18282dde",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17101262",
+    "ballistic-labeling-and-dynamic-imaging-of-astrocytes-in-organotypic-hippocampal-slice-cultures"
+  ],
+  "key_phrases": [
+    "ballistic",
+    "labeling",
+    "dynamic",
+    "imaging",
+    "astrocytes",
+    "organotypic",
+    "hippocampal",
+    "slice"
+  ],
+  "summary_1l": "Protoplasmic astrocytes in mammalian CNS tissues in vivo have a highly complex 3D morphology, but in diss",
+  "query_hits": [],
+  "embed_text": "17101262 Ballistic labeling and dynamic imaging of astrocytes in organotypic hippocampal slice cultures science scifact Protoplasmic astrocytes in mammalian CNS tissues in vivo have a highly complex 3D morphology, but in dissociated cell cultures they often assume a flattened, fibroblast-like morphology bearing only a few, simple processes. By fluorescent… 17101262 ballistic-labeling-and-dynamic-imaging-of-astrocytes-in-organotypic-hippocampal-slice-cultures ballistic labeling dynamic imaging astrocytes organotypic hippocampal slice Protoplasmic astrocytes in mammalian CNS tissues in vivo have a highly complex 3D morphology, but in diss Ballistic labeling and dynamic imaging of astrocytes in organotypic hippocampal slice cultures Protoplasmic astrocytes in mammalian CNS tissues in vivo have a highly complex 3D morphology, but in dissociated cell cultures they often assume a flattened, fibroblast-like morphology bearing only a few, simple processes. By fluorescent labeling and confocal reconstruction we show that many astrocytes in organotypic hippocampal slice cultures exhibit a more native complex cytoarchitecture. Although astrocytes at the surface of slice cultures show a reactive form with several thick glial fibrillary acidic protein (GFAP)-positive processes, astrocytes situated in deeper portions of tissue slices retain a highly complex 3D morphology with many fine spine- or veil-like protrusions. Dozens of astrocy",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.321969+00:00"
+}

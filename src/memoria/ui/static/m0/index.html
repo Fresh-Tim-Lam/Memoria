@@ -43,6 +43,7 @@
         <button id="btn-nav-back" class="m0-nav-btn" title="后退 (Alt+←)" disabled>←</button>
         <button id="btn-nav-forward" class="m0-nav-btn" title="前进 (Alt+→)" disabled>→</button>
         <button id="btn-open" title="打开知识库">打开</button>
+        <button id="btn-import" title="导入平面文件">导入</button>
         <button id="btn-refresh" title="刷新">刷新</button>
         <button id="btn-build" type="button" title="构建：同步链接配置并生成图谱">构建</button>
         <span class="m0-toolbar-btn-wrap">
@@ -262,6 +263,38 @@
         <button type="button" class="m0-btn primary hidden" id="link-save">保存</button>
         <button type="button" class="m0-btn primary hidden" id="link-save-jump">保存并跳转</button>
         <button type="button" class="m0-btn primary" id="link-confirm" disabled>确认跳转</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="import-conflict-modal" class="m0-modal hidden">
+    <div class="m0-modal-backdrop"></div>
+    <div class="m0-modal-box m0-modal-import-conflict">
+      <div class="m0-modal-header">
+        <span>导入冲突</span>
+        <button id="import-conflict-close" type="button" class="m0-icon-btn" title="关闭">×</button>
+      </div>
+      <div id="import-conflict-body" class="m0-modal-body"></div>
+      <div class="m0-modal-footer m0-btn-bar">
+        <button type="button" class="m0-btn secondary" id="import-conflict-copy-report">复制报告</button>
+        <span class="m0-modal-footer-spacer"></span>
+        <button type="button" class="m0-btn secondary" id="import-conflict-cancel">取消</button>
+        <button type="button" class="m0-btn primary" id="import-conflict-confirm">确认导入</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="import-result-modal" class="m0-modal hidden">
+    <div class="m0-modal-backdrop"></div>
+    <div class="m0-modal-box m0-modal-import-result">
+      <div class="m0-modal-header">
+        <span>导入结果</span>
+        <button id="import-result-close" type="button" class="m0-icon-btn" title="关闭">×</button>
+      </div>
+      <div id="import-result-body" class="m0-modal-body"></div>
+      <div class="m0-modal-footer m0-btn-bar">
+        <span class="m0-modal-footer-spacer"></span>
+        <button type="button" class="m0-btn primary" id="import-result-dismiss">确定</button>
       </div>
     </div>
   </div>

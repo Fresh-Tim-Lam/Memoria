@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18988265",
+  "source_fingerprint": "8047ba491161b640278b50441712b5aa",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18988265",
+    "susceptibility-to-exacerbation-in-chronic-obstructive-pulmonary-disease."
+  ],
+  "key_phrases": [
+    "susceptibility",
+    "exacerbation",
+    "chronic",
+    "obstructive",
+    "pulmonary",
+    "disease",
+    "background",
+    "although"
+  ],
+  "summary_1l": "Susceptibility to exacerbation in chronic obstructive pulmonary disease.",
+  "query_hits": [],
+  "embed_text": "18988265 Susceptibility to exacerbation in chronic obstructive pulmonary disease. science scifact BACKGROUND Although we know that exacerbations are key events in chronic obstructive pulmonary disease (COPD), our understanding of their frequency, determinants, and effects is incomplete. In a large observational cohort, we tested the… 18988265 susceptibility-to-exacerbation-in-chronic-obstructive-pulmonary-disease. susceptibility exacerbation chronic obstructive pulmonary disease background although Susceptibility to exacerbation in chronic obstructive pulmonary disease. Susceptibility to exacerbation in chronic obstructive pulmonary disease. BACKGROUND Although we know that exacerbations are key events in chronic obstructive pulmonary disease (COPD), our understanding of their frequency, determinants, and effects is incomplete. In a large observational cohort, we tested the hypothesis that there is a frequent-exacerbation phenotype of COPD that is independent of disease severity. METHODS We analyzed the frequency and associations of exacerbation in 2138 patients enrolled in the Evaluation of COPD Longitudinally to Identify Predictive Surrogate Endpoints (ECLIPSE) study. Exacerbations were defined as events that led a care provider to prescribe antibiotics or corticosteroids (or both) or that led to hospitalization (severe exacerbations). Exacerbation freq",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.998590+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14893425",
+  "source_fingerprint": "d24b901b8b104f2c4d5e2b309192c2e9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14893425",
+    "the-dystonia-associated-protein-torsina-modulates-synaptic-vesicle-recycling."
+  ],
+  "key_phrases": [
+    "dystonia",
+    "associated",
+    "protein",
+    "torsina",
+    "modulates",
+    "synaptic",
+    "vesicle",
+    "recycling"
+  ],
+  "summary_1l": "The dystonia-associated protein torsinA modulates synaptic vesicle recycling.",
+  "query_hits": [],
+  "embed_text": "14893425 The dystonia-associated protein torsinA modulates synaptic vesicle recycling. science scifact The loss of a glutamic acid residue in the AAA-ATPase (ATPases associated with diverse cellular activities) torsinA is responsible for most cases of early onset autosomal dominant primary dystonia. In this study, we found that snapin,… 14893425 the-dystonia-associated-protein-torsina-modulates-synaptic-vesicle-recycling. dystonia associated protein torsina modulates synaptic vesicle recycling The dystonia-associated protein torsinA modulates synaptic vesicle recycling. The dystonia-associated protein torsinA modulates synaptic vesicle recycling. The loss of a glutamic acid residue in the AAA-ATPase (ATPases associated with diverse cellular activities) torsinA is responsible for most cases of early onset autosomal dominant primary dystonia. In this study, we found that snapin, which binds SNAP-25 (synaptosome-associated protein of 25,000 Da) and enhances the association of the SNARE complex with synaptotagmin, is an interacting partner for both wild type and mutant torsinA. Snapin co-localized with endogenous torsinA on dense core granules in PC12 cells and was recruited to perinuclear inclusions containing mutant DeltaE-torsinA in neuroblastoma SH-SY5Y cells. In view of these observations, synaptic vesicle recycling was analyzed using the lipophilic dye",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.838465+00:00"
+}

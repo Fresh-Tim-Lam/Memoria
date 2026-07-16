@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "980196",
+  "source_fingerprint": "d4af761f3dfb28d38ae1904a68475c46",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "980196",
+    "alcohol-sales-and-risk-of-serious-assault"
+  ],
+  "key_phrases": [
+    "alcohol",
+    "sales",
+    "risk",
+    "serious",
+    "assault",
+    "background",
+    "contributing",
+    "cause"
+  ],
+  "summary_1l": "BACKGROUND Alcohol is a contributing cause of unintentional injuries, such as motor vehicle crashes.",
+  "query_hits": [],
+  "embed_text": "980196 Alcohol Sales and Risk of Serious Assault science scifact BACKGROUND Alcohol is a contributing cause of unintentional injuries, such as motor vehicle crashes. Prior research on the association between alcohol use and violent injury was limited to survey-based data, and the inclusion of cases from… 980196 alcohol-sales-and-risk-of-serious-assault alcohol sales risk serious assault background contributing cause BACKGROUND Alcohol is a contributing cause of unintentional injuries, such as motor vehicle crashes. Alcohol Sales and Risk of Serious Assault BACKGROUND Alcohol is a contributing cause of unintentional injuries, such as motor vehicle crashes. Prior research on the association between alcohol use and violent injury was limited to survey-based data, and the inclusion of cases from a single trauma centre, without adequate controls. Beyond these limitations was the inability of prior researchers to comprehensively capture most alcohol sales. In Ontario, most alcohol is sold through retail outlets run by the provincial government, and hospitals are financed under a provincial health care system. We assessed the risk of being hospitalized due to assault in association with retail alcohol sales across Ontario. METHODS AND FINDINGS We performed a population-based case-crossover analysis of all p",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.883960+00:00"
+}

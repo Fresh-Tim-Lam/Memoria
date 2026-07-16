@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "32084655",
+  "source_fingerprint": "0b113e57a77c0e936914464a90454f99",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "32084655",
+    "time-from-finding-abnormality-on-mass-screening-to-final-diagnosis-of-lung-cancer."
+  ],
+  "key_phrases": [
+    "time",
+    "from",
+    "finding",
+    "abnormality",
+    "mass",
+    "screening",
+    "final",
+    "diagnosis"
+  ],
+  "summary_1l": "Time from finding abnormality on mass-screening to final diagnosis of lung cancer.",
+  "query_hits": [],
+  "embed_text": "32084655 Time from finding abnormality on mass-screening to final diagnosis of lung cancer. science scifact Mass-screening for lung cancer is rather a unique system in Japan. This study illustrates time from finding abnormality on mass-screening to final diagnosis of lung cancer. Among the 517 patients with lung cancer who were admitted to our… 32084655 time-from-finding-abnormality-on-mass-screening-to-final-diagnosis-of-lung-cancer. time from finding abnormality mass screening final diagnosis Time from finding abnormality on mass-screening to final diagnosis of lung cancer. Time from finding abnormality on mass-screening to final diagnosis of lung cancer. Mass-screening for lung cancer is rather a unique system in Japan. This study illustrates time from finding abnormality on mass-screening to final diagnosis of lung cancer. Among the 517 patients with lung cancer who were admitted to our hospital over a 10-year period up to December 2001, 83 (16.1%) were detected by mass-screening. We reviewed medical records of the 83 patients and determined the intervals from the mass-screening to the pathological diagnosis with clinical staging. Time from the mass-screening to the date of hospital visit was <2 months in 62 (74.7%) cases. Five (6.0%) patients visited hospital more than 6 months after the mass-screening. With respect to the interval, there was no statistica",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.186982+00:00"
+}

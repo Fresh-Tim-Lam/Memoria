@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21221346",
+  "source_fingerprint": "57b1871538c5c0cb5ffc77534f22f348",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21221346",
+    "the-artemis:dna-pkcs-endonuclease-cleaves-dna-loops,-flaps,-and-gaps."
+  ],
+  "key_phrases": [
+    "artemis",
+    "dna",
+    "pkcs",
+    "endonuclease",
+    "cleaves",
+    "loops",
+    "flaps",
+    "gaps"
+  ],
+  "summary_1l": "The Artemis:DNA-PKcs endonuclease cleaves DNA loops, flaps, and gaps.",
+  "query_hits": [],
+  "embed_text": "21221346 The Artemis:DNA-PKcs endonuclease cleaves DNA loops, flaps, and gaps. science scifact In eukaryotic cells, nonhomologous DNA end joining (NHEJ) is a major pathway for repair of double-strand DNA breaks (DSBs). Artemis and the 469kDa DNA-dependent protein kinase (DNA-PKcs) together form a key nuclease for NHEJ in vertebrate… 21221346 the-artemis:dna-pkcs-endonuclease-cleaves-dna-loops,-flaps,-and-gaps. artemis dna pkcs endonuclease cleaves loops flaps gaps The Artemis:DNA-PKcs endonuclease cleaves DNA loops, flaps, and gaps. The Artemis:DNA-PKcs endonuclease cleaves DNA loops, flaps, and gaps. In eukaryotic cells, nonhomologous DNA end joining (NHEJ) is a major pathway for repair of double-strand DNA breaks (DSBs). Artemis and the 469kDa DNA-dependent protein kinase (DNA-PKcs) together form a key nuclease for NHEJ in vertebrate organisms. The structure-specific endonucleolytic activity of Artemis is activated by binding to and phosphorylation by DNA-PKcs. We tested various DNA structures in order to understand the range of structural features that are recognized by the Artemis:DNA-PKcs complex. We find that all tested substrates that contain single-to-double-strand transitions can be cleaved by the Artemis:DNA-PKcs complex near the transition region. The cleaved substrates include heterologous loops, stem-loop",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.575323+00:00"
+}

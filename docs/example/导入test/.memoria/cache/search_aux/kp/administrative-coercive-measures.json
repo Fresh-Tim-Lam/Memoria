@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "kp_id": "administrative-coercive-measures",
+  "source_fingerprint": "bef786ac32d109925527d9ba53f5ec50",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "行政征收",
+    "行政行为",
+    "行政机关",
+    "合理行政",
+    "行政法规",
+    "行政给付",
+    "抽象行政行为",
+    "授益行政行为",
+    "行政公开",
+    "行政征用",
+    "行政效能",
+    "行政确认"
+  ],
+  "aliases": [
+    "administrative-coercive-measures"
+  ],
+  "key_phrases": [
+    "行政",
+    "征收",
+    "xingzhengzhengshou",
+    "行政征收"
+  ],
+  "summary_1l": "行政征收",
+  "query_hits": [],
+  "embed_text": "administrative-coercive-measures 行政强制措施 行政法 行政强制 强制措施 查封 扣押 冻结 行政征收 行政行为 行政机关 合理行政 行政法规 行政给付 抽象行政行为 授益行政行为 行政公开 行政征用 行政效能 行政确认 administrative-coercive-measures 行政 征收 xingzhengzhengshou 行政征收 行政征收 行政征收",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-16T05:57:15.344796+00:00"
+}

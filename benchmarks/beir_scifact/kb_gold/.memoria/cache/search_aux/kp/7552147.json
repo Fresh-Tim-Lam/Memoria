@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7552147",
+  "source_fingerprint": "4d82e3efbd4040b3c4582eaf81114cea",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7552147",
+    "developmental-biology-of-the-pancreas."
+  ],
+  "key_phrases": [
+    "developmental",
+    "biology",
+    "pancreas",
+    "organ",
+    "containing",
+    "two",
+    "distinct",
+    "populations"
+  ],
+  "summary_1l": "Developmental biology of the pancreas.",
+  "query_hits": [],
+  "embed_text": "7552147 Developmental biology of the pancreas. science scifact The pancreas is an organ containing two distinct populations of cells, the exocrine cells that secrete enzymes into the digestive tract, and the endocrine cells that secrete hormones into the bloodstream. It arises from the endoderm as a… 7552147 developmental-biology-of-the-pancreas. developmental biology pancreas organ containing two distinct populations Developmental biology of the pancreas. Developmental biology of the pancreas. The pancreas is an organ containing two distinct populations of cells, the exocrine cells that secrete enzymes into the digestive tract, and the endocrine cells that secrete hormones into the bloodstream. It arises from the endoderm as a dorsal and a ventral bud which fuse together to form the single organ. Mammals, birds, reptiles and amphibians have a pancreas with similar histology and mode of development, while in some fish, the islet cells are segregated as Brockmann bodies. Invertebrates do not have a pancreas, but comparable endocrine cells may be found in the gut or the brain. The early pancreatic bud shows uniform expression of the homeobox gene IPF-1 (also known as IDX-1, STF-1 or PDX), which when mutated to inactivity leads to total absence",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.628700+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27393799",
+  "source_fingerprint": "b1a083369c9133b3dc2a4bb4fb4bac91",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27393799",
+    "the-body-mass-index-of-twins-who-have-been-reared-apart."
+  ],
+  "key_phrases": [
+    "body",
+    "mass",
+    "index",
+    "twins",
+    "who",
+    "have",
+    "been",
+    "reared"
+  ],
+  "summary_1l": "The body-mass index of twins who have been reared apart.",
+  "query_hits": [],
+  "embed_text": "27393799 The body-mass index of twins who have been reared apart. science scifact To assess the relative importance of genetic and environmental effects on the body-mass index (weight in kilograms divided by the square of the height in meters), we studied samples of identical and fraternal twins, reared apart or reared… 27393799 the-body-mass-index-of-twins-who-have-been-reared-apart. body mass index twins who have been reared The body-mass index of twins who have been reared apart. The body-mass index of twins who have been reared apart. To assess the relative importance of genetic and environmental effects on the body-mass index (weight in kilograms divided by the square of the height in meters), we studied samples of identical and fraternal twins, reared apart or reared together. The samples consisted of 93 pairs of identical twins reared apart, 154 pairs of identical twins reared together, 218 pairs of fraternal twins reared apart, and 208 pairs of fraternal twins reared together. The intrapair correlation coefficients of the values for body-mass index of identical twins reared apart were 0.70 for men and 0.66 for women. These are the most direct estimates of the relative importance of genetic influences (heritability) on the body-mass index, and they were only sl",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.825887+00:00"
+}

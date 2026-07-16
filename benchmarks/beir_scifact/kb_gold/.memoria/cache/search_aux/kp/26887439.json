@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26887439",
+  "source_fingerprint": "6c1f9f17f810ecd35d648a9de4e3510e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26887439",
+    "survivin-depletion-preferentially-reduces-the-survival-of-activated-k-ras-transformed-cells."
+  ],
+  "key_phrases": [
+    "survivin",
+    "depletion",
+    "preferentially",
+    "reduces",
+    "survival",
+    "activated",
+    "ras",
+    "transformed"
+  ],
+  "summary_1l": "Survivin depletion preferentially reduces the survival of activated K-Ras-transformed cells.",
+  "query_hits": [],
+  "embed_text": "26887439 Survivin depletion preferentially reduces the survival of activated K-Ras-transformed cells. science scifact To identify cancer-specific targets, we have conducted a synthetic lethal screen using a small interfering RNA (siRNA) library targeting approximately 4,000 individual genes for enhanced killing in the DLD-1 colon carcinoma cell line that… 26887439 survivin-depletion-preferentially-reduces-the-survival-of-activated-k-ras-transformed-cells. survivin depletion preferentially reduces survival activated ras transformed Survivin depletion preferentially reduces the survival of activated K-Ras-transformed cells. Survivin depletion preferentially reduces the survival of activated K-Ras-transformed cells. To identify cancer-specific targets, we have conducted a synthetic lethal screen using a small interfering RNA (siRNA) library targeting approximately 4,000 individual genes for enhanced killing in the DLD-1 colon carcinoma cell line that expresses an activated copy of the K-Ras oncogene. We found that siRNAs targeting baculoviral inhibitor of apoptosis repeat-containing 5 (survivin) significantly reduced the survival of activated K-Ras-transformed cells compared with its normal isogenic counterpart in which the mutant K-Ras gene had been disrupted (DKS-8). In addition, survivin siRNA induced a transient G(2)-M arrest and marked polyploidy that was associated with increased caspase-3 activation in",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.239476+00:00"
+}

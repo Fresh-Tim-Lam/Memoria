@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27127885",
+  "source_fingerprint": "9bf3cce4ead2871c3c165ec727c310d3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27127885",
+    "an-activator-of-the-camp/pka/creb-pathway-promotes-osteogenesis-from-human-mesenchymal-stem-cells."
+  ],
+  "key_phrases": [
+    "activator",
+    "camp",
+    "pka",
+    "creb",
+    "pathway",
+    "promotes",
+    "osteogenesis",
+    "from"
+  ],
+  "summary_1l": "An activator of the cAMP/PKA/CREB pathway promotes osteogenesis from human mesenchymal stem cells.",
+  "query_hits": [],
+  "embed_text": "27127885 An activator of the cAMP/PKA/CREB pathway promotes osteogenesis from human mesenchymal stem cells. science scifact Mesenchymal stem cells (MSCs) are multipotent adult stem cells capable of differentiating along the osteoblast, adipocyte, and chondrocyte lineages. Regulation of MSCs differentiation may be a useful tool for regenerative medicine and… 27127885 an-activator-of-the-camp/pka/creb-pathway-promotes-osteogenesis-from-human-mesenchymal-stem-cells. activator camp pka creb pathway promotes osteogenesis from An activator of the cAMP/PKA/CREB pathway promotes osteogenesis from human mesenchymal stem cells. An activator of the cAMP/PKA/CREB pathway promotes osteogenesis from human mesenchymal stem cells. Mesenchymal stem cells (MSCs) are multipotent adult stem cells capable of differentiating along the osteoblast, adipocyte, and chondrocyte lineages. Regulation of MSCs differentiation may be a useful tool for regenerative medicine and cell-based therapy. The discovery of small molecule that activates the osteogenic differentiation of MSCs could aid in the development of a new anabolic drug for osteoporosis treatment. We identified CW008, a derivative of pyrazole-pyridine, that stimulates osteoblast differentiation of human MSCs and increases bone formation in ovariectomized mice. CW008 promotes osteogenesis by activating cAMP/PKA/CREB signaling pathway and inhibiting leptin secretion. These r",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.501174+00:00"
+}

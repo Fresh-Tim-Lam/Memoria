@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "41710132",
+  "source_fingerprint": "871d005e05589ad159fd1f5d333cca05",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "41710132",
+    "regulation-of-e2fs-and-senescence-by-pml-nuclear-bodies."
+  ],
+  "key_phrases": [
+    "regulation",
+    "e2fs",
+    "senescence",
+    "by",
+    "pml",
+    "nuclear",
+    "bodies",
+    "tumor"
+  ],
+  "summary_1l": "Regulation of E2Fs and senescence by PML nuclear bodies.",
+  "query_hits": [],
+  "embed_text": "41710132 Regulation of E2Fs and senescence by PML nuclear bodies. science scifact The tumor suppressor PML (promyelocytic leukemia protein) regulates cellular senescence and terminal differentiation, two processes that implicate a permanent exit from the cell cycle. Here, we show that the mechanism by which PML induces… 41710132 regulation-of-e2fs-and-senescence-by-pml-nuclear-bodies. regulation e2fs senescence by pml nuclear bodies tumor Regulation of E2Fs and senescence by PML nuclear bodies. Regulation of E2Fs and senescence by PML nuclear bodies. The tumor suppressor PML (promyelocytic leukemia protein) regulates cellular senescence and terminal differentiation, two processes that implicate a permanent exit from the cell cycle. Here, we show that the mechanism by which PML induces a permanent cell cycle exit and activates p53 and senescence involves a recruitment of E2F transcription factors bound to their promoters and the retinoblastoma (Rb) proteins to PML nuclear bodies enriched in heterochromatin proteins and protein phosphatase 1α. Blocking the functions of the Rb protein family or adding back E2Fs to PML-expressing cells can rescue their defects in E2F-dependent gene expression and cell proliferation, inhibiting the senescent phenotype. In benign prostatic hyperplasia,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.553426+00:00"
+}

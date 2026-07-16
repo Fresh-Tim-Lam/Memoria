@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25300664",
+  "source_fingerprint": "78e39dda9cf05dad0e4385f4903ee15a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25300664",
+    "chronic-renal-failure-accelerates-atherogenesis-in-apolipoprotein-e-deficient-mice."
+  ],
+  "key_phrases": [
+    "chronic",
+    "renal",
+    "failure",
+    "accelerates",
+    "atherogenesis",
+    "apolipoprotein",
+    "deficient",
+    "mice"
+  ],
+  "summary_1l": "Chronic renal failure accelerates atherogenesis in apolipoprotein E-deficient mice.",
+  "query_hits": [],
+  "embed_text": "25300664 Chronic renal failure accelerates atherogenesis in apolipoprotein E-deficient mice. science scifact Cardiovascular mortality is 10 to 20 times increased in patients with chronic renal failure (CRF). Risk factors for atherosclerosis are abundant in patients with CRF. However, the pathogenesis of cardiovascular disease in CRF remains to be… 25300664 chronic-renal-failure-accelerates-atherogenesis-in-apolipoprotein-e-deficient-mice. chronic renal failure accelerates atherogenesis apolipoprotein deficient mice Chronic renal failure accelerates atherogenesis in apolipoprotein E-deficient mice. Chronic renal failure accelerates atherogenesis in apolipoprotein E-deficient mice. Cardiovascular mortality is 10 to 20 times increased in patients with chronic renal failure (CRF). Risk factors for atherosclerosis are abundant in patients with CRF. However, the pathogenesis of cardiovascular disease in CRF remains to be elucidated. The effect of CRF on the development of atherosclerosis in apolipoprotein E-deficient male mice was examined. Seven-week-old mice underwent 5/6 nephrectomy (CRF, n = 28), unilateral nephrectomy (UNX, n = 24), or no surgery (n = 23). Twenty-two weeks later, CRF mice showed increased aortic plaque area fraction (0.266 +/- 0.033 versus 0.045 +/- 0.006; P < 0.001), aortic cholesterol content (535 +/- 62 versus 100 +/- 9 nmol/cm(2) intimal surface area; P < 0.001),",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.343376+00:00"
+}

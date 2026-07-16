@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9846940",
+  "source_fingerprint": "c2e55fb459f5b53d6a0d556623d18e04",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9846940",
+    "preoperative-statin-treatment-reduces-systemic-inflammatory-response-and-myocardial-damage-in-cardiac-surgery."
+  ],
+  "key_phrases": [
+    "preoperative",
+    "statin",
+    "treatment",
+    "reduces",
+    "systemic",
+    "inflammatory",
+    "response",
+    "myocardial"
+  ],
+  "summary_1l": "Preoperative statin treatment reduces systemic inflammatory response and myocardial damage in cardiac surgery.",
+  "query_hits": [],
+  "embed_text": "9846940 Preoperative statin treatment reduces systemic inflammatory response and myocardial damage in cardiac surgery. science scifact OBJECTIVE To determine if preoperative statin treatment is associated with a reduction in systemic inflammatory response (SIR) and myocardial damage markers following cardiac surgery with cardiopulmonary bypass (CPB). METHODS We study a… 9846940 preoperative-statin-treatment-reduces-systemic-inflammatory-response-and-myocardial-damage-in-cardiac-surgery. preoperative statin treatment reduces systemic inflammatory response myocardial Preoperative statin treatment reduces systemic inflammatory response and myocardial damage in cardiac surgery. Preoperative statin treatment reduces systemic inflammatory response and myocardial damage in cardiac surgery. OBJECTIVE To determine if preoperative statin treatment is associated with a reduction in systemic inflammatory response (SIR) and myocardial damage markers following cardiac surgery with cardiopulmonary bypass (CPB). METHODS We study a prospective cohort of 138 patients who underwent coronary and valvular surgery with CPB. We differentiate two study groups: patients with (group A, n=72) or without (group B, n=66) statins. Plasma levels of pro-inflammatory interleukins (tumour necrosis factor-alpha (TNF-alpha), interleukin (IL)-6, IL-8 and IL-2R), creatine phosphokinase (CPK), CPK-MB and troponin I were measured before and 1, 6, 24 and >72 h after surgery. RESULTS The baseline, op",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.966283+00:00"
+}

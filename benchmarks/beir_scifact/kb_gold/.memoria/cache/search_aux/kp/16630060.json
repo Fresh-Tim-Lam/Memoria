@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16630060",
+  "source_fingerprint": "1c8c06efcc504446606259c82f23f6a4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16630060",
+    "genotoxic-stress-abrogates-renewal-of-melanocyte-stem-cells-by-triggering-their-differentiation"
+  ],
+  "key_phrases": [
+    "genotoxic",
+    "stress",
+    "abrogates",
+    "renewal",
+    "melanocyte",
+    "stem",
+    "cells",
+    "by"
+  ],
+  "summary_1l": "Somatic stem cell depletion due to the accumulation of DNA damage has been implicated in the appearance",
+  "query_hits": [],
+  "embed_text": "16630060 Genotoxic Stress Abrogates Renewal of Melanocyte Stem Cells by Triggering Their Differentiation science scifact Somatic stem cell depletion due to the accumulation of DNA damage has been implicated in the appearance of aging-related phenotypes. Hair graying, a typical sign of aging in mammals, is caused by the incomplete maintenance of melanocyte… 16630060 genotoxic-stress-abrogates-renewal-of-melanocyte-stem-cells-by-triggering-their-differentiation genotoxic stress abrogates renewal melanocyte stem cells by Somatic stem cell depletion due to the accumulation of DNA damage has been implicated in the appearance Genotoxic Stress Abrogates Renewal of Melanocyte Stem Cells by Triggering Their Differentiation Somatic stem cell depletion due to the accumulation of DNA damage has been implicated in the appearance of aging-related phenotypes. Hair graying, a typical sign of aging in mammals, is caused by the incomplete maintenance of melanocyte stem cells (MSCs) with age. Here, we report that irreparable DNA damage, as caused by ionizing radiation, abrogates renewal of MSCs in mice. Surprisingly, the DNA-damage response triggers MSC differentiation into mature melanocytes in the niche, rather than inducing their apoptosis or senescence. The resulting MSC depletion leads to irreversible hair graying. Furthermore, deficiency of Ataxia-telangiectasia mutated (ATM), a central transducer kinase of the DNA-da",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.554008+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23377475",
+  "source_fingerprint": "e229ca4734cada1b64512ecf814a7f57",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23377475",
+    "acute-kidney-injury-and-chronic-kidney-disease:-an-integrated-clinical-syndrome."
+  ],
+  "key_phrases": [
+    "acute",
+    "kidney",
+    "injury",
+    "chronic",
+    "disease",
+    "integrated",
+    "clinical",
+    "syndrome"
+  ],
+  "summary_1l": "Acute kidney injury and chronic kidney disease: an integrated clinical syndrome.",
+  "query_hits": [],
+  "embed_text": "23377475 Acute kidney injury and chronic kidney disease: an integrated clinical syndrome. science scifact The previous conventional wisdom that survivors of acute kidney injury (AKI) tend to do well and fully recover renal function appears to be flawed. AKI can cause end-stage renal disease (ESRD) directly, and increase the risk of developing… 23377475 acute-kidney-injury-and-chronic-kidney-disease:-an-integrated-clinical-syndrome. acute kidney injury chronic disease integrated clinical syndrome Acute kidney injury and chronic kidney disease: an integrated clinical syndrome. Acute kidney injury and chronic kidney disease: an integrated clinical syndrome. The previous conventional wisdom that survivors of acute kidney injury (AKI) tend to do well and fully recover renal function appears to be flawed. AKI can cause end-stage renal disease (ESRD) directly, and increase the risk of developing incident chronic kidney disease (CKD) and worsening of underlying CKD. In addition, severity, duration, and frequency of AKI appear to be important predictors of poor patient outcomes. CKD is an important risk factor for the development and ascertainment of AKI. Experimental data support the clinical observations and the bidirectional nature of the relationships between AKI and CKD. Reductions in renal mass and nephron number, vascular insufficiency, cell cycle disruption, an",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.376635+00:00"
+}

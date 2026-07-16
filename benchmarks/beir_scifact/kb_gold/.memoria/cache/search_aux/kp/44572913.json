@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "44572913",
+  "source_fingerprint": "aa57ad83b6d85951f1e4d4659d215822",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "44572913",
+    "calcium-and-peak-bone-mass."
+  ],
+  "key_phrases": [
+    "calcium",
+    "peak",
+    "bone",
+    "mass",
+    "basis",
+    "previous",
+    "epidemiological",
+    "clinical"
+  ],
+  "summary_1l": "Calcium and peak bone mass.",
+  "query_hits": [],
+  "embed_text": "44572913 Calcium and peak bone mass. science scifact On the basis of previous epidemiological, clinical and experimental studies, it was demonstrated that adequate calcium intake during growth may influence peak bone mass/density, and may be instrumental in preventing subsequent… 44572913 calcium-and-peak-bone-mass. calcium peak bone mass basis previous epidemiological clinical Calcium and peak bone mass. Calcium and peak bone mass. On the basis of previous epidemiological, clinical and experimental studies, it was demonstrated that adequate calcium intake during growth may influence peak bone mass/density, and may be instrumental in preventing subsequent postmenopausal and senile osteoporosis. Calcium intake during adolescence appears to affect skeletal calcium retention directly, and a calcium intake of up to 1600 mg d-1 may be required. Therefore, adolescent females at the time of puberty probably represent the optimal population for early prevention of osteoporosis with calcium. Young individuals must be in positive calcium balance to provide the calcium necessary for skeletal modelling and consolidation, but the degree of positive balance required to achieve peak bone mass and density",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.541581+00:00"
+}

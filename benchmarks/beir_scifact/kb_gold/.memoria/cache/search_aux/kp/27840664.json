@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27840664",
+  "source_fingerprint": "82c7e604ebe4a95fcc65c739e213e4e0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27840664",
+    "checkpoint-responses-to-replication-fork-barriers."
+  ],
+  "key_phrases": [
+    "checkpoint",
+    "responses",
+    "replication",
+    "fork",
+    "barriers",
+    "fidelity",
+    "dna",
+    "paramount"
+  ],
+  "summary_1l": "Checkpoint responses to replication fork barriers.",
+  "query_hits": [],
+  "embed_text": "27840664 Checkpoint responses to replication fork barriers. science scifact The fidelity of DNA replication is of paramount importance to the maintenance of genome integrity. When an active replication fork is perturbed, multiple cellular pathways are recruited to stabilize the replication apparatus and to help to… 27840664 checkpoint-responses-to-replication-fork-barriers. checkpoint responses replication fork barriers fidelity dna paramount Checkpoint responses to replication fork barriers. Checkpoint responses to replication fork barriers. The fidelity of DNA replication is of paramount importance to the maintenance of genome integrity. When an active replication fork is perturbed, multiple cellular pathways are recruited to stabilize the replication apparatus and to help to bypass or correct the causative problem. However, if the problem is not corrected, the fork may collapse, exposing free DNA ends to potentially inappropriate processing. In prokaryotes, replication fork collapse promotes the activity of recombination proteins to restore a replication fork. Recent work has demonstrated that recombination is also intimately linked to replication in eukaryotic cells, and that recombination proteins are recruited to collapsed, but not stalled, replication forks. In this revi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.347017+00:00"
+}

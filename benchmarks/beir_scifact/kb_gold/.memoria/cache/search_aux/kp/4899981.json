@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4899981",
+  "source_fingerprint": "fb119c49a23757f3272bffabe6564534",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4899981",
+    "human-cancer-cells-utilize-mitotic-dna-synthesis-to-resist-replication-stress-at-telomeres-regardless-of-their-telomere-maintenance-mechanism"
+  ],
+  "key_phrases": [
+    "human",
+    "cancer",
+    "cells",
+    "utilize",
+    "mitotic",
+    "dna",
+    "synthesis",
+    "resist"
+  ],
+  "summary_1l": "Telomeres resemble common fragile sites (CFSs) in that the",
+  "query_hits": [],
+  "embed_text": "4899981 Human cancer cells utilize mitotic DNA synthesis to resist replication stress at telomeres regardless of their telomere maintenance mechanism science scifact Telomeres resemble common fragile sites (CFSs) in that they are difficult-to-replicate and exhibit fragility in mitosis in response to DNA replication stress. At CFSs, this fragility is associated with a delay in the completion of DNA… 4899981 human-cancer-cells-utilize-mitotic-dna-synthesis-to-resist-replication-stress-at-telomeres-regardless-of-their-telomere-maintenance-mechanism human cancer cells utilize mitotic dna synthesis resist Telomeres resemble common fragile sites (CFSs) in that the Human cancer cells utilize mitotic DNA synthesis to resist replication stress at telomeres regardless of their telomere maintenance mechanism Telomeres resemble common fragile sites (CFSs) in that they are difficult-to-replicate and exhibit fragility in mitosis in response to DNA replication stress. At CFSs, this fragility is associated with a delay in the completion of DNA replication until early mitosis, whereupon cells are proposed to switch to a RAD52-dependent form of break-induced replication. Here, we show that this mitotic DNA synthesis (MiDAS) is also a feature of human telomeres. Telomeric MiDAS is not restricted to those telomeres displaying overt fragility, and is a feature of a wide range of cell lines irrespective of whether their telomeres are maintained by telomerase or by",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.684246+00:00"
+}

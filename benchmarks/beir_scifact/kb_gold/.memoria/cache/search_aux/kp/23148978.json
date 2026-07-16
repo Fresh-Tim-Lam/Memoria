@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23148978",
+  "source_fingerprint": "6caa21fc70a70e2dbe81aeaf66f72138",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23148978",
+    "the-influence-of-some-metabolic-inhibitors-on-phagocytic-activity-of-mouse-macrophages-in-vitro."
+  ],
+  "key_phrases": [
+    "influence",
+    "some",
+    "metabolic",
+    "inhibitors",
+    "phagocytic",
+    "activity",
+    "mouse",
+    "macrophages"
+  ],
+  "summary_1l": "The influence of some metabolic inhibitors on phagocytic activity of mouse macrophages in vitro.",
+  "query_hits": [],
+  "embed_text": "23148978 The influence of some metabolic inhibitors on phagocytic activity of mouse macrophages in vitro. science scifact The action of different metabolic inhibitors on phagocytosis by macrophages from mouse peritoneal exudate cultured in vitro was studied. The following metabolic inhibitors were tested: sodium iodoacetate, sodium fluoride, sodium… 23148978 the-influence-of-some-metabolic-inhibitors-on-phagocytic-activity-of-mouse-macrophages-in-vitro. influence some metabolic inhibitors phagocytic activity mouse macrophages The influence of some metabolic inhibitors on phagocytic activity of mouse macrophages in vitro. The influence of some metabolic inhibitors on phagocytic activity of mouse macrophages in vitro. The action of different metabolic inhibitors on phagocytosis by macrophages from mouse peritoneal exudate cultured in vitro was studied. The following metabolic inhibitors were tested: sodium iodoacetate, sodium fluoride, sodium fluoroacetate, sodium malonate, 2-4-dinitrophenol, sodium azide, ouabain and cycloheximide, all at the concentration of 10(-3) M. Iodoacetate caused a strong inhibitory effect on phagocytosis; this observation confirms that glycolysis is the main source of energy for the phagocytic process. On the contrary, fluoride, although it is an effective inhibitor of glycolysis, did not exert any effect. This difference may be explained by the fact that sodium fluoride blocks ana",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.941417+00:00"
+}

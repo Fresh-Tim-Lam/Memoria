@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "42913391",
+  "source_fingerprint": "8c96bb49d89c9d16954427adfa7d7be5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "42913391",
+    "health-related-quality-of-life-among-children-with-acute-lymphoblastic-leukemia."
+  ],
+  "key_phrases": [
+    "health",
+    "related",
+    "quality",
+    "life",
+    "among",
+    "children",
+    "with",
+    "acute"
+  ],
+  "summary_1l": "Health-related quality of life among children with acute lymphoblastic leukemia.",
+  "query_hits": [],
+  "embed_text": "42913391 Health-related quality of life among children with acute lymphoblastic leukemia. science scifact BACKGROUND The objective was to quantify the health-related quality of life (HRQL) of children treated for acute lymphoblastic leukemia (ALL) and identify specific disabilities for remediation. PROCEDURE Two types of subjects were… 42913391 health-related-quality-of-life-among-children-with-acute-lymphoblastic-leukemia. health related quality life among children with acute Health-related quality of life among children with acute lymphoblastic leukemia. Health-related quality of life among children with acute lymphoblastic leukemia. BACKGROUND The objective was to quantify the health-related quality of life (HRQL) of children treated for acute lymphoblastic leukemia (ALL) and identify specific disabilities for remediation. PROCEDURE Two types of subjects were included: ALL patients 5 plus years old in a multi-center clinical trial and general population control groups. Patients were assessed during all four major phases of active treatment and approximately 2 years after treatment. Health status and HRQL were measured using HEALTH UTILITIES INDEX® (HUI®) Mark 2 (HUI2) and Mark 3 (HUI3). HRQL scores were used to calculate quality-adjusted life years (QALYs). Excess disability rates identified attributes for remediation. RESULTS HUI assessm",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.329759+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8520041",
+  "source_fingerprint": "2cfd8ac36e85cca4a11bb59e880ec435",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8520041",
+    "acta-psychiatrica"
+  ],
+  "key_phrases": [
+    "acta",
+    "psychiatrica",
+    "objective",
+    "we",
+    "explored",
+    "subjective",
+    "effects",
+    "associated"
+  ],
+  "summary_1l": "OBJECTIVE We explored the subjective effects associated with olanzapine, risperidone and older antipsychotics.",
+  "query_hits": [],
+  "embed_text": "8520041 ACTA PSYCHIATRICA science scifact OBJECTIVE We explored the subjective effects associated with olanzapine, risperidone and older antipsychotics. METHOD We conducted a content analysis of an Internet database of comments about prescribed medications. RESULTS We analysed 223… 8520041 acta-psychiatrica acta psychiatrica objective we explored subjective effects associated OBJECTIVE We explored the subjective effects associated with olanzapine, risperidone and older antipsychotics. ACTA PSYCHIATRICA OBJECTIVE We explored the subjective effects associated with olanzapine, risperidone and older antipsychotics. METHOD We conducted a content analysis of an Internet database of comments about prescribed medications. RESULTS We analysed 223 comments on risperidone, 170 on olanzapine and 46 relating to three older antipsychotics. The predominant subjective effects produced by all drugs consisted of sedation, cognitive impairment and emotional flattening or indifference. Connections appeared between these effects and Parkinsonian-like symptoms with the older drugs, sexual impairment with risperidone and metabolic effects with olanzapine. The experience of akathisia was frequently linked to suicidal thoughts. Some respondents described how the drugs' subjective effects helped",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.889331+00:00"
+}

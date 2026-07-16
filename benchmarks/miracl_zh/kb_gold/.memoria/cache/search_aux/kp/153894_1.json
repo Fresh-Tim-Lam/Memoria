@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "kp_id": "153894#1",
+  "source_fingerprint": "80f277df71ade1acc623977be6615498",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "动物",
+    "卵生"
+  ],
+  "aliases": [
+    "153894#1"
+  ],
+  "key_phrases": [
+    "卵生",
+    "动物",
+    "母体",
+    "排出",
+    "过程",
+    "称为",
+    "产卵",
+    "oviposition"
+  ],
+  "summary_1l": "卵生动物将卵从母体中排出的过程称为产卵（oviposition）。",
+  "query_hits": [],
+  "embed_text": "153894#1 卵 卵 卵生动物将卵从母体中排出的过程称为产卵（oviposition）。目前尚存的卵生哺乳动物只有单孔目一类。 卵的保護層有膠狀物、硬殼及革殼幾種。魚類、兩生類的蛋只有膠狀物保護；鳥類的蛋屬於硬殼的，大多易破，目前最大的鳥蛋是鴕鳥蛋，最小的蛋是蜂鳥蛋；爬蟲類的蛋如蜥蜴或蛇等，蛋殼像皮革有彈性，稍為凹下去也沒關係。 动物 卵生 153894#1 卵生 动物 母体 排出 过程 称为 产卵 oviposition 卵生动物将卵从母体中排出的过程称为产卵（oviposition）。 卵 卵生动物将卵从母体中排出的过程称为产卵（oviposition）。目前尚存的卵生哺乳动物只有单孔目一类。 卵的保護層有膠狀物、硬殼及革殼幾種。魚類、兩生類的蛋只有膠狀物保護；鳥類的蛋屬於硬殼的，大多易破，目前最大的鳥蛋是鴕鳥蛋，最小的蛋是蜂鳥蛋；爬蟲類的蛋如蜥蜴或蛇等，蛋殼像皮革有彈性，稍為凹下去也沒關係。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:19:48.505311+00:00"
+}

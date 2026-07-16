@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10359591",
+  "source_fingerprint": "eedf736c30a100452638095e1d518eeb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10359591",
+    "interleukin-2-and-inflammation-induce-distinct-transcriptional-programs-that-promote-the-differentiation-of-effector-cytolytic-t-cells."
+  ],
+  "key_phrases": [
+    "interleukin",
+    "inflammation",
+    "induce",
+    "distinct",
+    "transcriptional",
+    "programs",
+    "that",
+    "promote"
+  ],
+  "summary_1l": "Interleukin-2 and inflammation induce distinct transcriptional programs that promote the differentiation of effector cytolytic T cells.",
+  "query_hits": [],
+  "embed_text": "10359591 Interleukin-2 and inflammation induce distinct transcriptional programs that promote the differentiation of effector cytolytic T cells. science scifact Interleukin(IL)-2 and inflammation regulate effector and memory cytolytic T-lymphocyte (CTL) generation during infection. We demonstrate a complex interplay between IL-2 and inflammatory signals during CTL differentiation. IL-2 stimulation… 10359591 interleukin-2-and-inflammation-induce-distinct-transcriptional-programs-that-promote-the-differentiation-of-effector-cytolytic-t-cells. interleukin inflammation induce distinct transcriptional programs that promote Interleukin-2 and inflammation induce distinct transcriptional programs that promote the differentiation of effector cytolytic T cells. Interleukin-2 and inflammation induce distinct transcriptional programs that promote the differentiation of effector cytolytic T cells. Interleukin(IL)-2 and inflammation regulate effector and memory cytolytic T-lymphocyte (CTL) generation during infection. We demonstrate a complex interplay between IL-2 and inflammatory signals during CTL differentiation. IL-2 stimulation induced the transcription factor eomesodermin (Eomes), upregulated perforin (Prf1) transcription, and repressed re-expression of memory CTL markers Bcl6 and IL-7Ralpha. Binding of Eomes and STAT5 to Prf1 cis-regulatory regions correlated with transcriptional initiation (increased recruitment of RNA polymerase II to the Prf1 promoter). Inflammation (CpG, IL-12) enhanced expression of IL-2Ralpha and the transcription facto",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.482813+00:00"
+}

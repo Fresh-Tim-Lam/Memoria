@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "39637840",
+  "source_fingerprint": "7572e4408bd47bd12d6e42b35fb28b53",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "39637840",
+    "the-processing-of-holliday-junctions-by-blm-and-wrn-helicases-is-regulated-by-p53."
+  ],
+  "key_phrases": [
+    "processing",
+    "holliday",
+    "junctions",
+    "by",
+    "blm",
+    "wrn",
+    "helicases",
+    "regulated"
+  ],
+  "summary_1l": "The processing of Holliday junctions by BLM and WRN helicases is regulated by p53.",
+  "query_hits": [],
+  "embed_text": "39637840 The processing of Holliday junctions by BLM and WRN helicases is regulated by p53. science scifact BLM, WRN, and p53 are involved in the homologous DNA recombination pathway. The DNA structure-specific helicases, BLM and WRN, unwind Holliday junctions (HJ), an activity that could suppress inappropriate homologous recombination during… 39637840 the-processing-of-holliday-junctions-by-blm-and-wrn-helicases-is-regulated-by-p53. processing holliday junctions by blm wrn helicases regulated The processing of Holliday junctions by BLM and WRN helicases is regulated by p53. The processing of Holliday junctions by BLM and WRN helicases is regulated by p53. BLM, WRN, and p53 are involved in the homologous DNA recombination pathway. The DNA structure-specific helicases, BLM and WRN, unwind Holliday junctions (HJ), an activity that could suppress inappropriate homologous recombination during DNA replication. Here, we show that purified, recombinant p53 binds to BLM and WRN helicases and attenuates their ability to unwind synthetic HJ in vitro. The p53 248W mutant reduces abilities of both to bind HJ and inhibit helicase activities, whereas the p53 273H mutant loses these abilities. Moreover, full-length p53 and a C-terminal polypeptide (residues 373-383) inhibit the BLM and WRN helicase activities, but phosphorylation at Ser(376) or Ser(378) completely abolishes",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.828135+00:00"
+}

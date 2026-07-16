@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24157077",
+  "source_fingerprint": "b41c44875fec606b533cd0063f8f6173",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24157077",
+    "cationic-host-defense-(antimicrobial)-peptides."
+  ],
+  "key_phrases": [
+    "cationic",
+    "host",
+    "defense",
+    "antimicrobial",
+    "peptides",
+    "members",
+    "peptide",
+    "family"
+  ],
+  "summary_1l": "Cationic host defense (antimicrobial) peptides.",
+  "query_hits": [],
+  "embed_text": "24157077 Cationic host defense (antimicrobial) peptides. science scifact Members of the cationic host defense (antimicrobial) peptide family are widely distributed in nature, existing in organisms from insects to plants to mammals and non-mammalian vertebrates. Although many demonstrate direct antimicrobial… 24157077 cationic-host-defense-(antimicrobial)-peptides. cationic host defense antimicrobial peptides members peptide family Cationic host defense (antimicrobial) peptides. Cationic host defense (antimicrobial) peptides. Members of the cationic host defense (antimicrobial) peptide family are widely distributed in nature, existing in organisms from insects to plants to mammals and non-mammalian vertebrates. Although many demonstrate direct antimicrobial activity against bacteria, fungi, eukaryotic parasites and/or viruses, it has been established that cationic peptides have a key modulatory role in the innate immune response. More recent evidence suggests that host defense peptides are effective adjuvants, are synergistic with other immune effectors, polarize the adaptive response, and support wound healing. In addition, the mechanisms of action are being unraveled, which support more effective implementation of derivatives of these endogenous peptides as ther",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.866450+00:00"
+}

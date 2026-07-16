@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16217855",
+  "source_fingerprint": "982724acfd1a82539f0c2cb8a1e56258",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16217855",
+    "the-bloom's-syndrome-helicase-promotes-the-annealing-of-complementary-single-stranded-dna"
+  ],
+  "key_phrases": [
+    "bloom",
+    "syndrome",
+    "helicase",
+    "promotes",
+    "annealing",
+    "complementary",
+    "single",
+    "stranded"
+  ],
+  "summary_1l": "The product of the gene mutated in Bloom's syndrome, BLM, is a 3′–5′ DNA helicase belonging to the highly cons",
+  "query_hits": [],
+  "embed_text": "16217855 The Bloom's syndrome helicase promotes the annealing of complementary single-stranded DNA science scifact The product of the gene mutated in Bloom's syndrome, BLM, is a 3′–5′ DNA helicase belonging to the highly conserved RecQ family. In addition to a conventional DNA strand separation activity, BLM catalyzes both the disruption of non-B-form… 16217855 the-bloom's-syndrome-helicase-promotes-the-annealing-of-complementary-single-stranded-dna bloom syndrome helicase promotes annealing complementary single stranded The product of the gene mutated in Bloom's syndrome, BLM, is a 3′–5′ DNA helicase belonging to the highly cons The Bloom's syndrome helicase promotes the annealing of complementary single-stranded DNA The product of the gene mutated in Bloom's syndrome, BLM, is a 3′–5′ DNA helicase belonging to the highly conserved RecQ family. In addition to a conventional DNA strand separation activity, BLM catalyzes both the disruption of non-B-form DNA, such as G-quadruplexes, and the branch migration of Holliday junctions. Here, we have characterized a new activity for BLM: the promotion of single-stranded DNA (ssDNA) annealing. This activity does not require Mg2+, is inhibited by ssDNA binding proteins and ATP, and is dependent on DNA length. Through analysis of various truncation mutants of BLM, we show that the C-terminal domain is essential for strand annealing and identify a 60 amino acid stretch of this",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.948135+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9478135",
+  "source_fingerprint": "cef23ec624d8466153c0009f4bab36c0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9478135",
+    "dual-mutations-in-the-aml1-and-flt3-genes-are-associated-with-leukemogenesis-in-acute-myeloblastic-leukemia-of-the-m0-subtype"
+  ],
+  "key_phrases": [
+    "dual",
+    "mutations",
+    "aml1",
+    "flt3",
+    "genes",
+    "associated",
+    "with",
+    "leukemogenesis"
+  ],
+  "summary_1l": "Point mutations of the transcription factor AML1 are associated with leuke",
+  "query_hits": [],
+  "embed_text": "9478135 Dual mutations in the AML1 and FLT3 genes are associated with leukemogenesis in acute myeloblastic leukemia of the M0 subtype science scifact Point mutations of the transcription factor AML1 are associated with leukemogenesis in acute myeloblastic leukemia (AML). Internal tandem duplications (ITDs) in the juxtamembrane domain and mutations in the second tyrosine kinase domain of… 9478135 dual-mutations-in-the-aml1-and-flt3-genes-are-associated-with-leukemogenesis-in-acute-myeloblastic-leukemia-of-the-m0-subtype dual mutations aml1 flt3 genes associated with leukemogenesis Point mutations of the transcription factor AML1 are associated with leuke Dual mutations in the AML1 and FLT3 genes are associated with leukemogenesis in acute myeloblastic leukemia of the M0 subtype Point mutations of the transcription factor AML1 are associated with leukemogenesis in acute myeloblastic leukemia (AML). Internal tandem duplications (ITDs) in the juxtamembrane domain and mutations in the second tyrosine kinase domain of the Fms-like tyrosine kinase 3 (FLT3) gene represent the most frequent genetic alterations in AML. However, such mutations per se appear to be insufficient for leukemic transformation. To evaluate whether both AML1 and FLT3 mutations contribute to leukemogenesis, we analyzed mutations of these genes in AML M0 subtype in whom AML1 mutations were predominantly observed. Of 51 patients, eight showed a mutation in the Runt domain of t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.984001+00:00"
+}

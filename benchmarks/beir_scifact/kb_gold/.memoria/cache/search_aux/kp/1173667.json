@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1173667",
+  "source_fingerprint": "4afff77da9a474560232467e33e923c5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1173667",
+    "ranking-of-elimination-feasibility-between-malaria-endemic-countries"
+  ],
+  "key_phrases": [
+    "ranking",
+    "elimination",
+    "feasibility",
+    "between",
+    "malaria",
+    "endemic",
+    "countries",
+    "experience"
+  ],
+  "summary_1l": "Experience gained from the Global Malaria Eradication Program (1955-72) identified a set of shared technical and operational factor",
+  "query_hits": [],
+  "embed_text": "1173667 Ranking of elimination feasibility between malaria-endemic countries science scifact Experience gained from the Global Malaria Eradication Program (1955-72) identified a set of shared technical and operational factors that enabled some countries to successfully eliminate malaria. Spatial data for these factors were… 1173667 ranking-of-elimination-feasibility-between-malaria-endemic-countries ranking elimination feasibility between malaria endemic countries experience Experience gained from the Global Malaria Eradication Program (1955-72) identified a set of shared technical and operational factor Ranking of elimination feasibility between malaria-endemic countries Experience gained from the Global Malaria Eradication Program (1955-72) identified a set of shared technical and operational factors that enabled some countries to successfully eliminate malaria. Spatial data for these factors were assembled for all malaria-endemic countries and combined to provide an objective, relative ranking of countries by technical, operational, and combined elimination feasibility. The analysis was done separately for Plasmodium falciparum and Plasmodium vivax, and the limitations of the approach were discussed. The relative rankings suggested that malaria elimination would be most feasible in countries in the Americas and Asia, and least feasible in countries in central and west Africa. The result",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:07.050934+00:00"
+}

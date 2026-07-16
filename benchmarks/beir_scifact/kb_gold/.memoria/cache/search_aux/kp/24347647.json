@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24347647",
+  "source_fingerprint": "4be0182b8a40848196d8948daa8aa699",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24347647",
+    "decreased-proteasomal-activity-causes-age-related-phenotypes-and-promotes-the-development-of-metabolic-abnormalities."
+  ],
+  "key_phrases": [
+    "decreased",
+    "proteasomal",
+    "activity",
+    "causes",
+    "age",
+    "related",
+    "phenotypes",
+    "promotes"
+  ],
+  "summary_1l": "Decreased proteasomal activity causes age-related phenotypes and promotes the development of metabolic abnormalities.",
+  "query_hits": [],
+  "embed_text": "24347647 Decreased proteasomal activity causes age-related phenotypes and promotes the development of metabolic abnormalities. science scifact The proteasome is a multicatalytic enzyme complex responsible for the degradation of both normal and damaged proteins. An age-related decline in proteasomal activity has been implicated in various age-related pathologies. The relevance of… 24347647 decreased-proteasomal-activity-causes-age-related-phenotypes-and-promotes-the-development-of-metabolic-abnormalities. decreased proteasomal activity causes age related phenotypes promotes Decreased proteasomal activity causes age-related phenotypes and promotes the development of metabolic abnormalities. Decreased proteasomal activity causes age-related phenotypes and promotes the development of metabolic abnormalities. The proteasome is a multicatalytic enzyme complex responsible for the degradation of both normal and damaged proteins. An age-related decline in proteasomal activity has been implicated in various age-related pathologies. The relevance of decreased proteasomal activity to aging and age-related diseases remains unclear, however, because suitable animal models are not available. In the present study, we established a transgenic (Tg) mouse model with decreased proteasomal chymotrypsin-like activity. Tg mice exhibited a shortened life span and developed age-related phenotypes. In Tg mice, polyubiquitinated and oxidized proteins accumulated, and the expression levels of cellular",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.296119+00:00"
+}

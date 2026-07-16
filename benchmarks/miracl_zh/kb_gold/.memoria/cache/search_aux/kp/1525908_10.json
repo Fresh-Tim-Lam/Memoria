@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "kp_id": "1525908#10",
+  "source_fingerprint": "eb6f3086481107d4b1df8b1b1caa2f8d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "印度文化",
+    "日本文化",
+    "日本流行文化",
+    "福建文化",
+    "马来西亚文化"
+  ],
+  "aliases": [
+    "1525908#10"
+  ],
+  "key_phrases": [
+    "武汉",
+    "文化",
+    "其他",
+    "特色小吃",
+    "有面",
+    "糊汤粉",
+    "欢喜",
+    "糯米鸡"
+  ],
+  "summary_1l": "其他的特色小吃有面窝、糊汤粉、欢喜坨、糯米鸡 (武汉)等等。",
+  "query_hits": [],
+  "embed_text": "1525908#10 武汉文化 武汉文化 其他的特色小吃有面窝、糊汤粉、欢喜坨、糯米鸡 (武汉)等等。更有多种汤粉、面条、蒸饺、包子，等等。 印度文化 日本文化 日本流行文化 福建文化 马来西亚文化 1525908#10 武汉 文化 其他 特色小吃 有面 糊汤粉 欢喜 糯米鸡 其他的特色小吃有面窝、糊汤粉、欢喜坨、糯米鸡 (武汉)等等。 武汉文化 其他的特色小吃有面窝、糊汤粉、欢喜坨、糯米鸡 (武汉)等等。更有多种汤粉、面条、蒸饺、包子，等等。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:21:32.244267+00:00"
+}

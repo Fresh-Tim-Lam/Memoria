@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "kp_id": "97858#4",
+  "source_fingerprint": "55c7333626af3dd99416d356a7357b84",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "细胞分化"
+  ],
+  "aliases": [
+    "97858#4"
+  ],
+  "key_phrases": [
+    "蚂蚁",
+    "螞蟻",
+    "社會",
+    "性動物",
+    "分工",
+    "方式",
+    "粗分",
+    "二種"
+  ],
+  "summary_1l": "螞蟻是真社會性動物，其分工方式可粗分為二種，依照形態分化分工及依照年齡分工，形態多形性（morph polyethism）與年齡多形性（age polyethism）。",
+  "query_hits": [],
+  "embed_text": "97858#4 蚂蚁 蚂蚁 螞蟻是真社會性動物，其分工方式可粗分為二種，依照形態分化分工及依照年齡分工，形態多形性（morph polyethism）與年齡多形性（age polyethism）。 细胞分化 97858#4 蚂蚁 螞蟻 社會 性動物 分工 方式 粗分 二種 螞蟻是真社會性動物，其分工方式可粗分為二種，依照形態分化分工及依照年齡分工，形態多形性（morph polyethism）與年齡多形性（age polyethism）。 蚂蚁 螞蟻是真社會性動物，其分工方式可粗分為二種，依照形態分化分工及依照年齡分工，形態多形性（morph polyethism）與年齡多形性（age polyethism）。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:19:27.342491+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22922353",
+  "source_fingerprint": "b6d826391aa34e1b362a08836ac9d6bf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22922353",
+    "prevalence-of-attempting-weight-loss-and-strategies-for-controlling-weight."
+  ],
+  "key_phrases": [
+    "prevalence",
+    "attempting",
+    "weight",
+    "loss",
+    "strategies",
+    "controlling",
+    "context",
+    "overweight"
+  ],
+  "summary_1l": "Prevalence of attempting weight loss and strategies for controlling weight.",
+  "query_hits": [],
+  "embed_text": "22922353 Prevalence of attempting weight loss and strategies for controlling weight. science scifact CONTEXT Overweight and obesity are increasing in the United States. Changes in diet and physical activity are important for weight control. OBJECTIVES To examine the prevalence of attempting to lose or to maintain weight and to describe… 22922353 prevalence-of-attempting-weight-loss-and-strategies-for-controlling-weight. prevalence attempting weight loss strategies controlling context overweight Prevalence of attempting weight loss and strategies for controlling weight. Prevalence of attempting weight loss and strategies for controlling weight. CONTEXT Overweight and obesity are increasing in the United States. Changes in diet and physical activity are important for weight control. OBJECTIVES To examine the prevalence of attempting to lose or to maintain weight and to describe weight control strategies among US adults. DESIGN The Behavioral Risk Factor Surveillance System, a random-digit telephone survey conducted in 1996 by state health departments. Setting The 49 states (and the District of Columbia) that participated in the survey. PARTICIPANTS Adults aged 18 years and older (N = 107 804). MAIN OUTCOME MEASURES Reported current weights and goal weights, prevalence of weight loss or maintenance attempts, and strategies used to control weight (eating few",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.538328+00:00"
+}

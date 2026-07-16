@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8083310",
+  "source_fingerprint": "bca9145f9c061d50974855c76f18a35c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8083310",
+    "rps14-haploinsufficiency-causes-a-block-in-erythroid-differentiation-mediated-by-s100a8-and-s100a9"
+  ],
+  "key_phrases": [
+    "rps14",
+    "haploinsufficiency",
+    "causes",
+    "block",
+    "erythroid",
+    "differentiation",
+    "mediated",
+    "by"
+  ],
+  "summary_1l": "Impaired erythropoiesis in the deletion 5q (del(5q)) subtype of myelodysplastic syndrome (MDS) has be",
+  "query_hits": [],
+  "embed_text": "8083310 Rps14 haploinsufficiency causes a block in erythroid differentiation mediated by S100A8 and S100A9 science scifact Impaired erythropoiesis in the deletion 5q (del(5q)) subtype of myelodysplastic syndrome (MDS) has been linked to heterozygous deletion of RPS14, which encodes the ribosomal protein small subunit 14. We generated mice with conditional… 8083310 rps14-haploinsufficiency-causes-a-block-in-erythroid-differentiation-mediated-by-s100a8-and-s100a9 rps14 haploinsufficiency causes block erythroid differentiation mediated by Impaired erythropoiesis in the deletion 5q (del(5q)) subtype of myelodysplastic syndrome (MDS) has be Rps14 haploinsufficiency causes a block in erythroid differentiation mediated by S100A8 and S100A9 Impaired erythropoiesis in the deletion 5q (del(5q)) subtype of myelodysplastic syndrome (MDS) has been linked to heterozygous deletion of RPS14, which encodes the ribosomal protein small subunit 14. We generated mice with conditional inactivation of Rps14 and demonstrated an erythroid differentiation defect that is dependent on the tumor suppressor protein p53 (encoded by Trp53 in mice) and is characterized by apoptosis at the transition from polychromatic to orthochromatic erythroblasts. This defect resulted in age-dependent progressive anemia, megakaryocyte dysplasia and loss of hematopoietic stem cell (HSC) quiescence. As assessed by quantitative proteomics, mutant erythroblasts expressed",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.884593+00:00"
+}

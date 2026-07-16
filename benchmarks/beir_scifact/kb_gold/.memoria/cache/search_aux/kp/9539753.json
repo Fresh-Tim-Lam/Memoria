@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9539753",
+  "source_fingerprint": "d0c519a11bbe54005f82931cb3962e1e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9539753",
+    "nuclear-rnai-maintains-heritable-gene-silencing-in-caenorhabditis-elegans."
+  ],
+  "key_phrases": [
+    "nuclear",
+    "rnai",
+    "maintains",
+    "heritable",
+    "gene",
+    "silencing",
+    "caenorhabditis",
+    "elegans"
+  ],
+  "summary_1l": "Nuclear RNAi maintains heritable gene silencing in Caenorhabditis elegans.",
+  "query_hits": [],
+  "embed_text": "9539753 Nuclear RNAi maintains heritable gene silencing in Caenorhabditis elegans. science scifact RNA interference (RNAi) is heritable in Caenorhabditis elegans; the progeny of C. elegans exposed to dsRNA inherit the ability to silence genes that were targeted by RNAi in the previous generation. Here we investigate the mechanism of… 9539753 nuclear-rnai-maintains-heritable-gene-silencing-in-caenorhabditis-elegans. nuclear rnai maintains heritable gene silencing caenorhabditis elegans Nuclear RNAi maintains heritable gene silencing in Caenorhabditis elegans. Nuclear RNAi maintains heritable gene silencing in Caenorhabditis elegans. RNA interference (RNAi) is heritable in Caenorhabditis elegans; the progeny of C. elegans exposed to dsRNA inherit the ability to silence genes that were targeted by RNAi in the previous generation. Here we investigate the mechanism of RNAi inheritance in C. elegans. We show that exposure of animals to dsRNA results in the heritable expression of siRNAs and the heritable deposition of histone 3 lysine 9 methylation (H3K9me) marks in progeny. siRNAs are detectable before the appearance of H3K9me marks, suggesting that chromatin marks are not directly inherited but, rather, reestablished in inheriting progeny. Interestingly, H3K9me marks appear more prominently in inheriting progeny than in animals directly exposed to",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.168746+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36033696",
+  "source_fingerprint": "1a8ac30c73828e1c4f191fea5b7121a4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36033696",
+    "a-wellness-class-for-inpatients-with-psychotic-disorders."
+  ],
+  "key_phrases": [
+    "wellness",
+    "class",
+    "inpatients",
+    "with",
+    "psychotic",
+    "disorders",
+    "objective",
+    "purpose"
+  ],
+  "summary_1l": "A wellness class for inpatients with psychotic disorders.",
+  "query_hits": [],
+  "embed_text": "36033696 A wellness class for inpatients with psychotic disorders. science scifact OBJECTIVE The purpose of this project was to educate inpatients with psychotic disorders, many of whom were taking second-generation antipsychotics, about lifestyle changes they can make to combat weight gain. METHOD All inpatients on a… 36033696 a-wellness-class-for-inpatients-with-psychotic-disorders. wellness class inpatients with psychotic disorders objective purpose A wellness class for inpatients with psychotic disorders. A wellness class for inpatients with psychotic disorders. OBJECTIVE The purpose of this project was to educate inpatients with psychotic disorders, many of whom were taking second-generation antipsychotics, about lifestyle changes they can make to combat weight gain. METHOD All inpatients on a Veterans Affairs acute inpatient schizophrenia treatment unit were invited to a 30-minute, didactic presentation given by a medical student and a psychology student under the supervision of the primary investigator. The topics covered included the health benefits of maintaining an ideal body weight by selecting foods according to the USDA Food Pyramid, determining adequate food portions, choosing healthy meals outside the home, and beginning and adhering to an exercise program. Subjects completed a 1",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.817055+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36830715",
+  "source_fingerprint": "2ad7b97b9a245cbd25c53808817d4105",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36830715",
+    "microtubule-stabilization-reduces-scarring-and-causes-axon-regeneration-after-spinal-cord-injury."
+  ],
+  "key_phrases": [
+    "microtubule",
+    "stabilization",
+    "reduces",
+    "scarring",
+    "causes",
+    "axon",
+    "regeneration",
+    "after"
+  ],
+  "summary_1l": "Microtubule stabilization reduces scarring and causes axon regeneration after spinal cord injury.",
+  "query_hits": [],
+  "embed_text": "36830715 Microtubule stabilization reduces scarring and causes axon regeneration after spinal cord injury. science scifact Hypertrophic scarring and poor intrinsic axon growth capacity constitute major obstacles for spinal cord repair. These processes are tightly regulated by microtubule dynamics. Here, moderate microtubule stabilization decreased scar… 36830715 microtubule-stabilization-reduces-scarring-and-causes-axon-regeneration-after-spinal-cord-injury. microtubule stabilization reduces scarring causes axon regeneration after Microtubule stabilization reduces scarring and causes axon regeneration after spinal cord injury. Microtubule stabilization reduces scarring and causes axon regeneration after spinal cord injury. Hypertrophic scarring and poor intrinsic axon growth capacity constitute major obstacles for spinal cord repair. These processes are tightly regulated by microtubule dynamics. Here, moderate microtubule stabilization decreased scar formation after spinal cord injury in rodents through various cellular mechanisms, including dampening of transforming growth factor-β signaling. It prevented accumulation of chondroitin sulfate proteoglycans and rendered the lesion site permissive for axon regeneration of growth-competent sensory neurons. Microtubule stabilization also promoted growth of central nervous system axons of the Raphe-spinal tract and led to functional improvement. Thus, microtubule stab",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:43.740973+00:00"
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "76776022",
+  "source_fingerprint": "7e899f3ff0d75fe4357992868348256e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "76776022"
+  ],
+  "key_phrases": [
+    "beh",
+    "et",
+    "disease",
+    "associated",
+    "with",
+    "lymphoproliferative",
+    "disorder",
+    "mixed"
+  ],
+  "summary_1l": "Behçet's disease associated with a lymphoproliferative disorder, mixed cryoglobulinemia, and an immune complex mediated vasculitis.",
+  "query_hits": [],
+  "embed_text": "76776022 Behçet's disease associated with a lymphoproliferative disorder, mixed cryoglobulinemia, and an immune complex mediated vasculitis. science scifact Abstract A woman, now 59 has been followed for 13 years with several manifestations of Behcet's disease. These were aphthous stomatitis, genital ulcers, uveitis causing blindness, recurrent erythema nodosum, and synovitis. In 1970 a poorly… 76776022 beh et disease associated with lymphoproliferative disorder mixed Behçet's disease associated with a lymphoproliferative disorder, mixed cryoglobulinemia, and an immune complex mediated vasculitis. Behçet's disease associated with a lymphoproliferative disorder, mixed cryoglobulinemia, and an immune complex mediated vasculitis. Abstract A woman, now 59 has been followed for 13 years with several manifestations of Behcet's disease. These were aphthous stomatitis, genital ulcers, uveitis causing blindness, recurrent erythema nodosum, and synovitis. In 1970 a poorly differentiated diffuse lymphocytic lymphoma appeared and was treated with radiotherapy. In 1976 she developed a mixed cryoglobulinemia and an immune complex mediated vasculitis manifested by purpura and neuropathy which improved on prednisone and chlorambucil therapy. The subsequent course of her lymphoproliferative disorder suggest that it was in fact benign.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.000268+00:00"
+}

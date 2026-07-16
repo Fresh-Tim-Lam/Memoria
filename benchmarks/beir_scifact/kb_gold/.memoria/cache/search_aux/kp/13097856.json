@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13097856",
+  "source_fingerprint": "ce2487a041b5a16f632ea3d333a313d7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13097856",
+    "suicide-prevention-strategies:-a-systematic-review."
+  ],
+  "key_phrases": [
+    "suicide",
+    "prevention",
+    "strategies",
+    "systematic",
+    "review",
+    "context",
+    "2002",
+    "estimated"
+  ],
+  "summary_1l": "Suicide prevention strategies: a systematic review.",
+  "query_hits": [],
+  "embed_text": "13097856 Suicide prevention strategies: a systematic review. science scifact CONTEXT In 2002, an estimated 877,000 lives were lost worldwide through suicide. Some developed nations have implemented national suicide prevention plans. Although these plans generally propose multiple interventions, their effectiveness… 13097856 suicide-prevention-strategies:-a-systematic-review. suicide prevention strategies systematic review context 2002 estimated Suicide prevention strategies: a systematic review. Suicide prevention strategies: a systematic review. CONTEXT In 2002, an estimated 877,000 lives were lost worldwide through suicide. Some developed nations have implemented national suicide prevention plans. Although these plans generally propose multiple interventions, their effectiveness is rarely evaluated. OBJECTIVES To examine evidence for the effectiveness of specific suicide-preventive interventions and to make recommendations for future prevention programs and research. DATA SOURCES AND STUDY SELECTION Relevant publications were identified via electronic searches of MEDLINE, the Cochrane Library, and PsychINFO databases using multiple search terms related to suicide prevention. Studies, published between 1966 and June 2005, included those that evaluated preventative interventions i",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:09.651891+00:00"
+}

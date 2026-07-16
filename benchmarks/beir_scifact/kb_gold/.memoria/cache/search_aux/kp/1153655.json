@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1153655",
+  "source_fingerprint": "52930438a8fac68869c8ffeedf0b2eaa",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1153655",
+    "familial-risk-of-lymphoproliferative-tumors-in-families-of-patients-with-chronic-lymphocytic-leukemia:-results-from-the-swedish-family-cancer-database."
+  ],
+  "key_phrases": [
+    "familial",
+    "risk",
+    "lymphoproliferative",
+    "tumors",
+    "families",
+    "patients",
+    "with",
+    "chronic"
+  ],
+  "summary_1l": "Familial risk of lymphoproliferative tumors in families of patients with chronic lymphocytic leukemia: results from the Swedish Family-Cancer Database.",
+  "query_hits": [],
+  "embed_text": "1153655 Familial risk of lymphoproliferative tumors in families of patients with chronic lymphocytic leukemia: results from the Swedish Family-Cancer Database. science scifact The importance of genetic factors in etiology of chronic lymphocytic leukemia (CLL) is suggested by family and population studies. However, the spectrum of malignancies sharing common genetic factors with CLL and the effects of sex and age… 1153655 familial-risk-of-lymphoproliferative-tumors-in-families-of-patients-with-chronic-lymphocytic-leukemia:-results-from-the-swedish-family-cancer-database. familial risk lymphoproliferative tumors families patients with chronic Familial risk of lymphoproliferative tumors in families of patients with chronic lymphocytic leukemia: results from the Swedish Family-Cancer Database. Familial risk of lymphoproliferative tumors in families of patients with chronic lymphocytic leukemia: results from the Swedish Family-Cancer Database. The importance of genetic factors in etiology of chronic lymphocytic leukemia (CLL) is suggested by family and population studies. However, the spectrum of malignancies sharing common genetic factors with CLL and the effects of sex and age on familial risk are unknown. We used the Swedish Family-Cancer Database to test for increased familial risks of CLL and other lymphoproliferative tumors. Cancer diagnoses from 1958 to 1998 were assessed in 14 336 first-degree relatives of 5918 CLL cases and in 28 876 first-degree relatives of 11 778 controls. Cancer risks in relatives of cases were compared with those in relatives of controls using margi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:06.691888+00:00"
+}

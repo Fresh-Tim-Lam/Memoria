@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13905670",
+  "source_fingerprint": "c6649c01467a7df37f2b3b45a9791e1d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13905670",
+    "human-snp-links-differential-outcomes-in-inflammatory-and-infectious-disease-to-a-foxo3-regulated-pathway"
+  ],
+  "key_phrases": [
+    "human",
+    "snp",
+    "links",
+    "differential",
+    "outcomes",
+    "inflammatory",
+    "infectious",
+    "disease"
+  ],
+  "summary_1l": "The clinical course and eventual outcome, or prognosis, of complex diseases varies enormously",
+  "query_hits": [],
+  "embed_text": "13905670 Human SNP Links Differential Outcomes in Inflammatory and Infectious Disease to a FOXO3-Regulated Pathway science scifact The clinical course and eventual outcome, or prognosis, of complex diseases varies enormously between affected individuals. This variability critically determines the impact a disease has on a patient's life but is very poorly understood.… 13905670 human-snp-links-differential-outcomes-in-inflammatory-and-infectious-disease-to-a-foxo3-regulated-pathway human snp links differential outcomes inflammatory infectious disease The clinical course and eventual outcome, or prognosis, of complex diseases varies enormously Human SNP Links Differential Outcomes in Inflammatory and Infectious Disease to a FOXO3-Regulated Pathway The clinical course and eventual outcome, or prognosis, of complex diseases varies enormously between affected individuals. This variability critically determines the impact a disease has on a patient's life but is very poorly understood. Here, we exploit existing genome-wide association study data to gain insight into the role of genetics in prognosis. We identify a noncoding polymorphism in FOXO3A (rs12212067: T > G) at which the minor (G) allele, despite not being associated with disease susceptibility, is associated with a milder course of Crohn's disease and rheumatoid arthritis and with increased risk of severe malaria. Minor allele carriage is shown to limit inflammatory respons",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.436591+00:00"
+}

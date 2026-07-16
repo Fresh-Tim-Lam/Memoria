@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "28107602",
+  "source_fingerprint": "b4bf732772f5f99555637a748c26ea38",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "28107602",
+    "schedule-dependent-interaction-between-anticancer-treatments"
+  ],
+  "key_phrases": [
+    "schedule",
+    "dependent",
+    "interaction",
+    "between",
+    "anticancer",
+    "treatments",
+    "oncogene",
+    "mdmx"
+  ],
+  "summary_1l": "The oncogene MDMX is overexpressed in many cancers, leading to suppression of the tumor suppressor p53.",
+  "query_hits": [],
+  "embed_text": "28107602 Schedule-dependent interaction between anticancer treatments science scifact The oncogene MDMX is overexpressed in many cancers, leading to suppression of the tumor suppressor p53. Inhibitors of the oncogene product MDMX therefore might help reactivate p53 and enhance the efficacy of DNA-damaging drugs. However, we… 28107602 schedule-dependent-interaction-between-anticancer-treatments schedule dependent interaction between anticancer treatments oncogene mdmx The oncogene MDMX is overexpressed in many cancers, leading to suppression of the tumor suppressor p53. Schedule-dependent interaction between anticancer treatments The oncogene MDMX is overexpressed in many cancers, leading to suppression of the tumor suppressor p53. Inhibitors of the oncogene product MDMX therefore might help reactivate p53 and enhance the efficacy of DNA-damaging drugs. However, we currently lack a quantitative understanding of how MDMX inhibition affects the p53 signaling pathway and cell sensitivity to DNA damage. Live cell imaging showed that MDMX depletion triggered two distinct phases of p53 accumulation in single cells: an initial postmitotic pulse, followed by low-amplitude oscillations. The response to DNA damage was sharply different in these two phases; in the first phase, MDMX depletion was synergistic with DNA damage in causing cell death, whereas in the secon",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.581538+00:00"
+}

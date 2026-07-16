@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "43890638",
+  "source_fingerprint": "4a4857638e81224cca1358cda37c884d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "43890638",
+    "hydrogen-sulphide-regulates-intracellular-ph-in-vascular-smooth-muscle-cells."
+  ],
+  "key_phrases": [
+    "hydrogen",
+    "sulphide",
+    "regulates",
+    "intracellular",
+    "ph",
+    "vascular",
+    "smooth",
+    "muscle"
+  ],
+  "summary_1l": "Hydrogen sulphide regulates intracellular pH in vascular smooth muscle cells.",
+  "query_hits": [],
+  "embed_text": "43890638 Hydrogen sulphide regulates intracellular pH in vascular smooth muscle cells. science scifact We investigated the role of hydrogen sulphide (H(2)S) in intracellular pH (pH(i)) regulation in vascular smooth muscle cells and its contribution on vasodilation. NaHS, a H(2)S donor, decreased pH(i) in a concentration-dependent manner… 43890638 hydrogen-sulphide-regulates-intracellular-ph-in-vascular-smooth-muscle-cells. hydrogen sulphide regulates intracellular ph vascular smooth muscle Hydrogen sulphide regulates intracellular pH in vascular smooth muscle cells. Hydrogen sulphide regulates intracellular pH in vascular smooth muscle cells. We investigated the role of hydrogen sulphide (H(2)S) in intracellular pH (pH(i)) regulation in vascular smooth muscle cells and its contribution on vasodilation. NaHS, a H(2)S donor, decreased pH(i) in a concentration-dependent manner ranging from 10 microM to 1mM. Neither inhibition of the Na(+)/H(+) exchanger with 5-(N-ethyl-N-isopropyl) amiloride, (EIPA, 10 microM), nor plasmalemmal Ca(2+)-ATPase with CdCl(2) (20nM) alters the effect of NaHS on pH(i). Blockade of the Cl(-)/HCO3- exchanger with 4,4'-diisothiocyanatostilbene-2,2'-disulfonic acid (DIDS) significantly attenuated the pH(i) lowering effect of NaHS. Moreover, NaHS significantly increased the activity of Cl(-)/HCO3- exchanger when measured with NH(4)",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.429895+00:00"
+}

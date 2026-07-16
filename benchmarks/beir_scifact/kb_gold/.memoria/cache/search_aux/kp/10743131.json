@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10743131",
+  "source_fingerprint": "83dbe77254a1dd360c705a04f5998caf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10743131",
+    "model-based-geostatistics"
+  ],
+  "key_phrases": [
+    "model",
+    "based",
+    "geostatistics",
+    "concerned",
+    "with",
+    "estimation",
+    "prediction",
+    "problems"
+  ],
+  "summary_1l": "Geostatistics is concerned with estimation and prediction problems for spatially continuous phenomena, using data obtained at a limited number of spatial locations.",
+  "query_hits": [],
+  "embed_text": "10743131 Model-based Geostatistics science scifact Geostatistics is concerned with estimation and prediction problems for spatially continuous phenomena, using data obtained at a limited number of spatial locations. Model-based geostatistics refers to the application of general statistical… 10743131 model-based-geostatistics model based geostatistics concerned with estimation prediction problems Geostatistics is concerned with estimation and prediction problems for spatially continuous phenomena, using data obtained at a limited number of spatial locations. Model-based Geostatistics Geostatistics is concerned with estimation and prediction problems for spatially continuous phenomena, using data obtained at a limited number of spatial locations. Model-based geostatistics refers to the application of general statistical principles of modelling and inference to geostatisatical problems. This volume is the first book-length treatment of model-based geostatistics.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:05.423623+00:00"
+}

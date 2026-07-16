@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12058271",
+  "source_fingerprint": "c7cce6710f0d91b59009f56c08f39d10",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12058271",
+    "role-of-the-cxcr4/sdf-1-chemokine-axis-in-circulating-neutrophil-homeostasis."
+  ],
+  "key_phrases": [
+    "role",
+    "cxcr4",
+    "sdf",
+    "chemokine",
+    "axis",
+    "circulating",
+    "neutrophil",
+    "homeostasis"
+  ],
+  "summary_1l": "Role of the CXCR4/SDF-1 chemokine axis in circulating neutrophil homeostasis.",
+  "query_hits": [],
+  "embed_text": "12058271 Role of the CXCR4/SDF-1 chemokine axis in circulating neutrophil homeostasis. science scifact The bone marrow is the primary site for neutrophil production and release into the circulation. Because the CXC chemokine receptor-4/stromal derived factor-1 (CXCR4/SDF-1) axis plays a central role in the interactions of hematopoietic stem… 12058271 role-of-the-cxcr4/sdf-1-chemokine-axis-in-circulating-neutrophil-homeostasis. role cxcr4 sdf chemokine axis circulating neutrophil homeostasis Role of the CXCR4/SDF-1 chemokine axis in circulating neutrophil homeostasis. Role of the CXCR4/SDF-1 chemokine axis in circulating neutrophil homeostasis. The bone marrow is the primary site for neutrophil production and release into the circulation. Because the CXC chemokine receptor-4/stromal derived factor-1 (CXCR4/SDF-1) axis plays a central role in the interactions of hematopoietic stem cells, lymphocytes, and developing neutrophils in the marrow, we investigated whether reciprocal CXCR4-dependent mechanisms might be involved in neutrophil release and subsequent return to the marrow following circulation. Neutralizing antibody to CXCR4 reduced marrow retention of infused neutrophils (45.7% +/- 0.5% to 6.9% +/- 0.5%) and was found to mobilize neutrophils from marrow (34.4% +/- 4.4%). Neutrophil CXCR4 expression and SDF-1-induced calcium flux decreased with matu",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:08.169672+00:00"
+}

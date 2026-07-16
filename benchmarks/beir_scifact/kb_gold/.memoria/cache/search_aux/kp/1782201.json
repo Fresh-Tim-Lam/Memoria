@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "1782201",
+  "source_fingerprint": "46d329d2e7667b4b6e2c519cc3f4265b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1782201"
+  ],
+  "key_phrases": [
+    "integrin",
+    "src",
+    "oncogenic",
+    "unit",
+    "promotes",
+    "anchorage",
+    "independence",
+    "tumor"
+  ],
+  "summary_1l": "Integrins regulate adhesion-dependent growth, survival and invasion of tumor cells.",
+  "query_hits": [],
+  "embed_text": "1782201 Integrin αvβ3/c-src “Oncogenic Unit” Promotes Anchorage-independence and Tumor Progression science scifact Integrins regulate adhesion-dependent growth, survival and invasion of tumor cells. In particular, expression of integrin alpha(v)beta(3) is associated with progression of a variety of human tumors. Here we reveal a previously undescribed… 1782201 integrin src oncogenic unit promotes anchorage independence tumor Integrins regulate adhesion-dependent growth, survival and invasion of tumor cells. Integrin αvβ3/c-src “Oncogenic Unit” Promotes Anchorage-independence and Tumor Progression Integrins regulate adhesion-dependent growth, survival and invasion of tumor cells. In particular, expression of integrin alpha(v)beta(3) is associated with progression of a variety of human tumors. Here we reveal a previously undescribed adhesion-independent role for integrin alpha(v)beta(3) in pancreatic cancer and other carcinomas. Specifically, alpha(v)beta(3) expressed in carcinoma cells enhanced anchorage-independent tumor growth in vitro and increased lymph node metastases in vivo. These effects required recruitment of c-Src to the beta(3) integrin cytoplasmic tail, leading to c-Src activation, Crk-associated substrate (CAS) phosphorylation and tumor cell survival that, unexpectedly, was indep",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.349800+00:00"
+}

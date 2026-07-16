@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "35543846",
+  "source_fingerprint": "fcada6cbe42f824c3388ddfb05ebc29c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "35543846",
+    "metabolic-analysis-of-senescent-human-fibroblasts-reveals-a-role-for-amp-in-cellular-senescence."
+  ],
+  "key_phrases": [
+    "metabolic",
+    "analysis",
+    "senescent",
+    "human",
+    "fibroblasts",
+    "reveals",
+    "role",
+    "amp"
+  ],
+  "summary_1l": "Metabolic analysis of senescent human fibroblasts reveals a role for AMP in cellular senescence.",
+  "query_hits": [],
+  "embed_text": "35543846 Metabolic analysis of senescent human fibroblasts reveals a role for AMP in cellular senescence. science scifact Cellular senescence is considered a major tumour-suppressor mechanism in mammals, and many oncogenic insults, such as the activation of the ras proto-oncogene, trigger initiation of the senescence programme. Although it was shown that… 35543846 metabolic-analysis-of-senescent-human-fibroblasts-reveals-a-role-for-amp-in-cellular-senescence. metabolic analysis senescent human fibroblasts reveals role amp Metabolic analysis of senescent human fibroblasts reveals a role for AMP in cellular senescence. Metabolic analysis of senescent human fibroblasts reveals a role for AMP in cellular senescence. Cellular senescence is considered a major tumour-suppressor mechanism in mammals, and many oncogenic insults, such as the activation of the ras proto-oncogene, trigger initiation of the senescence programme. Although it was shown that activation of the senescence programme involves the up-regulation of cell-cycle regulators such as the inhibitors of cyclin-dependent kinases p16INK4A and p21CIP-1, the mechanisms underlying the senescence response remain to be resolved. In the case of stress-induced premature senescence, reactive oxygen species are considered important intermediates contributing to the phenotype. Moreover, distinct alterations of the cellular carbohydrate metabolism are known to",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.391589+00:00"
+}

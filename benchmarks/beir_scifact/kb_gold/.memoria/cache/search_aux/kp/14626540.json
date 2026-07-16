@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14626540",
+  "source_fingerprint": "93da65624e27d3cdfc715254081a39c9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14626540",
+    "a-phase-i-study-of-pf-04449913,-an-oral-hedgehog-inhibitor,-in-patients-with-advanced-solid-tumors."
+  ],
+  "key_phrases": [
+    "phase",
+    "study",
+    "pf",
+    "04449913",
+    "oral",
+    "hedgehog",
+    "inhibitor",
+    "patients"
+  ],
+  "summary_1l": "A phase I study of PF-04449913, an oral hedgehog inhibitor, in patients with advanced solid tumors.",
+  "query_hits": [],
+  "embed_text": "14626540 A phase I study of PF-04449913, an oral hedgehog inhibitor, in patients with advanced solid tumors. science scifact PURPOSE To estimate the maximum tolerated dose (MTD) of single-agent PF-04449913, and to evaluate safety, tolerability, pharmacokinetics, pharmacodynamics, and preliminary antitumor activity in patients with advanced tumors. EXPERIMENTAL… 14626540 a-phase-i-study-of-pf-04449913,-an-oral-hedgehog-inhibitor,-in-patients-with-advanced-solid-tumors. phase study pf 04449913 oral hedgehog inhibitor patients A phase I study of PF-04449913, an oral hedgehog inhibitor, in patients with advanced solid tumors. A phase I study of PF-04449913, an oral hedgehog inhibitor, in patients with advanced solid tumors. PURPOSE To estimate the maximum tolerated dose (MTD) of single-agent PF-04449913, and to evaluate safety, tolerability, pharmacokinetics, pharmacodynamics, and preliminary antitumor activity in patients with advanced tumors. EXPERIMENTAL DESIGN A 3+3 design was used in this open-label, multicenter, phase I study and dose escalation/de-escalation applied until identification of the MTD. PF-04449913 was orally administered once daily in continuous 28-day treatment cycles. The starting dose was 80 mg. RESULTS A total of 23 patients were enrolled; 19 were evaluable for first-cycle dose-limiting toxicity (DLT). The first-cycle DLT rate at the 640 mg dose level was 33.3%, and the MTD was estimated",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.292676+00:00"
+}

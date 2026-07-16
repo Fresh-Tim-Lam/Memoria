@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4380451",
+  "source_fingerprint": "a2c08bbe0af98ba5d3d2e53e67e18e30",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4380451",
+    "reprogramming-of-human-somatic-cells-to-pluripotency-with-defined-factors"
+  ],
+  "key_phrases": [
+    "reprogramming",
+    "human",
+    "somatic",
+    "cells",
+    "pluripotency",
+    "with",
+    "defined",
+    "factors"
+  ],
+  "summary_1l": "Pluripotency pertains to the cells of early embryos that can generate all of the tissues in the organism.",
+  "query_hits": [],
+  "embed_text": "4380451 Reprogramming of human somatic cells to pluripotency with defined factors science scifact Pluripotency pertains to the cells of early embryos that can generate all of the tissues in the organism. Embryonic stem cells are embryo-derived cell lines that retain pluripotency and represent invaluable tools for research into the… 4380451 reprogramming-of-human-somatic-cells-to-pluripotency-with-defined-factors reprogramming human somatic cells pluripotency with defined factors Pluripotency pertains to the cells of early embryos that can generate all of the tissues in the organism. Reprogramming of human somatic cells to pluripotency with defined factors Pluripotency pertains to the cells of early embryos that can generate all of the tissues in the organism. Embryonic stem cells are embryo-derived cell lines that retain pluripotency and represent invaluable tools for research into the mechanisms of tissue formation. Recently, murine fibroblasts have been reprogrammed directly to pluripotency by ectopic expression of four transcription factors (Oct4, Sox2, Klf4 and Myc) to yield induced pluripotent stem (iPS) cells. Using these same factors, we have derived iPS cells from fetal, neonatal and adult human primary cells, including dermal fibroblasts isolated from a skin biopsy of a healthy research subject. Human iPS cells resemble embryonic stem cells in morphology and",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.302065+00:00"
+}

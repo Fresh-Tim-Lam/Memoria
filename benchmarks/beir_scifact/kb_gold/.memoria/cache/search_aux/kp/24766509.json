@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24766509",
+  "source_fingerprint": "669d839f863922e027415bf11a676fc9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24766509",
+    "differentiation-of-mesenchymal-stem-cells-and-embryonic-stem-cells-into-steroidogenic-cells-using-steroidogenic-factor-1-and-liver-receptor-homolog-1."
+  ],
+  "key_phrases": [
+    "differentiation",
+    "mesenchymal",
+    "stem",
+    "cells",
+    "embryonic",
+    "into",
+    "steroidogenic",
+    "using"
+  ],
+  "summary_1l": "Differentiation of mesenchymal stem cells and embryonic stem cells into steroidogenic cells using steroidogenic factor-1 and liver receptor homolog-1.",
+  "query_hits": [],
+  "embed_text": "24766509 Differentiation of mesenchymal stem cells and embryonic stem cells into steroidogenic cells using steroidogenic factor-1 and liver receptor homolog-1. science scifact Previously, we have demonstrated that mesenchymal stem cells could be differentiated into steroidogenic cells through steroidogenic factor-1 and 8bromo-cAMP treatment. Use of liver receptor homolog-1, another of the nuclear receptor 5A… 24766509 differentiation-of-mesenchymal-stem-cells-and-embryonic-stem-cells-into-steroidogenic-cells-using-steroidogenic-factor-1-and-liver-receptor-homolog-1. differentiation mesenchymal stem cells embryonic into steroidogenic using Differentiation of mesenchymal stem cells and embryonic stem cells into steroidogenic cells using steroidogenic factor-1 and liver receptor homolog-1. Differentiation of mesenchymal stem cells and embryonic stem cells into steroidogenic cells using steroidogenic factor-1 and liver receptor homolog-1. Previously, we have demonstrated that mesenchymal stem cells could be differentiated into steroidogenic cells through steroidogenic factor-1 and 8bromo-cAMP treatment. Use of liver receptor homolog-1, another of the nuclear receptor 5A family nuclear receptors, with 8bromo-cAMP also resulted in the differentiation of human mesenchymal stem cells into steroid hormone-producing cells. The same approaches could not be applied to other undifferentiated cells such as embryonic stem cells or embryonal carcinoma cells, because the over-expression of the nuclear receptor 5A family is cytotoxic to these cells. We established embryonic stem cells carr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.265497+00:00"
+}

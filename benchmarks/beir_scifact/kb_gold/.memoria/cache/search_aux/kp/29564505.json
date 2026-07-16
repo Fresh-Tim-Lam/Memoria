@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29564505",
+  "source_fingerprint": "a9b9aeeb46eeff7a462cc90d23cd24c6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29564505",
+    "inflammatory-biomarkers-and-exacerbations-in-chronic-obstructive-pulmonary-disease."
+  ],
+  "key_phrases": [
+    "inflammatory",
+    "biomarkers",
+    "exacerbations",
+    "chronic",
+    "obstructive",
+    "pulmonary",
+    "disease",
+    "importance"
+  ],
+  "summary_1l": "Inflammatory biomarkers and exacerbations in chronic obstructive pulmonary disease.",
+  "query_hits": [],
+  "embed_text": "29564505 Inflammatory biomarkers and exacerbations in chronic obstructive pulmonary disease. science scifact IMPORTANCE Exacerbations of respiratory symptoms in chronic obstructive pulmonary disease (COPD) have profound and long-lasting adverse effects on patients. OBJECTIVE To test the hypothesis that elevated levels of inflammatory biomarkers… 29564505 inflammatory-biomarkers-and-exacerbations-in-chronic-obstructive-pulmonary-disease. inflammatory biomarkers exacerbations chronic obstructive pulmonary disease importance Inflammatory biomarkers and exacerbations in chronic obstructive pulmonary disease. Inflammatory biomarkers and exacerbations in chronic obstructive pulmonary disease. IMPORTANCE Exacerbations of respiratory symptoms in chronic obstructive pulmonary disease (COPD) have profound and long-lasting adverse effects on patients. OBJECTIVE To test the hypothesis that elevated levels of inflammatory biomarkers in individuals with stable COPD are associated with an increased risk of having exacerbations. DESIGN, SETTING, AND PARTICIPANTS Prospective cohort study examining 61,650 participants with spirometry measurements from the Copenhagen City Heart Study (2001-2003) and the Copenhagen General Population Study (2003-2008). Of these, 6574 had COPD, defined as a ratio between forced expiratory volume in 1 second (FEV1) and forced vital capacity below 0.7. MAIN OUTCOMES AND MEASURES",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.052261+00:00"
+}

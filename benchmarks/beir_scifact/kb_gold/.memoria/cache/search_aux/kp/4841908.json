@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4841908",
+  "source_fingerprint": "a9a6a711e24ca208e3e6a3c8b4d15ccc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4841908",
+    "distinct-metabolomic-signatures-are-associated-with-longevity-in-humans"
+  ],
+  "key_phrases": [
+    "distinct",
+    "metabolomic",
+    "signatures",
+    "associated",
+    "with",
+    "longevity",
+    "humans",
+    "alterations"
+  ],
+  "summary_1l": "Alterations in metabolism influence lifespan in experimental models, but data in humans are lacking.",
+  "query_hits": [],
+  "embed_text": "4841908 Distinct Metabolomic Signatures Are Associated with Longevity in Humans science scifact Alterations in metabolism influence lifespan in experimental models, but data in humans are lacking. Here we use liquid chromatography/mass spectrometry to quantify 217 plasma metabolites and examine their relation to longevity in a large… 4841908 distinct-metabolomic-signatures-are-associated-with-longevity-in-humans distinct metabolomic signatures associated with longevity humans alterations Alterations in metabolism influence lifespan in experimental models, but data in humans are lacking. Distinct Metabolomic Signatures Are Associated with Longevity in Humans Alterations in metabolism influence lifespan in experimental models, but data in humans are lacking. Here we use liquid chromatography/mass spectrometry to quantify 217 plasma metabolites and examine their relation to longevity in a large cohort of men and women followed for up to 20 years. We find that, higher concentrations of the citric acid cycle intermediate, isocitrate, and the bile acid, taurocholate, are associated with lower odds of longevity, defined as attaining 80 years of age. Higher concentrations of isocitrate, but not taurocholate, are also associated with worse cardiovascular health at baseline, as well as risk of future cardiovascular disease and death. None of the metabolites identified are associate",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.545451+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4462155",
+  "source_fingerprint": "371a444e120ec04b590b0e4d849918c0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4462155",
+    "a-temporal-shift-in-the-circuits-mediating-retrieval-of-fear-memory"
+  ],
+  "key_phrases": [
+    "temporal",
+    "shift",
+    "circuits",
+    "mediating",
+    "retrieval",
+    "fear",
+    "memory",
+    "memories"
+  ],
+  "summary_1l": "Fear memories allow animals to avoid danger, thereby increasing their chances of survival.",
+  "query_hits": [],
+  "embed_text": "4462155 A temporal shift in the circuits mediating retrieval of fear memory science scifact Fear memories allow animals to avoid danger, thereby increasing their chances of survival. Fear memories can be retrieved long after learning, but little is known about how retrieval circuits change with time. Here we show that the dorsal… 4462155 a-temporal-shift-in-the-circuits-mediating-retrieval-of-fear-memory temporal shift circuits mediating retrieval fear memory memories Fear memories allow animals to avoid danger, thereby increasing their chances of survival. A temporal shift in the circuits mediating retrieval of fear memory Fear memories allow animals to avoid danger, thereby increasing their chances of survival. Fear memories can be retrieved long after learning, but little is known about how retrieval circuits change with time. Here we show that the dorsal midline thalamus of rats is required for the retrieval of auditory conditioned fear at late (24 hours, 7 days, 28 days), but not early (0.5 hours, 6 hours) time points after learning. Consistent with this, the paraventricular nucleus of the thalamus (PVT), a subregion of the dorsal midline thalamus, showed increased c-Fos expression only at late time points, indicating that the PVT is gradually recruited for fear retrieval. Accordingly, the conditioned tone responses of PVT neurons increa",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.645594+00:00"
+}

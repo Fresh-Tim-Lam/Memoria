@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4464565",
+  "source_fingerprint": "c5d4a2d7450572f2c4a94ca038ded400",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4464565",
+    "epicatechin-and-a-cocoa-polyphenolic-extract-modulate-gene-expression-in-human-caco-2-cells."
+  ],
+  "key_phrases": [
+    "epicatechin",
+    "cocoa",
+    "polyphenolic",
+    "extract",
+    "modulate",
+    "gene",
+    "expression",
+    "human"
+  ],
+  "summary_1l": "Epicatechin and a cocoa polyphenolic extract modulate gene expression in human Caco-2 cells.",
+  "query_hits": [],
+  "embed_text": "4464565 Epicatechin and a cocoa polyphenolic extract modulate gene expression in human Caco-2 cells. science scifact We performed a functional genomic analysis to study the effect of epicatechin and polyphenolic cocoa extract in the human colon adenocarcinoma cell line Caco-2. The specific Human Hematology/Immunology cDNA arrays by Clontech, containing… 4464565 epicatechin-and-a-cocoa-polyphenolic-extract-modulate-gene-expression-in-human-caco-2-cells. epicatechin cocoa polyphenolic extract modulate gene expression human Epicatechin and a cocoa polyphenolic extract modulate gene expression in human Caco-2 cells. Epicatechin and a cocoa polyphenolic extract modulate gene expression in human Caco-2 cells. We performed a functional genomic analysis to study the effect of epicatechin and polyphenolic cocoa extract in the human colon adenocarcinoma cell line Caco-2. The specific Human Hematology/Immunology cDNA arrays by Clontech, containing 406 genes in duplicate, were used. The differentially expressed genes were classified according to their level of expression, calculated as the ratio of the value obtained after each treatment relative to control cells, with a statistical significance of P < 0.05 (upregulated: ratio > 1.5; downregulated: ratio < 0.6). Treatment with epicatechin decreased the expression of 21 genes and upregulated 24 genes. Upon incubation with the cocoa polyphenolic extract, 24 gen",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.765210+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3475317",
+  "source_fingerprint": "711d85944302ec8ed1b0515ebfbf84f0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3475317",
+    "inflammatory-signaling-in-human-tuberculosis-granulomas-is-spatially-organized"
+  ],
+  "key_phrases": [
+    "inflammatory",
+    "signaling",
+    "human",
+    "tuberculosis",
+    "granulomas",
+    "spatially",
+    "organized",
+    "pathological"
+  ],
+  "summary_1l": "Granulomas are the pathological hallmark of tuberculosis (TB).",
+  "query_hits": [],
+  "embed_text": "3475317 Inflammatory signaling in human Tuberculosis granulomas is spatially organized science scifact Granulomas are the pathological hallmark of tuberculosis (TB). However, their function and mechanisms of formation remain poorly understood. To understand the role of granulomas in TB, we analyzed the proteomes of granulomas from subjects… 3475317 inflammatory-signaling-in-human-tuberculosis-granulomas-is-spatially-organized inflammatory signaling human tuberculosis granulomas spatially organized pathological Granulomas are the pathological hallmark of tuberculosis (TB). Inflammatory signaling in human Tuberculosis granulomas is spatially organized Granulomas are the pathological hallmark of tuberculosis (TB). However, their function and mechanisms of formation remain poorly understood. To understand the role of granulomas in TB, we analyzed the proteomes of granulomas from subjects with tuberculosis in an unbiased manner. Using laser-capture microdissection, mass spectrometry and confocal microscopy, we generated detailed molecular maps of human granulomas. We found that the centers of granulomas have a pro-inflammatory environment that is characterized by the presence of antimicrobial peptides, reactive oxygen species and pro-inflammatory eicosanoids. Conversely, the tissue surrounding the caseum has a comparatively anti-inflammatory signature. These fin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.728034+00:00"
+}

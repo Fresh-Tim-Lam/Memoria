@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "14178995",
+  "source_fingerprint": "0b877e8fa84112f8fea355f2f919e0ff",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14178995"
+  ],
+  "key_phrases": [
+    "summary",
+    "genetic",
+    "diseases",
+    "hutchinson",
+    "gilford",
+    "progeria",
+    "syndrome",
+    "hgps"
+  ],
+  "summary_1l": "The genetic diseases Hutchinson-Gilford progeria syndrome (HGPS) and restrictive dermopathy (RD) arise from accumulation of farnesylated prelamin A because of defects in the lamin A maturation",
+  "query_hits": [],
+  "embed_text": "14178995 Summary science scifact The genetic diseases Hutchinson-Gilford progeria syndrome (HGPS) and restrictive dermopathy (RD) arise from accumulation of farnesylated prelamin A because of defects in the lamin A maturation pathway. Both of these diseases exhibit… 14178995 summary genetic diseases hutchinson gilford progeria syndrome hgps The genetic diseases Hutchinson-Gilford progeria syndrome (HGPS) and restrictive dermopathy (RD) arise from accumulation of farnesylated prelamin A because of defects in the lamin A maturation Summary The genetic diseases Hutchinson-Gilford progeria syndrome (HGPS) and restrictive dermopathy (RD) arise from accumulation of farnesylated prelamin A because of defects in the lamin A maturation pathway. Both of these diseases exhibit symptoms that can be viewed as accelerated aging. The mechanism by which accumulation of farnesylated prelamin A leads to these accelerated aging phenotypes is not understood. Here we present evidence that in HGPS and RD fibroblasts, DNA damage checkpoints are persistently activated because of the compromise in genomic integrity. Inactivation of checkpoint kinases Ataxia-telangiectasia-mutated (ATM) and ATR (ATM- and Rad3-related) in these patient cells can partially overcome their early replication arrest. Treatment of patient cells with a protein farn",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.256153+00:00"
+}

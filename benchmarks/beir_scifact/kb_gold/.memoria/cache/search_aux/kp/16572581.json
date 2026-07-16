@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16572581",
+  "source_fingerprint": "81b6ea84e4f5b6d25e474121df31c6bb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16572581",
+    "viral-infection-of-engrafted-human-islets-leads-to-diabetes"
+  ],
+  "key_phrases": [
+    "viral",
+    "infection",
+    "engrafted",
+    "human",
+    "islets",
+    "leads",
+    "diabetes",
+    "type"
+  ],
+  "summary_1l": "Type 1 diabetes (T1D) is characterized by the destruction of the insulin-producing β-cells of pancreatic islets.",
+  "query_hits": [],
+  "embed_text": "16572581 Viral Infection of Engrafted Human Islets Leads to Diabetes science scifact Type 1 diabetes (T1D) is characterized by the destruction of the insulin-producing β-cells of pancreatic islets. Genetic and environmental factors both contribute to T1D development. Viral infection with enteroviruses is a suspected… 16572581 viral-infection-of-engrafted-human-islets-leads-to-diabetes viral infection engrafted human islets leads diabetes type Type 1 diabetes (T1D) is characterized by the destruction of the insulin-producing β-cells of pancreatic islets. Viral Infection of Engrafted Human Islets Leads to Diabetes Type 1 diabetes (T1D) is characterized by the destruction of the insulin-producing β-cells of pancreatic islets. Genetic and environmental factors both contribute to T1D development. Viral infection with enteroviruses is a suspected trigger for T1D, but a causal role remains unproven and controversial. Studies in animals are problematic because of species-specific differences in host cell susceptibility and immune responses to candidate viral pathogens such as coxsackievirus B (CVB). In order to resolve the controversial role of viruses in human T1D, we developed a viral infection model in immunodeficient mice bearing human islet grafts. Hyperglycemia was induced in mice by specific ablation of native β-cells. Human islets, which",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.483886+00:00"
+}

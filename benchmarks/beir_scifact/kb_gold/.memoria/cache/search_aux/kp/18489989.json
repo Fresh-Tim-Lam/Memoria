@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18489989",
+  "source_fingerprint": "f1d0ef58bd43ab22b945bd449dcb39a1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18489989",
+    "murine-embryonic-stem-cell-differentiation-is-promoted-by-socs-3-and-inhibited-by-the-zinc-finger-transcription-factor-klf4."
+  ],
+  "key_phrases": [
+    "murine",
+    "embryonic",
+    "stem",
+    "cell",
+    "differentiation",
+    "promoted",
+    "by",
+    "socs"
+  ],
+  "summary_1l": "Murine embryonic stem cell differentiation is promoted by SOCS-3 and inhibited by the zinc finger transcription factor Klf4.",
+  "query_hits": [],
+  "embed_text": "18489989 Murine embryonic stem cell differentiation is promoted by SOCS-3 and inhibited by the zinc finger transcription factor Klf4. science scifact Embryonic stem (ES) cells homozygous for a Shp-2 mutation (Shp-2(Delta46-110)) demonstrate leukemia inhibitory factor (LIF) hypersensitivity and increased LIF-stimulated phosphorylation of signal transducer and activator of transcription… 18489989 murine-embryonic-stem-cell-differentiation-is-promoted-by-socs-3-and-inhibited-by-the-zinc-finger-transcription-factor-klf4. murine embryonic stem cell differentiation promoted by socs Murine embryonic stem cell differentiation is promoted by SOCS-3 and inhibited by the zinc finger transcription factor Klf4. Murine embryonic stem cell differentiation is promoted by SOCS-3 and inhibited by the zinc finger transcription factor Klf4. Embryonic stem (ES) cells homozygous for a Shp-2 mutation (Shp-2(Delta46-110)) demonstrate leukemia inhibitory factor (LIF) hypersensitivity and increased LIF-stimulated phosphorylation of signal transducer and activator of transcription (STAT3). We hypothesized that LIF-responsive genes in Shp-2(Delta46-110) cells would represent potential candidates for molecules vital for ES cell self-renewal. Using microarray analysis, we detected 41 genes whose expression was modified by LIF in Shp-2(Delta46-110) ES cells. Induction of 2 significantly up-regulated genes, suppressor of cytokine signaling-3 (SOCS-3) and Kruppel-like factor 4 (Klf4), was verified using Northern blo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.359642+00:00"
+}

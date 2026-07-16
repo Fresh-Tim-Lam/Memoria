@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "935538",
+  "source_fingerprint": "2e2acb69546827672b4c61d8bd90b04a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "935538",
+    "the-mitochondrial-rna-binding-protein-grsf1-localizes-to-rna-granules-and-is-required-for-posttranscriptional-mitochondrial-gene-expression."
+  ],
+  "key_phrases": [
+    "mitochondrial",
+    "rna",
+    "binding",
+    "protein",
+    "grsf1",
+    "localizes",
+    "granules",
+    "required"
+  ],
+  "summary_1l": "The mitochondrial RNA-binding protein GRSF1 localizes to RNA granules and is required for posttranscriptional mitochondrial gene expression.",
+  "query_hits": [],
+  "embed_text": "935538 The mitochondrial RNA-binding protein GRSF1 localizes to RNA granules and is required for posttranscriptional mitochondrial gene expression. science scifact RNA-binding proteins are at the heart of posttranscriptional gene regulation, coordinating the processing, storage, and handling of cellular RNAs. We show here that GRSF1, previously implicated in the binding and selective translation of… 935538 the-mitochondrial-rna-binding-protein-grsf1-localizes-to-rna-granules-and-is-required-for-posttranscriptional-mitochondrial-gene-expression. mitochondrial rna binding protein grsf1 localizes granules required The mitochondrial RNA-binding protein GRSF1 localizes to RNA granules and is required for posttranscriptional mitochondrial gene expression. The mitochondrial RNA-binding protein GRSF1 localizes to RNA granules and is required for posttranscriptional mitochondrial gene expression. RNA-binding proteins are at the heart of posttranscriptional gene regulation, coordinating the processing, storage, and handling of cellular RNAs. We show here that GRSF1, previously implicated in the binding and selective translation of influenza mRNAs, is targeted to mitochondria where it forms granules that colocalize with foci of newly synthesized mtRNA next to mitochondrial nucleoids. GRSF1 preferentially binds RNAs transcribed from three contiguous genes on the light strand of mtDNA, the ND6 mRNA, and the long noncoding RNAs for cytb and ND5, each of which contains multiple consensus binding sequences. RNAi-mediated knockdown of GRSF1 leads to a",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.801822+00:00"
+}

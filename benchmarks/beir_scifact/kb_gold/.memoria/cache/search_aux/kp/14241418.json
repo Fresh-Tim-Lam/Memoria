@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14241418",
+  "source_fingerprint": "3d610ce2ad194ca87a2012a1547b3bc0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14241418",
+    "nvp-bez235,-a-dual-pi3k/mtor-inhibitor,-prevents-pi3k-signaling-and-inhibits-the-growth-of-cancer-cells-with-activating-pi3k-mutations."
+  ],
+  "key_phrases": [
+    "nvp",
+    "bez235",
+    "dual",
+    "pi3k",
+    "mtor",
+    "inhibitor",
+    "prevents",
+    "signaling"
+  ],
+  "summary_1l": "NVP-BEZ235, a dual PI3K/mTOR inhibitor, prevents PI3K signaling and inhibits the growth of cancer cells with activating PI3K mutations.",
+  "query_hits": [],
+  "embed_text": "14241418 NVP-BEZ235, a dual PI3K/mTOR inhibitor, prevents PI3K signaling and inhibits the growth of cancer cells with activating PI3K mutations. science scifact Phosphatidylinositol-3-kinase (PI3K) pathway deregulation is a common event in human cancer, either through inactivation of the tumor suppressor phosphatase and tensin homologue deleted from chromosome 10 or activating mutations of… 14241418 nvp-bez235,-a-dual-pi3k/mtor-inhibitor,-prevents-pi3k-signaling-and-inhibits-the-growth-of-cancer-cells-with-activating-pi3k-mutations. nvp bez235 dual pi3k mtor inhibitor prevents signaling NVP-BEZ235, a dual PI3K/mTOR inhibitor, prevents PI3K signaling and inhibits the growth of cancer cells with activating PI3K mutations. NVP-BEZ235, a dual PI3K/mTOR inhibitor, prevents PI3K signaling and inhibits the growth of cancer cells with activating PI3K mutations. Phosphatidylinositol-3-kinase (PI3K) pathway deregulation is a common event in human cancer, either through inactivation of the tumor suppressor phosphatase and tensin homologue deleted from chromosome 10 or activating mutations of p110-alpha. These hotspot mutations result in oncogenic activity of the enzyme and contribute to therapeutic resistance to the anti-HER2 antibody trastuzumab. The PI3K pathway is, therefore, an attractive target for cancer therapy. We have studied NVP-BEZ235, a dual inhibitor of the PI3K and the downstream mammalian target of rapamycin (mTOR). NVP-BEZ235 inhibited the activation of the downstream effectors Akt, S6 ribosomal prot",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.387814+00:00"
+}

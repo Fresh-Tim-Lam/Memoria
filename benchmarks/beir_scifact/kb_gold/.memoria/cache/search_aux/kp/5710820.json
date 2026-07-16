@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5710820",
+  "source_fingerprint": "347b8004b6f3171411259f5e0e25a056",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5710820",
+    "the-feasibility-of-malaria-elimination-in-south-africa"
+  ],
+  "key_phrases": [
+    "feasibility",
+    "malaria",
+    "elimination",
+    "south",
+    "africa",
+    "background",
+    "following",
+    "last"
+  ],
+  "summary_1l": "BACKGROUND Following the last major malaria epidemic in 2000, malaria incidence in South Africa has declined markedly.",
+  "query_hits": [],
+  "embed_text": "5710820 The feasibility of malaria elimination in South Africa science scifact BACKGROUND Following the last major malaria epidemic in 2000, malaria incidence in South Africa has declined markedly. The decrease has been so emphatic that South Africa now meets the World Health Organization (WHO) threshold for malaria… 5710820 the-feasibility-of-malaria-elimination-in-south-africa feasibility malaria elimination south africa background following last BACKGROUND Following the last major malaria epidemic in 2000, malaria incidence in South Africa has declined markedly. The feasibility of malaria elimination in South Africa BACKGROUND Following the last major malaria epidemic in 2000, malaria incidence in South Africa has declined markedly. The decrease has been so emphatic that South Africa now meets the World Health Organization (WHO) threshold for malaria elimination. Given the Millennium Development Goal of reversing the spread of malaria by 2015, South Africa is being urged to adopt an elimination agenda. This study aimed to determine the appropriateness of implementing a malaria elimination programme in present day South Africa. METHODS An assessment of the progress made by South Africa in terms of implementing an integrated malaria control programme across the three malaria-endemic provinces was undertaken. Vector control and case management data w",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.930765+00:00"
+}

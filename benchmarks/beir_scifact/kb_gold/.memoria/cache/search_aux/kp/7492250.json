@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7492250",
+  "source_fingerprint": "a3256dab892d0554aee764eff6b61c68",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7492250",
+    "prox1-is-required-for-granule-cell-maturation-and-intermediate-progenitor-maintenance-during-brain-neurogenesis"
+  ],
+  "key_phrases": [
+    "prox1",
+    "required",
+    "granule",
+    "cell",
+    "maturation",
+    "intermediate",
+    "progenitor",
+    "maintenance"
+  ],
+  "summary_1l": "The dentate gyrus has an important role in learning and memory, and adult neurogenesis i",
+  "query_hits": [],
+  "embed_text": "7492250 Prox1 Is Required for Granule Cell Maturation and Intermediate Progenitor Maintenance During Brain Neurogenesis science scifact The dentate gyrus has an important role in learning and memory, and adult neurogenesis in the subgranular zone of the dentate gyrus may play a role in the acquisition of new memories. The homeobox gene Prox1 is expressed in the dentate… 7492250 prox1-is-required-for-granule-cell-maturation-and-intermediate-progenitor-maintenance-during-brain-neurogenesis prox1 required granule cell maturation intermediate progenitor maintenance The dentate gyrus has an important role in learning and memory, and adult neurogenesis i Prox1 Is Required for Granule Cell Maturation and Intermediate Progenitor Maintenance During Brain Neurogenesis The dentate gyrus has an important role in learning and memory, and adult neurogenesis in the subgranular zone of the dentate gyrus may play a role in the acquisition of new memories. The homeobox gene Prox1 is expressed in the dentate gyrus during embryonic development and adult neurogenesis. Here we show that Prox1 is necessary for the maturation of granule cells in the dentate gyrus during development and for the maintenance of intermediate progenitors during adult neurogenesis. We also demonstrate that Prox1-expressing intermediate progenitors are required for adult neural stem cell self-maintenance in the subgranular zone; thus, we have identified a previously unknown non-ce",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.481358+00:00"
+}

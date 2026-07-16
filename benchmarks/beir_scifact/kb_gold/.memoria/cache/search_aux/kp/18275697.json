@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18275697",
+  "source_fingerprint": "6533768eb4d3ed44e34cf5dd071cab5f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18275697",
+    "cell-mediated-immunity-and-antibody-responses-elicited-by-attenuated-salmonella-enterica-serovar-typhi-strains-used-as-live-oral-vaccines-in-humans."
+  ],
+  "key_phrases": [
+    "cell",
+    "mediated",
+    "immunity",
+    "antibody",
+    "responses",
+    "elicited",
+    "by",
+    "attenuated"
+  ],
+  "summary_1l": "Cell-mediated immunity and antibody responses elicited by attenuated Salmonella enterica Serovar Typhi strains used as live oral vaccines in humans.",
+  "query_hits": [],
+  "embed_text": "18275697 Cell-mediated immunity and antibody responses elicited by attenuated Salmonella enterica Serovar Typhi strains used as live oral vaccines in humans. science scifact The development of improved typhoid vaccines is a high global public health priority. However, their development has been hampered by a lack of information regarding the specific determinants of protective immunity to Salmonella enterica… 18275697 cell-mediated-immunity-and-antibody-responses-elicited-by-attenuated-salmonella-enterica-serovar-typhi-strains-used-as-live-oral-vaccines-in-humans. cell mediated immunity antibody responses elicited by attenuated Cell-mediated immunity and antibody responses elicited by attenuated Salmonella enterica Serovar Typhi strains used as live oral vaccines in humans. Cell-mediated immunity and antibody responses elicited by attenuated Salmonella enterica Serovar Typhi strains used as live oral vaccines in humans. The development of improved typhoid vaccines is a high global public health priority. However, their development has been hampered by a lack of information regarding the specific determinants of protective immunity to Salmonella enterica serovar Typhi (S. Typhi) infection in humans. Although antibodies to S. Typhi O, H, and Vi appear to be involved in protection against S. Typhi infection, it is unknown whether such antibodies mediate protection, act in conjunction with other adaptive responses, or serve as a surrogate for the presence of other, more dominant protective immune responses (e.g., cell-mediated immunity [CMI]). CMI responses elici",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.043587+00:00"
+}

@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "kp_id": "ε-greedy-探索策略",
+  "source_fingerprint": "3bc96d8d68e8c94e750e0a3e3de3426a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "机器学习"
+  ],
+  "aliases": [
+    "ε-greedy-探索策略"
+  ],
+  "key_phrases": [
+    "greedy",
+    "探索",
+    "策略",
+    "为了",
+    "平衡",
+    "利用",
+    "learning",
+    "通常"
+  ],
+  "summary_1l": "为了平衡探索与利用，Q-Learning 通常配合 -greedy 策略使用： 以概率 随机选择动作（探索） 以概率 选择当前 Q 值最大的动作（利用） 的选择很关键： ：纯利用，可能陷入局部最优 ：纯探索，无法利用已学知识 常见做法： 从 1.",
+  "query_hits": [],
+  "embed_text": "ε-greedy-探索策略 ε-greedy 探索策略 机器学习 ε-greedy-探索策略 greedy 探索 策略 为了 平衡 利用 learning 通常 为了平衡探索与利用，Q-Learning 通常配合 -greedy 策略使用： 以概率 随机选择动作（探索） 以概率 选择当前 Q 值最大的动作（利用） 的选择很关键： ：纯利用，可能陷入局部最优 ：纯探索，无法利用已学知识 常见做法： 从 1. ε-greedy 探索策略 为了平衡探索与利用，Q-Learning 通常配合 -greedy 策略使用： 以概率 随机选择动作（探索） 以概率 选择当前 Q 值最大的动作（利用） 的选择很关键： ：纯利用，可能陷入局部最优 ：纯探索，无法利用已学知识 常见做法： 从 1.0 线性衰减到 0.1 更高级的探索策略包括： **Boltzmann 探索**：按 Q 值的 Softmax 分布选择动作 **UCB**：选择不确定性最高的动作 **Noisy Networks**：在网络参数中注入噪声 Q-Learning 的特点： **Off-policy**：学习目标策略与行为策略可以不同。即使行为策略是随机的，也能学到最优策略 **Model-free**：不需要知道 和 **收敛保证**：在表格情况下可证明收敛到最优 Q 函数 DQN 将 Q-Learning 与深度网络结合，而 DDPG 将其扩展到连续动作空间。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T03:38:47.424787+00:00"
+}

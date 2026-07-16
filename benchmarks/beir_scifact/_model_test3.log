@@ -1,0 +1,11 @@
+step1: import torch
+torch 2.10.0+cu130, cuda=True
+step2: import transformers
+imported
+step3: loading tokenizer: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+tokenizer loaded
+step4: loading model
+model loaded: BertModel
+step5: encoding test
+encoded: 384 dims, first 5: [0.006726359017193317, 0.03464793786406517, 0.05166569724678993, 0.04579075798392296, -0.03543964400887489]
+DONE

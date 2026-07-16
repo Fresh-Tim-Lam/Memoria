@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "799586",
+  "source_fingerprint": "e246c89999279e170f35966230683f75",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "799586"
+  ],
+  "key_phrases": [
+    "role",
+    "single",
+    "stranded",
+    "dna",
+    "binding",
+    "protein",
+    "ssbb",
+    "pneumococcal"
+  ],
+  "summary_1l": "Bacteria encode a single-stranded DNA (ssDNA) binding protein (SS",
+  "query_hits": [],
+  "embed_text": "799586 Role of the Single-Stranded DNA–Binding Protein SsbB in Pneumococcal Transformation: Maintenance of a Reservoir for Genetic Plasticity science scifact Bacteria encode a single-stranded DNA (ssDNA) binding protein (SSB) crucial for genome maintenance. In Bacillus subtilis and Streptococcus pneumoniae, an alternative SSB, SsbB, is expressed uniquely during competence for genetic… 799586 role single stranded dna binding protein ssbb pneumococcal Bacteria encode a single-stranded DNA (ssDNA) binding protein (SS Role of the Single-Stranded DNA–Binding Protein SsbB in Pneumococcal Transformation: Maintenance of a Reservoir for Genetic Plasticity Bacteria encode a single-stranded DNA (ssDNA) binding protein (SSB) crucial for genome maintenance. In Bacillus subtilis and Streptococcus pneumoniae, an alternative SSB, SsbB, is expressed uniquely during competence for genetic transformation, but its precise role has been disappointingly obscure. Here, we report our investigations involving comparison of a null mutant (ssbB(-)) and a C-ter truncation (ssbBΔ7) of SsbB of S. pneumoniae, the latter constructed because SSBs' acidic tail has emerged as a key site for interactions with partner proteins. We provide evidence that SsbB directly protects internalized ssDNA. We show that SsbB is highly abundant, pot",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.670798+00:00"
+}

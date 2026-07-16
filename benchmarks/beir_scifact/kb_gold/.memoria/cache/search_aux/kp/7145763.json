@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7145763",
+  "source_fingerprint": "e088393355269f9268f53745174da655",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7145763",
+    "tit-for-tat:-type-vi-secretion-system-counterattack-during-bacterial-cell-cell-interactions"
+  ],
+  "key_phrases": [
+    "tit",
+    "tat",
+    "type",
+    "vi",
+    "secretion",
+    "system",
+    "counterattack",
+    "during"
+  ],
+  "summary_1l": "The bacterial type VI secretion system (T6SS) is a dynamic organelle that bacteria use to target prey cells",
+  "query_hits": [],
+  "embed_text": "7145763 Tit-for-Tat: Type VI Secretion System Counterattack during Bacterial Cell-Cell Interactions science scifact The bacterial type VI secretion system (T6SS) is a dynamic organelle that bacteria use to target prey cells for inhibition via translocation of effector proteins. Time-lapse fluorescence microscopy has documented striking dynamics of… 7145763 tit-for-tat:-type-vi-secretion-system-counterattack-during-bacterial-cell-cell-interactions tit tat type vi secretion system counterattack during The bacterial type VI secretion system (T6SS) is a dynamic organelle that bacteria use to target prey cells Tit-for-Tat: Type VI Secretion System Counterattack during Bacterial Cell-Cell Interactions The bacterial type VI secretion system (T6SS) is a dynamic organelle that bacteria use to target prey cells for inhibition via translocation of effector proteins. Time-lapse fluorescence microscopy has documented striking dynamics of opposed T6SS organelles in adjacent sister cells of Pseudomonas aeruginosa. Such cell-cell interactions have been termed \"T6SS dueling\" and likely reflect a biological process that is driven by T6SS antibacterial attack. Here, we show that T6SS dueling behavior strongly influences the ability of P. aeruginosa to prey upon heterologous bacterial species. We show that, in the case of P. aeruginosa, T6SS-dependent killing of either Vibrio cholerae or Acinetobacter baylyi i",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.598536+00:00"
+}

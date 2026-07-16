@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "7221410",
+  "source_fingerprint": "3322cea62da9b79a8d5095aeb135e3e6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7221410"
+  ],
+  "key_phrases": [
+    "alzheimer",
+    "disease",
+    "risk",
+    "gene",
+    "cd33",
+    "inhibits",
+    "microglial",
+    "uptake"
+  ],
+  "summary_1l": "The transmembrane protein CD33 is a sialic acid-binding immunoglobulin-like lectin that regulates innate immunity but has",
+  "query_hits": [],
+  "embed_text": "7221410 Alzheimer’s Disease Risk Gene CD33 Inhibits Microglial Uptake of Amyloid Beta science scifact The transmembrane protein CD33 is a sialic acid-binding immunoglobulin-like lectin that regulates innate immunity but has no known functions in the brain. We have previously shown that the CD33 gene is a risk factor for Alzheimer's disease… 7221410 alzheimer disease risk gene cd33 inhibits microglial uptake The transmembrane protein CD33 is a sialic acid-binding immunoglobulin-like lectin that regulates innate immunity but has Alzheimer’s Disease Risk Gene CD33 Inhibits Microglial Uptake of Amyloid Beta The transmembrane protein CD33 is a sialic acid-binding immunoglobulin-like lectin that regulates innate immunity but has no known functions in the brain. We have previously shown that the CD33 gene is a risk factor for Alzheimer's disease (AD). Here, we observed increased expression of CD33 in microglial cells in AD brain. The minor allele of the CD33 SNP rs3865444, which confers protection against AD, was associated with reductions in both CD33 expression and insoluble amyloid beta 42 (Aβ42) levels in AD brain. Furthermore, the numbers of CD33-immunoreactive microglia were positively correlated with insoluble Aβ42 levels and plaque burden in AD brain. CD33 inhibited uptake and clearance of Aβ42 in microglial ce",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.801169+00:00"
+}

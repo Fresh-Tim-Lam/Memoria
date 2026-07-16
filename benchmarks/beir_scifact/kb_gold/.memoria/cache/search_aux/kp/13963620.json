@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13963620",
+  "source_fingerprint": "d40ce2fb6b95241129667915fafa5a3d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13963620",
+    "dynamic-analysis-of-filopodial-interactions-during-the-zippering-phase-of-drosophila-dorsal-closure."
+  ],
+  "key_phrases": [
+    "dynamic",
+    "analysis",
+    "filopodial",
+    "interactions",
+    "during",
+    "zippering",
+    "phase",
+    "drosophila"
+  ],
+  "summary_1l": "Dynamic analysis of filopodial interactions during the zippering phase of Drosophila dorsal closure.",
+  "query_hits": [],
+  "embed_text": "13963620 Dynamic analysis of filopodial interactions during the zippering phase of Drosophila dorsal closure. science scifact Dorsal closure is a paradigm epithelial fusion episode that occurs late in Drosophila embryogenesis and leads to sealing of a midline hole by bonding of two opposing epithelial sheets. The leading edge epithelial cells express filopodia… 13963620 dynamic-analysis-of-filopodial-interactions-during-the-zippering-phase-of-drosophila-dorsal-closure. dynamic analysis filopodial interactions during zippering phase drosophila Dynamic analysis of filopodial interactions during the zippering phase of Drosophila dorsal closure. Dynamic analysis of filopodial interactions during the zippering phase of Drosophila dorsal closure. Dorsal closure is a paradigm epithelial fusion episode that occurs late in Drosophila embryogenesis and leads to sealing of a midline hole by bonding of two opposing epithelial sheets. The leading edge epithelial cells express filopodia and fusion is dependent on interdigitation of these filopodia to prime formation of adhesions. Since the opposing epithelia are molecularly patterned there must exist some mechanism for accurately aligning the two sheets across this fusion seam. To address this, we generated a fly in which RFP-Moesin and GFP-Moesin are expressed in mutually exclusive stripes within each segment using the engrailed and patched promoters. We observe mutually exclusive interact",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.824395+00:00"
+}

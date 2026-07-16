@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2099400",
+  "source_fingerprint": "aedf9295bcf61c8a2f014990dcf41801",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2099400",
+    "helicobacter-pylori-induces-ags-cell-motility-and-elongation-via-independent-signaling-pathways."
+  ],
+  "key_phrases": [
+    "helicobacter",
+    "pylori",
+    "induces",
+    "ags",
+    "cell",
+    "motility",
+    "elongation",
+    "via"
+  ],
+  "summary_1l": "Helicobacter pylori induces AGS cell motility and elongation via independent signaling pathways.",
+  "query_hits": [],
+  "embed_text": "2099400 Helicobacter pylori induces AGS cell motility and elongation via independent signaling pathways. science scifact Helicobacter pylori induces motogenic and cytoskeletal responses in gastric epithelial cells. We demonstrate that these responses can be induced via independent signaling pathways that often occur in parallel. The cag pathogenicity island… 2099400 helicobacter-pylori-induces-ags-cell-motility-and-elongation-via-independent-signaling-pathways. helicobacter pylori induces ags cell motility elongation via Helicobacter pylori induces AGS cell motility and elongation via independent signaling pathways. Helicobacter pylori induces AGS cell motility and elongation via independent signaling pathways. Helicobacter pylori induces motogenic and cytoskeletal responses in gastric epithelial cells. We demonstrate that these responses can be induced via independent signaling pathways that often occur in parallel. The cag pathogenicity island appears to be nonessential for induction of motility, whereas the elongation phenotype depends on translocation and phosphorylation of CagA.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.225578+00:00"
+}

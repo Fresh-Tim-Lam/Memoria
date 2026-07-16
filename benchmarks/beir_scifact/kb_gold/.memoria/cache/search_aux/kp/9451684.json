@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9451684",
+  "source_fingerprint": "d7f56b37e1148224a52ba1fa3ae8474e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9451684",
+    "logic-of-the-yeast-metabolic-cycle:-temporal-compartmentalization-of-cellular-processes."
+  ],
+  "key_phrases": [
+    "logic",
+    "yeast",
+    "metabolic",
+    "cycle",
+    "temporal",
+    "compartmentalization",
+    "cellular",
+    "processes"
+  ],
+  "summary_1l": "Logic of the yeast metabolic cycle: temporal compartmentalization of cellular processes.",
+  "query_hits": [],
+  "embed_text": "9451684 Logic of the yeast metabolic cycle: temporal compartmentalization of cellular processes. science scifact Budding yeast grown under continuous, nutrient-limited conditions exhibit robust, highly periodic cycles in the form of respiratory bursts. Microarray studies reveal that over half of the yeast genome is expressed periodically during these… 9451684 logic-of-the-yeast-metabolic-cycle:-temporal-compartmentalization-of-cellular-processes. logic yeast metabolic cycle temporal compartmentalization cellular processes Logic of the yeast metabolic cycle: temporal compartmentalization of cellular processes. Logic of the yeast metabolic cycle: temporal compartmentalization of cellular processes. Budding yeast grown under continuous, nutrient-limited conditions exhibit robust, highly periodic cycles in the form of respiratory bursts. Microarray studies reveal that over half of the yeast genome is expressed periodically during these metabolic cycles. Genes encoding proteins having a common function exhibit similar temporal expression patterns, and genes specifying functions associated with energy and metabolism tend to be expressed with exceptionally robust periodicity. Essential cellular and metabolic events occur in synchrony with the metabolic cycle, demonstrating that key processes in a simple eukaryotic cell are compartmentalized in time.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.935712+00:00"
+}

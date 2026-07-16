@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15081770",
+  "source_fingerprint": "6871fc3b4569d6928645627997a3f3e8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15081770",
+    "the-novel-immunosuppressive-enzyme-il4i1-is-expressed-by-neoplastic-cells-of-several-b-cell-lymphomas-and-by-tumor-associated-macrophages"
+  ],
+  "key_phrases": [
+    "novel",
+    "immunosuppressive",
+    "enzyme",
+    "il4i1",
+    "expressed",
+    "by",
+    "neoplastic",
+    "cells"
+  ],
+  "summary_1l": "We previously reported a strong IL4I1 gene expression in prima",
+  "query_hits": [],
+  "embed_text": "15081770 The novel immunosuppressive enzyme IL4I1 is expressed by neoplastic cells of several B-cell lymphomas and by tumor-associated macrophages science scifact We previously reported a strong IL4I1 gene expression in primary mediastinal B-cell lymphoma (PMBL) and recently identified the protein as a secreted L-phenylalanine oxidase, physiologically expressed by myeloid cells, which inhibits… 15081770 the-novel-immunosuppressive-enzyme-il4i1-is-expressed-by-neoplastic-cells-of-several-b-cell-lymphomas-and-by-tumor-associated-macrophages novel immunosuppressive enzyme il4i1 expressed by neoplastic cells We previously reported a strong IL4I1 gene expression in prima The novel immunosuppressive enzyme IL4I1 is expressed by neoplastic cells of several B-cell lymphomas and by tumor-associated macrophages We previously reported a strong IL4I1 gene expression in primary mediastinal B-cell lymphoma (PMBL) and recently identified the protein as a secreted L-phenylalanine oxidase, physiologically expressed by myeloid cells, which inhibits T-cell proliferation in vitro. Here, we analyzed the pattern of IL4I1 protein expression in 315 human lymphoid and non-lymphoid malignancies. Besides PMBL, IL4I1 expression in tumors was very frequent. IL4I1 was detected in tumor-associated macrophages from most of the tumors and in neoplastic cells from follicular lymphoma, classic and nodular lymphocyte predominant Hodgkin lymphomas and small lymphocytic lymphoma, three of",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.075728+00:00"
+}

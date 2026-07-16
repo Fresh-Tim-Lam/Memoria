@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "952111",
+  "source_fingerprint": "39ebab9dff51eafd8877a6f6fedb10aa",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "952111",
+    "cancer-associated-fibroblasts-(cafs)-in-tumor-microenvironment."
+  ],
+  "key_phrases": [
+    "cancer",
+    "associated",
+    "fibroblasts",
+    "cafs",
+    "tumor",
+    "microenvironment",
+    "one",
+    "most"
+  ],
+  "summary_1l": "Cancer associated fibroblasts (CAFs) in tumor microenvironment.",
+  "query_hits": [],
+  "embed_text": "952111 Cancer associated fibroblasts (CAFs) in tumor microenvironment. science scifact Cancer associated fibroblasts (CAFs) is one of the most crucial components of the tumor microenvironment which promotes the growth and invasion of cancer cells by various mechanisms. CAFs demonstrate a high degree of heterogeneity due to… 952111 cancer-associated-fibroblasts-(cafs)-in-tumor-microenvironment. cancer associated fibroblasts cafs tumor microenvironment one most Cancer associated fibroblasts (CAFs) in tumor microenvironment. Cancer associated fibroblasts (CAFs) in tumor microenvironment. Cancer associated fibroblasts (CAFs) is one of the most crucial components of the tumor microenvironment which promotes the growth and invasion of cancer cells by various mechanisms. CAFs demonstrate a high degree of heterogeneity due to their various origins; however, many distinct morphological features and physiological functions of CAFs have been identified. It is becoming clear that the crosstalk between the cancer cells and the CAFs plays a key role in the progression of cancer, and understanding this mutual relationship would eventually enable us to treat cancer patients by targeting CAFs. In this review, we will discuss the latest findings on the role of CAFs in tumorigenesis and metastasis as well as potential therape",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.130785+00:00"
+}

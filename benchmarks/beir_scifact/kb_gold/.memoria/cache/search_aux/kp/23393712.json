@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23393712",
+  "source_fingerprint": "a20f36f281a020ea1ac45b1643605fb3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23393712",
+    "cell-cell-adhesion-and-signalling."
+  ],
+  "key_phrases": [
+    "cell",
+    "adhesion",
+    "signalling",
+    "pathways",
+    "activated",
+    "by",
+    "rho",
+    "small"
+  ],
+  "summary_1l": "Cell-cell adhesion and signalling.",
+  "query_hits": [],
+  "embed_text": "23393712 Cell-cell adhesion and signalling. science scifact Signalling pathways activated by Rho small GTPases have recently been identified that coordinate junction assembly, stability and function, as well as interactions of adhesive complexes with the underlying cortical cytoskeleton.… 23393712 cell-cell-adhesion-and-signalling. cell adhesion signalling pathways activated by rho small Cell-cell adhesion and signalling. Cell-cell adhesion and signalling. Signalling pathways activated by Rho small GTPases have recently been identified that coordinate junction assembly, stability and function, as well as interactions of adhesive complexes with the underlying cortical cytoskeleton. Particularly exciting is the interplay between adherens junctions, activation of Rho proteins and the dynamics of microtubule, actin and intermediate filaments. This interplay has important implications for functional regulation of cell-cell adhesion, and points to a more integrated view of signalling processes.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.419614+00:00"
+}

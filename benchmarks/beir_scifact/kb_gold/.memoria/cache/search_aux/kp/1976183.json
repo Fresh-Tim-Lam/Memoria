@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1976183",
+  "source_fingerprint": "03a39f0f6c149c7704898a842a324591",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1976183",
+    "oncomir-196-promotes-an-invasive-phenotype-in-oral-cancer-through-the-nme4-jnk-timp1-mmp-signaling-pathway"
+  ],
+  "key_phrases": [
+    "oncomir",
+    "196",
+    "promotes",
+    "invasive",
+    "phenotype",
+    "oral",
+    "cancer",
+    "through"
+  ],
+  "summary_1l": "BACKGROUND MicroRNA-196 (miR-196), which is highly up-regulated in oral cancer cells, has bee",
+  "query_hits": [],
+  "embed_text": "1976183 OncomiR-196 promotes an invasive phenotype in oral cancer through the NME4-JNK-TIMP1-MMP signaling pathway science scifact BACKGROUND MicroRNA-196 (miR-196), which is highly up-regulated in oral cancer cells, has been reported to be aberrantly expressed in several cancers; however, the significance of miR-196 in oral cancer has not yet been addressed. METHODS… 1976183 oncomir-196-promotes-an-invasive-phenotype-in-oral-cancer-through-the-nme4-jnk-timp1-mmp-signaling-pathway oncomir 196 promotes invasive phenotype oral cancer through BACKGROUND MicroRNA-196 (miR-196), which is highly up-regulated in oral cancer cells, has bee OncomiR-196 promotes an invasive phenotype in oral cancer through the NME4-JNK-TIMP1-MMP signaling pathway BACKGROUND MicroRNA-196 (miR-196), which is highly up-regulated in oral cancer cells, has been reported to be aberrantly expressed in several cancers; however, the significance of miR-196 in oral cancer has not yet been addressed. METHODS Cellular functions in response to miR-196 modulation were examined, including cell growth, migration, invasion and radio/chemosensitivity. Algorithm-based studies were used to identify the regulatory target of miR-196. The miR-196 target gene and downstream molecular mechanisms were confirmed by RT-qPCR, western blot, luciferase reporter and confocal microscopy analyses. miR-196 expression was determined in paired cancer and adjacent normal tissues f",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.147118+00:00"
+}

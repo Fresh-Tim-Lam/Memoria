@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23700330",
+  "source_fingerprint": "7ba25a084a91978ef8043454c23a7077",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23700330",
+    "angiopoietin-1-requires-p190-rhogap-to-protect-against-vascular-leakage-in-vivo."
+  ],
+  "key_phrases": [
+    "angiopoietin",
+    "requires",
+    "p190",
+    "rhogap",
+    "protect",
+    "against",
+    "vascular",
+    "leakage"
+  ],
+  "summary_1l": "Angiopoietin-1 requires p190 RhoGAP to protect against vascular leakage in vivo.",
+  "query_hits": [],
+  "embed_text": "23700330 Angiopoietin-1 requires p190 RhoGAP to protect against vascular leakage in vivo. science scifact Angiopoietin-1 (Ang-1), a ligand of the endothelium-specific receptor Tie-2, inhibits permeability in the mature vasculature, but the mechanism remains unknown. Here we show that Ang-1 signals Rho family GTPases to organize the… 23700330 angiopoietin-1-requires-p190-rhogap-to-protect-against-vascular-leakage-in-vivo. angiopoietin requires p190 rhogap protect against vascular leakage Angiopoietin-1 requires p190 RhoGAP to protect against vascular leakage in vivo. Angiopoietin-1 requires p190 RhoGAP to protect against vascular leakage in vivo. Angiopoietin-1 (Ang-1), a ligand of the endothelium-specific receptor Tie-2, inhibits permeability in the mature vasculature, but the mechanism remains unknown. Here we show that Ang-1 signals Rho family GTPases to organize the cytoskeleton into a junction-fortifying arrangement that enhances the permeability barrier function of the endothelium. Ang-1 phosphorylates Tie-2 and its downstream effector phosphatidylinositol 3-kinase. This induces activation of one endogenous GTPase, Rac1, and inhibition of another, RhoA. Loss of either part of this dual effect abrogates the cytoskeletal and anti-permeability actions of Ang-1, suggesting that coordinated GTPase regulation is necessary for the vessel-sealing effects",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.987276+00:00"
+}

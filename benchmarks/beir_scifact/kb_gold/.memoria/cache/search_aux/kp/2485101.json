@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2485101",
+  "source_fingerprint": "c2373a70eb34842499df4fe299148985",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2485101",
+    "candidate-causal-regulatory-effects-by-integration-of-expression-qtls-with-complex-trait-genetic-associations"
+  ],
+  "key_phrases": [
+    "candidate",
+    "causal",
+    "regulatory",
+    "effects",
+    "by",
+    "integration",
+    "expression",
+    "qtls"
+  ],
+  "summary_1l": "The recent success of genome-wide association studies (GWAS) is now followed by the challe",
+  "query_hits": [],
+  "embed_text": "2485101 Candidate Causal Regulatory Effects by Integration of Expression QTLs with Complex Trait Genetic Associations science scifact The recent success of genome-wide association studies (GWAS) is now followed by the challenge to determine how the reported susceptibility variants mediate complex traits and diseases. Expression quantitative trait loci (eQTLs) have been… 2485101 candidate-causal-regulatory-effects-by-integration-of-expression-qtls-with-complex-trait-genetic-associations candidate causal regulatory effects by integration expression qtls The recent success of genome-wide association studies (GWAS) is now followed by the challe Candidate Causal Regulatory Effects by Integration of Expression QTLs with Complex Trait Genetic Associations The recent success of genome-wide association studies (GWAS) is now followed by the challenge to determine how the reported susceptibility variants mediate complex traits and diseases. Expression quantitative trait loci (eQTLs) have been implicated in disease associations through overlaps between eQTLs and GWAS signals. However, the abundance of eQTLs and the strong correlation structure (LD) in the genome make it likely that some of these overlaps are coincidental and not driven by the same functional variants. In the present study, we propose an empirical methodology, which we call Regulatory Trait Concordance (RTC) that accounts for local LD structure and integrates eQTLs and GW",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.386821+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2095573",
+  "source_fingerprint": "8ff2f62baf821874f6228c857f179d35",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2095573",
+    "ldl-cholesterol-concentrations:-a-genome-wide-association-study"
+  ],
+  "key_phrases": [
+    "ldl",
+    "cholesterol",
+    "concentrations",
+    "genome",
+    "wide",
+    "association",
+    "study",
+    "background"
+  ],
+  "summary_1l": "BACKGROUND LDL cholesterol has a causal role in the development of cardiovascular disease.",
+  "query_hits": [],
+  "embed_text": "2095573 LDL-cholesterol concentrations: a genome-wide association study science scifact BACKGROUND LDL cholesterol has a causal role in the development of cardiovascular disease. Improved understanding of the biological mechanisms that underlie the metabolism and regulation of LDL cholesterol might help to identify novel… 2095573 ldl-cholesterol-concentrations:-a-genome-wide-association-study ldl cholesterol concentrations genome wide association study background BACKGROUND LDL cholesterol has a causal role in the development of cardiovascular disease. LDL-cholesterol concentrations: a genome-wide association study BACKGROUND LDL cholesterol has a causal role in the development of cardiovascular disease. Improved understanding of the biological mechanisms that underlie the metabolism and regulation of LDL cholesterol might help to identify novel therapeutic targets. We therefore did a genome-wide association study of LDL-cholesterol concentrations. METHODS We used genome-wide association data from up to 11,685 participants with measures of circulating LDL-cholesterol concentrations across five studies, including data for 293 461 autosomal single nucleotide polymorphisms (SNPs) with a minor allele frequency of 5% or more that passed our quality control criteria. We also used data from a second genome-wide array in up to 4337 participants",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.175455+00:00"
+}

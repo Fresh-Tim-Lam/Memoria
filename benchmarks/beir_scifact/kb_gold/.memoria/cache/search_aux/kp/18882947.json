@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "18882947",
+  "source_fingerprint": "7bd5df63a4d754706dbe773c591ea39d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18882947"
+  ],
+  "key_phrases": [
+    "nuclear",
+    "effector",
+    "wnt",
+    "signaling",
+    "tcf1",
+    "functions",
+    "as",
+    "cell"
+  ],
+  "summary_1l": "The HMG-box factor Tcf1 is required during T-cell development in the thymus an",
+  "query_hits": [],
+  "embed_text": "18882947 The Nuclear Effector of Wnt-Signaling, Tcf1, Functions as a T-Cell–Specific Tumor Suppressor for Development of Lymphomas science scifact The HMG-box factor Tcf1 is required during T-cell development in the thymus and mediates the nuclear response to Wnt signals. Tcf1(-/-) mice have previously been characterized and show developmental blocks at the CD4-CD8- double negative… 18882947 nuclear effector wnt signaling tcf1 functions as cell The HMG-box factor Tcf1 is required during T-cell development in the thymus an The Nuclear Effector of Wnt-Signaling, Tcf1, Functions as a T-Cell–Specific Tumor Suppressor for Development of Lymphomas The HMG-box factor Tcf1 is required during T-cell development in the thymus and mediates the nuclear response to Wnt signals. Tcf1(-/-) mice have previously been characterized and show developmental blocks at the CD4-CD8- double negative (DN) to CD4+CD8+ double positive transition. Due to the blocks in T-cell development, Tcf1(-/-) mice normally have a very small thymus. Unexpectedly, a large proportion of Tcf1(-/-) mice spontaneously develop thymic lymphomas with 50% of mice developing a thymic lymphoma/leukemia at the age of 16 wk. These lymphomas are clonal, highly metastatic, and paradoxically show high Wnt signaling when crossed with Wnt reporter mice and have high",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.833579+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36355784",
+  "source_fingerprint": "86dea1757c245c78672da4d5afedf466",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36355784",
+    "the-effect-of-mass-screening-on-incidence-and-mortality-of-squamous-and-adenocarcinoma-of-cervix-uteri."
+  ],
+  "key_phrases": [
+    "effect",
+    "mass",
+    "screening",
+    "incidence",
+    "mortality",
+    "squamous",
+    "adenocarcinoma",
+    "cervix"
+  ],
+  "summary_1l": "The effect of mass screening on incidence and mortality of squamous and adenocarcinoma of cervix uteri.",
+  "query_hits": [],
+  "embed_text": "36355784 The effect of mass screening on incidence and mortality of squamous and adenocarcinoma of cervix uteri. science scifact OBJECTIVE To describe the efficacy of the Finnish mass screening program for cervical squamous carcinoma and adenocarcinoma, as reflected by changes of incidence and mortality rate. METHODS Cervical cancer incidence and mortality data were… 36355784 the-effect-of-mass-screening-on-incidence-and-mortality-of-squamous-and-adenocarcinoma-of-cervix-uteri. effect mass screening incidence mortality squamous adenocarcinoma cervix The effect of mass screening on incidence and mortality of squamous and adenocarcinoma of cervix uteri. The effect of mass screening on incidence and mortality of squamous and adenocarcinoma of cervix uteri. OBJECTIVE To describe the efficacy of the Finnish mass screening program for cervical squamous carcinoma and adenocarcinoma, as reflected by changes of incidence and mortality rate. METHODS Cervical cancer incidence and mortality data were obtained from the Finnish Cancer Registry. Data were available from the year 1953, when the registry was established. The nationwide mass screening program in Finland was started in the mid-1960s. A centralized organization administers this program. Women age 30-60 years are notified for screening every 5 years. RESULTS The mean incidence of cervical carcinoma in the early 1960s was 15.4 per 10(5) woman-years. In 1991, it was only 2.7 per 10(5) woman-y",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:13.100551+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "154796494",
+  "source_fingerprint": "6695ab9a178505a9180017e5e3dc4015",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "154796494",
+    "citizen-participation-and-citizen-evaluation-in-disaster-recovery"
+  ],
+  "key_phrases": [
+    "citizen",
+    "participation",
+    "evaluation",
+    "disaster",
+    "recovery",
+    "april",
+    "1997",
+    "grand"
+  ],
+  "summary_1l": "In April 1997, Grand Forks, North Dakota, and East Grand Forks, Minnesota, experienced a disastrous flood.",
+  "query_hits": [],
+  "embed_text": "154796494 Citizen Participation and Citizen Evaluation in Disaster Recovery science scifact In April 1997, Grand Forks, North Dakota, and East Grand Forks, Minnesota, experienced a disastrous flood. Both cities have been textbook examples of success according to the Federal Emergency Management Agency. They have an updated… 154796494 citizen-participation-and-citizen-evaluation-in-disaster-recovery citizen participation evaluation disaster recovery april 1997 grand In April 1997, Grand Forks, North Dakota, and East Grand Forks, Minnesota, experienced a disastrous flood. Citizen Participation and Citizen Evaluation in Disaster Recovery In April 1997, Grand Forks, North Dakota, and East Grand Forks, Minnesota, experienced a disastrous flood. Both cities have been textbook examples of success according to the Federal Emergency Management Agency. They have an updated infrastructure, paid for largely by the federal government. Their downtowns are on the road to recovery with new construction and businesses. The paths of the two cities have diverged in the social and political aftermath of the flood. East Grand Forks, following consultant suggestions, instituted extensive citizen participation initiatives. East Grand Forks has experienced political stability and citizen satisfaction. Grand Forks relied primarily on bureaucratic guidance to react to the disaster",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.674705+00:00"
+}

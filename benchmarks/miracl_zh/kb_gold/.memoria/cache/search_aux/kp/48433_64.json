@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "kp_id": "48433#64",
+  "source_fingerprint": "f6f719f07f4c86ea4e89e1ad226a4933",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "48433#64"
+  ],
+  "key_phrases": [
+    "加法",
+    "基础",
+    "算术",
+    "基本",
+    "运算",
+    "jiafajiajianchengchushijichusuanshuzhongdejibenyunsuan",
+    "加法 加、减、乘、除是基础算术中的基本运算。"
+  ],
+  "summary_1l": "加、减、乘、除是基础算术中的基本运算。",
+  "query_hits": [],
+  "embed_text": "48433#64 加法 加法 加、减、乘、除是基础算术中的基本运算。 48433#64 加法 基础 算术 基本 运算 jiafajiajianchengchushijichusuanshuzhongdejibenyunsuan 加法 加、减、乘、除是基础算术中的基本运算。 加、减、乘、除是基础算术中的基本运算。 加法 加、减、乘、除是基础算术中的基本运算。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:19:03.603228+00:00"
+}

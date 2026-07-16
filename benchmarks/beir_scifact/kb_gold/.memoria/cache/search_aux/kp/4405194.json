@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4405194",
+  "source_fingerprint": "2f92174701c3eaecc0e4cbe44f101f01",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4405194",
+    "induction-of-human-neuronal-cells-by-defined-transcription-factors"
+  ],
+  "key_phrases": [
+    "induction",
+    "human",
+    "neuronal",
+    "cells",
+    "by",
+    "defined",
+    "transcription",
+    "factors"
+  ],
+  "summary_1l": "Somatic cell nuclear transfer, cell fusion, or expression of lineage-specific factors have been shown to induce cell-fate changes in",
+  "query_hits": [],
+  "embed_text": "4405194 Induction of human neuronal cells by defined transcription factors science scifact Somatic cell nuclear transfer, cell fusion, or expression of lineage-specific factors have been shown to induce cell-fate changes in diverse somatic cell types. We recently observed that forced expression of a combination of three… 4405194 induction-of-human-neuronal-cells-by-defined-transcription-factors induction human neuronal cells by defined transcription factors Somatic cell nuclear transfer, cell fusion, or expression of lineage-specific factors have been shown to induce cell-fate changes in Induction of human neuronal cells by defined transcription factors Somatic cell nuclear transfer, cell fusion, or expression of lineage-specific factors have been shown to induce cell-fate changes in diverse somatic cell types. We recently observed that forced expression of a combination of three transcription factors, Brn2 (also known as Pou3f2), Ascl1 and Myt1l, can efficiently convert mouse fibroblasts into functional induced neuronal (iN) cells. Here we show that the same three factors can generate functional neurons from human pluripotent stem cells as early as 6 days after transgene activation. When combined with the basic helix-loop-helix transcription factor NeuroD1, these factors could also convert fetal and postnatal human fibroblasts into iN cells showing typical neuronal morpho",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.686217+00:00"
+}

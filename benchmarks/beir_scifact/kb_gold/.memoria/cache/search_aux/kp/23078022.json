@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "23078022",
+  "source_fingerprint": "b1fba51fc3d0d654bc4d616aed4aa3f7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23078022"
+  ],
+  "key_phrases": [
+    "muc1",
+    "oncoprotein",
+    "activates",
+    "kinase",
+    "complex",
+    "constitutive",
+    "nf",
+    "signalling"
+  ],
+  "summary_1l": "Nuclear factor-κB (NF-κB) is constitutively activated in diverse human malignancies by mechanisms that are not und",
+  "query_hits": [],
+  "embed_text": "23078022 MUC1 oncoprotein activates the IκB kinase β complex and constitutive NF-κB signalling science scifact Nuclear factor-κB (NF-κB) is constitutively activated in diverse human malignancies by mechanisms that are not understood. The MUC1 oncoprotein is aberrantly overexpressed by most human carcinomas and, similarly to NF-κB, blocks apoptosis… 23078022 muc1 oncoprotein activates kinase complex constitutive nf signalling Nuclear factor-κB (NF-κB) is constitutively activated in diverse human malignancies by mechanisms that are not und MUC1 oncoprotein activates the IκB kinase β complex and constitutive NF-κB signalling Nuclear factor-κB (NF-κB) is constitutively activated in diverse human malignancies by mechanisms that are not understood. The MUC1 oncoprotein is aberrantly overexpressed by most human carcinomas and, similarly to NF-κB, blocks apoptosis and induces transformation. This study demonstrates that overexpression of MUC1 in human carcinoma cells is associated with constitutive activation of NF-κB p65. We show that MUC1 interacts with the high-molecular-weight IκB kinase (IKK) complex in vivo and that the MUC1 cytoplasmic domain binds directly to IKKβ and IKKγ. Interaction of MUC1 with both IKKβ and IKKγ is necessary for IKKβ activation, resulting in phosphorylation and degradation of IκBα. Studies in non-mali",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.821000+00:00"
+}

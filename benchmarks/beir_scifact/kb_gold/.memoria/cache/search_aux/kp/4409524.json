@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4409524",
+  "source_fingerprint": "b7c479008edfdf0129ec79823892608c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4409524",
+    "role-of-corin-in-trophoblast-invasion-and-uterine-spiral-artery-remodelling-in-pregnancy"
+  ],
+  "key_phrases": [
+    "role",
+    "corin",
+    "trophoblast",
+    "invasion",
+    "uterine",
+    "spiral",
+    "artery",
+    "remodelling"
+  ],
+  "summary_1l": "In pregnancy, trophoblast invasion and uterine spiral artery remodelling are important for lowering maternal va",
+  "query_hits": [],
+  "embed_text": "4409524 Role of corin in trophoblast invasion and uterine spiral artery remodelling in pregnancy science scifact In pregnancy, trophoblast invasion and uterine spiral artery remodelling are important for lowering maternal vascular resistance and increasing uteroplacental blood flow. Impaired spiral artery remodelling has been implicated in… 4409524 role-of-corin-in-trophoblast-invasion-and-uterine-spiral-artery-remodelling-in-pregnancy role corin trophoblast invasion uterine spiral artery remodelling In pregnancy, trophoblast invasion and uterine spiral artery remodelling are important for lowering maternal va Role of corin in trophoblast invasion and uterine spiral artery remodelling in pregnancy In pregnancy, trophoblast invasion and uterine spiral artery remodelling are important for lowering maternal vascular resistance and increasing uteroplacental blood flow. Impaired spiral artery remodelling has been implicated in pre-eclampsia, a major complication of pregnancy, for a long time but the underlying mechanisms remain unclear. Corin (also known as atrial natriuretic peptide-converting enzyme) is a cardiac protease that activates atrial natriuretic peptide (ANP), a cardiac hormone that is important in regulating blood pressure. Unexpectedly, corin expression was detected in the pregnant uterus. Here we identify a new function of corin and ANP in promoting trophoblast invasion and spiral arte",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.745668+00:00"
+}

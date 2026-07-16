@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20045514",
+  "source_fingerprint": "44136dd66f1d04ee78fe6114fb3a7a0c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20045514",
+    "spatial-genome-organization:-contrasting-views-from-chromosome-conformation-capture-and-fluorescence-in-situ-hybridization."
+  ],
+  "key_phrases": [
+    "spatial",
+    "genome",
+    "organization",
+    "contrasting",
+    "views",
+    "from",
+    "chromosome",
+    "conformation"
+  ],
+  "summary_1l": "Spatial genome organization: contrasting views from chromosome conformation capture and fluorescence in situ hybridization.",
+  "query_hits": [],
+  "embed_text": "20045514 Spatial genome organization: contrasting views from chromosome conformation capture and fluorescence in situ hybridization. science scifact Although important for gene regulation, most studies of genome organization use either fluorescence in situ hybridization (FISH) or chromosome conformation capture (3C) methods. FISH directly visualizes the spatial relationship of… 20045514 spatial-genome-organization:-contrasting-views-from-chromosome-conformation-capture-and-fluorescence-in-situ-hybridization. spatial genome organization contrasting views from chromosome conformation Spatial genome organization: contrasting views from chromosome conformation capture and fluorescence in situ hybridization. Spatial genome organization: contrasting views from chromosome conformation capture and fluorescence in situ hybridization. Although important for gene regulation, most studies of genome organization use either fluorescence in situ hybridization (FISH) or chromosome conformation capture (3C) methods. FISH directly visualizes the spatial relationship of sequences but is usually applied to a few loci at a time. The frequency at which sequences are ligated together by formaldehyde cross-linking can be measured genome-wide by 3C methods, with higher frequencies thought to reflect shorter distances. FISH and 3C should therefore give the same views of genome organization, but this has not been tested extensively. We investigated the murine HoxD locus with 3C carbon copy (5C) and FISH in differen",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.570037+00:00"
+}

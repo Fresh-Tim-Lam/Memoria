@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9394119",
+  "source_fingerprint": "8539dcaa65f5f7ebb797407972738620",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9394119",
+    "association-of-type-and-location-of-brca1-and-brca2-mutations-with-risk-of-breast-and-ovarian-cancer."
+  ],
+  "key_phrases": [
+    "association",
+    "type",
+    "location",
+    "brca1",
+    "brca2",
+    "mutations",
+    "with",
+    "risk"
+  ],
+  "summary_1l": "Association of type and location of BRCA1 and BRCA2 mutations with risk of breast and ovarian cancer.",
+  "query_hits": [],
+  "embed_text": "9394119 Association of type and location of BRCA1 and BRCA2 mutations with risk of breast and ovarian cancer. science scifact IMPORTANCE Limited information about the relationship between specific mutations in BRCA1 or BRCA2 (BRCA1/2) and cancer risk exists. OBJECTIVE To identify mutation-specific cancer risks for carriers of BRCA1/2. DESIGN, SETTING, AND… 9394119 association-of-type-and-location-of-brca1-and-brca2-mutations-with-risk-of-breast-and-ovarian-cancer. association type location brca1 brca2 mutations with risk Association of type and location of BRCA1 and BRCA2 mutations with risk of breast and ovarian cancer. Association of type and location of BRCA1 and BRCA2 mutations with risk of breast and ovarian cancer. IMPORTANCE Limited information about the relationship between specific mutations in BRCA1 or BRCA2 (BRCA1/2) and cancer risk exists. OBJECTIVE To identify mutation-specific cancer risks for carriers of BRCA1/2. DESIGN, SETTING, AND PARTICIPANTS Observational study of women who were ascertained between 1937 and 2011 (median, 1999) and found to carry disease-associated BRCA1 or BRCA2 mutations. The international sample comprised 19,581 carriers of BRCA1 mutations and 11,900 carriers of BRCA2 mutations from 55 centers in 33 countries on 6 continents. We estimated hazard ratios for breast and ovarian cancer based on mutation type, function, and nucleotide position. We also estimated RHR, the r",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.843842+00:00"
+}

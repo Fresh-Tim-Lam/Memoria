@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "31166180",
+  "source_fingerprint": "6c0f65d45995582bf487e7beff7c6d84",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "31166180",
+    "requirement-of-heterochromatin-for-cohesion-at-centromeres."
+  ],
+  "key_phrases": [
+    "requirement",
+    "heterochromatin",
+    "cohesion",
+    "at",
+    "centromeres",
+    "heterochromatic",
+    "many",
+    "organisms"
+  ],
+  "summary_1l": "Requirement of heterochromatin for cohesion at centromeres.",
+  "query_hits": [],
+  "embed_text": "31166180 Requirement of heterochromatin for cohesion at centromeres. science scifact Centromeres are heterochromatic in many organisms, but the mitotic function of this silent chromatin remains unknown. During cell division, newly replicated sister chromatids must cohere until anaphase when Scc1/Rad21-mediated cohesion is… 31166180 requirement-of-heterochromatin-for-cohesion-at-centromeres. requirement heterochromatin cohesion at centromeres heterochromatic many organisms Requirement of heterochromatin for cohesion at centromeres. Requirement of heterochromatin for cohesion at centromeres. Centromeres are heterochromatic in many organisms, but the mitotic function of this silent chromatin remains unknown. During cell division, newly replicated sister chromatids must cohere until anaphase when Scc1/Rad21-mediated cohesion is destroyed. In metazoans, chromosome arm cohesins dissociate during prophase, leaving centromeres as the only linkage before anaphase. It is not known what distinguishes centromere cohesion from arm cohesion. Fission yeast Swi6 (a Heterochromatin protein 1 counterpart) is a component of silent heterochromatin. Here we show that this heterochromatin is specifically required for cohesion between sister centromeres. Swi6 is required for association of Rad21-cohesin with centromeres but not along chro",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.363605+00:00"
+}

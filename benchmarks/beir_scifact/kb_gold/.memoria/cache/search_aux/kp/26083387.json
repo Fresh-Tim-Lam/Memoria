@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26083387",
+  "source_fingerprint": "78583d4debcf1a153a140fddf0a549b4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26083387",
+    "the-s.-cerevisiae-rrm3p-dna-helicase-moves-with-the-replication-fork-and-affects-replication-of-all-yeast-chromosomes."
+  ],
+  "key_phrases": [
+    "cerevisiae",
+    "rrm3p",
+    "dna",
+    "helicase",
+    "moves",
+    "with",
+    "replication",
+    "fork"
+  ],
+  "summary_1l": "The S.",
+  "query_hits": [],
+  "embed_text": "26083387 The S. cerevisiae Rrm3p DNA helicase moves with the replication fork and affects replication of all yeast chromosomes. science scifact The Saccharomyces cerevisiae DNA helicase Rrm3p is needed for normal fork progression through >1000 discrete sites scattered throughout the genome. Here we show that replication of all yeast chromosomes was markedly delayed in rrm3 cells.… 26083387 the-s.-cerevisiae-rrm3p-dna-helicase-moves-with-the-replication-fork-and-affects-replication-of-all-yeast-chromosomes. cerevisiae rrm3p dna helicase moves with replication fork The S. The S. cerevisiae Rrm3p DNA helicase moves with the replication fork and affects replication of all yeast chromosomes. The Saccharomyces cerevisiae DNA helicase Rrm3p is needed for normal fork progression through >1000 discrete sites scattered throughout the genome. Here we show that replication of all yeast chromosomes was markedly delayed in rrm3 cells. Delayed replication was seen even in a region that lacks any predicted Rrm3p-dependent sites. Based on the pattern of replication intermediates in two-dimensional gels, the rate of fork movement in rrm3 cells appeared similar to wild-type except at known Rrm3p-dependent sites. These data suggest that although Rrm3p has a global role in DNA replication, its activity is needed only or primarily at specific, difficult-to-replicate sites. By",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.294671+00:00"
+}

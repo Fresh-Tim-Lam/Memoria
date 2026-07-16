@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "kp_id": "543889#0",
+  "source_fingerprint": "8bd75ab2dc6b308a3ee7ea722f286fbf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "英国广播公司相关争议",
+    "2021年新疆棉花争议事件",
+    "腾讯相关争议"
+  ],
+  "aliases": [
+    "543889#0"
+  ],
+  "key_phrases": [
+    "启示录",
+    "骑士",
+    "天启四",
+    "记载",
+    "传统",
+    "解释",
+    "瘟疫",
+    "战争"
+  ],
+  "summary_1l": "天启四骑士（）被记载在，天启四骑士传统上被解释为瘟疫、战争、饥荒和死亡，不过，对于四骑士的解释略有争议。",
+  "query_hits": [],
+  "embed_text": "543889#0 启示录中的四骑士 启示录中的四骑士 天启四骑士（）被记载在，天启四骑士传统上被解释为瘟疫、战争、饥荒和死亡，不过，对于四骑士的解释略有争议。 英国广播公司相关争议 2021年新疆棉花争议事件 腾讯相关争议 543889#0 启示录 骑士 天启四 记载 传统 解释 瘟疫 战争 天启四骑士（）被记载在，天启四骑士传统上被解释为瘟疫、战争、饥荒和死亡，不过，对于四骑士的解释略有争议。 启示录中的四骑士 天启四骑士（）被记载在，天启四骑士传统上被解释为瘟疫、战争、饥荒和死亡，不过，对于四骑士的解释略有争议。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:20:41.402065+00:00"
+}

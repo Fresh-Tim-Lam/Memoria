@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18084826",
+  "source_fingerprint": "9e3681df464b5668eb2a0a79eefd4a3d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18084826",
+    "characteristics-of-body-fat,-body-fat-percentage-and-other-body-composition-for-koreans-from-knhanes-iv"
+  ],
+  "key_phrases": [
+    "characteristics",
+    "body",
+    "fat",
+    "percentage",
+    "other",
+    "composition",
+    "koreans",
+    "from"
+  ],
+  "summary_1l": "Accurate measurement of fat mass has become increasingly important with the increasing incidence",
+  "query_hits": [],
+  "embed_text": "18084826 Characteristics of Body Fat, Body Fat Percentage and Other Body Composition for Koreans from KNHANES IV science scifact Accurate measurement of fat mass has become increasingly important with the increasing incidence of obesity. We assessed fat and muscle mass of Koreans with the Korea National Health and Nutrition Examination Survey IV (KNHANES IV). We… 18084826 characteristics-of-body-fat,-body-fat-percentage-and-other-body-composition-for-koreans-from-knhanes-iv characteristics body fat percentage other composition koreans from Accurate measurement of fat mass has become increasingly important with the increasing incidence Characteristics of Body Fat, Body Fat Percentage and Other Body Composition for Koreans from KNHANES IV Accurate measurement of fat mass has become increasingly important with the increasing incidence of obesity. We assessed fat and muscle mass of Koreans with the Korea National Health and Nutrition Examination Survey IV (KNHANES IV). We studied 10,456 subjects (aged 20 to 85 yr; 4,476 men, 5,980 women). Fat and muscle mass were measured by dual-energy x-ray absorptiometry. Reference values of body compositions were obtained using the LMS method. The fat mass index (FMI, body fat mass/height(2); kg/m(2)) of Korean men did not correlate with age (P = 0.452), but those of Korean women (P < 0.001) did. The ratio of percentage of fat in the trunk and legs was positively related with age in bot",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.776974+00:00"
+}

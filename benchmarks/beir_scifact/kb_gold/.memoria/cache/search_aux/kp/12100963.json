@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12100963",
+  "source_fingerprint": "78e370d8b05dc94d6875ebbf3e37151b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12100963",
+    "tissue-exit:-a-novel-control-point-in-the-accumulation-of-antigen-specific-cd8-t-cells-in-the-influenza-a-virus-infected-lung."
+  ],
+  "key_phrases": [
+    "tissue",
+    "exit",
+    "novel",
+    "control",
+    "point",
+    "accumulation",
+    "antigen",
+    "specific"
+  ],
+  "summary_1l": "Tissue exit: a novel control point in the accumulation of antigen-specific CD8 T cells in the influenza a virus-infected lung.",
+  "query_hits": [],
+  "embed_text": "12100963 Tissue exit: a novel control point in the accumulation of antigen-specific CD8 T cells in the influenza a virus-infected lung. science scifact Memory/effector T cells efficiently migrate into extralymphoid tissues and sites of infection, providing immunosurveillance and a first line of defense against invading pathogens. Even though it is a potential means to regulate the size,… 12100963 tissue-exit:-a-novel-control-point-in-the-accumulation-of-antigen-specific-cd8-t-cells-in-the-influenza-a-virus-infected-lung. tissue exit novel control point accumulation antigen specific Tissue exit: a novel control point in the accumulation of antigen-specific CD8 T cells in the influenza a virus-infected lung. Tissue exit: a novel control point in the accumulation of antigen-specific CD8 T cells in the influenza a virus-infected lung. Memory/effector T cells efficiently migrate into extralymphoid tissues and sites of infection, providing immunosurveillance and a first line of defense against invading pathogens. Even though it is a potential means to regulate the size, quality, and duration of a tissue infiltrate, T cell egress from infected tissues is poorly understood. Using a mouse model of influenza A virus infection, we found that CD8 effector T cells egressed from the infected lung in a CCR7-dependent manner. In contrast, following antigen recognition, effector CD8 T cell egress decreased and CCR7 function was reduced in vivo and in vitro, indicating that the exit of CD8 T cells from infect",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:07.753965+00:00"
+}

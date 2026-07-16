@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8724666",
+  "source_fingerprint": "bd8ec5777fde721ccc37a8b59d3385ac",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8724666",
+    "cell-state-specific-metabolic-dependency-in-hematopoiesis-and-leukemogenesis"
+  ],
+  "key_phrases": [
+    "cell",
+    "state",
+    "specific",
+    "metabolic",
+    "dependency",
+    "hematopoiesis",
+    "leukemogenesis",
+    "balance"
+  ],
+  "summary_1l": "The balance between oxidative and nonoxidative glucose metabolism is essential for a number of pathophysiological processes",
+  "query_hits": [],
+  "embed_text": "8724666 Cell-State-Specific Metabolic Dependency in Hematopoiesis and Leukemogenesis science scifact The balance between oxidative and nonoxidative glucose metabolism is essential for a number of pathophysiological processes. By deleting enzymes that affect aerobic glycolysis with different potencies, we examine how modulating glucose… 8724666 cell-state-specific-metabolic-dependency-in-hematopoiesis-and-leukemogenesis cell state specific metabolic dependency hematopoiesis leukemogenesis balance The balance between oxidative and nonoxidative glucose metabolism is essential for a number of pathophysiological processes Cell-State-Specific Metabolic Dependency in Hematopoiesis and Leukemogenesis The balance between oxidative and nonoxidative glucose metabolism is essential for a number of pathophysiological processes. By deleting enzymes that affect aerobic glycolysis with different potencies, we examine how modulating glucose metabolism specifically affects hematopoietic and leukemic cell populations. We find that a deficiency in the M2 pyruvate kinase isoform (PKM2) reduces the levels of metabolic intermediates important for biosynthesis and impairs progenitor function without perturbing hematopoietic stem cells (HSCs), whereas lactate dehydrogenase A (LDHA) deletion significantly inhibits the function of both HSCs and progenitors during hematopoiesis. In contrast, leukemia initiation by transforming al",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.567750+00:00"
+}

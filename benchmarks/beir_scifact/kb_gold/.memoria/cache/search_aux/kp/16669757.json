@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16669757",
+  "source_fingerprint": "81dd1aca656c9a6b763220e546330b6c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16669757",
+    "mechanosensitivity-in-the-enteric-nervous-system"
+  ],
+  "key_phrases": [
+    "mechanosensitivity",
+    "enteric",
+    "nervous",
+    "system",
+    "ens",
+    "autonomously",
+    "controls",
+    "gut"
+  ],
+  "summary_1l": "The enteric nervous system (ENS) autonomously controls gut muscle activity.",
+  "query_hits": [],
+  "embed_text": "16669757 Mechanosensitivity in the enteric nervous system science scifact The enteric nervous system (ENS) autonomously controls gut muscle activity. Mechanosensitive enteric neurons (MEN) initiate reflex activity by responding to mechanical deformation of the gastrointestinal wall. MEN throughout the gut… 16669757 mechanosensitivity-in-the-enteric-nervous-system mechanosensitivity enteric nervous system ens autonomously controls gut The enteric nervous system (ENS) autonomously controls gut muscle activity. Mechanosensitivity in the enteric nervous system The enteric nervous system (ENS) autonomously controls gut muscle activity. Mechanosensitive enteric neurons (MEN) initiate reflex activity by responding to mechanical deformation of the gastrointestinal wall. MEN throughout the gut primarily respond to compression or stretch rather than to shear force. Some MEN are multimodal as they respond to compression and stretch. Depending on the region up to 60% of the entire ENS population responds to mechanical stress. MEN fire action potentials after mechanical stimulation of processes or soma although they are more sensitive to process deformation. There are at least two populations of MEN based on their sensitivity to different modalities of mechanical stress and on their firing pattern. (1) Rap",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.601939+00:00"
+}

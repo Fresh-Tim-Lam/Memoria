@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20231138",
+  "source_fingerprint": "bd941a198f5b5ac92fa28368a5cb2c33",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20231138",
+    "replication-fork-slowing-and-reversal-upon-dna-damage-require-pcna-polyubiquitination-and-zranb3-dna-translocase-activity"
+  ],
+  "key_phrases": [
+    "replication",
+    "fork",
+    "slowing",
+    "reversal",
+    "upon",
+    "dna",
+    "damage",
+    "require"
+  ],
+  "summary_1l": "DNA damage tolerance during eukaryotic replication is orchestrated by PCNA ubi",
+  "query_hits": [],
+  "embed_text": "20231138 Replication Fork Slowing and Reversal upon DNA Damage Require PCNA Polyubiquitination and ZRANB3 DNA Translocase Activity science scifact DNA damage tolerance during eukaryotic replication is orchestrated by PCNA ubiquitination. While monoubiquitination activates mutagenic translesion synthesis, polyubiquitination activates an error-free pathway, elusive in mammals, enabling… 20231138 replication-fork-slowing-and-reversal-upon-dna-damage-require-pcna-polyubiquitination-and-zranb3-dna-translocase-activity replication fork slowing reversal upon dna damage require DNA damage tolerance during eukaryotic replication is orchestrated by PCNA ubi Replication Fork Slowing and Reversal upon DNA Damage Require PCNA Polyubiquitination and ZRANB3 DNA Translocase Activity DNA damage tolerance during eukaryotic replication is orchestrated by PCNA ubiquitination. While monoubiquitination activates mutagenic translesion synthesis, polyubiquitination activates an error-free pathway, elusive in mammals, enabling damage bypass by template switching. Fork reversal is driven in vitro by multiple enzymes, including the DNA translocase ZRANB3, shown to bind polyubiquitinated PCNA. However, whether this interaction promotes fork remodeling and template switching in vivo was unknown. Here we show that damage-induced fork reversal in mammalian cells requires PCNA ubiquitination, UBC13, and K63-linked polyubiquitin chains, previously involved in error",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:12.245393+00:00"
+}

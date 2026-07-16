@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20280410",
+  "source_fingerprint": "855e5339a35f6525c63771f51e05d306",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20280410",
+    "a-common-variant-in-brca2-is-associated-with-both-breast-cancer-risk-and-prenatal-viability"
+  ],
+  "key_phrases": [
+    "common",
+    "variant",
+    "brca2",
+    "associated",
+    "with",
+    "both",
+    "breast",
+    "cancer"
+  ],
+  "summary_1l": "Inherited mutations in the gene BRCA2 predispose carriers to early onset breast cancer, but such mutations a",
+  "query_hits": [],
+  "embed_text": "20280410 A common variant in BRCA2 is associated with both breast cancer risk and prenatal viability science scifact Inherited mutations in the gene BRCA2 predispose carriers to early onset breast cancer, but such mutations account for fewer than 2% of all cases in East Anglia. It is likely that low penetrance alleles explain the greater part of… 20280410 a-common-variant-in-brca2-is-associated-with-both-breast-cancer-risk-and-prenatal-viability common variant brca2 associated with both breast cancer Inherited mutations in the gene BRCA2 predispose carriers to early onset breast cancer, but such mutations a A common variant in BRCA2 is associated with both breast cancer risk and prenatal viability Inherited mutations in the gene BRCA2 predispose carriers to early onset breast cancer, but such mutations account for fewer than 2% of all cases in East Anglia. It is likely that low penetrance alleles explain the greater part of inherited susceptibility to breast cancer; polymorphic variants in strongly predisposing genes, such as BRCA2, are candidates for this role. BRCA2 is thought to be involved in DNA double strand break-repair. Few mice in which Brca2 is truncated survive to birth; of those that do, most are male, smaller than their normal littermates and have high cancer incidence. Here we show that a common human polymorphism (N372H) in exon 10 of BRCA2 confers an increased risk of breast c",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.909881+00:00"
+}

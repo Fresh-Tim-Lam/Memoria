@@ -1,0 +1,2554 @@
+schema_version: 1
+updated_at: '2026-07-16T06:19:28.165572+00:00'
+items:
+- pending_id: 631bcc2b72236a85
+  file: BellmanFunc.md
+  kind: heading
+  name: 符号约定
+  range:
+    start:
+      snippet: '## 符号约定'
+      line_hint: 5
+    end:
+      snippet: '---'
+      line_hint: 19
+  status: pending
+- pending_id: 81bba1c9bb0ed5b0
+  file: BellmanFunc.md
+  kind: heading
+  name: 第一部分：折扣回报的递归结构
+  range:
+    start:
+      snippet: '## 第一部分：折扣回报的递归结构'
+      line_hint: 21
+    end:
+      snippet: '---'
+      line_hint: 47
+  status: pending
+- pending_id: 45a79028f74c85bf
+  file: BellmanFunc.md
+  kind: heading
+  name: 定义
+  range:
+    start:
+      snippet: '### 定义'
+      line_hint: 23
+    end:
+      snippet: $$
+      line_hint: 29
+  status: pending
+- pending_id: 85a6968e41d4aab3
+  file: BellmanFunc.md
+  kind: heading
+  name: 递归性质
+  range:
+    start:
+      snippet: '### 递归性质'
+      line_hint: 31
+    end:
+      snippet: '---'
+      line_hint: 47
+  status: pending
+- pending_id: 4b97ac4a8c0df4dd
+  file: BellmanFunc.md
+  kind: heading
+  name: 第二部分：状态价值函数 V^π(s) 的贝尔曼方程
+  range:
+    start:
+      snippet: '## 第二部分：状态价值函数 V^π(s) 的贝尔曼方程'
+      line_hint: 49
+    end:
+      snippet: '---'
+      line_hint: 128
+  status: pending
+- pending_id: 8cf024b32717f3a9
+  file: BellmanFunc.md
+  kind: heading
+  name: 定义
+  range:
+    start:
+      snippet: '### 定义'
+      line_hint: 51
+    end:
+      snippet: $$
+      line_hint: 57
+  status: pending
+- pending_id: 2bef1c8c1a77b57a
+  file: BellmanFunc.md
+  kind: heading
+  name: 推导
+  range:
+    start:
+      snippet: '### 推导'
+      line_hint: 59
+    end:
+      snippet: $$
+      line_hint: 71
+  status: pending
+- pending_id: bb42cb06fe096cb4
+  file: BellmanFunc.md
+  kind: heading
+  name: 处理第一项：E_pi[R_{t+1} | S_t = s]
+  range:
+    start:
+      snippet: '### 处理第一项：E_pi[R_{t+1} | S_t = s]'
+      line_hint: 73
+    end:
+      snippet: $$
+      line_hint: 85
+  status: pending
+- pending_id: 3489b599cb5df00b
+  file: BellmanFunc.md
+  kind: heading
+  name: 处理第二项：E_pi[G_{t+1} | S_t = s]
+  range:
+    start:
+      snippet: '### 处理第二项：E_pi[G_{t+1} | S_t = s]'
+      line_hint: 87
+    end:
+      snippet: $$
+      line_hint: 104
+  status: pending
+- pending_id: 0fa4f1814f21821c
+  file: BellmanFunc.md
+  kind: heading
+  name: 合并 (3)(4)(5)
+  range:
+    start:
+      snippet: '### 合并 (3)(4)(5)'
+      line_hint: 106
+    end:
+      snippet: $$
+      line_hint: 112
+  status: pending
+- pending_id: f9ea28b6ce8a8e91
+  file: BellmanFunc.md
+  kind: heading
+  name: 算子形式
+  range:
+    start:
+      snippet: '### 算子形式'
+      line_hint: 114
+    end:
+      snippet: '---'
+      line_hint: 128
+  status: pending
+- pending_id: ed35dc84cfe1fbc7
+  file: BellmanFunc.md
+  kind: heading
+  name: 第三部分：动作价值函数 Q^π(s,a) 的贝尔曼方程
+  range:
+    start:
+      snippet: '## 第三部分：动作价值函数 Q^π(s,a) 的贝尔曼方程'
+      line_hint: 130
+    end:
+      snippet: '---'
+      line_hint: 198
+  status: pending
+- pending_id: 489a26d6a3230ba8
+  file: BellmanFunc.md
+  kind: heading
+  name: 定义
+  range:
+    start:
+      snippet: '### 定义'
+      line_hint: 132
+    end:
+      snippet: $$
+      line_hint: 138
+  status: pending
+- pending_id: 1c2d588ac927d0e0
+  file: BellmanFunc.md
+  kind: heading
+  name: 推导
+  range:
+    start:
+      snippet: '### 推导'
+      line_hint: 140
+    end:
+      snippet: $$
+      line_hint: 150
+  status: pending
+- pending_id: 97f56fb6b9678dad
+  file: BellmanFunc.md
+  kind: heading
+  name: 处理第一项
+  range:
+    start:
+      snippet: '### 处理第一项'
+      line_hint: 152
+    end:
+      snippet: $$
+      line_hint: 158
+  status: pending
+- pending_id: 667c44bcda533d94
+  file: BellmanFunc.md
+  kind: heading
+  name: 处理第二项
+  range:
+    start:
+      snippet: '### 处理第二项'
+      line_hint: 160
+    end:
+      snippet: $$
+      line_hint: 178
+  status: pending
+- pending_id: e65edde863e1db83
+  file: BellmanFunc.md
+  kind: heading
+  name: 合并 (10)(11)(12)
+  range:
+    start:
+      snippet: '### 合并 (10)(11)(12)'
+      line_hint: 180
+    end:
+      snippet: $$
+      line_hint: 184
+  status: pending
+- pending_id: efd8be722265bb19
+  file: BellmanFunc.md
+  kind: heading
+  name: 用 Q^π 表达 V^π
+  range:
+    start:
+      snippet: '### 用 Q^π 表达 V^π'
+      line_hint: 186
+    end:
+      snippet: $$
+      line_hint: 190
+  status: pending
+- pending_id: dc169021cbd89e13
+  file: BellmanFunc.md
+  kind: heading
+  name: 将 (14) 代入 (13)
+  range:
+    start:
+      snippet: '### 将 (14) 代入 (13)'
+      line_hint: 192
+    end:
+      snippet: '---'
+      line_hint: 198
+  status: pending
+- pending_id: febaf676100cd92b
+  file: BellmanFunc.md
+  kind: heading
+  name: 第四部分：V^π 与 Q^π 的贝尔曼方程对比
+  range:
+    start:
+      snippet: '## 第四部分：V^π 与 Q^π 的贝尔曼方程对比'
+      line_hint: 200
+    end:
+      snippet: '---'
+      line_hint: 211
+  status: pending
+- pending_id: 9e839d08f4f795ae
+  file: BellmanFunc.md
+  kind: heading
+  name: 第五部分：确定性策略的贝尔曼方程
+  range:
+    start:
+      snippet: '## 第五部分：确定性策略的贝尔曼方程'
+      line_hint: 213
+    end:
+      snippet: '---'
+      line_hint: 231
+  status: pending
+- pending_id: cbb0689ee519813a
+  file: BellmanFunc.md
+  kind: heading
+  name: 状态价值函数
+  range:
+    start:
+      snippet: '### 状态价值函数'
+      line_hint: 217
+    end:
+      snippet: $$
+      line_hint: 221
+  status: pending
+- pending_id: 40341d26335078ab
+  file: BellmanFunc.md
+  kind: heading
+  name: 动作价值函数
+  range:
+    start:
+      snippet: '### 动作价值函数'
+      line_hint: 223
+    end:
+      snippet: '---'
+      line_hint: 231
+  status: pending
+- pending_id: 14c472b2b482ee9f
+  file: BellmanFunc.md
+  kind: heading
+  name: 第六部分：最优贝尔曼方程
+  range:
+    start:
+      snippet: '## 第六部分：最优贝尔曼方程'
+      line_hint: 233
+    end:
+      snippet: '---'
+      line_hint: 267
+  status: pending
+- pending_id: cc33898e7c249c9b
+  file: BellmanFunc.md
+  kind: heading
+  name: 最优状态价值函数
+  range:
+    start:
+      snippet: '### 最优状态价值函数'
+      line_hint: 235
+    end:
+      snippet: $$
+      line_hint: 243
+  status: pending
+- pending_id: d58ca3794bf845d5
+  file: BellmanFunc.md
+  kind: heading
+  name: 最优动作价值函数
+  range:
+    start:
+      snippet: '### 最优动作价值函数'
+      line_hint: 245
+    end:
+      snippet: '> (19) 是 DQN 算法试图逼近的目标。'
+      line_hint: 255
+  status: pending
+- pending_id: c5187053eede0457
+  file: BellmanFunc.md
+  kind: heading
+  name: V^* 与 Q^* 的关系
+  range:
+    start:
+      snippet: '### V^* 与 Q^* 的关系'
+      line_hint: 257
+    end:
+      snippet: '---'
+      line_hint: 267
+  status: pending
+- pending_id: 943c3e571f8c4937
+  file: BellmanFunc.md
+  kind: heading
+  name: 第七部分：压缩映射证明
+  range:
+    start:
+      snippet: '## 第七部分：压缩映射证明'
+      line_hint: 269
+    end:
+      snippet: '---'
+      line_hint: 338
+  status: pending
+- pending_id: 220fb2ebb3c79f4e
+  file: BellmanFunc.md
+  kind: heading
+  name: Bellman 算子定义
+  range:
+    start:
+      snippet: '### Bellman 算子定义'
+      line_hint: 271
+    end:
+      snippet: 其中 B(S) 是 S 上的有界实值函数空间，配备 sup 范数 ||V||_∞ = sup_s |V(s)|。
+      line_hint: 279
+  status: pending
+- pending_id: b20ba6553b6b101f
+  file: BellmanFunc.md
+  kind: heading
+  name: gamma-收缩性
+  range:
+    start:
+      snippet: '### gamma-收缩性'
+      line_hint: 281
+    end:
+      snippet: $$
+      line_hint: 317
+  status: pending
+- pending_id: a3ff9536846c9761
+  file: BellmanFunc.md
+  kind: heading
+  name: 结论
+  range:
+    start:
+      snippet: '### 结论'
+      line_hint: 319
+    end:
+      snippet: 2. 从任意 V_0 in B(S) 出发，迭代 V_{k+1} = T^π V_k 都会收敛到 V^π
+      line_hint: 326
+  status: pending
+- pending_id: 948c5942fdc2f134
+  file: BellmanFunc.md
+  kind: heading
+  name: 收敛速度
+  range:
+    start:
+      snippet: '### 收敛速度'
+      line_hint: 328
+    end:
+      snippet: '---'
+      line_hint: 338
+  status: pending
+- pending_id: dd50c8ca6eaef624
+  file: BellmanFunc.md
+  kind: heading
+  name: 第八部分：完整公式汇总表
+  range:
+    start:
+      snippet: '## 第八部分：完整公式汇总表'
+      line_hint: 340
+    end:
+      snippet: '---'
+      line_hint: 356
+  status: pending
+- pending_id: 3421d2b72f3e7c4d
+  file: BellmanFunc.md
+  kind: heading
+  name: 第九部分：在 DDPG 中的具体应用
+  range:
+    start:
+      snippet: '## 第九部分：在 DDPG 中的具体应用'
+      line_hint: 358
+    end:
+      snippet: 这等价于对最优贝尔曼方程 (19) 的近似求解。
+      line_hint: 378
+  status: pending
+- pending_id: 0fa4caae576fe3ae
+  file: BellmanFunc.md
+  kind: definition
+  name: Pr
+  range:
+    start:
+      snippet: '| P(s'' | s, a) | 状态转移概率：Pr(S_{t+1}=s'' | S_t=s, A_t=a) |'
+      line_hint: 13
+    end:
+      snippet: '| E_pi[·] | 在策略 pi 和环境动态下的期望 |'
+      line_hint: 17
+  status: pending
+- pending_id: 518b4ca050305392
+  file: BellmanFunc.md
+  kind: definition
+  name: pi
+  range:
+    start:
+      snippet: '| pi(a | s) | 策略：在状态 s 下选择动作 a 的概率 |'
+      line_hint: 14
+    end:
+      snippet: '| E_pi[·] | 在策略 pi 和环境动态下的期望 |'
+      line_hint: 17
+  status: pending
+- pending_id: b482493b9393a845
+  file: BellmanFunc.md
+  kind: definition
+  name: 折扣累积回报
+  range:
+    start:
+      snippet: 折扣累积回报（return）是从时间步 t 开始，未来所有折扣奖励的总和：
+      line_hint: 25
+    end:
+      snippet: ''
+      line_hint: 30
+  status: pending
+- pending_id: fe5e5d9ebc413d5e
+  file: BellmanFunc.md
+  kind: definition
+  name: 这个递归关系
+  range:
+    start:
+      snippet: '> 这个递归关系是确定性的恒等式，不涉及任何期望或策略。'
+      line_hint: 45
+    end:
+      snippet: ''
+      line_hint: 48
+  status: pending
+- pending_id: 8996a525d82511ea
+  file: BellmanFunc.md
+  kind: definition
+  name: \pi
+  range:
+    start:
+      snippet: \mathbb{E}_\pi \left[ R_{t+1} \mid S_t = s \right] = \sum_{a} \pi(a
+        \mid s) \cdo
+      line_hint: 78
+    end:
+      snippet: $$
+      line_hint: 79
+  status: pending
+- pending_id: e1b78c38d9d58be0
+  file: BellmanFunc.md
+  kind: definition
+  name: 给定
+  range:
+    start:
+      snippet: 给定 (S_t, A_t) = (s, a)，即时奖励由 R(s, a) 决定：
+      line_hint: 81
+    end:
+      snippet: ''
+      line_hint: 86
+  status: pending
+- pending_id: 63cc42e73d4c3066
+  file: BellmanFunc.md
+  kind: definition
+  name: \Pr
+  range:
+    start:
+      snippet: \mathbb{E}_\pi \left[ G_{t+1} \mid S_t = s \right] = \sum_{s'} \Pr(S_{t+1}=s'
+        \m
+      line_hint: 92
+    end:
+      snippet: $$
+      line_hint: 93
+  status: pending
+- pending_id: 02cf97b52a8042be
+  file: BellmanFunc.md
+  kind: definition
+  name: V^π
+  range:
+    start:
+      snippet: '- E_pi[G_{t+1} | S_{t+1}=s''] = V^π(s'')'
+      line_hint: 98
+    end:
+      snippet: ''
+      line_hint: 105
+  status: pending
+- pending_id: 5879f38b77de7042
+  file: BellmanFunc.md
+  kind: definition
+  name: Q^π
+  range:
+    start:
+      snippet: 动作价值函数 Q^π(s,a) 表示：从状态 s 出发，强制执行动作 a（不一定由策略 π 选择），此后一直遵循策略 π，所获得的期望折扣累积回报。
+      line_hint: 134
+    end:
+      snippet: ''
+      line_hint: 139
+  status: pending
+- pending_id: 5d640a38e5d4a7ad
+  file: BellmanFunc.md
+  kind: definition
+  name: Q^\pi
+  range:
+    start:
+      snippet: Q^\pi(s, a) = \mathbb{E}_\pi \left[ G_t \mid S_t = s, A_t = a \right]
+        \tag{8}
+      line_hint: 137
+    end:
+      snippet: $$
+      line_hint: 138
+  status: pending
+- pending_id: f765542d0a5414c4
+  file: BellmanFunc.md
+  kind: definition
+  name: V^\pi
+  range:
+    start:
+      snippet: \mathbb{E}_\pi \left[ G_{t+1} \mid S_{t+1} = s' \right] = V^\pi(s')
+      line_hint: 171
+    end:
+      snippet: $$
+      line_hint: 172
+  status: pending
+- pending_id: 7a1ba4f4b278099c
+  file: BellmanFunc.md
+  kind: definition
+  name: V^\mu
+  range:
+    start:
+      snippet: V^\mu(s) = \sum_{s'} P(s' \mid s, \mu(s)) \left[ R(s, \mu(s)) + \gamma
+        V^\mu(s')
+      line_hint: 220
+    end:
+      snippet: $$
+      line_hint: 221
+  status: pending
+- pending_id: bee60a527d14aad0
+  file: BellmanFunc.md
+  kind: definition
+  name: Q^\mu
+  range:
+    start:
+      snippet: \boxed{Q^\mu(s, a) = \sum_{s'} P(s' \mid s, a) \left[ R(s, a) + \gamma
+        Q^\mu(s',
+      line_hint: 226
+    end:
+      snippet: $$
+      line_hint: 227
+  status: pending
+- pending_id: 6bac955aeaebf97e
+  file: BellmanFunc.md
+  kind: definition
+  name: Q^mu
+  range:
+    start:
+      snippet: '> (17) 正是 DDPG 论文中的公式 (3)。关键洞察：目标值 R(s,a) + gamma Q^mu(s'', mu(s''))
+        的期望只对环境动态 P 取'
+      line_hint: 229
+    end:
+      snippet: ''
+      line_hint: 232
+  status: pending
+- pending_id: 8145def28d7e8939
+  file: BellmanFunc.md
+  kind: definition
+  name: V^*
+  range:
+    start:
+      snippet: \boxed{V^*(s) = \max_a \sum_{s'} P(s' \mid s, a) \left[ R(s, a) + \gamma
+        V^*(s')
+      line_hint: 242
+    end:
+      snippet: $$
+      line_hint: 243
+  status: pending
+- pending_id: 46b1310332ace927
+  file: BellmanFunc.md
+  kind: definition
+  name: Q^*
+  range:
+    start:
+      snippet: Q^*(s, a) = \max_\pi Q^\pi(s, a)
+      line_hint: 248
+    end:
+      snippet: $$
+      line_hint: 249
+  status: pending
+- pending_id: 6f5447a3f6e2c553
+  file: BellmanFunc.md
+  kind: definition
+  name: '|V_1'
+  range:
+    start:
+      snippet: 由于 |V_1(s') - V_2(s')| ≤ ||V_1 - V_2||_∞ 对所有 s' 成立：
+      line_hint: 301
+    end:
+      snippet: ''
+      line_hint: 318
+  status: pending
+- pending_id: a0c010570c06ad1c
+  file: BellmanFunc.md
+  kind: definition
+  name: 上的压缩映射
+  range:
+    start:
+      snippet: 由于 gamma < 1，T^π 是 B(S) 上的压缩映射 (contraction mapping)。
+      line_hint: 321
+    end:
+      snippet: ''
+      line_hint: 327
+  status: pending
+- pending_id: 6cfb9df94448ba11
+  file: BellmanFunc.md
+  kind: definition
+  name: 不动点定理
+  range:
+    start:
+      snippet: 根据 Banach 不动点定理 (Banach Fixed-Point Theorem)：
+      line_hint: 323
+    end:
+      snippet: ''
+      line_hint: 327
+  status: pending
+- pending_id: 47fe900164701c7c
+  file: BellmanFunc.md
+  kind: definition
+  name: Q^μ
+  range:
+    start:
+      snippet: '| 确定性 Q 贝尔曼方程 | Q^μ(s,a) = sum_{s''} P(s''|s,a) [R(s,a) + γ Q^μ(s'',
+        μ(s''))] | (17)'
+      line_hint: 351
+    end:
+      snippet: '| 压缩映射 | ||T^π V_1 - T^π V_2||_∞ ≤ γ ||V_1 - V_2||_∞ | (20) |'
+      line_hint: 354
+  status: pending
+- pending_id: 5cff754ae5b5cb30
+  file: BellmanFunc.md
+  kind: definition
+  name: a=\mu
+  range:
+    start:
+      snippet: \nabla_{\theta^\mu} J \approx \frac{1}{N} \sum_i \nabla_a Q(s,a) \big|_{a=\mu(s_
+      line_hint: 375
+    end:
+      snippet: $$
+      line_hint: 376
+  status: pending
+- pending_id: aecabb8facce68f5
+  file: DDPG/DDPG.md
+  kind: heading
+  name: 0. 论文来源
+  range:
+    start:
+      snippet: '## 0. 论文来源'
+      line_hint: 3
+    end:
+      snippet: '---'
+      line_hint: 14
+  status: pending
+- pending_id: cc083dc1168d6857
+  file: DDPG/DDPG.md
+  kind: heading
+  name: 1. 算法概述
+  range:
+    start:
+      snippet: '## 1. 算法概述'
+      line_hint: 16
+    end:
+      snippet: '---'
+      line_hint: 37
+  status: pending
+- pending_id: 06f8c6236f1603ee
+  file: DDPG/DDPG.md
+  kind: heading
+  name: 1.1 一句话定位
+  range:
+    start:
+      snippet: '### 1.1 一句话定位'
+      line_hint: 18
+    end:
+      snippet: '**DDPG (Deep Deterministic Policy Gradient)** 是一种 **无模型 (model-free)、异策略
+        (off-po'
+      line_hint: 20
+  status: pending
+- pending_id: 7458bfdaa905c55f
+  file: DDPG/DDPG.md
+  kind: heading
+  name: 1.2 设计动机（Why）
+  range:
+    start:
+      snippet: '### 1.2 设计动机（Why）'
+      line_hint: 22
+    end:
+      snippet: '---'
+      line_hint: 37
+  status: pending
+- pending_id: 295b701be668b047
+  file: DDPG/DDPG.md
+  kind: heading
+  name: 2. 数学基础
+  range:
+    start:
+      snippet: '## 2. 数学基础'
+      line_hint: 39
+    end:
+      snippet: '---'
+      line_hint: 92
+  status: pending
+- pending_id: 04456cd3dd1a6242
+  file: DDPG/DDPG.md
+  kind: heading
+  name: 2.1 强化学习基本框架
+  range:
+    start:
+      snippet: '### 2.1 强化学习基本框架'
+      line_hint: 41
+    end:
+      snippet: $$Q^\pi(s_t, a_t) = \mathbb{E}_{r_{i \ge t}, s_{i > t} \sim E, a_{i
+        > t} \sim \p
+      line_hint: 66
+  status: pending
+- pending_id: 2c7c86ee5df96518
+  file: DDPG/DDPG.md
+  kind: heading
+  name: 2.2 贝尔曼方程
+  range:
+    start:
+      snippet: '### 2.2 贝尔曼方程'
+      line_hint: 68
+    end:
+      snippet: '> **关键洞察**：在确定性策略下，目标值的计算只依赖于环境动态，不依赖于策略分布。这使得 **异策略 (off-policy)**
+        学习成为可能——我们可以'
+      line_hint: 78
+  status: pending
+- pending_id: f1921d764df832b3
+  file: DDPG/DDPG.md
+  kind: heading
+  name: 2.3 Q-Learning 的损失函数
+  range:
+    start:
+      snippet: '### 2.3 Q-Learning 的损失函数'
+      line_hint: 80
+    end:
+      snippet: '---'
+      line_hint: 92
+  status: pending
+- pending_id: 71249a748bd2dc2e
+  file: DDPG/DDPG.md
+  kind: heading
+  name: 3. DDPG 算法
+  range:
+    start:
+      snippet: '## 3. DDPG 算法'
+      line_hint: 94
+    end:
+      snippet: '---'
+      line_hint: 200
+  status: pending
+- pending_id: 7525777e7764834b
+  file: DDPG/DDPG.md
+  kind: heading
+  name: 3.1 核心挑战与解决方案
+  range:
+    start:
+      snippet: '### 3.1 核心挑战与解决方案'
+      line_hint: 96
+    end:
+      snippet: '| 不同特征的尺度差异 | — | **Batch Normalization** |'
+      line_hint: 103
+  status: pending
+- pending_id: d5ff04e06ada3109
+  file: DDPG/DDPG.md
+  kind: heading
+  name: 3.2 Actor-Critic 架构
+  range:
+    start:
+      snippet: '### 3.2 Actor-Critic 架构'
+      line_hint: 105
+    end:
+      snippet: '| **Target Critic** | $Q''(s,a|\theta^{Q''})$ | 软更新副本，用于计算稳定目标 |'
+      line_hint: 114
+  status: pending
+- pending_id: 6a90797af039ea73
+  file: DDPG/DDPG.md
+  kind: heading
+  name: 3.3 Critic 更新（Q-Learning）
+  range:
+    start:
+      snippet: '### 3.3 Critic 更新（Q-Learning）'
+      line_hint: 116
+    end:
+      snippet: $$\nabla_{\theta^Q} L = \frac{1}{N} \sum_{i=1}^{N} \left[ -2 \left(
+        y_i - Q(s_i,
+      line_hint: 130
+  status: pending
+- pending_id: e44cf6df2463bdb7
+  file: DDPG/DDPG.md
+  kind: heading
+  name: 3.4 Actor 更新（确定性策略梯度）
+  range:
+    start:
+      snippet: '### 3.4 Actor 更新（确定性策略梯度）'
+      line_hint: 132
+    end:
+      snippet: '> **梯度流向**：`actor_loss = -Q(states, actor(states)).mean()` → 梯度从 Critic
+        的输出回传到 A'
+      line_hint: 148
+  status: pending
+- pending_id: 3be000713b1fe8b2
+  file: DDPG/DDPG.md
+  kind: heading
+  name: 3.5 目标网络的软更新
+  range:
+    start:
+      snippet: '### 3.5 目标网络的软更新'
+      line_hint: 150
+    end:
+      snippet: '> **优势**：目标网络缓慢变化，极大提高了学习的稳定性，使 TD 误差的优化更接近监督学习。'
+      line_hint: 160
+  status: pending
+- pending_id: f06532e1e4d89a59
+  file: DDPG/DDPG.md
+  kind: heading
+  name: 3.6 探索策略
+  range:
+    start:
+      snippet: '### 3.6 探索策略'
+      line_hint: 162
+    end:
+      snippet: '**DDPG 中使用的参数**：$\theta = 0.15$，$\sigma = 0.2$。'
+      line_hint: 182
+  status: pending
+- pending_id: 783346f298ab173e
+  file: DDPG/DDPG.md
+  kind: heading
+  name: 3.7 Batch Normalization
+  range:
+    start:
+      snippet: '### 3.7 Batch Normalization'
+      line_hint: 184
+    end:
+      snippet: '---'
+      line_hint: 200
+  status: pending
+- pending_id: c40d2474ae69ec92
+  file: DDPG/DDPG.md
+  kind: heading
+  name: 4. 算法伪代码
+  range:
+    start:
+      snippet: '## 4. 算法伪代码'
+      line_hint: 202
+    end:
+      snippet: '---'
+      line_hint: 232
+  status: pending
+- pending_id: b5833b8dadf514ad
+  file: DDPG/DDPG.md
+  kind: heading
+  name: 5. 网络架构
+  range:
+    start:
+      snippet: '## 5. 网络架构'
+      line_hint: 234
+    end:
+      snippet: '---'
+      line_hint: 345
+  status: pending
+- pending_id: 1e9720156ea6b160
+  file: DDPG/DDPG.md
+  kind: heading
+  name: 5.1 低维观测的架构
+  range:
+    start:
+      snippet: '### 5.1 低维观测的架构'
+      line_hint: 236
+    end:
+      snippet: '```'
+      line_hint: 317
+  status: pending
+- pending_id: 4c29ec8628607ea7
+  file: DDPG/DDPG.md
+  kind: heading
+  name: 5.2 像素观测的架构
+  range:
+    start:
+      snippet: '### 5.2 像素观测的架构'
+      line_hint: 319
+    end:
+      snippet: '- RGB 值转换为浮点数并缩放到 $[0, 1]$'
+      line_hint: 332
+  status: pending
+- pending_id: ad09a505273c26a5
+  file: DDPG/DDPG.md
+  kind: heading
+  name: 5.3 权重初始化
+  range:
+    start:
+      snippet: '### 5.3 权重初始化'
+      line_hint: 334
+    end:
+      snippet: '---'
+      line_hint: 345
+  status: pending
+- pending_id: 5a51efab0914402d
+  file: DDPG/DDPG.md
+  kind: heading
+  name: 6. 超参数
+  range:
+    start:
+      snippet: '## 6. 超参数'
+      line_hint: 347
+    end:
+      snippet: '---'
+      line_hint: 386
+  status: pending
+- pending_id: cc3104abb47e2a88
+  file: DDPG/DDPG.md
+  kind: heading
+  name: 6.1 完整超参数表
+  range:
+    start:
+      snippet: '### 6.1 完整超参数表'
+      line_hint: 349
+    end:
+      snippet: '| Actor 输出激活 | — | tanh | 输出到 $[-1,1]$ |'
+      line_hint: 362
+  status: pending
+- pending_id: 7eb3d9b6dcfd84e0
+  file: DDPG/DDPG.md
+  kind: heading
+  name: 6.2 OU 噪声参数
+  range:
+    start:
+      snippet: '### 6.2 OU 噪声参数'
+      line_hint: 364
+    end:
+      snippet: '| $\sigma$ | 0.2 | 波动率（噪声强度） |'
+      line_hint: 369
+  status: pending
+- pending_id: 629e64c931ed89ac
+  file: DDPG/DDPG.md
+  kind: heading
+  name: 6.3 各任务维度信息
+  range:
+    start:
+      snippet: '### 6.3 各任务维度信息'
+      line_hint: 371
+    end:
+      snippet: '---'
+      line_hint: 386
+  status: pending
+- pending_id: bdd081adfb788059
+  file: DDPG/DDPG.md
+  kind: heading
+  name: 7. 实验与结果
+  range:
+    start:
+      snippet: '## 7. 实验与结果'
+      line_hint: 388
+    end:
+      snippet: '---'
+      line_hint: 414
+  status: pending
+- pending_id: 620e38fd2dcdd6c3
+  file: DDPG/DDPG.md
+  kind: heading
+  name: 7.1 评估协议
+  range:
+    start:
+      snippet: '### 7.1 评估协议'
+      line_hint: 390
+    end:
+      snippet: '- 归一化分数：随机策略 = 0，iLQG 规划器 = 1'
+      line_hint: 394
+  status: pending
+- pending_id: c02e28b997fb39d8
+  file: DDPG/DDPG.md
+  kind: heading
+  name: 7.2 关键发现
+  range:
+    start:
+      snippet: '### 7.2 关键发现'
+      line_hint: 396
+    end:
+      snippet: 5. **数据效率**：所有任务在 250 万步经验内解决，比 DQN 在 Atari 上的样本效率高约 20 倍
+      line_hint: 408
+  status: pending
+- pending_id: e01c222cb1fcc945
+  file: DDPG/DDPG.md
+  kind: heading
+  name: 7.3 与 iLQG 规划器的比较
+  range:
+    start:
+      snippet: '### 7.3 与 iLQG 规划器的比较'
+      line_hint: 410
+    end:
+      snippet: '---'
+      line_hint: 414
+  status: pending
+- pending_id: 7154001de206870f
+  file: DDPG/DDPG.md
+  kind: heading
+  name: 8. 与 ERL 报告的关联
+  range:
+    start:
+      snippet: '## 8. 与 ERL 报告的关联'
+      line_hint: 416
+    end:
+      snippet: '---'
+      line_hint: 435
+  status: pending
+- pending_id: a404217afe670c98
+  file: DDPG/DDPG.md
+  kind: heading
+  name: 9. 参考文献
+  range:
+    start:
+      snippet: '## 9. 参考文献'
+      line_hint: 437
+    end:
+      snippet: '[10] Glorot, X., Bordes, A., & Bengio, Y. (2011). *Deep Sparse Rectifier
+        Network'
+      line_hint: 457
+  status: pending
+- pending_id: cd00b91da6d5a90d
+  file: DDPG/DDPG.md
+  kind: definition
+  name: 的成功经验
+  range:
+    start:
+      snippet: '| **核心贡献** | 将 DQN 的成功经验（replay buffer + target network）推广到连续动作空间，提出
+        DDPG 算法 |'
+      line_hint: 12
+    end:
+      snippet: ''
+      line_hint: 15
+  status: pending
+- pending_id: 7c716cd15cc71fb0
+  file: DDPG/DDPG.md
+  kind: definition
+  name: '**DDPG'
+  range:
+    start:
+      snippet: '**DDPG (Deep Deterministic Policy Gradient)** 是一种 **无模型 (model-free)、异策略
+        (off-po'
+      line_hint: 20
+    end:
+      snippet: ''
+      line_hint: 21
+  status: pending
+- pending_id: 40c01d73717ee0e7
+  file: DDPG/DDPG.md
+  kind: definition
+  name: 的核心操作
+  range:
+    start:
+      snippet: '- DQN 的核心操作是 $a^* = \arg\max_a Q(s,a)$'
+      line_hint: 26
+    end:
+      snippet: '- 在连续动作空间中，每一步都需要求解一个非凸优化问题，计算代价过高'
+      line_hint: 27
+  status: pending
+- pending_id: 5f9f4e5594b761c0
+  file: DDPG/DDPG.md
+  kind: definition
+  name: 的两大创新
+  range:
+    start:
+      snippet: '**DDPG 的核心思想**：将 DQN 的两大创新（replay buffer + target network）嫁接到 **DPG
+        (Determinist'
+      line_hint: 35
+    end:
+      snippet: ''
+      line_hint: 38
+  status: pending
+- pending_id: 4a98f7bdaad67fee
+  file: DDPG/DDPG.md
+  kind: definition
+  name: '**动作价值函数**'
+  range:
+    start:
+      snippet: '**动作价值函数**（Q 函数）：'
+      line_hint: 64
+    end:
+      snippet: ''
+      line_hint: 67
+  status: pending
+- pending_id: b199dee613c72b2d
+  file: DDPG/DDPG.md
+  kind: definition
+  name: $$Q^\pi
+  range:
+    start:
+      snippet: $$Q^\pi(s_t, a_t) = \mathbb{E}_{r_{i \ge t}, s_{i > t} \sim E, a_{i
+        > t} \sim \p
+      line_hint: 66
+    end:
+      snippet: ''
+      line_hint: 67
+  status: pending
+- pending_id: 53a4d1c9d4e0103e
+  file: DDPG/DDPG.md
+  kind: definition
+  name: $$Q^\mu
+  range:
+    start:
+      snippet: $$Q^\mu(s_t, a_t) = \mathbb{E}_{r_t, s_{t+1} \sim E} \left[ r(s_t,
+        a_t) + \gamma
+      line_hint: 76
+    end:
+      snippet: ''
+      line_hint: 79
+  status: pending
+- pending_id: 2078d099a8861ea2
+  file: DDPG/DDPG.md
+  kind: definition
+  name: '**异策略'
+  range:
+    start:
+      snippet: '> **关键洞察**：在确定性策略下，目标值的计算只依赖于环境动态，不依赖于策略分布。这使得 **异策略 (off-policy)**
+        学习成为可能——我们可以'
+      line_hint: 78
+    end:
+      snippet: ''
+      line_hint: 79
+  status: pending
+- pending_id: 3f378e193b7ce7cc
+  file: DDPG/DDPG.md
+  kind: definition
+  name: $Q
+  range:
+    start:
+      snippet: 使用函数近似器 $Q(s,a|\theta^Q)$，最小化 Bellman 残差：
+      line_hint: 82
+    end:
+      snippet: ''
+      line_hint: 93
+  status: pending
+- pending_id: 55fac08dcb1b609b
+  file: DDPG/DDPG.md
+  kind: definition
+  name: \mu
+  range:
+    start:
+      snippet: $$y_t = r(s_t, a_t) + \gamma Q(s_{t+1}, \mu(s_{t+1}) | \theta^Q) \tag{5}$$
+      line_hint: 88
+    end:
+      snippet: ''
+      line_hint: 93
+  status: pending
+- pending_id: 6c229ed5d29f0cdd
+  file: DDPG/DDPG.md
+  kind: definition
+  name: $\mu
+  range:
+    start:
+      snippet: '| **Actor (策略网络)** | $\mu(s|\theta^\mu)$ | 确定性策略：$s \mapsto a$ |'
+      line_hint: 111
+    end:
+      snippet: '| **Target Critic** | $Q''(s,a|\theta^{Q''})$ | 软更新副本，用于计算稳定目标 |'
+      line_hint: 114
+  status: pending
+- pending_id: 2230af529429a50f
+  file: DDPG/DDPG.md
+  kind: definition
+  name: '**Critic'
+  range:
+    start:
+      snippet: '| **Critic (Q 网络)** | $Q(s,a|\theta^Q)$ | 动作价值函数：$(s,a) \mapsto \mathbb{R}$
+        |'
+      line_hint: 112
+    end:
+      snippet: '| **Target Critic** | $Q''(s,a|\theta^{Q''})$ | 软更新副本，用于计算稳定目标 |'
+      line_hint: 114
+  status: pending
+- pending_id: 0a8585cfe7a87a9a
+  file: DDPG/DDPG.md
+  kind: definition
+  name: '**确定性策略梯度定理**'
+  range:
+    start:
+      snippet: '**确定性策略梯度定理** (Silver et al., 2014)：'
+      line_hint: 136
+    end:
+      snippet: ''
+      line_hint: 149
+  status: pending
+- pending_id: 40ef13f669dff22a
+  file: DDPG/DDPG.md
+  kind: definition
+  name: a=\mu
+  range:
+    start:
+      snippet: $$\nabla_{\theta^\mu} J \approx \mathbb{E}_{s_t \sim \rho^\beta} \left[
+        \nabla_{
+      line_hint: 138
+    end:
+      snippet: ''
+      line_hint: 149
+  status: pending
+- pending_id: 12eefd1999d6cf36
+  file: DDPG/DDPG.md
+  kind: definition
+  name: -Q
+  range:
+    start:
+      snippet: '> **梯度流向**：`actor_loss = -Q(states, actor(states)).mean()` → 梯度从 Critic
+        的输出回传到 A'
+      line_hint: 148
+    end:
+      snippet: ''
+      line_hint: 149
+  status: pending
+- pending_id: 09bf2d14adf770f3
+  file: DDPG/DDPG.md
+  kind: definition
+  name: '**软更新'
+  range:
+    start:
+      snippet: 与 DQN 每隔若干步硬拷贝权重不同，DDPG 使用 **软更新 (soft update)**：
+      line_hint: 152
+    end:
+      snippet: ''
+      line_hint: 161
+  status: pending
+- pending_id: 1df28d2754c7a75f
+  file: DDPG/DDPG.md
+  kind: definition
+  name: DDPG
+  range:
+    start:
+      snippet: DDPG 是异策略算法，可以将探索与学习解耦。构造探索策略：
+      line_hint: 164
+    end:
+      snippet: ''
+      line_hint: 183
+  status: pending
+- pending_id: 8c08684e6d104571
+  file: DDPG/DDPG.md
+  kind: definition
+  name: 时间相关的有色噪声
+  range:
+    start:
+      snippet: '- 时间相关的有色噪声（OU 过程）比独立高斯噪声更适合这类系统'
+      line_hint: 173
+    end:
+      snippet: '- OU 过程模拟了带摩擦的布朗运动，产生围绕 0 的时间相关值'
+      line_hint: 174
+  status: pending
+- pending_id: 1cfad65edf12632a
+  file: DDPG/DDPG.md
+  kind: definition
+  name: $dW_t$
+  range:
+    start:
+      snippet: 其中 $dW_t$ 是维纳过程，$\theta$ 是均值回归系数，$\mu$ 是均值，$\sigma$ 是波动率。
+      line_hint: 180
+    end:
+      snippet: ''
+      line_hint: 183
+  status: pending
+- pending_id: c482eb88a10c718b
+  file: DDPG/DDPG.md
+  kind: definition
+  name: $\sigma_B^2$
+  range:
+    start:
+      snippet: 其中 $\mu_B$ 和 $\sigma_B^2$ 是 minibatch 的均值和方差，$\gamma$ 和 $\beta$ 是可学习的缩放和平移参数。
+      line_hint: 196
+    end:
+      snippet: ''
+      line_hint: 201
+  status: pending
+- pending_id: 24af31d0368338ae
+  file: DDPG/DDPG.md
+  kind: definition
+  name: 个模拟时间步执行一次动作
+  range:
+    start:
+      snippet: '- 每 3 个模拟时间步执行一次动作（action repeat）'
+      line_hint: 329
+    end:
+      snippet: '- RGB 值转换为浮点数并缩放到 $[0, 1]$'
+      line_hint: 332
+  status: pending
+- pending_id: 8cac38dbdad83c8f
+  file: DDPG/DDPG.md
+  kind: definition
+  name: 在简单任务
+  range:
+    start:
+      snippet: '- 在简单任务（pendulum, cartpole）上，Q 值估计非常准确'
+      line_hint: 405
+    end:
+      snippet: 5. **数据效率**：所有任务在 250 万步经验内解决，比 DQN 在 Atari 上的样本效率高约 20 倍
+      line_hint: 408
+  status: pending
+- pending_id: 0c65f5a376cabb0c
+  file: DDPG/DDPG.md
+  kind: definition
+  name: iLQG
+  range:
+    start:
+      snippet: iLQG 是一个有完整模型访问权限的规划器，在所有任务上均达到 1 的归一化分数。DDPG 在许多任务上达到了可比甚至超越 iLQG
+        的性能，甚至在从像素学习时
+      line_hint: 412
+    end:
+      snippet: ''
+      line_hint: 415
+  status: pending
+- pending_id: b3595dc9ea5ccd33
+  file: DDPG/DDPG.md
+  kind: definition
+  name: ERL
+  range:
+    start:
+      snippet: ERL（Evolution-Guided Policy Gradient）以 DDPG 作为其 RL 核心组件。理解 DDPG 是理解
+        ERL 的前提：
+      line_hint: 418
+    end:
+      snippet: ''
+      line_hint: 436
+  status: pending
+- pending_id: 4df011fc10095e34
+  file: ERL/ERL.md
+  kind: heading
+  name: 0. 论文来源
+  range:
+    start:
+      snippet: '## 0. 论文来源'
+      line_hint: 3
+    end:
+      snippet: '---'
+      line_hint: 14
+  status: pending
+- pending_id: cc2f632473abcf41
+  file: ERL/ERL.md
+  kind: heading
+  name: 1. 算法概述
+  range:
+    start:
+      snippet: '## 1. 算法概述'
+      line_hint: 16
+    end:
+      snippet: '---'
+      line_hint: 49
+  status: pending
+- pending_id: cbc6eba6e05a0272
+  file: ERL/ERL.md
+  kind: heading
+  name: 1.1 一句话定位
+  range:
+    start:
+      snippet: '### 1.1 一句话定位'
+      line_hint: 18
+    end:
+      snippet: '**ERL** 是将 **进化算法 (EA)** 的种群级 episode-级 fitness 优化与 **深度确定性策略梯度 (DDPG)**
+        的样本级梯度优'
+      line_hint: 20
+  status: pending
+- pending_id: 58ffada37b9ffc7e
+  file: ERL/ERL.md
+  kind: heading
+  name: 1.2 设计动机（Why）
+  range:
+    start:
+      snippet: '### 1.2 设计动机（Why）'
+      line_hint: 22
+    end:
+      snippet: 3. **episode-级 fitness** 对稀疏 / 欺骗性奖励更鲁棒；种群冗余降低单一策略崩溃的风险。
+      line_hint: 40
+  status: pending
+- pending_id: 7a4bf002a266e729
+  file: ERL/ERL.md
+  kind: heading
+  name: 1.3 核心实验结论（论文主张）
+  range:
+    start:
+      snippet: '### 1.3 核心实验结论（论文主张）'
+      line_hint: 42
+    end:
+      snippet: '---'
+      line_hint: 49
+  status: pending
+- pending_id: e7fb5815b5dda4eb
+  file: ERL/ERL.md
+  kind: heading
+  name: 2. 数学基础
+  range:
+    start:
+      snippet: '## 2. 数学基础'
+      line_hint: 51
+    end:
+      snippet: '---'
+      line_hint: 209
+  status: pending
+- pending_id: c3243ada8c66065b
+  file: ERL/ERL.md
+  kind: heading
+  name: 2.1 强化学习背景
+  range:
+    start:
+      snippet: '### 2.1 强化学习背景'
+      line_hint: 53
+    end:
+      snippet: $$J(\pi_\theta) = \mathbb{E}_{\pi_\theta}\!\left[\sum_{t=0}^{\infty}\gamma^t
+        r_t
+      line_hint: 62
+  status: pending
+- pending_id: 23031f0756c44f18
+  file: ERL/ERL.md
+  kind: heading
+  name: 2.2 DDPG（论文 §2.1）
+  range:
+    start:
+      snippet: '### 2.2 DDPG（论文 §2.1）'
+      line_hint: 64
+    end:
+      snippet: '**训练脚本中的实际更新量**：以 HalfCheetah 为例，每代 $50$ 次梯度更新，batch size $128$，$10^6$
+        级 buffer '
+      line_hint: 162
+  status: pending
+- pending_id: 368c77c273277bfd
+  file: ERL/ERL.md
+  kind: heading
+  name: 2.2.1 梯度计算详解与代码映射
+  range:
+    start:
+      snippet: '#### 2.2.1 梯度计算详解与代码映射'
+      line_hint: 97
+    end:
+      snippet: '**训练脚本中的实际更新量**：以 HalfCheetah 为例，每代 $50$ 次梯度更新，batch size $128$，$10^6$
+        级 buffer '
+      line_hint: 162
+  status: pending
+- pending_id: bdd55456ed253c6a
+  file: ERL/ERL.md
+  kind: heading
+  name: 2.3 进化算法组件
+  range:
+    start:
+      snippet: '### 2.3 进化算法组件'
+      line_hint: 164
+    end:
+      snippet: $$\text{Elites} = \{\pi_{(1)},\pi_{(2)},\ldots,\pi_{(e)}\}$$
+      line_hint: 198
+  status: pending
+- pending_id: dc6ea25254e0679b
+  file: ERL/ERL.md
+  kind: heading
+  name: 2.3.1 适应度（Algorithm 2 / Evaluate）
+  range:
+    start:
+      snippet: '#### 2.3.1 适应度（Algorithm 2 / Evaluate）'
+      line_hint: 166
+    end:
+      snippet: '> 注：论文 Algorithm 2 内层用 `fitness ← fitness + r_t`（不乘 $\gamma^t$），与
+        DDPG 的折扣回报不同——'
+      line_hint: 172
+  status: pending
+- pending_id: 9eef385073ef8bad
+  file: ERL/ERL.md
+  kind: heading
+  name: 2.3.2 锦标赛选择（Tournament Selection）
+  range:
+    start:
+      snippet: '#### 2.3.2 锦标赛选择（Tournament Selection）'
+      line_hint: 174
+    end:
+      snippet: $$\text{parent} = \arg\max_{i\in\text{tournament}}\text{fitness}_i$$
+      line_hint: 178
+  status: pending
+- pending_id: b623e0afca8a660f
+  file: ERL/ERL.md
+  kind: heading
+  name: 2.3.3 交叉（Probabilistic Crossover）
+  range:
+    start:
+      snippet: '#### 2.3.3 交叉（Probabilistic Crossover）'
+      line_hint: 180
+    end:
+      snippet: $$\theta_{\text{child}}^{(j)} = \begin{cases} \theta_1^{(j)} & m^{(j)}=0\\
+        \thet
+      line_hint: 184
+  status: pending
+- pending_id: 00ab2a3b3e3d9b74
+  file: ERL/ERL.md
+  kind: heading
+  name: 2.3.4 变异（Algorithm 3 / Mutate）
+  range:
+    start:
+      snippet: '#### 2.3.4 变异（Algorithm 3 / Mutate）'
+      line_hint: 186
+    end:
+      snippet: 默认 $\text{mutfrac}=0.1,\ \text{mutstrength}=0.1,\ \text{supermutprob}=0.05,\
+        \te
+      line_hint: 192
+  status: pending
+- pending_id: f4792c0cb02532af
+  file: ERL/ERL.md
+  kind: heading
+  name: 2.3.5 精英保留
+  range:
+    start:
+      snippet: '#### 2.3.5 精英保留'
+      line_hint: 194
+    end:
+      snippet: $$\text{Elites} = \{\pi_{(1)},\pi_{(2)},\ldots,\pi_{(e)}\}$$
+      line_hint: 198
+  status: pending
+- pending_id: de412c316339dc43
+  file: ERL/ERL.md
+  kind: heading
+  name: 2.4 混合机制（RL ↔ EA）
+  range:
+    start:
+      snippet: '### 2.4 混合机制（RL ↔ EA）'
+      line_hint: 200
+    end:
+      snippet: '---'
+      line_hint: 209
+  status: pending
+- pending_id: 4b8ebecb6bc7c60c
+  file: ERL/ERL.md
+  kind: heading
+  name: 3. 网络架构
+  range:
+    start:
+      snippet: '## 3. 网络架构'
+      line_hint: 211
+    end:
+      snippet: '---'
+      line_hint: 373
+  status: pending
+- pending_id: 4846ef84e048fabb
+  file: ERL/ERL.md
+  kind: heading
+  name: 3.1 Actor 网络（确定性策略 $\mu_\theta(s)$）
+  range:
+    start:
+      snippet: '### 3.1 Actor 网络（确定性策略 $\mu_\theta(s)$）'
+      line_hint: 220
+    end:
+      snippet: '---'
+      line_hint: 273
+  status: pending
+- pending_id: ce6cb41335d1e6a6
+  file: ERL/ERL.md
+  kind: heading
+  name: 3.1.1 网络结构
+  range:
+    start:
+      snippet: '#### 3.1.1 网络结构'
+      line_hint: 222
+    end:
+      snippet: '$$\text{LN}(x) = \gamma \odot \frac{x - \mu_x}{\sqrt{\sigma_x^2 +
+        \varepsilon}} '
+      line_hint: 258
+  status: pending
+- pending_id: 99efc298cba50960
+  file: ERL/ERL.md
+  kind: heading
+  name: '3.1.2 参数量计算（以 HalfCheetah: $d_s=17, d_a=6$ 为例）'
+  range:
+    start:
+      snippet: '#### 3.1.2 参数量计算（以 HalfCheetah: $d_s=17, d_a=6$ 为例）'
+      line_hint: 260
+    end:
+      snippet: '---'
+      line_hint: 273
+  status: pending
+- pending_id: e4d3bfcd8a6c6f20
+  file: ERL/ERL.md
+  kind: heading
+  name: 3.2 Critic 网络（Q 值函数 $Q_\phi(s,a)$）
+  range:
+    start:
+      snippet: '### 3.2 Critic 网络（Q 值函数 $Q_\phi(s,a)$）'
+      line_hint: 275
+    end:
+      snippet: '---'
+      line_hint: 336
+  status: pending
+- pending_id: 27fc00894469649a
+  file: ERL/ERL.md
+  kind: heading
+  name: 3.2.1 网络结构
+  range:
+    start:
+      snippet: '#### 3.2.1 网络结构'
+      line_hint: 277
+    end:
+      snippet: '> **设计原理**：状态和动作分两路映射的原因是状态维度和动作维度在物理意义上分属不同空间（状态描述系统配置，动作描述控制输入），独立编码后再拼接可以让网络更'
+      line_hint: 320
+  status: pending
+- pending_id: 7ff3ebf18c9e81a9
+  file: ERL/ERL.md
+  kind: heading
+  name: '3.2.2 参数量计算（以 HalfCheetah: $d_s=17, d_a=6$ 为例）'
+  range:
+    start:
+      snippet: '#### 3.2.2 参数量计算（以 HalfCheetah: $d_s=17, d_a=6$ 为例）'
+      line_hint: 322
+    end:
+      snippet: '---'
+      line_hint: 336
+  status: pending
+- pending_id: 2019e2cdba89dd97
+  file: ERL/ERL.md
+  kind: heading
+  name: 3.3 权重初始化策略
+  range:
+    start:
+      snippet: '### 3.3 权重初始化策略'
+      line_hint: 338
+    end:
+      snippet: '---'
+      line_hint: 353
+  status: pending
+- pending_id: bfe2a405f7840817
+  file: ERL/ERL.md
+  kind: heading
+  name: 3.4 激活函数对比
+  range:
+    start:
+      snippet: '### 3.4 激活函数对比'
+      line_hint: 355
+    end:
+      snippet: '---'
+      line_hint: 362
+  status: pending
+- pending_id: 424898f97f80800f
+  file: ERL/ERL.md
+  kind: heading
+  name: 3.5 经验回放缓冲区
+  range:
+    start:
+      snippet: '### 3.5 经验回放缓冲区'
+      line_hint: 364
+    end:
+      snippet: '---'
+      line_hint: 373
+  status: pending
+- pending_id: 97e0372d90ae1286
+  file: ERL/ERL.md
+  kind: heading
+  name: 4. 算法伪代码
+  range:
+    start:
+      snippet: '## 4. 算法伪代码'
+      line_hint: 375
+    end:
+      snippet: '---'
+      line_hint: 455
+  status: pending
+- pending_id: 66539da37d7ac4a2
+  file: ERL/ERL.md
+  kind: heading
+  name: 4.1 Algorithm 1：主循环（按论文逐行还原）
+  range:
+    start:
+      snippet: '### 4.1 Algorithm 1：主循环（按论文逐行还原）'
+      line_hint: 377
+    end:
+      snippet: '```'
+      line_hint: 412
+  status: pending
+- pending_id: fca67e57e9c35950
+  file: ERL/ERL.md
+  kind: heading
+  name: 4.2 Algorithm 2：Evaluate（适应度评估子过程）
+  range:
+    start:
+      snippet: '### 4.2 Algorithm 2：Evaluate（适应度评估子过程）'
+      line_hint: 414
+    end:
+      snippet: '```'
+      line_hint: 432
+  status: pending
+- pending_id: e170ac909e46a4ac
+  file: ERL/ERL.md
+  kind: heading
+  name: 4.3 Algorithm 3：Mutate（变异子过程）
+  range:
+    start:
+      snippet: '### 4.3 Algorithm 3：Mutate（变异子过程）'
+      line_hint: 434
+    end:
+      snippet: '---'
+      line_hint: 455
+  status: pending
+- pending_id: f29bdbb5f2bf5bc9
+  file: ERL/ERL.md
+  kind: heading
+  name: 5. 超参数
+  range:
+    start:
+      snippet: '## 5. 超参数'
+      line_hint: 457
+    end:
+      snippet: '---'
+      line_hint: 494
+  status: pending
+- pending_id: 13dde535ebf53891
+  file: ERL/ERL.md
+  kind: heading
+  name: 5.1 通用超参（论文 Appendix A，全任务相同）
+  range:
+    start:
+      snippet: '### 5.1 通用超参（论文 Appendix A，全任务相同）'
+      line_hint: 459
+    end:
+      snippet: '| Reset 概率 | $\text{resetprob}$ | 0.05 | 重置到 $\mathcal{N}(0,1)$ 分支
+        |'
+      line_hint: 475
+  status: pending
+- pending_id: c429a6444ef61558
+  file: ERL/ERL.md
+  kind: heading
+  name: 5.2 逐环境超参（论文 Table 2）
+  range:
+    start:
+      snippet: '### 5.2 逐环境超参（论文 Table 2）'
+      line_hint: 477
+    end:
+      snippet: '---'
+      line_hint: 494
+  status: pending
+- pending_id: 5a4497c27dac25e2
+  file: ERL/ERL.md
+  kind: heading
+  name: 6. 实验设置
+  range:
+    start:
+      snippet: '## 6. 实验设置'
+      line_hint: 496
+    end:
+      snippet: '- **种子**：5 个随机种子'
+      line_hint: 504
+  status: pending
+- pending_id: 52ac4c4cff1d01ef
+  file: ERL/ERL.md
+  kind: heading
+  name: 6.1 环境与协议
+  range:
+    start:
+      snippet: '### 6.1 环境与协议'
+      line_hint: 498
+    end:
+      snippet: '- **种子**：5 个随机种子'
+      line_hint: 504
+  status: pending
+- pending_id: 505b44dad6db9d07
+  file: ERL/ERL.md
+  kind: definition
+  name: '2018'
+  range:
+    start:
+      snippet: '| **会议** | NeurIPS 2018（arXiv 首页标 "Preprint. Work in progress."） |'
+      line_hint: 10
+    end:
+      snippet: '| **代码** | https://github.com/ShawK91/erl_paper_nips18 |'
+      line_hint: 12
+  status: pending
+- pending_id: 6e76472150b7318a
+  file: ERL/ERL.md
+  kind: definition
+  name: '**进化算法'
+  range:
+    start:
+      snippet: '**ERL** 是将 **进化算法 (EA)** 的种群级 episode-级 fitness 优化与 **深度确定性策略梯度 (DDPG)**
+        的样本级梯度优'
+      line_hint: 20
+    end:
+      snippet: ''
+      line_hint: 21
+  status: pending
+- pending_id: c3d30c4c29aec95d
+  file: ERL/ERL.md
+  kind: definition
+  name: 特别
+  range:
+    start:
+      snippet: '**RL 痛点（特别是 off-policy DDPG）**'
+      line_hint: 26
+    end:
+      snippet: ''
+      line_hint: 41
+  status: pending
+- pending_id: 85d1450f3359fd62
+  file: ERL/ERL.md
+  kind: definition
+  name: DDPG**
+  range:
+    start:
+      snippet: '- 在 **6 个 MuJoCo 连续控制任务**上 ERL **全部优于纯 DDPG**（Ant 任务上 DDPG 几乎学不动）。'
+      line_hint: 44
+    end:
+      snippet: '- 运行时间相对 DDPG **仅多约 3%**（变异为额外开销，未做并行）。'
+      line_hint: 47
+  status: pending
+- pending_id: e3a3d752f927ca32
+  file: ERL/ERL.md
+  kind: definition
+  name: '**去掉选择算子**'
+  range:
+    start:
+      snippet: '- **去掉选择算子**（no-selection ablation）性能下降约 ~80%，验证 EA 选择压不可少。'
+      line_hint: 46
+    end:
+      snippet: '- 运行时间相对 DDPG **仅多约 3%**（变异为额外开销，未做并行）。'
+      line_hint: 47
+  status: pending
+- pending_id: ac17abcc49daaa68
+  file: ERL/ERL.md
+  kind: definition
+  name: $P
+  range:
+    start:
+      snippet: '- 转移 $P(s''|s,a)$，奖励 $R(s,a)$，折扣 $\gamma\in[0,1)$'
+      line_hint: 58
+    end:
+      snippet: ''
+      line_hint: 63
+  status: pending
+- pending_id: 0405489c632f531d
+  file: ERL/ERL.md
+  kind: definition
+  name: 目标
+  range:
+    start:
+      snippet: 目标是最大化期望回报：
+      line_hint: 60
+    end:
+      snippet: ''
+      line_hint: 63
+  status: pending
+- pending_id: dea6efbdc5139057
+  file: ERL/ERL.md
+  kind: definition
+  name: 目标**
+  range:
+    start:
+      snippet: '**TD 目标**（one-step bootstrap）：'
+      line_hint: 75
+    end:
+      snippet: ''
+      line_hint: 163
+  status: pending
+- pending_id: 292ceb0471e82dd7
+  file: ERL/ERL.md
+  kind: definition
+  name: \bigl
+  range:
+    start:
+      snippet: $$y_i = r_i + \gamma\,Q_{\theta_{Q'}}\!\bigl(s_{i+1},\,\mu_{\theta_{\pi'}}(s_{i+
+      line_hint: 77
+    end:
+      snippet: ''
+      line_hint: 163
+  status: pending
+- pending_id: 6404bc5253df9c57
+  file: ERL/ERL.md
+  kind: definition
+  name: 损失**
+  range:
+    start:
+      snippet: '**Critic 损失**（MSBE，对 batch $T$ 个 transition 求平均）：'
+      line_hint: 79
+    end:
+      snippet: ''
+      line_hint: 163
+  status: pending
+- pending_id: 801f986ab6e31f96
+  file: ERL/ERL.md
+  kind: definition
+  name: '**Ornstein-Uhlenbeck'
+  range:
+    start:
+      snippet: '**行为策略探索**：动作上叠加 **Ornstein-Uhlenbeck (OU) 噪声**（时间相关的色噪声，比独立高斯在惯性系统上探索更高效）：'
+      line_hint: 93
+    end:
+      snippet: ''
+      line_hint: 163
+  status: pending
+- pending_id: f39b747b4c1de2e9
+  file: ERL/ERL.md
+  kind: definition
+  name: 的两路梯度更新
+  range:
+    start:
+      snippet: DDPG 的两路梯度更新（Critic 和 Actor）在代码中分别对应两个 optimizer，下面拆解每个梯度从数学公式到 PyTorch
+        自动微分的完整链
+      line_hint: 99
+    end:
+      snippet: ''
+      line_hint: 163
+  status: pending
+- pending_id: 343075d9e074a358
+  file: ERL/ERL.md
+  kind: definition
+  name: 梯度
+  range:
+    start:
+      snippet: '**Critic 梯度（TD 误差反向传播）**'
+      line_hint: 101
+    end:
+      snippet: ''
+      line_hint: 163
+  status: pending
+- pending_id: a4b60f758282a5bb
+  file: ERL/ERL.md
+  kind: definition
+  name: a=\mu
+  range:
+    start:
+      snippet: '$$\frac{\partial \mathcal{L}}{\partial \theta_\pi} = -\frac{1}{T}\sum_{i=1}^{T} '
+      line_hint: 129
+    end:
+      snippet: ''
+      line_hint: 163
+  status: pending
+- pending_id: 8d09593234e4c5b5
+  file: ERL/ERL.md
+  kind: definition
+  name: \cdot\tanh
+  range:
+    start:
+      snippet: $$\frac{\partial \mu}{\partial \theta_\pi} = \frac{\partial}{\partial
+        \theta_\pi
+      line_hint: 133
+    end:
+      snippet: ''
+      line_hint: 163
+  status: pending
+- pending_id: 1a85253291b96148
+  file: ERL/ERL.md
+  kind: definition
+  name: 因子
+  range:
+    start:
+      snippet: 三层 tanh 各贡献一个 $\text{sech}^2$ 因子（tanh 的导数：$\frac{d}{dx}\tanh(x) = 1
+        - \tanh^2(x)
+      line_hint: 139
+    end:
+      snippet: ''
+      line_hint: 163
+  status: pending
+- pending_id: dca370206661564e
+  file: ERL/ERL.md
+  kind: definition
+  name: critic
+  range:
+    start:
+      snippet: '| $\mathcal{L} = -\frac{1}{T}\sum Q(s,\mu(s))$ | `actor_loss = -self.critic(stat'
+      line_hint: 143
+    end:
+      snippet: '| $\theta_\pi \leftarrow \theta_\pi - \alpha_\pi \cdot \partial \mathcal{L}/\par'
+      line_hint: 146
+  status: pending
+- pending_id: 0206fc6051eaf4c2
+  file: ERL/ERL.md
+  kind: definition
+  name: 评估的
+  range:
+    start:
+      snippet: '> 注：论文 Algorithm 2 内层用 `fitness ← fitness + r_t`（不乘 $\gamma^t$），与
+        DDPG 的折扣回报不同——'
+      line_hint: 172
+    end:
+      snippet: ''
+      line_hint: 173
+  status: pending
+- pending_id: 2fe403f73cd0a68c
+  file: ERL/ERL.md
+  kind: definition
+  name: \tanh
+  range:
+    start:
+      snippet: '$$ \begin{aligned} x_1 &= \tanh\!\bigl(\text{LN}(W_1 x_0 + b_1)\bigr)
+        \\ x_2 &= '
+      line_hint: 254
+    end:
+      snippet: ''
+      line_hint: 259
+  status: pending
+- pending_id: 6b201316b94669eb
+  file: ERL/ERL.md
+  kind: definition
+  name: LayerNorm
+  range:
+    start:
+      snippet: 其中 LayerNorm 定义为：
+      line_hint: 256
+    end:
+      snippet: ''
+      line_hint: 259
+  status: pending
+- pending_id: a04b52dab33d9cdf
+  file: ERL/ERL.md
+  kind: definition
+  name: 而不
+  range:
+    start:
+      snippet: Critic 与 Actor 的关键区别：**状态和动作通过独立的子网络处理后再拼接**，而不是直接拼接原始输入。
+      line_hint: 279
+    end:
+      snippet: ''
+      line_hint: 321
+  status: pending
+- pending_id: 981a900ac89c8f31
+  file: ERL/ERL.md
+  kind: definition
+  name: _2
+  range:
+    start:
+      snippet: $$ \begin{aligned} f_s &= W_s s + b_s \quad (\text{状态子网络}) \\ f_a &=
+        W_a a + b_a
+      line_hint: 318
+    end:
+      snippet: ''
+      line_hint: 321
+  status: pending
+- pending_id: c44080bec54d0964
+  file: ERL/ERL.md
+  kind: definition
+  name: 状态和动作分两路映射的原因
+  range:
+    start:
+      snippet: '> **设计原理**：状态和动作分两路映射的原因是状态维度和动作维度在物理意义上分属不同空间（状态描述系统配置，动作描述控制输入），独立编码后再拼接可以让网络更'
+      line_hint: 320
+    end:
+      snippet: ''
+      line_hint: 321
+  status: pending
+- pending_id: 1e8e9b3eddcb8f33
+  file: ERL/ERL.md
+  kind: definition
+  name: Sub
+  range:
+    start:
+      snippet: '| State Sub (Linear) | [200, 17] | [200] | $200 \times 17 + 200 =
+        3{,}600$ |'
+      line_hint: 326
+    end:
+      snippet: '| **总计** | | | **127,001** |'
+      line_hint: 332
+  status: pending
+- pending_id: 6945033e6d1f3dc2
+  file: ERL/ERL.md
+  kind: definition
+  name: 300$
+  range:
+    start:
+      snippet: '> Critic 参数量远大于 Actor（约 6.3 倍），因为拼接层 $400 \to 300$ 是主要的参数量瓶颈。'
+      line_hint: 334
+    end:
+      snippet: ''
+      line_hint: 337
+  status: pending
+- pending_id: 0c55e9057e3ef490
+  file: ERL/ERL.md
+  kind: definition
+  name: Uniform**
+  range:
+    start:
+      snippet: 所有层统一使用 **Xavier Uniform**（Glorot 初始化），输出层额外缩小：
+      line_hint: 340
+    end:
+      snippet: ''
+      line_hint: 354
+  status: pending
+- pending_id: d3c8b651ae265f67
+  file: ERL/ERL.md
+  kind: definition
+  name: $10^6$
+  range:
+    start:
+      snippet: '- 容量 $10^6$（cyclic / FIFO）'
+      line_hint: 368
+    end:
+      snippet: '- 存储格式：每个 transition 是一个 5 元组 $(s_t, a_t, r_t, s_{t+1}, done_t)$，其中
+        $done_t$ 标志 '
+      line_hint: 371
+  status: pending
+- pending_id: f597a93aa133a227
+  file: ERL/ERL.md
+  kind: definition
+  name: transition
+  range:
+    start:
+      snippet: '- 存储格式：每个 transition 是一个 5 元组 $(s_t, a_t, r_t, s_{t+1}, done_t)$，其中
+        $done_t$ 标志 '
+      line_hint: 371
+    end:
+      snippet: ''
+      line_hint: 374
+  status: pending
+- pending_id: 82ec185acb04cca9
+  file: MachineLearning/Eigen_Face.md
+  kind: heading
+  name: 第一层：问题定义
+  range:
+    start:
+      snippet: '## 第一层：问题定义'
+      line_hint: 3
+    end:
+      snippet: '- 识别时只需比较低维向量（如欧氏距离）'
+      line_hint: 18
+  status: pending
+- pending_id: cc8b35eda5fe7d3b
+  file: MachineLearning/Eigen_Face.md
+  kind: heading
+  name: 第二层：计算平均脸和中心化
+  range:
+    start:
+      snippet: '## 第二层：计算平均脸和中心化'
+      line_hint: 21
+    end:
+      snippet: '- 后面所有分析都针对 $ \Phi $ 进行'
+      line_hint: 40
+  status: pending
+- pending_id: e7ec0dc54e002e23
+  file: MachineLearning/Eigen_Face.md
+  kind: heading
+  name: 第三层：建立协方差矩阵
+  range:
+    start:
+      snippet: '## 第三层：建立协方差矩阵'
+      line_hint: 43
+    end:
+      snippet: '- 需要换一条路来求主成分'
+      line_hint: 59
+  status: pending
+- pending_id: 1028840d724dcd7e
+  file: MachineLearning/Eigen_Face.md
+  kind: heading
+  name: 第四层：引入SVD技巧（核心）
+  range:
+    start:
+      snippet: '## 第四层：引入SVD技巧（核心）'
+      line_hint: 62
+    end:
+      snippet: '- 它们构成特征人脸空间 $ U = [u_1, u_2, \dots, u_{n-1}] $，大小 $ d^2 \times (n-1)
+        $'
+      line_hint: 87
+  status: pending
+- pending_id: 8db2965595e5014d
+  file: MachineLearning/Eigen_Face.md
+  kind: heading
+  name: 第五层：降维——把每张脸投影到特征人脸空间
+  range:
+    start:
+      snippet: '## 第五层：降维——把每张脸投影到特征人脸空间'
+      line_hint: 90
+    end:
+      snippet: '- **降维完成！** 用 30 个数代替了 10000 个数'
+      line_hint: 108
+  status: pending
+- pending_id: ead7f97825156620
+  file: MachineLearning/Eigen_Face.md
+  kind: heading
+  name: 第六层：识别——比对两张脸
+  range:
+    start:
+      snippet: '## 第六层：识别——比对两张脸'
+      line_hint: 111
+    end:
+      snippet: '- 整个过程不需要比较原始像素，只比较 $ k $ 维的投影系数'
+      line_hint: 132
+  status: pending
+- pending_id: 43eff166a5e789cc
+  file: MachineLearning/Eigen_Face.md
+  kind: heading
+  name: 完整流程总结（维度流转表）
+  range:
+    start:
+      snippet: '## 完整流程总结（维度流转表）'
+      line_hint: 135
+    end:
+      snippet: '| 10 | 识别：找距离最近的 $ \Omega_i $ | $ k \times 1 $ vs $ k \times 1 $ |
+        身份标签 |'
+      line_hint: 148
+  status: pending
+- pending_id: 5f98a92ac5ed17e4
+  file: MachineLearning/Eigen_Face.md
+  kind: heading
+  name: 最终一句话总结
+  range:
+    start:
+      snippet: '## 最终一句话总结'
+      line_hint: 151
+    end:
+      snippet: '> - 原始需要 $ d^2 $ 个数，现在只需要 $ k $ 个数（$ k \ll d^2 $）'
+      line_hint: 158
+  status: pending
+- pending_id: 361d17d76acc83bf
+  file: MachineLearning/Eigen_Face.md
+  kind: definition
+  name: 想识别新来的人脸
+  range:
+    start:
+      snippet: '- 想识别新来的人脸是谁，但直接比对像素太慢、太占存储、太敏感'
+      line_hint: 8
+    end:
+      snippet: ''
+      line_hint: 20
+  status: pending
+- pending_id: f53e7edc724f3d00
+  file: MachineLearning/Eigen_Face.md
+  kind: definition
+  name: 每张
+  range:
+    start:
+      snippet: '- $ n $ 张人脸图像：$ \Gamma_1, \Gamma_2, ..., \Gamma_n $，每张是 $ d^2 \times
+        1 $'
+      line_hint: 24
+    end:
+      snippet: ''
+      line_hint: 42
+  status: pending
+- pending_id: 77f3fabf8dab180a
+  file: MachineLearning/Eigen_Face.md
+  kind: definition
+  name: 每列
+  range:
+    start:
+      snippet: '- $ \Phi $：中心化后的数据矩阵（每列是一张脸独特于平均脸的部分）'
+      line_hint: 39
+    end:
+      snippet: '- 后面所有分析都针对 $ \Phi $ 进行'
+      line_hint: 40
+  status: pending
+- pending_id: d28d0f32890be849
+  file: MachineLearning/Eigen_Face.md
+  kind: definition
+  name: 而不
+  range:
+    start:
+      snippet: '- 需要求 $ \Phi^T \Phi $（$ n \times n $）的特征向量，而不是 $ \Phi \Phi^T $（$ d^2
+        \times d^2 '
+      line_hint: 66
+    end:
+      snippet: ''
+      line_hint: 89
+  status: pending
+- pending_id: 6398ad5d309241f2
+  file: MachineLearning/Eigen_Face.md
+  kind: definition
+  name: 对应的特征值
+  range:
+    start:
+      snippet: '- 说明 $ \Phi v_i $ 是 $ \Phi \Phi^T $ 的特征向量，对应的特征值是 $ \lambda_i $。'
+      line_hint: 78
+    end:
+      snippet: $$
+      line_hint: 82
+  status: pending
+- pending_id: 42b0b7143ce0f90a
+  file: MachineLearning/Eigen_Face.md
+  kind: definition
+  name: 大小
+  range:
+    start:
+      snippet: '- 特征人脸 $ u_i = \frac{\Phi v_i}{\|\Phi v_i\|} $，大小是 $ d^2 \times 1
+        $（和原始图片一样大）'
+      line_hint: 85
+    end:
+      snippet: '- 它们构成特征人脸空间 $ U = [u_1, u_2, \dots, u_{n-1}] $，大小 $ d^2 \times (n-1)
+        $'
+      line_hint: 87
+  status: pending
+- pending_id: 8ff10d2d09ec38d1
+  file: MachineLearning/Eigen_Face.md
+  kind: definition
+  name: \times
+  range:
+    start:
+      snippet: '- 它们构成特征人脸空间 $ U = [u_1, u_2, \dots, u_{n-1}] $，大小 $ d^2 \times (n-1)
+        $'
+      line_hint: 87
+    end:
+      snippet: ''
+      line_hint: 89
+  status: pending
+- pending_id: 00d82fda361ebe1c
+  file: MachineLearning/Eigen_Face.md
+  kind: definition
+  name: 做特征分解
+  range:
+    start:
+      snippet: '| 5 | 用小矩阵 $ \Phi^T \Phi $ 做特征分解（n×n） | $ n \times n $ | $ v_i $（n×1）
+        |'
+      line_hint: 143
+    end:
+      snippet: '| 10 | 识别：找距离最近的 $ \Omega_i $ | $ k \times 1 $ vs $ k \times 1 $ |
+        身份标签 |'
+      line_hint: 148
+  status: pending
+- pending_id: f2267bf798c00e30
+  file: MachineLearning/Eigen_Face.md
+  kind: definition
+  name: 识别时比较两张脸的系数向量
+  range:
+    start:
+      snippet: '> - 识别时比较两张脸的系数向量是否接近'
+      line_hint: 157
+    end:
+      snippet: '> - 原始需要 $ d^2 $ 个数，现在只需要 $ k $ 个数（$ k \ll d^2 $）'
+      line_hint: 158
+  status: pending
+- pending_id: 170cfcb7b268d0a3
+  file: MachineLearning/Solve_PCA_By_SVD.md
+  kind: heading
+  name: 第一层：PCA要解决什么问题
+  range:
+    start:
+      snippet: '## 第一层：PCA要解决什么问题'
+      line_hint: 3
+    end:
+      snippet: $$
+      line_hint: 21
+  status: pending
+- pending_id: 1982b82878a08c53
+  file: MachineLearning/Solve_PCA_By_SVD.md
+  kind: heading
+  name: 第二层：用拉格朗日乘子法求解PCA
+  range:
+    start:
+      snippet: '## 第二层：用拉格朗日乘子法求解PCA'
+      line_hint: 24
+    end:
+      snippet: '- 要选前 $ k $ 个最大特征值对应的特征向量作为投影方向'
+      line_hint: 46
+  status: pending
+- pending_id: b6d40ecf8e6cf6ff
+  file: MachineLearning/Solve_PCA_By_SVD.md
+  kind: heading
+  name: 第三层：直接做PCA的计算瓶颈
+  range:
+    start:
+      snippet: '## 第三层：直接做PCA的计算瓶颈'
+      line_hint: 49
+    end:
+      snippet: 直接对 $ d \times d $ 的协方差矩阵做特征分解，在 $ d $ 很大时**不可行**。
+      line_hint: 61
+  status: pending
+- pending_id: 61ea193831545e6a
+  file: MachineLearning/Solve_PCA_By_SVD.md
+  kind: heading
+  name: 第四层：引入SVD——改变分解对象
+  range:
+    start:
+      snippet: '## 第四层：引入SVD——改变分解对象'
+      line_hint: 64
+    end:
+      snippet: '- **PCA要找的 $ w $ = SVD的右奇异向量 $ V $**'
+      line_hint: 87
+  status: pending
+- pending_id: 7c612cf4e92a1208
+  file: MachineLearning/Solve_PCA_By_SVD.md
+  kind: heading
+  name: 第五层：SVD仍然要面对 $ d \times d $
+  range:
+    start:
+      snippet: '## 第五层：SVD仍然要面对 $ d \times d $'
+      line_hint: 90
+    end:
+      snippet: SVD如果直接从 $ X_c^T X_c $ 出发求 $ V $，同样面临 $ d \times d $ 的困难。
+      line_hint: 99
+  status: pending
+- pending_id: 4f7b6e7f3ddd3fb9
+  file: MachineLearning/Solve_PCA_By_SVD.md
+  kind: heading
+  name: 第六层：SVD的“曲线救国”——从 $ U $ 出发
+  range:
+    start:
+      snippet: '## 第六层：SVD的“曲线救国”——从 $ U $ 出发'
+      line_hint: 102
+    end:
+      snippet: '- **$ U $ 可以在 $ n \times n $ 的规模上直接求得，不需要碰 $ d \times d $**'
+      line_hint: 122
+  status: pending
+- pending_id: 9654486b2f78c76e
+  file: MachineLearning/Solve_PCA_By_SVD.md
+  kind: heading
+  name: 第七层：从 $ U $ 反推 $ V $（最终关卡）
+  range:
+    start:
+      snippet: '## 第七层：从 $ U $ 反推 $ V $（最终关卡）'
+      line_hint: 125
+    end:
+      snippet: 只要算出 $ U $（通过分解 $ n \times n $），再代入公式，就能得到 $ V $（即PCA的投影方向 $ w $）。
+      line_hint: 163
+  status: pending
+- pending_id: 9edb713501313dc1
+  file: MachineLearning/Solve_PCA_By_SVD.md
+  kind: heading
+  name: 第八层：SVD加速PCA的完整逻辑链
+  range:
+    start:
+      snippet: '## 第八层：SVD加速PCA的完整逻辑链'
+      line_hint: 166
+    end:
+      snippet: 直接PCA需要 $ O(d^3) $，SVD路径需要 $ O(n^3 + n^2 d) $，**加速比约为 $ (d/n)^3 $**。
+      line_hint: 178
+  status: pending
+- pending_id: 77044fa71b723ee6
+  file: MachineLearning/Solve_PCA_By_SVD.md
+  kind: heading
+  name: 最终一句话总结
+  range:
+    start:
+      snippet: '## 最终一句话总结'
+      line_hint: 181
+    end:
+      snippet: '> **计算结果完全相同，但计算量从 $ O(d^3) $ 降到了 $ O(n^3 + n^2 d) $。**'
+      line_hint: 188
+  status: pending
+- pending_id: 14863393ef13f2d8
+  file: MachineLearning/Solve_PCA_By_SVD.md
+  kind: definition
+  name: 投影后的数据
+  range:
+    start:
+      snippet: 要把数据投影到一个方向 $ w $ 上，投影后的数据是 $ y = Xw $。投影后的方差是：
+      line_hint: 11
+    end:
+      snippet: 所以PCA要最大化 $ w^T \Sigma w $，同时要求 $ w $ 是单位向量（$ w^T w = 1 $）。
+      line_hint: 15
+  status: pending
+- pending_id: 5feeed994eb7b52b
+  file: MachineLearning/Solve_PCA_By_SVD.md
+  kind: definition
+  name: PCA的优化问题就
+  range:
+    start:
+      snippet: PCA的优化问题就是：
+      line_hint: 18
+    end:
+      snippet: $$
+      line_hint: 21
+  status: pending
+- pending_id: 29d69450d6da4113
+  file: MachineLearning/Solve_PCA_By_SVD.md
+  kind: definition
+  name: \lambda
+  range:
+    start:
+      snippet: \mathcal{L}(w, \lambda) = w^T \Sigma w - \lambda (w^T w - 1)
+      line_hint: 32
+    end:
+      snippet: $$
+      line_hint: 40
+  status: pending
+- pending_id: ba249e21f450e29b
+  file: MachineLearning/Solve_PCA_By_SVD.md
+  kind: definition
+  name: 大小
+  range:
+    start:
+      snippet: '- 协方差矩阵 $ \Sigma = \frac{1}{n-1} X_c^T X_c $，大小是 $ d \times d $'
+      line_hint: 52
+    end:
+      snippet: '- 需要对它做特征分解，得到特征向量和特征值'
+      line_hint: 53
+  status: pending
+- pending_id: 65f7c9819fb0ae2a
+  file: MachineLearning/Solve_PCA_By_SVD.md
+  kind: definition
+  name: ^T
+  range:
+    start:
+      snippet: X_c^T X_c = (U \Sigma_{svd} V^T)^T (U \Sigma_{svd} V^T) = V \Sigma_{svd}^T
+        U^T U
+      line_hint: 75
+    end:
+      snippet: 因为 $ U^T U = I $。
+      line_hint: 77
+  status: pending
+- pending_id: bba2d6dcf8b98166
+  file: MachineLearning/Solve_PCA_By_SVD.md
+  kind: definition
+  name: 的大小
+  range:
+    start:
+      snippet: $ X_c^T X_c $ 的大小是 $ d \times d $，如果直接求 $ V $，还是要分解 $ d \times d $
+        的矩阵，问题依然没有解决。
+      line_hint: 96
+    end:
+      snippet: ''
+      line_hint: 101
+  status: pending
+- pending_id: c6753c3b5dc0d6da
+  file: MachineLearning/Solve_PCA_By_SVD.md
+  kind: definition
+  name: '**PCA要找的'
+  range:
+    start:
+      snippet: '> **PCA要找的是特征向量 $ w $（来自 $ d \times d $ 的 $ X_c^T X_c $）。**'
+      line_hint: 183
+    end:
+      snippet: '> **计算结果完全相同，但计算量从 $ O(d^3) $ 降到了 $ O(n^3 + n^2 d) $。**'
+      line_hint: 188
+  status: pending
+- pending_id: ca7541ad5037e5d1
+  file: MachineLearning/Solve_PCA_By_SVD.md
+  kind: definition
+  name: '**SVD加速的原理'
+  range:
+    start:
+      snippet: '> **SVD加速的原理是：**'
+      line_hint: 185
+    end:
+      snippet: '> **计算结果完全相同，但计算量从 $ O(d^3) $ 降到了 $ O(n^3 + n^2 d) $。**'
+      line_hint: 188
+  status: pending
+- pending_id: 3b5f3c7c9fb7514b
+  file: README.md
+  kind: heading
+  name: 使用注意事项
+  range:
+    start:
+      snippet: '### 使用注意事项'
+      line_hint: 1
+    end:
+      snippet: 应用型格式：问题，选择以及原因，结果
+      line_hint: 6
+  status: pending

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1695604",
+  "source_fingerprint": "79dba2c53d15cca2f48b3f1fd4660dbe",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1695604",
+    "plant-nuclear-rna-polymerase-iv-mediates-sirna-and-dna-methylation-dependent-heterochromatin-formation"
+  ],
+  "key_phrases": [
+    "plant",
+    "nuclear",
+    "rna",
+    "polymerase",
+    "iv",
+    "mediates",
+    "sirna",
+    "dna"
+  ],
+  "summary_1l": "All eukaryotes have three nuclear DNA-dependent RNA polymerases, namely, Pol I, II, and III.",
+  "query_hits": [],
+  "embed_text": "1695604 Plant Nuclear RNA Polymerase IV Mediates siRNA and DNA Methylation-Dependent Heterochromatin Formation science scifact All eukaryotes have three nuclear DNA-dependent RNA polymerases, namely, Pol I, II, and III. Interestingly, plants have catalytic subunits for a fourth nuclear polymerase, Pol IV. Genetic and biochemical evidence indicates that Pol IV does… 1695604 plant-nuclear-rna-polymerase-iv-mediates-sirna-and-dna-methylation-dependent-heterochromatin-formation plant nuclear rna polymerase iv mediates sirna dna All eukaryotes have three nuclear DNA-dependent RNA polymerases, namely, Pol I, II, and III. Plant Nuclear RNA Polymerase IV Mediates siRNA and DNA Methylation-Dependent Heterochromatin Formation All eukaryotes have three nuclear DNA-dependent RNA polymerases, namely, Pol I, II, and III. Interestingly, plants have catalytic subunits for a fourth nuclear polymerase, Pol IV. Genetic and biochemical evidence indicates that Pol IV does not functionally overlap with Pol I, II, or III and is nonessential for viability. However, disruption of the Pol IV catalytic subunit genes NRPD1 or NRPD2 inhibits heterochromatin association into chromocenters, coincident with losses in cytosine methylation at pericentromeric 5S gene clusters and AtSN1 retroelements. Loss of CG, CNG, and CNN methylation in Pol IV mutants implicates a partnership between Pol IV and the methyltransferase responsible for",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.069101+00:00"
+}

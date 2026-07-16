@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "33989422",
+  "source_fingerprint": "e3726d9c0336765320a44ea79e844122",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "33989422",
+    "on-the-origins-of-ultra-fine-anaphase-bridges."
+  ],
+  "key_phrases": [
+    "origins",
+    "ultra",
+    "fine",
+    "anaphase",
+    "bridges",
+    "comment",
+    "chan",
+    "kl"
+  ],
+  "summary_1l": "On the origins of ultra-fine anaphase bridges.",
+  "query_hits": [],
+  "embed_text": "33989422 On the origins of ultra-fine anaphase bridges. science scifact Comment on: Chan KL, Palmai-Pallag T, Ying S, Hickson ID. Replication stress induces sister-chromatid bridging at fragile site loci in mitosis. Nat Cell Biol 2009; 11:753-60. 33989422 on-the-origins-of-ultra-fine-anaphase-bridges. origins ultra fine anaphase bridges comment chan kl On the origins of ultra-fine anaphase bridges. On the origins of ultra-fine anaphase bridges. Comment on: Chan KL, Palmai-Pallag T, Ying S, Hickson ID. Replication stress induces sister-chromatid bridging at fragile site loci in mitosis. Nat Cell Biol 2009; 11:753-60.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.908175+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6374918",
+  "source_fingerprint": "6a3af3c1c7a1a0e4c47876cddd4c099c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6374918",
+    "chemosensitization-of-acute-myeloid-leukemia-(aml)-following-mobilization-by-the-cxcr4-antagonist-amd3100."
+  ],
+  "key_phrases": [
+    "chemosensitization",
+    "acute",
+    "myeloid",
+    "leukemia",
+    "aml",
+    "following",
+    "mobilization",
+    "by"
+  ],
+  "summary_1l": "Chemosensitization of acute myeloid leukemia (AML) following mobilization by the CXCR4 antagonist AMD3100.",
+  "query_hits": [],
+  "embed_text": "6374918 Chemosensitization of acute myeloid leukemia (AML) following mobilization by the CXCR4 antagonist AMD3100. science scifact The CXCR4-SDF-1 axis plays a central role in the trafficking and retention of normal and malignant stem cells in the bone marrow (BM) microenvironment. Here, we used a mouse model of acute promyelocytic leukemia (APL) and a small molecule… 6374918 chemosensitization-of-acute-myeloid-leukemia-(aml)-following-mobilization-by-the-cxcr4-antagonist-amd3100. chemosensitization acute myeloid leukemia aml following mobilization by Chemosensitization of acute myeloid leukemia (AML) following mobilization by the CXCR4 antagonist AMD3100. Chemosensitization of acute myeloid leukemia (AML) following mobilization by the CXCR4 antagonist AMD3100. The CXCR4-SDF-1 axis plays a central role in the trafficking and retention of normal and malignant stem cells in the bone marrow (BM) microenvironment. Here, we used a mouse model of acute promyelocytic leukemia (APL) and a small molecule competitive antagonist of CXCR4, AMD3100, to examine the interaction of mouse APL cells with the BM microenvironment. APL cells from a murine cathepsin G-PML-RARalpha knockin mouse were genetically modified with firefly luciferase (APL(luc)) to allow tracking by bioluminescence imaging. Coculture of APL(luc) cells with M2-10B4 stromal cells protected the leukemia cells from chemotherapy-induced apoptosis in vitro. Upon injection into syngeneic recipi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.669909+00:00"
+}

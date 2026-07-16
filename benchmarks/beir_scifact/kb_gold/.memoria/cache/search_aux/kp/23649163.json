@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23649163",
+  "source_fingerprint": "c44f0e760af32067e8714a1087dbf5c0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23649163",
+    "clinical-features-and-treatment-of-peristomal-pyoderma-gangrenosum."
+  ],
+  "key_phrases": [
+    "clinical",
+    "features",
+    "treatment",
+    "peristomal",
+    "pyoderma",
+    "gangrenosum",
+    "context",
+    "ppg"
+  ],
+  "summary_1l": "Clinical features and treatment of peristomal pyoderma gangrenosum.",
+  "query_hits": [],
+  "embed_text": "23649163 Clinical features and treatment of peristomal pyoderma gangrenosum. science scifact CONTEXT Peristomal pyoderma gangrenosum (PPG), an unusual variant of pyoderma gangrenosum, has been reported almost exclusively in patients with inflammatory bowel disease (IBD) and is frequently misdiagnosed. OBJECTIVE To better… 23649163 clinical-features-and-treatment-of-peristomal-pyoderma-gangrenosum. clinical features treatment peristomal pyoderma gangrenosum context ppg Clinical features and treatment of peristomal pyoderma gangrenosum. Clinical features and treatment of peristomal pyoderma gangrenosum. CONTEXT Peristomal pyoderma gangrenosum (PPG), an unusual variant of pyoderma gangrenosum, has been reported almost exclusively in patients with inflammatory bowel disease (IBD) and is frequently misdiagnosed. OBJECTIVE To better characterize the clinical manifestations, diagnosis, and management of PPG. DESIGN, SETTING, AND PATIENTS Retrospective analysis of 7 patients with PPG observed in a university-affiliated community setting between 1988 and December 1999. MAIN OUTCOME MEASURES Clinical and histopathologic features, associated disorders, and microbiologic findings. RESULTS Two patients had Crohn disease, 2 had ulcerative colitis, and 3 had abdominal cancer. Five patients had at least 1 relapse of PPG after initial h",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.916235+00:00"
+}

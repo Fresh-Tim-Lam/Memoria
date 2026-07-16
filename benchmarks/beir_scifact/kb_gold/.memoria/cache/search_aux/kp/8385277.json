@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8385277",
+  "source_fingerprint": "d22016b29ee428e9d70690052f9a0095",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8385277",
+    "myelodysplasia-and-leukemia-of-fanconi-anemia-are-associated-with-a-specific-pattern-of-genomic-abnormalities-that-includes-cryptic-runx1/aml1-lesions."
+  ],
+  "key_phrases": [
+    "myelodysplasia",
+    "leukemia",
+    "fanconi",
+    "anemia",
+    "associated",
+    "with",
+    "specific",
+    "pattern"
+  ],
+  "summary_1l": "Myelodysplasia and leukemia of Fanconi anemia are associated with a specific pattern of genomic abnormalities that includes cryptic RUNX1/AML1 lesions.",
+  "query_hits": [],
+  "embed_text": "8385277 Myelodysplasia and leukemia of Fanconi anemia are associated with a specific pattern of genomic abnormalities that includes cryptic RUNX1/AML1 lesions. science scifact Fanconi anemia (FA) is a genetic condition associated with bone marrow (BM) failure, myelodysplasia (MDS), and acute myeloid leukemia (AML). We studied 57 FA patients with hypoplastic or aplastic anemia (n = 20), MDS (n = 18), AML (n =… 8385277 myelodysplasia-and-leukemia-of-fanconi-anemia-are-associated-with-a-specific-pattern-of-genomic-abnormalities-that-includes-cryptic-runx1/aml1-lesions. myelodysplasia leukemia fanconi anemia associated with specific pattern Myelodysplasia and leukemia of Fanconi anemia are associated with a specific pattern of genomic abnormalities that includes cryptic RUNX1/AML1 lesions. Myelodysplasia and leukemia of Fanconi anemia are associated with a specific pattern of genomic abnormalities that includes cryptic RUNX1/AML1 lesions. Fanconi anemia (FA) is a genetic condition associated with bone marrow (BM) failure, myelodysplasia (MDS), and acute myeloid leukemia (AML). We studied 57 FA patients with hypoplastic or aplastic anemia (n = 20), MDS (n = 18), AML (n = 11), or no BM abnormality (n = 8). BM samples were analyzed by karyotype, high-density DNA arrays with respect to paired fibroblasts, and by selected oncogene sequencing. A specific pattern of chromosomal abnormalities was found in MDS/AML, which included 1q+ (44.8%), 3q+ (41.4%), -7/7q (17.2%), and 11q- (13.8%). Moreover, cryptic RUNX1/AML1 lesions (translocations, deletions, or mutations) were observed for",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.498430+00:00"
+}

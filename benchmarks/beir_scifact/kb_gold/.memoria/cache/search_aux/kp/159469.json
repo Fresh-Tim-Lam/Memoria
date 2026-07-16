@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "159469",
+  "source_fingerprint": "77cf1ebc29665cd7f1469042a46cccf0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "159469"
+  ],
+  "key_phrases": [
+    "htrf",
+    "technology",
+    "tailored",
+    "drug",
+    "discovery",
+    "review",
+    "theoretical",
+    "aspects"
+  ],
+  "summary_1l": "HTRF (Homogeneous Time Resolved Fluorescence) is the most frequently used generic assay technolo",
+  "query_hits": [],
+  "embed_text": "159469 HTRF: A Technology Tailored for Drug Discovery –A Review of Theoretical Aspects and Recent Applications science scifact HTRF (Homogeneous Time Resolved Fluorescence) is the most frequently used generic assay technology to measure analytes in a homogenous format, which is the ideal platform used for drug target studies in high-throughput screening (HTS).… 159469 htrf technology tailored drug discovery review theoretical aspects HTRF (Homogeneous Time Resolved Fluorescence) is the most frequently used generic assay technolo HTRF: A Technology Tailored for Drug Discovery –A Review of Theoretical Aspects and Recent Applications HTRF (Homogeneous Time Resolved Fluorescence) is the most frequently used generic assay technology to measure analytes in a homogenous format, which is the ideal platform used for drug target studies in high-throughput screening (HTS). This technology combines fluorescence resonance energy transfer technology (FRET) with time-resolved measurement (TR). In TR-FRET assays, a signal is generated through fluorescent resonance energy transfer between a donor and an acceptor molecule when in close proximity to each other. Buffer and media interference is dramatically reduced by dual-wavelength detection, and the final signal is proportional to the extent of product formation. The HTRF assay is",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.510635+00:00"
+}

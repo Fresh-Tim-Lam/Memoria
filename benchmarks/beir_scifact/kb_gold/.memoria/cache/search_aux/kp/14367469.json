@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14367469",
+  "source_fingerprint": "033083fa20bdf97629387f1416f76528",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14367469",
+    "the-circadian-factor-period-2-modulates-p53-stability-and-transcriptional-activity-in-unstressed-cells"
+  ],
+  "key_phrases": [
+    "circadian",
+    "factor",
+    "period",
+    "modulates",
+    "p53",
+    "stability",
+    "transcriptional",
+    "activity"
+  ],
+  "summary_1l": "Human Period 2 (hPer2) is a transcriptional regulator at the core of the circadian clock mechanis",
+  "query_hits": [],
+  "embed_text": "14367469 The circadian factor Period 2 modulates p53 stability and transcriptional activity in unstressed cells science scifact Human Period 2 (hPer2) is a transcriptional regulator at the core of the circadian clock mechanism that is responsible for generating the negative feedback loop that sustains the clock. Its relevance to human disease is underlined by… 14367469 the-circadian-factor-period-2-modulates-p53-stability-and-transcriptional-activity-in-unstressed-cells circadian factor period modulates p53 stability transcriptional activity Human Period 2 (hPer2) is a transcriptional regulator at the core of the circadian clock mechanis The circadian factor Period 2 modulates p53 stability and transcriptional activity in unstressed cells Human Period 2 (hPer2) is a transcriptional regulator at the core of the circadian clock mechanism that is responsible for generating the negative feedback loop that sustains the clock. Its relevance to human disease is underlined by alterations in its function that affect numerous biochemical and physiological processes. When absent, it results in the development of various cancers and an increase in the cell's susceptibility to genotoxic stress. Thus we sought to define a yet-uncharacterized checkpoint node in which circadian components integrate environmental stress signals to the DNA-damage response. We found that hPer2 binds the C-terminal half of human p53 (hp53) and forms a stable",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.711968+00:00"
+}

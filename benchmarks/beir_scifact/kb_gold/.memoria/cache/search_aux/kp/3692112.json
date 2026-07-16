@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3692112",
+  "source_fingerprint": "72f0c2cf064e3605dcff5d7f0576faca",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3692112",
+    "randomized-clinical-study-of-hydrofiber-dressing-with-silver-or-silver-sulfadiazine-in-the-management-of-partial-thickness-burns."
+  ],
+  "key_phrases": [
+    "randomized",
+    "clinical",
+    "study",
+    "hydrofiber",
+    "dressing",
+    "with",
+    "silver",
+    "sulfadiazine"
+  ],
+  "summary_1l": "Randomized clinical study of Hydrofiber dressing with silver or silver sulfadiazine in the management of partial-thickness burns.",
+  "query_hits": [],
+  "embed_text": "3692112 Randomized clinical study of Hydrofiber dressing with silver or silver sulfadiazine in the management of partial-thickness burns. science scifact This prospective, randomized study compared protocols of care using either AQUACEL Ag Hydrofiber (ConvaTec, a Bristol-Myers Squibb company, Skillman, NJ) dressing with silver (n = 42) or silver sulfadiazine (n = 42) for up to 21 days in… 3692112 randomized-clinical-study-of-hydrofiber-dressing-with-silver-or-silver-sulfadiazine-in-the-management-of-partial-thickness-burns. randomized clinical study hydrofiber dressing with silver sulfadiazine Randomized clinical study of Hydrofiber dressing with silver or silver sulfadiazine in the management of partial-thickness burns. Randomized clinical study of Hydrofiber dressing with silver or silver sulfadiazine in the management of partial-thickness burns. This prospective, randomized study compared protocols of care using either AQUACEL Ag Hydrofiber (ConvaTec, a Bristol-Myers Squibb company, Skillman, NJ) dressing with silver (n = 42) or silver sulfadiazine (n = 42) for up to 21 days in the management of partial-thickness burns covering 5% to 40% body surface area (BSA). AQUACEL Ag dressing was associated with less pain and anxiety during dressing changes, less burning and stinging during wear, fewer dressing changes, less nursing time, and fewer procedural medications. Silver sulfadiazine was associated with greater flexibility and ease of movement. Adverse events, including infection, were comparable between t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:43.866747+00:00"
+}

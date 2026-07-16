@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "20240998",
+  "source_fingerprint": "31e843c0a65f42b65f8cffee93087245",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20240998"
+  ],
+  "key_phrases": [
+    "bed",
+    "sharing",
+    "when",
+    "parents",
+    "do",
+    "not",
+    "smoke",
+    "there"
+  ],
+  "summary_1l": "Bed sharing when parents do not smoke: is there a risk of SIDS?",
+  "query_hits": [],
+  "embed_text": "20240998 Bed sharing when parents do not smoke: is there a risk of SIDS? An individual level analysis of five major case–control studies science scifact OBJECTIVE To resolve uncertainty as to the risk of Sudden Infant Death Syndrome (SIDS) associated with sleeping in bed with your baby if neither parent smokes and the baby is breastfed. DESIGN Bed sharing was defined as sleeping with a… 20240998 bed sharing when parents do not smoke there Bed sharing when parents do not smoke: is there a risk of SIDS? Bed sharing when parents do not smoke: is there a risk of SIDS? An individual level analysis of five major case–control studies OBJECTIVE To resolve uncertainty as to the risk of Sudden Infant Death Syndrome (SIDS) associated with sleeping in bed with your baby if neither parent smokes and the baby is breastfed. DESIGN Bed sharing was defined as sleeping with a baby in the parents' bed; room sharing as baby sleeping in the parents' room. Frequency of bed sharing during last sleep was compared between babies who died of SIDS and living control infants. Five large SIDS case-control datasets were combined. Missing data were imputed. Random effects logistic regression controlled for confounding factors. SETTING Home sleeping arrangements of infants in 19 studies across the UK, Europe and Austr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.874402+00:00"
+}

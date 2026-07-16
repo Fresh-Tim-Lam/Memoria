@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12839939",
+  "source_fingerprint": "f1f8308efa182dd0c3f0d062ac429b1d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12839939",
+    "registration-and-real-time-visualization-of-transcranial-magnetic-stimulation-with-3-d-mr-images"
+  ],
+  "key_phrases": [
+    "registration",
+    "real",
+    "time",
+    "visualization",
+    "transcranial",
+    "magnetic",
+    "stimulation",
+    "with"
+  ],
+  "summary_1l": "This paper describes a method for registering and visualizing in real-time the results of transcranial",
+  "query_hits": [],
+  "embed_text": "12839939 Registration and real-time visualization of transcranial magnetic stimulation with 3-D MR images science scifact This paper describes a method for registering and visualizing in real-time the results of transcranial magnetic stimulations (TMS) in physical space on the corresponding anatomical locations in MR images of the brain. The method proceeds… 12839939 registration-and-real-time-visualization-of-transcranial-magnetic-stimulation-with-3-d-mr-images registration real time visualization transcranial magnetic stimulation with This paper describes a method for registering and visualizing in real-time the results of transcranial Registration and real-time visualization of transcranial magnetic stimulation with 3-D MR images This paper describes a method for registering and visualizing in real-time the results of transcranial magnetic stimulations (TMS) in physical space on the corresponding anatomical locations in MR images of the brain. The method proceeds in three main steps. First, the patient scalp is digitized in physical space with a magnetic-field digitizer, following a specific digitization pattern. Second, a registration process minimizes the mean square distance between those points and a segmented scalp surface extracted from the magnetic resonance image. Following this registration, the physician can follow the change in coil position in real-time through the visualization interface and adjust the coil",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:09.095292+00:00"
+}

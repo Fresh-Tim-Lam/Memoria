@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2417551",
+  "source_fingerprint": "36347eb670851cc662adbe15d15265e8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2417551",
+    "control-of-immunity-by-the-tnfr-related-molecule-ox40-(cd134)."
+  ],
+  "key_phrases": [
+    "control",
+    "immunity",
+    "by",
+    "tnfr",
+    "related",
+    "molecule",
+    "ox40",
+    "cd134"
+  ],
+  "summary_1l": "Control of immunity by the TNFR-related molecule OX40 (CD134).",
+  "query_hits": [],
+  "embed_text": "2417551 Control of immunity by the TNFR-related molecule OX40 (CD134). science scifact TNFR/TNF superfamily members can control diverse aspects of immune function. Research over the past 10 years has shown that one of the most important and prominent interactions in this family is that between OX40 (CD134) and its partner… 2417551 control-of-immunity-by-the-tnfr-related-molecule-ox40-(cd134). control immunity by tnfr related molecule ox40 cd134 Control of immunity by the TNFR-related molecule OX40 (CD134). Control of immunity by the TNFR-related molecule OX40 (CD134). TNFR/TNF superfamily members can control diverse aspects of immune function. Research over the past 10 years has shown that one of the most important and prominent interactions in this family is that between OX40 (CD134) and its partner OX40L (CD252). These molecules strongly regulate conventional CD4 and CD8 T cells, and more recent data are highlighting their ability to modulate NKT cell and NK cell function as well as to mediate cross-talk with professional antigen-presenting cells and diverse cell types such as mast cells, smooth muscle cells, and endothelial cells. Additionally, OX40-OX40L interactions alter the differentiation and activity of regulatory T cells. Blocking OX40L has produced strong therapeutic effects in mu",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.903821+00:00"
+}

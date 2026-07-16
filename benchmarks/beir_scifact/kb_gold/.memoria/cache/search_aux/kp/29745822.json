@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29745822",
+  "source_fingerprint": "9b6339db4a72bdc99fe1a567b2797eca",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29745822",
+    "nonuniform-probability-of-glutamate-release-at-a-hippocampal-synapse."
+  ],
+  "key_phrases": [
+    "nonuniform",
+    "probability",
+    "glutamate",
+    "release",
+    "at",
+    "hippocampal",
+    "synapse",
+    "change"
+  ],
+  "summary_1l": "Nonuniform probability of glutamate release at a hippocampal synapse.",
+  "query_hits": [],
+  "embed_text": "29745822 Nonuniform probability of glutamate release at a hippocampal synapse. science scifact A change in the probability of neurotransmitter release (Pr) is an important mechanism underlying synaptic plasticity. Although Pr is often assumed to be the same for all terminals at a single synapse, this assumption is difficult to… 29745822 nonuniform-probability-of-glutamate-release-at-a-hippocampal-synapse. nonuniform probability glutamate release at hippocampal synapse change Nonuniform probability of glutamate release at a hippocampal synapse. Nonuniform probability of glutamate release at a hippocampal synapse. A change in the probability of neurotransmitter release (Pr) is an important mechanism underlying synaptic plasticity. Although Pr is often assumed to be the same for all terminals at a single synapse, this assumption is difficult to reconcile with the nonuniform size and structure of synaptic terminals in the central nervous system. Release probability was measured at excitatory synapses on cultured hippocampal neurons by analysis of the progressive block of N-methyl-D-aspartate receptor-mediated synaptic currents by the irreversible open channel blocker MK-801. Release probability was nonuniform (range of 0.09 to 0.54) for terminals arising from a single axon, the majority of which had a low Pr. However, terminals with",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.171192+00:00"
+}

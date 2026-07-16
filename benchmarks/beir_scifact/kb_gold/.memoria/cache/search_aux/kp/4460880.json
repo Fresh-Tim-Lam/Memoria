@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4460880",
+  "source_fingerprint": "88f8c326cb5c324a47c78b6cc19df394",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4460880",
+    "mesenchymal-endothelial-transition-contributes-to-cardiac-neovascularization"
+  ],
+  "key_phrases": [
+    "mesenchymal",
+    "endothelial",
+    "transition",
+    "contributes",
+    "cardiac",
+    "neovascularization",
+    "cells",
+    "contribute"
+  ],
+  "summary_1l": "Endothelial cells contribute to a subset of cardiac fibroblasts by undergoing endothelial-to-mesenchymal transition, but wh",
+  "query_hits": [],
+  "embed_text": "4460880 Mesenchymal-endothelial-transition contributes to cardiac neovascularization science scifact Endothelial cells contribute to a subset of cardiac fibroblasts by undergoing endothelial-to-mesenchymal transition, but whether cardiac fibroblasts can adopt an endothelial cell fate and directly contribute to neovascularization after… 4460880 mesenchymal-endothelial-transition-contributes-to-cardiac-neovascularization mesenchymal endothelial transition contributes cardiac neovascularization cells contribute Endothelial cells contribute to a subset of cardiac fibroblasts by undergoing endothelial-to-mesenchymal transition, but wh Mesenchymal-endothelial-transition contributes to cardiac neovascularization Endothelial cells contribute to a subset of cardiac fibroblasts by undergoing endothelial-to-mesenchymal transition, but whether cardiac fibroblasts can adopt an endothelial cell fate and directly contribute to neovascularization after cardiac injury is not known. Here, using genetic fate map techniques, we demonstrate that cardiac fibroblasts rapidly adopt an endothelial-cell-like phenotype after acute ischaemic cardiac injury. Fibroblast-derived endothelial cells exhibit anatomical and functional characteristics of native endothelial cells. We show that the transcription factor p53 regulates such a switch in cardiac fibroblast fate. Loss of p53 in cardiac fibroblasts severely decreases the formation of fibroblas",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.593392+00:00"
+}

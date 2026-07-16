@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23036207",
+  "source_fingerprint": "266bb0f13721d648fe3cc7305a1d32aa",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23036207",
+    "transient-delivery-of-modified-mrna-encoding-tert-rapidly-extends-telomeres-in-human-cells."
+  ],
+  "key_phrases": [
+    "transient",
+    "delivery",
+    "modified",
+    "mrna",
+    "encoding",
+    "tert",
+    "rapidly",
+    "extends"
+  ],
+  "summary_1l": "Transient delivery of modified mRNA encoding TERT rapidly extends telomeres in human cells.",
+  "query_hits": [],
+  "embed_text": "23036207 Transient delivery of modified mRNA encoding TERT rapidly extends telomeres in human cells. science scifact Telomere extension has been proposed as a means to improve cell culture and tissue engineering and to treat disease. However, telomere extension by nonviral, nonintegrating methods remains inefficient. Here we report that delivery of… 23036207 transient-delivery-of-modified-mrna-encoding-tert-rapidly-extends-telomeres-in-human-cells. transient delivery modified mrna encoding tert rapidly extends Transient delivery of modified mRNA encoding TERT rapidly extends telomeres in human cells. Transient delivery of modified mRNA encoding TERT rapidly extends telomeres in human cells. Telomere extension has been proposed as a means to improve cell culture and tissue engineering and to treat disease. However, telomere extension by nonviral, nonintegrating methods remains inefficient. Here we report that delivery of modified mRNA encoding TERT to human fibroblasts and myoblasts increases telomerase activity transiently (24-48 h) and rapidly extends telomeres, after which telomeres resume shortening. Three successive transfections over a 4 d period extended telomeres up to 0.9 kb in a cell type-specific manner in fibroblasts and myoblasts and conferred an additional 28 ± 1.5 and 3.4 ± 0.4 population doublings (PDs), respectively. Proliferative capacity increased in a dose-dependent",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.772995+00:00"
+}

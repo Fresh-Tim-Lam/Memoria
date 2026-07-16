@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "kp_id": "545907#1",
+  "source_fingerprint": "5a0e20fca2c68cf65e09f899efd992ab",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "2004年中国超级联赛杯",
+    "世界三大宗教",
+    "世界主要宗教",
+    "世界大戰",
+    "世界政府",
+    "世界水电站列表",
+    "富兰克林半美元",
+    "美国经典剧目剧团",
+    "英格兰足球超级联赛"
+  ],
+  "aliases": [
+    "545907#1"
+  ],
+  "key_phrases": [
+    "琳達",
+    "伊凡",
+    "吉莉絲塔",
+    "1990",
+    "年代",
+    "四位",
+    "模特",
+    "cindy"
+  ],
+  "summary_1l": "1990年代，她与另四位模特（ Cindy Crawford、Naomi Campbell、Christy Turlington、Claudia Schiffer ）组成的Big5，堪称世界模特行业的黄金年代。",
+  "query_hits": [],
+  "embed_text": "545907#1 琳達·伊凡吉莉絲塔 琳達·伊凡吉莉絲塔 1990年代，她与另四位模特（ Cindy Crawford、Naomi Campbell、Christy Turlington、Claudia Schiffer ）组成的Big5，堪称世界模特行业的黄金年代。她的经典金句“我们超级名模，要么每天工资至少10000美元，要么终日呼呼大睡”以及“我们不是去制作时尚，因为我们本身就是时尚”等至今经久流传。 2004年中国超级联赛杯 世界三大宗教 世界主要宗教 世界大戰 世界政府 世界水电站列表 富兰克林半美元 美国经典剧目剧团 英格兰足球超级联赛 545907#1 琳達 伊凡 吉莉絲塔 1990 年代 四位 模特 cindy 1990年代，她与另四位模特（ Cindy Crawford、Naomi Campbell、Christy Turlington、Claudia Schiffer ）组成的Big5，堪称世界模特行业的黄金年代。 琳達·伊凡吉莉絲塔 1990年代，她与另四位模特（ Cindy Crawford、Naomi Campbell、Christy Turlington、Claudia Schiffer ）组成的Big5，堪称世界模特行业的黄金年代。她的经典金句“我们超级名模，要么每天工资至少10000美元，要么终日呼呼大睡”以及“我们不是去制作时尚，因为我们本身就是时尚”等至今经久流传。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:20:42.068027+00:00"
+}

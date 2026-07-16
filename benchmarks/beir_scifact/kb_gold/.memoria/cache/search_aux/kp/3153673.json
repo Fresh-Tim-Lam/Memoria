@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3153673",
+  "source_fingerprint": "0820766f70bc03bed2e29e1b80bd0cb6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3153673",
+    "a-novel-3-hydroxysteroid-dehydrogenase-that-regulates-reproductive-development-and-longevity"
+  ],
+  "key_phrases": [
+    "novel",
+    "hydroxysteroid",
+    "dehydrogenase",
+    "that",
+    "regulates",
+    "reproductive",
+    "development",
+    "longevity"
+  ],
+  "summary_1l": "Endogenous small molecule metabolites that regulate animal longevity are emerging as a novel means to influ",
+  "query_hits": [],
+  "embed_text": "3153673 A Novel 3-Hydroxysteroid Dehydrogenase That Regulates Reproductive Development and Longevity science scifact Endogenous small molecule metabolites that regulate animal longevity are emerging as a novel means to influence health and life span. In C. elegans, bile acid-like steroids called the dafachronic acids (DAs) regulate developmental timing… 3153673 a-novel-3-hydroxysteroid-dehydrogenase-that-regulates-reproductive-development-and-longevity novel hydroxysteroid dehydrogenase that regulates reproductive development longevity Endogenous small molecule metabolites that regulate animal longevity are emerging as a novel means to influ A Novel 3-Hydroxysteroid Dehydrogenase That Regulates Reproductive Development and Longevity Endogenous small molecule metabolites that regulate animal longevity are emerging as a novel means to influence health and life span. In C. elegans, bile acid-like steroids called the dafachronic acids (DAs) regulate developmental timing and longevity through the conserved nuclear hormone receptor DAF-12, a homolog of mammalian sterol-regulated receptors LXR and FXR. Using metabolic genetics, mass spectrometry, and biochemical approaches, we identify new activities in DA biosynthesis and characterize an evolutionarily conserved short chain dehydrogenase, DHS-16, as a novel 3-hydroxysteroid dehydrogenase. Through regulation of DA production, DHS-16 controls DAF-12 activity governing longevity in res",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.655777+00:00"
+}

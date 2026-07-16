@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14706752",
+  "source_fingerprint": "4f1fbcee17fb523a6f835c18c46bc2a7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14706752",
+    "gamma-secretase-represents-a-therapeutic-target-for-the-treatment-of-invasive-glioma-mediated-by-the-p75-neurotrophin-receptor"
+  ],
+  "key_phrases": [
+    "gamma",
+    "secretase",
+    "represents",
+    "therapeutic",
+    "target",
+    "treatment",
+    "invasive",
+    "glioma"
+  ],
+  "summary_1l": "The multifunctional signaling protein p75 neurotrophin receptor (p75(NTR)",
+  "query_hits": [],
+  "embed_text": "14706752 Gamma-Secretase Represents a Therapeutic Target for the Treatment of Invasive Glioma Mediated by the p75 Neurotrophin Receptor science scifact The multifunctional signaling protein p75 neurotrophin receptor (p75(NTR)) is a central regulator and major contributor to the highly invasive nature of malignant gliomas. Here, we show that neurotrophin-dependent regulated intramembrane… 14706752 gamma-secretase-represents-a-therapeutic-target-for-the-treatment-of-invasive-glioma-mediated-by-the-p75-neurotrophin-receptor gamma secretase represents therapeutic target treatment invasive glioma The multifunctional signaling protein p75 neurotrophin receptor (p75(NTR) Gamma-Secretase Represents a Therapeutic Target for the Treatment of Invasive Glioma Mediated by the p75 Neurotrophin Receptor The multifunctional signaling protein p75 neurotrophin receptor (p75(NTR)) is a central regulator and major contributor to the highly invasive nature of malignant gliomas. Here, we show that neurotrophin-dependent regulated intramembrane proteolysis (RIP) of p75(NTR) is required for p75(NTR)-mediated glioma invasion, and identify a previously unnamed process for targeted glioma therapy. Expression of cleavage-resistant chimeras of p75(NTR) or treatment of animals bearing p75(NTR)-positive intracranial tumors with clinically applicable gamma-secretase inhibitors resulted in dramatically decreased glioma invasion and prolonged survival. Importantly, proteolytic proce",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.467929+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17463469",
+  "source_fingerprint": "9c8d58a96fcc3354f26013cf54f4f1d3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17463469",
+    "a-heteroskedasticity-consistent-covariance-matrix-estimator-and-a-direct-test-for-heteroskedasticity"
+  ],
+  "key_phrases": [
+    "heteroskedasticity",
+    "consistent",
+    "covariance",
+    "matrix",
+    "estimator",
+    "direct",
+    "test",
+    "this"
+  ],
+  "summary_1l": "This paper presents a parameter covariance matrix estimator which is consistent even when the distu",
+  "query_hits": [],
+  "embed_text": "17463469 A Heteroskedasticity-Consistent Covariance Matrix Estimator And A Direct Test For Heteroskedasticity science scifact This paper presents a parameter covariance matrix estimator which is consistent even when the disturbances of a linear regression model are heteroskedastic. This estimator does not depend on a formal model of the structure of the… 17463469 a-heteroskedasticity-consistent-covariance-matrix-estimator-and-a-direct-test-for-heteroskedasticity heteroskedasticity consistent covariance matrix estimator direct test this This paper presents a parameter covariance matrix estimator which is consistent even when the distu A Heteroskedasticity-Consistent Covariance Matrix Estimator And A Direct Test For Heteroskedasticity This paper presents a parameter covariance matrix estimator which is consistent even when the disturbances of a linear regression model are heteroskedastic. This estimator does not depend on a formal model of the structure of the heteroskedasticity. By comparing the elements of the new estimator to those of the usual covariance estimator, one obtains a direct test for heteroskedasticity, since in the absence of heteroskedasticity, the two estimators will be approximately equal, but will generally diverge otherwise. The test has an appealing least squares interpretation.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.815304+00:00"
+}

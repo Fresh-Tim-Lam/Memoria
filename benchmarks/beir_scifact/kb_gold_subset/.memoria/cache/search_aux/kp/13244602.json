@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13244602",
+  "source_fingerprint": "e73cc5c405f5a79c79845b1f0bb0eef3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13244602",
+    "ssea-1-is-an-enrichment-marker-for-tumor-initiating-cells-in-human-glioblastoma."
+  ],
+  "key_phrases": [
+    "ssea",
+    "enrichment",
+    "marker",
+    "tumor",
+    "initiating",
+    "cells",
+    "human",
+    "glioblastoma"
+  ],
+  "summary_1l": "SSEA-1 is an enrichment marker for tumor-initiating cells in human glioblastoma.",
+  "query_hits": [],
+  "embed_text": "13244602 SSEA-1 is an enrichment marker for tumor-initiating cells in human glioblastoma. science scifact CD133+ populations of human glioblastoma multiforme (GBM) cells are reportedly enriched for tumor stem cells (TSCs) or tumor-initiating cells (TICs). Approximately 40% of freshly isolated GBM specimens, however, do not contain CD133+ tumor… 13244602 ssea-1-is-an-enrichment-marker-for-tumor-initiating-cells-in-human-glioblastoma. ssea enrichment marker tumor initiating cells human glioblastoma SSEA-1 is an enrichment marker for tumor-initiating cells in human glioblastoma. SSEA-1 is an enrichment marker for tumor-initiating cells in human glioblastoma. CD133+ populations of human glioblastoma multiforme (GBM) cells are reportedly enriched for tumor stem cells (TSCs) or tumor-initiating cells (TICs). Approximately 40% of freshly isolated GBM specimens, however, do not contain CD133+ tumor cells, raising the possibility that CD133 may not be a universal enrichment marker for GBM TSCs/TICs. Here we demonstrate that stage-specific embryonic antigen 1(SSEA-1/LeX)+ GBM cells fulfill the functional criteria for TSC/TIC, since (1) SSEA-1+ cells are highly tumorigenic in vivo, unlike SSEA-1- cells; (2) SSEA-1+ cells can give rise to both SSEA-1+ and SSEA-1- cells, thereby establishing a cellular hierarchy; and (3) SSEA-1+ cells have self-renewal and multilineage diff",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:10.588548+00:00"
+}

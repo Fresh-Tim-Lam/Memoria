@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14591894",
+  "source_fingerprint": "6f1a464a13241d61cd5756c3423971a5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14591894",
+    "a-talin-dependent-lfa-1-focal-zone-is-formed-by-rapidly-migrating-t-lymphocytes"
+  ],
+  "key_phrases": [
+    "talin",
+    "dependent",
+    "lfa",
+    "focal",
+    "zone",
+    "formed",
+    "by",
+    "rapidly"
+  ],
+  "summary_1l": "Cells such as fibroblasts and endothelial cells migrate through the coordinated responses of discrete integrin-containin",
+  "query_hits": [],
+  "embed_text": "14591894 A talin-dependent LFA-1 focal zone is formed by rapidly migrating T lymphocytes science scifact Cells such as fibroblasts and endothelial cells migrate through the coordinated responses of discrete integrin-containing focal adhesions and complexes. In contrast, little is known about the organization of integrins on the highly motile… 14591894 a-talin-dependent-lfa-1-focal-zone-is-formed-by-rapidly-migrating-t-lymphocytes talin dependent lfa focal zone formed by rapidly Cells such as fibroblasts and endothelial cells migrate through the coordinated responses of discrete integrin-containin A talin-dependent LFA-1 focal zone is formed by rapidly migrating T lymphocytes Cells such as fibroblasts and endothelial cells migrate through the coordinated responses of discrete integrin-containing focal adhesions and complexes. In contrast, little is known about the organization of integrins on the highly motile T lymphocyte. We have investigated the distribution, activity, and cytoskeletal linkage of the integrin lymphocyte function associated antigen-1 (LFA-1) on human T lymphocytes migrating on endothelial cells and on ligand intercellular adhesion molecule-1 (ICAM-1). The pattern of total LFA-1 varies from low expression in the lamellipodia to high expression in the uropod. However, high affinity, clustered LFA-1 is restricted to a mid-cell zone that remains stable over time and o",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.245588+00:00"
+}

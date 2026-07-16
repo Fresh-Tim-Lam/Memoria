@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18037805",
+  "source_fingerprint": "e4ad1f5e8442dcc71401c4e5cb8d2831",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18037805",
+    "polycomb-proteins-remain-bound-to-chromatin-and-dna-during-dna-replication-in-vitro"
+  ],
+  "key_phrases": [
+    "polycomb",
+    "proteins",
+    "remain",
+    "bound",
+    "chromatin",
+    "dna",
+    "during",
+    "replication"
+  ],
+  "summary_1l": "The transcriptional status of a gene can be maintained through multiple rounds of cell division during development.",
+  "query_hits": [],
+  "embed_text": "18037805 Polycomb Proteins Remain Bound to Chromatin and DNA during DNA Replication In Vitro science scifact The transcriptional status of a gene can be maintained through multiple rounds of cell division during development. This epigenetic effect is believed to reflect heritable changes in chromatin folding and histone modifications or variants… 18037805 polycomb-proteins-remain-bound-to-chromatin-and-dna-during-dna-replication-in-vitro polycomb proteins remain bound chromatin dna during replication The transcriptional status of a gene can be maintained through multiple rounds of cell division during development. Polycomb Proteins Remain Bound to Chromatin and DNA during DNA Replication In Vitro The transcriptional status of a gene can be maintained through multiple rounds of cell division during development. This epigenetic effect is believed to reflect heritable changes in chromatin folding and histone modifications or variants at target genes, but little is known about how these chromatin features are inherited through cell division. A particular challenge for maintaining transcription states is DNA replication, which disrupts or dilutes chromatin-associated proteins and histone modifications. PRC1-class Polycomb group protein complexes are essential for development and are thought to heritably silence transcription by altering chromatin folding and histone modifications. It is not known whether",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.661902+00:00"
+}

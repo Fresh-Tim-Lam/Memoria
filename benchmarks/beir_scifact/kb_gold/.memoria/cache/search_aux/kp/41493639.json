@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "41493639",
+  "source_fingerprint": "9ee8a8bd894cef2074b9c39fc8da81e7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "41493639",
+    "abc-of-burns.-introduction."
+  ],
+  "key_phrases": [
+    "abc",
+    "burns",
+    "introduction",
+    "one",
+    "most",
+    "devastating",
+    "conditions",
+    "encountered"
+  ],
+  "summary_1l": "ABC of burns.",
+  "query_hits": [],
+  "embed_text": "41493639 ABC of burns. Introduction. science scifact Burns are one of the most devastating conditions encountered in medicine. The injury represents an assault on all aspects of the patient, from the physical to the psychological. It affects all ages, from babies to elderly people, and is a… 41493639 abc-of-burns.-introduction. abc burns introduction one most devastating conditions encountered ABC of burns. ABC of burns. Introduction. Burns are one of the most devastating conditions encountered in medicine. The injury represents an assault on all aspects of the patient, from the physical to the psychological. It affects all ages, from babies to elderly people, and is a problem in both the developed and developing world. All of us have experienced the severe pain that even a small burn can bring. However the pain and distress caused by a large burn are not limited to the immediate event. The visible physical and the invisible psychological scars are long lasting and often lead to chronic disability. Burn injuries represent a diverse and varied challenge to medical and paramedical staff. Correct management requires a skilled multidisciplinary approach that addresses all the problems facing a bu",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.431499+00:00"
+}

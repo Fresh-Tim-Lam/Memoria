@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36642096",
+  "source_fingerprint": "d70b09961ebf26deba3f5cd556a30ac6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36642096",
+    "anti-cd3-monoclonal-antibody-in-new-onset-type-1-diabetes-mellitus."
+  ],
+  "key_phrases": [
+    "anti",
+    "cd3",
+    "monoclonal",
+    "antibody",
+    "new",
+    "onset",
+    "type",
+    "diabetes"
+  ],
+  "summary_1l": "Anti-CD3 monoclonal antibody in new-onset type 1 diabetes mellitus.",
+  "query_hits": [],
+  "embed_text": "36642096 Anti-CD3 monoclonal antibody in new-onset type 1 diabetes mellitus. science scifact BACKGROUND Type 1 diabetes mellitus is a chronic autoimmune disease caused by the pathogenic action of T lymphocytes on insulin-producing beta cells. Previous clinical studies have shown that continuous immune suppression temporarily slows… 36642096 anti-cd3-monoclonal-antibody-in-new-onset-type-1-diabetes-mellitus. anti cd3 monoclonal antibody new onset type diabetes Anti-CD3 monoclonal antibody in new-onset type 1 diabetes mellitus. Anti-CD3 monoclonal antibody in new-onset type 1 diabetes mellitus. BACKGROUND Type 1 diabetes mellitus is a chronic autoimmune disease caused by the pathogenic action of T lymphocytes on insulin-producing beta cells. Previous clinical studies have shown that continuous immune suppression temporarily slows the loss of insulin production. Preclinical studies suggested that a monoclonal antibody against CD3 could reverse hyperglycemia at presentation and induce tolerance to recurrent disease. METHODS We studied the effects of a nonactivating humanized monoclonal antibody against CD3--hOKT3gamma1(Ala-Ala)--on the loss of insulin production in patients with type 1 diabetes mellitus. Within 6 weeks after diagnosis, 24 patients were randomly assigned to receive either a single 14-day course of t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:43.588349+00:00"
+}

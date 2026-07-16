@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21562657",
+  "source_fingerprint": "9d2330cd3c2b6cc58f9e8fc214210a84",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21562657",
+    "molecular-mechanism-of-bst2/tetherin-downregulation-by-k5/mir2-of-kaposi's-sarcoma-associated-herpesvirus."
+  ],
+  "key_phrases": [
+    "molecular",
+    "mechanism",
+    "bst2",
+    "tetherin",
+    "downregulation",
+    "by",
+    "k5",
+    "mir2"
+  ],
+  "summary_1l": "Molecular mechanism of BST2/tetherin downregulation by K5/MIR2 of Kaposi's sarcoma-associated herpesvirus.",
+  "query_hits": [],
+  "embed_text": "21562657 Molecular mechanism of BST2/tetherin downregulation by K5/MIR2 of Kaposi's sarcoma-associated herpesvirus. science scifact K3/MIR1 and K5/MIR2 of Kaposi's sarcoma-associated herpesvirus (KSHV) are viral members of the membrane-associated RING-CH (MARCH) ubiquitin ligase family and contribute to viral immune evasion by directing the conjugation of ubiquitin to… 21562657 molecular-mechanism-of-bst2/tetherin-downregulation-by-k5/mir2-of-kaposi's-sarcoma-associated-herpesvirus. molecular mechanism bst2 tetherin downregulation by k5 mir2 Molecular mechanism of BST2/tetherin downregulation by K5/MIR2 of Kaposi's sarcoma-associated herpesvirus. Molecular mechanism of BST2/tetherin downregulation by K5/MIR2 of Kaposi's sarcoma-associated herpesvirus. K3/MIR1 and K5/MIR2 of Kaposi's sarcoma-associated herpesvirus (KSHV) are viral members of the membrane-associated RING-CH (MARCH) ubiquitin ligase family and contribute to viral immune evasion by directing the conjugation of ubiquitin to immunostimulatory transmembrane proteins. In a quantitative proteomic screen for novel host cell proteins downregulated by viral immunomodulators, we previously observed that K5, as well as the human immunodeficiency virus type 1 (HIV-1) immunomodulator VPU, reduced steady-state levels of bone marrow stromal cell antigen 2 (BST2; also called CD317 or tetherin), suggesting that BST2 might be a novel substrate of K5 and VPU. Recent work revealed that i",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.391357+00:00"
+}

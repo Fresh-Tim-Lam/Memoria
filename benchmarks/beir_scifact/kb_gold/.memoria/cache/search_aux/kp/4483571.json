@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4483571",
+  "source_fingerprint": "c4a9494145b689152e874bda1acf2be6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4483571",
+    "human-serum-25-hydroxycholecalciferol-response-to-extended-oral-dosing-with-cholecalciferol."
+  ],
+  "key_phrases": [
+    "human",
+    "serum",
+    "25",
+    "hydroxycholecalciferol",
+    "response",
+    "extended",
+    "oral",
+    "dosing"
+  ],
+  "summary_1l": "Human serum 25-hydroxycholecalciferol response to extended oral dosing with cholecalciferol.",
+  "query_hits": [],
+  "embed_text": "4483571 Human serum 25-hydroxycholecalciferol response to extended oral dosing with cholecalciferol. science scifact BACKGROUND The cholecalciferol inputs required to achieve or maintain any given serum 25-hydroxycholecalciferol concentration are not known, particularly within ranges comparable to the probable physiologic supply of the vitamin.… 4483571 human-serum-25-hydroxycholecalciferol-response-to-extended-oral-dosing-with-cholecalciferol. human serum 25 hydroxycholecalciferol response extended oral dosing Human serum 25-hydroxycholecalciferol response to extended oral dosing with cholecalciferol. Human serum 25-hydroxycholecalciferol response to extended oral dosing with cholecalciferol. BACKGROUND The cholecalciferol inputs required to achieve or maintain any given serum 25-hydroxycholecalciferol concentration are not known, particularly within ranges comparable to the probable physiologic supply of the vitamin. OBJECTIVES The objectives were to establish the quantitative relation between steady state cholecalciferol input and the resulting serum 25-hydroxycholecalciferol concentration and to estimate the proportion of the daily requirement during winter that is met by cholecalciferol reserves in body tissue stores. DESIGN Cholecalciferol was administered daily in controlled oral doses labeled at 0, 25, 125, and 250 micro g cholecalciferol for approximately 20 wk during the winter",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.979876+00:00"
+}

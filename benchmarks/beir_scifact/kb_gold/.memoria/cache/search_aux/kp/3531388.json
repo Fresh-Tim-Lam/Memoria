@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3531388",
+  "source_fingerprint": "bc84a4e4479e11dd806591ef455959f9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3531388",
+    "cd200r/cd200-inhibits-osteoclastogenesis:-new-mechanism-of-osteoclast-control-by-mesenchymal-stem-cells-in-human"
+  ],
+  "key_phrases": [
+    "cd200r",
+    "cd200",
+    "inhibits",
+    "osteoclastogenesis",
+    "new",
+    "mechanism",
+    "osteoclast",
+    "control"
+  ],
+  "summary_1l": "Bone homeostasis is maintained by the balance between bone-forming osteoblasts and bone",
+  "query_hits": [],
+  "embed_text": "3531388 CD200R/CD200 Inhibits Osteoclastogenesis: New Mechanism of Osteoclast Control by Mesenchymal Stem Cells in Human science scifact Bone homeostasis is maintained by the balance between bone-forming osteoblasts and bone-degrading osteoclasts. Osteoblasts have a mesenchymal origin whereas osteoclasts belong to the myeloid lineage. Osteoclast and osteoblast communication… 3531388 cd200r/cd200-inhibits-osteoclastogenesis:-new-mechanism-of-osteoclast-control-by-mesenchymal-stem-cells-in-human cd200r cd200 inhibits osteoclastogenesis new mechanism osteoclast control Bone homeostasis is maintained by the balance between bone-forming osteoblasts and bone CD200R/CD200 Inhibits Osteoclastogenesis: New Mechanism of Osteoclast Control by Mesenchymal Stem Cells in Human Bone homeostasis is maintained by the balance between bone-forming osteoblasts and bone-degrading osteoclasts. Osteoblasts have a mesenchymal origin whereas osteoclasts belong to the myeloid lineage. Osteoclast and osteoblast communication occurs through soluble factors secretion, cell-bone interaction and cell-cell contact, which modulate their activities. CD200 is an immunoglobulin superfamilly member expressed on various types of cells including mesenchymal stem cells (MSCs). CD200 receptor (CD200R) is expressed on myeloid cells such as monocytes/macrophages. We assume that CD200 could be a new molecule involved in the control of osteoclastogenesis and could play a role in MS",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.115985+00:00"
+}

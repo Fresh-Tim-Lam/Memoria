@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "35962023",
+  "source_fingerprint": "6cefdf510920f7f4bf7c6508a32d2962",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "35962023",
+    "tbid-induces-alterations-of-mitochondrial-fatty-acid-oxidation-flux-by-malonyl-coa-independent-inhibition-of-carnitine-palmitoyltransferase-1"
+  ],
+  "key_phrases": [
+    "tbid",
+    "induces",
+    "alterations",
+    "mitochondrial",
+    "fatty",
+    "acid",
+    "oxidation",
+    "flux"
+  ],
+  "summary_1l": "Recent studies suggest a close relationship between cell m",
+  "query_hits": [],
+  "embed_text": "35962023 tBid induces alterations of mitochondrial fatty acid oxidation flux by malonyl-CoA-independent inhibition of carnitine palmitoyltransferase-1 science scifact Recent studies suggest a close relationship between cell metabolism and apoptosis. We have evaluated changes in lipid metabolism on permeabilized hepatocytes treated with truncated Bid (tBid) in the presence of caspase inhibitors and… 35962023 tbid-induces-alterations-of-mitochondrial-fatty-acid-oxidation-flux-by-malonyl-coa-independent-inhibition-of-carnitine-palmitoyltransferase-1 tbid induces alterations mitochondrial fatty acid oxidation flux Recent studies suggest a close relationship between cell m tBid induces alterations of mitochondrial fatty acid oxidation flux by malonyl-CoA-independent inhibition of carnitine palmitoyltransferase-1 Recent studies suggest a close relationship between cell metabolism and apoptosis. We have evaluated changes in lipid metabolism on permeabilized hepatocytes treated with truncated Bid (tBid) in the presence of caspase inhibitors and exogenous cytochrome c. The measurement of β-oxidation flux by labeled palmitate demonstrates that tBid inhibits β-oxidation, thereby resulting in the accumulation of palmitoyl-coenzyme A (CoA) and depletion of acetyl-carnitine and acylcarnitines, which is pathognomonic for inhibition of carnitine palmitoyltransferase-1 (CPT-1). We also show that tBid decreases CPT-1 activity by a mechanism independent of both malonyl-Co",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.756130+00:00"
+}

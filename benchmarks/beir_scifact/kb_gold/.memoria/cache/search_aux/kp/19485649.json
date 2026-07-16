@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19485649",
+  "source_fingerprint": "b168a54cfa7735c89fff34ba174cde30",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19485649",
+    "n--and-e-cadherins-in-xenopus-are-specifically-required-in-the-neural-and-non-neural-ectoderm,-respectively,-for-f-actin-assembly-and-morphogenetic-movements."
+  ],
+  "key_phrases": [
+    "cadherins",
+    "xenopus",
+    "specifically",
+    "required",
+    "neural",
+    "non",
+    "ectoderm",
+    "respectively"
+  ],
+  "summary_1l": "N- and E-cadherins in Xenopus are specifically required in the neural and non-neural ectoderm, respectively, for F-actin assembly and morphogenetic movements.",
+  "query_hits": [],
+  "embed_text": "19485649 N- and E-cadherins in Xenopus are specifically required in the neural and non-neural ectoderm, respectively, for F-actin assembly and morphogenetic movements. science scifact Transmembrane cadherins are calcium-dependent intercellular adhesion molecules. Recently, they have also been shown to be sites of actin assembly during adhesive contact formation. However, the roles of actin assembly on transmembrane… 19485649 n--and-e-cadherins-in-xenopus-are-specifically-required-in-the-neural-and-non-neural-ectoderm,-respectively,-for-f-actin-assembly-and-morphogenetic-movements. cadherins xenopus specifically required neural non ectoderm respectively N- and E-cadherins in Xenopus are specifically required in the neural and non-neural ectoderm, respectively, for F-actin assembly and morphogenetic movements. N- and E-cadherins in Xenopus are specifically required in the neural and non-neural ectoderm, respectively, for F-actin assembly and morphogenetic movements. Transmembrane cadherins are calcium-dependent intercellular adhesion molecules. Recently, they have also been shown to be sites of actin assembly during adhesive contact formation. However, the roles of actin assembly on transmembrane cadherins during development are not fully understood. We show here, using the developing ectoderm of the Xenopus embryo as a model, that F-actin assembly is a primary function of both N-cadherin in the neural ectoderm and E-cadherin in the non-neural (epidermal) ectoderm, and that each cadherin is essential for the characteristic morphogenetic movements of these two tissues. However, depletion of N-cad",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.640011+00:00"
+}

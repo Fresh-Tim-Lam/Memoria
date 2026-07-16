@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "40164383",
+  "source_fingerprint": "98a0558f82b2bb68dc48eab31f53f2f2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "40164383"
+  ],
+  "key_phrases": [
+    "comparison",
+    "allogeneic",
+    "vs",
+    "autologous",
+    "bone",
+    "marrow",
+    "derived",
+    "mesenchymal"
+  ],
+  "summary_1l": "Comparison of allogeneic vs autologous bone marrow–derived mesenchymal stem cells delivered by transendocardial injection in patients with ischemic cardiomyopathy: the POSEIDON randomized trial.",
+  "query_hits": [],
+  "embed_text": "40164383 Comparison of allogeneic vs autologous bone marrow–derived mesenchymal stem cells delivered by transendocardial injection in patients with ischemic cardiomyopathy: the POSEIDON randomized trial. science scifact CONTEXT Mesenchymal stem cells (MSCs) are under evaluation as a therapy for ischemic cardiomyopathy (ICM). Both autologous and allogeneic MSC therapies are possible; however, their safety and efficacy have not been compared. OBJECTIVE To… 40164383 comparison allogeneic vs autologous bone marrow derived mesenchymal Comparison of allogeneic vs autologous bone marrow–derived mesenchymal stem cells delivered by transendocardial injection in patients with ischemic cardiomyopathy: the POSEIDON randomized trial. Comparison of allogeneic vs autologous bone marrow–derived mesenchymal stem cells delivered by transendocardial injection in patients with ischemic cardiomyopathy: the POSEIDON randomized trial. CONTEXT Mesenchymal stem cells (MSCs) are under evaluation as a therapy for ischemic cardiomyopathy (ICM). Both autologous and allogeneic MSC therapies are possible; however, their safety and efficacy have not been compared. OBJECTIVE To test whether allogeneic MSCs are as safe and effective as autologous MSCs in patients with left ventricular (LV) dysfunction due to ICM. DESIGN, SETTING, AND PATIENTS A phase 1/2 randomized comparison (POSEIDON study) in a US tertiary-care referral hospital of allogeneic and autologous MSCs in 30 patients with LV dysfunction due to ICM between April 2, 2010, and Se",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.336604+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14500725",
+  "source_fingerprint": "c322e97fbebedc22f6e99d8c24641848",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14500725",
+    "physician-emigration-from-sub-saharan-africa-to-the-united-states:-analysis-of-the-2011-ama-physician-masterfile"
+  ],
+  "key_phrases": [
+    "physician",
+    "emigration",
+    "from",
+    "sub",
+    "saharan",
+    "africa",
+    "united",
+    "states"
+  ],
+  "summary_1l": "BACKGROUND The large-scale emigration of physicians from sub-Saharan Africa (SSA) to hi",
+  "query_hits": [],
+  "embed_text": "14500725 Physician Emigration from Sub-Saharan Africa to the United States: Analysis of the 2011 AMA Physician Masterfile science scifact BACKGROUND The large-scale emigration of physicians from sub-Saharan Africa (SSA) to high-income nations is a serious development concern. Our objective was to determine current emigration trends of SSA physicians found in the physician… 14500725 physician-emigration-from-sub-saharan-africa-to-the-united-states:-analysis-of-the-2011-ama-physician-masterfile physician emigration from sub saharan africa united states BACKGROUND The large-scale emigration of physicians from sub-Saharan Africa (SSA) to hi Physician Emigration from Sub-Saharan Africa to the United States: Analysis of the 2011 AMA Physician Masterfile BACKGROUND The large-scale emigration of physicians from sub-Saharan Africa (SSA) to high-income nations is a serious development concern. Our objective was to determine current emigration trends of SSA physicians found in the physician workforce of the United States. METHODS AND FINDINGS We analyzed physician data from the World Health Organization (WHO) Global Health Workforce Statistics along with graduation and residency data from the 2011 American Medical Association Physician Masterfile (AMA-PM) on physicians trained or born in SSA countries who currently practice in the US. We estimated emigration proportions, year of US entry, years of practice before emigration, and len",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.065110+00:00"
+}

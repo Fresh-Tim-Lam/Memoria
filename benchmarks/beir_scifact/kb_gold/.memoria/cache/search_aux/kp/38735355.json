@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "38735355",
+  "source_fingerprint": "87a27835ff893a97d20c9113ae3207bf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "38735355",
+    "early-intermittent-noninvasive-ventilation-for-acute-chest-syndrome-in-adults-with-sickle-cell-disease:-a-pilot-study"
+  ],
+  "key_phrases": [
+    "early",
+    "intermittent",
+    "noninvasive",
+    "ventilation",
+    "acute",
+    "chest",
+    "syndrome",
+    "adults"
+  ],
+  "summary_1l": "Alveolar hypoxia and hypoxic vasoconstriction lead to trapping of sickle cells wit",
+  "query_hits": [],
+  "embed_text": "38735355 Early intermittent noninvasive ventilation for acute chest syndrome in adults with sickle cell disease: a pilot study science scifact Alveolar hypoxia and hypoxic vasoconstriction lead to trapping of sickle cells within the pulmonary vasculature. Improving alveolar ventilation and oxygenation may improve the outcome of acute chest syndrome (ACS). Prospective randomized… 38735355 early-intermittent-noninvasive-ventilation-for-acute-chest-syndrome-in-adults-with-sickle-cell-disease:-a-pilot-study early intermittent noninvasive ventilation acute chest syndrome adults Alveolar hypoxia and hypoxic vasoconstriction lead to trapping of sickle cells wit Early intermittent noninvasive ventilation for acute chest syndrome in adults with sickle cell disease: a pilot study Alveolar hypoxia and hypoxic vasoconstriction lead to trapping of sickle cells within the pulmonary vasculature. Improving alveolar ventilation and oxygenation may improve the outcome of acute chest syndrome (ACS). Prospective randomized single-center open study from November 1998 to February 2002 to test whether noninvasive ventilation (NIV) was more effective than oxygen alone in improving oxygenation on day 3 in adults with ACS and to evaluate the effects on pain, transfusion requirements, and length of stay. Seventy-one consecutive ACS episodes in 67 patients were randomly allocated to oxygen (n = 36) or NIV (n = 35) for 3 days in a medical step-down unit. Baseline resp",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.802020+00:00"
+}

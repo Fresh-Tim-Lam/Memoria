@@ -1,0 +1,67 @@
+KB: D:\AAA_Jupyter\Memoria\benchmarks\ai_zh\kb_gold
+Queries: 38, Qrels: 38
+
+=== lexical (modes=lexical, 38 queries) ===
+  progress: 10/38 ok=10 failed=0 skipped=0 elapsed=1s
+  progress: 20/38 ok=20 failed=0 skipped=0 elapsed=2s
+  progress: 30/38 ok=30 failed=0 skipped=0 elapsed=2s
+=== lexical DONE: ok=38 failed=0 skipped=0 elapsed=2s ===
+
+--- lexical Summary (38 queries) ---
+  mrr=0.9868
+  recall@1=0.9474
+  precision@1=0.9737
+  noise@1=0.0263
+  ndcg@1=0.9737
+  recall@5=0.9868
+  precision@5=0.2105
+  noise@5=0.7895
+  ndcg@5=0.9778
+  recall@10=1.0
+  precision@10=0.1093
+  noise@10=0.8907
+  ndcg@10=0.9825
+
+=== embed (modes=both, 38 queries) ===
+  progress: 10/38 ok=10 failed=0 skipped=0 elapsed=16s
+  progress: 20/38 ok=20 failed=0 skipped=0 elapsed=17s
+  progress: 30/38 ok=30 failed=0 skipped=0 elapsed=18s
+=== embed DONE: ok=38 failed=0 skipped=0 elapsed=18s ===
+
+--- embed Summary (38 queries) ---
+  mrr=0.7982
+  recall@1=0.6842
+  precision@1=0.6842
+  noise@1=0.3158
+  ndcg@1=0.6842
+  recall@5=0.9605
+  precision@5=0.2088
+  noise@5=0.7912
+  ndcg@5=0.8398
+  recall@10=0.9737
+  precision@10=0.1114
+  noise@10=0.8886
+  ndcg@10=0.8456
+
+=== rerank (modes=both, 38 queries) ===
+  progress: 10/38 ok=10 failed=0 skipped=0 elapsed=31s
+  progress: 20/38 ok=20 failed=0 skipped=0 elapsed=45s
+  progress: 30/38 ok=30 failed=0 skipped=0 elapsed=60s
+=== rerank DONE: ok=38 failed=0 skipped=0 elapsed=73s ===
+
+--- rerank Summary (38 queries) ---
+  mrr=0.7625
+  recall@1=0.6579
+  precision@1=0.6842
+  noise@1=0.3158
+  ndcg@1=0.6842
+  recall@5=0.8158
+  precision@5=0.1772
+  noise@5=0.8228
+  ndcg@5=0.752
+  recall@10=0.9737
+  precision@10=0.1114
+  noise@10=0.8886
+  ndcg@10=0.8038
+
+=== ALL DONE ===

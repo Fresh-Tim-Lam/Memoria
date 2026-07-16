@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "28806780",
+  "source_fingerprint": "dbbd2993a5afbc05ea889e30411e375c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "28806780",
+    "poverty,-hunger,-education,-and-residential-status-impact-survival-in-hiv"
+  ],
+  "key_phrases": [
+    "poverty",
+    "hunger",
+    "education",
+    "residential",
+    "status",
+    "impact",
+    "survival",
+    "hiv"
+  ],
+  "summary_1l": "Despite combination antiretroviral therapy (ART), HIV infected people have higher mortality than non-infected.",
+  "query_hits": [],
+  "embed_text": "28806780 Poverty, Hunger, Education, and Residential Status Impact Survival in HIV science scifact Despite combination antiretroviral therapy (ART), HIV infected people have higher mortality than non-infected. Lower socioeconomic status (SES) predicts higher mortality in many chronic illnesses but data in people with HIV is limited. We… 28806780 poverty,-hunger,-education,-and-residential-status-impact-survival-in-hiv poverty hunger education residential status impact survival hiv Despite combination antiretroviral therapy (ART), HIV infected people have higher mortality than non-infected. Poverty, Hunger, Education, and Residential Status Impact Survival in HIV Despite combination antiretroviral therapy (ART), HIV infected people have higher mortality than non-infected. Lower socioeconomic status (SES) predicts higher mortality in many chronic illnesses but data in people with HIV is limited. We evaluated 878 HIV infected individuals followed from 1995 to 2005. Cox proportional hazards for all-cause mortality were estimated for SES measures and other factors. Mixed effects analyses examined how SES impacts factors predicting death. The 200 who died were older, had lower CD4 counts, and higher viral loads (VL). Age, transmission category, education, albumin, CD4 counts, VL, hunger, and poverty predicted death in univariate analyses; age, CD4 counts, albumin, VL, and poverty",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.339908+00:00"
+}

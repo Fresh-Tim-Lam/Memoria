@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13221399",
+  "source_fingerprint": "f43323293f41f346aacd3423f41f426d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13221399",
+    "gene-targeting-using-zinc-finger-nucleases"
+  ],
+  "key_phrases": [
+    "gene",
+    "targeting",
+    "using",
+    "zinc",
+    "finger",
+    "nucleases",
+    "ability",
+    "achieve"
+  ],
+  "summary_1l": "The ability to achieve site-specific manipulation of the mammalian genome has widespread implications for basic and applied research.",
+  "query_hits": [],
+  "embed_text": "13221399 Gene targeting using zinc finger nucleases science scifact The ability to achieve site-specific manipulation of the mammalian genome has widespread implications for basic and applied research. Gene targeting is a process in which a DNA molecule introduced into a cell replaces the corresponding… 13221399 gene-targeting-using-zinc-finger-nucleases gene targeting using zinc finger nucleases ability achieve The ability to achieve site-specific manipulation of the mammalian genome has widespread implications for basic and applied research. Gene targeting using zinc finger nucleases The ability to achieve site-specific manipulation of the mammalian genome has widespread implications for basic and applied research. Gene targeting is a process in which a DNA molecule introduced into a cell replaces the corresponding chromosomal segment by homologous recombination, and thus presents a precise way to manipulate the genome. In the past, the application of gene targeting to mammalian cells has been limited by its low efficiency. Zinc finger nucleases (ZFNs) show promise in improving the efficiency of gene targeting by introducing DNA double-strand breaks in target genes, which then stimulate the cell's endogenous homologous recombination machinery. Recent results have shown that ZFNs can be used to create targeting frequencies of u",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:09.786038+00:00"
+}

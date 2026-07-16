@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "83707680",
+  "source_fingerprint": "ecb2e295f84a76be13a123b4f59e1ce7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "83707680",
+    "a-forkhead-domain-gene-is-mutated-in-a-severe-speech-and-language-disorder"
+  ],
+  "key_phrases": [
+    "forkhead",
+    "domain",
+    "gene",
+    "mutated",
+    "severe",
+    "speech",
+    "language",
+    "disorder"
+  ],
+  "summary_1l": "Individuals affected with developmental disorders of speech and language have substantial difficulty acquiring expressive and",
+  "query_hits": [],
+  "embed_text": "83707680 A forkhead-domain gene is mutated in a severe speech and language disorder science scifact Individuals affected with developmental disorders of speech and language have substantial difficulty acquiring expressive and/or receptive language in the absence of any profound sensory or neurological impairment and despite adequate… 83707680 a-forkhead-domain-gene-is-mutated-in-a-severe-speech-and-language-disorder forkhead domain gene mutated severe speech language disorder Individuals affected with developmental disorders of speech and language have substantial difficulty acquiring expressive and A forkhead-domain gene is mutated in a severe speech and language disorder Individuals affected with developmental disorders of speech and language have substantial difficulty acquiring expressive and/or receptive language in the absence of any profound sensory or neurological impairment and despite adequate intelligence and opportunity1. Although studies of twins consistently indicate that a significant genetic component is involved1,2,3, most families segregating speech and language deficits show complex patterns of inheritance, and a gene that predisposes individuals to such disorders has not been identified. We have studied a unique three-generation pedigree, KE, in which a severe speech and language disorder is transmitted as an autosomal-dominant monogenic trait4. Our previous work m",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.465940+00:00"
+}

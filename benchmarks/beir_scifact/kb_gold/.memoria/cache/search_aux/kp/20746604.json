@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20746604",
+  "source_fingerprint": "06cf9c913ac9a659479f01af7c53f1f2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20746604",
+    "the-effectiveness-of-right-heart-catheterization-in-the-initial-care-of-critically-ill-patients.-support-investigators."
+  ],
+  "key_phrases": [
+    "effectiveness",
+    "right",
+    "heart",
+    "catheterization",
+    "initial",
+    "care",
+    "critically",
+    "ill"
+  ],
+  "summary_1l": "The effectiveness of right heart catheterization in the initial care of critically ill patients.",
+  "query_hits": [],
+  "embed_text": "20746604 The effectiveness of right heart catheterization in the initial care of critically ill patients. SUPPORT Investigators. science scifact OBJECTIVE To examine the association between the use of right heart catheterization (RHC) during the first 24 hours of care in the intensive care unit (ICU) and subsequent survival, length of stay, intensity of care, and cost of care.… 20746604 the-effectiveness-of-right-heart-catheterization-in-the-initial-care-of-critically-ill-patients.-support-investigators. effectiveness right heart catheterization initial care critically ill The effectiveness of right heart catheterization in the initial care of critically ill patients. The effectiveness of right heart catheterization in the initial care of critically ill patients. SUPPORT Investigators. OBJECTIVE To examine the association between the use of right heart catheterization (RHC) during the first 24 hours of care in the intensive care unit (ICU) and subsequent survival, length of stay, intensity of care, and cost of care. DESIGN Prospective cohort study. SETTING Five US teaching hospitals between 1989 and 1994. SUBJECTS A total of 5735 critically ill adult patients receiving care in an ICU for 1 of 9 prespecified disease categories. MAIN OUTCOME MEASURES Survival time, cost of care, intensity of care, and length of stay in the ICU and hospital, determined from the clinical record and from the National Death Index. A propensity score for RHC was constructed us",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.876545+00:00"
+}

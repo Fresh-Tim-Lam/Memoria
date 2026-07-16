@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5650232",
+  "source_fingerprint": "175427e23bd24a78d25c0e6edd948e4d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5650232",
+    "bedtools:-a-flexible-suite-of-utilities-for-comparing-genomic-features"
+  ],
+  "key_phrases": [
+    "bedtools",
+    "flexible",
+    "suite",
+    "utilities",
+    "comparing",
+    "genomic",
+    "features",
+    "motivation"
+  ],
+  "summary_1l": "MOTIVATION Testing for correlations between different sets of genomic features is a fundamental task in genomics research.",
+  "query_hits": [],
+  "embed_text": "5650232 BEDTools: a flexible suite of utilities for comparing genomic features science scifact MOTIVATION Testing for correlations between different sets of genomic features is a fundamental task in genomics research. However, searching for overlaps between features with existing web-based methods is complicated by the massive… 5650232 bedtools:-a-flexible-suite-of-utilities-for-comparing-genomic-features bedtools flexible suite utilities comparing genomic features motivation MOTIVATION Testing for correlations between different sets of genomic features is a fundamental task in genomics research. BEDTools: a flexible suite of utilities for comparing genomic features MOTIVATION Testing for correlations between different sets of genomic features is a fundamental task in genomics research. However, searching for overlaps between features with existing web-based methods is complicated by the massive datasets that are routinely produced with current sequencing technologies. Fast and flexible tools are therefore required to ask complex questions of these data in an efficient manner. RESULTS This article introduces a new software suite for the comparison, manipulation and annotation of genomic features in Browser Extensible Data (BED) and General Feature Format (GFF) format. BEDTools also supports the comparison of sequence alignments in BAM format to both BED and GFF features. The tools",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.815295+00:00"
+}

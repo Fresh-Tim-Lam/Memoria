@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21382907",
+  "source_fingerprint": "b92d5857c9ffb889f59b0059198906e0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21382907",
+    "reduced-cytokine-release-in-ex-vivo-response-to-cilengitide-and-cetuximab-is-a-marker-for-improved-survival-of-head-and-neck-cancer-patients"
+  ],
+  "key_phrases": [
+    "reduced",
+    "cytokine",
+    "release",
+    "ex",
+    "vivo",
+    "response",
+    "cilengitide",
+    "cetuximab"
+  ],
+  "summary_1l": "Targeting of αVβ3 and αVβ5 integrins by cilengitide may red",
+  "query_hits": [],
+  "embed_text": "21382907 Reduced Cytokine Release in Ex Vivo Response to Cilengitide and Cetuximab Is a Marker for Improved Survival of Head and Neck Cancer Patients science scifact Targeting of αVβ3 and αVβ5 integrins by cilengitide may reduce growth of solid tumors including head and neck squamous cell carcinoma (HNSCC). Preclinical investigations suggest increased activity of cilengitide in combination with other… 21382907 reduced-cytokine-release-in-ex-vivo-response-to-cilengitide-and-cetuximab-is-a-marker-for-improved-survival-of-head-and-neck-cancer-patients reduced cytokine release ex vivo response cilengitide cetuximab Targeting of αVβ3 and αVβ5 integrins by cilengitide may red Reduced Cytokine Release in Ex Vivo Response to Cilengitide and Cetuximab Is a Marker for Improved Survival of Head and Neck Cancer Patients Targeting of αVβ3 and αVβ5 integrins by cilengitide may reduce growth of solid tumors including head and neck squamous cell carcinoma (HNSCC). Preclinical investigations suggest increased activity of cilengitide in combination with other treatment modalities. The only published trial in HNSCC (ADVANTAGE) investigated cisplatin, 5-fluorouracil, and cetuximab (PFE) without or with once (PFE+CIL1W) or twice weekly cilengitide (PFE+CIL2W) in recurrent/metastatic HNSCC. ADVANTAGE showed good tolerability of the cilengitide arms and even lower adverse events (AEs) compared to PFE but not the benefit in overall survival expected based on preclinical data. As",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.967481+00:00"
+}

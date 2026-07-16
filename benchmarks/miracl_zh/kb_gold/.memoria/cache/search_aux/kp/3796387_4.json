@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "kp_id": "3796387#4",
+  "source_fingerprint": "1b384a6c1c7b393d1c3d63812933e986",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "J·K·罗琳",
+    "Kindle自助出版",
+    "富兰克林半美元",
+    "标普中盘400指数"
+  ],
+  "aliases": [
+    "3796387#4",
+    "the-harry-potter-lexicon"
+  ],
+  "key_phrases": [
+    "harry",
+    "potter",
+    "lexicon",
+    "罗琳",
+    "华纳",
+    "决定",
+    "起诉",
+    "美版"
+  ],
+  "summary_1l": "J·K·罗琳和华纳决定起诉美版《哈利波特百科（The Harry Potter Lexicon）》侵权行为，以阻止这本图书的发行。",
+  "query_hits": [],
+  "embed_text": "3796387#4 The Harry Potter Lexicon The Harry Potter Lexicon J·K·罗琳和华纳决定起诉美版《哈利波特百科（The Harry Potter Lexicon）》侵权行为，以阻止这本图书的发行。这本百科全书的作者是Steve Vander Ark，共400页，售价24.95美元，由RDR Books出版社出版。罗琳在她的官方网站对此事发表了声明，对此事表示遗憾和难过。 J·K·罗琳 Kindle自助出版 富兰克林半美元 标普中盘400指数 3796387#4 the-harry-potter-lexicon harry potter lexicon 罗琳 华纳 决定 起诉 美版 J·K·罗琳和华纳决定起诉美版《哈利波特百科（The Harry Potter Lexicon）》侵权行为，以阻止这本图书的发行。 The Harry Potter Lexicon J·K·罗琳和华纳决定起诉美版《哈利波特百科（The Harry Potter Lexicon）》侵权行为，以阻止这本图书的发行。这本百科全书的作者是Steve Vander Ark，共400页，售价24.95美元，由RDR Books出版社出版。罗琳在她的官方网站对此事发表了声明，对此事表示遗憾和难过。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:22:00.723749+00:00"
+}

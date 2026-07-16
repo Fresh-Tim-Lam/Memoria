@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "39084565",
+  "source_fingerprint": "823bfbc55038f8fd38ececc389ad8fb9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "39084565",
+    "cd11b+-monocytes-abrogate-th17-cd4+-t-cell-mediated-experimental-autoimmune-myocarditis."
+  ],
+  "key_phrases": [
+    "cd11b",
+    "monocytes",
+    "abrogate",
+    "th17",
+    "cd4",
+    "cell",
+    "mediated",
+    "experimental"
+  ],
+  "summary_1l": "CD11b+ monocytes abrogate Th17 CD4+ T cell-mediated experimental autoimmune myocarditis.",
+  "query_hits": [],
+  "embed_text": "39084565 CD11b+ monocytes abrogate Th17 CD4+ T cell-mediated experimental autoimmune myocarditis. science scifact Experimental autoimmune myocarditis (EAM) represents a Th17 T cell-mediated mouse model of postinflammatory heart disease. In BALB/c wild-type mice, EAM is a self-limiting disease, peaking 21 days after alpha-myosin H chain peptide… 39084565 cd11b+-monocytes-abrogate-th17-cd4+-t-cell-mediated-experimental-autoimmune-myocarditis. cd11b monocytes abrogate th17 cd4 cell mediated experimental CD11b+ monocytes abrogate Th17 CD4+ T cell-mediated experimental autoimmune myocarditis. CD11b+ monocytes abrogate Th17 CD4+ T cell-mediated experimental autoimmune myocarditis. Experimental autoimmune myocarditis (EAM) represents a Th17 T cell-mediated mouse model of postinflammatory heart disease. In BALB/c wild-type mice, EAM is a self-limiting disease, peaking 21 days after alpha-myosin H chain peptide (MyHC-alpha)/CFA immunization and largely resolving thereafter. In IFN-gammaR(-/-) mice, however, EAM is exacerbated and shows a chronic progressive disease course. We found that this progressive disease course paralleled persistently elevated IL-17 release from T cells infiltrating the hearts of IFN-gammaR(-/-) mice 30 days after immunization. In fact, IL-17 promoted the recruitment of CD11b(+) monocytes, the major heart-infiltrating cells in EAM. In turn, CD11b(+) monocyte",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.250102+00:00"
+}

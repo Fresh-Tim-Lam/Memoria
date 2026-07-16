@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2665425",
+  "source_fingerprint": "1f98d82c931af658f1809111318bbf2a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2665425",
+    "a-3d-map-of-the-yeast-kinetochore-reveals-the-presence-of-core-and-accessory-centromere-specific-histone"
+  ],
+  "key_phrases": [
+    "3d",
+    "map",
+    "yeast",
+    "kinetochore",
+    "reveals",
+    "presence",
+    "core",
+    "accessory"
+  ],
+  "summary_1l": "The budding yeast kinetochore is ~68 nm in length with a diameter slightly larger than a 25 nm",
+  "query_hits": [],
+  "embed_text": "2665425 A 3D Map of the Yeast Kinetochore Reveals the Presence of Core and Accessory Centromere-Specific Histone science scifact The budding yeast kinetochore is ~68 nm in length with a diameter slightly larger than a 25 nm microtubule. The kinetochores from the 16 chromosomes are organized in a stereotypic cluster encircling central spindle microtubules.… 2665425 a-3d-map-of-the-yeast-kinetochore-reveals-the-presence-of-core-and-accessory-centromere-specific-histone 3d map yeast kinetochore reveals presence core accessory The budding yeast kinetochore is ~68 nm in length with a diameter slightly larger than a 25 nm A 3D Map of the Yeast Kinetochore Reveals the Presence of Core and Accessory Centromere-Specific Histone The budding yeast kinetochore is ~68 nm in length with a diameter slightly larger than a 25 nm microtubule. The kinetochores from the 16 chromosomes are organized in a stereotypic cluster encircling central spindle microtubules. Quantitative analysis of the inner kinetochore cluster (Cse4, COMA) reveals structural features not apparent in singly attached kinetochores. The cluster of Cse4-containing kinetochores is physically larger perpendicular to the spindle axis relative to the cluster of Ndc80 molecules. If there was a single Cse4 (molecule or nucleosome) at the kinetochore attached to each microtubule plus end, the cluster of Cse4 would appear geometrically identical to Ndc80. Thus",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.964921+00:00"
+}

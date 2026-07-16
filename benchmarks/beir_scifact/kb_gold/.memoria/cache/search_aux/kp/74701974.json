@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "74701974",
+  "source_fingerprint": "44840d3b75bd64daf46277bbfed06454",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "74701974",
+    "the-women's-interagency-hiv-study"
+  ],
+  "key_phrases": [
+    "women",
+    "interagency",
+    "hiv",
+    "study",
+    "comprises",
+    "largest",
+    "cohort",
+    "date"
+  ],
+  "summary_1l": "The Women's Interagency HIV Study comprises the largest U.",
+  "query_hits": [],
+  "embed_text": "74701974 The Women's Interagency HIV Study science scifact The Women's Interagency HIV Study comprises the largest U.S. cohort to date of human immunodeficiency virus (HIV)-seropositive women (N = 2,058) with a comparison cohort of seronegative women (N = 568). The methodology, training, and… 74701974 the-women's-interagency-hiv-study women interagency hiv study comprises largest cohort date The Women's Interagency HIV Study comprises the largest U. The Women's Interagency HIV Study The Women's Interagency HIV Study comprises the largest U.S. cohort to date of human immunodeficiency virus (HIV)-seropositive women (N = 2,058) with a comparison cohort of seronegative women (N = 568). The methodology, training, and quality assurance activities employed are described. The study pop",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.386184+00:00"
+}

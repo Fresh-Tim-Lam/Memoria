@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2582169",
+  "source_fingerprint": "9a09b38df150cd5532704ad52ac7f619",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2582169",
+    "inhibition-of-hdm2-and-activation-of-p53-by-ribosomal-protein-l23."
+  ],
+  "key_phrases": [
+    "inhibition",
+    "hdm2",
+    "activation",
+    "p53",
+    "by",
+    "ribosomal",
+    "protein",
+    "l23"
+  ],
+  "summary_1l": "Inhibition of HDM2 and activation of p53 by ribosomal protein L23.",
+  "query_hits": [],
+  "embed_text": "2582169 Inhibition of HDM2 and activation of p53 by ribosomal protein L23. science scifact The importance of coordinating cell growth with proliferation has been recognized for a long time. The molecular basis of this relationship, however, is poorly understood. Here we show that the ribosomal protein L23 interacts with HDM2.… 2582169 inhibition-of-hdm2-and-activation-of-p53-by-ribosomal-protein-l23. inhibition hdm2 activation p53 by ribosomal protein l23 Inhibition of HDM2 and activation of p53 by ribosomal protein L23. Inhibition of HDM2 and activation of p53 by ribosomal protein L23. The importance of coordinating cell growth with proliferation has been recognized for a long time. The molecular basis of this relationship, however, is poorly understood. Here we show that the ribosomal protein L23 interacts with HDM2. The interaction involves the central acidic domain of HDM2 and an N-terminal domain of L23. L23 and L11, another HDM2-interacting ribosomal protein, can simultaneously yet distinctly interact with HDM2 together to form a ternary complex. We show that, when overexpressed, L23 inhibits HDM2-induced p53 polyubiquitination and degradation and causes a p53-dependent cell cycle arrest. On the other hand, knocking down L23 causes nucleolar stress and triggers translocation of B23 from the nucleolus",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.510843+00:00"
+}

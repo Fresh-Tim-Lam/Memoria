@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36233757",
+  "source_fingerprint": "7313af1b51b38e48c68fadfbe775af64",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36233757",
+    "purification-and-activation-properties-of-ured-uref-urease-apoprotein-complexes."
+  ],
+  "key_phrases": [
+    "purification",
+    "activation",
+    "properties",
+    "ured",
+    "uref",
+    "urease",
+    "apoprotein",
+    "complexes"
+  ],
+  "summary_1l": "Purification and activation properties of UreD-UreF-urease apoprotein complexes.",
+  "query_hits": [],
+  "embed_text": "36233757 Purification and activation properties of UreD-UreF-urease apoprotein complexes. science scifact In vivo assembly of the Klebsiella aerogenes urease nickel metallocenter requires the presence of UreD, UreF, and UreG accessory proteins and is further facilitated by UreE. Prior studies had shown that urease apoprotein exists in an… 36233757 purification-and-activation-properties-of-ured-uref-urease-apoprotein-complexes. purification activation properties ured uref urease apoprotein complexes Purification and activation properties of UreD-UreF-urease apoprotein complexes. Purification and activation properties of UreD-UreF-urease apoprotein complexes. In vivo assembly of the Klebsiella aerogenes urease nickel metallocenter requires the presence of UreD, UreF, and UreG accessory proteins and is further facilitated by UreE. Prior studies had shown that urease apoprotein exists in an uncomplexed form as well as in a series of UreD-urease (I.-S. Park, M.B. Carr, and R.P. Hausinger, Proc. Natl. Acad. Sci. USA 91:3233-3237, 1994) and UreD-UreF-UreG-urease (I.-S. Park and R.P. Hausinger, J. Bacteriol. 177:1947-1951, 1995) apoprotein complexes. This study demonstrates the existence of a distinct series of complexes consisting of UreD, UreF, and urease apoprotein. These novel complexes exhibited activation properties that were distinct from urease and UreD-urease ap",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:43.068684+00:00"
+}

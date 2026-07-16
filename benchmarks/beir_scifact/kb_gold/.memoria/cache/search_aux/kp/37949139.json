@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "37949139",
+  "source_fingerprint": "43dcd2a20c57a9b0d3a9b7303d7a8d8d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "37949139",
+    "the-in-vitro-effect-of-dandelions-antioxidants-on-microsomal-lipid-peroxidation."
+  ],
+  "key_phrases": [
+    "vitro",
+    "effect",
+    "dandelions",
+    "antioxidants",
+    "microsomal",
+    "lipid",
+    "peroxidation",
+    "have"
+  ],
+  "summary_1l": "The in vitro effect of dandelions antioxidants on microsomal lipid peroxidation.",
+  "query_hits": [],
+  "embed_text": "37949139 The in vitro effect of dandelions antioxidants on microsomal lipid peroxidation. science scifact Dandelions have long been used in herbal medicine for their choleretic, diuretic, antiinflammatory, appetite-stimulating and laxative properties. An antioxidant property can be supposed as a basis of their-therapeutic effects. To… 37949139 the-in-vitro-effect-of-dandelions-antioxidants-on-microsomal-lipid-peroxidation. vitro effect dandelions antioxidants microsomal lipid peroxidation have The in vitro effect of dandelions antioxidants on microsomal lipid peroxidation. The in vitro effect of dandelions antioxidants on microsomal lipid peroxidation. Dandelions have long been used in herbal medicine for their choleretic, diuretic, antiinflammatory, appetite-stimulating and laxative properties. An antioxidant property can be supposed as a basis of their-therapeutic effects. To understand the mechanism of the drug's action, the effects of natural extracts on a microsomal fraction of rat liver were examined. The extracts diminished the enzymatically induced-lipid peroxidation and reduced the cytochrome c with and without NADPH in a concentration dependent manner.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.033039+00:00"
+}

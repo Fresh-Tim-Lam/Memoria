@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20418809",
+  "source_fingerprint": "448bbbae7ac95064a872603caa1beac3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20418809",
+    "inducible-depletion-of-satellite-cells-in-adult,-sedentary-mice-impairs-muscle-regenerative-capacity-without-affecting-sarcopenia"
+  ],
+  "key_phrases": [
+    "inducible",
+    "depletion",
+    "satellite",
+    "cells",
+    "adult",
+    "sedentary",
+    "mice",
+    "impairs"
+  ],
+  "summary_1l": "A key determinant of geriatric frailty is sarcopenia, the age-associat",
+  "query_hits": [],
+  "embed_text": "20418809 Inducible depletion of satellite cells in adult, sedentary mice impairs muscle regenerative capacity without affecting sarcopenia science scifact A key determinant of geriatric frailty is sarcopenia, the age-associated loss of skeletal muscle mass and strength. Although the etiology of sarcopenia is unknown, the correlation during aging between the loss of activity of satellite… 20418809 inducible-depletion-of-satellite-cells-in-adult,-sedentary-mice-impairs-muscle-regenerative-capacity-without-affecting-sarcopenia inducible depletion satellite cells adult sedentary mice impairs A key determinant of geriatric frailty is sarcopenia, the age-associat Inducible depletion of satellite cells in adult, sedentary mice impairs muscle regenerative capacity without affecting sarcopenia A key determinant of geriatric frailty is sarcopenia, the age-associated loss of skeletal muscle mass and strength. Although the etiology of sarcopenia is unknown, the correlation during aging between the loss of activity of satellite cells, which are endogenous muscle stem cells, and impaired muscle regenerative capacity has led to the hypothesis that the loss of satellite cell activity is also a cause of sarcopenia. We tested this hypothesis in male sedentary mice by experimentally depleting satellite cells in young adult animals to a degree sufficient to impair regeneration throughout the rest of their lives. A detailed analysis of multiple muscles harvested",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.235778+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "42291761",
+  "source_fingerprint": "20f34d06d54998dc123ea82e3b7ad3fc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "42291761",
+    "preventing-deaths-by-drowning-in-children-in-the-united-kingdom:-have-we-made-progress-in-10-years?-population-based-incidence-study."
+  ],
+  "key_phrases": [
+    "preventing",
+    "deaths",
+    "by",
+    "drowning",
+    "children",
+    "united",
+    "kingdom",
+    "have"
+  ],
+  "summary_1l": "Preventing deaths by drowning in children in the United Kingdom: have we made progress in 10 years?",
+  "query_hits": [],
+  "embed_text": "42291761 Preventing deaths by drowning in children in the United Kingdom: have we made progress in 10 years? Population based incidence study. science scifact Detailed information on drowning in children is not routinely collected by offices of national statistics. Few studies have been carried out in the United Kingdom, and none has been done on British children abroad. In 1988-9, two of the… 42291761 preventing-deaths-by-drowning-in-children-in-the-united-kingdom:-have-we-made-progress-in-10-years?-population-based-incidence-study. preventing deaths by drowning children united kingdom have Preventing deaths by drowning in children in the United Kingdom: have we made progress in 10 years? Preventing deaths by drowning in children in the United Kingdom: have we made progress in 10 years? Population based incidence study. Detailed information on drowning in children is not routinely collected by offices of national statistics. Few studies have been carried out in the United Kingdom, and none has been done on British children abroad. In 1988-9, two of the authors (AMK and JRS) combined information from national statistical offices, police forces (Royal Life Saving Society), and from a press cutting service (Royal Society for Prevention of Accidents) for a detailed analysis of deaths by drowning in children.1, 2, 3 This analysis found that 149 children had drowned in the United Kingdom during 1998-9. It also identified a safety agenda, which focused on young children in garden",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.889579+00:00"
+}

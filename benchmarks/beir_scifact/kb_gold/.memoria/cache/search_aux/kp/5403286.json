@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5403286",
+  "source_fingerprint": "6dd6ca808dfcdc05e1a2737df8a8c9f8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5403286",
+    "pi3k-in-cancer:-divergent-roles-of-isoforms,-modes-of-activation-and-therapeutic-targeting"
+  ],
+  "key_phrases": [
+    "pi3k",
+    "cancer",
+    "divergent",
+    "roles",
+    "isoforms",
+    "modes",
+    "activation",
+    "therapeutic"
+  ],
+  "summary_1l": "Phosphatidylinositol 3-kinases (PI3Ks) are crucial coordinators of intracellular signalling in response to ex",
+  "query_hits": [],
+  "embed_text": "5403286 PI3K in cancer: divergent roles of isoforms, modes of activation and therapeutic targeting science scifact Phosphatidylinositol 3-kinases (PI3Ks) are crucial coordinators of intracellular signalling in response to extracellular stimuli. Hyperactivation of PI3K signalling cascades is one of the most common events in human cancers. In this… 5403286 pi3k-in-cancer:-divergent-roles-of-isoforms,-modes-of-activation-and-therapeutic-targeting pi3k cancer divergent roles isoforms modes activation therapeutic Phosphatidylinositol 3-kinases (PI3Ks) are crucial coordinators of intracellular signalling in response to ex PI3K in cancer: divergent roles of isoforms, modes of activation and therapeutic targeting Phosphatidylinositol 3-kinases (PI3Ks) are crucial coordinators of intracellular signalling in response to extracellular stimuli. Hyperactivation of PI3K signalling cascades is one of the most common events in human cancers. In this Review, we discuss recent advances in our knowledge of the roles of specific PI3K isoforms in normal and oncogenic signalling, the different ways in which PI3K can be upregulated, and the current state and future potential of targeting this pathway in the clinic.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.180870+00:00"
+}

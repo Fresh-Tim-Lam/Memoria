@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4417558",
+  "source_fingerprint": "b4697c483d46801e99cdd2df6a2cdaaf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4417558",
+    "mical-links-semaphorins-to-f-actin-disassembly"
+  ],
+  "key_phrases": [
+    "mical",
+    "links",
+    "semaphorins",
+    "actin",
+    "disassembly",
+    "how",
+    "instructive",
+    "cues"
+  ],
+  "summary_1l": "How instructive cues present on the cell surface have their precise effects on the actin cytoskeleton is poorly understood.",
+  "query_hits": [],
+  "embed_text": "4417558 Mical links semaphorins to F-actin disassembly science scifact How instructive cues present on the cell surface have their precise effects on the actin cytoskeleton is poorly understood. Semaphorins are one of the largest families of these instructive cues and are widely studied for their effects on… 4417558 mical-links-semaphorins-to-f-actin-disassembly mical links semaphorins actin disassembly how instructive cues How instructive cues present on the cell surface have their precise effects on the actin cytoskeleton is poorly understood. Mical links semaphorins to F-actin disassembly How instructive cues present on the cell surface have their precise effects on the actin cytoskeleton is poorly understood. Semaphorins are one of the largest families of these instructive cues and are widely studied for their effects on cell movement, navigation, angiogenesis, immunology and cancer. Semaphorins/collapsins were characterized in part on the basis of their ability to drastically alter actin cytoskeletal dynamics in neuronal processes, but despite considerable progress in the identification of semaphorin receptors and their signalling pathways, the molecules linking them to the precise control of cytoskeletal elements remain unknown. Recently, highly unusual proteins of the Mical family of enzymes have been found to associate wit",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.872872+00:00"
+}

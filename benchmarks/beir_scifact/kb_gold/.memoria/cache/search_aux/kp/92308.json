@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "92308",
+  "source_fingerprint": "913266eacc305f05bd9fed00eaa56f49",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "92308",
+    "loss-of-immune-escape-mutations-during-persistent-hcv-infection-in-pregnancy-enhances-replication-of-vertically-transmitted-viruses"
+  ],
+  "key_phrases": [
+    "loss",
+    "immune",
+    "escape",
+    "mutations",
+    "during",
+    "persistent",
+    "hcv",
+    "infection"
+  ],
+  "summary_1l": "Globally, about 1% of pregnant women are persistently infected with",
+  "query_hits": [],
+  "embed_text": "92308 Loss of immune escape mutations during persistent HCV infection in pregnancy enhances replication of vertically transmitted viruses science scifact Globally, about 1% of pregnant women are persistently infected with the hepatitis C virus (HCV). Mother-to-child transmission of HCV occurs in 3-5% of pregnancies and accounts for most new childhood infections. HCV-specific CD8(+)… 92308 loss-of-immune-escape-mutations-during-persistent-hcv-infection-in-pregnancy-enhances-replication-of-vertically-transmitted-viruses loss immune escape mutations during persistent hcv infection Globally, about 1% of pregnant women are persistently infected with Loss of immune escape mutations during persistent HCV infection in pregnancy enhances replication of vertically transmitted viruses Globally, about 1% of pregnant women are persistently infected with the hepatitis C virus (HCV). Mother-to-child transmission of HCV occurs in 3-5% of pregnancies and accounts for most new childhood infections. HCV-specific CD8(+) cytotoxic T lymphocytes (CTLs) are vital in the clearance of acute HCV infections, but in the 60-80% of infections that persist, these cells become functionally exhausted or select for mutant viruses that escape T cell recognition. Increased HCV replication during pregnancy suggests that maternofetal immune tolerance mechanisms may further impair HCV-specific CTLs, limiting their selective pressure on persistent viruses. To assess th",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.493191+00:00"
+}

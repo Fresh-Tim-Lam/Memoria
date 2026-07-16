@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25483562",
+  "source_fingerprint": "d798083654938b030c10132ae99f734a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25483562",
+    "crystal-structure-of-human-insulin-regulated-aminopeptidase-with-specificity-for-cyclic-peptides."
+  ],
+  "key_phrases": [
+    "crystal",
+    "structure",
+    "human",
+    "insulin",
+    "regulated",
+    "aminopeptidase",
+    "with",
+    "specificity"
+  ],
+  "summary_1l": "Crystal structure of human insulin-regulated aminopeptidase with specificity for cyclic peptides.",
+  "query_hits": [],
+  "embed_text": "25483562 Crystal structure of human insulin-regulated aminopeptidase with specificity for cyclic peptides. science scifact Insulin-regulated aminopeptidase (IRAP or oxytocinase) is a membrane-bound zinc-metallopeptidase that cleaves neuroactive peptides in the brain and produces memory enhancing effects when inhibited. We have determined the crystal structure… 25483562 crystal-structure-of-human-insulin-regulated-aminopeptidase-with-specificity-for-cyclic-peptides. crystal structure human insulin regulated aminopeptidase with specificity Crystal structure of human insulin-regulated aminopeptidase with specificity for cyclic peptides. Crystal structure of human insulin-regulated aminopeptidase with specificity for cyclic peptides. Insulin-regulated aminopeptidase (IRAP or oxytocinase) is a membrane-bound zinc-metallopeptidase that cleaves neuroactive peptides in the brain and produces memory enhancing effects when inhibited. We have determined the crystal structure of human IRAP revealing a closed, four domain arrangement with a large, mostly buried cavity abutting the active site. The structure reveals that the GAMEN exopeptidase loop adopts a very different conformation from other aminopeptidases, thus explaining IRAP's unique specificity for cyclic peptides such as oxytocin and vasopressin. Computational docking of a series of IRAP-specific cognitive enhancers into the crystal structure provides a molecular basis for",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.726722+00:00"
+}

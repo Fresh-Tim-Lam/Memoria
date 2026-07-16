@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10300888",
+  "source_fingerprint": "4763bbb87cd7f1faa29d9063ec1bc5e6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10300888",
+    "domestication-and-divergence-of-saccharomyces-cerevisiae-beer-yeasts"
+  ],
+  "key_phrases": [
+    "domestication",
+    "divergence",
+    "saccharomyces",
+    "cerevisiae",
+    "beer",
+    "yeasts",
+    "whereas",
+    "livestock"
+  ],
+  "summary_1l": "Whereas domestication of livestock, pets, and crops is well documented, it is still unclear to what extent microbes associated with",
+  "query_hits": [],
+  "embed_text": "10300888 Domestication and Divergence of Saccharomyces cerevisiae Beer Yeasts science scifact Whereas domestication of livestock, pets, and crops is well documented, it is still unclear to what extent microbes associated with the production of food have also undergone human selection and where the plethora of industrial strains… 10300888 domestication-and-divergence-of-saccharomyces-cerevisiae-beer-yeasts domestication divergence saccharomyces cerevisiae beer yeasts whereas livestock Whereas domestication of livestock, pets, and crops is well documented, it is still unclear to what extent microbes associated with Domestication and Divergence of Saccharomyces cerevisiae Beer Yeasts Whereas domestication of livestock, pets, and crops is well documented, it is still unclear to what extent microbes associated with the production of food have also undergone human selection and where the plethora of industrial strains originates from. Here, we present the genomes and phenomes of 157 industrial Saccharomyces cerevisiae yeasts. Our analyses reveal that today's industrial yeasts can be divided into five sublineages that are genetically and phenotypically separated from wild strains and originate from only a few ancestors through complex patterns of domestication and local divergence. Large-scale phenotyping and genome analysis further show strong industry-specific selection for stress tolerance, sugar utili",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:04.564751+00:00"
+}

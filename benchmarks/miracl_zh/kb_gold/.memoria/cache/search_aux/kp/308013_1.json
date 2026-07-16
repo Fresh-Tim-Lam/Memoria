@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "kp_id": "308013#1",
+  "source_fingerprint": "36ccb7ee8a6553f7694f40df6dbd818a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "法国国旗",
+    "法国",
+    "(法国)",
+    "2022年法国总统选举",
+    "挪威国旗",
+    "法国地理",
+    "法国美术"
+  ],
+  "aliases": [
+    "308013#1"
+  ],
+  "key_phrases": [
+    "蓝色",
+    "白色",
+    "红色",
+    "法国",
+    "国旗",
+    "从左到右",
+    "三种",
+    "颜色"
+  ],
+  "summary_1l": "蓝色、白色和红色是法国国旗从左到右的三种颜色。",
+  "query_hits": [],
+  "embed_text": "308013#1 三色 三色 蓝色、白色和红色是法国国旗从左到右的三种颜色。《三色》是电影史上的不朽之作，被许多影评家认为是电影界的巅峰。 法国国旗 法国 (法国) 2022年法国总统选举 挪威国旗 法国地理 法国美术 308013#1 蓝色 白色 红色 法国 国旗 从左到右 三种 颜色 蓝色、白色和红色是法国国旗从左到右的三种颜色。 三色 蓝色、白色和红色是法国国旗从左到右的三种颜色。《三色》是电影史上的不朽之作，被许多影评家认为是电影界的巅峰。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:20:16.045032+00:00"
+}

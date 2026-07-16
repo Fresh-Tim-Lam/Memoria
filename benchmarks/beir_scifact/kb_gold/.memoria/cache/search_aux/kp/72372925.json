@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "72372925",
+  "source_fingerprint": "75c87186411a63204975cce8b596d4b5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "72372925",
+    "wolff's-headache-and-other-head-pain."
+  ],
+  "key_phrases": [
+    "wolff",
+    "headache",
+    "other",
+    "head",
+    "pain",
+    "there",
+    "has",
+    "never"
+  ],
+  "summary_1l": "Wolff's Headache and Other Head Pain.",
+  "query_hits": [],
+  "embed_text": "72372925 Wolff's Headache and Other Head Pain. science scifact There has never been a book on headache that came close to that of the late Harold Wolff. The second edition was published 10 years ago; it was and is a masterpiece of writing, an exhaustive yet engrossing delineation of Wolff's long study… 72372925 wolff's-headache-and-other-head-pain. wolff headache other head pain there has never Wolff's Headache and Other Head Pain. Wolff's Headache and Other Head Pain. There has never been a book on headache that came close to that of the late Harold Wolff. The second edition was published 10 years ago; it was and is a masterpiece of writing, an exhaustive yet engrossing delineation of Wolff's long study and understanding of headache. The new edition, revised by Dalessio, serves to bring certain aspects of headache up to date, most of them having to do with drug therapy. The emphasis on total therapy rather than simply drug therapy has been preserved, however. Dalessio has altered slightly the form of the book, although the \"new chapters\" on cluster headache and trigeminal neuralgia are merely transplants from other sections of the original. Migraine, the main part of the book, has been reshaped, with some anecdotal",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.899490+00:00"
+}

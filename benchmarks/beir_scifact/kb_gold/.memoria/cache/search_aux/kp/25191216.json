@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25191216",
+  "source_fingerprint": "658cb71ca08a0a9fe116fae4dc589d27",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25191216",
+    "periostin,-a-novel-marker-of-intramembranous-ossification,-is-expressed-in-fibrous-dysplasia-and-in-c-fos-overexpressing-bone-lesions."
+  ],
+  "key_phrases": [
+    "periostin",
+    "novel",
+    "marker",
+    "intramembranous",
+    "ossification",
+    "expressed",
+    "fibrous",
+    "dysplasia"
+  ],
+  "summary_1l": "Periostin, a novel marker of intramembranous ossification, is expressed in fibrous dysplasia and in c-Fos-overexpressing bone lesions.",
+  "query_hits": [],
+  "embed_text": "25191216 Periostin, a novel marker of intramembranous ossification, is expressed in fibrous dysplasia and in c-Fos-overexpressing bone lesions. science scifact Fibrous dysplasia is a benign bone disease caused by a mutation in the gene for the stimulatory guanine nucleotide-binding protein Gs alpha, leading to high cyclic adenosine monophosphate levels. Histologically, fibrous dysplasia is… 25191216 periostin,-a-novel-marker-of-intramembranous-ossification,-is-expressed-in-fibrous-dysplasia-and-in-c-fos-overexpressing-bone-lesions. periostin novel marker intramembranous ossification expressed fibrous dysplasia Periostin, a novel marker of intramembranous ossification, is expressed in fibrous dysplasia and in c-Fos-overexpressing bone lesions. Periostin, a novel marker of intramembranous ossification, is expressed in fibrous dysplasia and in c-Fos-overexpressing bone lesions. Fibrous dysplasia is a benign bone disease caused by a mutation in the gene for the stimulatory guanine nucleotide-binding protein Gs alpha, leading to high cyclic adenosine monophosphate levels. Histologically, fibrous dysplasia is characterized by the production of fibrous tissue accompanied by the deposition of ectopic type I collagen and other bone-associated extracellular matrix proteins, as well as by irregular woven intramembranous bone onto which type I collagen-containing Sharpey fibers are often attached. Fibrous dysplasia is also characterized by high expression of c-Fos/c-Jun, known targets for cyclic adenosine monophosphate signaling. In this s",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.172795+00:00"
+}

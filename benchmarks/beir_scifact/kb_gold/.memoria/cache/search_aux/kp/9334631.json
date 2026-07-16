@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9334631",
+  "source_fingerprint": "b877781d40f6865231bdb360de258801",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9334631",
+    "c-reactive-protein-decreases-interleukin-10-secretion-in-activated-human-monocyte-derived-macrophages-via-inhibition-of-cyclic-amp-production."
+  ],
+  "key_phrases": [
+    "reactive",
+    "protein",
+    "decreases",
+    "interleukin",
+    "10",
+    "secretion",
+    "activated",
+    "human"
+  ],
+  "summary_1l": "C-reactive protein decreases interleukin-10 secretion in activated human monocyte-derived macrophages via inhibition of cyclic AMP production.",
+  "query_hits": [],
+  "embed_text": "9334631 C-reactive protein decreases interleukin-10 secretion in activated human monocyte-derived macrophages via inhibition of cyclic AMP production. science scifact OBJECTIVE C-Reactive protein (CRP), a cardiovascular risk marker, could also participate in atherosclerosis. Atherosclerotic plaques express CRP and interleukin (IL)-10, a major antiinflammatory cytokine. IL-10 deficiency results in… 9334631 c-reactive-protein-decreases-interleukin-10-secretion-in-activated-human-monocyte-derived-macrophages-via-inhibition-of-cyclic-amp-production. reactive protein decreases interleukin 10 secretion activated human C-reactive protein decreases interleukin-10 secretion in activated human monocyte-derived macrophages via inhibition of cyclic AMP production. C-reactive protein decreases interleukin-10 secretion in activated human monocyte-derived macrophages via inhibition of cyclic AMP production. OBJECTIVE C-Reactive protein (CRP), a cardiovascular risk marker, could also participate in atherosclerosis. Atherosclerotic plaques express CRP and interleukin (IL)-10, a major antiinflammatory cytokine. IL-10 deficiency results in increased lesion formation, whereas IL-10 delivery attenuates lesions. We tested the effect of CRP on lipopolysaccharide (LPS)-induced IL-10 secretion in human monocyte-derived macrophages (HMDMs). METHODS AND RESULTS Incubation of HMDMs with CRP significantly decreased LPS-induced IL-10 mRNA and intracellular and secreted IL-10 protein and destabilized IL-10 mRNA. Also, CRP alone increased secretion of IL-8, IL-6, and t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.776852+00:00"
+}

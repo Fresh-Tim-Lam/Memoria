@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5402581",
+  "source_fingerprint": "1ac4e96cb38b3d79e9130bdfba8603d0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5402581",
+    "risk-of-death-with-atypical-antipsychotic-drug-treatment-for-dementia:-meta-analysis-of-randomized-placebo-controlled-trials."
+  ],
+  "key_phrases": [
+    "risk",
+    "death",
+    "with",
+    "atypical",
+    "antipsychotic",
+    "drug",
+    "treatment",
+    "dementia"
+  ],
+  "summary_1l": "Risk of death with atypical antipsychotic drug treatment for dementia: meta-analysis of randomized placebo-controlled trials.",
+  "query_hits": [],
+  "embed_text": "5402581 Risk of death with atypical antipsychotic drug treatment for dementia: meta-analysis of randomized placebo-controlled trials. science scifact CONTEXT Atypical antipsychotic medications are widely used to treat delusions, aggression, and agitation in people with Alzheimer disease and other dementia; however, concerns have arisen about the increased risk for cerebrovascular… 5402581 risk-of-death-with-atypical-antipsychotic-drug-treatment-for-dementia:-meta-analysis-of-randomized-placebo-controlled-trials. risk death with atypical antipsychotic drug treatment dementia Risk of death with atypical antipsychotic drug treatment for dementia: meta-analysis of randomized placebo-controlled trials. Risk of death with atypical antipsychotic drug treatment for dementia: meta-analysis of randomized placebo-controlled trials. CONTEXT Atypical antipsychotic medications are widely used to treat delusions, aggression, and agitation in people with Alzheimer disease and other dementia; however, concerns have arisen about the increased risk for cerebrovascular adverse events, rapid cognitive decline, and mortality with their use. OBJECTIVE To assess the evidence for increased mortality from atypical antipsychotic drug treatment for people with dementia. DATA SOURCES MEDLINE (1966 to April 2005), the Cochrane Controlled Trials Register (2005, Issue 1), meetings presentations (1997-2004), and information from the sponsors were searched using the terms for atypical antipsychotic drugs (aripiprazo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.172768+00:00"
+}

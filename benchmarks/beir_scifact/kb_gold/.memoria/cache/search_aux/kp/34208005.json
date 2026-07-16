@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "34208005",
+  "source_fingerprint": "e7b829e32ff057c6569f8ebf8d761c08",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "34208005",
+    "ethical-dilemmas-in-a-randomized-trial-of-asthma-treatment:-can-bayesian-statistical-analysis-explain-the-results?"
+  ],
+  "key_phrases": [
+    "ethical",
+    "dilemmas",
+    "randomized",
+    "trial",
+    "asthma",
+    "treatment",
+    "can",
+    "bayesian"
+  ],
+  "summary_1l": "Ethical dilemmas in a randomized trial of asthma treatment: can Bayesian statistical analysis explain the results?",
+  "query_hits": [],
+  "embed_text": "34208005 Ethical dilemmas in a randomized trial of asthma treatment: can Bayesian statistical analysis explain the results? science scifact OBJECTIVES The original objective was to determine whether the use of bilevel positive airway pressure (BiPAP) ventilation would reduce the need for endotracheal intubation, the length of hospital stay, and hospital charges in patients… 34208005 ethical-dilemmas-in-a-randomized-trial-of-asthma-treatment:-can-bayesian-statistical-analysis-explain-the-results? ethical dilemmas randomized trial asthma treatment can bayesian Ethical dilemmas in a randomized trial of asthma treatment: can Bayesian statistical analysis explain the results? Ethical dilemmas in a randomized trial of asthma treatment: can Bayesian statistical analysis explain the results? OBJECTIVES The original objective was to determine whether the use of bilevel positive airway pressure (BiPAP) ventilation would reduce the need for endotracheal intubation, the length of hospital stay, and hospital charges in patients with status asthmaticus. The development of physician treatment bias made patient enrollment difficult. The article subsequently describes the use of Bayesian statistics to explain study results when this bias occurs. METHODS This study was a prospective, randomized controlled clinical trial conducted over a 34.5-month period at an urban university hospital with an emergency department census of 94,000 annual visits. Patients remaining in status",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.247146+00:00"
+}

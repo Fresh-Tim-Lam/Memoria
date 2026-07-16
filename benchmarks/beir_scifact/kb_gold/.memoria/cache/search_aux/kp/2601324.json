@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2601324",
+  "source_fingerprint": "bff6ee89149f47fe1850ea9dff823c85",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2601324",
+    "glycolytic-oligodendrocytes-maintain-myelin-and-long-term-axonal-integrity"
+  ],
+  "key_phrases": [
+    "glycolytic",
+    "oligodendrocytes",
+    "maintain",
+    "myelin",
+    "long",
+    "term",
+    "axonal",
+    "integrity"
+  ],
+  "summary_1l": "Oligodendrocytes, the myelin-forming glial cells of the central nervous system, maintain long-term axonal integrity.",
+  "query_hits": [],
+  "embed_text": "2601324 Glycolytic oligodendrocytes maintain myelin and long-term axonal integrity science scifact Oligodendrocytes, the myelin-forming glial cells of the central nervous system, maintain long-term axonal integrity. However, the underlying support mechanisms are not understood. Here we identify a metabolic component of axon–glia… 2601324 glycolytic-oligodendrocytes-maintain-myelin-and-long-term-axonal-integrity glycolytic oligodendrocytes maintain myelin long term axonal integrity Oligodendrocytes, the myelin-forming glial cells of the central nervous system, maintain long-term axonal integrity. Glycolytic oligodendrocytes maintain myelin and long-term axonal integrity Oligodendrocytes, the myelin-forming glial cells of the central nervous system, maintain long-term axonal integrity. However, the underlying support mechanisms are not understood. Here we identify a metabolic component of axon–glia interactions by generating conditional Cox10 (protoheme IX farnesyltransferase) mutant mice, in which oligodendrocytes and Schwann cells fail to assemble stable mitochondrial cytochrome c oxidase (COX, also known as mitochondrial complex IV). In the peripheral nervous system, Cox10 conditional mutants exhibit severe neuropathy with dysmyelination, abnormal Remak bundles, muscle atrophy and paralysis. Notably, perturbing mitochondrial respiration did not cause glial cell death. In the adul",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.025112+00:00"
+}

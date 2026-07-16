@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6807122",
+  "source_fingerprint": "18ce90e4873e0f38cd7185718cad9aee",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6807122",
+    "discovery-of-endothelial-to-mesenchymal-transition-as-a-source-for-carcinoma-associated-fibroblasts."
+  ],
+  "key_phrases": [
+    "discovery",
+    "endothelial",
+    "mesenchymal",
+    "transition",
+    "as",
+    "source",
+    "carcinoma",
+    "associated"
+  ],
+  "summary_1l": "Discovery of endothelial to mesenchymal transition as a source for carcinoma-associated fibroblasts.",
+  "query_hits": [],
+  "embed_text": "6807122 Discovery of endothelial to mesenchymal transition as a source for carcinoma-associated fibroblasts. science scifact Activated fibroblasts are associated with many different tumors. Myofibroblasts, activated fibroblasts, and perivascular mesenchymal cells such as pericytes play a role in cancer progression. Many studies suggest that myofibroblasts… 6807122 discovery-of-endothelial-to-mesenchymal-transition-as-a-source-for-carcinoma-associated-fibroblasts. discovery endothelial mesenchymal transition as source carcinoma associated Discovery of endothelial to mesenchymal transition as a source for carcinoma-associated fibroblasts. Discovery of endothelial to mesenchymal transition as a source for carcinoma-associated fibroblasts. Activated fibroblasts are associated with many different tumors. Myofibroblasts, activated fibroblasts, and perivascular mesenchymal cells such as pericytes play a role in cancer progression. Many studies suggest that myofibroblasts facilitate tumor growth and cancer progression. The source for myofibroblasts and other activated fibroblasts within the tumors is still debated. Although de novo activation of quiescent fibroblasts into alpha-smooth muscle actin (alpha SMA)-positive myofibroblasts is one likely source, epithelial to mesenchymal transition and bone marrow recruitment are also evolving as possible mechanisms for the emergence of a heterogeneous population of carcinoma-associated",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.729631+00:00"
+}

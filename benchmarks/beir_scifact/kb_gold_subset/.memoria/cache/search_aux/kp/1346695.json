@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1346695",
+  "source_fingerprint": "7d4aaa2965da4463fa037f23062ed684",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1346695",
+    "microrna-31/factor-inhibiting-hypoxia-inducible-factor-1-nexus-regulates-keratinocyte-differentiation."
+  ],
+  "key_phrases": [
+    "microrna",
+    "31",
+    "factor",
+    "inhibiting",
+    "hypoxia",
+    "inducible",
+    "nexus",
+    "regulates"
+  ],
+  "summary_1l": "microRNA-31/factor-inhibiting hypoxia-inducible factor 1 nexus regulates keratinocyte differentiation.",
+  "query_hits": [],
+  "embed_text": "1346695 microRNA-31/factor-inhibiting hypoxia-inducible factor 1 nexus regulates keratinocyte differentiation. science scifact Notch plays a critical role in the transition from proliferation to differentiation in the epidermis and corneal epithelium. Furthermore, aberrant Notch signaling is a feature of diseases like psoriasis, eczema, nonmelanoma skin cancer,… 1346695 microrna-31/factor-inhibiting-hypoxia-inducible-factor-1-nexus-regulates-keratinocyte-differentiation. microrna 31 factor inhibiting hypoxia inducible nexus regulates microRNA-31/factor-inhibiting hypoxia-inducible factor 1 nexus regulates keratinocyte differentiation. microRNA-31/factor-inhibiting hypoxia-inducible factor 1 nexus regulates keratinocyte differentiation. Notch plays a critical role in the transition from proliferation to differentiation in the epidermis and corneal epithelium. Furthermore, aberrant Notch signaling is a feature of diseases like psoriasis, eczema, nonmelanoma skin cancer, and melanoma where differentiation and proliferation are impaired. Whereas much is known about the downstream events following Notch signaling, factors responsible for negatively regulating Notch receptor signaling after ligand activation are incompletely understood. Notch can undergo hydroxylation by factor-inhibiting hypoxia-inducible factor 1 (FIH-1); however, the biological significance of this phenomenon is unclear. Here we show that FIH-1 expression",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:11.096399+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "41811327",
+  "source_fingerprint": "843e396e9a79dbbcea845889701c2afb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "41811327",
+    "at-least-1400-base-pairs-of-5'-flanking-dna-is-required-for-the-correct-expression-of-the-ho-gene-in-yeast."
+  ],
+  "key_phrases": [
+    "at",
+    "least",
+    "1400",
+    "base",
+    "pairs",
+    "flanking",
+    "dna",
+    "required"
+  ],
+  "summary_1l": "At least 1400 base pairs of 5'-flanking DNA is required for the correct expression of the HO gene in yeast.",
+  "query_hits": [],
+  "embed_text": "41811327 At least 1400 base pairs of 5'-flanking DNA is required for the correct expression of the HO gene in yeast. science scifact Homothallic yeast cells undergo a specific pattern of mating-type switching initiated by an endonuclease encoded by the HO gene. HO transcription is affected by cell type (a, alpha, and a/alpha), by cell age (mother or daughter), and by… 41811327 at-least-1400-base-pairs-of-5'-flanking-dna-is-required-for-the-correct-expression-of-the-ho-gene-in-yeast. at least 1400 base pairs flanking dna required At least 1400 base pairs of 5'-flanking DNA is required for the correct expression of the HO gene in yeast. At least 1400 base pairs of 5'-flanking DNA is required for the correct expression of the HO gene in yeast. Homothallic yeast cells undergo a specific pattern of mating-type switching initiated by an endonuclease encoded by the HO gene. HO transcription is affected by cell type (a, alpha, and a/alpha), by cell age (mother or daughter), and by the cell cycle. This paper investigates the sequences involved in HO transcription by replacing genomic DNA with copies mutated in vitro. A region between -1000 and 1400 (called URS1) is necessary for transcription in addition to a \"TATA\"-like region at -90. The 900 bp of DNA separating URS1 from the \"TATA\" box is not necessary for transcription nor for a/alpha repression and some measure of mother/daughter control, but it is necessary for correct cel",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.615072+00:00"
+}

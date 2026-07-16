@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8290760",
+  "source_fingerprint": "0136d17e0cf02c71f93eb46d78ffefce",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8290760",
+    "single-cell-expression-analyses-during-cellular-reprogramming-reveal-an-early-stochastic-and-a-late-hierarchic-phase"
+  ],
+  "key_phrases": [
+    "single",
+    "cell",
+    "expression",
+    "analyses",
+    "during",
+    "cellular",
+    "reprogramming",
+    "reveal"
+  ],
+  "summary_1l": "During cellular reprogramming, only a small fraction of cells become induced plurip",
+  "query_hits": [],
+  "embed_text": "8290760 Single-Cell Expression Analyses during Cellular Reprogramming Reveal an Early Stochastic and a Late Hierarchic Phase science scifact During cellular reprogramming, only a small fraction of cells become induced pluripotent stem cells (iPSCs). Previous analyses of gene expression during reprogramming were based on populations of cells, impeding single-cell level… 8290760 single-cell-expression-analyses-during-cellular-reprogramming-reveal-an-early-stochastic-and-a-late-hierarchic-phase single cell expression analyses during cellular reprogramming reveal During cellular reprogramming, only a small fraction of cells become induced plurip Single-Cell Expression Analyses during Cellular Reprogramming Reveal an Early Stochastic and a Late Hierarchic Phase During cellular reprogramming, only a small fraction of cells become induced pluripotent stem cells (iPSCs). Previous analyses of gene expression during reprogramming were based on populations of cells, impeding single-cell level identification of reprogramming events. We utilized two gene expression technologies to profile 48 genes in single cells at various stages during the reprogramming process. Analysis of early stages revealed considerable variation in gene expression between cells in contrast to late stages. Expression of Esrrb, Utf1, Lin28, and Dppa2 is a better predictor for cells to progress into iPSCs than expression of the previously suggested reprogramming marke",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.231387+00:00"
+}

@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "kp_id": "6860117#2",
+  "source_fingerprint": "7e710a8f42fb6d002462ec6b316ba7eb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "蜘蛛侠系列电影",
+    "法兰西第一帝国",
+    "2010年美國人口普查",
+    "中国大陆电影",
+    "中国弹幕网站",
+    "中铁第一勘察设计院",
+    "西班牙第一共和國",
+    "邦联第一白宫"
+  ],
+  "aliases": [
+    "6860117#2"
+  ],
+  "key_phrases": [
+    "高材生",
+    "电影",
+    "评论",
+    "网站",
+    "番茄",
+    "瞎妹",
+    "列为",
+    "2010"
+  ],
+  "summary_1l": "评论网站爛番茄将《A+瞎妹》列为2010年代排名第一的喜剧片。",
+  "query_hits": [],
+  "embed_text": "6860117#2 高材生 (电影) 高材生 (电影) 评论网站爛番茄将《A+瞎妹》列为2010年代排名第一的喜剧片。 蜘蛛侠系列电影 法兰西第一帝国 2010年美國人口普查 中国大陆电影 中国弹幕网站 中铁第一勘察设计院 西班牙第一共和國 邦联第一白宫 6860117#2 高材生 电影 评论 网站 番茄 瞎妹 列为 2010 评论网站爛番茄将《A+瞎妹》列为2010年代排名第一的喜剧片。 高材生 (电影) 评论网站爛番茄将《A+瞎妹》列为2010年代排名第一的喜剧片。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:23:03.423847+00:00"
+}

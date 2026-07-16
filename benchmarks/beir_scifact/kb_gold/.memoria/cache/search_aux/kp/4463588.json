@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4463588",
+  "source_fingerprint": "fd68070dbebd6e73e8b581ceb863b733",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4463588",
+    "effects-of-exercise-intensity-on-cardiovascular-fitness,-total-body-composition,-and-visceral-adiposity-of-obese-adolescents."
+  ],
+  "key_phrases": [
+    "effects",
+    "exercise",
+    "intensity",
+    "cardiovascular",
+    "fitness",
+    "total",
+    "body",
+    "composition"
+  ],
+  "summary_1l": "Effects of exercise intensity on cardiovascular fitness, total body composition, and visceral adiposity of obese adolescents.",
+  "query_hits": [],
+  "embed_text": "4463588 Effects of exercise intensity on cardiovascular fitness, total body composition, and visceral adiposity of obese adolescents. science scifact BACKGROUND Little is known about how the intensity of exercise influences cardiovascular fitness and body composition, especially in obese adolescents. OBJECTIVE Our goal was to determine the effects of physical training intensity on the… 4463588 effects-of-exercise-intensity-on-cardiovascular-fitness,-total-body-composition,-and-visceral-adiposity-of-obese-adolescents. effects exercise intensity cardiovascular fitness total body composition Effects of exercise intensity on cardiovascular fitness, total body composition, and visceral adiposity of obese adolescents. Effects of exercise intensity on cardiovascular fitness, total body composition, and visceral adiposity of obese adolescents. BACKGROUND Little is known about how the intensity of exercise influences cardiovascular fitness and body composition, especially in obese adolescents. OBJECTIVE Our goal was to determine the effects of physical training intensity on the cardiovascular fitness, percentage of body fat (%BF), and visceral adipose tissue (VAT) of obese adolescents. DESIGN Obese 13-16-y-olds (n = 80) were assigned to 1) biweekly lifestyle education (LSE), 2) LSE + moderate-intensity physical training, or 3) LSE + high-intensity physical training. The intervention lasted 8 mo. Physical training was offered 5 d/wk, and the target energy expenditure for all subjects in physical training gr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.727051+00:00"
+}

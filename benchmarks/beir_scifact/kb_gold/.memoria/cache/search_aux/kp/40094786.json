@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "40094786",
+  "source_fingerprint": "5e2ab999c38d4c105e84dbcf80f345df",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "40094786",
+    "the-immunological-synapse-of-ctl-contains-a-secretory-domain-and-membrane-bridges."
+  ],
+  "key_phrases": [
+    "immunological",
+    "synapse",
+    "ctl",
+    "contains",
+    "secretory",
+    "domain",
+    "membrane",
+    "bridges"
+  ],
+  "summary_1l": "The immunological synapse of CTL contains a secretory domain and membrane bridges.",
+  "query_hits": [],
+  "embed_text": "40094786 The immunological synapse of CTL contains a secretory domain and membrane bridges. science scifact Cytotoxic T lymphocytes (CTL) rapidly destroy their targets. Here we show that although target cell death occurs within 5 min of CTL-target cell contact, an immunological synapse similar to that seen in CD4 cells rapidly forms in CTL, with… 40094786 the-immunological-synapse-of-ctl-contains-a-secretory-domain-and-membrane-bridges. immunological synapse ctl contains secretory domain membrane bridges The immunological synapse of CTL contains a secretory domain and membrane bridges. The immunological synapse of CTL contains a secretory domain and membrane bridges. Cytotoxic T lymphocytes (CTL) rapidly destroy their targets. Here we show that although target cell death occurs within 5 min of CTL-target cell contact, an immunological synapse similar to that seen in CD4 cells rapidly forms in CTL, with a ring of adhesion proteins surrounding an inner signaling molecule domain. Lytic granule secretion occurs in a separate domain within the adhesion ring, maintaining signaling protein organization during exocytosis. Live and fixed cell studies show target cell plasma membrane markers are transferred to the CTL as the cells separate. Electron microscopy reveals continuities forming membrane bridges between the CTL and target cell membranes, suggesting a possible mechanism f",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.249412+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29073751",
+  "source_fingerprint": "ce31c075705e0f33956e8add0ad46e22",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29073751",
+    "redox-dependent-downregulation-of-rho-by-rac"
+  ],
+  "key_phrases": [
+    "redox",
+    "dependent",
+    "downregulation",
+    "rho",
+    "by",
+    "rac",
+    "gtpases",
+    "function"
+  ],
+  "summary_1l": "Rac and Rho GTPases function as critical regulators of actin cytoskeleton remodelling during cell spreading and migration.",
+  "query_hits": [],
+  "embed_text": "29073751 Redox-dependent downregulation of Rho by Rac science scifact Rac and Rho GTPases function as critical regulators of actin cytoskeleton remodelling during cell spreading and migration. Here we demonstrate that Rac-mediated reactive oxygen species (ROS) production results in the downregulation of Rho… 29073751 redox-dependent-downregulation-of-rho-by-rac redox dependent downregulation rho by rac gtpases function Rac and Rho GTPases function as critical regulators of actin cytoskeleton remodelling during cell spreading and migration. Redox-dependent downregulation of Rho by Rac Rac and Rho GTPases function as critical regulators of actin cytoskeleton remodelling during cell spreading and migration. Here we demonstrate that Rac-mediated reactive oxygen species (ROS) production results in the downregulation of Rho activity. The redox-dependent decrease in Rho activity is required for Rac-induced formation of membrane ruffles and integrin-mediated cell spreading. The pathway linking generation of ROS to downregulation of Rho involves inhibition of the low-molecular-weight protein tyrosine phosphatase (LMW-PTP) and then an increase in the tyrosine phosphorylation and activation of its target, p190Rho-GAP. Our findings define a novel mechanism for the coupling of changes in cellular redox state to the control of actin cytos",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.553244+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1373287",
+  "source_fingerprint": "700e859bf1db3f69900262fad4cff300",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1373287",
+    "prognostic-importance-of-6-mercaptopurine-dose-intensity-in-acute-lymphoblastic-leukemia."
+  ],
+  "key_phrases": [
+    "prognostic",
+    "importance",
+    "mercaptopurine",
+    "dose",
+    "intensity",
+    "acute",
+    "lymphoblastic",
+    "leukemia"
+  ],
+  "summary_1l": "Prognostic importance of 6-mercaptopurine dose intensity in acute lymphoblastic leukemia.",
+  "query_hits": [],
+  "embed_text": "1373287 Prognostic importance of 6-mercaptopurine dose intensity in acute lymphoblastic leukemia. science scifact 6-Mercaptopurine (6MP) and methotrexate are the backbone of continuation therapy for childhood acute lymphoblastic leukemia (ALL). In studies of oral 6MP and methotrexate, indices of chronic systemic exposure to active metabolites of these… 1373287 prognostic-importance-of-6-mercaptopurine-dose-intensity-in-acute-lymphoblastic-leukemia. prognostic importance mercaptopurine dose intensity acute lymphoblastic leukemia Prognostic importance of 6-mercaptopurine dose intensity in acute lymphoblastic leukemia. Prognostic importance of 6-mercaptopurine dose intensity in acute lymphoblastic leukemia. 6-Mercaptopurine (6MP) and methotrexate are the backbone of continuation therapy for childhood acute lymphoblastic leukemia (ALL). In studies of oral 6MP and methotrexate, indices of chronic systemic exposure to active metabolites of these agents, namely, red blood cell (RBC) concentrations of methotrexate polyglutamates (MTXPGs) and thioguanine nucleotides (TGNs) have positively correlated with event-free survival (EFS). Our objective was to evaluate whether MTXPGs, TGNs, and the dose intensity of administered methotrexate and 6MP were prognostic in the setting of a treatment protocol in which all treatment was coordinated through a single center, and the weekly doses of methotrexate were given paren",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.809016+00:00"
+}

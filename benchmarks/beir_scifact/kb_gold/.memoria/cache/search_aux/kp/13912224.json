@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "13912224",
+  "source_fingerprint": "7ca7f8db779b9a3816c21b2939cae329",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13912224"
+  ],
+  "key_phrases": [
+    "nexus",
+    "gene",
+    "expression",
+    "molecular",
+    "mechanisms",
+    "spt5",
+    "nusg",
+    "three"
+  ],
+  "summary_1l": "Evolutionary related multisubunit RNA polymerases (RNAPs) transcribe the genomes of all living organisms.",
+  "query_hits": [],
+  "embed_text": "13912224 A Nexus for Gene Expression—Molecular Mechanisms of Spt5 and NusG in the Three Domains of Life science scifact Evolutionary related multisubunit RNA polymerases (RNAPs) transcribe the genomes of all living organisms. Whereas the core subunits of RNAPs are universally conserved in all three domains of life-indicative of a common evolutionary… 13912224 nexus gene expression molecular mechanisms spt5 nusg three Evolutionary related multisubunit RNA polymerases (RNAPs) transcribe the genomes of all living organisms. A Nexus for Gene Expression—Molecular Mechanisms of Spt5 and NusG in the Three Domains of Life Evolutionary related multisubunit RNA polymerases (RNAPs) transcribe the genomes of all living organisms. Whereas the core subunits of RNAPs are universally conserved in all three domains of life-indicative of a common evolutionary descent-this only applies to one RNAP-associated transcription factor-Spt5, also known as NusG in bacteria. All other factors that aid RNAP during the transcription cycle are specific for the individual domain or only conserved between archaea and eukaryotes. Spt5 and its bacterial homologue NusG regulate gene expression in several ways by (i) modulating transcription processivity and promoter proximal pausing, (ii) coupling transcription and RNA processing or translat",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.518351+00:00"
+}

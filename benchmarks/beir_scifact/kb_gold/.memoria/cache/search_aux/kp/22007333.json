@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "22007333",
+  "source_fingerprint": "dda32fe47c8738a8fe3dd682a1ee2717",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22007333"
+  ],
+  "key_phrases": [
+    "menstrual",
+    "reproductive",
+    "factors",
+    "relation",
+    "mammographic",
+    "density",
+    "study",
+    "women"
+  ],
+  "summary_1l": "Menstrual and reproductive factors may increase breast cancer risk through",
+  "query_hits": [],
+  "embed_text": "22007333 Menstrual and reproductive factors in relation to mammographic density: the Study of Women’s Health Across the Nation (SWAN) science scifact Menstrual and reproductive factors may increase breast cancer risk through a pathway that includes increased mammographic density. We assessed whether known or suspected menstrual and reproductive breast cancer risk factors were… 22007333 menstrual reproductive factors relation mammographic density study women Menstrual and reproductive factors may increase breast cancer risk through Menstrual and reproductive factors in relation to mammographic density: the Study of Women’s Health Across the Nation (SWAN) Menstrual and reproductive factors may increase breast cancer risk through a pathway that includes increased mammographic density. We assessed whether known or suspected menstrual and reproductive breast cancer risk factors were cross-sectionally associated with mammographic density, by measuring area of radiographic density and total breast area on mammograms from 801 participants in the Study of Women’s Health Across the Nation (SWAN), a multi-ethnic cohort of pre- and early perimenopausal women. From multivariable linear regression, the following menstrual or reproductive factors were independently associated with percent mammographic density (area of dense breast",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.089379+00:00"
+}

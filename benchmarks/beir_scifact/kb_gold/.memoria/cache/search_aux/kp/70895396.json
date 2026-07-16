@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "70895396",
+  "source_fingerprint": "ce783637a85e8c65d2fa630de1ee5fc5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "70895396",
+    "the-endothelium:-modulator-of-cardiovascular-function"
+  ],
+  "key_phrases": [
+    "endothelium",
+    "modulator",
+    "cardiovascular",
+    "function",
+    "introduction",
+    "methods",
+    "study",
+    "dependent"
+  ],
+  "summary_1l": "Introduction.",
+  "query_hits": [],
+  "embed_text": "70895396 The Endothelium: Modulator of Cardiovascular Function science scifact Introduction. Methods To Study Endothelium-Dependent Responses. Endothelium-Derived Relaxing Factor. Physiological Actions. Other Relaxing Substances Released By the Endothelium. Production of Contracting Agents. Local Regulation of… 70895396 the-endothelium:-modulator-of-cardiovascular-function endothelium modulator cardiovascular function introduction methods study dependent Introduction. The Endothelium: Modulator of Cardiovascular Function Introduction. Methods To Study Endothelium-Dependent Responses. Endothelium-Derived Relaxing Factor. Physiological Actions. Other Relaxing Substances Released By the Endothelium. Production of Contracting Agents. Local Regulation of Endothelium-Dependent Responses. Neurohumoral Regulation. Heterogeneity and Chronic Modulation. Disease. Therapeutic Implications. References. Subject Index.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.430793+00:00"
+}

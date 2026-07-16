@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11884867",
+  "source_fingerprint": "139cd2ef89a1f2281f7301a7170df70e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11884867",
+    "a-literature-review-of-the-safety-of-medical-body-area-network-devices-in-magnetic-resonance-imaging"
+  ],
+  "key_phrases": [
+    "literature",
+    "review",
+    "safety",
+    "medical",
+    "body",
+    "area",
+    "network",
+    "devices"
+  ],
+  "summary_1l": "Electro-magnetic fields and wireless technology are part of modern life.",
+  "query_hits": [],
+  "embed_text": "11884867 A literature review of the safety of medical body area network devices in magnetic resonance imaging science scifact Electro-magnetic fields and wireless technology are part of modern life. The use of Magnetic Resonance Imaging (MRI) machines for clarification of internal human structures and function in healthcare is increasing. The rapid development of… 11884867 a-literature-review-of-the-safety-of-medical-body-area-network-devices-in-magnetic-resonance-imaging literature review safety medical body area network devices Electro-magnetic fields and wireless technology are part of modern life. A literature review of the safety of medical body area network devices in magnetic resonance imaging Electro-magnetic fields and wireless technology are part of modern life. The use of Magnetic Resonance Imaging (MRI) machines for clarification of internal human structures and function in healthcare is increasing. The rapid development of wireless devices, their miniaturization and their application as clinical tools creates an expanding intersection zone. Although safety standards for devices in MRI machines have been previously published, it is not clear that newer wireless technologies, including devices used in Medical Body Area Networks (MBAN) have been rigorously tested or disclosed. We undertook a review of the clinical scientific literature and the United States Food and Drug Admin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:07.309123+00:00"
+}

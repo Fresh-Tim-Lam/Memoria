@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "306006",
+  "source_fingerprint": "83954ca6f80fb626d7dc925f9b369f62",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "306006",
+    "the-stimulatory-potency-of-t-cell-antigens-is-influenced-by-the-formation-of-the-immunological-synapse."
+  ],
+  "key_phrases": [
+    "stimulatory",
+    "potency",
+    "cell",
+    "antigens",
+    "influenced",
+    "by",
+    "formation",
+    "immunological"
+  ],
+  "summary_1l": "The stimulatory potency of T cell antigens is influenced by the formation of the immunological synapse.",
+  "query_hits": [],
+  "embed_text": "306006 The stimulatory potency of T cell antigens is influenced by the formation of the immunological synapse. science scifact T cell activation is predicated on the interaction between the T cell receptor and peptide-major histocompatibility (pMHC) ligands. The factors that determine the stimulatory potency of a pMHC molecule remain unclear. We describe results… 306006 the-stimulatory-potency-of-t-cell-antigens-is-influenced-by-the-formation-of-the-immunological-synapse. stimulatory potency cell antigens influenced by formation immunological The stimulatory potency of T cell antigens is influenced by the formation of the immunological synapse. The stimulatory potency of T cell antigens is influenced by the formation of the immunological synapse. T cell activation is predicated on the interaction between the T cell receptor and peptide-major histocompatibility (pMHC) ligands. The factors that determine the stimulatory potency of a pMHC molecule remain unclear. We describe results showing that a peptide exhibiting many hallmarks of a weak agonist stimulates T cells to proliferate more than the wild-type agonist ligand. An in silico approach suggested that the inability to form the central supramolecular activation cluster (cSMAC) could underlie the increased proliferation. This conclusion was supported by experiments that showed that enhancing cSMAC formation reduced stimulatory capacity of the weak peptide. Our studies highlight",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:12.852481+00:00"
+}

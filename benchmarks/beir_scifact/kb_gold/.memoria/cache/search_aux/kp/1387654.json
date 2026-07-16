@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1387654",
+  "source_fingerprint": "ed6c4e9515bc69e25dacb1ca012d933c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1387654",
+    "the-hippo-signaling-pathway-restricts-the-oncogenic-potential-of-an-intestinal-regeneration-program."
+  ],
+  "key_phrases": [
+    "hippo",
+    "signaling",
+    "pathway",
+    "restricts",
+    "oncogenic",
+    "potential",
+    "intestinal",
+    "regeneration"
+  ],
+  "summary_1l": "The Hippo signaling pathway restricts the oncogenic potential of an intestinal regeneration program.",
+  "query_hits": [],
+  "embed_text": "1387654 The Hippo signaling pathway restricts the oncogenic potential of an intestinal regeneration program. science scifact Although a developmental role for Hippo signaling in organ size control is well appreciated, how this pathway functions in tissue regeneration is largely unknown. Here we address this issue using a dextran sodium sulfate (DSS)-induced… 1387654 the-hippo-signaling-pathway-restricts-the-oncogenic-potential-of-an-intestinal-regeneration-program. hippo signaling pathway restricts oncogenic potential intestinal regeneration The Hippo signaling pathway restricts the oncogenic potential of an intestinal regeneration program. The Hippo signaling pathway restricts the oncogenic potential of an intestinal regeneration program. Although a developmental role for Hippo signaling in organ size control is well appreciated, how this pathway functions in tissue regeneration is largely unknown. Here we address this issue using a dextran sodium sulfate (DSS)-induced colonic regeneration model. We find that regenerating crypts express elevated Yes-associated protein (YAP) levels. Inactivation of YAP causes no obvious intestinal defects under normal homeostasis, but severely impairs DSS-induced intestinal regeneration. Conversely, hyperactivation of YAP results in widespread early-onset polyp formation following DSS treatment. Thus, the YAP oncoprotein must be exquisitely controlled in tissue regeneration to allow compensat",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.265969+00:00"
+}

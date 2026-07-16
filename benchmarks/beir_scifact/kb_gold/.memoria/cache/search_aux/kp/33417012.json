@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "33417012",
+  "source_fingerprint": "75777bb41f43beb6dadd63c6ae1f625e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "33417012",
+    "treated-individuals-who-progress-to-action-or-maintenance-for-one-behavior-are-more-likely-to-make-similar-progress-on-another-behavior:-coaction-results-of-a-pooled-data-analysis-of-three-trials."
+  ],
+  "key_phrases": [
+    "treated",
+    "individuals",
+    "who",
+    "progress",
+    "action",
+    "maintenance",
+    "one",
+    "behavior"
+  ],
+  "summary_1l": "Treated individuals who progress to action or maintenance for one behavior are more likely to make similar progress on another behavior: coaction results of a pooled data analysis of three trials.",
+  "query_hits": [],
+  "embed_text": "33417012 Treated individuals who progress to action or maintenance for one behavior are more likely to make similar progress on another behavior: coaction results of a pooled data analysis of three trials. science scifact OBJECTIVE This study compared, in treatment and control groups, the phenomena of coaction, which is the probability that taking effective action on one behavior is related to taking effective action on a second behavior. METHODS Pooled… 33417012 treated-individuals-who-progress-to-action-or-maintenance-for-one-behavior-are-more-likely-to-make-similar-progress-on-another-behavior:-coaction-results-of-a-pooled-data-analysis-of-three-trials. treated individuals who progress action maintenance one behavior Treated individuals who progress to action or maintenance for one behavior are more likely to make similar progress on another behavior: coaction results of a pooled data analysis of three trials. Treated individuals who progress to action or maintenance for one behavior are more likely to make similar progress on another behavior: coaction results of a pooled data analysis of three trials. OBJECTIVE This study compared, in treatment and control groups, the phenomena of coaction, which is the probability that taking effective action on one behavior is related to taking effective action on a second behavior. METHODS Pooled data from three randomized trials of Transtheoretical Model (TTM) tailored interventions (n=9461), completed in the U.S. in 1999, were analyzed to assess coaction in three behavior pairs (diet and sun protection, diet and smoking, and sun protection and smoking). Odds ratios (ORs) compared the likelihood of taking action on a second behavior compared to taking acti",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.393261+00:00"
+}

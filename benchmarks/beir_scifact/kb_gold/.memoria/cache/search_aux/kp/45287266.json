@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "45287266",
+  "source_fingerprint": "61f5d789c288ae0ac07bbafb6549862f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "45287266",
+    "nonstructural-protein-3-4a:-the-swiss-army-knife-of-hepatitis-c-virus."
+  ],
+  "key_phrases": [
+    "nonstructural",
+    "protein",
+    "4a",
+    "swiss",
+    "army",
+    "knife",
+    "hepatitis",
+    "virus"
+  ],
+  "summary_1l": "Nonstructural protein 3-4A: the Swiss army knife of hepatitis C virus.",
+  "query_hits": [],
+  "embed_text": "45287266 Nonstructural protein 3-4A: the Swiss army knife of hepatitis C virus. science scifact Hepatitis C virus (HCV) nonstructural protein 3-4A (NS3-4A) is a complex composed of NS3 and its cofactor NS4A. It harbours serine protease as well as NTPase/RNA helicase activities and is essential for viral polyprotein processing, RNA… 45287266 nonstructural-protein-3-4a:-the-swiss-army-knife-of-hepatitis-c-virus. nonstructural protein 4a swiss army knife hepatitis virus Nonstructural protein 3-4A: the Swiss army knife of hepatitis C virus. Nonstructural protein 3-4A: the Swiss army knife of hepatitis C virus. Hepatitis C virus (HCV) nonstructural protein 3-4A (NS3-4A) is a complex composed of NS3 and its cofactor NS4A. It harbours serine protease as well as NTPase/RNA helicase activities and is essential for viral polyprotein processing, RNA replication and virion formation. Specific inhibitors of the NS3-4A protease significantly improve sustained virological response rates in patients with chronic hepatitis C when combined with pegylated interferon-α and ribavirin. The NS3-4A protease can also target selected cellular proteins, thereby blocking innate immune pathways and modulating growth factor signalling. Hence, NS3-4A is not only an essential component of the viral replication complex and prime target for antiviral inte",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.265330+00:00"
+}

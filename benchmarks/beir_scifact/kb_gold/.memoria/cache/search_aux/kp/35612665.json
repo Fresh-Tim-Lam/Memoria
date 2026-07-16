@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "35612665",
+  "source_fingerprint": "a9decfd165d1cf9316360356a6a33c3f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "35612665",
+    "identification-of-an-h2-m3-restricted-listeria-epitope:-implications-for-antigen-presentation-by-m3."
+  ],
+  "key_phrases": [
+    "identification",
+    "h2",
+    "m3",
+    "restricted",
+    "listeria",
+    "epitope",
+    "implications",
+    "antigen"
+  ],
+  "summary_1l": "Identification of an H2-M3-restricted Listeria epitope: implications for antigen presentation by M3.",
+  "query_hits": [],
+  "embed_text": "35612665 Identification of an H2-M3-restricted Listeria epitope: implications for antigen presentation by M3. science scifact Using expression cloning, we have identified an H2-M3-restricted epitope of the intracellular bacterial pathogen Listeria monocytogenes. Picomolar concentrations of an amino-terminal N-formylated hexapeptide, fMIGWII, targeted cells for… 35612665 identification-of-an-h2-m3-restricted-listeria-epitope:-implications-for-antigen-presentation-by-m3. identification h2 m3 restricted listeria epitope implications antigen Identification of an H2-M3-restricted Listeria epitope: implications for antigen presentation by M3. Identification of an H2-M3-restricted Listeria epitope: implications for antigen presentation by M3. Using expression cloning, we have identified an H2-M3-restricted epitope of the intracellular bacterial pathogen Listeria monocytogenes. Picomolar concentrations of an amino-terminal N-formylated hexapeptide, fMIGWII, targeted cells for lysis by CD8+ cytotoxic T cells, while the nonformylated peptide was approximately 100-fold less active. The sequence of the 185 aa protein source of this epitope predicts a transmembrane protein that retains its N terminus and assumes an N(out)-C(in) topology. This membrane orientation offers an explanation for the protection of the epitope from deformylases present in the bacterial cell and suggests an explanation for the ability of phagocytes to present H",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.411029+00:00"
+}

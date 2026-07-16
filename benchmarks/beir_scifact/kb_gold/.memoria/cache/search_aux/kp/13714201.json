@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13714201",
+  "source_fingerprint": "56ef0550bbde256830c0adcd8ed72f6d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13714201",
+    "gut-microbial-diversity-is-associated-with-lower-arterial-stiffness-in-women"
+  ],
+  "key_phrases": [
+    "gut",
+    "microbial",
+    "diversity",
+    "associated",
+    "with",
+    "lower",
+    "arterial",
+    "stiffness"
+  ],
+  "summary_1l": "Aims The gut microbiome influences metabolic syndrome (MetS) and inflammation and is therapeutically modifiable.",
+  "query_hits": [],
+  "embed_text": "13714201 Gut microbial diversity is associated with lower arterial stiffness in women science scifact Aims The gut microbiome influences metabolic syndrome (MetS) and inflammation and is therapeutically modifiable. Arterial stiffness is poorly correlated with most traditional risk factors. Our aim was to examine whether gut microbial… 13714201 gut-microbial-diversity-is-associated-with-lower-arterial-stiffness-in-women gut microbial diversity associated with lower arterial stiffness Aims The gut microbiome influences metabolic syndrome (MetS) and inflammation and is therapeutically modifiable. Gut microbial diversity is associated with lower arterial stiffness in women Aims The gut microbiome influences metabolic syndrome (MetS) and inflammation and is therapeutically modifiable. Arterial stiffness is poorly correlated with most traditional risk factors. Our aim was to examine whether gut microbial composition is associated with arterial stiffness. Methods and results We assessed the correlation between carotid-femoral pulse wave velocity (PWV), a measure of arterial stiffness, and gut microbiome composition in 617 middle-aged women from the TwinsUK cohort with concurrent serum metabolomics data. Pulse wave velocity was negatively correlated with gut microbiome alpha diversity (Shannon index, Beta(SE)= -0.25(0.07), P = 1 × 10-4) after adjustment for covariates. We identified sev",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.750808+00:00"
+}

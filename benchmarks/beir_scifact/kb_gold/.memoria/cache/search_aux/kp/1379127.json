@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1379127",
+  "source_fingerprint": "4fccaa17694435829db9e3f15ff8af49",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1379127",
+    "orai1-and-stim1-are-critical-for-breast-tumor-cell-migration-and-metastasis."
+  ],
+  "key_phrases": [
+    "orai1",
+    "stim1",
+    "critical",
+    "breast",
+    "tumor",
+    "cell",
+    "migration",
+    "metastasis"
+  ],
+  "summary_1l": "Orai1 and STIM1 are critical for breast tumor cell migration and metastasis.",
+  "query_hits": [],
+  "embed_text": "1379127 Orai1 and STIM1 are critical for breast tumor cell migration and metastasis. science scifact Tumor metastasis is the primary cause of death of cancer patients. Understanding the molecular mechanisms underlying tumor metastasis will provide potential drug targets. We report here that Orai1 and STIM1, both of which are involved in… 1379127 orai1-and-stim1-are-critical-for-breast-tumor-cell-migration-and-metastasis. orai1 stim1 critical breast tumor cell migration metastasis Orai1 and STIM1 are critical for breast tumor cell migration and metastasis. Orai1 and STIM1 are critical for breast tumor cell migration and metastasis. Tumor metastasis is the primary cause of death of cancer patients. Understanding the molecular mechanisms underlying tumor metastasis will provide potential drug targets. We report here that Orai1 and STIM1, both of which are involved in store-operated calcium entry, are essential for breast tumor cell migration in vitro and tumor metastasis in mice. Reduction of Orai1 or STIM1 by RNA interference in highly metastatic human breast cancer cells or treatment with a pharmacological inhibitor of store-operated calcium channels decreased tumor metastasis in animal models. Our data demonstrate a role for Orai1 and STIM1 in tumor metastasis and suggest store-operated calcium entry channels as potential cancer therapeutic",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.053362+00:00"
+}

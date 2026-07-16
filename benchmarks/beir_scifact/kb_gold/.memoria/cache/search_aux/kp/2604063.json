@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2604063",
+  "source_fingerprint": "5de008c01e1893937f4dc8cd8c1f5856",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2604063",
+    "the-composition-of-the-gut-microbiota-throughout-life,-with-an-emphasis-on-early-life"
+  ],
+  "key_phrases": [
+    "composition",
+    "gut",
+    "microbiota",
+    "throughout",
+    "life",
+    "with",
+    "emphasis",
+    "early"
+  ],
+  "summary_1l": "The intestinal microbiota has become a relevant aspect of human health.",
+  "query_hits": [],
+  "embed_text": "2604063 The composition of the gut microbiota throughout life, with an emphasis on early life science scifact The intestinal microbiota has become a relevant aspect of human health. Microbial colonization runs in parallel with immune system maturation and plays a role in intestinal physiology and regulation. Increasing evidence on early microbial… 2604063 the-composition-of-the-gut-microbiota-throughout-life,-with-an-emphasis-on-early-life composition gut microbiota throughout life with emphasis early The intestinal microbiota has become a relevant aspect of human health. The composition of the gut microbiota throughout life, with an emphasis on early life The intestinal microbiota has become a relevant aspect of human health. Microbial colonization runs in parallel with immune system maturation and plays a role in intestinal physiology and regulation. Increasing evidence on early microbial contact suggest that human intestinal microbiota is seeded before birth. Maternal microbiota forms the first microbial inoculum, and from birth, the microbial diversity increases and converges toward an adult-like microbiota by the end of the first 3-5 years of life. Perinatal factors such as mode of delivery, diet, genetics, and intestinal mucin glycosylation all contribute to influence microbial colonization. Once established, the composition of the gut microbiota is r",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.142795+00:00"
+}

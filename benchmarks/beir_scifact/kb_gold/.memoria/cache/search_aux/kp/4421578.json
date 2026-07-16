@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4421578",
+  "source_fingerprint": "1825364aaa09c9307bb9661e5edcc60b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4421578",
+    "broad-and-potent-neutralization-of-hiv-1-by-a-gp41-specific-human-antibody"
+  ],
+  "key_phrases": [
+    "broad",
+    "potent",
+    "neutralization",
+    "hiv",
+    "by",
+    "gp41",
+    "specific",
+    "human"
+  ],
+  "summary_1l": "Characterization of human monoclonal antibodies is providing considerable insight into mechanisms of broad HIV-1 neutralizati",
+  "query_hits": [],
+  "embed_text": "4421578 Broad and potent neutralization of HIV-1 by a gp41-specific human antibody science scifact Characterization of human monoclonal antibodies is providing considerable insight into mechanisms of broad HIV-1 neutralization. Here we report an HIV-1 gp41 membrane-proximal external region (MPER)-specific antibody, named 10E8, which… 4421578 broad-and-potent-neutralization-of-hiv-1-by-a-gp41-specific-human-antibody broad potent neutralization hiv by gp41 specific human Characterization of human monoclonal antibodies is providing considerable insight into mechanisms of broad HIV-1 neutralizati Broad and potent neutralization of HIV-1 by a gp41-specific human antibody Characterization of human monoclonal antibodies is providing considerable insight into mechanisms of broad HIV-1 neutralization. Here we report an HIV-1 gp41 membrane-proximal external region (MPER)-specific antibody, named 10E8, which neutralizes ∼98% of tested viruses. An analysis of sera from 78 healthy HIV-1-infected donors demonstrated that 27% contained MPER-specific antibodies and 8% contained 10E8-like specificities. In contrast to other neutralizing MPER antibodies, 10E8 did not bind phospholipids, was not autoreactive, and bound cell-surface envelope. The structure of 10E8 in complex with the complete MPER revealed a site of vulnerability comprising a narrow stretch of highly conserved gp41-hydrophobic res",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.957497+00:00"
+}

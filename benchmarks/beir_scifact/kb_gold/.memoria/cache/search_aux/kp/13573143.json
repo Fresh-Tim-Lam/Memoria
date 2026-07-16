@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13573143",
+  "source_fingerprint": "a554099816c470e4d2fc8767e8d88c1f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13573143",
+    "intestinal-cgi-58-deficiency-reduces-postprandial-lipid-absorption"
+  ],
+  "key_phrases": [
+    "intestinal",
+    "cgi",
+    "58",
+    "deficiency",
+    "reduces",
+    "postprandial",
+    "lipid",
+    "absorption"
+  ],
+  "summary_1l": "Comparative Gene Identification-58 (CGI-58), a lipid droplet (LD)-associated protein, promotes intracellular triglyceride (TG) hydrol",
+  "query_hits": [],
+  "embed_text": "13573143 Intestinal Cgi-58 Deficiency Reduces Postprandial Lipid Absorption science scifact Comparative Gene Identification-58 (CGI-58), a lipid droplet (LD)-associated protein, promotes intracellular triglyceride (TG) hydrolysis in vitro. Mutations in human CGI-58 cause TG accumulation in numerous tissues including intestine.… 13573143 intestinal-cgi-58-deficiency-reduces-postprandial-lipid-absorption intestinal cgi 58 deficiency reduces postprandial lipid absorption Comparative Gene Identification-58 (CGI-58), a lipid droplet (LD)-associated protein, promotes intracellular triglyceride (TG) hydrol Intestinal Cgi-58 Deficiency Reduces Postprandial Lipid Absorption Comparative Gene Identification-58 (CGI-58), a lipid droplet (LD)-associated protein, promotes intracellular triglyceride (TG) hydrolysis in vitro. Mutations in human CGI-58 cause TG accumulation in numerous tissues including intestine. Enterocytes are thought not to store TG-rich LDs, but a fatty meal does induce temporary cytosolic accumulation of LDs. Accumulated LDs are eventually cleared out, implying existence of TG hydrolytic machinery in enterocytes. However, identities of proteins responsible for LD-TG hydrolysis remain unknown. Here we report that intestine-specific inactivation of CGI-58 in mice significantly reduces postprandial plasma TG concentrations and intestinal TG hydrolase activity, which is associated w",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.534683+00:00"
+}

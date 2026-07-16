@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26474812",
+  "source_fingerprint": "9d1d082e03eb53c3c1b1d93259f90266",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26474812",
+    "age-structured-red-blood-cell-susceptibility-and-the-dynamics-of-malaria-infections."
+  ],
+  "key_phrases": [
+    "age",
+    "structured",
+    "red",
+    "blood",
+    "cell",
+    "susceptibility",
+    "dynamics",
+    "malaria"
+  ],
+  "summary_1l": "Age-structured red blood cell susceptibility and the dynamics of malaria infections.",
+  "query_hits": [],
+  "embed_text": "26474812 Age-structured red blood cell susceptibility and the dynamics of malaria infections. science scifact Malaria parasites and immune responses in an infected human interact on a dynamic landscape, in which a population of replicating parasites depletes a population of replenishing red blood cells (RBCs). These underlying dynamics receive… 26474812 age-structured-red-blood-cell-susceptibility-and-the-dynamics-of-malaria-infections. age structured red blood cell susceptibility dynamics malaria Age-structured red blood cell susceptibility and the dynamics of malaria infections. Age-structured red blood cell susceptibility and the dynamics of malaria infections. Malaria parasites and immune responses in an infected human interact on a dynamic landscape, in which a population of replicating parasites depletes a population of replenishing red blood cells (RBCs). These underlying dynamics receive relatively little attention, but they offer unique insights into the processes that control most malaria infections. Here, we focus on the observation that three of the four malaria-parasite species that infect humans are restricted to particular age classes of RBC. We explicitly incorporate this observation in models of infection dynamics to distinguish common from species-specific pressures on host immune responses, and we find that age structuring has profound effects on",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.782312+00:00"
+}

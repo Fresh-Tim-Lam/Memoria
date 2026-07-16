@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19278208",
+  "source_fingerprint": "bd6461d545dcd80752648e4e23abe5f8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19278208",
+    "folic-acid-supplementation-and-dietary-folate-intake,-and-risk-of-preeclampsia"
+  ],
+  "key_phrases": [
+    "folic",
+    "acid",
+    "supplementation",
+    "dietary",
+    "folate",
+    "intake",
+    "risk",
+    "preeclampsia"
+  ],
+  "summary_1l": "Background/Objectives:Folic acid supplementation has been suggested to reduce the risk of preeclampsia.",
+  "query_hits": [],
+  "embed_text": "19278208 Folic acid supplementation and dietary folate intake, and risk of preeclampsia science scifact Background/Objectives:Folic acid supplementation has been suggested to reduce the risk of preeclampsia. However, results from few epidemiologic studies have been inconclusive. We investigated the hypothesis that folic acid supplementation… 19278208 folic-acid-supplementation-and-dietary-folate-intake,-and-risk-of-preeclampsia folic acid supplementation dietary folate intake risk preeclampsia Background/Objectives:Folic acid supplementation has been suggested to reduce the risk of preeclampsia. Folic acid supplementation and dietary folate intake, and risk of preeclampsia Background/Objectives:Folic acid supplementation has been suggested to reduce the risk of preeclampsia. However, results from few epidemiologic studies have been inconclusive. We investigated the hypothesis that folic acid supplementation and dietary folate intake before conception and during pregnancy reduce the risk of preeclampsia. Subjects/Methods:A birth cohort study was conducted in 2010–2012 at the Gansu Provincial Maternity & Child Care Hospital in Lanzhou, China. A total of 10 041 pregnant women without chronic hypertension or gestational hypertension were enrolled. Results:Compared with nonusers, folic acid supplement users had a reduced risk of preeclampsia (OR=0.61, 95% CI: 0.43–0.87). A significant",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.358507+00:00"
+}

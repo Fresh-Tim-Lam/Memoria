@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "43557480",
+  "source_fingerprint": "2a87920297f7dd8db6f5dbae67241bd8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "43557480",
+    "arterial-hypertension-and-progression-of-chronic-kidney-disease-in-children-during-10-year-ambulatory-observation."
+  ],
+  "key_phrases": [
+    "arterial",
+    "hypertension",
+    "progression",
+    "chronic",
+    "kidney",
+    "disease",
+    "children",
+    "during"
+  ],
+  "summary_1l": "Arterial hypertension and progression of chronic kidney disease in children during 10-year ambulatory observation.",
+  "query_hits": [],
+  "embed_text": "43557480 Arterial hypertension and progression of chronic kidney disease in children during 10-year ambulatory observation. science scifact The aim of this study was the long-term retrospective analysis of chronic kidney disease (CKD) progression in children, especially with regard to the presence of hypertension (HTN). The average rate of progression of CKD was higher in… 43557480 arterial-hypertension-and-progression-of-chronic-kidney-disease-in-children-during-10-year-ambulatory-observation. arterial hypertension progression chronic kidney disease children during Arterial hypertension and progression of chronic kidney disease in children during 10-year ambulatory observation. Arterial hypertension and progression of chronic kidney disease in children during 10-year ambulatory observation. The aim of this study was the long-term retrospective analysis of chronic kidney disease (CKD) progression in children, especially with regard to the presence of hypertension (HTN). The average rate of progression of CKD was higher in patients with HTN than without HTN. Hypertension treatment requires multidrug schemes which need to be intensified with extended time of CKD duration.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.028773+00:00"
+}

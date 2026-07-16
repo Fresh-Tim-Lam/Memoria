@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11201004",
+  "source_fingerprint": "ac2aaf042b1ce96bfa07e0275bbd301c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11201004",
+    "consumption-of-added-sugars-from-liquid-but-not-solid-sources-predicts-impaired-glucose-homeostasis-and-insulin-resistance-among-youth-at-risk-of-obesity."
+  ],
+  "key_phrases": [
+    "consumption",
+    "added",
+    "sugars",
+    "from",
+    "liquid",
+    "but",
+    "not",
+    "solid"
+  ],
+  "summary_1l": "Consumption of added sugars from liquid but not solid sources predicts impaired glucose homeostasis and insulin resistance among youth at risk of obesity.",
+  "query_hits": [],
+  "embed_text": "11201004 Consumption of added sugars from liquid but not solid sources predicts impaired glucose homeostasis and insulin resistance among youth at risk of obesity. science scifact Little is known about longitudinal associations between added sugar consumption (solid and liquid sources) and glucose-insulin homeostasis among youth. Caucasian children (8-10 y) with at least one obese biological parent were recruited in… 11201004 consumption-of-added-sugars-from-liquid-but-not-solid-sources-predicts-impaired-glucose-homeostasis-and-insulin-resistance-among-youth-at-risk-of-obesity. consumption added sugars from liquid but not solid Consumption of added sugars from liquid but not solid sources predicts impaired glucose homeostasis and insulin resistance among youth at risk of obesity. Consumption of added sugars from liquid but not solid sources predicts impaired glucose homeostasis and insulin resistance among youth at risk of obesity. Little is known about longitudinal associations between added sugar consumption (solid and liquid sources) and glucose-insulin homeostasis among youth. Caucasian children (8-10 y) with at least one obese biological parent were recruited in the QUébec Adipose and Lifestyle InvesTigation in Youth (QUALITY) cohort (n = 630) and followed-up 2 y later (n = 564). Added sugars were assessed by 3 24-h dietary recalls at baseline. Two-year changes were examined in multivariate linear regression models, adjusting for baseline level, age, sex, Tanner stage, energy intake, fat mass (dual-energy X-ray absorptiometry), and physical activity (7 d accel",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:06.080565+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "43587663",
+  "source_fingerprint": "947721ac776f4a622ee27f4907d34fed",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "43587663",
+    "serious-infections-after-unrelated-donor-transplantation-in-136-children:-impact-of-stem-cell-source."
+  ],
+  "key_phrases": [
+    "serious",
+    "infections",
+    "after",
+    "unrelated",
+    "donor",
+    "transplantation",
+    "136",
+    "children"
+  ],
+  "summary_1l": "Serious infections after unrelated donor transplantation in 136 children: impact of stem cell source.",
+  "query_hits": [],
+  "embed_text": "43587663 Serious infections after unrelated donor transplantation in 136 children: impact of stem cell source. science scifact How the infection risks compare after umbilical cord blood (UCB) and bone marrow (BM) transplantation is not known. Therefore, we compared serious infections in the 2 years after pediatric myeloablative unrelated donor transplantation with… 43587663 serious-infections-after-unrelated-donor-transplantation-in-136-children:-impact-of-stem-cell-source. serious infections after unrelated donor transplantation 136 children Serious infections after unrelated donor transplantation in 136 children: impact of stem cell source. Serious infections after unrelated donor transplantation in 136 children: impact of stem cell source. How the infection risks compare after umbilical cord blood (UCB) and bone marrow (BM) transplantation is not known. Therefore, we compared serious infections in the 2 years after pediatric myeloablative unrelated donor transplantation with unmanipulated BM (n = 52), T cell-depleted (TCD) BM (n = 24), or UCB (n = 60) for the treatment of hematologic malignancy. Overall, the cumulative incidence of 1 or more serious infections was comparable between groups (BM, 81%; TCD, 83%; UCB, 90%; P = .12). Furthermore, by taking all serious infections into account and using multivariate techniques with unmanipulated BM as the reference, there were also no significant differences between groups (TCD rel",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.054841+00:00"
+}

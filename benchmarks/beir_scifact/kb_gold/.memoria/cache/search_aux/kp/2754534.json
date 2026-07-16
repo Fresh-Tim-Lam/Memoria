@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2754534",
+  "source_fingerprint": "f76a2407e11c9466f4f7ced045ae2a13",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2754534",
+    "dna-methylation-status-predicts-cell-type-specific-enhancer-activity."
+  ],
+  "key_phrases": [
+    "dna",
+    "methylation",
+    "status",
+    "predicts",
+    "cell",
+    "type",
+    "specific",
+    "enhancer"
+  ],
+  "summary_1l": "DNA methylation status predicts cell type-specific enhancer activity.",
+  "query_hits": [],
+  "embed_text": "2754534 DNA methylation status predicts cell type-specific enhancer activity. science scifact Cell-selective glucocorticoid receptor (GR) binding to distal regulatory elements is associated with cell type-specific regions of locally accessible chromatin. These regions can either pre-exist in chromatin (pre-programmed) or be induced… 2754534 dna-methylation-status-predicts-cell-type-specific-enhancer-activity. dna methylation status predicts cell type specific enhancer DNA methylation status predicts cell type-specific enhancer activity. DNA methylation status predicts cell type-specific enhancer activity. Cell-selective glucocorticoid receptor (GR) binding to distal regulatory elements is associated with cell type-specific regions of locally accessible chromatin. These regions can either pre-exist in chromatin (pre-programmed) or be induced by the receptor (de novo). Mechanisms that create and maintain these sites are not well understood. We observe a global enrichment of CpG density for pre-programmed elements, and implicate their demethylated state in the maintenance of open chromatin in a tissue-specific manner. In contrast, sites that are actively opened by GR (de novo) are characterized by low CpG density, and form a unique class of enhancers devoid of suppressive effect of agglomerated methyl-cytosines. Furthermore,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.008930+00:00"
+}

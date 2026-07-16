@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6944800",
+  "source_fingerprint": "35d3d6e990d04e4cb6bfd36e1ee427e1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6944800",
+    "microenvironmental-regulation-of-tumor-progression-and-metastasis"
+  ],
+  "key_phrases": [
+    "microenvironmental",
+    "regulation",
+    "tumor",
+    "progression",
+    "metastasis",
+    "cancers",
+    "develop",
+    "complex"
+  ],
+  "summary_1l": "Cancers develop in complex tissue environments, which they depend on for sustained growth, invasion and metastasis.",
+  "query_hits": [],
+  "embed_text": "6944800 Microenvironmental regulation of tumor progression and metastasis science scifact Cancers develop in complex tissue environments, which they depend on for sustained growth, invasion and metastasis. Unlike tumor cells, stromal cell types within the tumor microenvironment (TME) are genetically stable and thus represent an… 6944800 microenvironmental-regulation-of-tumor-progression-and-metastasis microenvironmental regulation tumor progression metastasis cancers develop complex Cancers develop in complex tissue environments, which they depend on for sustained growth, invasion and metastasis. Microenvironmental regulation of tumor progression and metastasis Cancers develop in complex tissue environments, which they depend on for sustained growth, invasion and metastasis. Unlike tumor cells, stromal cell types within the tumor microenvironment (TME) are genetically stable and thus represent an attractive therapeutic target with reduced risk of resistance and tumor recurrence. However, specifically disrupting the pro-tumorigenic TME is a challenging undertaking, as the TME has diverse capacities to induce both beneficial and adverse consequences for tumorigenesis. Furthermore, many studies have shown that the microenvironment is capable of normalizing tumor cells, suggesting that re-education of stromal cells, rather than targeted ablation per se, may be an effective strategy for",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.003781+00:00"
+}

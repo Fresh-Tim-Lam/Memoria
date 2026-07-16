@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3034412",
+  "source_fingerprint": "2efcd917c96a8388a67571bd6067c3bf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3034412",
+    "calcium-absorption-varies-within-the-reference-range-for-serum-25-hydroxyvitamin-d."
+  ],
+  "key_phrases": [
+    "calcium",
+    "absorption",
+    "varies",
+    "within",
+    "reference",
+    "range",
+    "serum",
+    "25"
+  ],
+  "summary_1l": "Calcium absorption varies within the reference range for serum 25-hydroxyvitamin D.",
+  "query_hits": [],
+  "embed_text": "3034412 Calcium absorption varies within the reference range for serum 25-hydroxyvitamin D. science scifact BACKGROUND Calcium absorption is generally considered to be impaired under conditions of vitamin D deficiency, but the vitamin D status that fully normalizes absorption is not known for humans. OBJECTIVE To quantify calcium absorption at… 3034412 calcium-absorption-varies-within-the-reference-range-for-serum-25-hydroxyvitamin-d. calcium absorption varies within reference range serum 25 Calcium absorption varies within the reference range for serum 25-hydroxyvitamin D. Calcium absorption varies within the reference range for serum 25-hydroxyvitamin D. BACKGROUND Calcium absorption is generally considered to be impaired under conditions of vitamin D deficiency, but the vitamin D status that fully normalizes absorption is not known for humans. OBJECTIVE To quantify calcium absorption at two levels of vitamin D repletion, using pharmacokinetic methods and commercially marketed calcium supplements. DESIGN Two experiments performed in the spring of the year, one year apart. In the first, in which participants were pretreated with 25-hydroxyvitamin D (25OHD), mean serum 25OHD concentration was 86.5 nmol/L; and in the other, with no pretreatment, mean serum concentration was 50.2 nmol/L. Participants received 500 mg oral calcium loads as a part of a standard lo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.588279+00:00"
+}

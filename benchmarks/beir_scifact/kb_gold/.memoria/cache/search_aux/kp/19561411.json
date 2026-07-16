@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19561411",
+  "source_fingerprint": "5672fe1a2f5f2d27e825e95aef2d4fbd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19561411",
+    "junctophilin-4,-a-component-of-the-endoplasmic-reticulum-plasma-membrane-junctions,-regulates-ca2+-dynamics-in-t-cells."
+  ],
+  "key_phrases": [
+    "junctophilin",
+    "component",
+    "endoplasmic",
+    "reticulum",
+    "plasma",
+    "membrane",
+    "junctions",
+    "regulates"
+  ],
+  "summary_1l": "Junctophilin-4, a component of the endoplasmic reticulum-plasma membrane junctions, regulates Ca2+ dynamics in T cells.",
+  "query_hits": [],
+  "embed_text": "19561411 Junctophilin-4, a component of the endoplasmic reticulum-plasma membrane junctions, regulates Ca2+ dynamics in T cells. science scifact Orai1 and stromal interaction molecule 1 (STIM1) mediate store-operated Ca(2+) entry (SOCE) in immune cells. STIM1, an endoplasmic reticulum (ER) Ca(2+) sensor, detects store depletion and interacts with plasma membrane (PM)-resident Orai1… 19561411 junctophilin-4,-a-component-of-the-endoplasmic-reticulum-plasma-membrane-junctions,-regulates-ca2+-dynamics-in-t-cells. junctophilin component endoplasmic reticulum plasma membrane junctions regulates Junctophilin-4, a component of the endoplasmic reticulum-plasma membrane junctions, regulates Ca2+ dynamics in T cells. Junctophilin-4, a component of the endoplasmic reticulum-plasma membrane junctions, regulates Ca2+ dynamics in T cells. Orai1 and stromal interaction molecule 1 (STIM1) mediate store-operated Ca(2+) entry (SOCE) in immune cells. STIM1, an endoplasmic reticulum (ER) Ca(2+) sensor, detects store depletion and interacts with plasma membrane (PM)-resident Orai1 channels at the ER-PM junctions. However, the molecular composition of these junctions in T cells remains poorly understood. Here, we show that junctophilin-4 (JP4), a member of junctional proteins in excitable cells, is expressed in T cells and localized at the ER-PM junctions to regulate Ca(2+) signaling. Silencing or genetic manipulation of JP4 decreased ER Ca(2+) content and SOCE in T cells, impaired activation of the nuclear factor",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.791814+00:00"
+}

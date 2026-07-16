@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27061085",
+  "source_fingerprint": "ec91fb3bca4b3ee33ea0779de4491aa2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27061085",
+    "transcript-assembly-and-quantification-by-rna-seq-reveals-unannotated-transcripts-and-isoform-switching-during-cell-differentiation."
+  ],
+  "key_phrases": [
+    "transcript",
+    "assembly",
+    "quantification",
+    "by",
+    "rna",
+    "seq",
+    "reveals",
+    "unannotated"
+  ],
+  "summary_1l": "Transcript assembly and quantification by RNA-Seq reveals unannotated transcripts and isoform switching during cell differentiation.",
+  "query_hits": [],
+  "embed_text": "27061085 Transcript assembly and quantification by RNA-Seq reveals unannotated transcripts and isoform switching during cell differentiation. science scifact High-throughput mRNA sequencing (RNA-Seq) promises simultaneous transcript discovery and abundance estimation. However, this would require algorithms that are not restricted by prior gene annotations and that account for alternative… 27061085 transcript-assembly-and-quantification-by-rna-seq-reveals-unannotated-transcripts-and-isoform-switching-during-cell-differentiation. transcript assembly quantification by rna seq reveals unannotated Transcript assembly and quantification by RNA-Seq reveals unannotated transcripts and isoform switching during cell differentiation. Transcript assembly and quantification by RNA-Seq reveals unannotated transcripts and isoform switching during cell differentiation. High-throughput mRNA sequencing (RNA-Seq) promises simultaneous transcript discovery and abundance estimation. However, this would require algorithms that are not restricted by prior gene annotations and that account for alternative transcription and splicing. Here we introduce such algorithms in an open-source software program called Cufflinks. To test Cufflinks, we sequenced and analyzed >430 million paired 75-bp RNA-Seq reads from a mouse myoblast cell line over a differentiation time series. We detected 13,692 known transcripts and 3,724 previously unannotated ones, 62% of which are supported by independent expression data or by homologous genes in other",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.406864+00:00"
+}

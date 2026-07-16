@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13636631",
+  "source_fingerprint": "e638730abb3c8cb253f73db143a89053",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13636631",
+    "cytokine-control-of-memory-t-cell-development-and-survival"
+  ],
+  "key_phrases": [
+    "cytokine",
+    "control",
+    "memory",
+    "cell",
+    "development",
+    "survival",
+    "evidence",
+    "has"
+  ],
+  "summary_1l": "Evidence has accumulated that cytokines have a fundamental role in the differentiation of memory T cells.",
+  "query_hits": [],
+  "embed_text": "13636631 Cytokine control of memory T-cell development and survival science scifact Evidence has accumulated that cytokines have a fundamental role in the differentiation of memory T cells. Here, we follow the CD8+ T cell from initial activation to memory-cell generation, indicating the checkpoints at which cytokines… 13636631 cytokine-control-of-memory-t-cell-development-and-survival cytokine control memory cell development survival evidence has Evidence has accumulated that cytokines have a fundamental role in the differentiation of memory T cells. Cytokine control of memory T-cell development and survival Evidence has accumulated that cytokines have a fundamental role in the differentiation of memory T cells. Here, we follow the CD8+ T cell from initial activation to memory-cell generation, indicating the checkpoints at which cytokines determine the fate of the T cell. Members of the common cytokine-receptor γ-chain (γc)-cytokine family — in particular, interleukin-7 (IL-7) and IL-15 — act at each stage of the immune response to promote proliferation and survival. In this manner, a stable and protective, long-lived memory CD8+ T-cell pool can be propagated and maintained.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.694681+00:00"
+}

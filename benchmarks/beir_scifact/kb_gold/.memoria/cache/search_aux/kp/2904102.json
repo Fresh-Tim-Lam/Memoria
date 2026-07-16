@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2904102",
+  "source_fingerprint": "1a503ef6e8a8dfb86529ea192b336235",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2904102",
+    "characterization-of-biochemical-properties-of-bacillus-subtilis-recq-helicase."
+  ],
+  "key_phrases": [
+    "characterization",
+    "biochemical",
+    "properties",
+    "bacillus",
+    "subtilis",
+    "recq",
+    "helicase",
+    "family"
+  ],
+  "summary_1l": "Characterization of biochemical properties of Bacillus subtilis RecQ helicase.",
+  "query_hits": [],
+  "embed_text": "2904102 Characterization of biochemical properties of Bacillus subtilis RecQ helicase. science scifact RecQ family helicases function as safeguards of the genome. Unlike Escherichia coli, the Gram-positive Bacillus subtilis bacterium possesses two RecQ-like homologues, RecQ[Bs] and RecS, which are required for the repair of DNA… 2904102 characterization-of-biochemical-properties-of-bacillus-subtilis-recq-helicase. characterization biochemical properties bacillus subtilis recq helicase family Characterization of biochemical properties of Bacillus subtilis RecQ helicase. Characterization of biochemical properties of Bacillus subtilis RecQ helicase. RecQ family helicases function as safeguards of the genome. Unlike Escherichia coli, the Gram-positive Bacillus subtilis bacterium possesses two RecQ-like homologues, RecQ[Bs] and RecS, which are required for the repair of DNA double-strand breaks. RecQ[Bs] also binds to the forked DNA to ensure a smooth progression of the cell cycle. Here we present the first biochemical analysis of recombinant RecQ[Bs]. RecQ[Bs] binds weakly to single-stranded DNA (ssDNA) and blunt-ended double-stranded DNA (dsDNA) but strongly to forked dsDNA. The protein exhibits a DNA-stimulated ATPase activity and ATP- and Mg(2+)-dependent DNA helicase activity with a 3' → 5' polarity. Molecular modeling shows that RecQ[Bs] shares high seq",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.545124+00:00"
+}

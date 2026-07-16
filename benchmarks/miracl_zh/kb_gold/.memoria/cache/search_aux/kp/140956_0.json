@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "kp_id": "140956#0",
+  "source_fingerprint": "374093bead575cdfa19b0eba00ab9fa1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "美国",
+    "美国国家公园列表",
+    "美国宪法历史",
+    "英国",
+    "中国国家女子足球队",
+    "国家公务员考试",
+    "美国流行音乐",
+    "西班牙语国家和地区列表",
+    "美国人口",
+    "美国媒体",
+    "美国独立日",
+    "英国工业革命"
+  ],
+  "aliases": [
+    "140956#0"
+  ],
+  "key_phrases": [
+    "美国",
+    "法律",
+    "law",
+    "united",
+    "states",
+    "源自",
+    "独立战争",
+    "时期"
+  ],
+  "summary_1l": "美国法律（law of the United States）源自美国独立战争时期的英国普通法体系，只是在最高权力条款规定下，美国宪法、国会制定的其他法律和美国参与的国际条约是国家的最高法律。",
+  "query_hits": [],
+  "embed_text": "140956#0 美国法律 美国法律 美国法律（law of the United States）源自美国独立战争时期的英国普通法体系，只是在最高权力条款规定下，美国宪法、国会制定的其他法律和美国参与的国际条约是国家的最高法律。这些文件组成了联邦制下联邦法律的基础，确定了联邦、五十个州与海外领地的法律权限。 美国 美国国家公园列表 美国宪法历史 英国 中国国家女子足球队 国家公务员考试 美国流行音乐 西班牙语国家和地区列表 美国人口 美国媒体 美国独立日 英国工业革命 140956#0 美国 法律 law united states 源自 独立战争 时期 美国法律（law of the United States）源自美国独立战争时期的英国普通法体系，只是在最高权力条款规定下，美国宪法、国会制定的其他法律和美国参与的国际条约是国家的最高法律。 美国法律 美国法律（law of the United States）源自美国独立战争时期的英国普通法体系，只是在最高权力条款规定下，美国宪法、国会制定的其他法律和美国参与的国际条约是国家的最高法律。这些文件组成了联邦制下联邦法律的基础，确定了联邦、五十个州与海外领地的法律权限。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:19:43.914016+00:00"
+}

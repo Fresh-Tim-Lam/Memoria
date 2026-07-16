@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "600808",
+  "source_fingerprint": "2d71cb73b840ad36ca6968c955067276",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "600808"
+  ],
+  "key_phrases": [
+    "anaphase",
+    "promoting",
+    "complex",
+    "cyclosome",
+    "dependent",
+    "proteolysis",
+    "human",
+    "cyclin"
+  ],
+  "summary_1l": "Cyclin A is a stable protein in S",
+  "query_hits": [],
+  "embed_text": "600808 Anaphase-Promoting Complex/Cyclosome–Dependent Proteolysis of Human Cyclin a Starts at the Beginning of Mitosis and Is Not Subject to the Spindle Assembly Checkpoint science scifact Cyclin A is a stable protein in S and G2 phases, but is destabilized when cells enter mitosis and is almost completely degraded before the metaphase to anaphase transition. Microinjection of antibodies against subunits of the… 600808 anaphase promoting complex cyclosome dependent proteolysis human cyclin Cyclin A is a stable protein in S Anaphase-Promoting Complex/Cyclosome–Dependent Proteolysis of Human Cyclin a Starts at the Beginning of Mitosis and Is Not Subject to the Spindle Assembly Checkpoint Cyclin A is a stable protein in S and G2 phases, but is destabilized when cells enter mitosis and is almost completely degraded before the metaphase to anaphase transition. Microinjection of antibodies against subunits of the anaphase-promoting complex/cyclosome (APC/C) or against human Cdc20 (fizzy) arrested cells at metaphase and stabilized both cyclins A and B1. Cyclin A was efficiently polyubiquitylated by Cdc20 or Cdh1-activated APC/C in vitro, but in contrast to cyclin B1, the proteolysis of cyclin A was not delayed by the spindle assembly checkpoint. The degradation of cyclin B1 was accelerated by inhibition of the spin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.703672+00:00"
+}

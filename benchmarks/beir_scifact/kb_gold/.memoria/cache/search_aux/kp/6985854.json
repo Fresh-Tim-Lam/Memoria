@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6985854",
+  "source_fingerprint": "0c13ac203e2971665a4597fb3312a7e5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6985854",
+    "discrimination-of-speech-stimuli-based-on-neuronal-response-phase-patterns-depends-on-acoustics-but-not-comprehension."
+  ],
+  "key_phrases": [
+    "discrimination",
+    "speech",
+    "stimuli",
+    "based",
+    "neuronal",
+    "response",
+    "phase",
+    "patterns"
+  ],
+  "summary_1l": "Discrimination of speech stimuli based on neuronal response phase patterns depends on acoustics but not comprehension.",
+  "query_hits": [],
+  "embed_text": "6985854 Discrimination of speech stimuli based on neuronal response phase patterns depends on acoustics but not comprehension. science scifact Speech stimuli give rise to neural activity in the listener that can be observed as waveforms using magnetoencephalography. Although waveforms vary greatly from trial to trial due to activity unrelated to the stimulus, it has been… 6985854 discrimination-of-speech-stimuli-based-on-neuronal-response-phase-patterns-depends-on-acoustics-but-not-comprehension. discrimination speech stimuli based neuronal response phase patterns Discrimination of speech stimuli based on neuronal response phase patterns depends on acoustics but not comprehension. Discrimination of speech stimuli based on neuronal response phase patterns depends on acoustics but not comprehension. Speech stimuli give rise to neural activity in the listener that can be observed as waveforms using magnetoencephalography. Although waveforms vary greatly from trial to trial due to activity unrelated to the stimulus, it has been demonstrated that spoken sentences can be discriminated based on theta-band (3-7 Hz) phase patterns in single-trial response waveforms. Furthermore, manipulations of the speech signal envelope and fine structure that reduced intelligibility were found to produce correlated reductions in discrimination performance, suggesting a relationship between theta-band phase patterns and speech comprehension. This study investigates the nature of this relat",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.157311+00:00"
+}

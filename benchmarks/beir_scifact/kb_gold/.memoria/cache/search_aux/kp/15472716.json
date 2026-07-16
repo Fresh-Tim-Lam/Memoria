@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15472716",
+  "source_fingerprint": "b783ddcb755a11c261c43405b35d88cc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15472716",
+    "differential-activation-of-dna-pk-based-on-dna-strand-orientation-and-sequence-bias"
+  ],
+  "key_phrases": [
+    "differential",
+    "activation",
+    "dna",
+    "pk",
+    "based",
+    "strand",
+    "orientation",
+    "sequence"
+  ],
+  "summary_1l": "DNA-PKcs and Ku are essential components of the complex that catalyzes non-homologous end joining (NHEJ) of DNA doub",
+  "query_hits": [],
+  "embed_text": "15472716 Differential activation of DNA-PK based on DNA strand orientation and sequence bias science scifact DNA-PKcs and Ku are essential components of the complex that catalyzes non-homologous end joining (NHEJ) of DNA double-strand breaks (DSBs). Ku, a heterodimeric protein, binds to DNA ends and facilitates recruitment of the catalytic… 15472716 differential-activation-of-dna-pk-based-on-dna-strand-orientation-and-sequence-bias differential activation dna pk based strand orientation sequence DNA-PKcs and Ku are essential components of the complex that catalyzes non-homologous end joining (NHEJ) of DNA doub Differential activation of DNA-PK based on DNA strand orientation and sequence bias DNA-PKcs and Ku are essential components of the complex that catalyzes non-homologous end joining (NHEJ) of DNA double-strand breaks (DSBs). Ku, a heterodimeric protein, binds to DNA ends and facilitates recruitment of the catalytic subunit, DNA-PKcs. We have investigated the effect of DNA strand orientation and sequence bias on the activation of DNA-PK. In addition, we assessed the effect of the position and strand orientation of cisplatin adducts on kinase activation. A series of duplex DNA substrates with site-specific cisplatin–DNA adducts placed in three different orientations on the duplex DNA were prepared. Terminal biotin modification and streptavidin (SA) blocking was employed to direct DNA-PK bind",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.615051+00:00"
+}

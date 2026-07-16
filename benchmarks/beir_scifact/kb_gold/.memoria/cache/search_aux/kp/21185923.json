@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21185923",
+  "source_fingerprint": "16640ff50e3542a7fefc88e9b5028ca7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21185923",
+    "stimulation-of-cd25+cd4+-regulatory-t-cells-through-gitr-breaks-immunological-self-tolerance"
+  ],
+  "key_phrases": [
+    "stimulation",
+    "cd25",
+    "cd4",
+    "regulatory",
+    "cells",
+    "through",
+    "gitr",
+    "breaks"
+  ],
+  "summary_1l": "CD25+CD4+ regulatory T cells in normal animals are engaged in the maintenance of immunological self-toleran",
+  "query_hits": [],
+  "embed_text": "21185923 Stimulation of CD25+CD4+ regulatory T cells through GITR breaks immunological self-tolerance science scifact CD25+CD4+ regulatory T cells in normal animals are engaged in the maintenance of immunological self-tolerance. We show here that glucocorticoid-induced tumor necrosis factor receptor family–related gene (GITR, also known as TNFRSF18)—a… 21185923 stimulation-of-cd25+cd4+-regulatory-t-cells-through-gitr-breaks-immunological-self-tolerance stimulation cd25 cd4 regulatory cells through gitr breaks CD25+CD4+ regulatory T cells in normal animals are engaged in the maintenance of immunological self-toleran Stimulation of CD25+CD4+ regulatory T cells through GITR breaks immunological self-tolerance CD25+CD4+ regulatory T cells in normal animals are engaged in the maintenance of immunological self-tolerance. We show here that glucocorticoid-induced tumor necrosis factor receptor family–related gene (GITR, also known as TNFRSF18)—a member of the tumor necrosis factor–nerve growth factor (TNF-NGF) receptor gene superfamily—is predominantly expressed on CD25+CD4+ T cells and on CD25+CD4+CD8− thymocytes in normal naïve mice. We found that stimulation of GITR abrogated CD25+CD4+ T cell–mediated suppression. In addition, removal of GITR-expressing T cells or administration of a monoclonal antibody to GITR produced organ-specific autoimmune disease in otherwise normal mice. Thus, GITR plays a key rol",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.488592+00:00"
+}

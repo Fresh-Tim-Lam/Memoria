@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10024681",
+  "source_fingerprint": "6a06a14cbf31a8eb7c6ee7e8da11e129",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10024681",
+    "epigenetic-induced-repression-of-microrna-205-is-associated-with-med1-activation-and-a-poorer-prognosis-in-localized-prostate-cancer"
+  ],
+  "key_phrases": [
+    "epigenetic",
+    "induced",
+    "repression",
+    "microrna",
+    "205",
+    "associated",
+    "with",
+    "med1"
+  ],
+  "summary_1l": "Deregulation of microRNA (miRNA) expression can have a critical rol",
+  "query_hits": [],
+  "embed_text": "10024681 Epigenetic-induced repression of microRNA-205 is associated with MED1 activation and a poorer prognosis in localized prostate cancer science scifact Deregulation of microRNA (miRNA) expression can have a critical role in carcinogenesis. Here we show in prostate cancer that miRNA-205 (miR-205) transcription is commonly repressed and the MIR-205 locus is hypermethylated. LOC642587, the… 10024681 epigenetic-induced-repression-of-microrna-205-is-associated-with-med1-activation-and-a-poorer-prognosis-in-localized-prostate-cancer epigenetic induced repression microrna 205 associated with med1 Deregulation of microRNA (miRNA) expression can have a critical rol Epigenetic-induced repression of microRNA-205 is associated with MED1 activation and a poorer prognosis in localized prostate cancer Deregulation of microRNA (miRNA) expression can have a critical role in carcinogenesis. Here we show in prostate cancer that miRNA-205 (miR-205) transcription is commonly repressed and the MIR-205 locus is hypermethylated. LOC642587, the MIR-205 host gene of unknown function, is also concordantly inactivated. We show that miR-205 targets mediator 1 (MED1, also called TRAP220 and PPARBP) for transcriptional silencing in normal prostate cells, leading to reduction in MED1 mRNA levels, and in total and active phospho-MED1 protein. Overexpression of miR-205 in prostate cancer cells negatively affects cell viability, consistent with a tumor suppressor function. We",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T12:30:14.839650+00:00"
+}

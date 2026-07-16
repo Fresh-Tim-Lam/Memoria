@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11328820",
+  "source_fingerprint": "83e8a4fc1e66c5baf11a22b2b394b274",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11328820",
+    "nets-are-a-source-of-citrullinated-autoantigens-and-stimulate-inflammatory-responses-in-rheumatoid-arthritis."
+  ],
+  "key_phrases": [
+    "nets",
+    "source",
+    "citrullinated",
+    "autoantigens",
+    "stimulate",
+    "inflammatory",
+    "responses",
+    "rheumatoid"
+  ],
+  "summary_1l": "NETs are a source of citrullinated autoantigens and stimulate inflammatory responses in rheumatoid arthritis.",
+  "query_hits": [],
+  "embed_text": "11328820 NETs are a source of citrullinated autoantigens and stimulate inflammatory responses in rheumatoid arthritis. science scifact The early events leading to the development of rheumatoid arthritis (RA) remain unclear, but formation of autoantibodies to citrullinated protein antigens (ACPAs) is considered a key pathogenic event. Neutrophils isolated from patients… 11328820 nets-are-a-source-of-citrullinated-autoantigens-and-stimulate-inflammatory-responses-in-rheumatoid-arthritis. nets source citrullinated autoantigens stimulate inflammatory responses rheumatoid NETs are a source of citrullinated autoantigens and stimulate inflammatory responses in rheumatoid arthritis. NETs are a source of citrullinated autoantigens and stimulate inflammatory responses in rheumatoid arthritis. The early events leading to the development of rheumatoid arthritis (RA) remain unclear, but formation of autoantibodies to citrullinated protein antigens (ACPAs) is considered a key pathogenic event. Neutrophils isolated from patients with various autoimmune diseases display enhanced neutrophil extracellular trap (NET) formation, a phenomenon that exposes autoantigens in the context of immunostimulatory molecules. We investigated whether aberrant NETosis occurs in RA, determined its triggers, and examined its deleterious inflammatory consequences. Enhanced NETosis was observed in circulating and RA synovial fluid neutrophils compared to neutrophils from healthy controls and from p",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:06.681202+00:00"
+}

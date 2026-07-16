@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "37722384",
+  "source_fingerprint": "513c5fd7f6fe71ba255d3ba5f9a65dd1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "37722384",
+    "a-review-of-the-methods-for-human-ipsc-derivation."
+  ],
+  "key_phrases": [
+    "review",
+    "methods",
+    "human",
+    "ipsc",
+    "derivation",
+    "ability",
+    "reprogram",
+    "somatic"
+  ],
+  "summary_1l": "A review of the methods for human iPSC derivation.",
+  "query_hits": [],
+  "embed_text": "37722384 A review of the methods for human iPSC derivation. science scifact The ability to reprogram somatic cells to induced pluripotent stem cells (iPSCs) offers an opportunity to generate pluripotent patient-specific cell lines that can help model human diseases. These iPSC lines could also be powerful tools… 37722384 a-review-of-the-methods-for-human-ipsc-derivation. review methods human ipsc derivation ability reprogram somatic A review of the methods for human iPSC derivation. A review of the methods for human iPSC derivation. The ability to reprogram somatic cells to induced pluripotent stem cells (iPSCs) offers an opportunity to generate pluripotent patient-specific cell lines that can help model human diseases. These iPSC lines could also be powerful tools for drug discovery and the development of cellular transplantation therapies. Many methods exist for generating iPSC lines but those best suited for use in studying human diseases and developing therapies must be of adequate efficiency to produce iPSCs from samples that may be of limited abundance, capable of reprogramming cells from both skin fibroblasts and blood, and footprint-free. Several reprogramming techniques meet these criteria and can be utilized to derive iPSCs in projects with both basic scient",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.871525+00:00"
+}

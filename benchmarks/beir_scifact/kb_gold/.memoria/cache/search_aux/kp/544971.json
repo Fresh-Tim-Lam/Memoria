@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "544971",
+  "source_fingerprint": "c941f870ef4762d5028b1c1b85ffa6fe",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "544971",
+    "dna-deamination-mediates-innate-immunity-to-retroviral-infection"
+  ],
+  "key_phrases": [
+    "dna",
+    "deamination",
+    "mediates",
+    "innate",
+    "immunity",
+    "retroviral",
+    "infection",
+    "cem15"
+  ],
+  "summary_1l": "CEM15/APOBEC3G is a cellular protein required for resistance to infection by virion infectivity factor (Vif)-deficient human immunodefi",
+  "query_hits": [],
+  "embed_text": "544971 DNA Deamination Mediates Innate Immunity to Retroviral Infection science scifact CEM15/APOBEC3G is a cellular protein required for resistance to infection by virion infectivity factor (Vif)-deficient human immunodeficiency virus (HIV). Here, using a murine leukemia virus (MLV)-based system, we provide evidence that… 544971 dna-deamination-mediates-innate-immunity-to-retroviral-infection dna deamination mediates innate immunity retroviral infection cem15 CEM15/APOBEC3G is a cellular protein required for resistance to infection by virion infectivity factor (Vif)-deficient human immunodefi DNA Deamination Mediates Innate Immunity to Retroviral Infection CEM15/APOBEC3G is a cellular protein required for resistance to infection by virion infectivity factor (Vif)-deficient human immunodeficiency virus (HIV). Here, using a murine leukemia virus (MLV)-based system, we provide evidence that CEM15/APOBEC3G is a DNA deaminase that is incorporated into virions during viral production and subsequently triggers massive deamination of deoxycytidine to deoxyuridine within the retroviral minus (first)-strand cDNA, thus providing a probable trigger for viral destruction. Furthermore, HIV Vif can protect MLV from this CEM15/APOBEC3G-dependent restriction. These findings imply that targeted DNA deamination is a major strategy of innate immunity to retroviruses and likely also contributes to",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.326142+00:00"
+}

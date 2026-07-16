@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "72159",
+  "source_fingerprint": "d2c56e490b95ce0686a9f5b396e4a3f1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "72159",
+    "induction-of-early-ifn-inducible-genes-in-the-absence-of-type"
+  ],
+  "key_phrases": [
+    "induction",
+    "early",
+    "ifn",
+    "inducible",
+    "genes",
+    "absence",
+    "type",
+    "recognition"
+  ],
+  "summary_1l": "On recognition of influenza virus (Flu) by TLR7, plasmacytoid dendritic cells (pDCs) produce type I IFN in significant amounts.",
+  "query_hits": [],
+  "embed_text": "72159 induction of early IFN-inducible genes in the absence of type science scifact On recognition of influenza virus (Flu) by TLR7, plasmacytoid dendritic cells (pDCs) produce type I IFN in significant amounts. Synthetic TLR7 ligands induce the maturation of pDCs, as evidenced by the expression of costimulatory molecules… 72159 induction-of-early-ifn-inducible-genes-in-the-absence-of-type induction early ifn inducible genes absence type recognition On recognition of influenza virus (Flu) by TLR7, plasmacytoid dendritic cells (pDCs) produce type I IFN in significant amounts. induction of early IFN-inducible genes in the absence of type On recognition of influenza virus (Flu) by TLR7, plasmacytoid dendritic cells (pDCs) produce type I IFN in significant amounts. Synthetic TLR7 ligands induce the maturation of pDCs, as evidenced by the expression of costimulatory molecules and the production of proinflammatory cytokines; however, they induce only low-level production of IFN-alpha. To dissect the TLR7 signaling in pDCs and how these different profiles are induced, we studied the effects of 2 TLR7 ligands (Flu and CL097) on the activation of blood-isolated pDCs and the human GEN2.2 pDC cell line. Type I IFN production by pDCs correlates with differential interferon regulatory factor 7 (IRF7) translocation into the nucleus induced by the 2 TLR7 ligands. Surprisingl",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.779961+00:00"
+}

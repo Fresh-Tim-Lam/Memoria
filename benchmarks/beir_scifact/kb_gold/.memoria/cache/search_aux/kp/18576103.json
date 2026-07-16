@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "18576103",
+  "source_fingerprint": "ee533954af7bf632bf8a68e1e8106c77",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18576103"
+  ],
+  "key_phrases": [
+    "rna",
+    "polymerase",
+    "switch",
+    "region",
+    "target",
+    "inhibitors",
+    "alpha",
+    "pyrone"
+  ],
+  "summary_1l": "The alpha-pyrone antibiotic myxopyronin (Myx) inhibits bacterial RNA polymerase (RNAP).",
+  "query_hits": [],
+  "embed_text": "18576103 The RNA Polymerase “Switch Region” Is a Target for Inhibitors science scifact The alpha-pyrone antibiotic myxopyronin (Myx) inhibits bacterial RNA polymerase (RNAP). Here, through a combination of genetic, biochemical, and structural approaches, we show that Myx interacts with the RNAP \"switch region\"--the hinge… 18576103 rna polymerase switch region target inhibitors alpha pyrone The alpha-pyrone antibiotic myxopyronin (Myx) inhibits bacterial RNA polymerase (RNAP). The RNA Polymerase “Switch Region” Is a Target for Inhibitors The alpha-pyrone antibiotic myxopyronin (Myx) inhibits bacterial RNA polymerase (RNAP). Here, through a combination of genetic, biochemical, and structural approaches, we show that Myx interacts with the RNAP \"switch region\"--the hinge that mediates opening and closing of the RNAP active center cleft--to prevent interaction of RNAP with promoter DNA. We define the contacts between Myx and RNAP and the effects of Myx on RNAP conformation and propose that Myx functions by interfering with opening of the RNAP active-center cleft during transcription initiation. We further show that the structurally related alpha-pyrone antibiotic corallopyronin (Cor) and the structurally unrelated macrocyclic-lactone antibiotic ripostatin (Rip) fun",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.471143+00:00"
+}

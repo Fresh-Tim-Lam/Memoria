@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "kp_id": "同段多链接",
+  "source_fingerprint": "97440e5458d6b16e3f59ef17dd12a5c3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [],
+  "key_phrases": [
+    "同段",
+    "链接",
+    "连续",
+    "方法",
+    "同时",
+    "涉及",
+    "两类",
+    "思想"
+  ],
+  "summary_1l": "连续 方法常同时涉及 与 两类思想；可继续点 按顺序点在 中的结合。",
+  "query_hits": [],
+  "embed_text": "同段多链接 同段多链接 屁滚尿流 同段 链接 连续 方法 同时 涉及 两类 思想 连续 方法常同时涉及 与 两类思想；可继续点 按顺序点在 中的结合。 同段多链接 连续 方法常同时涉及 与 两类思想；可继续点 按顺序点在 中的结合。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T02:48:42.567254+00:00"
+}

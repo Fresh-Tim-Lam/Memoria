@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "6917133",
+  "source_fingerprint": "6dbe763a2c12179be5112e8fa72d938e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6917133"
+  ],
+  "key_phrases": [
+    "estimating",
+    "risk",
+    "curves",
+    "first",
+    "degree",
+    "relatives",
+    "patients",
+    "with"
+  ],
+  "summary_1l": "Purpose: The REVEAL study is a randomized, controlled study of the psychological and behavioral",
+  "query_hits": [],
+  "embed_text": "6917133 Estimating risk curves for first-degree relatives of patients with Alzheimer’s disease: The REVEAL study science scifact Purpose: The REVEAL study is a randomized, controlled study of the psychological and behavioral impact of APOE disclosure in a risk assessment protocol provided to first degree relatives of patients with Alzheimer’s disease. The protocol… 6917133 estimating risk curves first degree relatives patients with Purpose: The REVEAL study is a randomized, controlled study of the psychological and behavioral Estimating risk curves for first-degree relatives of patients with Alzheimer’s disease: The REVEAL study Purpose: The REVEAL study is a randomized, controlled study of the psychological and behavioral impact of APOE disclosure in a risk assessment protocol provided to first degree relatives of patients with Alzheimer’s disease. The protocol presents risk information as cumulative incidence curves. This article describes how these curves were estimated. Methods: Curves were calculated using Bayes’ rule to compute the posterior survival curves incorporating APOE information. Results: A combination of survival data from the MIRAGE study and gender- and age-specific APOE odds ratios were used to create risk curves for males and females within each of the 6 APOE genotypes. Conclusion: Utilizing",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.952290+00:00"
+}

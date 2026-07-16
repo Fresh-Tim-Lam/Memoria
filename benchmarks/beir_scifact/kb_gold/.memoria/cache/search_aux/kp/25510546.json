@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25510546",
+  "source_fingerprint": "9373be63895a4dabf0d810537211505d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25510546",
+    "endoplasmic-reticulum-stress-contributes-to-beta-cell-apoptosis-in-type-2-diabetes"
+  ],
+  "key_phrases": [
+    "endoplasmic",
+    "reticulum",
+    "stress",
+    "contributes",
+    "beta",
+    "cell",
+    "apoptosis",
+    "type"
+  ],
+  "summary_1l": "Increased lipid supply causes beta cell death, which may contribute to reduced beta cell mass in type 2 diabetes.",
+  "query_hits": [],
+  "embed_text": "25510546 Endoplasmic reticulum stress contributes to beta cell apoptosis in type 2 diabetes science scifact Increased lipid supply causes beta cell death, which may contribute to reduced beta cell mass in type 2 diabetes. We investigated whether endoplasmic reticulum (ER) stress is necessary for lipid-induced apoptosis in beta cells and also… 25510546 endoplasmic-reticulum-stress-contributes-to-beta-cell-apoptosis-in-type-2-diabetes endoplasmic reticulum stress contributes beta cell apoptosis type Increased lipid supply causes beta cell death, which may contribute to reduced beta cell mass in type 2 diabetes. Endoplasmic reticulum stress contributes to beta cell apoptosis in type 2 diabetes Increased lipid supply causes beta cell death, which may contribute to reduced beta cell mass in type 2 diabetes. We investigated whether endoplasmic reticulum (ER) stress is necessary for lipid-induced apoptosis in beta cells and also whether ER stress is present in islets of an animal model of diabetes and of humans with type 2 diabetes. Expression of genes involved in ER stress was evaluated in insulin-secreting MIN6 cells exposed to elevated lipids, in islets isolated from db/db mice and in pancreas sections of humans with type 2 diabetes. Overproduction of the ER chaperone heat shock 70 kDa protein 5 (HSPA5, previously known as immunoglobulin heavy chain binding protein [BIP]) was performed to assess wh",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.790939+00:00"
+}

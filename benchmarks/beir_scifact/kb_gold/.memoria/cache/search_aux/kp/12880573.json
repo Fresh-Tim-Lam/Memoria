@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12880573",
+  "source_fingerprint": "9694c1bd92cb6080c586042e01347b95",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12880573",
+    "dual-roles-of-plca-in-listeria-monocytogenes-pathogenesis."
+  ],
+  "key_phrases": [
+    "dual",
+    "roles",
+    "plca",
+    "listeria",
+    "monocytogenes",
+    "pathogenesis",
+    "gene",
+    "encodes"
+  ],
+  "summary_1l": "Dual roles of plcA in Listeria monocytogenes pathogenesis.",
+  "query_hits": [],
+  "embed_text": "12880573 Dual roles of plcA in Listeria monocytogenes pathogenesis. science scifact The plcA gene of Listeria monocytogenes encodes a secreted phosphatidylinositol-specific phospholipase C (Pl-PLC). Recent studies have established that transposon mutations within plcA result in avirulence for mice and pleiotropic effects… 12880573 dual-roles-of-plca-in-listeria-monocytogenes-pathogenesis. dual roles plca listeria monocytogenes pathogenesis gene encodes Dual roles of plcA in Listeria monocytogenes pathogenesis. Dual roles of plcA in Listeria monocytogenes pathogenesis. The plcA gene of Listeria monocytogenes encodes a secreted phosphatidylinositol-specific phospholipase C (Pl-PLC). Recent studies have established that transposon mutations within plcA result in avirulence for mice and pleiotropic effects when examined in tissue-culture models of infection. Genetic analysis reveals that many of the effects of the transposon insertions are due to loss of readthrough transcription from plcA into the downstream gene prfA, which encodes an essential transcription factor of numerous L. monocytogenes virulence genes. Construction of an in-frame deletion within plcA had no effect on expression of prfA thus allowing direct assignment of a role of the Pl-PLC in pathogenesis. Pl-PLC was shown to play a signi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:09.187019+00:00"
+}

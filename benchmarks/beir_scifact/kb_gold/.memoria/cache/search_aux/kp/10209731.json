@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10209731",
+  "source_fingerprint": "bb3190a7e874983b3d6afcf97797f7e3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10209731",
+    "cardiovascular-diseases-in-chinese,-malays,-and-indians-in-singapore.-i.-differences-in-mortality."
+  ],
+  "key_phrases": [
+    "cardiovascular",
+    "diseases",
+    "chinese",
+    "malays",
+    "indians",
+    "singapore",
+    "differences",
+    "mortality"
+  ],
+  "summary_1l": "Cardiovascular diseases in Chinese, Malays, and Indians in Singapore.",
+  "query_hits": [],
+  "embed_text": "10209731 Cardiovascular diseases in Chinese, Malays, and Indians in Singapore. I. Differences in mortality. science scifact STUDY OBJECTIVE The aim of the study was to analyse differences in mortality from the main cardiovascular diseases (ischaemic heart disease, hypertensive disease, and cerebrovascular disease) among Chinese, Malays, and Indians in… 10209731 cardiovascular-diseases-in-chinese,-malays,-and-indians-in-singapore.-i.-differences-in-mortality. cardiovascular diseases chinese malays indians singapore differences mortality Cardiovascular diseases in Chinese, Malays, and Indians in Singapore. Cardiovascular diseases in Chinese, Malays, and Indians in Singapore. I. Differences in mortality. STUDY OBJECTIVE The aim of the study was to analyse differences in mortality from the main cardiovascular diseases (ischaemic heart disease, hypertensive disease, and cerebrovascular disease) among Chinese, Malays, and Indians in Singapore. DESIGN The study was a survey using national death registration data in Singapore for the five years 1980 to 1984. The underlying cause of death, coded according to the ninth revision of the International Classification of Diseases, was taken for the analyses. SETTING The study was confined to the independent island state of Singapore, population 2.53 million (Chinese 76.5%, Malays 14.8%, Indians 6.4%, Others 2.3%). Death registration is thought to be comp",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T12:36:20.593975+00:00"
+}

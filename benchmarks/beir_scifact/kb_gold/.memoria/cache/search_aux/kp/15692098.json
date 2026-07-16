@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15692098",
+  "source_fingerprint": "562bba3dbdb86d76f212529c7cb97d37",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15692098",
+    "hutchinson-gilford-progeria-syndrome:-review-of-the-phenotype"
+  ],
+  "key_phrases": [
+    "hutchinson",
+    "gilford",
+    "progeria",
+    "syndrome",
+    "review",
+    "phenotype",
+    "hgps",
+    "rare"
+  ],
+  "summary_1l": "Hutchinson-Gilford progeria syndrome (HGPS) is a rare but well known entity characterized by extreme short stature, low body weight, early",
+  "query_hits": [],
+  "embed_text": "15692098 Hutchinson-Gilford progeria syndrome: review of the phenotype science scifact Hutchinson-Gilford progeria syndrome (HGPS) is a rare but well known entity characterized by extreme short stature, low body weight, early loss of hair, lipodystrophy, scleroderma, decreased joint mobility, osteolysis, and facial features… 15692098 hutchinson-gilford-progeria-syndrome:-review-of-the-phenotype hutchinson gilford progeria syndrome review phenotype hgps rare Hutchinson-Gilford progeria syndrome (HGPS) is a rare but well known entity characterized by extreme short stature, low body weight, early Hutchinson-Gilford progeria syndrome: review of the phenotype Hutchinson-Gilford progeria syndrome (HGPS) is a rare but well known entity characterized by extreme short stature, low body weight, early loss of hair, lipodystrophy, scleroderma, decreased joint mobility, osteolysis, and facial features that resemble aged persons. Cardiovascular compromise leads to early demise. Cognitive development is normal. Data on 10 of our own cases and 132 cases from literature are presented. The incidence in the last century in the Netherlands was 1:4,000,000. Sex ratio was 1.2:1. Main first symptoms were failure to thrive (55%), hair loss (40%), skin problems (28%), and lipodystrophy (20%). Mean age at diagnosis was 2.9 years. Growth in weight was more disturbed than growth in height, and growth delay",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.138540+00:00"
+}

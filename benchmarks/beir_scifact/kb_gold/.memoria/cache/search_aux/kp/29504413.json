@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29504413",
+  "source_fingerprint": "9cc890662630de07e6699d70aea859d3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29504413",
+    "behavioral-effects-of-estrogen-receptor-gene-disruption-in-male-mice."
+  ],
+  "key_phrases": [
+    "behavioral",
+    "effects",
+    "estrogen",
+    "receptor",
+    "gene",
+    "disruption",
+    "male",
+    "mice"
+  ],
+  "summary_1l": "Behavioral effects of estrogen receptor gene disruption in male mice.",
+  "query_hits": [],
+  "embed_text": "29504413 Behavioral effects of estrogen receptor gene disruption in male mice. science scifact Gonadal steroid hormones regulate sexually dimorphic development of brain functions and behaviors. Their nuclear receptors offer the opportunity to relate molecular events in neurons to simple instinctive mammalian behaviors. We have… 29504413 behavioral-effects-of-estrogen-receptor-gene-disruption-in-male-mice. behavioral effects estrogen receptor gene disruption male mice Behavioral effects of estrogen receptor gene disruption in male mice. Behavioral effects of estrogen receptor gene disruption in male mice. Gonadal steroid hormones regulate sexually dimorphic development of brain functions and behaviors. Their nuclear receptors offer the opportunity to relate molecular events in neurons to simple instinctive mammalian behaviors. We have determined the role of estrogen receptor (ER) activation by endogenous estrogen in the development of male-typical behaviors by the use of transgenic estrogen-receptor-deficient (ERKO) mice. Surprisingly, in spite of the fact that they are infertile, ERKO mice showed normal motivation to mount females but they achieved less intromissions and virtually no ejaculations. Aggressive behaviors were dramatically reduced and male-typical offensive attacks were rarely displayed by ERKO males. Moreov",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.994594+00:00"
+}

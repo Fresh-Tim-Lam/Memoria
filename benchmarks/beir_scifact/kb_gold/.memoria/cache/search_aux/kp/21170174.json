@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21170174",
+  "source_fingerprint": "00ff74139a91452e5416fec3be47b20e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21170174",
+    "crossover-and-noncrossover-pathways-in-mouse-meiosis."
+  ],
+  "key_phrases": [
+    "crossover",
+    "noncrossover",
+    "pathways",
+    "mouse",
+    "meiosis",
+    "during",
+    "recombination",
+    "between"
+  ],
+  "summary_1l": "Crossover and noncrossover pathways in mouse meiosis.",
+  "query_hits": [],
+  "embed_text": "21170174 Crossover and noncrossover pathways in mouse meiosis. science scifact During meiosis, recombination between homologous chromosomes generates crossover (CR) and noncrossover (NCR) products. CRs establish connections between homologs, whereas intermediates leading to NCRs have been proposed to participate in… 21170174 crossover-and-noncrossover-pathways-in-mouse-meiosis. crossover noncrossover pathways mouse meiosis during recombination between Crossover and noncrossover pathways in mouse meiosis. Crossover and noncrossover pathways in mouse meiosis. During meiosis, recombination between homologous chromosomes generates crossover (CR) and noncrossover (NCR) products. CRs establish connections between homologs, whereas intermediates leading to NCRs have been proposed to participate in homologous pairing. How these events are differentiated and regulated remains to be determined. We have developed a strategy to detect, quantify, and map NCRs in parallel to CRs, at the Psmb9 meiotic recombination hot spot, in male and female mouse germ lines. Our results report direct molecular evidence for distinct CR and NCR pathways of DNA double-strand break (DSB) repair in mouse meiosis based on three observations: both CRs and NCRs require Spo11, NCR products have shorter conversion tracts than C",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.459554+00:00"
+}

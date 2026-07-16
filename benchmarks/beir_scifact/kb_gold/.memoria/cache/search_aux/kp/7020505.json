@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7020505",
+  "source_fingerprint": "a0ca85e5b6f4c1ba995c1c70c9c9027d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7020505",
+    "genetic-abnormalities-in-chronic-lymphocytic-leukemia:-where-we-are-and-where-we-go"
+  ],
+  "key_phrases": [
+    "genetic",
+    "abnormalities",
+    "chronic",
+    "lymphocytic",
+    "leukemia",
+    "where",
+    "we",
+    "go"
+  ],
+  "summary_1l": "Chromosomal abnormalities in chronic lymphocytic leukemia (CLL) are detected in up to 80% of patients.",
+  "query_hits": [],
+  "embed_text": "7020505 Genetic Abnormalities in Chronic Lymphocytic Leukemia: Where We Are and Where We Go science scifact Chromosomal abnormalities in chronic lymphocytic leukemia (CLL) are detected in up to 80% of patients. Among them, deletions of 11q, 13q, 17p, and trisomy 12 have a known prognostic value and play an important role in CLL pathogenesis and… 7020505 genetic-abnormalities-in-chronic-lymphocytic-leukemia:-where-we-are-and-where-we-go genetic abnormalities chronic lymphocytic leukemia where we go Chromosomal abnormalities in chronic lymphocytic leukemia (CLL) are detected in up to 80% of patients. Genetic Abnormalities in Chronic Lymphocytic Leukemia: Where We Are and Where We Go Chromosomal abnormalities in chronic lymphocytic leukemia (CLL) are detected in up to 80% of patients. Among them, deletions of 11q, 13q, 17p, and trisomy 12 have a known prognostic value and play an important role in CLL pathogenesis and evolution, determining patients outcome and therapeutic strategies. Standard methods used to identify these genomic aberrations include both conventional G-banding cytogenetics (CGC) and fluorescence in situ hybridization (FISH). Although FISH analyses have been implemented as the gold standard, CGC allows the identification of chromosomal translocations and complex karyotypes, the latest associated with poor outcome. Genomic arrays have a higher resolution that allows the",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.225355+00:00"
+}

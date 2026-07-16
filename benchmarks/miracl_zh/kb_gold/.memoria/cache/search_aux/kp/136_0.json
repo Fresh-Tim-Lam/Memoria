@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "kp_id": "136#0",
+  "source_fingerprint": "4f138627eb9a19bceee7e4ba430d838a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "理查德·斯托曼",
+    "TÜV組織",
+    "世界主要宗教",
+    "中華人民共和國新聞自由",
+    "联合国主要机构",
+    "自由软件历史"
+  ],
+  "aliases": [
+    "136#0"
+  ],
+  "key_phrases": [
+    "自由软件",
+    "基金会",
+    "自由",
+    "軟件",
+    "基金",
+    "一個",
+    "致力",
+    "推廣"
+  ],
+  "summary_1l": "自由軟件基金會（，）是一個致力於推廣自由軟件的美國民間非營利性組織。",
+  "query_hits": [],
+  "embed_text": "136#0 自由软件基金会 自由软件基金会 自由軟件基金會（，）是一個致力於推廣自由軟件的美國民間非營利性組織。它於1985年10月由理查德·斯托曼建立。其主要工作是執行GNU計劃，開發更多的自由軟件。 理查德·斯托曼 TÜV組織 世界主要宗教 中華人民共和國新聞自由 联合国主要机构 自由软件历史 136#0 自由软件 基金会 自由 軟件 基金 一個 致力 推廣 自由軟件基金會（，）是一個致力於推廣自由軟件的美國民間非營利性組織。 自由软件基金会 自由軟件基金會（，）是一個致力於推廣自由軟件的美國民間非營利性組織。它於1985年10月由理查德·斯托曼建立。其主要工作是執行GNU計劃，開發更多的自由軟件。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:17:44.759086+00:00"
+}

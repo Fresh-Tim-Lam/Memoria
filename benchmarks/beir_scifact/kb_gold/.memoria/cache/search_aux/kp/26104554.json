@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26104554",
+  "source_fingerprint": "241b876d8f555cd6d05a3f1b124a9d11",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26104554",
+    "ctbp3/bars-drives-membrane-fission-in-dynamin-independent-transport-pathways"
+  ],
+  "key_phrases": [
+    "ctbp3",
+    "bars",
+    "drives",
+    "membrane",
+    "fission",
+    "dynamin",
+    "independent",
+    "transport"
+  ],
+  "summary_1l": "Membrane fission is a fundamental step in membrane transport.",
+  "query_hits": [],
+  "embed_text": "26104554 CtBP3/BARS drives membrane fission in dynamin-independent transport pathways science scifact Membrane fission is a fundamental step in membrane transport. So far, the only fission protein machinery that has been implicated in in vivo transport involves dynamin, and functions in several, but not all, transport pathways. Thus, other… 26104554 ctbp3/bars-drives-membrane-fission-in-dynamin-independent-transport-pathways ctbp3 bars drives membrane fission dynamin independent transport Membrane fission is a fundamental step in membrane transport. CtBP3/BARS drives membrane fission in dynamin-independent transport pathways Membrane fission is a fundamental step in membrane transport. So far, the only fission protein machinery that has been implicated in in vivo transport involves dynamin, and functions in several, but not all, transport pathways. Thus, other fission machineries may exist. Here, we report that carboxy-terminal binding protein 3/brefeldin A-ribosylated substrate (CtBP3/BARS) controls fission in basolateral transport from the Golgi to the plasma membrane and in fluid-phase endocytosis, whereas dynamin is not involved in these steps. Conversely, CtBP3/BARS protein is inactive in apical transport to the plasma membrane and in receptor-mediated endocytosis, both steps being controlled by dynamin. This indicates that CtBP3",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.336193+00:00"
+}

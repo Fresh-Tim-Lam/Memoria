@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8294009",
+  "source_fingerprint": "4f4c8310e4c603b42802c6ed4ff5172d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8294009",
+    "global-tuberculosis-control:-lessons-learnt-and-future-prospects"
+  ],
+  "key_phrases": [
+    "global",
+    "tuberculosis",
+    "control",
+    "lessons",
+    "learnt",
+    "future",
+    "prospects",
+    "tb"
+  ],
+  "summary_1l": "Tuberculosis (TB) is an ancient disease, but not a disease of the past.",
+  "query_hits": [],
+  "embed_text": "8294009 Global tuberculosis control: lessons learnt and future prospects science scifact Tuberculosis (TB) is an ancient disease, but not a disease of the past. After disappearing from the world public health agenda in the 1960s and 1970s, TB returned in the early 1990s for several reasons, including the emergence of the… 8294009 global-tuberculosis-control:-lessons-learnt-and-future-prospects global tuberculosis control lessons learnt future prospects tb Tuberculosis (TB) is an ancient disease, but not a disease of the past. Global tuberculosis control: lessons learnt and future prospects Tuberculosis (TB) is an ancient disease, but not a disease of the past. After disappearing from the world public health agenda in the 1960s and 1970s, TB returned in the early 1990s for several reasons, including the emergence of the HIV/AIDS pandemic and increases in drug resistance. More than 100 years after the discovery of the tubercle bacillus by Robert Koch, what is the status of TB control worldwide? Here, we review the evolution of global TB control policies, including DOTS (directly observed therapy, short course) and the Stop TB Strategy, and assess whether the challenges and obstacles faced by the public health community worldwide in developing and implementing this strategy can aid future action towards the elimin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.249388+00:00"
+}

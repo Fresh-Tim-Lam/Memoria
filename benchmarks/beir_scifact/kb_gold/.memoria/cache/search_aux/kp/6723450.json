@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6723450",
+  "source_fingerprint": "575869d054a72a81793c4a9808da4a32",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6723450",
+    "effects-of-bifidobacterium-animalis-administered-during-lactation-on-allergic-and-autoimmune-responses-in-rodents."
+  ],
+  "key_phrases": [
+    "effects",
+    "bifidobacterium",
+    "animalis",
+    "administered",
+    "during",
+    "lactation",
+    "allergic",
+    "autoimmune"
+  ],
+  "summary_1l": "Effects of Bifidobacterium animalis administered during lactation on allergic and autoimmune responses in rodents.",
+  "query_hits": [],
+  "embed_text": "6723450 Effects of Bifidobacterium animalis administered during lactation on allergic and autoimmune responses in rodents. science scifact Probiotics are promoted as being beneficial to health and positive effects on the immune system have been reported. Beneficial immune effects have been attributed to several mechanisms, including stimulating T helper 1 (Th1) immunity. To… 6723450 effects-of-bifidobacterium-animalis-administered-during-lactation-on-allergic-and-autoimmune-responses-in-rodents. effects bifidobacterium animalis administered during lactation allergic autoimmune Effects of Bifidobacterium animalis administered during lactation on allergic and autoimmune responses in rodents. Effects of Bifidobacterium animalis administered during lactation on allergic and autoimmune responses in rodents. Probiotics are promoted as being beneficial to health and positive effects on the immune system have been reported. Beneficial immune effects have been attributed to several mechanisms, including stimulating T helper 1 (Th1) immunity. To explore the effects of the probiotic Bifidobacterium animalis on Th1- and Th2-mediated immune responses, two different animal models representing either Th1- or Th2-mediated immune responses were used: a rat model for experimental autoimmune encephalomyelitis (EAE) (Th1) and a mouse model for respiratory allergy induced by ovalbumin (OVA) (Th2). B. animalis administration started when the mice or rats were 2 weeks old. Respiratory allergy or E",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.544605+00:00"
+}

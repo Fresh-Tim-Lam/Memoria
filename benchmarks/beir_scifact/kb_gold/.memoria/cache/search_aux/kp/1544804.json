@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1544804",
+  "source_fingerprint": "b6118f86c3ae2196c214144555a8af5f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1544804",
+    "improved-variant-discovery-through-local-re-alignment-of-short-read-next-generation-sequencing-data-using-srma"
+  ],
+  "key_phrases": [
+    "improved",
+    "variant",
+    "discovery",
+    "through",
+    "local",
+    "re",
+    "alignment",
+    "short"
+  ],
+  "summary_1l": "A primary component of next-generation sequencing analysis is to align short reads to a r",
+  "query_hits": [],
+  "embed_text": "1544804 Improved variant discovery through local re-alignment of short-read next-generation sequencing data using SRMA science scifact A primary component of next-generation sequencing analysis is to align short reads to a reference genome, with each read aligned independently. However, reads that observe the same non-reference DNA sequence are highly correlated and can… 1544804 improved-variant-discovery-through-local-re-alignment-of-short-read-next-generation-sequencing-data-using-srma improved variant discovery through local re alignment short A primary component of next-generation sequencing analysis is to align short reads to a r Improved variant discovery through local re-alignment of short-read next-generation sequencing data using SRMA A primary component of next-generation sequencing analysis is to align short reads to a reference genome, with each read aligned independently. However, reads that observe the same non-reference DNA sequence are highly correlated and can be used to better model the true variation in the target genome. A novel short-read micro realigner, SRMA, that leverages this correlation to better resolve a consensus of the underlying DNA sequence of the targeted genome is described here.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.570593+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9889151",
+  "source_fingerprint": "c6b9901d1c9456ee600b4fefec2c690c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9889151",
+    "fact-disrupts-nucleosome-structure-by-binding-h2a-h2b-with-conserved-peptide-motifs."
+  ],
+  "key_phrases": [
+    "fact",
+    "disrupts",
+    "nucleosome",
+    "structure",
+    "by",
+    "binding",
+    "h2a",
+    "h2b"
+  ],
+  "summary_1l": "FACT Disrupts Nucleosome Structure by Binding H2A-H2B with Conserved Peptide Motifs.",
+  "query_hits": [],
+  "embed_text": "9889151 FACT Disrupts Nucleosome Structure by Binding H2A-H2B with Conserved Peptide Motifs. science scifact FACT, a heterodimer of Spt16 and Pob3, is an essential histone chaperone. We show that the H2A-H2B binding activity that is central to FACT function resides in short acidic regions near the C termini of each subunit. Mutations throughout… 9889151 fact-disrupts-nucleosome-structure-by-binding-h2a-h2b-with-conserved-peptide-motifs. fact disrupts nucleosome structure by binding h2a h2b FACT Disrupts Nucleosome Structure by Binding H2A-H2B with Conserved Peptide Motifs. FACT Disrupts Nucleosome Structure by Binding H2A-H2B with Conserved Peptide Motifs. FACT, a heterodimer of Spt16 and Pob3, is an essential histone chaperone. We show that the H2A-H2B binding activity that is central to FACT function resides in short acidic regions near the C termini of each subunit. Mutations throughout these regions affect binding and cause correlated phenotypes that range from mild to lethal, with the largest individual contributions unexpectedly coming from an aromatic residue and a nearby carboxylate residue within each domain. Spt16 and Pob3 bind overlapping sites on H2A-H2B, and Spt16-Pob3 heterodimers simultaneously bind two H2A-H2B dimers, the same stoichiometry as the components of a nucleosome. An Spt16:H2A-H2B crystal structure explains the biochemical and gene",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:06.032855+00:00"
+}

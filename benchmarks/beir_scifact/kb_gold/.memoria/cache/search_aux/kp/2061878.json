@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "2061878",
+  "source_fingerprint": "cb37416da920ccc8eba709138778d508",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2061878"
+  ],
+  "key_phrases": [
+    "neat1",
+    "novel",
+    "cancer",
+    "related",
+    "long",
+    "non",
+    "coding",
+    "rna"
+  ],
+  "summary_1l": "Aberrant overexpression of the long non-coding RNA NEAT1 (nuclear paraspeckle assembly transcript 1) has been documented in different types of solid t",
+  "query_hits": [],
+  "embed_text": "2061878 NEAT1: A novel cancer‐related long non‐coding RNA science scifact Aberrant overexpression of the long non-coding RNA NEAT1 (nuclear paraspeckle assembly transcript 1) has been documented in different types of solid tumours, such as lung cancer, oesophageal cancer, colorectal cancer and hepatocellular… 2061878 neat1 novel cancer related long non coding rna Aberrant overexpression of the long non-coding RNA NEAT1 (nuclear paraspeckle assembly transcript 1) has been documented in different types of solid t NEAT1: A novel cancer‐related long non‐coding RNA Aberrant overexpression of the long non-coding RNA NEAT1 (nuclear paraspeckle assembly transcript 1) has been documented in different types of solid tumours, such as lung cancer, oesophageal cancer, colorectal cancer and hepatocellular carcinoma, in which its high levels are associated with poor prognosis. In contrast, NEAT1 is downregulated in acute promyelocytic leukaemia where it promotes leucocyte differentiation. In this review, we provide an overview of current evidence concerning the oncogenic role and potential clinical utilities of NEAT1. Further investigations are warranted to elucidate the upstream and downstream mechanisms of NEAT1 overexpression.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.632027+00:00"
+}

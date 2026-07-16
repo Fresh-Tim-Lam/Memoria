@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "982650",
+  "source_fingerprint": "f4b564b1bf0d2a8067d5f0f9a0a8baa5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "982650",
+    "mir-375-inhibits-autophagy-and-reduces-viability-of-hepatocellular-carcinoma-cells-under-hypoxic-conditions."
+  ],
+  "key_phrases": [
+    "mir",
+    "375",
+    "inhibits",
+    "autophagy",
+    "reduces",
+    "viability",
+    "hepatocellular",
+    "carcinoma"
+  ],
+  "summary_1l": "miR-375 inhibits autophagy and reduces viability of hepatocellular carcinoma cells under hypoxic conditions.",
+  "query_hits": [],
+  "embed_text": "982650 miR-375 inhibits autophagy and reduces viability of hepatocellular carcinoma cells under hypoxic conditions. science scifact BACKGROUND & AIMS Tumor cells survive hypoxic conditions by inducing autophagy. We investigated the roles of microRNAs (miRNAs) in regulating autophagy of hepatocellular carcinoma (HCC) cells under hypoxic conditions. METHODS We used gain-… 982650 mir-375-inhibits-autophagy-and-reduces-viability-of-hepatocellular-carcinoma-cells-under-hypoxic-conditions. mir 375 inhibits autophagy reduces viability hepatocellular carcinoma miR-375 inhibits autophagy and reduces viability of hepatocellular carcinoma cells under hypoxic conditions. miR-375 inhibits autophagy and reduces viability of hepatocellular carcinoma cells under hypoxic conditions. BACKGROUND & AIMS Tumor cells survive hypoxic conditions by inducing autophagy. We investigated the roles of microRNAs (miRNAs) in regulating autophagy of hepatocellular carcinoma (HCC) cells under hypoxic conditions. METHODS We used gain- and loss-of-function methods to evaluate the effect of miRNAs on autophagy in human HCC cell lines (Huh7 and Hep3B) under hypoxic conditions. Autophagy was quantified by immunoblot, immunofluoresence, and transmission electron microscopy analyses, and after incubation of cells with bafilomycin A1. We used a luciferase reporter assay to confirm associations between miRNAs and their targets. We analyzed growth of HCC xenograft tumors in nude mice. R",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.939995+00:00"
+}

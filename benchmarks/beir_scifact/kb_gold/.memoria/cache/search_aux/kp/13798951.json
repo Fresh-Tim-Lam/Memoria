@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13798951",
+  "source_fingerprint": "34533fb7f242ee20870a55dfa5c8dadc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13798951",
+    "differentiation-of-effector-cd4-t-cell-populations-(*)."
+  ],
+  "key_phrases": [
+    "differentiation",
+    "effector",
+    "cd4",
+    "cell",
+    "populations",
+    "cells",
+    "play",
+    "critical"
+  ],
+  "summary_1l": "Differentiation of effector CD4 T cell populations (*).",
+  "query_hits": [],
+  "embed_text": "13798951 Differentiation of effector CD4 T cell populations (*). science scifact CD4 T cells play critical roles in mediating adaptive immunity to a variety of pathogens. They are also involved in autoimmunity, asthma, and allergic responses as well as in tumor immunity. During TCR activation in a particular cytokine… 13798951 differentiation-of-effector-cd4-t-cell-populations-(*). differentiation effector cd4 cell populations cells play critical Differentiation of effector CD4 T cell populations (*). Differentiation of effector CD4 T cell populations (*). CD4 T cells play critical roles in mediating adaptive immunity to a variety of pathogens. They are also involved in autoimmunity, asthma, and allergic responses as well as in tumor immunity. During TCR activation in a particular cytokine milieu, naive CD4 T cells may differentiate into one of several lineages of T helper (Th) cells, including Th1, Th2, Th17, and iTreg, as defined by their pattern of cytokine production and function. In this review, we summarize the discovery, functions, and relationships among Th cells; the cytokine and signaling requirements for their development; the networks of transcription factors involved in their differentiation; the epigenetic regulation of their key cytokines and transcription factors; and hu",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.082935+00:00"
+}

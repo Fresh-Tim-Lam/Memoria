@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12438901",
+  "source_fingerprint": "693b39ba726daccd40e12be8ff3d3278",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12438901",
+    "long-term-effects-of-continuing-adjuvant-tamoxifen-to-10-years-versus-stopping-at-5-years-after-diagnosis-of-oestrogen-receptor-positive-breast-cancer:-atlas,-a-randomised-trial"
+  ],
+  "key_phrases": [
+    "long",
+    "term",
+    "effects",
+    "continuing",
+    "adjuvant",
+    "tamoxifen",
+    "10",
+    "years"
+  ],
+  "summary_1l": "BACKGROUND For women w",
+  "query_hits": [],
+  "embed_text": "12438901 Long-term effects of continuing adjuvant tamoxifen to 10 years versus stopping at 5 years after diagnosis of oestrogen receptor-positive breast cancer: ATLAS, a randomised trial science scifact BACKGROUND For women with oestrogen receptor (ER)-positive early breast cancer, treatment with tamoxifen for 5 years substantially reduces the breast cancer mortality rate throughout the first 15 years after diagnosis. We aimed to assess… 12438901 long-term-effects-of-continuing-adjuvant-tamoxifen-to-10-years-versus-stopping-at-5-years-after-diagnosis-of-oestrogen-receptor-positive-breast-cancer:-atlas,-a-randomised-trial long term effects continuing adjuvant tamoxifen 10 years BACKGROUND For women w Long-term effects of continuing adjuvant tamoxifen to 10 years versus stopping at 5 years after diagnosis of oestrogen receptor-positive breast cancer: ATLAS, a randomised trial BACKGROUND For women with oestrogen receptor (ER)-positive early breast cancer, treatment with tamoxifen for 5 years substantially reduces the breast cancer mortality rate throughout the first 15 years after diagnosis. We aimed to assess the further effects of continuing tamoxifen to 10 years instead of stopping at 5 years. METHODS In the worldwide Adjuvant Tamoxifen: Longer Against Shorter (ATLAS) trial, 12,894 women with early breast cancer who had completed 5 years of treatment with tamoxifen were randomly allocated to continue tamoxifen to 10 years or stop at 5 years (open control). Allocation (1:1) was by cent",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:08.896402+00:00"
+}

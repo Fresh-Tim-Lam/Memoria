@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12658073",
+  "source_fingerprint": "b54d591c5a0985221f9e054af4f01ac9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12658073",
+    "regulation-of-serum-amyloid-a3-(saa3)-in-mouse-colonic-epithelium-and-adipose-tissue-by-the-intestinal-microbiota"
+  ],
+  "key_phrases": [
+    "regulation",
+    "serum",
+    "amyloid",
+    "a3",
+    "saa3",
+    "mouse",
+    "colonic",
+    "epithelium"
+  ],
+  "summary_1l": "The gut microbiota has been proposed as an environmental factor that affects the devel",
+  "query_hits": [],
+  "embed_text": "12658073 Regulation of Serum Amyloid A3 (SAA3) in Mouse Colonic Epithelium and Adipose Tissue by the Intestinal Microbiota science scifact The gut microbiota has been proposed as an environmental factor that affects the development of metabolic and inflammatory diseases in mammals. Recent reports indicate that gut bacteria-derived lipopolysaccharide (LPS) can initiate obesity… 12658073 regulation-of-serum-amyloid-a3-(saa3)-in-mouse-colonic-epithelium-and-adipose-tissue-by-the-intestinal-microbiota regulation serum amyloid a3 saa3 mouse colonic epithelium The gut microbiota has been proposed as an environmental factor that affects the devel Regulation of Serum Amyloid A3 (SAA3) in Mouse Colonic Epithelium and Adipose Tissue by the Intestinal Microbiota The gut microbiota has been proposed as an environmental factor that affects the development of metabolic and inflammatory diseases in mammals. Recent reports indicate that gut bacteria-derived lipopolysaccharide (LPS) can initiate obesity and insulin resistance in mice; however, the molecular interactions responsible for microbial regulation of host metabolism and mediators of inflammation have not been studied in detail. Hepatic serum amyloid A (SAA) proteins are markers and proposed mediators of inflammation that exhibit increased levels in serum of insulin-resistant mice. Adipose tissue-derived SAA3 displays monocyte chemotactic activity and may play a role in metabolic inf",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:08.743856+00:00"
+}

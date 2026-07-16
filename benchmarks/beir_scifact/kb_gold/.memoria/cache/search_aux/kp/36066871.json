@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36066871",
+  "source_fingerprint": "90342d95d592b12becb4809d88fc2ec5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36066871",
+    "heterochromatin-integrity-affects-chromosome-reorganization-after-centromere-dysfunction."
+  ],
+  "key_phrases": [
+    "heterochromatin",
+    "integrity",
+    "affects",
+    "chromosome",
+    "reorganization",
+    "after",
+    "centromere",
+    "dysfunction"
+  ],
+  "summary_1l": "Heterochromatin integrity affects chromosome reorganization after centromere dysfunction.",
+  "query_hits": [],
+  "embed_text": "36066871 Heterochromatin integrity affects chromosome reorganization after centromere dysfunction. science scifact The centromere is essential for the inheritance of genetic information on eukaryotic chromosomes. Epigenetic regulation of centromere identity has been implicated in genome stability, karyotype evolution, and speciation. However, little is… 36066871 heterochromatin-integrity-affects-chromosome-reorganization-after-centromere-dysfunction. heterochromatin integrity affects chromosome reorganization after centromere dysfunction Heterochromatin integrity affects chromosome reorganization after centromere dysfunction. Heterochromatin integrity affects chromosome reorganization after centromere dysfunction. The centromere is essential for the inheritance of genetic information on eukaryotic chromosomes. Epigenetic regulation of centromere identity has been implicated in genome stability, karyotype evolution, and speciation. However, little is known regarding the manner in which centromere dysfunction affects the chromosomal architectures. Here we show that in the fission yeast Schizosaccharomyces pombe, the conditional deletion of the centromere produces survivors that carry either a neocentromere-acquired chromosome at the subtelomeric region or an acentric chromosome rescued by intertelomere fusion with either of the remaining chromosomes. The ratio of neocentromere formation to telomere fusion is cons",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.826764+00:00"
+}

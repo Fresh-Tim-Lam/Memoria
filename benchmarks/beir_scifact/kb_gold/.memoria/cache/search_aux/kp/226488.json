@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "226488",
+  "source_fingerprint": "ab590a96b8f6a3a037d0fdb0fb456984",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "226488",
+    "activin/nodal-signalling-in-stem-cells."
+  ],
+  "key_phrases": [
+    "activin",
+    "nodal",
+    "signalling",
+    "stem",
+    "cells",
+    "growth",
+    "factors",
+    "control"
+  ],
+  "summary_1l": "Activin/Nodal signalling in stem cells.",
+  "query_hits": [],
+  "embed_text": "226488 Activin/Nodal signalling in stem cells. science scifact Activin/Nodal growth factors control a broad range of biological processes, including early cell fate decisions, organogenesis and adult tissue homeostasis. Here, we provide an overview of the mechanisms by which the Activin/Nodal… 226488 activin/nodal-signalling-in-stem-cells. activin nodal signalling stem cells growth factors control Activin/Nodal signalling in stem cells. Activin/Nodal signalling in stem cells. Activin/Nodal growth factors control a broad range of biological processes, including early cell fate decisions, organogenesis and adult tissue homeostasis. Here, we provide an overview of the mechanisms by which the Activin/Nodal signalling pathway governs stem cell function in these different stages of development. We describe recent findings that associate Activin/Nodal signalling to pathological conditions, focusing on cancer stem cells in tumorigenesis and its potential as a target for therapies. Moreover, we will discuss future directions and questions that currently remain unanswered on the role of Activin/Nodal signalling in stem cell self-renewal, differentiation and proliferation.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.160710+00:00"
+}

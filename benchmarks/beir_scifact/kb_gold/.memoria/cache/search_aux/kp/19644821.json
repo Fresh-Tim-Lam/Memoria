@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19644821",
+  "source_fingerprint": "3fdf436325598f6a90c83ba82eef274f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19644821",
+    "lin28b-is-sufficient-to-drive-liver-cancer-and-necessary-for-its-maintenance-in-murine-models."
+  ],
+  "key_phrases": [
+    "lin28b",
+    "sufficient",
+    "drive",
+    "liver",
+    "cancer",
+    "necessary",
+    "its",
+    "maintenance"
+  ],
+  "summary_1l": "Lin28b is sufficient to drive liver cancer and necessary for its maintenance in murine models.",
+  "query_hits": [],
+  "embed_text": "19644821 Lin28b is sufficient to drive liver cancer and necessary for its maintenance in murine models. science scifact Lin28a/b are RNA-binding proteins that influence stem cell maintenance, metabolism, and oncogenesis. Poorly differentiated, aggressive cancers often overexpress Lin28, but its role in tumor initiation or maintenance has not been… 19644821 lin28b-is-sufficient-to-drive-liver-cancer-and-necessary-for-its-maintenance-in-murine-models. lin28b sufficient drive liver cancer necessary its maintenance Lin28b is sufficient to drive liver cancer and necessary for its maintenance in murine models. Lin28b is sufficient to drive liver cancer and necessary for its maintenance in murine models. Lin28a/b are RNA-binding proteins that influence stem cell maintenance, metabolism, and oncogenesis. Poorly differentiated, aggressive cancers often overexpress Lin28, but its role in tumor initiation or maintenance has not been definitively addressed. We report that LIN28B overexpression is sufficient to initiate hepatoblastoma and hepatocellular carcinoma in murine models. We also detected Lin28b overexpression in MYC-driven hepatoblastomas, and liver-specific deletion of Lin28a/b reduced tumor burden, extended latency, and prolonged survival. Both intravenous siRNA against Lin28b and conditional Lin28b deletion reduced tumor burden and prolonged survival. Igf2bp proteins are upregulated, and I",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.921754+00:00"
+}

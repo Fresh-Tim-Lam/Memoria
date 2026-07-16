@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8246922",
+  "source_fingerprint": "4d386712589f90207f0cc820edd7bac6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8246922",
+    "the-development-of-autoimmune-myocarditis-in-mice-by-an"
+  ],
+  "key_phrases": [
+    "development",
+    "autoimmune",
+    "myocarditis",
+    "mice",
+    "by",
+    "background",
+    "interleukin",
+    "il"
+  ],
+  "summary_1l": "BACKGROUND Interleukin (IL)-12 exerts a potent proinflammatory effect by stimulating T-helper (Th) 1 responses.",
+  "query_hits": [],
+  "embed_text": "8246922 the Development of Autoimmune Myocarditis in Mice by an science scifact BACKGROUND Interleukin (IL)-12 exerts a potent proinflammatory effect by stimulating T-helper (Th) 1 responses. This effect is believed to be mediated primarily through the activation of STAT4 and subsequent production of interferon… 8246922 the-development-of-autoimmune-myocarditis-in-mice-by-an development autoimmune myocarditis mice by background interleukin il BACKGROUND Interleukin (IL)-12 exerts a potent proinflammatory effect by stimulating T-helper (Th) 1 responses. the Development of Autoimmune Myocarditis in Mice by an BACKGROUND Interleukin (IL)-12 exerts a potent proinflammatory effect by stimulating T-helper (Th) 1 responses. This effect is believed to be mediated primarily through the activation of STAT4 and subsequent production of interferon (IFN)-gamma. Methods and Results- We examined the role of IL-12 receptor (IL-12R) signaling in the development of murine experimental autoimmune myocarditis (EAM) induced by cardiac myosin immunization. Both IL-12Rbeta1-deficient mice and STAT4-deficient mice were resistant to the induction of myocarditis. Treatment with exogenous IL-12 exacerbated disease. We questioned whether IFN-gamma is required for the disease-promoting activity of IL-12. On the contrary, we found that IFN-gamma suppresses EAM. Lack",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.157659+00:00"
+}

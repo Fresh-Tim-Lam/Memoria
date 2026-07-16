@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8596357",
+  "source_fingerprint": "a947410753542134e2b2a00a0324a8de",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8596357",
+    "porcine-circovirus-type-2-dna-influences-cytoskeleton-rearrangements-in-plasmacytoid-and-monocyte-derived-dendritic-cells."
+  ],
+  "key_phrases": [
+    "porcine",
+    "circovirus",
+    "type",
+    "dna",
+    "influences",
+    "cytoskeleton",
+    "rearrangements",
+    "plasmacytoid"
+  ],
+  "summary_1l": "Porcine circovirus type 2 DNA influences cytoskeleton rearrangements in plasmacytoid and monocyte-derived dendritic cells.",
+  "query_hits": [],
+  "embed_text": "8596357 Porcine circovirus type 2 DNA influences cytoskeleton rearrangements in plasmacytoid and monocyte-derived dendritic cells. science scifact Functional disruption of dendritic cells (DC) is an important strategy for viral pathogens to evade host defences. In this context, porcine circovirus type 2 (PCV2), a single-stranded DNA virus, impairs plasmacytoid DC (pDC) and… 8596357 porcine-circovirus-type-2-dna-influences-cytoskeleton-rearrangements-in-plasmacytoid-and-monocyte-derived-dendritic-cells. porcine circovirus type dna influences cytoskeleton rearrangements plasmacytoid Porcine circovirus type 2 DNA influences cytoskeleton rearrangements in plasmacytoid and monocyte-derived dendritic cells. Porcine circovirus type 2 DNA influences cytoskeleton rearrangements in plasmacytoid and monocyte-derived dendritic cells. Functional disruption of dendritic cells (DC) is an important strategy for viral pathogens to evade host defences. In this context, porcine circovirus type 2 (PCV2), a single-stranded DNA virus, impairs plasmacytoid DC (pDC) and conventional DC activation by certain viruses or Toll-like receptor (TLR) ligands. This inhibitory capacity is associated with the viral DNA, but the impairment does not affect all signalling cascades; TLR7 ligation by small chemical molecules will still induce interleukin-6 (IL-6) and tumour necrosis factor-α secretion, but not interferon-α or IL-12. In this study, the molecular mechanisms by which silencing occurs were investigated. PP2, a po",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.164626+00:00"
+}

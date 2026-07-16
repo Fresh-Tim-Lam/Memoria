@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2492146",
+  "source_fingerprint": "9efec4232fde0ba103651e0c52a53d61",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2492146",
+    "comparative-safety-of-targeted-therapies-for-metastatic-colorectal-cancer-between-elderly-and-younger-patients:-a-study-using-the-international-pharmacovigilance-database"
+  ],
+  "key_phrases": [
+    "comparative",
+    "safety",
+    "targeted",
+    "therapies",
+    "metastatic",
+    "colorectal",
+    "cancer",
+    "between"
+  ],
+  "summary_1l": "Metastatic colorectal cancer",
+  "query_hits": [],
+  "embed_text": "2492146 Comparative Safety of Targeted Therapies for Metastatic Colorectal Cancer between Elderly and Younger Patients: a Study Using the International Pharmacovigilance Database science scifact Metastatic colorectal cancer (mCRC) is increasingly treated using targeted therapies. Post-marketing safety of these agents is understudied, especially in the elderly. This study aimed to compare, according to age, the adverse drug… 2492146 comparative-safety-of-targeted-therapies-for-metastatic-colorectal-cancer-between-elderly-and-younger-patients:-a-study-using-the-international-pharmacovigilance-database comparative safety targeted therapies metastatic colorectal cancer between Metastatic colorectal cancer Comparative Safety of Targeted Therapies for Metastatic Colorectal Cancer between Elderly and Younger Patients: a Study Using the International Pharmacovigilance Database Metastatic colorectal cancer (mCRC) is increasingly treated using targeted therapies. Post-marketing safety of these agents is understudied, especially in the elderly. This study aimed to compare, according to age, the adverse drug reactions (ADRs) of targeted therapies used for mCRC in real life. An extraction of VigiBase, which contains World Health Organization individual case safety reports (ICSRs), was performed. All ADR reports with aflibercept, bevacizumab, cetuximab, panitumumab, or regorafenib used in CRC were considered. For all drugs, chi-square tests were used to compare frequencies of serious ADRs between pat",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.565512+00:00"
+}

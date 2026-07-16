@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14092737",
+  "source_fingerprint": "500b066a84cf67766ffaaf86405754bd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14092737",
+    "alpha-synuclein-induces-lysosomal-rupture-and-cathepsin-dependent-reactive-oxygen-species-following-endocytosis"
+  ],
+  "key_phrases": [
+    "alpha",
+    "synuclein",
+    "induces",
+    "lysosomal",
+    "rupture",
+    "cathepsin",
+    "dependent",
+    "reactive"
+  ],
+  "summary_1l": "α-synuclein dysregulation is a critical aspect of Parkinson's disease pathology.",
+  "query_hits": [],
+  "embed_text": "14092737 Alpha-Synuclein Induces Lysosomal Rupture and Cathepsin Dependent Reactive Oxygen Species Following Endocytosis science scifact α-synuclein dysregulation is a critical aspect of Parkinson's disease pathology. Recent studies have observed that α-synuclein aggregates are cytotoxic to cells in culture and that this toxicity can be spread between cells. However, the… 14092737 alpha-synuclein-induces-lysosomal-rupture-and-cathepsin-dependent-reactive-oxygen-species-following-endocytosis alpha synuclein induces lysosomal rupture cathepsin dependent reactive α-synuclein dysregulation is a critical aspect of Parkinson's disease pathology. Alpha-Synuclein Induces Lysosomal Rupture and Cathepsin Dependent Reactive Oxygen Species Following Endocytosis α-synuclein dysregulation is a critical aspect of Parkinson's disease pathology. Recent studies have observed that α-synuclein aggregates are cytotoxic to cells in culture and that this toxicity can be spread between cells. However, the molecular mechanisms governing this cytotoxicity and spread are poorly characterized. Recent studies of viruses and bacteria, which achieve their cytoplasmic entry by rupturing intracellular vesicles, have utilized the redistribution of galectin proteins as a tool to measure vesicle rupture by these organisms. Using this approach, we demonstrate that α-synuclein aggregates can induce the rupture of lysosomes following their endocytosis in neuronal",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.071536+00:00"
+}

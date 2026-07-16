@@ -18,7 +18,9 @@
 
 ## 2. 检索：命中什么
 
-### 2.1 已确认 KP 的索引字段
+### 2.1 已确认 KP 的索引字段 → v1.5 扩展隐式字段
+
+**显式（sidecar，用户确认）**：
 
 | 字段 | 来源 | Lexical | Embedding | 相对权重 |
 |------|------|---------|-----------|----------|
@@ -28,6 +30,18 @@
 | kp description | sidecar | ✓ | 拼入向量 | 中 |
 | file description | sidecar 文件级 | ✓ | — | 低 |
 | range 正文 | md + 已确认 range | token（低权） | 前 800 字 | 低 / 语义主力 |
+
+**隐式（search_aux，持久化 cache，用户可经 proposals 采纳）**：
+
+| 字段 | Lexical | Embedding | 相对权重 |
+|------|---------|-----------|----------|
+| auto_tags | ✓ | ✓ | 略低于 user tag |
+| aliases | ✓ | ✓ | 接近 name |
+| key_phrases / summary_1l | ✓ | ✓ | 类似 description |
+| query_hits | ✓ | — | 个性化 |
+| bridge（MT 中间语言） | 可选 | ✓ 主用 | 跨语言 |
+
+完整 schema 与权重见 [`search-kernel-v1.5.md`](search-kernel-v1.5.md) §2、§6.2。
 
 **默认不进入 KP 索引**：pending 提议、虚链 anchor 文字、无 KP 的 plain 正文。
 
@@ -78,12 +92,23 @@ body_locate:      # 可选降级层（见 §3.1）
 
 链接推荐的产出是 `links[].targets`，与「是否已有 edge」**无必然关系**（见 §4.3）。
 
-### 3.3 Tag：系统 propose + 用户选择
+### 3.3 Tag：系统 propose + 用户选择 → **扩展为统一建议机制（v1.5）**
 
 - 系统 **propose** → 进入 **候选**；用户 **手动创建** 的 tag 也先进候选或直接已选（产品可配置）。
-- UI 划分：**已选** vs **候选** 两区。
+- UI 划分：**已选** vs **候选** vs **已忽略** 三态。
 - **颜色区分**：系统 propose 候选 vs 用户自建候选（不同色）；已选统一样式。
 - 算法（现有）：`suggest_tags` — jieba + 库内 tag 词表 + 正文共现；非 LLM。
+
+**v1.5 扩展（2026-07-10）**：同一交互模型覆盖 **alias、summary、key_phrase、description** 等隐式 aux — 非独立 AI 面板，而是：
+
+| 触达位置 | 管理内容 |
+|----------|----------|
+| KP 配置窗 | tag / description / alias / summary 候选 |
+| link 编辑 | link_target 候选 |
+| 图谱节点 | edge / merge 候选 |
+| 引导维护队列 | 全 kind 待办，按检索增益排序 |
+
+详见 [`search-kernel-v1.5.md`](search-kernel-v1.5.md) §3。
 
 ### 3.4 Links、KP、Edges 的关系 — **用户澄清**
 
@@ -188,6 +213,102 @@ actions: [confirm, edit, dismiss]
 
 ---
 
+## 8. 当前检索全流程（SearchKernel v1 · 2026-07-10）
+
+与 `dicussion.md` §17.1 一致；实现见 `search_kernel.py`、`lexical_index.py`、`embedding_provider.py`、`body_locate.py`。
+
+### 8.1 索引构建（KB 打开 / 侧车变更）
+
+1. 扫描库内 `.md` + 侧车，**仅已确认 KP** 进入索引。
+2. 每条 KP → 扁平记录：`kp_id`、`name`、`tags[]`、`kp_description`、文件级 `description`、`body_excerpt`（range 摘录）。
+3. 分字段分词（jieba + 标识符切分 + **拼音紧凑串**）→ 倒排表 `token → [(record_idx, field)]`。
+4. 缓存：`.memoria/cache/lexical/index.json`。
+5. （可选）Embedding：name+tags+description+正文 → 本地句向量 → `.memoria/cache/embedding/`。
+
+### 8.2 一次工具栏搜索
+
+```
+用户输入 q + 范围(全库|当前文件)
+  → 查询分词 + lower + 查询拼音
+  → 倒排召回候选 KP（无命中则全表打分）
+  → 字段加权：id 精确 > name > tag > description > body
+  → Top-N 排序
+  → [semantic/both] 向量相似度合并 (~0.65 Lexical + 0.35 Semantic)
+  → [body_locate_enabled] 线性扫描 md 行（正文定位，非 KP 结果）
+  → 返回 kp_id[] + sources + 可选 snippet/定位
+```
+
+### 8.3 当前局限（用户反馈：不够智能）
+
+| 缺失能力 | 说明 |
+|----------|------|
+| 图谱遍历 | `edges[]` 不参与召回与打分 |
+| 查询扩张 | 无同义/纠错/语义 query 树（R09 部分补齐 Lexical 层） |
+| 多跳路径分 | 无「从 query 到 KP 经过哪些边/tag」的证据链 |
+| 双向汇合 | 无「查询侧 + KB 侧同时生长再相遇」机制 |
+
+---
+
+## 9. 目标：双向生长汇合检索（SearchKernel v2 · R17）
+
+用户设想（2026-07-10）：知识库与搜索栏各有一棵 **生长树**，向中间汇合；汇合节点（高度匹配的 KP、tag、中间概念）按 **路径证据** 计分。
+
+```
+[查询侧 front]                         [KB 侧 front]
+      q                                    全库 KP 子图
+      │                                         │
+ 拼音纠正、同义、tag 别名              沿 edges(reference/extend)、
+ LLM/规则 query 扩张                   tag 共现、description 相似…
+      │                                         │
+      ▼                                         ▼
+ 查询概念树                               分析/激活树
+      │                                         │
+      └────────────► 汇合层 ◄───────────────────┘
+              路径加权 → 排序 kp_id
+```
+
+| 阶段 | 内容 |
+|------|------|
+| **R09（过渡）** | Lexical 拼音/ typo、query 推荐、分档置信度 |
+| **v2 首版** | tag 共现 + edge 1-hop 激活；简单路径分 |
+| **v2 完整** | 双向 BFS 深度扩展 + 汇合层打分 |
+| **R16** | 点击/有用无用反馈 → 调路径权重或库内小模型 |
+| **R07 绑定** | 边属性专章定稿后，边类型参与生长规则与推理提议 |
+
+详细对照表见 `dicussion.md` §17.2。
+
+---
+
+## 10. 用户决策补充（2026-07-10）
+
+| 主题 | 决策 |
+|------|------|
+| R07 图谱推理 | 边属性系统需专章；建议边 **不自动写**，用户逐条确认 |
+| R16 检索反馈 | 库内持久化方案 **可行** `[✅]` |
+| R15 编辑 | 富文本 **Markdown**（含公式、荧光笔、undo/redo），非隐藏 md 的 WYSIWYG |
+| R03 HTML | **全局最低优先级**；直接渲染 vs 转 md **待定** |
+| 检索智能 | 认同 v2 **双向生长** 方向；v1 为静态倒排基线 |
+| **SearchKernel v1.5** | 隐式 aux **全系统建议机制**（同 tag 候选）；**多模型分工** + MT 桥接；见 search-kernel-v1.5.md |
+
+---
+
+## 11. SearchKernel v1.5 摘要（2026-07-10）
+
+> 完整规格：[`search-kernel-v1.5.md`](search-kernel-v1.5.md)
+
+| 主题 | 决策 |
+|------|------|
+| 隐式内容可见性 | **嵌入全系统 proposals**；KP 配置 / link / 图谱 / 引导维护；用户 **采纳·拒绝·编辑**（同 tag） |
+| 隐式持久化 | `.memoria/cache/search_aux/kp/{id}.json`；可重建；采纳 → sidecar + `promoted` |
+| 多模型 | ModelRouter：**Embed-Recall / Embed-Rerank / MT-Bridge / LLM-aux / LTR** 分阶段；单模型不够 |
+| 跨语言 | 高精度 **MT → 中间语言（默认 en）** + 多语 embed 并联 |
+| 检索 | 显式+隐式 **四通道 RRF** → 精排 Top-20 → 反馈权重 → 置信分档 |
+| 速度 | 查询 &lt;100ms（5k KP，无 rerank）；LLM/全库 MT **不进热路径** |
+| 闭环 | aux 同时供 **search + suggest_tags/merge/link/query**；R16 显式+隐式反馈 |
+| Q1–Q4 | 混合 proposals 存储；桥接语言 en 默认可改；bge-reranker-v2-m3；query_hits 须确认才晋升 alias |
+
+---
+
 ## 7. 相关文件
 
 | 区域 | 路径 |
@@ -197,5 +318,5 @@ actions: [confirm, edit, dismiss]
 | 统一 search | `src/memoria/services/search_kernel.py` |
 | 正文定位 | `src/memoria/services/body_locate.py` |
 | 合并建议 | `search_kernel.suggest_kp_merge` |
-| 检索设置 UI | `src/memoria/ui/static/m0/js/search-settings.js` |
-| 合并夹具 | `tests/fixtures/m4_merge_kb/` |
+| **v1.5 规格** | `docs/design/search-kernel-v1.5.md` |
+| Benchmark | `scripts/benchmark/` |

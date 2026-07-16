@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4530659",
+  "source_fingerprint": "ce15717a94923c2eb1a6effc8c4b2ac2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4530659",
+    "mechanisms-of-age-related-macular-degeneration"
+  ],
+  "key_phrases": [
+    "mechanisms",
+    "age",
+    "related",
+    "macular",
+    "degeneration",
+    "amd",
+    "progressive",
+    "condition"
+  ],
+  "summary_1l": "Age-related macular degeneration (AMD), a progressive condition that is untreatable in up to 90% of patients, is a leading cause of blindness in the elde",
+  "query_hits": [],
+  "embed_text": "4530659 Mechanisms of Age-Related Macular Degeneration science scifact Age-related macular degeneration (AMD), a progressive condition that is untreatable in up to 90% of patients, is a leading cause of blindness in the elderly worldwide. The two forms of AMD, wet and dry, are classified based on the presence… 4530659 mechanisms-of-age-related-macular-degeneration mechanisms age related macular degeneration amd progressive condition Age-related macular degeneration (AMD), a progressive condition that is untreatable in up to 90% of patients, is a leading cause of blindness in the elde Mechanisms of Age-Related Macular Degeneration Age-related macular degeneration (AMD), a progressive condition that is untreatable in up to 90% of patients, is a leading cause of blindness in the elderly worldwide. The two forms of AMD, wet and dry, are classified based on the presence or absence of blood vessels that have disruptively invaded the retina, respectively. A detailed understanding of the molecular mechanisms underlying wet AMD has led to several robust FDA-approved therapies. In contrast, there are no approved treatments for dry AMD. In this review, we provide insight into the critical effector pathways mediating each form of the disease. A recurring theme that spans most aspects of AMD pathogenesis is defective immune modulation in the classically immune-privileged ocular hav",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.276708+00:00"
+}

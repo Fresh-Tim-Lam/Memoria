@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26611094",
+  "source_fingerprint": "5861f32ee415064701cd983f0e50447c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26611094",
+    "hospital-volume-and-the-outcomes-of-mechanical-ventilation."
+  ],
+  "key_phrases": [
+    "hospital",
+    "volume",
+    "outcomes",
+    "mechanical",
+    "ventilation",
+    "background",
+    "increased",
+    "patients"
+  ],
+  "summary_1l": "Hospital volume and the outcomes of mechanical ventilation.",
+  "query_hits": [],
+  "embed_text": "26611094 Hospital volume and the outcomes of mechanical ventilation. science scifact BACKGROUND An increased volume of patients is associated with improved survival in numerous high-risk medical and surgical conditions. The relationship between the number of patients admitted (hospital volume) and outcome among patients… 26611094 hospital-volume-and-the-outcomes-of-mechanical-ventilation. hospital volume outcomes mechanical ventilation background increased patients Hospital volume and the outcomes of mechanical ventilation. Hospital volume and the outcomes of mechanical ventilation. BACKGROUND An increased volume of patients is associated with improved survival in numerous high-risk medical and surgical conditions. The relationship between the number of patients admitted (hospital volume) and outcome among patients with critical illnesses is unknown. METHODS We analyzed data from 20,241 nonsurgical patients receiving mechanical ventilation at 37 acute care hospitals in the Acute Physiology and Chronic Health Evaluation clinical information system from 2002 through 2003. Multivariate analyses were performed to adjust for the severity of illness and other differences in the case mix. RESULTS An increase in hospital volume was associated with improved survival among patients receiving mechanical ventilation in t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.894674+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3619372",
+  "source_fingerprint": "5d25e9e71ee0b6f75f935480075f8eef",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3619372",
+    "expandable-cardiovascular-progenitor-cells-reprogrammed-from-fibroblasts."
+  ],
+  "key_phrases": [
+    "expandable",
+    "cardiovascular",
+    "progenitor",
+    "cells",
+    "reprogrammed",
+    "from",
+    "fibroblasts",
+    "stem"
+  ],
+  "summary_1l": "Expandable Cardiovascular Progenitor Cells Reprogrammed from Fibroblasts.",
+  "query_hits": [],
+  "embed_text": "3619372 Expandable Cardiovascular Progenitor Cells Reprogrammed from Fibroblasts. science scifact Stem cell-based approaches to cardiac regeneration are increasingly viable strategies for treating heart failure. Generating abundant and functional autologous cells for transplantation in such a setting, however, remains a significant… 3619372 expandable-cardiovascular-progenitor-cells-reprogrammed-from-fibroblasts. expandable cardiovascular progenitor cells reprogrammed from fibroblasts stem Expandable Cardiovascular Progenitor Cells Reprogrammed from Fibroblasts. Expandable Cardiovascular Progenitor Cells Reprogrammed from Fibroblasts. Stem cell-based approaches to cardiac regeneration are increasingly viable strategies for treating heart failure. Generating abundant and functional autologous cells for transplantation in such a setting, however, remains a significant challenge. Here, we isolated a cell population with extensive proliferation capacity and restricted cardiovascular differentiation potentials during cardiac transdifferentiation of mouse fibroblasts. These induced expandable cardiovascular progenitor cells (ieCPCs) proliferated extensively for more than 18 passages in chemically defined conditions, with 10(5) starting fibroblasts robustly producing 10(16) ieCPCs. ieCPCs expressed cardiac signature genes and readily differentiated into",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.964343+00:00"
+}

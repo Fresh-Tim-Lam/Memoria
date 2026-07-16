@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "kp_id": "155970#11",
+  "source_fingerprint": "8302c2ab8f68457f10af435fe7858ba7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "哈利·波特",
+    "(政治人物)",
+    "哈利·波特：一段魔法史"
+  ],
+  "aliases": [
+    "155970#11"
+  ],
+  "key_phrases": [
+    "魯霸",
+    "海格",
+    "作者",
+    "哈利",
+    "榮恩",
+    "差點",
+    "沒頭",
+    "尼克"
+  ],
+  "summary_1l": "作者羅琳說，海格與哈利、榮恩、差點沒頭的尼克、皮皮鬼都是她最早創造的《哈利波特》人物。",
+  "query_hits": [],
+  "embed_text": "155970#11 魯霸·海格 魯霸·海格 作者羅琳說，海格與哈利、榮恩、差點沒頭的尼克、皮皮鬼都是她最早創造的《哈利波特》人物。 哈利·波特 (政治人物) 哈利·波特：一段魔法史 155970#11 魯霸 海格 作者 哈利 榮恩 差點 沒頭 尼克 作者羅琳說，海格與哈利、榮恩、差點沒頭的尼克、皮皮鬼都是她最早創造的《哈利波特》人物。 魯霸·海格 作者羅琳說，海格與哈利、榮恩、差點沒頭的尼克、皮皮鬼都是她最早創造的《哈利波特》人物。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:19:49.294470+00:00"
+}

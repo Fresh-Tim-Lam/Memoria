@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13513790",
+  "source_fingerprint": "d3f6b551b2e4a2ce0f4734d665f91052",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13513790",
+    "generation-of-genetically-modified-mice-by-oocyte-injection-of-androgenetic-haploid-embryonic-stem-cells"
+  ],
+  "key_phrases": [
+    "generation",
+    "genetically",
+    "modified",
+    "mice",
+    "by",
+    "oocyte",
+    "injection",
+    "androgenetic"
+  ],
+  "summary_1l": "Haploid cells are amenable for genetic analysis.",
+  "query_hits": [],
+  "embed_text": "13513790 Generation of Genetically Modified Mice by Oocyte Injection of Androgenetic Haploid Embryonic Stem Cells science scifact Haploid cells are amenable for genetic analysis. Recent success in the derivation of mouse haploid embryonic stem cells (haESCs) via parthenogenesis has enabled genetic screening in mammalian cells. However, successful generation of live… 13513790 generation-of-genetically-modified-mice-by-oocyte-injection-of-androgenetic-haploid-embryonic-stem-cells generation genetically modified mice by oocyte injection androgenetic Haploid cells are amenable for genetic analysis. Generation of Genetically Modified Mice by Oocyte Injection of Androgenetic Haploid Embryonic Stem Cells Haploid cells are amenable for genetic analysis. Recent success in the derivation of mouse haploid embryonic stem cells (haESCs) via parthenogenesis has enabled genetic screening in mammalian cells. However, successful generation of live animals from these haESCs, which is needed to extend the genetic analysis to the organism level, has not been achieved. Here, we report the derivation of haESCs from androgenetic blastocysts. These cells, designated as AG-haESCs, partially maintain paternal imprints, express classical ESC pluripotency markers, and contribute to various tissues, including the germline, upon injection into diploid blastocysts. Strikingly, live mice can be obtained upon in",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.460518+00:00"
+}

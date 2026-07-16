@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7852582",
+  "source_fingerprint": "038e76467feb412b348f4d8abc58a1f6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7852582",
+    "lung-cancer-treatment-waiting-times-and-tumour-growth."
+  ],
+  "key_phrases": [
+    "lung",
+    "cancer",
+    "treatment",
+    "waiting",
+    "times",
+    "tumour",
+    "growth",
+    "we"
+  ],
+  "summary_1l": "Lung cancer treatment waiting times and tumour growth.",
+  "query_hits": [],
+  "embed_text": "7852582 Lung cancer treatment waiting times and tumour growth. science scifact We report a single-centre prospective audit of 29 lung cancer patients who were awaiting radical (potentially curative) radiotherapy. This was the total number assessed as suitable for radical treatment by one consultant during 1999. At… 7852582 lung-cancer-treatment-waiting-times-and-tumour-growth. lung cancer treatment waiting times tumour growth we Lung cancer treatment waiting times and tumour growth. Lung cancer treatment waiting times and tumour growth. We report a single-centre prospective audit of 29 lung cancer patients who were awaiting radical (potentially curative) radiotherapy. This was the total number assessed as suitable for radical treatment by one consultant during 1999. At the time of assessment they had been newly diagnosed and staged with a computed tomographic (CT) scan of chest. They had a subsequent CT scan prior to starting treatment for the purpose of planning the radiation fields. We have now measured tumour size on the diagnostic scans and compared this with the size on the planning scans. We have documented the delay between diagnostic and planning CT scanning and the total time between first hospital visit and starting treatment. Two patients had progression of",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.336640+00:00"
+}

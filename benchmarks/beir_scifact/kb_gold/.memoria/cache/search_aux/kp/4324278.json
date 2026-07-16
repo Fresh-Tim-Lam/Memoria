@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4324278",
+  "source_fingerprint": "d7a65d1330488640aa957ecd67ca9867",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4324278",
+    "the-tor-signalling-pathway-controls-nuclear-localization-of-nutrient-regulated-transcription-factors."
+  ],
+  "key_phrases": [
+    "tor",
+    "signalling",
+    "pathway",
+    "controls",
+    "nuclear",
+    "localization",
+    "nutrient",
+    "regulated"
+  ],
+  "summary_1l": "The TOR signalling pathway controls nuclear localization of nutrient-regulated transcription factors.",
+  "query_hits": [],
+  "embed_text": "4324278 The TOR signalling pathway controls nuclear localization of nutrient-regulated transcription factors. science scifact The rapamycin-sensitive TOR signalling pathway in Saccharomyces cerevisiae activates a cell-growth program in response to nutrients such as nitrogen and carbon. The TOR1 and TOR2 kinases (TOR) control cytoplasmic protein synthesis and… 4324278 the-tor-signalling-pathway-controls-nuclear-localization-of-nutrient-regulated-transcription-factors. tor signalling pathway controls nuclear localization nutrient regulated The TOR signalling pathway controls nuclear localization of nutrient-regulated transcription factors. The TOR signalling pathway controls nuclear localization of nutrient-regulated transcription factors. The rapamycin-sensitive TOR signalling pathway in Saccharomyces cerevisiae activates a cell-growth program in response to nutrients such as nitrogen and carbon. The TOR1 and TOR2 kinases (TOR) control cytoplasmic protein synthesis and degradation through the conserved TAP42 protein. Upon phosphorylation by TOR, TAP42 binds and possibly inhibits type 2A and type-2A-related phosphatases; however, the mechanism by which TOR controls nuclear events such as global repression of starvation-specific transcription is unknown. Here we show that TOR prevents transcription of genes expressed upon nitrogen limitation by promoting the association of the GATA transcription factor GLN3 with the cytoplasm",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.693664+00:00"
+}

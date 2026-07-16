@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1336292",
+  "source_fingerprint": "b22148152ed51f6c2d71fd2d774d0ffe",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1336292",
+    "immunosuppressant-fty720-inhibits-thymocyte-emigration."
+  ],
+  "key_phrases": [
+    "immunosuppressant",
+    "fty720",
+    "inhibits",
+    "thymocyte",
+    "emigration",
+    "one",
+    "major",
+    "role"
+  ],
+  "summary_1l": "Immunosuppressant FTY720 inhibits thymocyte emigration.",
+  "query_hits": [],
+  "embed_text": "1336292 Immunosuppressant FTY720 inhibits thymocyte emigration. science scifact One major role of the thymus is to provide the peripheral immune system with mature T cells, but the mechanisms involving the cellular export are not fully understood. In this study, we examined the ability of a novel immunosuppressive… 1336292 immunosuppressant-fty720-inhibits-thymocyte-emigration. immunosuppressant fty720 inhibits thymocyte emigration one major role Immunosuppressant FTY720 inhibits thymocyte emigration. Immunosuppressant FTY720 inhibits thymocyte emigration. One major role of the thymus is to provide the peripheral immune system with mature T cells, but the mechanisms involving the cellular export are not fully understood. In this study, we examined the ability of a novel immunosuppressive reagent, FTY720, to inhibit T cell export from the thymus. Daily administration of FTY720 at a dose of 1 mg / kg resulted in a marked decrease in the number of peripheral blood T lymphocytes. In the thymus, long-term daily administration of FTY720 caused a three- to fourfold increase in the proportion of mature medullary thymocytes (CD4(+)CD8(-) and CD4(-)CD8(+)) as well as a slight decrease in the double-positive cell (CD4(+)CD8(+)) ratio. Phenotypic analysis (TCRalpha beta, H-2K(d), CD44, CD69 and CD2",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.095454+00:00"
+}

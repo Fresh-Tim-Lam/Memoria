@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5927534",
+  "source_fingerprint": "11e2e302a74682af1383e0e54759c54d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5927534",
+    "camkii-triggers-the-diffusional-trapping-of-surface-ampars-through-phosphorylation-of-stargazin"
+  ],
+  "key_phrases": [
+    "camkii",
+    "triggers",
+    "diffusional",
+    "trapping",
+    "surface",
+    "ampars",
+    "through",
+    "phosphorylation"
+  ],
+  "summary_1l": "The Ca(2+)/calmodulin-dependent protein kinase II (CaMKII) is critically required for the synaptic recru",
+  "query_hits": [],
+  "embed_text": "5927534 CaMKII Triggers the Diffusional Trapping of Surface AMPARs through Phosphorylation of Stargazin science scifact The Ca(2+)/calmodulin-dependent protein kinase II (CaMKII) is critically required for the synaptic recruitment of AMPA-type glutamate receptors (AMPARs) during both development and plasticity. However, the underlying mechanism is unknown.… 5927534 camkii-triggers-the-diffusional-trapping-of-surface-ampars-through-phosphorylation-of-stargazin camkii triggers diffusional trapping surface ampars through phosphorylation The Ca(2+)/calmodulin-dependent protein kinase II (CaMKII) is critically required for the synaptic recru CaMKII Triggers the Diffusional Trapping of Surface AMPARs through Phosphorylation of Stargazin The Ca(2+)/calmodulin-dependent protein kinase II (CaMKII) is critically required for the synaptic recruitment of AMPA-type glutamate receptors (AMPARs) during both development and plasticity. However, the underlying mechanism is unknown. Using single-particle tracking of AMPARs, we show that CaMKII activation and postsynaptic translocation induce the synaptic trapping of AMPARs diffusing in the membrane. AMPAR immobilization requires both phosphorylation of the auxiliary subunit Stargazin and its binding to PDZ domain scaffolds. It does not depend on the PDZ binding domain of GluA1 AMPAR subunit nor its phosphorylation at Ser831. Finally, CaMKII-dependent AMPAR immobilization regulates short-te",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.495360+00:00"
+}

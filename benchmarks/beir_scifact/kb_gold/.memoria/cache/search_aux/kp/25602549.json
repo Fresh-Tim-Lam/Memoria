@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25602549",
+  "source_fingerprint": "0de6957c1e2549994c93c7bfab14e157",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25602549",
+    "when-nk-cells-overcome-their-lack-of-education."
+  ],
+  "key_phrases": [
+    "when",
+    "nk",
+    "cells",
+    "overcome",
+    "their",
+    "lack",
+    "education",
+    "immune"
+  ],
+  "summary_1l": "When NK cells overcome their lack of education.",
+  "query_hits": [],
+  "embed_text": "25602549 When NK cells overcome their lack of education. science scifact Cells of the immune system have evolved various molecular mechanisms to sense their environment and react to alterations of self. NK cells are lymphocytes with effector and regulatory functions, which are remarkably adaptable to changes in… 25602549 when-nk-cells-overcome-their-lack-of-education. when nk cells overcome their lack education immune When NK cells overcome their lack of education. When NK cells overcome their lack of education. Cells of the immune system have evolved various molecular mechanisms to sense their environment and react to alterations of self. NK cells are lymphocytes with effector and regulatory functions, which are remarkably adaptable to changes in self. In a study published in this issue of the JCI, Tarek and colleagues report the clinical benefits of manipulating NK cell adaptation to self in an innovative mAb-based therapy against neuroblastoma (NB). This novel therapeutic strategy should stimulate further research on NK cell therapies.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.988213+00:00"
+}

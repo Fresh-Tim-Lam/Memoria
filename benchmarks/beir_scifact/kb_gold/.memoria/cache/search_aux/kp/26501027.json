@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26501027",
+  "source_fingerprint": "34cd1b257be33a737e213649186f7561",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26501027",
+    "vasculature-associated-cells-expressing-nestin-in-developing-bones-encompass-early-cells-in-the-osteoblast-and-endothelial-lineage."
+  ],
+  "key_phrases": [
+    "vasculature",
+    "associated",
+    "cells",
+    "expressing",
+    "nestin",
+    "developing",
+    "bones",
+    "encompass"
+  ],
+  "summary_1l": "Vasculature-associated cells expressing nestin in developing bones encompass early cells in the osteoblast and endothelial lineage.",
+  "query_hits": [],
+  "embed_text": "26501027 Vasculature-associated cells expressing nestin in developing bones encompass early cells in the osteoblast and endothelial lineage. science scifact Nestin-positive (Nes(+)) cells are important hematopoiesis-supporting constituents in adult bone marrow. However, how these cells originate during endochondral bone development is unknown. Studies using mice expressing GFP under the… 26501027 vasculature-associated-cells-expressing-nestin-in-developing-bones-encompass-early-cells-in-the-osteoblast-and-endothelial-lineage. vasculature associated cells expressing nestin developing bones encompass Vasculature-associated cells expressing nestin in developing bones encompass early cells in the osteoblast and endothelial lineage. Vasculature-associated cells expressing nestin in developing bones encompass early cells in the osteoblast and endothelial lineage. Nestin-positive (Nes(+)) cells are important hematopoiesis-supporting constituents in adult bone marrow. However, how these cells originate during endochondral bone development is unknown. Studies using mice expressing GFP under the direction of nestin promoter/enhancer (Nes-GFP) revealed distinct endothelial and nonendothelial Nes(+) cells in the embryonic perichondrium; the latter were early cells of the osteoblast lineage immediately descended from their progenitors upon Indian hedgehog action and Runx2 expression. During vascular invasion and formation of ossification centers, these Nes(+) cells were closely associated with each other and increased in numb",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.827713+00:00"
+}

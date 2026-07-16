@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11238784",
+  "source_fingerprint": "1116f68816941357a2b1b8ae0c8319c1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11238784",
+    "lxrs-and-fxr:-the-yin-and-yang-of-cholesterol-and-fat-metabolism."
+  ],
+  "key_phrases": [
+    "lxrs",
+    "fxr",
+    "yin",
+    "yang",
+    "cholesterol",
+    "fat",
+    "metabolism",
+    "liver"
+  ],
+  "summary_1l": "LXRS and FXR: the yin and yang of cholesterol and fat metabolism.",
+  "query_hits": [],
+  "embed_text": "11238784 LXRS and FXR: the yin and yang of cholesterol and fat metabolism. science scifact Liver X receptors (LXRs) and farnesoid X receptor (FXR) are nuclear receptors that function as intracellular sensors for sterols and bile acids, respectively. In response to their ligands, these receptors induce transcriptional responses… 11238784 lxrs-and-fxr:-the-yin-and-yang-of-cholesterol-and-fat-metabolism. lxrs fxr yin yang cholesterol fat metabolism liver LXRS and FXR: the yin and yang of cholesterol and fat metabolism. LXRS and FXR: the yin and yang of cholesterol and fat metabolism. Liver X receptors (LXRs) and farnesoid X receptor (FXR) are nuclear receptors that function as intracellular sensors for sterols and bile acids, respectively. In response to their ligands, these receptors induce transcriptional responses that maintain a balanced, finely tuned regulation of cholesterol and bile acid metabolism. LXRs also permit the efficient storage of carbohydrate- and fat-derived energy, whereas FXR activation results in an overall decrease in triglyceride levels and modulation of glucose metabolism. The elegant, dual interplay between these two receptor systems suggests that they coevolved to constitute a highly sensitive and efficient system for the maintenance of total body fat and cholesterol homeostasi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:06.134467+00:00"
+}

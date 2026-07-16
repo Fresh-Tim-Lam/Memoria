@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10692948",
+  "source_fingerprint": "6adc04ac083418ce176079532b3ae6d3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10692948",
+    "neurological-development-of-5-year-old-children-receiving-a-low-saturated-fat,-low-cholesterol-diet-since-infancy:-a-randomized-controlled-trial."
+  ],
+  "key_phrases": [
+    "neurological",
+    "development",
+    "year",
+    "old",
+    "children",
+    "receiving",
+    "low",
+    "saturated"
+  ],
+  "summary_1l": "Neurological development of 5-year-old children receiving a low-saturated fat, low-cholesterol diet since infancy: A randomized controlled trial.",
+  "query_hits": [],
+  "embed_text": "10692948 Neurological development of 5-year-old children receiving a low-saturated fat, low-cholesterol diet since infancy: A randomized controlled trial. science scifact CONTEXT Early childhood introduction of nutritional habits aimed at atherosclerosis prevention is compatible with normal growth, but its effect on neurological development is unknown. OBJECTIVE To analyze how parental counseling aimed at… 10692948 neurological-development-of-5-year-old-children-receiving-a-low-saturated-fat,-low-cholesterol-diet-since-infancy:-a-randomized-controlled-trial. neurological development year old children receiving low saturated Neurological development of 5-year-old children receiving a low-saturated fat, low-cholesterol diet since infancy: A randomized controlled trial. Neurological development of 5-year-old children receiving a low-saturated fat, low-cholesterol diet since infancy: A randomized controlled trial. CONTEXT Early childhood introduction of nutritional habits aimed at atherosclerosis prevention is compatible with normal growth, but its effect on neurological development is unknown. OBJECTIVE To analyze how parental counseling aimed at keeping children's diets low in saturated fat and cholesterol influences neurodevelopment during the first 5 years of life. DESIGN Randomized controlled trial conducted between February 1990 and November 1996. SETTING Outpatient clinic of a university department in Turku, Finland. PARTICIPANTS A total of 1062 seven-month-old infants and their parents, recruited at well-baby clinics between 1990 and 1992. At age 5",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:05.331738+00:00"
+}

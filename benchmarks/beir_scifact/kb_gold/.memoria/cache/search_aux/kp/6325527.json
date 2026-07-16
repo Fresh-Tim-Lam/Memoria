@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "6325527",
+  "source_fingerprint": "d06d93498f577580f0f6cd1ec3b1bde6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6325527"
+  ],
+  "key_phrases": [
+    "gpr124",
+    "essential",
+    "blood",
+    "brain",
+    "barrier",
+    "integrity",
+    "central",
+    "nervous"
+  ],
+  "summary_1l": "Although blood–brain barrier (BBB) compromise is central to the etiology of diverse central nervous system (CNS)",
+  "query_hits": [],
+  "embed_text": "6325527 Gpr124 is essential for blood–brain barrier integrity in central nervous system disease science scifact Although blood–brain barrier (BBB) compromise is central to the etiology of diverse central nervous system (CNS) disorders, endothelial receptor proteins that control BBB function are poorly defined. The endothelial G-protein-coupled… 6325527 gpr124 essential blood brain barrier integrity central nervous Although blood–brain barrier (BBB) compromise is central to the etiology of diverse central nervous system (CNS) Gpr124 is essential for blood–brain barrier integrity in central nervous system disease Although blood–brain barrier (BBB) compromise is central to the etiology of diverse central nervous system (CNS) disorders, endothelial receptor proteins that control BBB function are poorly defined. The endothelial G-protein-coupled receptor (GPCR) Gpr124 has been reported to be required for normal forebrain angiogenesis and BBB function in mouse embryos, but the role of this receptor in adult animals is unknown. Here Gpr124 conditional knockout (CKO) in the endothelia of adult mice did not affect homeostatic BBB integrity, but resulted in BBB disruption and microvascular hemorrhage in mouse models of both ischemic stroke and glioblastoma, accompanied by reduced cerebrovascular canonical Wnt–β-catenin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.574222+00:00"
+}

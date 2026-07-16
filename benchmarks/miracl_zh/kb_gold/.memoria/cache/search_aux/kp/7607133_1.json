@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "kp_id": "7607133#1",
+  "source_fingerprint": "944b6f22c0850bdffdf821d177c0bfef",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "墨西哥城",
+    "首都",
+    "2010年美國人口普查",
+    "多首都國家",
+    "天主教墨西哥城總教區",
+    "美國參議院臨時議長",
+    "美國基督教"
+  ],
+  "aliases": [
+    "7607133#1"
+  ],
+  "key_phrases": [
+    "墨西哥",
+    "墨西哥城",
+    "聖殿",
+    "聖殿位",
+    "首都",
+    "北部",
+    "瑪雅",
+    "興風格"
+  ],
+  "summary_1l": "該聖殿位於墨西哥首都墨西哥城的東北部。",
+  "query_hits": [],
+  "embed_text": "7607133#1 墨西哥墨西哥城聖殿 墨西哥墨西哥城聖殿 該聖殿位於墨西哥首都墨西哥城的東北部。它有瑪雅復興風格的影響，包括許多阿兹特克和瑪雅元素。該聖殿是美國以外最大的聖殿。 墨西哥城 首都 2010年美國人口普查 多首都國家 天主教墨西哥城總教區 美國參議院臨時議長 美國基督教 7607133#1 墨西哥 墨西哥城 聖殿 聖殿位 首都 北部 瑪雅 興風格 該聖殿位於墨西哥首都墨西哥城的東北部。 墨西哥墨西哥城聖殿 該聖殿位於墨西哥首都墨西哥城的東北部。它有瑪雅復興風格的影響，包括許多阿兹特克和瑪雅元素。該聖殿是美國以外最大的聖殿。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:23:25.609955+00:00"
+}

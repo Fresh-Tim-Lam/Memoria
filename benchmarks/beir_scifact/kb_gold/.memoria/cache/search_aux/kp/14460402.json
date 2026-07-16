@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14460402",
+  "source_fingerprint": "bbe579eb39aad9aeb3345d0cf2267dd9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14460402",
+    "p63-regulates-adult-neural-precursor-and-newly-born-neuron-survival-to-control-hippocampal-dependent-behavior."
+  ],
+  "key_phrases": [
+    "p63",
+    "regulates",
+    "adult",
+    "neural",
+    "precursor",
+    "newly",
+    "born",
+    "neuron"
+  ],
+  "summary_1l": "p63 Regulates adult neural precursor and newly born neuron survival to control hippocampal-dependent Behavior.",
+  "query_hits": [],
+  "embed_text": "14460402 p63 Regulates adult neural precursor and newly born neuron survival to control hippocampal-dependent Behavior. science scifact The molecular mechanisms that regulate adult neural precursor cell (NPC) survival, and thus maintain adult neurogenesis, are not well defined. Here, we investigate the role of p63, a p53 family member, in adult NPC function in mice.… 14460402 p63-regulates-adult-neural-precursor-and-newly-born-neuron-survival-to-control-hippocampal-dependent-behavior. p63 regulates adult neural precursor newly born neuron p63 Regulates adult neural precursor and newly born neuron survival to control hippocampal-dependent Behavior. p63 Regulates adult neural precursor and newly born neuron survival to control hippocampal-dependent Behavior. The molecular mechanisms that regulate adult neural precursor cell (NPC) survival, and thus maintain adult neurogenesis, are not well defined. Here, we investigate the role of p63, a p53 family member, in adult NPC function in mice. Conditional ablation of p63 in adult NPCs or p63 haploinsufficiency led to reduced numbers of NPCs and newborn neurons in the neurogenic zones of the hippocampus and lateral ventricles and in the olfactory bulb. These reductions were attributable to enhanced apoptosis of NPCs and newborn neurons and were rescued by inhibition of caspase activity, p53, or the p53 apoptotic effector PUMA (p53-upregulated modulator of apoptosis). Moreover, these cellular",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.907068+00:00"
+}

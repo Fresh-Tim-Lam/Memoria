@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29347970",
+  "source_fingerprint": "7fff7cab04865408fa17e247d9342e09",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29347970",
+    "ccr6-regulates-the-migration-of-inflammatory-and-regulatory-t-cells."
+  ],
+  "key_phrases": [
+    "ccr6",
+    "regulates",
+    "migration",
+    "inflammatory",
+    "regulatory",
+    "cells",
+    "th17",
+    "treg"
+  ],
+  "summary_1l": "CCR6 regulates the migration of inflammatory and regulatory T cells.",
+  "query_hits": [],
+  "embed_text": "29347970 CCR6 regulates the migration of inflammatory and regulatory T cells. science scifact Th17 and regulatory T (Treg) cells play opposite roles in autoimmune diseases. However, the mechanisms underlying their proper migration to inflammatory tissues are unclear. In this study, we report that these two T cell subsets both… 29347970 ccr6-regulates-the-migration-of-inflammatory-and-regulatory-t-cells. ccr6 regulates migration inflammatory regulatory cells th17 treg CCR6 regulates the migration of inflammatory and regulatory T cells. CCR6 regulates the migration of inflammatory and regulatory T cells. Th17 and regulatory T (Treg) cells play opposite roles in autoimmune diseases. However, the mechanisms underlying their proper migration to inflammatory tissues are unclear. In this study, we report that these two T cell subsets both express CCR6. CCR6 expression in Th17 cells is regulated by TGF-beta and requires two nuclear receptors, RORalpha and RORgamma. Th17 cells also express the CCR6 ligand CCL20, which is induced synergistically by TGF-beta and IL-6, which requires STAT3, RORgamma and IL-21. Th17 cells, by producing CCL20, promote migration of Th17 and Treg cells in vitro in a CCR6-dependent manner. Lack of CCR6 in Th17 cells reduces the severity of experimental autoimmune encephalomyelitis and Th17 and Treg recr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.792854+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4283694",
+  "source_fingerprint": "f59581424b272c57dee19108de11ae5c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4283694",
+    "instability-and-decay-of-the-primary-structure-of-dna"
+  ],
+  "key_phrases": [
+    "instability",
+    "decay",
+    "primary",
+    "structure",
+    "dna",
+    "although",
+    "carrier",
+    "genetic"
+  ],
+  "summary_1l": "Although DNA is the carrier of genetic information, it has limited chemical stability.",
+  "query_hits": [],
+  "embed_text": "4283694 Instability and decay of the primary structure of DNA science scifact Although DNA is the carrier of genetic information, it has limited chemical stability. Hydrolysis, oxidation and nonenzymatic methylation of DNA occur at significant ratesin vivo, and are counteracted by specific DNA repair processes. The… 4283694 instability-and-decay-of-the-primary-structure-of-dna instability decay primary structure dna although carrier genetic Although DNA is the carrier of genetic information, it has limited chemical stability. Instability and decay of the primary structure of DNA Although DNA is the carrier of genetic information, it has limited chemical stability. Hydrolysis, oxidation and nonenzymatic methylation of DNA occur at significant ratesin vivo, and are counteracted by specific DNA repair processes. The spontaneous decay of DNA is likely to be a major factor in mutagenesis, carcinogenesis and ageing, and also sets limits for the recovery of DNA fragments from fossils.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.282368+00:00"
+}

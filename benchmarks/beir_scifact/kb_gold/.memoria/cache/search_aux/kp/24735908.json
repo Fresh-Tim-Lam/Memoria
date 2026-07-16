@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24735908",
+  "source_fingerprint": "9b836a0cec37d6fac3b5002003c303de",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24735908",
+    "long-term-use-of-aspirin-and-age-related-macular-degeneration."
+  ],
+  "key_phrases": [
+    "long",
+    "term",
+    "use",
+    "aspirin",
+    "age",
+    "related",
+    "macular",
+    "degeneration"
+  ],
+  "summary_1l": "Long-term use of aspirin and age-related macular degeneration.",
+  "query_hits": [],
+  "embed_text": "24735908 Long-term use of aspirin and age-related macular degeneration. science scifact CONTEXT Aspirin is widely used for relief of pain and for cardioprotective effects. Its use is of concern to ophthalmologists when ocular surgery is being considered and also in the presence of age-related macular degeneration (AMD).… 24735908 long-term-use-of-aspirin-and-age-related-macular-degeneration. long term use aspirin age related macular degeneration Long-term use of aspirin and age-related macular degeneration. Long-term use of aspirin and age-related macular degeneration. CONTEXT Aspirin is widely used for relief of pain and for cardioprotective effects. Its use is of concern to ophthalmologists when ocular surgery is being considered and also in the presence of age-related macular degeneration (AMD). OBJECTIVE To examine the association of regular aspirin use with incidence of AMD. DESIGN, SETTING, AND PARTICIPANTS The Beaver Dam Eye Study, a longitudinal population-based study of age-related eye diseases conducted in Wisconsin. Examinations were performed every 5 years over a 20-year period (1988-1990 through 2008-2010). Study participants (N = 4926) were aged 43 to 86 years at the baseline examination. At subsequent examinations, participants were asked if they had regularly used aspirin at l",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.185077+00:00"
+}

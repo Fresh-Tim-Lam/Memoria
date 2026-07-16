@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6961811",
+  "source_fingerprint": "462eb62a0ebe1543921e924c7d931744",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6961811",
+    "increased-sensitivity-of-antigen-experienced-t-cells-through-the-enrichment-of-oligomeric-t-cell-receptor-complexes."
+  ],
+  "key_phrases": [
+    "increased",
+    "sensitivity",
+    "antigen",
+    "experienced",
+    "cells",
+    "through",
+    "enrichment",
+    "oligomeric"
+  ],
+  "summary_1l": "Increased sensitivity of antigen-experienced T cells through the enrichment of oligomeric T cell receptor complexes.",
+  "query_hits": [],
+  "embed_text": "6961811 Increased sensitivity of antigen-experienced T cells through the enrichment of oligomeric T cell receptor complexes. science scifact Although memory T cells respond more vigorously to stimulation and they are more sensitive to low doses of antigen than naive T cells, the molecular basis of this increased sensitivity remains unclear. We have previously shown that the T… 6961811 increased-sensitivity-of-antigen-experienced-t-cells-through-the-enrichment-of-oligomeric-t-cell-receptor-complexes. increased sensitivity antigen experienced cells through enrichment oligomeric Increased sensitivity of antigen-experienced T cells through the enrichment of oligomeric T cell receptor complexes. Increased sensitivity of antigen-experienced T cells through the enrichment of oligomeric T cell receptor complexes. Although memory T cells respond more vigorously to stimulation and they are more sensitive to low doses of antigen than naive T cells, the molecular basis of this increased sensitivity remains unclear. We have previously shown that the T cell receptor (TCR) exists as different-sized oligomers on the surface of resting T cells and that large oligomers are preferentially activated in response to low antigen doses. Through biochemistry and electron microscopy, we now showed that previously stimulated and memory T cells have more and larger TCR oligomers at the cell surface than their naive counterparts. Reconstitution of cells and mice with a point mutant of the CD3ζ subunit, w",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.108630+00:00"
+}

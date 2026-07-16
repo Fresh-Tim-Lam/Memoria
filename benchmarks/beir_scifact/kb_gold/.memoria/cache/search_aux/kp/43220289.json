@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "43220289",
+  "source_fingerprint": "16dbb12af245b46d18c3ba039f1f065d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "43220289",
+    "psychological-outcome-4-years-after-restrictive-bariatric-surgery"
+  ],
+  "key_phrases": [
+    "psychological",
+    "outcome",
+    "years",
+    "after",
+    "restrictive",
+    "bariatric",
+    "surgery",
+    "extreme"
+  ],
+  "summary_1l": "Extreme obesity is associated with severe psychiatric and somatic comorbidity and impairment of psychosocial functioning.",
+  "query_hits": [],
+  "embed_text": "43220289 Psychological Outcome 4 Years after Restrictive Bariatric Surgery science scifact Extreme obesity is associated with severe psychiatric and somatic comorbidity and impairment of psychosocial functioning. Bariatric surgery is the most effective treatment not only with regard to weight loss but also with… 43220289 psychological-outcome-4-years-after-restrictive-bariatric-surgery psychological outcome years after restrictive bariatric surgery extreme Extreme obesity is associated with severe psychiatric and somatic comorbidity and impairment of psychosocial functioning. Psychological Outcome 4 Years after Restrictive Bariatric Surgery Extreme obesity is associated with severe psychiatric and somatic comorbidity and impairment of psychosocial functioning. Bariatric surgery is the most effective treatment not only with regard to weight loss but also with obesity-associated illnesses. Health-related psychological and psychosocial variables have been increasingly considered as important outcome variables of bariatric surgery. However, the long-term impact of bariatric surgery on psychological and psychosocial functioning is largely unclear. The aim of this study was to evaluate the relationship between the course of weight and psychological variables including depression, anxiety, health-related quality of life (HRQOL), and self-esteem up to 4 years after obe",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.620352+00:00"
+}

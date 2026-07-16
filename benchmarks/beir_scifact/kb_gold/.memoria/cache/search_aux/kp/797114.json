@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "797114",
+  "source_fingerprint": "ffaf21c3262e5326299adcabce215644",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "797114"
+  ],
+  "key_phrases": [
+    "mitochondrially",
+    "targeted",
+    "compound",
+    "delays",
+    "aging",
+    "yeast",
+    "through",
+    "mechanism"
+  ],
+  "summary_1l": "A recent study revealed a mechanism of del",
+  "query_hits": [],
+  "embed_text": "797114 A mitochondrially targeted compound delays aging in yeast through a mechanism linking mitochondrial membrane lipid metabolism to mitochondrial redox biology☆ science scifact A recent study revealed a mechanism of delaying aging in yeast by a natural compound which specifically impacts mitochondrial redox processes. In this mechanism, exogenously added lithocholic bile acid enters yeast cells, accumulates… 797114 mitochondrially targeted compound delays aging yeast through mechanism A recent study revealed a mechanism of del A mitochondrially targeted compound delays aging in yeast through a mechanism linking mitochondrial membrane lipid metabolism to mitochondrial redox biology☆ A recent study revealed a mechanism of delaying aging in yeast by a natural compound which specifically impacts mitochondrial redox processes. In this mechanism, exogenously added lithocholic bile acid enters yeast cells, accumulates mainly in the inner mitochondrial membrane, and elicits an age-related remodeling of phospholipid synthesis and movement within both mitochondrial membranes. Such remodeling of mitochondrial phospholipid dynamics progresses with the chronological age of a yeast cell and ultimately causes significant changes in mitochondrial membrane lipidome. These changes in the composition of membrane phospholipids alte",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.606076+00:00"
+}

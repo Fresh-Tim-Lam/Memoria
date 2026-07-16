@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "28392393",
+  "source_fingerprint": "3bedec571e1cedd422e0deed1f98f26a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "28392393",
+    "organ-resident,-nonlymphoid-cells-suppress-proliferation-of-autoimmune-t-helper-lymphocytes."
+  ],
+  "key_phrases": [
+    "organ",
+    "resident",
+    "nonlymphoid",
+    "cells",
+    "suppress",
+    "proliferation",
+    "autoimmune",
+    "helper"
+  ],
+  "summary_1l": "Organ-resident, nonlymphoid cells suppress proliferation of autoimmune T-helper lymphocytes.",
+  "query_hits": [],
+  "embed_text": "28392393 Organ-resident, nonlymphoid cells suppress proliferation of autoimmune T-helper lymphocytes. science scifact Local presentation of autoantigen by organ-resident cells inappropriately expressing Ia determinants has been implicated in organ-specific autoimmunity. Experimental autoimmune uveoretinitis, induced in rats by immunization with retinal… 28392393 organ-resident,-nonlymphoid-cells-suppress-proliferation-of-autoimmune-t-helper-lymphocytes. organ resident nonlymphoid cells suppress proliferation autoimmune helper Organ-resident, nonlymphoid cells suppress proliferation of autoimmune T-helper lymphocytes. Organ-resident, nonlymphoid cells suppress proliferation of autoimmune T-helper lymphocytes. Local presentation of autoantigen by organ-resident cells inappropriately expressing Ia determinants has been implicated in organ-specific autoimmunity. Experimental autoimmune uveoretinitis, induced in rats by immunization with retinal soluble antigen, is used as a model of organ-specific autoimmunity. In an in vitro system derived from this model, uveitogenic rat T-helper lymphocytes specific to the retinal soluble antigen, or control T-helper lymphocytes reactive to the purified protein derivative of tuberculin, were cocultured with Ia-expressing syngeneic retinal glial cells (Müller cells) in the presence of specific antigen. Antigen presentation was not apparent under ordinary culture conditio",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.958495+00:00"
+}

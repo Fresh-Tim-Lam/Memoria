@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22635278",
+  "source_fingerprint": "174142c30c3ed818d1c1cfca759a50f8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22635278",
+    "immunotherapy-of-metastatic-kidney-cancer."
+  ],
+  "key_phrases": [
+    "immunotherapy",
+    "metastatic",
+    "kidney",
+    "cancer",
+    "from",
+    "april",
+    "1986",
+    "september"
+  ],
+  "summary_1l": "Immunotherapy of metastatic kidney cancer.",
+  "query_hits": [],
+  "embed_text": "22635278 Immunotherapy of metastatic kidney cancer. science scifact From April 1986 to September 2000, 122 MRCC patients were treated by monthly intralymphatic injections (containing a mean of 573 IL-2 U and 26 x 10(6) LAK cells) and i.m. administration of IFN and TF; 71 patients also received a 3-day… 22635278 immunotherapy-of-metastatic-kidney-cancer. immunotherapy metastatic kidney cancer from april 1986 september Immunotherapy of metastatic kidney cancer. Immunotherapy of metastatic kidney cancer. From April 1986 to September 2000, 122 MRCC patients were treated by monthly intralymphatic injections (containing a mean of 573 IL-2 U and 26 x 10(6) LAK cells) and i.m. administration of IFN and TF; 71 patients also received a 3-day cycle of monthly IL-2 inhalations with a mean of 998 daily U. MRCC cases not treated by immunotherapy (n = 89) represent our historical controls. Adverse clinical side effects related to treatment were negligible. CR (n = 11) and PR (n = 13) were noticed in 24/122 patients. Of 24 responding patients, 17 resumed progression, whereas 7 remain in remission 11-69 months later. The overall median survival of treated patients (28 months) was 3.5-fold higher than the median survival of historical controls (7.5 months), and",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.132599+00:00"
+}

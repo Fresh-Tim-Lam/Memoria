@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2919030",
+  "source_fingerprint": "f092b4d86a2e096a60cc95c6c3ff4870",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2919030",
+    "sod1-integrates-signals-from-oxygen-and-glucose-to-repress-respiration"
+  ],
+  "key_phrases": [
+    "sod1",
+    "integrates",
+    "signals",
+    "from",
+    "oxygen",
+    "glucose",
+    "repress",
+    "respiration"
+  ],
+  "summary_1l": "Cu/Zn superoxide dismutase (SOD1) is an abundant enzyme that has been best studied as a regulator of antioxidant defense.",
+  "query_hits": [],
+  "embed_text": "2919030 SOD1 Integrates Signals from Oxygen and Glucose to Repress Respiration science scifact Cu/Zn superoxide dismutase (SOD1) is an abundant enzyme that has been best studied as a regulator of antioxidant defense. Using the yeast Saccharomyces cerevisiae, we report that SOD1 transmits signals from oxygen and glucose to repress… 2919030 sod1-integrates-signals-from-oxygen-and-glucose-to-repress-respiration sod1 integrates signals from oxygen glucose repress respiration Cu/Zn superoxide dismutase (SOD1) is an abundant enzyme that has been best studied as a regulator of antioxidant defense. SOD1 Integrates Signals from Oxygen and Glucose to Repress Respiration Cu/Zn superoxide dismutase (SOD1) is an abundant enzyme that has been best studied as a regulator of antioxidant defense. Using the yeast Saccharomyces cerevisiae, we report that SOD1 transmits signals from oxygen and glucose to repress respiration. The mechanism involves SOD1-mediated stabilization of two casein kinase 1-gamma (CK1γ) homologs, Yck1p and Yck2p, required for respiratory repression. SOD1 binds a C-terminal degron we identified in Yck1p/Yck2p and promotes kinase stability by catalyzing superoxide conversion to peroxide. The effects of SOD1 on CK1γ stability are also observed with mammalian SOD1 and CK1γ and in a human cell line. Therefore, in a single circuit, oxygen, glucose, and reactive oxygen can repre",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.676783+00:00"
+}

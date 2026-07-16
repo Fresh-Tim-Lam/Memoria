@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19510470",
+  "source_fingerprint": "16783051aebb4aeba233f39f2a6f3302",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19510470",
+    "induction-of-cell-cycle-entry-eliminates-human-leukemia-stem-cells-in-a-mouse-model-of-aml"
+  ],
+  "key_phrases": [
+    "induction",
+    "cell",
+    "cycle",
+    "entry",
+    "eliminates",
+    "human",
+    "leukemia",
+    "stem"
+  ],
+  "summary_1l": "Cancer stem cells have been proposed to be important for initiation, maintenance and recurrence of various ma",
+  "query_hits": [],
+  "embed_text": "19510470 Induction of cell cycle entry eliminates human leukemia stem cells in a mouse model of AML science scifact Cancer stem cells have been proposed to be important for initiation, maintenance and recurrence of various malignancies, including acute myeloid leukemia (AML). We have previously reported that CD34+CD38− human primary AML stem cells… 19510470 induction-of-cell-cycle-entry-eliminates-human-leukemia-stem-cells-in-a-mouse-model-of-aml induction cell cycle entry eliminates human leukemia stem Cancer stem cells have been proposed to be important for initiation, maintenance and recurrence of various ma Induction of cell cycle entry eliminates human leukemia stem cells in a mouse model of AML Cancer stem cells have been proposed to be important for initiation, maintenance and recurrence of various malignancies, including acute myeloid leukemia (AML). We have previously reported that CD34+CD38− human primary AML stem cells residing in the endosteal region of the bone marrow are relatively chemotherapy resistant. Using a NOD/SCID/IL2rγnull mouse model of human AML, we now show that the AML stem cells in the endosteal region are cell cycle quiescent and that these stem cells can be induced to enter the cell cycle by treatment with granulocyte colony-stimulating factor (G-CSF). In combination with cell cycle-dependent chemotherapy, G-CSF treatment significantly enhances induction of apoptosis",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.682747+00:00"
+}

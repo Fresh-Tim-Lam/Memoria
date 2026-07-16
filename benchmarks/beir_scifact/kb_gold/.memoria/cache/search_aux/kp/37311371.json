@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "37311371",
+  "source_fingerprint": "eae1538064dab4f88eaa1366eb7ef7c0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "37311371",
+    "central-memory-and-effector-memory-t-cell-subsets:-function,-generation,-and-maintenance."
+  ],
+  "key_phrases": [
+    "central",
+    "memory",
+    "effector",
+    "cell",
+    "subsets",
+    "function",
+    "generation",
+    "maintenance"
+  ],
+  "summary_1l": "Central memory and effector memory T cell subsets: function, generation, and maintenance.",
+  "query_hits": [],
+  "embed_text": "37311371 Central memory and effector memory T cell subsets: function, generation, and maintenance. science scifact The memory T cell pool functions as a dynamic repository of antigen-experienced T lymphocytes that accumulate over the lifetime of the individual. Recent studies indicate that memory T lymphocytes contain distinct populations of central… 37311371 central-memory-and-effector-memory-t-cell-subsets:-function,-generation,-and-maintenance. central memory effector cell subsets function generation maintenance Central memory and effector memory T cell subsets: function, generation, and maintenance. Central memory and effector memory T cell subsets: function, generation, and maintenance. The memory T cell pool functions as a dynamic repository of antigen-experienced T lymphocytes that accumulate over the lifetime of the individual. Recent studies indicate that memory T lymphocytes contain distinct populations of central memory (TCM) and effector memory (TEM) cells characterized by distinct homing capacity and effector function. This review addresses the heterogeneity of TCM and TEM, their differentiation stages, and the current models for their generation and maintenance in humans and mice.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.374390+00:00"
+}

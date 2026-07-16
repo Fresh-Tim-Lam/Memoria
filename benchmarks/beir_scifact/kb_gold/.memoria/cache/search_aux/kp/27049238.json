@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27049238",
+  "source_fingerprint": "77293db3231c213e138c5beb9ec6b313",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27049238",
+    "large-deformation-of-red-blood-cell-ghosts-in-a-simple-shear-flow."
+  ],
+  "key_phrases": [
+    "large",
+    "deformation",
+    "red",
+    "blood",
+    "cell",
+    "ghosts",
+    "simple",
+    "shear"
+  ],
+  "summary_1l": "Large deformation of red blood cell ghosts in a simple shear flow.",
+  "query_hits": [],
+  "embed_text": "27049238 Large deformation of red blood cell ghosts in a simple shear flow. science scifact Red blood cells are known to change shape in response to local flow conditions. Deformability affects red blood cell physiological function and the hydrodynamic properties of blood. The immersed boundary method is used to simulate… 27049238 large-deformation-of-red-blood-cell-ghosts-in-a-simple-shear-flow. large deformation red blood cell ghosts simple shear Large deformation of red blood cell ghosts in a simple shear flow. Large deformation of red blood cell ghosts in a simple shear flow. Red blood cells are known to change shape in response to local flow conditions. Deformability affects red blood cell physiological function and the hydrodynamic properties of blood. The immersed boundary method is used to simulate three-dimensional membrane-fluid flow interactions for cells with the same internal and external fluid viscosities. The method has been validated for small deformations of an initially spherical capsule in simple shear flow for both neo-Hookean and the Evans-Skalak membrane models. Initially oblate spheroidal capsules are simulated and it is shown that the red blood cell membrane exhibits asymptotic behavior as the ratio of the dilation modulus to the extensional modulus is increased and a good ap",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.383589+00:00"
+}

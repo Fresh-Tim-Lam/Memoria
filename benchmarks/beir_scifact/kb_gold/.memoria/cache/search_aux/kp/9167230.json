@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9167230",
+  "source_fingerprint": "347ae1957b356c8b32a7015f090938da",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9167230",
+    "global-and-regional-burden-of-hospital-admissions-for-severe-acute-lower-respiratory-infections-in-young-children-in-2010:-a-systematic-analysis"
+  ],
+  "key_phrases": [
+    "global",
+    "regional",
+    "burden",
+    "hospital",
+    "admissions",
+    "severe",
+    "acute",
+    "lower"
+  ],
+  "summary_1l": "BACKGROUND The annual number of hospital admissions and",
+  "query_hits": [],
+  "embed_text": "9167230 Global and regional burden of hospital admissions for severe acute lower respiratory infections in young children in 2010: a systematic analysis science scifact BACKGROUND The annual number of hospital admissions and in-hospital deaths due to severe acute lower respiratory infections (ALRI) in young children worldwide is unknown. We aimed to estimate the incidence of admissions and deaths for such… 9167230 global-and-regional-burden-of-hospital-admissions-for-severe-acute-lower-respiratory-infections-in-young-children-in-2010:-a-systematic-analysis global regional burden hospital admissions severe acute lower BACKGROUND The annual number of hospital admissions and Global and regional burden of hospital admissions for severe acute lower respiratory infections in young children in 2010: a systematic analysis BACKGROUND The annual number of hospital admissions and in-hospital deaths due to severe acute lower respiratory infections (ALRI) in young children worldwide is unknown. We aimed to estimate the incidence of admissions and deaths for such infections in children younger than 5 years in 2010. METHODS We estimated the incidence of admissions for severe and very severe ALRI in children younger than 5 years, stratified by age and region, with data from a systematic review of studies published between Jan 1, 1990, and March 31, 2012, and from 28 unpublished population-based studies. We applied these incidence estimates to population estimates for 2010,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.312137+00:00"
+}

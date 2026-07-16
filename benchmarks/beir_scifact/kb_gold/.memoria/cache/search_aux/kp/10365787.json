@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10365787",
+  "source_fingerprint": "faf71bd5c068e5bc660145d1f7edbd14",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10365787",
+    "genomic-stability-and-tumour-suppression-by-the-apc/c-cofactor-cdh1"
+  ],
+  "key_phrases": [
+    "genomic",
+    "stability",
+    "tumour",
+    "suppression",
+    "by",
+    "apc",
+    "cofactor",
+    "cdh1"
+  ],
+  "summary_1l": "The anaphase promoting complex or cyclosome (APC/C) is a ubiquitin protein ligase that, together with Cdc20 or Cdh1, targets cell-cy",
+  "query_hits": [],
+  "embed_text": "10365787 Genomic stability and tumour suppression by the APC/C cofactor Cdh1 science scifact The anaphase promoting complex or cyclosome (APC/C) is a ubiquitin protein ligase that, together with Cdc20 or Cdh1, targets cell-cycle proteins for degradation. APC/C–Cdh1 specifically promotes protein degradation in late mitosis and G1.… 10365787 genomic-stability-and-tumour-suppression-by-the-apc/c-cofactor-cdh1 genomic stability tumour suppression by apc cofactor cdh1 The anaphase promoting complex or cyclosome (APC/C) is a ubiquitin protein ligase that, together with Cdc20 or Cdh1, targets cell-cy Genomic stability and tumour suppression by the APC/C cofactor Cdh1 The anaphase promoting complex or cyclosome (APC/C) is a ubiquitin protein ligase that, together with Cdc20 or Cdh1, targets cell-cycle proteins for degradation. APC/C–Cdh1 specifically promotes protein degradation in late mitosis and G1. Mutant embryos lacking Cdh1 die at E9.5–E10.5 due to defects in the endoreduplication of trophoblast cells and placental malfunction. This lethality is prevented when Cdh1 is expressed in the placenta. Cdh1-deficient cells proliferate inefficiently and accumulate numeric and structural chromosomal aberrations, indicating that Cdh1 contributes to the maintenance of genomic stability. Cdh1 heterozygous animals show increased susceptibility to spontaneous tumours, suggesting that Cdh1 functi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:04.664934+00:00"
+}

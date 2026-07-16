@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9142761",
+  "source_fingerprint": "60bf244bb2e0274953f72b864f43d795",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9142761",
+    "the-ic(50)-of-anti-pfs25-antibody-in-membrane-feeding-assay-varies-among-species."
+  ],
+  "key_phrases": [
+    "ic",
+    "50",
+    "anti",
+    "pfs25",
+    "antibody",
+    "membrane",
+    "feeding",
+    "assay"
+  ],
+  "summary_1l": "The IC(50) of anti-Pfs25 antibody in membrane-feeding assay varies among species.",
+  "query_hits": [],
+  "embed_text": "9142761 The IC(50) of anti-Pfs25 antibody in membrane-feeding assay varies among species. science scifact Plasmodium falciparum surface protein 25 (Pfs25) is a candidate for transmission-blocking vaccines (TBVs). Anti-Pfs25 antibodies block the development of oocysts in membrane-feeding assays and we have shown the activity correlates with… 9142761 the-ic(50)-of-anti-pfs25-antibody-in-membrane-feeding-assay-varies-among-species. ic 50 anti pfs25 antibody membrane feeding assay The IC(50) of anti-Pfs25 antibody in membrane-feeding assay varies among species. The IC(50) of anti-Pfs25 antibody in membrane-feeding assay varies among species. Plasmodium falciparum surface protein 25 (Pfs25) is a candidate for transmission-blocking vaccines (TBVs). Anti-Pfs25 antibodies block the development of oocysts in membrane-feeding assays and we have shown the activity correlates with antibody titer. In this study, we purified Pfs25-specific IgGs to convert antibody titer to microg/mL and determined the amount of antibody required to inhibit 50% of oocyst development (IC(50)). The IC(50) were, 15.9, 4.2, 41.2, and 85.6microg/mL for mouse, rabbit, monkey and human, respectively, and the differences among species were significant. Anti-Pfs25 sera from rabbit, monkey and human showed different patterns of competition against 6 mouse monoclonal antibodies, and t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.230915+00:00"
+}

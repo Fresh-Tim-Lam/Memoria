@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "94365950",
+  "source_fingerprint": "46ae996fefddce33e6355e13c46fd042",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "94365950",
+    "the-reclamation-of-brine-generated-from-desalination-process-by-bipolar-membrane-electrodialysis"
+  ],
+  "key_phrases": [
+    "reclamation",
+    "brine",
+    "generated",
+    "from",
+    "desalination",
+    "process",
+    "by",
+    "bipolar"
+  ],
+  "summary_1l": "Abstract Some techno-economical analyses and environmental impact evaluation have proved that bipolar m",
+  "query_hits": [],
+  "embed_text": "94365950 The reclamation of brine generated from desalination process by bipolar membrane electrodialysis science scifact Abstract Some techno-economical analyses and environmental impact evaluation have proved that bipolar membrane electrodialysis (BMED) is feasible for the reclamation of industrial saline water. However, to date, the technology cannot be… 94365950 the-reclamation-of-brine-generated-from-desalination-process-by-bipolar-membrane-electrodialysis reclamation brine generated from desalination process by bipolar Abstract Some techno-economical analyses and environmental impact evaluation have proved that bipolar m The reclamation of brine generated from desalination process by bipolar membrane electrodialysis Abstract Some techno-economical analyses and environmental impact evaluation have proved that bipolar membrane electrodialysis (BMED) is feasible for the reclamation of industrial saline water. However, to date, the technology cannot be put into practice due to some unsolved application-oriented problems, such as the requirements of BMED for feed solution, the availability of the produced acid and base, relatively high salt concentration of the effluent, and relatively low desalinating efficiency and capacity. In this work, a novel hybrid process, which coupled conventional electrodialysis installed with monovalent selective cation-exchange membranes with BMED running in a constant-voltage mode",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.902500+00:00"
+}

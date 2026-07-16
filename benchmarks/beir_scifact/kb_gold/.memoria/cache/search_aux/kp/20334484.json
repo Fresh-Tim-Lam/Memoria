@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20334484",
+  "source_fingerprint": "914f2e1eaacd2671e8cfeaa70c782dcb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20334484",
+    "health-and-access-to-care:-perspectives-of-homeless-youth-in-baltimore-city,-u.s.a."
+  ],
+  "key_phrases": [
+    "health",
+    "access",
+    "care",
+    "perspectives",
+    "homeless",
+    "youth",
+    "baltimore",
+    "city"
+  ],
+  "summary_1l": "Health and access to care: perspectives of homeless youth in Baltimore City, U.",
+  "query_hits": [],
+  "embed_text": "20334484 Health and access to care: perspectives of homeless youth in Baltimore City, U.S.A. science scifact Homeless youth suffer from high rates of health problems, yet little is known about their perceptions of or context for their own health issues. In this study, a combination of qualitative techniques from participatory rural appraisal and… 20334484 health-and-access-to-care:-perspectives-of-homeless-youth-in-baltimore-city,-u.s.a. health access care perspectives homeless youth baltimore city Health and access to care: perspectives of homeless youth in Baltimore City, U. Health and access to care: perspectives of homeless youth in Baltimore City, U.S.A. Homeless youth suffer from high rates of health problems, yet little is known about their perceptions of or context for their own health issues. In this study, a combination of qualitative techniques from participatory rural appraisal and rapid assessment procedures was used to investigate the perceptions of health needs of shelter-based youth in Baltimore, MD in the U.S.A. The most common youth-identified health problems included STDs, HIV/AIDS, pregnancy, depression, drug use and injuries. These correlate well with more objective health status data for the same youth. The youth spoke of environmental safety threats of violence and victimization by adults, as well as racism and sexism in their lives. Youth",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.075232+00:00"
+}

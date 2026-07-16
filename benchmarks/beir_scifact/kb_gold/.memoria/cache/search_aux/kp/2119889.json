@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2119889",
+  "source_fingerprint": "968788cbbc3f5635d5c7e6885a4768a8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2119889",
+    "characterization-of-two-classes-of-small-molecule-inhibitors-of-arp2/3-complex"
+  ],
+  "key_phrases": [
+    "characterization",
+    "two",
+    "classes",
+    "small",
+    "molecule",
+    "inhibitors",
+    "arp2",
+    "complex"
+  ],
+  "summary_1l": "Polymerization of actin filaments directed by the actin-related protein (Arp)2/3 complex supports many types of cellular",
+  "query_hits": [],
+  "embed_text": "2119889 Characterization of two classes of small molecule inhibitors of Arp2/3 complex science scifact Polymerization of actin filaments directed by the actin-related protein (Arp)2/3 complex supports many types of cellular movements. However, questions remain regarding the relative contributions of Arp2/3 complex versus other mechanisms of… 2119889 characterization-of-two-classes-of-small-molecule-inhibitors-of-arp2/3-complex characterization two classes small molecule inhibitors arp2 complex Polymerization of actin filaments directed by the actin-related protein (Arp)2/3 complex supports many types of cellular Characterization of two classes of small molecule inhibitors of Arp2/3 complex Polymerization of actin filaments directed by the actin-related protein (Arp)2/3 complex supports many types of cellular movements. However, questions remain regarding the relative contributions of Arp2/3 complex versus other mechanisms of actin filament nucleation to processes such as path finding by neuronal growth cones; this is because of the lack of simple methods to inhibit Arp2/3 complex reversibly in living cells. Here we describe two classes of small molecules that bind to different sites on the Arp2/3 complex and inhibit its ability to nucleate actin filaments. CK-0944636 binds between Arp2 and Arp3, where it appears to block movement of Arp2 and Arp3 into their active conformation. CK-0993548 inserts",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.510759+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2844490",
+  "source_fingerprint": "e93cfdc21dade4eb7cfc95d2672498b5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2844490",
+    "proinflammatory-cytokines-underlying-the-inflammation-of-crohn's-disease."
+  ],
+  "key_phrases": [
+    "proinflammatory",
+    "cytokines",
+    "underlying",
+    "inflammation",
+    "crohn",
+    "disease",
+    "purpose",
+    "review"
+  ],
+  "summary_1l": "Proinflammatory cytokines underlying the inflammation of Crohn's disease.",
+  "query_hits": [],
+  "embed_text": "2844490 Proinflammatory cytokines underlying the inflammation of Crohn's disease. science scifact PURPOSE OF REVIEW To encapsulate our current understanding of the proinflammatory cytokines responsible for the inflammation underlying Crohn's disease and the prospect of using this information to devise therapy for this condition based… 2844490 proinflammatory-cytokines-underlying-the-inflammation-of-crohn's-disease. proinflammatory cytokines underlying inflammation crohn disease purpose review Proinflammatory cytokines underlying the inflammation of Crohn's disease. Proinflammatory cytokines underlying the inflammation of Crohn's disease. PURPOSE OF REVIEW To encapsulate our current understanding of the proinflammatory cytokines responsible for the inflammation underlying Crohn's disease and the prospect of using this information to devise therapy for this condition based on inhibition of these cytokines. RECENT FINDINGS Current research is shedding new light on the role of both T helper cell (Th)1 and Th17 responses in the pathogenesis of Crohn's disease. Initial studies conducted a decade ago highlighted the view that Crohn's disease inflammation is caused by an interleukin-12-driven Th1 response, which resulted in the generation of interferon-gamma, which then served as the main inflammatory mediator. In recent years, however, this view has been la",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.038436+00:00"
+}

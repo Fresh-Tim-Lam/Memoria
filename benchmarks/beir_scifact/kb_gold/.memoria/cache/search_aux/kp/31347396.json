@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "31347396",
+  "source_fingerprint": "cdba32e66b50406d52e8a100fec8a7c0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "31347396",
+    "a-rare-mutation-in-unc5c-predisposes-to-late-onset-alzheimer's-disease-and-increases-neuronal-cell-death"
+  ],
+  "key_phrases": [
+    "rare",
+    "mutation",
+    "unc5c",
+    "predisposes",
+    "late",
+    "onset",
+    "alzheimer",
+    "disease"
+  ],
+  "summary_1l": "We have identified a rare coding mutation, T835M (rs137875858), in the UNC5C netrin receptor ge",
+  "query_hits": [],
+  "embed_text": "31347396 A rare mutation in UNC5C predisposes to late-onset Alzheimer's disease and increases neuronal cell death science scifact We have identified a rare coding mutation, T835M (rs137875858), in the UNC5C netrin receptor gene that segregated with disease in an autosomal dominant pattern in two families enriched for late-onset Alzheimer's disease and that was… 31347396 a-rare-mutation-in-unc5c-predisposes-to-late-onset-alzheimer's-disease-and-increases-neuronal-cell-death rare mutation unc5c predisposes late onset alzheimer disease We have identified a rare coding mutation, T835M (rs137875858), in the UNC5C netrin receptor ge A rare mutation in UNC5C predisposes to late-onset Alzheimer's disease and increases neuronal cell death We have identified a rare coding mutation, T835M (rs137875858), in the UNC5C netrin receptor gene that segregated with disease in an autosomal dominant pattern in two families enriched for late-onset Alzheimer's disease and that was associated with disease across four large case-control cohorts (odds ratio = 2.15, Pmeta = 0.0095). T835M alters a conserved residue in the hinge region of UNC5C, and in vitro studies demonstrate that this mutation leads to increased cell death in human HEK293T cells and in rodent neurons. Furthermore, neurons expressing T835M UNC5C are more susceptible to cell death from multiple neurotoxic stimuli, including β-amyloid (Aβ), glutamate and staurosporine. On",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.529473+00:00"
+}

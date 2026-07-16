@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3078080",
+  "source_fingerprint": "ea51f46506f808b4e1afccb11b52ea1c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3078080",
+    "rapid-and-sensitive-rt-quic-detection-of-human-creutzfeldt-jakob-disease-using-cerebrospinal-fluid"
+  ],
+  "key_phrases": [
+    "rapid",
+    "sensitive",
+    "rt",
+    "quic",
+    "detection",
+    "human",
+    "creutzfeldt",
+    "jakob"
+  ],
+  "summary_1l": "UNLABELLED Fast, definitive diagnosis of Creutzfeldt-Jakob disease (CJD) is important in assessing pa",
+  "query_hits": [],
+  "embed_text": "3078080 Rapid and Sensitive RT-QuIC Detection of Human Creutzfeldt-Jakob Disease Using Cerebrospinal Fluid science scifact UNLABELLED Fast, definitive diagnosis of Creutzfeldt-Jakob disease (CJD) is important in assessing patient care options and transmission risks. Real-time quaking-induced conversion (RT-QuIC) assays of cerebrospinal fluid (CSF) and… 3078080 rapid-and-sensitive-rt-quic-detection-of-human-creutzfeldt-jakob-disease-using-cerebrospinal-fluid rapid sensitive rt quic detection human creutzfeldt jakob UNLABELLED Fast, definitive diagnosis of Creutzfeldt-Jakob disease (CJD) is important in assessing pa Rapid and Sensitive RT-QuIC Detection of Human Creutzfeldt-Jakob Disease Using Cerebrospinal Fluid UNLABELLED Fast, definitive diagnosis of Creutzfeldt-Jakob disease (CJD) is important in assessing patient care options and transmission risks. Real-time quaking-induced conversion (RT-QuIC) assays of cerebrospinal fluid (CSF) and nasal-brushing specimens are valuable in distinguishing CJD from non-CJD conditions but have required 2.5 to 5 days. Here, an improved RT-QuIC assay is described which identified positive CSF samples within 4 to 14 h with better analytical sensitivity. Moreover, analysis of 11 CJD patients demonstrated that while 7 were RT-QuIC positive using the previous conditions, 10 were positive using the new assay. In these and further analyses, a total of 46 of 48 CSF samples",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.946942+00:00"
+}

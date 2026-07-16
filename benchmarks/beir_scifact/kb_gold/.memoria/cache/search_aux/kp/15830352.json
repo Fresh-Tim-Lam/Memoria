@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15830352",
+  "source_fingerprint": "59a2150681ac81b23ae058c963f528ef",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15830352",
+    "resonating-circadian-clocks-enhance-fitness-in-cyanobacteria."
+  ],
+  "key_phrases": [
+    "resonating",
+    "circadian",
+    "clocks",
+    "enhance",
+    "fitness",
+    "cyanobacteria",
+    "some",
+    "organisms"
+  ],
+  "summary_1l": "Resonating circadian clocks enhance fitness in cyanobacteria.",
+  "query_hits": [],
+  "embed_text": "15830352 Resonating circadian clocks enhance fitness in cyanobacteria. science scifact In some organisms longevity, growth, and developmental rate are improved when they are maintained on a light/dark cycle, the period of which \"resonates\" optimally with the period of the endogenous circadian clock. However, to our knowledge… 15830352 resonating-circadian-clocks-enhance-fitness-in-cyanobacteria. resonating circadian clocks enhance fitness cyanobacteria some organisms Resonating circadian clocks enhance fitness in cyanobacteria. Resonating circadian clocks enhance fitness in cyanobacteria. In some organisms longevity, growth, and developmental rate are improved when they are maintained on a light/dark cycle, the period of which \"resonates\" optimally with the period of the endogenous circadian clock. However, to our knowledge no studies have demonstrated that reproductive fitness per se is improved by resonance between the endogenous clock and the environmental cycle. We tested the adaptive significance of circadian programming by measuring the relative fitness under competition between various strains of cyanobacteria expressing different circadian periods. Strains that had a circadian period similar to that of the light/dark cycle were favored under competition in a manner that indicates the action of soft select",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.298220+00:00"
+}

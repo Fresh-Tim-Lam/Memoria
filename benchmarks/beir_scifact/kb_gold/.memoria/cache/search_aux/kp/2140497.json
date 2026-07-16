@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2140497",
+  "source_fingerprint": "42e5cfc69a3d38132f474f05a017509f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2140497",
+    "independent-association-of-lobular-involution-and-mammographic-breast-density-with-breast-cancer-risk"
+  ],
+  "key_phrases": [
+    "independent",
+    "association",
+    "lobular",
+    "involution",
+    "mammographic",
+    "breast",
+    "density",
+    "with"
+  ],
+  "summary_1l": "BACKGROUND Lobular involution, or age-related atrophy of breast lobules, is inversely associated w",
+  "query_hits": [],
+  "embed_text": "2140497 Independent Association of Lobular Involution and Mammographic Breast Density With Breast Cancer Risk science scifact BACKGROUND Lobular involution, or age-related atrophy of breast lobules, is inversely associated with breast cancer risk, and mammographic breast density (MBD) is positively associated with breast cancer risk. METHODS To evaluate whether… 2140497 independent-association-of-lobular-involution-and-mammographic-breast-density-with-breast-cancer-risk independent association lobular involution mammographic breast density with BACKGROUND Lobular involution, or age-related atrophy of breast lobules, is inversely associated w Independent Association of Lobular Involution and Mammographic Breast Density With Breast Cancer Risk BACKGROUND Lobular involution, or age-related atrophy of breast lobules, is inversely associated with breast cancer risk, and mammographic breast density (MBD) is positively associated with breast cancer risk. METHODS To evaluate whether lobular involution and MBD are independently associated with breast cancer risk in women with benign breast disease, we performed a nested cohort study among women (n = 2666) with benign breast disease diagnosed at Mayo Clinic between January 1, 1985, and December 31, 1991 and a mammogram available within 6 months of the diagnosis. Women were followed up for an average of 13.3 years to document any breast cancer incidence. Lobular involution was categorize",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.073675+00:00"
+}

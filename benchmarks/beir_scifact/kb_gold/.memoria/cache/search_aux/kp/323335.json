@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "323335",
+  "source_fingerprint": "a7e05e7ce2663454189647483851e2a8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "323335",
+    "long-term-outcome-of-patients-with-asystole-induced-by-head-up-tilt-test."
+  ],
+  "key_phrases": [
+    "long",
+    "term",
+    "outcome",
+    "patients",
+    "with",
+    "asystole",
+    "induced",
+    "by"
+  ],
+  "summary_1l": "Long-term outcome of patients with asystole induced by head-up tilt test.",
+  "query_hits": [],
+  "embed_text": "323335 Long-term outcome of patients with asystole induced by head-up tilt test. science scifact AIMS To analyse the long-term outcome of the largest reported cohort of patients presenting asystole during head-up tilt test. METHODS AND RESULTS Since 1990, 1322 patients with syncope of unknown origin have undergone tilt-table testing.… 323335 long-term-outcome-of-patients-with-asystole-induced-by-head-up-tilt-test. long term outcome patients with asystole induced by Long-term outcome of patients with asystole induced by head-up tilt test. Long-term outcome of patients with asystole induced by head-up tilt test. AIMS To analyse the long-term outcome of the largest reported cohort of patients presenting asystole during head-up tilt test. METHODS AND RESULTS Since 1990, 1322 patients with syncope of unknown origin have undergone tilt-table testing. Of those, 330 patients (24 X 9%) presented an abnormal response (syncope or pre-syncope). Furthermore, 58 of those patients (17 X 5%) suffered a period of asystole (> or = 3000 ms) during the test. Asystole (median (interquartile range)) lasted 10 (4, 19 X 2) s (range 3-90). Two different protocols (angles) of tilting (Westminster (60 degrees) n=1124; isoproterenol (80 degrees) n=198)) influenced the time to the syncopal episode (13 (6 X 5, 20 X 5) vs 2 (1, 6 X 5) min, P=0,0005) but",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.432241+00:00"
+}

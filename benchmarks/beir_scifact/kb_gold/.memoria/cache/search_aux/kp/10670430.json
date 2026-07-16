@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10670430",
+  "source_fingerprint": "a0f2126b80cc6cfd2245939b3d4499c9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10670430",
+    "engulfment-of-apoptotic-cells:-signals-for-a-good-meal"
+  ],
+  "key_phrases": [
+    "engulfment",
+    "apoptotic",
+    "cells",
+    "signals",
+    "good",
+    "meal",
+    "clearance",
+    "by"
+  ],
+  "summary_1l": "The clearance of apoptotic cells by phagocytes is an integral component of normal life, and defects in this process can have significant implicat",
+  "query_hits": [],
+  "embed_text": "10670430 Engulfment of apoptotic cells: signals for a good meal science scifact The clearance of apoptotic cells by phagocytes is an integral component of normal life, and defects in this process can have significant implications for self tolerance and autoimmunity. Recent studies have provided new insights into the… 10670430 engulfment-of-apoptotic-cells:-signals-for-a-good-meal engulfment apoptotic cells signals good meal clearance by The clearance of apoptotic cells by phagocytes is an integral component of normal life, and defects in this process can have significant implicat Engulfment of apoptotic cells: signals for a good meal The clearance of apoptotic cells by phagocytes is an integral component of normal life, and defects in this process can have significant implications for self tolerance and autoimmunity. Recent studies have provided new insights into the engulfment process, including how phagocytes seek apoptotic cells, how they recognize and ingest these targets and how they maintain cellular homeostasis after the 'meal'. Several new factors that regulate engulfment have been identified, whereas the roles of some of the older players require revision. This Review focuses on these recent developments and attempts to highlight some of the important questions in this field.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:05.270599+00:00"
+}

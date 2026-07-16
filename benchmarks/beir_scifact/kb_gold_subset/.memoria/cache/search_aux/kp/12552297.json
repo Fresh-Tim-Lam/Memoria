@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "12552297",
+  "source_fingerprint": "e3e152818e187bf9656e91612db80fb6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12552297"
+  ],
+  "key_phrases": [
+    "dna",
+    "polymerase",
+    "required",
+    "repair",
+    "non",
+    "compatible",
+    "double",
+    "strand"
+  ],
+  "summary_1l": "DNA polymerase lambda (polλ) is a recently identified DNA polymerase whose cellula",
+  "query_hits": [],
+  "embed_text": "12552297 The DNA polymerase λ is required for the repair of non-compatible DNA double strand breaks by NHEJ in mammalian cells science scifact DNA polymerase lambda (polλ) is a recently identified DNA polymerase whose cellular function remains elusive. Here we show, that polλ participates at the molecular level in a chromosomal context, in the repair of DNA double strand breaks… 12552297 dna polymerase required repair non compatible double strand DNA polymerase lambda (polλ) is a recently identified DNA polymerase whose cellula The DNA polymerase λ is required for the repair of non-compatible DNA double strand breaks by NHEJ in mammalian cells DNA polymerase lambda (polλ) is a recently identified DNA polymerase whose cellular function remains elusive. Here we show, that polλ participates at the molecular level in a chromosomal context, in the repair of DNA double strand breaks (DSB) via non-homologous end joining (NHEJ) in mammalian cells. The expression of a catalytically inactive form of polλ (polλDN) decreases the frequency of NHEJ events in response to I-Sce-I-induced DSB whereas inactivated forms of its homologues polβ and polμ do not. Only events requiring DNA end processing before ligation are affected; this defect is associated with large deletions arising in the vicinity of the induced DSB. Furthermore,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:09.089222+00:00"
+}

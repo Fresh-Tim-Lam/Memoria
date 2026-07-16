@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "30884033",
+  "source_fingerprint": "fccdc6dd49b56aa1b2c635f6e3d5ed4a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "30884033",
+    "regulation-of-embryonic-stem-cell-pluripotency-by-heat-shock-protein-90."
+  ],
+  "key_phrases": [
+    "regulation",
+    "embryonic",
+    "stem",
+    "cell",
+    "pluripotency",
+    "by",
+    "heat",
+    "shock"
+  ],
+  "summary_1l": "Regulation of embryonic stem cell pluripotency by heat shock protein 90.",
+  "query_hits": [],
+  "embed_text": "30884033 Regulation of embryonic stem cell pluripotency by heat shock protein 90. science scifact Deciphering the molecular basis of stem cell pluripotency is fundamental to the understanding of stem cell biology, early embryonic development, and to the clinical application of regenerative medicine. We report here that the molecular… 30884033 regulation-of-embryonic-stem-cell-pluripotency-by-heat-shock-protein-90. regulation embryonic stem cell pluripotency by heat shock Regulation of embryonic stem cell pluripotency by heat shock protein 90. Regulation of embryonic stem cell pluripotency by heat shock protein 90. Deciphering the molecular basis of stem cell pluripotency is fundamental to the understanding of stem cell biology, early embryonic development, and to the clinical application of regenerative medicine. We report here that the molecular chaperone heat shock protein 90 (Hsp90) is essential for mouse embryonic stem cell (ESC) pluripotency through regulating multiple pluripotency factors, including Oct4, Nanog, and signal transducer and activator of transcription 3. Inhibition of Hsp90 by either 17-N-Allylamino-17-demethoxygeldanamycin or miRNA led to ESC differentiation. Overexpression of Hsp90β partially rescued the phenotype; in particular, the levels of Oct4 and Nanog were restored. Notably, Hsp90 associated with Oct",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.084875+00:00"
+}

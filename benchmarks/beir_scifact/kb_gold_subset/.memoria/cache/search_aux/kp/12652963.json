@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12652963",
+  "source_fingerprint": "5938e934b268381d7aee4e8a1ebeddbf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12652963",
+    "mirna-dependent-gene-silencing-involving-ago2-mediated-cleavage-of-a-circular-antisense-rna."
+  ],
+  "key_phrases": [
+    "mirna",
+    "dependent",
+    "gene",
+    "silencing",
+    "involving",
+    "ago2",
+    "mediated",
+    "cleavage"
+  ],
+  "summary_1l": "miRNA-dependent gene silencing involving Ago2-mediated cleavage of a circular antisense RNA.",
+  "query_hits": [],
+  "embed_text": "12652963 miRNA-dependent gene silencing involving Ago2-mediated cleavage of a circular antisense RNA. science scifact MicroRNAs (miRNAs) are ∼22 nt non-coding RNAs that typically bind to the 3' UTR of target mRNAs in the cytoplasm, resulting in mRNA destabilization and translational repression. Here, we report that miRNAs can also regulate gene expression… 12652963 mirna-dependent-gene-silencing-involving-ago2-mediated-cleavage-of-a-circular-antisense-rna. mirna dependent gene silencing involving ago2 mediated cleavage miRNA-dependent gene silencing involving Ago2-mediated cleavage of a circular antisense RNA. miRNA-dependent gene silencing involving Ago2-mediated cleavage of a circular antisense RNA. MicroRNAs (miRNAs) are ∼22 nt non-coding RNAs that typically bind to the 3' UTR of target mRNAs in the cytoplasm, resulting in mRNA destabilization and translational repression. Here, we report that miRNAs can also regulate gene expression by targeting non-coding antisense transcripts in human cells. Specifically, we show that miR-671 directs cleavage of a circular antisense transcript of the Cerebellar Degeneration-Related protein 1 (CDR1) locus in an Ago2-slicer-dependent manner. The resulting downregulation of circular antisense has a concomitant decrease in CDR1 mRNA levels, independently of heterochromatin formation. This study provides the first evidence for non-coding antisense transcripts a",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:09.305042+00:00"
+}

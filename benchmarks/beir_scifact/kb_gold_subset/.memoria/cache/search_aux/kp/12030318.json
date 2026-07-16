@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12030318",
+  "source_fingerprint": "43364cae9cedb8ad3dc5466cbab890db",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12030318",
+    "the-kinase-regulator-mob1-acts-as-a-patterning-protein-for-stentor-morphogenesis"
+  ],
+  "key_phrases": [
+    "kinase",
+    "regulator",
+    "mob1",
+    "acts",
+    "as",
+    "patterning",
+    "protein",
+    "stentor"
+  ],
+  "summary_1l": "Morphogenesis and pattern formation are vital processes in any organism, whether unicellular or multicellular.",
+  "query_hits": [],
+  "embed_text": "12030318 The Kinase Regulator Mob1 Acts as a Patterning Protein for Stentor Morphogenesis science scifact Morphogenesis and pattern formation are vital processes in any organism, whether unicellular or multicellular. But in contrast to the developmental biology of plants and animals, the principles of morphogenesis and pattern formation in… 12030318 the-kinase-regulator-mob1-acts-as-a-patterning-protein-for-stentor-morphogenesis kinase regulator mob1 acts as patterning protein stentor Morphogenesis and pattern formation are vital processes in any organism, whether unicellular or multicellular. The Kinase Regulator Mob1 Acts as a Patterning Protein for Stentor Morphogenesis Morphogenesis and pattern formation are vital processes in any organism, whether unicellular or multicellular. But in contrast to the developmental biology of plants and animals, the principles of morphogenesis and pattern formation in single cells remain largely unknown. Although all cells develop patterns, they are most obvious in ciliates; hence, we have turned to a classical unicellular model system, the giant ciliate Stentor coeruleus. Here we show that the RNA interference (RNAi) machinery is conserved in Stentor. Using RNAi, we identify the kinase coactivator Mob1--with conserved functions in cell division and morphogenesis from plants to humans-as an asymmetrically localized patterning protein required",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:08.086895+00:00"
+}

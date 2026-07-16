@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6290112",
+  "source_fingerprint": "d914d4b113539320085bbd591e9d8df3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6290112",
+    "low-copy-number-of-the-salivary-amylase-gene-predisposes-to-obesity"
+  ],
+  "key_phrases": [
+    "low",
+    "copy",
+    "number",
+    "salivary",
+    "amylase",
+    "gene",
+    "predisposes",
+    "obesity"
+  ],
+  "summary_1l": "Common multi-allelic copy number variants (CNVs) appear enriched for phenotypic associations compared to their biallelic counterpart",
+  "query_hits": [],
+  "embed_text": "6290112 Low copy number of the salivary amylase gene predisposes to obesity science scifact Common multi-allelic copy number variants (CNVs) appear enriched for phenotypic associations compared to their biallelic counterparts. Here we investigated the influence of gene dosage effects on adiposity through a CNV association study… 6290112 low-copy-number-of-the-salivary-amylase-gene-predisposes-to-obesity low copy number salivary amylase gene predisposes obesity Common multi-allelic copy number variants (CNVs) appear enriched for phenotypic associations compared to their biallelic counterpart Low copy number of the salivary amylase gene predisposes to obesity Common multi-allelic copy number variants (CNVs) appear enriched for phenotypic associations compared to their biallelic counterparts. Here we investigated the influence of gene dosage effects on adiposity through a CNV association study of gene expression levels in adipose tissue. We identified significant association of a multi-allelic CNV encompassing the salivary amylase gene (AMY1) with body mass index (BMI) and obesity, and we replicated this finding in 6,200 subjects. Increased AMY1 copy number was positively associated with both amylase gene expression (P = 2.31 × 10(-14)) and serum enzyme levels (P < 2.20 × 10(-16)), whereas reduced AMY1 copy number was associated with increased BMI (change in BMI per estimated co",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.463500+00:00"
+}

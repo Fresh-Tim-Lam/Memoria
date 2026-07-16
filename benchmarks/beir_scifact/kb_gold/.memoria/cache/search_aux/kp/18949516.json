@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "18949516",
+  "source_fingerprint": "66736a49e012c131d934458d76e55783",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18949516"
+  ],
+  "key_phrases": [
+    "tgf",
+    "insulin",
+    "signaling",
+    "regulate",
+    "reproductive",
+    "aging",
+    "via",
+    "oocyte"
+  ],
+  "summary_1l": "Reproductive cessation is perhaps the earliest aging phenotype that humans experience.",
+  "query_hits": [],
+  "embed_text": "18949516 TGF-β and Insulin Signaling Regulate Reproductive Aging via Oocyte and Germline Quality Maintenance science scifact Reproductive cessation is perhaps the earliest aging phenotype that humans experience. Similarly, reproduction of Caenorhabditis elegans ceases in mid-adulthood. Although somatic aging has been studied in both worms and humans, mechanisms… 18949516 tgf insulin signaling regulate reproductive aging via oocyte Reproductive cessation is perhaps the earliest aging phenotype that humans experience. TGF-β and Insulin Signaling Regulate Reproductive Aging via Oocyte and Germline Quality Maintenance Reproductive cessation is perhaps the earliest aging phenotype that humans experience. Similarly, reproduction of Caenorhabditis elegans ceases in mid-adulthood. Although somatic aging has been studied in both worms and humans, mechanisms regulating reproductive aging are not yet understood. Here, we show that TGF-β Sma/Mab and Insulin/IGF-1 signaling regulate C. elegans reproductive aging by modulating multiple aspects of the reproductive process, including embryo integrity, oocyte fertilizability, chromosome segregation fidelity, DNA damage resistance, and oocyte and germline morphology. TGF-β activity regulates reproductive span and germline/oocyte quality noncell-autonomously and is temp",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.934409+00:00"
+}

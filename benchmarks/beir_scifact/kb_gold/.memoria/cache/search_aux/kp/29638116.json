@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29638116",
+  "source_fingerprint": "caf078b47aad5ff0cad65ef142217c74",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29638116",
+    "complex-tissue-and-disease-modeling-using-hipscs."
+  ],
+  "key_phrases": [
+    "complex",
+    "tissue",
+    "disease",
+    "modeling",
+    "using",
+    "hipscs",
+    "defined",
+    "genetic"
+  ],
+  "summary_1l": "Complex Tissue and Disease Modeling using hiPSCs.",
+  "query_hits": [],
+  "embed_text": "29638116 Complex Tissue and Disease Modeling using hiPSCs. science scifact Defined genetic models based on human pluripotent stem cells have opened new avenues for understanding disease mechanisms and drug screening. Many of these models assume cell-autonomous mechanisms of disease but it is possible that disease… 29638116 complex-tissue-and-disease-modeling-using-hipscs. complex tissue disease modeling using hipscs defined genetic Complex Tissue and Disease Modeling using hiPSCs. Complex Tissue and Disease Modeling using hiPSCs. Defined genetic models based on human pluripotent stem cells have opened new avenues for understanding disease mechanisms and drug screening. Many of these models assume cell-autonomous mechanisms of disease but it is possible that disease phenotypes or drug responses will only be evident if all cellular and extracellular components of a tissue are present and functionally mature. To derive optimal benefit from such models, complex multicellular structures with vascular components that mimic tissue niches will thus likely be necessary. Here we consider emerging research creating human tissue mimics and provide some recommendations for moving the field forward.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.084282+00:00"
+}

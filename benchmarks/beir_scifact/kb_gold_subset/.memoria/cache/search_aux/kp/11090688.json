@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11090688",
+  "source_fingerprint": "23368bb4c908ff88f661b18ceecb3d6f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11090688",
+    "genetic-variability-in-glp-1-receptor-is-associated-with-inter-individual-differences-in-weight-lowering-potential-of-liraglutide-in-obese-women-with-pcos:-a-pilot-study"
+  ],
+  "key_phrases": [
+    "genetic",
+    "variability",
+    "glp",
+    "receptor",
+    "associated",
+    "with",
+    "inter",
+    "individual"
+  ],
+  "summary_1l": "The weight lowering potential",
+  "query_hits": [],
+  "embed_text": "11090688 Genetic variability in GLP-1 receptor is associated with inter-individual differences in weight lowering potential of liraglutide in obese women with PCOS: a pilot study science scifact The weight lowering potential of glucagon-like peptide 1 (GLP-1) receptor agonists (RAs) is inter-individually different and clinically unpredictable. The potential role of genetic variability of GLP-1R on body weight response to GLP-1 RAs… 11090688 genetic-variability-in-glp-1-receptor-is-associated-with-inter-individual-differences-in-weight-lowering-potential-of-liraglutide-in-obese-women-with-pcos:-a-pilot-study genetic variability glp receptor associated with inter individual The weight lowering potential Genetic variability in GLP-1 receptor is associated with inter-individual differences in weight lowering potential of liraglutide in obese women with PCOS: a pilot study The weight lowering potential of glucagon-like peptide 1 (GLP-1) receptor agonists (RAs) is inter-individually different and clinically unpredictable. The potential role of genetic variability of GLP-1R on body weight response to GLP-1 RAs in obese women with polycystic ovary syndrome (PCOS) has not yet been evaluated. Fifty-seven obese women with PCOS (aged 30.7 ± 7.0, BMI 38.6 ± 5.3 kg/m2) were assigned to liraglutide 1.2 mg QD s.c. for 12 weeks and classified as strong responders regarding weight loss if they lost 5 % or more of their initial body weight. They were genotyped for common GLP-1R single nucleotide polymorph",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:06.329762+00:00"
+}

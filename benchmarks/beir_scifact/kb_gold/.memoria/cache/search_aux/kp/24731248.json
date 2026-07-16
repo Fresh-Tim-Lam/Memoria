@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24731248",
+  "source_fingerprint": "831633e4ebc76a48ef359304c807a644",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24731248",
+    "tet-proteins-can-convert-5-methylcytosine-to-5-formylcytosine-and-5-carboxylcytosine."
+  ],
+  "key_phrases": [
+    "tet",
+    "proteins",
+    "can",
+    "convert",
+    "methylcytosine",
+    "formylcytosine",
+    "carboxylcytosine",
+    "5mc"
+  ],
+  "summary_1l": "Tet proteins can convert 5-methylcytosine to 5-formylcytosine and 5-carboxylcytosine.",
+  "query_hits": [],
+  "embed_text": "24731248 Tet proteins can convert 5-methylcytosine to 5-formylcytosine and 5-carboxylcytosine. science scifact 5-methylcytosine (5mC) in DNA plays an important role in gene expression, genomic imprinting, and suppression of transposable elements. 5mC can be converted to 5-hydroxymethylcytosine (5hmC) by the Tet (ten eleven translocation) proteins.… 24731248 tet-proteins-can-convert-5-methylcytosine-to-5-formylcytosine-and-5-carboxylcytosine. tet proteins can convert methylcytosine formylcytosine carboxylcytosine 5mc Tet proteins can convert 5-methylcytosine to 5-formylcytosine and 5-carboxylcytosine. Tet proteins can convert 5-methylcytosine to 5-formylcytosine and 5-carboxylcytosine. 5-methylcytosine (5mC) in DNA plays an important role in gene expression, genomic imprinting, and suppression of transposable elements. 5mC can be converted to 5-hydroxymethylcytosine (5hmC) by the Tet (ten eleven translocation) proteins. Here, we show that, in addition to 5hmC, the Tet proteins can generate 5-formylcytosine (5fC) and 5-carboxylcytosine (5caC) from 5mC in an enzymatic activity-dependent manner. Furthermore, we reveal the presence of 5fC and 5caC in genomic DNA of mouse embryonic stem cells and mouse organs. The genomic content of 5hmC, 5fC, and 5caC can be increased or reduced through overexpression or depletion of Tet proteins. Thus, we identify two previously unknown cytosine derivative",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.169288+00:00"
+}

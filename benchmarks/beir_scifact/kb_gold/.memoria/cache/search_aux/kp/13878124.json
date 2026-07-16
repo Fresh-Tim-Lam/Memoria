@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13878124",
+  "source_fingerprint": "2d68ed03a3aafeb4503b15d57660c3bc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13878124",
+    "regulation-of-radial-glial-survival-by-signals-from-the-meninges."
+  ],
+  "key_phrases": [
+    "regulation",
+    "radial",
+    "glial",
+    "survival",
+    "by",
+    "signals",
+    "from",
+    "meninges"
+  ],
+  "summary_1l": "Regulation of radial glial survival by signals from the meninges.",
+  "query_hits": [],
+  "embed_text": "13878124 Regulation of radial glial survival by signals from the meninges. science scifact Radial glial cells (RGCs) in the developing cerebral cortex are progenitors for neurons and glia, and their processes serve as guideposts for migrating neurons. So far, it has remained unclear whether RGC processes also control the… 13878124 regulation-of-radial-glial-survival-by-signals-from-the-meninges. regulation radial glial survival by signals from meninges Regulation of radial glial survival by signals from the meninges. Regulation of radial glial survival by signals from the meninges. Radial glial cells (RGCs) in the developing cerebral cortex are progenitors for neurons and glia, and their processes serve as guideposts for migrating neurons. So far, it has remained unclear whether RGC processes also control the function of RGCs more directly. Here, we show that RGC numbers and cortical size are reduced in mice lacking beta1 integrins in RGCs. TUNEL stainings and time-lapse video recordings demonstrate that beta1-deficient RGCs processes detach from the meningeal basement membrane (BM) followed by apoptotic death of RGCs. Apoptosis is also induced by surgical removal of the meninges. Finally, mice lacking the BM components laminin alpha2 and alpha4 show defects in the attachment of RGC processes at the me",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.275500+00:00"
+}

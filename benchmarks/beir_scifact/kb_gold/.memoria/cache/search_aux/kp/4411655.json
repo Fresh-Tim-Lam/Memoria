@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4411655",
+  "source_fingerprint": "ab6c6185ecc098da99c8eab3631dfa69",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4411655",
+    "the-yeast-pif1p-helicase-removes-telomerase-from-telomeric-dna"
+  ],
+  "key_phrases": [
+    "yeast",
+    "pif1p",
+    "helicase",
+    "removes",
+    "telomerase",
+    "from",
+    "telomeric",
+    "dna"
+  ],
+  "summary_1l": "Telomeres are the physical ends of eukaryotic chromosomes.",
+  "query_hits": [],
+  "embed_text": "4411655 The yeast Pif1p helicase removes telomerase from telomeric DNA science scifact Telomeres are the physical ends of eukaryotic chromosomes. Genetic studies have established that the baker's yeast Pif1p DNA helicase is a negative regulator of telomerase, the specialized reverse transcriptase that maintains telomeric… 4411655 the-yeast-pif1p-helicase-removes-telomerase-from-telomeric-dna yeast pif1p helicase removes telomerase from telomeric dna Telomeres are the physical ends of eukaryotic chromosomes. The yeast Pif1p helicase removes telomerase from telomeric DNA Telomeres are the physical ends of eukaryotic chromosomes. Genetic studies have established that the baker's yeast Pif1p DNA helicase is a negative regulator of telomerase, the specialized reverse transcriptase that maintains telomeric DNA, but the biochemical basis for this inhibition was unknown. Here we show that in vitro, Pif1p reduces the processivity of telomerase and releases telomerase from telomeric oligonucleotides. The released telomerase is enzymatically active because it is able to lengthen a challenger oligonucleotide. In vivo, overexpression of Pif1p reduces telomerase association with telomeres, whereas depleting cells of Pif1p increases the levels of telomere-bound Est1p, a telomerase subunit that is present on",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.769789+00:00"
+}

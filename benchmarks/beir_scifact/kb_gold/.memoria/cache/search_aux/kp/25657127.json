@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25657127",
+  "source_fingerprint": "29a8f542541409c02bf0b11734f1fad8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25657127",
+    "crystal-structure-of-the-first-plant-urease-from-jack-bean:-83-years-of-journey-from-its-first-crystal-to-molecular-structure."
+  ],
+  "key_phrases": [
+    "crystal",
+    "structure",
+    "first",
+    "plant",
+    "urease",
+    "from",
+    "jack",
+    "bean"
+  ],
+  "summary_1l": "Crystal structure of the first plant urease from jack bean: 83 years of journey from its first crystal to molecular structure.",
+  "query_hits": [],
+  "embed_text": "25657127 Crystal structure of the first plant urease from jack bean: 83 years of journey from its first crystal to molecular structure. science scifact Urease, a nickel-dependent metalloenzyme, is synthesized by plants, some bacteria, and fungi. It catalyzes the hydrolysis of urea into ammonia and carbon dioxide. Although the amino acid sequences of plant and bacterial ureases are closely… 25657127 crystal-structure-of-the-first-plant-urease-from-jack-bean:-83-years-of-journey-from-its-first-crystal-to-molecular-structure. crystal structure first plant urease from jack bean Crystal structure of the first plant urease from jack bean: 83 years of journey from its first crystal to molecular structure. Crystal structure of the first plant urease from jack bean: 83 years of journey from its first crystal to molecular structure. Urease, a nickel-dependent metalloenzyme, is synthesized by plants, some bacteria, and fungi. It catalyzes the hydrolysis of urea into ammonia and carbon dioxide. Although the amino acid sequences of plant and bacterial ureases are closely related, some biological activities differ significantly. Plant ureases but not bacterial ureases possess insecticidal properties independent of its ureolytic activity. To date, the structural information is available only for bacterial ureases although the jack bean urease (Canavalia ensiformis; JBU), the best-studied plant urease, was the first enzyme to be crystallized in 1926. To better understand the biological properties of",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.130877+00:00"
+}

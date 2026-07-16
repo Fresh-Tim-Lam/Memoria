@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13791788",
+  "source_fingerprint": "1f40eeca8b4ff7724e8f7b6b7d7bb972",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13791788",
+    "the-genetics-of-mexico-recapitulates-native-american-substructure-and-affects-biomedical-traits"
+  ],
+  "key_phrases": [
+    "genetics",
+    "mexico",
+    "recapitulates",
+    "native",
+    "american",
+    "substructure",
+    "affects",
+    "biomedical"
+  ],
+  "summary_1l": "Mexico harbors great cultural and ethnic diversity, yet fine-scale patterns of human genome-wide variati",
+  "query_hits": [],
+  "embed_text": "13791788 The genetics of Mexico recapitulates Native American substructure and affects biomedical traits science scifact Mexico harbors great cultural and ethnic diversity, yet fine-scale patterns of human genome-wide variation from this region remain largely uncharacterized. We studied genomic variation within Mexico from over 1000 individuals representing… 13791788 the-genetics-of-mexico-recapitulates-native-american-substructure-and-affects-biomedical-traits genetics mexico recapitulates native american substructure affects biomedical Mexico harbors great cultural and ethnic diversity, yet fine-scale patterns of human genome-wide variati The genetics of Mexico recapitulates Native American substructure and affects biomedical traits Mexico harbors great cultural and ethnic diversity, yet fine-scale patterns of human genome-wide variation from this region remain largely uncharacterized. We studied genomic variation within Mexico from over 1000 individuals representing 20 indigenous and 11 mestizo populations. We found striking genetic stratification among indigenous populations within Mexico at varying degrees of geographic isolation. Some groups were as differentiated as Europeans are from East Asians. Pre-Columbian genetic substructure is recapitulated in the indigenous ancestry of admixed mestizo individuals across the country. Furthermore, two independently phenotyped cohorts of Mexicans and Mexican Americans showed a si",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.063377+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5483793",
+  "source_fingerprint": "f6df38358170cf0bd9627c8eb632f6fe",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5483793",
+    "altered-recognition-of-antigen-is-a-mechanism-of-cd8+-t-cell-tolerance-in-cancer"
+  ],
+  "key_phrases": [
+    "altered",
+    "recognition",
+    "antigen",
+    "mechanism",
+    "cd8",
+    "cell",
+    "tolerance",
+    "cancer"
+  ],
+  "summary_1l": "Antigen-specific CD8+ T-cell tolerance, induced by myeloid-derived suppressor cells (MDSCs), is one of the main mechani",
+  "query_hits": [],
+  "embed_text": "5483793 Altered recognition of antigen is a mechanism of CD8+ T cell tolerance in cancer science scifact Antigen-specific CD8+ T-cell tolerance, induced by myeloid-derived suppressor cells (MDSCs), is one of the main mechanisms of tumor escape. Using in vivo models, we show here that MDSCs directly disrupt the binding of specific… 5483793 altered-recognition-of-antigen-is-a-mechanism-of-cd8+-t-cell-tolerance-in-cancer altered recognition antigen mechanism cd8 cell tolerance cancer Antigen-specific CD8+ T-cell tolerance, induced by myeloid-derived suppressor cells (MDSCs), is one of the main mechani Altered recognition of antigen is a mechanism of CD8+ T cell tolerance in cancer Antigen-specific CD8+ T-cell tolerance, induced by myeloid-derived suppressor cells (MDSCs), is one of the main mechanisms of tumor escape. Using in vivo models, we show here that MDSCs directly disrupt the binding of specific peptide–major histocompatibility complex (pMHC) dimers to CD8-expressing T cells through nitration of tyrosines in a T-cell receptor (TCR)-CD8 complex. This process makes CD8-expressing T cells unable to bind pMHC and to respond to the specific peptide, although they retain their ability to respond to nonspecific stimulation. Nitration of TCR-CD8 is induced by MDSCs through hyperproduction of reactive oxygen species and peroxynitrite during direct cell-cell contact. Molecular modeling su",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.413551+00:00"
+}

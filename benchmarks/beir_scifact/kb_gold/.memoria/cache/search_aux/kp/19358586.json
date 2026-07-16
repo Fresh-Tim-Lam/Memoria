@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19358586",
+  "source_fingerprint": "b13464b3c26cc5bcb9022903136e1ed1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19358586",
+    "functional-proteomics-identifies-mirnas-to-target-a-p27/myc/phospho-rb-signature-in-breast-and-ovarian-cancer"
+  ],
+  "key_phrases": [
+    "functional",
+    "proteomics",
+    "identifies",
+    "mirnas",
+    "target",
+    "p27",
+    "myc",
+    "phospho"
+  ],
+  "summary_1l": "The myc oncogene is overexpressed in almost half of all breast and ovarian cancers, but at",
+  "query_hits": [],
+  "embed_text": "19358586 Functional proteomics identifies miRNAs to target a p27/Myc/phospho-Rb signature in breast and ovarian cancer science scifact The myc oncogene is overexpressed in almost half of all breast and ovarian cancers, but attempts at therapeutic interventions against myc have proven to be challenging. Myc regulates multiple biological processes, including the cell cycle,… 19358586 functional-proteomics-identifies-mirnas-to-target-a-p27/myc/phospho-rb-signature-in-breast-and-ovarian-cancer functional proteomics identifies mirnas target p27 myc phospho The myc oncogene is overexpressed in almost half of all breast and ovarian cancers, but at Functional proteomics identifies miRNAs to target a p27/Myc/phospho-Rb signature in breast and ovarian cancer The myc oncogene is overexpressed in almost half of all breast and ovarian cancers, but attempts at therapeutic interventions against myc have proven to be challenging. Myc regulates multiple biological processes, including the cell cycle, and as such is associated with cell proliferation and tumor progression. We identified a protein signature of high myc, low p27 and high phospho-Rb significantly correlated with poor patient survival in breast and ovarian cancers. Screening of a miRNA library by functional proteomics in multiple cell lines and integration of data from patient tumors revealed a panel of five microRNAs (miRNAs) (miR-124, miR-365, miR-34b*, miR-18a and miR-506) as p",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.480812+00:00"
+}

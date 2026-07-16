@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27910499",
+  "source_fingerprint": "bf24591f68279eb1aa35c79ba657ae4b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27910499",
+    "quantitative-assessment-of-t-cell-repertoire-recovery-after-hematopoietic-stem-cell-transplantation"
+  ],
+  "key_phrases": [
+    "quantitative",
+    "assessment",
+    "cell",
+    "repertoire",
+    "recovery",
+    "after",
+    "hematopoietic",
+    "stem"
+  ],
+  "summary_1l": "Delayed T cell recovery and restricted T cell receptor (TCR) diversity after allogeneic hematopoieti",
+  "query_hits": [],
+  "embed_text": "27910499 Quantitative assessment of T-cell repertoire recovery after hematopoietic stem cell transplantation science scifact Delayed T cell recovery and restricted T cell receptor (TCR) diversity after allogeneic hematopoietic stem cell transplantation (allo-HSCT) are associated with increased risks of infection and cancer relapse. Technical challenges have… 27910499 quantitative-assessment-of-t-cell-repertoire-recovery-after-hematopoietic-stem-cell-transplantation quantitative assessment cell repertoire recovery after hematopoietic stem Delayed T cell recovery and restricted T cell receptor (TCR) diversity after allogeneic hematopoieti Quantitative assessment of T-cell repertoire recovery after hematopoietic stem cell transplantation Delayed T cell recovery and restricted T cell receptor (TCR) diversity after allogeneic hematopoietic stem cell transplantation (allo-HSCT) are associated with increased risks of infection and cancer relapse. Technical challenges have limited faithful measurement of TCR diversity after allo-HSCT. Here we combined 5' rapid amplification of complementary DNA ends PCR with deep sequencing to quantify TCR diversity in 28 recipients of allo-HSCT using a single oligonucleotide pair. Analysis of duplicate blood samples confirmed that we accurately determined the frequency of individual TCRs. After 6 months, cord blood-graft recipients approximated the TCR diversity of healthy individuals, whereas r",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.458687+00:00"
+}

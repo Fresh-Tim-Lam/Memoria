@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6123521",
+  "source_fingerprint": "b4ddf0a647c4efef0d2a70e12c79aac2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6123521",
+    "structural-plasticity-of-the-adult-brain:-how-animal-models-help-us-understand-brain-changes-in-depression-and-systemic-disorders-related-to-depression"
+  ],
+  "key_phrases": [
+    "structural",
+    "plasticity",
+    "adult",
+    "brain",
+    "how",
+    "animal",
+    "models",
+    "help"
+  ],
+  "summary_1l": "The brain interprets experiences and translates",
+  "query_hits": [],
+  "embed_text": "6123521 Structural plasticity of the adult brain: how animal models help us understand brain changes in depression and systemic disorders related to depression science scifact The brain interprets experiences and translates them into behavioral and physiological responses. Stressful events are those which are threatening or, at the very least, unexpected and surprising, and the physiological and behavioral… 6123521 structural-plasticity-of-the-adult-brain:-how-animal-models-help-us-understand-brain-changes-in-depression-and-systemic-disorders-related-to-depression structural plasticity adult brain how animal models help The brain interprets experiences and translates Structural plasticity of the adult brain: how animal models help us understand brain changes in depression and systemic disorders related to depression The brain interprets experiences and translates them into behavioral and physiological responses. Stressful events are those which are threatening or, at the very least, unexpected and surprising, and the physiological and behavioral responses are intended to promote adaptation via a process called \"allostasis. \" Chemical mediators of allostasis include cortisol and adrenalin from the adrenal glands, other hormones, and neurotransmitters, the parasympathetic and sympathetic nervous systems, and cytokines and chemokines from the immune system. Two brain structures, the amygdala and hippocampus, play key roles in interpreting what is stressfu",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.003696+00:00"
+}

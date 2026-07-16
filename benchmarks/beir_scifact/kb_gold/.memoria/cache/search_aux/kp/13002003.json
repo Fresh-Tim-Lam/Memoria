@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13002003",
+  "source_fingerprint": "51ac6fb4aa1f1316b53e32bf640b33f2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13002003",
+    "mtor-supports-long-term-self-renewal-and-suppresses-mesoderm-and-endoderm-activities-of-human-embryonic-stem-cells."
+  ],
+  "key_phrases": [
+    "mtor",
+    "supports",
+    "long",
+    "term",
+    "self",
+    "renewal",
+    "suppresses",
+    "mesoderm"
+  ],
+  "summary_1l": "mTOR supports long-term self-renewal and suppresses mesoderm and endoderm activities of human embryonic stem cells.",
+  "query_hits": [],
+  "embed_text": "13002003 mTOR supports long-term self-renewal and suppresses mesoderm and endoderm activities of human embryonic stem cells. science scifact Despite the recent identification of the transcriptional regulatory circuitry involving SOX2, NANOG, and OCT-4, the intracellular signaling networks that control pluripotency of human embryonic stem cells (hESCs) remain largely undefined.… 13002003 mtor-supports-long-term-self-renewal-and-suppresses-mesoderm-and-endoderm-activities-of-human-embryonic-stem-cells. mtor supports long term self renewal suppresses mesoderm mTOR supports long-term self-renewal and suppresses mesoderm and endoderm activities of human embryonic stem cells. mTOR supports long-term self-renewal and suppresses mesoderm and endoderm activities of human embryonic stem cells. Despite the recent identification of the transcriptional regulatory circuitry involving SOX2, NANOG, and OCT-4, the intracellular signaling networks that control pluripotency of human embryonic stem cells (hESCs) remain largely undefined. Here, we demonstrate an essential role for the serine/threonine protein kinase mammalian target of rapamycin (mTOR) in regulating hESC long-term undifferentiated growth. Inhibition of mTOR impairs pluripotency, prevents cell proliferation, and enhances mesoderm and endoderm activities in hESCs. At the molecular level, mTOR integrates signals from extrinsic pluripotency-supporting factors and represses the transcriptional activities of a subs",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:09.436825+00:00"
+}

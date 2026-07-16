@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2296264",
+  "source_fingerprint": "f5dcbc6310c2698492b27fce896bce55",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2296264",
+    "modulation-of-cancer-chemotherapy-by-green-tea."
+  ],
+  "key_phrases": [
+    "modulation",
+    "cancer",
+    "chemotherapy",
+    "by",
+    "green",
+    "tea",
+    "biochemical",
+    "has"
+  ],
+  "summary_1l": "Modulation of cancer chemotherapy by green tea.",
+  "query_hits": [],
+  "embed_text": "2296264 Modulation of cancer chemotherapy by green tea. science scifact Biochemical modulation has played an important role in the development of cancer chemotherapy. We have directed our attention to the intake of common beverages and investigated the effects of green tea and tea components on the antitumor… 2296264 modulation-of-cancer-chemotherapy-by-green-tea. modulation cancer chemotherapy by green tea biochemical has Modulation of cancer chemotherapy by green tea. Modulation of cancer chemotherapy by green tea. Biochemical modulation has played an important role in the development of cancer chemotherapy. We have directed our attention to the intake of common beverages and investigated the effects of green tea and tea components on the antitumor activity of doxorubicin. We carried out the combined treatment of toxorubicin and green tea on Ehrlich ascites carcinoma tumor-bearing mice. The oral administration of green tea enhanced 2.5-fold the inhibitory effects of doxorubicin on tumor growth. The Doxorubicin concentration in the tumor was increased by the combination of green tea with doxorubicin. In contrast, the increase in doxorubicin concentration was not observed in normal tissues after green tea combination. Furthermore, the enhancement of antit",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.618073+00:00"
+}

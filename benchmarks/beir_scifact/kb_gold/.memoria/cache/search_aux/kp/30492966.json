@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "30492966",
+  "source_fingerprint": "5bb7852be03974912aa908931490f359",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "30492966",
+    "detection-of-mycoplasmas-in-patients-with-amyotrophic-lateral-sclerosis"
+  ],
+  "key_phrases": [
+    "detection",
+    "mycoplasmas",
+    "patients",
+    "with",
+    "amyotrophic",
+    "lateral",
+    "sclerosis",
+    "als"
+  ],
+  "summary_1l": "Amyotrophic Lateral Sclerosis (ALS) is a progressive degenerative disease of the motor neurons and the cause is unknown.",
+  "query_hits": [],
+  "embed_text": "30492966 Detection of Mycoplasmas in Patients with Amyotrophic Lateral Sclerosis science scifact Amyotrophic Lateral Sclerosis (ALS) is a progressive degenerative  disease of the motor neurons and the cause is unknown. Diverse factors such as  genetic defects, nutritional deficiencies, head trauma, environmental toxin,  autoimmune… 30492966 detection-of-mycoplasmas-in-patients-with-amyotrophic-lateral-sclerosis detection mycoplasmas patients with amyotrophic lateral sclerosis als Amyotrophic Lateral Sclerosis (ALS) is a progressive degenerative disease of the motor neurons and the cause is unknown. Detection of Mycoplasmas in Patients with Amyotrophic Lateral Sclerosis Amyotrophic Lateral Sclerosis (ALS) is a progressive degenerative disease of the motor neurons and the cause is unknown. Diverse factors such as genetic defects, nutritional deficiencies, head trauma, environmental toxin, autoimmune responses and viral and bacterial infections are involved. Mycoplasmas have been implicated as causal agents of different illnesses in human. The purpose of this study was to investigate the presence of mycoplasmas in the bloodstream of patients with ALS. Patients with ALS and healthy individuals were included in the study. A blood sample was taken in tubes with or without anticoagulant. Mycoplasmas were detected by culture or direct PCR, and the presence of antibodies IgM and IgG against L",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.704603+00:00"
+}

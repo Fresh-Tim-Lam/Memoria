@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6144969",
+  "source_fingerprint": "c39a018bf3d312a58233fb52557f2aae",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6144969",
+    "enterovirus-induced-gene-expression-profile-is-critical-for-human-pancreatic-islet-destruction"
+  ],
+  "key_phrases": [
+    "enterovirus",
+    "induced",
+    "gene",
+    "expression",
+    "profile",
+    "critical",
+    "human",
+    "pancreatic"
+  ],
+  "summary_1l": "Virally induced inflammatory responses, beta cell destruction and release of beta cell autoantigens may l",
+  "query_hits": [],
+  "embed_text": "6144969 Enterovirus-induced gene expression profile is critical for human pancreatic islet destruction science scifact Virally induced inflammatory responses, beta cell destruction and release of beta cell autoantigens may lead to autoimmune reactions culminating in type 1 diabetes. Therefore, viral capability to induce beta cell death and the nature of… 6144969 enterovirus-induced-gene-expression-profile-is-critical-for-human-pancreatic-islet-destruction enterovirus induced gene expression profile critical human pancreatic Virally induced inflammatory responses, beta cell destruction and release of beta cell autoantigens may l Enterovirus-induced gene expression profile is critical for human pancreatic islet destruction Virally induced inflammatory responses, beta cell destruction and release of beta cell autoantigens may lead to autoimmune reactions culminating in type 1 diabetes. Therefore, viral capability to induce beta cell death and the nature of virus-induced immune responses are among key determinants of diabetogenic viruses. We hypothesised that enterovirus infection induces a specific gene expression pattern that results in islet destruction and that such a host response pattern is not shared among all enterovirus infections but varies between virus strains. The changes in global gene expression and secreted cytokine profiles induced by lytic or benign enterovirus infections were studied in primary hum",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.077541+00:00"
+}

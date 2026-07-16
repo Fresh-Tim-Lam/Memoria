@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27841037",
+  "source_fingerprint": "19ac9b340be445f0409a4f6111a4de1d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27841037",
+    "ecology,-economics-and-political-will:-the-vicissitudes-of-malaria-strategies-in-asia."
+  ],
+  "key_phrases": [
+    "ecology",
+    "economics",
+    "political",
+    "will",
+    "vicissitudes",
+    "malaria",
+    "strategies",
+    "asia"
+  ],
+  "summary_1l": "Ecology, economics and political will: the vicissitudes of malaria strategies in Asia.",
+  "query_hits": [],
+  "embed_text": "27841037 Ecology, economics and political will: the vicissitudes of malaria strategies in Asia. science scifact The documented history of malaria in parts of Asia goes back more than 2,000 years, during which the disease has been a major player on the socioeconomic stage in many nation states as they waxed and waned in power and prosperity. On a… 27841037 ecology,-economics-and-political-will:-the-vicissitudes-of-malaria-strategies-in-asia. ecology economics political will vicissitudes malaria strategies asia Ecology, economics and political will: the vicissitudes of malaria strategies in Asia. Ecology, economics and political will: the vicissitudes of malaria strategies in Asia. The documented history of malaria in parts of Asia goes back more than 2,000 years, during which the disease has been a major player on the socioeconomic stage in many nation states as they waxed and waned in power and prosperity. On a much shorter time scale, the last half century has seen in microcosm a history of large fluctuations in endemicity and impact of malaria across the spectrum of rice fields and rain forests, mountains and plains that reflect the vast ecological diversity inhabited by this majority aggregation of mankind. That period has seen some of the most dramatic changes in social and economic structure, in population size, density and mobility, and in political structure in history: al",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.362238+00:00"
+}

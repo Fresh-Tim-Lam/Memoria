@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12785130",
+  "source_fingerprint": "42ae5722c75426b52560416ef7ee54b4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12785130",
+    "the-regulation-of-n-methyl-d-aspartate-receptors-by-src-kinase."
+  ],
+  "key_phrases": [
+    "regulation",
+    "methyl",
+    "aspartate",
+    "receptors",
+    "by",
+    "src",
+    "kinase",
+    "family"
+  ],
+  "summary_1l": "The regulation of N-methyl-D-aspartate receptors by Src kinase.",
+  "query_hits": [],
+  "embed_text": "12785130 The regulation of N-methyl-D-aspartate receptors by Src kinase. science scifact Src family kinases (SFKs) play critical roles in the regulation of many cellular functions by growth factors, G-protein-coupled receptors and ligand-gated ion channels. Recent data have shown that SFKs serve as a convergent point of… 12785130 the-regulation-of-n-methyl-d-aspartate-receptors-by-src-kinase. regulation methyl aspartate receptors by src kinase family The regulation of N-methyl-D-aspartate receptors by Src kinase. The regulation of N-methyl-D-aspartate receptors by Src kinase. Src family kinases (SFKs) play critical roles in the regulation of many cellular functions by growth factors, G-protein-coupled receptors and ligand-gated ion channels. Recent data have shown that SFKs serve as a convergent point of multiple signaling pathways regulating N-methyl-d-aspartate (NMDA) receptors in the central nervous system. Multiple SFK molecules, such as Src and Fyn, closely associate with their substrate, NMDA receptors, via indirect and direct binding mechanisms. The NMDA receptor is associated with an SFK signaling complex consisting of SFKs; the SFK-activating phosphatase, protein tyrosine phosphatase α; and the SFK-inactivating kinase, C-terminal Src kinase. Early studies have demonstrated that intramolecu",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:09.547990+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36497180",
+  "source_fingerprint": "ea1d9ab92768b7feca067d543fdda8d4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36497180",
+    "drug-resistant-salmonella-in-the-united-states:-an-epidemiologic-perspective."
+  ],
+  "key_phrases": [
+    "drug",
+    "resistant",
+    "salmonella",
+    "united",
+    "states",
+    "epidemiologic",
+    "perspective",
+    "salmonellosis"
+  ],
+  "summary_1l": "Drug-resistant Salmonella in the United States: an epidemiologic perspective.",
+  "query_hits": [],
+  "embed_text": "36497180 Drug-resistant Salmonella in the United States: an epidemiologic perspective. science scifact Salmonellosis poses a health problem of large proportions in the United States. Annually, it accounts for more than 40,000 reported cases, 500 deaths, and financial costs well in excess of $50 million. Antimicrobial resistance is… 36497180 drug-resistant-salmonella-in-the-united-states:-an-epidemiologic-perspective. drug resistant salmonella united states epidemiologic perspective salmonellosis Drug-resistant Salmonella in the United States: an epidemiologic perspective. Drug-resistant Salmonella in the United States: an epidemiologic perspective. Salmonellosis poses a health problem of large proportions in the United States. Annually, it accounts for more than 40,000 reported cases, 500 deaths, and financial costs well in excess of $50 million. Antimicrobial resistance is increasing in Salmonella strains, a finding that has important public health implications. Although the chain of transmission of the bacteria is often complex, combined epidemiologic and laboratory studies with the use of new methods in molecular biology make it possible to trace antimicrobial-resistant salmonellae to their primary source--foods of animal origin. These studies suggest that the antimicrobial drugs to which food animals are exposed provide selective pressure that leads to",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:43.437507+00:00"
+}

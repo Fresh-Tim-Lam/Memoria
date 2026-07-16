@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5966635",
+  "source_fingerprint": "1d5afbe8b3b0155ea61fa8dff17b8466",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5966635",
+    "crystal-structure-of-a-nucleosome-core-particle-containing-the-variant-histone-h2a.z"
+  ],
+  "key_phrases": [
+    "crystal",
+    "structure",
+    "nucleosome",
+    "core",
+    "particle",
+    "containing",
+    "variant",
+    "histone"
+  ],
+  "summary_1l": "Crystal structure of a nucleosome core particle containing the variant histone H2A.",
+  "query_hits": [],
+  "embed_text": "5966635 Crystal structure of a nucleosome core particle containing the variant histone H2A.Z science scifact Activation of transcription within chromatin has been correlated with the incorporation of the essential histone variant H2A.Z into nucleosomes. H2A.Z and other histone variants may establish structurally distinct chromosomal domains;… 5966635 crystal-structure-of-a-nucleosome-core-particle-containing-the-variant-histone-h2a.z crystal structure nucleosome core particle containing variant histone Crystal structure of a nucleosome core particle containing the variant histone H2A. Crystal structure of a nucleosome core particle containing the variant histone H2A.Z Activation of transcription within chromatin has been correlated with the incorporation of the essential histone variant H2A.Z into nucleosomes. H2A.Z and other histone variants may establish structurally distinct chromosomal domains; however, the molecular mechanism by which they function is largely unknown. Here we report the 2.6 Å crystal structure of a nucleosome core particle containing the histone variant H2A.Z. The overall structure is similar to that of the previously reported 2.8 Å nucleosome structure containing major histone proteins. However, distinct localized changes result in the subtle destabilization of the interaction between the (H2A.Z–H2B) dimer and the (H3–H4)2 tetramer. Moreover, H2A.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.597663+00:00"
+}

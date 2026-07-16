@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "40905302",
+  "source_fingerprint": "d3d1604978dd4ec23e8afc1e09155c62",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "40905302",
+    "economic-implications-of-nighttime-attending-intensivist-coverage-in-a-medical-intensive-care-unit."
+  ],
+  "key_phrases": [
+    "economic",
+    "implications",
+    "nighttime",
+    "attending",
+    "intensivist",
+    "coverage",
+    "medical",
+    "intensive"
+  ],
+  "summary_1l": "Economic implications of nighttime attending intensivist coverage in a medical intensive care unit.",
+  "query_hits": [],
+  "embed_text": "40905302 Economic implications of nighttime attending intensivist coverage in a medical intensive care unit. science scifact OBJECTIVE Our objective was to assess the cost implications of changing the intensive care unit staffing model from on-demand presence to mandatory 24-hr in-house critical care specialist presence. DESIGN A pre-post comparison was… 40905302 economic-implications-of-nighttime-attending-intensivist-coverage-in-a-medical-intensive-care-unit. economic implications nighttime attending intensivist coverage medical intensive Economic implications of nighttime attending intensivist coverage in a medical intensive care unit. Economic implications of nighttime attending intensivist coverage in a medical intensive care unit. OBJECTIVE Our objective was to assess the cost implications of changing the intensive care unit staffing model from on-demand presence to mandatory 24-hr in-house critical care specialist presence. DESIGN A pre-post comparison was undertaken among the prospectively assessed cohorts of patients admitted to our medical intensive care unit 1 yr before and 1 yr after the change. Our data were stratified by Acute Physiology and Chronic Health Evaluation III quartile and whether a patient was admitted during the day or at night. Costs were modeled using a generalized linear model with log-link and γ-distributed errors. SETTING A large academic center in the Midwest. PATIENTS All patients admitted",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.942618+00:00"
+}

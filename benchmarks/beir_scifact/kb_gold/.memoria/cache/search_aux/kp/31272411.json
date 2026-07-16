@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "31272411",
+  "source_fingerprint": "b9841e81b7343b2b7efe715ab08ca0e2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "31272411",
+    "immune-signaling-by-rig-i-like-receptors."
+  ],
+  "key_phrases": [
+    "immune",
+    "signaling",
+    "by",
+    "rig",
+    "like",
+    "receptors",
+    "rlrs",
+    "mda5"
+  ],
+  "summary_1l": "Immune signaling by RIG-I-like receptors.",
+  "query_hits": [],
+  "embed_text": "31272411 Immune signaling by RIG-I-like receptors. science scifact The RIG-I-like receptors (RLRs) RIG-I, MDA5, and LGP2 play a major role in pathogen sensing of RNA virus infection to initiate and modulate antiviral immunity. The RLRs detect viral RNA ligands or processed self RNA in the cytoplasm to… 31272411 immune-signaling-by-rig-i-like-receptors. immune signaling by rig like receptors rlrs mda5 Immune signaling by RIG-I-like receptors. Immune signaling by RIG-I-like receptors. The RIG-I-like receptors (RLRs) RIG-I, MDA5, and LGP2 play a major role in pathogen sensing of RNA virus infection to initiate and modulate antiviral immunity. The RLRs detect viral RNA ligands or processed self RNA in the cytoplasm to trigger innate immunity and inflammation and to impart gene expression that serves to control infection. Importantly, RLRs cooperate in signaling crosstalk networks with Toll-like receptors and other factors to impart innate immunity and to modulate the adaptive immune response. RLR regulation occurs at a variety of levels ranging from autoregulation to ligand and cofactor interactions and posttranslational modifications. Abberant RLR signaling or dysregulation of RLR expression is now implicated in the development o",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.427030+00:00"
+}

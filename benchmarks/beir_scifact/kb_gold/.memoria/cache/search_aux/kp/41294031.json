@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "41294031",
+  "source_fingerprint": "879431855d2577cd502ff723ad733f76",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "41294031",
+    "glucocorticoid-with-cyclophosphamide-for-paraquat-induced-lung-fibrosis."
+  ],
+  "key_phrases": [
+    "glucocorticoid",
+    "with",
+    "cyclophosphamide",
+    "paraquat",
+    "induced",
+    "lung",
+    "fibrosis",
+    "background"
+  ],
+  "summary_1l": "Glucocorticoid with cyclophosphamide for paraquat-induced lung fibrosis.",
+  "query_hits": [],
+  "embed_text": "41294031 Glucocorticoid with cyclophosphamide for paraquat-induced lung fibrosis. science scifact BACKGROUND Paraquat is an effective and widely used herbicide but is also a lethal poison. In many developing countries paraquat is widely available and inexpensive, making poisoning prevention difficult. However most of the people who… 41294031 glucocorticoid-with-cyclophosphamide-for-paraquat-induced-lung-fibrosis. glucocorticoid with cyclophosphamide paraquat induced lung fibrosis background Glucocorticoid with cyclophosphamide for paraquat-induced lung fibrosis. Glucocorticoid with cyclophosphamide for paraquat-induced lung fibrosis. BACKGROUND Paraquat is an effective and widely used herbicide but is also a lethal poison. In many developing countries paraquat is widely available and inexpensive, making poisoning prevention difficult. However most of the people who become poisoned from paraquat have taken it as a means of suicide. Standard treatment for paraquat poisoning both prevents further absorption and reduces the load of paraquat in the blood through haemoperfusion or haemodialysis. The effectiveness of standard treatments is extremely limited. The immune system plays an important role in exacerbating paraquat-induced lung fibrosis. Immunosuppressive treatment using glucocorticoid and cyclophosphamide in combination is being developed and s",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.265645+00:00"
+}

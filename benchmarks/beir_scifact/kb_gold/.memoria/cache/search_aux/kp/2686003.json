@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2686003",
+  "source_fingerprint": "f04b3e1f0fcfcfaa5f382c80671ab342",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2686003",
+    "cyanidin-3-rutinoside,-a-natural-polyphenol-antioxidant,-selectively-kills-leukemic-cells-by-induction-of-oxidative-stress."
+  ],
+  "key_phrases": [
+    "cyanidin",
+    "rutinoside",
+    "natural",
+    "polyphenol",
+    "antioxidant",
+    "selectively",
+    "kills",
+    "leukemic"
+  ],
+  "summary_1l": "Cyanidin-3-rutinoside, a natural polyphenol antioxidant, selectively kills leukemic cells by induction of oxidative stress.",
+  "query_hits": [],
+  "embed_text": "2686003 Cyanidin-3-rutinoside, a natural polyphenol antioxidant, selectively kills leukemic cells by induction of oxidative stress. science scifact Anthocyanins are a group of naturally occurring phenolic compounds widely available in fruits and vegetables in human diets. They have broad biological activities including anti-mutagenesis and anticarcinogenesis, which are generally… 2686003 cyanidin-3-rutinoside,-a-natural-polyphenol-antioxidant,-selectively-kills-leukemic-cells-by-induction-of-oxidative-stress. cyanidin rutinoside natural polyphenol antioxidant selectively kills leukemic Cyanidin-3-rutinoside, a natural polyphenol antioxidant, selectively kills leukemic cells by induction of oxidative stress. Cyanidin-3-rutinoside, a natural polyphenol antioxidant, selectively kills leukemic cells by induction of oxidative stress. Anthocyanins are a group of naturally occurring phenolic compounds widely available in fruits and vegetables in human diets. They have broad biological activities including anti-mutagenesis and anticarcinogenesis, which are generally attributed to their antioxidant activities. We studied the effects and the mechanisms of the most common type of anthocyanins, cyanidin-3-rutinoside, in several leukemia and lymphoma cell lines. We found that cyanidin-3-rutinoside extracted and purified from the black raspberry cultivar Jewel induced apoptosis in HL-60 cells in a dose- and time-dependent manner. Paradoxically, this compound induced the accumulation of peroxides, which are",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.206263+00:00"
+}

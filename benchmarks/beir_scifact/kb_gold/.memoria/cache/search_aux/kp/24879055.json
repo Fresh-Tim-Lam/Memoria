@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24879055",
+  "source_fingerprint": "328102b2a7988f4bd649a8dddbc6e5d6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24879055",
+    "distinct-memory-cd4+-t-cells-with-commitment-to-t-follicular-helper--and-t-helper-1-cell-lineages-are-generated-after-acute-viral-infection."
+  ],
+  "key_phrases": [
+    "distinct",
+    "memory",
+    "cd4",
+    "cells",
+    "with",
+    "commitment",
+    "follicular",
+    "helper"
+  ],
+  "summary_1l": "Distinct memory CD4+ T cells with commitment to T follicular helper- and T helper 1-cell lineages are generated after acute viral infection.",
+  "query_hits": [],
+  "embed_text": "24879055 Distinct memory CD4+ T cells with commitment to T follicular helper- and T helper 1-cell lineages are generated after acute viral infection. science scifact CD4(+) T follicular helper (Tfh) cells provide the required signals to B cells for germinal center reactions that are necessary for long-lived antibody responses. However, it remains unclear whether there are CD4(+) memory T cells… 24879055 distinct-memory-cd4+-t-cells-with-commitment-to-t-follicular-helper--and-t-helper-1-cell-lineages-are-generated-after-acute-viral-infection. distinct memory cd4 cells with commitment follicular helper Distinct memory CD4+ T cells with commitment to T follicular helper- and T helper 1-cell lineages are generated after acute viral infection. Distinct memory CD4+ T cells with commitment to T follicular helper- and T helper 1-cell lineages are generated after acute viral infection. CD4(+) T follicular helper (Tfh) cells provide the required signals to B cells for germinal center reactions that are necessary for long-lived antibody responses. However, it remains unclear whether there are CD4(+) memory T cells committed to the Tfh cell lineage after antigen clearance. By using adoptive transfer of antigen-specific memory CD4(+) T cell subpopulations in the lymphocytic choriomeningitis virus infection model, we found that there are distinct memory CD4(+) T cell populations with commitment to either Tfh- or Th1-cell lineages. Our conclusions are based on gene expression profiles, epigenetic studies, and phenotypic and functional ana",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.454027+00:00"
+}

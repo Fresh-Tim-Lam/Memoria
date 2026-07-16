@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29689140",
+  "source_fingerprint": "7a85aa642a429e67ab67677d7eda0e7a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29689140",
+    "b-catenin-deficiency,-but-not-myc-deletion,-suppresses-the-immediate-phenotypes-of-apc-loss-in-the-liver."
+  ],
+  "key_phrases": [
+    "catenin",
+    "deficiency",
+    "but",
+    "not",
+    "myc",
+    "deletion",
+    "suppresses",
+    "immediate"
+  ],
+  "summary_1l": "B-catenin deficiency, but not Myc deletion, suppresses the immediate phenotypes of APC loss in the liver.",
+  "query_hits": [],
+  "embed_text": "29689140 B-catenin deficiency, but not Myc deletion, suppresses the immediate phenotypes of APC loss in the liver. science scifact Dysregulated Wnt signaling is seen in approximately 30% of hepatocellular carcinomas; thus, finding pathways downstream of the activation of Wnt signaling is key. Here, using cre-lox technology, we deleted the Apc gene in the adult mouse… 29689140 b-catenin-deficiency,-but-not-myc-deletion,-suppresses-the-immediate-phenotypes-of-apc-loss-in-the-liver. catenin deficiency but not myc deletion suppresses immediate B-catenin deficiency, but not Myc deletion, suppresses the immediate phenotypes of APC loss in the liver. B-catenin deficiency, but not Myc deletion, suppresses the immediate phenotypes of APC loss in the liver. Dysregulated Wnt signaling is seen in approximately 30% of hepatocellular carcinomas; thus, finding pathways downstream of the activation of Wnt signaling is key. Here, using cre-lox technology, we deleted the Apc gene in the adult mouse liver and observed a rapid increase in nuclear beta-catenin and c-Myc, which is associated with an induction of proliferation that led to hepatomegaly within 4 days of gene deletion. To investigate the downstream pathways responsible for these phenotypes, we analyzed the impact of inactivating APC in the context of deficiency of the potentially key effectors beta-catenin and c-Myc. beta-catenin loss rescues both the proliferation and hepatomegaly pheno",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.120572+00:00"
+}

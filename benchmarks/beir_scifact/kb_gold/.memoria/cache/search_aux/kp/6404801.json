@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6404801",
+  "source_fingerprint": "76b69bb29c898870045cde6d6315ea1f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6404801",
+    "cytomegalovirus-micrornas-facilitate-persistent-virus-infection-in-salivary-glands"
+  ],
+  "key_phrases": [
+    "cytomegalovirus",
+    "micrornas",
+    "facilitate",
+    "persistent",
+    "virus",
+    "infection",
+    "salivary",
+    "glands"
+  ],
+  "summary_1l": "Micro (mi)RNAs are small non-coding RNAs that regulate the expression of their targets' messenger RNAs through both t",
+  "query_hits": [],
+  "embed_text": "6404801 Cytomegalovirus microRNAs Facilitate Persistent Virus Infection in Salivary Glands science scifact Micro (mi)RNAs are small non-coding RNAs that regulate the expression of their targets' messenger RNAs through both translational inhibition and regulation of target RNA stability. Recently, a number of viruses, particularly of the… 6404801 cytomegalovirus-micrornas-facilitate-persistent-virus-infection-in-salivary-glands cytomegalovirus micrornas facilitate persistent virus infection salivary glands Micro (mi)RNAs are small non-coding RNAs that regulate the expression of their targets' messenger RNAs through both t Cytomegalovirus microRNAs Facilitate Persistent Virus Infection in Salivary Glands Micro (mi)RNAs are small non-coding RNAs that regulate the expression of their targets' messenger RNAs through both translational inhibition and regulation of target RNA stability. Recently, a number of viruses, particularly of the herpesvirus family, have been shown to express their own miRNAs to control both viral and cellular transcripts. Although some targets of viral miRNAs are known, their function in a physiologically relevant infection remains to be elucidated. As such, no in vivo phenotype of a viral miRNA knock-out mutant has been described so far. Here, we report on the first functional phenotype of a miRNA knock-out virus in vivo. During subacute infection of a mutant mouse cytomegalovirus lackin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.736562+00:00"
+}

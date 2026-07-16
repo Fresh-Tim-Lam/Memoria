@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21498497",
+  "source_fingerprint": "bde9f8e87f4e07f17cde308e29b8bc28",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21498497",
+    "tlr-activation-triggers-the-rapid-differentiation-of-monocytes-into-macrophages-and-dendritic-cells"
+  ],
+  "key_phrases": [
+    "tlr",
+    "activation",
+    "triggers",
+    "rapid",
+    "differentiation",
+    "monocytes",
+    "into",
+    "macrophages"
+  ],
+  "summary_1l": "Leprosy enables investigation of mechanisms by which the innate immune system contributes to host de",
+  "query_hits": [],
+  "embed_text": "21498497 TLR activation triggers the rapid differentiation of monocytes into macrophages and dendritic cells science scifact Leprosy enables investigation of mechanisms by which the innate immune system contributes to host defense against infection, because in one form, the disease progresses, and in the other, the infection is limited. We report that Toll-like… 21498497 tlr-activation-triggers-the-rapid-differentiation-of-monocytes-into-macrophages-and-dendritic-cells tlr activation triggers rapid differentiation monocytes into macrophages Leprosy enables investigation of mechanisms by which the innate immune system contributes to host de TLR activation triggers the rapid differentiation of monocytes into macrophages and dendritic cells Leprosy enables investigation of mechanisms by which the innate immune system contributes to host defense against infection, because in one form, the disease progresses, and in the other, the infection is limited. We report that Toll-like receptor (TLR) activation of human monocytes induces rapid differentiation into two distinct subsets: DC-SIGN+ CD16+ macrophages and CD1b+ DC-SIGN− dendritic cells. DC-SIGN+ phagocytic macrophages were expanded by TLR-mediated upregulation of interleukin (IL)-15 and IL-15 receptor. CD1b+ dendritic cells were expanded by TLR-mediated upregulation of granulocyte-macrophage colony-stimulating factor (GM-CSF) and its receptor, promoted T cell activation and sec",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.254850+00:00"
+}

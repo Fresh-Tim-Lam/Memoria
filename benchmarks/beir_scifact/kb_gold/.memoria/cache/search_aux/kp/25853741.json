@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25853741",
+  "source_fingerprint": "05f3f6bdc0fdc8d2aaa3dfed2697f066",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25853741",
+    "incidence-of-skin-cancer-after-renal-transplantation-in-the-netherlands."
+  ],
+  "key_phrases": [
+    "incidence",
+    "skin",
+    "cancer",
+    "after",
+    "renal",
+    "transplantation",
+    "netherlands",
+    "squamous"
+  ],
+  "summary_1l": "Incidence of skin cancer after renal transplantation in The Netherlands.",
+  "query_hits": [],
+  "embed_text": "25853741 Incidence of skin cancer after renal transplantation in The Netherlands. science scifact The incidence of squamous cell carcinoma (SCC) and basal cell carcinoma (BCC) was analyzed separately in all 764 patients who received a renal allograft between 1966 and 1988 at the Leiden University Hospital. The mean follow-up period was… 25853741 incidence-of-skin-cancer-after-renal-transplantation-in-the-netherlands. incidence skin cancer after renal transplantation netherlands squamous Incidence of skin cancer after renal transplantation in The Netherlands. Incidence of skin cancer after renal transplantation in The Netherlands. The incidence of squamous cell carcinoma (SCC) and basal cell carcinoma (BCC) was analyzed separately in all 764 patients who received a renal allograft between 1966 and 1988 at the Leiden University Hospital. The mean follow-up period was 8.7 posttransplant years (range 1-21 years). During this time period 176 skin cancers were diagnosed in 47 patients. The overall risk to develop a first tumor increased from 10% after 10 years to 40% after 20 years of graft survival. The overall incidence of SCC was 250 times higher and that of BCC 10 times higher when compared with the general Dutch population. Moreover the localization of SCCs and BCCs differed considerably. Solar radiation is thought to be an important risk facto",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.609607+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4427060",
+  "source_fingerprint": "9a983dc58352f95fae5b4bfa3d78cc29",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4427060",
+    "association-of-nod2-leucine-rich-repeat-variants-with-susceptibility-to-crohn's-disease."
+  ],
+  "key_phrases": [
+    "association",
+    "nod2",
+    "leucine",
+    "rich",
+    "repeat",
+    "variants",
+    "with",
+    "susceptibility"
+  ],
+  "summary_1l": "Association of NOD2 leucine-rich repeat variants with susceptibility to Crohn's disease.",
+  "query_hits": [],
+  "embed_text": "4427060 Association of NOD2 leucine-rich repeat variants with susceptibility to Crohn's disease. science scifact Crohn's disease and ulcerative colitis, the two main types of chronic inflammatory bowel disease, are multifactorial conditions of unknown aetiology. A susceptibility locus for Crohn's disease has been mapped to chromosome 16. Here we have… 4427060 association-of-nod2-leucine-rich-repeat-variants-with-susceptibility-to-crohn's-disease. association nod2 leucine rich repeat variants with susceptibility Association of NOD2 leucine-rich repeat variants with susceptibility to Crohn's disease. Association of NOD2 leucine-rich repeat variants with susceptibility to Crohn's disease. Crohn's disease and ulcerative colitis, the two main types of chronic inflammatory bowel disease, are multifactorial conditions of unknown aetiology. A susceptibility locus for Crohn's disease has been mapped to chromosome 16. Here we have used a positional-cloning strategy, based on linkage analysis followed by linkage disequilibrium mapping, to identify three independent associations for Crohn's disease: a frameshift variant and two missense variants of NOD2, encoding a member of the Apaf-1/Ced-4 superfamily of apoptosis regulators that is expressed in monocytes. These NOD2 variants alter the structure of either the leucine-rich repeat domain of the protein or the adjacent region. NOD2 activates nucl",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.141239+00:00"
+}

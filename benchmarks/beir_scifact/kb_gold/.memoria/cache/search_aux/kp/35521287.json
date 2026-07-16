@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "35521287",
+  "source_fingerprint": "30faa429b7e31849e04445f1ec46eced",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "35521287",
+    "cardiorespiratory-adaptation-during-sleep-in-infants-and-children."
+  ],
+  "key_phrases": [
+    "cardiorespiratory",
+    "adaptation",
+    "during",
+    "sleep",
+    "infants",
+    "children",
+    "control",
+    "system"
+  ],
+  "summary_1l": "Cardiorespiratory adaptation during sleep in infants and children.",
+  "query_hits": [],
+  "embed_text": "35521287 Cardiorespiratory adaptation during sleep in infants and children. science scifact The cardiorespiratory control system undergoes functional maturation after birth. Until this process is completed, the cardiorespiratory system is unstable, placing infants at risk for cardiorespiratory disturbances, especially during… 35521287 cardiorespiratory-adaptation-during-sleep-in-infants-and-children. cardiorespiratory adaptation during sleep infants children control system Cardiorespiratory adaptation during sleep in infants and children. Cardiorespiratory adaptation during sleep in infants and children. The cardiorespiratory control system undergoes functional maturation after birth. Until this process is completed, the cardiorespiratory system is unstable, placing infants at risk for cardiorespiratory disturbances, especially during sleep. The profound influence of states of alertness on respiratory and cardiac control has been the focus of intense scrutiny during the last decade. The effects of rapid-eye movement (REM) sleep on various mechanisms involved in cardiorespiratory control are of particular significance during the postnatal period since newborns spend much of their time in this sleep state. In fullterm newborns, REM sleep occupies more than 50% of total sleep time, and this percentage is even greater in preter",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.324461+00:00"
+}

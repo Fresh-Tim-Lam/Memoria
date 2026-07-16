@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9675944",
+  "source_fingerprint": "81c3bb7ed388d3a3f964ea6c96fc5d14",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9675944",
+    "induction-of-pluripotent-stem-cells-from-mouse-embryonic-fibroblasts-by-oct4-and-klf4-with-small-molecule-compounds."
+  ],
+  "key_phrases": [
+    "induction",
+    "pluripotent",
+    "stem",
+    "cells",
+    "from",
+    "mouse",
+    "embryonic",
+    "fibroblasts"
+  ],
+  "summary_1l": "Induction of pluripotent stem cells from mouse embryonic fibroblasts by Oct4 and Klf4 with small-molecule compounds.",
+  "query_hits": [],
+  "embed_text": "9675944 Induction of pluripotent stem cells from mouse embryonic fibroblasts by Oct4 and Klf4 with small-molecule compounds. science scifact Somatic cells can be induced into pluripotent stem cells (iPSCs) with a combination of four transcription factors, Oct4/Sox2/Klf4/c-Myc or Oct4/Sox2/Nanog/LIN28. This provides an enabling platform to obtain patient-specific cells for… 9675944 induction-of-pluripotent-stem-cells-from-mouse-embryonic-fibroblasts-by-oct4-and-klf4-with-small-molecule-compounds. induction pluripotent stem cells from mouse embryonic fibroblasts Induction of pluripotent stem cells from mouse embryonic fibroblasts by Oct4 and Klf4 with small-molecule compounds. Induction of pluripotent stem cells from mouse embryonic fibroblasts by Oct4 and Klf4 with small-molecule compounds. Somatic cells can be induced into pluripotent stem cells (iPSCs) with a combination of four transcription factors, Oct4/Sox2/Klf4/c-Myc or Oct4/Sox2/Nanog/LIN28. This provides an enabling platform to obtain patient-specific cells for various therapeutic and research applications. However, several problems remain for this approach to be therapeutically relevant due to drawbacks associated with efficiency and viral genome integration. Recently, it was shown that neural progenitor cells (NPCs) transduced with Oct4/Klf4 can be reprogrammed into iPSCs. However, NPCs express Sox2 endogenously, possibly facilitating reprogramming in the absence of exogenous Sox2. In this study, we",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.552546+00:00"
+}

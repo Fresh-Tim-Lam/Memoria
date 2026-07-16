@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7821634",
+  "source_fingerprint": "b38c92f5f9bc35e15c054e26893d9b74",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7821634",
+    "profiling-of-residual-breast-cancers-after-neoadjuvant-chemotherapy-identifies-dusp4-deficiency-as-a-mechanism-of-drug-resistance"
+  ],
+  "key_phrases": [
+    "profiling",
+    "residual",
+    "breast",
+    "cancers",
+    "after",
+    "neoadjuvant",
+    "chemotherapy",
+    "identifies"
+  ],
+  "summary_1l": "Neoadjuvant chemotherapy (NAC) induces a pathological complete respons",
+  "query_hits": [],
+  "embed_text": "7821634 Profiling of residual breast cancers after neoadjuvant chemotherapy identifies DUSP4 deficiency as a mechanism of drug resistance science scifact Neoadjuvant chemotherapy (NAC) induces a pathological complete response (pCR) in ∼30% of patients with breast cancer. However, many patients have residual cancer after chemotherapy, which correlates with a higher risk of metastatic… 7821634 profiling-of-residual-breast-cancers-after-neoadjuvant-chemotherapy-identifies-dusp4-deficiency-as-a-mechanism-of-drug-resistance profiling residual breast cancers after neoadjuvant chemotherapy identifies Neoadjuvant chemotherapy (NAC) induces a pathological complete respons Profiling of residual breast cancers after neoadjuvant chemotherapy identifies DUSP4 deficiency as a mechanism of drug resistance Neoadjuvant chemotherapy (NAC) induces a pathological complete response (pCR) in ∼30% of patients with breast cancer. However, many patients have residual cancer after chemotherapy, which correlates with a higher risk of metastatic recurrence and poorer outcome than those who achieve a pCR. We hypothesized that molecular profiling of tumors after NAC would identify genes associated with drug resistance. Digital transcript counting was used to profile surgically resected breast cancers after NAC. Low concentrations of dual specificity protein phosphatase 4 (DUSP4), an ERK phosphatase, correlated with high post-NAC tumor cell proliferation and with basal-like brea",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.258286+00:00"
+}

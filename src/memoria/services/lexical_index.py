@@ -12,7 +12,7 @@ from memoria.storage.markdown import strip_frontmatter
 from memoria.storage.scanner import collect_md_files
 from memoria.storage.sidecar import load_sidecar_for_md
 
-SCHEMA_VERSION = 3
+SCHEMA_VERSION = 4
 
 WEIGHTS = {
     "id_exact": 100.0,
@@ -27,6 +27,14 @@ WEIGHTS = {
     "body_token": 15.0,
     "name_pinyin": 78.0,
     "id_pinyin": 70.0,
+    # v1.5 implicit (below user tag / name)
+    "auto_tag_exact": 47.0,
+    "auto_tag_contains": 41.0,
+    "alias_exact": 63.0,
+    "alias_contains": 58.0,
+    "summary": 26.0,
+    "key_phrase": 24.0,
+    "query_hit": 32.0,
 }
 
 POSTING_FIELD_WEIGHT = {
@@ -38,6 +46,11 @@ POSTING_FIELD_WEIGHT = {
     "body": WEIGHTS["body_token"],
     "pinyin_name": WEIGHTS["name_pinyin"],
     "pinyin_id": WEIGHTS["id_pinyin"],
+    "auto_tag": WEIGHTS["auto_tag_contains"],
+    "alias": WEIGHTS["alias_contains"],
+    "summary": WEIGHTS["summary"],
+    "key_phrase": WEIGHTS["key_phrase"],
+    "query_hit": WEIGHTS["query_hit"],
 }
 
 
@@ -92,16 +105,45 @@ def _build_inverted(records: list[dict], kb_path: str) -> dict[str, list[dict]]:
         for tag in rec.get("tags") or []:
             for tok in tokenize(str(tag), kb_path=kb_path):
                 _add_posting(inverted, seen, tok, idx, "tag")
+        for alias in rec.get("aliases_explicit") or []:
+            for tok in tokenize(str(alias), kb_path=kb_path):
+                _add_posting(inverted, seen, tok, idx, "alias")
+            for tok in tokenize_identifier(str(alias)):
+                _add_posting(inverted, seen, tok, idx, "alias")
         for tok in tokenize(str(rec.get("kp_description") or ""), kb_path=kb_path):
             _add_posting(inverted, seen, tok, idx, "kp_description")
         for tok in tokenize(str(rec.get("file_description") or ""), kb_path=kb_path):
             _add_posting(inverted, seen, tok, idx, "file_description")
         for tok in tokenize(str(rec.get("body_excerpt") or ""), kb_path=kb_path):
             _add_posting(inverted, seen, tok, idx, "body")
+        for tag in rec.get("auto_tags") or []:
+            for tok in tokenize(str(tag), kb_path=kb_path):
+                _add_posting(inverted, seen, tok, idx, "auto_tag")
+        for alias in rec.get("aliases") or []:
+            for tok in tokenize(str(alias), kb_path=kb_path):
+                _add_posting(inverted, seen, tok, idx, "alias")
+            for tok in tokenize_identifier(str(alias)):
+                _add_posting(inverted, seen, tok, idx, "alias")
+        for phrase in rec.get("key_phrases") or []:
+            for tok in tokenize(str(phrase), kb_path=kb_path):
+                _add_posting(inverted, seen, tok, idx, "key_phrase")
+        for tok in tokenize(str(rec.get("summary_1l") or ""), kb_path=kb_path):
+            _add_posting(inverted, seen, tok, idx, "summary")
+        for hit in rec.get("query_hits") or []:
+            for tok in tokenize(str(hit), kb_path=kb_path):
+                _add_posting(inverted, seen, tok, idx, "query_hit")
     return inverted
 
 
 def build_lexical_index(kb_path: str) -> dict:
+    from memoria.services.search_aux import aux_lexical_fields, load_all_aux, rebuild_search_aux
+
+    try:
+        rebuild_search_aux(kb_path)
+    except OSError:
+        pass
+    aux_by_kp = load_all_aux(kb_path)
+
     records: list[dict] = []
     for rel in collect_md_files(kb_path):
         rel_norm = rel.replace("\\", "/")
@@ -128,14 +170,22 @@ def build_lexical_index(kb_path: str) -> dict:
                 for t in (kp.get("tags") or [])
                 if str(t).strip()
             ]
+            aliases = [
+                str(a).strip()
+                for a in (kp.get("aliases") or [])
+                if str(a).strip()
+            ]
+            implicit = aux_lexical_fields(aux_by_kp.get(kp_id))
             records.append({
                 "kp_id": kp_id,
                 "file": rel_norm,
                 "name": str(kp.get("name") or kp_id).strip(),
                 "tags": tags,
+                "aliases_explicit": aliases,
                 "kp_description": str(kp.get("description") or "").strip(),
                 "file_description": file_desc,
                 "body_excerpt": _kp_body_text(lines, kp),
+                **implicit,
             })
 
     inverted = _build_inverted(records, kb_path)
@@ -222,6 +272,15 @@ def _score_record(rec: dict, q_lower: str) -> tuple[float, list[str]] | None:
             score = max(score, WEIGHTS["tag_contains"])
             sources.append("tag-fuzzy")
 
+    for alias in rec.get("aliases_explicit") or []:
+        al = str(alias).lower()
+        if al == q_lower:
+            score = max(score, WEIGHTS["alias_exact"])
+            sources.append("alias-explicit-exact")
+        elif q_lower and q_lower in al:
+            score = max(score, WEIGHTS["alias_contains"])
+            sources.append("alias-explicit-fuzzy")
+
     kp_desc = str(rec.get("kp_description") or "").lower()
     if q_lower and q_lower in kp_desc:
         score = max(score, WEIGHTS["kp_description"])
@@ -236,6 +295,43 @@ def _score_record(rec: dict, q_lower: str) -> tuple[float, list[str]] | None:
     if q_lower and q_lower in body:
         score = max(score, WEIGHTS["body_token"])
         sources.append("body-fuzzy")
+
+    for tag in rec.get("auto_tags") or []:
+        tl = str(tag).lower()
+        if tl == q_lower:
+            score = max(score, WEIGHTS["auto_tag_exact"])
+            sources.append("auto-tag-exact")
+        elif q_lower and q_lower in tl:
+            score = max(score, WEIGHTS["auto_tag_contains"])
+            sources.append("auto-tag-fuzzy")
+
+    for alias in rec.get("aliases") or []:
+        al = str(alias).lower()
+        if al == q_lower:
+            score = max(score, WEIGHTS["alias_exact"])
+            sources.append("alias-exact")
+        elif q_lower and q_lower in al:
+            score = max(score, WEIGHTS["alias_contains"])
+            sources.append("alias-fuzzy")
+
+    summary = str(rec.get("summary_1l") or "").lower()
+    if q_lower and q_lower in summary:
+        score = max(score, WEIGHTS["summary"])
+        sources.append("summary-fuzzy")
+
+    for phrase in rec.get("key_phrases") or []:
+        pl = str(phrase).lower()
+        if q_lower and (q_lower == pl or q_lower in pl):
+            score = max(score, WEIGHTS["key_phrase"])
+            sources.append("key-phrase-fuzzy")
+            break
+
+    for hit in rec.get("query_hits") or []:
+        hl = str(hit).lower()
+        if q_lower and q_lower in hl:
+            score = max(score, WEIGHTS["query_hit"])
+            sources.append("query-hit-fuzzy")
+            break
 
     py_q = pinyin_compact(q_lower)
     if py_q:

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22236223",
+  "source_fingerprint": "77ce04b42808e09ef6262b83e8041059",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22236223",
+    "renal-disease-and-pregnancy"
+  ],
+  "key_phrases": [
+    "renal",
+    "disease",
+    "pregnancy",
+    "women",
+    "with",
+    "different",
+    "diseases",
+    "has"
+  ],
+  "summary_1l": "Pregnancy in women with different renal diseases has important consequences for the developing fetus and maternal health.",
+  "query_hits": [],
+  "embed_text": "22236223 Renal Disease and Pregnancy science scifact Pregnancy in women with different renal diseases has important consequences for the developing fetus and maternal health. Kidneys and the urinary tract have to adapt to the pregnancy status and therefore suffer significant anatomical,… 22236223 renal-disease-and-pregnancy renal disease pregnancy women with different diseases has Pregnancy in women with different renal diseases has important consequences for the developing fetus and maternal health. Renal Disease and Pregnancy Pregnancy in women with different renal diseases has important consequences for the developing fetus and maternal health. Kidneys and the urinary tract have to adapt to the pregnancy status and therefore suffer significant anatomical, hemodynamic and endocrine changes. Failure to adapt can aggravate the preexisting maternal disease and can also create suboptimal environment for fetal development and increase the risk of obstetric complications. Knowledge and correct interpretation of the renal functional tests is necessary for the modern obstetrician, avoiding an incorrect diagnosis for renal disease where only specific renal changes during pregnancy are present, but meanwhile a correct evaluation of the renal function and changes can detect a pathology that can",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.476702+00:00"
+}

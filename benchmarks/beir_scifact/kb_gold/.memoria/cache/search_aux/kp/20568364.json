@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20568364",
+  "source_fingerprint": "41ec860b24c3146cb80fc3769effe975",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20568364",
+    "crosstalk-between-tumor-and-endothelial-cells-promotes-tumor-angiogenesis-by-mapk-activation-of-notch-signaling."
+  ],
+  "key_phrases": [
+    "crosstalk",
+    "between",
+    "tumor",
+    "endothelial",
+    "cells",
+    "promotes",
+    "angiogenesis",
+    "by"
+  ],
+  "summary_1l": "Crosstalk between tumor and endothelial cells promotes tumor angiogenesis by MAPK activation of Notch signaling.",
+  "query_hits": [],
+  "embed_text": "20568364 Crosstalk between tumor and endothelial cells promotes tumor angiogenesis by MAPK activation of Notch signaling. science scifact While significant progress has been made in understanding the induction of tumor vasculature by secreted angiogenic factors, little is known regarding contact-dependent signals that promote tumor angiogenesis. Here, we report that the… 20568364 crosstalk-between-tumor-and-endothelial-cells-promotes-tumor-angiogenesis-by-mapk-activation-of-notch-signaling. crosstalk between tumor endothelial cells promotes angiogenesis by Crosstalk between tumor and endothelial cells promotes tumor angiogenesis by MAPK activation of Notch signaling. Crosstalk between tumor and endothelial cells promotes tumor angiogenesis by MAPK activation of Notch signaling. While significant progress has been made in understanding the induction of tumor vasculature by secreted angiogenic factors, little is known regarding contact-dependent signals that promote tumor angiogenesis. Here, we report that the Notch ligand Jagged1 induced by growth factors via mitogen-activating protein kinase (MAPK) in head and neck squamous cell carcinoma (HNSCC) cells triggered Notch activation in neighboring endothelial cells (ECs) and promoted capillary-like sprout formation. Jagged1-expressing HNSCC cells significantly enhanced neovascularization and tumor growth in vivo. Moreover, the level of Jagged1 was significantly correlated with tumor blood vessel content an",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.508748+00:00"
+}

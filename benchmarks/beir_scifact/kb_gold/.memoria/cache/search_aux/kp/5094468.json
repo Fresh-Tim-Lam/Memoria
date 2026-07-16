@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5094468",
+  "source_fingerprint": "f9a1b5c4a8fe1001f48793f7a13d629c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5094468",
+    "mitochondria-as-sensors-and-regulators-of-calcium-signalling"
+  ],
+  "key_phrases": [
+    "mitochondria",
+    "as",
+    "sensors",
+    "regulators",
+    "calcium",
+    "signalling",
+    "during",
+    "past"
+  ],
+  "summary_1l": "During the past two decades calcium (Ca2+) accumulation in energized mitochondria has emerged as a biological process of utmost physiologic",
+  "query_hits": [],
+  "embed_text": "5094468 Mitochondria as sensors and regulators of calcium signalling science scifact During the past two decades calcium (Ca2+) accumulation in energized mitochondria has emerged as a biological process of utmost physiological relevance. Mitochondrial Ca2+ uptake was shown to control intracellular Ca2+ signalling, cell… 5094468 mitochondria-as-sensors-and-regulators-of-calcium-signalling mitochondria as sensors regulators calcium signalling during past During the past two decades calcium (Ca2+) accumulation in energized mitochondria has emerged as a biological process of utmost physiologic Mitochondria as sensors and regulators of calcium signalling During the past two decades calcium (Ca2+) accumulation in energized mitochondria has emerged as a biological process of utmost physiological relevance. Mitochondrial Ca2+ uptake was shown to control intracellular Ca2+ signalling, cell metabolism, cell survival and other cell-type specific functions by buffering cytosolic Ca2+ levels and regulating mitochondrial effectors. Recently, the identity of mitochondrial Ca2+ transporters has been revealed, opening new perspectives for investigation and molecular intervention.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.089344+00:00"
+}

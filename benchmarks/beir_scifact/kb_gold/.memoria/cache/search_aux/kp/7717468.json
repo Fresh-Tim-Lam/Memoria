@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7717468",
+  "source_fingerprint": "32878ccb9b5ba07b1e5137f64a8811db",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7717468",
+    "loss-of-allergen-1-confers-a-hypervirulent-phenotype-that-resembles-mucoid-switch-variants-of-cryptococcus-neoformans."
+  ],
+  "key_phrases": [
+    "loss",
+    "allergen",
+    "confers",
+    "hypervirulent",
+    "phenotype",
+    "that",
+    "resembles",
+    "mucoid"
+  ],
+  "summary_1l": "Loss of allergen 1 confers a hypervirulent phenotype that resembles mucoid switch variants of Cryptococcus neoformans.",
+  "query_hits": [],
+  "embed_text": "7717468 Loss of allergen 1 confers a hypervirulent phenotype that resembles mucoid switch variants of Cryptococcus neoformans. science scifact Microbial survival in a host is usually dependent on the ability of a pathogen to undergo changes that promote escape from host defense mechanisms. The human-pathogenic fungus Cryptococcus neoformans undergoes phenotypic switching in vivo… 7717468 loss-of-allergen-1-confers-a-hypervirulent-phenotype-that-resembles-mucoid-switch-variants-of-cryptococcus-neoformans. loss allergen confers hypervirulent phenotype that resembles mucoid Loss of allergen 1 confers a hypervirulent phenotype that resembles mucoid switch variants of Cryptococcus neoformans. Loss of allergen 1 confers a hypervirulent phenotype that resembles mucoid switch variants of Cryptococcus neoformans. Microbial survival in a host is usually dependent on the ability of a pathogen to undergo changes that promote escape from host defense mechanisms. The human-pathogenic fungus Cryptococcus neoformans undergoes phenotypic switching in vivo that promotes persistence in tissue. By microarray and real-time PCR analyses, the allergen 1 gene (ALL1) was found to be downregulated in the hypervirulent mucoid switch variant, both during logarithmic growth and during intracellular growth in macrophages. The ALL1 gene encodes a small cytoplasmic protein that is involved in capsule formation. Growth of an all1Delta gene deletion mutant was normal. Similar to cells of the mucoid switch",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.070062+00:00"
+}

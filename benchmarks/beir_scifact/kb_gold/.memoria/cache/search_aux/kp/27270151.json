@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27270151",
+  "source_fingerprint": "5e601922ccb5a8c445044cbf3cfb9242",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27270151",
+    "changing-the-course-of-pancreatic-cancer--focus-on-recent-translational-advances."
+  ],
+  "key_phrases": [
+    "changing",
+    "course",
+    "pancreatic",
+    "cancer",
+    "--",
+    "focus",
+    "recent",
+    "translational"
+  ],
+  "summary_1l": "Changing the course of pancreatic cancer--Focus on recent translational advances.",
+  "query_hits": [],
+  "embed_text": "27270151 Changing the course of pancreatic cancer--Focus on recent translational advances. science scifact In the past decade, insightful preclinical research has led to important breakthroughs in our understanding of pancreatic cancer. Even though the vast majority of pancreatic cancers are KRAS mutated, not all pancreatic cancer tumors are… 27270151 changing-the-course-of-pancreatic-cancer--focus-on-recent-translational-advances. changing course pancreatic cancer -- focus recent translational Changing the course of pancreatic cancer--Focus on recent translational advances. Changing the course of pancreatic cancer--Focus on recent translational advances. In the past decade, insightful preclinical research has led to important breakthroughs in our understanding of pancreatic cancer. Even though the vast majority of pancreatic cancers are KRAS mutated, not all pancreatic cancer tumors are \"KRAS equal\"; there seems to be varying dependencies on the KRAS pathway. While KRAS-targeting therapies have been disappointing in the clinic, 'synthetic lethal' approaches hold promise in this setting. The pancreatic cancer stromal microenvironment appears to have contradictory roles. While there is evidence to suggest that stromal barrier prevents drug delivery, in other circumstances, stroma can play a protective role and its disruption enhances tumor dissemination. Clinic",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.735848+00:00"
+}

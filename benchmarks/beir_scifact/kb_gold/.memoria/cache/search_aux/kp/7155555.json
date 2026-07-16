@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7155555",
+  "source_fingerprint": "4ae907a7e84c5bf1466d806a2d3a7ae8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7155555",
+    "crucial-role-of-interferon-consensus-sequence-binding-protein,-but-neither-of-interferon-regulatory-factor-1-nor-of-nitric-oxide-synthesis-for-protection-against-murine-listeriosis"
+  ],
+  "key_phrases": [
+    "crucial",
+    "role",
+    "interferon",
+    "consensus",
+    "sequence",
+    "binding",
+    "protein",
+    "but"
+  ],
+  "summary_1l": "Listeria monocytoge",
+  "query_hits": [],
+  "embed_text": "7155555 Crucial Role of Interferon Consensus Sequence Binding Protein, but neither of Interferon Regulatory Factor 1 nor of Nitric Oxide Synthesis for Protection Against Murine Listeriosis science scifact Listeria monocytogenes is widely used as a model to study immune responses against intracellular bacteria. It has been shown that neutrophils and macrophages play an important role to restrict bacterial replication in the early phase of… 7155555 crucial-role-of-interferon-consensus-sequence-binding-protein,-but-neither-of-interferon-regulatory-factor-1-nor-of-nitric-oxide-synthesis-for-protection-against-murine-listeriosis crucial role interferon consensus sequence binding protein but Listeria monocytoge Crucial Role of Interferon Consensus Sequence Binding Protein, but neither of Interferon Regulatory Factor 1 nor of Nitric Oxide Synthesis for Protection Against Murine Listeriosis Listeria monocytogenes is widely used as a model to study immune responses against intracellular bacteria. It has been shown that neutrophils and macrophages play an important role to restrict bacterial replication in the early phase of primary infection in mice, and that the cytokines interferon-γ (IFN-γ) and tumor necrosis factor-α (TNF-α) are essential for protection. However, the involved signaling pathways and effector mechanisms are still poorly understood. This study investigated mouse strains deficient for the IFN-dependent transcription factors interferon consensus sequence binding protein (ICSBP), inte",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.633697+00:00"
+}

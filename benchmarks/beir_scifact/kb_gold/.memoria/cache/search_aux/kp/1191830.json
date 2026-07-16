@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1191830",
+  "source_fingerprint": "c13de872b5d11eb6142b52820c25a0f5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1191830",
+    "2010-rheumatoid-arthritis-classification-criteria:-an-american-college-of-rheumatology/european-league-against-rheumatism-collaborative-initiative."
+  ],
+  "key_phrases": [
+    "2010",
+    "rheumatoid",
+    "arthritis",
+    "classification",
+    "criteria",
+    "american",
+    "college",
+    "rheumatology"
+  ],
+  "summary_1l": "2010 rheumatoid arthritis classification criteria: an American College of Rheumatology/European League Against Rheumatism collaborative initiative.",
+  "query_hits": [],
+  "embed_text": "1191830 2010 rheumatoid arthritis classification criteria: an American College of Rheumatology/European League Against Rheumatism collaborative initiative. science scifact OBJECTIVE The 1987 American College of Rheumatology (ACR; formerly the American Rheumatism Association) classification criteria for rheumatoid arthritis (RA) have been criticised for their lack of sensitivity in early disease. This work… 1191830 2010-rheumatoid-arthritis-classification-criteria:-an-american-college-of-rheumatology/european-league-against-rheumatism-collaborative-initiative. 2010 rheumatoid arthritis classification criteria american college rheumatology 2010 rheumatoid arthritis classification criteria: an American College of Rheumatology/European League Against Rheumatism collaborative initiative. 2010 rheumatoid arthritis classification criteria: an American College of Rheumatology/European League Against Rheumatism collaborative initiative. OBJECTIVE The 1987 American College of Rheumatology (ACR; formerly the American Rheumatism Association) classification criteria for rheumatoid arthritis (RA) have been criticised for their lack of sensitivity in early disease. This work was undertaken to develop new classification criteria for RA. METHODS A joint working group from the ACR and the European League Against Rheumatism developed, in three phases, a new approach to classifying RA. The work focused on identifying, among patients newly presenting with undifferentiated inflammatory synovitis, factors that best discriminated between those who were and those who were not at high risk for",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:07.406752+00:00"
+}

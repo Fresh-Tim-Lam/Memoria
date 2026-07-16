@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6441369",
+  "source_fingerprint": "25088aff61daa900b2332e8946e88426",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6441369",
+    "mll1-inhibition-reprograms-epiblast-stem-cells-to-naive-pluripotency."
+  ],
+  "key_phrases": [
+    "mll1",
+    "inhibition",
+    "reprograms",
+    "epiblast",
+    "stem",
+    "cells",
+    "naive",
+    "pluripotency"
+  ],
+  "summary_1l": "MLL1 Inhibition Reprograms Epiblast Stem Cells to Naive Pluripotency.",
+  "query_hits": [],
+  "embed_text": "6441369 MLL1 Inhibition Reprograms Epiblast Stem Cells to Naive Pluripotency. science scifact The interconversion between naive and primed pluripotent states is accompanied by drastic epigenetic rearrangements. However, it is unclear whether intrinsic epigenetic events can drive reprogramming to naive pluripotency or if distinct… 6441369 mll1-inhibition-reprograms-epiblast-stem-cells-to-naive-pluripotency. mll1 inhibition reprograms epiblast stem cells naive pluripotency MLL1 Inhibition Reprograms Epiblast Stem Cells to Naive Pluripotency. MLL1 Inhibition Reprograms Epiblast Stem Cells to Naive Pluripotency. The interconversion between naive and primed pluripotent states is accompanied by drastic epigenetic rearrangements. However, it is unclear whether intrinsic epigenetic events can drive reprogramming to naive pluripotency or if distinct chromatin states are instead simply a reflection of discrete pluripotent states. Here, we show that blocking histone H3K4 methyltransferase MLL1 activity with the small-molecule inhibitor MM-401 reprograms mouse epiblast stem cells (EpiSCs) to naive pluripotency. This reversion is highly efficient and synchronized, with more than 50% of treated EpiSCs exhibiting features of naive embryonic stem cells (ESCs) within 3 days. Reverted ESCs reactivate the silenced X chromosome and contribute t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.893074+00:00"
+}

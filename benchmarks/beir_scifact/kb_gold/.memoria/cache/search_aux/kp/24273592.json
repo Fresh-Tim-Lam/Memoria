@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24273592",
+  "source_fingerprint": "4b77fe530bd835fcbd9a6e6b7ae0f0b5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24273592",
+    "dietary-quality-among-men-and-women-in-187-countries-in-1990-and-2010:-a-systematic-assessment"
+  ],
+  "key_phrases": [
+    "dietary",
+    "quality",
+    "among",
+    "men",
+    "women",
+    "187",
+    "countries",
+    "1990"
+  ],
+  "summary_1l": "BACKGROUND Healthy dietary patterns are a global priority to reduce non-communicable diseases.",
+  "query_hits": [],
+  "embed_text": "24273592 Dietary quality among men and women in 187 countries in 1990 and 2010: a systematic assessment science scifact BACKGROUND Healthy dietary patterns are a global priority to reduce non-communicable diseases. Yet neither worldwide patterns of diets nor their trends with time are well established. We aimed to characterise global changes (or trends) in… 24273592 dietary-quality-among-men-and-women-in-187-countries-in-1990-and-2010:-a-systematic-assessment dietary quality among men women 187 countries 1990 BACKGROUND Healthy dietary patterns are a global priority to reduce non-communicable diseases. Dietary quality among men and women in 187 countries in 1990 and 2010: a systematic assessment BACKGROUND Healthy dietary patterns are a global priority to reduce non-communicable diseases. Yet neither worldwide patterns of diets nor their trends with time are well established. We aimed to characterise global changes (or trends) in dietary patterns nationally and regionally and to assess heterogeneity by age, sex, national income, and type of dietary pattern. METHODS In this systematic assessment, we evaluated global consumption of key dietary items (foods and nutrients) by region, nation, age, and sex in 1990 and 2010. Consumption data were evaluated from 325 surveys (71·7% nationally representative) covering 88·7% of the global adult population. Two types of dietary pattern were assessed",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.096309+00:00"
+}

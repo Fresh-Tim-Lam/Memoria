@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4424888",
+  "source_fingerprint": "0d51d5300a5446561e1b666385c19377",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4424888",
+    "the-challenge-of-new-drug-discovery-for-tuberculosis"
+  ],
+  "key_phrases": [
+    "challenge",
+    "new",
+    "drug",
+    "discovery",
+    "tuberculosis",
+    "tb",
+    "more",
+    "prevalent"
+  ],
+  "summary_1l": "Tuberculosis (TB) is more prevalent in the world today than at any other time in human history.",
+  "query_hits": [],
+  "embed_text": "4424888 The challenge of new drug discovery for tuberculosis science scifact Tuberculosis (TB) is more prevalent in the world today than at any other time in human history. Mycobacterium tuberculosis, the pathogen responsible for TB, uses diverse strategies to survive in a variety of host lesions and to evade… 4424888 the-challenge-of-new-drug-discovery-for-tuberculosis challenge new drug discovery tuberculosis tb more prevalent Tuberculosis (TB) is more prevalent in the world today than at any other time in human history. The challenge of new drug discovery for tuberculosis Tuberculosis (TB) is more prevalent in the world today than at any other time in human history. Mycobacterium tuberculosis, the pathogen responsible for TB, uses diverse strategies to survive in a variety of host lesions and to evade immune surveillance. A key question is how robust are our approaches to discovering new TB drugs, and what measures could be taken to reduce the long and protracted clinical development of new drugs. The emergence of multi-drug-resistant strains of M. tuberculosis makes the discovery of new molecular scaffolds a priority, and the current situation even necessitates the re-engineering and repositioning of some old drug families to achieve effective control. Whatever the strategy used, success will depend larg",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.092038+00:00"
+}

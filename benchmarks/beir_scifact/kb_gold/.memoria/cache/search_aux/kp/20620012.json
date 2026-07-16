@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20620012",
+  "source_fingerprint": "10fe02334f0851db592ecccf09eb77d7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20620012",
+    "hitting-the-target:-emerging-technologies-in-the-search-for-kinase-substrates."
+  ],
+  "key_phrases": [
+    "hitting",
+    "target",
+    "emerging",
+    "technologies",
+    "search",
+    "kinase",
+    "substrates",
+    "through"
+  ],
+  "summary_1l": "Hitting the target: emerging technologies in the search for kinase substrates.",
+  "query_hits": [],
+  "embed_text": "20620012 Hitting the target: emerging technologies in the search for kinase substrates. science scifact Through phosphorylation, protein kinases can alter the activity, localization, protein association, and stability of their targets. Despite the importance to our understanding of all aspects of cell biology, progress toward identifying… 20620012 hitting-the-target:-emerging-technologies-in-the-search-for-kinase-substrates. hitting target emerging technologies search kinase substrates through Hitting the target: emerging technologies in the search for kinase substrates. Hitting the target: emerging technologies in the search for kinase substrates. Through phosphorylation, protein kinases can alter the activity, localization, protein association, and stability of their targets. Despite the importance to our understanding of all aspects of cell biology, progress toward identifying bona fide substrates of specific protein kinases has been slow. Traditionally used techniques to identify true kinase substrates, such as genetics, yeast two-hybrid screens, and biochemical purification, are often laborious and unreliable. However, several new approaches have recently been developed and used successfully to identify genuine in vivo substrates of certain protein kinases. These methods include screening for phosphorylation of proteins from phage expression libraries",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.642125+00:00"
+}

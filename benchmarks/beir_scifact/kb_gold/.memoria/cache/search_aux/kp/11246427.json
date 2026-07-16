@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11246427",
+  "source_fingerprint": "aeb56710b3087ea3e8f984f238674bbb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11246427",
+    "effect-of-alendronate-on-risk-of-fracture-in-women-with-low-bone-density-but-without-vertebral-fractures:-results-from-the-fracture-intervention-trial."
+  ],
+  "key_phrases": [
+    "effect",
+    "alendronate",
+    "risk",
+    "fracture",
+    "women",
+    "with",
+    "low",
+    "bone"
+  ],
+  "summary_1l": "Effect of alendronate on risk of fracture in women with low bone density but without vertebral fractures: results from the Fracture Intervention Trial.",
+  "query_hits": [],
+  "embed_text": "11246427 Effect of alendronate on risk of fracture in women with low bone density but without vertebral fractures: results from the Fracture Intervention Trial. science scifact CONTEXT Alendronate sodium reduces fracture risk in postmenopausal women who have vertebral fractures, but its effects on fracture risk have not been studied for women without vertebral fractures. OBJECTIVE To test the hypothesis that 4… 11246427 effect-of-alendronate-on-risk-of-fracture-in-women-with-low-bone-density-but-without-vertebral-fractures:-results-from-the-fracture-intervention-trial. effect alendronate risk fracture women with low bone Effect of alendronate on risk of fracture in women with low bone density but without vertebral fractures: results from the Fracture Intervention Trial. Effect of alendronate on risk of fracture in women with low bone density but without vertebral fractures: results from the Fracture Intervention Trial. CONTEXT Alendronate sodium reduces fracture risk in postmenopausal women who have vertebral fractures, but its effects on fracture risk have not been studied for women without vertebral fractures. OBJECTIVE To test the hypothesis that 4 years of alendronate would decrease the risk of clinical and vertebral fractures in women who have low bone mineral density (BMD) but no vertebral fractures. DESIGN Randomized, blinded, placebo-controlled trial. SETTING Eleven community-based clinical research centers. SUBJECTS Women aged 54 to 81 years with a femoral neck BMD of 0.68 g/cm2 or less (Hologic Inc, Waltham, Mass) but no vertebral fracture; 4432",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:06.175150+00:00"
+}

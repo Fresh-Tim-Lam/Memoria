@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14118484",
+  "source_fingerprint": "2e83558b0d2a6478f89932fbbd606d00",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14118484",
+    "ers/ests-clinical-guidelines-on-fitness-for-radical-therapy-in-lung-cancer-patients-(surgery-and-chemo-radiotherapy)."
+  ],
+  "key_phrases": [
+    "ers",
+    "ests",
+    "clinical",
+    "guidelines",
+    "fitness",
+    "radical",
+    "therapy",
+    "lung"
+  ],
+  "summary_1l": "ERS/ESTS clinical guidelines on fitness for radical therapy in lung cancer patients (surgery and chemo-radiotherapy).",
+  "query_hits": [],
+  "embed_text": "14118484 ERS/ESTS clinical guidelines on fitness for radical therapy in lung cancer patients (surgery and chemo-radiotherapy). science scifact A collaboration of multidisciplinary experts on the functional evaluation of lung cancer patients has been facilitated by the European Respiratory Society (ERS) and the European Society of Thoracic Surgery (ESTS), in order to draw up… 14118484 ers/ests-clinical-guidelines-on-fitness-for-radical-therapy-in-lung-cancer-patients-(surgery-and-chemo-radiotherapy). ers ests clinical guidelines fitness radical therapy lung ERS/ESTS clinical guidelines on fitness for radical therapy in lung cancer patients (surgery and chemo-radiotherapy). ERS/ESTS clinical guidelines on fitness for radical therapy in lung cancer patients (surgery and chemo-radiotherapy). A collaboration of multidisciplinary experts on the functional evaluation of lung cancer patients has been facilitated by the European Respiratory Society (ERS) and the European Society of Thoracic Surgery (ESTS), in order to draw up recommendations and provide clinicians with clear, up-to-date guidelines on fitness for surgery and chemo-radiotherapy. The subject was divided into different topics, which were then assigned to at least two experts. The authors searched the literature according to their own strategies, with no central literature review being performed. The draft reports written by the experts on each topic were reviewed, discussed and voted on by the entire ex",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.132208+00:00"
+}

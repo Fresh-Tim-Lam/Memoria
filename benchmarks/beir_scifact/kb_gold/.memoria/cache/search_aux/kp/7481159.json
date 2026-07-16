@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "7481159",
+  "source_fingerprint": "f0046b534b442f07d15e660e2cd87c65",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7481159"
+  ],
+  "key_phrases": [
+    "biochemical",
+    "analysis",
+    "tssk",
+    "core",
+    "component",
+    "bacterial",
+    "type",
+    "vi"
+  ],
+  "summary_1l": "Gram-negative bacteria use t",
+  "query_hits": [],
+  "embed_text": "7481159 Biochemical analysis of TssK, a core component of the bacterial Type VI secretion system, reveals distinct oligomeric states of TssK and identifies a TssK–TssFG subcomplex science scifact Gram-negative bacteria use the Type VI secretion system (T6SS) to inject toxic proteins into rival bacteria or eukaryotic cells. However, the mechanism of the T6SS is incompletely understood. In the present study, we investigated a… 7481159 biochemical analysis tssk core component bacterial type vi Gram-negative bacteria use t Biochemical analysis of TssK, a core component of the bacterial Type VI secretion system, reveals distinct oligomeric states of TssK and identifies a TssK–TssFG subcomplex Gram-negative bacteria use the Type VI secretion system (T6SS) to inject toxic proteins into rival bacteria or eukaryotic cells. However, the mechanism of the T6SS is incompletely understood. In the present study, we investigated a conserved component of the T6SS, TssK, using the antibacterial T6SS of Serratia marcescens as a model system. TssK was confirmed to be essential for effector secretion by the T6SS. The native protein, although not an integral membrane protein, appeared to localize to the inner membrane, consistent with its presence within a membrane-anchored assembly. Recombinant TssK purified from S. marcesce",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.398872+00:00"
+}

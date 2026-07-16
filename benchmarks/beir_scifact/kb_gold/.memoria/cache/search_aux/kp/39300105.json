@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "39300105",
+  "source_fingerprint": "69cc76f6bc9c72dcd048ca8e3b51f653",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "39300105",
+    "a-brief-analysis-of-clinical-pharmacy-interventions-undertaken-in-an-australian-teaching-hospital."
+  ],
+  "key_phrases": [
+    "brief",
+    "analysis",
+    "clinical",
+    "pharmacy",
+    "interventions",
+    "undertaken",
+    "australian",
+    "teaching"
+  ],
+  "summary_1l": "A brief analysis of clinical pharmacy interventions undertaken in an Australian teaching hospital.",
+  "query_hits": [],
+  "embed_text": "39300105 A brief analysis of clinical pharmacy interventions undertaken in an Australian teaching hospital. science scifact Selected clinical pharmacy interventions undertaken during a 30-day data capture period were analysed, seeking to gain a greater understanding of the nature of the drug-related problems involved. Pharmacists were asked to record only… 39300105 a-brief-analysis-of-clinical-pharmacy-interventions-undertaken-in-an-australian-teaching-hospital. brief analysis clinical pharmacy interventions undertaken australian teaching A brief analysis of clinical pharmacy interventions undertaken in an Australian teaching hospital. A brief analysis of clinical pharmacy interventions undertaken in an Australian teaching hospital. Selected clinical pharmacy interventions undertaken during a 30-day data capture period were analysed, seeking to gain a greater understanding of the nature of the drug-related problems involved. Pharmacists were asked to record only interventions that were of potentially major significance. A total of 67 interventions were submitted for analysis. In 28 cases (41.7% of the initial total) the intervention reports were excluded from further analysis after initial review. For the remaining 39 interventions, 20 patients (51%) were under the care of a medical unit, and cardiovascular/antithrombotic agents accounted for 17 reports (43.5%). The majority of interventions were implemented at the time",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.441038+00:00"
+}

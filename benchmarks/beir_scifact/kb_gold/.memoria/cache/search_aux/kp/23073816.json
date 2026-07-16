@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23073816",
+  "source_fingerprint": "3936dd303ecfcf700af1e1b3cf1b9b03",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23073816",
+    "umbilical-cord-blood-therapy-potentiated-with-erythropoietin-for-children-with-cerebral-palsy:-a-double-blind,-randomized,-placebo-controlled-trial"
+  ],
+  "key_phrases": [
+    "umbilical",
+    "cord",
+    "blood",
+    "therapy",
+    "potentiated",
+    "with",
+    "erythropoietin",
+    "children"
+  ],
+  "summary_1l": "Allogeneic umbilical cord blood (UCB) has therapeuti",
+  "query_hits": [],
+  "embed_text": "23073816 Umbilical Cord Blood Therapy Potentiated with Erythropoietin for Children with Cerebral Palsy: A Double-blind, Randomized, Placebo-Controlled Trial science scifact Allogeneic umbilical cord blood (UCB) has therapeutic potential for cerebral palsy (CP). Concomitant administration of recombinant human erythropoietin (rhEPO) may boost the efficacy of UCB, as it has neurotrophic effects. The objectives… 23073816 umbilical-cord-blood-therapy-potentiated-with-erythropoietin-for-children-with-cerebral-palsy:-a-double-blind,-randomized,-placebo-controlled-trial umbilical cord blood therapy potentiated with erythropoietin children Allogeneic umbilical cord blood (UCB) has therapeuti Umbilical Cord Blood Therapy Potentiated with Erythropoietin for Children with Cerebral Palsy: A Double-blind, Randomized, Placebo-Controlled Trial Allogeneic umbilical cord blood (UCB) has therapeutic potential for cerebral palsy (CP). Concomitant administration of recombinant human erythropoietin (rhEPO) may boost the efficacy of UCB, as it has neurotrophic effects. The objectives of this study were to assess the safety and efficacy of allogeneic UCB potentiated with rhEPO in children with CP. Children with CP were randomly assigned to one of three parallel groups: the pUCB group, which received allogeneic UCB potentiated with rhEPO; the EPO group, which received rhEPO and placebo UCB; and the Control group, which received placebo UCB and placebo rhEPO. All participants received rehabili",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.798730+00:00"
+}

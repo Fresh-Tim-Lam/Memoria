@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16882895",
+  "source_fingerprint": "567f84a2bf8c06af2e5d16605d006cf5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16882895",
+    "microrna-29a-suppresses-cell-proliferation-by-targeting-sparc-in-hepatocellular-carcinoma."
+  ],
+  "key_phrases": [
+    "microrna",
+    "29a",
+    "suppresses",
+    "cell",
+    "proliferation",
+    "by",
+    "targeting",
+    "sparc"
+  ],
+  "summary_1l": "microRNA-29a suppresses cell proliferation by targeting SPARC in hepatocellular carcinoma.",
+  "query_hits": [],
+  "embed_text": "16882895 microRNA-29a suppresses cell proliferation by targeting SPARC in hepatocellular carcinoma. science scifact In the present study, we constructed a lentivirus vector encoding the miR-29a             precursor and established two stably infected cell lines, PLC-29a and 97L-29a. The overexpression of miR-29a was confirmed by TaqMan RT-PCR and… 16882895 microrna-29a-suppresses-cell-proliferation-by-targeting-sparc-in-hepatocellular-carcinoma. microrna 29a suppresses cell proliferation by targeting sparc microRNA-29a suppresses cell proliferation by targeting SPARC in hepatocellular carcinoma. microRNA-29a suppresses cell proliferation by targeting SPARC in hepatocellular carcinoma. In the present study, we constructed a lentivirus vector encoding the miR-29a precursor and established two stably infected cell lines, PLC-29a and 97L-29a. The overexpression of miR-29a was confirmed by TaqMan RT-PCR and significantly suppressed the growth of the hepatocellular carcinoma cell lines MHCC-97L and PLC. Dual-luciferase reporter assays indicated that the SPARC mRNA 3'UTR was directly targeted by miR-29a since the mutated 3'UTR was not affected. Silencing SPARC expression by RNAi knockdown resulted in a similar effect as miR-29a overexpression on hepatocellular carcinoma (HCC) cell growth regulation. Anti-miR-29a oligonucleotides (AMOs) upregulated the levels of SPARC in the HCC cells. Th",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.998615+00:00"
+}

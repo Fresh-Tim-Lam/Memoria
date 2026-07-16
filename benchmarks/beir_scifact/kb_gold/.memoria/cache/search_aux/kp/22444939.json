@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22444939",
+  "source_fingerprint": "65cec93dd41572d93798977007c3a324",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22444939",
+    "modloop:-automated-modeling-of-loops-in-protein-structures."
+  ],
+  "key_phrases": [
+    "modloop",
+    "automated",
+    "modeling",
+    "loops",
+    "protein",
+    "structures",
+    "summary",
+    "web"
+  ],
+  "summary_1l": "ModLoop: automated modeling of loops in protein structures.",
+  "query_hits": [],
+  "embed_text": "22444939 ModLoop: automated modeling of loops in protein structures. science scifact SUMMARY ModLoop is a web server for automated modeling of loops in protein structures. The input is the atomic coordinates of the protein structure in the Protein Data Bank format, and the specification of the starting and ending residues… 22444939 modloop:-automated-modeling-of-loops-in-protein-structures. modloop automated modeling loops protein structures summary web ModLoop: automated modeling of loops in protein structures. ModLoop: automated modeling of loops in protein structures. SUMMARY ModLoop is a web server for automated modeling of loops in protein structures. The input is the atomic coordinates of the protein structure in the Protein Data Bank format, and the specification of the starting and ending residues of one or more segments to be modeled, containing no more than 20 residues in total. The output is the coordinates of the non-hydrogen atoms in the modeled segments. A user provides the input to the server via a simple web interface, and receives the output by e-mail. The server relies on the loop modeling routine in MODELLER that predicts the loop conformations by satisfaction of spatial restraints, without relying on a database of known protein structures. For a rapid response, ModLoop runs on",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.756127+00:00"
+}

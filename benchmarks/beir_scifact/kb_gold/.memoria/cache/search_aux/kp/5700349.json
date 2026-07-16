@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5700349",
+  "source_fingerprint": "0cb1c3c9d4b2036045943ce000368b88",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5700349",
+    "mechanical-coupling-between-transsynaptic-n-cadherin-adhesions-and-actin-flow-stabilizes-dendritic-spines"
+  ],
+  "key_phrases": [
+    "mechanical",
+    "coupling",
+    "between",
+    "transsynaptic",
+    "cadherin",
+    "adhesions",
+    "actin",
+    "flow"
+  ],
+  "summary_1l": "The morphology of neuronal dendritic spines is a critical indicator of synaptic function.",
+  "query_hits": [],
+  "embed_text": "5700349 Mechanical coupling between transsynaptic N-cadherin adhesions and actin flow stabilizes dendritic spines science scifact The morphology of neuronal dendritic spines is a critical indicator of synaptic function. It is regulated by several factors, including the intracellular actin/myosin cytoskeleton and transcellular N-cadherin adhesions. To examine the… 5700349 mechanical-coupling-between-transsynaptic-n-cadherin-adhesions-and-actin-flow-stabilizes-dendritic-spines mechanical coupling between transsynaptic cadherin adhesions actin flow The morphology of neuronal dendritic spines is a critical indicator of synaptic function. Mechanical coupling between transsynaptic N-cadherin adhesions and actin flow stabilizes dendritic spines The morphology of neuronal dendritic spines is a critical indicator of synaptic function. It is regulated by several factors, including the intracellular actin/myosin cytoskeleton and transcellular N-cadherin adhesions. To examine the mechanical relationship between these molecular components, we performed quantitative live-imaging experiments in primary hippocampal neurons. We found that actin turnover and structural motility were lower in dendritic spines than in immature filopodia and increased upon expression of a nonadhesive N-cadherin mutant, resulting in an inverse relationship between spine motility and actin enrichment. Furthermore, the pharmacological stimulation of myosin II",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.887775+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21392223",
+  "source_fingerprint": "52080b4765efc883d2de5a654cfc5a76",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21392223",
+    "within-the-hemopoietic-system,-lar-phosphatase-is-a-t-cell-lineage-specific-adhesion-receptor-like-protein-whose-phosphatase-activity-appears-dispensable-for-t-cell-development,-repertoire-selection-and-function."
+  ],
+  "key_phrases": [
+    "within",
+    "hemopoietic",
+    "system",
+    "lar",
+    "phosphatase",
+    "cell",
+    "lineage",
+    "specific"
+  ],
+  "summary_1l": "Within the hemopoietic system, LAR phosphatase is a T cell lineage-specific adhesion receptor-like protein whose phosphatase activity appears dispensable for T cell development, repertoire selection a",
+  "query_hits": [],
+  "embed_text": "21392223 Within the hemopoietic system, LAR phosphatase is a T cell lineage-specific adhesion receptor-like protein whose phosphatase activity appears dispensable for T cell development, repertoire selection and function. science scifact Expression of the receptor-type tyrosine phosphatase LAR was studied in cells of the murine hemopoietic system. The gene is expressed in all cells of the T cell lineage but not in cells of any other hemopoietic lineage and the level of… 21392223 within-the-hemopoietic-system,-lar-phosphatase-is-a-t-cell-lineage-specific-adhesion-receptor-like-protein-whose-phosphatase-activity-appears-dispensable-for-t-cell-development,-repertoire-selection-and-function. within hemopoietic system lar phosphatase cell lineage specific Within the hemopoietic system, LAR phosphatase is a T cell lineage-specific adhesion receptor-like protein whose phosphatase activity appears dispensable for T cell development, repertoire selection a Within the hemopoietic system, LAR phosphatase is a T cell lineage-specific adhesion receptor-like protein whose phosphatase activity appears dispensable for T cell development, repertoire selection and function. Expression of the receptor-type tyrosine phosphatase LAR was studied in cells of the murine hemopoietic system. The gene is expressed in all cells of the T cell lineage but not in cells of any other hemopoietic lineage and the level of expression in T cells is developmentally regulated. The CD4(-)8(-)44(+) early thymic immigrants and mature (CD4(+)8(-)/CD4(-)8(+)) thymocytes and T cells express low levels, whereas immature (CD4(-)8(-)44(-) and CD4(+)8(+)) thymocytes express high levels of LAR. Among bone marrow cells only uncommitted c-kit(+)B220(+)CD19(-) precursors, but not B ce",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.026482+00:00"
+}

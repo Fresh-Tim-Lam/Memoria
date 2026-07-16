@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "kp_id": "884874#9",
+  "source_fingerprint": "ef2bcc6b6784597b8a1e94721028c103",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "自閉症"
+  ],
+  "aliases": [
+    "884874#9"
+  ],
+  "key_phrases": [
+    "自闭症",
+    "谱系",
+    "自閉",
+    "徵狀",
+    "可以",
+    "非常",
+    "不同",
+    "完全"
+  ],
+  "summary_1l": "自閉症的徵狀可以非常不同，由完全不能自理生活，到經過治療、與常人無異。",
+  "query_hits": [],
+  "embed_text": "884874#9 自闭症谱系 自闭症谱系 自閉症的徵狀可以非常不同，由完全不能自理生活，到經過治療、與常人無異。以智商80區別低功能自閉症、高功能自閉症的分類法，不被專業人士及文獻接受，很有爭議。 自閉症 884874#9 自闭症 谱系 自閉 徵狀 可以 非常 不同 完全 自閉症的徵狀可以非常不同，由完全不能自理生活，到經過治療、與常人無異。 自闭症谱系 自閉症的徵狀可以非常不同，由完全不能自理生活，到經過治療、與常人無異。以智商80區別低功能自閉症、高功能自閉症的分類法，不被專業人士及文獻接受，很有爭議。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:21:05.118632+00:00"
+}

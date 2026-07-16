@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4658268",
+  "source_fingerprint": "5bc1e82adf3116d01bfa733883b58d8e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4658268",
+    "rictor,-a-novel-binding-partner-of-mtor,-defines-a-rapamycin-insensitive-and-raptor-independent-pathway-that-regulates-the-cytoskeleton"
+  ],
+  "key_phrases": [
+    "rictor",
+    "novel",
+    "binding",
+    "partner",
+    "mtor",
+    "defines",
+    "rapamycin",
+    "insensitive"
+  ],
+  "summary_1l": "The mammalian TOR (mTOR) pathway integrates nutrient- and growth",
+  "query_hits": [],
+  "embed_text": "4658268 Rictor, a Novel Binding Partner of mTOR, Defines a Rapamycin-Insensitive and Raptor-Independent Pathway that Regulates the Cytoskeleton science scifact The mammalian TOR (mTOR) pathway integrates nutrient- and growth factor-derived signals to regulate growth, the process whereby cells accumulate mass and increase in size. mTOR is a large protein kinase and the target of rapamycin, an… 4658268 rictor,-a-novel-binding-partner-of-mtor,-defines-a-rapamycin-insensitive-and-raptor-independent-pathway-that-regulates-the-cytoskeleton rictor novel binding partner mtor defines rapamycin insensitive The mammalian TOR (mTOR) pathway integrates nutrient- and growth Rictor, a Novel Binding Partner of mTOR, Defines a Rapamycin-Insensitive and Raptor-Independent Pathway that Regulates the Cytoskeleton The mammalian TOR (mTOR) pathway integrates nutrient- and growth factor-derived signals to regulate growth, the process whereby cells accumulate mass and increase in size. mTOR is a large protein kinase and the target of rapamycin, an immunosuppressant that also blocks vessel restenosis and has potential anticancer applications. mTOR interacts with the raptor and GbetaL proteins to form a complex that is the target of rapamycin. Here, we demonstrate that mTOR is also part of a distinct complex defined by the novel protein rictor (rapamycin-insensitive companion of mTOR). Rictor shares homology with the previously described pianissimo from D. discoidieum, S",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.991748+00:00"
+}

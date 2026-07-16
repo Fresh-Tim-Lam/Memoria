@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26121646",
+  "source_fingerprint": "32de9873f822bdda9a3b80ebc227155d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26121646",
+    "targeting-oxidative-stress-to-treat-endometriosis."
+  ],
+  "key_phrases": [
+    "targeting",
+    "oxidative",
+    "stress",
+    "treat",
+    "endometriosis",
+    "introduction",
+    "affects",
+    "10%"
+  ],
+  "summary_1l": "Targeting oxidative stress to treat endometriosis.",
+  "query_hits": [],
+  "embed_text": "26121646 Targeting oxidative stress to treat endometriosis. science scifact INTRODUCTION Endometriosis affects 10% of women of reproductive age. It is defined as the presence of implanted active endometrial tissue outside the uterine cavity. The exact pathophysiology of endometriosis is still uncertain, although… 26121646 targeting-oxidative-stress-to-treat-endometriosis. targeting oxidative stress treat endometriosis introduction affects 10% Targeting oxidative stress to treat endometriosis. Targeting oxidative stress to treat endometriosis. INTRODUCTION Endometriosis affects 10% of women of reproductive age. It is defined as the presence of implanted active endometrial tissue outside the uterine cavity. The exact pathophysiology of endometriosis is still uncertain, although several optional etiological theories have been suggested. Being so common, a novel treatment for endometriosis is widely quested. Recent studies addressing the pathological characteristics of endometriosis have revealed a vicious cycle in which oxidative stress (OS) is generated, which in turn facilitates the implantation of the ectopic endometrium. At the same time, the generation of high amounts of reactive oxygen species further triggers a state of OS. AREAS COVERED The author examined the evidence ass",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.430760+00:00"
+}

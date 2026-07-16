@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20886584",
+  "source_fingerprint": "9f8c11f743d45c5b699e2560fc93bafa",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20886584",
+    "genetic-predictors-of-taxane-induced-neurotoxicity-in-a-swog-phase-iii-intergroup-adjuvant-breast-cancer-treatment-trial-(s0221)"
+  ],
+  "key_phrases": [
+    "genetic",
+    "predictors",
+    "taxane",
+    "induced",
+    "neurotoxicity",
+    "swog",
+    "phase",
+    "iii"
+  ],
+  "summary_1l": "Taxanes have resulted in improved survival for breast cancer patients,",
+  "query_hits": [],
+  "embed_text": "20886584 Genetic predictors of taxane-induced neurotoxicity in a SWOG phase III intergroup adjuvant breast cancer treatment trial (S0221) science scifact Taxanes have resulted in improved survival for breast cancer patients, but often cause neurological toxicities. Identification of biomarkers related to toxicities could be important for dictating treatment regimen. We evaluated single… 20886584 genetic-predictors-of-taxane-induced-neurotoxicity-in-a-swog-phase-iii-intergroup-adjuvant-breast-cancer-treatment-trial-(s0221) genetic predictors taxane induced neurotoxicity swog phase iii Taxanes have resulted in improved survival for breast cancer patients, Genetic predictors of taxane-induced neurotoxicity in a SWOG phase III intergroup adjuvant breast cancer treatment trial (S0221) Taxanes have resulted in improved survival for breast cancer patients, but often cause neurological toxicities. Identification of biomarkers related to toxicities could be important for dictating treatment regimen. We evaluated single nucleotide polymorphisms (SNPs) in the Fanconi Anemia (FA)/BRCA pathway in relation to grade 3/4 neurotoxicities in patients (n = 888) from SWOG0221, a phase III adjuvant trial for breast cancer of 4 dose/schedules of cyclophosphamide (C), doxorubicin (A), and paclitaxel (T). In a separate cohort, we measured the correlation of significant FANCD2 SNPs with corresponding gene expression. For FANCD2, permutation testing revealed that",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.061300+00:00"
+}

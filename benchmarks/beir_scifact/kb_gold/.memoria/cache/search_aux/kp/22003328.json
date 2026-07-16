@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22003328",
+  "source_fingerprint": "b89847b2e99959280ec4c9e8f5e9451a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22003328",
+    "a-novel-family-of-sequence-specific-endoribonucleases-associated-with-the-clustered-regularly-interspaced-short-palindromic-repeats."
+  ],
+  "key_phrases": [
+    "novel",
+    "family",
+    "sequence",
+    "specific",
+    "endoribonucleases",
+    "associated",
+    "with",
+    "clustered"
+  ],
+  "summary_1l": "A novel family of sequence-specific endoribonucleases associated with the clustered regularly interspaced short palindromic repeats.",
+  "query_hits": [],
+  "embed_text": "22003328 A novel family of sequence-specific endoribonucleases associated with the clustered regularly interspaced short palindromic repeats. science scifact Clustered regularly interspaced short palindromic repeats (CRISPRs) together with the associated CAS proteins protect microbial cells from invasion by foreign genetic elements using presently unknown molecular mechanisms. All CRISPR… 22003328 a-novel-family-of-sequence-specific-endoribonucleases-associated-with-the-clustered-regularly-interspaced-short-palindromic-repeats. novel family sequence specific endoribonucleases associated with clustered A novel family of sequence-specific endoribonucleases associated with the clustered regularly interspaced short palindromic repeats. A novel family of sequence-specific endoribonucleases associated with the clustered regularly interspaced short palindromic repeats. Clustered regularly interspaced short palindromic repeats (CRISPRs) together with the associated CAS proteins protect microbial cells from invasion by foreign genetic elements using presently unknown molecular mechanisms. All CRISPR systems contain proteins of the CAS2 family, suggesting that these uncharacterized proteins play a central role in this process. Here we show that the CAS2 proteins represent a novel family of endoribonucleases. Six purified CAS2 proteins from diverse organisms cleaved single-stranded RNAs preferentially within U-rich regions. A representative CAS2 enzyme, SSO1404 from Sulfolobus solfataricus, cleaved the phosphodiester linkage on",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.076372+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "461550",
+  "source_fingerprint": "dd1e6edddcde3e94cf82dd766f2127b1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "461550",
+    "multiplex-genome-engineering-using-crispr/cas-systems."
+  ],
+  "key_phrases": [
+    "multiplex",
+    "genome",
+    "engineering",
+    "using",
+    "crispr",
+    "cas",
+    "systems",
+    "functional"
+  ],
+  "summary_1l": "Multiplex genome engineering using CRISPR/Cas systems.",
+  "query_hits": [],
+  "embed_text": "461550 Multiplex genome engineering using CRISPR/Cas systems. science scifact Functional elucidation of causal genetic variants and elements requires precise genome editing technologies. The type II prokaryotic CRISPR (clustered regularly interspaced short palindromic repeats)/Cas adaptive immune system has been… 461550 multiplex-genome-engineering-using-crispr/cas-systems. multiplex genome engineering using crispr cas systems functional Multiplex genome engineering using CRISPR/Cas systems. Multiplex genome engineering using CRISPR/Cas systems. Functional elucidation of causal genetic variants and elements requires precise genome editing technologies. The type II prokaryotic CRISPR (clustered regularly interspaced short palindromic repeats)/Cas adaptive immune system has been shown to facilitate RNA-guided site-specific DNA cleavage. We engineered two different type II CRISPR/Cas systems and demonstrate that Cas9 nucleases can be directed by short RNAs to induce precise cleavage at endogenous genomic loci in human and mouse cells. Cas9 can also be converted into a nicking enzyme to facilitate homology-directed repair with minimal mutagenic activity. Lastly, multiple guide sequences can be encoded into a single CRISPR array to enable simultaneous editing of several sites withi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.675202+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19701340",
+  "source_fingerprint": "e1e7c22881cb1d3156deae6c60af1f6b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19701340",
+    "oncostatic-effects-of-the-indole-melatonin-and-expression-of-its-cytosolic-and-nuclear-receptors-in-cultured-human-melanoma-cell-lines."
+  ],
+  "key_phrases": [
+    "oncostatic",
+    "effects",
+    "indole",
+    "melatonin",
+    "expression",
+    "its",
+    "cytosolic",
+    "nuclear"
+  ],
+  "summary_1l": "Oncostatic effects of the indole melatonin and expression of its cytosolic and nuclear receptors in cultured human melanoma cell lines.",
+  "query_hits": [],
+  "embed_text": "19701340 Oncostatic effects of the indole melatonin and expression of its cytosolic and nuclear receptors in cultured human melanoma cell lines. science scifact Melatonin has been shown to have oncostatic effects on malignant melanoma in vitro and in vivo. We studied the growth suppressive effects of melatonin over a wide range of concentrations in four melanoma cell lines (SBCE2, WM-98, WM-164… 19701340 oncostatic-effects-of-the-indole-melatonin-and-expression-of-its-cytosolic-and-nuclear-receptors-in-cultured-human-melanoma-cell-lines. oncostatic effects indole melatonin expression its cytosolic nuclear Oncostatic effects of the indole melatonin and expression of its cytosolic and nuclear receptors in cultured human melanoma cell lines. Oncostatic effects of the indole melatonin and expression of its cytosolic and nuclear receptors in cultured human melanoma cell lines. Melatonin has been shown to have oncostatic effects on malignant melanoma in vitro and in vivo. We studied the growth suppressive effects of melatonin over a wide range of concentrations in four melanoma cell lines (SBCE2, WM-98, WM-164 and SKMEL-188) representative for different growth stages and phenotype. Melanoma cells were incubated with melatonin 10(-12)-10(-3) M, and proliferation and clonogenicity was assessed at 12 h and 14 days, respectively. We also determined the expression of cytosolic quinone oxidoreductases NQO1, NQO2 (known as MT3 receptor) and nuclear receptor RORalpha by RT-PCR. Melatonin at pharmacological concentrations (10(-3)-10(-7) M",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.057632+00:00"
+}

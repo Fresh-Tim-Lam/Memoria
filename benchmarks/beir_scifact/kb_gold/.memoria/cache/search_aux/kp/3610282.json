@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "3610282",
+  "source_fingerprint": "5d7af98247bbb72285500cd23260f605",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3610282"
+  ],
+  "key_phrases": [
+    "phase",
+    "plate",
+    "cryo",
+    "em",
+    "structure",
+    "biased",
+    "agonist",
+    "bound"
+  ],
+  "summary_1l": "The class B glucagon-like peptide-1 (GLP-1) G protein-coupled receptor is a major target for the treatment of ty",
+  "query_hits": [],
+  "embed_text": "3610282 Phase-plate cryo-EM structure of a biased agonist-bound human GLP-1 receptor–Gs complex science scifact The class B glucagon-like peptide-1 (GLP-1) G protein-coupled receptor is a major target for the treatment of type 2 diabetes and obesity. Endogenous and mimetic GLP-1 peptides exhibit biased agonism—a difference in functional… 3610282 phase plate cryo em structure biased agonist bound The class B glucagon-like peptide-1 (GLP-1) G protein-coupled receptor is a major target for the treatment of ty Phase-plate cryo-EM structure of a biased agonist-bound human GLP-1 receptor–Gs complex The class B glucagon-like peptide-1 (GLP-1) G protein-coupled receptor is a major target for the treatment of type 2 diabetes and obesity. Endogenous and mimetic GLP-1 peptides exhibit biased agonism—a difference in functional selectivity—that may provide improved therapeutic outcomes. Here we describe the structure of the human GLP-1 receptor in complex with the G protein-biased peptide exendin-P5 and a Gαs heterotrimer, determined at a global resolution of 3.3 Å. At the extracellular surface, the organization of extracellular loop 3 and proximal transmembrane segments differs between our exendin-P5-bound structure and previous GLP-1-bound GLP-1 receptor structure. At the intracellular face, there was",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.872839+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21601459",
+  "source_fingerprint": "f19fde857ec16b376dc628c954174759",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21601459",
+    "epigenetic-regulation-of-nanog-by-mir-302-cluster-mbd2-completes-induced-pluripotent-stem-cell-reprogramming."
+  ],
+  "key_phrases": [
+    "epigenetic",
+    "regulation",
+    "nanog",
+    "by",
+    "mir",
+    "302",
+    "cluster",
+    "mbd2"
+  ],
+  "summary_1l": "Epigenetic regulation of NANOG by miR-302 cluster-MBD2 completes induced pluripotent stem cell reprogramming.",
+  "query_hits": [],
+  "embed_text": "21601459 Epigenetic regulation of NANOG by miR-302 cluster-MBD2 completes induced pluripotent stem cell reprogramming. science scifact While most somatic cells undergoing induced pluripotent stem (iPS) cell reprogramming with Yamanaka factors accumulate at stable partially reprogrammed stages, the molecular mechanisms required to achieve full reprogramming are unknown.… 21601459 epigenetic-regulation-of-nanog-by-mir-302-cluster-mbd2-completes-induced-pluripotent-stem-cell-reprogramming. epigenetic regulation nanog by mir 302 cluster mbd2 Epigenetic regulation of NANOG by miR-302 cluster-MBD2 completes induced pluripotent stem cell reprogramming. Epigenetic regulation of NANOG by miR-302 cluster-MBD2 completes induced pluripotent stem cell reprogramming. While most somatic cells undergoing induced pluripotent stem (iPS) cell reprogramming with Yamanaka factors accumulate at stable partially reprogrammed stages, the molecular mechanisms required to achieve full reprogramming are unknown. MicroRNAs (miRNAs) fine-tune mRNA translation and are implicated in reprogramming, but miRNA functional targets critical for complete iPS cell reprogramming remain elusive. We identified methyl-DNA binding domain protein 2 (MBD2) as an epigenetic suppressor, blocking full reprogramming of somatic to iPS cells through direct binding to NANOG promoter elements preventing transcriptional activation. When we overexpressed miR-302 cluster we observed a s",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.489955+00:00"
+}

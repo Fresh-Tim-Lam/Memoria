@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13296399",
+  "source_fingerprint": "21fb7427ba6b4ec8b4cb6c7746d23595",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13296399",
+    "in-vivo-crispr/cas9-gene-editing-corrects-retinal-dystrophy-in-the-s334ter-3-rat-model-of-autosomal-dominant-retinitis-pigmentosa"
+  ],
+  "key_phrases": [
+    "vivo",
+    "crispr",
+    "cas9",
+    "gene",
+    "editing",
+    "corrects",
+    "retinal",
+    "dystrophy"
+  ],
+  "summary_1l": "Reliable genome editing via Clustered Regularly Interspaced Short Pali",
+  "query_hits": [],
+  "embed_text": "13296399 In Vivo CRISPR/Cas9 Gene Editing Corrects Retinal Dystrophy in the S334ter-3 Rat Model of Autosomal Dominant Retinitis Pigmentosa science scifact Reliable genome editing via Clustered Regularly Interspaced Short Palindromic Repeat (CRISPR)/Cas9 may provide a means to correct inherited diseases in patients. As proof of principle, we show that CRISPR/Cas9 can be used in vivo to… 13296399 in-vivo-crispr/cas9-gene-editing-corrects-retinal-dystrophy-in-the-s334ter-3-rat-model-of-autosomal-dominant-retinitis-pigmentosa vivo crispr cas9 gene editing corrects retinal dystrophy Reliable genome editing via Clustered Regularly Interspaced Short Pali In Vivo CRISPR/Cas9 Gene Editing Corrects Retinal Dystrophy in the S334ter-3 Rat Model of Autosomal Dominant Retinitis Pigmentosa Reliable genome editing via Clustered Regularly Interspaced Short Palindromic Repeat (CRISPR)/Cas9 may provide a means to correct inherited diseases in patients. As proof of principle, we show that CRISPR/Cas9 can be used in vivo to selectively ablate the rhodopsin gene carrying the dominant S334ter mutation (Rho(S334)) in rats that model severe autosomal dominant retinitis pigmentosa. A single subretinal injection of guide RNA/Cas9 plasmid in combination with electroporation generated allele-specific disruption of Rho(S334), which prevented retinal degeneration and improved visual function.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.001951+00:00"
+}

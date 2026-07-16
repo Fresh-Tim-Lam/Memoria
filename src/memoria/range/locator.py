@@ -35,6 +35,17 @@ def locate_snippet(
             if needle in _norm(lines[i]):
                 candidates.append(i)
 
+    # Trust line_hint first: if the hint line contains the snippet, use it
+    # directly without searching the full window. This prevents the locator
+    # from matching an earlier occurrence of the same snippet text.
+    if line_hint is not None and 1 <= line_hint <= len(lines):
+        h = line_hint - 1
+        if needle in _norm(lines[h]):
+            # Build candidate list from the window for transparency, but
+            # pin the result to the hint line.
+            scan(max(start, h - HINT_WINDOW), min(len(lines), h + HINT_WINDOW + 1))
+            return h, candidates or [h]
+
     if line_hint is not None and line_hint >= 1:
         h = line_hint - 1
         scan(max(start, h - HINT_WINDOW), min(len(lines), h + HINT_WINDOW + 1))

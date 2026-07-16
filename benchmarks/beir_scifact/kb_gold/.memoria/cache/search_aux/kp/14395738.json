@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14395738",
+  "source_fingerprint": "2756189bf18e62bda93a957198e71d6a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14395738",
+    "equity-in-adherence-to-antiretroviral-therapy-among-economically-vulnerable-adolescents-living-with-hiv-in-uganda"
+  ],
+  "key_phrases": [
+    "equity",
+    "adherence",
+    "antiretroviral",
+    "therapy",
+    "among",
+    "economically",
+    "vulnerable",
+    "adolescents"
+  ],
+  "summary_1l": "Studies from sub-Saharan Africa indicate that children made vulnerable by poverty have",
+  "query_hits": [],
+  "embed_text": "14395738 Equity in adherence to antiretroviral therapy among economically vulnerable adolescents living with HIV in Uganda science scifact Studies from sub-Saharan Africa indicate that children made vulnerable by poverty have been disproportionately affected by HIV with many exposed via mother-to-child transmission. For youth living with HIV, adherence to life-saving… 14395738 equity-in-adherence-to-antiretroviral-therapy-among-economically-vulnerable-adolescents-living-with-hiv-in-uganda equity adherence antiretroviral therapy among economically vulnerable adolescents Studies from sub-Saharan Africa indicate that children made vulnerable by poverty have Equity in adherence to antiretroviral therapy among economically vulnerable adolescents living with HIV in Uganda Studies from sub-Saharan Africa indicate that children made vulnerable by poverty have been disproportionately affected by HIV with many exposed via mother-to-child transmission. For youth living with HIV, adherence to life-saving treatment regimens are likely to be affected by the complex set of economic and social circumstances that challenge their families and also exacerbate health problems. Using baseline data from the National Institute of Child and Human Development (NICHD) funded Suubi+Adherence study, we examined the extent to which individual and composite measures of equity predict self-reported adherence among Ugandan adolescents aged 10-16 (n = 702) living with HIV",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.782696+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23670644",
+  "source_fingerprint": "f6e2a7f115b2f50bfeff31d19566484b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23670644",
+    "the-ketogenic-diet-for-the-treatment-of-childhood-epilepsy:-a-randomised-controlled-trial."
+  ],
+  "key_phrases": [
+    "ketogenic",
+    "diet",
+    "treatment",
+    "childhood",
+    "epilepsy",
+    "randomised",
+    "controlled",
+    "trial"
+  ],
+  "summary_1l": "The ketogenic diet for the treatment of childhood epilepsy: a randomised controlled trial.",
+  "query_hits": [],
+  "embed_text": "23670644 The ketogenic diet for the treatment of childhood epilepsy: a randomised controlled trial. science scifact BACKGROUND The ketogenic diet has been widely and successfully used to treat children with drug-resistant epilepsy since the 1920s. The aim of this study was to test the efficacy of the ketogenic diet in a randomised controlled trial.… 23670644 the-ketogenic-diet-for-the-treatment-of-childhood-epilepsy:-a-randomised-controlled-trial. ketogenic diet treatment childhood epilepsy randomised controlled trial The ketogenic diet for the treatment of childhood epilepsy: a randomised controlled trial. The ketogenic diet for the treatment of childhood epilepsy: a randomised controlled trial. BACKGROUND The ketogenic diet has been widely and successfully used to treat children with drug-resistant epilepsy since the 1920s. The aim of this study was to test the efficacy of the ketogenic diet in a randomised controlled trial. METHODS 145 children aged between 2 and 16 years who had at least daily seizures (or more than seven seizures per week), had failed to respond to at least two antiepileptic drugs, and had not been treated previously with the ketogenic diet participated in a randomised controlled trial of its efficacy to control seizures. Enrolment for the trial ran between December, 2001, and July, 2006. Children were seen at one of two hospital centres or a residential centre for young",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.956049+00:00"
+}

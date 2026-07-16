@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8646760",
+  "source_fingerprint": "47b020eabca9d70f276d20938eb0349a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8646760",
+    "identification-and-functional-characterization-of-n-terminally-acetylated-proteins-in-drosophila-melanogaster"
+  ],
+  "key_phrases": [
+    "identification",
+    "functional",
+    "characterization",
+    "terminally",
+    "acetylated",
+    "proteins",
+    "drosophila",
+    "melanogaster"
+  ],
+  "summary_1l": "Protein modifications play a major role for most biological processes in living organisms.",
+  "query_hits": [],
+  "embed_text": "8646760 Identification and Functional Characterization of N-Terminally Acetylated Proteins in Drosophila melanogaster science scifact Protein modifications play a major role for most biological processes in living organisms. Amino-terminal acetylation of proteins is a common modification found throughout the tree of life: the N-terminus of a nascent polypeptide chain… 8646760 identification-and-functional-characterization-of-n-terminally-acetylated-proteins-in-drosophila-melanogaster identification functional characterization terminally acetylated proteins drosophila melanogaster Protein modifications play a major role for most biological processes in living organisms. Identification and Functional Characterization of N-Terminally Acetylated Proteins in Drosophila melanogaster Protein modifications play a major role for most biological processes in living organisms. Amino-terminal acetylation of proteins is a common modification found throughout the tree of life: the N-terminus of a nascent polypeptide chain becomes co-translationally acetylated, often after the removal of the initiating methionine residue. While the enzymes and protein complexes involved in these processes have been extensively studied, only little is known about the biological function of such N-terminal modification events. To identify common principles of N-terminal acetylation, we analyzed the amino-terminal peptides from proteins extracted from Drosophila Kc167 cells. We detected m",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:13.974748+00:00"
+}

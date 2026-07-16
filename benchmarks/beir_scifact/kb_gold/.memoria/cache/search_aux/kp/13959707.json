@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13959707",
+  "source_fingerprint": "fa7094bd7f871bdf893652ad2b83c54c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13959707",
+    "the-ratio-of-monocytes-to-lymphocytes-in-peripheral-blood-correlates-with-increased-susceptibility-to-clinical-malaria-in-kenyan-children"
+  ],
+  "key_phrases": [
+    "ratio",
+    "monocytes",
+    "lymphocytes",
+    "peripheral",
+    "blood",
+    "correlates",
+    "with",
+    "increased"
+  ],
+  "summary_1l": "BACKGROUND Plasmodium falciparum malaria remains a major cause",
+  "query_hits": [],
+  "embed_text": "13959707 The Ratio of Monocytes to Lymphocytes in Peripheral Blood Correlates with Increased Susceptibility to Clinical Malaria in Kenyan Children science scifact BACKGROUND Plasmodium falciparum malaria remains a major cause of illness and death in sub-Saharan Africa. Young children bear the brunt of the disease and though older children and adults suffer relatively fewer clinical attacks, they… 13959707 the-ratio-of-monocytes-to-lymphocytes-in-peripheral-blood-correlates-with-increased-susceptibility-to-clinical-malaria-in-kenyan-children ratio monocytes lymphocytes peripheral blood correlates with increased BACKGROUND Plasmodium falciparum malaria remains a major cause The Ratio of Monocytes to Lymphocytes in Peripheral Blood Correlates with Increased Susceptibility to Clinical Malaria in Kenyan Children BACKGROUND Plasmodium falciparum malaria remains a major cause of illness and death in sub-Saharan Africa. Young children bear the brunt of the disease and though older children and adults suffer relatively fewer clinical attacks, they remain susceptible to asymptomatic P. falciparum infection. A better understanding of the host factors associated with immunity to clinical malaria and the ability to sustain asymptomatic P. falciparum infection will aid the development of improved strategies for disease prevention. METHODS AND FINDINGS Here we investigate whether full differential blood counts can predict susceptibility to clinical malaria among Kenyan ch",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.809783+00:00"
+}

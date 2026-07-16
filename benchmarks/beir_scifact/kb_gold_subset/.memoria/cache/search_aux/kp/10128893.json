@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10128893",
+  "source_fingerprint": "54db9507d63933915bd8957d73ec2f2a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10128893",
+    "long-term-survival-of-beta-thalassemia-major-patients-treated-with-hematopoietic-stem-cell-transplantation-compared-with-survival-with-conventional-treatment."
+  ],
+  "key_phrases": [
+    "long",
+    "term",
+    "survival",
+    "beta",
+    "thalassemia",
+    "major",
+    "patients",
+    "treated"
+  ],
+  "summary_1l": "Long-term survival of beta thalassemia major patients treated with hematopoietic stem cell transplantation compared with survival with conventional treatment.",
+  "query_hits": [],
+  "embed_text": "10128893 Long-term survival of beta thalassemia major patients treated with hematopoietic stem cell transplantation compared with survival with conventional treatment. science scifact Allogeneic hematopoietic stem cell transplantation (HSCT) in thalassemia remains a challenge. We reported a single-centre case-control study of a large cohort of 516 children and adult patients treated with HSCT or blood transfusion… 10128893 long-term-survival-of-beta-thalassemia-major-patients-treated-with-hematopoietic-stem-cell-transplantation-compared-with-survival-with-conventional-treatment. long term survival beta thalassemia major patients treated Long-term survival of beta thalassemia major patients treated with hematopoietic stem cell transplantation compared with survival with conventional treatment. Long-term survival of beta thalassemia major patients treated with hematopoietic stem cell transplantation compared with survival with conventional treatment. Allogeneic hematopoietic stem cell transplantation (HSCT) in thalassemia remains a challenge. We reported a single-centre case-control study of a large cohort of 516 children and adult patients treated with HSCT or blood transfusion support and iron chelation therapy; 258 patients (median age 12, range 1-45) underwent sibling (67%) or unrelated (33%) HSCT; 97 patients were adults (age ≥ 16 years). The median follow-up after HSCT was 11 years (range 1-30). The conditioning regimen was busulfan (80.6%) or treosulfan-based (19.4%). A cohort of 258 age-sex matched conventionally treated (CT) patients was randomly selected. In transplante",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.292849+00:00"
+}

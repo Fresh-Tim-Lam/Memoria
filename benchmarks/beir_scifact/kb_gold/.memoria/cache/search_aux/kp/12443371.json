@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12443371",
+  "source_fingerprint": "e9ef9f1b20f788526b610924c9102305",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12443371",
+    "apolipoprotein-e-genotype-and-concussion-in-college-athletes."
+  ],
+  "key_phrases": [
+    "apolipoprotein",
+    "genotype",
+    "concussion",
+    "college",
+    "athletes",
+    "objective",
+    "evaluate",
+    "association"
+  ],
+  "summary_1l": "Apolipoprotein E genotype and concussion in college athletes.",
+  "query_hits": [],
+  "embed_text": "12443371 Apolipoprotein E genotype and concussion in college athletes. science scifact OBJECTIVE To evaluate the association between apolipoprotein E (APOE) polymorphisms (E2, C/T Arg158Cys; E4, T/C Cys112Arg; and promoter, g-219t) and the history of concussion in college athletes. We hypothesized that carrying 1 or more… 12443371 apolipoprotein-e-genotype-and-concussion-in-college-athletes. apolipoprotein genotype concussion college athletes objective evaluate association Apolipoprotein E genotype and concussion in college athletes. Apolipoprotein E genotype and concussion in college athletes. OBJECTIVE To evaluate the association between apolipoprotein E (APOE) polymorphisms (E2, C/T Arg158Cys; E4, T/C Cys112Arg; and promoter, g-219t) and the history of concussion in college athletes. We hypothesized that carrying 1 or more APOE rare (or minor) allele assessed in this study would be associated with having a history of 1 or more concussions. DESIGN Multicenter cross-sectional study. SETTING University athletic facilities. PARTICIPANTS One hundred ninety-six male football (n = 163) and female soccer (n = 33) college athletes volunteered. INTERVENTIONS Written concussion history questionnaire and saliva samples for genotyping. MAIN OUTCOME MEASURES Self-reported history of a documented concussion and rare APOE genotype",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:08.377899+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17023584",
+  "source_fingerprint": "11db64e0a3f9c72ad8353c16fbd240d2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17023584",
+    "current-knowledge-and-future-directions-of-tlr-and-nod-signaling-in-sepsis"
+  ],
+  "key_phrases": [
+    "current",
+    "knowledge",
+    "future",
+    "directions",
+    "tlr",
+    "nod",
+    "signaling",
+    "sepsis"
+  ],
+  "summary_1l": "The incidence of sepsis is increasing over time, along with an increased risk of dying from the condition.",
+  "query_hits": [],
+  "embed_text": "17023584 Current knowledge and future directions of TLR and NOD signaling in sepsis science scifact The incidence of sepsis is increasing over time, along with an increased risk of dying from the condition. Sepsis care costs billions annually in the United States. Death from sepsis is understood to be a complex process, driven by a lack… 17023584 current-knowledge-and-future-directions-of-tlr-and-nod-signaling-in-sepsis current knowledge future directions tlr nod signaling sepsis The incidence of sepsis is increasing over time, along with an increased risk of dying from the condition. Current knowledge and future directions of TLR and NOD signaling in sepsis The incidence of sepsis is increasing over time, along with an increased risk of dying from the condition. Sepsis care costs billions annually in the United States. Death from sepsis is understood to be a complex process, driven by a lack of normal immune homeostatic functions and excessive production of proinflammatory cytokines, which leads to multi-organ failure. The Toll-like receptor (TLR) family, one of whose members was initially discovered in Drosophila, performs an important role in the recognition of microbial pathogens. These pattern recognition receptors (PRRs), upon sensing invading microorganisms, activate intracellular signal transduction pathways. NOD signaling is also involved in the recognition of",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.209064+00:00"
+}

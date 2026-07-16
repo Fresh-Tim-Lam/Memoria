@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4422868",
+  "source_fingerprint": "69b3dfad26048a70871fb0c303d32d3b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4422868",
+    "crypt-stem-cells-as-the-cells-of-origin-of-intestinal-cancer"
+  ],
+  "key_phrases": [
+    "crypt",
+    "stem",
+    "cells",
+    "as",
+    "origin",
+    "intestinal",
+    "cancer",
+    "initiated"
+  ],
+  "summary_1l": "Intestinal cancer is initiated by Wnt-pathway-activating mutations in genes such as adenomatous polyposis coli (APC).",
+  "query_hits": [],
+  "embed_text": "4422868 Crypt stem cells as the cells-of-origin of intestinal cancer science scifact Intestinal cancer is initiated by Wnt-pathway-activating mutations in genes such as adenomatous polyposis coli (APC). As in most cancers, the cell of origin has remained elusive. In a previously established Lgr5 (leucine-rich-repeat… 4422868 crypt-stem-cells-as-the-cells-of-origin-of-intestinal-cancer crypt stem cells as origin intestinal cancer initiated Intestinal cancer is initiated by Wnt-pathway-activating mutations in genes such as adenomatous polyposis coli (APC). Crypt stem cells as the cells-of-origin of intestinal cancer Intestinal cancer is initiated by Wnt-pathway-activating mutations in genes such as adenomatous polyposis coli (APC). As in most cancers, the cell of origin has remained elusive. In a previously established Lgr5 (leucine-rich-repeat containing G-protein-coupled receptor 5) knockin mouse model, a tamoxifen-inducible Cre recombinase is expressed in long-lived intestinal stem cells. Here we show that deletion of Apc in these stem cells leads to their transformation within days. Transformed stem cells remain located at crypt bottoms, while fuelling a growing microadenoma. These microadenomas show unimpeded growth and develop into macroscopic adenomas within 3-5weeks. The distribution of Lgr5+ cells within stem-cell-derived adenomas i",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.025792+00:00"
+}

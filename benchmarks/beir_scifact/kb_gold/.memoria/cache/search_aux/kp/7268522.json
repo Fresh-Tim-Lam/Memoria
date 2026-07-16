@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7268522",
+  "source_fingerprint": "10278dc6b6e1c87461554ff07025b454",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7268522",
+    "notch-targets-and-their-regulation."
+  ],
+  "key_phrases": [
+    "notch",
+    "targets",
+    "their",
+    "regulation",
+    "proteolytic",
+    "cleavages",
+    "elicited",
+    "by"
+  ],
+  "summary_1l": "Notch targets and their regulation.",
+  "query_hits": [],
+  "embed_text": "7268522 Notch targets and their regulation. science scifact The proteolytic cleavages elicited by activation of the Notch receptor release an intracellular fragment, Notch intracellular domain, which enters the nucleus to activate the transcription of targets. Changes in transcription are therefore… 7268522 notch-targets-and-their-regulation. notch targets their regulation proteolytic cleavages elicited by Notch targets and their regulation. Notch targets and their regulation. The proteolytic cleavages elicited by activation of the Notch receptor release an intracellular fragment, Notch intracellular domain, which enters the nucleus to activate the transcription of targets. Changes in transcription are therefore a major output of this pathway. However, the Notch outputs clearly differ from cell type to cell type. In this review we discuss current understanding of Notch targets, the mechanisms involved in their transcriptional regulation, and what might underlie the activation of different sets of targets in different cell types.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.961457+00:00"
+}

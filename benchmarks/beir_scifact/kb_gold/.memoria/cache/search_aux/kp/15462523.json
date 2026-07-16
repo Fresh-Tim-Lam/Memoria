@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "15462523",
+  "source_fingerprint": "6b927e514bea535d3047d9b2f8c7dcc2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15462523"
+  ],
+  "key_phrases": [
+    "natural",
+    "killer",
+    "cells",
+    "immunotherapy",
+    "advantages",
+    "nk",
+    "92",
+    "cell"
+  ],
+  "summary_1l": "Natural killer (NK) cells are potent cytotoxic effector cells for cancer therapy and potentially for seve",
+  "query_hits": [],
+  "embed_text": "15462523 Natural Killer Cells for Immunotherapy – Advantages of the NK-92 Cell Line over Blood NK Cells science scifact Natural killer (NK) cells are potent cytotoxic effector cells for cancer therapy and potentially for severe viral infections. However, there are technical challenges to obtain sufficient numbers of functionally active NK cells from a… 15462523 natural killer cells immunotherapy advantages nk 92 cell Natural killer (NK) cells are potent cytotoxic effector cells for cancer therapy and potentially for seve Natural Killer Cells for Immunotherapy – Advantages of the NK-92 Cell Line over Blood NK Cells Natural killer (NK) cells are potent cytotoxic effector cells for cancer therapy and potentially for severe viral infections. However, there are technical challenges to obtain sufficient numbers of functionally active NK cells from a patient's blood since they represent only 10% of the lymphocytes and are often dysfunctional. The alternative is to obtain cells from a healthy donor, which requires depletion of the allogeneic T cells to prevent graft-versus-host reactions. Cytotoxic cell lines have been established from patients with clonal NK-cell lymphoma. Those cells can be expanded in culture in the presence of IL-2. Except for the NK-92 cell line, though, none of the other six known NK cell li",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.592691+00:00"
+}

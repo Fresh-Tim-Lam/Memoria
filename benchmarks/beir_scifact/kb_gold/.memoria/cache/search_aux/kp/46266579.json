@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "46266579",
+  "source_fingerprint": "af5230f3a4c1684893a4f11d18043a23",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "46266579",
+    "therapeutic-clearance-of-amyloid-by-antibodies-to-serum-amyloid-p-component."
+  ],
+  "key_phrases": [
+    "therapeutic",
+    "clearance",
+    "amyloid",
+    "by",
+    "antibodies",
+    "serum",
+    "component",
+    "background"
+  ],
+  "summary_1l": "Therapeutic Clearance of Amyloid by Antibodies to Serum Amyloid P Component.",
+  "query_hits": [],
+  "embed_text": "46266579 Therapeutic Clearance of Amyloid by Antibodies to Serum Amyloid P Component. science scifact BACKGROUND The amyloid fibril deposits that cause systemic amyloidosis always contain the nonfibrillar normal plasma protein, serum amyloid P component (SAP). The drug… 46266579 therapeutic-clearance-of-amyloid-by-antibodies-to-serum-amyloid-p-component. therapeutic clearance amyloid by antibodies serum component background Therapeutic Clearance of Amyloid by Antibodies to Serum Amyloid P Component. Therapeutic Clearance of Amyloid by Antibodies to Serum Amyloid P Component. BACKGROUND The amyloid fibril deposits that cause systemic amyloidosis always contain the nonfibrillar normal plasma protein, serum amyloid P component (SAP). The drug (R)-1-[6-[(R)-2-carboxy-pyrrolidin-1-yl]-6-oxo-hexanoyl]pyrrolidine-2-carboxylic acid (CPHPC) efficiently depletes SAP from the plasma but leaves some SAP in amyloid deposits that can be specifically targeted by therapeutic IgG anti-SAP antibodies. In murine amyloid A type amyloidosis, the binding of these antibodies to the residual SAP in amyloid deposits activates complement and triggers the rapid clearance of amyloid by macrophage-derived multinucleated giant cells. METHODS We conducted an open-label, single-dose-escalation, phase 1 trial involvi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.718615+00:00"
+}

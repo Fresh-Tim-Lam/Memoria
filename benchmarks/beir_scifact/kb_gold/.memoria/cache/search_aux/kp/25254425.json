@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25254425",
+  "source_fingerprint": "dc1683f7283884e67cd9ce316035d88b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25254425",
+    "nucleosome-stability-mediated-by-histone-variants-h3.3-and-h2a.z."
+  ],
+  "key_phrases": [
+    "nucleosome",
+    "stability",
+    "mediated",
+    "by",
+    "histone",
+    "variants",
+    "h3.3",
+    "h2a"
+  ],
+  "summary_1l": "Nucleosome stability mediated by histone variants H3.",
+  "query_hits": [],
+  "embed_text": "25254425 Nucleosome stability mediated by histone variants H3.3 and H2A.Z. science scifact Nucleosomes containing the histone variant H3.3 tend to be clustered in vivo in the neighborhood of transcriptionally active genes and over regulatory elements. It has not been clear, however, whether H3.3-containing nucleosomes possess… 25254425 nucleosome-stability-mediated-by-histone-variants-h3.3-and-h2a.z. nucleosome stability mediated by histone variants h3.3 h2a Nucleosome stability mediated by histone variants H3. Nucleosome stability mediated by histone variants H3.3 and H2A.Z. Nucleosomes containing the histone variant H3.3 tend to be clustered in vivo in the neighborhood of transcriptionally active genes and over regulatory elements. It has not been clear, however, whether H3.3-containing nucleosomes possess unique properties that would affect transcription. We report here that H3.3 nucleosomes isolated from vertebrates, regardless of whether they are partnered with H2A or H2A.Z, are unusually sensitive to salt-dependent disruption, losing H2A/H2B or H2A.Z/H2B dimers. Immunoprecipitation studies of nucleosome core particles (NCPs) show that NCPs that contain both H3.3 and H2A.Z are even less stable than NCPs containing H3.3 and H2A. Intriguingly, NCPs containing H3 and H2A.Z are at least as stabl",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.221138+00:00"
+}

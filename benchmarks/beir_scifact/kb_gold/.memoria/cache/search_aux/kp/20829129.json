@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20829129",
+  "source_fingerprint": "845a44778ca19d83285f1e8e7f0f0bd0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20829129",
+    "gut-expressed-gustducin-and-taste-receptors-regulate-secretion-of-glucagon-like-peptide-1."
+  ],
+  "key_phrases": [
+    "gut",
+    "expressed",
+    "gustducin",
+    "taste",
+    "receptors",
+    "regulate",
+    "secretion",
+    "glucagon"
+  ],
+  "summary_1l": "Gut-expressed gustducin and taste receptors regulate secretion of glucagon-like peptide-1.",
+  "query_hits": [],
+  "embed_text": "20829129 Gut-expressed gustducin and taste receptors regulate secretion of glucagon-like peptide-1. science scifact Glucagon-like peptide-1 (GLP-1), released from gut endocrine L cells in response to glucose, regulates appetite, insulin secretion, and gut motility. How glucose given orally, but not systemically, induces GLP-1 secretion is unknown. We… 20829129 gut-expressed-gustducin-and-taste-receptors-regulate-secretion-of-glucagon-like-peptide-1. gut expressed gustducin taste receptors regulate secretion glucagon Gut-expressed gustducin and taste receptors regulate secretion of glucagon-like peptide-1. Gut-expressed gustducin and taste receptors regulate secretion of glucagon-like peptide-1. Glucagon-like peptide-1 (GLP-1), released from gut endocrine L cells in response to glucose, regulates appetite, insulin secretion, and gut motility. How glucose given orally, but not systemically, induces GLP-1 secretion is unknown. We show that human duodenal L cells express sweet taste receptors, the taste G protein gustducin, and several other taste transduction elements. Mouse intestinal L cells also express alpha-gustducin. Ingestion of glucose by alpha-gustducin null mice revealed deficiencies in secretion of GLP-1 and the regulation of plasma insulin and glucose. Isolated small bowel and intestinal villi from alpha-gustducin null mice showed markedly defective GLP-1 secretion in response to g",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.988630+00:00"
+}

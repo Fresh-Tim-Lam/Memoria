@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3308636",
+  "source_fingerprint": "079e39458c46adfd90098744905f2791",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3308636",
+    "interferons:-success-in-anti-viral-immunotherapy."
+  ],
+  "key_phrases": [
+    "interferons",
+    "success",
+    "anti",
+    "viral",
+    "immunotherapy",
+    "ifns",
+    "glycoproteins",
+    "with"
+  ],
+  "summary_1l": "Interferons: Success in anti-viral immunotherapy.",
+  "query_hits": [],
+  "embed_text": "3308636 Interferons: Success in anti-viral immunotherapy. science scifact The interferons (IFNs) are glycoproteins with strong antiviral activities that represent one of the first lines of host defense against invading pathogens. These proteins are classified into three groups, Type I, II and III IFNs, based on… 3308636 interferons:-success-in-anti-viral-immunotherapy. interferons success anti viral immunotherapy ifns glycoproteins with Interferons: Success in anti-viral immunotherapy. Interferons: Success in anti-viral immunotherapy. The interferons (IFNs) are glycoproteins with strong antiviral activities that represent one of the first lines of host defense against invading pathogens. These proteins are classified into three groups, Type I, II and III IFNs, based on the structure of their receptors on the cell surface. Due to their ability to modulate immune responses, they have become attractive therapeutic options to control chronic virus infections. In combination with other drugs, Type I IFNs are considered as \"standard of care\" in suppressing Hepatitis C (HCV) and Hepatitis B (HBV) infections, while Type III IFN has generated encouraging results as a treatment for HCV infection in phase III clinical trials. However, though effective, using IFNs as a treatment is",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.208441+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "40500723",
+  "source_fingerprint": "7e3ba10d102eea228b529b4ef1027860",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "40500723",
+    "immigration-cohorts-and-residential-overcrowding-in-southern-california"
+  ],
+  "key_phrases": [
+    "immigration",
+    "cohorts",
+    "residential",
+    "overcrowding",
+    "southern",
+    "california",
+    "what",
+    "degree"
+  ],
+  "summary_1l": "To what degree do immigrants reduce their high rates of residential overcrowding with increasing length of residence in the Unit",
+  "query_hits": [],
+  "embed_text": "40500723 Immigration cohorts and residential overcrowding in southern California science scifact To what degree do immigrants reduce their high rates of residential overcrowding with increasing length of residence in the United States? This question is addressed through the application of a “double cohort” method that nests birth… 40500723 immigration-cohorts-and-residential-overcrowding-in-southern-california immigration cohorts residential overcrowding southern california what degree To what degree do immigrants reduce their high rates of residential overcrowding with increasing length of residence in the Unit Immigration cohorts and residential overcrowding in southern California To what degree do immigrants reduce their high rates of residential overcrowding with increasing length of residence in the United States? This question is addressed through the application of a “double cohort” method that nests birth cohorts within immigration cohorts. This method enables duration of immigration effects to be separated from aging effects as cohorts pass through life course phases, when family sizes may be growing or shrinking. The analysis finds that cohort trends differ sharply from the cross-sectional pattern observed at a single point in time. Cohorts’ growth in income is found to contribute substantially to the decline in overcrowding over time. Cohort trends among Hispanic immigrants, however, di",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.604091+00:00"
+}

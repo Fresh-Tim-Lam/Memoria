@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2248870",
+  "source_fingerprint": "a959454faa990989af8b22e8dc84f609",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2248870",
+    "lung-dendritic-cells-imprint-t-cell-lung-homing-and-promote-lung-immunity-through-the-chemokine-receptor-ccr4"
+  ],
+  "key_phrases": [
+    "lung",
+    "dendritic",
+    "cells",
+    "imprint",
+    "cell",
+    "homing",
+    "promote",
+    "immunity"
+  ],
+  "summary_1l": "T cell trafficking into the lung is critical for lung immunity, but the mechanisms that me",
+  "query_hits": [],
+  "embed_text": "2248870 Lung dendritic cells imprint T cell lung homing and promote lung immunity through the chemokine receptor CCR4 science scifact T cell trafficking into the lung is critical for lung immunity, but the mechanisms that mediate T cell lung homing are not well understood. Here, we show that lung dendritic cells (DCs) imprint T cell lung homing, as lung DC-activated T… 2248870 lung-dendritic-cells-imprint-t-cell-lung-homing-and-promote-lung-immunity-through-the-chemokine-receptor-ccr4 lung dendritic cells imprint cell homing promote immunity T cell trafficking into the lung is critical for lung immunity, but the mechanisms that me Lung dendritic cells imprint T cell lung homing and promote lung immunity through the chemokine receptor CCR4 T cell trafficking into the lung is critical for lung immunity, but the mechanisms that mediate T cell lung homing are not well understood. Here, we show that lung dendritic cells (DCs) imprint T cell lung homing, as lung DC-activated T cells traffic more efficiently into the lung in response to inhaled antigen and at homeostasis compared with T cells activated by DCs from other tissues. Consequently, lung DC-imprinted T cells protect against influenza more effectively than do gut and skin DC-imprinted T cells. Lung DCs imprint the expression of CCR4 on T cells, and CCR4 contributes to T cell lung imprinting. Lung DC-activated, CCR4-deficient T cells fail to traffic into the lung a",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.849244+00:00"
+}

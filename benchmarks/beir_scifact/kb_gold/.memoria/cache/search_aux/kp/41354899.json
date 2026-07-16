@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "41354899",
+  "source_fingerprint": "3c932ae6be5901eb9026b180239ef932",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "41354899",
+    "drug-interactions-between-oral-contraceptives-and-antibiotics."
+  ],
+  "key_phrases": [
+    "drug",
+    "interactions",
+    "between",
+    "oral",
+    "contraceptives",
+    "antibiotics",
+    "objective",
+    "evaluate"
+  ],
+  "summary_1l": "Drug interactions between oral contraceptives and antibiotics.",
+  "query_hits": [],
+  "embed_text": "41354899 Drug interactions between oral contraceptives and antibiotics. science scifact OBJECTIVE To evaluate the evidence on possible drug interactions between antibiotics and oral contraceptives (OCs) that may lead to OC failure. DATA SOURCES MEDLINE and Lexis/Nexis Medical Library searches for 1966-1999 using the key word… 41354899 drug-interactions-between-oral-contraceptives-and-antibiotics. drug interactions between oral contraceptives antibiotics objective evaluate Drug interactions between oral contraceptives and antibiotics. Drug interactions between oral contraceptives and antibiotics. OBJECTIVE To evaluate the evidence on possible drug interactions between antibiotics and oral contraceptives (OCs) that may lead to OC failure. DATA SOURCES MEDLINE and Lexis/Nexis Medical Library searches for 1966-1999 using the key word \"oral contraceptives,\" cross-indexed with the terms \"antibiotics,\" \"adverse effects,\" and \"pregnancy,\" and MEDLINE search using the additional MeSH term \"drug interactions. \" No language restrictions were used. METHODS OF STUDY SELECTION A total of 167 articles were retrieved for analysis. Another 32 articles were identified by review of the references cited in these publications. Articles were selected based on their ability to provide information on the relationship between antibiotic therap",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.382996+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "31154082",
+  "source_fingerprint": "919afc4310bb62a6d586ad8d2ba5f18c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "31154082",
+    "the-binding-of-maize-dhn1-to-lipid-vesicles.-gain-of-structure-and-lipid-specificity."
+  ],
+  "key_phrases": [
+    "binding",
+    "maize",
+    "dhn1",
+    "lipid",
+    "vesicles",
+    "gain",
+    "structure",
+    "specificity"
+  ],
+  "summary_1l": "The binding of maize DHN1 to lipid vesicles.",
+  "query_hits": [],
+  "embed_text": "31154082 The binding of maize DHN1 to lipid vesicles. Gain of structure and lipid specificity. science scifact Dehydrins (DHNs; late embryogenesis abundant D-11) are a family of plant proteins induced in response to abiotic stresses such as drought, low temperature, and salinity or during the late stages of embryogenesis. Spectral and thermal… 31154082 the-binding-of-maize-dhn1-to-lipid-vesicles.-gain-of-structure-and-lipid-specificity. binding maize dhn1 lipid vesicles gain structure specificity The binding of maize DHN1 to lipid vesicles. The binding of maize DHN1 to lipid vesicles. Gain of structure and lipid specificity. Dehydrins (DHNs; late embryogenesis abundant D-11) are a family of plant proteins induced in response to abiotic stresses such as drought, low temperature, and salinity or during the late stages of embryogenesis. Spectral and thermal properties of these proteins in purified form suggest that they are \"intrinsically unstructured. \" However, DHNs contain at least one copy of a consensus 15-amino acid sequence, the \"K segment,\" which resembles a class A2 amphipathic alpha-helical, lipid-binding domain found in other proteins such as apolipoproteins and alpha-synuclein. The presence of the K segment raises the question of whether DHNs bind lipids, bilayers, or phospholipid vesicles. Here, we show that maize (",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.353985+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "44387884",
+  "source_fingerprint": "05672955d72e65e89ceac8e9b687718e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "44387884",
+    "platelet-activation-in-type-2-diabetes-mellitus."
+  ],
+  "key_phrases": [
+    "platelet",
+    "activation",
+    "type",
+    "diabetes",
+    "mellitus",
+    "abnormal",
+    "metabolic",
+    "state"
+  ],
+  "summary_1l": "Platelet activation in type 2 diabetes mellitus.",
+  "query_hits": [],
+  "embed_text": "44387884 Platelet activation in type 2 diabetes mellitus. science scifact The abnormal metabolic state that accompanies diabetes renders arteries susceptible to atherosclerosis, being capable of altering the functional properties of multiple cell types, including endothelium and platelets. In particular, an… 44387884 platelet-activation-in-type-2-diabetes-mellitus. platelet activation type diabetes mellitus abnormal metabolic state Platelet activation in type 2 diabetes mellitus. Platelet activation in type 2 diabetes mellitus. The abnormal metabolic state that accompanies diabetes renders arteries susceptible to atherosclerosis, being capable of altering the functional properties of multiple cell types, including endothelium and platelets. In particular, an altered platelet metabolism and changes in intraplatelet signaling pathways may contribute to the pathogenesis of atherothrombotic complications of diabetes. A variety of mechanisms may be responsible for enhanced platelet aggregation. Among them, hyperglycemia may represent a causal factor for in vivo platelet activation, and may be responsible for nonenzymatic glycation of platelet glycoproteins, causing changes in their structure and conformation, as well as alterations of membrane lipid dynamics. Furthermor",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.284328+00:00"
+}

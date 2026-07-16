@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4388082",
+  "source_fingerprint": "302be9a9931e43dfc720f60f2a6b7ec2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4388082",
+    "drosophila-oocyte-localization-is-mediated-by-differential-cadherin-based-adhesion."
+  ],
+  "key_phrases": [
+    "drosophila",
+    "oocyte",
+    "localization",
+    "mediated",
+    "by",
+    "differential",
+    "cadherin",
+    "based"
+  ],
+  "summary_1l": "Drosophila oocyte localization is mediated by differential cadherin-based adhesion.",
+  "query_hits": [],
+  "embed_text": "4388082 Drosophila oocyte localization is mediated by differential cadherin-based adhesion. science scifact In a Drosophila follicle the oocyte always occupies a posterior position among a group of sixteen germline cells. Although the importance of this cell arrangement for the subsequent formation of the anterior-posterior axis of the embryo is… 4388082 drosophila-oocyte-localization-is-mediated-by-differential-cadherin-based-adhesion. drosophila oocyte localization mediated by differential cadherin based Drosophila oocyte localization is mediated by differential cadherin-based adhesion. Drosophila oocyte localization is mediated by differential cadherin-based adhesion. In a Drosophila follicle the oocyte always occupies a posterior position among a group of sixteen germline cells. Although the importance of this cell arrangement for the subsequent formation of the anterior-posterior axis of the embryo is well documented, the molecular mechanism responsible for the posterior localization of the oocyte was unknown. Here we show that the homophilic adhesion molecule DE-cadherin mediates oocyte positioning. During follicle biogenesis, DE-cadherin is expressed in germline (including oocyte) and surrounding follicle cells, with the highest concentration of DE-cadherin being found at the interface between oocyte and posterior follicle cells. Mosaic analysis shows that DE-cadheri",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.406425+00:00"
+}

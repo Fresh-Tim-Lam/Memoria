@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16322674",
+  "source_fingerprint": "873b1119532ee25c9745619fa9b5f295",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16322674",
+    "birth-size-and-breast-cancer-risk:-re-analysis-of-individual-participant-data-from-32-studies"
+  ],
+  "key_phrases": [
+    "birth",
+    "size",
+    "breast",
+    "cancer",
+    "risk",
+    "re",
+    "analysis",
+    "individual"
+  ],
+  "summary_1l": "BACKGROUND Birth size, perhaps a proxy for prenatal environment, might be a correlate of subsequent breast",
+  "query_hits": [],
+  "embed_text": "16322674 Birth Size and Breast Cancer Risk: Re-analysis of Individual Participant Data from 32 Studies science scifact BACKGROUND Birth size, perhaps a proxy for prenatal environment, might be a correlate of subsequent breast cancer risk, but findings from epidemiological studies have been inconsistent. We re-analysed individual participant data from… 16322674 birth-size-and-breast-cancer-risk:-re-analysis-of-individual-participant-data-from-32-studies birth size breast cancer risk re analysis individual BACKGROUND Birth size, perhaps a proxy for prenatal environment, might be a correlate of subsequent breast Birth Size and Breast Cancer Risk: Re-analysis of Individual Participant Data from 32 Studies BACKGROUND Birth size, perhaps a proxy for prenatal environment, might be a correlate of subsequent breast cancer risk, but findings from epidemiological studies have been inconsistent. We re-analysed individual participant data from published and unpublished studies to obtain more precise estimates of the magnitude and shape of the birth size-breast cancer association. METHODS AND FINDINGS Studies were identified through computer-assisted and manual searches, and personal communication with investigators. Individual participant data from 32 studies, comprising 22,058 breast cancer cases, were obtained. Random effect models were used, if appropriate, to combine study-specific estimates of effect.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.124994+00:00"
+}

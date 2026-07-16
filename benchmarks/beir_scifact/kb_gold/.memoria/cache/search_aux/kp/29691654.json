@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29691654",
+  "source_fingerprint": "17d209d3a0b4a992f18f720c635ea783",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29691654",
+    "uncoupling-mitochondrial-respiration-for-diabesity."
+  ],
+  "key_phrases": [
+    "uncoupling",
+    "mitochondrial",
+    "respiration",
+    "diabesity",
+    "until",
+    "recently",
+    "mechanism",
+    "adaptive"
+  ],
+  "summary_1l": "Uncoupling Mitochondrial Respiration for Diabesity.",
+  "query_hits": [],
+  "embed_text": "29691654 Uncoupling Mitochondrial Respiration for Diabesity. science scifact Until recently, the mechanism of adaptive thermogenesis was ascribed to the expression of uncoupling protein 1 (UCP1) in brown and beige adipocytes. UCP1 is known to catalyze a proton leak of the inner mitochondrial membrane, resulting in… 29691654 uncoupling-mitochondrial-respiration-for-diabesity. uncoupling mitochondrial respiration diabesity until recently mechanism adaptive Uncoupling Mitochondrial Respiration for Diabesity. Uncoupling Mitochondrial Respiration for Diabesity. Until recently, the mechanism of adaptive thermogenesis was ascribed to the expression of uncoupling protein 1 (UCP1) in brown and beige adipocytes. UCP1 is known to catalyze a proton leak of the inner mitochondrial membrane, resulting in uncoupled oxidative metabolism with no production of adenosine triphosphate and increased energy expenditure. Thus increasing brown and beige adipose tissue with augmented UCP1 expression is a viable target for obesity-related disorders. Recent work demonstrates an UCP1-independent pathway to uncouple mitochondrial respiration. A secreted enzyme, PM20D1, enriched in UCP1+ adipocytes, exhibits catalytic and hydrolytic activity to reversibly form N-acyl amino acids. N-acyl amino acids act as endogenous unc",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.130652+00:00"
+}

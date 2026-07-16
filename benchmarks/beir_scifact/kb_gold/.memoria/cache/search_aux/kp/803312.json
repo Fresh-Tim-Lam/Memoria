@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "803312",
+  "source_fingerprint": "289f5debabff55b6ec71a0bf4a0b7be7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "803312",
+    "cerebral-organoids-model-human-brain-development-and-microcephaly"
+  ],
+  "key_phrases": [
+    "cerebral",
+    "organoids",
+    "model",
+    "human",
+    "brain",
+    "development",
+    "microcephaly",
+    "complexity"
+  ],
+  "summary_1l": "The complexity of the human brain has made it difficult to study many brain disorders in model organisms, highlighting the need for an",
+  "query_hits": [],
+  "embed_text": "803312 Cerebral organoids model human brain development and microcephaly science scifact The complexity of the human brain has made it difficult to study many brain disorders in model organisms, highlighting the need for an in vitro model of human brain development. Here we have developed a human pluripotent stem cell-derived… 803312 cerebral-organoids-model-human-brain-development-and-microcephaly cerebral organoids model human brain development microcephaly complexity The complexity of the human brain has made it difficult to study many brain disorders in model organisms, highlighting the need for an Cerebral organoids model human brain development and microcephaly The complexity of the human brain has made it difficult to study many brain disorders in model organisms, highlighting the need for an in vitro model of human brain development. Here we have developed a human pluripotent stem cell-derived three-dimensional organoid culture system, termed cerebral organoids, that develop various discrete, although interdependent, brain regions. These include a cerebral cortex containing progenitor populations that organize and produce mature cortical neuron subtypes. Furthermore, cerebral organoids are shown to recapitulate features of human cortical development, namely characteristic progenitor zone organization with abundant outer radial glial stem cells. Finally, we use RNA interference an",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.755192+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5649538",
+  "source_fingerprint": "f8322a321b00ec53adb297d9817648e9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5649538",
+    "development-of-candidate-genomic-markers-to-select-breast-cancer-patients-for-dasatinib-therapy."
+  ],
+  "key_phrases": [
+    "development",
+    "candidate",
+    "genomic",
+    "markers",
+    "select",
+    "breast",
+    "cancer",
+    "patients"
+  ],
+  "summary_1l": "Development of candidate genomic markers to select breast cancer patients for dasatinib therapy.",
+  "query_hits": [],
+  "embed_text": "5649538 Development of candidate genomic markers to select breast cancer patients for dasatinib therapy. science scifact Patient selection is important for targeted therapies, yet phase I/II trials are often underpowered for developing predictors of drug response. The goal of this research was to define genomic predictors for dasatinib that could be… 5649538 development-of-candidate-genomic-markers-to-select-breast-cancer-patients-for-dasatinib-therapy. development candidate genomic markers select breast cancer patients Development of candidate genomic markers to select breast cancer patients for dasatinib therapy. Development of candidate genomic markers to select breast cancer patients for dasatinib therapy. Patient selection is important for targeted therapies, yet phase I/II trials are often underpowered for developing predictors of drug response. The goal of this research was to define genomic predictors for dasatinib that could be prospectively tested in early-phase clinical trials. Gene expression profiles of dasatinib-sensitive and dasatinib-resistant cell lines (n = 23) were compared to develop a dasatinib-sensitivity index (modified DS index). A Src pathway activity index (revised Src index) was defined using genes induced by the Src transfection of mammary epithelial cells and was optimized to be reproducible across cell lines and human specimens. A dasatinib target index was devised using",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.803986+00:00"
+}

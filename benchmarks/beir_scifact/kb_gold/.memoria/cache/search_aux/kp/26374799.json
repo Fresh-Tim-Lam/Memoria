@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26374799",
+  "source_fingerprint": "15c846173dc8332d1d5b2a9f0c32c51e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26374799",
+    "tgfbeta/activin/nodal-signaling-is-necessary-for-the-maintenance-of-pluripotency-in-human-embryonic-stem-cells."
+  ],
+  "key_phrases": [
+    "tgfbeta",
+    "activin",
+    "nodal",
+    "signaling",
+    "necessary",
+    "maintenance",
+    "pluripotency",
+    "human"
+  ],
+  "summary_1l": "TGFbeta/activin/nodal signaling is necessary for the maintenance of pluripotency in human embryonic stem cells.",
+  "query_hits": [],
+  "embed_text": "26374799 TGFbeta/activin/nodal signaling is necessary for the maintenance of pluripotency in human embryonic stem cells. science scifact Human embryonic stem cells (hESCs) self-renew indefinitely and give rise to derivatives of all three primary germ layers, yet little is known about the signaling cascades that govern their pluripotent character. Because it plays a… 26374799 tgfbeta/activin/nodal-signaling-is-necessary-for-the-maintenance-of-pluripotency-in-human-embryonic-stem-cells. tgfbeta activin nodal signaling necessary maintenance pluripotency human TGFbeta/activin/nodal signaling is necessary for the maintenance of pluripotency in human embryonic stem cells. TGFbeta/activin/nodal signaling is necessary for the maintenance of pluripotency in human embryonic stem cells. Human embryonic stem cells (hESCs) self-renew indefinitely and give rise to derivatives of all three primary germ layers, yet little is known about the signaling cascades that govern their pluripotent character. Because it plays a prominent role in the early cell fate decisions of embryonic development, we have examined the role of TGFbeta superfamily signaling in hESCs. We found that, in undifferentiated cells, the TGFbeta/activin/nodal branch is activated (through the signal transducer SMAD2/3) while the BMP/GDF branch (SMAD1/5) is only active in isolated mitotic cells. Upon early differentiation, SMAD2/3 signaling is decreased while SMAD1/5 signaling is activated. We next test",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.666688+00:00"
+}

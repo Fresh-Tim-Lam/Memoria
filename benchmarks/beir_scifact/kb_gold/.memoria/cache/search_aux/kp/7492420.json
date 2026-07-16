@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7492420",
+  "source_fingerprint": "c427f2fb6aea1166b89908332523d4bd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7492420",
+    "the-abbreviated-pluripotent-cell-cycle."
+  ],
+  "key_phrases": [
+    "abbreviated",
+    "pluripotent",
+    "cell",
+    "cycle",
+    "human",
+    "embryonic",
+    "stem",
+    "cells"
+  ],
+  "summary_1l": "The abbreviated pluripotent cell cycle.",
+  "query_hits": [],
+  "embed_text": "7492420 The abbreviated pluripotent cell cycle. science scifact Human embryonic stem cells (hESCs) and induced pluripotent stem cells proliferate rapidly and divide symmetrically producing equivalent progeny cells. In contrast, lineage committed cells acquire an extended symmetrical cell cycle.… 7492420 the-abbreviated-pluripotent-cell-cycle. abbreviated pluripotent cell cycle human embryonic stem cells The abbreviated pluripotent cell cycle. The abbreviated pluripotent cell cycle. Human embryonic stem cells (hESCs) and induced pluripotent stem cells proliferate rapidly and divide symmetrically producing equivalent progeny cells. In contrast, lineage committed cells acquire an extended symmetrical cell cycle. Self-renewal of tissue-specific stem cells is sustained by asymmetric cell division where one progeny cell remains a progenitor while the partner progeny cell exits the cell cycle and differentiates. There are three principal contexts for considering the operation and regulation of the pluripotent cell cycle: temporal, regulatory, and structural. The primary temporal context that the pluripotent self-renewal cell cycle of hESCs is a short G1 period without reducing periods of time allocated to S phase, G2, and mitosis. The",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.495516+00:00"
+}

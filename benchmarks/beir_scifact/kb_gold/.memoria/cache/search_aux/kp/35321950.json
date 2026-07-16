@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "35321950",
+  "source_fingerprint": "a67a4c572a0f5b8346eeb4ea5fd58457",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "35321950",
+    "staphylococcus-aureus-and-candida-albicans-infection-(animal-experiments)."
+  ],
+  "key_phrases": [
+    "staphylococcus",
+    "aureus",
+    "candida",
+    "albicans",
+    "infection",
+    "animal",
+    "experiments",
+    "during"
+  ],
+  "summary_1l": "Staphylococcus aureus and Candida albicans infection (animal experiments).",
+  "query_hits": [],
+  "embed_text": "35321950 Staphylococcus aureus and Candida albicans infection (animal experiments). science scifact During a certain period of the course of infection in white mice inoculated intraperitoneally with the pure culture of a proteolysing strain of Candida albicans, Staphylococcus aureus and C. albicans both, were isolated simultaneously from… 35321950 staphylococcus-aureus-and-candida-albicans-infection-(animal-experiments). staphylococcus aureus candida albicans infection animal experiments during Staphylococcus aureus and Candida albicans infection (animal experiments). Staphylococcus aureus and Candida albicans infection (animal experiments). During a certain period of the course of infection in white mice inoculated intraperitoneally with the pure culture of a proteolysing strain of Candida albicans, Staphylococcus aureus and C. albicans both, were isolated simultaneously from the peritoneal abscesses, especially those adhering to the stomach, duodenum, pancreas and the upper part of small intestine. This concommitant occurrence of the two pathogens was further corroborated by histopathological examination which revealed large number of staphylococci present in the close neighbourhood of Candida cells, usually in the center of the granulomata caused by the fungus. In view of the facts that the proteolytic end-products of C. albicans can offer a good sub",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.156666+00:00"
+}

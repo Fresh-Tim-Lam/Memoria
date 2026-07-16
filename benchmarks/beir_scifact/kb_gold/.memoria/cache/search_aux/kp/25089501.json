@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "25089501",
+  "source_fingerprint": "11bcaa68935c74cff52d26eaec9dfc2a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25089501"
+  ],
+  "key_phrases": [
+    "tumor",
+    "necrosis",
+    "factor",
+    "mediated",
+    "pathway",
+    "promoting",
+    "autosomal",
+    "dominant"
+  ],
+  "summary_1l": "Autosomal dominant polycystic kidney disease (ADPKD) is caused by heterozygous mutations in either PKD",
+  "query_hits": [],
+  "embed_text": "25089501 A tumor necrosis factor-α–mediated pathway promoting autosomal dominant polycystic kidney disease science scifact Autosomal dominant polycystic kidney disease (ADPKD) is caused by heterozygous mutations in either PKD1 or PKD2, genes that encode polycystin-1 and polycystin-2, respectively. We show here that tumor necrosis factor-α (TNF-α), an… 25089501 tumor necrosis factor mediated pathway promoting autosomal dominant Autosomal dominant polycystic kidney disease (ADPKD) is caused by heterozygous mutations in either PKD A tumor necrosis factor-α–mediated pathway promoting autosomal dominant polycystic kidney disease Autosomal dominant polycystic kidney disease (ADPKD) is caused by heterozygous mutations in either PKD1 or PKD2, genes that encode polycystin-1 and polycystin-2, respectively. We show here that tumor necrosis factor-α (TNF-α), an inflammatory cytokine present in the cystic fluid of humans with ADPKD, disrupts the localization of polycystin-2 to the plasma membrane and primary cilia through a scaffold protein, FIP2, which is induced by TNF-α. Treatment of mouse embryonic kidney organ cultures with TNF-α resulted in formation of cysts, and this effect was exacerbated in the Pkd2+/− kidneys. TNF-α also stimulated cyst formation in vivo in Pkd2+/− mice. In contrast, treatment of Pkd2+/− mice with",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.990934+00:00"
+}

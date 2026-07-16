@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23100220",
+  "source_fingerprint": "508a569e628bcb34bda9751191da3e3c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23100220",
+    "lipoxins:-novel-series-of-biologically-active-compounds-formed-from-arachidonic-acid-in-human-leukocytes."
+  ],
+  "key_phrases": [
+    "lipoxins",
+    "novel",
+    "series",
+    "biologically",
+    "active",
+    "compounds",
+    "formed",
+    "from"
+  ],
+  "summary_1l": "Lipoxins: novel series of biologically active compounds formed from arachidonic acid in human leukocytes.",
+  "query_hits": [],
+  "embed_text": "23100220 Lipoxins: novel series of biologically active compounds formed from arachidonic acid in human leukocytes. science scifact Trihydroxytetraenes, a novel series of oxygenated derivatives formed from arachidonic acid in human leukocytes, were recently isolated [Serhan, C. N., Hamberg, M. & Samuelsson, B. (1984) Biochem. Biophys. Res. Commun. 118, 943-949]. The… 23100220 lipoxins:-novel-series-of-biologically-active-compounds-formed-from-arachidonic-acid-in-human-leukocytes. lipoxins novel series biologically active compounds formed from Lipoxins: novel series of biologically active compounds formed from arachidonic acid in human leukocytes. Lipoxins: novel series of biologically active compounds formed from arachidonic acid in human leukocytes. Trihydroxytetraenes, a novel series of oxygenated derivatives formed from arachidonic acid in human leukocytes, were recently isolated [Serhan, C. N., Hamberg, M. & Samuelsson, B. (1984) Biochem. Biophys. Res. Commun. 118, 943-949]. The structure of the major compound was established--i.e., 5,6,15L-trihydroxy-7,9,11,13-icosatetraenoic acid. The present study reports the structure of a second member of the trihydroxytetraene series of compounds--i.e., 5D,14,15L-trihydroxy-6,8,10,12-icosatetraenoic acid. When added to human neutrophils, 5,6,15L-trihydroxy-7,9,11,13-icosatetraenoic acid stimulated superoxide anion generation and degranulation at submicromolar concentrations without provok",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.834082+00:00"
+}

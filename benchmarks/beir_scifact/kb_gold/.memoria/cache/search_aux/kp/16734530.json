@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16734530",
+  "source_fingerprint": "2802ca58491582c94d02ea1f6e94531c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16734530",
+    "the-association-between-single-nucleotide-polymorphisms-of-orai1-gene-and-breast-cancer-in-a-taiwanese-population"
+  ],
+  "key_phrases": [
+    "association",
+    "between",
+    "single",
+    "nucleotide",
+    "polymorphisms",
+    "orai1",
+    "gene",
+    "breast"
+  ],
+  "summary_1l": "BACKGROUND Breast cancer is the most common malignancy in women.",
+  "query_hits": [],
+  "embed_text": "16734530 The Association between Single-Nucleotide Polymorphisms of ORAI1 Gene and Breast Cancer in a Taiwanese Population science scifact BACKGROUND Breast cancer is the most common malignancy in women. There is increasing evidence suggesting that ORAI1, components of store-operated calcium channel, play a pivotal role in breast cancer progression and metastasis. METHODS A… 16734530 the-association-between-single-nucleotide-polymorphisms-of-orai1-gene-and-breast-cancer-in-a-taiwanese-population association between single nucleotide polymorphisms orai1 gene breast BACKGROUND Breast cancer is the most common malignancy in women. The Association between Single-Nucleotide Polymorphisms of ORAI1 Gene and Breast Cancer in a Taiwanese Population BACKGROUND Breast cancer is the most common malignancy in women. There is increasing evidence suggesting that ORAI1, components of store-operated calcium channel, play a pivotal role in breast cancer progression and metastasis. METHODS A total of 384 female patients with breast cancer were included in this study. We selected five representative tagging ORAI1 SNPs from HapMap database with minimum allele frequency (MAF) >10%. Genotyping was performed using TaqMan allelic discrimination assay. Chi-square (χ²) test was used to analyze statistical differences among control and patient groups in genotype and allelic frequencies. RESULTS Two of the ORAI1 SNPs (rs12320939 and rs123132",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.719051+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "28193026",
+  "source_fingerprint": "fbd75f5cafdb49a82e02fe0dc7f86489",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "28193026",
+    "a-unified-concept-of-species-and-its-consequences-for-the-future-of-taxonomy"
+  ],
+  "key_phrases": [
+    "unified",
+    "concept",
+    "species",
+    "its",
+    "consequences",
+    "future",
+    "taxonomy",
+    "contemporary"
+  ],
+  "summary_1l": "Contemporary species concepts are diverse.",
+  "query_hits": [],
+  "embed_text": "28193026 A unified concept of species and its consequences for the future of taxonomy science scifact Contemporary species concepts are diverse. Nonetheless, all share the fundamental idea that species are segments of lineages at the population level of biological organization. They differ in the secondary properties (e.g., intrinsic… 28193026 a-unified-concept-of-species-and-its-consequences-for-the-future-of-taxonomy unified concept species its consequences future taxonomy contemporary Contemporary species concepts are diverse. A unified concept of species and its consequences for the future of taxonomy Contemporary species concepts are diverse. Nonetheless, all share the fundamental idea that species are segments of lineages at the population level of biological organization. They differ in the secondary properties (e.g., intrinsic reproductive isolation, monophyly, diagnosability) that are treated as necessary for considering lineages to be species. A unified species concept can be achieved by interpreting the common fundamental idea of being a separately evolving lineage segment as the only necessary property of species and viewing the various secondary properties either as lines of evidence relevant to assessing lineage separation or as properties that define different subcategories of the species category (e",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.649290+00:00"
+}

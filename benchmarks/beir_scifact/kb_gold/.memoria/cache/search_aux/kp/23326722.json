@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23326722",
+  "source_fingerprint": "84d86df721aa36dd501d0f7238ceddd3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23326722",
+    "clinical-and-laboratory-features-of-adult-t-cell-leukaemia-lymphoma-in-barbados."
+  ],
+  "key_phrases": [
+    "clinical",
+    "laboratory",
+    "features",
+    "adult",
+    "cell",
+    "leukaemia",
+    "lymphoma",
+    "barbados"
+  ],
+  "summary_1l": "Clinical and laboratory features of adult T-cell leukaemia lymphoma in Barbados.",
+  "query_hits": [],
+  "embed_text": "23326722 Clinical and laboratory features of adult T-cell leukaemia lymphoma in Barbados. science scifact We describe the clinical and pathological features of 23 Afro-Caribbean patients with adult T-cell leukaemia/lymphoma admitted to the Queen Elizabeth Hospital, Barbados over a 5 year period. There were 9 males and 14 females, with a median… 23326722 clinical-and-laboratory-features-of-adult-t-cell-leukaemia-lymphoma-in-barbados. clinical laboratory features adult cell leukaemia lymphoma barbados Clinical and laboratory features of adult T-cell leukaemia lymphoma in Barbados. Clinical and laboratory features of adult T-cell leukaemia lymphoma in Barbados. We describe the clinical and pathological features of 23 Afro-Caribbean patients with adult T-cell leukaemia/lymphoma admitted to the Queen Elizabeth Hospital, Barbados over a 5 year period. There were 9 males and 14 females, with a median age of 38 years (range 14-84). Twelve had acute leukaemia, 10 lymphoma (including 4 with solitary extra nodal lesions) and 1 smouldering subtype. Two patients had a past history of tropical spastic paraparesis/HTLV I associated myelopathy (TSP/HAM). The prognosis was poor, with only 3 complete responses to chemotherapy (CHOP) lasting from 9 to 36 months. We conclude that ATLL in Barbados is similar to the disease in the other Caribbean islands and Japan, except that in Barba",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.269434+00:00"
+}

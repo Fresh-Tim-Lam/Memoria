@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10526279",
+  "source_fingerprint": "da5b8c72273804964152c328b8452303",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10526279",
+    "oxymetholone-therapy-of-fanconi-anemia-suppresses-osteopontin-transcription-and-induces-hematopoietic-stem-cell-cycling"
+  ],
+  "key_phrases": [
+    "oxymetholone",
+    "therapy",
+    "fanconi",
+    "anemia",
+    "suppresses",
+    "osteopontin",
+    "transcription",
+    "induces"
+  ],
+  "summary_1l": "Androgens are widely used for treating Fanconi anemia (FA) and other human bone",
+  "query_hits": [],
+  "embed_text": "10526279 Oxymetholone Therapy of Fanconi Anemia Suppresses Osteopontin Transcription and Induces Hematopoietic Stem Cell Cycling science scifact Androgens are widely used for treating Fanconi anemia (FA) and other human bone marrow failure syndromes, but their mode of action remains incompletely understood. Aged Fancd2(-/-) mice were used to assess the therapeutic efficacy of… 10526279 oxymetholone-therapy-of-fanconi-anemia-suppresses-osteopontin-transcription-and-induces-hematopoietic-stem-cell-cycling oxymetholone therapy fanconi anemia suppresses osteopontin transcription induces Androgens are widely used for treating Fanconi anemia (FA) and other human bone Oxymetholone Therapy of Fanconi Anemia Suppresses Osteopontin Transcription and Induces Hematopoietic Stem Cell Cycling Androgens are widely used for treating Fanconi anemia (FA) and other human bone marrow failure syndromes, but their mode of action remains incompletely understood. Aged Fancd2(-/-) mice were used to assess the therapeutic efficacy of oxymetholone (OXM) and its mechanism of action. Eighteen-month-old Fancd2(-/-) mice recapitulated key human FA phenotypes, including reduced bone marrow cellularity, red cell macrocytosis, and peripheral pancytopenia. As in humans, chronic OXM treatment significantly improved these hematological parameters and stimulated the proliferation of hematopoietic stem and progenitor cells. RNA-Seq analysis implicated downregulation of osteopontin as",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:04.928859+00:00"
+}

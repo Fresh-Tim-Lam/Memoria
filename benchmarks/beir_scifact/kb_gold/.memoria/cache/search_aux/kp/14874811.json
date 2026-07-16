@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14874811",
+  "source_fingerprint": "f252b2b856539b2527ff9668c08bc9b2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14874811",
+    "hypoxia-induced-energy-stress-regulates-mrna-translation-and-cell-growth."
+  ],
+  "key_phrases": [
+    "hypoxia",
+    "induced",
+    "energy",
+    "stress",
+    "regulates",
+    "mrna",
+    "translation",
+    "cell"
+  ],
+  "summary_1l": "Hypoxia-induced energy stress regulates mRNA translation and cell growth.",
+  "query_hits": [],
+  "embed_text": "14874811 Hypoxia-induced energy stress regulates mRNA translation and cell growth. science scifact Oxygen (O2) deprivation, or hypoxia, has profound effects on cell metabolism and growth. Cells can adapt to low O2 in part through activation of hypoxia-inducible factor (HIF). We report here that hypoxia inhibits mRNA translation by… 14874811 hypoxia-induced-energy-stress-regulates-mrna-translation-and-cell-growth. hypoxia induced energy stress regulates mrna translation cell Hypoxia-induced energy stress regulates mRNA translation and cell growth. Hypoxia-induced energy stress regulates mRNA translation and cell growth. Oxygen (O2) deprivation, or hypoxia, has profound effects on cell metabolism and growth. Cells can adapt to low O2 in part through activation of hypoxia-inducible factor (HIF). We report here that hypoxia inhibits mRNA translation by suppressing multiple key regulators, including eIF2alpha, eEF2, and the mammalian target of rapamycin (mTOR) effectors 4EBP1, p70S6K, and rpS6, independent of HIF. Hypoxia results in energy starvation and activation of the AMPK/TSC2/Rheb/mTOR pathway. Hypoxic AMP-activated protein kinase (AMPK) activation also leads to eEF2 inhibition. Moreover, hypoxic effects on cellular bioenergetics and mTOR inhibition increase over time. Mutation of the TSC2 tumor suppressor gene confers a growth ad",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.825820+00:00"
+}

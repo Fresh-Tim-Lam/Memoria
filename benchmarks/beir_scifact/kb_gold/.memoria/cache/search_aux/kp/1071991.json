@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1071991",
+  "source_fingerprint": "55a64dcea6f484ef2ce940e42be58f38",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1071991",
+    "lymph-node-t-cell-responses-predict-the-efficacy-of-live-attenuated-siv-vaccines"
+  ],
+  "key_phrases": [
+    "lymph",
+    "node",
+    "cell",
+    "responses",
+    "predict",
+    "efficacy",
+    "live",
+    "attenuated"
+  ],
+  "summary_1l": "Live attenuated simian immunodeficiency virus (SIV) vaccines (LAVs) remain the most efficacious of all vaccines in nonh",
+  "query_hits": [],
+  "embed_text": "1071991 Lymph node T cell responses predict the efficacy of live attenuated SIV vaccines science scifact Live attenuated simian immunodeficiency virus (SIV) vaccines (LAVs) remain the most efficacious of all vaccines in nonhuman primate models of HIV and AIDS, yet the basis of their robust protection remains poorly understood. Here we show… 1071991 lymph-node-t-cell-responses-predict-the-efficacy-of-live-attenuated-siv-vaccines lymph node cell responses predict efficacy live attenuated Live attenuated simian immunodeficiency virus (SIV) vaccines (LAVs) remain the most efficacious of all vaccines in nonh Lymph node T cell responses predict the efficacy of live attenuated SIV vaccines Live attenuated simian immunodeficiency virus (SIV) vaccines (LAVs) remain the most efficacious of all vaccines in nonhuman primate models of HIV and AIDS, yet the basis of their robust protection remains poorly understood. Here we show that the degree of LAV-mediated protection against intravenous wild-type SIVmac239 challenge strongly correlates with the magnitude and function of SIV-specific, effector-differentiated T cells in the lymph node but not with the responses of such T cells in the blood or with other cellular, humoral and innate immune parameters. We found that maintenance of protective T cell responses is associated with persistent LAV replication in the lymph node, which occurs almost exclusivel",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:05.416051+00:00"
+}

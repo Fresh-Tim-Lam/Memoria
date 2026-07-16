@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8428837",
+  "source_fingerprint": "f836dc221bff7c2a8702983a15dcbda8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8428837",
+    "treatment-of-spondyloarthropathy-with-5-aminosalicylic-acid-(mesalazine):-an-open-trial."
+  ],
+  "key_phrases": [
+    "treatment",
+    "spondyloarthropathy",
+    "with",
+    "aminosalicylic",
+    "acid",
+    "mesalazine",
+    "open",
+    "trial"
+  ],
+  "summary_1l": "Treatment of spondyloarthropathy with 5-aminosalicylic acid (mesalazine): an open trial.",
+  "query_hits": [],
+  "embed_text": "8428837 Treatment of spondyloarthropathy with 5-aminosalicylic acid (mesalazine): an open trial. science scifact OBJECTIVE Ankylosing spondylitis (AS) and spondyloarthropathy (SpA) are inflammatory diseases of unknown etiology. Various exogenous and endogenous (inherited) factors play a role in their development. Sulfasalazine (SSZ) is generally… 8428837 treatment-of-spondyloarthropathy-with-5-aminosalicylic-acid-(mesalazine):-an-open-trial. treatment spondyloarthropathy with aminosalicylic acid mesalazine open trial Treatment of spondyloarthropathy with 5-aminosalicylic acid (mesalazine): an open trial. Treatment of spondyloarthropathy with 5-aminosalicylic acid (mesalazine): an open trial. OBJECTIVE Ankylosing spondylitis (AS) and spondyloarthropathy (SpA) are inflammatory diseases of unknown etiology. Various exogenous and endogenous (inherited) factors play a role in their development. Sulfasalazine (SSZ) is generally accepted as a disease modifying drug in the treatment of AS and SpA. Which part of SSZ, 5-acetylsalicylic acid (5-ASA, mesalazine) or sulfapyridine (SP), is the effective moiety is unknown. As the bowel, colon, and the ileum play an important role in the development of AS and SpA, it may be possible that 5-ASA is the effective moiety, with a similar mode of action as in the treatment of inflammatory bowel disease. To determine the efficacy of 5-ASA an open pilot study was",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.636784+00:00"
+}

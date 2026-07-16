@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "33076846",
+  "source_fingerprint": "0cd6c5377fbb25489a35a95afb1f62bf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "33076846",
+    "role-of-rhoa-specific-guanine-exchange-factors-in-regulation-of-endomitosis-in-megakaryocytes."
+  ],
+  "key_phrases": [
+    "role",
+    "rhoa",
+    "specific",
+    "guanine",
+    "exchange",
+    "factors",
+    "regulation",
+    "endomitosis"
+  ],
+  "summary_1l": "Role of RhoA-specific guanine exchange factors in regulation of endomitosis in megakaryocytes.",
+  "query_hits": [],
+  "embed_text": "33076846 Role of RhoA-specific guanine exchange factors in regulation of endomitosis in megakaryocytes. science scifact Polyploidization can precede the development of aneuploidy in cancer. Polyploidization in megakaryocytes (Mks), in contrast, is a highly controlled developmental process critical for efficient platelet production via unknown mechanisms.… 33076846 role-of-rhoa-specific-guanine-exchange-factors-in-regulation-of-endomitosis-in-megakaryocytes. role rhoa specific guanine exchange factors regulation endomitosis Role of RhoA-specific guanine exchange factors in regulation of endomitosis in megakaryocytes. Role of RhoA-specific guanine exchange factors in regulation of endomitosis in megakaryocytes. Polyploidization can precede the development of aneuploidy in cancer. Polyploidization in megakaryocytes (Mks), in contrast, is a highly controlled developmental process critical for efficient platelet production via unknown mechanisms. Using primary cells, we demonstrate that the guanine exchange factors GEF-H1 and ECT2, which are often overexpressed in cancer and are essential for RhoA activation during cytokinesis, must be downregulated for Mk polyploidization. The first (2N-4N) endomitotic cycle requires GEF-H1 downregulation, whereas subsequent cycles (>4N) require ECT2 downregulation. Exogenous expression of both GEF-H1 and ECT2 prevents endomitosis, resulting in proliferation of 2N Mks. Fu",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.193433+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "406733",
+  "source_fingerprint": "b29ddd6db7ab5641baf07052ab5daf8e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "406733",
+    "histones-are-incorporated-in-trans-during-reassembly-of-the-yeast-pho5-promoter."
+  ],
+  "key_phrases": [
+    "histones",
+    "incorporated",
+    "trans",
+    "during",
+    "reassembly",
+    "yeast",
+    "pho5",
+    "promoter"
+  ],
+  "summary_1l": "Histones are incorporated in trans during reassembly of the yeast PHO5 promoter.",
+  "query_hits": [],
+  "embed_text": "406733 Histones are incorporated in trans during reassembly of the yeast PHO5 promoter. science scifact In yeast, remodeling of PHO5 promoter chromatin upon activation is accompanied by transient hyperacetylation and subsequent eviction of histones from the promoter in trans. In the course of rerepression, nucleosomes have to be reassembled… 406733 histones-are-incorporated-in-trans-during-reassembly-of-the-yeast-pho5-promoter. histones incorporated trans during reassembly yeast pho5 promoter Histones are incorporated in trans during reassembly of the yeast PHO5 promoter. Histones are incorporated in trans during reassembly of the yeast PHO5 promoter. In yeast, remodeling of PHO5 promoter chromatin upon activation is accompanied by transient hyperacetylation and subsequent eviction of histones from the promoter in trans. In the course of rerepression, nucleosomes have to be reassembled on the promoter. We have analyzed where the histones for reassembly of the inactive promoter chromatin come from. The use of a strain with two differently tagged and differently regulated versions of histone H3 allowed us to discriminate between histones originating from the chromatin fraction and histones arising from the soluble histone pool. In this way, we show that the incorporated histones originate from a source in trans. Promoter closure occurs very rapidly, and the h",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.744011+00:00"
+}

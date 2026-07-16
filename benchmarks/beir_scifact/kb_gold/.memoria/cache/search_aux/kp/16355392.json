@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16355392",
+  "source_fingerprint": "8c9a7dc6713ce0d6eb6044a237640921",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16355392",
+    "modification-of-kidney-barrier-function-by-the-urokinase-receptor"
+  ],
+  "key_phrases": [
+    "modification",
+    "kidney",
+    "barrier",
+    "function",
+    "by",
+    "urokinase",
+    "receptor",
+    "podocyte"
+  ],
+  "summary_1l": "Podocyte dysfunction, represented by foot process effacement and proteinuria, is often the starting point for progressive kidney disea",
+  "query_hits": [],
+  "embed_text": "16355392 Modification of kidney barrier function by the urokinase receptor science scifact Podocyte dysfunction, represented by foot process effacement and proteinuria, is often the starting point for progressive kidney disease. Therapies aimed at the cellular level of the disease are currently not available. Here we show that… 16355392 modification-of-kidney-barrier-function-by-the-urokinase-receptor modification kidney barrier function by urokinase receptor podocyte Podocyte dysfunction, represented by foot process effacement and proteinuria, is often the starting point for progressive kidney disea Modification of kidney barrier function by the urokinase receptor Podocyte dysfunction, represented by foot process effacement and proteinuria, is often the starting point for progressive kidney disease. Therapies aimed at the cellular level of the disease are currently not available. Here we show that induction of urokinase receptor (uPAR) signaling in podocytes leads to foot process effacement and urinary protein loss via a mechanism that includes lipid-dependent activation of αvβ3 integrin. Mice lacking uPAR (Plaur−/−) are protected from lipopolysaccharide (LPS)-mediated proteinuria but develop disease after expression of a constitutively active β3 integrin. Gene transfer studies reveal a prerequisite for uPAR expression in podocytes, but not in endothelial cells, for the development of",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.146726+00:00"
+}

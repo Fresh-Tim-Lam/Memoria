@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36480032",
+  "source_fingerprint": "052072e0e6cb6d4493743fc67a2046f1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36480032",
+    "role-of-ocular-pigment-epithelial-cells-in-immune-privilege"
+  ],
+  "key_phrases": [
+    "role",
+    "ocular",
+    "pigment",
+    "epithelial",
+    "cells",
+    "immune",
+    "privilege",
+    "microenvironment"
+  ],
+  "summary_1l": "The ocular microenvironment is both immunosuppressive and anti-inflammatory in nature.",
+  "query_hits": [],
+  "embed_text": "36480032 Role of ocular pigment epithelial cells in immune privilege science scifact The ocular microenvironment is both immunosuppressive and anti-inflammatory in nature. Pigment epithelial (PE) cells isolated from the eye possess the ability to suppress the T cell receptor-dependent activation of T cells and the… 36480032 role-of-ocular-pigment-epithelial-cells-in-immune-privilege role ocular pigment epithelial cells immune privilege microenvironment The ocular microenvironment is both immunosuppressive and anti-inflammatory in nature. Role of ocular pigment epithelial cells in immune privilege The ocular microenvironment is both immunosuppressive and anti-inflammatory in nature. Pigment epithelial (PE) cells isolated from the eye possess the ability to suppress the T cell receptor-dependent activation of T cells and the induction of regulatory T cells in vitro. This property is dependent on the cells’ capacity to produce cell-surface and soluble inhibitory molecules, for example CD86 (B7-2), transforming growth factor (TGF)-β, thrombospondin-1, programmed cell death 1 ligand 1 (PD-L1/B7-H1), and cytotoxic T lymphocyte-associated antigen 2α. Cultured ocular PE cells from the iris, ciliary body, and retina can individually suppress T-cell activation via mechanisms that partially overlap. Moreover, PE-derived regulatory T",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:43.397543+00:00"
+}

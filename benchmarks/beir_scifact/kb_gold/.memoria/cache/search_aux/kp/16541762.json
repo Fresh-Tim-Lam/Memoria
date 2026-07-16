@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16541762",
+  "source_fingerprint": "b20c59cb6ec5bfb1e6e6f00a74e6ad1d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16541762",
+    "reprogramming-factor-stoichiometry-influences-the-epigenetic-state-and-biological-properties-of-induced-pluripotent-stem-cells."
+  ],
+  "key_phrases": [
+    "reprogramming",
+    "factor",
+    "stoichiometry",
+    "influences",
+    "epigenetic",
+    "state",
+    "biological",
+    "properties"
+  ],
+  "summary_1l": "Reprogramming factor stoichiometry influences the epigenetic state and biological properties of induced pluripotent stem cells.",
+  "query_hits": [],
+  "embed_text": "16541762 Reprogramming factor stoichiometry influences the epigenetic state and biological properties of induced pluripotent stem cells. science scifact We compared two genetically highly defined transgenic systems to identify parameters affecting reprogramming of somatic cells to a pluripotent state. Our results demonstrate that the level and stoichiometry of reprogramming factors during… 16541762 reprogramming-factor-stoichiometry-influences-the-epigenetic-state-and-biological-properties-of-induced-pluripotent-stem-cells. reprogramming factor stoichiometry influences epigenetic state biological properties Reprogramming factor stoichiometry influences the epigenetic state and biological properties of induced pluripotent stem cells. Reprogramming factor stoichiometry influences the epigenetic state and biological properties of induced pluripotent stem cells. We compared two genetically highly defined transgenic systems to identify parameters affecting reprogramming of somatic cells to a pluripotent state. Our results demonstrate that the level and stoichiometry of reprogramming factors during the reprogramming process strongly influence the resulting pluripotency of iPS cells. High expression of Oct4 and Klf4 combined with lower expression of c-Myc and Sox2 produced iPS cells that efficiently generated \"all-iPSC mice\" by tetraploid (4n) complementation, maintained normal imprinting at the Dlk1-Dio3 locus, and did not create mice with tumors. Loss of imprinting (LOI) at the Dlk1-Dio3 locus did not strictly correlate wi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.428953+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16853734",
+  "source_fingerprint": "fdb7dfa27a141cd2f8ebb6810c683e4b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16853734",
+    "matrix-metalloproteinase-1-is-necessary-for-the-migration-of-human-bone-marrow-derived-mesenchymal-stem-cells-toward-human-glioma"
+  ],
+  "key_phrases": [
+    "matrix",
+    "metalloproteinase",
+    "necessary",
+    "migration",
+    "human",
+    "bone",
+    "marrow",
+    "derived"
+  ],
+  "summary_1l": "Human mesenchymal stem cells (MSCs) have increasingly been used as cel",
+  "query_hits": [],
+  "embed_text": "16853734 Matrix Metalloproteinase 1 Is Necessary for the Migration of Human Bone Marrow-Derived Mesenchymal Stem Cells Toward Human Glioma science scifact Human mesenchymal stem cells (MSCs) have increasingly been used as cellular vectors for the delivery of therapeutic genes to tumors. However, the precise mechanism of mobilization remains poorly defined. In this study, MSCs that expressed… 16853734 matrix-metalloproteinase-1-is-necessary-for-the-migration-of-human-bone-marrow-derived-mesenchymal-stem-cells-toward-human-glioma matrix metalloproteinase necessary migration human bone marrow derived Human mesenchymal stem cells (MSCs) have increasingly been used as cel Matrix Metalloproteinase 1 Is Necessary for the Migration of Human Bone Marrow-Derived Mesenchymal Stem Cells Toward Human Glioma Human mesenchymal stem cells (MSCs) have increasingly been used as cellular vectors for the delivery of therapeutic genes to tumors. However, the precise mechanism of mobilization remains poorly defined. In this study, MSCs that expressed similar cell surface markers and exhibited multilineage differentiation potentials were isolated from various donors. Interestingly, different MSC isolates displayed differential migration ability toward human glioma cells. We hypothesized that distinct molecular signals may be involved in the varied tumor tropisms exhibited by different MSC isolates. To test this hypothesis, gene expression profiles of tumor-trophic MSCs were",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.943160+00:00"
+}

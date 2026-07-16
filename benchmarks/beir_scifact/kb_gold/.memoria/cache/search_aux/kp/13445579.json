@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13445579",
+  "source_fingerprint": "db2f491ef6bc85be4c2c00bf30a9b9b7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13445579",
+    "results-of-screening-for-intracranial-aneurysms-in-patients-with-coarctation-of-the-aorta."
+  ],
+  "key_phrases": [
+    "results",
+    "screening",
+    "intracranial",
+    "aneurysms",
+    "patients",
+    "with",
+    "coarctation",
+    "aorta"
+  ],
+  "summary_1l": "Results of screening for intracranial aneurysms in patients with coarctation of the aorta.",
+  "query_hits": [],
+  "embed_text": "13445579 Results of screening for intracranial aneurysms in patients with coarctation of the aorta. science scifact BACKGROUND AND PURPOSE IAs are found in 2.3% of adults; the mean age at detection is 52 years. Prevalence is <0.5% in young adults. Early studies suggest that 10%-50% of patients with aortic coarctation have IAs. Screening recommendations… 13445579 results-of-screening-for-intracranial-aneurysms-in-patients-with-coarctation-of-the-aorta. results screening intracranial aneurysms patients with coarctation aorta Results of screening for intracranial aneurysms in patients with coarctation of the aorta. Results of screening for intracranial aneurysms in patients with coarctation of the aorta. BACKGROUND AND PURPOSE IAs are found in 2.3% of adults; the mean age at detection is 52 years. Prevalence is <0.5% in young adults. Early studies suggest that 10%-50% of patients with aortic coarctation have IAs. Screening recommendations are variable. We sought to examine the prevalence of IAs through screening with MRA. MATERIALS AND METHODS Consecutive patients older than 16 years of age with coarctation undergoing brain MRA between May 1999 and October 2007 were included. MRA was performed by using a 1.5T scanner with a 3D time-of-flight protocol; simultaneous MR imaging was performed of the heart and aorta. Cerebral MRAs were double-reported by a neuroradiologist. Statistics are described as mea",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.259764+00:00"
+}

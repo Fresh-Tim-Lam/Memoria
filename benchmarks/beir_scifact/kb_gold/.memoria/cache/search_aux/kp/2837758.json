@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2837758",
+  "source_fingerprint": "f108837d8a52b7eb1b5fed5293736d6e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2837758",
+    "therapeutic-efficacy-of-a-multi-epitope-vaccine-against-helicobacter-pylori-infection-in-balb/c-mice-model."
+  ],
+  "key_phrases": [
+    "therapeutic",
+    "efficacy",
+    "multi",
+    "epitope",
+    "vaccine",
+    "against",
+    "helicobacter",
+    "pylori"
+  ],
+  "summary_1l": "Therapeutic efficacy of a multi-epitope vaccine against Helicobacter pylori infection in BALB/c mice model.",
+  "query_hits": [],
+  "embed_text": "2837758 Therapeutic efficacy of a multi-epitope vaccine against Helicobacter pylori infection in BALB/c mice model. science scifact Epitope vaccine is a promising option for therapeutic vaccination against Helicobacter pylori (H. pylori) infection. In this study, we constructed a multi-epitope vaccine with five epitopes and mucosal adjuvant E. coli heat-labile… 2837758 therapeutic-efficacy-of-a-multi-epitope-vaccine-against-helicobacter-pylori-infection-in-balb/c-mice-model. therapeutic efficacy multi epitope vaccine against helicobacter pylori Therapeutic efficacy of a multi-epitope vaccine against Helicobacter pylori infection in BALB/c mice model. Therapeutic efficacy of a multi-epitope vaccine against Helicobacter pylori infection in BALB/c mice model. Epitope vaccine is a promising option for therapeutic vaccination against Helicobacter pylori (H. pylori) infection. In this study, we constructed a multi-epitope vaccine with five epitopes and mucosal adjuvant E. coli heat-labile enterotoxin B subunit (LTB) named HUepi-LTB and evaluated its therapeutic effect against H. pylori infection in BALB/c mice model. HUepi-LTB containing three Th epitopes from UreB and two B cell epitopes from UreB and HpaA was constructed and expressed in E. coli. Oral therapeutic immunization with HUepi-LTB significantly decreased H. pylori colonization compared with oral immunization with PBS, and the protection was correlated with antigen-specific CD4+ T",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.926714+00:00"
+}

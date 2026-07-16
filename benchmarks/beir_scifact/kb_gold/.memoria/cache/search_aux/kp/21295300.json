@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21295300",
+  "source_fingerprint": "c582adb57d75b479529005906de99c81",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21295300",
+    "phosphorylation-of-atm-by-cdk5-mediates-dna-damage-signaling-and-regulates-neuronal-death"
+  ],
+  "key_phrases": [
+    "phosphorylation",
+    "atm",
+    "by",
+    "cdk5",
+    "mediates",
+    "dna",
+    "damage",
+    "signaling"
+  ],
+  "summary_1l": "The phosphatidylinositol-3-kinase-like kinase ATM (ataxia-telangiectasia mutated) has a central role in coordi",
+  "query_hits": [],
+  "embed_text": "21295300 Phosphorylation of ATM by Cdk5 mediates DNA damage signaling and regulates neuronal death science scifact The phosphatidylinositol-3-kinase-like kinase ATM (ataxia-telangiectasia mutated) has a central role in coordinating DNA damage responses, including cell-cycle checkpoint control, DNA repair and apoptosis. Mutations of ATM cause a spectrum… 21295300 phosphorylation-of-atm-by-cdk5-mediates-dna-damage-signaling-and-regulates-neuronal-death phosphorylation atm by cdk5 mediates dna damage signaling The phosphatidylinositol-3-kinase-like kinase ATM (ataxia-telangiectasia mutated) has a central role in coordi Phosphorylation of ATM by Cdk5 mediates DNA damage signaling and regulates neuronal death The phosphatidylinositol-3-kinase-like kinase ATM (ataxia-telangiectasia mutated) has a central role in coordinating DNA damage responses, including cell-cycle checkpoint control, DNA repair and apoptosis. Mutations of ATM cause a spectrum of defects ranging from neurodegeneration to cancer predisposition. However, the mechanism by which DNA damage activates ATM is poorly understood. Here we show that Cdk5 (cyclin-dependent kinase 5), activated by DNA damage, directly phosphorylates ATM at Ser 794 in post-mitotic neurons. Phosphorylation at Ser 794 precedes, and is required for, ATM autophosphorylation at Ser 1981, and activates ATM kinase activity. The Cdk5-ATM signal regulates phosphorylation and fu",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.744903+00:00"
+}

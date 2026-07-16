@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24725136",
+  "source_fingerprint": "c00be12a26063287f4f08e7f255ade15",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24725136",
+    "ataxia,-dementia,-and-hypogonadotropism-caused-by-disordered-ubiquitination."
+  ],
+  "key_phrases": [
+    "ataxia",
+    "dementia",
+    "hypogonadotropism",
+    "caused",
+    "by",
+    "disordered",
+    "ubiquitination",
+    "background"
+  ],
+  "summary_1l": "Ataxia, dementia, and hypogonadotropism caused by disordered ubiquitination.",
+  "query_hits": [],
+  "embed_text": "24725136 Ataxia, dementia, and hypogonadotropism caused by disordered ubiquitination. science scifact BACKGROUND The combination of ataxia and hypogonadism was first described more than a century ago, but its genetic basis has remained elusive. METHODS We performed whole-exome sequencing in a patient with ataxia and hypogonadotropic… 24725136 ataxia,-dementia,-and-hypogonadotropism-caused-by-disordered-ubiquitination. ataxia dementia hypogonadotropism caused by disordered ubiquitination background Ataxia, dementia, and hypogonadotropism caused by disordered ubiquitination. Ataxia, dementia, and hypogonadotropism caused by disordered ubiquitination. BACKGROUND The combination of ataxia and hypogonadism was first described more than a century ago, but its genetic basis has remained elusive. METHODS We performed whole-exome sequencing in a patient with ataxia and hypogonadotropic hypogonadism, followed by targeted sequencing of candidate genes in similarly affected patients. Neurologic and reproductive endocrine phenotypes were characterized in detail. The effects of sequence variants and the presence of an epistatic interaction were tested in a zebrafish model. RESULTS Digenic homozygous mutations in RNF216 and OTUD4, which encode a ubiquitin E3 ligase and a deubiquitinase, respectively, were found in three affected siblings in a consanguineous family. Additio",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.137099+00:00"
+}

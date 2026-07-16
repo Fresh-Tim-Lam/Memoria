@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "mdp-core",
+  "source_fingerprint": "6b9e69f6cc5352c6175fe4e265c6cda4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "mdp-core"
+  ],
+  "key_phrases": [
+    "mdp",
+    "id",
+    "前缀",
+    "相关",
+    "名称",
+    "不同",
+    "qianzhuixiangguanmingchengbutong",
+    "mdp id 前缀相关，名称不同。"
+  ],
+  "summary_1l": "MDP id 前缀相关，名称不同。",
+  "query_hits": [],
+  "embed_text": "mdp-core 马尔可夫决策过程 mdp-core mdp id 前缀 相关 名称 不同 qianzhuixiangguanmingchengbutong mdp id 前缀相关，名称不同。 MDP id 前缀相关，名称不同。 MDP id 前缀相关，名称不同。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T03:23:44.715344+00:00"
+}

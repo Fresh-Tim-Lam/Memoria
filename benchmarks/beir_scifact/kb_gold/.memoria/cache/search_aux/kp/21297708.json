@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21297708",
+  "source_fingerprint": "8efbb35b72701b8cf5db4cfb66a47009",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21297708",
+    "nerve-induced-release-of-nitric-oxide-in-the-rabbit-gastrointestinal-tract-as-measured-by-in-vivo-microdialysis."
+  ],
+  "key_phrases": [
+    "nerve",
+    "induced",
+    "release",
+    "nitric",
+    "oxide",
+    "rabbit",
+    "gastrointestinal",
+    "tract"
+  ],
+  "summary_1l": "Nerve-induced release of nitric oxide in the rabbit gastrointestinal tract as measured by in vivo microdialysis.",
+  "query_hits": [],
+  "embed_text": "21297708 Nerve-induced release of nitric oxide in the rabbit gastrointestinal tract as measured by in vivo microdialysis. science scifact 1. Nitric oxide (NO) has been suggested as a gastrointestinal neurotransmitter, mediating the gastric receptive relaxation and the relaxation in the peristaltic reflex. The aim of the present study was to measure nerve-induced NO formation… 21297708 nerve-induced-release-of-nitric-oxide-in-the-rabbit-gastrointestinal-tract-as-measured-by-in-vivo-microdialysis. nerve induced release nitric oxide rabbit gastrointestinal tract Nerve-induced release of nitric oxide in the rabbit gastrointestinal tract as measured by in vivo microdialysis. Nerve-induced release of nitric oxide in the rabbit gastrointestinal tract as measured by in vivo microdialysis. 1. Nitric oxide (NO) has been suggested as a gastrointestinal neurotransmitter, mediating the gastric receptive relaxation and the relaxation in the peristaltic reflex. The aim of the present study was to measure nerve-induced NO formation in vivo in the gastrointestinal tract. 2. Formation of the nitric oxide oxidation products nitrite and nitrate during vagal nerve stimulation were measured in the anaesthetized rabbit. Microdialysis probes were inserted into the wall of the stomach and proximal colon, and nitrite and nitrate in dialysate measured by capillary electrophoresis. 3. During bilateral vagal nerve stimulation there was an increase in nitrite and nitrate formation at",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.756248+00:00"
+}

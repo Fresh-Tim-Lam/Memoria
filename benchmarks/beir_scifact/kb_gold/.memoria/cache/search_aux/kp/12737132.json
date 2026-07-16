@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12737132",
+  "source_fingerprint": "e07fdafb539590d7202020c784989188",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12737132",
+    "tead-mediates-yap-dependent-gene-induction-and-growth-control."
+  ],
+  "key_phrases": [
+    "tead",
+    "mediates",
+    "yap",
+    "dependent",
+    "gene",
+    "induction",
+    "growth",
+    "control"
+  ],
+  "summary_1l": "TEAD mediates YAP-dependent gene induction and growth control.",
+  "query_hits": [],
+  "embed_text": "12737132 TEAD mediates YAP-dependent gene induction and growth control. science scifact The YAP transcription coactivator has been implicated as an oncogene and is amplified in human cancers. Recent studies have established that YAP is phosphorylated and inhibited by the Hippo tumor suppressor pathway. Here we demonstrate… 12737132 tead-mediates-yap-dependent-gene-induction-and-growth-control. tead mediates yap dependent gene induction growth control TEAD mediates YAP-dependent gene induction and growth control. TEAD mediates YAP-dependent gene induction and growth control. The YAP transcription coactivator has been implicated as an oncogene and is amplified in human cancers. Recent studies have established that YAP is phosphorylated and inhibited by the Hippo tumor suppressor pathway. Here we demonstrate that the TEAD family transcription factors are essential in mediating YAP-dependent gene expression. TEAD is also required for YAP-induced cell growth, oncogenic transformation, and epithelial-mesenchymal transition. CTGF is identified as a direct YAP target gene important for cell growth. Moreover, the functional relationship between YAP and TEAD is conserved in Drosophila Yki (the YAP homolog) and Scalloped (the TEAD homolog). Our study reveals TEAD as a new component in the Hippo pathway playi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:08.867364+00:00"
+}

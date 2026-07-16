@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18997216",
+  "source_fingerprint": "47f5cefc1c7e3a98a312d914a0b42bd8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18997216",
+    "sympathetic-baroreflex-gain-in-normotensive-pregnant-women."
+  ],
+  "key_phrases": [
+    "sympathetic",
+    "baroreflex",
+    "gain",
+    "normotensive",
+    "pregnant",
+    "women",
+    "muscle",
+    "nerve"
+  ],
+  "summary_1l": "Sympathetic baroreflex gain in normotensive pregnant women.",
+  "query_hits": [],
+  "embed_text": "18997216 Sympathetic baroreflex gain in normotensive pregnant women. science scifact Muscle sympathetic nerve activity is increased during normotensive pregnancy while mean arterial pressure is maintained or reduced, suggesting baroreflex resetting. We hypothesized spontaneous sympathetic baroreflex gain would be reduced… 18997216 sympathetic-baroreflex-gain-in-normotensive-pregnant-women. sympathetic baroreflex gain normotensive pregnant women muscle nerve Sympathetic baroreflex gain in normotensive pregnant women. Sympathetic baroreflex gain in normotensive pregnant women. Muscle sympathetic nerve activity is increased during normotensive pregnancy while mean arterial pressure is maintained or reduced, suggesting baroreflex resetting. We hypothesized spontaneous sympathetic baroreflex gain would be reduced in normotensive pregnant women relative to nonpregnant matched controls. Integrated muscle sympathetic burst incidence and total sympathetic activity (microneurography), blood pressure (Finometer), and R-R interval (ECG) were assessed at rest in 11 pregnant women (33 ± 1 wk gestation, 31 ± 1 yr, prepregnancy BMI: 23.5 ± 0.9 kg/m(2)) and 11 nonpregnant controls (29 ± 1 yr; BMI: 25.2 ± 1.7 kg/m(2)). Pregnant women had elevated baseline sympathetic burst incidence (43 ± 2 vs. 33 ± 2 bursts/100 heart",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.012679+00:00"
+}

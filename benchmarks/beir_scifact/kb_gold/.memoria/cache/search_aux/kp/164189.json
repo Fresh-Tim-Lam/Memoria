@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "164189",
+  "source_fingerprint": "f587fef5e3d790033d36bfab0e3b30b0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "164189",
+    "chk1-inhibits-replication-factory-activation-but-allows-dormant-origin-firing-in-existing-factories"
+  ],
+  "key_phrases": [
+    "chk1",
+    "inhibits",
+    "replication",
+    "factory",
+    "activation",
+    "but",
+    "allows",
+    "dormant"
+  ],
+  "summary_1l": "Replication origins are licensed by loading MCM2-7 hexamers before entry into S phase.",
+  "query_hits": [],
+  "embed_text": "164189 Chk1 inhibits replication factory activation but allows dormant origin firing in existing factories science scifact Replication origins are licensed by loading MCM2-7 hexamers before entry into S phase. However, only ∼10% of licensed origins are normally used in S phase, with the others remaining dormant. When fork progression is inhibited, dormant… 164189 chk1-inhibits-replication-factory-activation-but-allows-dormant-origin-firing-in-existing-factories chk1 inhibits replication factory activation but allows dormant Replication origins are licensed by loading MCM2-7 hexamers before entry into S phase. Chk1 inhibits replication factory activation but allows dormant origin firing in existing factories Replication origins are licensed by loading MCM2-7 hexamers before entry into S phase. However, only ∼10% of licensed origins are normally used in S phase, with the others remaining dormant. When fork progression is inhibited, dormant origins initiate nearby to ensure that all of the DNA is eventually replicated. In apparent contrast, replicative stress activates ataxia telangiectasia and rad-3-related (ATR) and Chk1 checkpoint kinases that inhibit origin firing. In this study, we show that at low levels of replication stress, ATR/Chk1 predominantly suppresses origin initiation by inhibiting the activation of new replication factories, thereby reducing the number of active factories. At the",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.255178+00:00"
+}

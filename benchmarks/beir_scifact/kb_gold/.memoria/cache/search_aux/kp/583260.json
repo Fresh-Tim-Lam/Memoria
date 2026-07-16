@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "583260",
+  "source_fingerprint": "66d00f14b1371137a30530727fe0f244",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "583260",
+    "adverse-drug-events:-database-construction-and-in-silico-prediction."
+  ],
+  "key_phrases": [
+    "adverse",
+    "drug",
+    "events",
+    "database",
+    "construction",
+    "silico",
+    "prediction",
+    "ades"
+  ],
+  "summary_1l": "Adverse drug events: database construction and in silico prediction.",
+  "query_hits": [],
+  "embed_text": "583260 Adverse drug events: database construction and in silico prediction. science scifact Adverse drug events (ADEs) are the harms associated with uses of given medications at normal dosages, which are crucial for a drug to be approved in clinical use or continue to stay on the market. Many ADEs are not identified in trials… 583260 adverse-drug-events:-database-construction-and-in-silico-prediction. adverse drug events database construction silico prediction ades Adverse drug events: database construction and in silico prediction. Adverse drug events: database construction and in silico prediction. Adverse drug events (ADEs) are the harms associated with uses of given medications at normal dosages, which are crucial for a drug to be approved in clinical use or continue to stay on the market. Many ADEs are not identified in trials until the drug is approved for clinical use, which results in adverse morbidity and mortality. To date, millions of ADEs have been reported around the world. Methods to avoid or reduce ADEs are an important issue for drug discovery and development. Here, we reported a comprehensive database of adverse drug events (namely MetaADEDB), which included more than 520,000 drug-ADE associations among 3059 unique compounds (including 1330 drugs) and 13,200 ADE items by data integration and text mini",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.244031+00:00"
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "18658#5",
+  "source_fingerprint": "99325a411c8be034434313bc91bf9a20",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18658#5"
+  ],
+  "key_phrases": [
+    "北宋",
+    "宋朝",
+    "開國",
+    "皇帝",
+    "庙号",
+    "太祖",
+    "本來",
+    "后周"
+  ],
+  "summary_1l": "宋朝的開國皇帝是趙匡胤，庙号太祖。",
+  "query_hits": [],
+  "embed_text": "18658#5 北宋 北宋 宋朝的開國皇帝是趙匡胤，庙号太祖。他本來是后周的殿前都點檢，掌管禁軍，乃職業軍人。趙匡胤由於戰功卓著，成為了後周世宗的左膀右臂。世宗死後，繼位的恭帝年幼，后通過陈橋兵變奪取後周政權，建立北宋王朝。 18658#5 北宋 宋朝 開國 皇帝 庙号 太祖 本來 后周 宋朝的開國皇帝是趙匡胤，庙号太祖。 北宋 宋朝的開國皇帝是趙匡胤，庙号太祖。他本來是后周的殿前都點檢，掌管禁軍，乃職業軍人。趙匡胤由於戰功卓著，成為了後周世宗的左膀右臂。世宗死後，繼位的恭帝年幼，后通過陈橋兵變奪取後周政權，建立北宋王朝。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:18:35.914404+00:00"
+}

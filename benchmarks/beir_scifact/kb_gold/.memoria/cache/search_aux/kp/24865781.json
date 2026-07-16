@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24865781",
+  "source_fingerprint": "34751e59194db063a2fd0ac8a4828c10",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24865781",
+    "a-comparison-of-pharmacological-(amitriptyline-hcl)-and-nonpharmacological-(cognitive-behavioral)-therapies-for-chronic-tension-headaches."
+  ],
+  "key_phrases": [
+    "comparison",
+    "pharmacological",
+    "amitriptyline",
+    "hcl",
+    "nonpharmacological",
+    "cognitive",
+    "behavioral",
+    "therapies"
+  ],
+  "summary_1l": "A comparison of pharmacological (amitriptyline HCL) and nonpharmacological (cognitive-behavioral) therapies for chronic tension headaches.",
+  "query_hits": [],
+  "embed_text": "24865781 A comparison of pharmacological (amitriptyline HCL) and nonpharmacological (cognitive-behavioral) therapies for chronic tension headaches. science scifact Forty-one recurrent tension headache sufferers were randomly assigned to either cognitive-behavioral therapy (administered in a primarily home-based treatment protocol) or to amitriptyline therapy (with dosage individualized at 25, 50, or… 24865781 a-comparison-of-pharmacological-(amitriptyline-hcl)-and-nonpharmacological-(cognitive-behavioral)-therapies-for-chronic-tension-headaches. comparison pharmacological amitriptyline hcl nonpharmacological cognitive behavioral therapies A comparison of pharmacological (amitriptyline HCL) and nonpharmacological (cognitive-behavioral) therapies for chronic tension headaches. A comparison of pharmacological (amitriptyline HCL) and nonpharmacological (cognitive-behavioral) therapies for chronic tension headaches. Forty-one recurrent tension headache sufferers were randomly assigned to either cognitive-behavioral therapy (administered in a primarily home-based treatment protocol) or to amitriptyline therapy (with dosage individualized at 25, 50, or 75 mg/day). Cognitive-behavioral therapy and amitriptyline each yielded clinically significant improvements in headache activity, both when improvement was assessed with patient daily recordings (56% and 27% reduction in headache index, respectively), and when improvement was assessed with neurologist ratings of clinical improvement (94% and 69% of patients rated at least moderately improved, respectively). In instance",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.420304+00:00"
+}

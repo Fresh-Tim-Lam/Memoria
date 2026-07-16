@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29107180",
+  "source_fingerprint": "9709bfaf7da009838873f2b2ec99c948",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29107180",
+    "genomic-organization-and-chromosomal-location-of-the-human-dsrna-adenosine-deaminase-gene:-the-enzyme-for-glutamate-activated-ion-channel-rna-editing."
+  ],
+  "key_phrases": [
+    "genomic",
+    "organization",
+    "chromosomal",
+    "location",
+    "human",
+    "dsrna",
+    "adenosine",
+    "deaminase"
+  ],
+  "summary_1l": "Genomic organization and chromosomal location of the human dsRNA adenosine deaminase gene: the enzyme for glutamate-activated ion channel RNA editing.",
+  "query_hits": [],
+  "embed_text": "29107180 Genomic organization and chromosomal location of the human dsRNA adenosine deaminase gene: the enzyme for glutamate-activated ion channel RNA editing. science scifact The structure of the human gene encoding the double-stranded RNA (dsRNA) adenosine deaminase (DRADA) was characterized. This nuclear localized enzyme is involved in the RNA editing required for the expression of certain subtypes of… 29107180 genomic-organization-and-chromosomal-location-of-the-human-dsrna-adenosine-deaminase-gene:-the-enzyme-for-glutamate-activated-ion-channel-rna-editing. genomic organization chromosomal location human dsrna adenosine deaminase Genomic organization and chromosomal location of the human dsRNA adenosine deaminase gene: the enzyme for glutamate-activated ion channel RNA editing. Genomic organization and chromosomal location of the human dsRNA adenosine deaminase gene: the enzyme for glutamate-activated ion channel RNA editing. The structure of the human gene encoding the double-stranded RNA (dsRNA) adenosine deaminase (DRADA) was characterized. This nuclear localized enzyme is involved in the RNA editing required for the expression of certain subtypes of glutamate-gated ion channel subunits. The DRADA gene span 30 kb pairs and harbors 15 exons. The transcription of the DRADA gene driven by the putative promoter region, which contains no typical TATA or CCAAT box-like sequences, is initiated at multiple sites, 164 to 216 nucleotides upstream of the translation initiation codon. The three dsRNA binding motifs (DRBM), 70 amino acid residues long, are each encoded by",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.587815+00:00"
+}

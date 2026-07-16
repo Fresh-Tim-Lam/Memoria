@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11935250",
+  "source_fingerprint": "6d8b214491fe7e4e53142a8e0d55545e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11935250",
+    "widespread-and-tissue-specific-age-related-dna-methylation-changes-in-mice."
+  ],
+  "key_phrases": [
+    "widespread",
+    "tissue",
+    "specific",
+    "age",
+    "related",
+    "dna",
+    "methylation",
+    "changes"
+  ],
+  "summary_1l": "Widespread and tissue specific age-related DNA methylation changes in mice.",
+  "query_hits": [],
+  "embed_text": "11935250 Widespread and tissue specific age-related DNA methylation changes in mice. science scifact Aberrant methylation of promoter CpG islands in cancer is associated with silencing of tumor-suppressor genes, and age-dependent hypermethylation in normal appearing mucosa may be a risk factor for human colon cancer. It is not known… 11935250 widespread-and-tissue-specific-age-related-dna-methylation-changes-in-mice. widespread tissue specific age related dna methylation changes Widespread and tissue specific age-related DNA methylation changes in mice. Widespread and tissue specific age-related DNA methylation changes in mice. Aberrant methylation of promoter CpG islands in cancer is associated with silencing of tumor-suppressor genes, and age-dependent hypermethylation in normal appearing mucosa may be a risk factor for human colon cancer. It is not known whether this age-related DNA methylation phenomenon is specific to human tissues. We performed comprehensive DNA methylation profiling of promoter regions in aging mouse intestine using methylated CpG island amplification in combination with microarray analysis. By comparing C57BL/6 mice at 3-mo-old versus 35-mo-old for 3627 detectable autosomal genes, we found 774 (21%) that showed increased methylation and 466 (13%) that showed decreased methylation. We used pyrosequencing to quantit",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:07.923916+00:00"
+}

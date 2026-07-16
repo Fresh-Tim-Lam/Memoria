@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7850867",
+  "source_fingerprint": "0e271cd1c6ed55e799339e661834d846",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7850867",
+    "margination-of-white-blood-cells-in-microcapillary-flow."
+  ],
+  "key_phrases": [
+    "margination",
+    "white",
+    "blood",
+    "cells",
+    "microcapillary",
+    "flow",
+    "wbcs",
+    "towards"
+  ],
+  "summary_1l": "Margination of white blood cells in microcapillary flow.",
+  "query_hits": [],
+  "embed_text": "7850867 Margination of white blood cells in microcapillary flow. science scifact Margination of white blood cells (WBCs) towards vessel walls is an essential precondition for their efficient adhesion to the vascular endothelium. We perform numerical simulations with a two-dimensional blood flow model to investigate the… 7850867 margination-of-white-blood-cells-in-microcapillary-flow. margination white blood cells microcapillary flow wbcs towards Margination of white blood cells in microcapillary flow. Margination of white blood cells in microcapillary flow. Margination of white blood cells (WBCs) towards vessel walls is an essential precondition for their efficient adhesion to the vascular endothelium. We perform numerical simulations with a two-dimensional blood flow model to investigate the dependence of WBC margination on hydrodynamic interactions of blood cells with the vessel walls, as well as on their collective behavior and deformability. We find WBC margination to be optimal in intermediate ranges of red blood cell (RBC) volume fractions and flow rates, while, beyond these ranges, it is substantially attenuated. RBC aggregation enhances WBC margination, while WBC deformability reduces it. These results are combined in state diagrams, which identify WBC margination for a wide ran",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.322460+00:00"
+}

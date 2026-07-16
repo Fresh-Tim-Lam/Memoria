@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17188921",
+  "source_fingerprint": "7733ee025c6f11f1bc9b4a78c3ec8263",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17188921",
+    "n-cadherin-in-the-spotlight-of-cell-cell-adhesion,-differentiation,-embryogenesis,-invasion-and-signalling."
+  ],
+  "key_phrases": [
+    "cadherin",
+    "spotlight",
+    "cell",
+    "adhesion",
+    "differentiation",
+    "embryogenesis",
+    "invasion",
+    "signalling"
+  ],
+  "summary_1l": "N-cadherin in the spotlight of cell-cell adhesion, differentiation, embryogenesis, invasion and signalling.",
+  "query_hits": [],
+  "embed_text": "17188921 N-cadherin in the spotlight of cell-cell adhesion, differentiation, embryogenesis, invasion and signalling. science scifact Cell migration is a process which is essential during embryonic development, throughout adult life and in some pathological conditions. Cadherins, and more specifically the neural cell adhesion molecule N-cadherin, play an important role… 17188921 n-cadherin-in-the-spotlight-of-cell-cell-adhesion,-differentiation,-embryogenesis,-invasion-and-signalling. cadherin spotlight cell adhesion differentiation embryogenesis invasion signalling N-cadherin in the spotlight of cell-cell adhesion, differentiation, embryogenesis, invasion and signalling. N-cadherin in the spotlight of cell-cell adhesion, differentiation, embryogenesis, invasion and signalling. Cell migration is a process which is essential during embryonic development, throughout adult life and in some pathological conditions. Cadherins, and more specifically the neural cell adhesion molecule N-cadherin, play an important role in migration. In embryogenesis, N-cadherin is the key molecule during gastrulation and neural crest development. N-cadherin mediated contacts activate several pathways like Rho GTPases and function in tyrosine kinase signalling (for example via the fibroblast growth factor receptor). In cancer, cadherins control the balance between suppression and promotion of invasion. E-cadherin functions as an invasion suppressor and is downregulated in most carci",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.439740+00:00"
+}

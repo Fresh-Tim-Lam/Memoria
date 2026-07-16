@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11903247",
+  "source_fingerprint": "3721b24b5bee565163ff72e0f42dccea",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11903247",
+    "regulation-of-autophagy-by-cytoplasmic-p53"
+  ],
+  "key_phrases": [
+    "regulation",
+    "autophagy",
+    "by",
+    "cytoplasmic",
+    "p53",
+    "multiple",
+    "cellular",
+    "stressors"
+  ],
+  "summary_1l": "Multiple cellular stressors, including activation of the tumour suppressor p53, can stimulate autophagy.",
+  "query_hits": [],
+  "embed_text": "11903247 Regulation of autophagy by cytoplasmic p53 science scifact Multiple cellular stressors, including activation of the tumour suppressor p53, can stimulate autophagy. Here we show that deletion, depletion or inhibition of p53 can induce autophagy in human, mouse and nematode cells subjected to… 11903247 regulation-of-autophagy-by-cytoplasmic-p53 regulation autophagy by cytoplasmic p53 multiple cellular stressors Multiple cellular stressors, including activation of the tumour suppressor p53, can stimulate autophagy. Regulation of autophagy by cytoplasmic p53 Multiple cellular stressors, including activation of the tumour suppressor p53, can stimulate autophagy. Here we show that deletion, depletion or inhibition of p53 can induce autophagy in human, mouse and nematode cells subjected to knockout, knockdown or pharmacological inhibition of p53. Enhanced autophagy improved the survival of p53-deficient cancer cells under conditions of hypoxia and nutrient depletion, allowing them to maintain high ATP levels. Inhibition of p53 led to autophagy in enucleated cells, and cytoplasmic, not nuclear, p53 was able to repress the enhanced autophagy of p53−/− cells. Many different inducers of autophagy (for example, starvation, rapamycin and toxins affecting the endoplasmic reticulum) stimulated proteasome-mediate",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:07.818276+00:00"
+}

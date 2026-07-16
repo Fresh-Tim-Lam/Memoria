@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12224536",
+  "source_fingerprint": "4fbe84a966e5b89577df7e59248dce60",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12224536",
+    "trends-in-sugar-sweetened-beverage-consumption-among-youth-and-adults-in-the-united-states:-1999-2010."
+  ],
+  "key_phrases": [
+    "trends",
+    "sugar",
+    "sweetened",
+    "beverage",
+    "consumption",
+    "among",
+    "youth",
+    "adults"
+  ],
+  "summary_1l": "Trends in sugar-sweetened beverage consumption among youth and adults in the United States: 1999-2010.",
+  "query_hits": [],
+  "embed_text": "12224536 Trends in sugar-sweetened beverage consumption among youth and adults in the United States: 1999-2010. science scifact BACKGROUND Reducing sugar-sweetened beverage (SSB) consumption is a recommended strategy to promote optimal health. OBJECTIVE The objective was to describe trends in SSB consumption among youth and adults in the United States. DESIGN We… 12224536 trends-in-sugar-sweetened-beverage-consumption-among-youth-and-adults-in-the-united-states:-1999-2010. trends sugar sweetened beverage consumption among youth adults Trends in sugar-sweetened beverage consumption among youth and adults in the United States: 1999-2010. Trends in sugar-sweetened beverage consumption among youth and adults in the United States: 1999-2010. BACKGROUND Reducing sugar-sweetened beverage (SSB) consumption is a recommended strategy to promote optimal health. OBJECTIVE The objective was to describe trends in SSB consumption among youth and adults in the United States. DESIGN We analyzed energy intake from SSBs among 22,367 youth aged 2-19 y and 29,133 adults aged ≥20 y who participated in a 24-h dietary recall as part of NHANES, a nationally representative sample of the US population with a cross-sectional design, between 1999 and 2010. SSBs included soda, fruit drinks, sports and energy drinks, sweetened coffee and tea, and other sweetened beverages. Patterns of SSB consumption, including location of consumption and meal occasio",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:08.521036+00:00"
+}

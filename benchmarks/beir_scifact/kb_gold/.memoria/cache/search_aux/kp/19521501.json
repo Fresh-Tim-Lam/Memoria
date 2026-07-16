@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19521501",
+  "source_fingerprint": "f4f9c595e0cc3bd1073c96150f233153",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19521501",
+    "vision-tests-in-the-mouse:-functional-phenotyping-with-electroretinography."
+  ],
+  "key_phrases": [
+    "vision",
+    "tests",
+    "mouse",
+    "functional",
+    "phenotyping",
+    "with",
+    "electroretinography",
+    "erg"
+  ],
+  "summary_1l": "Vision tests in the mouse: Functional phenotyping with electroretinography.",
+  "query_hits": [],
+  "embed_text": "19521501 Vision tests in the mouse: Functional phenotyping with electroretinography. science scifact Electroretinography (ERG) is an established diagnostic technique in clinical ophthalmology and provides objective information about retinal function. This technique is also applied in basic research, where animal models of hereditary… 19521501 vision-tests-in-the-mouse:-functional-phenotyping-with-electroretinography. vision tests mouse functional phenotyping with electroretinography erg Vision tests in the mouse: Functional phenotyping with electroretinography. Vision tests in the mouse: Functional phenotyping with electroretinography. Electroretinography (ERG) is an established diagnostic technique in clinical ophthalmology and provides objective information about retinal function. This technique is also applied in basic research, where animal models of hereditary retinopathies have significantly contributed to our understanding of the composition of ERG responses in general and how retinal degenerative pathologies alter retinal function specifically. Indeed, electrophysiologic assessment of transgenic mice, which are genetically engineered to mimic human mutations that lead to retinal diseases, can be well compared with clinical data. Furthermore, limitations on examinations (e.g. length of measurement, range of light intensity) are much less o",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.701621+00:00"
+}

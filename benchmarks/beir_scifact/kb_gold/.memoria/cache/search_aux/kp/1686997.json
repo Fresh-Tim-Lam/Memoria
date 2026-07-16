@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1686997",
+  "source_fingerprint": "3eeedce1df271edfabfffe2a01e18d4a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1686997",
+    "6-phosphogluconate-dehydrogenase-links-oxidative-ppp,-lipogenesis-and-tumor-growth-by-inhibiting-lkb1-ampk-signaling"
+  ],
+  "key_phrases": [
+    "phosphogluconate",
+    "dehydrogenase",
+    "links",
+    "oxidative",
+    "ppp",
+    "lipogenesis",
+    "tumor",
+    "growth"
+  ],
+  "summary_1l": "The oxidative pentose phosphate pathway (PPP) contributes to tumour growth, but the",
+  "query_hits": [],
+  "embed_text": "1686997 6-phosphogluconate dehydrogenase links oxidative PPP, lipogenesis and tumor growth by inhibiting LKB1-AMPK signaling science scifact The oxidative pentose phosphate pathway (PPP) contributes to tumour growth, but the precise contribution of 6-phosphogluconate dehydrogenase (6PGD), the third enzyme in this pathway, to tumorigenesis remains unclear. We found that… 1686997 6-phosphogluconate-dehydrogenase-links-oxidative-ppp,-lipogenesis-and-tumor-growth-by-inhibiting-lkb1-ampk-signaling phosphogluconate dehydrogenase links oxidative ppp lipogenesis tumor growth The oxidative pentose phosphate pathway (PPP) contributes to tumour growth, but the 6-phosphogluconate dehydrogenase links oxidative PPP, lipogenesis and tumor growth by inhibiting LKB1-AMPK signaling The oxidative pentose phosphate pathway (PPP) contributes to tumour growth, but the precise contribution of 6-phosphogluconate dehydrogenase (6PGD), the third enzyme in this pathway, to tumorigenesis remains unclear. We found that suppression of 6PGD decreased lipogenesis and RNA biosynthesis and elevated ROS levels in cancer cells, attenuating cell proliferation and tumour growth. 6PGD-mediated production of ribulose-5-phosphate (Ru-5-P) inhibits AMPK activation by disrupting the active LKB1 complex, thereby activating acetyl-CoA carboxylase 1 and lipogenesis. Ru-5-P and NADPH are thought to be precursors in RNA biosynthesis and lipogenesis, respectively; thus, our findings",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.988536+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10669939",
+  "source_fingerprint": "e84fc5c9f02d9592591b9f8f61b13a5f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10669939",
+    "imaging-the-expression-of-transfected-genes-in-vivo."
+  ],
+  "key_phrases": [
+    "imaging",
+    "expression",
+    "transfected",
+    "genes",
+    "vivo",
+    "successful",
+    "gene",
+    "transduction"
+  ],
+  "summary_1l": "Imaging the expression of transfected genes in vivo.",
+  "query_hits": [],
+  "embed_text": "10669939 Imaging the expression of transfected genes in vivo. science scifact Imaging the expression of successful gene transduction has been demonstrated in vivo for the first time by using an appropriate combination of \"marker gene\" and \"marker substrate\" in an experimental animal model. The herpes simplex virus 1… 10669939 imaging-the-expression-of-transfected-genes-in-vivo. imaging expression transfected genes vivo successful gene transduction Imaging the expression of transfected genes in vivo. Imaging the expression of transfected genes in vivo. Imaging the expression of successful gene transduction has been demonstrated in vivo for the first time by using an appropriate combination of \"marker gene\" and \"marker substrate\" in an experimental animal model. The herpes simplex virus 1 thymidine kinase (HSV1-tk) gene was selected as an example of a marker gene, and the recombinant STK retrovirus containing HSV1-tk was used to transduce RG2 glioma cells in vitro and in vivo. RG2TK+ cell lines expressing the HSV1-tk gene and three potential marker substrates for the HSV1-TK enzyme were evaluated. Radiolabeled 5-iodo-2'-fluoro-2'deoxy-1-beta-D-arabinofuranosyluracil (FIAU) was shown to be a substantially better marker substrate for the HSV1-TK enzyme than 5-iodo-2'-deoxyuridine or ganci",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.849336+00:00"
+}

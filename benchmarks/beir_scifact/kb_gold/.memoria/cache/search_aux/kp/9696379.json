@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9696379",
+  "source_fingerprint": "2e3182ddb32874c0ab124efea72a5811",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9696379",
+    "metabolic-cycling-in-single-yeast-cells-from-unsynchronized-steady-state-populations-limited-on-glucose-or-phosphate."
+  ],
+  "key_phrases": [
+    "metabolic",
+    "cycling",
+    "single",
+    "yeast",
+    "cells",
+    "from",
+    "unsynchronized",
+    "steady"
+  ],
+  "summary_1l": "Metabolic cycling in single yeast cells from unsynchronized steady-state populations limited on glucose or phosphate.",
+  "query_hits": [],
+  "embed_text": "9696379 Metabolic cycling in single yeast cells from unsynchronized steady-state populations limited on glucose or phosphate. science scifact Oscillations in patterns of expression of a large fraction of yeast genes are associated with the \"metabolic cycle,\" usually seen only in prestarved, continuous cultures of yeast. We used FISH of mRNA in individual cells to test the… 9696379 metabolic-cycling-in-single-yeast-cells-from-unsynchronized-steady-state-populations-limited-on-glucose-or-phosphate. metabolic cycling single yeast cells from unsynchronized steady Metabolic cycling in single yeast cells from unsynchronized steady-state populations limited on glucose or phosphate. Metabolic cycling in single yeast cells from unsynchronized steady-state populations limited on glucose or phosphate. Oscillations in patterns of expression of a large fraction of yeast genes are associated with the \"metabolic cycle,\" usually seen only in prestarved, continuous cultures of yeast. We used FISH of mRNA in individual cells to test the hypothesis that these oscillations happen in single cells drawn from unsynchronized cultures growing exponentially in chemostats. Gene-expression data from synchronized cultures were used to predict coincident appearance of mRNAs from pairs of genes in the unsynchronized cells. Quantitative analysis of the FISH results shows that individual unsynchronized cells growing slowly because of glucose limitation or phosphate limitation show the predict",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.587512+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "46594244",
+  "source_fingerprint": "9ce67926372860e393feb9637e372463",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "46594244",
+    "activation-of-lysosomal-function-during-dendritic-cell-maturation."
+  ],
+  "key_phrases": [
+    "activation",
+    "lysosomal",
+    "function",
+    "during",
+    "dendritic",
+    "cell",
+    "maturation",
+    "response"
+  ],
+  "summary_1l": "Activation of lysosomal function during dendritic cell maturation.",
+  "query_hits": [],
+  "embed_text": "46594244 Activation of lysosomal function during dendritic cell maturation. science scifact In response to a variety of stimuli, dendritic cells (DCs) transform from immature cells specialized for antigen capture into mature cells specialized for T cell stimulation. During maturation, the DCs acquire an enhanced capacity to form… 46594244 activation-of-lysosomal-function-during-dendritic-cell-maturation. activation lysosomal function during dendritic cell maturation response Activation of lysosomal function during dendritic cell maturation. Activation of lysosomal function during dendritic cell maturation. In response to a variety of stimuli, dendritic cells (DCs) transform from immature cells specialized for antigen capture into mature cells specialized for T cell stimulation. During maturation, the DCs acquire an enhanced capacity to form and accumulate peptide-MHC (major histocompatibility complex) class II complexes. Here we show that a key mechanism responsible for this alteration was the generalized activation of lysosomal function. In immature DCs, internalized antigens were slowly degraded and inefficiently used for peptide loading. Maturation induced activation of the vacuolar proton pump that enhanced lysosomal acidification and antigen proteolysis, facilitating efficient formation of peptide-MHC class II complexes.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.001287+00:00"
+}

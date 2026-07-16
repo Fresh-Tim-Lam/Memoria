@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4417177",
+  "source_fingerprint": "4379b98ff5431d0d2c0a0a63b82fa2dc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4417177",
+    "direct-conversion-of-human-fibroblasts-to-multilineage-blood-progenitors"
+  ],
+  "key_phrases": [
+    "direct",
+    "conversion",
+    "human",
+    "fibroblasts",
+    "multilineage",
+    "blood",
+    "progenitors",
+    "as"
+  ],
+  "summary_1l": "As is the case for embryo-derived stem cells, application of reprogrammed human induced pluripotent stem cells is limited by ou",
+  "query_hits": [],
+  "embed_text": "4417177 Direct conversion of human fibroblasts to multilineage blood progenitors science scifact As is the case for embryo-derived stem cells, application of reprogrammed human induced pluripotent stem cells is limited by our understanding of lineage specification. Here we demonstrate the ability to generate progenitors and mature… 4417177 direct-conversion-of-human-fibroblasts-to-multilineage-blood-progenitors direct conversion human fibroblasts multilineage blood progenitors as As is the case for embryo-derived stem cells, application of reprogrammed human induced pluripotent stem cells is limited by ou Direct conversion of human fibroblasts to multilineage blood progenitors As is the case for embryo-derived stem cells, application of reprogrammed human induced pluripotent stem cells is limited by our understanding of lineage specification. Here we demonstrate the ability to generate progenitors and mature cells of the haematopoietic fate directly from human dermal fibroblasts without establishing pluripotency. Ectopic expression of OCT4 (also called POU5F1)-activated haematopoietic transcription factors, together with specific cytokine treatment, allowed generation of cells expressing the pan-leukocyte marker CD45. These unique fibroblast-derived cells gave rise to granulocytic, monocytic, megakaryocytic and erythroid lineages, and demonstrated in vivo engraftment capacity. We note that",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.844460+00:00"
+}

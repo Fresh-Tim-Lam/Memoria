@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19708993",
+  "source_fingerprint": "9d2d24033c25d4d3c60276cbdd48d89d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19708993",
+    "lysosomal-localization-of-trpml3-depends-on-trpml2-and-the-mucolipidosis-associated-protein-trpml1."
+  ],
+  "key_phrases": [
+    "lysosomal",
+    "localization",
+    "trpml3",
+    "depends",
+    "trpml2",
+    "mucolipidosis",
+    "associated",
+    "protein"
+  ],
+  "summary_1l": "Lysosomal localization of TRPML3 depends on TRPML2 and the mucolipidosis-associated protein TRPML1.",
+  "query_hits": [],
+  "embed_text": "19708993 Lysosomal localization of TRPML3 depends on TRPML2 and the mucolipidosis-associated protein TRPML1. science scifact Mucolipidosis type IV is an autosomal recessive lysosomal storage disorder characterized by severe neurodegeneration, achlorhydria, and visual impairments such as corneal opacity and strabismus. The disease arises due to mutations in a… 19708993 lysosomal-localization-of-trpml3-depends-on-trpml2-and-the-mucolipidosis-associated-protein-trpml1. lysosomal localization trpml3 depends trpml2 mucolipidosis associated protein Lysosomal localization of TRPML3 depends on TRPML2 and the mucolipidosis-associated protein TRPML1. Lysosomal localization of TRPML3 depends on TRPML2 and the mucolipidosis-associated protein TRPML1. Mucolipidosis type IV is an autosomal recessive lysosomal storage disorder characterized by severe neurodegeneration, achlorhydria, and visual impairments such as corneal opacity and strabismus. The disease arises due to mutations in a group 2 transient receptor potential (TRP)-related cation channel, TRPML1. Mammals encode two additional TRPML proteins named TRPML2 and TRPML3. Information regarding the propensity of these proteins to multimerize, their subcellular distribution and mechanisms that regulate their trafficking are limited. Here we demonstrate that TRPMLs interact to form homo- and heteromultimers. Moreover, the presence of either TRPML1 or TRPML2 specifically influences the spa",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.082118+00:00"
+}

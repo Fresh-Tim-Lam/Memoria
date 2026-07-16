@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21287352",
+  "source_fingerprint": "fcc01440b341a1fc359f254a5dbf12a8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21287352",
+    "serum-biomarkers-as-predictors-of-lung-function-decline-in-chronic-obstructive-pulmonary-disease."
+  ],
+  "key_phrases": [
+    "serum",
+    "biomarkers",
+    "as",
+    "predictors",
+    "lung",
+    "function",
+    "decline",
+    "chronic"
+  ],
+  "summary_1l": "Serum biomarkers as predictors of lung function decline in chronic obstructive pulmonary disease.",
+  "query_hits": [],
+  "embed_text": "21287352 Serum biomarkers as predictors of lung function decline in chronic obstructive pulmonary disease. science scifact BACKGROUND Recent studies show that COPD patients exhibit low-grade systemic inflammation, and that plasma fibrinogen and high neutrophil counts are related to faster declines in lung function. We examined correlations between serum… 21287352 serum-biomarkers-as-predictors-of-lung-function-decline-in-chronic-obstructive-pulmonary-disease. serum biomarkers as predictors lung function decline chronic Serum biomarkers as predictors of lung function decline in chronic obstructive pulmonary disease. Serum biomarkers as predictors of lung function decline in chronic obstructive pulmonary disease. BACKGROUND Recent studies show that COPD patients exhibit low-grade systemic inflammation, and that plasma fibrinogen and high neutrophil counts are related to faster declines in lung function. We examined correlations between serum biomarkers and the decline of lung function in COPD patients. METHOD Baseline levels of 9 serum biomarkers (TIMP-1, alpha1-antitrypsin, MMP-9, TNF-alpha, TGF-beta, IL-6, IL-8, neutrophil elastase and CRP), fibrinogen and white blood cell counts (WCC) were measured in 96 COPD patients. Lung function was measured at the time of blood sampling and every 3-6 months during the observation period (median 25.0 months). RESULTS Twenty patients were rapid decliners of lung",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.734284+00:00"
+}

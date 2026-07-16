@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25475802",
+  "source_fingerprint": "abcc3d559e255cd7f89d3199c91087a0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25475802",
+    "nitroxergic-nerves-mediate-vagally-induced-relaxation-in-the-isolated-stomach-of-the-guinea-pig."
+  ],
+  "key_phrases": [
+    "nitroxergic",
+    "nerves",
+    "mediate",
+    "vagally",
+    "induced",
+    "relaxation",
+    "isolated",
+    "stomach"
+  ],
+  "summary_1l": "Nitroxergic nerves mediate vagally induced relaxation in the isolated stomach of the guinea pig.",
+  "query_hits": [],
+  "embed_text": "25475802 Nitroxergic nerves mediate vagally induced relaxation in the isolated stomach of the guinea pig. science scifact Here we show that the relaxation induced by stimulation of the vagus nerve in the presence of cholinergic (muscarinic) and adrenergic blockade in the isolated stomach of the guinea pig is mediated by nitric oxide (NO). This is… 25475802 nitroxergic-nerves-mediate-vagally-induced-relaxation-in-the-isolated-stomach-of-the-guinea-pig. nitroxergic nerves mediate vagally induced relaxation isolated stomach Nitroxergic nerves mediate vagally induced relaxation in the isolated stomach of the guinea pig. Nitroxergic nerves mediate vagally induced relaxation in the isolated stomach of the guinea pig. Here we show that the relaxation induced by stimulation of the vagus nerve in the presence of cholinergic (muscarinic) and adrenergic blockade in the isolated stomach of the guinea pig is mediated by nitric oxide (NO). This is substantiated by inhibition of vagal relaxation by NG-monomethyl-L-arginine, an inhibitor of NO synthesis. The effect of NG-monomethyl-L-arginine was partially reversed by coincubation with L-arginine but not with D-arginine. NO activates soluble guanylate cyclase, and relaxation of the stomach induced by vagal stimulation was prevented by an inhibitor of soluble guanylate cyclase, methylene blue, further supporting our conclusions. The relaxant effect of vagal stimulatio",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.695589+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16557565",
+  "source_fingerprint": "ce6f82c8a3bd644c9a8f6b0364a0065f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16557565",
+    "local,-efflux-dependent-auxin-gradients-as-a-common-module-for-plant-organ-formation"
+  ],
+  "key_phrases": [
+    "local",
+    "efflux",
+    "dependent",
+    "auxin",
+    "gradients",
+    "as",
+    "common",
+    "module"
+  ],
+  "summary_1l": "Plants, compared to animals, exhibit an amazing adaptability and plasticity in their development.",
+  "query_hits": [],
+  "embed_text": "16557565 Local, Efflux-Dependent Auxin Gradients as a Common Module for Plant Organ Formation science scifact Plants, compared to animals, exhibit an amazing adaptability and plasticity in their development. This is largely dependent on the ability of plants to form new organs, such as lateral roots, leaves, and flowers during postembryonic… 16557565 local,-efflux-dependent-auxin-gradients-as-a-common-module-for-plant-organ-formation local efflux dependent auxin gradients as common module Plants, compared to animals, exhibit an amazing adaptability and plasticity in their development. Local, Efflux-Dependent Auxin Gradients as a Common Module for Plant Organ Formation Plants, compared to animals, exhibit an amazing adaptability and plasticity in their development. This is largely dependent on the ability of plants to form new organs, such as lateral roots, leaves, and flowers during postembryonic development. Organ primordia develop from founder cell populations into organs by coordinated cell division and differentiation. Here, we show that organ formation in Arabidopsis involves dynamic gradients of the signaling molecule auxin with maxima at the primordia tips. These gradients are mediated by cellular efflux requiring asymmetrically localized PIN proteins, which represent a functionally redundant network for auxin distribution in both aerial and underground organs. P",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.461579+00:00"
+}

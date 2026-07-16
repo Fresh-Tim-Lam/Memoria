@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "145335387",
+  "source_fingerprint": "1d23aee1e943703ec3ab16ff8f263efc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "145335387",
+    "economic-restructuring-and-suburbanization-in-china"
+  ],
+  "key_phrases": [
+    "economic",
+    "restructuring",
+    "suburbanization",
+    "china",
+    "as",
+    "other",
+    "countries",
+    "occurred"
+  ],
+  "summary_1l": "As in other countries, suburbanization in China occurred after the cities had experienced a period of sustained industrial and population growth.",
+  "query_hits": [],
+  "embed_text": "145335387 ECONOMIC RESTRUCTURING AND SUBURBANIZATION IN CHINA science scifact As in other countries, suburbanization in China occurred after the cities had experienced a period of sustained industrial and population growth. This study examines suburbanization in Beijing, Shanghai, Shenyang, and Dalian. As a result… 145335387 economic-restructuring-and-suburbanization-in-china economic restructuring suburbanization china as other countries occurred As in other countries, suburbanization in China occurred after the cities had experienced a period of sustained industrial and population growth. ECONOMIC RESTRUCTURING AND SUBURBANIZATION IN CHINA As in other countries, suburbanization in China occurred after the cities had experienced a period of sustained industrial and population growth. This study examines suburbanization in Beijing, Shanghai, Shenyang, and Dalian. As a result of economic restructuring, the urban core registered net population loss from 1982 to 1990 because of decentralization while the inner suburbs gained population. Among the forces driving suburbanization were marketization of urban land, the shift of industrial land to tertiary use, transportation improvement, the availability of foreign and domestic capital, housing rehabilitation in the city, and new housing construction in the suburbs. There were certain similarities but major differences between Americ",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.097706+00:00"
+}

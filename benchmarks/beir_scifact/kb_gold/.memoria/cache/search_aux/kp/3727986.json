@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3727986",
+  "source_fingerprint": "e8bcca01f02305fc6f7e8a21ac23b81c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3727986",
+    "a-mechanically-active-heterotypic-e-cadherin/n-cadherin-adhesion-enables-fibroblasts-to-drive-cancer-cell-invasion"
+  ],
+  "key_phrases": [
+    "mechanically",
+    "active",
+    "heterotypic",
+    "cadherin",
+    "adhesion",
+    "enables",
+    "fibroblasts",
+    "drive"
+  ],
+  "summary_1l": "Cancer-associated fibroblasts (CAFs) promote tumour invasion and metastasis.",
+  "query_hits": [],
+  "embed_text": "3727986 A mechanically active heterotypic E-cadherin/N-cadherin adhesion enables fibroblasts to drive cancer cell invasion science scifact Cancer-associated fibroblasts (CAFs) promote tumour invasion and metastasis. We show that CAFs exert a physical force on cancer cells that enables their collective invasion. Force transmission is mediated by a heterophilic adhesion… 3727986 a-mechanically-active-heterotypic-e-cadherin/n-cadherin-adhesion-enables-fibroblasts-to-drive-cancer-cell-invasion mechanically active heterotypic cadherin adhesion enables fibroblasts drive Cancer-associated fibroblasts (CAFs) promote tumour invasion and metastasis. A mechanically active heterotypic E-cadherin/N-cadherin adhesion enables fibroblasts to drive cancer cell invasion Cancer-associated fibroblasts (CAFs) promote tumour invasion and metastasis. We show that CAFs exert a physical force on cancer cells that enables their collective invasion. Force transmission is mediated by a heterophilic adhesion involving N-cadherin at the CAF membrane and E-cadherin at the cancer cell membrane. This adhesion is mechanically active; when subjected to force it triggers β-catenin recruitment and adhesion reinforcement dependent on α-catenin/vinculin interaction. Impairment of E-cadherin/N-cadherin adhesion abrogates the ability of CAFs to guide collective cell migration and blocks cancer cell invasion. N-cadherin also mediates repolarization of the CAFs away",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.329491+00:00"
+}

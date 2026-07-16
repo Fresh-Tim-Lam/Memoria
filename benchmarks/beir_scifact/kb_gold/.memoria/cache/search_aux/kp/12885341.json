@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12885341",
+  "source_fingerprint": "ca74538076319661a33fc6b55e049dfb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12885341",
+    "a-c-type-lectin-collaborates-with-a-cd45-phosphatase-homolog-to-facilitate-west-nile-virus-infection-of-mosquitoes"
+  ],
+  "key_phrases": [
+    "type",
+    "lectin",
+    "collaborates",
+    "with",
+    "cd45",
+    "phosphatase",
+    "homolog",
+    "facilitate"
+  ],
+  "summary_1l": "West Nile virus (WNV) is the most common arthropod-borne flavivirus in the United Sta",
+  "query_hits": [],
+  "embed_text": "12885341 A C-Type Lectin Collaborates with a CD45 Phosphatase Homolog to Facilitate West Nile Virus Infection of Mosquitoes science scifact West Nile virus (WNV) is the most common arthropod-borne flavivirus in the United States; however, the vector ligand(s) that participate in infection are not known. We now show that an Aedes aegypti C-type lectin, mosGCTL-1, is induced by… 12885341 a-c-type-lectin-collaborates-with-a-cd45-phosphatase-homolog-to-facilitate-west-nile-virus-infection-of-mosquitoes type lectin collaborates with cd45 phosphatase homolog facilitate West Nile virus (WNV) is the most common arthropod-borne flavivirus in the United Sta A C-Type Lectin Collaborates with a CD45 Phosphatase Homolog to Facilitate West Nile Virus Infection of Mosquitoes West Nile virus (WNV) is the most common arthropod-borne flavivirus in the United States; however, the vector ligand(s) that participate in infection are not known. We now show that an Aedes aegypti C-type lectin, mosGCTL-1, is induced by WNV, interacts with WNV in a calcium-dependent manner, and facilitates infection in vivo and in vitro. A mosquito homolog of human CD45 in A. aegypti, designated mosPTP-1, recruits mosGCTL-1 to enable viral attachment to cells and to enhance viral entry. In vivo experiments show that mosGCTL-1 and mosPTP-1 function as part of the same pathway and are critical for WNV infection of mosquitoes. A similar phenomenon was also observed in Culex qui",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:09.207561+00:00"
+}

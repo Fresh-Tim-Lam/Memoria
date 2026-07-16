@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "5500086",
+  "source_fingerprint": "f85be9815d304e63e85339d67a55afe1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5500086"
+  ],
+  "key_phrases": [
+    "cancer",
+    "cell",
+    "autonomous",
+    "contribution",
+    "type",
+    "interferon",
+    "signaling",
+    "efficacy"
+  ],
+  "summary_1l": "Some of the anti-neoplastic effects of anthracyclines in mice originate from the induction of innate",
+  "query_hits": [],
+  "embed_text": "5500086 Cancer cell–autonomous contribution of type I interferon signaling to the efficacy of chemotherapy science scifact Some of the anti-neoplastic effects of anthracyclines in mice originate from the induction of innate and T cell–mediated anticancer immune responses. Here we demonstrate that anthracyclines stimulate the rapid production of type I… 5500086 cancer cell autonomous contribution type interferon signaling efficacy Some of the anti-neoplastic effects of anthracyclines in mice originate from the induction of innate Cancer cell–autonomous contribution of type I interferon signaling to the efficacy of chemotherapy Some of the anti-neoplastic effects of anthracyclines in mice originate from the induction of innate and T cell–mediated anticancer immune responses. Here we demonstrate that anthracyclines stimulate the rapid production of type I interferons (IFNs) by malignant cells after activation of the endosomal pattern recognition receptor Toll-like receptor 3 (TLR3). By binding to IFN-α and IFN-β receptors (IFNARs) on neoplastic cells, type I IFNs trigger autocrine and paracrine circuitries that result in the release of chemokine (C-X-C motif) ligand 10 (CXCL10). Tumors lacking Tlr3 or Ifnar failed to respond to chemotherapy unless type I IFN or Cxcl10, respectively, was artificially supplied. Moreove",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.466681+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "33677323",
+  "source_fingerprint": "1166b774f47a123fbd80bd7318f54d33",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "33677323",
+    "the-oncogenic-microrna-mir-22-targets-the-tet2-tumor-suppressor-to-promote-hematopoietic-stem-cell-self-renewal-and-transformation."
+  ],
+  "key_phrases": [
+    "oncogenic",
+    "microrna",
+    "mir",
+    "22",
+    "targets",
+    "tet2",
+    "tumor",
+    "suppressor"
+  ],
+  "summary_1l": "The oncogenic microRNA miR-22 targets the TET2 tumor suppressor to promote hematopoietic stem cell self-renewal and transformation.",
+  "query_hits": [],
+  "embed_text": "33677323 The oncogenic microRNA miR-22 targets the TET2 tumor suppressor to promote hematopoietic stem cell self-renewal and transformation. science scifact MicroRNAs are frequently deregulated in cancer. Here we show that miR-22 is upregulated in myelodysplastic syndrome (MDS) and leukemia and its aberrant expression correlates with poor survival. To explore its role in hematopoietic stem… 33677323 the-oncogenic-microrna-mir-22-targets-the-tet2-tumor-suppressor-to-promote-hematopoietic-stem-cell-self-renewal-and-transformation. oncogenic microrna mir 22 targets tet2 tumor suppressor The oncogenic microRNA miR-22 targets the TET2 tumor suppressor to promote hematopoietic stem cell self-renewal and transformation. The oncogenic microRNA miR-22 targets the TET2 tumor suppressor to promote hematopoietic stem cell self-renewal and transformation. MicroRNAs are frequently deregulated in cancer. Here we show that miR-22 is upregulated in myelodysplastic syndrome (MDS) and leukemia and its aberrant expression correlates with poor survival. To explore its role in hematopoietic stem cell function and malignancy, we generated transgenic mice conditionally expressing miR-22 in the hematopoietic compartment. These mice displayed reduced levels of global 5-hydroxymethylcytosine (5-hmC) and increased hematopoietic stem cell self-renewal accompanied by defective differentiation. Conversely, miR-22 inhibition blocked proliferation in both mouse and human leukemic cells. Over time, miR-22 transgenic mice developed",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.609330+00:00"
+}

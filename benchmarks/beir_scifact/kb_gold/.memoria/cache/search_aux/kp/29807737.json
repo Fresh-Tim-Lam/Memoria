@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29807737",
+  "source_fingerprint": "43fc96bc35432e6737ac4c64de02b02d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29807737",
+    "drugbank-5.0:-a-major-update-to-the-drugbank-database-for-2018"
+  ],
+  "key_phrases": [
+    "drugbank",
+    "5.0",
+    "major",
+    "update",
+    "database",
+    "2018",
+    "www",
+    "ca"
+  ],
+  "summary_1l": "DrugBank 5.",
+  "query_hits": [],
+  "embed_text": "29807737 DrugBank 5.0: a major update to the DrugBank database for 2018 science scifact DrugBank (www.drugbank.ca) is a web-enabled database containing comprehensive molecular information about drugs, their mechanisms, their interactions and their targets. First described in 2006, DrugBank has continued to evolve over the… 29807737 drugbank-5.0:-a-major-update-to-the-drugbank-database-for-2018 drugbank 5.0 major update database 2018 www ca DrugBank 5. DrugBank 5.0: a major update to the DrugBank database for 2018 DrugBank (www.drugbank.ca) is a web-enabled database containing comprehensive molecular information about drugs, their mechanisms, their interactions and their targets. First described in 2006, DrugBank has continued to evolve over the past 12 years in response to marked improvements to web standards and changing needs for drug research and development. This year's update, DrugBank 5.0, represents the most significant upgrade to the database in more than 10 years. In many cases, existing data content has grown by 100% or more over the last update. For instance, the total number of investigational drugs in the database has grown by almost 300%, the number of drug-drug interactions has grown by nearly 600% and the number of SNP-a",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.213659+00:00"
+}

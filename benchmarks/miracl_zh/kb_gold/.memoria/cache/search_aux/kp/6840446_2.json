@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "kp_id": "6840446#2",
+  "source_fingerprint": "ed46b97a60041adc7173d424d9e1f0d5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "编程语言",
+    "比利时语言",
+    "福建语言",
+    "语言便利市镇"
+  ],
+  "aliases": [
+    "6840446#2"
+  ],
+  "key_phrases": [
+    "语言",
+    "戏称",
+    "编程语言",
+    "apl",
+    "ddt",
+    "perl",
+    "forth",
+    "teco"
+  ],
+  "summary_1l": "被戏称为只写语言的编程语言有APL、（DDT）、Perl、Forth、（TECO）、Mathematica、IGOR Pro和各种语言中使用的正则表达式语法。",
+  "query_hits": [],
+  "embed_text": "6840446#2 只写语言 只写语言 被戏称为只写语言的编程语言有APL、（DDT）、Perl、Forth、（TECO）、Mathematica、IGOR Pro和各种语言中使用的正则表达式语法。这些语言的共同属性包括大量的操作符集和鼓励或至少允许编写非常密集的代码的语法。有些语法与其他语言非常不同，有些使用不同的字符集。 编程语言 比利时语言 福建语言 语言便利市镇 6840446#2 语言 戏称 编程语言 apl ddt perl forth teco 被戏称为只写语言的编程语言有APL、（DDT）、Perl、Forth、（TECO）、Mathematica、IGOR Pro和各种语言中使用的正则表达式语法。 只写语言 被戏称为只写语言的编程语言有APL、（DDT）、Perl、Forth、（TECO）、Mathematica、IGOR Pro和各种语言中使用的正则表达式语法。这些语言的共同属性包括大量的操作符集和鼓励或至少允许编写非常密集的代码的语法。有些语法与其他语言非常不同，有些使用不同的字符集。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:23:02.991487+00:00"
+}

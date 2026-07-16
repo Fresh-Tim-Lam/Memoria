@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9283422",
+  "source_fingerprint": "e59f36ffb1fe65407f18be5aa39ce49b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9283422",
+    "t-cell-receptor-proximal-signals-are-sustained-in-peripheral-microclusters-and-terminated-in-the-central-supramolecular-activation-cluster."
+  ],
+  "key_phrases": [
+    "cell",
+    "receptor",
+    "proximal",
+    "signals",
+    "sustained",
+    "peripheral",
+    "microclusters",
+    "terminated"
+  ],
+  "summary_1l": "T cell receptor-proximal signals are sustained in peripheral microclusters and terminated in the central supramolecular activation cluster.",
+  "query_hits": [],
+  "embed_text": "9283422 T cell receptor-proximal signals are sustained in peripheral microclusters and terminated in the central supramolecular activation cluster. science scifact T cell receptor (TCR) signaling is initiated and sustained in microclusters; however, it's not known whether signaling also occurs in the TCR-rich central supramolecular activation cluster (cSMAC). We showed that the cSMAC formed by fusion… 9283422 t-cell-receptor-proximal-signals-are-sustained-in-peripheral-microclusters-and-terminated-in-the-central-supramolecular-activation-cluster. cell receptor proximal signals sustained peripheral microclusters terminated T cell receptor-proximal signals are sustained in peripheral microclusters and terminated in the central supramolecular activation cluster. T cell receptor-proximal signals are sustained in peripheral microclusters and terminated in the central supramolecular activation cluster. T cell receptor (TCR) signaling is initiated and sustained in microclusters; however, it's not known whether signaling also occurs in the TCR-rich central supramolecular activation cluster (cSMAC). We showed that the cSMAC formed by fusion of microclusters contained more CD45 than microclusters and is a site enriched in lysobisphosphatidic acid, a lipid involved in sorting ubiquitinated membrane proteins for degradation. Calcium signaling via TCR was blocked within 2 min by anti-MHCp treatment and 1 min by latrunculin-A treatment. TCR-MHCp interactions in the cSMAC survived these perturbations for 10 min and hence were not sufficient to sustain signali",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.635211+00:00"
+}

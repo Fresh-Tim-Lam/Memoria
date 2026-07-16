@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8202880",
+  "source_fingerprint": "f3706ae59ddf4e8dbcee1976d17b2a53",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8202880",
+    "bioinformatics-applications-note"
+  ],
+  "key_phrases": [
+    "bioinformatics",
+    "applications",
+    "note",
+    "summary",
+    "made4",
+    "microarray",
+    "ade4",
+    "software"
+  ],
+  "summary_1l": "SUMMARY MADE4, microarray ade4, is a software package that facilitates multivariate analysis of microarray gene-expression data.",
+  "query_hits": [],
+  "embed_text": "8202880 BIOINFORMATICS APPLICATIONS NOTE science scifact SUMMARY MADE4, microarray ade4, is a software package that facilitates multivariate analysis of microarray gene-expression data. MADE4 accepts a wide variety of gene-expression data formats. MADE4 takes advantage of the extensive… 8202880 bioinformatics-applications-note bioinformatics applications note summary made4 microarray ade4 software SUMMARY MADE4, microarray ade4, is a software package that facilitates multivariate analysis of microarray gene-expression data. BIOINFORMATICS APPLICATIONS NOTE SUMMARY MADE4, microarray ade4, is a software package that facilitates multivariate analysis of microarray gene-expression data. MADE4 accepts a wide variety of gene-expression data formats. MADE4 takes advantage of the extensive multivariate statistical and graphical functions in the R package ade4, extending these for application to microarray data. In addition, MADE4 provides new graphical and visualization tools that aid in interpretation of multivariate analysis of microarray data.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.087274+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9412420",
+  "source_fingerprint": "b2f0e5faa4f8724a6b41ffb35c6d3918",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9412420",
+    "endogenous-bone-marrow-mscs-are-dynamic,-fate-restricted-participants-in-bone-maintenance-and-regeneration."
+  ],
+  "key_phrases": [
+    "endogenous",
+    "bone",
+    "marrow",
+    "mscs",
+    "dynamic",
+    "fate",
+    "restricted",
+    "participants"
+  ],
+  "summary_1l": "Endogenous bone marrow MSCs are dynamic, fate-restricted participants in bone maintenance and regeneration.",
+  "query_hits": [],
+  "embed_text": "9412420 Endogenous bone marrow MSCs are dynamic, fate-restricted participants in bone maintenance and regeneration. science scifact Mesenchymal stem cells (MSCs) commonly defined by in vitro functions have entered clinical application despite little definition of their function in residence. Here, we report genetic pulse-chase experiments that define osteoblastic cells… 9412420 endogenous-bone-marrow-mscs-are-dynamic,-fate-restricted-participants-in-bone-maintenance-and-regeneration. endogenous bone marrow mscs dynamic fate restricted participants Endogenous bone marrow MSCs are dynamic, fate-restricted participants in bone maintenance and regeneration. Endogenous bone marrow MSCs are dynamic, fate-restricted participants in bone maintenance and regeneration. Mesenchymal stem cells (MSCs) commonly defined by in vitro functions have entered clinical application despite little definition of their function in residence. Here, we report genetic pulse-chase experiments that define osteoblastic cells as short-lived and nonreplicative, requiring replenishment from bone-marrow-derived, Mx1(+) stromal cells with \"MSC\" features. These cells respond to tissue stress and migrate to sites of injury, supplying new osteoblasts during fracture healing. Single cell transplantation yielded progeny that both preserve progenitor function and differentiate into osteoblasts, producing new bone. They are capable of local and systemic translocation and serial tr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.864839+00:00"
+}

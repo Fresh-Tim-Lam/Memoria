@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "202259",
+  "source_fingerprint": "a5e73da4a8b6b8a3ddd8ff06e6c5f93d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "202259",
+    "effect-of-lowering-blood-pressure-on-cardiovascular-events-and-mortality-in-patients-on-dialysis:-a-systematic-review-and-meta-analysis-of-randomised-controlled-trials"
+  ],
+  "key_phrases": [
+    "effect",
+    "lowering",
+    "blood",
+    "pressure",
+    "cardiovascular",
+    "events",
+    "mortality",
+    "patients"
+  ],
+  "summary_1l": "BACKGROUND Patients undergoing d",
+  "query_hits": [],
+  "embed_text": "202259 Effect of lowering blood pressure on cardiovascular events and mortality in patients on dialysis: a systematic review and meta-analysis of randomised controlled trials science scifact BACKGROUND Patients undergoing dialysis have a substantially increased risk of cardiovascular mortality and morbidity. Although several trials have shown the cardiovascular benefits of lowering blood pressure in the general population,… 202259 effect-of-lowering-blood-pressure-on-cardiovascular-events-and-mortality-in-patients-on-dialysis:-a-systematic-review-and-meta-analysis-of-randomised-controlled-trials effect lowering blood pressure cardiovascular events mortality patients BACKGROUND Patients undergoing d Effect of lowering blood pressure on cardiovascular events and mortality in patients on dialysis: a systematic review and meta-analysis of randomised controlled trials BACKGROUND Patients undergoing dialysis have a substantially increased risk of cardiovascular mortality and morbidity. Although several trials have shown the cardiovascular benefits of lowering blood pressure in the general population, there is uncertainty about the efficacy and tolerability of reducing blood pressure in patients on dialysis. We did a systematic review and meta-analysis to assess the effect of blood pressure lowering in patients on dialysis. METHODS We systematically searched Medline, Embase, and the Cochrane Library database for trials reported between 1950 and November, 2008, without language restriction.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.849453+00:00"
+}

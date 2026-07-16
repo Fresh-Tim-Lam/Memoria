@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29399239",
+  "source_fingerprint": "2c4eef1da79451c0090f7926d22ee84b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29399239",
+    "neutrophil-extracellular-traps:-is-immunity-the-second-function-of-chromatin?"
+  ],
+  "key_phrases": [
+    "neutrophil",
+    "extracellular",
+    "traps",
+    "immunity",
+    "second",
+    "function",
+    "chromatin",
+    "nets"
+  ],
+  "summary_1l": "Neutrophil extracellular traps: Is immunity the second function of chromatin?",
+  "query_hits": [],
+  "embed_text": "29399239 Neutrophil extracellular traps: Is immunity the second function of chromatin? science scifact Neutrophil extracellular traps (NETs) are made of processed chromatin bound to granular and selected cytoplasmic proteins. NETs are released by white blood cells called neutrophils, maybe as a last resort, to control microbial infections.… 29399239 neutrophil-extracellular-traps:-is-immunity-the-second-function-of-chromatin? neutrophil extracellular traps immunity second function chromatin nets Neutrophil extracellular traps: Is immunity the second function of chromatin? Neutrophil extracellular traps: Is immunity the second function of chromatin? Neutrophil extracellular traps (NETs) are made of processed chromatin bound to granular and selected cytoplasmic proteins. NETs are released by white blood cells called neutrophils, maybe as a last resort, to control microbial infections. This release of chromatin is the result of a unique form of cell death, dubbed \"NETosis. \" Here we review our understanding of how NETs are made, their function in infections and as danger signals, and their emerging importance in autoimmunity and coagulation.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.872324+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2107238",
+  "source_fingerprint": "84fef6b9946b9d34fc5448c75b9759a8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2107238",
+    "the-sequence-alignment/map-format-and-samtools"
+  ],
+  "key_phrases": [
+    "sequence",
+    "alignment",
+    "map",
+    "format",
+    "samtools",
+    "summary",
+    "sam",
+    "generic"
+  ],
+  "summary_1l": "SUMMARY The Sequence Alignment/Map (SAM) format is a generic alignment format for storing read alignments against reference sequences, supporting short a",
+  "query_hits": [],
+  "embed_text": "2107238 The Sequence Alignment/Map format and SAMtools science scifact SUMMARY The Sequence Alignment/Map (SAM) format is a generic alignment format for storing read alignments against reference sequences, supporting short and long reads (up to 128 Mbp) produced by different sequencing platforms. It is… 2107238 the-sequence-alignment/map-format-and-samtools sequence alignment map format samtools summary sam generic SUMMARY The Sequence Alignment/Map (SAM) format is a generic alignment format for storing read alignments against reference sequences, supporting short a The Sequence Alignment/Map format and SAMtools SUMMARY The Sequence Alignment/Map (SAM) format is a generic alignment format for storing read alignments against reference sequences, supporting short and long reads (up to 128 Mbp) produced by different sequencing platforms. It is flexible in style, compact in size, efficient in random access and is the format in which alignments from the 1000 Genomes Project are released. SAMtools implements various utilities for post-processing alignments in the SAM format, such as indexing, variant caller and alignment viewer, and thus provides universal tools for processing read alignments. AVAILABILITY http://samtools.sourceforge.net.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.380770+00:00"
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "97858#12",
+  "source_fingerprint": "026ec0a3f17e98fe52fc8b84a7a1a6aa",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "97858#12"
+  ],
+  "key_phrases": [
+    "蚂蚁",
+    "羽化",
+    "工蟻",
+    "負責",
+    "巢中",
+    "事務",
+    "如照",
+    "顧幼蟲"
+  ],
+  "summary_1l": "剛羽化的工蟻負責巢中事務，如照顧幼蟲和蟻后、清掃環境、打理巢穴等；羽化較久的工蟻則出外覓食。",
+  "query_hits": [],
+  "embed_text": "97858#12 蚂蚁 蚂蚁 剛羽化的工蟻負責巢中事務，如照顧幼蟲和蟻后、清掃環境、打理巢穴等；羽化較久的工蟻則出外覓食。幾乎所有的螞蟻都具有年齡多形性（Age polytheism）的分工機制，除了兩個物種以外，分別是 \"Amblyopone pallipes\" 和 大眼擬鬥牛犬蟻（\"Nothomyrmecia macrops\"）。 97858#12 蚂蚁 羽化 工蟻 負責 巢中 事務 如照 顧幼蟲 剛羽化的工蟻負責巢中事務，如照顧幼蟲和蟻后、清掃環境、打理巢穴等；羽化較久的工蟻則出外覓食。 蚂蚁 剛羽化的工蟻負責巢中事務，如照顧幼蟲和蟻后、清掃環境、打理巢穴等；羽化較久的工蟻則出外覓食。幾乎所有的螞蟻都具有年齡多形性（Age polytheism）的分工機制，除了兩個物種以外，分別是 \"Amblyopone pallipes\" 和 大眼擬鬥牛犬蟻（\"Nothomyrmecia macrops\"）。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:19:27.992632+00:00"
+}

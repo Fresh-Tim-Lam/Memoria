@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22267225",
+  "source_fingerprint": "bf2c188c43a66fff7dbaa9b8eebf8b4d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22267225",
+    "cancer-chemoprevention:-much-has-been-done,-but-there-is-still-much-to-do.-state-of-the-art-and-possible-new-approaches."
+  ],
+  "key_phrases": [
+    "cancer",
+    "chemoprevention",
+    "much",
+    "has",
+    "been",
+    "done",
+    "but",
+    "there"
+  ],
+  "summary_1l": "Cancer chemoprevention: Much has been done, but there is still much to do.",
+  "query_hits": [],
+  "embed_text": "22267225 Cancer chemoprevention: Much has been done, but there is still much to do. State of the art and possible new approaches. science scifact Over the past three decades great efforts have been made in search of cancer chemoprevention strategies. The increase in knowledge of the long process from normal to cancer cell has enabled interventions in terms of lifestyle… 22267225 cancer-chemoprevention:-much-has-been-done,-but-there-is-still-much-to-do.-state-of-the-art-and-possible-new-approaches. cancer chemoprevention much has been done but there Cancer chemoprevention: Much has been done, but there is still much to do. Cancer chemoprevention: Much has been done, but there is still much to do. State of the art and possible new approaches. Over the past three decades great efforts have been made in search of cancer chemoprevention strategies. The increase in knowledge of the long process from normal to cancer cell has enabled interventions in terms of lifestyle modifications, natural compounds or drugs to block or reverse the process. Great successes have been achieved, especially for breast and colorectal cancer. However, these strategies have yet to find clinical application on a large scale. In this article we identify the achievements, the pitfalls and the next steps to be taken to improve the efficacy and applicability of chemoprevention strategies. Among the crucial key points to be implemented are e",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.518230+00:00"
+}

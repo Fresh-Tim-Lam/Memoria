@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "28937856",
+  "source_fingerprint": "8ca399fd986a6018fac4ddc23e79dbbe",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "28937856",
+    "stress-dependent-regulation-of-foxo-transcription-factors-by-the-sirt1-deacetylase."
+  ],
+  "key_phrases": [
+    "stress",
+    "dependent",
+    "regulation",
+    "foxo",
+    "transcription",
+    "factors",
+    "by",
+    "sirt1"
+  ],
+  "summary_1l": "Stress-dependent regulation of FOXO transcription factors by the SIRT1 deacetylase.",
+  "query_hits": [],
+  "embed_text": "28937856 Stress-dependent regulation of FOXO transcription factors by the SIRT1 deacetylase. science scifact The Sir2 deacetylase modulates organismal life-span in various species. However, the molecular mechanisms by which Sir2 increases longevity are largely unknown. We show that in mammalian cells, the Sir2 homolog SIRT1 appears to control the… 28937856 stress-dependent-regulation-of-foxo-transcription-factors-by-the-sirt1-deacetylase. stress dependent regulation foxo transcription factors by sirt1 Stress-dependent regulation of FOXO transcription factors by the SIRT1 deacetylase. Stress-dependent regulation of FOXO transcription factors by the SIRT1 deacetylase. The Sir2 deacetylase modulates organismal life-span in various species. However, the molecular mechanisms by which Sir2 increases longevity are largely unknown. We show that in mammalian cells, the Sir2 homolog SIRT1 appears to control the cellular response to stress by regulating the FOXO family of Forkhead transcription factors, a family of proteins that function as sensors of the insulin signaling pathway and as regulators of organismal longevity. SIRT1 and the FOXO transcription factor FOXO3 formed a complex in cells in response to oxidative stress, and SIRT1 deacetylated FOXO3 in vitro and within cells. SIRT1 had a dual effect on FOXO3 function: SIRT1 increased FOXO3's ability to induce cell cycle arre",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:12.791700+00:00"
+}

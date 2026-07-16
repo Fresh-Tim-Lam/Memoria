@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "kp_id": "administrative-license-law",
+  "source_fingerprint": "4439de2642a811c587f593a36aa29320",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "administrative-license-law"
+  ],
+  "key_phrases": [
+    "授益",
+    "行政",
+    "行为",
+    "shouyixingzhengxingwei",
+    "授益行政行为"
+  ],
+  "summary_1l": "授益行政行为",
+  "query_hits": [],
+  "embed_text": "administrative-license-law 行政许可法 administrative-license-law 授益 行政 行为 shouyixingzhengxingwei 授益行政行为 授益行政行为 授益行政行为",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-15T12:51:06.262934+00:00"
+}

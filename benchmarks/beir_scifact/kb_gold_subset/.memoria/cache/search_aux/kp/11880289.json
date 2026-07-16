@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11880289",
+  "source_fingerprint": "3cd86ec837457b695187efa0bcd04521",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11880289",
+    "effect-of-mammographic-screening-from-age-40-years-on-breast-cancer-mortality-in-the-uk-age-trial-at-17-years'-follow-up:-a-randomised-controlled-trial."
+  ],
+  "key_phrases": [
+    "effect",
+    "mammographic",
+    "screening",
+    "from",
+    "age",
+    "40",
+    "years",
+    "breast"
+  ],
+  "summary_1l": "Effect of mammographic screening from age 40 years on breast cancer mortality in the UK Age trial at 17 years' follow-up: a randomised controlled trial.",
+  "query_hits": [],
+  "embed_text": "11880289 Effect of mammographic screening from age 40 years on breast cancer mortality in the UK Age trial at 17 years' follow-up: a randomised controlled trial. science scifact BACKGROUND Age-specific effects of mammographic screening, and the timing of such effects, are a matter of debate. The results of the UK Age trial, which compared the effect of invitation to annual mammographic screening from age 40 years… 11880289 effect-of-mammographic-screening-from-age-40-years-on-breast-cancer-mortality-in-the-uk-age-trial-at-17-years'-follow-up:-a-randomised-controlled-trial. effect mammographic screening from age 40 years breast Effect of mammographic screening from age 40 years on breast cancer mortality in the UK Age trial at 17 years' follow-up: a randomised controlled trial. Effect of mammographic screening from age 40 years on breast cancer mortality in the UK Age trial at 17 years' follow-up: a randomised controlled trial. BACKGROUND Age-specific effects of mammographic screening, and the timing of such effects, are a matter of debate. The results of the UK Age trial, which compared the effect of invitation to annual mammographic screening from age 40 years with commencement of screening at age 50 years on breast cancer mortality, have been reported at 10 years of follow-up and showed no significant difference in mortality between the trial groups. Here, we report the results of the UK Age trial after 17 years of follow-up. METHODS Women aged 39-41 from 23 UK NHS Breast Screening Programme units years were randomly assigned by individual randomisation (1:2)",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:07.720503+00:00"
+}

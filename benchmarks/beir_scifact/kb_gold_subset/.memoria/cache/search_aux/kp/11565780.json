@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11565780",
+  "source_fingerprint": "6db466e807713e98afa46fc5af14a7dd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11565780",
+    "circadian-regulation-of-intracellular-g-protein-signalling-mediates-intercellular-synchrony-and-rhythmicity-in-the-suprachiasmatic-nucleus"
+  ],
+  "key_phrases": [
+    "circadian",
+    "regulation",
+    "intracellular",
+    "protein",
+    "signalling",
+    "mediates",
+    "intercellular",
+    "synchrony"
+  ],
+  "summary_1l": "Synchronous oscillations of thousands of cellular clocks in t",
+  "query_hits": [],
+  "embed_text": "11565780 Circadian regulation of intracellular G-protein signalling mediates intercellular synchrony and rhythmicity in the suprachiasmatic nucleus science scifact Synchronous oscillations of thousands of cellular clocks in the suprachiasmatic nucleus (SCN), the circadian centre, are coordinated by precisely timed cell-cell communication, the principle of which is largely unknown. Here we show that… 11565780 circadian-regulation-of-intracellular-g-protein-signalling-mediates-intercellular-synchrony-and-rhythmicity-in-the-suprachiasmatic-nucleus circadian regulation intracellular protein signalling mediates intercellular synchrony Synchronous oscillations of thousands of cellular clocks in t Circadian regulation of intracellular G-protein signalling mediates intercellular synchrony and rhythmicity in the suprachiasmatic nucleus Synchronous oscillations of thousands of cellular clocks in the suprachiasmatic nucleus (SCN), the circadian centre, are coordinated by precisely timed cell-cell communication, the principle of which is largely unknown. Here we show that the amount of RGS16 (regulator of G protein signalling 16), a protein known to inactivate Gαi, increases at a selective circadian time to allow time-dependent activation of intracellular cyclic AMP signalling in the SCN. Gene ablation of Rgs16 leads to the loss of circadian production of cAMP and as a result lengthens circadian period of behavioural rhythm. The temporally precise regulation of the cAMP signal by clock-c",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:07.121859+00:00"
+}

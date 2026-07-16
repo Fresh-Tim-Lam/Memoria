@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "3866315",
+  "source_fingerprint": "6c56f8293fd0a2035618ca04d61b31a1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3866315"
+  ],
+  "key_phrases": [
+    "novel",
+    "functional",
+    "sets",
+    "lipid",
+    "derived",
+    "mediators",
+    "with",
+    "antiinflammatory"
+  ],
+  "summary_1l": "Novel Functional Sets of Lipid-Derived Mediators with Antiinflammatory Actions Generated from Omega-3 Fatty Acids via Cyclooxygenase 2–Nonsteroidal Antiinflammatory Drugs and Transcellular Processing",
+  "query_hits": [],
+  "embed_text": "3866315 Novel Functional Sets of Lipid-Derived Mediators with Antiinflammatory Actions Generated from Omega-3 Fatty Acids via Cyclooxygenase 2–Nonsteroidal Antiinflammatory Drugs and Transcellular Processing science scifact Aspirin therapy inhibits prostaglandin biosynthesis without directly acting on lipoxygenases, yet via acetylation of cyclooxygenase 2 (COX-2) it leads to bioactive lipoxins (LXs) epimeric at carbon 15 (15-epi-LX, also termed… 3866315 novel functional sets lipid derived mediators with antiinflammatory Novel Functional Sets of Lipid-Derived Mediators with Antiinflammatory Actions Generated from Omega-3 Fatty Acids via Cyclooxygenase 2–Nonsteroidal Antiinflammatory Drugs and Transcellular Processing Novel Functional Sets of Lipid-Derived Mediators with Antiinflammatory Actions Generated from Omega-3 Fatty Acids via Cyclooxygenase 2–Nonsteroidal Antiinflammatory Drugs and Transcellular Processing Aspirin therapy inhibits prostaglandin biosynthesis without directly acting on lipoxygenases, yet via acetylation of cyclooxygenase 2 (COX-2) it leads to bioactive lipoxins (LXs) epimeric at carbon 15 (15-epi-LX, also termed aspirin-triggered LX [ATL]). Here, we report that inflammatory exudates from mice treated with ω-3 polyunsaturated fatty acid and aspirin (ASA) generate a novel array of bioactive lipid signals. Human endothelial cells with upregulated COX-2 treated with ASA converted C20:5 ω-3 to 18R-hydroxyeicosapentaenoic acid (HEPE) and 15R-HEPE. Each was used by polymorphonuclear leuk",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.704305+00:00"
+}

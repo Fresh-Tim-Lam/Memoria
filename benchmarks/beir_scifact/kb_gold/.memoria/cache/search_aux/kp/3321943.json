@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3321943",
+  "source_fingerprint": "dcba7b8a5f775bc54586e94a2790a7c1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3321943",
+    "the-non-coding-rna-landscape-of-human-hematopoiesis-and-leukemia"
+  ],
+  "key_phrases": [
+    "non",
+    "coding",
+    "rna",
+    "landscape",
+    "human",
+    "hematopoiesis",
+    "leukemia",
+    "rnas"
+  ],
+  "summary_1l": "Non-coding RNAs have emerged as crucial regulators of gene expression and cell fate decisions.",
+  "query_hits": [],
+  "embed_text": "3321943 The non-coding RNA landscape of human hematopoiesis and leukemia science scifact Non-coding RNAs have emerged as crucial regulators of gene expression and cell fate decisions. However, their expression patterns and regulatory functions during normal and malignant human hematopoiesis are incompletely understood. Here we… 3321943 the-non-coding-rna-landscape-of-human-hematopoiesis-and-leukemia non coding rna landscape human hematopoiesis leukemia rnas Non-coding RNAs have emerged as crucial regulators of gene expression and cell fate decisions. The non-coding RNA landscape of human hematopoiesis and leukemia Non-coding RNAs have emerged as crucial regulators of gene expression and cell fate decisions. However, their expression patterns and regulatory functions during normal and malignant human hematopoiesis are incompletely understood. Here we present a comprehensive resource defining the non-coding RNA landscape of the human hematopoietic system. Based on highly specific non-coding RNA expression portraits per blood cell population, we identify unique fingerprint non-coding RNAs-such as LINC00173 in granulocytes-and assign these to critical regulatory circuits involved in blood homeostasis. Following the incorporation of acute myeloid leukemia samples into the landscape, we further uncover prognostically relevant non-coding RNA",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.273550+00:00"
+}

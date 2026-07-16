@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26720366",
+  "source_fingerprint": "3a6409cf0bbcb1806044d09e366431e0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26720366",
+    "psychological-adaptation-in-children-with-idiopathic-short-stature-treated-with-growth-hormone-or-placebo."
+  ],
+  "key_phrases": [
+    "psychological",
+    "adaptation",
+    "children",
+    "with",
+    "idiopathic",
+    "short",
+    "stature",
+    "treated"
+  ],
+  "summary_1l": "Psychological adaptation in children with idiopathic short stature treated with growth hormone or placebo.",
+  "query_hits": [],
+  "embed_text": "26720366 Psychological adaptation in children with idiopathic short stature treated with growth hormone or placebo. science scifact The influence of short stature on psychological adaptation in childhood and adolescence is controversial. GH is currently used to treat children with idiopathic short stature (ISS, also known as non-GH-deficient short stature). This study… 26720366 psychological-adaptation-in-children-with-idiopathic-short-stature-treated-with-growth-hormone-or-placebo. psychological adaptation children with idiopathic short stature treated Psychological adaptation in children with idiopathic short stature treated with growth hormone or placebo. Psychological adaptation in children with idiopathic short stature treated with growth hormone or placebo. The influence of short stature on psychological adaptation in childhood and adolescence is controversial. GH is currently used to treat children with idiopathic short stature (ISS, also known as non-GH-deficient short stature). This study represents the first double-blind, placebo-controlled trial of the effects of GH on the psychological adaptation of children and adolescents with ISS, treated with GH until adult height was attained. Sixty-eight children (53 males, 15 females), 9-16 yr old, with marked ISS (measured height or predicted adult height -2.5 sd or less) received either GH 0.074 mg/kg or placebo sc three times per week until height velocity decreased to less than 1.5 cm/yr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.090859+00:00"
+}

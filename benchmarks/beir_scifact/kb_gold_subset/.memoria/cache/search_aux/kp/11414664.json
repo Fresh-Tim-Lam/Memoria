@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11414664",
+  "source_fingerprint": "99785cf3d310d02bb42510ee168c4009",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11414664",
+    "timing-requirements-for-insulin/igf-1-signaling-in-c.-elegans."
+  ],
+  "key_phrases": [
+    "timing",
+    "requirements",
+    "insulin",
+    "igf",
+    "signaling",
+    "elegans",
+    "where",
+    "like"
+  ],
+  "summary_1l": "Timing requirements for insulin/IGF-1 signaling in C.",
+  "query_hits": [],
+  "embed_text": "11414664 Timing requirements for insulin/IGF-1 signaling in C. elegans. science scifact The insulin/IGF-1 (where IGF-1 is insulin-like growth factor-1) signaling pathway influences longevity, reproduction, and diapause in many organisms. Because of the fundamental importance of this system in animal physiology, we asked when… 11414664 timing-requirements-for-insulin/igf-1-signaling-in-c.-elegans. timing requirements insulin igf signaling elegans where like Timing requirements for insulin/IGF-1 signaling in C. Timing requirements for insulin/IGF-1 signaling in C. elegans. The insulin/IGF-1 (where IGF-1 is insulin-like growth factor-1) signaling pathway influences longevity, reproduction, and diapause in many organisms. Because of the fundamental importance of this system in animal physiology, we asked when during the animal's life it is required to regulate these different processes. We find that in Caenorhabditis elegans, the pathway acts during adulthood, to relatively advanced ages, to influence aging. In contrast, it regulates diapause during development. In addition, the pathway controls longevity and reproduction independently of one another. Together our findings show that life-span regulation can be dissociated temporally from phenotypes that might seem to decrease the quality of life.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:06.838386+00:00"
+}

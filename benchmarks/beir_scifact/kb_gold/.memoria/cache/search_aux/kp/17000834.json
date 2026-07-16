@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17000834",
+  "source_fingerprint": "4b745e3b0b84dd5afe4b04f4e8f400ab",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17000834",
+    "past-exposure-to-sun,-skin-phenotype,-and-risk-of-multiple-sclerosis:-case-control-study."
+  ],
+  "key_phrases": [
+    "past",
+    "exposure",
+    "sun",
+    "skin",
+    "phenotype",
+    "risk",
+    "multiple",
+    "sclerosis"
+  ],
+  "summary_1l": "Past exposure to sun, skin phenotype, and risk of multiple sclerosis: case-control study.",
+  "query_hits": [],
+  "embed_text": "17000834 Past exposure to sun, skin phenotype, and risk of multiple sclerosis: case-control study. science scifact OBJECTIVE To examine whether past high sun exposure is associated with a reduced risk of multiple sclerosis. DESIGN Population based case-control study. SETTING Tasmania, latitudes 41-3 degrees S.   PARTICIPANTS 136 cases with multiple… 17000834 past-exposure-to-sun,-skin-phenotype,-and-risk-of-multiple-sclerosis:-case-control-study. past exposure sun skin phenotype risk multiple sclerosis Past exposure to sun, skin phenotype, and risk of multiple sclerosis: case-control study. Past exposure to sun, skin phenotype, and risk of multiple sclerosis: case-control study. OBJECTIVE To examine whether past high sun exposure is associated with a reduced risk of multiple sclerosis. DESIGN Population based case-control study. SETTING Tasmania, latitudes 41-3 degrees S. PARTICIPANTS 136 cases with multiple sclerosis and 272 controls randomly drawn from the community and matched on sex and year of birth. MAIN OUTCOME MEASURE Multiple sclerosis defined by both clinical and magnetic resonance imaging criteria. RESULTS Higher sun exposure when aged 6-15 years (average 2-3 hours or more a day in summer during weekends and holidays) was associated with a decreased risk of multiple sclerosis (adjusted odds ratio 0.31, 95% confidence interval 0.16 to 0.59). Higher exposure in winte",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.162177+00:00"
+}

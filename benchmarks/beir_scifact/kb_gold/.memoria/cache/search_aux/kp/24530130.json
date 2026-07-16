@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24530130",
+  "source_fingerprint": "46502c61f6bb850b22f15792259f3de0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24530130",
+    "genome-wide-association-study-identifies-variants-at-clu-and-cr1-associated-with-alzheimer's-disease"
+  ],
+  "key_phrases": [
+    "genome",
+    "wide",
+    "association",
+    "study",
+    "identifies",
+    "variants",
+    "at",
+    "clu"
+  ],
+  "summary_1l": "The gene encoding apolipoprotein E (APOE) on chromosome 19 is the only confirmed susceptibility loc",
+  "query_hits": [],
+  "embed_text": "24530130 Genome-wide association study identifies variants at CLU and CR1 associated with Alzheimer's disease science scifact The gene encoding apolipoprotein E (APOE) on chromosome 19 is the only confirmed susceptibility locus for late-onset Alzheimer's disease. To identify other risk loci, we conducted a large genome-wide association study of 2,032 individuals… 24530130 genome-wide-association-study-identifies-variants-at-clu-and-cr1-associated-with-alzheimer's-disease genome wide association study identifies variants at clu The gene encoding apolipoprotein E (APOE) on chromosome 19 is the only confirmed susceptibility loc Genome-wide association study identifies variants at CLU and CR1 associated with Alzheimer's disease The gene encoding apolipoprotein E (APOE) on chromosome 19 is the only confirmed susceptibility locus for late-onset Alzheimer's disease. To identify other risk loci, we conducted a large genome-wide association study of 2,032 individuals from France with Alzheimer's disease (cases) and 5,328 controls. Markers outside APOE with suggestive evidence of association (P < 10−5) were examined in collections from Belgium, Finland, Italy and Spain totaling 3,978 Alzheimer's disease cases and 3,297 controls. Two loci gave replicated evidence of association: one within CLU (also called APOJ), encoding clusterin or apolipoprotein J, on chromosome 8 (rs11136000, OR = 0.86, 95% CI 0.81–0.90, P = 7.5 × 1",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.652027+00:00"
+}

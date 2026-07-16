@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22544171",
+  "source_fingerprint": "6780d41155286e509535039990a03eb5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22544171",
+    "reversal-of-the-cellular-phenotype-in-the-premature-aging-disease-hutchinson-gilford-progeria-syndrome"
+  ],
+  "key_phrases": [
+    "reversal",
+    "cellular",
+    "phenotype",
+    "premature",
+    "aging",
+    "disease",
+    "hutchinson",
+    "gilford"
+  ],
+  "summary_1l": "Hutchinson-Gilford progeria syndrome (HGPS) is a childhood premature aging disease caused by a sp",
+  "query_hits": [],
+  "embed_text": "22544171 Reversal of the cellular phenotype in the premature aging disease Hutchinson-Gilford progeria syndrome science scifact Hutchinson-Gilford progeria syndrome (HGPS) is a childhood premature aging disease caused by a spontaneous point mutation in lamin A (encoded by LMNA), one of the major architectural elements of the mammalian cell nucleus. The HGPS… 22544171 reversal-of-the-cellular-phenotype-in-the-premature-aging-disease-hutchinson-gilford-progeria-syndrome reversal cellular phenotype premature aging disease hutchinson gilford Hutchinson-Gilford progeria syndrome (HGPS) is a childhood premature aging disease caused by a sp Reversal of the cellular phenotype in the premature aging disease Hutchinson-Gilford progeria syndrome Hutchinson-Gilford progeria syndrome (HGPS) is a childhood premature aging disease caused by a spontaneous point mutation in lamin A (encoded by LMNA), one of the major architectural elements of the mammalian cell nucleus. The HGPS mutation activates an aberrant cryptic splice site in LMNA pre-mRNA, leading to synthesis of a truncated lamin A protein and concomitant reduction in wild-type lamin A. Fibroblasts from individuals with HGPS have severe morphological abnormalities in nuclear envelope structure. Here we show that the cellular disease phenotype is reversible in cells from individuals with HGPS. Introduction of wild-type lamin A protein does not rescue the cellular disease symptom",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.010906+00:00"
+}

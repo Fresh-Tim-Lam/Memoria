@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4462919",
+  "source_fingerprint": "41766c80c60ea5632a401ae5b489ce65",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4462919",
+    "in-vivo-genome-editing-using-staphylococcus-aureus-cas9"
+  ],
+  "key_phrases": [
+    "vivo",
+    "genome",
+    "editing",
+    "using",
+    "staphylococcus",
+    "aureus",
+    "cas9",
+    "rna"
+  ],
+  "summary_1l": "The RNA-guided endonuclease Cas9 has emerged as a versatile genome-editing platform.",
+  "query_hits": [],
+  "embed_text": "4462919 In vivo genome editing using Staphylococcus aureus Cas9 science scifact The RNA-guided endonuclease Cas9 has emerged as a versatile genome-editing platform. However, the size of the commonly used Cas9 from Streptococcus pyogenes (SpCas9) limits its utility for basic research and therapeutic applications that… 4462919 in-vivo-genome-editing-using-staphylococcus-aureus-cas9 vivo genome editing using staphylococcus aureus cas9 rna The RNA-guided endonuclease Cas9 has emerged as a versatile genome-editing platform. In vivo genome editing using Staphylococcus aureus Cas9 The RNA-guided endonuclease Cas9 has emerged as a versatile genome-editing platform. However, the size of the commonly used Cas9 from Streptococcus pyogenes (SpCas9) limits its utility for basic research and therapeutic applications that use the highly versatile adeno-associated virus (AAV) delivery vehicle. Here, we characterize six smaller Cas9 orthologues and show that Cas9 from Staphylococcus aureus (SaCas9) can edit the genome with efficiencies similar to those of SpCas9, while being more than 1 kilobase shorter. We packaged SaCas9 and its single guide RNA expression cassette into a single AAV vector and targeted the cholesterol regulatory gene Pcsk9 in the mouse liver. Within one week of injection, we observed >40% gene modifica",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.701042+00:00"
+}

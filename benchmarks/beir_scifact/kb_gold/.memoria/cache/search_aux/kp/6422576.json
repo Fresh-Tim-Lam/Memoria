@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6422576",
+  "source_fingerprint": "82c730241fa4dd944c12de41923fcaf2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6422576",
+    "ubiquitin-dependent-protein-degradation."
+  ],
+  "key_phrases": [
+    "ubiquitin",
+    "dependent",
+    "protein",
+    "degradation",
+    "growing",
+    "number",
+    "cellular",
+    "regulatory"
+  ],
+  "summary_1l": "Ubiquitin-dependent protein degradation.",
+  "query_hits": [],
+  "embed_text": "6422576 Ubiquitin-dependent protein degradation. science scifact A growing number of cellular regulatory mechanisms are being linked to protein modification by the polypeptide ubiquitin. These include key transitions in the cell cycle, class I antigen processing, signal transduction pathways, and… 6422576 ubiquitin-dependent-protein-degradation. ubiquitin dependent protein degradation growing number cellular regulatory Ubiquitin-dependent protein degradation. Ubiquitin-dependent protein degradation. A growing number of cellular regulatory mechanisms are being linked to protein modification by the polypeptide ubiquitin. These include key transitions in the cell cycle, class I antigen processing, signal transduction pathways, and receptor-mediated endocytosis. In most, but not all, of these examples, ubiquitination of a protein leads to its degradation by the 26S proteasome. Following attachment of ubiquitin to a substrate and binding of the ubiquitinated protein to the proteasome, the bound substrate must be unfolded (and eventually deubiquitinated) and translocated through a narrow set of channels that leads to the proteasome interior, where the polypeptide is cleaved into short peptides. Protein ubiquitination and deubiquitination are both med",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.842937+00:00"
+}

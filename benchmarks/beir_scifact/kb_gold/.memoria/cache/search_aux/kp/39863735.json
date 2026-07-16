@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "39863735",
+  "source_fingerprint": "d6b5b9db2fafd6171737018d230a4fcb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "39863735",
+    "attachment-of-the-ubiquitin-related-protein-urm1p-to-the-antioxidant-protein-ahp1p."
+  ],
+  "key_phrases": [
+    "attachment",
+    "ubiquitin",
+    "related",
+    "protein",
+    "urm1p",
+    "antioxidant",
+    "ahp1p",
+    "that"
+  ],
+  "summary_1l": "Attachment of the ubiquitin-related protein Urm1p to the antioxidant protein Ahp1p.",
+  "query_hits": [],
+  "embed_text": "39863735 Attachment of the ubiquitin-related protein Urm1p to the antioxidant protein Ahp1p. science scifact Urm1p is a ubiquitin-related protein that serves as a posttranslational modification of other proteins. Urm1p conjugation has been implicated in the budding process and in nutrient sensing. Here, we have identified the first in vivo target… 39863735 attachment-of-the-ubiquitin-related-protein-urm1p-to-the-antioxidant-protein-ahp1p. attachment ubiquitin related protein urm1p antioxidant ahp1p that Attachment of the ubiquitin-related protein Urm1p to the antioxidant protein Ahp1p. Attachment of the ubiquitin-related protein Urm1p to the antioxidant protein Ahp1p. Urm1p is a ubiquitin-related protein that serves as a posttranslational modification of other proteins. Urm1p conjugation has been implicated in the budding process and in nutrient sensing. Here, we have identified the first in vivo target for the urmylation pathway as the antioxidant protein Ahp1p. The attachment of Urm1p to Ahp1p requires the E1 for the urmylation pathway, Uba4p. Loss of the urmylation pathway components results in sensitivity to a thiol-specific oxidant, as does loss of Ahp1p, implying that urmylation has a role in an oxidative-stress response. Moreover, treatment of cells with thiol-specific oxidants affects the abundance of Ahp1p-Urm1p conjugates. These results suggest that the conjuga",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.038834+00:00"
+}

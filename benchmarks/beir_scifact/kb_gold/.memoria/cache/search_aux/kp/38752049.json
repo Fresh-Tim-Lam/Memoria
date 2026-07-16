@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "38752049",
+  "source_fingerprint": "892d7138e845ec039e12721f8909290c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "38752049",
+    "a-chart-review-of-cyproheptadine-for-stimulant-induced-weight-loss."
+  ],
+  "key_phrases": [
+    "chart",
+    "review",
+    "cyproheptadine",
+    "stimulant",
+    "induced",
+    "weight",
+    "loss",
+    "youths"
+  ],
+  "summary_1l": "A chart review of cyproheptadine for stimulant-induced weight loss.",
+  "query_hits": [],
+  "embed_text": "38752049 A chart review of cyproheptadine for stimulant-induced weight loss. science scifact Youths with attention deficit hyperactivity disorder often experience weight loss on stimulants, which may limit optimal dosing and compliance. Cyproheptadine has been shown in medical samples to stimulate weight gain. We conducted a… 38752049 a-chart-review-of-cyproheptadine-for-stimulant-induced-weight-loss. chart review cyproheptadine stimulant induced weight loss youths A chart review of cyproheptadine for stimulant-induced weight loss. A chart review of cyproheptadine for stimulant-induced weight loss. Youths with attention deficit hyperactivity disorder often experience weight loss on stimulants, which may limit optimal dosing and compliance. Cyproheptadine has been shown in medical samples to stimulate weight gain. We conducted a retrospective chart review of 28 consecutive pediatric psychiatry outpatients prescribed cyproheptadine for weight loss or insomnia while on stimulants. Of these, 4 patients never took cyproheptadine consistently, and 3 discontinued it within the first 7 days due to intolerable side effects. Data were analyzed for 21 other patients (age range 4-15 years) who continued with 4-8 mg of cyproheptadine nightly (mean final dose = 4.9 mg/day) for at least 14 days (mean duration = 104.7 days). Most ha",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.860115+00:00"
+}

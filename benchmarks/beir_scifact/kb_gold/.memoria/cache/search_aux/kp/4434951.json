@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4434951",
+  "source_fingerprint": "56fc8f8ab893c67dbfc9161de37af17d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4434951",
+    "diverse-interventions-that-extend-mouse-lifespan-suppress-shared-age-associated-epigenetic-changes-at-critical-gene-regulatory-regions"
+  ],
+  "key_phrases": [
+    "diverse",
+    "interventions",
+    "that",
+    "extend",
+    "mouse",
+    "lifespan",
+    "suppress",
+    "shared"
+  ],
+  "summary_1l": "BACKGROUND Age-associated epigenetic changes are implicated in ag",
+  "query_hits": [],
+  "embed_text": "4434951 Diverse interventions that extend mouse lifespan suppress shared age-associated epigenetic changes at critical gene regulatory regions science scifact BACKGROUND Age-associated epigenetic changes are implicated in aging. Notably, age-associated DNA methylation changes comprise a so-called aging \"clock\", a robust biomarker of aging. However, while genetic, dietary and drug interventions… 4434951 diverse-interventions-that-extend-mouse-lifespan-suppress-shared-age-associated-epigenetic-changes-at-critical-gene-regulatory-regions diverse interventions that extend mouse lifespan suppress shared BACKGROUND Age-associated epigenetic changes are implicated in ag Diverse interventions that extend mouse lifespan suppress shared age-associated epigenetic changes at critical gene regulatory regions BACKGROUND Age-associated epigenetic changes are implicated in aging. Notably, age-associated DNA methylation changes comprise a so-called aging \"clock\", a robust biomarker of aging. However, while genetic, dietary and drug interventions can extend lifespan, their impact on the epigenome is uncharacterised. To fill this knowledge gap, we defined age-associated DNA methylation changes at the whole-genome, single-nucleotide level in mouse liver and tested the impact of longevity-promoting interventions, specifically the Ames dwarf Prop1 df/df mutation, calorie restriction and rapamycin. RESULTS In wild-type mice fed an unsupplemented ad libitum diet, age-asso",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.238031+00:00"
+}

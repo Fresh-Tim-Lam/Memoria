@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5991309",
+  "source_fingerprint": "1f03c5a334cda0d18b668e73f82de3eb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5991309",
+    "targeting-tumor-necrosis-factor-receptor-pathways-for-tumor-immunotherapy"
+  ],
+  "key_phrases": [
+    "targeting",
+    "tumor",
+    "necrosis",
+    "factor",
+    "receptor",
+    "pathways",
+    "immunotherapy",
+    "with"
+  ],
+  "summary_1l": "With the success of ipilimumab and promise of programmed death-1 pathway-targeted agents, the field of tumor immunotherapy is",
+  "query_hits": [],
+  "embed_text": "5991309 Targeting tumor-necrosis factor receptor pathways for tumor immunotherapy science scifact With the success of ipilimumab and promise of programmed death-1 pathway-targeted agents, the field of tumor immunotherapy is expanding rapidly. Newer targets for clinical development include select members of the tumor necrosis factor… 5991309 targeting-tumor-necrosis-factor-receptor-pathways-for-tumor-immunotherapy targeting tumor necrosis factor receptor pathways immunotherapy with With the success of ipilimumab and promise of programmed death-1 pathway-targeted agents, the field of tumor immunotherapy is Targeting tumor-necrosis factor receptor pathways for tumor immunotherapy With the success of ipilimumab and promise of programmed death-1 pathway-targeted agents, the field of tumor immunotherapy is expanding rapidly. Newer targets for clinical development include select members of the tumor necrosis factor receptor (TNFR) family. Agonist antibodies to these co-stimulatory molecules target both T and B cells, modulating T-cell activation and enhancing immune responses. In vitro and in vivo preclinical data have provided the basis for continued development of 4-1BB, OX40, glucocorticoid-induced TNFR-related gene, herpes virus entry mediator, and CD27 as potential therapies for patients with cancer. In this review, we summarize the immune response to tumors, consider preclinical and early c",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.647839+00:00"
+}

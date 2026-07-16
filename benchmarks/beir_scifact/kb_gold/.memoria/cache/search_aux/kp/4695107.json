@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4695107",
+  "source_fingerprint": "4d5a8ed7e4327c4c3b1361c4206c8a17",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4695107",
+    "the-challenges-of-overcoming-antibiotic-resistance:-plant-extracts-as-potential-sources-of-antimicrobial-and-resistance-modifying-agents"
+  ],
+  "key_phrases": [
+    "challenges",
+    "overcoming",
+    "antibiotic",
+    "resistance",
+    "plant",
+    "extracts",
+    "as",
+    "potential"
+  ],
+  "summary_1l": "The problem of antibiotic resistance, which has limited the use",
+  "query_hits": [],
+  "embed_text": "4695107 The challenges of overcoming antibiotic resistance: Plant extracts as potential sources of antimicrobial and resistance modifying agents science scifact The problem of antibiotic resistance, which has limited the use of cheap and old antibiotics, has necessitated the need for a continued search for new antimicrobial compounds. Understanding the mechanisms of resistance is important in the… 4695107 the-challenges-of-overcoming-antibiotic-resistance:-plant-extracts-as-potential-sources-of-antimicrobial-and-resistance-modifying-agents challenges overcoming antibiotic resistance plant extracts as potential The problem of antibiotic resistance, which has limited the use The challenges of overcoming antibiotic resistance: Plant extracts as potential sources of antimicrobial and resistance modifying agents The problem of antibiotic resistance, which has limited the use of cheap and old antibiotics, has necessitated the need for a continued search for new antimicrobial compounds. Understanding the mechanisms of resistance is important in the development of strategies to solving the problem. Active efflux of drugs, alteration of target sites and enzymatic degradations are the strategies by which pathogenic bacteria acquire or develop intrinsic resistance to antibiotics. Multi-drug resistance (MDR) pumps, capable of recognizing and expelling a variety of structurally unrelated compounds from the bacterial cell and conferring resistance to a wide range of antib",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.247354+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "31407112",
+  "source_fingerprint": "7de0c43afe933e7b338fb053ad10e036",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "31407112",
+    "deficiency-in-l-serine-deaminase-results-in-abnormal-growth-and-cell-division-of-escherichia-coli-k-12."
+  ],
+  "key_phrases": [
+    "deficiency",
+    "serine",
+    "deaminase",
+    "results",
+    "abnormal",
+    "growth",
+    "cell",
+    "division"
+  ],
+  "summary_1l": "Deficiency in l-serine deaminase results in abnormal growth and cell division of Escherichia coli K-12.",
+  "query_hits": [],
+  "embed_text": "31407112 Deficiency in l-serine deaminase results in abnormal growth and cell division of Escherichia coli K-12. science scifact The loss of the ability to deaminate l-serine severely impairs growth and cell division in Escherichia coli K-12. A strain from which the three genes (sdaA, sdaB, tdcG) coding for this organism's three l-serine deaminases had been deleted… 31407112 deficiency-in-l-serine-deaminase-results-in-abnormal-growth-and-cell-division-of-escherichia-coli-k-12. deficiency serine deaminase results abnormal growth cell division Deficiency in l-serine deaminase results in abnormal growth and cell division of Escherichia coli K-12. Deficiency in l-serine deaminase results in abnormal growth and cell division of Escherichia coli K-12. The loss of the ability to deaminate l-serine severely impairs growth and cell division in Escherichia coli K-12. A strain from which the three genes (sdaA, sdaB, tdcG) coding for this organism's three l-serine deaminases had been deleted grows well in glucose minimal medium but, on subculture into minimal medium with glucose and casamino acids, it makes very large, abnormally shaped cells, many of which lyse. When inoculated into Luria-Bertani (LB) broth with or without glucose, it makes very long filaments. Provision of S-adenosylmethionine restores cell division in LB broth with glucose, and repairs much of the difficulty in growth in medium with casamino acids. We suggest that replic",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.572491+00:00"
+}

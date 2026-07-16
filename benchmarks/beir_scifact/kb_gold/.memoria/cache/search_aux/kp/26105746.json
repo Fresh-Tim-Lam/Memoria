@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26105746",
+  "source_fingerprint": "66ed02a15615154b0dcf54811e3394da",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26105746",
+    "influenza-a-myocarditis-developing-in-an-adult-liver-transplant-recipient-despite-vaccination:-a-case-report-and-review-of-the-literature."
+  ],
+  "key_phrases": [
+    "influenza",
+    "myocarditis",
+    "developing",
+    "adult",
+    "liver",
+    "transplant",
+    "recipient",
+    "despite"
+  ],
+  "summary_1l": "Influenza A myocarditis developing in an adult liver transplant recipient despite vaccination: a case report and review of the literature.",
+  "query_hits": [],
+  "embed_text": "26105746 Influenza A myocarditis developing in an adult liver transplant recipient despite vaccination: a case report and review of the literature. science scifact Solid organ transplant recipients receiving chronic immunosuppressive agents are at increased risk to acquire influenza virus despite vaccination. Myocarditis is a known but rare complication of influenza infection. We present the first… 26105746 influenza-a-myocarditis-developing-in-an-adult-liver-transplant-recipient-despite-vaccination:-a-case-report-and-review-of-the-literature. influenza myocarditis developing adult liver transplant recipient despite Influenza A myocarditis developing in an adult liver transplant recipient despite vaccination: a case report and review of the literature. Influenza A myocarditis developing in an adult liver transplant recipient despite vaccination: a case report and review of the literature. Solid organ transplant recipients receiving chronic immunosuppressive agents are at increased risk to acquire influenza virus despite vaccination. Myocarditis is a known but rare complication of influenza infection. We present the first adult liver transplant recipient who received prophylactic vaccination but developed influenza A myocarditis. This may occur in solid organ transplant recipients, because they have reduced response to protein vaccines, which may leave them vulnerable to infections. Studies are needed to evaluate if antiviral chemoprophylaxis in solid organ transplant recipients during influenza season would be an effective preventive the",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.344320+00:00"
+}

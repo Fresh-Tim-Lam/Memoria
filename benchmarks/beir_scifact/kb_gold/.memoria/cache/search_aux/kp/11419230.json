@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11419230",
+  "source_fingerprint": "d3fa266c6df291b014594bf388b8cecc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11419230",
+    "folding-and-self-assembly-of-the-tata-translocation-pore-based-on-a-charge-zipper-mechanism"
+  ],
+  "key_phrases": [
+    "folding",
+    "self",
+    "assembly",
+    "tata",
+    "translocation",
+    "pore",
+    "based",
+    "charge"
+  ],
+  "summary_1l": "We propose a concept for the folding and self-assembly of the pore-forming TatA complex from the Twin-argini",
+  "query_hits": [],
+  "embed_text": "11419230 Folding and Self-Assembly of the TatA Translocation Pore Based on a Charge Zipper Mechanism science scifact We propose a concept for the folding and self-assembly of the pore-forming TatA complex from the Twin-arginine translocase and of other membrane proteins based on electrostatic \"charge zippers. \" Each subunit of TatA consists of a… 11419230 folding-and-self-assembly-of-the-tata-translocation-pore-based-on-a-charge-zipper-mechanism folding self assembly tata translocation pore based charge We propose a concept for the folding and self-assembly of the pore-forming TatA complex from the Twin-argini Folding and Self-Assembly of the TatA Translocation Pore Based on a Charge Zipper Mechanism We propose a concept for the folding and self-assembly of the pore-forming TatA complex from the Twin-arginine translocase and of other membrane proteins based on electrostatic \"charge zippers. \" Each subunit of TatA consists of a transmembrane segment, an amphiphilic helix (APH), and a C-terminal densely charged region (DCR). The sequence of charges in the DCR is complementary to the charge pattern on the APH, suggesting that the protein can be \"zipped up\" by a ladder of seven salt bridges. The length of the resulting hairpin matches the lipid bilayer thickness, hence a transmembrane pore could self-assemble via intra- and intermolecular salt bridges. The steric feasibility was rationalized by mole",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:06.501639+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12948892",
+  "source_fingerprint": "79a08e5ea58fc284606216dd6996f66c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12948892",
+    "ca2+-permeable-ampa-receptors-regulate-growth-of-human-glioblastoma-via-akt-activation."
+  ],
+  "key_phrases": [
+    "ca2",
+    "+-",
+    "permeable",
+    "ampa",
+    "receptors",
+    "regulate",
+    "growth",
+    "human"
+  ],
+  "summary_1l": "Ca2+-permeable AMPA receptors regulate growth of human glioblastoma via Akt activation.",
+  "query_hits": [],
+  "embed_text": "12948892 Ca2+-permeable AMPA receptors regulate growth of human glioblastoma via Akt activation. science scifact Evidence has been accumulated that glioblastoma cells release and exploit glutamate for proliferation and migration by autocrine or paracrine loops through Ca2+-permeable AMPA-type glutamate receptors. Here, we show that Ca2+ signaling… 12948892 ca2+-permeable-ampa-receptors-regulate-growth-of-human-glioblastoma-via-akt-activation. ca2 +- permeable ampa receptors regulate growth human Ca2+-permeable AMPA receptors regulate growth of human glioblastoma via Akt activation. Ca2+-permeable AMPA receptors regulate growth of human glioblastoma via Akt activation. Evidence has been accumulated that glioblastoma cells release and exploit glutamate for proliferation and migration by autocrine or paracrine loops through Ca2+-permeable AMPA-type glutamate receptors. Here, we show that Ca2+ signaling mediated by AMPA receptor regulates the growth and motility of glioblastoma cells via activation of Akt. Ca2+ supplied through Ca2+-permeable AMPA receptor phosphorylated Akt at Ser-473, thereby facilitating proliferation and mobility. A dominant-negative form of Akt inhibited cell proliferation and migration accelerated by overexpression of Ca2+-permeable AMPA receptor. In contrast, introduction of a constitutively active form of Akt rescued tumor cells from apoptosis in",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:09.358024+00:00"
+}

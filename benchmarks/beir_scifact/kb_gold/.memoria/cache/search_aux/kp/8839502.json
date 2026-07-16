@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8839502",
+  "source_fingerprint": "707d745b8e34496ead6ecc8e53ea3915",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8839502",
+    "mechanisms-of-progression-and-regression-of-renal-lesions-of-chronic-nephropathies-and-diabetes."
+  ],
+  "key_phrases": [
+    "mechanisms",
+    "progression",
+    "regression",
+    "renal",
+    "lesions",
+    "chronic",
+    "nephropathies",
+    "diabetes"
+  ],
+  "summary_1l": "Mechanisms of progression and regression of renal lesions of chronic nephropathies and diabetes.",
+  "query_hits": [],
+  "embed_text": "8839502 Mechanisms of progression and regression of renal lesions of chronic nephropathies and diabetes. science scifact The incidence of chronic kidney diseases is increasing worldwide, and these conditions are emerging as a major public health problem. While genetic factors contribute to susceptibility and progression of renal disease, proteinuria has been… 8839502 mechanisms-of-progression-and-regression-of-renal-lesions-of-chronic-nephropathies-and-diabetes. mechanisms progression regression renal lesions chronic nephropathies diabetes Mechanisms of progression and regression of renal lesions of chronic nephropathies and diabetes. Mechanisms of progression and regression of renal lesions of chronic nephropathies and diabetes. The incidence of chronic kidney diseases is increasing worldwide, and these conditions are emerging as a major public health problem. While genetic factors contribute to susceptibility and progression of renal disease, proteinuria has been claimed as an independent predictor of outcome. Reduction of urinary protein levels by various medications and a low-protein diet limits renal function decline in individuals with nondiabetic and diabetic nephropathies to the point that remission of the disease and regression of renal lesions have been observed in experimental animals and even in humans. In animal models, regression of glomerular structural changes is associated with remodeling of the glomeru",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.811170+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "599582",
+  "source_fingerprint": "c044b8d98898e868741c7ca209db28ce",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "599582",
+    "familial-aphasic-episodes:-another-variant-of-partial-epilepsy-with-simple-inheritance?"
+  ],
+  "key_phrases": [
+    "familial",
+    "aphasic",
+    "episodes",
+    "another",
+    "variant",
+    "partial",
+    "epilepsy",
+    "with"
+  ],
+  "summary_1l": "Familial aphasic episodes: another variant of partial epilepsy with simple inheritance?",
+  "query_hits": [],
+  "embed_text": "599582 Familial aphasic episodes: another variant of partial epilepsy with simple inheritance? science scifact We report on a family having partial epilepsy with simple inheritance. The affected members commonly have aphasic episodes with secondary generalization; onset occurred either in adolescence or adulthood. Patients' response to medication… 599582 familial-aphasic-episodes:-another-variant-of-partial-epilepsy-with-simple-inheritance? familial aphasic episodes another variant partial epilepsy with Familial aphasic episodes: another variant of partial epilepsy with simple inheritance? Familial aphasic episodes: another variant of partial epilepsy with simple inheritance? We report on a family having partial epilepsy with simple inheritance. The affected members commonly have aphasic episodes with secondary generalization; onset occurred either in adolescence or adulthood. Patients' response to medication has varied greatly. No neurological defects or decline in intelligence were found. The case represents another variety of rare familial partial epilepsy with neocortical epilepsy features.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.668535+00:00"
+}

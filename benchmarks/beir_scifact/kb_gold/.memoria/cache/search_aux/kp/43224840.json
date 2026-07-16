@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "43224840",
+  "source_fingerprint": "b81e7946a8b4044afc59404f5ee04b29",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "43224840",
+    "dynamics-of-microvillus-extension-and-tether-formation-in-rolling-leukocytes."
+  ],
+  "key_phrases": [
+    "dynamics",
+    "microvillus",
+    "extension",
+    "tether",
+    "formation",
+    "rolling",
+    "leukocytes",
+    "selectin"
+  ],
+  "summary_1l": "Dynamics of Microvillus Extension and Tether Formation in Rolling Leukocytes.",
+  "query_hits": [],
+  "embed_text": "43224840 Dynamics of Microvillus Extension and Tether Formation in Rolling Leukocytes. science scifact P-selectin glycoprotein ligand-1 (PSGL-1) binding to P-selectin mediates leukocyte rolling under conditions of flow. In human neutrophils, a type of leukocyte belonging to the innate immune system, PSGL-1 molecules are located on the… 43224840 dynamics-of-microvillus-extension-and-tether-formation-in-rolling-leukocytes. dynamics microvillus extension tether formation rolling leukocytes selectin Dynamics of Microvillus Extension and Tether Formation in Rolling Leukocytes. Dynamics of Microvillus Extension and Tether Formation in Rolling Leukocytes. P-selectin glycoprotein ligand-1 (PSGL-1) binding to P-selectin mediates leukocyte rolling under conditions of flow. In human neutrophils, a type of leukocyte belonging to the innate immune system, PSGL-1 molecules are located on the neutrophil's surface ruffles, called microvilli. Each newly formed P-selectin-PSGL-1 bond can become load bearing, imposing on its microvillus a pulling force that deforms the microvillus. Depending on the magnitude of the bond force, a microvillus can be extended, or a thin membrane cylinder (a tether) can be formed at the tip of the microvillus. Here we propose a Kelvin-Voigt viscoelastic material as an improved model for microvillus extension. Using a modified version of our Event",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.632980+00:00"
+}

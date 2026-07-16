@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "946756",
+  "source_fingerprint": "71171709470480d016117e4cefd43d93",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "946756",
+    "identification-and-purification-of-a-62,000-dalton-protein-that-binds-specifically-to-the-polypyrimidine-tract-of-introns."
+  ],
+  "key_phrases": [
+    "identification",
+    "purification",
+    "62",
+    "000",
+    "dalton",
+    "protein",
+    "that",
+    "binds"
+  ],
+  "summary_1l": "Identification and purification of a 62,000-dalton protein that binds specifically to the polypyrimidine tract of introns.",
+  "query_hits": [],
+  "embed_text": "946756 Identification and purification of a 62,000-dalton protein that binds specifically to the polypyrimidine tract of introns. science scifact A protein of molecular size 62,000 daltons (p62) was detected in HeLa cell nuclear extracts by UV cross-linking to mRNA precursors. p62 binds specifically to the polypyrimidine tract of the 3' splice site region of introns. p62 purified to… 946756 identification-and-purification-of-a-62,000-dalton-protein-that-binds-specifically-to-the-polypyrimidine-tract-of-introns. identification purification 62 000 dalton protein that binds Identification and purification of a 62,000-dalton protein that binds specifically to the polypyrimidine tract of introns. Identification and purification of a 62,000-dalton protein that binds specifically to the polypyrimidine tract of introns. A protein of molecular size 62,000 daltons (p62) was detected in HeLa cell nuclear extracts by UV cross-linking to mRNA precursors. p62 binds specifically to the polypyrimidine tract of the 3' splice site region of introns. p62 purified to homogeneity binds the polypyrimidine tract of pre-mRNAs. This binding does not require the AG dinucleotide at the 3' splice site. Alterations in the polypyrimidine tract that reduce the binding of p62 yield a corresponding reduction in the efficiency of formation of a U2 snRNP/pre-mRNA complex and splicing. The p62 protein is retained in the spliceosome, where it remains bound to the pre-mRNA. This polypyrimidine tract binding protei",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.957119+00:00"
+}

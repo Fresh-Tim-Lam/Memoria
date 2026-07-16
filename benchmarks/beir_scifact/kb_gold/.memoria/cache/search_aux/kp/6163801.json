@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6163801",
+  "source_fingerprint": "d82b247447684b0735d06bbebdfe5082",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6163801",
+    "kinetics-of-early-t-cell-receptor-signaling-regulate-the-pathway-of-lytic-granule-delivery-to-the-secretory-domain."
+  ],
+  "key_phrases": [
+    "kinetics",
+    "early",
+    "cell",
+    "receptor",
+    "signaling",
+    "regulate",
+    "pathway",
+    "lytic"
+  ],
+  "summary_1l": "Kinetics of early T cell receptor signaling regulate the pathway of lytic granule delivery to the secretory domain.",
+  "query_hits": [],
+  "embed_text": "6163801 Kinetics of early T cell receptor signaling regulate the pathway of lytic granule delivery to the secretory domain. science scifact Cytolytic granules mediate killing of virus-infected cells by cytotoxic T lymphocytes. We show here that the granules can take long or short paths to the secretory domain. Both paths utilized the same intracellular molecular events, which… 6163801 kinetics-of-early-t-cell-receptor-signaling-regulate-the-pathway-of-lytic-granule-delivery-to-the-secretory-domain. kinetics early cell receptor signaling regulate pathway lytic Kinetics of early T cell receptor signaling regulate the pathway of lytic granule delivery to the secretory domain. Kinetics of early T cell receptor signaling regulate the pathway of lytic granule delivery to the secretory domain. Cytolytic granules mediate killing of virus-infected cells by cytotoxic T lymphocytes. We show here that the granules can take long or short paths to the secretory domain. Both paths utilized the same intracellular molecular events, which have different spatial and temporal arrangements and are regulated by the kinetics of Ca(2+)-mediated signaling. Rapid signaling caused swift granule concentration near the microtubule-organizing center (MTOC) and subsequent delivery by the polarized MTOC directly to the secretory domain-the shortest path. Indolent signaling led to late recruitment of granules that moved along microtubules to the periphery of the synapse and then moved tange",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.167044+00:00"
+}

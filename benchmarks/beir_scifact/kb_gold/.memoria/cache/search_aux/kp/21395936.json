@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21395936",
+  "source_fingerprint": "40edce937fa44d720e1b1050fb3c19bd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21395936",
+    "[neutrophils-and-macrophages-related-to-the-pathogenesis-and-disease-development-of-chronic-obstructive-pulmonary-disease-by-the-inflammatory-reaction]."
+  ],
+  "key_phrases": [
+    "neutrophils",
+    "macrophages",
+    "related",
+    "pathogenesis",
+    "disease",
+    "development",
+    "chronic",
+    "obstructive"
+  ],
+  "summary_1l": "[Neutrophils and macrophages related to the pathogenesis and disease development of chronic obstructive pulmonary disease by the inflammatory reaction].",
+  "query_hits": [],
+  "embed_text": "21395936 [Neutrophils and macrophages related to the pathogenesis and disease development of chronic obstructive pulmonary disease by the inflammatory reaction]. science scifact Chronic obstructive pulmonary disease (COPD) is a chronic airway disorder characterized by obstructive airflow limitation which is not completely reversible with treatment. Inflammatory changes in the peripheral airways, especially those… 21395936 [neutrophils-and-macrophages-related-to-the-pathogenesis-and-disease-development-of-chronic-obstructive-pulmonary-disease-by-the-inflammatory-reaction]. neutrophils macrophages related pathogenesis disease development chronic obstructive [Neutrophils and macrophages related to the pathogenesis and disease development of chronic obstructive pulmonary disease by the inflammatory reaction]. [Neutrophils and macrophages related to the pathogenesis and disease development of chronic obstructive pulmonary disease by the inflammatory reaction]. Chronic obstructive pulmonary disease (COPD) is a chronic airway disorder characterized by obstructive airflow limitation which is not completely reversible with treatment. Inflammatory changes in the peripheral airways, especially those with the diameter less than 2mm (so-called small airway disease) have been speculated to be initial steps of COPD. And so it must be quite clear that neutrophils and macrophages play an essential role in the pathogenesis of these lesions. Studies with bronchoalveolar lavage demonstrated an increase in neutrophil numbers and the neutrophil chemoattractant interleukin-8. Recent studies demonstrated that neut",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.058908+00:00"
+}

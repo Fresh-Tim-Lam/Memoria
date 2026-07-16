@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "195683603",
+  "source_fingerprint": "87124545453a8e8b723a4ecffecbe2f8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "195683603",
+    "invariant-nkt-cells-modulate-the-suppressive-activity-of-il-10-secreting-neutrophils-differentiated-with-serum-amyloid-a."
+  ],
+  "key_phrases": [
+    "invariant",
+    "nkt",
+    "cells",
+    "modulate",
+    "suppressive",
+    "activity",
+    "il",
+    "10"
+  ],
+  "summary_1l": "Invariant NKT cells modulate the suppressive activity of IL-10-secreting neutrophils differentiated with serum amyloid A.",
+  "query_hits": [],
+  "embed_text": "195683603 Invariant NKT cells modulate the suppressive activity of IL-10-secreting neutrophils differentiated with serum amyloid A. science scifact Neutrophils are the main effector cells during inflammation, but they can also control excessive inflammatory responses by secreting anti-inflammatory cytokines. However, the mechanisms that modulate their plasticity remain unclear. We now… 195683603 invariant-nkt-cells-modulate-the-suppressive-activity-of-il-10-secreting-neutrophils-differentiated-with-serum-amyloid-a. invariant nkt cells modulate suppressive activity il 10 Invariant NKT cells modulate the suppressive activity of IL-10-secreting neutrophils differentiated with serum amyloid A. Invariant NKT cells modulate the suppressive activity of IL-10-secreting neutrophils differentiated with serum amyloid A. Neutrophils are the main effector cells during inflammation, but they can also control excessive inflammatory responses by secreting anti-inflammatory cytokines. However, the mechanisms that modulate their plasticity remain unclear. We now show that systemic serum amyloid A 1 (SAA-1) controls the plasticity of neutrophil differentiation. SAA-1 not only induced anti-inflammatory interleukin 10 (IL-10)-secreting neutrophils but also promoted the interaction of invariant natural killer T cells (iNKT cells) with those neutrophils, a process that limited their suppressive activity by diminishing the production of IL-10 and enhancing the production of IL-12. Because SAA-1-pro",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.827066+00:00"
+}

@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "kp_id": "basic-principles-of-administrative-law",
+  "source_fingerprint": "99de66a89c9f46d667f1400af5f3b5cc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "basic-principles-of-administrative-law"
+  ],
+  "key_phrases": [
+    "行政",
+    "主体",
+    "xingzhengzhuti",
+    "行政主体"
+  ],
+  "summary_1l": "行政主体",
+  "query_hits": [],
+  "embed_text": "basic-principles-of-administrative-law 行政基本原则 basic-principles-of-administrative-law 行政 主体 xingzhengzhuti 行政主体 行政主体 行政主体",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-15T12:51:06.209045+00:00"
+}

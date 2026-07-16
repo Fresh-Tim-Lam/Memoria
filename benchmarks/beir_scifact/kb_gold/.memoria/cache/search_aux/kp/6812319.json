@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "6812319",
+  "source_fingerprint": "9f5f2f60f46d98bca37f58f97314824e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6812319"
+  ],
+  "key_phrases": [
+    "ercc1",
+    "mus81",
+    "eme1",
+    "promote",
+    "sister",
+    "chromatid",
+    "separation",
+    "by"
+  ],
+  "summary_1l": "Chromosomal instability (CIN) is a hallmark of tumour initi",
+  "query_hits": [],
+  "embed_text": "6812319 ERCC1 and MUS81–EME1 promote sister chromatid separation by processing late replication intermediates at common fragile sites during mitosis science scifact Chromosomal instability (CIN) is a hallmark of tumour initiation and progression. Some genomic regions are particularly unstable under replication stress, notably common fragile sites (CFSs) whose rearrangements in tumour cells contribute… 6812319 ercc1 mus81 eme1 promote sister chromatid separation by Chromosomal instability (CIN) is a hallmark of tumour initi ERCC1 and MUS81–EME1 promote sister chromatid separation by processing late replication intermediates at common fragile sites during mitosis Chromosomal instability (CIN) is a hallmark of tumour initiation and progression. Some genomic regions are particularly unstable under replication stress, notably common fragile sites (CFSs) whose rearrangements in tumour cells contribute to cancer development. Recent work has shown that the Fanconi anaemia (FANC) pathway plays a role in preventing defective chromosome segregation and CIN under conditions of replication stress. Strikingly, FANCD2 is recruited to regions hosting CFSs on metaphase chromosomes. To decipher the mechanisms protecting CFSs in G2/M, we searched for proteins that co-localize with FANCD2 on mitotic chromosomes, and identified",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.750732+00:00"
+}

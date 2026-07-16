@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36855703",
+  "source_fingerprint": "6a76781c6c5422f85ab46264248462f4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36855703",
+    "the-non-catalytic-function-of-xpg-protein-during-dual-incision-in-human-nucleotide-excision-repair."
+  ],
+  "key_phrases": [
+    "non",
+    "catalytic",
+    "function",
+    "xpg",
+    "protein",
+    "during",
+    "dual",
+    "incision"
+  ],
+  "summary_1l": "The non-catalytic function of XPG protein during dual incision in human nucleotide excision repair.",
+  "query_hits": [],
+  "embed_text": "36855703 The non-catalytic function of XPG protein during dual incision in human nucleotide excision repair. science scifact XPG is a member of the FEN-1 structure-specific endonuclease family. It has 3'-junction cutting activity on bubble substrates and makes the 3'-incision in the human dual incision (excision nuclease) repair system. To investigate the… 36855703 the-non-catalytic-function-of-xpg-protein-during-dual-incision-in-human-nucleotide-excision-repair. non catalytic function xpg protein during dual incision The non-catalytic function of XPG protein during dual incision in human nucleotide excision repair. The non-catalytic function of XPG protein during dual incision in human nucleotide excision repair. XPG is a member of the FEN-1 structure-specific endonuclease family. It has 3'-junction cutting activity on bubble substrates and makes the 3'-incision in the human dual incision (excision nuclease) repair system. To investigate the precise role of XPG in nucleotide excision repair, we mutagenized two amino acid residues thought to be involved in DNA binding and catalysis, overproduced the mutant proteins using a baculovirus/insect cell system, and purified and characterized the mutant proteins. The mutation D77A had a modest effect on junction cutting and excision activity and gave rise to uncoupled 5'-incision by mammalian cell-free extracts. The D812A mutation completely abolished the jun",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:43.799099+00:00"
+}

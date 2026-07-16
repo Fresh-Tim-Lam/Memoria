@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13868795",
+  "source_fingerprint": "dffe028c5f76c01c6372de1d815182cb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13868795",
+    "cd28-costimulation:-from-mechanism-to-therapy."
+  ],
+  "key_phrases": [
+    "cd28",
+    "costimulation",
+    "from",
+    "mechanism",
+    "therapy",
+    "ligation",
+    "receptor",
+    "cells"
+  ],
+  "summary_1l": "CD28 Costimulation: From Mechanism to Therapy.",
+  "query_hits": [],
+  "embed_text": "13868795 CD28 Costimulation: From Mechanism to Therapy. science scifact Ligation of the CD28 receptor on T cells provides a critical second signal alongside T cell receptor (TCR) ligation for naive T cell activation. Here, we discuss the expression, structure, and biochemistry of CD28 and its ligands. CD28… 13868795 cd28-costimulation:-from-mechanism-to-therapy. cd28 costimulation from mechanism therapy ligation receptor cells CD28 Costimulation: From Mechanism to Therapy. CD28 Costimulation: From Mechanism to Therapy. Ligation of the CD28 receptor on T cells provides a critical second signal alongside T cell receptor (TCR) ligation for naive T cell activation. Here, we discuss the expression, structure, and biochemistry of CD28 and its ligands. CD28 signals play a key role in many T cell processes, including cytoskeletal remodeling, production of cytokines, survival, and differentiation. CD28 ligation leads to unique epigenetic, transcriptional, and post-translational changes in T cells that cannot be recapitulated by TCR ligation alone. We discuss the function of CD28 and its ligands in both effector and regulatory T cells. CD28 is critical for regulatory T cell survival and the maintenance of immune homeostasis. We outline the roles that CD28 and its fami",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.227381+00:00"
+}

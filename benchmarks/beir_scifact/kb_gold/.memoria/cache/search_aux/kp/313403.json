@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "313403",
+  "source_fingerprint": "488777d95aa0e0727bf8740612816ad4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "313403",
+    "high-infiltration-of-tumor-associated-macrophages-predicts-unfavorable-clinical-outcome-for-node-negative-breast-cancer"
+  ],
+  "key_phrases": [
+    "high",
+    "infiltration",
+    "tumor",
+    "associated",
+    "macrophages",
+    "predicts",
+    "unfavorable",
+    "clinical"
+  ],
+  "summary_1l": "The tumor microenvironment is composed of tumor cells, fibroblasts, endothelial",
+  "query_hits": [],
+  "embed_text": "313403 High-Infiltration of Tumor-Associated Macrophages Predicts Unfavorable Clinical Outcome for Node-Negative Breast Cancer science scifact The tumor microenvironment is composed of tumor cells, fibroblasts, endothelial cells and infiltrating immune cells, which may inhibit or promote tumor growth and progression. The objectives of this retrospective study were to characterize… 313403 high-infiltration-of-tumor-associated-macrophages-predicts-unfavorable-clinical-outcome-for-node-negative-breast-cancer high infiltration tumor associated macrophages predicts unfavorable clinical The tumor microenvironment is composed of tumor cells, fibroblasts, endothelial High-Infiltration of Tumor-Associated Macrophages Predicts Unfavorable Clinical Outcome for Node-Negative Breast Cancer The tumor microenvironment is composed of tumor cells, fibroblasts, endothelial cells and infiltrating immune cells, which may inhibit or promote tumor growth and progression. The objectives of this retrospective study were to characterize the density of tumor-associated macrophages (TAMs) in breast cancer, and to correlate the density of TAMs with clinicopathological parameters. Paraffin-embedded specimens and clinicopathological data, including up to 5 years follow-up information, were obtained from 172 breast cancer patients. Immunohistochemical staining for CD68 (marker for macrophages) was performed and evaluated in a blinded fashion. We found that TAMs were signific",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.518870+00:00"
+}

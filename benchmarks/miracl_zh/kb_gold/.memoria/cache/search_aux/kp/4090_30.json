@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "kp_id": "4090#30",
+  "source_fingerprint": "ced263035647ca6aa618f17ee1a8b80b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "1991年歐洲歌唱大賽",
+    "荷蘭地理"
+  ],
+  "aliases": [
+    "4090#30"
+  ],
+  "key_phrases": [
+    "荷兰",
+    "荷蘭",
+    "本土",
+    "歐洲",
+    "西北部",
+    "北部",
+    "北海",
+    "南部"
+  ],
+  "summary_1l": "荷蘭本土位於歐洲西北部。",
+  "query_hits": [],
+  "embed_text": "4090#30 荷兰 荷兰 荷蘭本土位於歐洲西北部。西、北部臨北海，南部與東部分別和比利時與德國接壤，其總面積為4,1526平方公里，其中水域面積就有7,643平方公里。 1991年歐洲歌唱大賽 荷蘭地理 4090#30 荷兰 荷蘭 本土 歐洲 西北部 北部 北海 南部 荷蘭本土位於歐洲西北部。 荷兰 荷蘭本土位於歐洲西北部。西、北部臨北海，南部與東部分別和比利時與德國接壤，其總面積為4,1526平方公里，其中水域面積就有7,643平方公里。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:18:13.640554+00:00"
+}

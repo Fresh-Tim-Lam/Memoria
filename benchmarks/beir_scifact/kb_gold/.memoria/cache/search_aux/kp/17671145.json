@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "17671145",
+  "source_fingerprint": "e1676031813b085b78110750a970dbcc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17671145"
+  ],
+  "key_phrases": [
+    "ror",
+    "drives",
+    "androgen",
+    "receptor",
+    "expression",
+    "represents",
+    "therapeutic",
+    "target"
+  ],
+  "summary_1l": "The androgen receptor (AR) is overexpressed and hyperactivated in human castration",
+  "query_hits": [],
+  "embed_text": "17671145 ROR-γ drives androgen receptor expression and represents a therapeutic target in castration-resistant prostate cancer science scifact The androgen receptor (AR) is overexpressed and hyperactivated in human castration-resistant prostate cancer (CRPC). However, the determinants of AR overexpression in CRPC are poorly defined. Here we show that retinoic acid… 17671145 ror drives androgen receptor expression represents therapeutic target The androgen receptor (AR) is overexpressed and hyperactivated in human castration ROR-γ drives androgen receptor expression and represents a therapeutic target in castration-resistant prostate cancer The androgen receptor (AR) is overexpressed and hyperactivated in human castration-resistant prostate cancer (CRPC). However, the determinants of AR overexpression in CRPC are poorly defined. Here we show that retinoic acid receptor-related orphan receptor γ (ROR-γ) is overexpressed and amplified in metastatic CRPC tumors, and that ROR-γ drives AR expression in the tumors. ROR-γ recruits nuclear receptor coactivator 1 and 3 (NCOA1 and NCOA3, also known as SRC-1 and SRC-3) to an AR-ROR response element (RORE) to stimulate AR gene transcription. ROR-γ antagonists suppress the expression of both AR and its variant AR-V7 in prostate cancer (PCa) cell lines and tumors. ROR-γ ant",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.080126+00:00"
+}

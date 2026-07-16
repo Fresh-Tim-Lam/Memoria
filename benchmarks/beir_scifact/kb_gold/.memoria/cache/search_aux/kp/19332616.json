@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19332616",
+  "source_fingerprint": "47d6d34333790d69aa1278cba2112961",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19332616",
+    "coronary-plaque-disruption."
+  ],
+  "key_phrases": [
+    "coronary",
+    "plaque",
+    "disruption",
+    "atherosclerosis",
+    "by",
+    "far",
+    "most",
+    "frequent"
+  ],
+  "summary_1l": "Coronary plaque disruption.",
+  "query_hits": [],
+  "embed_text": "19332616 Coronary plaque disruption. science scifact Coronary atherosclerosis is by far the most frequent cause of ischemic heart disease, and plaque disruption with superimposed thrombosis is the main cause of the acute coronary syndromes of unstable angina, myocardial infarction, and… 19332616 coronary-plaque-disruption. coronary plaque disruption atherosclerosis by far most frequent Coronary plaque disruption. Coronary plaque disruption. Coronary atherosclerosis is by far the most frequent cause of ischemic heart disease, and plaque disruption with superimposed thrombosis is the main cause of the acute coronary syndromes of unstable angina, myocardial infarction, and sudden death.1 2 3 4 5 Therefore, for event-free survival, the vital question is not why atherosclerosis develops but rather why, after years of indolent growth, it suddenly becomes complicated by life-threatening thrombosis. The composition and vulnerability of plaque rather than its volume or the consequent severity of stenosis produced have emerged as being the most important determinants for the development of the thrombus-mediated acute coronary syndromes; lipid-rich and soft plaques are more dangerous than collagen-rich and ha",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.438780+00:00"
+}

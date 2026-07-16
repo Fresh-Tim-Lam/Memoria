@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25416944",
+  "source_fingerprint": "5901b6e0c100b6c296468d22bf1ac1df",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25416944",
+    "autosomal-dominant-lateral-temporal-epilepsy:-two-families-with-novel-mutations-in-the-lgi1-gene."
+  ],
+  "key_phrases": [
+    "autosomal",
+    "dominant",
+    "lateral",
+    "temporal",
+    "epilepsy",
+    "two",
+    "families",
+    "with"
+  ],
+  "summary_1l": "Autosomal dominant lateral temporal epilepsy: two families with novel mutations in the LGI1 gene.",
+  "query_hits": [],
+  "embed_text": "25416944 Autosomal dominant lateral temporal epilepsy: two families with novel mutations in the LGI1 gene. science scifact PURPOSE Mutations in the leucine rich, glioma inactivated gene (LGI1) were recently described in a small number of families with autosomal dominant lateral temporal epilepsy (ADLTE). ADLTE is characterized by partial seizures with symptoms… 25416944 autosomal-dominant-lateral-temporal-epilepsy:-two-families-with-novel-mutations-in-the-lgi1-gene. autosomal dominant lateral temporal epilepsy two families with Autosomal dominant lateral temporal epilepsy: two families with novel mutations in the LGI1 gene. Autosomal dominant lateral temporal epilepsy: two families with novel mutations in the LGI1 gene. PURPOSE Mutations in the leucine rich, glioma inactivated gene (LGI1) were recently described in a small number of families with autosomal dominant lateral temporal epilepsy (ADLTE). ADLTE is characterized by partial seizures with symptoms suggestive of a lateral temporal onset, including frequent auditory aura. Here we report the results of clinical and genetic analyses of two newly identified families with ADTLE. METHODS We identified two families whose seizure semiology was suggestive of ADLTE. Evaluation included a detailed history and neurologic examination, as well as collection of DNA. The coding sequence of the LGI1 gene from affected subjects from both families was analyzed for eviden",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.545006+00:00"
+}

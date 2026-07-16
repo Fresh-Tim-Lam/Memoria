@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10450300",
+  "source_fingerprint": "9e8544a23dd478e05aa70ebdf0ece209",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10450300",
+    "human-cytomegalovirus-latency-associated-proteins-elicit-immune-suppressive-il-10-producing-cd4+-t-cells"
+  ],
+  "key_phrases": [
+    "human",
+    "cytomegalovirus",
+    "latency",
+    "associated",
+    "proteins",
+    "elicit",
+    "immune",
+    "suppressive"
+  ],
+  "summary_1l": "Human cytomegalovirus (HCMV) is a widely prevalent human herpesvirus, which, after primary infe",
+  "query_hits": [],
+  "embed_text": "10450300 Human Cytomegalovirus Latency-Associated Proteins Elicit Immune-Suppressive IL-10 Producing CD4+ T Cells science scifact Human cytomegalovirus (HCMV) is a widely prevalent human herpesvirus, which, after primary infection, persists in the host for life. In healthy individuals, the virus is well controlled by the HCMV-specific T cell response. A key feature… 10450300 human-cytomegalovirus-latency-associated-proteins-elicit-immune-suppressive-il-10-producing-cd4+-t-cells human cytomegalovirus latency associated proteins elicit immune suppressive Human cytomegalovirus (HCMV) is a widely prevalent human herpesvirus, which, after primary infe Human Cytomegalovirus Latency-Associated Proteins Elicit Immune-Suppressive IL-10 Producing CD4+ T Cells Human cytomegalovirus (HCMV) is a widely prevalent human herpesvirus, which, after primary infection, persists in the host for life. In healthy individuals, the virus is well controlled by the HCMV-specific T cell response. A key feature of this persistence, in the face of a normally robust host immune response, is the establishment of viral latency. In contrast to lytic infection, which is characterised by extensive viral gene expression and virus production, long-term latency in cells of the myeloid lineage is characterised by highly restricted expression of viral genes, including UL138 and LUNA. Here we report that both UL138 and LUNA-specific T cells were detectable directly ex vivo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.559417+00:00"
+}

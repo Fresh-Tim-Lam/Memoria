@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "596817",
+  "source_fingerprint": "bcf9461a4c261f707cf2cf479304d528",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "596817",
+    "genetic-tests-for-ecological-and-allopatric-speciation-in-anoles-on-an-island-archipelago"
+  ],
+  "key_phrases": [
+    "genetic",
+    "tests",
+    "ecological",
+    "allopatric",
+    "speciation",
+    "anoles",
+    "island",
+    "archipelago"
+  ],
+  "summary_1l": "From Darwin's study of the Galapagos and Wallace's study of Indonesia, islands have played an important role i",
+  "query_hits": [],
+  "embed_text": "596817 Genetic Tests for Ecological and Allopatric Speciation in Anoles on an Island Archipelago science scifact From Darwin's study of the Galapagos and Wallace's study of Indonesia, islands have played an important role in evolutionary investigations, and radiations within archipelagos are readily interpreted as supporting the conventional view of… 596817 genetic-tests-for-ecological-and-allopatric-speciation-in-anoles-on-an-island-archipelago genetic tests ecological allopatric speciation anoles island archipelago From Darwin's study of the Galapagos and Wallace's study of Indonesia, islands have played an important role i Genetic Tests for Ecological and Allopatric Speciation in Anoles on an Island Archipelago From Darwin's study of the Galapagos and Wallace's study of Indonesia, islands have played an important role in evolutionary investigations, and radiations within archipelagos are readily interpreted as supporting the conventional view of allopatric speciation. Even during the ongoing paradigm shift towards other modes of speciation, island radiations, such as the Lesser Antillean anoles, are thought to exemplify this process. Geological and molecular phylogenetic evidence show that, in this archipelago, Martinique anoles provide several examples of secondary contact of island species. Four precursor island species, with up to 8 mybp divergence, met when their islands coalesced to form the current isl",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.612296+00:00"
+}

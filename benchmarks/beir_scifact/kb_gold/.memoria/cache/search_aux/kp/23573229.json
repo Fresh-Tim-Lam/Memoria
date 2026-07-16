@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23573229",
+  "source_fingerprint": "1b04144b9f84eac4cdaad9926d2fef3f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23573229",
+    "helicobacter-hepaticus-does-not-induce-or-potentiate-colitis-in-interleukin-10-deficient-mice."
+  ],
+  "key_phrases": [
+    "helicobacter",
+    "hepaticus",
+    "does",
+    "not",
+    "induce",
+    "potentiate",
+    "colitis",
+    "interleukin"
+  ],
+  "summary_1l": "Helicobacter hepaticus does not induce or potentiate colitis in interleukin-10-deficient mice.",
+  "query_hits": [],
+  "embed_text": "23573229 Helicobacter hepaticus does not induce or potentiate colitis in interleukin-10-deficient mice. science scifact Helicobacter hepaticus has been reported to induce colitis, hepatitis, and hepatocellular carcinoma in several different murine models. The aim of this study was to determine if H. hepaticus will cause colitis in monoassociated mice… 23573229 helicobacter-hepaticus-does-not-induce-or-potentiate-colitis-in-interleukin-10-deficient-mice. helicobacter hepaticus does not induce potentiate colitis interleukin Helicobacter hepaticus does not induce or potentiate colitis in interleukin-10-deficient mice. Helicobacter hepaticus does not induce or potentiate colitis in interleukin-10-deficient mice. Helicobacter hepaticus has been reported to induce colitis, hepatitis, and hepatocellular carcinoma in several different murine models. The aim of this study was to determine if H. hepaticus will cause colitis in monoassociated mice lacking the interleukin-10 gene (IL-10(-/-) mice) and potentiate colitis in specific-pathogen-free (SPF) IL-10(-/-) mice. Germfree IL-10(-/-) mice on either a mixed (C57BL/6 x 129/Ola) or inbred (129/SvEv) genetic background were monoassociated with H. hepaticus ATCC 51448 by oral feeding and rectal enemas. In a second experiment, germfree IL-10(-/-) mice were colonized with stool from SPF mice that harbored or did not harbor endogenous H. hepaticus. After 7 to 9 week",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.691232+00:00"
+}

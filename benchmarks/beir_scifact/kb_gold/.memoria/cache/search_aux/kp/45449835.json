@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "45449835",
+  "source_fingerprint": "19d72d4a0c6a2fd7dab9905fc6d7f1a3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "45449835",
+    "interleukin-17-mrna-expression-in-blood-and-csf-mononuclear-cells-is-augmented-in-multiple-sclerosis."
+  ],
+  "key_phrases": [
+    "interleukin",
+    "17",
+    "mrna",
+    "expression",
+    "blood",
+    "csf",
+    "mononuclear",
+    "cells"
+  ],
+  "summary_1l": "Interleukin-17 mRNA expression in blood and CSF mononuclear cells is augmented in multiple sclerosis.",
+  "query_hits": [],
+  "embed_text": "45449835 Interleukin-17 mRNA expression in blood and CSF mononuclear cells is augmented in multiple sclerosis. science scifact Myelin-directed autoimmunity is considered to play a key role in the pathogenesis of multiple sclerosis (MS). Increased production of both pro- and anti-inflammatory cytokines is a common finding in MS. Interleukin-17 (IL-17) is a recently… 45449835 interleukin-17-mrna-expression-in-blood-and-csf-mononuclear-cells-is-augmented-in-multiple-sclerosis. interleukin 17 mrna expression blood csf mononuclear cells Interleukin-17 mRNA expression in blood and CSF mononuclear cells is augmented in multiple sclerosis. Interleukin-17 mRNA expression in blood and CSF mononuclear cells is augmented in multiple sclerosis. Myelin-directed autoimmunity is considered to play a key role in the pathogenesis of multiple sclerosis (MS). Increased production of both pro- and anti-inflammatory cytokines is a common finding in MS. Interleukin-17 (IL-17) is a recently described cytokine produced in humans almost exclusively by activated memory T cells, which can induce the production of proinflammatory cytokines and chemokines from parenchymal cells and macrophages. In situ hybridisation with synthetic oligonucleotide probes was adopted to detect and enumerate IL-17 mRNA expressing mononuclear cells (MNC) in blood and cerebrospinal fluid (CSF) from patients with MS and control individuals. Numbers of IL-17 mRNA expres",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.389696+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4455466",
+  "source_fingerprint": "e25fdfd70013d022114d0273b74e78b2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4455466",
+    "zmynd11-links-histone-h3.3k36me3-to-transcription-elongation-and-tumour-suppression"
+  ],
+  "key_phrases": [
+    "zmynd11",
+    "links",
+    "histone",
+    "h3.3",
+    "k36me3",
+    "transcription",
+    "elongation",
+    "tumour"
+  ],
+  "summary_1l": "ZMYND11 links histone H3.",
+  "query_hits": [],
+  "embed_text": "4455466 ZMYND11 links histone H3.3K36me3 to transcription elongation and tumour suppression science scifact Recognition of modified histones by ‘reader’ proteins plays a critical role in the regulation of chromatin. H3K36 trimethylation (H3K36me3) is deposited onto the nucleosomes in the transcribed regions after RNA polymerase II elongation. In… 4455466 zmynd11-links-histone-h3.3k36me3-to-transcription-elongation-and-tumour-suppression zmynd11 links histone h3.3 k36me3 transcription elongation tumour ZMYND11 links histone H3. ZMYND11 links histone H3.3K36me3 to transcription elongation and tumour suppression Recognition of modified histones by ‘reader’ proteins plays a critical role in the regulation of chromatin. H3K36 trimethylation (H3K36me3) is deposited onto the nucleosomes in the transcribed regions after RNA polymerase II elongation. In yeast, this mark in turn recruits epigenetic regulators to reset the chromatin to a relatively repressive state, thus suppressing cryptic transcription. However, much less is known about the role of H3K36me3 in transcription regulation in mammals. This is further complicated by the transcription-coupled incorporation of the histone variant H3.3 in gene bodies. Here we show that the candidate tumour suppressor ZMYND11 specifically recognizes H3K36me3 on H3.3 (H3.3K36me3) a",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.465088+00:00"
+}

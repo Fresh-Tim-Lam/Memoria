@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8426046",
+  "source_fingerprint": "571205d6e7cb28befc23f5cf6f4c34ce",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8426046",
+    "ribosome-profiling-provides-evidence-that-large-noncoding-rnas-do-not-encode-proteins"
+  ],
+  "key_phrases": [
+    "ribosome",
+    "profiling",
+    "provides",
+    "evidence",
+    "that",
+    "large",
+    "noncoding",
+    "rnas"
+  ],
+  "summary_1l": "Large noncoding RNAs are emerging as an important component in cellular regulation.",
+  "query_hits": [],
+  "embed_text": "8426046 Ribosome Profiling Provides Evidence that Large Noncoding RNAs Do Not Encode Proteins science scifact Large noncoding RNAs are emerging as an important component in cellular regulation. Considerable evidence indicates that these transcripts act directly as functional RNAs rather than through an encoded protein product. However, a recent… 8426046 ribosome-profiling-provides-evidence-that-large-noncoding-rnas-do-not-encode-proteins ribosome profiling provides evidence that large noncoding rnas Large noncoding RNAs are emerging as an important component in cellular regulation. Ribosome Profiling Provides Evidence that Large Noncoding RNAs Do Not Encode Proteins Large noncoding RNAs are emerging as an important component in cellular regulation. Considerable evidence indicates that these transcripts act directly as functional RNAs rather than through an encoded protein product. However, a recent study of ribosome occupancy reported that many large intergenic ncRNAs (lincRNAs) are bound by ribosomes, raising the possibility that they are translated into proteins. Here, we show that classical noncoding RNAs and 5' UTRs show the same ribosome occupancy as lincRNAs, demonstrating that ribosome occupancy alone is not sufficient to classify transcripts as coding or noncoding. Instead, we define a metric based on the known property of translation whereby translating ribo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.612388+00:00"
+}

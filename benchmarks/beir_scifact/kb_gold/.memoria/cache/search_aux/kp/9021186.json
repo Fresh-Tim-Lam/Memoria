@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9021186",
+  "source_fingerprint": "b08567e6864e876680b166dbf03fb26e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9021186",
+    "synergistic-activation-of-hiv-1-expression-by-deacetylase-inhibitors-and-prostratin:-implications-for-treatment-of-latent-infection"
+  ],
+  "key_phrases": [
+    "synergistic",
+    "activation",
+    "hiv",
+    "expression",
+    "by",
+    "deacetylase",
+    "inhibitors",
+    "prostratin"
+  ],
+  "summary_1l": "The persistence of transcriptionally silent but replication-competen",
+  "query_hits": [],
+  "embed_text": "9021186 Synergistic Activation of HIV-1 Expression by Deacetylase Inhibitors and Prostratin: Implications for Treatment of Latent Infection science scifact The persistence of transcriptionally silent but replication-competent HIV-1 reservoirs in Highly Active Anti-Retroviral Therapy (HAART)-treated infected individuals, represents a major hurdle to virus eradication. Activation of HIV-1 gene… 9021186 synergistic-activation-of-hiv-1-expression-by-deacetylase-inhibitors-and-prostratin:-implications-for-treatment-of-latent-infection synergistic activation hiv expression by deacetylase inhibitors prostratin The persistence of transcriptionally silent but replication-competen Synergistic Activation of HIV-1 Expression by Deacetylase Inhibitors and Prostratin: Implications for Treatment of Latent Infection The persistence of transcriptionally silent but replication-competent HIV-1 reservoirs in Highly Active Anti-Retroviral Therapy (HAART)-treated infected individuals, represents a major hurdle to virus eradication. Activation of HIV-1 gene expression in these cells together with an efficient HAART has been proposed as an adjuvant therapy aimed at decreasing the pool of latent viral reservoirs. Using the latently-infected U1 monocytic cell line and latently-infected J-Lat T-cell clones, we here demonstrated a strong synergistic activation of HIV-1 production by clinically used histone deacetylase inhibitors (HDACIs) combined with prostratin, a non-tumor-promotin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.083463+00:00"
+}

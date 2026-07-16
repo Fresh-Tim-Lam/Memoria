@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2014909",
+  "source_fingerprint": "207b0644b8e503ed70ef3ec09705f832",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2014909",
+    "oncogenic-mtor-signaling-recruits-myeloid-derived-suppressor-cells-to-promote-tumor-initiation"
+  ],
+  "key_phrases": [
+    "oncogenic",
+    "mtor",
+    "signaling",
+    "recruits",
+    "myeloid",
+    "derived",
+    "suppressor",
+    "cells"
+  ],
+  "summary_1l": "Myeloid-derived suppressor cells (MDSCs) play critical roles in primary and metastatic cancer progression",
+  "query_hits": [],
+  "embed_text": "2014909 Oncogenic mTOR signaling recruits myeloid-derived suppressor cells to promote tumor initiation science scifact Myeloid-derived suppressor cells (MDSCs) play critical roles in primary and metastatic cancer progression. MDSC regulation is widely variable even among patients harbouring the same type of malignancy, and the mechanisms governing such… 2014909 oncogenic-mtor-signaling-recruits-myeloid-derived-suppressor-cells-to-promote-tumor-initiation oncogenic mtor signaling recruits myeloid derived suppressor cells Myeloid-derived suppressor cells (MDSCs) play critical roles in primary and metastatic cancer progression Oncogenic mTOR signaling recruits myeloid-derived suppressor cells to promote tumor initiation Myeloid-derived suppressor cells (MDSCs) play critical roles in primary and metastatic cancer progression. MDSC regulation is widely variable even among patients harbouring the same type of malignancy, and the mechanisms governing such heterogeneity are largely unknown. Here, integrating human tumour genomics and syngeneic mammary tumour models, we demonstrate that mTOR signalling in cancer cells dictates a mammary tumour's ability to stimulate MDSC accumulation through regulating G-CSF. Inhibiting this pathway or its activators (for example, FGFR) impairs tumour progression, which is partially rescued by restoring MDSCs or G-CSF. Tumour-initiating cells (TICs) exhibit elevated G-CSF. MDSCs recip",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.707579+00:00"
+}

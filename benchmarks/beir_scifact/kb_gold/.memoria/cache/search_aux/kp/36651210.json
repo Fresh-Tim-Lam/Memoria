@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36651210",
+  "source_fingerprint": "fadc51f56e86a4044778c2bcaeb922cf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36651210",
+    "establishment-and-in-vitro-differentiation-of-a-new-embryonic-stem-cell-line-from-human-blastocyst."
+  ],
+  "key_phrases": [
+    "establishment",
+    "vitro",
+    "differentiation",
+    "new",
+    "embryonic",
+    "stem",
+    "cell",
+    "line"
+  ],
+  "summary_1l": "Establishment and in vitro differentiation of a new embryonic stem cell line from human blastocyst.",
+  "query_hits": [],
+  "embed_text": "36651210 Establishment and in vitro differentiation of a new embryonic stem cell line from human blastocyst. science scifact Embryonic stem cells have the ability to remain undifferentiated and proliferate indefinitely in vitro while maintaining the potential to differentiate into derivatives of all three embryonic germ layers. These cells have, therefore,… 36651210 establishment-and-in-vitro-differentiation-of-a-new-embryonic-stem-cell-line-from-human-blastocyst. establishment vitro differentiation new embryonic stem cell line Establishment and in vitro differentiation of a new embryonic stem cell line from human blastocyst. Establishment and in vitro differentiation of a new embryonic stem cell line from human blastocyst. Embryonic stem cells have the ability to remain undifferentiated and proliferate indefinitely in vitro while maintaining the potential to differentiate into derivatives of all three embryonic germ layers. These cells have, therefore, potential for in vitro differentiation studies, gene function, and so on. The aim of this study was to produce a human embryonic stem cell line. An inner cell mass of a human blastocyst was separated and cultured on mouse embryonic fibroblasts in embryonic stem cell medium with related additives. The established line was evaluated by morphology; passaging; freezing and thawing; alkaline phosphatase; Oct-4 expression; anti-surface markers including Tra-1-60 and T",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:43.600906+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13624704",
+  "source_fingerprint": "473af6e11d0432322b0b343124ae190b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13624704",
+    "ondansetron-reduces-nausea-and-vomiting-after-paediatric-adenotonsillectomy."
+  ],
+  "key_phrases": [
+    "ondansetron",
+    "reduces",
+    "nausea",
+    "vomiting",
+    "after",
+    "paediatric",
+    "adenotonsillectomy",
+    "efficacy"
+  ],
+  "summary_1l": "Ondansetron reduces nausea and vomiting after paediatric adenotonsillectomy.",
+  "query_hits": [],
+  "embed_text": "13624704 Ondansetron reduces nausea and vomiting after paediatric adenotonsillectomy. science scifact The efficacy, safety and resource implications of a single intravenous dose of ondansetron (0.1 mg.kg-1, maximum 4 mg) were assessed in a multinational, multicentre, randomized, double-blind, placebo-controlled trial of 427 children aged… 13624704 ondansetron-reduces-nausea-and-vomiting-after-paediatric-adenotonsillectomy. ondansetron reduces nausea vomiting after paediatric adenotonsillectomy efficacy Ondansetron reduces nausea and vomiting after paediatric adenotonsillectomy. Ondansetron reduces nausea and vomiting after paediatric adenotonsillectomy. The efficacy, safety and resource implications of a single intravenous dose of ondansetron (0.1 mg.kg-1, maximum 4 mg) were assessed in a multinational, multicentre, randomized, double-blind, placebo-controlled trial of 427 children aged 1-12 years, undergoing tonsillectomy with/without adenoidectomy. Emesis (retching and/or vomiting) and nausea were analysed separately. Significantly more ondansetron-treated children had no episodes of emesis (127/212 (60%) vs 100/215 (47%); P = 0.004) and experienced no postoperative nausea (135/211 (64%) vs 108/213 (51%); P = 0.004) in the first 24 h. Ondansetron also reduced the number of emetic episodes (P < 0.001), the time to the first emetic episode (P < 0.001) and overall",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.672008+00:00"
+}

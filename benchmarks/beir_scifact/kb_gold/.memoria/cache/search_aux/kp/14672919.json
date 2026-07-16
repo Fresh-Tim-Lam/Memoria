@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14672919",
+  "source_fingerprint": "1ecd9c2de64f4b343fc2643a59b988ed",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14672919",
+    "combination-of-platelet-count-and-mean-platelet-volume-(cop-mpv)-predicts-postoperative-prognosis-in-both-resectable-early-and-advanced-stage-esophageal-squamous-cell-cancer-patients"
+  ],
+  "key_phrases": [
+    "combination",
+    "platelet",
+    "count",
+    "mean",
+    "volume",
+    "cop",
+    "mpv",
+    "predicts"
+  ],
+  "summary_1l": "The aim of this s",
+  "query_hits": [],
+  "embed_text": "14672919 Combination of platelet count and mean platelet volume (COP-MPV) predicts postoperative prognosis in both resectable early and advanced stage esophageal squamous cell cancer patients science scifact The aim of this study is to search the most powerful prognostic factor from routine blood test for esophageal squamous cell cancer (ESCC) patients. Multiple laboratory tests were evaluated including those reflecting red blood cell… 14672919 combination-of-platelet-count-and-mean-platelet-volume-(cop-mpv)-predicts-postoperative-prognosis-in-both-resectable-early-and-advanced-stage-esophageal-squamous-cell-cancer-patients combination platelet count mean volume cop mpv predicts The aim of this s Combination of platelet count and mean platelet volume (COP-MPV) predicts postoperative prognosis in both resectable early and advanced stage esophageal squamous cell cancer patients The aim of this study is to search the most powerful prognostic factor from routine blood test for esophageal squamous cell cancer (ESCC) patients. Multiple laboratory tests were evaluated including those reflecting red blood cell parameters (hemoglobin (Hb), mean corpuscular volume (MCV), mean corpuscular hemoglobin concentration (MCHC), and red blood cell distribution width (RDW)), platelet morphological parameters (mean platelet volume (MPV) and platelet count (PLT)), blood coagulation status (D-dimer), and tumor biomarker (CA19-9). Known inflammatory indices (NLR and PLR) were also calculated. A total of 4",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.409794+00:00"
+}

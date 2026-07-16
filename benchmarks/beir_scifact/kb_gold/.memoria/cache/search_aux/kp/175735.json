@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "175735",
+  "source_fingerprint": "fe66d8d8a15a3307a81cf9fd2afe1165",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "175735",
+    "inferring-nucleosome-positions-with-their-histone-mark-annotation-from-chip-data"
+  ],
+  "key_phrases": [
+    "inferring",
+    "nucleosome",
+    "positions",
+    "with",
+    "their",
+    "histone",
+    "mark",
+    "annotation"
+  ],
+  "summary_1l": "MOTIVATION The nucleosome is the basic repeating unit of chromatin.",
+  "query_hits": [],
+  "embed_text": "175735 Inferring nucleosome positions with their histone mark annotation from ChIP data science scifact MOTIVATION The nucleosome is the basic repeating unit of chromatin. It contains two copies each of the four core histones H2A, H2B, H3 and H4 and about 147 bp of DNA. The residues of the histone proteins are subject to numerous… 175735 inferring-nucleosome-positions-with-their-histone-mark-annotation-from-chip-data inferring nucleosome positions with their histone mark annotation MOTIVATION The nucleosome is the basic repeating unit of chromatin. Inferring nucleosome positions with their histone mark annotation from ChIP data MOTIVATION The nucleosome is the basic repeating unit of chromatin. It contains two copies each of the four core histones H2A, H2B, H3 and H4 and about 147 bp of DNA. The residues of the histone proteins are subject to numerous post-translational modifications, such as methylation or acetylation. Chromatin immunoprecipitiation followed by sequencing (ChIP-seq) is a technique that provides genome-wide occupancy data of these modified histone proteins, and it requires appropriate computational methods. RESULTS We present NucHunter, an algorithm that uses the data from ChIP-seq experiments directed against many histone modifications to infer positioned nucleosomes. NucHunter annotates each of these nucleosomes wi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.951163+00:00"
+}

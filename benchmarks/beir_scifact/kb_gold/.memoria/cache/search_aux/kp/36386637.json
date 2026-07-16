@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36386637",
+  "source_fingerprint": "fe5955192bb6152ea1dfd4d6f031807e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36386637",
+    "effect-of-interleukin-1-and-tumor-necrosis-factor/cachectin-on-glucose-turnover-in-the-rat."
+  ],
+  "key_phrases": [
+    "effect",
+    "interleukin",
+    "tumor",
+    "necrosis",
+    "factor",
+    "cachectin",
+    "glucose",
+    "turnover"
+  ],
+  "summary_1l": "Effect of interleukin-1 and tumor necrosis factor/cachectin on glucose turnover in the rat.",
+  "query_hits": [],
+  "embed_text": "36386637 Effect of interleukin-1 and tumor necrosis factor/cachectin on glucose turnover in the rat. science scifact We studied the effect of recombinant human interleukin-1 beta (IL-1) and recombinant human tumor necrosis factor alpha/cachectin (TNF) on glucose kinetics in healthy rats by means of a primed constant infusion of D-(6-3H)glucose and… 36386637 effect-of-interleukin-1-and-tumor-necrosis-factor/cachectin-on-glucose-turnover-in-the-rat. effect interleukin tumor necrosis factor cachectin glucose turnover Effect of interleukin-1 and tumor necrosis factor/cachectin on glucose turnover in the rat. Effect of interleukin-1 and tumor necrosis factor/cachectin on glucose turnover in the rat. We studied the effect of recombinant human interleukin-1 beta (IL-1) and recombinant human tumor necrosis factor alpha/cachectin (TNF) on glucose kinetics in healthy rats by means of a primed constant infusion of D-(6-3H)glucose and D-[U-14C]glucose. During the isotope (6-hour) and monokine (4-hour) infusion, plasma levels of glucagon and insulin were determined and correlated with changes in glucose metabolism. The rates of glucose appearance (Ra) and disappearance (Rd) were elevated only with IL-1 and were associated with an increase in glucagon and a concomitant decrease in the ratio of insulin to glucagon. Plasma glucose concentration was increased early after IL-1 administration and coincided w",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:43.182944+00:00"
+}

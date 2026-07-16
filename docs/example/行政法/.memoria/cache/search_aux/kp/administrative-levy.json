@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "kp_id": "administrative-levy",
+  "source_fingerprint": "7fca996a869cffa202132dba054e028d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "administrative-levy"
+  ],
+  "key_phrases": [
+    "行政",
+    "征收",
+    "xingzhengzhengshou",
+    "行政征收"
+  ],
+  "summary_1l": "行政征收",
+  "query_hits": [],
+  "embed_text": "administrative-levy 行政征收 administrative-levy 行政 征收 xingzhengzhengshou 行政征收 行政征收 行政征收",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-15T12:51:06.169164+00:00"
+}

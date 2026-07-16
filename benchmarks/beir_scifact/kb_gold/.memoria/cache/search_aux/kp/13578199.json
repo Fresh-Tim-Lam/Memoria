@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13578199",
+  "source_fingerprint": "1d8789f71ab27a302f55c805cce57742",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13578199",
+    "transglutaminase-2-undergoes-a-large-conformational-change-upon-activation"
+  ],
+  "key_phrases": [
+    "transglutaminase",
+    "undergoes",
+    "large",
+    "conformational",
+    "change",
+    "upon",
+    "activation",
+    "human"
+  ],
+  "summary_1l": "Human transglutaminase 2 (TG2), a member of a large family of enzymes that catalyze protein crosslinking, plays an important",
+  "query_hits": [],
+  "embed_text": "13578199 Transglutaminase 2 Undergoes a Large Conformational Change upon Activation science scifact Human transglutaminase 2 (TG2), a member of a large family of enzymes that catalyze protein crosslinking, plays an important role in the extracellular matrix biology of many tissues and is implicated in the gluten-induced pathogenesis of… 13578199 transglutaminase-2-undergoes-a-large-conformational-change-upon-activation transglutaminase undergoes large conformational change upon activation human Human transglutaminase 2 (TG2), a member of a large family of enzymes that catalyze protein crosslinking, plays an important Transglutaminase 2 Undergoes a Large Conformational Change upon Activation Human transglutaminase 2 (TG2), a member of a large family of enzymes that catalyze protein crosslinking, plays an important role in the extracellular matrix biology of many tissues and is implicated in the gluten-induced pathogenesis of celiac sprue. Although vertebrate transglutaminases have been studied extensively, thus far all structurally characterized members of this family have been crystallized in conformations with inaccessible active sites. We have trapped human TG2 in complex with an inhibitor that mimics inflammatory gluten peptide substrates and have solved, at 2-A resolution, its x-ray crystal structure. The inhibitor stabilizes TG2 in an extended conformation that is dramatically different from earli",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.546117+00:00"
+}

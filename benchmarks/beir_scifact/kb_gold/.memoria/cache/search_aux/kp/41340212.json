@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "41340212",
+  "source_fingerprint": "8caebea270d4d3cee520ad154fd9fd18",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "41340212",
+    "radiotherapy-plus-concomitant-and-adjuvant-temozolomide-for-glioblastoma."
+  ],
+  "key_phrases": [
+    "radiotherapy",
+    "plus",
+    "concomitant",
+    "adjuvant",
+    "temozolomide",
+    "glioblastoma",
+    "background",
+    "most"
+  ],
+  "summary_1l": "Radiotherapy plus concomitant and adjuvant temozolomide for glioblastoma.",
+  "query_hits": [],
+  "embed_text": "41340212 Radiotherapy plus concomitant and adjuvant temozolomide for glioblastoma. science scifact BACKGROUND Glioblastoma, the most common primary brain tumor in adults, is usually rapidly fatal. The current standard of care for newly diagnosed glioblastoma is surgical resection to the extent feasible, followed by adjuvant… 41340212 radiotherapy-plus-concomitant-and-adjuvant-temozolomide-for-glioblastoma. radiotherapy plus concomitant adjuvant temozolomide glioblastoma background most Radiotherapy plus concomitant and adjuvant temozolomide for glioblastoma. Radiotherapy plus concomitant and adjuvant temozolomide for glioblastoma. BACKGROUND Glioblastoma, the most common primary brain tumor in adults, is usually rapidly fatal. The current standard of care for newly diagnosed glioblastoma is surgical resection to the extent feasible, followed by adjuvant radiotherapy. In this trial we compared radiotherapy alone with radiotherapy plus temozolomide, given concomitantly with and after radiotherapy, in terms of efficacy and safety. METHODS Patients with newly diagnosed, histologically confirmed glioblastoma were randomly assigned to receive radiotherapy alone (fractionated focal irradiation in daily fractions of 2 Gy given 5 days per week for 6 weeks, for a total of 60 Gy) or radiotherapy plus continuous daily temozolomide (75 mg per square meter",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.367337+00:00"
+}

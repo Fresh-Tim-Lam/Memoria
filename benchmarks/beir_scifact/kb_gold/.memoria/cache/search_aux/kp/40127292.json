@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "40127292",
+  "source_fingerprint": "11dbb977cd74f03a459cd4d7f5fdf6b8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "40127292",
+    "apoptosis-and-chemoresistance-in-transgenic-cancer-models"
+  ],
+  "key_phrases": [
+    "apoptosis",
+    "chemoresistance",
+    "transgenic",
+    "cancer",
+    "models",
+    "multidrug",
+    "resistance",
+    "remains"
+  ],
+  "summary_1l": "Multidrug resistance remains an unresolved problem in clinical oncology.",
+  "query_hits": [],
+  "embed_text": "40127292 Apoptosis and chemoresistance in transgenic cancer models science scifact Multidrug resistance remains an unresolved problem in clinical oncology. Over a decade ago genes encoding cellular efflux pumps were shown to confer resistance to a broad spectrum of biochemically unrelated anticancer drugs even before the… 40127292 apoptosis-and-chemoresistance-in-transgenic-cancer-models apoptosis chemoresistance transgenic cancer models multidrug resistance remains Multidrug resistance remains an unresolved problem in clinical oncology. Apoptosis and chemoresistance in transgenic cancer models Multidrug resistance remains an unresolved problem in clinical oncology. Over a decade ago genes encoding cellular efflux pumps were shown to confer resistance to a broad spectrum of biochemically unrelated anticancer drugs even before the compounds reached their intracellular targets. More recently it has become apparent that many drugs induce a common apoptotic program, such that mutations in this program can also produce multidrug resistance. However, a thorough evaluation of the contribution of apoptotic defects to this \"postdamage\" drug resistant phenotype is technically complicated, and this has led to uncertainty about the overall significance of apoptosis in therapy-induced cell death. For example, correlative analyses using",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.288430+00:00"
+}

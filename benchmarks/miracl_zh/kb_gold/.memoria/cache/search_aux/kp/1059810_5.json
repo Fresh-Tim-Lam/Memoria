@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "kp_id": "1059810#5",
+  "source_fingerprint": "3d7f289b0141d095e8f34b315dac2812",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "Map",
+    "集合",
+    "纽约市摩天大楼列表",
+    "西班牙语国家和地区列表",
+    "周深音樂作品列表",
+    "波兰旗帜列表",
+    "联合国安全理事会成员国列表",
+    "世界水电站列表",
+    "中国驻西班牙大使列表",
+    "中華民國駐西班牙大使列表",
+    "俄语国家和地区列表",
+    "南沙群岛岛礁列表"
+  ],
+  "aliases": [
+    "1059810#5"
+  ],
+  "key_phrases": [
+    "java",
+    "集合",
+    "框架",
+    "可分",
+    "三種",
+    "序列表",
+    "ordered",
+    "lists"
+  ],
+  "summary_1l": "集合可分為三種：有序列表（ordered lists）、映射表（maps）和集（sets）。",
+  "query_hits": [],
+  "embed_text": "1059810#5 Java集合框架 Java集合框架 集合可分為三種：有序列表（ordered lists）、映射表（maps）和集（sets）。有序列表容許程式設計師依序地加入元素，並以同樣的順序取回元素，例如等候列表。在有序列表介面底下有兩個子介面，分別為列表（Lists）和佇列（Queue）。映射表使用索引來參考物件並取回其值。在映射表介面底下有一個子介面映射表（Map）。集是一種可供遍巡的無序集合，但當中不允許重複的物件存在。在其中有個子介面集（Set）。 Map 集合 纽约市摩天大楼列表 西班牙语国家和地区列表 周深音樂作品列表 波兰旗帜列表 联合国安全理事会成员国列表 世界水电站列表 中国驻西班牙大使列表 中華民國駐西班牙大使列表 俄语国家和地区列表 南沙群岛岛礁列表 1059810#5 java 集合 框架 可分 三種 序列表 ordered lists 集合可分為三種：有序列表（ordered lists）、映射表（maps）和集（sets）。 Java集合框架 集合可分為三種：有序列表（ordered lists）、映射表（maps）和集（sets）。有序列表容許程式設計師依序地加入元素，並以同樣的順序取回元素，例如等候列表。在有序列表介面底下有兩個子介面，分別為列表（Lists）和佇列（Queue）。映射表使用索引來參考物件並取回其值。在映射表介面底下有一個子介面映射表（Map）。集是一種可供遍巡的無序集合，但當中不允許重複的物件存在。在其中有個子介面集（Set）。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:21:13.268749+00:00"
+}

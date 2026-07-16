@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18027063",
+  "source_fingerprint": "9af241df512f6fddb8f16045acc236b6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18027063",
+    "choosing-appropriate-substitution-models-for-the-phylogenetic-analysis-of-protein-coding-sequences."
+  ],
+  "key_phrases": [
+    "choosing",
+    "appropriate",
+    "substitution",
+    "models",
+    "phylogenetic",
+    "analysis",
+    "protein",
+    "coding"
+  ],
+  "summary_1l": "Choosing appropriate substitution models for the phylogenetic analysis of protein-coding sequences.",
+  "query_hits": [],
+  "embed_text": "18027063 Choosing appropriate substitution models for the phylogenetic analysis of protein-coding sequences. science scifact Although phylogenetic inference of protein-coding sequences continues to dominate the literature, few analyses incorporate evolutionary models that consider the genetic code. This problem is exacerbated by the exclusion of codon-based… 18027063 choosing-appropriate-substitution-models-for-the-phylogenetic-analysis-of-protein-coding-sequences. choosing appropriate substitution models phylogenetic analysis protein coding Choosing appropriate substitution models for the phylogenetic analysis of protein-coding sequences. Choosing appropriate substitution models for the phylogenetic analysis of protein-coding sequences. Although phylogenetic inference of protein-coding sequences continues to dominate the literature, few analyses incorporate evolutionary models that consider the genetic code. This problem is exacerbated by the exclusion of codon-based models from commonly employed model selection techniques, presumably due to the computational cost associated with codon models. We investigated an efficient alternative to standard nucleotide substitution models, in which codon position (CP) is incorporated into the model. We determined the most appropriate model for alignments of 177 RNA virus genes and 106 yeast genes, using 11 substitution models including one codon model and four CP models. The majority of",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.651719+00:00"
+}

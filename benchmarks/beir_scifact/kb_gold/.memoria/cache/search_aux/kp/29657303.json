@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29657303",
+  "source_fingerprint": "49a90ff985d7b0bbd7d67b7039048af9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29657303",
+    "anorectic-drugs-and-pulmonary-hypertension-from-the-bedside-to-the-bench."
+  ],
+  "key_phrases": [
+    "anorectic",
+    "drugs",
+    "pulmonary",
+    "hypertension",
+    "from",
+    "bedside",
+    "bench",
+    "have"
+  ],
+  "summary_1l": "Anorectic drugs and pulmonary hypertension from the bedside to the bench.",
+  "query_hits": [],
+  "embed_text": "29657303 Anorectic drugs and pulmonary hypertension from the bedside to the bench. science scifact Anorectic drugs have been used for more than 30 years as an aid in weight reduction for obese persons. The use of aminorex, an amphetamine analog that increases norepinephrine levels in the central nervous system, led to an epidemic of… 29657303 anorectic-drugs-and-pulmonary-hypertension-from-the-bedside-to-the-bench. anorectic drugs pulmonary hypertension from bedside bench have Anorectic drugs and pulmonary hypertension from the bedside to the bench. Anorectic drugs and pulmonary hypertension from the bedside to the bench. Anorectic drugs have been used for more than 30 years as an aid in weight reduction for obese persons. The use of aminorex, an amphetamine analog that increases norepinephrine levels in the central nervous system, led to an epidemic of primary pulmonary hypertension (PPH) in Europe in the late 1960s and early 1970s. The use of fenfluramine and later dexfenfluramine [drugs that inhibit 5-hydroxytryptamine (5-HT) release and reuptake and increases 5-HT and thus 5-HT secretion in the brain] was associated with a second epidemic of PPH. All of these drugs have been voluntarily withdrawn from the market. The pathogenesis of PPH in patients treated with these agents is uncertain, but recent evidence suggests that potassium",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.107479+00:00"
+}

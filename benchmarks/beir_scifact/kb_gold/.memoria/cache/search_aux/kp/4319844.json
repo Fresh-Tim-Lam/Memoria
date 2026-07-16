@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4319844",
+  "source_fingerprint": "3c522cdf9f9cc53782f04fe31a1933ad",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4319844",
+    "alternative-lengthening-of-telomeres-mediated-by-mitotic-dna-synthesis-engages-break-induced-replication-processes."
+  ],
+  "key_phrases": [
+    "alternative",
+    "lengthening",
+    "telomeres",
+    "mediated",
+    "by",
+    "mitotic",
+    "dna",
+    "synthesis"
+  ],
+  "summary_1l": "Alternative Lengthening of Telomeres Mediated by Mitotic DNA Synthesis Engages Break-Induced Replication Processes.",
+  "query_hits": [],
+  "embed_text": "4319844 Alternative Lengthening of Telomeres Mediated by Mitotic DNA Synthesis Engages Break-Induced Replication Processes. science scifact Alternative lengthening of telomeres (ALT) is a telomerase-independent telomere maintenance mechanism that occurs in a subset of cancers. By analyzing telomerase-positive cells and their human TERC knockout-derived ALT human cell lines, we… 4319844 alternative-lengthening-of-telomeres-mediated-by-mitotic-dna-synthesis-engages-break-induced-replication-processes. alternative lengthening telomeres mediated by mitotic dna synthesis Alternative Lengthening of Telomeres Mediated by Mitotic DNA Synthesis Engages Break-Induced Replication Processes. Alternative Lengthening of Telomeres Mediated by Mitotic DNA Synthesis Engages Break-Induced Replication Processes. Alternative lengthening of telomeres (ALT) is a telomerase-independent telomere maintenance mechanism that occurs in a subset of cancers. By analyzing telomerase-positive cells and their human TERC knockout-derived ALT human cell lines, we show that ALT cells harbor more fragile telomeres representing telomere replication problems. ALT-associated replication defects trigger mitotic DNA synthesis (MiDAS) at telomeres in a RAD52-dependent, but RAD51-independent, manner. Telomeric MiDAS is a conservative DNA synthesis process, potentially mediated by break-induced replication, similar to type II ALT survivors in Saccharomyces cerevisiae Replication stresses induced by ectopic on",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.559362+00:00"
+}

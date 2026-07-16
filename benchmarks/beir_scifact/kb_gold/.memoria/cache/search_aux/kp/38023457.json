@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "38023457",
+  "source_fingerprint": "e2a09c89381746a872482fcd699d855e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "38023457",
+    "tumor-necrosis-factor-alpha-mediates-apoptosis-of-brown-adipocytes-and-defective-brown-adipocyte-function-in-obesity."
+  ],
+  "key_phrases": [
+    "tumor",
+    "necrosis",
+    "factor",
+    "alpha",
+    "mediates",
+    "apoptosis",
+    "brown",
+    "adipocytes"
+  ],
+  "summary_1l": "Tumor necrosis factor alpha mediates apoptosis of brown adipocytes and defective brown adipocyte function in obesity.",
+  "query_hits": [],
+  "embed_text": "38023457 Tumor necrosis factor alpha mediates apoptosis of brown adipocytes and defective brown adipocyte function in obesity. science scifact Severe quantitative and qualitative brown adipocyte defects are common in obesity. To investigate whether aberrant expression of tumor necrosis factor alpha (TNF-alpha) in obesity is involved in functional brown fat atrophy, we have… 38023457 tumor-necrosis-factor-alpha-mediates-apoptosis-of-brown-adipocytes-and-defective-brown-adipocyte-function-in-obesity. tumor necrosis factor alpha mediates apoptosis brown adipocytes Tumor necrosis factor alpha mediates apoptosis of brown adipocytes and defective brown adipocyte function in obesity. Tumor necrosis factor alpha mediates apoptosis of brown adipocytes and defective brown adipocyte function in obesity. Severe quantitative and qualitative brown adipocyte defects are common in obesity. To investigate whether aberrant expression of tumor necrosis factor alpha (TNF-alpha) in obesity is involved in functional brown fat atrophy, we have studied genetically obese (ob/ob) mice with targeted null mutations in the genes encoding the two TNF receptors. The absence of both TNF receptors or p55 receptor alone resulted in a significant reduction in brown adipocyte apoptosis and an increase in beta(3)-adrenoreceptor and uncoupling protein-1 expression in obese mice. Increased numbers of multilocular functionally active brown adipocytes, and improved thermoregulation was also observed in",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.091745+00:00"
+}

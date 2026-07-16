@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27712433",
+  "source_fingerprint": "7295c86cce17d875d2e54271ae0e2ca9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27712433",
+    "[palliative-care-in-germany]."
+  ],
+  "key_phrases": [
+    "palliative",
+    "care",
+    "germany",
+    "delivery",
+    "still",
+    "characterized",
+    "by",
+    "wide"
+  ],
+  "summary_1l": "[Palliative care in Germany].",
+  "query_hits": [],
+  "embed_text": "27712433 [Palliative care in Germany]. science scifact The delivery of palliative care in Germany is still characterized by a wide-spread undersupply both for inpatients and outpatients. Nevertheless over the last 15 years progress has also been made in Germany, which is pleasing and which has… 27712433 [palliative-care-in-germany]. palliative care germany delivery still characterized by wide [Palliative care in Germany]. [Palliative care in Germany]. The delivery of palliative care in Germany is still characterized by a wide-spread undersupply both for inpatients and outpatients. Nevertheless over the last 15 years progress has also been made in Germany, which is pleasing and which has directed professional and public attention increasingly to the situation of the incurably ill and dying. In the course of this development the first structures for specialized palliative care have been established. In particular the situation for inpatients in hospitals and hospices is pleasing, even if a satisfaction for total coverage is not yet reached. More seriously however is the demand for the outpatients. Financial means, which are steered so far only rudimentarily for palliative care, must be made sufficiently avail",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.252523+00:00"
+}

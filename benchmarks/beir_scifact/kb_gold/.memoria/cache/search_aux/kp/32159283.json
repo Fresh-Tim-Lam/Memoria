@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "32159283",
+  "source_fingerprint": "b1479458ce11a16e04726aba97ebb58d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "32159283",
+    "antibiotics-and-risk-of-subsequent-first-time-acute-myocardial-infarction."
+  ],
+  "key_phrases": [
+    "antibiotics",
+    "risk",
+    "subsequent",
+    "first",
+    "time",
+    "acute",
+    "myocardial",
+    "infarction"
+  ],
+  "summary_1l": "Antibiotics and risk of subsequent first-time acute myocardial infarction.",
+  "query_hits": [],
+  "embed_text": "32159283 Antibiotics and risk of subsequent first-time acute myocardial infarction. science scifact CONTEXT Increasing evidence supports the hypothesis of a causal association between certain bacterial infections and increased risk of developing acute myocardial infarction. If such a causal association exists, subjects who used… 32159283 antibiotics-and-risk-of-subsequent-first-time-acute-myocardial-infarction. antibiotics risk subsequent first time acute myocardial infarction Antibiotics and risk of subsequent first-time acute myocardial infarction. Antibiotics and risk of subsequent first-time acute myocardial infarction. CONTEXT Increasing evidence supports the hypothesis of a causal association between certain bacterial infections and increased risk of developing acute myocardial infarction. If such a causal association exists, subjects who used antibiotics active against the bacteria, regardless of indication, might be at lower risk of developing acute myocardial infarction than nonusers. OBJECTIVE To determine whether previous use of antibiotics decreases the risk of developing a first-time acute myocardial infarction. DESIGN Population-based case-control analysis. SETTING The United Kingdom-based General Practice Research Database comprising 350 general practices. PATIENTS A total of 3315 case patients aged 75 years or younger w",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.239149+00:00"
+}

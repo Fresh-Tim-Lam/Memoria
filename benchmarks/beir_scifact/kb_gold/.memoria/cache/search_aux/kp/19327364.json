@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19327364",
+  "source_fingerprint": "1c80b7defbdc814c6c03f17f8459b47d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19327364",
+    "seroepidemiologic-survey-of-captive-old-world-primates-for-antibodies-to-human-and-simian-retroviruses,-and-isolation-of-a-lentivirus-from-sooty-mangabeys-(cercocebus-atys)."
+  ],
+  "key_phrases": [
+    "seroepidemiologic",
+    "survey",
+    "captive",
+    "old",
+    "world",
+    "primates",
+    "antibodies",
+    "human"
+  ],
+  "summary_1l": "Seroepidemiologic survey of captive Old-World primates for antibodies to human and simian retroviruses, and isolation of a lentivirus from sooty mangabeys (Cercocebus atys).",
+  "query_hits": [],
+  "embed_text": "19327364 Seroepidemiologic survey of captive Old-World primates for antibodies to human and simian retroviruses, and isolation of a lentivirus from sooty mangabeys (Cercocebus atys). science scifact Sera from 526 Old-World monkeys and apes, representing 50 species and 20 genera and living in US zoos and vivaria, were screened for antibodies to HTLV-I, HTLV-III/LAV, and simian-AIDS retrovirus, type I (SRV-I). Sera were screened… 19327364 seroepidemiologic-survey-of-captive-old-world-primates-for-antibodies-to-human-and-simian-retroviruses,-and-isolation-of-a-lentivirus-from-sooty-mangabeys-(cercocebus-atys). seroepidemiologic survey captive old world primates antibodies human Seroepidemiologic survey of captive Old-World primates for antibodies to human and simian retroviruses, and isolation of a lentivirus from sooty mangabeys (Cercocebus atys). Seroepidemiologic survey of captive Old-World primates for antibodies to human and simian retroviruses, and isolation of a lentivirus from sooty mangabeys (Cercocebus atys). Sera from 526 Old-World monkeys and apes, representing 50 species and 20 genera and living in US zoos and vivaria, were screened for antibodies to HTLV-I, HTLV-III/LAV, and simian-AIDS retrovirus, type I (SRV-I). Sera were screened initially by ELISA, and ELISA-positive sera, as well as ELISA-negative sera from cage contacts, were further tested by Western blotting. A large number of false-positive and a small number of false-negative ELISA sera were identified. Although most true positive reactions were directed to a single retrovirus, a number of individuals from 4 species were positive for more than one retrovirus.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.424537+00:00"
+}

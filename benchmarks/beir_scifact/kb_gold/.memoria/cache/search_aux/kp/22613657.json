@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22613657",
+  "source_fingerprint": "cd7839012461aced8bb09f5e3010cd66",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22613657",
+    "advances-in-graft-versus-host-disease-biology-and-therapy"
+  ],
+  "key_phrases": [
+    "advances",
+    "graft",
+    "versus",
+    "host",
+    "disease",
+    "biology",
+    "therapy",
+    "allogeneic"
+  ],
+  "summary_1l": "Allogeneic haematopoietic stem cell transplantation is used to treat a variety of disorders, but its efficacy is limited by the occurrence of",
+  "query_hits": [],
+  "embed_text": "22613657 Advances in graft-versus-host disease biology and therapy science scifact Allogeneic haematopoietic stem cell transplantation is used to treat a variety of disorders, but its efficacy is limited by the occurrence of graft-versus-host disease (GVHD). The past decade has brought impressive advances in our… 22613657 advances-in-graft-versus-host-disease-biology-and-therapy advances graft versus host disease biology therapy allogeneic Allogeneic haematopoietic stem cell transplantation is used to treat a variety of disorders, but its efficacy is limited by the occurrence of Advances in graft-versus-host disease biology and therapy Allogeneic haematopoietic stem cell transplantation is used to treat a variety of disorders, but its efficacy is limited by the occurrence of graft-versus-host disease (GVHD). The past decade has brought impressive advances in our understanding of the role of stimulatory and suppressive elements of the adaptive and innate immune systems from both the donor and the host in GVHD pathogenesis. New insights from basic immunology, preclinical models and clinical studies have led to novel approaches for prevention and treatment. This Review highlights the recent advances in understanding the pathophysiology of GVHD and its treatment, with a focus on manipulations of the immune system that are amenable to clinical application.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.084813+00:00"
+}

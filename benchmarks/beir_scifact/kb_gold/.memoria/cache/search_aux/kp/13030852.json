@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13030852",
+  "source_fingerprint": "8d28b6491a0474cb6e3f0d50f36d4b3f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13030852",
+    "identification-of-bone-and-liver-metastases-from-breast-cancer-by-measurement-of-plasma-alkaline-phosphatase-isoenzyme-activity."
+  ],
+  "key_phrases": [
+    "identification",
+    "bone",
+    "liver",
+    "metastases",
+    "from",
+    "breast",
+    "cancer",
+    "by"
+  ],
+  "summary_1l": "Identification of bone and liver metastases from breast cancer by measurement of plasma alkaline phosphatase isoenzyme activity.",
+  "query_hits": [],
+  "embed_text": "13030852 Identification of bone and liver metastases from breast cancer by measurement of plasma alkaline phosphatase isoenzyme activity. science scifact Plasma alkaline phosphatase isoenzyme activities were determined in patients with breast cancer to diagnose and monitor bone and liver metastases. Bone alkaline phosphatase activity was increased in 21 of 50 patients (42%) with… 13030852 identification-of-bone-and-liver-metastases-from-breast-cancer-by-measurement-of-plasma-alkaline-phosphatase-isoenzyme-activity. identification bone liver metastases from breast cancer by Identification of bone and liver metastases from breast cancer by measurement of plasma alkaline phosphatase isoenzyme activity. Identification of bone and liver metastases from breast cancer by measurement of plasma alkaline phosphatase isoenzyme activity. Plasma alkaline phosphatase isoenzyme activities were determined in patients with breast cancer to diagnose and monitor bone and liver metastases. Bone alkaline phosphatase activity was increased in 21 of 50 patients (42%) with radiologically confirmed bone metastases, while total alkaline phosphatase activity was increased in only 10 of 50 (20%); liver alkaline phosphatase activity was raised in 12 of 25 patients (48%) with liver metastases. All patients with liver metastases had bone metastases. Bone alkaline phosphatase activity was significantly higher in patients with symptomatic bone disease. Isoenzyme determination provided additional information that woul",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:09.508207+00:00"
+}

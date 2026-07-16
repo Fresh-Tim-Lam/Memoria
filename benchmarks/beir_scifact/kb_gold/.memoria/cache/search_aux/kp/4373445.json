@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4373445",
+  "source_fingerprint": "ec16a9cd1dd29229e9720195e6340238",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4373445",
+    "coordination-of-rho-gtpase-activities-during-cell-protrusion"
+  ],
+  "key_phrases": [
+    "coordination",
+    "rho",
+    "gtpase",
+    "activities",
+    "during",
+    "cell",
+    "protrusion",
+    "gtpases"
+  ],
+  "summary_1l": "The GTPases Rac1, RhoA and Cdc42 act together to control cytoskeleton dynamics.",
+  "query_hits": [],
+  "embed_text": "4373445 Coordination of Rho GTPase activities during cell protrusion science scifact The GTPases Rac1, RhoA and Cdc42 act together to control cytoskeleton dynamics. Recent biosensor studies have shown that all three GTPases are activated at the front of migrating cells, and biochemical evidence suggests that they may… 4373445 coordination-of-rho-gtpase-activities-during-cell-protrusion coordination rho gtpase activities during cell protrusion gtpases The GTPases Rac1, RhoA and Cdc42 act together to control cytoskeleton dynamics. Coordination of Rho GTPase activities during cell protrusion The GTPases Rac1, RhoA and Cdc42 act together to control cytoskeleton dynamics. Recent biosensor studies have shown that all three GTPases are activated at the front of migrating cells, and biochemical evidence suggests that they may regulate one another: Cdc42 can activate Rac1 (ref. 8), and Rac1 and RhoA are mutually inhibitory. However, their spatiotemporal coordination, at the seconds and single-micrometre dimensions typical of individual protrusion events, remains unknown. Here we examine GTPase coordination in mouse embryonic fibroblasts both through simultaneous visualization of two GTPase biosensors and using a 'computational multiplexing' approach capable of defining the relationships between multiple protein activities",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.225230+00:00"
+}

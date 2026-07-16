@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "60206680",
+  "source_fingerprint": "87bdcedd56888e2b493ca6425de5993e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "60206680",
+    "r:-a-language-for-data-analysis-and-graphics"
+  ],
+  "key_phrases": [
+    "language",
+    "data",
+    "analysis",
+    "graphics",
+    "abstract",
+    "this",
+    "article",
+    "we"
+  ],
+  "summary_1l": "Abstract In this article we discuss our experience designing and implementing a statistical computing language.",
+  "query_hits": [],
+  "embed_text": "60206680 R: A Language for Data Analysis and Graphics science scifact Abstract In this article we discuss our experience designing and implementing a statistical computing language. In developing this new language, we sought to combine what we felt were useful features from two existing computer languages.… 60206680 r:-a-language-for-data-analysis-and-graphics language data analysis graphics abstract this article we Abstract In this article we discuss our experience designing and implementing a statistical computing language. R: A Language for Data Analysis and Graphics Abstract In this article we discuss our experience designing and implementing a statistical computing language. In developing this new language, we sought to combine what we felt were useful features from two existing computer languages. We feel that the new language provides advantages in the areas of portability, computational efficiency, memory management, and scoping.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.724781+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "39892135",
+  "source_fingerprint": "e7c385fe60567288192315b11ad0ce27",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "39892135",
+    "sulfasalazine-in-the-treatment-of-spondylarthropathy.-a-randomized,-multicenter,-double-blind,-placebo-controlled-study."
+  ],
+  "key_phrases": [
+    "sulfasalazine",
+    "treatment",
+    "spondylarthropathy",
+    "randomized",
+    "multicenter",
+    "double",
+    "blind",
+    "placebo"
+  ],
+  "summary_1l": "Sulfasalazine in the treatment of spondylarthropathy.",
+  "query_hits": [],
+  "embed_text": "39892135 Sulfasalazine in the treatment of spondylarthropathy. A randomized, multicenter, double-blind, placebo-controlled study. science scifact OBJECTIVE To assess the efficacy and tolerability of sulfasalazine (SSZ) in the treatment of spondylarthropathy. METHODS We conducted a 6-month randomized, placebo-controlled, double-blind, multicenter study of patients with… 39892135 sulfasalazine-in-the-treatment-of-spondylarthropathy.-a-randomized,-multicenter,-double-blind,-placebo-controlled-study. sulfasalazine treatment spondylarthropathy randomized multicenter double blind placebo Sulfasalazine in the treatment of spondylarthropathy. Sulfasalazine in the treatment of spondylarthropathy. A randomized, multicenter, double-blind, placebo-controlled study. OBJECTIVE To assess the efficacy and tolerability of sulfasalazine (SSZ) in the treatment of spondylarthropathy. METHODS We conducted a 6-month randomized, placebo-controlled, double-blind, multicenter study of patients with spondylarthropathy whose disease had remained active despite treatment with nonsteroidal antiinflammatory drugs. Patients were treated with SSZ (3 gm/day) or placebo. The primary efficacy variables were the physician's and patient's overall assessments, pain, and morning stiffness. End points were analyzed in the intent-to-treat and completer patient populations; the time course of effect was analyzed in the completer patient population. RESULTS Of t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.062820+00:00"
+}

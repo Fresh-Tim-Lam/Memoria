@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26341063",
+  "source_fingerprint": "720c7d75742bc3317cba55c69c1fb4c1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26341063",
+    "effect-of-enalapril-on-12-year-survival-and-life-expectancy-in-patients-with-left-ventricular-systolic-dysfunction:-a-follow-up-study."
+  ],
+  "key_phrases": [
+    "effect",
+    "enalapril",
+    "12",
+    "year",
+    "survival",
+    "life",
+    "expectancy",
+    "patients"
+  ],
+  "summary_1l": "Effect of enalapril on 12-year survival and life expectancy in patients with left ventricular systolic dysfunction: a follow-up study.",
+  "query_hits": [],
+  "embed_text": "26341063 Effect of enalapril on 12-year survival and life expectancy in patients with left ventricular systolic dysfunction: a follow-up study. science scifact BACKGROUND In the studies of left ventricular dysfunction (SOLVD), enalapril reduced mortality in patients with symptomatic but not asymptomatic left ventricular systolic dysfunction during the trial. We did a 12-year follow-up of SOLVD to… 26341063 effect-of-enalapril-on-12-year-survival-and-life-expectancy-in-patients-with-left-ventricular-systolic-dysfunction:-a-follow-up-study. effect enalapril 12 year survival life expectancy patients Effect of enalapril on 12-year survival and life expectancy in patients with left ventricular systolic dysfunction: a follow-up study. Effect of enalapril on 12-year survival and life expectancy in patients with left ventricular systolic dysfunction: a follow-up study. BACKGROUND In the studies of left ventricular dysfunction (SOLVD), enalapril reduced mortality in patients with symptomatic but not asymptomatic left ventricular systolic dysfunction during the trial. We did a 12-year follow-up of SOLVD to establish if the mortality reduction with enalapril among patients with heart failure was sustained, and whether a subsequent reduction in mortality would emerge among those with asymptomatic ventricular dysfunction. METHODS Of the 6797 patients previously enrolled in the SOLVD prevention and treatment trials, we ascertained the subsequent vital status of 5165 individuals who were alive when the trials had been completed.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.654372+00:00"
+}

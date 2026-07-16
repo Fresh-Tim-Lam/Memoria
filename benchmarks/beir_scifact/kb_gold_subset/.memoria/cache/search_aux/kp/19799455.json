@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19799455",
+  "source_fingerprint": "29009357230911fc359863a6f262acb1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19799455",
+    "ascorbic-acid-transporter-slc23a1-is-essential-for-vitamin-c-transport-into-the-brain-and-for-perinatal-survival"
+  ],
+  "key_phrases": [
+    "ascorbic",
+    "acid",
+    "transporter",
+    "slc23a1",
+    "essential",
+    "vitamin",
+    "transport",
+    "into"
+  ],
+  "summary_1l": "The only proven requirement for ascorbic acid (vitamin C) is in preventing scurvy, pres",
+  "query_hits": [],
+  "embed_text": "19799455 Ascorbic-acid transporter Slc23a1 is essential for vitamin C transport into the brain and for perinatal survival science scifact The only proven requirement for ascorbic acid (vitamin C) is in preventing scurvy, presumably because it is a cofactor for hydroxylases required for post-translational modifications that stabilize collagen. We have created mice deficient… 19799455 ascorbic-acid-transporter-slc23a1-is-essential-for-vitamin-c-transport-into-the-brain-and-for-perinatal-survival ascorbic acid transporter slc23a1 essential vitamin transport into The only proven requirement for ascorbic acid (vitamin C) is in preventing scurvy, pres Ascorbic-acid transporter Slc23a1 is essential for vitamin C transport into the brain and for perinatal survival The only proven requirement for ascorbic acid (vitamin C) is in preventing scurvy, presumably because it is a cofactor for hydroxylases required for post-translational modifications that stabilize collagen. We have created mice deficient in the mouse ortholog (solute carrier family 23 member 1 or Slc23a1) of a rat ascorbic-acid transporter, Svct2 (ref. 4). Cultured embryonic fibroblasts from homozygous Slc23a1−/− mice had less than 5% of normal ascorbic-acid uptake. Ascorbic-acid levels were undetectable or markedly reduced in the blood and tissues of Slc23a1−/− mice. Prenatal supplementation of pregnant females did not elevate blood ascorbic acid in Slc23a1−/− fetuses, suggesti",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:12.211776+00:00"
+}

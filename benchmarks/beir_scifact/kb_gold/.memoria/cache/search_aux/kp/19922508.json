@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19922508",
+  "source_fingerprint": "d85a2835191c3db3a386cbe936a10273",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19922508",
+    "monitoring-starvation-induced-reactive-oxygen-species-formation."
+  ],
+  "key_phrases": [
+    "monitoring",
+    "starvation",
+    "induced",
+    "reactive",
+    "oxygen",
+    "species",
+    "formation",
+    "ros"
+  ],
+  "summary_1l": "Monitoring starvation-induced reactive oxygen species formation.",
+  "query_hits": [],
+  "embed_text": "19922508 Monitoring starvation-induced reactive oxygen species formation. science scifact Reactive oxygen species (ROS) are potentially harmful to cells because of their ability to oxidize cell constituents such as DNA, proteins, and lipids. However, at low levels, and under tight control, this feature makes them excellent… 19922508 monitoring-starvation-induced-reactive-oxygen-species-formation. monitoring starvation induced reactive oxygen species formation ros Monitoring starvation-induced reactive oxygen species formation. Monitoring starvation-induced reactive oxygen species formation. Reactive oxygen species (ROS) are potentially harmful to cells because of their ability to oxidize cell constituents such as DNA, proteins, and lipids. However, at low levels, and under tight control, this feature makes them excellent modifiers in a variety of signal transduction pathways, including autophagy. Autophagy was traditionally associated with oxidative stress, acting in the degradation of oxidized proteins and organelles. Recently, a signaling role was suggested for ROS in the regulation of autophagy, leading, under different circumstances, either to survival or to death. To study the effects of ROS on this pathway, one must determine the localization, intensity, kinetics, and essentiality of the oxidative signal i",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.386214+00:00"
+}

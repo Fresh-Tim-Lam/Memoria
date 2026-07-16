@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16550075",
+  "source_fingerprint": "b889b101f40947389c2baef4c039a13a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16550075",
+    "bcl-6-represses-genes-that-function-in-lymphocyte-differentiation,-inflammation,-and-cell-cycle-control."
+  ],
+  "key_phrases": [
+    "bcl",
+    "represses",
+    "genes",
+    "that",
+    "function",
+    "lymphocyte",
+    "differentiation",
+    "inflammation"
+  ],
+  "summary_1l": "BCL-6 represses genes that function in lymphocyte differentiation, inflammation, and cell cycle control.",
+  "query_hits": [],
+  "embed_text": "16550075 BCL-6 represses genes that function in lymphocyte differentiation, inflammation, and cell cycle control. science scifact BCL-6, a transcriptional repressor frequently translocated in lymphomas, regulates germinal center B cell differentiation and inflammation. DNA microarray screening identified genes repressed by BCL-6, including many lymphocyte activation… 16550075 bcl-6-represses-genes-that-function-in-lymphocyte-differentiation,-inflammation,-and-cell-cycle-control. bcl represses genes that function lymphocyte differentiation inflammation BCL-6 represses genes that function in lymphocyte differentiation, inflammation, and cell cycle control. BCL-6 represses genes that function in lymphocyte differentiation, inflammation, and cell cycle control. BCL-6, a transcriptional repressor frequently translocated in lymphomas, regulates germinal center B cell differentiation and inflammation. DNA microarray screening identified genes repressed by BCL-6, including many lymphocyte activation genes, suggesting that BCL-6 modulates B cell receptor signals. BCL-6 repression of two chemokine genes, MIP-1alpha and IP-10, may also attenuate inflammatory responses. Blimp-1, another BCL-6 target, is important for plasmacytic differentiation. Since BCL-6 expression is silenced in plasma cells, repression of blimp-1 by BCL-6 may control plasmacytic differentiation. Indeed, inhibition of BCL-6 function initiated changes indicative of plasmacytic diff",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.450884+00:00"
+}

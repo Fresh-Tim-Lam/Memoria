@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1684489",
+  "source_fingerprint": "c12a115ecfc95d93575ee6de4717469d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1684489",
+    "chd4-is-a-rangtp-dependent-map-that-stabilizes-microtubules-and-regulates-bipolar-spindle-formation"
+  ],
+  "key_phrases": [
+    "chd4",
+    "rangtp",
+    "dependent",
+    "map",
+    "that",
+    "stabilizes",
+    "microtubules",
+    "regulates"
+  ],
+  "summary_1l": "BACKGROUND Production of the GTP-bound form of the Ran GTPase (RanGTP) around chromosomes induces sp",
+  "query_hits": [],
+  "embed_text": "1684489 CHD4 Is a RanGTP-Dependent MAP that Stabilizes Microtubules and Regulates Bipolar Spindle Formation science scifact BACKGROUND Production of the GTP-bound form of the Ran GTPase (RanGTP) around chromosomes induces spindle assembly by activating nuclear localization signal (NLS)-containing proteins. Several NLS proteins have been identified as spindle… 1684489 chd4-is-a-rangtp-dependent-map-that-stabilizes-microtubules-and-regulates-bipolar-spindle-formation chd4 rangtp dependent map that stabilizes microtubules regulates BACKGROUND Production of the GTP-bound form of the Ran GTPase (RanGTP) around chromosomes induces sp CHD4 Is a RanGTP-Dependent MAP that Stabilizes Microtubules and Regulates Bipolar Spindle Formation BACKGROUND Production of the GTP-bound form of the Ran GTPase (RanGTP) around chromosomes induces spindle assembly by activating nuclear localization signal (NLS)-containing proteins. Several NLS proteins have been identified as spindle assembly factors, but the complexity of the process led us to search for additional proteins with distinct roles in spindle assembly. RESULTS We identify a chromatin-remodeling ATPase, CHD4, as a RanGTP-dependent microtubule (MT)-associated protein (MAP). MT binding occurs via the region containing an NLS and chromatin-binding domains. In Xenopus egg extracts and cultured cells, CHD4 largely dissociates from mitotic chromosomes and partially localizes to the",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.930533+00:00"
+}

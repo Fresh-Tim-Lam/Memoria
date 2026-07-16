@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17539488",
+  "source_fingerprint": "c94d2de933f444e5cd609d4e3cd164df",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17539488",
+    "regulation-of-poly(a)-site-choice-of-several-yeast-mrnas"
+  ],
+  "key_phrases": [
+    "regulation",
+    "poly",
+    "site",
+    "choice",
+    "several",
+    "yeast",
+    "mrnas",
+    "genes"
+  ],
+  "summary_1l": "Several yeast genes produce multiple transcripts with different 3'-ends.",
+  "query_hits": [],
+  "embed_text": "17539488 Regulation of poly(A) site choice of several yeast mRNAs science scifact Several yeast genes produce multiple transcripts with different 3'-ends. Of these, four genes are known to produce truncated transcripts that end within the coding sequence of longer transcripts: CBP1 , AEP2 / ATP13 , RNA14 and SIR1 . It… 17539488 regulation-of-poly(a)-site-choice-of-several-yeast-mrnas regulation poly site choice several yeast mrnas genes Several yeast genes produce multiple transcripts with different 3'-ends. Regulation of poly(A) site choice of several yeast mRNAs Several yeast genes produce multiple transcripts with different 3'-ends. Of these, four genes are known to produce truncated transcripts that end within the coding sequence of longer transcripts: CBP1 , AEP2 / ATP13 , RNA14 and SIR1 . It has been shown that the level of the truncated CBP1 transcript increases during the switch to respiratory growth while that of the full-length transcript decreases. To determine whether this phenomenon is unique to CBP1 , northern analysis was used to determine whether the levels of other truncated transcripts are regulated similarly by carbon source. The levels of the shortest transcripts of AEP2 / ATP13 and RNA14 increased during respiration while the shortest SIR1 transcript remained constant. How",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.895753+00:00"
+}

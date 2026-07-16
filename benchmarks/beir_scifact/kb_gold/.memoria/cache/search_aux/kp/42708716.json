@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "42708716",
+  "source_fingerprint": "ad8dd449fa20a096fc71286bfad00c6c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "42708716",
+    "the-isolation-and-characterization-of-a-cdna-encoding-phospholipid-specific-inositol-polyphosphate-5-phosphatase."
+  ],
+  "key_phrases": [
+    "isolation",
+    "characterization",
+    "cdna",
+    "encoding",
+    "phospholipid",
+    "specific",
+    "inositol",
+    "polyphosphate"
+  ],
+  "summary_1l": "The isolation and characterization of a cDNA encoding phospholipid-specific inositol polyphosphate 5-phosphatase.",
+  "query_hits": [],
+  "embed_text": "42708716 The isolation and characterization of a cDNA encoding phospholipid-specific inositol polyphosphate 5-phosphatase. science scifact We report the cDNA cloning and characterization of a novel human inositol polyphosphate 5-phosphatase (5-phosphatase) that has substrate specificity unlike previously described members of this large gene family. All previously described… 42708716 the-isolation-and-characterization-of-a-cdna-encoding-phospholipid-specific-inositol-polyphosphate-5-phosphatase. isolation characterization cdna encoding phospholipid specific inositol polyphosphate The isolation and characterization of a cDNA encoding phospholipid-specific inositol polyphosphate 5-phosphatase. The isolation and characterization of a cDNA encoding phospholipid-specific inositol polyphosphate 5-phosphatase. We report the cDNA cloning and characterization of a novel human inositol polyphosphate 5-phosphatase (5-phosphatase) that has substrate specificity unlike previously described members of this large gene family. All previously described members hydrolyze water soluble inositol phosphates. This enzyme hydrolyzes only lipid substrates, phosphatidylinositol 3,4,5-trisphosphate and phosphatidylinositol 4,5-bisphosphate. The cDNA isolated comprises 3110 base pairs and predicts a protein product of 644 amino acids and M(r) = 70,023. We designate this 5-phosphatase as type IV. It is a highly basic protein (pI = 8.8) and has the greatest affinity toward phosphatidylinositol 3,4,5-trisp",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.186735+00:00"
+}

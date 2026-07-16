@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "34378726",
+  "source_fingerprint": "ae1ad25d3e124fdf9445c3001a404eb0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "34378726",
+    "interferon-gamma-in-autoimmunity:-a-complicated-player-on-a-complex-stage."
+  ],
+  "key_phrases": [
+    "interferon",
+    "gamma",
+    "autoimmunity",
+    "complicated",
+    "player",
+    "complex",
+    "stage",
+    "early"
+  ],
+  "summary_1l": "Interferon gamma in autoimmunity: A complicated player on a complex stage.",
+  "query_hits": [],
+  "embed_text": "34378726 Interferon gamma in autoimmunity: A complicated player on a complex stage. science scifact Early views of autoimmune disease cast IFNγ as a prototypic pro-inflammatory factor. It is now clear that IFNγ is capable of both pro- and anti-inflammatory activities with the functional outcome dependent on the physiological and… 34378726 interferon-gamma-in-autoimmunity:-a-complicated-player-on-a-complex-stage. interferon gamma autoimmunity complicated player complex stage early Interferon gamma in autoimmunity: A complicated player on a complex stage. Interferon gamma in autoimmunity: A complicated player on a complex stage. Early views of autoimmune disease cast IFNγ as a prototypic pro-inflammatory factor. It is now clear that IFNγ is capable of both pro- and anti-inflammatory activities with the functional outcome dependent on the physiological and pathological setting examined. Here, the major immune modulatory activities of IFNγ are reviewed and current evidence for the impact of IFNγ on pathology and regulation of several autoimmune diseases and disease models is summarized.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.409679+00:00"
+}

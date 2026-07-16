@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16237005",
+  "source_fingerprint": "80da3ac794da339c4352c95f868fa919",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16237005",
+    "single-rna-counting-reveals-alternative-modes-of-gene-expression-in-yeast"
+  ],
+  "key_phrases": [
+    "single",
+    "rna",
+    "counting",
+    "reveals",
+    "alternative",
+    "modes",
+    "gene",
+    "expression"
+  ],
+  "summary_1l": "Proper execution of transcriptional programs is a key requirement of gene expression regulation, demanding accurate control of",
+  "query_hits": [],
+  "embed_text": "16237005 Single-RNA counting reveals alternative modes of gene expression in yeast science scifact Proper execution of transcriptional programs is a key requirement of gene expression regulation, demanding accurate control of timing and amplitude. How precisely the transcription machinery fulfills this task is not known. Using an in… 16237005 single-rna-counting-reveals-alternative-modes-of-gene-expression-in-yeast single rna counting reveals alternative modes gene expression Proper execution of transcriptional programs is a key requirement of gene expression regulation, demanding accurate control of Single-RNA counting reveals alternative modes of gene expression in yeast Proper execution of transcriptional programs is a key requirement of gene expression regulation, demanding accurate control of timing and amplitude. How precisely the transcription machinery fulfills this task is not known. Using an in situ hybridization approach that detects single mRNA molecules, we measured mRNA abundance and transcriptional activity within single Saccharomyces cerevisiae cells. We found that expression levels for particular genes are higher than initially reported and can vary substantially among cells. However, variability for most constitutively expressed genes is unexpectedly small. Combining single-transcript measurements with computational modeling indicates that low expression variation is",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.981056+00:00"
+}

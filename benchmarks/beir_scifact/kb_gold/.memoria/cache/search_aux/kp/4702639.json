@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "4702639",
+  "source_fingerprint": "764303f853a50b56f218514793df8ea1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4702639"
+  ],
+  "key_phrases": [
+    "integrin",
+    "kras",
+    "ralb",
+    "complex",
+    "drives",
+    "tumour",
+    "stemness",
+    "resistance"
+  ],
+  "summary_1l": "Tumour cells, with stem-like properties, are highly aggressive and often show drug resistance.",
+  "query_hits": [],
+  "embed_text": "4702639 An integrin β3–KRAS–RalB complex drives tumour stemness and resistance to EGFR inhibition science scifact Tumour cells, with stem-like properties, are highly aggressive and often show drug resistance. Here, we reveal that integrin αvβ3 serves as a marker of breast, lung and pancreatic carcinomas with stem-like properties that are highly… 4702639 integrin kras ralb complex drives tumour stemness resistance Tumour cells, with stem-like properties, are highly aggressive and often show drug resistance. An integrin β3–KRAS–RalB complex drives tumour stemness and resistance to EGFR inhibition Tumour cells, with stem-like properties, are highly aggressive and often show drug resistance. Here, we reveal that integrin αvβ3 serves as a marker of breast, lung and pancreatic carcinomas with stem-like properties that are highly resistant to receptor tyrosine kinase inhibitors such as erlotinib. This was observed in vitro and in mice bearing patient-derived tumour xenografts or in clinical specimens from lung cancer patients who had progressed on erlotinib. Mechanistically, αvβ3, in the unliganded state, recruits KRAS and RalB to the tumour cell plasma membrane, leading to the activation of TBK1 and NF-κB. In fact, αvβ3 expression and the resulting KRAS–RalB–NF-κB pathway were both necessary and s",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.291936+00:00"
+}

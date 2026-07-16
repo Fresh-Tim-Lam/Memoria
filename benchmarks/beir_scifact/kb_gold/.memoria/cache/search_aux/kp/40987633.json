@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "40987633",
+  "source_fingerprint": "504489024126a02603a05e97b6c8891c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "40987633",
+    "the-role-of-chmp2bintron5-in-autophagy-and-frontotemporal-dementia."
+  ],
+  "key_phrases": [
+    "role",
+    "chmp2bintron5",
+    "autophagy",
+    "frontotemporal",
+    "dementia",
+    "charged",
+    "multivesicular",
+    "body"
+  ],
+  "summary_1l": "The role of CHMP2BIntron5 in autophagy and frontotemporal dementia.",
+  "query_hits": [],
+  "embed_text": "40987633 The role of CHMP2BIntron5 in autophagy and frontotemporal dementia. science scifact Charged multivesicular body protein 2B (CHMP2B) - a component of the endosomal complex required for transport-III (ESCRT-III) - is responsible for the vital membrane deformation functions in autophagy and endolysosomal trafficking. A… 40987633 the-role-of-chmp2bintron5-in-autophagy-and-frontotemporal-dementia. role chmp2bintron5 autophagy frontotemporal dementia charged multivesicular body The role of CHMP2BIntron5 in autophagy and frontotemporal dementia. The role of CHMP2BIntron5 in autophagy and frontotemporal dementia. Charged multivesicular body protein 2B (CHMP2B) - a component of the endosomal complex required for transport-III (ESCRT-III) - is responsible for the vital membrane deformation functions in autophagy and endolysosomal trafficking. A dominant mutation in CHMP2B (CHMP2BIntron5) is associated with a subset of heritable frontotemporal dementia - frontotemporal dementia linked to chromosome 3 (FTD-3). ESCRT-III recruits Vps4, an AAA-ATPase that abscises the membrane during various cellular processes including autophagy and intraluminal vesicle formation. CHMP2BIntron5 results in a C-terminus truncation removing an important Vps4 binding site as well as eliminating the normal autoinhibitory resting state of CHMP2B. CHMP2B is ex",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.026854+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8582337",
+  "source_fingerprint": "e66e6c00603e0b1fb284079008d00a00",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8582337",
+    "the-state-of-us-health,-1990-2010:-burden-of-diseases,-injuries,-and-risk-factors."
+  ],
+  "key_phrases": [
+    "state",
+    "us",
+    "health",
+    "1990",
+    "2010",
+    "burden",
+    "diseases",
+    "injuries"
+  ],
+  "summary_1l": "The state of US health, 1990-2010: burden of diseases, injuries, and risk factors.",
+  "query_hits": [],
+  "embed_text": "8582337 The state of US health, 1990-2010: burden of diseases, injuries, and risk factors. science scifact IMPORTANCE Understanding the major health problems in the United States and how they are changing over time is critical for informing national health policy. OBJECTIVES To measure the burden of diseases, injuries, and leading risk factors… 8582337 the-state-of-us-health,-1990-2010:-burden-of-diseases,-injuries,-and-risk-factors. state us health 1990 2010 burden diseases injuries The state of US health, 1990-2010: burden of diseases, injuries, and risk factors. The state of US health, 1990-2010: burden of diseases, injuries, and risk factors. IMPORTANCE Understanding the major health problems in the United States and how they are changing over time is critical for informing national health policy. OBJECTIVES To measure the burden of diseases, injuries, and leading risk factors in the United States from 1990 to 2010 and to compare these measurements with those of the 34 countries in the Organisation for Economic Co-operation and Development (OECD) countries. DESIGN We used the systematic analysis of descriptive epidemiology of 291 diseases and injuries, 1160 sequelae of these diseases and injuries, and 67 risk factors or clusters of risk factors from 1990 to 2010 for 187 countries developed for the Global Burden of Disease 2010 Study to describe t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.123971+00:00"
+}

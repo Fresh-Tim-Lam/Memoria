@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "4820792",
+  "source_fingerprint": "ff8d9e4e118cc2b2e11a28c40ac24f9f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4820792"
+  ],
+  "key_phrases": [
+    "integrin",
+    "mediates",
+    "alternative",
+    "survival",
+    "pathway",
+    "breast",
+    "cancer",
+    "cells"
+  ],
+  "summary_1l": "INTRODUCTION The overexpression of human epidermal growth factor receptor (HER)-2 in 20% of human bre",
+  "query_hits": [],
+  "embed_text": "4820792 β1 integrin mediates an alternative survival pathway in breast cancer cells resistant to lapatinib science scifact INTRODUCTION The overexpression of human epidermal growth factor receptor (HER)-2 in 20% of human breast cancers and its association with aggressive growth has led to widespread use of HER2-targeted therapies, such as trastuzumab (T) and… 4820792 integrin mediates alternative survival pathway breast cancer cells INTRODUCTION The overexpression of human epidermal growth factor receptor (HER)-2 in 20% of human bre β1 integrin mediates an alternative survival pathway in breast cancer cells resistant to lapatinib INTRODUCTION The overexpression of human epidermal growth factor receptor (HER)-2 in 20% of human breast cancers and its association with aggressive growth has led to widespread use of HER2-targeted therapies, such as trastuzumab (T) and lapatinib (L). Despite the success of these drugs, their efficacy is limited in patients whose tumors demonstrate de novo or acquired resistance to treatment. The β1 integrin resides on the membrane of the breast cancer cell, activating several elements of breast tumor progression including proliferation and survival. METHODS We developed a panel of HER2-overexpressing cell lines resistant to L, T, and the potent LT combination through long-term exposure and",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.479478+00:00"
+}

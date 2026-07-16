@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15405204",
+  "source_fingerprint": "3cda944b97465ca335ec90b8c53aa2a1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15405204",
+    "spontaneous-autoimmunity-prevented-by-thymic-expression-of-a-single-self-antigen"
+  ],
+  "key_phrases": [
+    "spontaneous",
+    "autoimmunity",
+    "prevented",
+    "by",
+    "thymic",
+    "expression",
+    "single",
+    "self"
+  ],
+  "summary_1l": "The expression of self-antigen in the thymus is believed to be responsible for the deletion of autoreactive T lymphocyt",
+  "query_hits": [],
+  "embed_text": "15405204 Spontaneous autoimmunity prevented by thymic expression of a single self-antigen science scifact The expression of self-antigen in the thymus is believed to be responsible for the deletion of autoreactive T lymphocytes, a critical process in the maintenance of unresponsiveness to self. The Autoimmune regulator (Aire) gene, which is… 15405204 spontaneous-autoimmunity-prevented-by-thymic-expression-of-a-single-self-antigen spontaneous autoimmunity prevented by thymic expression single self The expression of self-antigen in the thymus is believed to be responsible for the deletion of autoreactive T lymphocyt Spontaneous autoimmunity prevented by thymic expression of a single self-antigen The expression of self-antigen in the thymus is believed to be responsible for the deletion of autoreactive T lymphocytes, a critical process in the maintenance of unresponsiveness to self. The Autoimmune regulator (Aire) gene, which is defective in the disorder autoimmune polyglandular syndrome type 1, has been shown to promote the thymic expression of self-antigens. A clear link, however, between specific thymic self-antigens and a single autoimmune phenotype in this model has been lacking. We show that autoimmune eye disease in aire-deficient mice develops as a result of loss of thymic expression of a single eye antigen, interphotoreceptor retinoid-binding protein (IRBP). In addition, lack of IRBP expressio",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.480625+00:00"
+}

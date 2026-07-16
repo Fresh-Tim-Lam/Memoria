@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11748341",
+  "source_fingerprint": "616dcd470dc873fdf887114f0d80ab3e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11748341",
+    "evidence-based-interventions-for-improvement-of-maternal-and-child-nutrition:-what-can-be-done-and-at-what-cost?"
+  ],
+  "key_phrases": [
+    "evidence",
+    "based",
+    "interventions",
+    "improvement",
+    "maternal",
+    "child",
+    "nutrition",
+    "what"
+  ],
+  "summary_1l": "Evidence-based interventions for improvement of maternal and child nutrition: what can be done and at what cost?",
+  "query_hits": [],
+  "embed_text": "11748341 Evidence-based interventions for improvement of maternal and child nutrition: what can be done and at what cost? science scifact Maternal undernutrition contributes to 800,000 neonatal deaths annually through small for gestational age births; stunting, wasting, and micronutrient deficiencies are estimated to underlie nearly 3·1 million child deaths annually.… 11748341 evidence-based-interventions-for-improvement-of-maternal-and-child-nutrition:-what-can-be-done-and-at-what-cost? evidence based interventions improvement maternal child nutrition what Evidence-based interventions for improvement of maternal and child nutrition: what can be done and at what cost? Evidence-based interventions for improvement of maternal and child nutrition: what can be done and at what cost? Maternal undernutrition contributes to 800,000 neonatal deaths annually through small for gestational age births; stunting, wasting, and micronutrient deficiencies are estimated to underlie nearly 3·1 million child deaths annually. Progress has been made with many interventions implemented at scale and the evidence for effectiveness of nutrition interventions and delivery strategies has grown since The Lancet Series on Maternal and Child Undernutrition in 2008. We did a comprehensive update of interventions to address undernutrition and micronutrient deficiencies in women and children and used standard methods to assess emerging new evidence for delivery platforms. We modelled t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:07.511606+00:00"
+}

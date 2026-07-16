@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22198971",
+  "source_fingerprint": "cc4382266c8de6b74d19261e16168ed6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22198971",
+    "noncognate-interaction-with-mhc-class-ii-molecules-is-essential-for-maintenance-of-t-cell-metabolism-to-establish-optimal-memory-cd4-t-cell-function."
+  ],
+  "key_phrases": [
+    "noncognate",
+    "interaction",
+    "with",
+    "mhc",
+    "class",
+    "ii",
+    "molecules",
+    "essential"
+  ],
+  "summary_1l": "Noncognate interaction with MHC class II molecules is essential for maintenance of T cell metabolism to establish optimal memory CD4 T cell function.",
+  "query_hits": [],
+  "embed_text": "22198971 Noncognate interaction with MHC class II molecules is essential for maintenance of T cell metabolism to establish optimal memory CD4 T cell function. science scifact CD4 memory T cells surviving in the absence of MHC class II contact lose their characteristic memory function. To investigate the mechanisms underlying the impaired function of memory T cells in the absence of MHC class II molecules, we… 22198971 noncognate-interaction-with-mhc-class-ii-molecules-is-essential-for-maintenance-of-t-cell-metabolism-to-establish-optimal-memory-cd4-t-cell-function. noncognate interaction with mhc class ii molecules essential Noncognate interaction with MHC class II molecules is essential for maintenance of T cell metabolism to establish optimal memory CD4 T cell function. Noncognate interaction with MHC class II molecules is essential for maintenance of T cell metabolism to establish optimal memory CD4 T cell function. CD4 memory T cells surviving in the absence of MHC class II contact lose their characteristic memory function. To investigate the mechanisms underlying the impaired function of memory T cells in the absence of MHC class II molecules, we analyzed gene expression profiles of resting memory T cells isolated from MHC class II-competent or -deficient hosts. The analysis focused on five transcripts related to T cell activation, metabolism, and survival that are underexpressed in resting memory T cells from MHC class II-deficient hosts compared with MHC class II-competent hosts. CD4 memory cells isolated from MHC class II-deficient hosts display alt",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.440811+00:00"
+}

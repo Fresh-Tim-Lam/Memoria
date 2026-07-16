@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "51706771",
+  "source_fingerprint": "58bff9facf472e966533c6023f25c284",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "51706771",
+    "comparison-of-glioblastoma-(gbm)-molecular-classification-methods."
+  ],
+  "key_phrases": [
+    "comparison",
+    "glioblastoma",
+    "gbm",
+    "molecular",
+    "classification",
+    "methods",
+    "most",
+    "aggressive"
+  ],
+  "summary_1l": "Comparison of glioblastoma (GBM) molecular classification methods.",
+  "query_hits": [],
+  "embed_text": "51706771 Comparison of glioblastoma (GBM) molecular classification methods. science scifact Glioblastoma (GBM) is the most aggressive and common form of brain cancer in adults. GBM is characterized by poor survival and remarkably high tumors heterogeneity (both intertumoral and intratumoral), and lack of effective therapies.… 51706771 comparison-of-glioblastoma-(gbm)-molecular-classification-methods. comparison glioblastoma gbm molecular classification methods most aggressive Comparison of glioblastoma (GBM) molecular classification methods. Comparison of glioblastoma (GBM) molecular classification methods. Glioblastoma (GBM) is the most aggressive and common form of brain cancer in adults. GBM is characterized by poor survival and remarkably high tumors heterogeneity (both intertumoral and intratumoral), and lack of effective therapies. Recent high-throughput data revealed heterogeneous genetic/genomic/epigenetic features and led to multiple methods aiming to classify tumors according to the key molecular events that drive the most aggressive cellular components so that targeted therapies can be developed for individual subtypes. However, GBM molecular subtypes have not led to improvement of patients outcomes. Targeted or tailored therapies for specific mutations or subtypes largely failed due to the complexities arising from",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.334618+00:00"
+}

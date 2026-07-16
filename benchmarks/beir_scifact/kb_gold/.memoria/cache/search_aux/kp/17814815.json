@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17814815",
+  "source_fingerprint": "395122de36d588fcd74133d1f4531384",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17814815",
+    "label-free-in-vivo-imaging-of-myelinated-axons-in-health-and-disease-with-spectral-confocal-reflectance-microscopy"
+  ],
+  "key_phrases": [
+    "label",
+    "free",
+    "vivo",
+    "imaging",
+    "myelinated",
+    "axons",
+    "health",
+    "disease"
+  ],
+  "summary_1l": "We report a newly developed technique for high-resolution in vivo imaging of myelinat",
+  "query_hits": [],
+  "embed_text": "17814815 Label-free in vivo imaging of myelinated axons in health and disease with spectral confocal reflectance microscopy science scifact We report a newly developed technique for high-resolution in vivo imaging of myelinated axons in the brain, spinal cord and peripheral nerve that requires no fluorescent labeling. This method, based on spectral confocal reflectance… 17814815 label-free-in-vivo-imaging-of-myelinated-axons-in-health-and-disease-with-spectral-confocal-reflectance-microscopy label free vivo imaging myelinated axons health disease We report a newly developed technique for high-resolution in vivo imaging of myelinat Label-free in vivo imaging of myelinated axons in health and disease with spectral confocal reflectance microscopy We report a newly developed technique for high-resolution in vivo imaging of myelinated axons in the brain, spinal cord and peripheral nerve that requires no fluorescent labeling. This method, based on spectral confocal reflectance microscopy (SCoRe), uses a conventional laser-scanning confocal system to generate images by merging the simultaneously reflected signals from multiple lasers of different wavelengths. Striking color patterns unique to individual myelinated fibers are generated that facilitate their tracing in dense axonal areas. These patterns highlight nodes of Ranvier and Schmidt-Lanterman incisures and can be used to detect various myelin pathologies. Using SCoR",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.310741+00:00"
+}

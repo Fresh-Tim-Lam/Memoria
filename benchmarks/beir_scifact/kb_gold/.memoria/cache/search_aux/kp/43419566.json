@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "43419566",
+  "source_fingerprint": "807a84b75e6dea52e4d6536faebeddfe",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "43419566",
+    "transformation-of-mammalian-cells-by-constitutively-active-map-kinase-kinase."
+  ],
+  "key_phrases": [
+    "transformation",
+    "mammalian",
+    "cells",
+    "by",
+    "constitutively",
+    "active",
+    "map",
+    "kinase"
+  ],
+  "summary_1l": "Transformation of mammalian cells by constitutively active MAP kinase kinase.",
+  "query_hits": [],
+  "embed_text": "43419566 Transformation of mammalian cells by constitutively active MAP kinase kinase. science scifact Mitogen-activated protein (MAP) kinase kinase (MAPKK) activates MAP kinase in a signal transduction pathway that mediates cellular responses to growth and differentiation factors. Oncogenes such as ras, src, raf, and mos have been proposed… 43419566 transformation-of-mammalian-cells-by-constitutively-active-map-kinase-kinase. transformation mammalian cells by constitutively active map kinase Transformation of mammalian cells by constitutively active MAP kinase kinase. Transformation of mammalian cells by constitutively active MAP kinase kinase. Mitogen-activated protein (MAP) kinase kinase (MAPKK) activates MAP kinase in a signal transduction pathway that mediates cellular responses to growth and differentiation factors. Oncogenes such as ras, src, raf, and mos have been proposed to transform cells by prolonging the activated state of MAPKK and of components downstream in the signaling pathway. To test this hypothesis, constitutively active MAPKK mutants were designed that had basal activities up to 400 times greater than that of the unphosphorylated wild-type kinase. Expression of these mutants in mammalian cells activated AP-1-regulated transcription. The cells formed transformed foci, grew efficiently in soft agar, and were highly tumorigenic in nude",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.897984+00:00"
+}

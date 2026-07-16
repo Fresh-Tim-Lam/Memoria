@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4449524",
+  "source_fingerprint": "8151921834450e50239f26cee0434cf6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4449524",
+    "hemoglobin-concentration-in-white,-black,-and-oriental-children:-is-there-a-need-for-separate-criteria-in-screening-for-anemia?"
+  ],
+  "key_phrases": [
+    "hemoglobin",
+    "concentration",
+    "white",
+    "black",
+    "oriental",
+    "children",
+    "there",
+    "need"
+  ],
+  "summary_1l": "Hemoglobin concentration in white, black, and Oriental children: is there a need for separate criteria in screening for anemia?",
+  "query_hits": [],
+  "embed_text": "4449524 Hemoglobin concentration in white, black, and Oriental children: is there a need for separate criteria in screening for anemia? science scifact The concentration of hemoglobin in blacks was found to be 0.5 to 1.0 g/dl lower than that of income-matched whites in several large surveys. This difference could be a racial characteristic of blacks, or it might be due to a higher… 4449524 hemoglobin-concentration-in-white,-black,-and-oriental-children:-is-there-a-need-for-separate-criteria-in-screening-for-anemia? hemoglobin concentration white black oriental children there need Hemoglobin concentration in white, black, and Oriental children: is there a need for separate criteria in screening for anemia? Hemoglobin concentration in white, black, and Oriental children: is there a need for separate criteria in screening for anemia? The concentration of hemoglobin in blacks was found to be 0.5 to 1.0 g/dl lower than that of income-matched whites in several large surveys. This difference could be a racial characteristic of blacks, or it might be due to a higher frequency of genetic traits such as thalassemia minor and hemoglobinopathies, or to environmental factors such as iron deficiency. To help in making this distinction, we analyzed the data from multiphasic examinations (1973 to 1975) on 1718 white, 741 black, and 315 Oriental healthy, nonindigent children between 5 and 14 years of age. In the entire population, the median hemoglobin concentration averaged 0.5 g/dl lower in blacks than in",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.406483+00:00"
+}

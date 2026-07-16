@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16284655",
+  "source_fingerprint": "88e9f164f9088eb02b30cc567fd1074c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16284655",
+    "forebrain-engraftment-by-human-glial-progenitor-cells-enhances-synaptic-plasticity-and-learning-in-adult-mice."
+  ],
+  "key_phrases": [
+    "forebrain",
+    "engraftment",
+    "by",
+    "human",
+    "glial",
+    "progenitor",
+    "cells",
+    "enhances"
+  ],
+  "summary_1l": "Forebrain engraftment by human glial progenitor cells enhances synaptic plasticity and learning in adult mice.",
+  "query_hits": [],
+  "embed_text": "16284655 Forebrain engraftment by human glial progenitor cells enhances synaptic plasticity and learning in adult mice. science scifact Human astrocytes are larger and more complex than those of infraprimate mammals, suggesting that their role in neural processing has expanded with evolution. To assess the cell-autonomous and species-selective properties of human glia, we… 16284655 forebrain-engraftment-by-human-glial-progenitor-cells-enhances-synaptic-plasticity-and-learning-in-adult-mice. forebrain engraftment by human glial progenitor cells enhances Forebrain engraftment by human glial progenitor cells enhances synaptic plasticity and learning in adult mice. Forebrain engraftment by human glial progenitor cells enhances synaptic plasticity and learning in adult mice. Human astrocytes are larger and more complex than those of infraprimate mammals, suggesting that their role in neural processing has expanded with evolution. To assess the cell-autonomous and species-selective properties of human glia, we engrafted human glial progenitor cells (GPCs) into neonatal immunodeficient mice. Upon maturation, the recipient brains exhibited large numbers and high proportions of both human glial progenitors and astrocytes. The engrafted human glia were gap-junction-coupled to host astroglia, yet retained the size and pleomorphism of hominid astroglia, and propagated Ca2+ signals 3-fold faster than their hosts. Long-term potentiation (LTP) was sharply enhan",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.069799+00:00"
+}

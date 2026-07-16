@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "667451",
+  "source_fingerprint": "feda8d2dae9b9ba4a4f91e43c14f84dc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "667451",
+    "evolution-and-impact-of-subclonal-mutations-in-chronic-lymphocytic-leukemia"
+  ],
+  "key_phrases": [
+    "evolution",
+    "impact",
+    "subclonal",
+    "mutations",
+    "chronic",
+    "lymphocytic",
+    "leukemia",
+    "clonal"
+  ],
+  "summary_1l": "Clonal evolution is a key feature of cancer progression and relapse.",
+  "query_hits": [],
+  "embed_text": "667451 Evolution and Impact of Subclonal Mutations in Chronic Lymphocytic Leukemia science scifact Clonal evolution is a key feature of cancer progression and relapse. We studied intratumoral heterogeneity in 149 chronic lymphocytic leukemia (CLL) cases by integrating whole-exome sequence and copy number to measure the fraction of… 667451 evolution-and-impact-of-subclonal-mutations-in-chronic-lymphocytic-leukemia evolution impact subclonal mutations chronic lymphocytic leukemia clonal Clonal evolution is a key feature of cancer progression and relapse. Evolution and Impact of Subclonal Mutations in Chronic Lymphocytic Leukemia Clonal evolution is a key feature of cancer progression and relapse. We studied intratumoral heterogeneity in 149 chronic lymphocytic leukemia (CLL) cases by integrating whole-exome sequence and copy number to measure the fraction of cancer cells harboring each somatic mutation. We identified driver mutations as predominantly clonal (e.g., MYD88, trisomy 12, and del(13q)) or subclonal (e.g., SF3B1 and TP53), corresponding to earlier and later events in CLL evolution. We sampled leukemia cells from 18 patients at two time points. Ten of twelve CLL cases treated with chemotherapy (but only one of six without treatment) underwent clonal evolution, predominantly involving subclones with driver mutations (e.g., SF3B1 an",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.431404+00:00"
+}

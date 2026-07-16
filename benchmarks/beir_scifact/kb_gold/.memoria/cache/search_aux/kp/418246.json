@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "418246",
+  "source_fingerprint": "2b22187b251bc1bd61242769fca5d9aa",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "418246",
+    "pathway-connectivity-and-signaling-coordination-in-the-yeast-stress-activated-signaling-network"
+  ],
+  "key_phrases": [
+    "pathway",
+    "connectivity",
+    "signaling",
+    "coordination",
+    "yeast",
+    "stress",
+    "activated",
+    "network"
+  ],
+  "summary_1l": "Stressed cells coordinate a multi-faceted response spanning many levels of physiology.",
+  "query_hits": [],
+  "embed_text": "418246 Pathway connectivity and signaling coordination in the yeast stress-activated signaling network science scifact Stressed cells coordinate a multi-faceted response spanning many levels of physiology. Yet knowledge of the complete stress-activated regulatory network as well as design principles for signal integration remains incomplete. We developed… 418246 pathway-connectivity-and-signaling-coordination-in-the-yeast-stress-activated-signaling-network pathway connectivity signaling coordination yeast stress activated network Stressed cells coordinate a multi-faceted response spanning many levels of physiology. Pathway connectivity and signaling coordination in the yeast stress-activated signaling network Stressed cells coordinate a multi-faceted response spanning many levels of physiology. Yet knowledge of the complete stress-activated regulatory network as well as design principles for signal integration remains incomplete. We developed an experimental and computational approach to integrate available protein interaction data with gene fitness contributions, mutant transcriptome profiles, and phospho-proteome changes in cells responding to salt stress, to infer the salt-responsive signaling network in yeast. The inferred subnetwork presented many novel predictions by implicating new regulators, uncovering unrecognized crosstalk between known pathways, and pointing to previously unknown 'hubs' o",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.626758+00:00"
+}

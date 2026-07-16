@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "38830961",
+  "source_fingerprint": "32425948bc83eae647d3c550c799b643",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "38830961",
+    "interaction-of-tnf-with-tnf-receptor-type-2-promotes-expansion-and-function-of-mouse-cd4+cd25+-t-regulatory-cells."
+  ],
+  "key_phrases": [
+    "interaction",
+    "tnf",
+    "with",
+    "receptor",
+    "type",
+    "promotes",
+    "expansion",
+    "function"
+  ],
+  "summary_1l": "Interaction of TNF with TNF receptor type 2 promotes expansion and function of mouse CD4+CD25+ T regulatory cells.",
+  "query_hits": [],
+  "embed_text": "38830961 Interaction of TNF with TNF receptor type 2 promotes expansion and function of mouse CD4+CD25+ T regulatory cells. science scifact Although TNF is a major proinflammatory cytokine, increasing evidence indicates that TNF also has immunosuppressive feedback effects. We have demonstrated in this study that, in both resting and activated states, mouse peripheral… 38830961 interaction-of-tnf-with-tnf-receptor-type-2-promotes-expansion-and-function-of-mouse-cd4+cd25+-t-regulatory-cells. interaction tnf with receptor type promotes expansion function Interaction of TNF with TNF receptor type 2 promotes expansion and function of mouse CD4+CD25+ T regulatory cells. Interaction of TNF with TNF receptor type 2 promotes expansion and function of mouse CD4+CD25+ T regulatory cells. Although TNF is a major proinflammatory cytokine, increasing evidence indicates that TNF also has immunosuppressive feedback effects. We have demonstrated in this study that, in both resting and activated states, mouse peripheral CD4(+)CD25(+) T regulatory cells (Tregs) expressed remarkably higher surface levels of TNFR2 than CD4(+)CD25(-) T effector cells (Teffs). In cocultures of Tregs and Teffs, inhibition of proliferation of Teffs by Tregs was initially transiently abrogated by exposure to TNF, but longer exposure to TNF restored suppressive effects. Cytokine production by Teffs remained continually suppressed by Tregs. The profound anergy of Tregs in response to TCR stimu",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.029112+00:00"
+}

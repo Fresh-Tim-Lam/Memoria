@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5270265",
+  "source_fingerprint": "95a3c0ec2cb8d08206d4b298fea84f69",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5270265",
+    "combating-trastuzumab-resistance-by-targeting-src,-a-common-node-downstream-of-multiple-resistance-pathways"
+  ],
+  "key_phrases": [
+    "combating",
+    "trastuzumab",
+    "resistance",
+    "by",
+    "targeting",
+    "src",
+    "common",
+    "node"
+  ],
+  "summary_1l": "Trastuzumab is a successful rationally designed ERBB2-targeted therapy.",
+  "query_hits": [],
+  "embed_text": "5270265 Combating trastuzumab resistance by targeting SRC, a common node downstream of multiple resistance pathways science scifact Trastuzumab is a successful rationally designed ERBB2-targeted therapy. However, about half of individuals with ERBB2-overexpressing breast cancer do not respond to trastuzumab-based therapies, owing to various resistance mechanisms.… 5270265 combating-trastuzumab-resistance-by-targeting-src,-a-common-node-downstream-of-multiple-resistance-pathways combating trastuzumab resistance by targeting src common node Trastuzumab is a successful rationally designed ERBB2-targeted therapy. Combating trastuzumab resistance by targeting SRC, a common node downstream of multiple resistance pathways Trastuzumab is a successful rationally designed ERBB2-targeted therapy. However, about half of individuals with ERBB2-overexpressing breast cancer do not respond to trastuzumab-based therapies, owing to various resistance mechanisms. Clinically applicable regimens for overcoming trastuzumab resistance of different mechanisms are not yet available. We show that the nonreceptor tyrosine kinase c-SRC (SRC) is a key modulator of trastuzumab response and a common node downstream of multiple trastuzumab resistance pathways. We find that SRC is activated in both acquired and de novo trastuzumab-resistant cells and uncover a novel mechanism of SRC regulation involving dephosphorylation by PT",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.702057+00:00"
+}

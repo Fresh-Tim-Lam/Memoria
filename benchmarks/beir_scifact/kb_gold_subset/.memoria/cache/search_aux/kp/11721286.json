@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11721286",
+  "source_fingerprint": "833539554ed81a805507c53afeb467de",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11721286",
+    "streptococcus-pneumoniae-early-response-genes-to-human-lung-epithelial-cells"
+  ],
+  "key_phrases": [
+    "streptococcus",
+    "pneumoniae",
+    "early",
+    "response",
+    "genes",
+    "human",
+    "lung",
+    "epithelial"
+  ],
+  "summary_1l": "BACKGROUND Streptococcus pneumoniae infection starts from colonization of the host respiratory tract where interaction with",
+  "query_hits": [],
+  "embed_text": "11721286 Streptococcus pneumoniae early response genes to human lung epithelial cells science scifact BACKGROUND Streptococcus pneumoniae infection starts from colonization of the host respiratory tract where interaction with host respiratory tract epithelial cells occurs. To investigate pneumococcal genes that are involved in the early… 11721286 streptococcus-pneumoniae-early-response-genes-to-human-lung-epithelial-cells streptococcus pneumoniae early response genes human lung epithelial BACKGROUND Streptococcus pneumoniae infection starts from colonization of the host respiratory tract where interaction with Streptococcus pneumoniae early response genes to human lung epithelial cells BACKGROUND Streptococcus pneumoniae infection starts from colonization of the host respiratory tract where interaction with host respiratory tract epithelial cells occurs. To investigate pneumococcal genes that are involved in the early stage of interaction with host epithelial cells, transcriptional responses of an encapsulated pathogenic pneumococcal strain TIGR4 upon exposure to human lung epithelial cells A549 for 0.5 h and 1 h time periods were investigated by using TIGR (JCVI) microarray technology. Gene expression changes were validated by quantitative real-time PCR (qRT-PCR) analysis. FINDINGS We observed different transcriptional profiles at two incubation time periods in which most gene expressions were",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:07.440246+00:00"
+}

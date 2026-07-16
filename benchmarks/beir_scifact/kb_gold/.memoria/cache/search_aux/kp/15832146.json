@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15832146",
+  "source_fingerprint": "311ab42a343f448879f5a3c32d037fc8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15832146",
+    "stromal-fibroblasts-present-in-invasive-human-breast-carcinomas-promote-tumor-growth-and-angiogenesis-through-elevated-sdf-1/cxcl12-secretion"
+  ],
+  "key_phrases": [
+    "stromal",
+    "fibroblasts",
+    "present",
+    "invasive",
+    "human",
+    "breast",
+    "carcinomas",
+    "promote"
+  ],
+  "summary_1l": "Fibroblasts often constitute the majority of the stromal c",
+  "query_hits": [],
+  "embed_text": "15832146 Stromal Fibroblasts Present in Invasive Human Breast Carcinomas Promote Tumor Growth and Angiogenesis through Elevated SDF-1/CXCL12 Secretion science scifact Fibroblasts often constitute the majority of the stromal cells within a breast carcinoma, yet the functional contributions of these cells to tumorigenesis are poorly understood. Using a coimplantation tumor xenograft model, we demonstrate… 15832146 stromal-fibroblasts-present-in-invasive-human-breast-carcinomas-promote-tumor-growth-and-angiogenesis-through-elevated-sdf-1/cxcl12-secretion stromal fibroblasts present invasive human breast carcinomas promote Fibroblasts often constitute the majority of the stromal c Stromal Fibroblasts Present in Invasive Human Breast Carcinomas Promote Tumor Growth and Angiogenesis through Elevated SDF-1/CXCL12 Secretion Fibroblasts often constitute the majority of the stromal cells within a breast carcinoma, yet the functional contributions of these cells to tumorigenesis are poorly understood. Using a coimplantation tumor xenograft model, we demonstrate that carcinoma-associated fibroblasts (CAFs) extracted from human breast carcinomas promote the growth of admixed breast carcinoma cells significantly more than do normal mammary fibroblasts derived from the same patients. The CAFs, which exhibit the traits of myofibroblasts, play a central role in promoting the growth of tumor cells through their ability to secrete stromal cell-derived factor 1 (SDF-1); CAFs promot",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.325796+00:00"
+}

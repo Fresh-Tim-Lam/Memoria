@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10423989",
+  "source_fingerprint": "745982c6282f6b7e5b2c1d5229f75e5c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10423989",
+    "a-coactivator-of-pre-mrna-splicing."
+  ],
+  "key_phrases": [
+    "coactivator",
+    "pre",
+    "mrna",
+    "splicing",
+    "nuclear",
+    "matrix",
+    "antigen",
+    "recognized"
+  ],
+  "summary_1l": "A coactivator of pre-mRNA splicing.",
+  "query_hits": [],
+  "embed_text": "10423989 A coactivator of pre-mRNA splicing. science scifact The nuclear matrix antigen recognized by the monoclonal antibody (mAb) B1C8 is a novel serine (S) and arginine (R)-rich protein associated with splicing complexes and is named here SRm160 (SR-related matrix protein of 160 kD). SRm160… 10423989 a-coactivator-of-pre-mrna-splicing. coactivator pre mrna splicing nuclear matrix antigen recognized A coactivator of pre-mRNA splicing. A coactivator of pre-mRNA splicing. The nuclear matrix antigen recognized by the monoclonal antibody (mAb) B1C8 is a novel serine (S) and arginine (R)-rich protein associated with splicing complexes and is named here SRm160 (SR-related matrix protein of 160 kD). SRm160 contains multiple SR repeats, but unlike proteins of the SR family of splicing factors, lacks an RNA recognition motif. SRm160 and a related protein SRm300 (the 300-kD nuclear matrix antigen recognized by mAb B4A11) form a complex that is required for the splicing of specific pre-mRNAs. The SRm160/300 complex associates with splicing complexes and promotes splicing through interactions with SR family proteins. Binding of SRm160/300 to pre-mRNA is normally also dependent on U1 snRNP and is stabilized by U2 snRNP. Thus, SRm160",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:04.725928+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16180601",
+  "source_fingerprint": "07bcaa2ced2fc065530c8867b0dfa05d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16180601",
+    "serum-soluble-corin-deficiency-predicts-major-disability-within-3-months-after-acute-stroke"
+  ],
+  "key_phrases": [
+    "serum",
+    "soluble",
+    "corin",
+    "deficiency",
+    "predicts",
+    "major",
+    "disability",
+    "within"
+  ],
+  "summary_1l": "OBJECTIVE Serum soluble corin has been associated with stroke.",
+  "query_hits": [],
+  "embed_text": "16180601 Serum Soluble Corin Deficiency Predicts Major Disability within 3 Months after Acute Stroke science scifact OBJECTIVE Serum soluble corin has been associated with stroke. However, whether it is associated with stroke prognosis has not yet been studied. Therefore, we aimed to study the association of serum soluble corin with risk of poor outcomes… 16180601 serum-soluble-corin-deficiency-predicts-major-disability-within-3-months-after-acute-stroke serum soluble corin deficiency predicts major disability within OBJECTIVE Serum soluble corin has been associated with stroke. Serum Soluble Corin Deficiency Predicts Major Disability within 3 Months after Acute Stroke OBJECTIVE Serum soluble corin has been associated with stroke. However, whether it is associated with stroke prognosis has not yet been studied. Therefore, we aimed to study the association of serum soluble corin with risk of poor outcomes within 3 months after stroke. METHODS We followed 522 stroke patients for 3 months to identify major disability, death and vascular events. Serum soluble corin was measured at baseline for all participants. Logistic regression was used to examine the associations of baseline serum soluble corin with outcomes of stroke, adjusting for age, sex, baseline NIHSS score, hours from onset to hospitalization, smoking, drinking, hypertension, diabetes, coronary heart diseas",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.909103+00:00"
+}

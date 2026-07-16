@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12821938",
+  "source_fingerprint": "60f9de711709bd9a6fb0bb4321ad8eec",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12821938",
+    "control-of-oocyte-meiotic-maturation-and-fertilization."
+  ],
+  "key_phrases": [
+    "control",
+    "oocyte",
+    "meiotic",
+    "maturation",
+    "fertilization",
+    "sexual",
+    "reproduction",
+    "depends"
+  ],
+  "summary_1l": "Control of oocyte meiotic maturation and fertilization.",
+  "query_hits": [],
+  "embed_text": "12821938 Control of oocyte meiotic maturation and fertilization. science scifact Sexual reproduction depends upon meiosis for the generation of haploid gamete nuclei, which unite after fertilization to form the diploid zygote. The oocytes of most animal species arrest during meiotic prophase, and complete meiosis in… 12821938 control-of-oocyte-meiotic-maturation-and-fertilization. control oocyte meiotic maturation fertilization sexual reproduction depends Control of oocyte meiotic maturation and fertilization. Control of oocyte meiotic maturation and fertilization. Sexual reproduction depends upon meiosis for the generation of haploid gamete nuclei, which unite after fertilization to form the diploid zygote. The oocytes of most animal species arrest during meiotic prophase, and complete meiosis in response to intercellular signaling in a process called meiotic maturation. Oocyte meiotic maturation is defined by the transition between diakinesis and metaphase of meiosis I and is accompanied by nuclear envelope breakdown, rearrangement of the cortical cytoskeleton, and meiotic spindle assembly. Thus, the meiotic maturation process is essential for meiosis and prepares the oocyte for fertilization. In C. elegans, the processes of meiotic maturation, ovulation, and fertilization are temporally coupl",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:09.057988+00:00"
+}

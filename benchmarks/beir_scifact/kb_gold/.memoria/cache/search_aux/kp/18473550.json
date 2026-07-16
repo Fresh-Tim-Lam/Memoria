@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18473550",
+  "source_fingerprint": "0f69d8ed1495662474cfafad4b633682",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18473550",
+    "synergistic-activity-of-the-histone-deacetylase-inhibitor-suberoylanilide-hydroxamic-acid-and-the-bisphosphonate-zoledronic-acid-against-prostate-cancer-cells-in-vitro."
+  ],
+  "key_phrases": [
+    "synergistic",
+    "activity",
+    "histone",
+    "deacetylase",
+    "inhibitor",
+    "suberoylanilide",
+    "hydroxamic",
+    "acid"
+  ],
+  "summary_1l": "Synergistic activity of the histone deacetylase inhibitor suberoylanilide hydroxamic acid and the bisphosphonate zoledronic acid against prostate cancer cells in vitro.",
+  "query_hits": [],
+  "embed_text": "18473550 Synergistic activity of the histone deacetylase inhibitor suberoylanilide hydroxamic acid and the bisphosphonate zoledronic acid against prostate cancer cells in vitro. science scifact Bisphosphonates are widely used agents for the treatment of malignant bone disease. They inhibit osteoclast-mediated bone resorption and can have direct effects on cancer cells. In this study, we investigated whether the anticancer… 18473550 synergistic-activity-of-the-histone-deacetylase-inhibitor-suberoylanilide-hydroxamic-acid-and-the-bisphosphonate-zoledronic-acid-against-prostate-cancer-cells-in-vitro. synergistic activity histone deacetylase inhibitor suberoylanilide hydroxamic acid Synergistic activity of the histone deacetylase inhibitor suberoylanilide hydroxamic acid and the bisphosphonate zoledronic acid against prostate cancer cells in vitro. Synergistic activity of the histone deacetylase inhibitor suberoylanilide hydroxamic acid and the bisphosphonate zoledronic acid against prostate cancer cells in vitro. Bisphosphonates are widely used agents for the treatment of malignant bone disease. They inhibit osteoclast-mediated bone resorption and can have direct effects on cancer cells. In this study, we investigated whether the anticancer activity of the third-generation bisphosphonate zoledronic acid (ZOL) could be enhanced by combination with the histone deacetylase inhibitor suberoylanilide hydroxamic acid (SAHA). We found that ZOL and SAHA cooperated to induce cell death in the prostate cancer cell lines LNCaP and PC-3. The effect was synergistic, as evidenced by combination index isobologram analysis. ZOL and SAHA synergized",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.327262+00:00"
+}

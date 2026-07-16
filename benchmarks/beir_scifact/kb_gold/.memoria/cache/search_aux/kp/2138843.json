@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2138843",
+  "source_fingerprint": "95ddc063f84bb5b2895c5acad9b3246b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2138843",
+    "microvascular-and-macrovascular-complications-of-diabetes"
+  ],
+  "key_phrases": [
+    "microvascular",
+    "macrovascular",
+    "complications",
+    "diabetes",
+    "group",
+    "chronic",
+    "diseases",
+    "characterized"
+  ],
+  "summary_1l": "Diabetes is a group of chronic diseases characterized by hyperglycemia.",
+  "query_hits": [],
+  "embed_text": "2138843 Microvascular and Macrovascular Complications of Diabetes science scifact Diabetes is a group of chronic diseases characterized by hyperglycemia. Modern medical care uses a vast array of lifestyle and pharmaceutical interventions aimed at preventing and controlling hyperglycemia. In addition to ensuring the… 2138843 microvascular-and-macrovascular-complications-of-diabetes microvascular macrovascular complications diabetes group chronic diseases characterized Diabetes is a group of chronic diseases characterized by hyperglycemia. Microvascular and Macrovascular Complications of Diabetes Diabetes is a group of chronic diseases characterized by hyperglycemia. Modern medical care uses a vast array of lifestyle and pharmaceutical interventions aimed at preventing and controlling hyperglycemia. In addition to ensuring the adequate delivery of glucose to the tissues of the body, treatment of diabetes attempts to decrease the likelihood that the tissues of the body are harmed by hyperglycemia. The importance of protecting the body from hyperglycemia cannot be overstated; the direct and indirect effects on the human vascular tree are the major source of morbidity and mortality in both type 1 and type 2 diabetes. Generally, the injurious effects of hyperglycemia are separated into macrovascular complications (coronary arter",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.015353+00:00"
+}

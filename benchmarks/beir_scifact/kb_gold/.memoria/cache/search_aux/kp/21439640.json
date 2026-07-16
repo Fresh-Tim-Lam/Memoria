@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "21439640",
+  "source_fingerprint": "fcaab73daaf4a04cb3a131dfc70a5400",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21439640"
+  ],
+  "key_phrases": [
+    "macrophages",
+    "induce",
+    "cox",
+    "expression",
+    "breast",
+    "cancer",
+    "cells",
+    "role"
+  ],
+  "summary_1l": "Macrophages induce COX-2 expression in breast cancer cells: role of IL-1β autoamplification.",
+  "query_hits": [],
+  "embed_text": "21439640 Macrophages induce COX-2 expression in breast cancer cells: role of IL-1β autoamplification. science scifact Tumor-associated macrophages and high levels of cyclooxygenase-2 (COX-2) are associated with poor prognosis in breast cancer patients, but their potential interdependence has not been evaluated. The objective of this study was to determine… 21439640 macrophages induce cox expression breast cancer cells role Macrophages induce COX-2 expression in breast cancer cells: role of IL-1β autoamplification. Macrophages induce COX-2 expression in breast cancer cells: role of IL-1β autoamplification. Tumor-associated macrophages and high levels of cyclooxygenase-2 (COX-2) are associated with poor prognosis in breast cancer patients, but their potential interdependence has not been evaluated. The objective of this study was to determine whether macrophages regulate COX-2 expression in breast cancer cells. For this purpose, THP-1 cells were cocultured with HCC1954 breast cancer cells. Coculture led to increased COX-2 expression in the HCC1954 cells and elevated prostaglandin E(2) levels in conditioned media. Similar results were observed when THP-1 cells were incubated with HCC1937 breast cancer cells or when human monocyte-derived macrophages were cocultured with HCC1954 cells. Coculture trigger",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.126135+00:00"
+}

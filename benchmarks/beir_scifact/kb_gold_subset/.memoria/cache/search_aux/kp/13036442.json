@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13036442",
+  "source_fingerprint": "64f262679514a56012a7d04649a019c1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13036442",
+    "coordinated-regulation-of-sulfur-and-phospholipid-metabolism-reflects-the-importance-of-methylation-in-the-growth-of-yeast"
+  ],
+  "key_phrases": [
+    "coordinated",
+    "regulation",
+    "sulfur",
+    "phospholipid",
+    "metabolism",
+    "reflects",
+    "importance",
+    "methylation"
+  ],
+  "summary_1l": "A yeast strain lacking Met4p, the primary transcriptional regulator of the su",
+  "query_hits": [],
+  "embed_text": "13036442 Coordinated regulation of sulfur and phospholipid metabolism reflects the importance of methylation in the growth of yeast science scifact A yeast strain lacking Met4p, the primary transcriptional regulator of the sulfur assimilation pathway, cannot synthesize methionine. This apparently simple auxotroph did not grow well in rich media containing excess methionine, forming… 13036442 coordinated-regulation-of-sulfur-and-phospholipid-metabolism-reflects-the-importance-of-methylation-in-the-growth-of-yeast coordinated regulation sulfur phospholipid metabolism reflects importance methylation A yeast strain lacking Met4p, the primary transcriptional regulator of the su Coordinated regulation of sulfur and phospholipid metabolism reflects the importance of methylation in the growth of yeast A yeast strain lacking Met4p, the primary transcriptional regulator of the sulfur assimilation pathway, cannot synthesize methionine. This apparently simple auxotroph did not grow well in rich media containing excess methionine, forming small colonies on yeast extract/peptone/dextrose plates. Faster-growing large colonies were abundant when overnight cultures were plated, suggesting that spontaneous suppressors of the growth defect arise with high frequency. To identify the suppressor mutations, we used genome-wide single-nucleotide polymorphism and standard genetic analyses. The most common suppressors were loss-of-function mutations in OPI1, encoding a transcriptiona",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:10.202538+00:00"
+}

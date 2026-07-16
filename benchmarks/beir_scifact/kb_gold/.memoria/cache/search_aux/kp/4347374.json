@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4347374",
+  "source_fingerprint": "18cc754781f05b25305ea8de3fef255a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4347374",
+    "broad-antiretroviral-defence-by-human-apobec3g-through-lethal-editing-of-nascent-reverse-transcripts"
+  ],
+  "key_phrases": [
+    "broad",
+    "antiretroviral",
+    "defence",
+    "by",
+    "human",
+    "apobec3g",
+    "through",
+    "lethal"
+  ],
+  "summary_1l": "Viral replication usually requires that innate intracellular lines of defence be overcome, a task u",
+  "query_hits": [],
+  "embed_text": "4347374 Broad antiretroviral defence by human APOBEC3G through lethal editing of nascent reverse transcripts science scifact Viral replication usually requires that innate intracellular lines of defence be overcome, a task usually accomplished by specialized viral gene products. The virion infectivity factor (Vif) protein of human immunodeficiency virus (HIV) is… 4347374 broad-antiretroviral-defence-by-human-apobec3g-through-lethal-editing-of-nascent-reverse-transcripts broad antiretroviral defence by human apobec3g through lethal Viral replication usually requires that innate intracellular lines of defence be overcome, a task u Broad antiretroviral defence by human APOBEC3G through lethal editing of nascent reverse transcripts Viral replication usually requires that innate intracellular lines of defence be overcome, a task usually accomplished by specialized viral gene products. The virion infectivity factor (Vif) protein of human immunodeficiency virus (HIV) is required during the late stages of viral production to counter the antiviral activity of APOBEC3G (apolipoprotein B mRNA-editing enzyme, catalytic polypeptide-like 3G; also known as CEM15), a protein expressed notably in human T lymphocytes. When produced in the presence of APOBEC3G, vif-defective virus is non-infectious. APOBEC3G is closely related to APOBEC1, the central component of an RNA-editing complex that deaminates a cytosine residue in apoB mess",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.978479+00:00"
+}

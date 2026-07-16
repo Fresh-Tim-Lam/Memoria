@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13969173",
+  "source_fingerprint": "5677aea55137f15367427d48e6136b0f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13969173",
+    "direct-conversion-of-patient-fibroblasts-demonstrates-non-cell-autonomous-toxicity-of-astrocytes-to-motor-neurons-in-familial-and-sporadic-als."
+  ],
+  "key_phrases": [
+    "direct",
+    "conversion",
+    "patient",
+    "fibroblasts",
+    "demonstrates",
+    "non",
+    "cell",
+    "autonomous"
+  ],
+  "summary_1l": "Direct conversion of patient fibroblasts demonstrates non-cell autonomous toxicity of astrocytes to motor neurons in familial and sporadic ALS.",
+  "query_hits": [],
+  "embed_text": "13969173 Direct conversion of patient fibroblasts demonstrates non-cell autonomous toxicity of astrocytes to motor neurons in familial and sporadic ALS. science scifact Amyotrophic lateral sclerosis (ALS) causes motor neuron degeneration, paralysis, and death. Accurate disease modeling, identifying disease mechanisms, and developing therapeutics is urgently needed. We previously reported motor neuron… 13969173 direct-conversion-of-patient-fibroblasts-demonstrates-non-cell-autonomous-toxicity-of-astrocytes-to-motor-neurons-in-familial-and-sporadic-als. direct conversion patient fibroblasts demonstrates non cell autonomous Direct conversion of patient fibroblasts demonstrates non-cell autonomous toxicity of astrocytes to motor neurons in familial and sporadic ALS. Direct conversion of patient fibroblasts demonstrates non-cell autonomous toxicity of astrocytes to motor neurons in familial and sporadic ALS. Amyotrophic lateral sclerosis (ALS) causes motor neuron degeneration, paralysis, and death. Accurate disease modeling, identifying disease mechanisms, and developing therapeutics is urgently needed. We previously reported motor neuron toxicity through postmortem ALS spinal cord-derived astrocytes. However, these cells can only be harvested after death, and their expansion is limited. We now report a rapid, highly reproducible method to convert adult human fibroblasts from living ALS patients to induced neuronal progenitor cells and subsequent differentiation into astrocytes (i-astrocytes). Non-cell autonomous toxicity to motor neurons is found foll",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.881663+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "58050905",
+  "source_fingerprint": "d9e28ed25f3fa8d05e8e2972c384057a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "58050905",
+    "the-bone-and-joint-decade-2000-2010."
+  ],
+  "key_phrases": [
+    "bone",
+    "joint",
+    "decade",
+    "2000",
+    "2010",
+    "world",
+    "health",
+    "organisation"
+  ],
+  "summary_1l": "The Bone and Joint Decade 2000-2010.",
+  "query_hits": [],
+  "embed_text": "58050905 The Bone and Joint Decade 2000-2010. science scifact The World Health Organisation has declared the period 2000 to 2010 the Bone and Joint Decade. This is indeed timely and appropriate. Hundreds of millions of people in the world today are beset with a host of disabilities caused by trauma,… 58050905 the-bone-and-joint-decade-2000-2010. bone joint decade 2000 2010 world health organisation The Bone and Joint Decade 2000-2010. The Bone and Joint Decade 2000-2010. The World Health Organisation has declared the period 2000 to 2010 the Bone and Joint Decade. This is indeed timely and appropriate. Hundreds of millions of people in the world today are beset with a host of disabilities caused by trauma, ageing and degeneration and other affections of the musculo-skeletal system. With the state of art of orthopaedic surgery and rheumatology, sufferers of bone and joint disabilities have benefited a great deal from advances in pharmacology, newer techniques of imaging, surgery and man-made materials to replace diseased or damaged bone and cartilage. However, man-made materials, being non-living, are subject to wear and tear and loosening in the host bone. As we advance into the Bone and Joint Decade, further improvement",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.149088+00:00"
+}

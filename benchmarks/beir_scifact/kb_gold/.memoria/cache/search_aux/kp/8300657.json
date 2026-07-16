@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8300657",
+  "source_fingerprint": "e52cce1bf00bdf1097b7a900f2ef30e7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8300657",
+    "gastrointestinal-tract-as-a-major-site-of-cd4+-t-cell-depletion-and-viral-replication-in-siv-infection."
+  ],
+  "key_phrases": [
+    "gastrointestinal",
+    "tract",
+    "as",
+    "major",
+    "site",
+    "cd4",
+    "cell",
+    "depletion"
+  ],
+  "summary_1l": "Gastrointestinal tract as a major site of CD4+ T cell depletion and viral replication in SIV infection.",
+  "query_hits": [],
+  "embed_text": "8300657 Gastrointestinal tract as a major site of CD4+ T cell depletion and viral replication in SIV infection. science scifact Human and simian immunodeficiency virus (HIV and SIV) replicate optimally in activated memory CD4(+) T cells, a cell type that is abundant in the intestine. SIV infection of rhesus monkeys resulted in profound and selective depletion of… 8300657 gastrointestinal-tract-as-a-major-site-of-cd4+-t-cell-depletion-and-viral-replication-in-siv-infection. gastrointestinal tract as major site cd4 cell depletion Gastrointestinal tract as a major site of CD4+ T cell depletion and viral replication in SIV infection. Gastrointestinal tract as a major site of CD4+ T cell depletion and viral replication in SIV infection. Human and simian immunodeficiency virus (HIV and SIV) replicate optimally in activated memory CD4(+) T cells, a cell type that is abundant in the intestine. SIV infection of rhesus monkeys resulted in profound and selective depletion of CD4+ T cells in the intestine within days of infection, before any such changes in peripheral lymphoid tissues. The loss of CD4+ T cells in the intestine occurred coincident with productive infection of large numbers of mononuclear cells at this site. The intestine appears to be a major target for SIV replication and the major site of CD4+ T cell loss in early SIV infection.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.297902+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "39281140",
+  "source_fingerprint": "e476e2104b139d431226552e27221dbc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "39281140",
+    "treatment-of-antidepressant-associated-sexual-dysfunction-with-sildenafil:-a-randomized-controlled-trial."
+  ],
+  "key_phrases": [
+    "treatment",
+    "antidepressant",
+    "associated",
+    "sexual",
+    "dysfunction",
+    "with",
+    "sildenafil",
+    "randomized"
+  ],
+  "summary_1l": "Treatment of antidepressant-associated sexual dysfunction with sildenafil: a randomized controlled trial.",
+  "query_hits": [],
+  "embed_text": "39281140 Treatment of antidepressant-associated sexual dysfunction with sildenafil: a randomized controlled trial. science scifact CONTEXT Sexual dysfunction is a common adverse effect of antidepressants that frequently results in treatment noncompliance. OBJECTIVE To assess the efficacy of sildenafil citrate in men with sexual dysfunction associated with the use of… 39281140 treatment-of-antidepressant-associated-sexual-dysfunction-with-sildenafil:-a-randomized-controlled-trial. treatment antidepressant associated sexual dysfunction with sildenafil randomized Treatment of antidepressant-associated sexual dysfunction with sildenafil: a randomized controlled trial. Treatment of antidepressant-associated sexual dysfunction with sildenafil: a randomized controlled trial. CONTEXT Sexual dysfunction is a common adverse effect of antidepressants that frequently results in treatment noncompliance. OBJECTIVE To assess the efficacy of sildenafil citrate in men with sexual dysfunction associated with the use of selective and nonselective serotonin reuptake inhibitor (SRI) antidepressants. DESIGN, SETTING, AND PATIENTS Prospective, parallel-group, randomized, double-blind, placebo-controlled trial conducted between November 1, 2000, and January 1, 2001, at 3 US university medical centers among 90 male outpatients (mean [SD] age, 45 [8] years) with major depression in remission and sexual dysfunction associated with SRI antidepressant treatment. INTERVENTION Pa",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.359243+00:00"
+}

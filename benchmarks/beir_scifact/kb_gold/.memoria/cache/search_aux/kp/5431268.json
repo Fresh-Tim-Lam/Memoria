@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5431268",
+  "source_fingerprint": "333c5ea9fe041ba4514a979ac7715f93",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5431268",
+    "role-of-common-hypnotics-on-the-phenotypic-causes-of-obstructive-sleep-apnoea:-paradoxical-effects-of-zolpidem."
+  ],
+  "key_phrases": [
+    "role",
+    "common",
+    "hypnotics",
+    "phenotypic",
+    "causes",
+    "obstructive",
+    "sleep",
+    "apnoea"
+  ],
+  "summary_1l": "Role of common hypnotics on the phenotypic causes of obstructive sleep apnoea: paradoxical effects of zolpidem.",
+  "query_hits": [],
+  "embed_text": "5431268 Role of common hypnotics on the phenotypic causes of obstructive sleep apnoea: paradoxical effects of zolpidem. science scifact Hypnotics are contraindicated in obstructive sleep apnoea (OSA) because of concerns of pharyngeal muscle relaxation and delayed arousal worsening hypoxaemia. However, human data are lacking. This study aimed to determine the effects of… 5431268 role-of-common-hypnotics-on-the-phenotypic-causes-of-obstructive-sleep-apnoea:-paradoxical-effects-of-zolpidem. role common hypnotics phenotypic causes obstructive sleep apnoea Role of common hypnotics on the phenotypic causes of obstructive sleep apnoea: paradoxical effects of zolpidem. Role of common hypnotics on the phenotypic causes of obstructive sleep apnoea: paradoxical effects of zolpidem. Hypnotics are contraindicated in obstructive sleep apnoea (OSA) because of concerns of pharyngeal muscle relaxation and delayed arousal worsening hypoxaemia. However, human data are lacking. This study aimed to determine the effects of three common hypnotics on the respiratory arousal threshold, genioglossus muscle responsiveness and upper airway collapsibility during sleep.21 individuals with and without OSA (18-65 years) completed 84 detailed sleep studies after receiving temazepam (10 mg), zolpidem (10 mg), zopiclone (7.5 mg) and placebo on four occasions in a randomised, double-blind, placebo-controlled, crossover trial (ACTRN12612001004853).The arousal threshold increased wi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.240063+00:00"
+}

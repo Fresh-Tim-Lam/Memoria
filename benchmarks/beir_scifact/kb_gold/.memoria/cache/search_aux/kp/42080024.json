@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "42080024",
+  "source_fingerprint": "88b76b15b3e180339109fb077ff0d56f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "42080024",
+    "vascular-endothelial-growth-factor-stimulates-bone-repair-by-promoting-angiogenesis-and-bone-turnover."
+  ],
+  "key_phrases": [
+    "vascular",
+    "endothelial",
+    "growth",
+    "factor",
+    "stimulates",
+    "bone",
+    "repair",
+    "by"
+  ],
+  "summary_1l": "Vascular endothelial growth factor stimulates bone repair by promoting angiogenesis and bone turnover.",
+  "query_hits": [],
+  "embed_text": "42080024 Vascular endothelial growth factor stimulates bone repair by promoting angiogenesis and bone turnover. science scifact Several growth factors are expressed in distinct temporal and spatial patterns during fracture repair. Of these, vascular endothelial growth factor, VEGF, is of particular interest because of its ability to induce neovascularization… 42080024 vascular-endothelial-growth-factor-stimulates-bone-repair-by-promoting-angiogenesis-and-bone-turnover. vascular endothelial growth factor stimulates bone repair by Vascular endothelial growth factor stimulates bone repair by promoting angiogenesis and bone turnover. Vascular endothelial growth factor stimulates bone repair by promoting angiogenesis and bone turnover. Several growth factors are expressed in distinct temporal and spatial patterns during fracture repair. Of these, vascular endothelial growth factor, VEGF, is of particular interest because of its ability to induce neovascularization (angiogenesis). To determine whether VEGF is required for bone repair, we inhibited VEGF activity during secondary bone healing via a cartilage intermediate (endochondral ossification) and during direct bone repair (intramembranous ossification) in a novel mouse model. Treatment of mice with a soluble, neutralizing VEGF receptor decreased angiogenesis, bone formation, and callus mineralization in femoral fractures. Inhibition of VEGF also dramatically inhibite",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.781118+00:00"
+}

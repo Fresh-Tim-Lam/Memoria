@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "kp_id": "自注意力机制",
+  "source_fingerprint": "9d7f0e9beab64651f7b27a77117c6181",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [],
+  "key_phrases": [
+    "注意力",
+    "机制",
+    "self",
+    "attention",
+    "核心",
+    "操作",
+    "序列",
+    "每个"
+  ],
+  "summary_1l": "自注意力（Self-Attention）是 的核心操作。",
+  "query_hits": [],
+  "embed_text": "自注意力机制 自注意力机制 注意力 机制 self attention 核心 操作 序列 每个 自注意力（Self-Attention）是 的核心操作。 自注意力机制 自注意力（Self-Attention）是 的核心操作。它让序列中的每个位置都能直接关注到其他所有位置，从而捕获任意距离的依赖关系。 其中 、 、 均来自同一输入序列的线性变换： 缩放因子 的作用是防止点积值过大导致 Softmax 梯度消失。当 时，点积的方差为 64，除以 后方差回到 1。 自注意力的计算复杂度为 ，其中 是序列长度， 是维度。对于长序列，这会成为瓶颈。后续工作如 Linformer、Performer 等试图将复杂度降到线性。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T03:38:47.627102+00:00"
+}

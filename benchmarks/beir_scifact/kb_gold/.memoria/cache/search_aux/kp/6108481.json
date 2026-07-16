@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6108481",
+  "source_fingerprint": "4ba2b6ddefd06cc994eeab36bffd15b4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6108481",
+    "postnatal-development-of-adipocyte-cellularity-in-the-normal-rat."
+  ],
+  "key_phrases": [
+    "postnatal",
+    "development",
+    "adipocyte",
+    "cellularity",
+    "normal",
+    "rat",
+    "it",
+    "has"
+  ],
+  "summary_1l": "Postnatal development of adipocyte cellularity in the normal rat.",
+  "query_hits": [],
+  "embed_text": "6108481 Postnatal development of adipocyte cellularity in the normal rat. science scifact It has been shown by several investigators that adipocyte number is stable in mature human beings and several species of rodents. Although the number of new cells appearing in the adipose depot can be measured histometrically and by… 6108481 postnatal-development-of-adipocyte-cellularity-in-the-normal-rat. postnatal development adipocyte cellularity normal rat it has Postnatal development of adipocyte cellularity in the normal rat. Postnatal development of adipocyte cellularity in the normal rat. It has been shown by several investigators that adipocyte number is stable in mature human beings and several species of rodents. Although the number of new cells appearing in the adipose depot can be measured histometrically and by Coulter counting of osmium-fixed cells, such methods do not distinguish between \"lipid filling\" of preexistent adipocytes and synthesis of new adipocytes. The experiments reported here using in vivo injection of [(3)H]thymidine show that synthesis of new adipocytes in the Sprague-Dawley rat continues after birth and ceases before sexual maturity. Furthermore, during the second and third postnatal weeks, a \"bed\" of preadipocytes is synthesized. Preadipocytes may take as long as 30 days to appear a",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.939001+00:00"
+}

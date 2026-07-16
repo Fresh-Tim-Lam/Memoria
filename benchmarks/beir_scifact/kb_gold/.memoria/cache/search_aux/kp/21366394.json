@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21366394",
+  "source_fingerprint": "43384c0304eaaac575c280026b63f26e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21366394",
+    "cx3cr1-is-required-for-airway-inflammation-by-promoting-t-helper-cell-survival-and-maintenance-in-inflamed-lung"
+  ],
+  "key_phrases": [
+    "cx3cr1",
+    "required",
+    "airway",
+    "inflammation",
+    "by",
+    "promoting",
+    "helper",
+    "cell"
+  ],
+  "summary_1l": "Allergic asthma is a T helper type 2 (T(H)2)-dominated disease of the lung.",
+  "query_hits": [],
+  "embed_text": "21366394 CX3CR1 is required for airway inflammation by promoting T helper cell survival and maintenance in inflamed lung science scifact Allergic asthma is a T helper type 2 (T(H)2)-dominated disease of the lung. In people with asthma, a fraction of CD4(+) T cells express the CX3CL1 receptor, CX3CR1, and CX3CL1 expression is increased in airway smooth muscle, lung… 21366394 cx3cr1-is-required-for-airway-inflammation-by-promoting-t-helper-cell-survival-and-maintenance-in-inflamed-lung cx3cr1 required airway inflammation by promoting helper cell Allergic asthma is a T helper type 2 (T(H)2)-dominated disease of the lung. CX3CR1 is required for airway inflammation by promoting T helper cell survival and maintenance in inflamed lung Allergic asthma is a T helper type 2 (T(H)2)-dominated disease of the lung. In people with asthma, a fraction of CD4(+) T cells express the CX3CL1 receptor, CX3CR1, and CX3CL1 expression is increased in airway smooth muscle, lung endothelium and epithelium upon allergen challenge. Here we found that untreated CX3CR1-deficient mice or wild-type (WT) mice treated with CX3CR1-blocking reagents show reduced lung disease upon allergen sensitization and challenge. Transfer of WT CD4(+) T cells into CX3CR1-deficient mice restored the cardinal features of asthma, and CX3CR1-blocking reagents prevented airway inflammation in CX3CR1-deficient recipients injected with WT T(H)2 cells. We fou",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.877581+00:00"
+}

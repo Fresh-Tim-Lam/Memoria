@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29634262",
+  "source_fingerprint": "2a753ce9c59f6b965210862958f43fa2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29634262",
+    "gene-supplementation-therapy-for-recessive-forms-of-inherited-retinal-dystrophies"
+  ],
+  "key_phrases": [
+    "gene",
+    "supplementation",
+    "therapy",
+    "recessive",
+    "forms",
+    "inherited",
+    "retinal",
+    "dystrophies"
+  ],
+  "summary_1l": "Over the last decade, gene supplementation therapy for inherited retinal degeneration has come of age.",
+  "query_hits": [],
+  "embed_text": "29634262 Gene supplementation therapy for recessive forms of inherited retinal dystrophies science scifact Over the last decade, gene supplementation therapy for inherited retinal degeneration has come of age. Early proof-of-concept studies in animal models of disease showed modest, but genuine improvements in retinal function and/or survival.… 29634262 gene-supplementation-therapy-for-recessive-forms-of-inherited-retinal-dystrophies gene supplementation therapy recessive forms inherited retinal dystrophies Over the last decade, gene supplementation therapy for inherited retinal degeneration has come of age. Gene supplementation therapy for recessive forms of inherited retinal dystrophies Over the last decade, gene supplementation therapy for inherited retinal degeneration has come of age. Early proof-of-concept studies in animal models of disease showed modest, but genuine improvements in retinal function and/or survival. Further development of the vectors used for gene transfer to the retina has led to better treatment efficacy in a wide variety of animal models, leading in 2008 to the initiation of three clinical trials for Leber congenital amaurosis caused by retinal pigment epithelium 65 deficiency. The results from these trials suggest that the treatment of inherited retinal dystrophy by gene therapy can be safe and effective. Here, we examine the progress of gene supplementation therapy",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.074163+00:00"
+}

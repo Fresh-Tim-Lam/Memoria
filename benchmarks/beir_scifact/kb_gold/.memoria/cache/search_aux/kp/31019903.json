@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "31019903",
+  "source_fingerprint": "071e14b0cbf93d41500a45e862e2285e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "31019903",
+    "homelessness-and-health."
+  ],
+  "key_phrases": [
+    "homelessness",
+    "health",
+    "affects",
+    "tens",
+    "thousands",
+    "canadians",
+    "has",
+    "important"
+  ],
+  "summary_1l": "Homelessness and health.",
+  "query_hits": [],
+  "embed_text": "31019903 Homelessness and health. science scifact Homelessness affects tens of thousands of canadians and has important health implications. Homeless people are at increased risk of dying prematurely and suffer from a wide range of health problems, including seizures, chronic obstructive… 31019903 homelessness-and-health. homelessness health affects tens thousands canadians has important Homelessness and health. Homelessness and health. Homelessness affects tens of thousands of canadians and has important health implications. Homeless people are at increased risk of dying prematurely and suffer from a wide range of health problems, including seizures, chronic obstructive pulmonary disease, musculoskeletal disorders, tuberculosis, and skin and foot problems. Homeless people also face significant barriers that impair their access to health care. More research is needed to identify better ways to deliver care to this population.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.256970+00:00"
+}

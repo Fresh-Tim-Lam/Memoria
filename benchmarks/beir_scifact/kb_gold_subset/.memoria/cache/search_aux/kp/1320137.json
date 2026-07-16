@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1320137",
+  "source_fingerprint": "6436a1425bd56af7166348c156398750",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1320137",
+    "the-twin-arginine-translocation-(tat)-protein-export-pathway"
+  ],
+  "key_phrases": [
+    "twin",
+    "arginine",
+    "translocation",
+    "tat",
+    "protein",
+    "export",
+    "pathway",
+    "system"
+  ],
+  "summary_1l": "The twin-arginine translocation (Tat) protein export system is present in the cytoplasmic membranes of most bacteria and archaea and has th",
+  "query_hits": [],
+  "embed_text": "1320137 The twin-arginine translocation (Tat) protein export pathway science scifact The twin-arginine translocation (Tat) protein export system is present in the cytoplasmic membranes of most bacteria and archaea and has the highly unusual property of transporting fully folded proteins. The system must therefore provide a… 1320137 the-twin-arginine-translocation-(tat)-protein-export-pathway twin arginine translocation tat protein export pathway system The twin-arginine translocation (Tat) protein export system is present in the cytoplasmic membranes of most bacteria and archaea and has th The twin-arginine translocation (Tat) protein export pathway The twin-arginine translocation (Tat) protein export system is present in the cytoplasmic membranes of most bacteria and archaea and has the highly unusual property of transporting fully folded proteins. The system must therefore provide a transmembrane pathway that is large enough to allow the passage of structured macromolecular substrates of different sizes but that maintains the impermeability of the membrane to ions. In the Gram-negative bacterium Escherichia coli, this complex task can be achieved by using only three small membrane proteins: TatA, TatB and TatC. In this Review, we summarize recent advances in our understanding of how this remarkable machine operates.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:10.449487+00:00"
+}

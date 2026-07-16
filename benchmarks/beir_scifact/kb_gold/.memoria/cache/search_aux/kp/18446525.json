@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "18446525",
+  "source_fingerprint": "21189a6dbbc6d779ac068303d0a75c23",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18446525"
+  ],
+  "key_phrases": [
+    "prodromal",
+    "non",
+    "motor",
+    "symptoms",
+    "parkinson",
+    "disease",
+    "pd",
+    "bradykinesia"
+  ],
+  "summary_1l": "The motor symptoms of Parkinson’s disease (PD), bradykinesia, muscular rigidity, and tremor depend upon degeneration of the dopaminergic neurons in",
+  "query_hits": [],
+  "embed_text": "18446525 Prodromal non-motor symptoms of Parkinson’s disease science scifact The motor symptoms of Parkinson’s disease (PD), bradykinesia, muscular rigidity, and tremor depend upon degeneration of the dopaminergic neurons in the substantia nigra pars compacta. Recent neuropathological studies show that the Lewy… 18446525 prodromal non motor symptoms parkinson disease pd bradykinesia The motor symptoms of Parkinson’s disease (PD), bradykinesia, muscular rigidity, and tremor depend upon degeneration of the dopaminergic neurons in Prodromal non-motor symptoms of Parkinson’s disease The motor symptoms of Parkinson’s disease (PD), bradykinesia, muscular rigidity, and tremor depend upon degeneration of the dopaminergic neurons in the substantia nigra pars compacta. Recent neuropathological studies show that the Lewy bodies, the intraneuronal landmark of PD, accumulate in several neuronal cell types in the brain. An ascending gradient of pathological involvement, from the medulla oblongata to neocortical areas has been reported. Thus the original view of PD as a disease characterized by selective damage of the dopaminergic neurons in the mesencephalon should be updated into the concept of a severe multisystemic neurodegenerative disorder. Additionally, the neuropathological alterations outside the substantia nigra are s",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.280890+00:00"
+}

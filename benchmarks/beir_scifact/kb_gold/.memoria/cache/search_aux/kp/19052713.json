@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19052713",
+  "source_fingerprint": "bfff91c41f60c27397784d24716b6475",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19052713",
+    "human-albumin-administration-in-critically-ill-patients:-systematic-review-of-randomised-controlled-trials."
+  ],
+  "key_phrases": [
+    "human",
+    "albumin",
+    "administration",
+    "critically",
+    "ill",
+    "patients",
+    "systematic",
+    "review"
+  ],
+  "summary_1l": "Human albumin administration in critically ill patients: systematic review of randomised controlled trials.",
+  "query_hits": [],
+  "embed_text": "19052713 Human albumin administration in critically ill patients: systematic review of randomised controlled trials. science scifact OBJECTIVE To quantify effect on mortality of administering human albumin or plasma protein fraction during management of critically ill patients. DESIGN Systematic review of randomised controlled trials comparing administration of albumin… 19052713 human-albumin-administration-in-critically-ill-patients:-systematic-review-of-randomised-controlled-trials. human albumin administration critically ill patients systematic review Human albumin administration in critically ill patients: systematic review of randomised controlled trials. Human albumin administration in critically ill patients: systematic review of randomised controlled trials. OBJECTIVE To quantify effect on mortality of administering human albumin or plasma protein fraction during management of critically ill patients. DESIGN Systematic review of randomised controlled trials comparing administration of albumin or plasma protein fraction with no administration or with administration of crystalloid solution in critically ill patients with hypovolaemia, burns, or hypoalbuminaemia. SUBJECTS 30 randomised controlled trials including 1419 randomised patients. MAIN OUTCOME MEASURE Mortality from all causes at end of follow up for each trial. RESULTS For each patient category the risk of death in the albumin treated group was higher than in the comparison group.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.098571+00:00"
+}

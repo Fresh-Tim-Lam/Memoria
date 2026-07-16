@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12087063",
+  "source_fingerprint": "3598de9038abd372b2c9514ebf1b3985",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12087063",
+    "the-structure-of-informal-care:-are-there-differences-by-race?"
+  ],
+  "key_phrases": [
+    "structure",
+    "informal",
+    "care",
+    "there",
+    "differences",
+    "by",
+    "race",
+    "this"
+  ],
+  "summary_1l": "The structure of informal care: are there differences by race?",
+  "query_hits": [],
+  "embed_text": "12087063 The structure of informal care: are there differences by race? science scifact This study investigated whether there are race differences in the structure of informal caregiving networks. Data on 3,793 functionally impaired persons age 65 and over from the 1989 National Long-Term Care Survey were analyzed. The size… 12087063 the-structure-of-informal-care:-are-there-differences-by-race? structure informal care there differences by race this The structure of informal care: are there differences by race? The structure of informal care: are there differences by race? This study investigated whether there are race differences in the structure of informal caregiving networks. Data on 3,793 functionally impaired persons age 65 and over from the 1989 National Long-Term Care Survey were analyzed. The size of the total caregiver network and the unpaid network did not differ by race, but the likelihood of there being a non-immediate family member among unpaid caregivers was higher among disabled older blacks. These findings raise questions about whether race differences in nursing home utilization and paid long-term care services, documented in other studies, can be explained by differences in caregiving arrangements.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:07.734585+00:00"
+}

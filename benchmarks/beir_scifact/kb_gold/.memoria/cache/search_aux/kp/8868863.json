@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8868863",
+  "source_fingerprint": "1f840151cd81d3ed7b9fe23529892eaf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8868863",
+    "interactions-between-sleep,-circadian-function,-and-glucose-metabolism:-implications-for-risk-and-severity-of-diabetes."
+  ],
+  "key_phrases": [
+    "interactions",
+    "between",
+    "sleep",
+    "circadian",
+    "function",
+    "glucose",
+    "metabolism",
+    "implications"
+  ],
+  "summary_1l": "Interactions between sleep, circadian function, and glucose metabolism: implications for risk and severity of diabetes.",
+  "query_hits": [],
+  "embed_text": "8868863 Interactions between sleep, circadian function, and glucose metabolism: implications for risk and severity of diabetes. science scifact Sleep disturbances, including sleep insufficiency and sleep fragmentation, have been linked to abnormal glucose metabolism and increased diabetes risk. Well-controlled laboratory studies have provided insights regarding the underlying… 8868863 interactions-between-sleep,-circadian-function,-and-glucose-metabolism:-implications-for-risk-and-severity-of-diabetes. interactions between sleep circadian function glucose metabolism implications Interactions between sleep, circadian function, and glucose metabolism: implications for risk and severity of diabetes. Interactions between sleep, circadian function, and glucose metabolism: implications for risk and severity of diabetes. Sleep disturbances, including sleep insufficiency and sleep fragmentation, have been linked to abnormal glucose metabolism and increased diabetes risk. Well-controlled laboratory studies have provided insights regarding the underlying mechanisms. Several large prospective studies suggest that these sleep disturbances are associated with an increased risk of incident diabetes. Obstructive sleep apnea, which combines sleep fragmentation and hypoxemia, is a major risk factor for insulin resistance and possibly diabetes. Whether glycemic control in type 2 diabetes patients can be improved by treating sleep apnea remains controversial. Recently, sleep disturbances during pregn",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.876791+00:00"
+}

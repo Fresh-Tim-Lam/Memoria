@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12580014",
+  "source_fingerprint": "a743e3d802b978aa1603770f51b1f603",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12580014",
+    "keratin-dependent-regulation-of-aire-and-gene-expression-in-skin-tumor-keratinocytes"
+  ],
+  "key_phrases": [
+    "keratin",
+    "dependent",
+    "regulation",
+    "aire",
+    "gene",
+    "expression",
+    "skin",
+    "tumor"
+  ],
+  "summary_1l": "Expression of the intermediate filament protein keratin 17 (K17) is robustly upregulated in inflammatory skin disea",
+  "query_hits": [],
+  "embed_text": "12580014 Keratin-dependent regulation of Aire and gene expression in skin tumor keratinocytes science scifact Expression of the intermediate filament protein keratin 17 (K17) is robustly upregulated in inflammatory skin diseases and in many tumors originating in stratified and pseudostratified epithelia. We report that autoimmune regulator (Aire),… 12580014 keratin-dependent-regulation-of-aire-and-gene-expression-in-skin-tumor-keratinocytes keratin dependent regulation aire gene expression skin tumor Expression of the intermediate filament protein keratin 17 (K17) is robustly upregulated in inflammatory skin disea Keratin-dependent regulation of Aire and gene expression in skin tumor keratinocytes Expression of the intermediate filament protein keratin 17 (K17) is robustly upregulated in inflammatory skin diseases and in many tumors originating in stratified and pseudostratified epithelia. We report that autoimmune regulator (Aire), a transcriptional regulator, is inducibly expressed in human and mouse tumor keratinocytes in a K17-dependent manner and is required for timely onset of Gli2-induced skin tumorigenesis in mice. The induction of Aire mRNA in keratinocytes depends on a functional interaction between K17 and the heterogeneous nuclear ribonucleoprotein hnRNP K. Further, K17 colocalizes with Aire protein in the nucleus of tumor-prone keratinocytes, and each factor is bound to a specific promo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:09.129466+00:00"
+}

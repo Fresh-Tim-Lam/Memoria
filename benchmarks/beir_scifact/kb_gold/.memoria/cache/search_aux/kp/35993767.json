@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "35993767",
+  "source_fingerprint": "3ac1e6bc688c305711cabb4a678c4bfc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "35993767"
+  ],
+  "key_phrases": [
+    "cancer",
+    "associated",
+    "fibroblasts",
+    "promote",
+    "hepatocellular",
+    "carcinoma",
+    "metastasis",
+    "through"
+  ],
+  "summary_1l": "Cancer-associated fibroblasts promote hepatocellular carcinoma metastasis through chemokine-activated hedgehog and TGF-β pathways.",
+  "query_hits": [],
+  "embed_text": "35993767 Cancer-associated fibroblasts promote hepatocellular carcinoma metastasis through chemokine-activated hedgehog and TGF-β pathways. science scifact Fibroblasts are rich in the surrounding microenvironment of hepatocellular carcinoma (HCC) because most HCCs occur in fibrotic or cirrhotic livers. However, the role of cancer-associated fibroblasts (CAFs) in HCC metastasis remains… 35993767 cancer associated fibroblasts promote hepatocellular carcinoma metastasis through Cancer-associated fibroblasts promote hepatocellular carcinoma metastasis through chemokine-activated hedgehog and TGF-β pathways. Cancer-associated fibroblasts promote hepatocellular carcinoma metastasis through chemokine-activated hedgehog and TGF-β pathways. Fibroblasts are rich in the surrounding microenvironment of hepatocellular carcinoma (HCC) because most HCCs occur in fibrotic or cirrhotic livers. However, the role of cancer-associated fibroblasts (CAFs) in HCC metastasis remains obscure. Here, we reported that CAFs promote the migration and invasion of HCC cells in vitro and facilitate the HCC metastasis to the bone, brain and lung in NOD/SCID mice. The RayBio human chemokine antibody array revealed that CAFs secret higher levels of CCL2, CCL5, CCL7 and CXCL16 than peri-tumor fibroblasts. CCL2 and CCL5 increase the migration but not the invasion of HCC cells, while CCL7 and CXCL16 promote both migration and",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.778608+00:00"
+}

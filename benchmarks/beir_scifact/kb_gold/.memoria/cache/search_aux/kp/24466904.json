@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24466904",
+  "source_fingerprint": "6815f19ff3fd06dd9da52ae5943c920d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24466904",
+    "successful-establishment-of-long-term-bone-marrow-cultures-in-103-patients-with-myelodysplastic-syndromes."
+  ],
+  "key_phrases": [
+    "successful",
+    "establishment",
+    "long",
+    "term",
+    "bone",
+    "marrow",
+    "cultures",
+    "103"
+  ],
+  "summary_1l": "Successful establishment of long-term bone marrow cultures in 103 patients with myelodysplastic syndromes.",
+  "query_hits": [],
+  "embed_text": "24466904 Successful establishment of long-term bone marrow cultures in 103 patients with myelodysplastic syndromes. science scifact We used bone marrow biopsies instead of mononuclear cells to maintain long-term cultures from 103 patients belonging to all five sub-categories of myelodysplastic syndromes (MDS), as well as 12 normal controls. By week 4, 30-50% confluency… 24466904 successful-establishment-of-long-term-bone-marrow-cultures-in-103-patients-with-myelodysplastic-syndromes. successful establishment long term bone marrow cultures 103 Successful establishment of long-term bone marrow cultures in 103 patients with myelodysplastic syndromes. Successful establishment of long-term bone marrow cultures in 103 patients with myelodysplastic syndromes. We used bone marrow biopsies instead of mononuclear cells to maintain long-term cultures from 103 patients belonging to all five sub-categories of myelodysplastic syndromes (MDS), as well as 12 normal controls. By week 4, 30-50% confluency was reached and could be maintained for up to 12 weeks with 100% confluency. The four prominent cells were fibroblasts, macrophages, endothelial cells and adipocytes. Immunohistochemical and electron microscopic studies provided lineage confirmation. Normal hematopoiesis was well supported by MDS stroma. Neither the FAB nor cytogenetics was co-related with the potency of growth. MDS stroma appears to be both morphologically and functionally normal.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.506478+00:00"
+}

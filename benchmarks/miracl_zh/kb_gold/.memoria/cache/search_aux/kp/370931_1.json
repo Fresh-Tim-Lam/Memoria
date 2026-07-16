@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "kp_id": "370931#1",
+  "source_fingerprint": "a04084e2e3d28b0605e22a16bc6be151",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "意大利",
+    "西班牙",
+    "曼聯足球俱樂部歷史",
+    "1991年歐洲歌唱大賽",
+    "中国驻西班牙大使列表",
+    "中意大利",
+    "中華民國駐西班牙大使列表",
+    "山东省足球代表队",
+    "巴塞罗那足球俱乐部",
+    "曼徹斯特聯足球俱樂部",
+    "法國政府",
+    "法國政治"
+  ],
+  "aliases": [
+    "370931#1"
+  ],
+  "key_phrases": [
+    "足球",
+    "週刊",
+    "周刊",
+    "多間",
+    "歐洲",
+    "雜誌",
+    "社有",
+    "合作"
+  ],
+  "summary_1l": "《足球周刊》与多間歐洲雜誌社有合作關係，與《法國足球》(France football)、西班牙《足球先生》(don balon)、南非《開球》(Kickoff)有獨家版權合作協議，與意大利《米蘭體育報》(La Gazzetta dello Sport)及Eurosport為海外戰略合作伙伴，因此《足球周刊》經常能轉載球員獨家訪問、球員專訪，和專題介紹。",
+  "query_hits": [],
+  "embed_text": "370931#1 足球週刊 足球週刊 《足球周刊》与多間歐洲雜誌社有合作關係，與《法國足球》(France football)、西班牙《足球先生》(don balon)、南非《開球》(Kickoff)有獨家版權合作協議，與意大利《米蘭體育報》(La Gazzetta dello Sport)及Eurosport為海外戰略合作伙伴，因此《足球周刊》經常能轉載球員獨家訪問、球員專訪，和專題介紹。 意大利 西班牙 曼聯足球俱樂部歷史 1991年歐洲歌唱大賽 中国驻西班牙大使列表 中意大利 中華民國駐西班牙大使列表 山东省足球代表队 巴塞罗那足球俱乐部 曼徹斯特聯足球俱樂部 法國政府 法國政治 370931#1 足球 週刊 周刊 多間 歐洲 雜誌 社有 合作 《足球周刊》与多間歐洲雜誌社有合作關係，與《法國足球》(France football)、西班牙《足球先生》(don balon)、南非《開球》(Kickoff)有獨家版權合作協議，與意大利《米蘭體育報》(La Gazzetta dello Sport)及Eurosport為海外戰略合作伙伴，因此《足球周刊》經常能轉載球員獨家訪問、球員專訪，和專題介紹。 足球週刊 《足球周刊》与多間歐洲雜誌社有合作關係，與《法國足球》(France football)、西班牙《足球先生》(don balon)、南非《開球》(Kickoff)有獨家版權合作協議，與意大利《米蘭體育報》(La Gazzetta dello Sport)及Eurosport為海外戰略合作伙伴，因此《足球周刊》經常能轉載球員獨家訪問、球員專訪，和專題介紹。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:20:23.522596+00:00"
+}

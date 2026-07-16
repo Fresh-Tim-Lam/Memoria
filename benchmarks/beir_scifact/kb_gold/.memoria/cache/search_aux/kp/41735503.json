@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "41735503",
+  "source_fingerprint": "c6bc09676fda430a3b14537000e52a81",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "41735503",
+    "the-international-classification-of-headache-disorders."
+  ],
+  "key_phrases": [
+    "international",
+    "classification",
+    "headache",
+    "disorders",
+    "set",
+    "related",
+    "medical",
+    "that"
+  ],
+  "summary_1l": "The International Classification of Headache Disorders.",
+  "query_hits": [],
+  "embed_text": "41735503 The International Classification of Headache Disorders. science scifact A set of related medical disorders that lack a proper classification system and diagnostic criteria is like a society without laws. The result is incoherence at best, chaos at worst. For this reason, the International Classification of… 41735503 the-international-classification-of-headache-disorders. international classification headache disorders set related medical that The International Classification of Headache Disorders. The International Classification of Headache Disorders. A set of related medical disorders that lack a proper classification system and diagnostic criteria is like a society without laws. The result is incoherence at best, chaos at worst. For this reason, the International Classification of Headache Disorders (ICHD) is arguably the single most important breakthrough in headache medicine over the last 50 years. The ICHD identifies and categorizes more than a hundred different kinds of headache in a logical, hierarchal system. Even more important, it has provided explicit diagnostic criteria for all of the headache disorders listed. The ICHD quickly became universally accepted, and criticism of the classification has been minor relative to that directed at other disease classification system",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.563545+00:00"
+}

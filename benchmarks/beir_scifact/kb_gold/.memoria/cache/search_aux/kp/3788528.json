@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3788528",
+  "source_fingerprint": "ef1d31e5ed732dcf68e5360bef083715",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3788528",
+    "thymic-expression-of-the-golli-myelin-basic-protein-gene-in-the-sjl/j-mouse"
+  ],
+  "key_phrases": [
+    "thymic",
+    "expression",
+    "golli",
+    "myelin",
+    "basic",
+    "protein",
+    "gene",
+    "sjl"
+  ],
+  "summary_1l": "The T cell antigen-specific repertoire is thought to be shaped by thymic expression of self molecules.",
+  "query_hits": [],
+  "embed_text": "3788528 Thymic expression of the golli-myelin basic protein gene in the SJL/J mouse science scifact The T cell antigen-specific repertoire is thought to be shaped by thymic expression of self molecules. Since a myelin basic protein (MBP)-like gene (golli-MBP) has been reported to be expressed by cells of the immune system, the present… 3788528 thymic-expression-of-the-golli-myelin-basic-protein-gene-in-the-sjl/j-mouse thymic expression golli myelin basic protein gene sjl The T cell antigen-specific repertoire is thought to be shaped by thymic expression of self molecules. Thymic expression of the golli-myelin basic protein gene in the SJL/J mouse The T cell antigen-specific repertoire is thought to be shaped by thymic expression of self molecules. Since a myelin basic protein (MBP)-like gene (golli-MBP) has been reported to be expressed by cells of the immune system, the present study was undertaken to determine whether the golli-MBP gene was expressed in the mouse thymus and, if so, to characterize transcripts of this gene in this organ. Using exon-specific primers for MBP and golli-MBP, cDNA from thymus and other tissues was amplified, and the amplified products analyzed by Southern blotting with exon-specific oligonucleotide probes. The amplified products were subcloned, and the inserts characterized by DNA sequencing. The thymic transcripts were found t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.990825+00:00"
+}

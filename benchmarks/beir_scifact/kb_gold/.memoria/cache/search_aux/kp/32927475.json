@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "32927475",
+  "source_fingerprint": "91354e747b54822f3162fcfa9296fcf1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "32927475",
+    "antigen-presentation-by-major-histocompatibility-complex-class-i-b-molecules."
+  ],
+  "key_phrases": [
+    "antigen",
+    "presentation",
+    "by",
+    "major",
+    "histocompatibility",
+    "complex",
+    "class",
+    "molecules"
+  ],
+  "summary_1l": "Antigen presentation by major histocompatibility complex class I-B molecules.",
+  "query_hits": [],
+  "embed_text": "32927475 Antigen presentation by major histocompatibility complex class I-B molecules. science scifact Class I-b genes constitute the majority of MHC class I loci. These monomorphic or oligomorphic molecules have been described in many organisms; they are best characterized in the mouse, which contains a substantial number of potentially… 32927475 antigen-presentation-by-major-histocompatibility-complex-class-i-b-molecules. antigen presentation by major histocompatibility complex class molecules Antigen presentation by major histocompatibility complex class I-B molecules. Antigen presentation by major histocompatibility complex class I-B molecules. Class I-b genes constitute the majority of MHC class I loci. These monomorphic or oligomorphic molecules have been described in many organisms; they are best characterized in the mouse, which contains a substantial number of potentially intact genes. Two main characteristics differentiate class I-b from class I-a molecules: limited polymorphism and lower cell surface expression. These distinguishing features suggest possible generalizations regarding the evolution and function of this class. Additionally, class I-b proteins tend to have shorter cytoplasmic domains or in some cases may be secreted or may substitute a lipid anchor for the transmembrane domain. Some are also expressed in a limited distribution of ce",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.092623+00:00"
+}

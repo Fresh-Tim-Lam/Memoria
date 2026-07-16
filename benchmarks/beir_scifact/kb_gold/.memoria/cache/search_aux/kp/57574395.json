@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "57574395",
+  "source_fingerprint": "ce7f1b7a18283d8604ae3da4ab51882e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "57574395"
+  ],
+  "key_phrases": [
+    "exercise",
+    "linked",
+    "fndc5",
+    "irisin",
+    "rescues",
+    "synaptic",
+    "plasticity",
+    "memory"
+  ],
+  "summary_1l": "Defective brain hormonal signaling has been associated with Alzheimer's disease (AD), a disorder chara",
+  "query_hits": [],
+  "embed_text": "57574395 Exercise-linked FNDC5/irisin rescues synaptic plasticity and memory defects in Alzheimer’s models science scifact Defective brain hormonal signaling has been associated with Alzheimer's disease (AD), a disorder characterized by synapse and memory failure. Irisin is an exercise-induced myokine released on cleavage of the membrane-bound precursor… 57574395 exercise linked fndc5 irisin rescues synaptic plasticity memory Defective brain hormonal signaling has been associated with Alzheimer's disease (AD), a disorder chara Exercise-linked FNDC5/irisin rescues synaptic plasticity and memory defects in Alzheimer’s models Defective brain hormonal signaling has been associated with Alzheimer's disease (AD), a disorder characterized by synapse and memory failure. Irisin is an exercise-induced myokine released on cleavage of the membrane-bound precursor protein fibronectin type III domain-containing protein 5 (FNDC5), also expressed in the hippocampus. Here we show that FNDC5/irisin levels are reduced in AD hippocampi and cerebrospinal fluid, and in experimental AD models. Knockdown of brain FNDC5/irisin impairs long-term potentiation and novel object recognition memory in mice. Conversely, boosting brain levels of FNDC5/irisin rescues synaptic plasticity and memory in AD mouse models. Peripheral overexpression of",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.978976+00:00"
+}

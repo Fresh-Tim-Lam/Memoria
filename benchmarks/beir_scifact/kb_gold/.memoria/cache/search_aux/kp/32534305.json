@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "32534305",
+  "source_fingerprint": "8ed44a77d3becc4a8da22d5126cc2ea1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "32534305",
+    "type-2-diabetes-and-subsequent-incidence-of-breast-cancer-in-the-nurses'-health-study."
+  ],
+  "key_phrases": [
+    "type",
+    "diabetes",
+    "subsequent",
+    "incidence",
+    "breast",
+    "cancer",
+    "nurses",
+    "health"
+  ],
+  "summary_1l": "Type 2 diabetes and subsequent incidence of breast cancer in the Nurses' Health Study.",
+  "query_hits": [],
+  "embed_text": "32534305 Type 2 diabetes and subsequent incidence of breast cancer in the Nurses' Health Study. science scifact OBJECTIVE Hyperinsulinemia may promote mammary carcinogenesis. Insulin resistance has been linked to an increased risk of breast cancer and is also characteristic of type 2 diabetes. We prospectively evaluated the association between type… 32534305 type-2-diabetes-and-subsequent-incidence-of-breast-cancer-in-the-nurses'-health-study. type diabetes subsequent incidence breast cancer nurses health Type 2 diabetes and subsequent incidence of breast cancer in the Nurses' Health Study. Type 2 diabetes and subsequent incidence of breast cancer in the Nurses' Health Study. OBJECTIVE Hyperinsulinemia may promote mammary carcinogenesis. Insulin resistance has been linked to an increased risk of breast cancer and is also characteristic of type 2 diabetes. We prospectively evaluated the association between type 2 diabetes and invasive breast cancer incidence in the Nurses' Health Study. RESEARCH DESIGN AND METHODS A total of 116,488 female nurses who were 30-55 years old and free of cancer in 1976 were followed through 1996 for the occurrence of type 2 diabetes and through 1998 for incident invasive breast cancer, verified by medical records and pathology reports. RESULTS During 2.3 million person-years of follow-up, we identified 6,220 women with type 2 diabetes and 5,189 inc",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.652408+00:00"
+}

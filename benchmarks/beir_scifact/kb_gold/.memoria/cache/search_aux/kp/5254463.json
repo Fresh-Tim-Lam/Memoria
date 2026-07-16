@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5254463",
+  "source_fingerprint": "1806daeaec9e6aabe70ecb43a4b8af3a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5254463",
+    "wip1-phosphatase-regulates-p53-dependent-apoptosis-of-stem-cells-and-tumorigenesis-in-the-mouse-intestine."
+  ],
+  "key_phrases": [
+    "wip1",
+    "phosphatase",
+    "regulates",
+    "p53",
+    "dependent",
+    "apoptosis",
+    "stem",
+    "cells"
+  ],
+  "summary_1l": "Wip1 phosphatase regulates p53-dependent apoptosis of stem cells and tumorigenesis in the mouse intestine.",
+  "query_hits": [],
+  "embed_text": "5254463 Wip1 phosphatase regulates p53-dependent apoptosis of stem cells and tumorigenesis in the mouse intestine. science scifact Colorectal cancer is one of the major causes of cancer-related deaths. To gain further insights into the mechanisms underlying its development, we investigated the role of Wip1 phosphatase, which is highly expressed in intestinal stem… 5254463 wip1-phosphatase-regulates-p53-dependent-apoptosis-of-stem-cells-and-tumorigenesis-in-the-mouse-intestine. wip1 phosphatase regulates p53 dependent apoptosis stem cells Wip1 phosphatase regulates p53-dependent apoptosis of stem cells and tumorigenesis in the mouse intestine. Wip1 phosphatase regulates p53-dependent apoptosis of stem cells and tumorigenesis in the mouse intestine. Colorectal cancer is one of the major causes of cancer-related deaths. To gain further insights into the mechanisms underlying its development, we investigated the role of Wip1 phosphatase, which is highly expressed in intestinal stem cells, in the mouse model of APC(Min)-driven polyposis. We found that Wip1 removal increased the life span of APC(Min) mice through a significant suppression of polyp formation. This protection was dependent on the p53 tumor suppressor, which plays a putative role in the regulation of apoptosis of intestinal stem cells. Activation of apoptosis in stem cells of Wip1-deficient mice, but not wild-type APC(Min) mice, increased when the Wnt pathway was consti",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.618966+00:00"
+}

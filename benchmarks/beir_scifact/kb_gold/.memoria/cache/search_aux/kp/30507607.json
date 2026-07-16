@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "30507607",
+  "source_fingerprint": "6c93a663c737cab93c05fb7741d9ecb2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "30507607",
+    "an-oct4-centered-protein-interaction-network-in-embryonic-stem-cells"
+  ],
+  "key_phrases": [
+    "oct4",
+    "centered",
+    "protein",
+    "interaction",
+    "network",
+    "embryonic",
+    "stem",
+    "cells"
+  ],
+  "summary_1l": "Transcription factors, such as Oct4, are critical for establishing and maintaining pluripotent cell identity.",
+  "query_hits": [],
+  "embed_text": "30507607 An Oct4-Centered Protein Interaction Network in Embryonic Stem Cells science scifact Transcription factors, such as Oct4, are critical for establishing and maintaining pluripotent cell identity. Whereas the genomic locations of several pluripotency transcription factors have been reported, the spectrum of their interaction… 30507607 an-oct4-centered-protein-interaction-network-in-embryonic-stem-cells oct4 centered protein interaction network embryonic stem cells Transcription factors, such as Oct4, are critical for establishing and maintaining pluripotent cell identity. An Oct4-Centered Protein Interaction Network in Embryonic Stem Cells Transcription factors, such as Oct4, are critical for establishing and maintaining pluripotent cell identity. Whereas the genomic locations of several pluripotency transcription factors have been reported, the spectrum of their interaction partners is underexplored. Here, we use an improved affinity protocol to purify Oct4-interacting proteins from mouse embryonic stem cells (ESCs). Subsequent purification of Oct4 partners Sall4, Tcfcp2l1, Dax1, and Esrrb resulted in an Oct4 interactome of 166 proteins, including transcription factors and chromatin-modifying complexes with documented roles in self-renewal, but also many factors not previously associated with the ESC network. We find that Esrrb associated with the basal tr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.725939+00:00"
+}

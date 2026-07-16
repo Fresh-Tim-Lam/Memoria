@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "9196472",
+  "source_fingerprint": "ad14473b4191b307862fec3afe84580f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9196472"
+  ],
+  "key_phrases": [
+    "genetics",
+    "beyond",
+    "transcriptome",
+    "human",
+    "monocytes",
+    "disease",
+    "susceptibility",
+    "background"
+  ],
+  "summary_1l": "BACKGROUND Variability of gene expression in human may link gene sequence variability and phenotypes; however, non",
+  "query_hits": [],
+  "embed_text": "9196472 Genetics and Beyond – The Transcriptome of Human Monocytes and Disease Susceptibility science scifact BACKGROUND Variability of gene expression in human may link gene sequence variability and phenotypes; however, non-genetic variations, alone or in combination with genetics, may also influence expression traits and have a critical role in… 9196472 genetics beyond transcriptome human monocytes disease susceptibility background BACKGROUND Variability of gene expression in human may link gene sequence variability and phenotypes; however, non Genetics and Beyond – The Transcriptome of Human Monocytes and Disease Susceptibility BACKGROUND Variability of gene expression in human may link gene sequence variability and phenotypes; however, non-genetic variations, alone or in combination with genetics, may also influence expression traits and have a critical role in physiological and disease processes. METHODOLOGY/PRINCIPAL FINDINGS To get better insight into the overall variability of gene expression, we assessed the transcriptome of circulating monocytes, a key cell involved in immunity-related diseases and atherosclerosis, in 1,490 unrelated individuals and investigated its association with >675,000 SNPs and 10 common cardiovascular risk factors. Out of 12,808 expressed genes, 2,745 expression quantitative trait loci were detecte",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.396890+00:00"
+}

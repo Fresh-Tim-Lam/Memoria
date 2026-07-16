@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "43128141",
+  "source_fingerprint": "903c91c9a9840d935b341bbecae12126",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "43128141",
+    "enteral-nutrition-in-the-critically-ill-patient."
+  ],
+  "key_phrases": [
+    "enteral",
+    "nutrition",
+    "critically",
+    "ill",
+    "patient",
+    "timing",
+    "route",
+    "provided"
+  ],
+  "summary_1l": "Enteral nutrition in the critically ill patient.",
+  "query_hits": [],
+  "embed_text": "43128141 Enteral nutrition in the critically ill patient. science scifact Timing and route of nutrition provided to critically ill patients can affect their outcome. Early enteral nutrition has been shown to decrease specifically infectious morbidity in the critically ill patient. There is a small group of… 43128141 enteral-nutrition-in-the-critically-ill-patient. enteral nutrition critically ill patient timing route provided Enteral nutrition in the critically ill patient. Enteral nutrition in the critically ill patient. Timing and route of nutrition provided to critically ill patients can affect their outcome. Early enteral nutrition has been shown to decrease specifically infectious morbidity in the critically ill patient. There is a small group of patients who are malnourished on arrival to the intensive care unit and in these patients parenteral nutrition is beneficial.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.489525+00:00"
+}

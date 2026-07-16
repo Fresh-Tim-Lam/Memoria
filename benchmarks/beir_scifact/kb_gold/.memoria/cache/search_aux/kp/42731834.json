@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "42731834",
+  "source_fingerprint": "6092b0b72a8e21e4c23a353c5c59b6c4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "42731834",
+    "lack-of-absent-in-melanoma-2-(aim2)-expression-in-tumor-cells-is-closely-associated-with-poor-survival-in-colorectal-cancer-patients."
+  ],
+  "key_phrases": [
+    "lack",
+    "absent",
+    "melanoma",
+    "aim2",
+    "expression",
+    "tumor",
+    "cells",
+    "closely"
+  ],
+  "summary_1l": "Lack of Absent in Melanoma 2 (AIM2) expression in tumor cells is closely associated with poor survival in colorectal cancer patients.",
+  "query_hits": [],
+  "embed_text": "42731834 Lack of Absent in Melanoma 2 (AIM2) expression in tumor cells is closely associated with poor survival in colorectal cancer patients. science scifact Functional studies on colorectal cancer cells indicated a protective role of the interferon-inducible dsDNA sensor Absent in Melanoma 2 (AIM2) in cancer progression. Given that a high mutation rate and lack of AIM2 expression was… 42731834 lack-of-absent-in-melanoma-2-(aim2)-expression-in-tumor-cells-is-closely-associated-with-poor-survival-in-colorectal-cancer-patients. lack absent melanoma aim2 expression tumor cells closely Lack of Absent in Melanoma 2 (AIM2) expression in tumor cells is closely associated with poor survival in colorectal cancer patients. Lack of Absent in Melanoma 2 (AIM2) expression in tumor cells is closely associated with poor survival in colorectal cancer patients. Functional studies on colorectal cancer cells indicated a protective role of the interferon-inducible dsDNA sensor Absent in Melanoma 2 (AIM2) in cancer progression. Given that a high mutation rate and lack of AIM2 expression was previously detected in a subset of colorectal cancers, we here investigated the association of AIM2 expression in tumor cells and patient prognosis (5-year follow-up). A tissue microarray analysis of 476 matched tissue pairs (colorectal tumor and adjacent normal colon epithelium) was performed by two independent observers. Samples from 62 patients were excluded because of missing follow-up information or due to neo-adjuvant therapy",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.212444+00:00"
+}

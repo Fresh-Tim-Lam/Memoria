@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "28704738",
+  "source_fingerprint": "016c152e792ad430b5c08f4b993ada9e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "28704738",
+    "mir-294/mir-302-promotes-proliferation,-suppresses-g1-s-restriction-point,-and-inhibits-esc-differentiation-through-separable-mechanisms."
+  ],
+  "key_phrases": [
+    "mir",
+    "294",
+    "302",
+    "promotes",
+    "proliferation",
+    "suppresses",
+    "g1",
+    "restriction"
+  ],
+  "summary_1l": "miR-294/miR-302 promotes proliferation, suppresses G1-S restriction point, and inhibits ESC differentiation through separable mechanisms.",
+  "query_hits": [],
+  "embed_text": "28704738 miR-294/miR-302 promotes proliferation, suppresses G1-S restriction point, and inhibits ESC differentiation through separable mechanisms. science scifact The miR-294 and miR-302 microRNAs promote the abbreviated G1 phase of the embryonic stem cell (ESC) cell cycle and suppress differentiation induced by let-7. Here, we evaluated the role of the retinoblastoma (Rb) family proteins in these… 28704738 mir-294/mir-302-promotes-proliferation,-suppresses-g1-s-restriction-point,-and-inhibits-esc-differentiation-through-separable-mechanisms. mir 294 302 promotes proliferation suppresses g1 restriction miR-294/miR-302 promotes proliferation, suppresses G1-S restriction point, and inhibits ESC differentiation through separable mechanisms. miR-294/miR-302 promotes proliferation, suppresses G1-S restriction point, and inhibits ESC differentiation through separable mechanisms. The miR-294 and miR-302 microRNAs promote the abbreviated G1 phase of the embryonic stem cell (ESC) cell cycle and suppress differentiation induced by let-7. Here, we evaluated the role of the retinoblastoma (Rb) family proteins in these settings. Under normal growth conditions, miR-294 promoted the rapid G1-S transition independent of the Rb family. In contrast, miR-294 suppressed the further accumulation of cells in G1 in response to nutrient deprivation and cell-cell contact in an Rb-dependent fashion. We uncovered five additional miRNAs (miR-26a, miR-99b, miR-193, miR-199a-5p, and miR-218) that silenced ESC self-renewal in the absence of other miRNAs",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.277747+00:00"
+}

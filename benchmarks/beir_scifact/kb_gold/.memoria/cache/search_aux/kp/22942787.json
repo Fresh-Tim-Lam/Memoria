@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22942787",
+  "source_fingerprint": "a1fda957aef8eac0ceda2ace7ee872af",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22942787",
+    "relation-between-medicare-screening-reimbursement-and-stage-at-diagnosis-for-older-patients-with-colon-cancer."
+  ],
+  "key_phrases": [
+    "relation",
+    "between",
+    "medicare",
+    "screening",
+    "reimbursement",
+    "stage",
+    "at",
+    "diagnosis"
+  ],
+  "summary_1l": "Relation between Medicare screening reimbursement and stage at diagnosis for older patients with colon cancer.",
+  "query_hits": [],
+  "embed_text": "22942787 Relation between Medicare screening reimbursement and stage at diagnosis for older patients with colon cancer. science scifact CONTEXT Medicare's reimbursement policy was changed in 1998 to provide coverage for screening colonoscopies for patients with increased colon cancer risk, and expanded further in 2001 to cover screening colonoscopies for all individuals.… 22942787 relation-between-medicare-screening-reimbursement-and-stage-at-diagnosis-for-older-patients-with-colon-cancer. relation between medicare screening reimbursement stage at diagnosis Relation between Medicare screening reimbursement and stage at diagnosis for older patients with colon cancer. Relation between Medicare screening reimbursement and stage at diagnosis for older patients with colon cancer. CONTEXT Medicare's reimbursement policy was changed in 1998 to provide coverage for screening colonoscopies for patients with increased colon cancer risk, and expanded further in 2001 to cover screening colonoscopies for all individuals. OBJECTIVE To determine whether the Medicare reimbursement policy changes were associated with an increase in either colonoscopy use or early stage colon cancer diagnosis. DESIGN, SETTING, AND PARTICIPANTS Patients in the Surveillance, Epidemiology, and End Results Medicare linked database who were 67 years of age and older and had a primary diagnosis of colon cancer during 1992-2002, as well as a group of Medicare beneficiaries who resided in Surv",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.584043+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1192458",
+  "source_fingerprint": "8cad6f0bd914cf69d1cfc2426012f5ab",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1192458",
+    "a-role-for-fibroblasts-in-mediating-the-effects-of-tobacco-induced-epithelial-cell-growth-and-invasion."
+  ],
+  "key_phrases": [
+    "role",
+    "fibroblasts",
+    "mediating",
+    "effects",
+    "tobacco",
+    "induced",
+    "epithelial",
+    "cell"
+  ],
+  "summary_1l": "A role for fibroblasts in mediating the effects of tobacco-induced epithelial cell growth and invasion.",
+  "query_hits": [],
+  "embed_text": "1192458 A role for fibroblasts in mediating the effects of tobacco-induced epithelial cell growth and invasion. science scifact Cigarette smoke and smokeless tobacco extracts contain multiple carcinogenic compounds, but little is known about the mechanisms by which tumors develop and progress upon chronic exposure to carcinogens such as those present in tobacco… 1192458 a-role-for-fibroblasts-in-mediating-the-effects-of-tobacco-induced-epithelial-cell-growth-and-invasion. role fibroblasts mediating effects tobacco induced epithelial cell A role for fibroblasts in mediating the effects of tobacco-induced epithelial cell growth and invasion. A role for fibroblasts in mediating the effects of tobacco-induced epithelial cell growth and invasion. Cigarette smoke and smokeless tobacco extracts contain multiple carcinogenic compounds, but little is known about the mechanisms by which tumors develop and progress upon chronic exposure to carcinogens such as those present in tobacco products. Here, we examine the effects of smokeless tobacco extracts on human oral fibroblasts. We show that smokeless tobacco extracts elevated the levels of intracellular reactive oxygen, oxidative DNA damage, and DNA double-strand breaks in a dose-dependent manner. Extended exposure to extracts induced fibroblasts to undergo a senescence-like growth arrest, with striking accompanying changes in the secretory phenotype. Using cocultures of smokeless toba",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:07.439490+00:00"
+}

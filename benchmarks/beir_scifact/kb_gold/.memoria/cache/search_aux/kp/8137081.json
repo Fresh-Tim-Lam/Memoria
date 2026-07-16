@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8137081",
+  "source_fingerprint": "e1b076500af98f4976d733250dac66c4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8137081",
+    "effects-of-repeated-social-stress-on-leukocyte-distribution-in-bone-marrow,-peripheral-blood-and-spleen"
+  ],
+  "key_phrases": [
+    "effects",
+    "repeated",
+    "social",
+    "stress",
+    "leukocyte",
+    "distribution",
+    "bone",
+    "marrow"
+  ],
+  "summary_1l": "Leukocyte trafficking between the various body compartments has an important surveillance functi",
+  "query_hits": [],
+  "embed_text": "8137081 Effects of repeated social stress on leukocyte distribution in bone marrow, peripheral blood and spleen science scifact Leukocyte trafficking between the various body compartments has an important surveillance function that ensures the detection of antigen and enables the immune system to initiate a rapid and effective response. Repeated social defeat of… 8137081 effects-of-repeated-social-stress-on-leukocyte-distribution-in-bone-marrow,-peripheral-blood-and-spleen effects repeated social stress leukocyte distribution bone marrow Leukocyte trafficking between the various body compartments has an important surveillance functi Effects of repeated social stress on leukocyte distribution in bone marrow, peripheral blood and spleen Leukocyte trafficking between the various body compartments has an important surveillance function that ensures the detection of antigen and enables the immune system to initiate a rapid and effective response. Repeated social defeat of group-housed male mice induced by daily, acute encounters with an aggressive conspecific substantially altered leukocyte trafficking and led to a gradual redistribution of immune cells in bone marrow, peripheral blood and spleen. Recurrent exposure to the stressor over a period of 2, 4 or 6 consecutive days was associated with cell mobilization and increased myelopoiesis in the bone marrow that was paralleled by an accumulation of neutrophils and monocyte",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.983825+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21271817",
+  "source_fingerprint": "7677472e2df184f6d85ae402f60e6676",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21271817",
+    "directly-reprogrammed-fibroblasts-show-global-epigenetic-remodeling-and-widespread-tissue-contribution."
+  ],
+  "key_phrases": [
+    "directly",
+    "reprogrammed",
+    "fibroblasts",
+    "show",
+    "global",
+    "epigenetic",
+    "remodeling",
+    "widespread"
+  ],
+  "summary_1l": "Directly reprogrammed fibroblasts show global epigenetic remodeling and widespread tissue contribution.",
+  "query_hits": [],
+  "embed_text": "21271817 Directly reprogrammed fibroblasts show global epigenetic remodeling and widespread tissue contribution. science scifact Ectopic expression of the four transcription factors Oct4, Sox2, c-Myc, and Klf4 is sufficient to confer a pluripotent state upon the fibroblast genome, generating induced pluripotent stem (iPS) cells. It remains unknown if nuclear… 21271817 directly-reprogrammed-fibroblasts-show-global-epigenetic-remodeling-and-widespread-tissue-contribution. directly reprogrammed fibroblasts show global epigenetic remodeling widespread Directly reprogrammed fibroblasts show global epigenetic remodeling and widespread tissue contribution. Directly reprogrammed fibroblasts show global epigenetic remodeling and widespread tissue contribution. Ectopic expression of the four transcription factors Oct4, Sox2, c-Myc, and Klf4 is sufficient to confer a pluripotent state upon the fibroblast genome, generating induced pluripotent stem (iPS) cells. It remains unknown if nuclear reprogramming induced by these four factors globally resets epigenetic differences between differentiated and pluripotent cells. Here, using novel selection approaches, we have generated iPS cells from fibroblasts to characterize their epigenetic state. Female iPS cells showed reactivation of a somatically silenced X chromosome and underwent random X inactivation upon differentiation. Genome-wide analysis of two key histone modifications indicated that iPS cel",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.684192+00:00"
+}

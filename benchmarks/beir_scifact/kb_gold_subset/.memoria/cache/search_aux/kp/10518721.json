@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10518721",
+  "source_fingerprint": "155962dda5746a6f401a5a55af9b5a22",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10518721",
+    "parallel-processing-in-the-mammalian-retina"
+  ],
+  "key_phrases": [
+    "parallel",
+    "processing",
+    "mammalian",
+    "retina",
+    "our",
+    "eyes",
+    "send",
+    "different"
+  ],
+  "summary_1l": "Our eyes send different 'images' of the outside world to the brain — an image of contours (line drawing), a colour image (watercolour painting) or an image",
+  "query_hits": [],
+  "embed_text": "10518721 Parallel processing in the mammalian retina science scifact Our eyes send different 'images' of the outside world to the brain — an image of contours (line drawing), a colour image (watercolour painting) or an image of moving objects (movie). This is commonly referred to as parallel processing, and… 10518721 parallel-processing-in-the-mammalian-retina parallel processing mammalian retina our eyes send different Our eyes send different 'images' of the outside world to the brain — an image of contours (line drawing), a colour image (watercolour painting) or an image Parallel processing in the mammalian retina Our eyes send different 'images' of the outside world to the brain — an image of contours (line drawing), a colour image (watercolour painting) or an image of moving objects (movie). This is commonly referred to as parallel processing, and starts as early as the first synapse of the retina, the cone pedicle. Here, the molecular composition of the transmitter receptors of the postsynaptic neurons defines which images are transferred to the inner retina. Within the second synaptic layer — the inner plexiform layer — circuits that involve complex inhibitory and excitatory interactions represent filters that select 'what the eye tells the brain'.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.632297+00:00"
+}

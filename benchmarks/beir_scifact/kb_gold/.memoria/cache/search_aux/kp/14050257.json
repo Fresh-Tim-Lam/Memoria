@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14050257",
+  "source_fingerprint": "ea188d1ed72ccb0e67f7ab602c8a2b41",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14050257",
+    "gene-regulation-by-the-act-of-long-non-coding-rna-transcription"
+  ],
+  "key_phrases": [
+    "gene",
+    "regulation",
+    "by",
+    "act",
+    "long",
+    "non",
+    "coding",
+    "rna"
+  ],
+  "summary_1l": "Long non-protein-coding RNAs (lncRNAs) are proposed to be the largest transcript class in the mouse and human transcriptomes.",
+  "query_hits": [],
+  "embed_text": "14050257 Gene regulation by the act of long non-coding RNA transcription science scifact Long non-protein-coding RNAs (lncRNAs) are proposed to be the largest transcript class in the mouse and human transcriptomes. Two important questions are whether all lncRNAs are functional and how they could exert a function. Several… 14050257 gene-regulation-by-the-act-of-long-non-coding-rna-transcription gene regulation by act long non coding rna Long non-protein-coding RNAs (lncRNAs) are proposed to be the largest transcript class in the mouse and human transcriptomes. Gene regulation by the act of long non-coding RNA transcription Long non-protein-coding RNAs (lncRNAs) are proposed to be the largest transcript class in the mouse and human transcriptomes. Two important questions are whether all lncRNAs are functional and how they could exert a function. Several lncRNAs have been shown to function through their product, but this is not the only possible mode of action. In this review we focus on a role for the process of lncRNA transcription, independent of the lncRNA product, in regulating protein-coding-gene activity in cis. We discuss examples where lncRNA transcription leads to gene silencing or activation, and describe strategies to determine if the lncRNA product or its transcription causes the regulatory effect.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.976603+00:00"
+}

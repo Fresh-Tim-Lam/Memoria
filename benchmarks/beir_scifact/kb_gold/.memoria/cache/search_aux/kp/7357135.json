@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "7357135",
+  "source_fingerprint": "131945d18fee28c4a1100f7a9f27fe3f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7357135"
+  ],
+  "key_phrases": [
+    "dissociation",
+    "adrenergic",
+    "receptor",
+    "subtypes",
+    "retrieval",
+    "cocaine",
+    "associated",
+    "memory"
+  ],
+  "summary_1l": "Dissociation of β1- and β2-adrenergic receptor subtypes in the retrieval of cocaine-associated memory.",
+  "query_hits": [],
+  "embed_text": "7357135 Dissociation of β1- and β2-adrenergic receptor subtypes in the retrieval of cocaine-associated memory. science scifact Drug seeking is maintained by encounters with drug-associated cues, and disrupting retrieval of these drug-cue associations would reduce the risk of relapse. Retrieval of cocaine-associated memories is dependent on β-adrenergic receptor… 7357135 dissociation adrenergic receptor subtypes retrieval cocaine associated memory Dissociation of β1- and β2-adrenergic receptor subtypes in the retrieval of cocaine-associated memory. Dissociation of β1- and β2-adrenergic receptor subtypes in the retrieval of cocaine-associated memory. Drug seeking is maintained by encounters with drug-associated cues, and disrupting retrieval of these drug-cue associations would reduce the risk of relapse. Retrieval of cocaine-associated memories is dependent on β-adrenergic receptor (β-AR) activation, and blockade of these receptors induces a persistent retrieval deficit. Whether retrieval of cocaine-associated memory is mediated by a specific β-AR subtype, however, remains unclear. Using a cocaine conditioned place preference (CPP) procedure, we examined whether retrieval of a cocaine CPP memory is mediated collectively by β1- and β2-ARs, or by one of these β-AR subtypes alone. We show that co-blockade of β1- and β2-ARs abolished CPP",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.125785+00:00"
+}

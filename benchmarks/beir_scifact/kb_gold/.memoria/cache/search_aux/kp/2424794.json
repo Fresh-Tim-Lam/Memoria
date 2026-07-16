@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2424794",
+  "source_fingerprint": "cc43a14a8da3efa2250938ca619e6e08",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2424794",
+    "a-neuroimaging-investigation-of-the-association-between-aerobic-fitness,-hippocampal-volume,-and-memory-performance-in-preadolescent-children."
+  ],
+  "key_phrases": [
+    "neuroimaging",
+    "investigation",
+    "association",
+    "between",
+    "aerobic",
+    "fitness",
+    "hippocampal",
+    "volume"
+  ],
+  "summary_1l": "A neuroimaging investigation of the association between aerobic fitness, hippocampal volume, and memory performance in preadolescent children.",
+  "query_hits": [],
+  "embed_text": "2424794 A neuroimaging investigation of the association between aerobic fitness, hippocampal volume, and memory performance in preadolescent children. science scifact Because children are becoming overweight, unhealthy, and unfit, understanding the neurocognitive benefits of an active lifestyle in childhood has important public health and educational implications. Animal research has indicated that… 2424794 a-neuroimaging-investigation-of-the-association-between-aerobic-fitness,-hippocampal-volume,-and-memory-performance-in-preadolescent-children. neuroimaging investigation association between aerobic fitness hippocampal volume A neuroimaging investigation of the association between aerobic fitness, hippocampal volume, and memory performance in preadolescent children. A neuroimaging investigation of the association between aerobic fitness, hippocampal volume, and memory performance in preadolescent children. Because children are becoming overweight, unhealthy, and unfit, understanding the neurocognitive benefits of an active lifestyle in childhood has important public health and educational implications. Animal research has indicated that aerobic exercise is related to increased cell proliferation and survival in the hippocampus as well as enhanced hippocampal-dependent learning and memory. Recent evidence extends this relationship to elderly humans by suggesting that high aerobic fitness levels in older adults are associated with increased hippocampal volume and superior memory performance. The present study aimed to further extend the link between fit",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.040486+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14652521",
+  "source_fingerprint": "4497602bbd73333414eb26d41e7ff838",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14652521",
+    "a-framework-for-improving-microrna-prediction-in-non-human-genomes"
+  ],
+  "key_phrases": [
+    "framework",
+    "improving",
+    "microrna",
+    "prediction",
+    "non",
+    "human",
+    "genomes",
+    "novel"
+  ],
+  "summary_1l": "The prediction of novel pre-microRNA (miRNA) from genomic sequence has received considerable attention recently.",
+  "query_hits": [],
+  "embed_text": "14652521 A framework for improving microRNA prediction in non-human genomes science scifact The prediction of novel pre-microRNA (miRNA) from genomic sequence has received considerable attention recently. However, the majority of studies have focused on the human genome. Previous studies have demonstrated that sensitivity… 14652521 a-framework-for-improving-microrna-prediction-in-non-human-genomes framework improving microrna prediction non human genomes novel The prediction of novel pre-microRNA (miRNA) from genomic sequence has received considerable attention recently. A framework for improving microRNA prediction in non-human genomes The prediction of novel pre-microRNA (miRNA) from genomic sequence has received considerable attention recently. However, the majority of studies have focused on the human genome. Previous studies have demonstrated that sensitivity (correctly detecting true miRNA) is sustained when human-trained methods are applied to other species, however they have failed to report the dramatic drop in specificity (the ability to correctly reject non-miRNA sequences) in non-human genomes. Considering the ratio of true miRNA sequences to pseudo-miRNA sequences is on the order of 1:1000, such low specificity prevents the application of most existing tools to non-human genomes, as the number of false positives overwhelms the true predictions",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.336965+00:00"
+}

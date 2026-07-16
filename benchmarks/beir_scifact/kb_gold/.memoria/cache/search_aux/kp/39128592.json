@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "39128592",
+  "source_fingerprint": "ae543588d66418626691b868b273a771",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "39128592",
+    "the-cytokine-rankl-produced-by-positively-selected-thymocytes-fosters-medullary-thymic-epithelial-cells-that-express-autoimmune-regulator."
+  ],
+  "key_phrases": [
+    "cytokine",
+    "rankl",
+    "produced",
+    "by",
+    "positively",
+    "selected",
+    "thymocytes",
+    "fosters"
+  ],
+  "summary_1l": "The cytokine RANKL produced by positively selected thymocytes fosters medullary thymic epithelial cells that express autoimmune regulator.",
+  "query_hits": [],
+  "embed_text": "39128592 The cytokine RANKL produced by positively selected thymocytes fosters medullary thymic epithelial cells that express autoimmune regulator. science scifact The thymic medulla provides a microenvironment where medullary thymic epithelial cells (mTECs) express autoimmune regulator and diverse tissue-restricted genes, contributing to launching self-tolerance. Positive selection is essential for… 39128592 the-cytokine-rankl-produced-by-positively-selected-thymocytes-fosters-medullary-thymic-epithelial-cells-that-express-autoimmune-regulator. cytokine rankl produced by positively selected thymocytes fosters The cytokine RANKL produced by positively selected thymocytes fosters medullary thymic epithelial cells that express autoimmune regulator. The cytokine RANKL produced by positively selected thymocytes fosters medullary thymic epithelial cells that express autoimmune regulator. The thymic medulla provides a microenvironment where medullary thymic epithelial cells (mTECs) express autoimmune regulator and diverse tissue-restricted genes, contributing to launching self-tolerance. Positive selection is essential for thymic medulla formation via a previously unknown mechanism. Here we show that the cytokine RANK ligand (RANKL) was produced by positively selected thymocytes and regulated the cellularity of mTEC by interacting with RANK and osteoprotegerin. Forced expression of RANKL restored thymic medulla in mice lacking positive selection, whereas RANKL perturbation impaired medulla formation. These results indicate that RANKL pro",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.274454+00:00"
+}

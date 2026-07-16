@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4138659",
+  "source_fingerprint": "4a9e5b9f768195c89d860372910b5dc1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4138659",
+    "macropinocytosis-of-protein-is-an-amino-acid-supply-route-in-ras-transformed-cells"
+  ],
+  "key_phrases": [
+    "macropinocytosis",
+    "protein",
+    "amino",
+    "acid",
+    "supply",
+    "route",
+    "ras",
+    "transformed"
+  ],
+  "summary_1l": "Macropinocytosis is a highly conserved endocytic process by which extracellular fluid and its contents are internaliz",
+  "query_hits": [],
+  "embed_text": "4138659 Macropinocytosis of protein is an amino acid supply route in Ras-transformed cells science scifact Macropinocytosis is a highly conserved endocytic process by which extracellular fluid and its contents are internalized into cells through large, heterogeneous vesicles known as macropinosomes. Oncogenic Ras proteins have been shown to… 4138659 macropinocytosis-of-protein-is-an-amino-acid-supply-route-in-ras-transformed-cells macropinocytosis protein amino acid supply route ras transformed Macropinocytosis is a highly conserved endocytic process by which extracellular fluid and its contents are internaliz Macropinocytosis of protein is an amino acid supply route in Ras-transformed cells Macropinocytosis is a highly conserved endocytic process by which extracellular fluid and its contents are internalized into cells through large, heterogeneous vesicles known as macropinosomes. Oncogenic Ras proteins have been shown to stimulate macropinocytosis but the functional contribution of this uptake mechanism to the transformed phenotype remains unknown. Here we show that Ras-transformed cells use macropinocytosis to transport extracellular protein into the cell. The internalized protein undergoes proteolytic degradation, yielding amino acids including glutamine that can enter central carbon metabolism. Accordingly, the dependence of Ras-transformed cells on free extracellular glutamine for growth c",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.407661+00:00"
+}

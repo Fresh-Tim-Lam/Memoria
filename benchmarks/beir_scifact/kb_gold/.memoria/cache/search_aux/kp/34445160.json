@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "34445160",
+  "source_fingerprint": "f3921e7b9ce0229b8e5d025d04f7a101",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "34445160",
+    "the-hippo-pathway-effector-yap-controls-mouse-hepatic-stellate-cell-activation."
+  ],
+  "key_phrases": [
+    "hippo",
+    "pathway",
+    "effector",
+    "yap",
+    "controls",
+    "mouse",
+    "hepatic",
+    "stellate"
+  ],
+  "summary_1l": "The Hippo pathway effector YAP controls mouse hepatic stellate cell activation.",
+  "query_hits": [],
+  "embed_text": "34445160 The Hippo pathway effector YAP controls mouse hepatic stellate cell activation. science scifact BACKGROUND & AIMS Hepatic stellate cell activation is a wound-healing response to liver injury. However, continued activation of stellate cells during chronic liver damage causes excessive matrix deposition and the formation of… 34445160 the-hippo-pathway-effector-yap-controls-mouse-hepatic-stellate-cell-activation. hippo pathway effector yap controls mouse hepatic stellate The Hippo pathway effector YAP controls mouse hepatic stellate cell activation. The Hippo pathway effector YAP controls mouse hepatic stellate cell activation. BACKGROUND & AIMS Hepatic stellate cell activation is a wound-healing response to liver injury. However, continued activation of stellate cells during chronic liver damage causes excessive matrix deposition and the formation of pathological scar tissue leading to fibrosis and ultimately cirrhosis. The importance of sustained stellate cell activation for this pathological process is well recognized, and several signalling pathways that can promote stellate cell activation have been identified, such as the TGFβ-, PDGF-, and LPS-dependent pathways. However, the mechanisms that trigger and drive the early steps in activation are not well understood. METHODS AND RESULTS We identified the Hippo pathway and its effect",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.492892+00:00"
+}

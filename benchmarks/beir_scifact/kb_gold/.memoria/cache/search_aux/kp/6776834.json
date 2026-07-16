@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6776834",
+  "source_fingerprint": "e224684189700f5a60008717802e4a6c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6776834",
+    "opa1-gene-therapy-prevents-retinal-ganglion-cell-loss-in-a-dominant-optic-atrophy-mouse-model"
+  ],
+  "key_phrases": [
+    "opa1",
+    "gene",
+    "therapy",
+    "prevents",
+    "retinal",
+    "ganglion",
+    "cell",
+    "loss"
+  ],
+  "summary_1l": "Dominant optic atrophy (DOA) is a rare progressive and irreversible blinding disease which is one of the m",
+  "query_hits": [],
+  "embed_text": "6776834 OPA1 gene therapy prevents retinal ganglion cell loss in a Dominant Optic Atrophy mouse model science scifact Dominant optic atrophy (DOA) is a rare progressive and irreversible blinding disease which is one of the most frequent forms of hereditary optic neuropathy. DOA is mainly caused by dominant mutation in the OPA1 gene encoding a large… 6776834 opa1-gene-therapy-prevents-retinal-ganglion-cell-loss-in-a-dominant-optic-atrophy-mouse-model opa1 gene therapy prevents retinal ganglion cell loss Dominant optic atrophy (DOA) is a rare progressive and irreversible blinding disease which is one of the m OPA1 gene therapy prevents retinal ganglion cell loss in a Dominant Optic Atrophy mouse model Dominant optic atrophy (DOA) is a rare progressive and irreversible blinding disease which is one of the most frequent forms of hereditary optic neuropathy. DOA is mainly caused by dominant mutation in the OPA1 gene encoding a large mitochondrial GTPase with crucial roles in membrane dynamics and cell survival. Hereditary optic neuropathies are commonly characterized by the degeneration of retinal ganglion cells, leading to the optic nerve atrophy and the progressive loss of visual acuity. Up to now, despite increasing advances in the understanding of the pathological mechanisms, DOA remains intractable. Here, we tested the efficiency of gene therapy on a genetically-modified mouse model reproduci",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.639590+00:00"
+}

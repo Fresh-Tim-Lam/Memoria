@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "41620295",
+  "source_fingerprint": "5f384034eae2c15b5c9d76fb30b3b48f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "41620295",
+    "the-hsa-domain-binds-nuclear-actin-related-proteins-to-regulate-chromatin-remodeling-atpases"
+  ],
+  "key_phrases": [
+    "hsa",
+    "domain",
+    "binds",
+    "nuclear",
+    "actin",
+    "related",
+    "proteins",
+    "regulate"
+  ],
+  "summary_1l": "We identify the helicase-SANT–associated (HSA) domain as the primary binding platform for nuclear actin-rel",
+  "query_hits": [],
+  "embed_text": "41620295 The HSA domain binds nuclear actin-related proteins to regulate chromatin-remodeling ATPases science scifact We identify the helicase-SANT–associated (HSA) domain as the primary binding platform for nuclear actin-related proteins (ARPs) and actin. Individual HSA domains from chromatin remodelers (RSC, yeast SWI-SNF, human SWI-SNF, SWR1 and INO80)… 41620295 the-hsa-domain-binds-nuclear-actin-related-proteins-to-regulate-chromatin-remodeling-atpases hsa domain binds nuclear actin related proteins regulate We identify the helicase-SANT–associated (HSA) domain as the primary binding platform for nuclear actin-rel The HSA domain binds nuclear actin-related proteins to regulate chromatin-remodeling ATPases We identify the helicase-SANT–associated (HSA) domain as the primary binding platform for nuclear actin-related proteins (ARPs) and actin. Individual HSA domains from chromatin remodelers (RSC, yeast SWI-SNF, human SWI-SNF, SWR1 and INO80) or modifiers (NuA4) reconstitute their respective ARP–ARP or ARP–actin modules. In RSC, the HSA domain resides on the catalytic ATPase subunit Sth1. The Sth1 HSA is essential in vivo, and its omission causes the specific loss of ARPs and a moderate reduction in ATPase activity. Genetic selections for arp suppressors yielded specific gain-of-function mutations in two new domains in Sth1, the post-HSA domain and protrusion 1, which are essential for RSC function in",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.475873+00:00"
+}

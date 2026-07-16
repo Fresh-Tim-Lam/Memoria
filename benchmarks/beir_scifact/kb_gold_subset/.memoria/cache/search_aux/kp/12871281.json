@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12871281",
+  "source_fingerprint": "1c262438dc3c1f862e42d93bf2fc9301",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12871281",
+    "localized-diacylglycerol-drives-the-polarization-of-the-microtubule-organizing-center-in-t-cells"
+  ],
+  "key_phrases": [
+    "localized",
+    "diacylglycerol",
+    "drives",
+    "polarization",
+    "microtubule",
+    "organizing",
+    "center",
+    "cells"
+  ],
+  "summary_1l": "The reorientation of the T cell microtubule-organizing center (MTOC) toward the antigen-presenting cell",
+  "query_hits": [],
+  "embed_text": "12871281 Localized diacylglycerol drives the polarization of the microtubule-organizing center in T cells science scifact The reorientation of the T cell microtubule-organizing center (MTOC) toward the antigen-presenting cell enables the directional secretion of cytokines and lytic factors. By single-cell photoactivation of the T cell antigen receptor, we… 12871281 localized-diacylglycerol-drives-the-polarization-of-the-microtubule-organizing-center-in-t-cells localized diacylglycerol drives polarization microtubule organizing center cells The reorientation of the T cell microtubule-organizing center (MTOC) toward the antigen-presenting cell Localized diacylglycerol drives the polarization of the microtubule-organizing center in T cells The reorientation of the T cell microtubule-organizing center (MTOC) toward the antigen-presenting cell enables the directional secretion of cytokines and lytic factors. By single-cell photoactivation of the T cell antigen receptor, we show that MTOC polarization is driven by localized accumulation of diacylglycerol (DAG). MTOC reorientation was closely preceded first by production of DAG and then by recruitment of the microtubule motor protein dynein. Blocking DAG production or disrupting the localization of DAG impaired MTOC recruitment. Localized DAG accumulation was also required for cytotoxic T cell–mediated killing. Furthermore, photoactivation of DAG itself was sufficient to induce trans",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:09.794614+00:00"
+}

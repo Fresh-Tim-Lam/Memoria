@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5836",
+  "source_fingerprint": "2eca2c11821b13431606f54cad879d9a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5836",
+    "induction-of-myelodysplasia-by-myeloid-derived-suppressor-cells."
+  ],
+  "key_phrases": [
+    "induction",
+    "myelodysplasia",
+    "by",
+    "myeloid",
+    "derived",
+    "suppressor",
+    "cells",
+    "myelodysplastic"
+  ],
+  "summary_1l": "Induction of myelodysplasia by myeloid-derived suppressor cells.",
+  "query_hits": [],
+  "embed_text": "5836 Induction of myelodysplasia by myeloid-derived suppressor cells. science scifact Myelodysplastic syndromes (MDS) are age-dependent stem cell malignancies that share biological features of activated adaptive immune response and ineffective hematopoiesis. Here we report that myeloid-derived suppressor cells (MDSC), which… 5836 induction-of-myelodysplasia-by-myeloid-derived-suppressor-cells. induction myelodysplasia by myeloid derived suppressor cells myelodysplastic Induction of myelodysplasia by myeloid-derived suppressor cells. Induction of myelodysplasia by myeloid-derived suppressor cells. Myelodysplastic syndromes (MDS) are age-dependent stem cell malignancies that share biological features of activated adaptive immune response and ineffective hematopoiesis. Here we report that myeloid-derived suppressor cells (MDSC), which are classically linked to immunosuppression, inflammation, and cancer, were markedly expanded in the bone marrow of MDS patients and played a pathogenetic role in the development of ineffective hematopoiesis. These clonally distinct MDSC overproduce hematopoietic suppressive cytokines and function as potent apoptotic effectors targeting autologous hematopoietic progenitors. Using multiple transfected cell models, we found that MDSC expansion is driven by the interaction of the proinflammato",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.272707+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12152977",
+  "source_fingerprint": "056f20afd218033497b95c57415378d2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12152977",
+    "swi/snf-brg1-regulates-self-renewal-and-occupies-core-pluripotency-related-genes-in-embryonic-stem-cells."
+  ],
+  "key_phrases": [
+    "swi",
+    "snf",
+    "brg1",
+    "regulates",
+    "self",
+    "renewal",
+    "occupies",
+    "core"
+  ],
+  "summary_1l": "SWI/SNF-Brg1 regulates self-renewal and occupies core pluripotency-related genes in embryonic stem cells.",
+  "query_hits": [],
+  "embed_text": "12152977 SWI/SNF-Brg1 regulates self-renewal and occupies core pluripotency-related genes in embryonic stem cells. science scifact The SWI/SNF-Brg1 chromatin remodeling protein plays critical roles in cell-cycle control and differentiation through regulation of gene expression. Loss of Brg1 in mice results in early embryonic lethality, and recent studies have… 12152977 swi/snf-brg1-regulates-self-renewal-and-occupies-core-pluripotency-related-genes-in-embryonic-stem-cells. swi snf brg1 regulates self renewal occupies core SWI/SNF-Brg1 regulates self-renewal and occupies core pluripotency-related genes in embryonic stem cells. SWI/SNF-Brg1 regulates self-renewal and occupies core pluripotency-related genes in embryonic stem cells. The SWI/SNF-Brg1 chromatin remodeling protein plays critical roles in cell-cycle control and differentiation through regulation of gene expression. Loss of Brg1 in mice results in early embryonic lethality, and recent studies have implicated a role for Brg1 in somatic stem cell self-renewal and differentiation. However, little is known about Brg1 function in preimplantation embryos and embryonic stem (ES) cells. Here we report that Brg1 is required for ES cell self-renewal and pluripotency. RNA interference-mediated knockdown of Brg1 in blastocysts caused aberrant expression of Oct4 and Nanog. In ES cells, knockdown of Brg1 resulted in phenotypic changes indicative of differentiation,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:08.370497+00:00"
+}

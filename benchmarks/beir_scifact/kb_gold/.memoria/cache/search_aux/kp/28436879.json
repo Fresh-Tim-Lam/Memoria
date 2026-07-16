@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "28436879",
+  "source_fingerprint": "323d0fc556beca9f1911e981473e7be4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "28436879",
+    "neuromodulation-of-neurons-and-synapses."
+  ],
+  "key_phrases": [
+    "neuromodulation",
+    "neurons",
+    "synapses",
+    "underlies",
+    "flexibility",
+    "neural",
+    "circuit",
+    "operation"
+  ],
+  "summary_1l": "Neuromodulation of neurons and synapses.",
+  "query_hits": [],
+  "embed_text": "28436879 Neuromodulation of neurons and synapses. science scifact Neuromodulation underlies the flexibility of neural circuit operation and behavior. Individual neuromodulators can have divergent actions in a neuron by targeting multiple physiological mechanisms. Conversely, multiple neuromodulators may… 28436879 neuromodulation-of-neurons-and-synapses. neuromodulation neurons synapses underlies flexibility neural circuit operation Neuromodulation of neurons and synapses. Neuromodulation of neurons and synapses. Neuromodulation underlies the flexibility of neural circuit operation and behavior. Individual neuromodulators can have divergent actions in a neuron by targeting multiple physiological mechanisms. Conversely, multiple neuromodulators may have convergent actions through overlapping targets. The divergent and convergent neuromodulator actions can be unambiguously synergistic or antagonistic, but neuromodulation often entails balanced adjustment of nonlinear membrane and synaptic properties by targeting ion channel and synaptic dynamics rather than just excitability or synaptic strength. In addition, neuromodulators can exert effects at multiple timescales, from short-term adjustments of neuron and synapse function to persistent long-term regulation.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.006282+00:00"
+}

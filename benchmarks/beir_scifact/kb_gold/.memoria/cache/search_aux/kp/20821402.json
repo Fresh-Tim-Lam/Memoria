@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20821402",
+  "source_fingerprint": "f99df1f60a230baea3112643d14ea92a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20821402",
+    "specificity-of-the-drp/ap-lyase-of-ku-promotes-nonhomologous-end-joining-(nhej)-fidelity-at-damaged-ends."
+  ],
+  "key_phrases": [
+    "specificity",
+    "drp",
+    "ap",
+    "lyase",
+    "ku",
+    "promotes",
+    "nonhomologous",
+    "end"
+  ],
+  "summary_1l": "Specificity of the dRP/AP lyase of Ku promotes nonhomologous end joining (NHEJ) fidelity at damaged ends.",
+  "query_hits": [],
+  "embed_text": "20821402 Specificity of the dRP/AP lyase of Ku promotes nonhomologous end joining (NHEJ) fidelity at damaged ends. science scifact Nonhomologous end joining (NHEJ) is essential for efficient repair of chromosome breaks. However, the NHEJ ligation step is often obstructed by break-associated nucleotide damage, including base loss (abasic site or 5'-dRP/AP sites). Ku, a… 20821402 specificity-of-the-drp/ap-lyase-of-ku-promotes-nonhomologous-end-joining-(nhej)-fidelity-at-damaged-ends. specificity drp ap lyase ku promotes nonhomologous end Specificity of the dRP/AP lyase of Ku promotes nonhomologous end joining (NHEJ) fidelity at damaged ends. Specificity of the dRP/AP lyase of Ku promotes nonhomologous end joining (NHEJ) fidelity at damaged ends. Nonhomologous end joining (NHEJ) is essential for efficient repair of chromosome breaks. However, the NHEJ ligation step is often obstructed by break-associated nucleotide damage, including base loss (abasic site or 5'-dRP/AP sites). Ku, a 5'-dRP/AP lyase, can excise such damage at ends in preparation for the ligation step. We show here that this activity is greatest if the abasic site is within a short 5' overhang, when this activity is necessary and sufficient to prepare such termini for ligation. In contrast, Ku is less active near 3' strand termini, where excision would leave a ligation-blocking α,β-unsaturated aldehyde. The Ku AP lyase activity is also strongly suppressed by as li",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.977581+00:00"
+}

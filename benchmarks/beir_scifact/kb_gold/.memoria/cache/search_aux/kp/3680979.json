@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3680979",
+  "source_fingerprint": "2b698e5b7af0d4107f2a58541559d86d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3680979",
+    "the-transcriptional-program,-functional-heterogeneity,-and-clinical-targeting-of-mast-cells"
+  ],
+  "key_phrases": [
+    "transcriptional",
+    "program",
+    "functional",
+    "heterogeneity",
+    "clinical",
+    "targeting",
+    "mast",
+    "cells"
+  ],
+  "summary_1l": "Mast cells are unique tissue-resident immune cells that express an array of receptors that can be activated",
+  "query_hits": [],
+  "embed_text": "3680979 The transcriptional program, functional heterogeneity, and clinical targeting of mast cells science scifact Mast cells are unique tissue-resident immune cells that express an array of receptors that can be activated by several extracellular cues, including antigen-immunoglobulin E (IgE) complexes, bacteria, viruses, cytokines, hormones,… 3680979 the-transcriptional-program,-functional-heterogeneity,-and-clinical-targeting-of-mast-cells transcriptional program functional heterogeneity clinical targeting mast cells Mast cells are unique tissue-resident immune cells that express an array of receptors that can be activated The transcriptional program, functional heterogeneity, and clinical targeting of mast cells Mast cells are unique tissue-resident immune cells that express an array of receptors that can be activated by several extracellular cues, including antigen-immunoglobulin E (IgE) complexes, bacteria, viruses, cytokines, hormones, peptides, and drugs. Mast cells constitute a small population in tissues, but their extraordinary ability to respond rapidly by releasing granule-stored and newly made mediators underpins their importance in health and disease. In this review, we document the biology of mast cells and introduce new concepts and opinions regarding their role in human diseases beyond IgE-mediated allergic responses and antiparasitic functions. We bring to light recent discoveries and develop",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:43.719797+00:00"
+}

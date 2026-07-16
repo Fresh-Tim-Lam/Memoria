@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3140772",
+  "source_fingerprint": "04cf235fc3775553e7faecc5e475842c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3140772",
+    "neuronal-circuitry-mechanism-regulating-adult-quiescent-neural-stem-cell-fate-decision"
+  ],
+  "key_phrases": [
+    "neuronal",
+    "circuitry",
+    "mechanism",
+    "regulating",
+    "adult",
+    "quiescent",
+    "neural",
+    "stem"
+  ],
+  "summary_1l": "Adult neurogenesis arises from neural stem cells within specialized niches.",
+  "query_hits": [],
+  "embed_text": "3140772 Neuronal circuitry mechanism regulating adult quiescent neural stem cell fate decision science scifact Adult neurogenesis arises from neural stem cells within specialized niches. Neuronal activity and experience, presumably acting on this local niche, regulate multiple stages of adult neurogenesis, from neural progenitor proliferation to… 3140772 neuronal-circuitry-mechanism-regulating-adult-quiescent-neural-stem-cell-fate-decision neuronal circuitry mechanism regulating adult quiescent neural stem Adult neurogenesis arises from neural stem cells within specialized niches. Neuronal circuitry mechanism regulating adult quiescent neural stem cell fate decision Adult neurogenesis arises from neural stem cells within specialized niches. Neuronal activity and experience, presumably acting on this local niche, regulate multiple stages of adult neurogenesis, from neural progenitor proliferation to new neuron maturation, synaptic integration and survival. It is unknown whether local neuronal circuitry has a direct impact on adult neural stem cells. Here we show that, in the adult mouse hippocampus, nestin-expressing radial glia-like quiescent neural stem cells (RGLs) respond tonically to the neurotransmitter γ-aminobutyric acid (GABA) by means of γ2-subunit-containing GABAA receptors. Clonal analysis of individual RGLs revealed a rapid exit from quiescence and enhan",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.584565+00:00"
+}

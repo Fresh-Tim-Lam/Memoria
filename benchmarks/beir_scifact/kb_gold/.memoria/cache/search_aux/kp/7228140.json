@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7228140",
+  "source_fingerprint": "8acb91b32db79f523c04a3935e905944",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7228140",
+    "virtual-microdissection-identifies-distinct-tumor--and-stroma-specific-subtypes-of-pancreatic-ductal-adenocarcinoma"
+  ],
+  "key_phrases": [
+    "virtual",
+    "microdissection",
+    "identifies",
+    "distinct",
+    "tumor",
+    "stroma",
+    "specific",
+    "subtypes"
+  ],
+  "summary_1l": "Pancreatic ductal adenocarcinoma (PDAC) remains a lethal disease with a 5-year survi",
+  "query_hits": [],
+  "embed_text": "7228140 Virtual microdissection identifies distinct tumor- and stroma-specific subtypes of pancreatic ductal adenocarcinoma science scifact Pancreatic ductal adenocarcinoma (PDAC) remains a lethal disease with a 5-year survival rate of 4%. A key hallmark of PDAC is extensive stromal involvement, which makes capturing precise tumor-specific molecular information difficult. Here… 7228140 virtual-microdissection-identifies-distinct-tumor--and-stroma-specific-subtypes-of-pancreatic-ductal-adenocarcinoma virtual microdissection identifies distinct tumor stroma specific subtypes Pancreatic ductal adenocarcinoma (PDAC) remains a lethal disease with a 5-year survi Virtual microdissection identifies distinct tumor- and stroma-specific subtypes of pancreatic ductal adenocarcinoma Pancreatic ductal adenocarcinoma (PDAC) remains a lethal disease with a 5-year survival rate of 4%. A key hallmark of PDAC is extensive stromal involvement, which makes capturing precise tumor-specific molecular information difficult. Here we have overcome this problem by applying blind source separation to a diverse collection of PDAC gene expression microarray data, including data from primary tumor, metastatic and normal samples. By digitally separating tumor, stromal and normal gene expression, we have identified and validated two tumor subtypes, including a 'basal-like' subtype that has worse outcome and is molecularly similar to basal tumors in bladder and breast cancer",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.877516+00:00"
+}

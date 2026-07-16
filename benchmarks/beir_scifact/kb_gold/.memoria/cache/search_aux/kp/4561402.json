@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4561402",
+  "source_fingerprint": "fc9fb2e15917015938900083d31a02dc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4561402",
+    "aire-regulates-negative-selection-of-organ-specific-t-cells"
+  ],
+  "key_phrases": [
+    "aire",
+    "regulates",
+    "negative",
+    "selection",
+    "organ",
+    "specific",
+    "cells",
+    "autoimmune"
+  ],
+  "summary_1l": "Autoimmune polyendocrinopathy syndrome type 1 is a recessive Mendelian disorder resulting from mutations in a novel gene, AIRE, and is chara",
+  "query_hits": [],
+  "embed_text": "4561402 Aire regulates negative selection of organ-specific T cells science scifact Autoimmune polyendocrinopathy syndrome type 1 is a recessive Mendelian disorder resulting from mutations in a novel gene, AIRE, and is characterized by a spectrum of organ-specific autoimmune diseases. It is not known what tolerance… 4561402 aire-regulates-negative-selection-of-organ-specific-t-cells aire regulates negative selection organ specific cells autoimmune Autoimmune polyendocrinopathy syndrome type 1 is a recessive Mendelian disorder resulting from mutations in a novel gene, AIRE, and is chara Aire regulates negative selection of organ-specific T cells Autoimmune polyendocrinopathy syndrome type 1 is a recessive Mendelian disorder resulting from mutations in a novel gene, AIRE, and is characterized by a spectrum of organ-specific autoimmune diseases. It is not known what tolerance mechanisms are defective as a result of AIRE mutation. By tracing the fate of autoreactive CD4+ T cells with high affinity for a pancreatic antigen in transgenic mice with an Aire mutation, we show here that Aire deficiency causes almost complete failure to delete the organ-specific cells in the thymus. These results indicate that autoimmune polyendocrinopathy syndrome 1 is caused by failure of a specialized mechanism for deleting forbidden T cell clones, establishing a central role for this tolerance",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.485384+00:00"
+}

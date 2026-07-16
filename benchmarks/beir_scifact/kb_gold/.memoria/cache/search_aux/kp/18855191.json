@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18855191",
+  "source_fingerprint": "d16d46e200fae52e97ae75cd6339482a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18855191",
+    "exploitative-and-hierarchical-antagonism-in-a-cooperative-bacterium"
+  ],
+  "key_phrases": [
+    "exploitative",
+    "hierarchical",
+    "antagonism",
+    "cooperative",
+    "bacterium",
+    "social",
+    "organisms",
+    "that"
+  ],
+  "summary_1l": "Social organisms that cooperate with some members of their own species, such as close relatives, may fail to cooperate with other ge",
+  "query_hits": [],
+  "embed_text": "18855191 Exploitative and Hierarchical Antagonism in a Cooperative Bacterium science scifact Social organisms that cooperate with some members of their own species, such as close relatives, may fail to cooperate with other genotypes of the same species. Such noncooperation may take the form of outright antagonism or social… 18855191 exploitative-and-hierarchical-antagonism-in-a-cooperative-bacterium exploitative hierarchical antagonism cooperative bacterium social organisms that Social organisms that cooperate with some members of their own species, such as close relatives, may fail to cooperate with other ge Exploitative and Hierarchical Antagonism in a Cooperative Bacterium Social organisms that cooperate with some members of their own species, such as close relatives, may fail to cooperate with other genotypes of the same species. Such noncooperation may take the form of outright antagonism or social exploitation. Myxococcus xanthus is a highly social prokaryote that cooperatively develops into spore-bearing, multicellular fruiting bodies in response to starvation. Here we have characterized the nature of social interactions among nine developmentally proficient strains of M. xanthus isolated from spatially distant locations. Strains were competed against one another in all possible pairwise combinations during starvation-induced development. In most pairings, at least one competitor exhibit",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.787594+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2147704",
+  "source_fingerprint": "88dbd44fb1a4f3291b42a658d2cdb767",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2147704",
+    "the-homeobox-gene-goosecoid-controls-cell-migration-in-xenopus-embryos."
+  ],
+  "key_phrases": [
+    "homeobox",
+    "gene",
+    "goosecoid",
+    "controls",
+    "cell",
+    "migration",
+    "xenopus",
+    "embryos"
+  ],
+  "summary_1l": "The homeobox gene goosecoid controls cell migration in Xenopus embryos.",
+  "query_hits": [],
+  "embed_text": "2147704 The homeobox gene goosecoid controls cell migration in Xenopus embryos. science scifact Goosecoid (gsc), a homeobox gene expressed specifically in the dorsal blastopore lip of the Xenopus gastrula, is considered to play an important role in Spemann's organizer phenomenon. Lineage tracing and time-lapse microscopy were used to… 2147704 the-homeobox-gene-goosecoid-controls-cell-migration-in-xenopus-embryos. homeobox gene goosecoid controls cell migration xenopus embryos The homeobox gene goosecoid controls cell migration in Xenopus embryos. The homeobox gene goosecoid controls cell migration in Xenopus embryos. Goosecoid (gsc), a homeobox gene expressed specifically in the dorsal blastopore lip of the Xenopus gastrula, is considered to play an important role in Spemann's organizer phenomenon. Lineage tracing and time-lapse microscopy were used to follow the fate of embryonic cells microinjected with gsc mRNA. Microinjected gsc has non-cell autonomous effects, recruiting neighboring uninjected cells into a twinned dorsal axis. Ectopic expression of gsc mRNA in ventral blastomeres as well as overexpression of gsc in dorsal blastomeres leads to cell movement toward the anterior of the embryo. The results suggest a function for gsc in the control of gastrulation movements in groups of cells, but not in dissociated cells, and demo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.184570+00:00"
+}

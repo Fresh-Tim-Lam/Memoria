@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "33986507",
+  "source_fingerprint": "3e626d803bb9955f944cb2f47c05e02e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "33986507",
+    "inducible-gene-expression:-diverse-regulatory-mechanisms"
+  ],
+  "key_phrases": [
+    "inducible",
+    "gene",
+    "expression",
+    "diverse",
+    "regulatory",
+    "mechanisms",
+    "rapid",
+    "activation"
+  ],
+  "summary_1l": "The rapid activation of gene expression in response to stimuli occurs largely through the regulation of RNA polymerase II-dependent transcripti",
+  "query_hits": [],
+  "embed_text": "33986507 Inducible gene expression: diverse regulatory mechanisms science scifact The rapid activation of gene expression in response to stimuli occurs largely through the regulation of RNA polymerase II-dependent transcription. In this Review, we discuss events that occur during the transcription cycle in eukaryotes… 33986507 inducible-gene-expression:-diverse-regulatory-mechanisms inducible gene expression diverse regulatory mechanisms rapid activation The rapid activation of gene expression in response to stimuli occurs largely through the regulation of RNA polymerase II-dependent transcripti Inducible gene expression: diverse regulatory mechanisms The rapid activation of gene expression in response to stimuli occurs largely through the regulation of RNA polymerase II-dependent transcription. In this Review, we discuss events that occur during the transcription cycle in eukaryotes that are important for the rapid and specific activation of gene expression in response to external stimuli. In addition to regulated recruitment of the transcription machinery to the promoter, it has now been shown that control steps can include chromatin remodelling and the release of paused polymerase. Recent work suggests that some components of signal transduction cascades also play an integral part in activating transcription at target genes.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.901141+00:00"
+}

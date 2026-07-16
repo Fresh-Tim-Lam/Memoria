@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18841257",
+  "source_fingerprint": "1e23c84f3ec0ec7b05c843fe0caf8cac",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18841257",
+    "the-histone-h3-lysine-27-demethylase-jmjd3-links-inflammation-to-inhibition-of-polycomb-mediated-gene-silencing"
+  ],
+  "key_phrases": [
+    "histone",
+    "h3",
+    "lysine",
+    "27",
+    "demethylase",
+    "jmjd3",
+    "links",
+    "inflammation"
+  ],
+  "summary_1l": "Epigenetic chromatin marks restrict the ability of differentiated cells to change gene e",
+  "query_hits": [],
+  "embed_text": "18841257 The Histone H3 Lysine-27 Demethylase Jmjd3 Links Inflammation to Inhibition of Polycomb-Mediated Gene Silencing science scifact Epigenetic chromatin marks restrict the ability of differentiated cells to change gene expression programs in response to environmental cues and to transdifferentiate. Polycomb group (PcG) proteins mediate gene silencing and repress… 18841257 the-histone-h3-lysine-27-demethylase-jmjd3-links-inflammation-to-inhibition-of-polycomb-mediated-gene-silencing histone h3 lysine 27 demethylase jmjd3 links inflammation Epigenetic chromatin marks restrict the ability of differentiated cells to change gene e The Histone H3 Lysine-27 Demethylase Jmjd3 Links Inflammation to Inhibition of Polycomb-Mediated Gene Silencing Epigenetic chromatin marks restrict the ability of differentiated cells to change gene expression programs in response to environmental cues and to transdifferentiate. Polycomb group (PcG) proteins mediate gene silencing and repress transdifferentiation in a manner dependent on histone H3 lysine 27 trimethylation (H3K27me3). However, macrophages migrated into inflamed tissues can transdifferentiate, but it is unknown whether inflammation alters PcG-dependent silencing. Here we show that the JmjC-domain protein Jmjd3 is a H3K27me demethylase expressed in macrophages in response to bacterial products and inflammatory cytokines. Jmjd3 binds PcG target genes and regulates their H3K27",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.758275+00:00"
+}

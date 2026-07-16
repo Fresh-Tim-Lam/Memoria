@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "33030946",
+  "source_fingerprint": "8acd9ce819d3819a873e4fd189a36f4d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "33030946"
+  ],
+  "key_phrases": [
+    "hypoxia",
+    "sensitive",
+    "commd1",
+    "integrates",
+    "signaling",
+    "cellular",
+    "metabolism",
+    "human"
+  ],
+  "summary_1l": "Summary Hypoxia augments inflammatory responses and osteoclastogenesis by i",
+  "query_hits": [],
+  "embed_text": "33030946 Hypoxia‐Sensitive COMMD1 Integrates Signaling and Cellular Metabolism in Human Macrophages and Suppresses Osteoclastogenesis science scifact Summary Hypoxia augments inflammatory responses and osteoclastogenesis by incompletely understood mechanisms. We identified COMMD1 as a cell‐intrinsic negative regulator of osteoclastogenesis that is suppressed by hypoxia. In human… 33030946 hypoxia sensitive commd1 integrates signaling cellular metabolism human Summary Hypoxia augments inflammatory responses and osteoclastogenesis by i Hypoxia‐Sensitive COMMD1 Integrates Signaling and Cellular Metabolism in Human Macrophages and Suppresses Osteoclastogenesis Summary Hypoxia augments inflammatory responses and osteoclastogenesis by incompletely understood mechanisms. We identified COMMD1 as a cell‐intrinsic negative regulator of osteoclastogenesis that is suppressed by hypoxia. In human macrophages, COMMD1 restrained induction of NF‐&kgr;B signaling and a transcription factor E2F1‐dependent metabolic pathway by the cytokine RANKL. Downregulation of COMMD1 protein expression by hypoxia augmented RANKL‐induced expression of inflammatory and E2F1 target genes and downstream osteoclastogenesis. E2F1 targets included glycolysis and metabolic genes including CKB that enabled cells to meet metabolic demands in challenging enviro",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.143276+00:00"
+}

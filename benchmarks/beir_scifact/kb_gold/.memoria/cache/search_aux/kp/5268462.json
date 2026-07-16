@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5268462",
+  "source_fingerprint": "9b0ba171ed1a2a08ab4eed7c5596b2bf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5268462",
+    "obesity-and-its-metabolic-complications:-the-role-of-adipokines-and-the-relationship-between-obesity,-inflammation,-insulin-resistance,-dyslipidemia-and-nonalcoholic-fatty-liver-disease"
+  ],
+  "key_phrases": [
+    "obesity",
+    "its",
+    "metabolic",
+    "complications",
+    "role",
+    "adipokines",
+    "relationship",
+    "between"
+  ],
+  "summary_1l": "Accumulating e",
+  "query_hits": [],
+  "embed_text": "5268462 Obesity and Its Metabolic Complications: The Role of Adipokines and the Relationship between Obesity, Inflammation, Insulin Resistance, Dyslipidemia and Nonalcoholic Fatty Liver Disease science scifact Accumulating evidence indicates that obesity is closely associated with an increased risk of metabolic diseases such as insulin resistance, type 2 diabetes, dyslipidemia and nonalcoholic fatty liver disease. Obesity results from an… 5268462 obesity-and-its-metabolic-complications:-the-role-of-adipokines-and-the-relationship-between-obesity,-inflammation,-insulin-resistance,-dyslipidemia-and-nonalcoholic-fatty-liver-disease obesity its metabolic complications role adipokines relationship between Accumulating e Obesity and Its Metabolic Complications: The Role of Adipokines and the Relationship between Obesity, Inflammation, Insulin Resistance, Dyslipidemia and Nonalcoholic Fatty Liver Disease Accumulating evidence indicates that obesity is closely associated with an increased risk of metabolic diseases such as insulin resistance, type 2 diabetes, dyslipidemia and nonalcoholic fatty liver disease. Obesity results from an imbalance between food intake and energy expenditure, which leads to an excessive accumulation of adipose tissue. Adipose tissue is now recognized not only as a main site of storage of excess energy derived from food intake but also as an endocrine organ. The expansion of adipose tissue produces a number of bioactive substances, known as adipocytokines or adipokines, which trigge",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.691427+00:00"
+}

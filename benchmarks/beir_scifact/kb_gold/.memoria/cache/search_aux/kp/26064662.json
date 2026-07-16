@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26064662",
+  "source_fingerprint": "f4250c17e366125f8c0b18fd036827a6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26064662",
+    "association-of-sickle-cell-trait-with-hemoglobin-a1c-in-african-americans"
+  ],
+  "key_phrases": [
+    "association",
+    "sickle",
+    "cell",
+    "trait",
+    "with",
+    "hemoglobin",
+    "a1c",
+    "african"
+  ],
+  "summary_1l": "Importance Hemoglobin A1c (HbA1c) reflects past glucose concentrations, but this relationship may differ between those with si",
+  "query_hits": [],
+  "embed_text": "26064662 Association of Sickle Cell Trait With Hemoglobin A1c in African Americans science scifact Importance Hemoglobin A1c (HbA1c) reflects past glucose concentrations, but this relationship may differ between those with sickle cell trait (SCT) and those without it. Objective To evaluate the association between SCT and HbA1c for given… 26064662 association-of-sickle-cell-trait-with-hemoglobin-a1c-in-african-americans association sickle cell trait with hemoglobin a1c african Importance Hemoglobin A1c (HbA1c) reflects past glucose concentrations, but this relationship may differ between those with si Association of Sickle Cell Trait With Hemoglobin A1c in African Americans Importance Hemoglobin A1c (HbA1c) reflects past glucose concentrations, but this relationship may differ between those with sickle cell trait (SCT) and those without it. Objective To evaluate the association between SCT and HbA1c for given levels of fasting or 2-hour glucose levels among African Americans. Design, Setting, and Participants Retrospective cohort study using data collected from 7938 participants in 2 community-based cohorts, the Coronary Artery Risk Development in Young Adults (CARDIA) study and the Jackson Heart Study (JHS). From the CARDIA study, 2637 patients contributed a maximum of 2 visits (2005-2011); from the JHS, 5301 participants contributed a maximum of 3 visits (2000-2013). All visits were s",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.214493+00:00"
+}

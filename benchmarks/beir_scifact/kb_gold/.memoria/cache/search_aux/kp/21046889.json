@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21046889",
+  "source_fingerprint": "45bc630107715e82299f546a0c27ddc9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21046889",
+    "alternate-day-wheel-access:-effects-on-feeding,-body-weight,-and-running."
+  ],
+  "key_phrases": [
+    "alternate",
+    "day",
+    "wheel",
+    "access",
+    "effects",
+    "feeding",
+    "body",
+    "weight"
+  ],
+  "summary_1l": "Alternate-day wheel access: effects on feeding, body weight, and running.",
+  "query_hits": [],
+  "embed_text": "21046889 Alternate-day wheel access: effects on feeding, body weight, and running. science scifact For rats access to a running wheel results in a pronounced but temporary suppression of feeding. The reasons for the feeding suppression and its temporary nature are unclear. The effects of alternate-day wheel access were explored by… 21046889 alternate-day-wheel-access:-effects-on-feeding,-body-weight,-and-running. alternate day wheel access effects feeding body weight Alternate-day wheel access: effects on feeding, body weight, and running. Alternate-day wheel access: effects on feeding, body weight, and running. For rats access to a running wheel results in a pronounced but temporary suppression of feeding. The reasons for the feeding suppression and its temporary nature are unclear. The effects of alternate-day wheel access were explored by comparing feeding and running in 25 male Sprague-Dawley rats given either no wheel access, continuous wheel access, or alternate-day wheel access. With alternate-day wheel access food intake was suppressed on wheel days and elevated on non-wheel days for the full 32 days of the experiment. Body weight decreased on wheel days and showed a large increase on non-wheel days. Acquisition of running over days was similar in both wheel groups and plateaued at the same level, but running was ele",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.312903+00:00"
+}

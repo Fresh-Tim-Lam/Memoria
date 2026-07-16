@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7157436",
+  "source_fingerprint": "634f2dee5a7e12cde384b5c4946810a5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7157436",
+    "neuronal-replacement-from-endogenous-precursors-in-the-adult-brain-after-stroke"
+  ],
+  "key_phrases": [
+    "neuronal",
+    "replacement",
+    "from",
+    "endogenous",
+    "precursors",
+    "adult",
+    "brain",
+    "after"
+  ],
+  "summary_1l": "In the adult brain, new neurons are continuously generated in the subventricular zone and dentate gyrus, but it is unkno",
+  "query_hits": [],
+  "embed_text": "7157436 Neuronal replacement from endogenous precursors in the adult brain after stroke science scifact In the adult brain, new neurons are continuously generated in the subventricular zone and dentate gyrus, but it is unknown whether these neurons can replace those lost following damage or disease. Here we show that stroke, caused by… 7157436 neuronal-replacement-from-endogenous-precursors-in-the-adult-brain-after-stroke neuronal replacement from endogenous precursors adult brain after In the adult brain, new neurons are continuously generated in the subventricular zone and dentate gyrus, but it is unkno Neuronal replacement from endogenous precursors in the adult brain after stroke In the adult brain, new neurons are continuously generated in the subventricular zone and dentate gyrus, but it is unknown whether these neurons can replace those lost following damage or disease. Here we show that stroke, caused by transient middle cerebral artery occlusion in adult rats, leads to a marked increase of cell proliferation in the subventricular zone. Stroke-generated new neurons, as well as neuroblasts probably already formed before the insult, migrate into the severely damaged area of the striatum, where they express markers of developing and mature, striatal medium-sized spiny neurons. Thus, stroke induces differentiation of new neurons into the phenotype of most of the neurons destroyed by the",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.645402+00:00"
+}

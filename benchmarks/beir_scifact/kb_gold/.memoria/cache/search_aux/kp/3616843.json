@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3616843",
+  "source_fingerprint": "4d409a665781e7d7c96cd2be6ec0e1f1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3616843",
+    "association-of-toll-like-receptor-4-on-human-monocyte-subsets-and-vulnerability-characteristics-of-coronary-plaque-as-assessed-by-64-slice-multidetector-computed-tomography."
+  ],
+  "key_phrases": [
+    "association",
+    "toll",
+    "like",
+    "receptor",
+    "human",
+    "monocyte",
+    "subsets",
+    "vulnerability"
+  ],
+  "summary_1l": "Association of Toll-Like Receptor 4 on Human Monocyte Subsets and Vulnerability Characteristics of Coronary Plaque as Assessed by 64-Slice Multidetector Computed Tomography.",
+  "query_hits": [],
+  "embed_text": "3616843 Association of Toll-Like Receptor 4 on Human Monocyte Subsets and Vulnerability Characteristics of Coronary Plaque as Assessed by 64-Slice Multidetector Computed Tomography. science scifact BACKGROUND Although Toll-like receptor 4 (TLR-4) is involved in monocyte activation in patients with accelerated forms of atherosclerosis, the relationship between the expression of TLR-4 on circulating monocytes and coronary plaque… 3616843 association-of-toll-like-receptor-4-on-human-monocyte-subsets-and-vulnerability-characteristics-of-coronary-plaque-as-assessed-by-64-slice-multidetector-computed-tomography. association toll like receptor human monocyte subsets vulnerability Association of Toll-Like Receptor 4 on Human Monocyte Subsets and Vulnerability Characteristics of Coronary Plaque as Assessed by 64-Slice Multidetector Computed Tomography. Association of Toll-Like Receptor 4 on Human Monocyte Subsets and Vulnerability Characteristics of Coronary Plaque as Assessed by 64-Slice Multidetector Computed Tomography. BACKGROUND Although Toll-like receptor 4 (TLR-4) is involved in monocyte activation in patients with accelerated forms of atherosclerosis, the relationship between the expression of TLR-4 on circulating monocytes and coronary plaque vulnerability has not previously been evaluated. We investigated this relationship using 64-slice multidetector computed tomography (MDCT) in patients with stable angina pectoris (SAP).Methods and Results:We enrolled 65 patients with SAP who underwent MDCT. Three monocyte subsets (CD14++CD16-, CD14++CD16+, and CD14+CD16+) and expression of TLR-4 were measured by flow cytometry. Intracoronar",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.928179+00:00"
+}

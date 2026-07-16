@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9159495",
+  "source_fingerprint": "2c6643a0b0fe91fd8b47041f8a073ab9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9159495",
+    "a-microrna-feedback-loop-regulates-global-microrna-abundance-during-aging."
+  ],
+  "key_phrases": [
+    "microrna",
+    "feedback",
+    "loop",
+    "regulates",
+    "global",
+    "abundance",
+    "during",
+    "aging"
+  ],
+  "summary_1l": "A microRNA feedback loop regulates global microRNA abundance during aging.",
+  "query_hits": [],
+  "embed_text": "9159495 A microRNA feedback loop regulates global microRNA abundance during aging. science scifact Expression levels of many microRNAs (miRNAs) change during aging, notably declining globally in a number of organisms and tissues across taxa. However, little is known about the mechanisms or the biological relevance for this change. We… 9159495 a-microrna-feedback-loop-regulates-global-microrna-abundance-during-aging. microrna feedback loop regulates global abundance during aging A microRNA feedback loop regulates global microRNA abundance during aging. A microRNA feedback loop regulates global microRNA abundance during aging. Expression levels of many microRNAs (miRNAs) change during aging, notably declining globally in a number of organisms and tissues across taxa. However, little is known about the mechanisms or the biological relevance for this change. We investigated the network of genes that controls miRNA transcription and processing during C. elegans aging. We found that miRNA biogenesis genes are highly networked with transcription factors and aging-associated miRNAs. In particular, miR-71, known to influence life span and itself up-regulated during aging, represses alg-1/Argonaute expression post-transcriptionally during aging. Increased ALG-1 abundance in mir-71 loss-of-function mutants led to globally increased miRNA expressio",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.264348+00:00"
+}

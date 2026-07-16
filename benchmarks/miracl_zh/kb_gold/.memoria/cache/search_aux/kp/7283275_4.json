@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "kp_id": "7283275#4",
+  "source_fingerprint": "123819c4e2a61e272f9d3a488f8fe190",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "意大利",
+    "首都",
+    "中意大利",
+    "多首都國家",
+    "洛杉矶音乐中心"
+  ],
+  "aliases": [
+    "7283275#4"
+  ],
+  "key_phrases": [
+    "1991",
+    "歐洲",
+    "歌唱",
+    "大賽",
+    "意大利",
+    "首都",
+    "一個",
+    "特殊"
+  ],
+  "summary_1l": "羅馬是意大利的首都，也是一個特殊的公社（名稱為“Comune di Roma Capitale”，羅馬首都自治市）。",
+  "query_hits": [],
+  "embed_text": "7283275#4 1991年歐洲歌唱大賽 1991年歐洲歌唱大賽 羅馬是意大利的首都，也是一個特殊的公社（名稱為“Comune di Roma Capitale”，羅馬首都自治市）。羅馬還是拉齊奧的首府。奇尼奇塔的15號工作室是羅馬中的一個大型電影製片廠，後來被確認為新場地。它是歐洲最大的電影製片廠，面積達40萬平方米，被認為是義大利電影院的中心。這些電影製片廠是在期間興建的，目的是復興義大利電影業。 意大利 首都 中意大利 多首都國家 洛杉矶音乐中心 7283275#4 1991 歐洲 歌唱 大賽 意大利 首都 一個 特殊 羅馬是意大利的首都，也是一個特殊的公社（名稱為“Comune di Roma Capitale”，羅馬首都自治市）。 1991年歐洲歌唱大賽 羅馬是意大利的首都，也是一個特殊的公社（名稱為“Comune di Roma Capitale”，羅馬首都自治市）。羅馬還是拉齊奧的首府。奇尼奇塔的15號工作室是羅馬中的一個大型電影製片廠，後來被確認為新場地。它是歐洲最大的電影製片廠，面積達40萬平方米，被認為是義大利電影院的中心。這些電影製片廠是在期間興建的，目的是復興義大利電影業。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:23:16.370178+00:00"
+}

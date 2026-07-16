@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22490293",
+  "source_fingerprint": "84897bd9d46fea1a48e59c738f013e5d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22490293",
+    "production-of-cloned-mice-and-es-cells-from-adult-somatic-cells-by-nuclear-transfer:-how-to-improve-cloning-efficiency?"
+  ],
+  "key_phrases": [
+    "production",
+    "cloned",
+    "mice",
+    "es",
+    "cells",
+    "from",
+    "adult",
+    "somatic"
+  ],
+  "summary_1l": "Production of cloned mice and ES cells from adult somatic cells by nuclear transfer: how to improve cloning efficiency?",
+  "query_hits": [],
+  "embed_text": "22490293 Production of cloned mice and ES cells from adult somatic cells by nuclear transfer: how to improve cloning efficiency? science scifact Although it has now been 10 years since the first cloned mammals were generated from somatic cells using nuclear transfer (NT), most cloned embryos usually undergo developmental arrest prior to or soon after implantation, and the success… 22490293 production-of-cloned-mice-and-es-cells-from-adult-somatic-cells-by-nuclear-transfer:-how-to-improve-cloning-efficiency? production cloned mice es cells from adult somatic Production of cloned mice and ES cells from adult somatic cells by nuclear transfer: how to improve cloning efficiency? Production of cloned mice and ES cells from adult somatic cells by nuclear transfer: how to improve cloning efficiency? Although it has now been 10 years since the first cloned mammals were generated from somatic cells using nuclear transfer (NT), most cloned embryos usually undergo developmental arrest prior to or soon after implantation, and the success rate for producing live offspring by cloning remains below 5%. The low success rate is believed to be associated with epigenetic errors, including abnormal DNA hypermethylation, but the mechanism of \"reprogramming\" is unclear. We have been able to develop a stable NT method in the mouse in which donor nuclei are directly injected into the oocyte using a piezo-actuated micromanipulator. Especially in the mouse, only a few laboratories can",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.861856+00:00"
+}

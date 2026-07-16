@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1292369",
+  "source_fingerprint": "e6f3e9d9194559071ce8fabb669df3ce",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1292369",
+    "biochemical-properties-of-highly-neuroinvasive-prion-strains"
+  ],
+  "key_phrases": [
+    "biochemical",
+    "properties",
+    "highly",
+    "neuroinvasive",
+    "prion",
+    "strains",
+    "infectious",
+    "prions"
+  ],
+  "summary_1l": "Infectious prions propagate from peripheral entry sites into the central nervous system (CNS), where they cause progressive neurodegenerati",
+  "query_hits": [],
+  "embed_text": "1292369 Biochemical Properties of Highly Neuroinvasive Prion Strains science scifact Infectious prions propagate from peripheral entry sites into the central nervous system (CNS), where they cause progressive neurodegeneration that ultimately leads to death. Yet the pathogenesis of prion disease can vary dramatically… 1292369 biochemical-properties-of-highly-neuroinvasive-prion-strains biochemical properties highly neuroinvasive prion strains infectious prions Infectious prions propagate from peripheral entry sites into the central nervous system (CNS), where they cause progressive neurodegenerati Biochemical Properties of Highly Neuroinvasive Prion Strains Infectious prions propagate from peripheral entry sites into the central nervous system (CNS), where they cause progressive neurodegeneration that ultimately leads to death. Yet the pathogenesis of prion disease can vary dramatically depending on the strain, or conformational variant of the aberrantly folded and aggregated protein, PrP(Sc). Although most prion strains invade the CNS, some prion strains cannot gain entry and do not cause clinical signs of disease. The conformational basis for this remarkable variation in the pathogenesis among strains is unclear. Using mouse-adapted prion strains, here we show that highly neuroinvasive prion strains primarily form diffuse aggregates in brain and are noncongophilic, conformationall",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:09.320199+00:00"
+}

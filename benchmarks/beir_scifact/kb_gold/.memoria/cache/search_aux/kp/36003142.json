@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36003142",
+  "source_fingerprint": "09dccc013842c25d505afb84f6836521",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36003142",
+    "mortality-risk-in-patients-with-dementia-treated-with-antipsychotics-versus-other-psychiatric-medications."
+  ],
+  "key_phrases": [
+    "mortality",
+    "risk",
+    "patients",
+    "with",
+    "dementia",
+    "treated",
+    "antipsychotics",
+    "versus"
+  ],
+  "summary_1l": "Mortality risk in patients with dementia treated with antipsychotics versus other psychiatric medications.",
+  "query_hits": [],
+  "embed_text": "36003142 Mortality risk in patients with dementia treated with antipsychotics versus other psychiatric medications. science scifact OBJECTIVE Mortality rates in the year following new antipsychotic medication starts for neuropsychiatric symptoms of dementia were compared with rates after starts of other psychiatric medications. METHOD The retrospective, cohort study… 36003142 mortality-risk-in-patients-with-dementia-treated-with-antipsychotics-versus-other-psychiatric-medications. mortality risk patients with dementia treated antipsychotics versus Mortality risk in patients with dementia treated with antipsychotics versus other psychiatric medications. Mortality risk in patients with dementia treated with antipsychotics versus other psychiatric medications. OBJECTIVE Mortality rates in the year following new antipsychotic medication starts for neuropsychiatric symptoms of dementia were compared with rates after starts of other psychiatric medications. METHOD The retrospective, cohort study used national data from the Department of Veterans Affairs (fiscal years 2001-2005) on patients older than 65 years who began outpatient treatment with psychiatric medication following a dementia diagnosis (N=10,615). Twelve-month mortality rates were compared in patients taking antipsychotics and those taking other psychiatric medications. The authors controlled for confounding by using multivariate models and propensity-scoring methods. Secondary ana",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.794480+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8087082",
+  "source_fingerprint": "80258e38c6d657a117666c9f5af0fb66",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8087082",
+    "a-microtubule-interactome:-complexes-with-roles-in-cell-cycle-and-mitosis"
+  ],
+  "key_phrases": [
+    "microtubule",
+    "interactome",
+    "complexes",
+    "with",
+    "roles",
+    "cell",
+    "cycle",
+    "mitosis"
+  ],
+  "summary_1l": "The microtubule (MT) cytoskeleton is required for many aspects of cell function, including the transport of intracellular mate",
+  "query_hits": [],
+  "embed_text": "8087082 A Microtubule Interactome: Complexes with Roles in Cell Cycle and Mitosis science scifact The microtubule (MT) cytoskeleton is required for many aspects of cell function, including the transport of intracellular materials, the maintenance of cell polarity, and the regulation of mitosis. These functions are coordinated by… 8087082 a-microtubule-interactome:-complexes-with-roles-in-cell-cycle-and-mitosis microtubule interactome complexes with roles cell cycle mitosis The microtubule (MT) cytoskeleton is required for many aspects of cell function, including the transport of intracellular mate A Microtubule Interactome: Complexes with Roles in Cell Cycle and Mitosis The microtubule (MT) cytoskeleton is required for many aspects of cell function, including the transport of intracellular materials, the maintenance of cell polarity, and the regulation of mitosis. These functions are coordinated by MT-associated proteins (MAPs), which work in concert with each other, binding MTs and altering their properties. We have used a MT cosedimentation assay, combined with 1D and 2D PAGE and mass spectrometry, to identify over 250 MAPs from early Drosophila embryos. We have taken two complementary approaches to analyse the cellular function of novel MAPs isolated using this approach. First, we have carried out an RNA interference (RNAi) screen, identifying 21 previously uncharacterised genes",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.896098+00:00"
+}

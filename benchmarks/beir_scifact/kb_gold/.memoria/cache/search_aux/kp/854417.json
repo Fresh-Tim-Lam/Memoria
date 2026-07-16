@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "854417",
+  "source_fingerprint": "6b97015a39a727866fb82fe05ca3638c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "854417",
+    "transgenic-interleukin-10-prevents-induction-of-experimental-autoimmune-encephalomyelitis"
+  ],
+  "key_phrases": [
+    "transgenic",
+    "interleukin",
+    "10",
+    "prevents",
+    "induction",
+    "experimental",
+    "autoimmune",
+    "encephalomyelitis"
+  ],
+  "summary_1l": "The effectiveness of interleukin 10 (IL-10) in the treatment of autoimmune-mediated central nervous system inf",
+  "query_hits": [],
+  "embed_text": "854417 Transgenic Interleukin 10 Prevents Induction of Experimental Autoimmune Encephalomyelitis science scifact The effectiveness of interleukin 10 (IL-10) in the treatment of autoimmune-mediated central nervous system inflammation is controversial. Studies of the model system, experimental autoimmune encephalomyelitis (EAE), using various routes,… 854417 transgenic-interleukin-10-prevents-induction-of-experimental-autoimmune-encephalomyelitis transgenic interleukin 10 prevents induction experimental autoimmune encephalomyelitis The effectiveness of interleukin 10 (IL-10) in the treatment of autoimmune-mediated central nervous system inf Transgenic Interleukin 10 Prevents Induction of Experimental Autoimmune Encephalomyelitis The effectiveness of interleukin 10 (IL-10) in the treatment of autoimmune-mediated central nervous system inflammation is controversial. Studies of the model system, experimental autoimmune encephalomyelitis (EAE), using various routes, regimens, and delivery methods of IL-10 suggest that these variables may affect its immunoregulatory function. To study the influence of these factors on IL-10 regulation of EAE pathogenesis, we have analyzed transgenic mice expressing human IL-10 (hIL-10) transgene under the control of a class II major histocompatibility complex (MHC) promoter. The hIL-10 transgenic mice are highly resistant to EAE induced by active immunization, and this resistance appears to be med",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.989987+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "471735",
+  "source_fingerprint": "35ce833c1b49433016194fb01d49839b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "471735",
+    "two-stage-control-of-an-oxidative-stress-regulon:-the-escherichia-coli-soxr-protein-triggers-redox-inducible-expression-of-the-soxs-regulatory-gene."
+  ],
+  "key_phrases": [
+    "two",
+    "stage",
+    "control",
+    "oxidative",
+    "stress",
+    "regulon",
+    "escherichia",
+    "coli"
+  ],
+  "summary_1l": "Two-stage control of an oxidative stress regulon: the Escherichia coli SoxR protein triggers redox-inducible expression of the soxS regulatory gene.",
+  "query_hits": [],
+  "embed_text": "471735 Two-stage control of an oxidative stress regulon: the Escherichia coli SoxR protein triggers redox-inducible expression of the soxS regulatory gene. science scifact Escherichia coli responds to the redox stress imposed by superoxide-generating agents such as paraquat by activating the synthesis of as many as 80 polypeptides. Expression of a key group of these inducible proteins is controlled at the… 471735 two-stage-control-of-an-oxidative-stress-regulon:-the-escherichia-coli-soxr-protein-triggers-redox-inducible-expression-of-the-soxs-regulatory-gene. two stage control oxidative stress regulon escherichia coli Two-stage control of an oxidative stress regulon: the Escherichia coli SoxR protein triggers redox-inducible expression of the soxS regulatory gene. Two-stage control of an oxidative stress regulon: the Escherichia coli SoxR protein triggers redox-inducible expression of the soxS regulatory gene. Escherichia coli responds to the redox stress imposed by superoxide-generating agents such as paraquat by activating the synthesis of as many as 80 polypeptides. Expression of a key group of these inducible proteins is controlled at the transcriptional level by the soxRS locus (the soxRS regulon). A two-stage control system was hypothesized for soxRS, in which an intracellular redox signal would trigger the SoxR protein as a transcriptional activator of the soxS gene and the resulting increased levels of SoxS protein would activate transcription of the various soxRS regulon genes (B. Demple and C.F. Amábile Cuevas, Cell 67:837-839, 1990). We h",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.329072+00:00"
+}

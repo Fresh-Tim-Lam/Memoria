@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20610557",
+  "source_fingerprint": "86d7ae32c5516087e8247825667dda66",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20610557",
+    "alkylating-agent-melphalan-augments-the-efficacy-of-adoptive-immunotherapy-using-tumor-specific-cd4+-t-cells."
+  ],
+  "key_phrases": [
+    "alkylating",
+    "agent",
+    "melphalan",
+    "augments",
+    "efficacy",
+    "adoptive",
+    "immunotherapy",
+    "using"
+  ],
+  "summary_1l": "Alkylating agent melphalan augments the efficacy of adoptive immunotherapy using tumor-specific CD4+ T cells.",
+  "query_hits": [],
+  "embed_text": "20610557 Alkylating agent melphalan augments the efficacy of adoptive immunotherapy using tumor-specific CD4+ T cells. science scifact In recent years, the immune-potentiating effects of some widely used chemotherapeutic agents have been increasingly appreciated. This provides a rationale for combining conventional chemotherapy with immunotherapy strategies to achieve… 20610557 alkylating-agent-melphalan-augments-the-efficacy-of-adoptive-immunotherapy-using-tumor-specific-cd4+-t-cells. alkylating agent melphalan augments efficacy adoptive immunotherapy using Alkylating agent melphalan augments the efficacy of adoptive immunotherapy using tumor-specific CD4+ T cells. Alkylating agent melphalan augments the efficacy of adoptive immunotherapy using tumor-specific CD4+ T cells. In recent years, the immune-potentiating effects of some widely used chemotherapeutic agents have been increasingly appreciated. This provides a rationale for combining conventional chemotherapy with immunotherapy strategies to achieve durable therapeutic benefits. Previous studies have implicated the immunomodulatory effects of melphalan, an alkylating agent commonly used to treat multiple myeloma, but the underlying mechanisms remain obscure. In the present study, we investigated the impact of melphalan on endogenous immune cells as well as adoptively transferred tumor-specific CD4(+) T cells in tumor-bearing mice. We showed that melphalan treatment resulted in a rapid burst of i",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.610745+00:00"
+}

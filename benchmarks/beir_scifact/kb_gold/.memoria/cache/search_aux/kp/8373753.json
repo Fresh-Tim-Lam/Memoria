@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8373753",
+  "source_fingerprint": "a875076298703b81787dd16f56f28f9d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8373753",
+    "spatial-and-temporal-heterogeneity-of-anopheles-mosquitoes-and-plasmodium-falciparum-transmission-along-the-kenyan-coast."
+  ],
+  "key_phrases": [
+    "spatial",
+    "temporal",
+    "heterogeneity",
+    "anopheles",
+    "mosquitoes",
+    "plasmodium",
+    "falciparum",
+    "transmission"
+  ],
+  "summary_1l": "Spatial and temporal heterogeneity of Anopheles mosquitoes and Plasmodium falciparum transmission along the Kenyan coast.",
+  "query_hits": [],
+  "embed_text": "8373753 Spatial and temporal heterogeneity of Anopheles mosquitoes and Plasmodium falciparum transmission along the Kenyan coast. science scifact The seasonal dynamics and spatial distributions of Anopheles mosquitoes and Plasmodium falciparum parasites were studied for one year at 30 villages in Malindi, Kilifi, and Kwale Districts along the coast of Kenya. Anopheline mosquitoes… 8373753 spatial-and-temporal-heterogeneity-of-anopheles-mosquitoes-and-plasmodium-falciparum-transmission-along-the-kenyan-coast. spatial temporal heterogeneity anopheles mosquitoes plasmodium falciparum transmission Spatial and temporal heterogeneity of Anopheles mosquitoes and Plasmodium falciparum transmission along the Kenyan coast. Spatial and temporal heterogeneity of Anopheles mosquitoes and Plasmodium falciparum transmission along the Kenyan coast. The seasonal dynamics and spatial distributions of Anopheles mosquitoes and Plasmodium falciparum parasites were studied for one year at 30 villages in Malindi, Kilifi, and Kwale Districts along the coast of Kenya. Anopheline mosquitoes were sampled inside houses at each site once every two months and malaria parasite prevalence in local school children was determined at the end of the entomologic survey. A total of 5,476 Anopheles gambiae s.l. and 3,461 An. funestus were collected. Species in the An. gambiae complex, identified by a polymerase chain reaction, included 81.9% An. gambiae s.s., 12.8% An. arabiensis, and 5.3% An. merus. Anopheles gambiae s.s. contributed m",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.480137+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9669099",
+  "source_fingerprint": "4db1f77a6acd9575f8b5d4012071c1be",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9669099",
+    "ernas-are-required-for-p53-dependent-enhancer-activity-and-gene-transcription."
+  ],
+  "key_phrases": [
+    "ernas",
+    "required",
+    "p53",
+    "dependent",
+    "enhancer",
+    "activity",
+    "gene",
+    "transcription"
+  ],
+  "summary_1l": "eRNAs are required for p53-dependent enhancer activity and gene transcription.",
+  "query_hits": [],
+  "embed_text": "9669099 eRNAs are required for p53-dependent enhancer activity and gene transcription. science scifact Binding within or nearby target genes involved in cell proliferation and survival enables the p53 tumor suppressor gene to regulate their transcription and cell-cycle progression. Using genome-wide chromatin-binding profiles, we describe… 9669099 ernas-are-required-for-p53-dependent-enhancer-activity-and-gene-transcription. ernas required p53 dependent enhancer activity gene transcription eRNAs are required for p53-dependent enhancer activity and gene transcription. eRNAs are required for p53-dependent enhancer activity and gene transcription. Binding within or nearby target genes involved in cell proliferation and survival enables the p53 tumor suppressor gene to regulate their transcription and cell-cycle progression. Using genome-wide chromatin-binding profiles, we describe binding of p53 also to regions located distantly from any known p53 target gene. Interestingly, many of these regions possess conserved p53-binding sites and all known hallmarks of enhancer regions. We demonstrate that these p53-bound enhancer regions (p53BERs) indeed contain enhancer activity and interact intrachromosomally with multiple neighboring genes to convey long-distance p53-dependent transcription regulation. Furthermore, p53BERs produce, in a p53-dependent manner, enh",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.540899+00:00"
+}

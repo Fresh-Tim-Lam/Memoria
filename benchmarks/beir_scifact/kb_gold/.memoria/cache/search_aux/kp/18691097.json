@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18691097",
+  "source_fingerprint": "6760e4ac374ac2a781a78c3c1ffc6f3c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18691097",
+    "periostin-deficiency-increases-bone-damage-and-impairs-injury-response-to-fatigue-loading-in-adult-mice"
+  ],
+  "key_phrases": [
+    "periostin",
+    "deficiency",
+    "increases",
+    "bone",
+    "damage",
+    "impairs",
+    "injury",
+    "response"
+  ],
+  "summary_1l": "Bone damage removal and callus formation in response to fatigue loading are essential to prevent",
+  "query_hits": [],
+  "embed_text": "18691097 Periostin Deficiency Increases Bone Damage and Impairs Injury Response to Fatigue Loading in Adult Mice science scifact Bone damage removal and callus formation in response to fatigue loading are essential to prevent fractures. Periostin (Postn) is a matricellular protein that mediates adaptive response of cortical bone to loading. Whether and how periostin… 18691097 periostin-deficiency-increases-bone-damage-and-impairs-injury-response-to-fatigue-loading-in-adult-mice periostin deficiency increases bone damage impairs injury response Bone damage removal and callus formation in response to fatigue loading are essential to prevent Periostin Deficiency Increases Bone Damage and Impairs Injury Response to Fatigue Loading in Adult Mice Bone damage removal and callus formation in response to fatigue loading are essential to prevent fractures. Periostin (Postn) is a matricellular protein that mediates adaptive response of cortical bone to loading. Whether and how periostin influences damage and the injury response to fatigue remains unknown. We investigated the skeletal response of Postn(-/-) and Postn(+/+) mice after fatigue stimulus by axial compression of their tibia. In Postn(+/+) mice, cracks number and surface (CsNb, CsS) increased 1h after fatigue, with a decrease in strength compared to non-fatigued tibia. At 15 days, CsNb had started to decline, while CtTV and CtBV increased in fatigued vs non-fatigued tibia, re",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.609495+00:00"
+}

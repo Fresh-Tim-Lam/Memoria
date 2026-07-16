@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "14116046",
+  "source_fingerprint": "6572cd7644f190934ce893dc93c5e4af",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14116046"
+  ],
+  "key_phrases": [
+    "retinoic",
+    "acid",
+    "related",
+    "orphan",
+    "receptors",
+    "key",
+    "regulators",
+    "lipid"
+  ],
+  "summary_1l": "Retinoic acid-related orphan receptors RORα and RORγ play a regulatory",
+  "query_hits": [],
+  "embed_text": "14116046 Retinoic acid-related orphan receptors α and γ: key regulators of lipid/glucose metabolism, inflammation, and insulin sensitivity science scifact Retinoic acid-related orphan receptors RORα and RORγ play a regulatory role in lipid/glucose homeostasis and various immune functions, and have been implicated in metabolic syndrome and several inflammatory diseases. RORα-deficient mice… 14116046 retinoic acid related orphan receptors key regulators lipid Retinoic acid-related orphan receptors RORα and RORγ play a regulatory Retinoic acid-related orphan receptors α and γ: key regulators of lipid/glucose metabolism, inflammation, and insulin sensitivity Retinoic acid-related orphan receptors RORα and RORγ play a regulatory role in lipid/glucose homeostasis and various immune functions, and have been implicated in metabolic syndrome and several inflammatory diseases. RORα-deficient mice are protected against age- and diet-induced obesity, hepatosteatosis, and insulin resistance. The resistance to hepatosteatosis in RORα-deficient mice is related to the reduced expression of several genes regulating lipid synthesis, transport, and storage. Adipose tissue-associated inflammation, which plays a critical role in the development of insulin resistance, is considerably diminished in RORα-deficient mice as indicated by",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.119680+00:00"
+}

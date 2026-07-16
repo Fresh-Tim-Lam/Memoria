@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5114940",
+  "source_fingerprint": "1f2f6dcd49072c105f431ce2ca5603fc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5114940",
+    "pharmacological-interventions-for-smoking-cessation:-an-overview-and-network-meta-analysis."
+  ],
+  "key_phrases": [
+    "pharmacological",
+    "interventions",
+    "smoking",
+    "cessation",
+    "overview",
+    "network",
+    "meta",
+    "analysis"
+  ],
+  "summary_1l": "Pharmacological interventions for smoking cessation: an overview and network meta-analysis.",
+  "query_hits": [],
+  "embed_text": "5114940 Pharmacological interventions for smoking cessation: an overview and network meta-analysis. science scifact BACKGROUND Smoking is the leading preventable cause of illness and premature death worldwide. Some medications have been proven to help people to quit, with three licensed for this purpose in Europe and the USA: nicotine replacement… 5114940 pharmacological-interventions-for-smoking-cessation:-an-overview-and-network-meta-analysis. pharmacological interventions smoking cessation overview network meta analysis Pharmacological interventions for smoking cessation: an overview and network meta-analysis. Pharmacological interventions for smoking cessation: an overview and network meta-analysis. BACKGROUND Smoking is the leading preventable cause of illness and premature death worldwide. Some medications have been proven to help people to quit, with three licensed for this purpose in Europe and the USA: nicotine replacement therapy (NRT), bupropion, and varenicline. Cytisine (a treatment pharmacologically similar to varenicline) is also licensed for use in Russia and some of the former socialist economy countries. Other therapies, including nortriptyline, have also been tested for effectiveness. OBJECTIVES How do NRT, bupropion and varenicline compare with placebo and with each other in achieving long-term abstinence (six months or longer)? How do the remaining treatments compare with place",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.165917+00:00"
+}

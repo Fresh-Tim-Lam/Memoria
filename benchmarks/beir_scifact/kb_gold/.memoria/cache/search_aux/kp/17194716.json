@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17194716",
+  "source_fingerprint": "f0a36312b3b5db78498bc1594f79a53e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17194716",
+    "role-of-fascin-in-filopodial-protrusion"
+  ],
+  "key_phrases": [
+    "role",
+    "fascin",
+    "filopodial",
+    "protrusion",
+    "this",
+    "study",
+    "mechanisms",
+    "actin"
+  ],
+  "summary_1l": "In this study, the mechanisms of actin-bundling in filopodia were examined.",
+  "query_hits": [],
+  "embed_text": "17194716 Role of fascin in filopodial protrusion science scifact In this study, the mechanisms of actin-bundling in filopodia were examined. Analysis of cellular localization of known actin cross-linking proteins in mouse melanoma B16F1 cells revealed that fascin was specifically localized along the… 17194716 role-of-fascin-in-filopodial-protrusion role fascin filopodial protrusion this study mechanisms actin In this study, the mechanisms of actin-bundling in filopodia were examined. Role of fascin in filopodial protrusion In this study, the mechanisms of actin-bundling in filopodia were examined. Analysis of cellular localization of known actin cross-linking proteins in mouse melanoma B16F1 cells revealed that fascin was specifically localized along the entire length of all filopodia, whereas other actin cross-linkers were not. RNA interference of fascin reduced the number of filopodia, and remaining filopodia had abnormal morphology with wavy and loosely bundled actin organization. Dephosphorylation of serine 39 likely determined cellular filopodia frequency. The constitutively active fascin mutant S39A increased the number and length of filopodia, whereas the inactive fascin mutant S39E reduced filopodia frequency. Fluorescence recovery after photobleaching of GFP-t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.449258+00:00"
+}

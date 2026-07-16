@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16644043",
+  "source_fingerprint": "62e458f31f0e0945e37ebd1024c6196d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16644043",
+    "the-dna-damage-machinery-and-homologous-recombination-pathway-act-consecutively-to-protect-human-telomeres"
+  ],
+  "key_phrases": [
+    "dna",
+    "damage",
+    "machinery",
+    "homologous",
+    "recombination",
+    "pathway",
+    "act",
+    "consecutively"
+  ],
+  "summary_1l": "Telomeres protect chromosome ends from being detected as lesions and from triggering DNA dama",
+  "query_hits": [],
+  "embed_text": "16644043 The DNA Damage Machinery and Homologous Recombination Pathway Act Consecutively to Protect Human Telomeres science scifact Telomeres protect chromosome ends from being detected as lesions and from triggering DNA damage checkpoints. Paradoxically, telomere function depends on checkpoint proteins such as ATM and ATR, but a molecular model explaining this… 16644043 the-dna-damage-machinery-and-homologous-recombination-pathway-act-consecutively-to-protect-human-telomeres dna damage machinery homologous recombination pathway act consecutively Telomeres protect chromosome ends from being detected as lesions and from triggering DNA dama The DNA Damage Machinery and Homologous Recombination Pathway Act Consecutively to Protect Human Telomeres Telomeres protect chromosome ends from being detected as lesions and from triggering DNA damage checkpoints. Paradoxically, telomere function depends on checkpoint proteins such as ATM and ATR, but a molecular model explaining this seemingly contradictory relationship has been missing so far. Here we show that the DNA damage machinery acts on telomeres in at least two independent steps. First, the ATR-dependent machinery is recruited to telomeres before telomere replication is completed, likely in response to single-stranded DNA resulting from replication fork stalling. Second, after replication, telomeres attract ATM and the homologous recombination (HR) machinery. In vivo and in vit",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.578231+00:00"
+}

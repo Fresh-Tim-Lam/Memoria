@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14252892",
+  "source_fingerprint": "87f18ede8c163b2450d07cfb3f449cdd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14252892",
+    "pharmacokinetic,-pharmacodynamic,-and-pharmacogenetic-determinants-of-osteonecrosis-in-children-with-acute-lymphoblastic-leukemia."
+  ],
+  "key_phrases": [
+    "pharmacokinetic",
+    "pharmacodynamic",
+    "pharmacogenetic",
+    "determinants",
+    "osteonecrosis",
+    "children",
+    "with",
+    "acute"
+  ],
+  "summary_1l": "Pharmacokinetic, pharmacodynamic, and pharmacogenetic determinants of osteonecrosis in children with acute lymphoblastic leukemia.",
+  "query_hits": [],
+  "embed_text": "14252892 Pharmacokinetic, pharmacodynamic, and pharmacogenetic determinants of osteonecrosis in children with acute lymphoblastic leukemia. science scifact Osteonecrosis is a severe glucocorticoid-induced complication of acute lymphoblastic leukemia treatment. We prospectively screened children (n = 364) with magnetic resonance imaging of hips and knees, regardless of symptoms; the cumulative… 14252892 pharmacokinetic,-pharmacodynamic,-and-pharmacogenetic-determinants-of-osteonecrosis-in-children-with-acute-lymphoblastic-leukemia. pharmacokinetic pharmacodynamic pharmacogenetic determinants osteonecrosis children with acute Pharmacokinetic, pharmacodynamic, and pharmacogenetic determinants of osteonecrosis in children with acute lymphoblastic leukemia. Pharmacokinetic, pharmacodynamic, and pharmacogenetic determinants of osteonecrosis in children with acute lymphoblastic leukemia. Osteonecrosis is a severe glucocorticoid-induced complication of acute lymphoblastic leukemia treatment. We prospectively screened children (n = 364) with magnetic resonance imaging of hips and knees, regardless of symptoms; the cumulative incidence of any (grade 1-4) versus symptomatic (grade 2-4) osteonecrosis was 71.8% versus 17.6%, respectively. We investigated whether age, race, sex, acute lymphoblastic leukemia treatment arm, body mass, serum lipids, albumin and cortisol levels, dexamethasone pharmacokinetics, and genome-wide germline genetic polymorphisms were associated with symptomatic osteonecrosis. Age more than 10 years (odds ratio, = 4.85; 95% conf",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.399338+00:00"
+}

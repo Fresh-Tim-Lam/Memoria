@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21948782",
+  "source_fingerprint": "9387e3d63289654874126a986445017c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21948782",
+    "function-and-regulation-of-sumo-proteases"
+  ],
+  "key_phrases": [
+    "function",
+    "regulation",
+    "sumo",
+    "proteases",
+    "covalent",
+    "attachment",
+    "small",
+    "ubiquitin"
+  ],
+  "summary_1l": "Covalent attachment of small ubiquitin-like modifier (SUMO) to proteins is highly dynamic, and both SUMO–protein conjugation and cleavage can be regulated.",
+  "query_hits": [],
+  "embed_text": "21948782 Function and regulation of SUMO proteases science scifact Covalent attachment of small ubiquitin-like modifier (SUMO) to proteins is highly dynamic, and both SUMO–protein conjugation and cleavage can be regulated. Protein desumoylation is carried out by SUMO proteases, which control cellular… 21948782 function-and-regulation-of-sumo-proteases function regulation sumo proteases covalent attachment small ubiquitin Covalent attachment of small ubiquitin-like modifier (SUMO) to proteins is highly dynamic, and both SUMO–protein conjugation and cleavage can be regulated. Function and regulation of SUMO proteases Covalent attachment of small ubiquitin-like modifier (SUMO) to proteins is highly dynamic, and both SUMO–protein conjugation and cleavage can be regulated. Protein desumoylation is carried out by SUMO proteases, which control cellular mechanisms ranging from transcription and cell division to ribosome biogenesis. Recent advances include the discovery of two novel classes of SUMO proteases, insights regarding SUMO protease specificity, and revelations of previously unappreciated SUMO protease functions in several key cellular pathways. These developments, together with new connections between SUMO proteases and the recently discovered SUMO-targeted ubiquitin ligases (STUbLs), make this an exciting period to study these enzymes.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.017547+00:00"
+}

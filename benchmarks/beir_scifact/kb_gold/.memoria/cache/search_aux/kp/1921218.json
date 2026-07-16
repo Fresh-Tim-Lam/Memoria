@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1921218",
+  "source_fingerprint": "23392c6951e5d593de18bf9ab4e8aecb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1921218",
+    "detecting-and-targeting-tumor-relapse-by-its-resistance-to-innate-effectors-at-early-recurrence"
+  ],
+  "key_phrases": [
+    "detecting",
+    "targeting",
+    "tumor",
+    "relapse",
+    "by",
+    "its",
+    "resistance",
+    "innate"
+  ],
+  "summary_1l": "Tumor recurrence represents a major clinical challenge.",
+  "query_hits": [],
+  "embed_text": "1921218 Detecting and targeting tumor relapse by its resistance to innate effectors at early recurrence science scifact Tumor recurrence represents a major clinical challenge. Our data show that emergent recurrent tumors acquire a phenotype radically different from that of their originating primary tumors. This phenotype allows them to evade a host-derived… 1921218 detecting-and-targeting-tumor-relapse-by-its-resistance-to-innate-effectors-at-early-recurrence detecting targeting tumor relapse by its resistance innate Tumor recurrence represents a major clinical challenge. Detecting and targeting tumor relapse by its resistance to innate effectors at early recurrence Tumor recurrence represents a major clinical challenge. Our data show that emergent recurrent tumors acquire a phenotype radically different from that of their originating primary tumors. This phenotype allows them to evade a host-derived innate immune response elicited by the progression from minimal residual disease (MRD) to actively growing recurrence. Screening for this innate response predicted accurately in which mice recurrence would occur. Premature induction of recurrence resensitized MRD to the primary therapy, suggesting a possible paradigm shift for clinical treatment of dormant disease in which the current expectant approach is replaced with active attempts to uncover MRD before evo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.315332+00:00"
+}

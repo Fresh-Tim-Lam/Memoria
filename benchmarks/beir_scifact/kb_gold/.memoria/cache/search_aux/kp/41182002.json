@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "41182002",
+  "source_fingerprint": "394bc1c976082bf0b7f791e9540c0b4b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "41182002",
+    "directional-perception-of-distributed-sound-sources."
+  ],
+  "key_phrases": [
+    "directional",
+    "perception",
+    "distributed",
+    "sound",
+    "sources",
+    "spatially",
+    "was",
+    "investigated"
+  ],
+  "summary_1l": "Directional perception of distributed sound sources.",
+  "query_hits": [],
+  "embed_text": "41182002 Directional perception of distributed sound sources. science scifact The perception of spatially distributed sound sources was investigated by conducting two listening experiments in anechoic conditions with 13 loudspeakers evenly distributed in the frontal horizontal plane emitting incoherent noise… 41182002 directional-perception-of-distributed-sound-sources. directional perception distributed sound sources spatially was investigated Directional perception of distributed sound sources. Directional perception of distributed sound sources. The perception of spatially distributed sound sources was investigated by conducting two listening experiments in anechoic conditions with 13 loudspeakers evenly distributed in the frontal horizontal plane emitting incoherent noise signals. In the first experiment, widely distributed sound sources with gaps in their distribution emitted pink noise. The results indicated that the exact loudspeaker distribution could not be perceived accurately and that the width of the distribution was perceived to be narrower than it was in reality. Up to three spatially distributed loudspeakers that were simultaneously emitting sound could be individually perceived. In addition, the number of loudspeakers that were indicated as emitting sound was smalle",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.178096+00:00"
+}

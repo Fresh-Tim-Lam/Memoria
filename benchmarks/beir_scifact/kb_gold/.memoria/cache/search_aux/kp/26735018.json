@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26735018",
+  "source_fingerprint": "c6fd7d28882b3eed019620371d2ff59f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26735018",
+    "interleukin-2--and-interferon-gamma-secreting-t-cells-in-normal-and-diseased-human-intestinal-mucosa."
+  ],
+  "key_phrases": [
+    "interleukin",
+    "interferon",
+    "gamma",
+    "secreting",
+    "cells",
+    "normal",
+    "diseased",
+    "human"
+  ],
+  "summary_1l": "Interleukin-2- and interferon-gamma-secreting T cells in normal and diseased human intestinal mucosa.",
+  "query_hits": [],
+  "embed_text": "26735018 Interleukin-2- and interferon-gamma-secreting T cells in normal and diseased human intestinal mucosa. science scifact A sensitive reverse haemolytic plaque assay to detect lymphokine-secreting T cells, and Northern blot analysis to detect expression of lymphokine messenger RNA (mRNA) were used to study interferon-gamma (IFN-gamma) and interleukin-2 (IL-2)… 26735018 interleukin-2--and-interferon-gamma-secreting-t-cells-in-normal-and-diseased-human-intestinal-mucosa. interleukin interferon gamma secreting cells normal diseased human Interleukin-2- and interferon-gamma-secreting T cells in normal and diseased human intestinal mucosa. Interleukin-2- and interferon-gamma-secreting T cells in normal and diseased human intestinal mucosa. A sensitive reverse haemolytic plaque assay to detect lymphokine-secreting T cells, and Northern blot analysis to detect expression of lymphokine messenger RNA (mRNA) were used to study interferon-gamma (IFN-gamma) and interleukin-2 (IL-2) production in the mucosa of children with Crohn's disease or ulcerative colitis (UC), and in histologically normal mucosa from patients without inflammatory bowel disease. In the mucosa of most patients with UC and control patients, IL-2- and IFN-gamma-secreting cells were absent or were present at only low levels. In contrast, in mucosa from patients with Crohn's disease, lymphokine-secreting cells were readily detectable (3-18%). IFN-gamma mRNA was det",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.110559+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "37444589",
+  "source_fingerprint": "0a78c088693b023eb08cd9dbd5cd2984",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "37444589",
+    "apoptosis-occurs-predominantly-in-bystander-cells-and-not-in-productively-infected-cells-of-hiv--and-siv-infected-lymph-nodes"
+  ],
+  "key_phrases": [
+    "apoptosis",
+    "occurs",
+    "predominantly",
+    "bystander",
+    "cells",
+    "not",
+    "productively",
+    "infected"
+  ],
+  "summary_1l": "Although 13 years have passed since identification of human immunodeficien",
+  "query_hits": [],
+  "embed_text": "37444589 Apoptosis occurs predominantly in bystander cells and not in productively infected cells of HIV- and SIV-infected lymph nodes science scifact Although 13 years have passed since identification of human immunodeficiency virus-1 (HIV-1) as the cause of AIDS, we do not yet know how HIV kills its primary target, the T cell that carries the CD4 antigen. We and others have shown an… 37444589 apoptosis-occurs-predominantly-in-bystander-cells-and-not-in-productively-infected-cells-of-hiv--and-siv-infected-lymph-nodes apoptosis occurs predominantly bystander cells not productively infected Although 13 years have passed since identification of human immunodeficien Apoptosis occurs predominantly in bystander cells and not in productively infected cells of HIV- and SIV-infected lymph nodes Although 13 years have passed since identification of human immunodeficiency virus-1 (HIV-1) as the cause of AIDS, we do not yet know how HIV kills its primary target, the T cell that carries the CD4 antigen. We and others have shown an increase in the percentage of apoptotic cells among circulating CD4+ (and CD8+) T cells of HIV-seropositive individuals and an increase in frequency of apoptosis with disease progression. However, it is not known if this apoptosis occurs in infected or uninfected T cells. We show here, using in situ labelling of lymph nodes from HIV-infected children and SIV-infected macaques, that apoptosis occurs predominantly in bystander cells an",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.499769+00:00"
+}

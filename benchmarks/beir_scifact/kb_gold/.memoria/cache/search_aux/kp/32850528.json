@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "32850528",
+  "source_fingerprint": "47ce212ab9f94633fb1538ea090a2a3f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "32850528",
+    "amylase,-lipase,-and-acute-pancreatitis-in-people-with-type-2-diabetes-treated-with-liraglutide:-results-from-the-leader-randomized-trial."
+  ],
+  "key_phrases": [
+    "amylase",
+    "lipase",
+    "acute",
+    "pancreatitis",
+    "people",
+    "with",
+    "type",
+    "diabetes"
+  ],
+  "summary_1l": "Amylase, Lipase, and Acute Pancreatitis in People With Type 2 Diabetes Treated With Liraglutide: Results From the LEADER Randomized Trial.",
+  "query_hits": [],
+  "embed_text": "32850528 Amylase, Lipase, and Acute Pancreatitis in People With Type 2 Diabetes Treated With Liraglutide: Results From the LEADER Randomized Trial. science scifact OBJECTIVE To evaluate serum amylase and lipase levels and the rate of acute pancreatitis in patients with type 2 diabetes and high cardiovascular risk randomized to liraglutide or placebo and observed for 3.5-5.0 years. RESEARCH DESIGN AND… 32850528 amylase,-lipase,-and-acute-pancreatitis-in-people-with-type-2-diabetes-treated-with-liraglutide:-results-from-the-leader-randomized-trial. amylase lipase acute pancreatitis people with type diabetes Amylase, Lipase, and Acute Pancreatitis in People With Type 2 Diabetes Treated With Liraglutide: Results From the LEADER Randomized Trial. Amylase, Lipase, and Acute Pancreatitis in People With Type 2 Diabetes Treated With Liraglutide: Results From the LEADER Randomized Trial. OBJECTIVE To evaluate serum amylase and lipase levels and the rate of acute pancreatitis in patients with type 2 diabetes and high cardiovascular risk randomized to liraglutide or placebo and observed for 3.5-5.0 years. RESEARCH DESIGN AND METHODS A total of 9,340 patients with type 2 diabetes were randomized to either liraglutide or placebo (median observation time 3.84 years). Fasting serum lipase and amylase were monitored. Acute pancreatitis was adjudicated in a blinded manner. RESULTS Compared with the placebo group, liraglutide-treated patients had increases in serum lipase and amylase of 28.0% and 7.0%, respectively. Levels were increased at 6 mo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.997876+00:00"
+}

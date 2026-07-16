@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10852047",
+  "source_fingerprint": "3ca208045d6dacef17e354a1fee4ba59",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10852047",
+    "wk175,-a-novel-antitumor-agent,-decreases-the-intracellular-nicotinamide-adenine-dinucleotide-concentration-and-induces-the-apoptotic-cascade-in-human-leukemia-cells."
+  ],
+  "key_phrases": [
+    "wk175",
+    "novel",
+    "antitumor",
+    "agent",
+    "decreases",
+    "intracellular",
+    "nicotinamide",
+    "adenine"
+  ],
+  "summary_1l": "WK175, a novel antitumor agent, decreases the intracellular nicotinamide adenine dinucleotide concentration and induces the apoptotic cascade in human leukemia cells.",
+  "query_hits": [],
+  "embed_text": "10852047 WK175, a novel antitumor agent, decreases the intracellular nicotinamide adenine dinucleotide concentration and induces the apoptotic cascade in human leukemia cells. science scifact We recently developed a class of novel antitumor agents that elicit a potent growth-inhibitory response in many tumor cells cultured in vitro. WK175, a member of this class, was chosen as a model compound that showed strong in vitro… 10852047 wk175,-a-novel-antitumor-agent,-decreases-the-intracellular-nicotinamide-adenine-dinucleotide-concentration-and-induces-the-apoptotic-cascade-in-human-leukemia-cells. wk175 novel antitumor agent decreases intracellular nicotinamide adenine WK175, a novel antitumor agent, decreases the intracellular nicotinamide adenine dinucleotide concentration and induces the apoptotic cascade in human leukemia cells. WK175, a novel antitumor agent, decreases the intracellular nicotinamide adenine dinucleotide concentration and induces the apoptotic cascade in human leukemia cells. We recently developed a class of novel antitumor agents that elicit a potent growth-inhibitory response in many tumor cells cultured in vitro. WK175, a member of this class, was chosen as a model compound that showed strong in vitro efficacy. WK175 interferes with the intracellular steady-state level of NAD(+), resulting in a decreased cellular NAD(+) concentration. We found that WK175 induces apoptotic cell death without any DNA-damaging effect. The apoptotic death signaling pathway initiated by WK175 was examined in detail: mitochondrial membrane potential, cytochrome c release, caspase 3 activation, caspase 3 and poly(ADP-",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:06.036436+00:00"
+}

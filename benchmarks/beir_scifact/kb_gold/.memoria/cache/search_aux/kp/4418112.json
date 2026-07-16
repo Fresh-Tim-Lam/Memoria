@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4418112",
+  "source_fingerprint": "3791ecba956e3b3fdf95e630c39cb4dc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4418112",
+    "functional-screening-identifies-mirnas-inducing-cardiac-regeneration"
+  ],
+  "key_phrases": [
+    "functional",
+    "screening",
+    "identifies",
+    "mirnas",
+    "inducing",
+    "cardiac",
+    "regeneration",
+    "mammals"
+  ],
+  "summary_1l": "In mammals, enlargement of the heart during embryonic development is primarily dependent on the increase in cardiomyocyte numbers.",
+  "query_hits": [],
+  "embed_text": "4418112 Functional screening identifies miRNAs inducing cardiac regeneration science scifact In mammals, enlargement of the heart during embryonic development is primarily dependent on the increase in cardiomyocyte numbers. Shortly after birth, however, cardiomyocytes stop proliferating and further growth of the myocardium occurs… 4418112 functional-screening-identifies-mirnas-inducing-cardiac-regeneration functional screening identifies mirnas inducing cardiac regeneration mammals In mammals, enlargement of the heart during embryonic development is primarily dependent on the increase in cardiomyocyte numbers. Functional screening identifies miRNAs inducing cardiac regeneration In mammals, enlargement of the heart during embryonic development is primarily dependent on the increase in cardiomyocyte numbers. Shortly after birth, however, cardiomyocytes stop proliferating and further growth of the myocardium occurs through hypertrophic enlargement of the existing myocytes. As a consequence of the minimal renewal of cardiomyocytes during adult life, repair of cardiac damage through myocardial regeneration is very limited. Here we show that the exogenous administration of selected microRNAs (miRNAs) markedly stimulates cardiomyocyte proliferation and promotes cardiac repair. We performed a high-content microscopy, high-throughput functional screening for human miRNAs that promoted neonatal cardiomyoc",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.895815+00:00"
+}

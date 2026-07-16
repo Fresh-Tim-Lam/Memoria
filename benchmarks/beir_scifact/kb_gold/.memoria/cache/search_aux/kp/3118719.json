@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3118719",
+  "source_fingerprint": "703f0a21926f0a087ba40312905737d9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3118719",
+    "regulation-and-function-of-the-e-cadherin/catenin-complex-in-cells-of-the-monocyte-macrophage-lineage-and-dcs."
+  ],
+  "key_phrases": [
+    "regulation",
+    "function",
+    "cadherin",
+    "catenin",
+    "complex",
+    "cells",
+    "monocyte",
+    "macrophage"
+  ],
+  "summary_1l": "Regulation and function of the E-cadherin/catenin complex in cells of the monocyte-macrophage lineage and DCs.",
+  "query_hits": [],
+  "embed_text": "3118719 Regulation and function of the E-cadherin/catenin complex in cells of the monocyte-macrophage lineage and DCs. science scifact E-cadherin is best characterized as adherens junction protein, which through homotypic interactions contributes to the maintenance of the epithelial barrier function. In epithelial cells, the cytoplasmic tail of E-cadherin forms a dynamic… 3118719 regulation-and-function-of-the-e-cadherin/catenin-complex-in-cells-of-the-monocyte-macrophage-lineage-and-dcs. regulation function cadherin catenin complex cells monocyte macrophage Regulation and function of the E-cadherin/catenin complex in cells of the monocyte-macrophage lineage and DCs. Regulation and function of the E-cadherin/catenin complex in cells of the monocyte-macrophage lineage and DCs. E-cadherin is best characterized as adherens junction protein, which through homotypic interactions contributes to the maintenance of the epithelial barrier function. In epithelial cells, the cytoplasmic tail of E-cadherin forms a dynamic complex with catenins and regulates several intracellular signal transduction pathways, including Wnt/β-catenin, PI3K/Akt, Rho GTPase, and NF-κB signaling. Recent progress uncovered a novel and critical role for this adhesion molecule in mononuclear phagocyte functions. E-cadherin regulates the maturation and migration of Langerhans cells, and its ligation prevents the induction of a tolerogenic state in bone marrow-derived dendritic cells (DCs).",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.375628+00:00"
+}

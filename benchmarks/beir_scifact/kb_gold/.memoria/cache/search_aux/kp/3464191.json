@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3464191",
+  "source_fingerprint": "0532cce08867e5c8c85c1166d944e933",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3464191",
+    "periosteum-contains-skeletal-stem-cells-with-high-bone-regenerative-potential-controlled-by-periostin"
+  ],
+  "key_phrases": [
+    "periosteum",
+    "contains",
+    "skeletal",
+    "stem",
+    "cells",
+    "with",
+    "high",
+    "bone"
+  ],
+  "summary_1l": "Bone regeneration relies on the activation of skeletal stem cells (SSCs) that still remain poorly",
+  "query_hits": [],
+  "embed_text": "3464191 Periosteum contains skeletal stem cells with high bone regenerative potential controlled by Periostin science scifact Bone regeneration relies on the activation of skeletal stem cells (SSCs) that still remain poorly characterized. Here, we show that periosteum contains SSCs with high bone regenerative potential compared to bone marrow stromal… 3464191 periosteum-contains-skeletal-stem-cells-with-high-bone-regenerative-potential-controlled-by-periostin periosteum contains skeletal stem cells with high bone Bone regeneration relies on the activation of skeletal stem cells (SSCs) that still remain poorly Periosteum contains skeletal stem cells with high bone regenerative potential controlled by Periostin Bone regeneration relies on the activation of skeletal stem cells (SSCs) that still remain poorly characterized. Here, we show that periosteum contains SSCs with high bone regenerative potential compared to bone marrow stromal cells/skeletal stem cells (BMSCs) in mice. Although periosteal cells (PCs) and BMSCs are derived from a common embryonic mesenchymal lineage, postnatally PCs exhibit greater clonogenicity, growth and differentiation capacity than BMSCs. During bone repair, PCs can efficiently contribute to cartilage and bone, and integrate long-term after transplantation. Molecular profiling uncovers genes encoding Periostin and other extracellular matrix molecules associated with th",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.662144+00:00"
+}

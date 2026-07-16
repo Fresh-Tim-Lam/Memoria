@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26735905",
+  "source_fingerprint": "c10c4d54c86de366a51452856e197c55",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26735905",
+    "metabolic-reprogramming-of-stromal-fibroblasts-through-p62-mtorc1-signaling-promotes-inflammation-and-tumorigenesis."
+  ],
+  "key_phrases": [
+    "metabolic",
+    "reprogramming",
+    "stromal",
+    "fibroblasts",
+    "through",
+    "p62",
+    "mtorc1",
+    "signaling"
+  ],
+  "summary_1l": "Metabolic reprogramming of stromal fibroblasts through p62-mTORC1 signaling promotes inflammation and tumorigenesis.",
+  "query_hits": [],
+  "embed_text": "26735905 Metabolic reprogramming of stromal fibroblasts through p62-mTORC1 signaling promotes inflammation and tumorigenesis. science scifact The tumor microenvironment plays a critical role in cancer progression, but the precise mechanisms by which stromal cells influence the epithelium are poorly understood. Here we show that p62 levels were reduced in the stroma of several… 26735905 metabolic-reprogramming-of-stromal-fibroblasts-through-p62-mtorc1-signaling-promotes-inflammation-and-tumorigenesis. metabolic reprogramming stromal fibroblasts through p62 mtorc1 signaling Metabolic reprogramming of stromal fibroblasts through p62-mTORC1 signaling promotes inflammation and tumorigenesis. Metabolic reprogramming of stromal fibroblasts through p62-mTORC1 signaling promotes inflammation and tumorigenesis. The tumor microenvironment plays a critical role in cancer progression, but the precise mechanisms by which stromal cells influence the epithelium are poorly understood. Here we show that p62 levels were reduced in the stroma of several tumors and that its loss in the tumor microenvironment or stromal fibroblasts resulted in increased tumorigenesis of epithelial prostate cancer cells. The mechanism involves the regulation of cellular redox through an mTORC1/c-Myc pathway of stromal glucose and amino acid metabolism, resulting in increased stromal IL-6 production, which is required for tumor promotion in the epithelial compartment. Thus, p62 is an anti-inflammatory tumor supp",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.119372+00:00"
+}

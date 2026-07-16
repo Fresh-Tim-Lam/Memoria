@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13400643",
+  "source_fingerprint": "60491024087080a1428b245f96f86234",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13400643",
+    "a-small-molecule-modulates-jumonji-histone-demethylase-activity-and-selectively-inhibits-cancer-growth"
+  ],
+  "key_phrases": [
+    "small",
+    "molecule",
+    "modulates",
+    "jumonji",
+    "histone",
+    "demethylase",
+    "activity",
+    "selectively"
+  ],
+  "summary_1l": "The pharmacological inhibition of general transcriptional regulators has the potential to block g",
+  "query_hits": [],
+  "embed_text": "13400643 A small molecule modulates Jumonji histone demethylase activity and selectively inhibits cancer growth science scifact The pharmacological inhibition of general transcriptional regulators has the potential to block growth through targeting multiple tumorigenic signalling pathways simultaneously. Here, using an innovative cell-based screen, we identify a… 13400643 a-small-molecule-modulates-jumonji-histone-demethylase-activity-and-selectively-inhibits-cancer-growth small molecule modulates jumonji histone demethylase activity selectively The pharmacological inhibition of general transcriptional regulators has the potential to block g A small molecule modulates Jumonji histone demethylase activity and selectively inhibits cancer growth The pharmacological inhibition of general transcriptional regulators has the potential to block growth through targeting multiple tumorigenic signalling pathways simultaneously. Here, using an innovative cell-based screen, we identify a structurally unique small molecule (named JIB-04) that specifically inhibits the activity of the Jumonji family of histone demethylases in vitro, in cancer cells, and in tumours in vivo. Unlike known inhibitors, JIB-04 is not a competitive inhibitor of α-ketoglutarate. In cancer, but not in patient-matched normal cells, JIB-04 alters a subset of transcriptional pathways and blocks viability. In mice, JIB-04 reduces tumour burden and prolongs survival. Impo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.190667+00:00"
+}

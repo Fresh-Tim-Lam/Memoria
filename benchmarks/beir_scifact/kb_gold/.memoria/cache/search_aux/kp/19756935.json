@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19756935",
+  "source_fingerprint": "dd54ea48981e9a3dd240bacd845d274f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19756935",
+    "a-simple-two-step-protocol-for-the-purification-of-human-pancreatic-beta-cells"
+  ],
+  "key_phrases": [
+    "simple",
+    "two",
+    "step",
+    "protocol",
+    "purification",
+    "human",
+    "pancreatic",
+    "beta"
+  ],
+  "summary_1l": "Isolated pure human beta cells would be helpful for a number of research purposes.",
+  "query_hits": [],
+  "embed_text": "19756935 A simple two-step protocol for the purification of human pancreatic beta cells science scifact Isolated pure human beta cells would be helpful for a number of research purposes. However, lack of beta cell-specific surface antigens has been a major problem. We aimed to develop a simple method for human beta cell isolation based on… 19756935 a-simple-two-step-protocol-for-the-purification-of-human-pancreatic-beta-cells simple two step protocol purification human pancreatic beta Isolated pure human beta cells would be helpful for a number of research purposes. A simple two-step protocol for the purification of human pancreatic beta cells Isolated pure human beta cells would be helpful for a number of research purposes. However, lack of beta cell-specific surface antigens has been a major problem. We aimed to develop a simple method for human beta cell isolation based on the initial elimination of ductal cells by their expression of carbohydrate antigen 19-9 (CA19-9), followed by positive selection of beta cells by their expression of polysialic acid–neural cell adhesion molecule (PSA-NCAM). Cell type-specific expression of CA19-9, NCAM and PSA-NCAM was studied in sections of adult human pancreas and in cultured primary endocrine and exocrine cells. Dispersed human islet cells were purified in two steps, after 4 days of suspension culture, by bin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.134919+00:00"
+}

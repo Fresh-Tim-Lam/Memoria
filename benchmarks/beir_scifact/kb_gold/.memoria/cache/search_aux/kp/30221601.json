@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "30221601",
+  "source_fingerprint": "953e46729846d4a3831a9481fee5f276",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "30221601",
+    "up-regulation-of-neuronal-calcium-sensor-1-(ncs-1)-in-the-prefrontal-cortex-of-schizophrenic-and-bipolar-patients."
+  ],
+  "key_phrases": [
+    "up",
+    "regulation",
+    "neuronal",
+    "calcium",
+    "sensor",
+    "ncs",
+    "prefrontal",
+    "cortex"
+  ],
+  "summary_1l": "Up-regulation of neuronal calcium sensor-1 (NCS-1) in the prefrontal cortex of schizophrenic and bipolar patients.",
+  "query_hits": [],
+  "embed_text": "30221601 Up-regulation of neuronal calcium sensor-1 (NCS-1) in the prefrontal cortex of schizophrenic and bipolar patients. science scifact The delineation of dopamine dysfunction in the mentally ill has been a long-standing quest of biological psychiatry. The present study focuses on a recently recognized group of dopamine receptor-interacting proteins as possible novel sites… 30221601 up-regulation-of-neuronal-calcium-sensor-1-(ncs-1)-in-the-prefrontal-cortex-of-schizophrenic-and-bipolar-patients. up regulation neuronal calcium sensor ncs prefrontal cortex Up-regulation of neuronal calcium sensor-1 (NCS-1) in the prefrontal cortex of schizophrenic and bipolar patients. Up-regulation of neuronal calcium sensor-1 (NCS-1) in the prefrontal cortex of schizophrenic and bipolar patients. The delineation of dopamine dysfunction in the mentally ill has been a long-standing quest of biological psychiatry. The present study focuses on a recently recognized group of dopamine receptor-interacting proteins as possible novel sites of dysfunction in schizophrenic and bipolar patients. We demonstrate that the dorsolateral prefrontal cortex in schizophrenia and bipolar cases from the Stanley Foundation Neuropathology Consortium display significantly elevated levels of the D2 dopamine receptor desensitization regulatory protein, neuronal calcium sensor-1. These levels of neuronal calcium sensor-1 were not influenced by age, gender, hemisphere, cause of death, postmortem p",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.489272+00:00"
+}

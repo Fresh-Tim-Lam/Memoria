@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "3720107",
+  "source_fingerprint": "2c932c6c8a5c0f0e6bb9def7a55efa38",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3720107"
+  ],
+  "key_phrases": [
+    "formin",
+    "mediated",
+    "actin",
+    "polymerization",
+    "at",
+    "cell",
+    "junctions",
+    "stabilizes"
+  ],
+  "summary_1l": "Cadherin-mediated cell-cell adhesion is required for epithelial",
+  "query_hits": [],
+  "embed_text": "3720107 Formin-mediated actin polymerization at cell–cell junctions stabilizes E-cadherin and maintains monolayer integrity during wound repair science scifact Cadherin-mediated cell-cell adhesion is required for epithelial tissue integrity in homeostasis, during development, and in tissue repair. E-cadherin stability depends on F-actin, but the mechanisms regulating actin polymerization at… 3720107 formin mediated actin polymerization at cell junctions stabilizes Cadherin-mediated cell-cell adhesion is required for epithelial Formin-mediated actin polymerization at cell–cell junctions stabilizes E-cadherin and maintains monolayer integrity during wound repair Cadherin-mediated cell-cell adhesion is required for epithelial tissue integrity in homeostasis, during development, and in tissue repair. E-cadherin stability depends on F-actin, but the mechanisms regulating actin polymerization at cell-cell junctions remain poorly understood. Here we investigated a role for formin-mediated actin polymerization at cell-cell junctions. We identify mDia1 and Fmnl3 as major factors enhancing actin polymerization and stabilizing E-cadherin at epithelial junctions. Fmnl3 localizes to adherens junctions downstream of Src and Cdc42 and its depletion leads to a reduction in F-actin and E-cadherin at junctions and a weakening of",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.215190+00:00"
+}

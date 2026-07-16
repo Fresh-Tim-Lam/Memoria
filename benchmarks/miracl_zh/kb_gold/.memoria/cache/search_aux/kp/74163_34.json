@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "kp_id": "74163#34",
+  "source_fingerprint": "b393dab060312a04eb6e75279522e49b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "动物"
+  ],
+  "aliases": [
+    "74163#34"
+  ],
+  "key_phrases": [
+    "脊椎动物",
+    "繁殖",
+    "形式多样",
+    "首先",
+    "分为",
+    "有性",
+    "无性",
+    "两种"
+  ],
+  "summary_1l": "无脊椎动物的繁殖形式多样。",
+  "query_hits": [],
+  "embed_text": "74163#34 无脊椎动物 无脊椎动物 无脊椎动物的繁殖形式多样。首先分为有性跟无性两种。有些动物，如刺胞动物和寄生虫线形动物，有世代交替现象。如果动物是雌雄同体，还会出现自体交配现象。 动物 74163#34 脊椎动物 繁殖 形式多样 首先 分为 有性 无性 两种 无脊椎动物的繁殖形式多样。 无脊椎动物 无脊椎动物的繁殖形式多样。首先分为有性跟无性两种。有些动物，如刺胞动物和寄生虫线形动物，有世代交替现象。如果动物是雌雄同体，还会出现自体交配现象。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:19:12.942750+00:00"
+}

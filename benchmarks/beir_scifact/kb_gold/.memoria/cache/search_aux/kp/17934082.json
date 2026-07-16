@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17934082",
+  "source_fingerprint": "cae5e850f4fae1cab9fdf1506aa19c55",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17934082",
+    "membrane-lipids-in-invadopodia-and-podosomes:-key-structures-for-cancer-invasion-and-metastasis"
+  ],
+  "key_phrases": [
+    "membrane",
+    "lipids",
+    "invadopodia",
+    "podosomes",
+    "key",
+    "structures",
+    "cancer",
+    "invasion"
+  ],
+  "summary_1l": "Invadopodia are extracellular matrix (ECM)-degrading protrusions formed by invasive cancer cells.",
+  "query_hits": [],
+  "embed_text": "17934082 Membrane lipids in invadopodia and podosomes: Key structures for cancer invasion and metastasis science scifact Invadopodia are extracellular matrix (ECM)-degrading protrusions formed by invasive cancer cells. Podosomes are structures functionally similar to invadopodia that are found in oncogene-transformed fibroblasts and monocyte-derived cells,… 17934082 membrane-lipids-in-invadopodia-and-podosomes:-key-structures-for-cancer-invasion-and-metastasis membrane lipids invadopodia podosomes key structures cancer invasion Invadopodia are extracellular matrix (ECM)-degrading protrusions formed by invasive cancer cells. Membrane lipids in invadopodia and podosomes: Key structures for cancer invasion and metastasis Invadopodia are extracellular matrix (ECM)-degrading protrusions formed by invasive cancer cells. Podosomes are structures functionally similar to invadopodia that are found in oncogene-transformed fibroblasts and monocyte-derived cells, including macrophages and osteoclasts. These structures are thought to play important roles in the pericellular remodeling of ECM during cancer invasion and metastasis. Much effort has been directed toward identification of the molecular components and regulators of invadopodia/podosomes, which could be therapeutic targets in the treatment of malignant cancers. However, it remains largely unknown how these components are assembled into invadopodia/podosomes and",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.510810+00:00"
+}

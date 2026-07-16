@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9929089",
+  "source_fingerprint": "d38dd2f71d6be20c9db06c68c39cb7ec",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9929089",
+    "subsequent-chemotherapy-reverses-acquired-tyrosine-kinase-inhibitor-resistance-and-restores-response-to-tyrosine-kinase-inhibitor-in-advanced-non-small-cell-lung-cancer"
+  ],
+  "key_phrases": [
+    "subsequent",
+    "chemotherapy",
+    "reverses",
+    "acquired",
+    "tyrosine",
+    "kinase",
+    "inhibitor",
+    "resistance"
+  ],
+  "summary_1l": "BACKGROUND Patients with advanc",
+  "query_hits": [],
+  "embed_text": "9929089 Subsequent chemotherapy reverses acquired tyrosine kinase inhibitor resistance and restores response to tyrosine kinase inhibitor in advanced non-small-cell lung cancer science scifact BACKGROUND Patients with advanced or metastatic non-small cell lung cancer (NSCLC) can develop acquired resistance to epidermal growth factor receptor tyrosine kinase inhibitors (TKIs) erlotinib and gefitinib. Here, we report the… 9929089 subsequent-chemotherapy-reverses-acquired-tyrosine-kinase-inhibitor-resistance-and-restores-response-to-tyrosine-kinase-inhibitor-in-advanced-non-small-cell-lung-cancer subsequent chemotherapy reverses acquired tyrosine kinase inhibitor resistance BACKGROUND Patients with advanc Subsequent chemotherapy reverses acquired tyrosine kinase inhibitor resistance and restores response to tyrosine kinase inhibitor in advanced non-small-cell lung cancer BACKGROUND Patients with advanced or metastatic non-small cell lung cancer (NSCLC) can develop acquired resistance to epidermal growth factor receptor tyrosine kinase inhibitors (TKIs) erlotinib and gefitinib. Here, we report the successful treatment with alternating chemotherapy and TKIs of two cases of advanced NSCLC who developed resistance to TKI. CASE PRESENTATION Two patients with advanced or metastatic NSCLC were treated with palliative chemotherapy followed by erlotinib/gefitinib. When TKI therapy failed, two cycles of chemotherapy were provided, which were followed by re-challenge with erlotinib or gefitinib. CONCL",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:06.121066+00:00"
+}

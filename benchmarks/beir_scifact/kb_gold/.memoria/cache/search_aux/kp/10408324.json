@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10408324",
+  "source_fingerprint": "869cc43f96df4ad7cd5bf4872d94c343",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10408324",
+    "the-effects-of-self-administering-emergency-contraception."
+  ],
+  "key_phrases": [
+    "effects",
+    "self",
+    "administering",
+    "emergency",
+    "contraception",
+    "background",
+    "postcoital",
+    "prevents"
+  ],
+  "summary_1l": "The effects of self-administering emergency contraception.",
+  "query_hits": [],
+  "embed_text": "10408324 The effects of self-administering emergency contraception. science scifact BACKGROUND Emergency postcoital contraception prevents pregnancy, but it must be prescribed by a doctor and taken within 72 hours of intercourse. It has been proposed that emergency contraception be made available without a prescription.… 10408324 the-effects-of-self-administering-emergency-contraception. effects self administering emergency contraception background postcoital prevents The effects of self-administering emergency contraception. The effects of self-administering emergency contraception. BACKGROUND Emergency postcoital contraception prevents pregnancy, but it must be prescribed by a doctor and taken within 72 hours of intercourse. It has been proposed that emergency contraception be made available without a prescription. We undertook a study to learn how women might behave if given a supply of emergency contraceptive pills to keep at home. METHODS We assigned 553 women to be given a replaceable supply of hormonal emergency contraceptive pills to take home (the treatment group) and 530 women to use emergency contraception obtained by visiting a doctor (the control group). The frequency of use of emergency contraception, the use of other contraceptives, and the incidence of unwanted pregnancy were determined in both",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:04.695162+00:00"
+}

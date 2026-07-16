@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4469125",
+  "source_fingerprint": "12cb58270c0db929b9ff816b2743e6bc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4469125",
+    "g-protein-independent-coupling-of-mc4r-to-kir7.1-in-hypothalamic-neurons"
+  ],
+  "key_phrases": [
+    "protein",
+    "independent",
+    "coupling",
+    "mc4r",
+    "kir7.1",
+    "hypothalamic",
+    "neurons",
+    "regulated"
+  ],
+  "summary_1l": "G-protein-independent coupling of MC4R to Kir7.",
+  "query_hits": [],
+  "embed_text": "4469125 G-protein-independent coupling of MC4R to Kir7.1 in hypothalamic neurons science scifact The regulated release of anorexigenic α-melanocyte stimulating hormone (α-MSH) and orexigenic Agouti-related protein (AgRP) from discrete hypothalamic arcuate neurons onto common target sites in the central nervous system has a fundamental… 4469125 g-protein-independent-coupling-of-mc4r-to-kir7.1-in-hypothalamic-neurons protein independent coupling mc4r kir7.1 hypothalamic neurons regulated G-protein-independent coupling of MC4R to Kir7. G-protein-independent coupling of MC4R to Kir7.1 in hypothalamic neurons The regulated release of anorexigenic α-melanocyte stimulating hormone (α-MSH) and orexigenic Agouti-related protein (AgRP) from discrete hypothalamic arcuate neurons onto common target sites in the central nervous system has a fundamental role in the regulation of energy homeostasis. Both peptides bind with high affinity to the melanocortin-4 receptor (MC4R); existing data show that α-MSH is an agonist that couples the receptor to the Gαs signalling pathway, while AgRP binds competitively to block α-MSH binding and blocks the constitutive activity mediated by the ligand-mimetic amino-terminal domain of the receptor. Here we show that, in mice, regulation of firing activity of neurons from the paraventricular nucleus",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.874152+00:00"
+}

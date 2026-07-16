@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23369842",
+  "source_fingerprint": "c1ae12226a1d4ee7444dea0a0fbe117c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23369842",
+    "metabolic-effects-of-isoenergetic-nutrient-exchange-over-24-hours-in-relation-to-obesity-in-women."
+  ],
+  "key_phrases": [
+    "metabolic",
+    "effects",
+    "isoenergetic",
+    "nutrient",
+    "exchange",
+    "over",
+    "24",
+    "hours"
+  ],
+  "summary_1l": "Metabolic effects of isoenergetic nutrient exchange over 24 hours in relation to obesity in women.",
+  "query_hits": [],
+  "embed_text": "23369842 Metabolic effects of isoenergetic nutrient exchange over 24 hours in relation to obesity in women. science scifact Twenty-four hour whole body indirect calorimetry has been used to study the effects of feeding, during a sedentary test day, isoenergetic diets which varied in fat (3 or 40 per cent of total energy) and carbohydrate (82 or 45 per cent)… 23369842 metabolic-effects-of-isoenergetic-nutrient-exchange-over-24-hours-in-relation-to-obesity-in-women. metabolic effects isoenergetic nutrient exchange over 24 hours Metabolic effects of isoenergetic nutrient exchange over 24 hours in relation to obesity in women. Metabolic effects of isoenergetic nutrient exchange over 24 hours in relation to obesity in women. Twenty-four hour whole body indirect calorimetry has been used to study the effects of feeding, during a sedentary test day, isoenergetic diets which varied in fat (3 or 40 per cent of total energy) and carbohydrate (82 or 45 per cent) content. Three groups of women were studied: lean, obese and 'post-obese' after slimming. Energy expenditure was greater in absolute terms in the obese women. Twenty-four hour energy expenditure was lower by only 3-7 per cent when fasting compared to that when fed to achieve energy balance. There were no large differences in energy expenditure between the two diets or between the groups but the thermogenic effect of the high carbohydrate diet was significantly",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.365902+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1032372",
+  "source_fingerprint": "356f045754941f17dbf5e30161468a8a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1032372",
+    "augmenting-antitumor-immune-responses-with-epigenetic-modifying-agents"
+  ],
+  "key_phrases": [
+    "augmenting",
+    "antitumor",
+    "immune",
+    "responses",
+    "with",
+    "epigenetic",
+    "modifying",
+    "agents"
+  ],
+  "summary_1l": "Epigenetic silencing of immune-related genes is a striking feature of the cancer genome that occurs in the process of tumorigenes",
+  "query_hits": [],
+  "embed_text": "1032372 Augmenting Antitumor Immune Responses with Epigenetic Modifying Agents science scifact Epigenetic silencing of immune-related genes is a striking feature of the cancer genome that occurs in the process of tumorigenesis. This phenomena impacts antigen processing and antigen presentation by tumor cells and facilitates evasion… 1032372 augmenting-antitumor-immune-responses-with-epigenetic-modifying-agents augmenting antitumor immune responses with epigenetic modifying agents Epigenetic silencing of immune-related genes is a striking feature of the cancer genome that occurs in the process of tumorigenes Augmenting Antitumor Immune Responses with Epigenetic Modifying Agents Epigenetic silencing of immune-related genes is a striking feature of the cancer genome that occurs in the process of tumorigenesis. This phenomena impacts antigen processing and antigen presentation by tumor cells and facilitates evasion of immunosurveillance. Further modulation of the tumor microenvironment by altered expression of immunosuppressive cytokines impairs antigen-presenting cells and cytolytic T-cell function. The potential reversal of immunosuppression by epigenetic modulation is therefore a promising and versatile therapeutic approach to reinstate endogenous immune recognition and tumor lysis. Pre-clinical studies have identified multiple elements of the immune system that can be modulated by epigenetic",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:04.594708+00:00"
+}

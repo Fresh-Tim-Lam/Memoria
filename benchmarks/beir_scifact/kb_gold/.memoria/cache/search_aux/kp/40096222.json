@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "40096222",
+  "source_fingerprint": "51a8ecd122ec0f07afeff79661066147",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "40096222",
+    "compromised-intestinal-epithelial-barrier-induces-adaptive-immune-compensation-that-protects-from-colitis."
+  ],
+  "key_phrases": [
+    "compromised",
+    "intestinal",
+    "epithelial",
+    "barrier",
+    "induces",
+    "adaptive",
+    "immune",
+    "compensation"
+  ],
+  "summary_1l": "Compromised intestinal epithelial barrier induces adaptive immune compensation that protects from colitis.",
+  "query_hits": [],
+  "embed_text": "40096222 Compromised intestinal epithelial barrier induces adaptive immune compensation that protects from colitis. science scifact Mice lacking junctional adhesion molecule A (JAM-A, encoded by F11r) exhibit enhanced intestinal epithelial permeability, bacterial translocation, and elevated colonic lymphocyte numbers, yet do not develop colitis. To investigate the… 40096222 compromised-intestinal-epithelial-barrier-induces-adaptive-immune-compensation-that-protects-from-colitis. compromised intestinal epithelial barrier induces adaptive immune compensation Compromised intestinal epithelial barrier induces adaptive immune compensation that protects from colitis. Compromised intestinal epithelial barrier induces adaptive immune compensation that protects from colitis. Mice lacking junctional adhesion molecule A (JAM-A, encoded by F11r) exhibit enhanced intestinal epithelial permeability, bacterial translocation, and elevated colonic lymphocyte numbers, yet do not develop colitis. To investigate the contribution of adaptive immune compensation in response to increased intestinal epithelial permeability, we examined the susceptibility of F11r(-/-)Rag1(-/-) mice to acute colitis. Although negligible contributions of adaptive immunity in F11r(+/+)Rag1(-/-) mice were observed, F11r(-/-)Rag1(-/-) mice exhibited increased microflora-dependent colitis. Elimination of T cell subsets and cytokine analyses revealed a protective role for TGF-β-producing CD4(+)",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.264300+00:00"
+}

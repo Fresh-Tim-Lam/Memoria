@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26973393",
+  "source_fingerprint": "d798ec7b107838d335ad2bae7153d6a7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26973393",
+    "the-quest-to-overcome-resistance-to-egfr-targeted-therapies-in-cancer"
+  ],
+  "key_phrases": [
+    "quest",
+    "overcome",
+    "resistance",
+    "egfr",
+    "targeted",
+    "therapies",
+    "cancer",
+    "all"
+  ],
+  "summary_1l": "All patients with metastatic lung, colorectal, pancreatic or head and neck cancers who initially benefit from epidermal growth fac",
+  "query_hits": [],
+  "embed_text": "26973393 The quest to overcome resistance to EGFR-targeted therapies in cancer science scifact All patients with metastatic lung, colorectal, pancreatic or head and neck cancers who initially benefit from epidermal growth factor receptor (EGFR)-targeted therapies eventually develop resistance. An increasing understanding of the… 26973393 the-quest-to-overcome-resistance-to-egfr-targeted-therapies-in-cancer quest overcome resistance egfr targeted therapies cancer all All patients with metastatic lung, colorectal, pancreatic or head and neck cancers who initially benefit from epidermal growth fac The quest to overcome resistance to EGFR-targeted therapies in cancer All patients with metastatic lung, colorectal, pancreatic or head and neck cancers who initially benefit from epidermal growth factor receptor (EGFR)-targeted therapies eventually develop resistance. An increasing understanding of the number and complexity of resistance mechanisms highlights the Herculean challenge of killing tumors that are resistant to EGFR inhibitors. Our growing knowledge of resistance pathways provides an opportunity to develop new mechanism-based inhibitors and combination therapies to prevent or overcome therapeutic resistance in tumors. We present a comprehensive review of resistance pathways to EGFR-targeted therapies in lung, colorectal and head and neck cancers and discuss therapeutic strategi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.306882+00:00"
+}

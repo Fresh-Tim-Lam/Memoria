@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13989491",
+  "source_fingerprint": "c4b42d0a023f0b014185e121851fb7e2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13989491",
+    "acids:-structures,-properties,-and-functions-(university-science-books,-sausalito,-ca,-2000)."
+  ],
+  "key_phrases": [
+    "acids",
+    "structures",
+    "properties",
+    "functions",
+    "university",
+    "science",
+    "books",
+    "sausalito"
+  ],
+  "summary_1l": "Acids: Structures, Properties, and Functions (University Science Books, Sausalito, CA, 2000).",
+  "query_hits": [],
+  "embed_text": "13989491 Acids: Structures, Properties, and Functions (University Science Books, Sausalito, CA, 2000). science scifact Humans expressing a defective form of the transcription factor AIRE (autoimmune regulator) develop multiorgan autoimmune disease. We used aire- deficient mice to test the hypothesis that this transcription factor regulates autoimmunity by… 13989491 acids:-structures,-properties,-and-functions-(university-science-books,-sausalito,-ca,-2000). acids structures properties functions university science books sausalito Acids: Structures, Properties, and Functions (University Science Books, Sausalito, CA, 2000). Acids: Structures, Properties, and Functions (University Science Books, Sausalito, CA, 2000). Humans expressing a defective form of the transcription factor AIRE (autoimmune regulator) develop multiorgan autoimmune disease. We used aire- deficient mice to test the hypothesis that this transcription factor regulates autoimmunity by promoting the ectopic expression of peripheral tissue- restricted antigens in medullary epithelial cells of the thymus. This hypothesis proved correct. The mutant animals exhibited a defined profile of autoimmune diseases that depended on the absence of aire in stromal cells of the thymus. Aire-deficient thymic medullary epithelial cells showed a specific reduction in ectopic transcription of genes encoding peripheral antigens. These findings highlight the import",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.916826+00:00"
+}

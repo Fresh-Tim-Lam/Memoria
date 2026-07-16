@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5035851",
+  "source_fingerprint": "3f632290117247483c779f1c0db4f1dd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5035851",
+    "cryptochromes-enabling-plants-and-animals-to-determine-circadian-time"
+  ],
+  "key_phrases": [
+    "cryptochromes",
+    "enabling",
+    "plants",
+    "animals",
+    "determine",
+    "circadian",
+    "time",
+    "flavin"
+  ],
+  "summary_1l": "Cryptochromes are flavin-containing blue light photoreceptors related to photolyases-they are found in both plants and animals and",
+  "query_hits": [],
+  "embed_text": "5035851 Cryptochromes Enabling Plants and Animals to Determine Circadian Time science scifact Cryptochromes are flavin-containing blue light photoreceptors related to photolyases-they are found in both plants and animals and have recently been described for bacteria. In plants, cryptochromes perform a variety of functions including… 5035851 cryptochromes-enabling-plants-and-animals-to-determine-circadian-time cryptochromes enabling plants animals determine circadian time flavin Cryptochromes are flavin-containing blue light photoreceptors related to photolyases-they are found in both plants and animals and Cryptochromes Enabling Plants and Animals to Determine Circadian Time Cryptochromes are flavin-containing blue light photoreceptors related to photolyases-they are found in both plants and animals and have recently been described for bacteria. In plants, cryptochromes perform a variety of functions including the entrainment of circadian rhythms. They serve a similar role in Drosophila and mammals, where the cryptochromes also perform an additional function as an essential component of the circadian clock.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.059430+00:00"
+}

@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "kp_id": "599798#0",
+  "source_fingerprint": "36c9e2802764cc518b7d149fa7a478aa",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "摩托車",
+    "纽约市摩天大楼列表",
+    "西班牙语国家和地区列表",
+    "周深音樂作品列表",
+    "波兰旗帜列表",
+    "联合国安全理事会成员国列表",
+    "電視廣播有限公司",
+    "世界水电站列表",
+    "中国证券金融股份有限公司",
+    "中国驻西班牙大使列表",
+    "中華民國駐西班牙大使列表",
+    "俄语国家和地区列表"
+  ],
+  "aliases": [
+    "599798#0"
+  ],
+  "key_phrases": [
+    "摩托车",
+    "品牌",
+    "列表",
+    "以下",
+    "世界各地",
+    "摩托",
+    "名稱",
+    "acme"
+  ],
+  "summary_1l": "以下為世界各地的摩托車品牌名稱列表。",
+  "query_hits": [],
+  "embed_text": "599798#0 摩托车品牌列表 摩托车品牌列表 以下為世界各地的摩托車品牌名稱列表。 ACME（Sydney） Agon、 Belarus、 generic、 KTM、 Laurin & Klement、 Puch ADS、 Ajax（Brussel）、 FN、 Piatti Balkan CBB Minsk（） A&A、 Big Brute ADM、 ECOMOBIL、 PERAVES Skyteam（三鑫） ZNEN MOTOR（中能）、 HAOJIANG（豪江）、 Baotian（寶田）、 CFMOTO（春風）、 C 摩托車 纽约市摩天大楼列表 西班牙语国家和地区列表 周深音樂作品列表 波兰旗帜列表 联合国安全理事会成员国列表 電視廣播有限公司 世界水电站列表 中国证券金融股份有限公司 中国驻西班牙大使列表 中華民國駐西班牙大使列表 俄语国家和地区列表 599798#0 摩托车 品牌 列表 以下 世界各地 摩托 名稱 acme 以下為世界各地的摩托車品牌名稱列表。 摩托车品牌列表 以下為世界各地的摩托車品牌名稱列表。 ACME（Sydney） Agon、 Belarus、 generic、 KTM、 Laurin & Klement、 Puch ADS、 Ajax（Brussel）、 FN、 Piatti Balkan CBB Minsk（） A&A、 Big Brute ADM、 ECOMOBIL、 PERAVES Skyteam（三鑫） ZNEN MOTOR（中能）、 HAOJIANG（豪江）、 Baotian（寶田）、 CFMOTO（春風）、 CJYM（建設）、 DAYUN（大运）、 DAYANG（大陽）、 Emeishan（峨眉山）、 ESHINE（翼翔）、 Fulaitai（福來泰）、 FYM（飛鷹）、 GAMMA（加瑪）、 HangLong（航龍）、 Haojue（豪爵）、 Hensim（恆勝）、 Hua Sha（華日）、 Huawinmotor（華鷹）、 JIALING（嘉陵）、 JL（鴻運來）、 KANCED（康鑫）、 KINGPENG（鵬王）、 KINLONG（勁隆）、 Lingben（凌本）、 LONCIN（隆鑫）、 MeiTian（美田）、 MULAN（木蘭）、 QiSheng（琪盛）、 QJLANG（錢江）、 QINGQI（轻骑摩托）、 SANDI（三迪）、 SANJG（廣州奔馬實業三鈴摩托）、 Shandong Pioneer（山東先鋒）、 Shineray（鑫源） XINGCHANG（星昶）、 YUEHAO（粵豪）、 ZIPSTAR（力之星）、 ZONGSHEN（宗申）、 ZUNLON（尊隆）、 Wuyang-Honda（五羊-本田摩托(广州)有限公司）、 GSTMOTO 浙江台州古思特机车 Aeros、 C-Zeta、 Čezeta、 ČZ、 ESO、 JAWA、 Kentoya、 Manet、 Yuki",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:20:45.009616+00:00"
+}

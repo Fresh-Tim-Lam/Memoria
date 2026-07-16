@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15335331",
+  "source_fingerprint": "0ed30046ef4ba74a4b01a25c1db13a65",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15335331",
+    "tumor-associated-macrophages-correlate-with-the-clinicopathological-features-and-poor-outcomes-via-inducing-epithelial-to-mesenchymal-transition-in-oral-squamous-cell-carcinoma"
+  ],
+  "key_phrases": [
+    "tumor",
+    "associated",
+    "macrophages",
+    "correlate",
+    "with",
+    "clinicopathological",
+    "features",
+    "poor"
+  ],
+  "summary_1l": "BACKGROUND Both tumor-a",
+  "query_hits": [],
+  "embed_text": "15335331 Tumor-associated macrophages correlate with the clinicopathological features and poor outcomes via inducing epithelial to mesenchymal transition in oral squamous cell carcinoma science scifact BACKGROUND Both tumor-associated macrophages (TAMs) and the epithelial to mesenchymal transition (EMT) of cancer cells play key roles in promoting tumor progression. However, whether TAMs could induce EMT in the progression of oral… 15335331 tumor-associated-macrophages-correlate-with-the-clinicopathological-features-and-poor-outcomes-via-inducing-epithelial-to-mesenchymal-transition-in-oral-squamous-cell-carcinoma tumor associated macrophages correlate with clinicopathological features poor BACKGROUND Both tumor-a Tumor-associated macrophages correlate with the clinicopathological features and poor outcomes via inducing epithelial to mesenchymal transition in oral squamous cell carcinoma BACKGROUND Both tumor-associated macrophages (TAMs) and the epithelial to mesenchymal transition (EMT) of cancer cells play key roles in promoting tumor progression. However, whether TAMs could induce EMT in the progression of oral squamous cell carcinoma (OSCC) remains undefined. RESULTS Here we detected the expression of macrophages markers CD68 and CD163, epithelial marker E-cadherin and mesenchymal marker vimentin in 127 OSCC patients by using semi-quantitative immunohistochemistry. CD68 and CD163 expression was not confined to the infiltrating TAMs, but also detected in cancer cells. The high number of CD68-pos",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.354733+00:00"
+}

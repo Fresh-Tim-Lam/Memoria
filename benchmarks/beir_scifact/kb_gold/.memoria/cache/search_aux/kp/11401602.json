@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11401602",
+  "source_fingerprint": "850b287feac0a67392a963400473ca46",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11401602",
+    "topoisomerase-ii-plays-an-essential-role-as-a-swivelase-in-the-late-stage-of-sv40-chromosome-replication-in-vitro."
+  ],
+  "key_phrases": [
+    "topoisomerase",
+    "ii",
+    "plays",
+    "essential",
+    "role",
+    "as",
+    "swivelase",
+    "late"
+  ],
+  "summary_1l": "Topoisomerase II plays an essential role as a swivelase in the late stage of SV40 chromosome replication in vitro.",
+  "query_hits": [],
+  "embed_text": "11401602 Topoisomerase II plays an essential role as a swivelase in the late stage of SV40 chromosome replication in vitro. science scifact The effects of topoisomerases I and II on the replication of SV40 DNA were examined using an in vitro replication system of purified proteins that constitutes the monopolymerase system. In the presence of the two topoisomerases, two… 11401602 topoisomerase-ii-plays-an-essential-role-as-a-swivelase-in-the-late-stage-of-sv40-chromosome-replication-in-vitro. topoisomerase ii plays essential role as swivelase late Topoisomerase II plays an essential role as a swivelase in the late stage of SV40 chromosome replication in vitro. Topoisomerase II plays an essential role as a swivelase in the late stage of SV40 chromosome replication in vitro. The effects of topoisomerases I and II on the replication of SV40 DNA were examined using an in vitro replication system of purified proteins that constitutes the monopolymerase system. In the presence of the two topoisomerases, two distinct nascent DNAs were formed. One product arising from the replication of the leading template strand was approximately half the size of the template DNA, whereas the other product derived from the lagging template strand consisted of short DNAs. These products were synthesized from both SV40 naked DNA and SV40 chromosomes. For the replication of SV40 naked DNA, either topoisomerase I or II maintained replication fork movement and supported co",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:06.477534+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "31834381",
+  "source_fingerprint": "31484aa9b74e32d268464e6ae943cae3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "31834381",
+    "risk-factors-associated-with-symptoms-of-gastroesophageal-reflux."
+  ],
+  "key_phrases": [
+    "risk",
+    "factors",
+    "associated",
+    "with",
+    "symptoms",
+    "gastroesophageal",
+    "reflux",
+    "background"
+  ],
+  "summary_1l": "Risk factors associated with symptoms of gastroesophageal reflux.",
+  "query_hits": [],
+  "embed_text": "31834381 Risk factors associated with symptoms of gastroesophageal reflux. science scifact BACKGROUND Although patients with gastroesophageal reflux are often instructed to change their lifestyle, population-based data on the risk factors for reflux in the United States are lacking. METHODS We performed a cross-sectional study… 31834381 risk-factors-associated-with-symptoms-of-gastroesophageal-reflux. risk factors associated with symptoms gastroesophageal reflux background Risk factors associated with symptoms of gastroesophageal reflux. Risk factors associated with symptoms of gastroesophageal reflux. BACKGROUND Although patients with gastroesophageal reflux are often instructed to change their lifestyle, population-based data on the risk factors for reflux in the United States are lacking. METHODS We performed a cross-sectional study in an age- and gender-stratified random sample of the population of Olmsted County, Minnesota. Residents aged 25 to 74 years were mailed a valid self-report questionnaire that measured reflux symptoms and potential risk factors. Logistic regression was used to estimate the odds ratios (OR) with 95% confidence intervals (CI) for reflux symptoms (heartburn or acid regurgitation) associated with potential risk factors. RESULTS Overall, 1,524 (72%) of 2,118 eligible subjects responded. A body ma",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.897582+00:00"
+}

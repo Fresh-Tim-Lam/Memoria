@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13791044",
+  "source_fingerprint": "953b6f49dbc37467d08d89b6509de43d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13791044",
+    "cerebral-palsy-among-term-and-postterm-births."
+  ],
+  "key_phrases": [
+    "cerebral",
+    "palsy",
+    "among",
+    "term",
+    "postterm",
+    "births",
+    "context",
+    "although"
+  ],
+  "summary_1l": "Cerebral palsy among term and postterm births.",
+  "query_hits": [],
+  "embed_text": "13791044 Cerebral palsy among term and postterm births. science scifact CONTEXT Although preterm delivery is a well-established risk factor for cerebral palsy (CP), preterm deliveries contribute only a minority of affected infants. There is little information on the relation of CP risk to gestational age in… 13791044 cerebral-palsy-among-term-and-postterm-births. cerebral palsy among term postterm births context although Cerebral palsy among term and postterm births. Cerebral palsy among term and postterm births. CONTEXT Although preterm delivery is a well-established risk factor for cerebral palsy (CP), preterm deliveries contribute only a minority of affected infants. There is little information on the relation of CP risk to gestational age in the term range, where most CP occurs. OBJECTIVE To determine whether timing of birth in the term and postterm period is associated with risk of CP. DESIGN, SETTING, AND PARTICIPANTS Population-based follow-up study using the Medical Birth Registry of Norway to identify 1,682,441 singleton children born in the years 1967-2001 with a gestational age of 37 through 44 weeks and no congenital anomalies. The cohort was followed up through 2005 by linkage to other national registries. MAIN OUTCOME MEASURES Absolute an",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.034316+00:00"
+}

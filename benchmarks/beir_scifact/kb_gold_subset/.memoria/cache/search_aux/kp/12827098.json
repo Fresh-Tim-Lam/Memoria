@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12827098",
+  "source_fingerprint": "35c5ac8124b744dc5129472e0bc90431",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12827098",
+    "tissue-resident-macrophages-self-maintain-locally-throughout-adult-life-with-minimal-contribution-from-circulating-monocytes."
+  ],
+  "key_phrases": [
+    "tissue",
+    "resident",
+    "macrophages",
+    "self",
+    "maintain",
+    "locally",
+    "throughout",
+    "adult"
+  ],
+  "summary_1l": "Tissue-resident macrophages self-maintain locally throughout adult life with minimal contribution from circulating monocytes.",
+  "query_hits": [],
+  "embed_text": "12827098 Tissue-resident macrophages self-maintain locally throughout adult life with minimal contribution from circulating monocytes. science scifact Despite accumulating evidence suggesting local self-maintenance of tissue macrophages in the steady state, the dogma remains that tissue macrophages derive from monocytes. Using parabiosis and fate-mapping approaches, we confirmed that… 12827098 tissue-resident-macrophages-self-maintain-locally-throughout-adult-life-with-minimal-contribution-from-circulating-monocytes. tissue resident macrophages self maintain locally throughout adult Tissue-resident macrophages self-maintain locally throughout adult life with minimal contribution from circulating monocytes. Tissue-resident macrophages self-maintain locally throughout adult life with minimal contribution from circulating monocytes. Despite accumulating evidence suggesting local self-maintenance of tissue macrophages in the steady state, the dogma remains that tissue macrophages derive from monocytes. Using parabiosis and fate-mapping approaches, we confirmed that monocytes do not show significant contribution to tissue macrophages in the steady state. Similarly, we found that after depletion of lung macrophages, the majority of repopulation occurred by stochastic cellular proliferation in situ in a macrophage colony-stimulating factor (M-Csf)- and granulocyte macrophage (GM)-CSF-dependent manner but independently of interleukin-4. We also found that after bone marrow transplantation, host macr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:09.699360+00:00"
+}

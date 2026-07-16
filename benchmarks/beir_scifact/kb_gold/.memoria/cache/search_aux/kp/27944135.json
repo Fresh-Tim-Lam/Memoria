@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27944135",
+  "source_fingerprint": "1798d36f0ff3f66218ac8e2a37eacb9f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27944135",
+    "silver-sulfadiazine-for-the-treatment-of-partial-thickness-burns-and-venous-stasis-ulcers."
+  ],
+  "key_phrases": [
+    "silver",
+    "sulfadiazine",
+    "treatment",
+    "partial",
+    "thickness",
+    "burns",
+    "venous",
+    "stasis"
+  ],
+  "summary_1l": "Silver sulfadiazine for the treatment of partial-thickness burns and venous stasis ulcers.",
+  "query_hits": [],
+  "embed_text": "27944135 Silver sulfadiazine for the treatment of partial-thickness burns and venous stasis ulcers. science scifact BACKGROUND For decades silver-containing antibiotics such as silver sulfadiazine (SSD) have been applied as standard topical therapy for patients with partial-thickness burns and venous stasis ulcers. This evidence-based review intends to… 27944135 silver-sulfadiazine-for-the-treatment-of-partial-thickness-burns-and-venous-stasis-ulcers. silver sulfadiazine treatment partial thickness burns venous stasis Silver sulfadiazine for the treatment of partial-thickness burns and venous stasis ulcers. Silver sulfadiazine for the treatment of partial-thickness burns and venous stasis ulcers. BACKGROUND For decades silver-containing antibiotics such as silver sulfadiazine (SSD) have been applied as standard topical therapy for patients with partial-thickness burns and venous stasis ulcers. This evidence-based review intends to answer the following research question: in ambulatory patients with partial-thickness burns or stasis dermatitis ulcers, does the use of topical SSD compared with nonantibiotic dressings improve mortality, wound healing, re-epithelialization, or infection rates? METHODS MEDLINE, EMBASE, Cochrane Library, and other databases were searched. We considered trials that enrolled patients of any age with partial-thickness burns or venous stasis ulcers and randomized them t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.473262+00:00"
+}

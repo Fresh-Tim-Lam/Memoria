@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11936877",
+  "source_fingerprint": "7e2fbb811305e796f67c59a836ef4bbf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11936877",
+    "environmental-and-economic-costs-of-soil-erosion-and-conservation-benefits."
+  ],
+  "key_phrases": [
+    "environmental",
+    "economic",
+    "costs",
+    "soil",
+    "erosion",
+    "conservation",
+    "benefits",
+    "major"
+  ],
+  "summary_1l": "Environmental and economic costs of soil erosion and conservation benefits.",
+  "query_hits": [],
+  "embed_text": "11936877 Environmental and economic costs of soil erosion and conservation benefits. science scifact Soil erosion is a major environmental threat to the sustainability and productive capacity of agriculture. During the last 40 years, nearly one-third of the world's arable land has been lost by erosion and continues to be lost at a rate of… 11936877 environmental-and-economic-costs-of-soil-erosion-and-conservation-benefits. environmental economic costs soil erosion conservation benefits major Environmental and economic costs of soil erosion and conservation benefits. Environmental and economic costs of soil erosion and conservation benefits. Soil erosion is a major environmental threat to the sustainability and productive capacity of agriculture. During the last 40 years, nearly one-third of the world's arable land has been lost by erosion and continues to be lost at a rate of more than 10 million hectares per year. With the addition of a quarter of a million people each day, the world population's food demand is increasing at a time when per capita food productivity is beginning to decline.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:07.472561+00:00"
+}

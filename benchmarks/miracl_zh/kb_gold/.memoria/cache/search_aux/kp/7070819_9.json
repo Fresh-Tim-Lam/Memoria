@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "7070819#9",
+  "source_fingerprint": "a6433839014fb918a7882710c0502396",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7070819#9"
+  ],
+  "key_phrases": [
+    "舉尾家",
+    "蟻屬",
+    "分工",
+    "工作",
+    "體體型",
+    "和頭",
+    "巢外",
+    "寬則"
+  ],
+  "summary_1l": "舉尾家蟻會分工，在巢內工作的個體體型和頭寬較小，在巢外工作的個體體型和頭寬則較大。",
+  "query_hits": [],
+  "embed_text": "7070819#9 舉尾家蟻屬 舉尾家蟻屬 舉尾家蟻會分工，在巢內工作的個體體型和頭寬較小，在巢外工作的個體體型和頭寬則較大。有些 Orthocrema 亞屬的物種，如 \"Crematogaster schimmeri\", \"C. biroi, C. pygmaea\" ，有專門產卵的階級，產下的未受精卵會被幼蟲吃掉。 7070819#9 舉尾家 蟻屬 分工 工作 體體型 和頭 巢外 寬則 舉尾家蟻會分工，在巢內工作的個體體型和頭寬較小，在巢外工作的個體體型和頭寬則較大。 舉尾家蟻屬 舉尾家蟻會分工，在巢內工作的個體體型和頭寬較小，在巢外工作的個體體型和頭寬則較大。有些 Orthocrema 亞屬的物種，如 \"Crematogaster schimmeri\", \"C. biroi, C. pygmaea\" ，有專門產卵的階級，產下的未受精卵會被幼蟲吃掉。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:23:11.975384+00:00"
+}

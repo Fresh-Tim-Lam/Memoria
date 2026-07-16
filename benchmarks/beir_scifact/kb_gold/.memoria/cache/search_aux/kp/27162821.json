@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27162821",
+  "source_fingerprint": "cb9e88bb0b923f6b8bd294cf89896ebf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27162821",
+    "percentile-curves-for-hemoglobin-and-red-cell-volume-in-infancy-and-childhood."
+  ],
+  "key_phrases": [
+    "percentile",
+    "curves",
+    "hemoglobin",
+    "red",
+    "cell",
+    "volume",
+    "infancy",
+    "childhood"
+  ],
+  "summary_1l": "Percentile curves for hemoglobin and red cell volume in infancy and childhood.",
+  "query_hits": [],
+  "embed_text": "27162821 Percentile curves for hemoglobin and red cell volume in infancy and childhood. science scifact Percentile curves were calculated for hemoglobin and mean corpuscular volume in children between 0.5 and 16 years of age. The curves were derived from several populations of non-indigent white children who lived near sea level. Subjects… 27162821 percentile-curves-for-hemoglobin-and-red-cell-volume-in-infancy-and-childhood. percentile curves hemoglobin red cell volume infancy childhood Percentile curves for hemoglobin and red cell volume in infancy and childhood. Percentile curves for hemoglobin and red cell volume in infancy and childhood. Percentile curves were calculated for hemoglobin and mean corpuscular volume in children between 0.5 and 16 years of age. The curves were derived from several populations of non-indigent white children who lived near sea level. Subjects were excluded from the reference population if they had laboratory evidence of iron deficiency, thalassemia minor, and/or hemoglobinopathy. The final reference populations included 9,946 children for the derivation of the hemoglobin curves and 2,314 for the MCV curves. The percentile curves should be particularly applicable to the diagnosis and screening of iron deficiency and thalassemia minor.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.592863+00:00"
+}

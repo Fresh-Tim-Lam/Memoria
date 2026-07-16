@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7150238",
+  "source_fingerprint": "7d0ebf9673e6ff2f4f781d0eb6e83b33",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7150238",
+    "the-effects-of-ly2405319,-an-fgf21-analog,-in-obese-human-subjects-with-type-2-diabetes."
+  ],
+  "key_phrases": [
+    "effects",
+    "ly2405319",
+    "fgf21",
+    "analog",
+    "obese",
+    "human",
+    "subjects",
+    "with"
+  ],
+  "summary_1l": "The effects of LY2405319, an FGF21 analog, in obese human subjects with type 2 diabetes.",
+  "query_hits": [],
+  "embed_text": "7150238 The effects of LY2405319, an FGF21 analog, in obese human subjects with type 2 diabetes. science scifact Fibroblast growth factor 21 (FGF21) is a recently discovered metabolic regulator. Exogenous FGF21 produces beneficial metabolic effects in animal models; however, the translation of these observations to humans has not been tested. Here,… 7150238 the-effects-of-ly2405319,-an-fgf21-analog,-in-obese-human-subjects-with-type-2-diabetes. effects ly2405319 fgf21 analog obese human subjects with The effects of LY2405319, an FGF21 analog, in obese human subjects with type 2 diabetes. The effects of LY2405319, an FGF21 analog, in obese human subjects with type 2 diabetes. Fibroblast growth factor 21 (FGF21) is a recently discovered metabolic regulator. Exogenous FGF21 produces beneficial metabolic effects in animal models; however, the translation of these observations to humans has not been tested. Here, we studied the effects of LY2405319 (LY), a variant of FGF21, in a randomized, placebo-controlled, double-blind proof-of-concept trial in patients with obesity and type 2 diabetes. Patients received placebo or 3, 10, or 20 mg of LY daily for 28 days. LY treatment produced significant improvements in dyslipidemia, including decreases in low-density lipoprotein cholesterol and triglycerides and increases in high-density lipoprotein cholesterol and a shift to a potentiall",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.609237+00:00"
+}

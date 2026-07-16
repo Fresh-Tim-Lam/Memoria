@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "35987381",
+  "source_fingerprint": "55297651156c46eebc8194fe49945a19",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "35987381",
+    "cd8+-t-cells-are-activated-in-an-antigen-independent-manner-in-hiv-infected-individuals."
+  ],
+  "key_phrases": [
+    "cd8",
+    "cells",
+    "activated",
+    "antigen",
+    "independent",
+    "manner",
+    "hiv",
+    "infected"
+  ],
+  "summary_1l": "CD8+ T cells are activated in an antigen-independent manner in HIV-infected individuals.",
+  "query_hits": [],
+  "embed_text": "35987381 CD8+ T cells are activated in an antigen-independent manner in HIV-infected individuals. science scifact Hyperactivation of T cells, particularly of CD8(+) T cells, is a hallmark of chronic HIV 1 (HIV-1) infection. Little is known about the antigenic specificities and the mechanisms by which HIV-1 causes activation of CD8(+) T cells during… 35987381 cd8+-t-cells-are-activated-in-an-antigen-independent-manner-in-hiv-infected-individuals. cd8 cells activated antigen independent manner hiv infected CD8+ T cells are activated in an antigen-independent manner in HIV-infected individuals. CD8+ T cells are activated in an antigen-independent manner in HIV-infected individuals. Hyperactivation of T cells, particularly of CD8(+) T cells, is a hallmark of chronic HIV 1 (HIV-1) infection. Little is known about the antigenic specificities and the mechanisms by which HIV-1 causes activation of CD8(+) T cells during chronic infection. We report that CD8(+) T cells were activated during in vivo HIV-1 replication irrespective of their Ag specificity. Cytokines present during untreated HIV-1 infection, most prominently IL-15, triggered proliferation and expression of activation markers in CD8(+) T cells, but not CD4(+) T cells, in the absence of TCR stimulation. Moreover, LPS or HIV-1-activated dendritic cells (DCs) stimulated CD8(+) T cells in an IL-15-dependent but Ag-independent ma",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.766441+00:00"
+}

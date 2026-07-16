@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22334300",
+  "source_fingerprint": "d81f43bfe019590293efa3afccb9196e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22334300",
+    "toxicity-of-nerium-oleander-in-the-monkey-(cebus-apella)."
+  ],
+  "key_phrases": [
+    "toxicity",
+    "nerium",
+    "oleander",
+    "monkey",
+    "cebus",
+    "apella",
+    "toxic",
+    "effects"
+  ],
+  "summary_1l": "Toxicity of Nerium oleander in the monkey (Cebus apella).",
+  "query_hits": [],
+  "embed_text": "22334300 Toxicity of Nerium oleander in the monkey (Cebus apella). science scifact The toxic effects of Nerium oleander were evaluated in capuchin monkeys (Cebus apella) by examination of clinical signs, hematologic and serum chemical values, and gross and microscopic lesions. Dried and ground oleander leaves were given… 22334300 toxicity-of-nerium-oleander-in-the-monkey-(cebus-apella). toxicity nerium oleander monkey cebus apella toxic effects Toxicity of Nerium oleander in the monkey (Cebus apella). Toxicity of Nerium oleander in the monkey (Cebus apella). The toxic effects of Nerium oleander were evaluated in capuchin monkeys (Cebus apella) by examination of clinical signs, hematologic and serum chemical values, and gross and microscopic lesions. Dried and ground oleander leaves were given at intervals of 48 h in doses of 30, 7.5, and 3 mg/kg body weight. The cumulative lethal dose ranged from 30 to 60 mg/kg body weight in monkeys that were given doses of 30 and 7.5 mg/kg body weight. Monkeys that received doses of 3 mg/kg body weight (total cumulative dose: 60 mg/kg) survived. Clinical signs were vomiting, salivation, polyuria, bradycardia, vaginal hemorrhage, abortion, anorexia, constipation, loss of body weight, narcosis, restlessness, weakness, and shallow and rapid respirations.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.581170+00:00"
+}

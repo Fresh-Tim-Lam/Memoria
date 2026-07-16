@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11026600",
+  "source_fingerprint": "7a6a28c2ef5be46e3eff7bfd82418296",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11026600",
+    "unifying-viral-genetics-and-human-transportation-data-to-predict-the-global-transmission-dynamics-of-human-influenza-h3n2"
+  ],
+  "key_phrases": [
+    "unifying",
+    "viral",
+    "genetics",
+    "human",
+    "transportation",
+    "data",
+    "predict",
+    "global"
+  ],
+  "summary_1l": "Information on global human movement patterns is central to spatial epidemiolo",
+  "query_hits": [],
+  "embed_text": "11026600 Unifying Viral Genetics and Human Transportation Data to Predict the Global Transmission Dynamics of Human Influenza H3N2 science scifact Information on global human movement patterns is central to spatial epidemiological models used to predict the behavior of influenza and other infectious diseases. Yet it remains difficult to test which modes of dispersal drive pathogen… 11026600 unifying-viral-genetics-and-human-transportation-data-to-predict-the-global-transmission-dynamics-of-human-influenza-h3n2 unifying viral genetics human transportation data predict global Information on global human movement patterns is central to spatial epidemiolo Unifying Viral Genetics and Human Transportation Data to Predict the Global Transmission Dynamics of Human Influenza H3N2 Information on global human movement patterns is central to spatial epidemiological models used to predict the behavior of influenza and other infectious diseases. Yet it remains difficult to test which modes of dispersal drive pathogen spread at various geographic scales using standard epidemiological data alone. Evolutionary analyses of pathogen genome sequences increasingly provide insights into the spatial dynamics of influenza viruses, but to date they have largely neglected the wealth of information on human mobility, mainly because no statistical framework exists within which viral gene sequences and empirical data on host movement can be combined. Here, we addre",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:05.888383+00:00"
+}

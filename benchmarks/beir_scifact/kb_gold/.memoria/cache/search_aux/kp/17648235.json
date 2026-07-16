@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17648235",
+  "source_fingerprint": "a6e153c8f2ecae382cd5048322a33314",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17648235",
+    "autocrine-wnt-signaling-contributes-to-breast-cancer-cell-proliferation-via-the-canonical-wnt-pathway-and-egfr-transactivation"
+  ],
+  "key_phrases": [
+    "autocrine",
+    "wnt",
+    "signaling",
+    "contributes",
+    "breast",
+    "cancer",
+    "cell",
+    "proliferation"
+  ],
+  "summary_1l": "De-regulation of the wingless and integration site growth factor (WNT) si",
+  "query_hits": [],
+  "embed_text": "17648235 Autocrine WNT signaling contributes to breast cancer cell proliferation via the canonical WNT pathway and EGFR transactivation science scifact De-regulation of the wingless and integration site growth factor (WNT) signaling pathway via mutations in APC and Axin, proteins that target β-catenin for destruction, have been linked to various types of human cancer. These genetic… 17648235 autocrine-wnt-signaling-contributes-to-breast-cancer-cell-proliferation-via-the-canonical-wnt-pathway-and-egfr-transactivation autocrine wnt signaling contributes breast cancer cell proliferation De-regulation of the wingless and integration site growth factor (WNT) si Autocrine WNT signaling contributes to breast cancer cell proliferation via the canonical WNT pathway and EGFR transactivation De-regulation of the wingless and integration site growth factor (WNT) signaling pathway via mutations in APC and Axin, proteins that target β-catenin for destruction, have been linked to various types of human cancer. These genetic alterations rarely, if ever, are observed in breast tumors. However, various lines of evidence suggest that WNT signaling may also be de-regulated in breast cancer. Most breast tumors show hypermethylation of the promoter region of secreted Frizzled-related protein 1 (sFRP1), a negative WNT pathway regulator, leading to downregulation of its expression. As a consequence, WNT signaling is enhanced and may contribute to proliferation of h",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.056832+00:00"
+}

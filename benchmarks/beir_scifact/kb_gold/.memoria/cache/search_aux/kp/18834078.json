@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "18834078",
+  "source_fingerprint": "0a6871a7a173320c720007c9f84e8b91",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18834078"
+  ],
+  "key_phrases": [
+    "secondary",
+    "cell",
+    "synaptic",
+    "interactions",
+    "drive",
+    "differentiation",
+    "protective",
+    "cd8"
+  ],
+  "summary_1l": "Immunization results in the differentiation of CD8+ T cells, such that they acquire effector abilitie",
+  "query_hits": [],
+  "embed_text": "18834078 Secondary T cell–T cell synaptic interactions drive the differentiation of protective CD8+ T cells science scifact Immunization results in the differentiation of CD8+ T cells, such that they acquire effector abilities and convert into a memory pool. Priming of T cells takes place via an immunological synapse formed with an antigen-presenting cell… 18834078 secondary cell synaptic interactions drive differentiation protective cd8 Immunization results in the differentiation of CD8+ T cells, such that they acquire effector abilitie Secondary T cell–T cell synaptic interactions drive the differentiation of protective CD8+ T cells Immunization results in the differentiation of CD8+ T cells, such that they acquire effector abilities and convert into a memory pool. Priming of T cells takes place via an immunological synapse formed with an antigen-presenting cell (APC). By disrupting synaptic stability at different times, we found that the differentiation of CD8+ T cells required cell interactions beyond those made with APCs. We identified a critical differentiation period that required interactions between primed T cells. We found that T cell–T cell synapses had a major role in the generation of protective CD8+ T cell memory. T cell–T cell synapses allowed T cells to polarize critical secretion of interferon-γ (IFN-γ) to",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.747980+00:00"
+}

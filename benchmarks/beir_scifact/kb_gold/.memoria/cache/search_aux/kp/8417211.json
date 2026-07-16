@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8417211",
+  "source_fingerprint": "58d126904e80f041b9e8129162344d54",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8417211",
+    "phosphorylation-site-mutations-in-heterochromatin-protein-1-(hp1)-reduce-or-eliminate-silencing-activity."
+  ],
+  "key_phrases": [
+    "phosphorylation",
+    "site",
+    "mutations",
+    "heterochromatin",
+    "protein",
+    "hp1",
+    "reduce",
+    "eliminate"
+  ],
+  "summary_1l": "Phosphorylation site mutations in heterochromatin protein 1 (HP1) reduce or eliminate silencing activity.",
+  "query_hits": [],
+  "embed_text": "8417211 Phosphorylation site mutations in heterochromatin protein 1 (HP1) reduce or eliminate silencing activity. science scifact HP1 is an essential heterochromatin-associated protein in Drosophila. HP1 has dosage-dependent effects on the silencing of euchromatic genes that are mislocalized to heterochromatin and is required for the normal expression of at least two… 8417211 phosphorylation-site-mutations-in-heterochromatin-protein-1-(hp1)-reduce-or-eliminate-silencing-activity. phosphorylation site mutations heterochromatin protein hp1 reduce eliminate Phosphorylation site mutations in heterochromatin protein 1 (HP1) reduce or eliminate silencing activity. Phosphorylation site mutations in heterochromatin protein 1 (HP1) reduce or eliminate silencing activity. HP1 is an essential heterochromatin-associated protein in Drosophila. HP1 has dosage-dependent effects on the silencing of euchromatic genes that are mislocalized to heterochromatin and is required for the normal expression of at least two heterochromatic genes. HP1 is multiply phosphorylated in vivo, and HP1 hyperphosphorylation is correlated with heterochromatin assembly during development. The purpose of this study was to test whether HP1 phosphorylation modifies biological activity and biochemical properties of HP1. To determine sites of HP1 phosphorylation in vivo and whether phosphorylation affects any biochemical properties of HP1, we expressed Drosophila HP1 in lepidopteran cul",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.582212+00:00"
+}

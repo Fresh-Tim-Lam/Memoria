@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "9612317",
+  "source_fingerprint": "eaf695a99312ac98d2c871f0acbfa5a6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9612317"
+  ],
+  "key_phrases": [
+    "angiopoietin",
+    "at",
+    "high",
+    "concentration",
+    "can",
+    "enhance",
+    "endothelial",
+    "cell"
+  ],
+  "summary_1l": "The angiopoietin-Tie2 system in endothelial cells",
+  "query_hits": [],
+  "embed_text": "9612317 Angiopoietin-2 at high concentration can enhance endothelial cell survival through the phosphatidylinositol 3′-kinase/Akt signal transduction pathway science scifact The angiopoietin-Tie2 system in endothelial cells is an important regulator of vasculogenesis and vascular integrity. High levels of angiopoietin-2 (Ang2) mRNA are observed in vascular activation during tumorigenesis. Although Ang2 is… 9612317 angiopoietin at high concentration can enhance endothelial cell The angiopoietin-Tie2 system in endothelial cells Angiopoietin-2 at high concentration can enhance endothelial cell survival through the phosphatidylinositol 3′-kinase/Akt signal transduction pathway The angiopoietin-Tie2 system in endothelial cells is an important regulator of vasculogenesis and vascular integrity. High levels of angiopoietin-2 (Ang2) mRNA are observed in vascular activation during tumorigenesis. Although Ang2 is known to be a naturally occurring antagonist of angiopoietin-1 (Ang1) in vivo, the exact function of Ang2 itself is not known. Here, we found that a high concentration of Ang2 (800 ng/ml) acts as an apoptosis survival factor for endothelial cells during serum deprivation apoptosis. The survival effect of high concentration Ang2 was blocked by pre-treatment with soluble Tie2 receptor and the PI 3′-kinase-specific",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.367181+00:00"
+}

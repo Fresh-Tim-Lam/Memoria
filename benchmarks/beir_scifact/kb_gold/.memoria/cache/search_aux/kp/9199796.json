@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9199796",
+  "source_fingerprint": "ab8c2bfc27f474319d74df1ad4d751ff",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9199796",
+    "the-snf1-kinase-controls-glucose-repression-in-yeast-by-modulating-interactions-between-the-mig1-repressor-and-the-cyc8-tup1-co-repressor."
+  ],
+  "key_phrases": [
+    "snf1",
+    "kinase",
+    "controls",
+    "glucose",
+    "repression",
+    "yeast",
+    "by",
+    "modulating"
+  ],
+  "summary_1l": "The Snf1 kinase controls glucose repression in yeast by modulating interactions between the Mig1 repressor and the Cyc8-Tup1 co-repressor.",
+  "query_hits": [],
+  "embed_text": "9199796 The Snf1 kinase controls glucose repression in yeast by modulating interactions between the Mig1 repressor and the Cyc8-Tup1 co-repressor. science scifact Among lower eukaryotes, glucose repression is a conserved, widely spread mechanism regulating carbon catabolism. The yeast Snf1 kinase, the Mig1 DNA-binding repressor and the Mig1-interacting co-repressor complex Cyc8(Ssn6)-Tup1 are… 9199796 the-snf1-kinase-controls-glucose-repression-in-yeast-by-modulating-interactions-between-the-mig1-repressor-and-the-cyc8-tup1-co-repressor. snf1 kinase controls glucose repression yeast by modulating The Snf1 kinase controls glucose repression in yeast by modulating interactions between the Mig1 repressor and the Cyc8-Tup1 co-repressor. The Snf1 kinase controls glucose repression in yeast by modulating interactions between the Mig1 repressor and the Cyc8-Tup1 co-repressor. Among lower eukaryotes, glucose repression is a conserved, widely spread mechanism regulating carbon catabolism. The yeast Snf1 kinase, the Mig1 DNA-binding repressor and the Mig1-interacting co-repressor complex Cyc8(Ssn6)-Tup1 are central components of this pathway. Previous experiments suggested that cytoplasmic translocation of Mig1, upon its phosphorylation by Snf1 in the nucleus, is the key regulatory step for releasing glucose repression. In this report we re-evaluate this model. We establish the coordinated repressive action of Mig1 and Cyc8-Tup1 on GAL1 transcription, but we find that Cyc8-Tup1 is not tethered by Mig1 to the promoter DNA. We de",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.433497+00:00"
+}

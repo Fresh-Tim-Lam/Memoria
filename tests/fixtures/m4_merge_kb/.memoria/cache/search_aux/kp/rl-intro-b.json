@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "rl-intro-b",
+  "source_fingerprint": "6ea086c5a001658382de83e87998c1a0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "rl-intro-b"
+  ],
+  "key_phrases": [
+    "强化",
+    "学习",
+    "导论",
+    "文件",
+    "同名",
+    "kp",
+    "qianghuaxuexidaolunlingyiwenjiandetongming",
+    "强化学习导论 b 另一文件的同名 kp。"
+  ],
+  "summary_1l": "B 另一文件的同名 KP。",
+  "query_hits": [],
+  "embed_text": "rl-intro-b 强化学习导论 rl-intro-b 强化 学习 导论 文件 同名 kp qianghuaxuexidaolunlingyiwenjiandetongming 强化学习导论 b 另一文件的同名 kp。 B 另一文件的同名 KP。 强化学习导论 B 另一文件的同名 KP。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T03:23:44.828866+00:00"
+}

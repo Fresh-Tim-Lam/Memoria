@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22180793",
+  "source_fingerprint": "dc595d170d34dc15e0ca0b202911fa5a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22180793",
+    "monoclonal-antibody-targeting-of-n-cadherin-inhibits-prostate-cancer-growth,-metastasis-and-castration-resistance"
+  ],
+  "key_phrases": [
+    "monoclonal",
+    "antibody",
+    "targeting",
+    "cadherin",
+    "inhibits",
+    "prostate",
+    "cancer",
+    "growth"
+  ],
+  "summary_1l": "The transition from androgen-dependent to castration-resistant prostate cancer (CRPC)",
+  "query_hits": [],
+  "embed_text": "22180793 Monoclonal antibody targeting of N-cadherin inhibits prostate cancer growth, metastasis and castration resistance science scifact The transition from androgen-dependent to castration-resistant prostate cancer (CRPC) is a lethal event of uncertain molecular etiology. Comparing gene expression in isogenic androgen-dependent and CRPC xenografts, we found a reproducible… 22180793 monoclonal-antibody-targeting-of-n-cadherin-inhibits-prostate-cancer-growth,-metastasis-and-castration-resistance monoclonal antibody targeting cadherin inhibits prostate cancer growth The transition from androgen-dependent to castration-resistant prostate cancer (CRPC) Monoclonal antibody targeting of N-cadherin inhibits prostate cancer growth, metastasis and castration resistance The transition from androgen-dependent to castration-resistant prostate cancer (CRPC) is a lethal event of uncertain molecular etiology. Comparing gene expression in isogenic androgen-dependent and CRPC xenografts, we found a reproducible increase in N-cadherin expression, which was also elevated in primary and metastatic tumors of individuals with CRPC. Ectopic expression of N-cadherin in nonmetastatic, androgen-dependent prostate cancer models caused castration resistance, invasion and metastasis. Monoclonal antibodies against the ectodomain of N-cadherin reduced proliferation, adhesion and invasion of prostate cancer cells in vitro. In vivo, these antibodies slowed the growt",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.371769+00:00"
+}

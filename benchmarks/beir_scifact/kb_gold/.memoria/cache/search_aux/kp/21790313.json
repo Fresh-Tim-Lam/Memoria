@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21790313",
+  "source_fingerprint": "a167e47396f0ef2e35ff2c25f465afa9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21790313",
+    "effects-of-powered-mobility-on-self-initiated-behaviors-of-very-young-children-with-locomotor-disability."
+  ],
+  "key_phrases": [
+    "effects",
+    "powered",
+    "mobility",
+    "self",
+    "initiated",
+    "behaviors",
+    "very",
+    "young"
+  ],
+  "summary_1l": "Effects of powered mobility on self-initiated behaviors of very young children with locomotor disability.",
+  "query_hits": [],
+  "embed_text": "21790313 Effects of powered mobility on self-initiated behaviors of very young children with locomotor disability. science scifact This study reports the effects of powered mobility on the self-initiated behavior of six children with various disabilities who, between 23 and 38 months of age, learnt to use motorized wheelchairs in less than three weeks. Using a… 21790313 effects-of-powered-mobility-on-self-initiated-behaviors-of-very-young-children-with-locomotor-disability. effects powered mobility self initiated behaviors very young Effects of powered mobility on self-initiated behaviors of very young children with locomotor disability. Effects of powered mobility on self-initiated behaviors of very young children with locomotor disability. This study reports the effects of powered mobility on the self-initiated behavior of six children with various disabilities who, between 23 and 38 months of age, learnt to use motorized wheelchairs in less than three weeks. Using a multiple baseline design, two-hour observation periods were video-recorded at 10-day intervals before and after they achieved independent mobility. Frequency of self-initiated interaction with objects, spatial exploration and communication with care-giver were analyzed. Three children increased all three types of behavior; one increased in two types but decreased in interaction with objects; and two increased in spatial exploration only.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.727012+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "857189",
+  "source_fingerprint": "d0c563bcc1a15bf545f0b3ba82682dd6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "857189",
+    "autosomal-dominant-immune-dysregulation-syndrome-in-humans-with-ctla4-mutations"
+  ],
+  "key_phrases": [
+    "autosomal",
+    "dominant",
+    "immune",
+    "dysregulation",
+    "syndrome",
+    "humans",
+    "with",
+    "ctla4"
+  ],
+  "summary_1l": "The protein cytotoxic T lymphocyte antigen-4 (CTLA-4) is an essential negative regulator of immune responses, and its lo",
+  "query_hits": [],
+  "embed_text": "857189 Autosomal dominant immune dysregulation syndrome in humans with CTLA4 mutations science scifact The protein cytotoxic T lymphocyte antigen-4 (CTLA-4) is an essential negative regulator of immune responses, and its loss causes fatal autoimmunity in mice. We studied a large family in which five individuals presented with a complex,… 857189 autosomal-dominant-immune-dysregulation-syndrome-in-humans-with-ctla4-mutations autosomal dominant immune dysregulation syndrome humans with ctla4 The protein cytotoxic T lymphocyte antigen-4 (CTLA-4) is an essential negative regulator of immune responses, and its lo Autosomal dominant immune dysregulation syndrome in humans with CTLA4 mutations The protein cytotoxic T lymphocyte antigen-4 (CTLA-4) is an essential negative regulator of immune responses, and its loss causes fatal autoimmunity in mice. We studied a large family in which five individuals presented with a complex, autosomal dominant immune dysregulation syndrome characterized by hypogammaglobulinemia, recurrent infections and multiple autoimmune clinical features. We identified a heterozygous nonsense mutation in exon 1 of CTLA4. Screening of 71 unrelated patients with comparable clinical phenotypes identified five additional families (nine individuals) with previously undescribed splice site and missense mutations in CTLA4. Clinical penetrance was incomplete (eight adults of a total of 19",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.099067+00:00"
+}

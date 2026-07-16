@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "2526777",
+  "source_fingerprint": "a25a5e66121e52080bdcc95166859879",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2526777"
+  ],
+  "key_phrases": [
+    "manslaughter",
+    "by",
+    "fake",
+    "artesunate",
+    "asia",
+    "will",
+    "africa",
+    "be"
+  ],
+  "summary_1l": "Manslaughter by Fake Artesunate in Asia—Will Africa Be Next?",
+  "query_hits": [],
+  "embed_text": "2526777 Manslaughter by Fake Artesunate in Asia—Will Africa Be Next? science scifact Falciparum malaria kills, and it particularly kills the rural poor. Artemisinin derivatives, such as artesunate, are a vital component of Plasmodium falciparum malaria treatment and control in the face of globally increasing antimalarial… 2526777 manslaughter by fake artesunate asia will africa be Manslaughter by Fake Artesunate in Asia—Will Africa Be Next? Manslaughter by Fake Artesunate in Asia—Will Africa Be Next? Falciparum malaria kills, and it particularly kills the rural poor. Artemisinin derivatives, such as artesunate, are a vital component of Plasmodium falciparum malaria treatment and control in the face of globally increasing antimalarial drug resistance. Since 1998 a worsening epidemic of sophisticated counterfeit “artesunate” tablets (containing no artesunate) has plagued mainland Southeast Asia (see Figure S1). In some countries, most of the available artesunate is fake [ 1–5]. Artemisinin derivatives are remarkably rapid in their antimalarial effects, and they are very well tolerated. So where these medicines are available, they are sought after. But as they are relatively expensive, a demand is created for cheaper versions am",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.281045+00:00"
+}

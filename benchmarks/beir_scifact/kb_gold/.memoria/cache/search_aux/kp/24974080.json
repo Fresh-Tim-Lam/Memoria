@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24974080",
+  "source_fingerprint": "09fc15a63b875fd2aa98330e5848705c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24974080",
+    "role-of-the-vascular-endothelial-growth-factor-pathway-in-tumor-growth-and-angiogenesis."
+  ],
+  "key_phrases": [
+    "role",
+    "vascular",
+    "endothelial",
+    "growth",
+    "factor",
+    "pathway",
+    "tumor",
+    "angiogenesis"
+  ],
+  "summary_1l": "Role of the vascular endothelial growth factor pathway in tumor growth and angiogenesis.",
+  "query_hits": [],
+  "embed_text": "24974080 Role of the vascular endothelial growth factor pathway in tumor growth and angiogenesis. science scifact New blood vessel formation (angiogenesis) is a fundamental event in the process of tumor growth and metastatic dissemination. Hence, the molecular basis of tumor angiogenesis has been of keen interest in the field of cancer research. The… 24974080 role-of-the-vascular-endothelial-growth-factor-pathway-in-tumor-growth-and-angiogenesis. role vascular endothelial growth factor pathway tumor angiogenesis Role of the vascular endothelial growth factor pathway in tumor growth and angiogenesis. Role of the vascular endothelial growth factor pathway in tumor growth and angiogenesis. New blood vessel formation (angiogenesis) is a fundamental event in the process of tumor growth and metastatic dissemination. Hence, the molecular basis of tumor angiogenesis has been of keen interest in the field of cancer research. The vascular endothelial growth factor (VEGF) pathway is well established as one of the key regulators of this process. The VEGF/VEGF-receptor axis is composed of multiple ligands and receptors with overlapping and distinct ligand-receptor binding specificities, cell-type expression, and function. Activation of the VEGF-receptor pathway triggers a network of signaling processes that promote endothelial cell growth, migration, and survival from pre-existing vasculature. In",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.665466+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "665817",
+  "source_fingerprint": "6c8a11182569fc3fcff02598f3cb4e8c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "665817",
+    "histone-deacetylases-(hdacs)-in-frontotemporal-lobar-degeneration."
+  ],
+  "key_phrases": [
+    "histone",
+    "deacetylases",
+    "hdacs",
+    "frontotemporal",
+    "lobar",
+    "degeneration",
+    "aims",
+    "ftld"
+  ],
+  "summary_1l": "Histone deacetylases (HDACs) in frontotemporal lobar degeneration.",
+  "query_hits": [],
+  "embed_text": "665817 Histone deacetylases (HDACs) in frontotemporal lobar degeneration. science scifact AIMS Frontotemporal lobar degeneration (FTLD) is clinically and pathologically heterogeneous. Although associated with variations in MAPT, GRN and C9ORF72, the pathogenesis of these, and of other nongenetic, forms of FTLD, remains unknown.… 665817 histone-deacetylases-(hdacs)-in-frontotemporal-lobar-degeneration. histone deacetylases hdacs frontotemporal lobar degeneration aims ftld Histone deacetylases (HDACs) in frontotemporal lobar degeneration. Histone deacetylases (HDACs) in frontotemporal lobar degeneration. AIMS Frontotemporal lobar degeneration (FTLD) is clinically and pathologically heterogeneous. Although associated with variations in MAPT, GRN and C9ORF72, the pathogenesis of these, and of other nongenetic, forms of FTLD, remains unknown. Epigenetic factors such as histone regulation by histone deacetylases (HDAC) may play a role in the dysregulation of transcriptional activity, thought to underpin the neurodegenerative process. METHODS The distribution and intensity of HDACs 4, 5 and 6 was assessed semi-quantitatively in immunostained sections of temporal cortex with hippocampus, and cerebellum, from 33 pathologically confirmed cases of FTLD and 27 controls. RESULTS We found a significantly greater intensity of cytoplasmi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.378147+00:00"
+}

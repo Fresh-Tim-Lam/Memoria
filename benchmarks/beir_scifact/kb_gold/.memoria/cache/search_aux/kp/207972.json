@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "207972",
+  "source_fingerprint": "0d55800305fcce9fe0ead1c9e9899249",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "207972",
+    "interaction-of-an-adenovirus-e3-14.7-kilodalton-protein-with-a-novel-tumor-necrosis-factor-alpha-inducible-cellular-protein-containing-leucine-zipper-domains."
+  ],
+  "key_phrases": [
+    "interaction",
+    "adenovirus",
+    "e3",
+    "14.7",
+    "kilodalton",
+    "protein",
+    "with",
+    "novel"
+  ],
+  "summary_1l": "Interaction of an adenovirus E3 14.",
+  "query_hits": [],
+  "embed_text": "207972 Interaction of an adenovirus E3 14.7-kilodalton protein with a novel tumor necrosis factor alpha-inducible cellular protein containing leucine zipper domains. science scifact Early region 3 (E3) of group C human adenoviruses (Ad) encodes several inhibitors of tumor necrosis factor alpha (TNF-alpha) cytolysis, including an E3 14.7-kDa protein (E3-14.7K) and a heterodimer containing two polypeptides of 10.4 and… 207972 interaction-of-an-adenovirus-e3-14.7-kilodalton-protein-with-a-novel-tumor-necrosis-factor-alpha-inducible-cellular-protein-containing-leucine-zipper-domains. interaction adenovirus e3 14.7 kilodalton protein with novel Interaction of an adenovirus E3 14. Interaction of an adenovirus E3 14.7-kilodalton protein with a novel tumor necrosis factor alpha-inducible cellular protein containing leucine zipper domains. Early region 3 (E3) of group C human adenoviruses (Ad) encodes several inhibitors of tumor necrosis factor alpha (TNF-alpha) cytolysis, including an E3 14.7-kDa protein (E3-14.7K) and a heterodimer containing two polypeptides of 10.4 and 14.5 kDa. To understand the mechanism by which the viral proteins inhibit TNF-alpha functions, the E3-14.7K protein was used to screen a HeLa cell cDNA library to search for interacting proteins in the yeast two-hybrid system. A novel protein containing multiple leucine zipper domains without any significant homology with any known protein was identified and has been named FIP-2 (for 14.7K-interactin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.965496+00:00"
+}

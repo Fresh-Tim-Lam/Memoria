@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "kp_id": "3468313#2",
+  "source_fingerprint": "ee6ea4bb5e8a8600e915905d18b69228",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "首都",
+    "墨西哥墨西哥城聖殿",
+    "多首都國家"
+  ],
+  "aliases": [
+    "3468313#2"
+  ],
+  "key_phrases": [
+    "斯科科",
+    "現代",
+    "墨西哥",
+    "首都",
+    "墨西哥市",
+    "這個",
+    "大都",
+    "一部分"
+  ],
+  "summary_1l": "現代墨西哥首都墨西哥市這個大都會的一部分便是建築在特斯科科的遺址上。",
+  "query_hits": [],
+  "embed_text": "3468313#2 特斯科科 特斯科科 現代墨西哥首都墨西哥市這個大都會的一部分便是建築在特斯科科的遺址上。像羅馬一樣，現在仍可以在市內發掘大量的文物。 首都 墨西哥墨西哥城聖殿 多首都國家 3468313#2 斯科科 現代 墨西哥 首都 墨西哥市 這個 大都 一部分 現代墨西哥首都墨西哥市這個大都會的一部分便是建築在特斯科科的遺址上。 特斯科科 現代墨西哥首都墨西哥市這個大都會的一部分便是建築在特斯科科的遺址上。像羅馬一樣，現在仍可以在市內發掘大量的文物。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:21:53.023323+00:00"
+}

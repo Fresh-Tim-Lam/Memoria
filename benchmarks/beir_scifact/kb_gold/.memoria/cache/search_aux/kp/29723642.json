@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29723642",
+  "source_fingerprint": "c22adb2be62b3da734682a113d795261",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29723642",
+    "a-functional-polymorphism-in-the-prodynorphin-gene-promotor-is-associated-with-temporal-lobe-epilepsy."
+  ],
+  "key_phrases": [
+    "functional",
+    "polymorphism",
+    "prodynorphin",
+    "gene",
+    "promotor",
+    "associated",
+    "with",
+    "temporal"
+  ],
+  "summary_1l": "A functional polymorphism in the prodynorphin gene promotor is associated with temporal lobe epilepsy.",
+  "query_hits": [],
+  "embed_text": "29723642 A functional polymorphism in the prodynorphin gene promotor is associated with temporal lobe epilepsy. science scifact The prodynorphin gene (PDYN) encoding the anticonvulsant peptide dynorphin is a strong candidate for a seizure suppressor gene and thus a possible modulator of susceptibility to temporal lobe epilepsy. We performed a case control… 29723642 a-functional-polymorphism-in-the-prodynorphin-gene-promotor-is-associated-with-temporal-lobe-epilepsy. functional polymorphism prodynorphin gene promotor associated with temporal A functional polymorphism in the prodynorphin gene promotor is associated with temporal lobe epilepsy. A functional polymorphism in the prodynorphin gene promotor is associated with temporal lobe epilepsy. The prodynorphin gene (PDYN) encoding the anticonvulsant peptide dynorphin is a strong candidate for a seizure suppressor gene and thus a possible modulator of susceptibility to temporal lobe epilepsy. We performed a case control association study in 155 patients with nonlesional temporal lobe epilepsy and 202 controls and found that PDYN promotor low-expression L-alleles confer an increased risk for temporal lobe epilepsy in patients with a family history for seizures. Irrespective of the familial background, L-homozygotes display a higher risk for secondarily generalized seizures and status epilepticus.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.140836+00:00"
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "26283293",
+  "source_fingerprint": "119c3b58760b7770c53b2504c71bde14",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26283293"
+  ],
+  "key_phrases": [
+    "structural",
+    "mechanistic",
+    "insights",
+    "into",
+    "phospholipid",
+    "transfer",
+    "by",
+    "ups1"
+  ],
+  "summary_1l": "Eukaryotic cells are compartmentalized into membrane-bounded organelles whose functions rely on lipid traff",
+  "query_hits": [],
+  "embed_text": "26283293 Structural and mechanistic insights into phospholipid transfer by Ups1–Mdm35 in mitochondria science scifact Eukaryotic cells are compartmentalized into membrane-bounded organelles whose functions rely on lipid trafficking to achieve membrane-specific compositions of lipids. Here we focused on the Ups1-Mdm35 system, which mediates phosphatidic… 26283293 structural mechanistic insights into phospholipid transfer by ups1 Eukaryotic cells are compartmentalized into membrane-bounded organelles whose functions rely on lipid traff Structural and mechanistic insights into phospholipid transfer by Ups1–Mdm35 in mitochondria Eukaryotic cells are compartmentalized into membrane-bounded organelles whose functions rely on lipid trafficking to achieve membrane-specific compositions of lipids. Here we focused on the Ups1-Mdm35 system, which mediates phosphatidic acid (PA) transfer between the outer and inner mitochondrial membranes, and determined the X-ray structures of Mdm35 and Ups1-Mdm35 with and without PA. The Ups1-Mdm35 complex constitutes a single domain that has a deep pocket and flexible Ω-loop lid. Structure-based mutational analyses revealed that a basic residue at the pocket bottom and the Ω-loop lid are important for PA extraction from the membrane following Ups1 binding. Ups1 binding to the membrane is enhanc",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.589399+00:00"
+}

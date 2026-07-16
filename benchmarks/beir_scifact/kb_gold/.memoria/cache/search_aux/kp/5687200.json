@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5687200",
+  "source_fingerprint": "7e4a8169cb2f0d983484ac041672957e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5687200",
+    "vegetarian-diet-improves-insulin-resistance-and-oxidative-stress-markers-more-than-conventional-diet-in-subjects-with-type-2-diabetes"
+  ],
+  "key_phrases": [
+    "vegetarian",
+    "diet",
+    "improves",
+    "insulin",
+    "resistance",
+    "oxidative",
+    "stress",
+    "markers"
+  ],
+  "summary_1l": "AIMS The aim of this study was to compare the effects of calorie-r",
+  "query_hits": [],
+  "embed_text": "5687200 Vegetarian diet improves insulin resistance and oxidative stress markers more than conventional diet in subjects with Type 2 diabetes science scifact AIMS The aim of this study was to compare the effects of calorie-restricted vegetarian and conventional diabetic diets alone and in combination with exercise on insulin resistance, visceral fat and oxidative stress markers in subjects with… 5687200 vegetarian-diet-improves-insulin-resistance-and-oxidative-stress-markers-more-than-conventional-diet-in-subjects-with-type-2-diabetes vegetarian diet improves insulin resistance oxidative stress markers AIMS The aim of this study was to compare the effects of calorie-r Vegetarian diet improves insulin resistance and oxidative stress markers more than conventional diet in subjects with Type 2 diabetes AIMS The aim of this study was to compare the effects of calorie-restricted vegetarian and conventional diabetic diets alone and in combination with exercise on insulin resistance, visceral fat and oxidative stress markers in subjects with Type 2 diabetes. METHODS A 24-week, randomized, open, parallel design was used. Seventy-four patients with Type 2 diabetes were randomly assigned to either the experimental group (n = 37), which received a vegetarian diet, or the control group (n = 37), which received a conventional diabetic diet. Both diets were isocaloric, calorie restricted (-500 kcal/day). All meals during the study were provided. The second 12 weeks o",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.841682+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "40590358",
+  "source_fingerprint": "1f4b6bf456f5ff48f5ccc91b56cc6fd1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "40590358",
+    "the-sphingosine-1-phosphate-receptor-agonist-fty720-modulates-dendritic-cell-trafficking-in-vivo."
+  ],
+  "key_phrases": [
+    "sphingosine",
+    "phosphate",
+    "receptor",
+    "agonist",
+    "fty720",
+    "modulates",
+    "dendritic",
+    "cell"
+  ],
+  "summary_1l": "The sphingosine-1-phosphate receptor agonist FTY720 modulates dendritic cell trafficking in vivo.",
+  "query_hits": [],
+  "embed_text": "40590358 The sphingosine-1-phosphate receptor agonist FTY720 modulates dendritic cell trafficking in vivo. science scifact The pro-drug FTY720 is undergoing phase III clinical trials for prevention of allograft rejection. After phosphorylation, FTY720 targets the G protein-coupled-sphingosine-1-phosphate receptor 1 (S1PR1) on lymphocytes, thereby inhibiting… 40590358 the-sphingosine-1-phosphate-receptor-agonist-fty720-modulates-dendritic-cell-trafficking-in-vivo. sphingosine phosphate receptor agonist fty720 modulates dendritic cell The sphingosine-1-phosphate receptor agonist FTY720 modulates dendritic cell trafficking in vivo. The sphingosine-1-phosphate receptor agonist FTY720 modulates dendritic cell trafficking in vivo. The pro-drug FTY720 is undergoing phase III clinical trials for prevention of allograft rejection. After phosphorylation, FTY720 targets the G protein-coupled-sphingosine-1-phosphate receptor 1 (S1PR1) on lymphocytes, thereby inhibiting their egress from lymphoid organs and their recirculation to inflammatory sites. Potential effects on dendritic cell (DC) trafficking have not been evaluated. Here, we demonstrate the expression of all five S1PR subtypes (S1PR1-5) by murine DCs. Administration of FTY720 to C57BL/10 mice markedly reduced circulating T and B lymphocytes within 24 h, but not blood-borne DCs, which were enhanced significantly for up to 96 h, while DCs in lymph nodes and spleen were",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.641499+00:00"
+}

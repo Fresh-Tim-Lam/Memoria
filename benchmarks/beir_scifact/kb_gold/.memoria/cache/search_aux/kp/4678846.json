@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4678846",
+  "source_fingerprint": "8eb52774b8a572f87475de84327921a2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4678846",
+    "acetylcysteine-for-prevention-of-acute-deterioration-of-renal-function-following-elective-coronary-angiography-and-intervention:-a-randomized-controlled-trial."
+  ],
+  "key_phrases": [
+    "acetylcysteine",
+    "prevention",
+    "acute",
+    "deterioration",
+    "renal",
+    "function",
+    "following",
+    "elective"
+  ],
+  "summary_1l": "Acetylcysteine for prevention of acute deterioration of renal function following elective coronary angiography and intervention: a randomized controlled trial.",
+  "query_hits": [],
+  "embed_text": "4678846 Acetylcysteine for prevention of acute deterioration of renal function following elective coronary angiography and intervention: a randomized controlled trial. science scifact CONTEXT The antioxidant acetylcysteine prevents acute contrast nephrotoxicity in patients with impaired renal function who undergo computed tomography scanning. However, its role in coronary angiography is unclear. OBJECTIVE To determine… 4678846 acetylcysteine-for-prevention-of-acute-deterioration-of-renal-function-following-elective-coronary-angiography-and-intervention:-a-randomized-controlled-trial. acetylcysteine prevention acute deterioration renal function following elective Acetylcysteine for prevention of acute deterioration of renal function following elective coronary angiography and intervention: a randomized controlled trial. Acetylcysteine for prevention of acute deterioration of renal function following elective coronary angiography and intervention: a randomized controlled trial. CONTEXT The antioxidant acetylcysteine prevents acute contrast nephrotoxicity in patients with impaired renal function who undergo computed tomography scanning. However, its role in coronary angiography is unclear. OBJECTIVE To determine whether oral acetylcysteine prevents acute deterioration in renal function in patients with moderate renal insufficiency who undergo elective coronary angiography. DESIGN AND SETTING Prospective, randomized, double-blind, placebo-controlled trial conducted from May 2000 to December 2001 at the Grantham Hospital at the University of Hong Kong. PARTICIPANTS Two hundred Chinese patients aged mean (SD)",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.108836+00:00"
+}

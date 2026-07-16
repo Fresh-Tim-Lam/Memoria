@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21793890",
+  "source_fingerprint": "2bedfe61f85e3c89206c2014189091a4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21793890",
+    "bcr/abl-modifies-the-kinetics-and-fidelity-of-dna-double-strand-breaks-repair-in-hematopoietic-cells."
+  ],
+  "key_phrases": [
+    "bcr",
+    "abl",
+    "modifies",
+    "kinetics",
+    "fidelity",
+    "dna",
+    "double",
+    "strand"
+  ],
+  "summary_1l": "BCR/ABL modifies the kinetics and fidelity of DNA double-strand breaks repair in hematopoietic cells.",
+  "query_hits": [],
+  "embed_text": "21793890 BCR/ABL modifies the kinetics and fidelity of DNA double-strand breaks repair in hematopoietic cells. science scifact The oncogenic BCR/ABL tyrosine kinase facilitates the repair of DNA double-strand breaks (DSBs). We find that after gamma-irradiation BCR/ABL-positive leukemia cells accumulate more DSBs in comparison to normal cells. These lesions are… 21793890 bcr/abl-modifies-the-kinetics-and-fidelity-of-dna-double-strand-breaks-repair-in-hematopoietic-cells. bcr abl modifies kinetics fidelity dna double strand BCR/ABL modifies the kinetics and fidelity of DNA double-strand breaks repair in hematopoietic cells. BCR/ABL modifies the kinetics and fidelity of DNA double-strand breaks repair in hematopoietic cells. The oncogenic BCR/ABL tyrosine kinase facilitates the repair of DNA double-strand breaks (DSBs). We find that after gamma-irradiation BCR/ABL-positive leukemia cells accumulate more DSBs in comparison to normal cells. These lesions are efficiently repaired in a time-dependent fashion by BCR/ABL-stimulated non-homologous end-joining (NHEJ) followed by homologous recombination repair (HRR) mechanisms. However, mutations and large deletions were detected in HRR and NHEJ products, respectively, in BCR/ABL-positive leukemia cells. We propose that unfaithful repair of DSBs may contribute to genomic instability in the Philadelphia chromosome-positive leukemias.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.736104+00:00"
+}

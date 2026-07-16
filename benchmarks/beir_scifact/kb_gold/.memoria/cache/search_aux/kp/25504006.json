@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "25504006",
+  "source_fingerprint": "1041e42aa9674e74602150e6f0c037d3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25504006"
+  ],
+  "key_phrases": [
+    "molecular",
+    "analysis",
+    "circulating",
+    "tumour",
+    "cells",
+    "biology",
+    "biomarkers",
+    "growing"
+  ],
+  "summary_1l": "Growing evidence for intratumour heterogeneity informs us that single-site biopsies fall short of revealing the complete genomic l",
+  "query_hits": [],
+  "embed_text": "25504006 Molecular analysis of circulating tumour cells—biology and biomarkers science scifact Growing evidence for intratumour heterogeneity informs us that single-site biopsies fall short of revealing the complete genomic landscape of a tumour. With an expanding repertoire of targeted agents entering the clinic, screening tumours… 25504006 molecular analysis circulating tumour cells biology biomarkers growing Growing evidence for intratumour heterogeneity informs us that single-site biopsies fall short of revealing the complete genomic l Molecular analysis of circulating tumour cells—biology and biomarkers Growing evidence for intratumour heterogeneity informs us that single-site biopsies fall short of revealing the complete genomic landscape of a tumour. With an expanding repertoire of targeted agents entering the clinic, screening tumours for genomic aberrations is increasingly important, as is interrogating the tumours for resistance mechanisms upon disease progression. Multiple biopsies separated spatially and temporally are impractical, uncomfortable for the patient and not without risk. Here, we describe how circulating tumour cells (CTCs), captured from a minimally invasive blood test—and readily amenable to serial sampling—have the potential to inform intratumour heterogeneity and tumour evolution, although it rema",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.777281+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17631671",
+  "source_fingerprint": "e1be3baa66e3078e777c7c846804cf50",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17631671",
+    "cadherins-in-brain-morphogenesis-and-wiring."
+  ],
+  "key_phrases": [
+    "cadherins",
+    "brain",
+    "morphogenesis",
+    "wiring",
+    "ca",
+    "dependent",
+    "cell",
+    "adhesion"
+  ],
+  "summary_1l": "Cadherins in brain morphogenesis and wiring.",
+  "query_hits": [],
+  "embed_text": "17631671 Cadherins in brain morphogenesis and wiring. science scifact Cadherins are Ca(2+)-dependent cell-cell adhesion molecules that play critical roles in animal morphogenesis. Various cadherin-related molecules have also been identified, which show diverse functions, not only for the regulation of cell… 17631671 cadherins-in-brain-morphogenesis-and-wiring. cadherins brain morphogenesis wiring ca dependent cell adhesion Cadherins in brain morphogenesis and wiring. Cadherins in brain morphogenesis and wiring. Cadherins are Ca(2+)-dependent cell-cell adhesion molecules that play critical roles in animal morphogenesis. Various cadherin-related molecules have also been identified, which show diverse functions, not only for the regulation of cell adhesion but also for that of cell proliferation and planar cell polarity. During the past decade, understanding of the roles of these molecules in the nervous system has significantly progressed. They are important not only for the development of the nervous system but also for its functions and, in turn, for neural disorders. In this review, we discuss the roles of cadherins and related molecules in neural development and function in the vertebrate brain.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.041977+00:00"
+}

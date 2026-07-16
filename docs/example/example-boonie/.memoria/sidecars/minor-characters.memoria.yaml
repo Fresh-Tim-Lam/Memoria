@@ -1,0 +1,83 @@
+schema_version: 1
+file: minor-characters.md
+knowledge_points:
+- id: big-monkey-er-gou
+  name: 大马猴和二狗
+  range:
+    start:
+      snippet: '## 大马猴和二狗'
+      line_hint: 1
+    end:
+      snippet: '[[大马猴和二狗]]常帮或坑[[光头强]]，也常被[[熊兄弟]]利用，最终变成笑料。'
+      line_hint: 3
+- id: fei-bo
+  name: 肥波
+  range:
+    start:
+      snippet: '## 肥波'
+      line_hint: 5
+    end:
+      snippet: '[[肥波]]是[[光头强]]的胖猫，贪吃却偶尔敏锐，[[熊兄弟]]曾误以为它是间谍。'
+      line_hint: 7
+links:
+- anchor_text: 大马猴和二狗
+  occurrence: 0
+  targets:
+  - big-monkey-er-gou
+  edge_type: reference
+  instances:
+  - line: 3
+    wrapped: true
+  source_id: big-monkey-er-gou
+- anchor_text: 光头强
+  occurrence: 0
+  targets: &id001
+  - guang-tou-qiang
+  edge_type: reference
+  instances:
+  - line: 3
+    wrapped: true
+  - line: 7
+    wrapped: true
+  source_id: big-monkey-er-gou
+- anchor_text: 熊兄弟
+  occurrence: 0
+  targets: &id002
+  - xiong-da
+  - xiong-er
+  edge_type: reference
+  instances:
+  - line: 3
+    wrapped: true
+  - line: 7
+    wrapped: true
+  source_id: big-monkey-er-gou
+- anchor_text: 肥波
+  occurrence: 0
+  targets:
+  - fei-bo
+  edge_type: reference
+  instances:
+  - line: 7
+    wrapped: true
+  source_id: fei-bo
+- anchor_text: 光头强
+  occurrence: 0
+  targets: *id001
+  edge_type: reference
+  instances:
+  - line: 3
+    wrapped: true
+  - line: 7
+    wrapped: true
+  source_id: fei-bo
+- anchor_text: 熊兄弟
+  occurrence: 0
+  targets: *id002
+  edge_type: reference
+  instances:
+  - line: 3
+    wrapped: true
+  - line: 7
+    wrapped: true
+  source_id: fei-bo

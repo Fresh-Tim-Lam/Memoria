@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20672596",
+  "source_fingerprint": "c0c210a61fbe67aa9f96fb84f2bdcc57",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20672596",
+    "metabolism-of-glucose,-glutamine,-long-chain-fatty-acids-and-ketone-bodies-by-murine-macrophages."
+  ],
+  "key_phrases": [
+    "metabolism",
+    "glucose",
+    "glutamine",
+    "long",
+    "chain",
+    "fatty",
+    "acids",
+    "ketone"
+  ],
+  "summary_1l": "Metabolism of glucose, glutamine, long-chain fatty acids and ketone bodies by murine macrophages.",
+  "query_hits": [],
+  "embed_text": "20672596 Metabolism of glucose, glutamine, long-chain fatty acids and ketone bodies by murine macrophages. science scifact Maximum activities of some key enzymes of metabolism were studied in elicited (inflammatory) macrophages of the mouse and lymph-node lymphocytes of the rat. The activity of hexokinase in the macrophage is very high, as high as that in any… 20672596 metabolism-of-glucose,-glutamine,-long-chain-fatty-acids-and-ketone-bodies-by-murine-macrophages. metabolism glucose glutamine long chain fatty acids ketone Metabolism of glucose, glutamine, long-chain fatty acids and ketone bodies by murine macrophages. Metabolism of glucose, glutamine, long-chain fatty acids and ketone bodies by murine macrophages. Maximum activities of some key enzymes of metabolism were studied in elicited (inflammatory) macrophages of the mouse and lymph-node lymphocytes of the rat. The activity of hexokinase in the macrophage is very high, as high as that in any other major tissue of the body, and higher than that of phosphorylase or 6-phosphofructokinase, suggesting that glucose is a more important fuel than glycogen and that the pentose phosphate pathway is also important in these cells. The latter suggestion is supported by the high activities of both glucose-6-phosphate dehydrogenase and 6-phosphogluconate dehydrogenase. However, the rate of glucose utilization by 'resting' macrophages incubated in vitro is less",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.749762+00:00"
+}

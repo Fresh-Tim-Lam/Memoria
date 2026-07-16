@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4407318",
+  "source_fingerprint": "17dbb1b6737bc693357905e67aaaf1f0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4407318",
+    "replication-stress-activates-dna-repair-synthesis-in-mitosis"
+  ],
+  "key_phrases": [
+    "replication",
+    "stress",
+    "activates",
+    "dna",
+    "repair",
+    "synthesis",
+    "mitosis",
+    "oncogene"
+  ],
+  "summary_1l": "Oncogene-induced DNA replication stress has been implicated as a driver of tumorigenesis.",
+  "query_hits": [],
+  "embed_text": "4407318 Replication stress activates DNA repair synthesis in mitosis science scifact Oncogene-induced DNA replication stress has been implicated as a driver of tumorigenesis. Many chromosomal rearrangements characteristic of human cancers originate from specific regions of the genome called common fragile sites (CFSs).… 4407318 replication-stress-activates-dna-repair-synthesis-in-mitosis replication stress activates dna repair synthesis mitosis oncogene Oncogene-induced DNA replication stress has been implicated as a driver of tumorigenesis. Replication stress activates DNA repair synthesis in mitosis Oncogene-induced DNA replication stress has been implicated as a driver of tumorigenesis. Many chromosomal rearrangements characteristic of human cancers originate from specific regions of the genome called common fragile sites (CFSs). CFSs are difficult-to-replicate loci that manifest as gaps or breaks on metaphase chromosomes (termed CFS ‘expression’), particularly when cells have been exposed to replicative stress. The MUS81–EME1 structure-specific endonuclease promotes the appearance of chromosome gaps or breaks at CFSs following replicative stress. Here we show that entry of cells into mitotic prophase triggers the recruitment of MUS81 to CFSs. The nuclease activity of MUS81 then promotes POLD3-dependent DNA synthesis at CFS",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.709751+00:00"
+}

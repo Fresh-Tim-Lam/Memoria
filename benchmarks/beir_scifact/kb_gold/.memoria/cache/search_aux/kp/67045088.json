@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "67045088",
+  "source_fingerprint": "56af9b0047fa3daa5364e5f5e010df55",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "67045088",
+    "inhibition-of-the-dipeptidyl-peptidase-dpp4-(cd26)-reveals-il-33-dependent-eosinophil-mediated-control-of-tumor-growth"
+  ],
+  "key_phrases": [
+    "inhibition",
+    "dipeptidyl",
+    "peptidase",
+    "dpp4",
+    "cd26",
+    "reveals",
+    "il",
+    "33"
+  ],
+  "summary_1l": "Post-translational modification of chemokines mediated by the dipeptidyl peptidas",
+  "query_hits": [],
+  "embed_text": "67045088 Inhibition of the dipeptidyl peptidase DPP4 (CD26) reveals IL-33-dependent eosinophil-mediated control of tumor growth science scifact Post-translational modification of chemokines mediated by the dipeptidyl peptidase DPP4 (CD26) has been shown to negatively regulate lymphocyte trafficking, and its inhibition enhances T cell migration and tumor immunity by preserving… 67045088 inhibition-of-the-dipeptidyl-peptidase-dpp4-(cd26)-reveals-il-33-dependent-eosinophil-mediated-control-of-tumor-growth inhibition dipeptidyl peptidase dpp4 cd26 reveals il 33 Post-translational modification of chemokines mediated by the dipeptidyl peptidas Inhibition of the dipeptidyl peptidase DPP4 (CD26) reveals IL-33-dependent eosinophil-mediated control of tumor growth Post-translational modification of chemokines mediated by the dipeptidyl peptidase DPP4 (CD26) has been shown to negatively regulate lymphocyte trafficking, and its inhibition enhances T cell migration and tumor immunity by preserving functional chemokine CXCL10. By extending those initial findings to pre-clinical models of hepatocellular carcinoma and breast cancer, we discovered a distinct mechanism by which inhibition of DPP4 improves anti-tumor responses. Administration of the DPP4 inhibitor sitagliptin resulted in higher concentrations of the chemokine CCL11 and increased migration of eosinophils into solid tumors. Enhanced tumor control was preserved in mice lacking",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.457615+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "30398773",
+  "source_fingerprint": "00f4006b6d6abf79be4017da81eefa80",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "30398773",
+    "strong-association-between-respiratory-viral-infection-early-after-hematopoietic-stem-cell-transplantation-and-the-development-of-life-threatening-acute-and-chronic-alloimmune-lung-syndromes."
+  ],
+  "key_phrases": [
+    "strong",
+    "association",
+    "between",
+    "respiratory",
+    "viral",
+    "infection",
+    "early",
+    "after"
+  ],
+  "summary_1l": "Strong association between respiratory viral infection early after hematopoietic stem cell transplantation and the development of life-threatening acute and chronic alloimmune lung syndromes.",
+  "query_hits": [],
+  "embed_text": "30398773 Strong association between respiratory viral infection early after hematopoietic stem cell transplantation and the development of life-threatening acute and chronic alloimmune lung syndromes. science scifact Alloimmune lung syndromes (allo-LS), including idiopathic pneumonia syndrome, bronchiolitis obliterans syndrome, and bronchiolitis obliterans organizing pneumonia, are severe complications after hematopoietic stem cell transplantation… 30398773 strong-association-between-respiratory-viral-infection-early-after-hematopoietic-stem-cell-transplantation-and-the-development-of-life-threatening-acute-and-chronic-alloimmune-lung-syndromes. strong association between respiratory viral infection early after Strong association between respiratory viral infection early after hematopoietic stem cell transplantation and the development of life-threatening acute and chronic alloimmune lung syndromes. Strong association between respiratory viral infection early after hematopoietic stem cell transplantation and the development of life-threatening acute and chronic alloimmune lung syndromes. Alloimmune lung syndromes (allo-LS), including idiopathic pneumonia syndrome, bronchiolitis obliterans syndrome, and bronchiolitis obliterans organizing pneumonia, are severe complications after hematopoietic stem cell transplantation (HSCT). In our cohort of 110 pediatric patients, 30 had allo-LS (27.3%), 18 with idiopathic pneumonia syndrome and 12 with bronchiolitis obliterans syndrome. Multivariate analysis showed that respiratory viral infection early after HSCT is an important predictor for the development of allo-LS (P <.0001). This was true for all viruses tested. In multivariate analysis, all",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.647780+00:00"
+}

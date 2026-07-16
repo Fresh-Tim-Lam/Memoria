@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9737083",
+  "source_fingerprint": "5b250b8682e96bc83a1ef14a92ce535c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9737083",
+    "the-somatic-genomic-landscape-of-glioblastoma"
+  ],
+  "key_phrases": [
+    "somatic",
+    "genomic",
+    "landscape",
+    "glioblastoma",
+    "we",
+    "describe",
+    "alterations",
+    "based"
+  ],
+  "summary_1l": "We describe the landscape of somatic genomic alterations based on multidimensional and comprehensive characterization of more than 500 glioblastoma tumors",
+  "query_hits": [],
+  "embed_text": "9737083 The Somatic Genomic Landscape of Glioblastoma science scifact We describe the landscape of somatic genomic alterations based on multidimensional and comprehensive characterization of more than 500 glioblastoma tumors (GBMs). We identify several novel mutated genes as well as complex rearrangements of… 9737083 the-somatic-genomic-landscape-of-glioblastoma somatic genomic landscape glioblastoma we describe alterations based We describe the landscape of somatic genomic alterations based on multidimensional and comprehensive characterization of more than 500 glioblastoma tumors The Somatic Genomic Landscape of Glioblastoma We describe the landscape of somatic genomic alterations based on multidimensional and comprehensive characterization of more than 500 glioblastoma tumors (GBMs). We identify several novel mutated genes as well as complex rearrangements of signature receptors, including EGFR and PDGFRA. TERT promoter mutations are shown to correlate with elevated mRNA expression, supporting a role in telomerase reactivation. Correlative analyses confirm that the survival advantage of the proneural subtype is conferred by the G-CIMP phenotype, and MGMT DNA methylation may be a predictive biomarker for treatment response only in classical subtype GBM. Integrative analysis of genomic and proteomic profiles challenges the notion of therapeutic inhibition of a pathw",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.663795+00:00"
+}

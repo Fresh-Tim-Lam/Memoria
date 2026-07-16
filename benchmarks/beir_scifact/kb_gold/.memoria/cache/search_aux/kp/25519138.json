@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25519138",
+  "source_fingerprint": "d4ebf2297ce99412265bd1957f42f695",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25519138",
+    "regulation-of-arabinose-and-xylose-metabolism-in-escherichia-coli."
+  ],
+  "key_phrases": [
+    "regulation",
+    "arabinose",
+    "xylose",
+    "metabolism",
+    "escherichia",
+    "coli",
+    "bacteria",
+    "such"
+  ],
+  "summary_1l": "Regulation of arabinose and xylose metabolism in Escherichia coli.",
+  "query_hits": [],
+  "embed_text": "25519138 Regulation of arabinose and xylose metabolism in Escherichia coli. science scifact Bacteria such as Escherichia coli will often consume one sugar at a time when fed multiple sugars, in a process known as carbon catabolite repression. The classic example involves glucose and lactose, where E. coli will first consume… 25519138 regulation-of-arabinose-and-xylose-metabolism-in-escherichia-coli. regulation arabinose xylose metabolism escherichia coli bacteria such Regulation of arabinose and xylose metabolism in Escherichia coli. Regulation of arabinose and xylose metabolism in Escherichia coli. Bacteria such as Escherichia coli will often consume one sugar at a time when fed multiple sugars, in a process known as carbon catabolite repression. The classic example involves glucose and lactose, where E. coli will first consume glucose, and only when it has consumed all of the glucose will it begin to consume lactose. In addition to that of lactose, glucose also represses the consumption of many other sugars, including arabinose and xylose. In this work, we characterized a second hierarchy in E. coli, that between arabinose and xylose. We show that, when grown in a mixture of the two pentoses, E. coli will consume arabinose before it consumes xylose. Consistent with a mechanism involving catabolite repression, the exp",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.846468+00:00"
+}

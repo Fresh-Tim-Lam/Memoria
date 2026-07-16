@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24660385",
+  "source_fingerprint": "7c87ae55ef9cd26234e2c16e63424cc1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24660385",
+    "echocardiographic-assessment-of-left-ventricular-hypertrophy:-comparison-to-necropsy-findings."
+  ],
+  "key_phrases": [
+    "echocardiographic",
+    "assessment",
+    "left",
+    "ventricular",
+    "hypertrophy",
+    "comparison",
+    "necropsy",
+    "findings"
+  ],
+  "summary_1l": "Echocardiographic assessment of left ventricular hypertrophy: comparison to necropsy findings.",
+  "query_hits": [],
+  "embed_text": "24660385 Echocardiographic assessment of left ventricular hypertrophy: comparison to necropsy findings. science scifact To determine the accuracy of echocardiographic left ventricular (LV) dimension and mass measurements for detection and quantification of LV hypertrophy, results of blindly read antemortem echocardiograms were compared with LV mass… 24660385 echocardiographic-assessment-of-left-ventricular-hypertrophy:-comparison-to-necropsy-findings. echocardiographic assessment left ventricular hypertrophy comparison necropsy findings Echocardiographic assessment of left ventricular hypertrophy: comparison to necropsy findings. Echocardiographic assessment of left ventricular hypertrophy: comparison to necropsy findings. To determine the accuracy of echocardiographic left ventricular (LV) dimension and mass measurements for detection and quantification of LV hypertrophy, results of blindly read antemortem echocardiograms were compared with LV mass measurements made at necropsy in 55 patients. LV mass was calculated using M-mode LV measurements by Penn and American Society of Echocardiography (ASE) conventions and cube function and volume correction formulas in 52 patients. Penn-cube LV mass correlated closely with necropsy LV mass (r = 0.92, p less than 0.001) and overestimated it by only 6%; sensitivity in 18 patients with LV hypertrophy (necropsy LV mass more than 215 g) was 100% (18 of 18 patients) and specifi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.965755+00:00"
+}

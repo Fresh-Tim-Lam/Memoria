@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5389095",
+  "source_fingerprint": "8cad08c883204e1da43d3e54bc51e9ae",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5389095",
+    "mfge8-promotes-obesity-by-mediating-the-uptake-of-dietary-fats-and-serum-fatty-acids"
+  ],
+  "key_phrases": [
+    "mfge8",
+    "promotes",
+    "obesity",
+    "by",
+    "mediating",
+    "uptake",
+    "dietary",
+    "fats"
+  ],
+  "summary_1l": "Fatty acids are integral mediators of energy storage, membrane formation and cell signaling.",
+  "query_hits": [],
+  "embed_text": "5389095 Mfge8 promotes obesity by mediating the uptake of dietary fats and serum fatty acids science scifact Fatty acids are integral mediators of energy storage, membrane formation and cell signaling. The pathways that orchestrate uptake of fatty acids remain incompletely understood. Expression of the integrin ligand Mfge8 is increased in human… 5389095 mfge8-promotes-obesity-by-mediating-the-uptake-of-dietary-fats-and-serum-fatty-acids mfge8 promotes obesity by mediating uptake dietary fats Fatty acids are integral mediators of energy storage, membrane formation and cell signaling. Mfge8 promotes obesity by mediating the uptake of dietary fats and serum fatty acids Fatty acids are integral mediators of energy storage, membrane formation and cell signaling. The pathways that orchestrate uptake of fatty acids remain incompletely understood. Expression of the integrin ligand Mfge8 is increased in human obesity and in mice on a high-fat diet, but its role in obesity is unknown. We show here that Mfge8 promotes the absorption of dietary triglycerides and the cellular uptake of fatty acid and that Mfge8-deficient (Mfge8−/−) mice are protected from diet-induced obesity, steatohepatitis and insulin resistance. Mechanistically, we found that Mfge8 coordinates fatty acid uptake through αvβ3 integrin– and αvβ5 integrin–dependent phosphorylation of Akt by phosphatidylinositide-3",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.115587+00:00"
+}

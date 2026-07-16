@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5106691",
+  "source_fingerprint": "b09f4632f1d4bb431f1bc4da90744929",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5106691",
+    "adipocyte-inflammation-is-essential-for-healthy-adipose-tissue-expansion-and-remodeling."
+  ],
+  "key_phrases": [
+    "adipocyte",
+    "inflammation",
+    "essential",
+    "healthy",
+    "adipose",
+    "tissue",
+    "expansion",
+    "remodeling"
+  ],
+  "summary_1l": "Adipocyte inflammation is essential for healthy adipose tissue expansion and remodeling.",
+  "query_hits": [],
+  "embed_text": "5106691 Adipocyte inflammation is essential for healthy adipose tissue expansion and remodeling. science scifact Chronic inflammation constitutes an important link between obesity and its pathophysiological sequelae. In contrast to the belief that inflammatory signals exert a fundamentally negative impact on metabolism, we show that proinflammatory… 5106691 adipocyte-inflammation-is-essential-for-healthy-adipose-tissue-expansion-and-remodeling. adipocyte inflammation essential healthy adipose tissue expansion remodeling Adipocyte inflammation is essential for healthy adipose tissue expansion and remodeling. Adipocyte inflammation is essential for healthy adipose tissue expansion and remodeling. Chronic inflammation constitutes an important link between obesity and its pathophysiological sequelae. In contrast to the belief that inflammatory signals exert a fundamentally negative impact on metabolism, we show that proinflammatory signaling in the adipocyte is in fact required for proper adipose tissue remodeling and expansion. Three mouse models with an adipose tissue-specific reduction in proinflammatory potential were generated that display a reduced capacity for adipogenesis in vivo, while the differentiation potential is unaltered in vitro. Upon high-fat-diet exposure, the expansion of visceral adipose tissue is prominently affected. This is associated with decreased intestinal barrier func",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.111014+00:00"
+}

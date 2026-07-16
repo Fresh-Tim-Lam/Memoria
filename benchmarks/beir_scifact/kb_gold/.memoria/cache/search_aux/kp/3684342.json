@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3684342",
+  "source_fingerprint": "95ff0891bb3b144284660c6d1c9c204b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3684342",
+    "lin28b-enhanced-tumorigenesis-in-an-autochthonous-krasg12v-driven-lung-carcinoma-mouse-model"
+  ],
+  "key_phrases": [
+    "lin28b",
+    "enhanced",
+    "tumorigenesis",
+    "autochthonous",
+    "krasg12v",
+    "driven",
+    "lung",
+    "carcinoma"
+  ],
+  "summary_1l": "LIN28B is a RNA-binding protein regulating predominantly let-7 microRNAs with essential functions in inflam",
+  "query_hits": [],
+  "embed_text": "3684342 LIN28B enhanced tumorigenesis in an autochthonous KRASG12V-driven lung carcinoma mouse model science scifact LIN28B is a RNA-binding protein regulating predominantly let-7 microRNAs with essential functions in inflammation, wound healing, embryonic stem cells, and cancer. LIN28B expression is associated with tumor initiation, progression,… 3684342 lin28b-enhanced-tumorigenesis-in-an-autochthonous-krasg12v-driven-lung-carcinoma-mouse-model lin28b enhanced tumorigenesis autochthonous krasg12v driven lung carcinoma LIN28B is a RNA-binding protein regulating predominantly let-7 microRNAs with essential functions in inflam LIN28B enhanced tumorigenesis in an autochthonous KRASG12V-driven lung carcinoma mouse model LIN28B is a RNA-binding protein regulating predominantly let-7 microRNAs with essential functions in inflammation, wound healing, embryonic stem cells, and cancer. LIN28B expression is associated with tumor initiation, progression, resistance, and poor outcome in several solid cancers, including lung cancer. However, the functional role of LIN28B, especially in non-small cell lung adenocarcinomas, remains elusive. Here, we investigated the effects of LIN28B expression on lung tumorigenesis using LIN28B transgenic overexpression in an autochthonous KRASG12V-driven mouse model. We found that LIN28B overexpression significantly increased the number of CD44+/CD326+ tumor cells, upregulated VEGF-A and m",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:43.777219+00:00"
+}

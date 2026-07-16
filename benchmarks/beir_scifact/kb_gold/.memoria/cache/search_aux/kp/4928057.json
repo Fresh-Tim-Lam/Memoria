@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4928057",
+  "source_fingerprint": "4d893d4e2e1aa5843be62d9134fd55bc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4928057",
+    "macrophages-facilitate-electrical-conduction-in-the-heart"
+  ],
+  "key_phrases": [
+    "macrophages",
+    "facilitate",
+    "electrical",
+    "conduction",
+    "heart",
+    "organ",
+    "specific",
+    "functions"
+  ],
+  "summary_1l": "Organ-specific functions of tissue-resident macrophages in the steady-state heart are unknown.",
+  "query_hits": [],
+  "embed_text": "4928057 Macrophages Facilitate Electrical Conduction in the Heart science scifact Organ-specific functions of tissue-resident macrophages in the steady-state heart are unknown. Here, we show that cardiac macrophages facilitate electrical conduction through the distal atrioventricular node, where conducting cells densely… 4928057 macrophages-facilitate-electrical-conduction-in-the-heart macrophages facilitate electrical conduction heart organ specific functions Organ-specific functions of tissue-resident macrophages in the steady-state heart are unknown. Macrophages Facilitate Electrical Conduction in the Heart Organ-specific functions of tissue-resident macrophages in the steady-state heart are unknown. Here, we show that cardiac macrophages facilitate electrical conduction through the distal atrioventricular node, where conducting cells densely intersperse with elongated macrophages expressing connexin 43. When coupled to spontaneously beating cardiomyocytes via connexin-43-containing gap junctions, cardiac macrophages have a negative resting membrane potential and depolarize in synchrony with cardiomyocytes. Conversely, macrophages render the resting membrane potential of cardiomyocytes more positive and, according to computational modeling, accelerate their repolarization. Photostimulation of channelrhodopsin-2-expressing macrophages i",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.762534+00:00"
+}

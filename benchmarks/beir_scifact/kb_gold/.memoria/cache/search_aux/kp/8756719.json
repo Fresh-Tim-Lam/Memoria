@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8756719",
+  "source_fingerprint": "8cc574e9c36d645cc223f333f7c9c547",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8756719",
+    "randomized,-double-blind-study-of-the-safety,-tolerability,-and-efficacy-of-tafenoquine-versus-mefloquine-for-malaria-prophylaxis-in-nonimmune-subjects."
+  ],
+  "key_phrases": [
+    "randomized",
+    "double",
+    "blind",
+    "study",
+    "safety",
+    "tolerability",
+    "efficacy",
+    "tafenoquine"
+  ],
+  "summary_1l": "Randomized, double-blind study of the safety, tolerability, and efficacy of tafenoquine versus mefloquine for malaria prophylaxis in nonimmune subjects.",
+  "query_hits": [],
+  "embed_text": "8756719 Randomized, double-blind study of the safety, tolerability, and efficacy of tafenoquine versus mefloquine for malaria prophylaxis in nonimmune subjects. science scifact This study represents the first phase III trial of the safety, tolerability, and effectiveness of tafenoquine for malaria prophylaxis. In a randomized (3:1), double-blinded study, Australian soldiers received weekly malaria prophylaxis… 8756719 randomized,-double-blind-study-of-the-safety,-tolerability,-and-efficacy-of-tafenoquine-versus-mefloquine-for-malaria-prophylaxis-in-nonimmune-subjects. randomized double blind study safety tolerability efficacy tafenoquine Randomized, double-blind study of the safety, tolerability, and efficacy of tafenoquine versus mefloquine for malaria prophylaxis in nonimmune subjects. Randomized, double-blind study of the safety, tolerability, and efficacy of tafenoquine versus mefloquine for malaria prophylaxis in nonimmune subjects. This study represents the first phase III trial of the safety, tolerability, and effectiveness of tafenoquine for malaria prophylaxis. In a randomized (3:1), double-blinded study, Australian soldiers received weekly malaria prophylaxis with 200 mg tafenoquine (492 subjects) or 250 mg mefloquine (162 subjects) for 6 months on a peacekeeping deployment to East Timor. After returning to Australia, tafenoquine-receiving subjects received a placebo and mefloquine-receiving subjects received 30 mg primaquine daily for 14 days. There were no clinically significant differences between hematological and biochemical parameters of the treatment group",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.632828+00:00"
+}

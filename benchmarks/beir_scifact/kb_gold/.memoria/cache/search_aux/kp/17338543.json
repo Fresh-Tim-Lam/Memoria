@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17338543",
+  "source_fingerprint": "aec993b6f1c6af53d9b92f5474b4133b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17338543",
+    "high-affinity-zinc-inhibition-of-nmda-nr1-nr2a-receptors"
+  ],
+  "key_phrases": [
+    "high",
+    "affinity",
+    "zinc",
+    "inhibition",
+    "nmda",
+    "nr1",
+    "nr2a",
+    "receptors"
+  ],
+  "summary_1l": "Micromolar concentrations of extracellular Zn2+ are known to antagonize native NMDA receptors via a dual mechanism involving both a voltage-ind",
+  "query_hits": [],
+  "embed_text": "17338543 High-affinity zinc inhibition of NMDA NR1-NR2A receptors science scifact Micromolar concentrations of extracellular Zn2+ are known to antagonize native NMDA receptors via a dual mechanism involving both a voltage-independent and a voltage-dependent inhibition. We have tried to evaluate the relative importance… 17338543 high-affinity-zinc-inhibition-of-nmda-nr1-nr2a-receptors high affinity zinc inhibition nmda nr1 nr2a receptors Micromolar concentrations of extracellular Zn2+ are known to antagonize native NMDA receptors via a dual mechanism involving both a voltage-ind High-affinity zinc inhibition of NMDA NR1-NR2A receptors Micromolar concentrations of extracellular Zn2+ are known to antagonize native NMDA receptors via a dual mechanism involving both a voltage-independent and a voltage-dependent inhibition. We have tried to evaluate the relative importance of these two effects and their subunit specificity on recombinant NMDA receptors expressed in HEK 293 cells and Xenopus oocytes. The comparison of NR1a-NR2A and NR1a-NR2B receptors shows that the voltage-dependent inhibition is similar in both types of receptors but that the voltage-independent inhibition occurs at much lower Zn2+ concentrations in NR1a-NR2A receptors (IC50 in the nanomolar range) than in NR1a-NR2B receptors (IC50 in the micromolar range). The high affinity of the effect observed wit",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.617602+00:00"
+}

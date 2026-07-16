@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4423327",
+  "source_fingerprint": "76e815dc09d56b124e0b9939c2a32ba5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4423327",
+    "nanog-safeguards-pluripotency-and-mediates-germline-development"
+  ],
+  "key_phrases": [
+    "nanog",
+    "safeguards",
+    "pluripotency",
+    "mediates",
+    "germline",
+    "development",
+    "divergent",
+    "homeodomain"
+  ],
+  "summary_1l": "Nanog is a divergent homeodomain protein found in mammalian pluripotent cells and developing germ cells.",
+  "query_hits": [],
+  "embed_text": "4423327 Nanog safeguards pluripotency and mediates germline development science scifact Nanog is a divergent homeodomain protein found in mammalian pluripotent cells and developing germ cells. Deletion of Nanog causes early embryonic lethality, whereas constitutive expression enables autonomous self-renewal of embryonic stem… 4423327 nanog-safeguards-pluripotency-and-mediates-germline-development nanog safeguards pluripotency mediates germline development divergent homeodomain Nanog is a divergent homeodomain protein found in mammalian pluripotent cells and developing germ cells. Nanog safeguards pluripotency and mediates germline development Nanog is a divergent homeodomain protein found in mammalian pluripotent cells and developing germ cells. Deletion of Nanog causes early embryonic lethality, whereas constitutive expression enables autonomous self-renewal of embryonic stem cells. Nanog is accordingly considered a core element of the pluripotent transcriptional network. However, here we report that Nanog fluctuates in mouse embryonic stem cells. Transient downregulation of Nanog appears to predispose cells towards differentiation but does not mark commitment. By genetic deletion we show that, although they are prone to differentiate, embryonic stem cells can self-renew indefinitely in the permanent absence of Nanog. Expanded Nanog null cells colonize embryonic g",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.060631+00:00"
+}

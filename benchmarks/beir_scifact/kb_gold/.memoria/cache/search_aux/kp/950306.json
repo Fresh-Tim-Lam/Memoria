@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "950306",
+  "source_fingerprint": "64360460a71c5cadde20edeb1b1830ca",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "950306",
+    "molecular-basis-for-target-rna-recognition-and-cleavage-by-human-risc"
+  ],
+  "key_phrases": [
+    "molecular",
+    "basis",
+    "target",
+    "rna",
+    "recognition",
+    "cleavage",
+    "by",
+    "human"
+  ],
+  "summary_1l": "The RNA-Induced Silencing Complex (RISC) is a ribonucleoprotein particle composed of a single-stranded short interfering RNA (siRN",
+  "query_hits": [],
+  "embed_text": "950306 Molecular Basis for Target RNA Recognition and Cleavage by Human RISC science scifact The RNA-Induced Silencing Complex (RISC) is a ribonucleoprotein particle composed of a single-stranded short interfering RNA (siRNA) and an endonucleolytically active Argonaute protein, capable of cleaving mRNAs complementary to the siRNA.… 950306 molecular-basis-for-target-rna-recognition-and-cleavage-by-human-risc molecular basis target rna recognition cleavage by human The RNA-Induced Silencing Complex (RISC) is a ribonucleoprotein particle composed of a single-stranded short interfering RNA (siRN Molecular Basis for Target RNA Recognition and Cleavage by Human RISC The RNA-Induced Silencing Complex (RISC) is a ribonucleoprotein particle composed of a single-stranded short interfering RNA (siRNA) and an endonucleolytically active Argonaute protein, capable of cleaving mRNAs complementary to the siRNA. The mechanism by which RISC cleaves a target RNA is well understood, however it remains enigmatic how RISC finds its target RNA. Here, we show, both in vitro and in vivo, that the accessibility of the target site correlates directly with the efficiency of cleavage, demonstrating that RISC is unable to unfold structured RNA. In the course of target recognition, RISC transiently contacts single-stranded RNA nonspecifically and promotes siRNA-target RNA annealing. Furthermore, the 5' part",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.057998+00:00"
+}

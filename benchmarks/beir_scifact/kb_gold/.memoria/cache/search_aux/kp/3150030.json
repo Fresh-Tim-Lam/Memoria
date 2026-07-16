@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3150030",
+  "source_fingerprint": "bac73dfd7f3d67992b65124db2e9ff68",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3150030",
+    "global-vitamin-d-levels-in-relation-to-age,-gender,-skin-pigmentation-and-latitude:-an-ecologic-meta-regression-analysis"
+  ],
+  "key_phrases": [
+    "global",
+    "vitamin",
+    "levels",
+    "relation",
+    "age",
+    "gender",
+    "skin",
+    "pigmentation"
+  ],
+  "summary_1l": "We performed a meta-analysis of cross-sectional studies on serum 25(OH)D status",
+  "query_hits": [],
+  "embed_text": "3150030 Global vitamin D levels in relation to age, gender, skin pigmentation and latitude: an ecologic meta-regression analysis science scifact We performed a meta-analysis of cross-sectional studies on serum 25(OH)D status globally. Serum 25(OH)D levels on average were 54 nmol/l, were higher in women than men, and higher in Caucasians than in non-Caucasians. There was no trend in… 3150030 global-vitamin-d-levels-in-relation-to-age,-gender,-skin-pigmentation-and-latitude:-an-ecologic-meta-regression-analysis global vitamin levels relation age gender skin pigmentation We performed a meta-analysis of cross-sectional studies on serum 25(OH)D status Global vitamin D levels in relation to age, gender, skin pigmentation and latitude: an ecologic meta-regression analysis We performed a meta-analysis of cross-sectional studies on serum 25(OH)D status globally. Serum 25(OH)D levels on average were 54 nmol/l, were higher in women than men, and higher in Caucasians than in non-Caucasians. There was no trend in serum 25(OH)D level with latitude. Vitamin D deficiency was widespread. We studied vitamin D status (expressed as serum 25-hydroxy-vitamin D [25(OH)D]) in native subjects worldwide. Meta-analysis and meta-regression of studies reporting on 25(OH)D in healthy subjects retrieved from Pubmed, Embase and Web of Science using the terms “serum”, “25-hydroxy-vitamin D”, “cholecalciferol”, and “human”. A total of 394 studies were included. The",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.624660+00:00"
+}

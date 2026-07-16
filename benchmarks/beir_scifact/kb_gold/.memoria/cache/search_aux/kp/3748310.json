@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3748310",
+  "source_fingerprint": "3138aee8a43770c473859aa06afb9e53",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3748310",
+    "slp-65-regulates-immunoglobulin-light-chain-gene-recombination-through-the-pi(3)k-pkb-foxo-pathway"
+  ],
+  "key_phrases": [
+    "slp",
+    "65",
+    "regulates",
+    "immunoglobulin",
+    "light",
+    "chain",
+    "gene",
+    "recombination"
+  ],
+  "summary_1l": "Although the essential role of the adaptor protein SLP-65 in pre-B cell differentiation is establishe",
+  "query_hits": [],
+  "embed_text": "3748310 SLP-65 regulates immunoglobulin light chain gene recombination through the PI(3)K-PKB-Foxo pathway science scifact Although the essential role of the adaptor protein SLP-65 in pre-B cell differentiation is established, the molecular mechanism underlying its function is poorly understood. In this study, we uncover a link between SLP-65–dependent… 3748310 slp-65-regulates-immunoglobulin-light-chain-gene-recombination-through-the-pi(3)k-pkb-foxo-pathway slp 65 regulates immunoglobulin light chain gene recombination Although the essential role of the adaptor protein SLP-65 in pre-B cell differentiation is establishe SLP-65 regulates immunoglobulin light chain gene recombination through the PI(3)K-PKB-Foxo pathway Although the essential role of the adaptor protein SLP-65 in pre-B cell differentiation is established, the molecular mechanism underlying its function is poorly understood. In this study, we uncover a link between SLP-65–dependent signaling and the phosphoinositide-3-OH kinase (PI(3)K)–protein kinase B (PKB)–Foxo pathway. We show that the forkhead box transcription factor Foxo3a promotes light chain rearrangement in pre-B cells. Our data suggest that PKB suppresses light chain recombination by phosphorylating Foxo proteins, whereas reconstitution of SLP-65 function counteracts PKB activation and promotes Foxo3a and Foxo1 activity in pre-B cells. Together, these data illuminate a molecular fu",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.532021+00:00"
+}

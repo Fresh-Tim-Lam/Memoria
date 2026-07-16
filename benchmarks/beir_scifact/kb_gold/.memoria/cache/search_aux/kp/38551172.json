@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "38551172",
+  "source_fingerprint": "084a8fb86d59c5c4edf8b1fd412df990",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "38551172",
+    "mammographic-density,-plasma-vitamin-d-levels-and-risk-of-breast-cancer-in-postmenopausal-women."
+  ],
+  "key_phrases": [
+    "mammographic",
+    "density",
+    "plasma",
+    "vitamin",
+    "levels",
+    "risk",
+    "breast",
+    "cancer"
+  ],
+  "summary_1l": "Mammographic density, plasma vitamin D levels and risk of breast cancer in postmenopausal women.",
+  "query_hits": [],
+  "embed_text": "38551172 Mammographic density, plasma vitamin D levels and risk of breast cancer in postmenopausal women. science scifact Mammographic density is a strong risk factor for breast cancer, but the underlying biology for this association is unknown. Studies suggest that vitamin D may reduce breast cancer risk and dietary vitamin D intake has been associated with… 38551172 mammographic-density,-plasma-vitamin-d-levels-and-risk-of-breast-cancer-in-postmenopausal-women. mammographic density plasma vitamin levels risk breast cancer Mammographic density, plasma vitamin D levels and risk of breast cancer in postmenopausal women. Mammographic density, plasma vitamin D levels and risk of breast cancer in postmenopausal women. Mammographic density is a strong risk factor for breast cancer, but the underlying biology for this association is unknown. Studies suggest that vitamin D may reduce breast cancer risk and dietary vitamin D intake has been associated with reduced breast density. We conducted a case-control study nested within the Nurses' Health Study cohort consisting of 463 and 497 postmenopausal cases and controls, respectively. We examined the association between mammographic density and plasma levels of 25-hydroxyvitamin D [25(OH)D] and 1,25-dihydroxyvitamin D [1,25(OH)(2)D]. We assessed whether plasma vitamin D metabolites modify the association between breast density and breast cancer. Percent mammographi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.629553+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16527698",
+  "source_fingerprint": "81d286c1f520a2c68d758867ee6b9073",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16527698",
+    "functional-and-molecular-defects-of-pancreatic-islets-in-human-type-2-diabetes."
+  ],
+  "key_phrases": [
+    "functional",
+    "molecular",
+    "defects",
+    "pancreatic",
+    "islets",
+    "human",
+    "type",
+    "diabetes"
+  ],
+  "summary_1l": "Functional and molecular defects of pancreatic islets in human type 2 diabetes.",
+  "query_hits": [],
+  "embed_text": "16527698 Functional and molecular defects of pancreatic islets in human type 2 diabetes. science scifact To shed further light on the primary alterations of insulin secretion in type 2 diabetes and the possible mechanisms involved, we studied several functional and molecular properties of islets isolated from the pancreata of 13 type 2… 16527698 functional-and-molecular-defects-of-pancreatic-islets-in-human-type-2-diabetes. functional molecular defects pancreatic islets human type diabetes Functional and molecular defects of pancreatic islets in human type 2 diabetes. Functional and molecular defects of pancreatic islets in human type 2 diabetes. To shed further light on the primary alterations of insulin secretion in type 2 diabetes and the possible mechanisms involved, we studied several functional and molecular properties of islets isolated from the pancreata of 13 type 2 diabetic and 13 matched nondiabetic cadaveric organ donors. Glucose-stimulated insulin secretion from type 2 diabetic islets was significantly lower than from control islets, whereas arginine- and glibenclamide-stimulated insulin release was less markedly affected. The defects were accompanied by reduced mRNA expression of GLUT1 and -2 and glucokinase and by diminished glucose oxidation. In addition, AMP-activated protein kinase activation was reduced. Furthermore, the expression of",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.402685+00:00"
+}

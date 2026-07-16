@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "643765",
+  "source_fingerprint": "a9eee57a258e18a150c177991a6437fe",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "643765",
+    "relationship-between-sloan-kettering-virus-expression-and-mouse-follicular-development"
+  ],
+  "key_phrases": [
+    "relationship",
+    "between",
+    "sloan",
+    "kettering",
+    "virus",
+    "expression",
+    "mouse",
+    "follicular"
+  ],
+  "summary_1l": "Sloan-Kettering virus gene product (Ski) is an unique nuclear pro-oncoprotein and belongs to the ski/sno proto-on",
+  "query_hits": [],
+  "embed_text": "643765 Relationship between Sloan-Kettering virus expression and mouse follicular development science scifact Sloan-Kettering virus gene product (Ski) is an unique nuclear pro-oncoprotein and belongs to the ski/sno proto-oncogene family. Ski plays multiple roles in a variety of cell types, it can induce both oncogenic transformation and terminal… 643765 relationship-between-sloan-kettering-virus-expression-and-mouse-follicular-development relationship between sloan kettering virus expression mouse follicular Sloan-Kettering virus gene product (Ski) is an unique nuclear pro-oncoprotein and belongs to the ski/sno proto-on Relationship between Sloan-Kettering virus expression and mouse follicular development Sloan-Kettering virus gene product (Ski) is an unique nuclear pro-oncoprotein and belongs to the ski/sno proto-oncogene family. Ski plays multiple roles in a variety of cell types, it can induce both oncogenic transformation and terminal muscle differentiation when expressed at high levels. Ski/SnoN are important transcription regulators of the transforming growth factor-β (TGF-β) superfamily and function mainly through heterodimers. Since TGF-β superfamily are key regulators of follicle development and it has been previously shown that SnoN is also vital to follicle development, this research was conducted to clarify the relationship between Ski expression and mouse follicular development, in ovaries of",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.882451+00:00"
+}

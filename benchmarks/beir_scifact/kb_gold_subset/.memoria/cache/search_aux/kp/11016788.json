@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11016788",
+  "source_fingerprint": "841559afcbd3aec587492d1d752ce609",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11016788",
+    "sascif:-an-extension-of-core-crystallographic-information-file-for-sas"
+  ],
+  "key_phrases": [
+    "sascif",
+    "extension",
+    "core",
+    "crystallographic",
+    "information",
+    "file",
+    "sas",
+    "data"
+  ],
+  "summary_1l": "Data acquisition packages developed at different small angle scattering facilities use different formats both for raw and process",
+  "query_hits": [],
+  "embed_text": "11016788 sasCIF: an extension of core Crystallographic Information File for SAS science scifact Data acquisition packages developed at different small angle scattering facilities use different formats both for raw and processed data storage. To facilitate the data exchange between laboratories, a consensus in the small angle… 11016788 sascif:-an-extension-of-core-crystallographic-information-file-for-sas sascif extension core crystallographic information file sas data Data acquisition packages developed at different small angle scattering facilities use different formats both for raw and process sasCIF: an extension of core Crystallographic Information File for SAS Data acquisition packages developed at different small angle scattering facilities use different formats both for raw and processed data storage. To facilitate the data exchange between laboratories, a consensus in the small angle scattering community has been reached on an ASCII format for one-dimensional data which includes a self-describing header containing relevant information about the sample and instrumental conditions followed by raw or reduced data in a tabular form. This format called sasCIF was implemented as an extension of core CIF (Crystallographic Information File) dictionary.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:06.194899+00:00"
+}

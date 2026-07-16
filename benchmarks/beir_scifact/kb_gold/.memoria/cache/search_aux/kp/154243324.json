@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "154243324",
+  "source_fingerprint": "28bc8ab25ceba4441640b4515bfa22fc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "154243324",
+    "from-youth-to-adult-homelessness"
+  ],
+  "key_phrases": [
+    "from",
+    "youth",
+    "adult",
+    "homelessness",
+    "governments",
+    "have",
+    "shown",
+    "interest"
+  ],
+  "summary_1l": "Governments have shown an interest in early intervention strategies to reduce youth homelessness, but critics say that early intervention programs lack clear outcomes.",
+  "query_hits": [],
+  "embed_text": "154243324 From youth to adult homelessness science scifact Governments have shown an interest in early intervention strategies to reduce youth homelessness, but critics say that early intervention programs lack clear outcomes. This paper investigates what happens when early intervention programs… 154243324 from-youth-to-adult-homelessness from youth adult homelessness governments have shown interest Governments have shown an interest in early intervention strategies to reduce youth homelessness, but critics say that early intervention programs lack clear outcomes. From youth to adult homelessness Governments have shown an interest in early intervention strategies to reduce youth homelessness, but critics say that early intervention programs lack clear outcomes. This paper investigates what happens when early intervention programs are not in place and young people progress to adult homelessness. The paper assesses the 'social adaptation' hypothesis that the longer young people are homeless the more they adapt to homelessness as a way of life. The paper uses information on 1,677 individuals who first became homeless when they were 18 or younger. Three-quarters of the sample had progressed to adult homelessness (defined as 25 or older) and one-quarter were now young adults aged 19 to 24. The findings confirm that the longer people are homeless, the mor",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.512863+00:00"
+}

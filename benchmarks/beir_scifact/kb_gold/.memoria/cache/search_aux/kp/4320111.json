@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4320111",
+  "source_fingerprint": "e597654da1764ee1da0798b4c8dda2b6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4320111",
+    "light-acts-directly-on-organs-and-cells-in-culture-to-set-the-vertebrate-circadian-clock."
+  ],
+  "key_phrases": [
+    "light",
+    "acts",
+    "directly",
+    "organs",
+    "cells",
+    "culture",
+    "set",
+    "vertebrate"
+  ],
+  "summary_1l": "Light acts directly on organs and cells in culture to set the vertebrate circadian clock.",
+  "query_hits": [],
+  "embed_text": "4320111 Light acts directly on organs and cells in culture to set the vertebrate circadian clock. science scifact The expression of clock genes in vertebrates is widespread and not restricted to classical clock structures. The expression of the Clock gene in zebrafish shows a strong circadian oscillation in many tissues in vivo and in culture, showing… 4320111 light-acts-directly-on-organs-and-cells-in-culture-to-set-the-vertebrate-circadian-clock. light acts directly organs cells culture set vertebrate Light acts directly on organs and cells in culture to set the vertebrate circadian clock. Light acts directly on organs and cells in culture to set the vertebrate circadian clock. The expression of clock genes in vertebrates is widespread and not restricted to classical clock structures. The expression of the Clock gene in zebrafish shows a strong circadian oscillation in many tissues in vivo and in culture, showing that endogenous oscillators exist in peripheral organs. A defining feature of circadian clocks is that they can be set or entrained to local time, usually by the environmental light-dark cycle. An important question is whether peripheral oscillators are entrained to local time by signals from central pacemakers such as the eyes or are themselves directly light-responsive. Here we show that the peripheral organ clocks of zebrafish are set by light-dark cycles in cult",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.569929+00:00"
+}

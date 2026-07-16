@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "86694016",
+  "source_fingerprint": "f437e1cbc98365a4b593c18baad0cd41",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "86694016"
+  ],
+  "key_phrases": [
+    "molecular",
+    "mechanisms",
+    "invadopodium",
+    "formation",
+    "role",
+    "wasp",
+    "arp2",
+    "complex"
+  ],
+  "summary_1l": "Invadopodia are actin-rich membrane protrusions with a matrix degradation activity formed by i",
+  "query_hits": [],
+  "embed_text": "86694016 Molecular mechanisms of invadopodium formation: the role of the N-WASP–Arp2/3 complex pathway and cofilin science scifact Invadopodia are actin-rich membrane protrusions with a matrix degradation activity formed by invasive cancer cells. We have studied the molecular mechanisms of invadopodium formation in metastatic carcinoma cells. Epidermal growth factor… 86694016 molecular mechanisms invadopodium formation role wasp arp2 complex Invadopodia are actin-rich membrane protrusions with a matrix degradation activity formed by i Molecular mechanisms of invadopodium formation: the role of the N-WASP–Arp2/3 complex pathway and cofilin Invadopodia are actin-rich membrane protrusions with a matrix degradation activity formed by invasive cancer cells. We have studied the molecular mechanisms of invadopodium formation in metastatic carcinoma cells. Epidermal growth factor (EGF) receptor kinase inhibitors blocked invadopodium formation in the presence of serum, and EGF stimulation of serum-starved cells induced invadopodium formation. RNA interference and dominant-negative mutant expression analyses revealed that neural WASP (N-WASP), Arp2/3 complex, and their upstream regulators, Nck1, Cdc42, and WIP, are necessary for invadopodium formation. Time-lapse analysis revealed that invadopodia are formed de novo at the cell p",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.407758+00:00"
+}

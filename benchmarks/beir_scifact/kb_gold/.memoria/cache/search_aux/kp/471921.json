@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "471921",
+  "source_fingerprint": "a4f4681a0aed9548dd89d993cd03ed76",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "471921",
+    "air-pollution-and-cardiovascular-disease:-a-statement-for-healthcare-professionals-from-the-expert-panel-on-population-and-prevention-science-of-the-american-heart-association."
+  ],
+  "key_phrases": [
+    "air",
+    "pollution",
+    "cardiovascular",
+    "disease",
+    "statement",
+    "healthcare",
+    "professionals",
+    "from"
+  ],
+  "summary_1l": "Air pollution and cardiovascular disease: a statement for healthcare professionals from the Expert Panel on Population and Prevention Science of the American Heart Association.",
+  "query_hits": [],
+  "embed_text": "471921 Air pollution and cardiovascular disease: a statement for healthcare professionals from the Expert Panel on Population and Prevention Science of the American Heart Association. science scifact Air pollution is a heterogeneous, complex mixture of gases, liquids, and particulate matter. Epidemiological studies have demonstrated a consistent increased risk for cardiovascular events in relation to both short- and long-term exposure… 471921 air-pollution-and-cardiovascular-disease:-a-statement-for-healthcare-professionals-from-the-expert-panel-on-population-and-prevention-science-of-the-american-heart-association. air pollution cardiovascular disease statement healthcare professionals from Air pollution and cardiovascular disease: a statement for healthcare professionals from the Expert Panel on Population and Prevention Science of the American Heart Association. Air pollution and cardiovascular disease: a statement for healthcare professionals from the Expert Panel on Population and Prevention Science of the American Heart Association. Air pollution is a heterogeneous, complex mixture of gases, liquids, and particulate matter. Epidemiological studies have demonstrated a consistent increased risk for cardiovascular events in relation to both short- and long-term exposure to present-day concentrations of ambient particulate matter. Several plausible mechanistic pathways have been described, including enhanced coagulation/thrombosis, a propensity for arrhythmias, acute arterial vasoconstriction, systemic inflammatory responses, and the chronic promotion of atherosclerosis. The purpose of this statement is to provide healthcare professionals and regul",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.339633+00:00"
+}

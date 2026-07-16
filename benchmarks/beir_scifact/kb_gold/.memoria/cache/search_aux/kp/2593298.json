@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2593298",
+  "source_fingerprint": "495c95cfbf2bbecdb64c83a4c3788069",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2593298",
+    "vascular-endothelial-cadherin-controls-vegfr-2-internalization-and-signaling-from-intracellular-compartments"
+  ],
+  "key_phrases": [
+    "vascular",
+    "endothelial",
+    "cadherin",
+    "controls",
+    "vegfr",
+    "internalization",
+    "signaling",
+    "from"
+  ],
+  "summary_1l": "Receptor endocytosis is a fundamental step in controlling the magnitude, duration, and natu",
+  "query_hits": [],
+  "embed_text": "2593298 Vascular endothelial cadherin controls VEGFR-2 internalization and signaling from intracellular compartments science scifact Receptor endocytosis is a fundamental step in controlling the magnitude, duration, and nature of cell signaling events. Confluent endothelial cells are contact inhibited in their growth and respond poorly to the proliferative signals of… 2593298 vascular-endothelial-cadherin-controls-vegfr-2-internalization-and-signaling-from-intracellular-compartments vascular endothelial cadherin controls vegfr internalization signaling from Receptor endocytosis is a fundamental step in controlling the magnitude, duration, and natu Vascular endothelial cadherin controls VEGFR-2 internalization and signaling from intracellular compartments Receptor endocytosis is a fundamental step in controlling the magnitude, duration, and nature of cell signaling events. Confluent endothelial cells are contact inhibited in their growth and respond poorly to the proliferative signals of vascular endothelial growth factor (VEGF). In a previous study, we found that the association of vascular endothelial cadherin (VEC) with VEGF receptor (VEGFR) type 2 contributes to density-dependent growth inhibition (Lampugnani, G.M., A. Zanetti, M. Corada, T. Takahashi, G. Balconi, F. Breviario, F. Orsenigo, A. Cattelino, R. Kemler, T.O. Daniel, and E. Dejana. 2003. J. Cell Biol. 161:793–804). In the present study, we describe the mechanism throug",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.737985+00:00"
+}

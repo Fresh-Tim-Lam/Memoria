@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25985964",
+  "source_fingerprint": "94830e731ed7b0aa9b0cb594b8452947",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25985964",
+    "very-small-embryonic-like-stem-cells-with-maximum-regenerative-potential-get-discarded-during-cord-blood-banking-and-bone-marrow-processing-for-autologous-stem-cell-therapy."
+  ],
+  "key_phrases": [
+    "very",
+    "small",
+    "embryonic",
+    "like",
+    "stem",
+    "cells",
+    "with",
+    "maximum"
+  ],
+  "summary_1l": "Very small embryonic-like stem cells with maximum regenerative potential get discarded during cord blood banking and bone marrow processing for autologous stem cell therapy.",
+  "query_hits": [],
+  "embed_text": "25985964 Very small embryonic-like stem cells with maximum regenerative potential get discarded during cord blood banking and bone marrow processing for autologous stem cell therapy. science scifact Very small embryonic-like stem cells (VSELs) are possibly lost during cord blood banking and bone marrow (BM) processing for autologus stem cell therapy mainly because of their small size. The present study was conducted on human umbilical… 25985964 very-small-embryonic-like-stem-cells-with-maximum-regenerative-potential-get-discarded-during-cord-blood-banking-and-bone-marrow-processing-for-autologous-stem-cell-therapy. very small embryonic like stem cells with maximum Very small embryonic-like stem cells with maximum regenerative potential get discarded during cord blood banking and bone marrow processing for autologous stem cell therapy. Very small embryonic-like stem cells with maximum regenerative potential get discarded during cord blood banking and bone marrow processing for autologous stem cell therapy. Very small embryonic-like stem cells (VSELs) are possibly lost during cord blood banking and bone marrow (BM) processing for autologus stem cell therapy mainly because of their small size. The present study was conducted on human umbilical cord blood (UCB, n=6) and discarded red blood cells (RBC) fraction obtained after separation of mononuclear cells from human BM (n=6), to test this hypothesis. The results show that VSELs, which are pluripotent stem cells with maximum regenerative potential, settle along with the RBCs during Ficoll-Hypaque density separation. These cells are very small in size (3-5 μm), have high nuc",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.888181+00:00"
+}

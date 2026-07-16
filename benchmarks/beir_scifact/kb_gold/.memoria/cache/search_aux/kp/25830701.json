@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25830701",
+  "source_fingerprint": "b71b7f7b413547ed1bc70ea56707f163",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25830701",
+    "a-developmental-transition-in-definitive-erythropoiesis:-erythropoietin-expression-is-sequentially-regulated-by-retinoic-acid-receptors-and-hnf4."
+  ],
+  "key_phrases": [
+    "developmental",
+    "transition",
+    "definitive",
+    "erythropoiesis",
+    "erythropoietin",
+    "expression",
+    "sequentially",
+    "regulated"
+  ],
+  "summary_1l": "A developmental transition in definitive erythropoiesis: erythropoietin expression is sequentially regulated by retinoic acid receptors and HNF4.",
+  "query_hits": [],
+  "embed_text": "25830701 A developmental transition in definitive erythropoiesis: erythropoietin expression is sequentially regulated by retinoic acid receptors and HNF4. science scifact The cytokine erythropoietin (Epo) promotes erythropoietic progenitor cell proliferation and is required for erythropoietic differentiation. We have found that the Epo gene is a direct transcriptional target gene of retinoic acid signaling… 25830701 a-developmental-transition-in-definitive-erythropoiesis:-erythropoietin-expression-is-sequentially-regulated-by-retinoic-acid-receptors-and-hnf4. developmental transition definitive erythropoiesis erythropoietin expression sequentially regulated A developmental transition in definitive erythropoiesis: erythropoietin expression is sequentially regulated by retinoic acid receptors and HNF4. A developmental transition in definitive erythropoiesis: erythropoietin expression is sequentially regulated by retinoic acid receptors and HNF4. The cytokine erythropoietin (Epo) promotes erythropoietic progenitor cell proliferation and is required for erythropoietic differentiation. We have found that the Epo gene is a direct transcriptional target gene of retinoic acid signaling during early erythropoiesis (prior to embryonic day E12.5) in the fetal liver. Mouse embryos lacking the retinoic acid receptor gene RXR alpha have a morphological and histological phenotype that is comparable with embryos in which the Epo gene itself has been mutated, and flow cytometric analysis indicates that RXR alpha-deficient embryos are deficient in erythroid differentiation. Epo mRNA levels are reduced s",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.550878+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17150648",
+  "source_fingerprint": "eea0086968a1d7575f545988569f8928",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17150648",
+    "leptin-regulates-glutamate-and-glucose-transporters-in-hypothalamic-astrocytes."
+  ],
+  "key_phrases": [
+    "leptin",
+    "regulates",
+    "glutamate",
+    "glucose",
+    "transporters",
+    "hypothalamic",
+    "astrocytes",
+    "glial"
+  ],
+  "summary_1l": "Leptin regulates glutamate and glucose transporters in hypothalamic astrocytes.",
+  "query_hits": [],
+  "embed_text": "17150648 Leptin regulates glutamate and glucose transporters in hypothalamic astrocytes. science scifact Glial cells perform critical functions that alter the metabolism and activity of neurons, and there is increasing interest in their role in appetite and energy balance. Leptin, a key regulator of appetite and metabolism, has previously… 17150648 leptin-regulates-glutamate-and-glucose-transporters-in-hypothalamic-astrocytes. leptin regulates glutamate glucose transporters hypothalamic astrocytes glial Leptin regulates glutamate and glucose transporters in hypothalamic astrocytes. Leptin regulates glutamate and glucose transporters in hypothalamic astrocytes. Glial cells perform critical functions that alter the metabolism and activity of neurons, and there is increasing interest in their role in appetite and energy balance. Leptin, a key regulator of appetite and metabolism, has previously been reported to influence glial structural proteins and morphology. Here, we demonstrate that metabolic status and leptin also modify astrocyte-specific glutamate and glucose transporters, indicating that metabolic signals influence synaptic efficacy and glucose uptake and, ultimately, neuronal function. We found that basal and glucose-stimulated electrical activity of hypothalamic proopiomelanocortin (POMC) neurons in mice were altered in the offspring of mothers fed a high-fat",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.391819+00:00"
+}

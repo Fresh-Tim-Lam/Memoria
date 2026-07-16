@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "40963697",
+  "source_fingerprint": "c10659c940ffcb50b930b5f13fc9e481",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "40963697",
+    "the-tumor-necrosis-factor-receptor-stalk-regions-define-responsiveness-to-soluble-versus-membrane-bound-ligand."
+  ],
+  "key_phrases": [
+    "tumor",
+    "necrosis",
+    "factor",
+    "receptor",
+    "stalk",
+    "regions",
+    "define",
+    "responsiveness"
+  ],
+  "summary_1l": "The tumor necrosis factor receptor stalk regions define responsiveness to soluble versus membrane-bound ligand.",
+  "query_hits": [],
+  "embed_text": "40963697 The tumor necrosis factor receptor stalk regions define responsiveness to soluble versus membrane-bound ligand. science scifact The family of tumor necrosis factor receptors (TNFRs) and their ligands form a regulatory signaling network that controls immune responses. Various members of this receptor family respond differently to the soluble and membrane-bound forms… 40963697 the-tumor-necrosis-factor-receptor-stalk-regions-define-responsiveness-to-soluble-versus-membrane-bound-ligand. tumor necrosis factor receptor stalk regions define responsiveness The tumor necrosis factor receptor stalk regions define responsiveness to soluble versus membrane-bound ligand. The tumor necrosis factor receptor stalk regions define responsiveness to soluble versus membrane-bound ligand. The family of tumor necrosis factor receptors (TNFRs) and their ligands form a regulatory signaling network that controls immune responses. Various members of this receptor family respond differently to the soluble and membrane-bound forms of their respective ligands. However, the determining factors and underlying molecular mechanisms of this diversity are not yet understood. Using an established system of chimeric TNFRs and novel ligand variants mimicking the bioactivity of membrane-bound TNF (mTNF), we demonstrate that the membrane-proximal extracellular stalk regions of TNFR1 and TNFR2 are crucial in controlling responsiveness to soluble TNF (sTNF). We show that the stalk reg",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.005270+00:00"
+}

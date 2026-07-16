@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3001685",
+  "source_fingerprint": "7b4e0a49cdc5b850fa0e4bf063876334",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3001685",
+    "population-dynamics-of-a-pathogen:-the-conundrum-of-vivax-malaria"
+  ],
+  "key_phrases": [
+    "population",
+    "dynamics",
+    "pathogen",
+    "conundrum",
+    "vivax",
+    "malaria",
+    "building",
+    "mathematical"
+  ],
+  "summary_1l": "Building a mathematical model of population dynamics of pathogens within their host involves considerations of factors similar to thos",
+  "query_hits": [],
+  "embed_text": "3001685 Population dynamics of a pathogen: the conundrum of vivax malaria science scifact Building a mathematical model of population dynamics of pathogens within their host involves considerations of factors similar to those in ecology, as pathogens can prey on cells in the host. But within the multicellular host, attacked… 3001685 population-dynamics-of-a-pathogen:-the-conundrum-of-vivax-malaria population dynamics pathogen conundrum vivax malaria building mathematical Building a mathematical model of population dynamics of pathogens within their host involves considerations of factors similar to thos Population dynamics of a pathogen: the conundrum of vivax malaria Building a mathematical model of population dynamics of pathogens within their host involves considerations of factors similar to those in ecology, as pathogens can prey on cells in the host. But within the multicellular host, attacked cell types are integrated with other cellular systems, which in turn intervene in the infection. For example, immune responses attempt to sense and then eliminate or contain pathogens, and homeostatic mechanisms try to compensate for cell loss. This review focuses on modeling applied to malarias, diseases caused by single-cell eukaryote parasites that infect red blood cells, with special concern given to vivax malaria, a disease often thought to be benign (if sometimes incapacitating) because",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.347981+00:00"
+}

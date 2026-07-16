@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16120395",
+  "source_fingerprint": "b81d2624faf1de01a481d15dac78a296",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16120395",
+    "multiple-rna-surveillance-pathways-limit-aberrant-expression-of-iron-uptake-mrnas-and-prevent-iron-toxicity-in-s.-cerevisiae."
+  ],
+  "key_phrases": [
+    "multiple",
+    "rna",
+    "surveillance",
+    "pathways",
+    "limit",
+    "aberrant",
+    "expression",
+    "iron"
+  ],
+  "summary_1l": "Multiple RNA surveillance pathways limit aberrant expression of iron uptake mRNAs and prevent iron toxicity in S.",
+  "query_hits": [],
+  "embed_text": "16120395 Multiple RNA surveillance pathways limit aberrant expression of iron uptake mRNAs and prevent iron toxicity in S. cerevisiae. science scifact Tight regulation of the expression of mRNAs encoding iron uptake proteins is essential to control iron homeostasis and avoid intracellular iron toxicity. We show that many mRNAs encoding iron uptake or iron mobilization proteins are… 16120395 multiple-rna-surveillance-pathways-limit-aberrant-expression-of-iron-uptake-mrnas-and-prevent-iron-toxicity-in-s.-cerevisiae. multiple rna surveillance pathways limit aberrant expression iron Multiple RNA surveillance pathways limit aberrant expression of iron uptake mRNAs and prevent iron toxicity in S. Multiple RNA surveillance pathways limit aberrant expression of iron uptake mRNAs and prevent iron toxicity in S. cerevisiae. Tight regulation of the expression of mRNAs encoding iron uptake proteins is essential to control iron homeostasis and avoid intracellular iron toxicity. We show that many mRNAs encoding iron uptake or iron mobilization proteins are expressed in iron-replete conditions in the absence of the S. cerevisiae RNase III ortholog Rnt1p or of the nuclear exosome component Rrp6p. Extended forms of these mRNAs accumulate in the absence of Rnt1p or of the 5'-->3' exonucleases Xrn1p and Rat1p, showing that multiple degradative pathways contribute to the surveillance of aberrant forms of these transcripts. RNase III-deficient cells are hypersensitive to high iron concentrations,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.859873+00:00"
+}

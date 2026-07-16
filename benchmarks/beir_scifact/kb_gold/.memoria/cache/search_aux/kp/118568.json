@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "118568",
+  "source_fingerprint": "b061b2ace5354272b3bf3d40164ab91a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "118568",
+    "acute-administration-of-recombinant-angiopoietin-1-ameliorates-multiple-organ-dysfunction-syndrome-and-improves-survival-in-murine-sepsis."
+  ],
+  "key_phrases": [
+    "acute",
+    "administration",
+    "recombinant",
+    "angiopoietin",
+    "ameliorates",
+    "multiple",
+    "organ",
+    "dysfunction"
+  ],
+  "summary_1l": "Acute administration of recombinant Angiopoietin-1 ameliorates multiple-organ dysfunction syndrome and improves survival in murine sepsis.",
+  "query_hits": [],
+  "embed_text": "118568 Acute administration of recombinant Angiopoietin-1 ameliorates multiple-organ dysfunction syndrome and improves survival in murine sepsis. science scifact INTRODUCTION Endothelial activation leading to vascular barrier breakdown plays an essential role in the pathophysiology of multiple-organ dysfunction syndrome (MODS) in sepsis. Increasing evidence suggests that the function of the… 118568 acute-administration-of-recombinant-angiopoietin-1-ameliorates-multiple-organ-dysfunction-syndrome-and-improves-survival-in-murine-sepsis. acute administration recombinant angiopoietin ameliorates multiple organ dysfunction Acute administration of recombinant Angiopoietin-1 ameliorates multiple-organ dysfunction syndrome and improves survival in murine sepsis. Acute administration of recombinant Angiopoietin-1 ameliorates multiple-organ dysfunction syndrome and improves survival in murine sepsis. INTRODUCTION Endothelial activation leading to vascular barrier breakdown plays an essential role in the pathophysiology of multiple-organ dysfunction syndrome (MODS) in sepsis. Increasing evidence suggests that the function of the vessel-protective factor Angiopoietin-1 (Ang-1), a ligand of the endothelial-specific Tie2 receptor, is inhibited by its antagonist Angiopoietin-2 (Ang-2) during sepsis. In order to reverse the effects of the sepsis-induced suppression of Ang-1 and elevation of Ang-2 we aimed to investigate whether an intravenous injection of recombinant human (rh) Ang-1 protects against MODS in murine sepsis. METHODS Polymicrobiological abdo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:07.227620+00:00"
+}

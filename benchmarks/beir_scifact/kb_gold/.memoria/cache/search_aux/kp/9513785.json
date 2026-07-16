@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9513785",
+  "source_fingerprint": "f2c3a314168a593f80ad4099ce0e876f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9513785",
+    "maternal-protein-restriction-affects-postnatal-growth-and-the-expression-of-key-proteins-involved-in-lifespan-regulation-in-mice"
+  ],
+  "key_phrases": [
+    "maternal",
+    "protein",
+    "restriction",
+    "affects",
+    "postnatal",
+    "growth",
+    "expression",
+    "key"
+  ],
+  "summary_1l": "We previously reported that maternal protein restriction in rodents inf",
+  "query_hits": [],
+  "embed_text": "9513785 Maternal Protein Restriction Affects Postnatal Growth and the Expression of Key Proteins Involved in Lifespan Regulation in Mice science scifact We previously reported that maternal protein restriction in rodents influenced the rate of growth in early life and ultimately affected longevity. Low birth weight caused by maternal protein restriction followed by catch-up growth… 9513785 maternal-protein-restriction-affects-postnatal-growth-and-the-expression-of-key-proteins-involved-in-lifespan-regulation-in-mice maternal protein restriction affects postnatal growth expression key We previously reported that maternal protein restriction in rodents inf Maternal Protein Restriction Affects Postnatal Growth and the Expression of Key Proteins Involved in Lifespan Regulation in Mice We previously reported that maternal protein restriction in rodents influenced the rate of growth in early life and ultimately affected longevity. Low birth weight caused by maternal protein restriction followed by catch-up growth (recuperated animals) was associated with shortened lifespan whereas protein restriction and slow growth during lactation (postnatal low protein: PLP animals) increased lifespan. We aim to explore the mechanistic basis by which these differences arise. Here we investigated effects of maternal diet on organ growth, metabolic parameters and the expression of insulin/IGF1 signalling proteins and Sirt1 in muscle of male mice at weaning. PLP",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.121563+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1383826",
+  "source_fingerprint": "55a26c1a5d45b8f4d61b91400492f1c4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1383826",
+    "pseudoknots:-rna-structures-with-diverse-functions"
+  ],
+  "key_phrases": [
+    "pseudoknots",
+    "rna",
+    "structures",
+    "with",
+    "diverse",
+    "functions",
+    "molecules",
+    "fulfill"
+  ],
+  "summary_1l": "RNA molecules fulfill a diverse set of biological functions within cells, from the transfer of genetic information from DNA to protein, to enzymatic",
+  "query_hits": [],
+  "embed_text": "1383826 Pseudoknots: RNA Structures with Diverse Functions science scifact RNA molecules fulfill a diverse set of biological functions within cells, from the transfer of genetic information from DNA to protein, to enzymatic catalysis. Reflecting this range of roles, simple linear strings of RNA—made up of uracil,… 1383826 pseudoknots:-rna-structures-with-diverse-functions pseudoknots rna structures with diverse functions molecules fulfill RNA molecules fulfill a diverse set of biological functions within cells, from the transfer of genetic information from DNA to protein, to enzymatic Pseudoknots: RNA Structures with Diverse Functions RNA molecules fulfill a diverse set of biological functions within cells, from the transfer of genetic information from DNA to protein, to enzymatic catalysis. Reflecting this range of roles, simple linear strings of RNA—made up of uracil, guanine, cytosine, and adenine—form a variety of complex three-dimensional structures. Just as proteins form distinct structural motifs such as zinc fingers and beta barrels, certain structures are also commonly adopted by RNA molecules. Among the most prevalent RNA structures is a motif known as the pseudoknot. First recognized in the turnip yellow mosaic virus [1], a pseudoknot is an RNA structure that is minimally composed of two helical segments connected by single-stranded regions or loops (Figure 1",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.169211+00:00"
+}

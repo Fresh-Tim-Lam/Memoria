@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17209919",
+  "source_fingerprint": "a092ef9e3069236fecff169d511150e3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17209919",
+    "ciliary-extracellular-vesicles:-txt-msg-organelles"
+  ],
+  "key_phrases": [
+    "ciliary",
+    "extracellular",
+    "vesicles",
+    "txt",
+    "msg",
+    "organelles",
+    "cilia",
+    "sensory"
+  ],
+  "summary_1l": "Cilia are sensory organelles that protrude from cell surfaces to monitor the surrounding environment.",
+  "query_hits": [],
+  "embed_text": "17209919 Ciliary Extracellular Vesicles: Txt Msg Organelles science scifact Cilia are sensory organelles that protrude from cell surfaces to monitor the surrounding environment. In addition to its role as sensory receiver, the cilium also releases extracellular vesicles (EVs). The release of sub-micron sized EVs… 17209919 ciliary-extracellular-vesicles:-txt-msg-organelles ciliary extracellular vesicles txt msg organelles cilia sensory Cilia are sensory organelles that protrude from cell surfaces to monitor the surrounding environment. Ciliary Extracellular Vesicles: Txt Msg Organelles Cilia are sensory organelles that protrude from cell surfaces to monitor the surrounding environment. In addition to its role as sensory receiver, the cilium also releases extracellular vesicles (EVs). The release of sub-micron sized EVs is a conserved form of intercellular communication used by all three kingdoms of life. These extracellular organelles play important roles in both short and long range signaling between donor and target cells and may coordinate systemic responses within an organism in normal and diseased states. EV shedding from ciliated cells and EV–cilia interactions are evolutionarily conserved phenomena, yet remarkably little is known about the relationship between the cilia and EVs and the fundamental biology of EVs.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.482682+00:00"
+}

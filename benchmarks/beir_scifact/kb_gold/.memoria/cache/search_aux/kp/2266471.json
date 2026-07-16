@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2266471",
+  "source_fingerprint": "f4b70b6d8fc9fd554cdf128f997d89dd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2266471",
+    "microrna-21-is-induced-by-rapamycin-in-a-model-of-tuberous-sclerosis-(tsc)-and-lymphangioleiomyomatosis-(lam)"
+  ],
+  "key_phrases": [
+    "microrna",
+    "21",
+    "induced",
+    "by",
+    "rapamycin",
+    "model",
+    "tuberous",
+    "sclerosis"
+  ],
+  "summary_1l": "Lymphangioleiomyomatosis (LAM), a multisystem disease of women, is manifest by the prolife",
+  "query_hits": [],
+  "embed_text": "2266471 MicroRNA-21 is Induced by Rapamycin in a Model of Tuberous Sclerosis (TSC) and Lymphangioleiomyomatosis (LAM) science scifact Lymphangioleiomyomatosis (LAM), a multisystem disease of women, is manifest by the proliferation of smooth muscle-like cells in the lung resulting in cystic lung destruction. Women with LAM can also develop renal angiomyolipomas. LAM is… 2266471 microrna-21-is-induced-by-rapamycin-in-a-model-of-tuberous-sclerosis-(tsc)-and-lymphangioleiomyomatosis-(lam) microrna 21 induced by rapamycin model tuberous sclerosis Lymphangioleiomyomatosis (LAM), a multisystem disease of women, is manifest by the prolife MicroRNA-21 is Induced by Rapamycin in a Model of Tuberous Sclerosis (TSC) and Lymphangioleiomyomatosis (LAM) Lymphangioleiomyomatosis (LAM), a multisystem disease of women, is manifest by the proliferation of smooth muscle-like cells in the lung resulting in cystic lung destruction. Women with LAM can also develop renal angiomyolipomas. LAM is caused by mutations in the tuberous sclerosis complex genes (TSC1 or TSC2), resulting in hyperactive mammalian Target of Rapamycin (mTOR) signaling. The mTOR inhibitor, Rapamycin, stabilizes lung function in LAM and decreases the volume of renal angiomyolipomas, but lung function declines and angiomyolipomas regrow when treatment is discontinued, suggesting that factors induced by mTORC1 inhibition may promote the survival of TSC2-deficient cells. W",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.174523+00:00"
+}

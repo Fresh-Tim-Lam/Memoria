@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "42267740",
+  "source_fingerprint": "fb255de00e3ae42f97321aa44927b2ec",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "42267740",
+    "methylation-of-histone-h3-lysine-79-by-dot1p-plays-multiple-roles-in-the-response-to-uv-damage-in-saccharomyces-cerevisiae."
+  ],
+  "key_phrases": [
+    "methylation",
+    "histone",
+    "h3",
+    "lysine",
+    "79",
+    "by",
+    "dot1p",
+    "plays"
+  ],
+  "summary_1l": "Methylation of histone H3 lysine-79 by Dot1p plays multiple roles in the response to UV damage in Saccharomyces cerevisiae.",
+  "query_hits": [],
+  "embed_text": "42267740 Methylation of histone H3 lysine-79 by Dot1p plays multiple roles in the response to UV damage in Saccharomyces cerevisiae. science scifact Various proteins have been found to play roles in both the repair of UV damaged DNA and heterochromatin-mediated silencing in the yeast Saccharomyces cerevisiae. In particular, factors that are involved in the methylation of lysine-79 of… 42267740 methylation-of-histone-h3-lysine-79-by-dot1p-plays-multiple-roles-in-the-response-to-uv-damage-in-saccharomyces-cerevisiae. methylation histone h3 lysine 79 by dot1p plays Methylation of histone H3 lysine-79 by Dot1p plays multiple roles in the response to UV damage in Saccharomyces cerevisiae. Methylation of histone H3 lysine-79 by Dot1p plays multiple roles in the response to UV damage in Saccharomyces cerevisiae. Various proteins have been found to play roles in both the repair of UV damaged DNA and heterochromatin-mediated silencing in the yeast Saccharomyces cerevisiae. In particular, factors that are involved in the methylation of lysine-79 of histone H3 by Dot1p have been implicated in both processes, suggesting a bipartite function for this modification. We find that a dot1 null mutation and a histone H3 point mutation at lysine-79 cause increased sensitivity to UV radiation, suggesting that lysine-79 methylation is important for efficient repair of UV damage. Epistasis analysis between dot1 and various UV repair genes indicates that lysine-79 methylation plays overlappin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.855680+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4465762",
+  "source_fingerprint": "d1fc179d6dc496928570b309911448b6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4465762",
+    "transcription-initiation-complex-structures-elucidate-dna-opening"
+  ],
+  "key_phrases": [
+    "transcription",
+    "initiation",
+    "complex",
+    "structures",
+    "elucidate",
+    "dna",
+    "opening",
+    "eukaryotic"
+  ],
+  "summary_1l": "Transcription of eukaryotic protein-coding genes begins with assembly of the RNA polymerase (Pol) II initiation complex and promoter D",
+  "query_hits": [],
+  "embed_text": "4465762 Transcription initiation complex structures elucidate DNA opening science scifact Transcription of eukaryotic protein-coding genes begins with assembly of the RNA polymerase (Pol) II initiation complex and promoter DNA opening. Here we report cryo-electron microscopy (cryo-EM) structures of yeast initiation complexes… 4465762 transcription-initiation-complex-structures-elucidate-dna-opening transcription initiation complex structures elucidate dna opening eukaryotic Transcription of eukaryotic protein-coding genes begins with assembly of the RNA polymerase (Pol) II initiation complex and promoter D Transcription initiation complex structures elucidate DNA opening Transcription of eukaryotic protein-coding genes begins with assembly of the RNA polymerase (Pol) II initiation complex and promoter DNA opening. Here we report cryo-electron microscopy (cryo-EM) structures of yeast initiation complexes containing closed and open DNA at resolutions of 8.8 Å and 3.6 Å, respectively. DNA is positioned and retained over the Pol II cleft by a network of interactions between the TATA-box-binding protein TBP and transcription factors TFIIA, TFIIB, TFIIE, and TFIIF. DNA opening occurs around the tip of the Pol II clamp and the TFIIE ‘extended winged helix’ domain, and can occur in the absence of TFIIH. Loading of the DNA template strand into the active centre may be facilitated by movements of obst",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.800065+00:00"
+}

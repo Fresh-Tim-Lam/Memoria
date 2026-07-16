@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18852643",
+  "source_fingerprint": "e4da02788d26cb2ed5ae4dca15df5755",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18852643",
+    "apolipoprotein-e-and-atherosclerosis:-beyond-lipid-effect."
+  ],
+  "key_phrases": [
+    "apolipoprotein",
+    "atherosclerosis",
+    "beyond",
+    "lipid",
+    "effect",
+    "humans",
+    "apoe",
+    "polymorphic"
+  ],
+  "summary_1l": "Apolipoprotein E and atherosclerosis: beyond lipid effect.",
+  "query_hits": [],
+  "embed_text": "18852643 Apolipoprotein E and atherosclerosis: beyond lipid effect. science scifact In humans, apolipoprotein E (apoE) is a polymorphic multifunctional protein.1 It is coded by three alleles (e2, e3, e4) of a modulator gene (level, variability, and susceptibility gene) at the apoE locus on chromosome 19, determining six… 18852643 apolipoprotein-e-and-atherosclerosis:-beyond-lipid-effect. apolipoprotein atherosclerosis beyond lipid effect humans apoe polymorphic Apolipoprotein E and atherosclerosis: beyond lipid effect. Apolipoprotein E and atherosclerosis: beyond lipid effect. In humans, apolipoprotein E (apoE) is a polymorphic multifunctional protein.1 It is coded by three alleles (e2, e3, e4) of a modulator gene (level, variability, and susceptibility gene) at the apoE locus on chromosome 19, determining six apoE genotypes and plasma phenotypes. Its pleiotropic effects are exerted on plasma lipoprotein metabolism, coagulation, oxidative processes, macrophage, glial cell and neuronal cell homeostasis, adrenal function, central nervous system physiology, inflammation, and cell proliferation.2,3 ApoE polymorphism modulates susceptibility to many diseases. It is, however, particularly notorious for its role in neurodegenerative disorders4 and atherosclerotic arterial disease.5,6 The e4 allele (phenotypes E",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.771964+00:00"
+}

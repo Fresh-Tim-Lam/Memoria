@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18488986",
+  "source_fingerprint": "457608dcdd686904e869429503d88579",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18488986",
+    "the-immune-response-to-melanoma-is-limited-by-thymic-selection-of-self-antigens"
+  ],
+  "key_phrases": [
+    "immune",
+    "response",
+    "melanoma",
+    "limited",
+    "by",
+    "thymic",
+    "selection",
+    "self"
+  ],
+  "summary_1l": "The expression of melanoma-associated antigens (MAA) being limited to normal melanocytes and melanomas, MAAs are ideal t",
+  "query_hits": [],
+  "embed_text": "18488986 The Immune Response to Melanoma Is Limited by Thymic Selection of Self-Antigens science scifact The expression of melanoma-associated antigens (MAA) being limited to normal melanocytes and melanomas, MAAs are ideal targets for immunotherapy and melanoma vaccines. As MAAs are derived from self, immune responses to these may be limited… 18488986 the-immune-response-to-melanoma-is-limited-by-thymic-selection-of-self-antigens immune response melanoma limited by thymic selection self The expression of melanoma-associated antigens (MAA) being limited to normal melanocytes and melanomas, MAAs are ideal t The Immune Response to Melanoma Is Limited by Thymic Selection of Self-Antigens The expression of melanoma-associated antigens (MAA) being limited to normal melanocytes and melanomas, MAAs are ideal targets for immunotherapy and melanoma vaccines. As MAAs are derived from self, immune responses to these may be limited by thymic tolerance. The extent to which self-tolerance prevents efficient immune responses to MAAs remains unknown. The autoimmune regulator (AIRE) controls the expression of tissue-specific self-antigens in thymic epithelial cells (TECs). The level of antigens expressed in the TECs determines the fate of auto-reactive thymocytes. Deficiency in AIRE leads in both humans (APECED patients) and mice to enlarged autoreactive immune repertoires. Here we show increased IgG levels",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.348367+00:00"
+}

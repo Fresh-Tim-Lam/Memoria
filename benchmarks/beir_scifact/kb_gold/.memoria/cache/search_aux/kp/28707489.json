@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "28707489",
+  "source_fingerprint": "5853a6b3f8462bdfbbce65f7fbdad2a1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "28707489",
+    "bacteriophage-latent-period-evolution-as-a-response-to-resource-availability."
+  ],
+  "key_phrases": [
+    "bacteriophage",
+    "latent",
+    "period",
+    "evolution",
+    "as",
+    "response",
+    "resource",
+    "availability"
+  ],
+  "summary_1l": "Bacteriophage latent-period evolution as a response to resource availability.",
+  "query_hits": [],
+  "embed_text": "28707489 Bacteriophage latent-period evolution as a response to resource availability. science scifact Bacteriophages (phages) modify microbial communities by lysing hosts, transferring genetic material, and effecting lysogenic conversion. To understand how natural communities are affected it is important to develop predictive models. Here… 28707489 bacteriophage-latent-period-evolution-as-a-response-to-resource-availability. bacteriophage latent period evolution as response resource availability Bacteriophage latent-period evolution as a response to resource availability. Bacteriophage latent-period evolution as a response to resource availability. Bacteriophages (phages) modify microbial communities by lysing hosts, transferring genetic material, and effecting lysogenic conversion. To understand how natural communities are affected it is important to develop predictive models. Here we consider how variation between models--in eclipse period, latent period, adsorption constant, burst size, the handling of differences in host quantity and host quality, and in modeling strategy--can affect predictions. First we compare two published models of phage growth, which differ primarily in terms of how they model the kinetics of phage adsorption; one is a computer simulation and the other is an explicit calculation. At higher host quantities (approximately 10(8) cell",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.289877+00:00"
+}

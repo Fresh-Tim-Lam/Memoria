@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9559146",
+  "source_fingerprint": "c2e3343b7a3db0b2103d9a3da6cbdad4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9559146",
+    "senescent-cells,-tumor-suppression,-and-organismal-aging:-good-citizens,-bad-neighbors"
+  ],
+  "key_phrases": [
+    "senescent",
+    "cells",
+    "tumor",
+    "suppression",
+    "organismal",
+    "aging",
+    "good",
+    "citizens"
+  ],
+  "summary_1l": "Cells from organisms with renewable tissues can permanently withdraw from the cell cycle in response to diverse s",
+  "query_hits": [],
+  "embed_text": "9559146 Senescent Cells, Tumor Suppression, and Organismal Aging: Good Citizens, Bad Neighbors science scifact Cells from organisms with renewable tissues can permanently withdraw from the cell cycle in response to diverse stress, including dysfunctional telomeres, DNA damage, strong mitogenic signals, and disrupted chromatin. This response, termed… 9559146 senescent-cells,-tumor-suppression,-and-organismal-aging:-good-citizens,-bad-neighbors senescent cells tumor suppression organismal aging good citizens Cells from organisms with renewable tissues can permanently withdraw from the cell cycle in response to diverse s Senescent Cells, Tumor Suppression, and Organismal Aging: Good Citizens, Bad Neighbors Cells from organisms with renewable tissues can permanently withdraw from the cell cycle in response to diverse stress, including dysfunctional telomeres, DNA damage, strong mitogenic signals, and disrupted chromatin. This response, termed cellular senescence, is controlled by the p53 and RB tumor suppressor proteins and constitutes a potent anticancer mechanism. Nonetheless, senescent cells acquire phenotypic changes that may contribute to aging and certain age-related diseases, including late-life cancer. Thus, the senescence response may be antagonistically pleiotropic, promoting early-life survival by curtailing the development of cancer but eventually limiting longevity as dysfunctional senescent ce",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.237634+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15946643",
+  "source_fingerprint": "0996782c896f8e67b6cc829a4e7f69fc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15946643",
+    "a-cxcl1-paracrine-network-links-cancer-chemoresistance-and-metastasis"
+  ],
+  "key_phrases": [
+    "cxcl1",
+    "paracrine",
+    "network",
+    "links",
+    "cancer",
+    "chemoresistance",
+    "metastasis",
+    "linked"
+  ],
+  "summary_1l": "Metastasis and chemoresistance in cancer are linked phenomena, but the molecular basis for this link is unknown.",
+  "query_hits": [],
+  "embed_text": "15946643 A CXCL1 Paracrine Network Links Cancer Chemoresistance and Metastasis science scifact Metastasis and chemoresistance in cancer are linked phenomena, but the molecular basis for this link is unknown. We uncovered a network of paracrine signals between carcinoma, myeloid, and endothelial cells that drives both processes in… 15946643 a-cxcl1-paracrine-network-links-cancer-chemoresistance-and-metastasis cxcl1 paracrine network links cancer chemoresistance metastasis linked Metastasis and chemoresistance in cancer are linked phenomena, but the molecular basis for this link is unknown. A CXCL1 Paracrine Network Links Cancer Chemoresistance and Metastasis Metastasis and chemoresistance in cancer are linked phenomena, but the molecular basis for this link is unknown. We uncovered a network of paracrine signals between carcinoma, myeloid, and endothelial cells that drives both processes in breast cancer. Cancer cells that overexpress CXCL1 and 2 by transcriptional hyperactivation or 4q21 amplification are primed for survival in metastatic sites. CXCL1/2 attract CD11b(+)Gr1(+) myeloid cells into the tumor, which produce chemokines including S100A8/9 that enhance cancer cell survival. Although chemotherapeutic agents kill cancer cells, these treatments trigger a parallel stromal reaction leading to TNF-α production by endothelial and other stromal cells. TNF-α via NF-kB heigh",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.495130+00:00"
+}

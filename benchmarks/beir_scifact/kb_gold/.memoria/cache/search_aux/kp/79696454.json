@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "79696454",
+  "source_fingerprint": "88525ed6091ea4ef2f86bb443fc22332",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "79696454",
+    "safety,-pharmacokinetics-and-efficacy-of-imcgp100,-a-first-in-class-soluble-tcr-anticd3-bispecific-t-cell-redirector-with-solid-tumour-activity:-results-from-the-fih-study-in-melanoma."
+  ],
+  "key_phrases": [
+    "safety",
+    "pharmacokinetics",
+    "efficacy",
+    "imcgp100",
+    "first",
+    "class",
+    "soluble",
+    "tcr"
+  ],
+  "summary_1l": "Safety, pharmacokinetics and efficacy of IMCgp100, a first-in-class soluble TCR-antiCD3 bispecific t cell redirector with solid tumour activity: Results from the FIH study in melanoma.",
+  "query_hits": [],
+  "embed_text": "79696454 Safety, pharmacokinetics and efficacy of IMCgp100, a first-in-class soluble TCR-antiCD3 bispecific t cell redirector with solid tumour activity: Results from the FIH study in melanoma. science scifact 3016Background: T cell-based bispecific agents have shown activity in hematologic cancers, but solid tumor efficacy remains elusive. IMCgp100 is a bispecific biologic comprising an affinityenhanced TCR specific for gp100 and an anti-CD3… 79696454 safety,-pharmacokinetics-and-efficacy-of-imcgp100,-a-first-in-class-soluble-tcr-anticd3-bispecific-t-cell-redirector-with-solid-tumour-activity:-results-from-the-fih-study-in-melanoma. safety pharmacokinetics efficacy imcgp100 first class soluble tcr Safety, pharmacokinetics and efficacy of IMCgp100, a first-in-class soluble TCR-antiCD3 bispecific t cell redirector with solid tumour activity: Results from the FIH study in melanoma. Safety, pharmacokinetics and efficacy of IMCgp100, a first-in-class soluble TCR-antiCD3 bispecific t cell redirector with solid tumour activity: Results from the FIH study in melanoma. 3016Background: T cell-based bispecific agents have shown activity in hematologic cancers, but solid tumor efficacy remains elusive. IMCgp100 is a bispecific biologic comprising an affinityenhanced TCR specific for gp100 and an anti-CD3 scFV. In vitro, IMCgp100 binds gp100+ melanoma cells causing redirection of cytotoxicity and induction of potent immune effects. Methods: The Phase I was conducted in HLA-A2+ pts with advanced melanoma, using a 3+3 design to define the MTD. Pts were treated with IMCgp100 (iv) weekly (QW, Arm 1) or daily (4QD3W, Arm 2) to evaluate safety, PK and efficacy. The recommended phase",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.578282+00:00"
+}

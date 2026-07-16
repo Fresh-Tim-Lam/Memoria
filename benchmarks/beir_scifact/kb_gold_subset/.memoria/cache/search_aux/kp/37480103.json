@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "37480103",
+  "source_fingerprint": "38f034b1b3e0fc6d1bf63042232b32a6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "37480103",
+    "pregnancy-characteristics-and-maternal-risk-of-breast-cancer."
+  ],
+  "key_phrases": [
+    "pregnancy",
+    "characteristics",
+    "maternal",
+    "risk",
+    "breast",
+    "cancer",
+    "context",
+    "during"
+  ],
+  "summary_1l": "Pregnancy characteristics and maternal risk of breast cancer.",
+  "query_hits": [],
+  "embed_text": "37480103 Pregnancy characteristics and maternal risk of breast cancer. science scifact CONTEXT During pregnancy, serum levels of estrogen, progesterone, and other hormones are markedly higher than during other periods of life. Pregnancy hormones primarily are produced in the placenta, and signs of placental impairment may… 37480103 pregnancy-characteristics-and-maternal-risk-of-breast-cancer. pregnancy characteristics maternal risk breast cancer context during Pregnancy characteristics and maternal risk of breast cancer. Pregnancy characteristics and maternal risk of breast cancer. CONTEXT During pregnancy, serum levels of estrogen, progesterone, and other hormones are markedly higher than during other periods of life. Pregnancy hormones primarily are produced in the placenta, and signs of placental impairment may serve as indirect markers of hormone exposures during pregnancy. During pregnancy, these markers have been inconsistently associated with subsequent risk of breast cancer in the mother. OBJECTIVE To examine associations between indirect markers of hormonal exposures, such as placental weight and other pregnancy characteristics, and maternal risk of developing breast cancer. DESIGN AND SETTING Population-based cohort study using data from the Swedish Birth Register, the Swedish Cancer Register, th",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:13.120847+00:00"
+}

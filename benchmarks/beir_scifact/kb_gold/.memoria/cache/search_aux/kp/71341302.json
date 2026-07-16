@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "71341302",
+  "source_fingerprint": "bb2366f7a84aa033e119ca9a303b72b0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "71341302"
+  ],
+  "key_phrases": [
+    "vegetarian",
+    "vs",
+    "conventional",
+    "diabetic",
+    "diet",
+    "year",
+    "follow",
+    "up"
+  ],
+  "summary_1l": "Vegetarian vs.",
+  "query_hits": [],
+  "embed_text": "71341302 Vegetarian vs. conventional diabetic diet – A 1-year follow-up science scifact Abstract Objective Our previous 6-month, randomized study demonstrated the beneficial effect of a vegetarian (V) compared to a conventional diet (C) with similar caloric restriction on cardiovascular risk factors for patients with type 2… 71341302 vegetarian vs conventional diabetic diet year follow up Vegetarian vs. Vegetarian vs. conventional diabetic diet – A 1-year follow-up Abstract Objective Our previous 6-month, randomized study demonstrated the beneficial effect of a vegetarian (V) compared to a conventional diet (C) with similar caloric restriction on cardiovascular risk factors for patients with type 2 diabetes (T2D), namely increased insulin sensitivity, reduced body weight, reduced volume of visceral and subcutaneous fat, decreased LDL-cholesterol and improved oxidative stress markers and chosen adipokines. We conducted post-trial monitoring to determine whether the improved outcomes persisted 1 year after the end of the study. Methods 62 subjects with T2D who completed the study were asked to come for a 1-year follow-up to measure weight, waist circumference, HbA1c and blood lipids. No att",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.558823+00:00"
+}

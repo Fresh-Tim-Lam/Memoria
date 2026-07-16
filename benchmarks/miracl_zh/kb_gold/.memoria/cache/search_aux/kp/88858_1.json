@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "88858#1",
+  "source_fingerprint": "579147988a11972fa4d10bacfc93efbd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "88858#1"
+  ],
+  "key_phrases": [
+    "聖週",
+    "根据",
+    "福音书",
+    "记载",
+    "耶稣",
+    "公元",
+    "33",
+    "犹太"
+  ],
+  "summary_1l": "根据福音书记载，耶稣于公元33年犹太历尼散月十四日与门徒设立記念仪式，后于上午九时左右被钉，于下午三时左右死去。",
+  "query_hits": [],
+  "embed_text": "88858#1 聖週五 聖週五 根据福音书记载，耶稣于公元33年犹太历尼散月十四日与门徒设立記念仪式，后于上午九时左右被钉，于下午三时左右死去。主耶稣基督惟独吩咐门徒要記念祂的死亡。 88858#1 聖週 根据 福音书 记载 耶稣 公元 33 犹太 根据福音书记载，耶稣于公元33年犹太历尼散月十四日与门徒设立記念仪式，后于上午九时左右被钉，于下午三时左右死去。 聖週五 根据福音书记载，耶稣于公元33年犹太历尼散月十四日与门徒设立記念仪式，后于上午九时左右被钉，于下午三时左右死去。主耶稣基督惟独吩咐门徒要記念祂的死亡。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:19:21.078252+00:00"
+}

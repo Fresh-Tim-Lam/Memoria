@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22134353",
+  "source_fingerprint": "198904572ffda4c3734e11ae08873a8e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22134353",
+    "regulation-of-self-ligands-for-activating-natural-killer-cell-receptors."
+  ],
+  "key_phrases": [
+    "regulation",
+    "self",
+    "ligands",
+    "activating",
+    "natural",
+    "killer",
+    "cell",
+    "receptors"
+  ],
+  "summary_1l": "Regulation of self-ligands for activating natural killer cell receptors.",
+  "query_hits": [],
+  "embed_text": "22134353 Regulation of self-ligands for activating natural killer cell receptors. science scifact Natural killer (NK) cells are able to lyse infected and tumor cells while sparing healthy cells. Recognition of diseased cells by NK cells is governed by several activating and inhibitory receptors. We review numerous pathways that have… 22134353 regulation-of-self-ligands-for-activating-natural-killer-cell-receptors. regulation self ligands activating natural killer cell receptors Regulation of self-ligands for activating natural killer cell receptors. Regulation of self-ligands for activating natural killer cell receptors. Natural killer (NK) cells are able to lyse infected and tumor cells while sparing healthy cells. Recognition of diseased cells by NK cells is governed by several activating and inhibitory receptors. We review numerous pathways that have been implicated in the regulation of self-ligands for activating receptors, including NKG2D, DNAM-1, LFA-1, NKp30, NKp44, NKp46, NKp65, and NKp80 found on NK cells and some T cells. Understanding how the regulation of self-encoded ligand expression is regulated may provide novel avenues for future therapeutic approaches to infections and cancer.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.301041+00:00"
+}

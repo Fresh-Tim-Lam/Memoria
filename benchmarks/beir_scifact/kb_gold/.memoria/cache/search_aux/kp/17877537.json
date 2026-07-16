@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17877537",
+  "source_fingerprint": "b42099ef59f3c6c262a4e9cbd90e375e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17877537",
+    "babies-driving-robots:-self-generated-mobility-in-very-young-infants"
+  ],
+  "key_phrases": [
+    "babies",
+    "driving",
+    "robots",
+    "self",
+    "generated",
+    "mobility",
+    "very",
+    "young"
+  ],
+  "summary_1l": "Self-generated mobility via locomotion is a key for the cognitive, social and motor development of young infants.",
+  "query_hits": [],
+  "embed_text": "17877537 Babies driving robots: self-generated mobility in very young infants science scifact Self-generated mobility via locomotion is a key for the cognitive, social and motor development of young infants. For certain children with special needs, self-generated mobility is only attained via assistive technology such as a power… 17877537 babies-driving-robots:-self-generated-mobility-in-very-young-infants babies driving robots self generated mobility very young Self-generated mobility via locomotion is a key for the cognitive, social and motor development of young infants. Babies driving robots: self-generated mobility in very young infants Self-generated mobility via locomotion is a key for the cognitive, social and motor development of young infants. For certain children with special needs, self-generated mobility is only attained via assistive technology such as a power wheelchair. Up until recently, infants under 24 months of age were not considered candidates for training in power mobility. Recent work in our labs and others suggest that younger infants can utilize their reaching and grasping ability to learn power mobility. This interdisciplinary study combines our previous work in motor development and learning in infants with special needs, and the application of robot technology for rehabilitation to determine whether young infants without structure",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.393950+00:00"
+}

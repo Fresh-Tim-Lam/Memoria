@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24737389",
+  "source_fingerprint": "ac97c4117ef5e6795c14ae02ede647c2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24737389",
+    "growth-control-and-ribosomopathies."
+  ],
+  "key_phrases": [
+    "growth",
+    "control",
+    "ribosomopathies",
+    "ribosome",
+    "biogenesis",
+    "protein",
+    "synthesis",
+    "two"
+  ],
+  "summary_1l": "Growth control and ribosomopathies.",
+  "query_hits": [],
+  "embed_text": "24737389 Growth control and ribosomopathies. science scifact Ribosome biogenesis and protein synthesis are two of the most energy consuming processes in a growing cell. Moreover, defects in their molecular components can alter the pattern of gene expression. Thus it is understandable that cells have… 24737389 growth-control-and-ribosomopathies. growth control ribosomopathies ribosome biogenesis protein synthesis two Growth control and ribosomopathies. Growth control and ribosomopathies. Ribosome biogenesis and protein synthesis are two of the most energy consuming processes in a growing cell. Moreover, defects in their molecular components can alter the pattern of gene expression. Thus it is understandable that cells have developed a surveillance system to monitor the status of the translational machinery. Recent discoveries of causative mutations and deletions in genes linked to ribosome biogenesis have defined a group of similar pathologies termed ribosomopathies. Over the past decade, much has been learned regarding the relationship between growth control and ribosome biogenesis. The discovery of extra-ribosomal functions of several ribosome proteins and their regulation of p53 levels has provided a link from ribosome impairment to c",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.195289+00:00"
+}

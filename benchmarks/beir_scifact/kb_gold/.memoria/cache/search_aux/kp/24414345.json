@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24414345",
+  "source_fingerprint": "b7323c123cb0f383977480f3fae3cfe2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24414345",
+    "new-pathologic-classification-of-lung-cancer:-relevance-for-clinical-practice-and-clinical-trials."
+  ],
+  "key_phrases": [
+    "new",
+    "pathologic",
+    "classification",
+    "lung",
+    "cancer",
+    "relevance",
+    "clinical",
+    "practice"
+  ],
+  "summary_1l": "New pathologic classification of lung cancer: relevance for clinical practice and clinical trials.",
+  "query_hits": [],
+  "embed_text": "24414345 New pathologic classification of lung cancer: relevance for clinical practice and clinical trials. science scifact We summarize significant changes in pathologic classification of lung cancer resulting from the 2011 International Association for the Study of Lung Cancer/American Thoracic Society/European Respiratory Society (IASLC/ATS/ERS) lung… 24414345 new-pathologic-classification-of-lung-cancer:-relevance-for-clinical-practice-and-clinical-trials. new pathologic classification lung cancer relevance clinical practice New pathologic classification of lung cancer: relevance for clinical practice and clinical trials. New pathologic classification of lung cancer: relevance for clinical practice and clinical trials. We summarize significant changes in pathologic classification of lung cancer resulting from the 2011 International Association for the Study of Lung Cancer/American Thoracic Society/European Respiratory Society (IASLC/ATS/ERS) lung adenocarcinoma classification. The classification was developed by an international core panel of experts representing IASLC, ATS, and ERS with oncologists/pulmonologists, pathologists, radiologists, molecular biologists, and thoracic surgeons. Because 70% of patients with lung cancer present with advanced stages, a new approach to small biopsies and cytology with specific terminology and criteria focused on the need for distinguishing squamous cell carcinoma from",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.448495+00:00"
+}

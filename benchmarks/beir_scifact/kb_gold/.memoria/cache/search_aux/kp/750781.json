@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "750781",
+  "source_fingerprint": "6e18a63a25bf0c069ca73597e7d37c8f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "750781",
+    "coronary-bypass-graft-patency-in-patients-with-diabetes-in-the-bypass-angioplasty-revascularization-investigation-(bari)."
+  ],
+  "key_phrases": [
+    "coronary",
+    "bypass",
+    "graft",
+    "patency",
+    "patients",
+    "with",
+    "diabetes",
+    "angioplasty"
+  ],
+  "summary_1l": "Coronary bypass graft patency in patients with diabetes in the Bypass Angioplasty Revascularization Investigation (BARI).",
+  "query_hits": [],
+  "embed_text": "750781 Coronary bypass graft patency in patients with diabetes in the Bypass Angioplasty Revascularization Investigation (BARI). science scifact BACKGROUND Few studies have compared long-term status of bypass grafts between patients with and without diabetes, and uncertainty exists as to whether diabetes independently predicts poor clinical outcome after CABG. METHODS AND RESULTS… 750781 coronary-bypass-graft-patency-in-patients-with-diabetes-in-the-bypass-angioplasty-revascularization-investigation-(bari). coronary bypass graft patency patients with diabetes angioplasty Coronary bypass graft patency in patients with diabetes in the Bypass Angioplasty Revascularization Investigation (BARI). Coronary bypass graft patency in patients with diabetes in the Bypass Angioplasty Revascularization Investigation (BARI). BACKGROUND Few studies have compared long-term status of bypass grafts between patients with and without diabetes, and uncertainty exists as to whether diabetes independently predicts poor clinical outcome after CABG. METHODS AND RESULTS Among 1526 patients in BARI who underwent CABG as initial revascularization, 99 of 292 (34%) with treated diabetes mellitus (TDM) (those on insulin or oral hypoglycemic agents) and 469 of 1234 (38%) without TDM had follow-up angiography. Angiograms with the longest interval from initial surgery and before any percutaneous graft intervention (mean 3.9 years) were reviewed. An average of 3.0 grafts were placed at initial CABG for patients",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.522192+00:00"
+}

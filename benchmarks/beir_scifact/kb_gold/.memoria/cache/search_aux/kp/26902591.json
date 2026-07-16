@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26902591",
+  "source_fingerprint": "0160032f42673248bcb17e6ba8e6c302",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26902591",
+    "a-switch-from-white-to-brown-fat-increases-energy-expenditure-in-cancer-associated-cachexia."
+  ],
+  "key_phrases": [
+    "switch",
+    "from",
+    "white",
+    "brown",
+    "fat",
+    "increases",
+    "energy",
+    "expenditure"
+  ],
+  "summary_1l": "A switch from white to brown fat increases energy expenditure in cancer-associated cachexia.",
+  "query_hits": [],
+  "embed_text": "26902591 A switch from white to brown fat increases energy expenditure in cancer-associated cachexia. science scifact Cancer-associated cachexia (CAC) is a wasting syndrome characterized by systemic inflammation, body weight loss, atrophy of white adipose tissue (WAT) and skeletal muscle. Limited therapeutic options are available and the underlying… 26902591 a-switch-from-white-to-brown-fat-increases-energy-expenditure-in-cancer-associated-cachexia. switch from white brown fat increases energy expenditure A switch from white to brown fat increases energy expenditure in cancer-associated cachexia. A switch from white to brown fat increases energy expenditure in cancer-associated cachexia. Cancer-associated cachexia (CAC) is a wasting syndrome characterized by systemic inflammation, body weight loss, atrophy of white adipose tissue (WAT) and skeletal muscle. Limited therapeutic options are available and the underlying mechanisms are poorly defined. Here we show that a phenotypic switch from WAT to brown fat, a phenomenon termed WAT browning, takes place in the initial stages of CAC, before skeletal muscle atrophy. WAT browning is associated with increased expression of uncoupling protein 1 (UCP1), which uncouples mitochondrial respiration toward thermogenesis instead of ATP synthesis, leading to increased lipid mobilization and energy expenditure in cachectic mice. Chronic inflammati",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.260593+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19950357",
+  "source_fingerprint": "4d847b8904e3cc5eae3a02c429b4eed1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19950357",
+    "the-rice-fish-bone-gene-encodes-a-tryptophan-aminotransferase,-which-affects-pleiotropic-auxin-related-processes."
+  ],
+  "key_phrases": [
+    "rice",
+    "fish",
+    "bone",
+    "gene",
+    "encodes",
+    "tryptophan",
+    "aminotransferase",
+    "which"
+  ],
+  "summary_1l": "The rice FISH BONE gene encodes a tryptophan aminotransferase, which affects pleiotropic auxin-related processes.",
+  "query_hits": [],
+  "embed_text": "19950357 The rice FISH BONE gene encodes a tryptophan aminotransferase, which affects pleiotropic auxin-related processes. science scifact Auxin is a fundamental plant hormone and its localization within organs plays pivotal roles in plant growth and development. Analysis of many Arabidopsis mutants that were defective in auxin biosynthesis revealed that the indole-3-pyruvic… 19950357 the-rice-fish-bone-gene-encodes-a-tryptophan-aminotransferase,-which-affects-pleiotropic-auxin-related-processes. rice fish bone gene encodes tryptophan aminotransferase which The rice FISH BONE gene encodes a tryptophan aminotransferase, which affects pleiotropic auxin-related processes. The rice FISH BONE gene encodes a tryptophan aminotransferase, which affects pleiotropic auxin-related processes. Auxin is a fundamental plant hormone and its localization within organs plays pivotal roles in plant growth and development. Analysis of many Arabidopsis mutants that were defective in auxin biosynthesis revealed that the indole-3-pyruvic acid (IPA) pathway, catalyzed by the TRYPTOPHAN AMINOTRANSFERASE OF ARABIDOPSIS (TAA) and YUCCA (YUC) families, is the major biosynthetic pathway of indole-3-acetic acid (IAA). In contrast, little information is known about the molecular mechanisms of auxin biosynthesis in rice. In this study, we identified a auxin-related rice mutant, fish bone (fib). FIB encodes an orthologue of TAA genes and loss of FIB function resulted in pleiotropic abno",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.401360+00:00"
+}

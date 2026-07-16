@@ -5,7 +5,6 @@ from __future__ import annotations
 import re
 from collections import Counter
 
-from memoria.services.lexical_index import ensure_lexical_index
 from memoria.services.lexical_tokenizer import tokenize
 
 _MD_NOISE = re.compile(r"^#{1,6}\s+|^[-*+]\s+|\[\[.*?\]\]|\$\$?[^$]+\$\$?", re.M)
@@ -71,14 +70,45 @@ def _kp_body_excerpt(lines: list[str], kp: dict, *, max_chars: int = 2400) -> st
 
 
 def _kb_tag_vocab(kb_path: str) -> Counter[str]:
-    index = ensure_lexical_index(kb_path)
+    import os
+
+    from memoria.storage.scanner import collect_md_files
+    from memoria.storage.sidecar import load_sidecar_for_md
+
     counts: Counter[str] = Counter()
-    for rec in index.get("records") or []:
-        for tag in rec.get("tags") or []:
-            t = str(tag).strip()
-            if t:
-                counts[t] += 1
+    for rel in collect_md_files(kb_path):
+        full = os.path.join(kb_path, rel)
+        sidecar = load_sidecar_for_md(full, kb_path) or {}
+        for rec in sidecar.get("knowledge_points") or []:
+            if not isinstance(rec, dict):
+                continue
+            for tag in rec.get("tags") or []:
+                t = str(tag).strip()
+                if t:
+                    counts[t] += 1
     return counts
+
+
+# --- Tag vocabulary cache (avoids O(N²) when rebuilding aux for many KPs) ---
+_KB_TAG_VOCAB_CACHE: dict[str, Counter[str]] = {}
+
+
+def _cached_tag_vocab(kb_path: str) -> Counter[str]:
+    """Return tag vocabulary for *kb_path*, cached per-KB to avoid O(N²) traversal."""
+    cached = _KB_TAG_VOCAB_CACHE.get(kb_path)
+    if cached is not None:
+        return cached
+    vocab = _kb_tag_vocab(kb_path)
+    _KB_TAG_VOCAB_CACHE[kb_path] = vocab
+    return vocab
+
+
+def clear_tag_vocab_cache(kb_path: str | None = None) -> None:
+    """Invalidate tag vocabulary cache. If *kb_path* is None, clear all."""
+    if kb_path is None:
+        _KB_TAG_VOCAB_CACHE.clear()
+    else:
+        _KB_TAG_VOCAB_CACHE.pop(kb_path, None)
 
 
 def suggest_tags(
@@ -99,7 +129,7 @@ def suggest_tags(
         return {"status": "ok", "available": True, "suggestions": [], "kp_id": kid}
 
     existing = {str(t).strip().lower() for t in (kp.get("tags") or []) if str(t).strip()}
-    vocab = _expand_tag_vocab(_kb_tag_vocab(kb_path))
+    vocab = _expand_tag_vocab(_cached_tag_vocab(kb_path))
     query_tokens = set(tokenize(body, kb_path=kb_path))
 
     scored: list[tuple[float, str]] = []

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15286783",
+  "source_fingerprint": "693e16b48afa324e1ca280c7e05b376b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15286783",
+    "matrix-eqtl:-ultra-fast-eqtl-analysis-via-large-matrix-operations"
+  ],
+  "key_phrases": [
+    "matrix",
+    "eqtl",
+    "ultra",
+    "fast",
+    "analysis",
+    "via",
+    "large",
+    "operations"
+  ],
+  "summary_1l": "Expression quantitative trait loci (eQTL) mapping aims to determine genomic regions that regulate gene transcription.",
+  "query_hits": [],
+  "embed_text": "15286783 Matrix eQTL: Ultra fast eQTL analysis via large matrix operations science scifact Expression quantitative trait loci (eQTL) mapping aims to determine genomic regions that regulate gene transcription. Expression QTL is used to study the regulatory structure of normal tissues and to search for genetic factors in complex… 15286783 matrix-eqtl:-ultra-fast-eqtl-analysis-via-large-matrix-operations matrix eqtl ultra fast analysis via large operations Expression quantitative trait loci (eQTL) mapping aims to determine genomic regions that regulate gene transcription. Matrix eQTL: Ultra fast eQTL analysis via large matrix operations Expression quantitative trait loci (eQTL) mapping aims to determine genomic regions that regulate gene transcription. Expression QTL is used to study the regulatory structure of normal tissues and to search for genetic factors in complex diseases such as cancer, diabetes, and cystic fibrosis. A modern eQTL dataset contains millions of SNPs and thousands of transcripts measured for hundreds of samples. This makes the analysis computationally complex as it involves independent testing for association for every transcript-SNP pair. The heavy computational burden makes eQTL analysis less popular, often forces analysts to restrict their attention to just a subset of transcripts and SNPs. As larger genotype and gene expression dat",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.295302+00:00"
+}

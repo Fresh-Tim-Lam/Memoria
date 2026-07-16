@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "kp_id": "权重归一化",
+  "source_fingerprint": "f50d017f0565f48ebf848ef4ec548423",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [],
+  "key_phrases": [
+    "权重",
+    "归一化",
+    "通过",
+    "softmax",
+    "点积",
+    "得分",
+    "转化",
+    "概率分布"
+  ],
+  "summary_1l": "权重归一化通过 Softmax 将点积得分转化为概率分布： 归一化的作用是把无界的点积得分映射到 区间，使得所有位置的权重之和为 1。",
+  "query_hits": [],
+  "embed_text": "权重归一化 权重归一化 权重 归一化 通过 softmax 点积 得分 转化 概率分布 权重归一化通过 Softmax 将点积得分转化为概率分布： 归一化的作用是把无界的点积得分映射到 区间，使得所有位置的权重之和为 1。 权重归一化 权重归一化通过 Softmax 将点积得分转化为概率分布： 归一化的作用是把无界的点积得分映射到 区间，使得所有位置的权重之和为 1。这样，加权后的输出可以解释为\"以注意力权重聚合的信息\"。 Softmax 归一化有以下关键性质： **单调性**：得分越高，权重越大，保持原始排序 **可微性**：梯度流畅，适合反向传播训练 **概率解释**：输出可以解释为\"模型关注位置 的概率\"",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T03:38:45.500100+00:00"
+}

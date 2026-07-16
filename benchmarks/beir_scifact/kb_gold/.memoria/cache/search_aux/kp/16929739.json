@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16929739",
+  "source_fingerprint": "20efa6e53ccc4001f500638a731f6b77",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16929739",
+    "corresponding-author:"
+  ],
+  "key_phrases": [
+    "corresponding",
+    "author",
+    "higher",
+    "eukaryotes",
+    "introns",
+    "spliced",
+    "out",
+    "protein"
+  ],
+  "summary_1l": "In higher eukaryotes, introns are spliced out of protein-coding mRNAs by the spliceosome, a massive complex comprising five non-coding RNAs (ncRNAs) and about 200 proteins.",
+  "query_hits": [],
+  "embed_text": "16929739 Corresponding Author: science scifact In higher eukaryotes, introns are spliced out of protein-coding mRNAs by the spliceosome, a massive complex comprising five non-coding RNAs (ncRNAs) and about 200 proteins. By comparing the differences between spliceosomal proteins from… 16929739 corresponding-author: corresponding author higher eukaryotes introns spliced out protein In higher eukaryotes, introns are spliced out of protein-coding mRNAs by the spliceosome, a massive complex comprising five non-coding RNAs (ncRNAs) and about 200 proteins. Corresponding Author: In higher eukaryotes, introns are spliced out of protein-coding mRNAs by the spliceosome, a massive complex comprising five non-coding RNAs (ncRNAs) and about 200 proteins. By comparing the differences between spliceosomal proteins from many basal eukaryotic lineages, it is possible to infer properties of the splicing system in the last common ancestor of extant eukaryotes, the eukaryotic ancestor. We begin with the hypothesis that, similar to intron length (that appears to have increased in multicellular eukaryotes), the spliceosome has increased in complexity throughout eukaryotic evolution. However, examination of the distribution of spliceosomal components indicates that not only was a spliceosome present in the eukaryotic ancestor but it also contained most of th",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.046407+00:00"
+}

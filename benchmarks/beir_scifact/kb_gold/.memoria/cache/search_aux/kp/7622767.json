@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7622767",
+  "source_fingerprint": "4b8bf3de3a821e8f28082beafb13acde",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7622767",
+    "human-cyclin-a-is-required-for-mitosis-until-mid-prophase"
+  ],
+  "key_phrases": [
+    "human",
+    "cyclin",
+    "required",
+    "mitosis",
+    "until",
+    "mid",
+    "prophase",
+    "we"
+  ],
+  "summary_1l": "We have used microinjection and time-lapse video microscopy to study the role of cyclin A in mitosis.",
+  "query_hits": [],
+  "embed_text": "7622767 Human Cyclin a Is Required for Mitosis until Mid Prophase science scifact We have used microinjection and time-lapse video microscopy to study the role of cyclin A in mitosis. We have injected purified, active cyclin A/cyclin-dependent kinase 2 (CDK2) into synchronized cells at specific points in the cell cycle… 7622767 human-cyclin-a-is-required-for-mitosis-until-mid-prophase human cyclin required mitosis until mid prophase we We have used microinjection and time-lapse video microscopy to study the role of cyclin A in mitosis. Human Cyclin a Is Required for Mitosis until Mid Prophase We have used microinjection and time-lapse video microscopy to study the role of cyclin A in mitosis. We have injected purified, active cyclin A/cyclin-dependent kinase 2 (CDK2) into synchronized cells at specific points in the cell cycle and assayed its effect on cell division. We find that cyclin A/CDK2 will drive G2 phase cells into mitosis within 30 min of microinjection, up to 4 h before control cells enter mitosis. Often this premature mitosis is abnormal; the chromosomes do not completely condense and daughter cells fuse. Remarkably, microinjecting cyclin A/CDK2 into S phase cells has no effect on progress through the following G2 phase or mitosis. In complementary experiments we have microinjected the amino terminus of p21Ci",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.810859+00:00"
+}

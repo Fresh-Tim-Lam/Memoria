@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "40500438",
+  "source_fingerprint": "d1732d9d63bd09e2a1ba2f6e39bb3b07",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "40500438",
+    "silibinin-inhibits-the-invasion-of-il-6-stimulated-colon-cancer-cells-via-selective-jnk/ap-1/mmp-2-modulation-in-vitro."
+  ],
+  "key_phrases": [
+    "silibinin",
+    "inhibits",
+    "invasion",
+    "il",
+    "stimulated",
+    "colon",
+    "cancer",
+    "cells"
+  ],
+  "summary_1l": "Silibinin inhibits the invasion of IL-6-stimulated colon cancer cells via selective JNK/AP-1/MMP-2 modulation in vitro.",
+  "query_hits": [],
+  "embed_text": "40500438 Silibinin inhibits the invasion of IL-6-stimulated colon cancer cells via selective JNK/AP-1/MMP-2 modulation in vitro. science scifact Silibinin is a flavonoid with antihepatotoxic properties and pleiotropic anticancer capabilities. This study investigated silibinin inhibition of cell invasion by down-regulating matrix metalloproteinase-2 (MMP-2) expression, via… 40500438 silibinin-inhibits-the-invasion-of-il-6-stimulated-colon-cancer-cells-via-selective-jnk/ap-1/mmp-2-modulation-in-vitro. silibinin inhibits invasion il stimulated colon cancer cells Silibinin inhibits the invasion of IL-6-stimulated colon cancer cells via selective JNK/AP-1/MMP-2 modulation in vitro. Silibinin inhibits the invasion of IL-6-stimulated colon cancer cells via selective JNK/AP-1/MMP-2 modulation in vitro. Silibinin is a flavonoid with antihepatotoxic properties and pleiotropic anticancer capabilities. This study investigated silibinin inhibition of cell invasion by down-regulating matrix metalloproteinase-2 (MMP-2) expression, via attenuation of activator protein-1 (AP-1) in IL-6-stimulated LoVo colon cancer cells. Western blot data showed that the expression of MMP-2 protein was reduced 1.6- or 1.7-fold over the control by treatment with silibinin or JNK inhibitor in the models. Similar results were revealed in zymography and confocal microscopy. Pretreatment with silibinin also abolished the binding activity of AP-1 and MMP-2 promoter activity via AP-1 binding, as observ",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.593620+00:00"
+}

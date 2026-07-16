@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "28149602",
+  "source_fingerprint": "250a4fca3e3da8a9382135f34090a4dc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "28149602",
+    "the-role-of-neutrophils-in-the-pathogenesis-of-systemic-lupus-erythematosus."
+  ],
+  "key_phrases": [
+    "role",
+    "neutrophils",
+    "pathogenesis",
+    "systemic",
+    "lupus",
+    "erythematosus",
+    "purpose",
+    "review"
+  ],
+  "summary_1l": "The role of neutrophils in the pathogenesis of systemic lupus erythematosus.",
+  "query_hits": [],
+  "embed_text": "28149602 The role of neutrophils in the pathogenesis of systemic lupus erythematosus. science scifact PURPOSE OF REVIEW Recent discoveries implicate neutrophils as important regulators of innate and adaptive immunity and in the development of organ damage in systemic autoimmune diseases, including systemic lupus erythematosus (SLE). RECENT… 28149602 the-role-of-neutrophils-in-the-pathogenesis-of-systemic-lupus-erythematosus. role neutrophils pathogenesis systemic lupus erythematosus purpose review The role of neutrophils in the pathogenesis of systemic lupus erythematosus. The role of neutrophils in the pathogenesis of systemic lupus erythematosus. PURPOSE OF REVIEW Recent discoveries implicate neutrophils as important regulators of innate and adaptive immunity and in the development of organ damage in systemic autoimmune diseases, including systemic lupus erythematosus (SLE). RECENT FINDINGS Various putative SLE biomarkers are neutrophil-related, including neutrophil granular proteins and histones undergoing post-translational modifications during neutrophil extracellular trap (NET) formation. In the bone marrow, lupus neutrophils can drive B and T cell abnormalities, at least in part, by their enhanced production of type-I interferons, tumor necrosis factor-alpha (TNFα) and the B-cell stimulating factors B-cell activating factor (BAFF) and a proliferation-",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.612306+00:00"
+}

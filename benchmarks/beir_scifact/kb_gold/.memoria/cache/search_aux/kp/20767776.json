@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20767776",
+  "source_fingerprint": "0c47d5e83a7f7626f6684e1333318933",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20767776",
+    "familial-clustering-of-reflux-symptoms"
+  ],
+  "key_phrases": [
+    "familial",
+    "clustering",
+    "reflux",
+    "symptoms",
+    "objective",
+    "number",
+    "case",
+    "reports"
+  ],
+  "summary_1l": "Objective:A number of case reports describe multiple family members with gastroesophageal reflux disease and Barrett's esophagus.",
+  "query_hits": [],
+  "embed_text": "20767776 Familial clustering of reflux symptoms science scifact Objective:A number of case reports describe multiple family members with gastroesophageal reflux disease and Barrett's esophagus. The wider importance of familial factors in gastroesophageal reflux disease has not been established.… 20767776 familial-clustering-of-reflux-symptoms familial clustering reflux symptoms objective number case reports Objective:A number of case reports describe multiple family members with gastroesophageal reflux disease and Barrett's esophagus. Familial clustering of reflux symptoms Objective:A number of case reports describe multiple family members with gastroesophageal reflux disease and Barrett's esophagus. The wider importance of familial factors in gastroesophageal reflux disease has not been established. Therefore, we have studied the prevalence of reflux symptoms and medication use among relatives of patients with documented gastroesophageal reflux disease. Methods:A postal questionnaire study of the first degree relatives of six groups of matched patients. The groups comprised patients with 1) no dyspeptic symptoms; 2) reflux symptoms and a normal pH study; 3) reflux symptoms, an abnormal pH study, and a lower esophageal sphincter (LOS) pressure more than 10 mm Hg; 4) reflux symptoms, an abnormal pH study, and a LOS press",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.931195+00:00"
+}

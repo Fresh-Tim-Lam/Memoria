@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "39545358",
+  "source_fingerprint": "d6f94466c40a4a3963c247c10b80fb35",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "39545358",
+    "neuregulin-1-promotes-excitatory-synapse-development-and-function-in-gabaergic-interneurons."
+  ],
+  "key_phrases": [
+    "neuregulin",
+    "promotes",
+    "excitatory",
+    "synapse",
+    "development",
+    "function",
+    "gabaergic",
+    "interneurons"
+  ],
+  "summary_1l": "Neuregulin 1 promotes excitatory synapse development and function in GABAergic interneurons.",
+  "query_hits": [],
+  "embed_text": "39545358 Neuregulin 1 promotes excitatory synapse development and function in GABAergic interneurons. science scifact Neuregulin 1 (NRG1) and its receptor ErbB4 are both susceptibility genes of schizophrenia. However, little is known about the underlying mechanisms of their malfunction. Although ErbB4 is enriched in GABAergic interneurons, the role of… 39545358 neuregulin-1-promotes-excitatory-synapse-development-and-function-in-gabaergic-interneurons. neuregulin promotes excitatory synapse development function gabaergic interneurons Neuregulin 1 promotes excitatory synapse development and function in GABAergic interneurons. Neuregulin 1 promotes excitatory synapse development and function in GABAergic interneurons. Neuregulin 1 (NRG1) and its receptor ErbB4 are both susceptibility genes of schizophrenia. However, little is known about the underlying mechanisms of their malfunction. Although ErbB4 is enriched in GABAergic interneurons, the role of NRG1 in excitatory synapse formation in these neurons remains poorly understood. We showed that NRG1 increased both the number and size of PSD-95 puncta and the frequency and amplitude of miniature EPSCs (mEPSCs) in GABAergic interneurons, indicating that NRG1 stimulates the formation of new synapses and strengthens existing synapses. In contrast, NRG1 treatment had no effect on either the number or size of excitatory synapses in glutamatergic neurons, suggesting its",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.730137+00:00"
+}

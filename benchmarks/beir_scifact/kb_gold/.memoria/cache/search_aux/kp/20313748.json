@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "20313748",
+  "source_fingerprint": "3eb0d9587ffb3863ccf18d7d0a345f56",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20313748"
+  ],
+  "key_phrases": [
+    "catenin",
+    "as",
+    "tension",
+    "transducer",
+    "that",
+    "induces",
+    "adherens",
+    "junction"
+  ],
+  "summary_1l": "Adherens junctions (AJs), which are organized by adhesion proteins and the underlying actin cytoskeleton, probably sense pu",
+  "query_hits": [],
+  "embed_text": "20313748 α-Catenin as a tension transducer that induces adherens junction development science scifact Adherens junctions (AJs), which are organized by adhesion proteins and the underlying actin cytoskeleton, probably sense pulling forces from adjacent cells and modulate opposing forces to maintain tissue integrity, but the regulatory… 20313748 catenin as tension transducer that induces adherens junction Adherens junctions (AJs), which are organized by adhesion proteins and the underlying actin cytoskeleton, probably sense pu α-Catenin as a tension transducer that induces adherens junction development Adherens junctions (AJs), which are organized by adhesion proteins and the underlying actin cytoskeleton, probably sense pulling forces from adjacent cells and modulate opposing forces to maintain tissue integrity, but the regulatory mechanism remains unknown at the molecular level. Although the possibility that α-catenin acts as a direct linker between the membrane and the actin cytoskeleton for AJ formation and function has been minimized, here we show that α-catenin recruits vinculin, another main actin-binding protein of AJs, through force-dependent changes in α-catenin conformation. We identified regions in the α-catenin molecule that are required for its force-dependent binding of vinculin by introducing mut",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.004776+00:00"
+}

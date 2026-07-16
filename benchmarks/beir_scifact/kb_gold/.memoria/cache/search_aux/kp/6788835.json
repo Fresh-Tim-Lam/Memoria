@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6788835",
+  "source_fingerprint": "6da1dbeeb92c1e6c9339bc1916dfc452",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6788835",
+    "dislocation-of-a-type-i-membrane-protein-requires-interactions-between-membrane-spanning-segments-within-the-lipid-bilayer."
+  ],
+  "key_phrases": [
+    "dislocation",
+    "type",
+    "membrane",
+    "protein",
+    "requires",
+    "interactions",
+    "between",
+    "spanning"
+  ],
+  "summary_1l": "Dislocation of a type I membrane protein requires interactions between membrane-spanning segments within the lipid bilayer.",
+  "query_hits": [],
+  "embed_text": "6788835 Dislocation of a type I membrane protein requires interactions between membrane-spanning segments within the lipid bilayer. science scifact The human cytomegalovirus gene product US11 causes rapid degradation of class I major histocompatibility complex (MHCI) heavy chains by inducing their dislocation from the endoplasmic reticulum (ER) and subsequent degradation by the… 6788835 dislocation-of-a-type-i-membrane-protein-requires-interactions-between-membrane-spanning-segments-within-the-lipid-bilayer. dislocation type membrane protein requires interactions between spanning Dislocation of a type I membrane protein requires interactions between membrane-spanning segments within the lipid bilayer. Dislocation of a type I membrane protein requires interactions between membrane-spanning segments within the lipid bilayer. The human cytomegalovirus gene product US11 causes rapid degradation of class I major histocompatibility complex (MHCI) heavy chains by inducing their dislocation from the endoplasmic reticulum (ER) and subsequent degradation by the proteasome. This set of reactions resembles the endogenous cellular quality control pathway that removes misfolded or unassembled proteins from the ER. We show that the transmembrane domain (TMD) of US11 is essential for MHCI heavy chain dislocation, but dispensable for MHCI binding. A Gln residue at position 192 in the US11 TMD is crucial for the ubiquitination and degradation of MHCI heavy chains. Cells that express US11 TMD mutants allo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.675401+00:00"
+}

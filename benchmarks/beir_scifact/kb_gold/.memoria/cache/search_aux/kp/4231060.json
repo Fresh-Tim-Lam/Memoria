@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4231060",
+  "source_fingerprint": "f32bf63a60bf1a960f64103d53a0b7c8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4231060",
+    "nucleotide-sequence-of-an-avian-sarcoma-virus-oncogene-(src)-and-proposed-amino-acid-sequence-for-gene-product"
+  ],
+  "key_phrases": [
+    "nucleotide",
+    "sequence",
+    "avian",
+    "sarcoma",
+    "virus",
+    "oncogene",
+    "src",
+    "proposed"
+  ],
+  "summary_1l": "The transforming gene (src) of avian sarcoma virus (ASV) and adjacent regions of the vira",
+  "query_hits": [],
+  "embed_text": "4231060 Nucleotide sequence of an avian sarcoma virus oncogene (src) and proposed amino acid sequence for gene product science scifact The transforming gene (src) of avian sarcoma virus (ASV) and adjacent regions of the viral genome have been isolated by molecular cloning of viral DNA. Their nucleotide sequence encompasses the whole of src and the portion of the gene env… 4231060 nucleotide-sequence-of-an-avian-sarcoma-virus-oncogene-(src)-and-proposed-amino-acid-sequence-for-gene-product nucleotide sequence avian sarcoma virus oncogene src proposed The transforming gene (src) of avian sarcoma virus (ASV) and adjacent regions of the vira Nucleotide sequence of an avian sarcoma virus oncogene (src) and proposed amino acid sequence for gene product The transforming gene (src) of avian sarcoma virus (ASV) and adjacent regions of the viral genome have been isolated by molecular cloning of viral DNA. Their nucleotide sequence encompasses the whole of src and the portion of the gene env that encodes gp 37, one of two glycoproteins found in the viral envelope. Src encodes a single, hydrophobic protein with structural features that conform to previous descriptions of the gene product (pp60src). It appears that a single viral protein is responsible for both the initiation and maintenance of neoplastic transformation by avian sarcoma virus. Neither src nor its product bear any obvious structural relationship to several other viral o",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.912878+00:00"
+}

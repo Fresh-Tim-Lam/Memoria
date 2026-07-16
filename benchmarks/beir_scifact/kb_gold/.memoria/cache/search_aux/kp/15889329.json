@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15889329",
+  "source_fingerprint": "ec3a7271b9d354f312fc795dce7007c7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15889329",
+    "a-journal-of-neurology"
+  ],
+  "key_phrases": [
+    "journal",
+    "neurology",
+    "brain",
+    "glial",
+    "cells",
+    "five",
+    "times",
+    "more"
+  ],
+  "summary_1l": "Brain glial cells, five times more prevalent than neurons, have recently received attention for their potential involvement in epileptic seizures.",
+  "query_hits": [],
+  "embed_text": "15889329 A JOURNAL OF NEUROLOGY science scifact Brain glial cells, five times more prevalent than neurons, have recently received attention for their potential involvement in epileptic seizures. Microglia and astrocytes, associated with inflammatory innate immune responses, are… 15889329 a-journal-of-neurology journal neurology brain glial cells five times more Brain glial cells, five times more prevalent than neurons, have recently received attention for their potential involvement in epileptic seizures. A JOURNAL OF NEUROLOGY Brain glial cells, five times more prevalent than neurons, have recently received attention for their potential involvement in epileptic seizures. Microglia and astrocytes, associated with inflammatory innate immune responses, are responsible for surveillance of brain damage that frequently results in seizures. Thus, an intriguing suggestion has been put forward that seizures may be facilitated and perhaps triggered by brain immune responses. Indeed, recent evidence strongly implicates innate immune responses in lowering seizure threshold in experimental models of epilepsy, yet, there is no proof that they can play an independent role in initiating seizures in vivo. Here, we show that cortical innate immune responses alone produce profound increases of brain excitabi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.398117+00:00"
+}

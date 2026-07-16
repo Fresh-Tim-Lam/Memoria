@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4687948",
+  "source_fingerprint": "c21b02aa45a6c72befa249c30b2f56dc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4687948",
+    "hmg-coa-reductase-inhibitors-and-the-risk-of-hip-fractures-in-elderly-patients."
+  ],
+  "key_phrases": [
+    "hmg",
+    "coa",
+    "reductase",
+    "inhibitors",
+    "risk",
+    "hip",
+    "fractures",
+    "elderly"
+  ],
+  "summary_1l": "HMG-CoA reductase inhibitors and the risk of hip fractures in elderly patients.",
+  "query_hits": [],
+  "embed_text": "4687948 HMG-CoA reductase inhibitors and the risk of hip fractures in elderly patients. science scifact CONTEXT Recent animal studies have found that 3-hydroxy-3-methylglutaryl coenzyme A (HMG-CoA) lipid-lowering drugs (statins) substantially increase bone formation, but whether statin use in humans results in clinically meaningful bone… 4687948 hmg-coa-reductase-inhibitors-and-the-risk-of-hip-fractures-in-elderly-patients. hmg coa reductase inhibitors risk hip fractures elderly HMG-CoA reductase inhibitors and the risk of hip fractures in elderly patients. HMG-CoA reductase inhibitors and the risk of hip fractures in elderly patients. CONTEXT Recent animal studies have found that 3-hydroxy-3-methylglutaryl coenzyme A (HMG-CoA) lipid-lowering drugs (statins) substantially increase bone formation, but whether statin use in humans results in clinically meaningful bone formation or a reduction in the risk of osteoporotic fractures is not known. OBJECTIVE To determine whether the use of statins is associated with reduced hip fracture risk. DESIGN Case-control study. SETTING AND PATIENTS A total of 6110 New Jersey residents aged 65 years or older and enrolled in Medicare and either Medicaid or the Pharmacy Assistance for the Aged and Disabled program. Case patients (n=1222) underwent surgical repair of a hip fracture in 1994. Control patients (n=4",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:13.446615+00:00"
+}

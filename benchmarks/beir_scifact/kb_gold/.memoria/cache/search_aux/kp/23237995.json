@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23237995",
+  "source_fingerprint": "a37a2d5cb12077f65360763d4358b738",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23237995",
+    "steroid-regulation-of-c.-elegans-diapause,-developmental-timing,-and-longevity."
+  ],
+  "key_phrases": [
+    "steroid",
+    "regulation",
+    "elegans",
+    "diapause",
+    "developmental",
+    "timing",
+    "longevity",
+    "hormones"
+  ],
+  "summary_1l": "Steroid regulation of C.",
+  "query_hits": [],
+  "embed_text": "23237995 Steroid regulation of C. elegans diapause, developmental timing, and longevity. science scifact Hormones play a critical role in driving major stage transitions and developmental timing events in many species. In the nematode C. elegans the steroid hormone receptor, DAF-12, works at the confluence of pathways regulating developmental… 23237995 steroid-regulation-of-c.-elegans-diapause,-developmental-timing,-and-longevity. steroid regulation elegans diapause developmental timing longevity hormones Steroid regulation of C. Steroid regulation of C. elegans diapause, developmental timing, and longevity. Hormones play a critical role in driving major stage transitions and developmental timing events in many species. In the nematode C. elegans the steroid hormone receptor, DAF-12, works at the confluence of pathways regulating developmental timing, stage specification, and longevity. DAF-12 couples environmental and physiologic signals to life history regulation, and it is embedded in a rich architecture governing diverse processes. Here, we highlight the molecular insights, extraordinary circuitry, and signaling pathways governing life stage transitions in the worm and how they have yielded fundamental insights into steroid regulation of biological time.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.071750+00:00"
+}

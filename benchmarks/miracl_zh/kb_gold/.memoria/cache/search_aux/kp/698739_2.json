@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "698739#2",
+  "source_fingerprint": "14c85e0550d1d05e0574020b7e349018",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "698739#2"
+  ],
+  "key_phrases": [
+    "铵盐",
+    "性质",
+    "类似",
+    "大多数",
+    "易溶",
+    "于水",
+    "水溶液",
+    "导电"
+  ],
+  "summary_1l": "季铵盐的性质类似于铵盐，大多数易溶于水，水溶液导电。",
+  "query_hits": [],
+  "embed_text": "698739#2 季铵盐 季铵盐 季铵盐的性质类似于铵盐，大多数易溶于水，水溶液导电。 698739#2 铵盐 性质 类似 大多数 易溶 于水 水溶液 导电 季铵盐的性质类似于铵盐，大多数易溶于水，水溶液导电。 季铵盐 季铵盐的性质类似于铵盐，大多数易溶于水，水溶液导电。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:20:56.521868+00:00"
+}

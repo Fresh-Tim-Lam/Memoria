@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "275294",
+  "source_fingerprint": "ac0d2d4e91e44e827efb9d3fffb27a86",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "275294",
+    "environmental-factors-that-influence-the-cutaneous-production-of-vitamin-d"
+  ],
+  "key_phrases": [
+    "environmental",
+    "factors",
+    "that",
+    "influence",
+    "cutaneous",
+    "production",
+    "vitamin",
+    "all"
+  ],
+  "summary_1l": "All vertebrates, including humans, obtain most of their daily vitamin D requirement from casual exposure to sunlight.",
+  "query_hits": [],
+  "embed_text": "275294 Environmental factors that influence the cutaneous production of vitamin D science scifact All vertebrates, including humans, obtain most of their daily vitamin D requirement from casual exposure to sunlight. During exposure to sunlight, the solar ultraviolet B photons (290-315 nm) penetrate into the skin where they cause the… 275294 environmental-factors-that-influence-the-cutaneous-production-of-vitamin-d environmental factors that influence cutaneous production vitamin all All vertebrates, including humans, obtain most of their daily vitamin D requirement from casual exposure to sunlight. Environmental factors that influence the cutaneous production of vitamin D All vertebrates, including humans, obtain most of their daily vitamin D requirement from casual exposure to sunlight. During exposure to sunlight, the solar ultraviolet B photons (290-315 nm) penetrate into the skin where they cause the photolysis of 7-dehydrocholesterol to precholecalciferol. Once formed, precholecalciferol undergoes a thermally induced rearrangement of its double bonds to form cholecalciferol. An increase in skin pigmentation, aging, and the topical application of a sunscreen diminishes the cutaneous production of cholecalciferol. Latitude, season, and time of day as well as ozone pollution in the atmosphere influence the number of solar ultraviolet B photons that reach the earth's surface, and th",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.998345+00:00"
+}

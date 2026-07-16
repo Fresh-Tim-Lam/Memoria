@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13900610",
+  "source_fingerprint": "9b86a057f27735e5e381c983c847e9e6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13900610",
+    "self-harm-in-prisons-in-england-and-wales:-an-epidemiological-study-of-prevalence,-risk-factors,-clustering,-and-subsequent-suicide"
+  ],
+  "key_phrases": [
+    "self",
+    "harm",
+    "prisons",
+    "england",
+    "wales",
+    "epidemiological",
+    "study",
+    "prevalence"
+  ],
+  "summary_1l": "BACKGROUND Self-harm and suicide are common in prisoners, yet robust",
+  "query_hits": [],
+  "embed_text": "13900610 Self-harm in prisons in England and Wales: an epidemiological study of prevalence, risk factors, clustering, and subsequent suicide science scifact BACKGROUND Self-harm and suicide are common in prisoners, yet robust information on the full extent and characteristics of people at risk of self-harm is scant. Furthermore, understanding how frequently self-harm is followed by suicide,… 13900610 self-harm-in-prisons-in-england-and-wales:-an-epidemiological-study-of-prevalence,-risk-factors,-clustering,-and-subsequent-suicide self harm prisons england wales epidemiological study prevalence BACKGROUND Self-harm and suicide are common in prisoners, yet robust Self-harm in prisons in England and Wales: an epidemiological study of prevalence, risk factors, clustering, and subsequent suicide BACKGROUND Self-harm and suicide are common in prisoners, yet robust information on the full extent and characteristics of people at risk of self-harm is scant. Furthermore, understanding how frequently self-harm is followed by suicide, and in which prisoners this progression is most likely to happen, is important. We did a case-control study of all prisoners in England and Wales to ascertain the prevalence of self-harm in this population, associated risk factors, clustering effects, and risk of subsequent suicide after self-harm. METHODS Records of self-harm incidents in all prisons in England and Wales were gathered routinely between January, 2004, and Decem",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.388839+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20888849",
+  "source_fingerprint": "940e7ba8f6e1d4e43ecde4e5a7b6173e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20888849",
+    "inhibition-of-hedgehog-signaling-enhances-delivery-of-chemotherapy-in-a-mouse-model-of-pancreatic-cancer."
+  ],
+  "key_phrases": [
+    "inhibition",
+    "hedgehog",
+    "signaling",
+    "enhances",
+    "delivery",
+    "chemotherapy",
+    "mouse",
+    "model"
+  ],
+  "summary_1l": "Inhibition of Hedgehog signaling enhances delivery of chemotherapy in a mouse model of pancreatic cancer.",
+  "query_hits": [],
+  "embed_text": "20888849 Inhibition of Hedgehog signaling enhances delivery of chemotherapy in a mouse model of pancreatic cancer. science scifact Pancreatic ductal adenocarcinoma (PDA) is among the most lethal human cancers in part because it is insensitive to many chemotherapeutic drugs. Studying a mouse model of PDA that is refractory to the clinically used drug gemcitabine, we… 20888849 inhibition-of-hedgehog-signaling-enhances-delivery-of-chemotherapy-in-a-mouse-model-of-pancreatic-cancer. inhibition hedgehog signaling enhances delivery chemotherapy mouse model Inhibition of Hedgehog signaling enhances delivery of chemotherapy in a mouse model of pancreatic cancer. Inhibition of Hedgehog signaling enhances delivery of chemotherapy in a mouse model of pancreatic cancer. Pancreatic ductal adenocarcinoma (PDA) is among the most lethal human cancers in part because it is insensitive to many chemotherapeutic drugs. Studying a mouse model of PDA that is refractory to the clinically used drug gemcitabine, we found that the tumors in this model were poorly perfused and poorly vascularized, properties that are shared with human PDA. We tested whether the delivery and efficacy of gemcitabine in the mice could be improved by coadministration of IPI-926, a drug that depletes tumor-associated stromal tissue by inhibition of the Hedgehog cellular signaling pathway. The combination therapy produced a transient increase in intratumoral vascular density and intratumo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.086151+00:00"
+}

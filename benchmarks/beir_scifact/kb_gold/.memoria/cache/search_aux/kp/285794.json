@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "285794",
+  "source_fingerprint": "6a5cfbb6ce282345a666e097be8d0631",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "285794",
+    "quantitative-detection-of-hepatitis-c-virus-rna-by-light-cycler-pcr-and-comparison-with-two-different-pcr-assays"
+  ],
+  "key_phrases": [
+    "quantitative",
+    "detection",
+    "hepatitis",
+    "virus",
+    "rna",
+    "by",
+    "light",
+    "cycler"
+  ],
+  "summary_1l": "The new Light Cycler technology was adapted to the detection of hepatitis C virus (HCV)",
+  "query_hits": [],
+  "embed_text": "285794 Quantitative Detection of Hepatitis C Virus RNA by Light Cycler PCR and Comparison with Two Different PCR Assays science scifact The new Light Cycler technology was adapted to the detection of hepatitis C virus (HCV) RNA in clinical samples. Sera from 81 patients were tested by Light Cycler PCR, AMPLICOR HCV Monitor assay, and in-house PCR. Our data demonstrate that… 285794 quantitative-detection-of-hepatitis-c-virus-rna-by-light-cycler-pcr-and-comparison-with-two-different-pcr-assays quantitative detection hepatitis virus rna by light cycler The new Light Cycler technology was adapted to the detection of hepatitis C virus (HCV) Quantitative Detection of Hepatitis C Virus RNA by Light Cycler PCR and Comparison with Two Different PCR Assays The new Light Cycler technology was adapted to the detection of hepatitis C virus (HCV) RNA in clinical samples. Sera from 81 patients were tested by Light Cycler PCR, AMPLICOR HCV Monitor assay, and in-house PCR. Our data demonstrate that Light Cycler is a fast and reliable method for the detection and quantitation of HCV RNA.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.143521+00:00"
+}

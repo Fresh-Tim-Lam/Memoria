@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19951373",
+  "source_fingerprint": "d9cf996e23e7a9aa62be6655f5ca0389",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19951373",
+    "successful-mouse-cloning-of-an-outbred-strain-by-trichostatin-a-treatment-after-somatic-nuclear-transfer."
+  ],
+  "key_phrases": [
+    "successful",
+    "mouse",
+    "cloning",
+    "outbred",
+    "strain",
+    "by",
+    "trichostatin",
+    "treatment"
+  ],
+  "summary_1l": "Successful mouse cloning of an outbred strain by trichostatin A treatment after somatic nuclear transfer.",
+  "query_hits": [],
+  "embed_text": "19951373 Successful mouse cloning of an outbred strain by trichostatin A treatment after somatic nuclear transfer. science scifact Although the somatic cloning technique has been used for numerous applications and basic research of reprogramming in various species, extremely low success rates have plagued this technique for a decade. Further in mice, the \"clonable\"… 19951373 successful-mouse-cloning-of-an-outbred-strain-by-trichostatin-a-treatment-after-somatic-nuclear-transfer. successful mouse cloning outbred strain by trichostatin treatment Successful mouse cloning of an outbred strain by trichostatin A treatment after somatic nuclear transfer. Successful mouse cloning of an outbred strain by trichostatin A treatment after somatic nuclear transfer. Although the somatic cloning technique has been used for numerous applications and basic research of reprogramming in various species, extremely low success rates have plagued this technique for a decade. Further in mice, the \"clonable\" strains have been limited to mainly hybrid F1 strains such as B6D2F1. Recently, we established a new efficient cloning technique using trichostatin A (TSA) which leads to a 2-5 fold increase in success rates for mouse cloning of B6D2F1 cumulus cells. To further test the validity of this TSA cloning technique, we tried to clone the adult ICR mouse, an outbred strain, which has never been directly cloned before. Only when TSA was used did we obtain both m",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.409988+00:00"
+}

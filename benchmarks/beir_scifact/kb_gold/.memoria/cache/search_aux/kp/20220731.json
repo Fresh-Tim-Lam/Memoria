@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20220731",
+  "source_fingerprint": "847d0241e7665c10d5cc52efc653af74",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20220731",
+    "origin-and-t-cell-receptor-diversity-of-foxp3+cd4+cd25+-t-cells."
+  ],
+  "key_phrases": [
+    "origin",
+    "cell",
+    "receptor",
+    "diversity",
+    "foxp3",
+    "cd4",
+    "cd25",
+    "cells"
+  ],
+  "summary_1l": "Origin and T cell receptor diversity of Foxp3+CD4+CD25+ T cells.",
+  "query_hits": [],
+  "embed_text": "20220731 Origin and T cell receptor diversity of Foxp3+CD4+CD25+ T cells. science scifact Foxp3(+)CD4(+)CD25(+) regulatory T cells can differentiate from Foxp3(-)CD4(+) medullary thymocytes and Foxp3(-)CD4(+) naive T cells. However, the impact of these two processes on size and composition of the peripheral repertoire of… 20220731 origin-and-t-cell-receptor-diversity-of-foxp3+cd4+cd25+-t-cells. origin cell receptor diversity foxp3 cd4 cd25 cells Origin and T cell receptor diversity of Foxp3+CD4+CD25+ T cells. Origin and T cell receptor diversity of Foxp3+CD4+CD25+ T cells. Foxp3(+)CD4(+)CD25(+) regulatory T cells can differentiate from Foxp3(-)CD4(+) medullary thymocytes and Foxp3(-)CD4(+) naive T cells. However, the impact of these two processes on size and composition of the peripheral repertoire of regulatory T cells is unclear. Here we followed the fate of individual Foxp3(+)CD4(+)CD25(+) thymocytes and T cells in vivo in T cell receptor (TCR) transgenic mice that express a restricted but polyclonal repertoire of TCRs. By utilizing high-throughput single-cell analysis, we showed that Foxp3(+)CD4(+) peripheral T cells were derived from thymic precursors that expressed a different TCRs than Foxp3(-)CD4(+) medullary thymocytes and Foxp3(-)CD4(+) T cells. Furthermore, the diversity of TCRs on F",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.821943+00:00"
+}

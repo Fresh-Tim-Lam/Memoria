@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "kp_id": "7054195#0",
+  "source_fingerprint": "b21504ad6857f22f6d8ccf2304846e51",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "2019冠狀病毒病疫情对旅游业的影响",
+    "林俊杰",
+    "孙燕姿",
+    "2020年瑞典羽毛球公開賽",
+    "建國神廟",
+    "马来西亚－新加坡边界"
+  ],
+  "aliases": [
+    "7054195#0"
+  ],
+  "key_phrases": [
+    "stay",
+    "with",
+    "you",
+    "林俊杰",
+    "单曲",
+    "新加坡",
+    "歌手",
+    "歌曲"
+  ],
+  "summary_1l": "《Stay with You》是新加坡歌手林俊杰的单曲。",
+  "query_hits": [],
+  "embed_text": "7054195#0 Stay with You (林俊杰单曲) Stay with You (林俊杰单曲) 《Stay with You》是新加坡歌手林俊杰的单曲。该歌曲是抗击2019冠状病毒病疫情公益歌曲，由孙燕姿作词，林俊杰作曲、编曲，于2020年1月28日发行。5月11日播出的“致敬白衣天使公益云演唱会”中，孙燕姿、林俊杰、周杰伦均演唱了这首歌曲。5月15日，该歌曲成为第八届“U选1000”冠军歌曲。 林俊傑與孫燕姿獲邀為新加坡建國55週年國慶製作單曲《Stay With You》英文版，2人將於國慶日現場，透過遠端連線方式演唱，於2020年8月9日發行。 2019冠狀病毒病疫情对旅游业的影响 林俊杰 孙燕姿 2020年瑞典羽毛球公開賽 建國神廟 马来西亚－新加坡边界 7054195#0 stay with you 林俊杰 单曲 新加坡 歌手 歌曲 《Stay with You》是新加坡歌手林俊杰的单曲。 Stay with You (林俊杰单曲) 《Stay with You》是新加坡歌手林俊杰的单曲。该歌曲是抗击2019冠状病毒病疫情公益歌曲，由孙燕姿作词，林俊杰作曲、编曲，于2020年1月28日发行。5月11日播出的“致敬白衣天使公益云演唱会”中，孙燕姿、林俊杰、周杰伦均演唱了这首歌曲。5月15日，该歌曲成为第八届“U选1000”冠军歌曲。 林俊傑與孫燕姿獲邀為新加坡建國55週年國慶製作單曲《Stay With You》英文版，2人將於國慶日現場，透過遠端連線方式演唱，於2020年8月9日發行。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:23:11.504438+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "58006489",
+  "source_fingerprint": "05cbef0b939e0572c5886d7e93ce58cf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "58006489",
+    "prostaglandin-e2-mediates-sensory-nerve-regulation-of-bone-homeostasis"
+  ],
+  "key_phrases": [
+    "prostaglandin",
+    "e2",
+    "mediates",
+    "sensory",
+    "nerve",
+    "regulation",
+    "bone",
+    "homeostasis"
+  ],
+  "summary_1l": "Whether sensory nerve can sense bone density or metabolic activity to control bone homeostasis is unknown.",
+  "query_hits": [],
+  "embed_text": "58006489 Prostaglandin E2 mediates sensory nerve regulation of bone homeostasis science scifact Whether sensory nerve can sense bone density or metabolic activity to control bone homeostasis is unknown. Here we found prostaglandin E2 (PGE2) secreted by osteoblastic cells activates PGE2 receptor 4 (EP4) in sensory nerves to regulate… 58006489 prostaglandin-e2-mediates-sensory-nerve-regulation-of-bone-homeostasis prostaglandin e2 mediates sensory nerve regulation bone homeostasis Whether sensory nerve can sense bone density or metabolic activity to control bone homeostasis is unknown. Prostaglandin E2 mediates sensory nerve regulation of bone homeostasis Whether sensory nerve can sense bone density or metabolic activity to control bone homeostasis is unknown. Here we found prostaglandin E2 (PGE2) secreted by osteoblastic cells activates PGE2 receptor 4 (EP4) in sensory nerves to regulate bone formation by inhibiting sympathetic activity through the central nervous system. PGE2 secreted by osteoblasts increases when bone density decreases as demonstrated in osteoporotic animal models. Ablation of sensory nerves erodes the skeletal integrity. Specifically, knockout of the EP4 gene in the sensory nerves or cyclooxygenase-2 (COX2) in the osteoblastic cells significantly reduces bone volume in adult mice. Sympathetic tone is increased in sensory denervation models, and propr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.135939+00:00"
+}

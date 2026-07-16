@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15347087",
+  "source_fingerprint": "37bf4fe9a14a634fd79b4389b6ebb30b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15347087",
+    "amyloid-accumulation-is-a-late-event-in-sporadic-alzheimer's-disease-like-pathology-in-nontransgenic-rats"
+  ],
+  "key_phrases": [
+    "amyloid",
+    "accumulation",
+    "late",
+    "event",
+    "sporadic",
+    "alzheimer",
+    "disease",
+    "like"
+  ],
+  "summary_1l": "The amyloid cascade hypothesis posits that deposition of the amyloid β (Aβ) peptide in the bra",
+  "query_hits": [],
+  "embed_text": "15347087 Amyloid accumulation is a late event in sporadic Alzheimer's disease-like pathology in nontransgenic rats science scifact The amyloid cascade hypothesis posits that deposition of the amyloid β (Aβ) peptide in the brain is a key event in the initiation of Alzheimer's disease (AD). Nonetheless, it now seems increasingly unlikely that amyloid toxicity is the… 15347087 amyloid-accumulation-is-a-late-event-in-sporadic-alzheimer's-disease-like-pathology-in-nontransgenic-rats amyloid accumulation late event sporadic alzheimer disease like The amyloid cascade hypothesis posits that deposition of the amyloid β (Aβ) peptide in the bra Amyloid accumulation is a late event in sporadic Alzheimer's disease-like pathology in nontransgenic rats The amyloid cascade hypothesis posits that deposition of the amyloid β (Aβ) peptide in the brain is a key event in the initiation of Alzheimer's disease (AD). Nonetheless, it now seems increasingly unlikely that amyloid toxicity is the cause of sporadic AD, which leads to cognitive decline. Here, using accelerated-senescence nontransgenic OXYS rats, we confirmed that aggregation of Aβ is a later event in AD-like pathology. We showed that an age-dependent increase in the levels of Aβ₁₋₄₂ and extracellular Aβ deposits in the brain of OXYS rats occur later than do synaptic losses, neuronal cell death, mitochondrial structural abnormalities, and hyperphosphorylation of the tau protein. We",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.376326+00:00"
+}

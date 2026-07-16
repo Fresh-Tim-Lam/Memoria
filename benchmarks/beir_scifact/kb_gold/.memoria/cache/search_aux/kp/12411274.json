@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12411274",
+  "source_fingerprint": "66a9690a6684dd99db9db5d61bea1cd6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12411274",
+    "skeletal-myogenic-progenitors-originating-from-embryonic-dorsal-aorta-coexpress-endothelial-and-myogenic-markers-and-contribute-to-postnatal-muscle-growth-and-regeneration"
+  ],
+  "key_phrases": [
+    "skeletal",
+    "myogenic",
+    "progenitors",
+    "originating",
+    "from",
+    "embryonic",
+    "dorsal",
+    "aorta"
+  ],
+  "summary_1l": "Skeletal muscle in vertebrat",
+  "query_hits": [],
+  "embed_text": "12411274 Skeletal Myogenic Progenitors Originating from Embryonic Dorsal Aorta Coexpress Endothelial and Myogenic Markers and Contribute to Postnatal Muscle Growth and Regeneration science scifact Skeletal muscle in vertebrates is derived from somites, epithelial structures of the paraxial mesoderm, yet many unrelated reports describe the occasional appearance of myogenic cells from tissues of nonsomite origin, suggesting either… 12411274 skeletal-myogenic-progenitors-originating-from-embryonic-dorsal-aorta-coexpress-endothelial-and-myogenic-markers-and-contribute-to-postnatal-muscle-growth-and-regeneration skeletal myogenic progenitors originating from embryonic dorsal aorta Skeletal muscle in vertebrat Skeletal Myogenic Progenitors Originating from Embryonic Dorsal Aorta Coexpress Endothelial and Myogenic Markers and Contribute to Postnatal Muscle Growth and Regeneration Skeletal muscle in vertebrates is derived from somites, epithelial structures of the paraxial mesoderm, yet many unrelated reports describe the occasional appearance of myogenic cells from tissues of nonsomite origin, suggesting either transdifferentiation or the persistence of a multipotent progenitor. Here, we show that clonable skeletal myogenic cells are present in the embryonic dorsal aorta of mouse embryos. This finding is based on a detailed clonal analysis of different tissue anlagen at various developmental stages. In vitro, these myogenic cells show the same morphology as satellite cells derived from adult skel",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:08.276904+00:00"
+}

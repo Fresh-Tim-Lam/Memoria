@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12513042",
+  "source_fingerprint": "06e8fd48f3da267e81f7f842f463a459",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12513042",
+    "role-of-microsomal-prostaglandin-e-synthase-1-in-the-facilitation-of-angiogenesis-and-the-healing-of-gastric-ulcers."
+  ],
+  "key_phrases": [
+    "role",
+    "microsomal",
+    "prostaglandin",
+    "synthase",
+    "facilitation",
+    "angiogenesis",
+    "healing",
+    "gastric"
+  ],
+  "summary_1l": "Role of microsomal prostaglandin E synthase-1 in the facilitation of angiogenesis and the healing of gastric ulcers.",
+  "query_hits": [],
+  "embed_text": "12513042 Role of microsomal prostaglandin E synthase-1 in the facilitation of angiogenesis and the healing of gastric ulcers. science scifact The importance of prostaglandin E(2) in various pathophysiological events emphasizes the necessity of understanding the role of PGE synthases (PGESs) in vivo. However, there has been no report on the functional relevance of microsomal… 12513042 role-of-microsomal-prostaglandin-e-synthase-1-in-the-facilitation-of-angiogenesis-and-the-healing-of-gastric-ulcers. role microsomal prostaglandin synthase facilitation angiogenesis healing gastric Role of microsomal prostaglandin E synthase-1 in the facilitation of angiogenesis and the healing of gastric ulcers. Role of microsomal prostaglandin E synthase-1 in the facilitation of angiogenesis and the healing of gastric ulcers. The importance of prostaglandin E(2) in various pathophysiological events emphasizes the necessity of understanding the role of PGE synthases (PGESs) in vivo. However, there has been no report on the functional relevance of microsomal PGES-1 (mPGES-1) to the physiological healing processes of gastric ulcers, or to angiogenesis, which is indispensable to the healing processes. In this report, we tested whether mPGES-1 plays a role in the healing of gastric ulcers and in the enhancement of angiogenesis using mPGES-1 knockout mice (mPGES-1 KO mice) and their wild-type (WT) counterparts. Gastric ulcers were induced by the serosal application of 100% acetic acid, and the areas of",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:09.039637+00:00"
+}

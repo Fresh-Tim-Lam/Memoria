@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24726600",
+  "source_fingerprint": "97f21aaddbb8eb4534d5aa732f5d190c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24726600",
+    "combination-cancer-immunotherapies-tailored-to-the-tumour-microenvironment"
+  ],
+  "key_phrases": [
+    "combination",
+    "cancer",
+    "immunotherapies",
+    "tailored",
+    "tumour",
+    "microenvironment",
+    "evidence",
+    "suggests"
+  ],
+  "summary_1l": "Evidence suggests that cancer immunotherapy will be a major part of the combination treatment plan for many patients with man",
+  "query_hits": [],
+  "embed_text": "24726600 Combination cancer immunotherapies tailored to the tumour microenvironment science scifact Evidence suggests that cancer immunotherapy will be a major part of the combination treatment plan for many patients with many cancer types in the near future. There are many types of immune processes involving different antitumour and… 24726600 combination-cancer-immunotherapies-tailored-to-the-tumour-microenvironment combination cancer immunotherapies tailored tumour microenvironment evidence suggests Evidence suggests that cancer immunotherapy will be a major part of the combination treatment plan for many patients with man Combination cancer immunotherapies tailored to the tumour microenvironment Evidence suggests that cancer immunotherapy will be a major part of the combination treatment plan for many patients with many cancer types in the near future. There are many types of immune processes involving different antitumour and tumour-promoting leucocytes, and tumour cells use many strategies to evade the immune response. The tumour microenvironment can help determine which immune suppressive pathways become activated to restrain antitumour immunity. This includes immune checkpoint receptors on effector T-cells and myeloid cells, and release of inhibitory cytokines and metabolites. Therapeutic approaches that target these pathways, particularly immune-checkpoint receptors, can induce durable antitumour respo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.148725+00:00"
+}

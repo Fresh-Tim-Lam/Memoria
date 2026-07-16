@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8325952",
+  "source_fingerprint": "2d380ae36fbf6720ceba1570d279a5ff",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8325952",
+    "the-frequency-and-immunodominance-of-islet-specific-cd8+-t-cell-responses-change-after-type-1-diabetes-diagnosis-and-treatment."
+  ],
+  "key_phrases": [
+    "frequency",
+    "immunodominance",
+    "islet",
+    "specific",
+    "cd8",
+    "cell",
+    "responses",
+    "change"
+  ],
+  "summary_1l": "The frequency and immunodominance of islet-specific CD8+ T-cell responses change after type 1 diabetes diagnosis and treatment.",
+  "query_hits": [],
+  "embed_text": "8325952 The frequency and immunodominance of islet-specific CD8+ T-cell responses change after type 1 diabetes diagnosis and treatment. science scifact OBJECTIVE Islet-reactive CD8(+) T-cells play a key role in the pathogenesis of type 1 diabetes in the NOD mouse. The predominant T-cell specificities change over time, but whether similar shifts also occur after clinical diagnosis and… 8325952 the-frequency-and-immunodominance-of-islet-specific-cd8+-t-cell-responses-change-after-type-1-diabetes-diagnosis-and-treatment. frequency immunodominance islet specific cd8 cell responses change The frequency and immunodominance of islet-specific CD8+ T-cell responses change after type 1 diabetes diagnosis and treatment. The frequency and immunodominance of islet-specific CD8+ T-cell responses change after type 1 diabetes diagnosis and treatment. OBJECTIVE Islet-reactive CD8(+) T-cells play a key role in the pathogenesis of type 1 diabetes in the NOD mouse. The predominant T-cell specificities change over time, but whether similar shifts also occur after clinical diagnosis and insulin treatment in type 1 diabetic patients is unknown. RESEARCH DESIGN AND METHODS We took advantage of a recently validated islet-specific CD8(+) T-cell gamma-interferon enzyme-linked immunospot (ISL8Spot) assay to follow responses against preproinsulin (PPI), GAD, insulinoma-associated protein 2 (IA-2), and islet-specific glucose-6-phosphatase catalytic subunit-related protein (IGRP) epitopes in 15 HLA-A2(+) adult type 1 diabeti",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.369614+00:00"
+}

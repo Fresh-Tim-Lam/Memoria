@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1991105",
+  "source_fingerprint": "7a37ad0c5151e1f7989e0cd32d830dbf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1991105",
+    "er-associated-mitochondrial-division-links-the-distribution-of-mitochondria-and-mitochondrial-dna-in-yeast"
+  ],
+  "key_phrases": [
+    "er",
+    "associated",
+    "mitochondrial",
+    "division",
+    "links",
+    "distribution",
+    "mitochondria",
+    "dna"
+  ],
+  "summary_1l": "Mitochondrial division is important for mitochondrial distribution and function.",
+  "query_hits": [],
+  "embed_text": "1991105 ER-associated mitochondrial division links the distribution of mitochondria and mitochondrial DNA in yeast science scifact Mitochondrial division is important for mitochondrial distribution and function. Recent data have demonstrated that ER-mitochondria contacts mark mitochondrial division sites, but the molecular basis and functions of these contacts are not… 1991105 er-associated-mitochondrial-division-links-the-distribution-of-mitochondria-and-mitochondrial-dna-in-yeast er associated mitochondrial division links distribution mitochondria dna Mitochondrial division is important for mitochondrial distribution and function. ER-associated mitochondrial division links the distribution of mitochondria and mitochondrial DNA in yeast Mitochondrial division is important for mitochondrial distribution and function. Recent data have demonstrated that ER-mitochondria contacts mark mitochondrial division sites, but the molecular basis and functions of these contacts are not understood. Here we show that in yeast, the ER-mitochondria tethering complex, ERMES, and the highly conserved Miro GTPase, Gem1, are spatially and functionally linked to ER-associated mitochondrial division. Gem1 acts as a negative regulator of ER-mitochondria contacts, an activity required for the spatial resolution and distribution of newly generated mitochondrial tips following division. Previous data have demonstrated that ERMES localizes with",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.366363+00:00"
+}

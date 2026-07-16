@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5953485",
+  "source_fingerprint": "bbb048dfa85818c1edd797b80ae33a42",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5953485",
+    "adar1-forms-a-complex-with-dicer-to-promote-microrna-processing-and-rna-induced-gene-silencing"
+  ],
+  "key_phrases": [
+    "adar1",
+    "forms",
+    "complex",
+    "with",
+    "dicer",
+    "promote",
+    "microrna",
+    "processing"
+  ],
+  "summary_1l": "Adenosine deaminases acting on RNA (ADARs) are involved in RNA editing that converts adenosine residues t",
+  "query_hits": [],
+  "embed_text": "5953485 ADAR1 Forms a Complex with Dicer to Promote MicroRNA Processing and RNA-Induced Gene Silencing science scifact Adenosine deaminases acting on RNA (ADARs) are involved in RNA editing that converts adenosine residues to inosine specifically in double-stranded RNAs. In this study, we investigated the interaction of the RNA editing mechanism with the… 5953485 adar1-forms-a-complex-with-dicer-to-promote-microrna-processing-and-rna-induced-gene-silencing adar1 forms complex with dicer promote microrna processing Adenosine deaminases acting on RNA (ADARs) are involved in RNA editing that converts adenosine residues t ADAR1 Forms a Complex with Dicer to Promote MicroRNA Processing and RNA-Induced Gene Silencing Adenosine deaminases acting on RNA (ADARs) are involved in RNA editing that converts adenosine residues to inosine specifically in double-stranded RNAs. In this study, we investigated the interaction of the RNA editing mechanism with the RNA interference (RNAi) machinery and found that ADAR1 forms a complex with Dicer through direct protein-protein interaction. Most importantly, ADAR1 increases the maximum rate (Vmax) of pre-microRNA (miRNA) cleavage by Dicer and facilitates loading of miRNA onto RNA-induced silencing complexes, identifying a new role of ADAR1 in miRNA processing and RNAi mechanisms. ADAR1 differentiates its functions in RNA editing and RNAi by the formation of either ADAR1/ADAR1",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:13.675208+00:00"
+}

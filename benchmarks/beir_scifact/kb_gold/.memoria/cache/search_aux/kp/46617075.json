@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "46617075",
+  "source_fingerprint": "13bf9362e286ba5429ecc20ad96f8768",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "46617075",
+    "retinoblastoma-regulatory-pathway-in-lung-cancer."
+  ],
+  "key_phrases": [
+    "retinoblastoma",
+    "regulatory",
+    "pathway",
+    "lung",
+    "cancer",
+    "leading",
+    "cause",
+    "related"
+  ],
+  "summary_1l": "Retinoblastoma regulatory pathway in lung cancer.",
+  "query_hits": [],
+  "embed_text": "46617075 Retinoblastoma regulatory pathway in lung cancer. science scifact Lung cancer is the leading cause of cancer related deaths accounting for more deaths than breast, colon and prostate cancers combined. The Rb-p16 regulatory pathway plays an essential role in tumor suppression in the lung epithelium. This… 46617075 retinoblastoma-regulatory-pathway-in-lung-cancer. retinoblastoma regulatory pathway lung cancer leading cause related Retinoblastoma regulatory pathway in lung cancer. Retinoblastoma regulatory pathway in lung cancer. Lung cancer is the leading cause of cancer related deaths accounting for more deaths than breast, colon and prostate cancers combined. The Rb-p16 regulatory pathway plays an essential role in tumor suppression in the lung epithelium. This is evidenced by the nearly universal alterations in Rb-p16 pathway components in lung cancer, and the increased incidence of pulmonary carcinomas in persons with germline Rb mutations. Interestingly, p16 loss and Rb mutations preferentially occur in phenotypically distinct lung cancer subtypes. Analysis of human tumors has identified progressive preneoplastic lesions that accumulate molecular alterations in an orderly sequence. Epigenetic p16 gene modifications represent an early event in lung cancer progr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.021999+00:00"
+}

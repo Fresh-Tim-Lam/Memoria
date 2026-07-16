@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "40382183",
+  "source_fingerprint": "47c8d1f88e3e04605d774949fd9ead85",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "40382183",
+    "cancer-stem-cells-in-solid-tumours:-accumulating-evidence-and-unresolved-questions"
+  ],
+  "key_phrases": [
+    "cancer",
+    "stem",
+    "cells",
+    "solid",
+    "tumours",
+    "accumulating",
+    "evidence",
+    "unresolved"
+  ],
+  "summary_1l": "Solid tumours are an enormous cancer burden and a major therapeutic challenge.",
+  "query_hits": [],
+  "embed_text": "40382183 Cancer stem cells in solid tumours: accumulating evidence and unresolved questions science scifact Solid tumours are an enormous cancer burden and a major therapeutic challenge. The cancer stem cell (CSC) hypothesis provides an attractive cellular mechanism to account for the therapeutic refractoriness and dormant behaviour exhibited by… 40382183 cancer-stem-cells-in-solid-tumours:-accumulating-evidence-and-unresolved-questions cancer stem cells solid tumours accumulating evidence unresolved Solid tumours are an enormous cancer burden and a major therapeutic challenge. Cancer stem cells in solid tumours: accumulating evidence and unresolved questions Solid tumours are an enormous cancer burden and a major therapeutic challenge. The cancer stem cell (CSC) hypothesis provides an attractive cellular mechanism to account for the therapeutic refractoriness and dormant behaviour exhibited by many of these tumours. There is increasing evidence that diverse solid tumours are hierarchically organized and sustained by a distinct subpopulation of CSCs. Direct evidence for the CSC hypothesis has recently emerged from mouse models of epithelial tumorigenesis, although alternative models of heterogeneity also seem to apply. The clinical relevance of CSCs remains a fundamental issue but preliminary findings indicate that specific targeting may be possible.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.509670+00:00"
+}

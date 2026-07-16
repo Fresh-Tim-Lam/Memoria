@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22116439",
+  "source_fingerprint": "c376a3ff5d79eee802b1e5b4c708d097",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22116439",
+    "pioglitazone-prevents-tau-oligomerization."
+  ],
+  "key_phrases": [
+    "pioglitazone",
+    "prevents",
+    "tau",
+    "oligomerization",
+    "aggregation",
+    "amyloid",
+    "protein",
+    "deposition"
+  ],
+  "summary_1l": "Pioglitazone prevents tau oligomerization.",
+  "query_hits": [],
+  "embed_text": "22116439 Pioglitazone prevents tau oligomerization. science scifact Tau aggregation and amyloid β protein (Aβ) deposition are the main causes of Alzheimer's disease (AD). Peroxisome proliferator-activated receptor γ (PPARγ) activation modulates Aβ production. To test whether the PPARγ agonist pioglitazone… 22116439 pioglitazone-prevents-tau-oligomerization. pioglitazone prevents tau oligomerization aggregation amyloid protein deposition Pioglitazone prevents tau oligomerization. Pioglitazone prevents tau oligomerization. Tau aggregation and amyloid β protein (Aβ) deposition are the main causes of Alzheimer's disease (AD). Peroxisome proliferator-activated receptor γ (PPARγ) activation modulates Aβ production. To test whether the PPARγ agonist pioglitazone (PIO) is also effective in preventing tau aggregation in AD, we used a cellular model in which wild-type tau protein (4R0N) is overexpressed (M1C cells) (Hamano et al., 2012) as well as primary neuronal cultures. PIO reduced both phosphorylated and total tau levels, and inactivated glycogen synthase kinase 3β, a major tau kinase, associated with activation of Akt. In addition, PIO decreased cleaved caspase3 and C-terminal truncated tau species by caspase, which is expected to decrease tau aggregation. A fractiona",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.245318+00:00"
+}

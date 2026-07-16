@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10485142",
+  "source_fingerprint": "7289ac692144c337d36dc3de61e451b6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10485142",
+    "molecular-and-cytogenetic-changes-involved-in-the-immortalization-of-nasopharyngeal-epithelial-cells-by-telomerase."
+  ],
+  "key_phrases": [
+    "molecular",
+    "cytogenetic",
+    "changes",
+    "involved",
+    "immortalization",
+    "nasopharyngeal",
+    "epithelial",
+    "cells"
+  ],
+  "summary_1l": "Molecular and cytogenetic changes involved in the immortalization of nasopharyngeal epithelial cells by telomerase.",
+  "query_hits": [],
+  "embed_text": "10485142 Molecular and cytogenetic changes involved in the immortalization of nasopharyngeal epithelial cells by telomerase. science scifact Nasopharyngeal carcinoma (NPC) is a common disease in Hong Kong and southern provinces of China. EBV infection is believed to play a critical role in the development of NPC. Previous studies on the transformation mechanism of EBV genes… 10485142 molecular-and-cytogenetic-changes-involved-in-the-immortalization-of-nasopharyngeal-epithelial-cells-by-telomerase. molecular cytogenetic changes involved immortalization nasopharyngeal epithelial cells Molecular and cytogenetic changes involved in the immortalization of nasopharyngeal epithelial cells by telomerase. Molecular and cytogenetic changes involved in the immortalization of nasopharyngeal epithelial cells by telomerase. Nasopharyngeal carcinoma (NPC) is a common disease in Hong Kong and southern provinces of China. EBV infection is believed to play a critical role in the development of NPC. Previous studies on the transformation mechanism of EBV genes were mostly performed in either NPC or nonnasopharyngeal epithelial cells which may not be representative of premalignant nasopharyngeal epithelial cells. Establishment of a representative cell system would greatly facilitate the elucidation of the role of EBV infection in the development of NPC. Using telomerase alone, we were able to establish an immortalized nasopharyngeal epithelial cell line from primary nonmalignant nasopharyngeal biopsie",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.591771+00:00"
+}

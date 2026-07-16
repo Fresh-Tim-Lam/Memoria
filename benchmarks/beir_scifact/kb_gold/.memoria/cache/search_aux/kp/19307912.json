@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19307912",
+  "source_fingerprint": "8fbe84a8337c410ee776aa6d0fa86c9a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19307912",
+    "familial-obesity-and-leanness."
+  ],
+  "key_phrases": [
+    "familial",
+    "obesity",
+    "leanness",
+    "using",
+    "princeton",
+    "school",
+    "district",
+    "family"
+  ],
+  "summary_1l": "Familial obesity and leanness.",
+  "query_hits": [],
+  "embed_text": "19307912 Familial obesity and leanness. science scifact Using the Princeton School District Family Study cohort, our specific aim was to estimate the prevalence of suspected familial ponderosity and leanness, to provide empirical risk estimates for the proportion of probands' first-degree… 19307912 familial-obesity-and-leanness. familial obesity leanness using princeton school district family Familial obesity and leanness. Familial obesity and leanness. Using the Princeton School District Family Study cohort, our specific aim was to estimate the prevalence of suspected familial ponderosity and leanness, to provide empirical risk estimates for the proportion of probands' first-degree relatives who were similarly affected, and to estimate the contributions of diseases, drugs and caloric intake to relative obesity and leanness. We studied 379 probands, 125 whites and 52 blacks from a random recall group, 147 whites and 55 blacks from a hyperlipidemic recall group. Suspected familial obesity and leanness were arbitrarily identified in those kindreds with at least two first-degree relatives in the same Quetelet index decile as the proband, top or bottom respectively. Suspected familial obesity was observed in 2.4",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.379831+00:00"
+}

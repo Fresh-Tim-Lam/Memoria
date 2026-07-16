@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "softmax-归一化",
+  "source_fingerprint": "b7e0de5531483d5e41110ae74b47f921",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "softmax-归一化"
+  ],
+  "key_phrases": [
+    "softmax",
+    "归一化",
+    "函数",
+    "实数",
+    "向量",
+    "转化",
+    "概率分布",
+    "注意力"
+  ],
+  "summary_1l": "Softmax 函数将实数向量转化为概率分布： 在注意力中，Softmax 的作用是将 Q-K 点积的原始得分归一化为注意力权重。",
+  "query_hits": [],
+  "embed_text": "softmax-归一化 Softmax 归一化 softmax-归一化 softmax 归一化 函数 实数 向量 转化 概率分布 注意力 Softmax 函数将实数向量转化为概率分布： 在注意力中，Softmax 的作用是将 Q-K 点积的原始得分归一化为注意力权重。 Softmax 归一化 Softmax 函数将实数向量转化为概率分布： 在注意力中，Softmax 的作用是将 Q-K 点积的原始得分归一化为注意力权重。它有以下重要性质： **非负性**：所有输出 ，保证权重可以解释为概率 **归一化**：所有输出之和为 1，保证信息守恒 **可微性**：梯度良好，适合反向传播 实践中，直接对原始得分做 Softmax 会导致数值不稳定。当维度 较大时，点积的方差也大，梯度可能消失。因此 Transformer 引入了缩放因子： 这个缩放使得无论 多大，点积的方差保持稳定。这一看似简单的技巧对训练稳定性至关重要。 Softmax 的温度参数是另一个重要概念。将分母 替换为温度 ，可以控制分布的尖锐程度： ：趋近 one-hot，注意力集中 ：趋近均匀，注意力分散 Transformer 将注意力机制推到了极致，去除了 RNN 结构，完全基于注意力进行序列建模。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T03:38:45.589616+00:00"
+}

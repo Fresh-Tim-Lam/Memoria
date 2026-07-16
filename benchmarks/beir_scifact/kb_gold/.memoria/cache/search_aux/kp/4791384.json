@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4791384",
+  "source_fingerprint": "a6054482ccca7713d5c72827c875d3d9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4791384",
+    "neonatal-mortality-levels-for-193-countries-in-2009-with-trends-since-1990:-a-systematic-analysis-of-progress,-projections,-and-priorities"
+  ],
+  "key_phrases": [
+    "neonatal",
+    "mortality",
+    "levels",
+    "193",
+    "countries",
+    "2009",
+    "with",
+    "trends"
+  ],
+  "summary_1l": "BACKGROUND Historically, the main focus of studies of childho",
+  "query_hits": [],
+  "embed_text": "4791384 Neonatal Mortality Levels for 193 Countries in 2009 with Trends since 1990: A Systematic Analysis of Progress, Projections, and Priorities science scifact BACKGROUND Historically, the main focus of studies of childhood mortality has been the infant and under-five mortality rates. Neonatal mortality (deaths <28 days of age) has received limited attention, although such deaths account for… 4791384 neonatal-mortality-levels-for-193-countries-in-2009-with-trends-since-1990:-a-systematic-analysis-of-progress,-projections,-and-priorities neonatal mortality levels 193 countries 2009 with trends BACKGROUND Historically, the main focus of studies of childho Neonatal Mortality Levels for 193 Countries in 2009 with Trends since 1990: A Systematic Analysis of Progress, Projections, and Priorities BACKGROUND Historically, the main focus of studies of childhood mortality has been the infant and under-five mortality rates. Neonatal mortality (deaths <28 days of age) has received limited attention, although such deaths account for about 41% of all child deaths. To better assess progress, we developed annual estimates for neonatal mortality rates (NMRs) and neonatal deaths for 193 countries for the period 1990-2009 with forecasts into the future. METHODS AND FINDINGS We compiled a database of mortality in neonates and children (<5 years) comprising 3,551 country-years of information. Reliable civil registration data from 1990 to 2009 were available f",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.424494+00:00"
+}

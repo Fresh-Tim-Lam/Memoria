@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10530014",
+  "source_fingerprint": "5d15d014999643bab6c331e8f66f7396",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10530014",
+    "a-point-mutation-in-kindlin3-ablates-activation-of-three-integrin-subfamilies-in-humans"
+  ],
+  "key_phrases": [
+    "point",
+    "mutation",
+    "kindlin3",
+    "ablates",
+    "activation",
+    "three",
+    "integrin",
+    "subfamilies"
+  ],
+  "summary_1l": "Monogenic deficiency diseases provide unique opportunities to define the contributions of individual molecules t",
+  "query_hits": [],
+  "embed_text": "10530014 A point mutation in KINDLIN3 ablates activation of three integrin subfamilies in humans science scifact Monogenic deficiency diseases provide unique opportunities to define the contributions of individual molecules to human physiology and to identify pathologies arising from their dysfunction. Here we describe a deficiency disease in two… 10530014 a-point-mutation-in-kindlin3-ablates-activation-of-three-integrin-subfamilies-in-humans point mutation kindlin3 ablates activation three integrin subfamilies Monogenic deficiency diseases provide unique opportunities to define the contributions of individual molecules t A point mutation in KINDLIN3 ablates activation of three integrin subfamilies in humans Monogenic deficiency diseases provide unique opportunities to define the contributions of individual molecules to human physiology and to identify pathologies arising from their dysfunction. Here we describe a deficiency disease in two human siblings that presented with severe bleeding, frequent infections and osteopetrosis at an early age. These symptoms are consistent with but more severe than those reported for people with leukocyte adhesion deficiency III (LAD-III). Mechanistically, these symptoms arose from an inability to activate the integrins expressed on hematopoietic cells, including platelets and leukocytes. Immortalized lymphocyte cell lines isolated from the two individuals showed integrin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.644081+00:00"
+}

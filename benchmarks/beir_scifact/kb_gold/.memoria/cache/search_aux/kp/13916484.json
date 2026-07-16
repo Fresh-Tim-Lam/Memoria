@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13916484",
+  "source_fingerprint": "e86c4bff7a52e018fe4384ab411f1e85",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13916484",
+    "cosmic:-mining-complete-cancer-genomes-in-the-catalogue-of-somatic-mutations-in-cancer"
+  ],
+  "key_phrases": [
+    "cosmic",
+    "mining",
+    "complete",
+    "cancer",
+    "genomes",
+    "catalogue",
+    "somatic",
+    "mutations"
+  ],
+  "summary_1l": "COSMIC (http://www.",
+  "query_hits": [],
+  "embed_text": "13916484 COSMIC: mining complete cancer genomes in the Catalogue of Somatic Mutations in Cancer science scifact COSMIC (http://www.sanger.ac.uk/cosmic) curates comprehensive information on somatic mutations in human cancer. Release v48 (July 2010) describes over 136,000 coding mutations in almost 542,000 tumour samples; of the 18,490 genes… 13916484 cosmic:-mining-complete-cancer-genomes-in-the-catalogue-of-somatic-mutations-in-cancer cosmic mining complete cancer genomes catalogue somatic mutations COSMIC (http://www. COSMIC: mining complete cancer genomes in the Catalogue of Somatic Mutations in Cancer COSMIC (http://www.sanger.ac.uk/cosmic) curates comprehensive information on somatic mutations in human cancer. Release v48 (July 2010) describes over 136,000 coding mutations in almost 542,000 tumour samples; of the 18,490 genes documented, 4803 (26%) have one or more mutations. Full scientific literature curations are available on 83 major cancer genes and 49 fusion gene pairs (19 new cancer genes and 30 new fusion pairs this year) and this number is continually increasing. Key amongst these is TP53, now available through a collaboration with the IARC p53 database. In addition to data from the Cancer Genome Project (CGP) at the Sanger Institute, UK, and The Cancer Genome Atlas project (TCGA), large sys",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.565213+00:00"
+}

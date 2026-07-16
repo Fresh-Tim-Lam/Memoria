@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7666498",
+  "source_fingerprint": "6f672a1d8c82fe9632a3aebcc5f07d84",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7666498",
+    "genetic-disruption-of-aurora-b-uncovers-an-essential-role-for-aurora-c-during-early-mammalian-development."
+  ],
+  "key_phrases": [
+    "genetic",
+    "disruption",
+    "aurora",
+    "uncovers",
+    "essential",
+    "role",
+    "during",
+    "early"
+  ],
+  "summary_1l": "Genetic disruption of aurora B uncovers an essential role for aurora C during early mammalian development.",
+  "query_hits": [],
+  "embed_text": "7666498 Genetic disruption of aurora B uncovers an essential role for aurora C during early mammalian development. science scifact Mitosis is controlled by multiple kinases that drive cell cycle progression and prevent chromosome mis-segregation. Aurora kinase B interacts with survivin, borealin and incenp to form the chromosomal passenger complex (CPC), which is… 7666498 genetic-disruption-of-aurora-b-uncovers-an-essential-role-for-aurora-c-during-early-mammalian-development. genetic disruption aurora uncovers essential role during early Genetic disruption of aurora B uncovers an essential role for aurora C during early mammalian development. Genetic disruption of aurora B uncovers an essential role for aurora C during early mammalian development. Mitosis is controlled by multiple kinases that drive cell cycle progression and prevent chromosome mis-segregation. Aurora kinase B interacts with survivin, borealin and incenp to form the chromosomal passenger complex (CPC), which is involved in the regulation of microtubule-kinetochore attachments and cytokinesis. Whereas genetic ablation of survivin, borealin or incenp results in early lethality at the morula stage, we show here that aurora B is dispensable for CPC function during early cell divisions and aurora B-null embryos are normally implanted. This is due to a crucial function of aurora C during these early embryonic cycles. Expression of aurora C decreases during late blast",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.990607+00:00"
+}

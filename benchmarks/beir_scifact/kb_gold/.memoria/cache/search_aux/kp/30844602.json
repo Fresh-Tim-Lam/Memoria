@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "30844602",
+  "source_fingerprint": "8f4bbf49fad6f994aa2b34c676165d0b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "30844602",
+    "surveillance-for-foodborne-disease-outbreaks--united-states,-1993-1997."
+  ],
+  "key_phrases": [
+    "surveillance",
+    "foodborne",
+    "disease",
+    "outbreaks",
+    "--",
+    "united",
+    "states",
+    "1993"
+  ],
+  "summary_1l": "Surveillance for foodborne-disease outbreaks--United States, 1993-1997.",
+  "query_hits": [],
+  "embed_text": "30844602 Surveillance for foodborne-disease outbreaks--United States, 1993-1997. science scifact PROBLEM/CONDITION Since 1973, CDC has maintained a collaborative surveillance program for collection and periodic reporting of data on the occurrence and causes of foodborne-disease outbreaks (FBDOs) in the United States. REPORTING PERIOD… 30844602 surveillance-for-foodborne-disease-outbreaks--united-states,-1993-1997. surveillance foodborne disease outbreaks -- united states 1993 Surveillance for foodborne-disease outbreaks--United States, 1993-1997. Surveillance for foodborne-disease outbreaks--United States, 1993-1997. PROBLEM/CONDITION Since 1973, CDC has maintained a collaborative surveillance program for collection and periodic reporting of data on the occurrence and causes of foodborne-disease outbreaks (FBDOs) in the United States. REPORTING PERIOD COVERED This summary reviews data from January 1993 through December 1997. DESCRIPTION OF SYSTEM The Foodborne-Disease Outbreak Surveillance System reviews data concerning FBDOs, defined as the occurrence of two or more cases of a similar illness resulting from the ingestion of a common food. State and local public health departments have primary responsibility for identifying and investigating FBDOs. State, local, and territorial health departments use a standard form to report these",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.044211+00:00"
+}

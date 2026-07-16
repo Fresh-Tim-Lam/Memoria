@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2481032",
+  "source_fingerprint": "89e45117ae7fb670f9a862b4ef7e9303",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2481032",
+    "neuronal-sirt1-deficiency-increases-insulin-sensitivity-in-both-brain-and-peripheral-tissues."
+  ],
+  "key_phrases": [
+    "neuronal",
+    "sirt1",
+    "deficiency",
+    "increases",
+    "insulin",
+    "sensitivity",
+    "both",
+    "brain"
+  ],
+  "summary_1l": "Neuronal Sirt1 deficiency increases insulin sensitivity in both brain and peripheral tissues.",
+  "query_hits": [],
+  "embed_text": "2481032 Neuronal Sirt1 deficiency increases insulin sensitivity in both brain and peripheral tissues. science scifact Sirt1 is a NAD(+)-dependent class III deacetylase that functions as a cellular energy sensor. In addition to its well-characterized effects in peripheral tissues, emerging evidence suggests that neuronal Sirt1 activity plays a role in the… 2481032 neuronal-sirt1-deficiency-increases-insulin-sensitivity-in-both-brain-and-peripheral-tissues. neuronal sirt1 deficiency increases insulin sensitivity both brain Neuronal Sirt1 deficiency increases insulin sensitivity in both brain and peripheral tissues. Neuronal Sirt1 deficiency increases insulin sensitivity in both brain and peripheral tissues. Sirt1 is a NAD(+)-dependent class III deacetylase that functions as a cellular energy sensor. In addition to its well-characterized effects in peripheral tissues, emerging evidence suggests that neuronal Sirt1 activity plays a role in the central regulation of energy balance and glucose metabolism. To assess this idea, we generated Sirt1 neuron-specific knockout (SINKO) mice. On both standard chow and HFD, SINKO mice were more insulin sensitive than Sirt1(f/f) mice. Thus, SINKO mice had lower fasting insulin levels, improved glucose tolerance and insulin tolerance, and enhanced systemic insulin sensitivity during hyperinsulinemic euglycemic clamp studies. Hypothalamic insulin sensitivity of SINKO",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.341289+00:00"
+}

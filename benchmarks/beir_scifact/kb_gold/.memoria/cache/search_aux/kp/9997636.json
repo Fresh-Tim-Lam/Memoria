@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9997636",
+  "source_fingerprint": "34a2e3f77f0800b72c2e00db4ad7deb7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9997636",
+    "ovarian-surface-epithelium-in-patients-with-severe-ovarian-infertility:-a-potential-source-of-cells-expressing-markers-of-pluripotent/multipotent-stem-cells"
+  ],
+  "key_phrases": [
+    "ovarian",
+    "surface",
+    "epithelium",
+    "patients",
+    "with",
+    "severe",
+    "infertility",
+    "potential"
+  ],
+  "summary_1l": "The aim of this study was to confirm the pr",
+  "query_hits": [],
+  "embed_text": "9997636 Ovarian Surface Epithelium in Patients with Severe Ovarian Infertility: A Potential Source of Cells Expressing Markers of Pluripotent/Multipotent Stem Cells science scifact The aim of this study was to confirm the presence of stem cells in the ovarian surface epithelium of patients with premature ovarian failure and no mature follicles and oocytes. In these patients, small round cells of unknown origin… 9997636 ovarian-surface-epithelium-in-patients-with-severe-ovarian-infertility:-a-potential-source-of-cells-expressing-markers-of-pluripotent/multipotent-stem-cells ovarian surface epithelium patients with severe infertility potential The aim of this study was to confirm the pr Ovarian Surface Epithelium in Patients with Severe Ovarian Infertility: A Potential Source of Cells Expressing Markers of Pluripotent/Multipotent Stem Cells The aim of this study was to confirm the presence of stem cells in the ovarian surface epithelium of patients with premature ovarian failure and no mature follicles and oocytes. In these patients, small round cells of unknown origin expressing SOX-2 marker of pluripotency were observed among the epithelial cells just after the ovarian surface epithelium scraping. These cells were an integral part of the ovarian surface epithelium. When the scraped cells were cultured in a medium with added follicular fluid to provide some ovarian niche, primitive oocyte-like cells and typical round-shaped cell clusters positively stained on alkaline ph",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:06.274582+00:00"
+}

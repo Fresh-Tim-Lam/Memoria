@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "47018050",
+  "source_fingerprint": "7e4a248cc79c13e5a35a7d7423a05699",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "47018050"
+  ],
+  "key_phrases": [
+    "crispr",
+    "cas9",
+    "genome",
+    "editing",
+    "induces",
+    "p53",
+    "mediated",
+    "dna"
+  ],
+  "summary_1l": "Here, we report that genome editing by CRISPR–Cas9 induces a p53-mediated DNA damage response and cell cycle arrest in immortalize",
+  "query_hits": [],
+  "embed_text": "47018050 CRISPR–Cas9 genome editing induces a p53-mediated DNA damage response science scifact Here, we report that genome editing by CRISPR–Cas9 induces a p53-mediated DNA damage response and cell cycle arrest in immortalized human retinal pigment epithelial cells, leading to a selection against cells with a functional p53 pathway.… 47018050 crispr cas9 genome editing induces p53 mediated dna Here, we report that genome editing by CRISPR–Cas9 induces a p53-mediated DNA damage response and cell cycle arrest in immortalize CRISPR–Cas9 genome editing induces a p53-mediated DNA damage response Here, we report that genome editing by CRISPR–Cas9 induces a p53-mediated DNA damage response and cell cycle arrest in immortalized human retinal pigment epithelial cells, leading to a selection against cells with a functional p53 pathway. Inhibition of p53 prevents the damage response and increases the rate of homologous recombination from a donor template. These results suggest that p53 inhibition may improve the efficiency of genome editing of untransformed cells and that p53 function should be monitored when developing cell-based therapies utilizing CRISPR–Cas9. CRISPR–Cas9-induced DNA damage triggers p53 to limit the efficiency of gene editing in immortalized human retinal pigment epithelial cells.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.281860+00:00"
+}

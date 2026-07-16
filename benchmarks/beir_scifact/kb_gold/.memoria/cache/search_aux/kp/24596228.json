@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24596228",
+  "source_fingerprint": "11ef9267ecb0d65b65be22a2d9299ebc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24596228",
+    "hepatitis-b-and-c-in-hiv-infected-patients.-prevalence-and-prognostic-value."
+  ],
+  "key_phrases": [
+    "hepatitis",
+    "hiv",
+    "infected",
+    "patients",
+    "prevalence",
+    "prognostic",
+    "value",
+    "background"
+  ],
+  "summary_1l": "Hepatitis B and C in HIV-infected patients.",
+  "query_hits": [],
+  "embed_text": "24596228 Hepatitis B and C in HIV-infected patients. Prevalence and prognostic value. science scifact BACKGROUND/AIMS There is only limited information on the prevalence and influence of coinfection with either hepatitis B or C on the clinical course in patients infected with the human immunodeficiency virus (HIV). METHODS Follow-up was… 24596228 hepatitis-b-and-c-in-hiv-infected-patients.-prevalence-and-prognostic-value. hepatitis hiv infected patients prevalence prognostic value background Hepatitis B and C in HIV-infected patients. Hepatitis B and C in HIV-infected patients. Prevalence and prognostic value. BACKGROUND/AIMS There is only limited information on the prevalence and influence of coinfection with either hepatitis B or C on the clinical course in patients infected with the human immunodeficiency virus (HIV). METHODS Follow-up was available in 232 HIV-infected patients (age 37+/-8 years, CD4 count 167+/-167 microl; 46% had AIDS). Samples were investigated for markers of HBV and HCV infection (HBsAg, HBeAg, HBV-DNA, Anti-HBs, anti-HBc, anti-HCV, HCV-RNA). RESULTS 60/232 patients (23%) were anti-HCV positive. 78% of these sera were positive for HCV-RNA. 22/232 patients (9%) suffered from chronic HBV infection (HBsAg positive), 18/22 (82%) of these sera had detectable HBeAg and 19/22 (86%) HBV-DNA. Presence of",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.833843+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3512154",
+  "source_fingerprint": "b758b64f5832222c9cafcd494d5c9a7a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3512154",
+    "crispr-adaptation-biases-explain-preference-for-acquisition-of-foreign-dna"
+  ],
+  "key_phrases": [
+    "crispr",
+    "adaptation",
+    "biases",
+    "explain",
+    "preference",
+    "acquisition",
+    "foreign",
+    "dna"
+  ],
+  "summary_1l": "CRISPR-Cas (clustered, regularly interspaced short palindromic repeats coupled with CRISPR-associated proteins) is a bacteria",
+  "query_hits": [],
+  "embed_text": "3512154 CRISPR adaptation biases explain preference for acquisition of foreign DNA science scifact CRISPR-Cas (clustered, regularly interspaced short palindromic repeats coupled with CRISPR-associated proteins) is a bacterial immunity system that protects against invading phages or plasmids. In the process of CRISPR adaptation, short… 3512154 crispr-adaptation-biases-explain-preference-for-acquisition-of-foreign-dna crispr adaptation biases explain preference acquisition foreign dna CRISPR-Cas (clustered, regularly interspaced short palindromic repeats coupled with CRISPR-associated proteins) is a bacteria CRISPR adaptation biases explain preference for acquisition of foreign DNA CRISPR-Cas (clustered, regularly interspaced short palindromic repeats coupled with CRISPR-associated proteins) is a bacterial immunity system that protects against invading phages or plasmids. In the process of CRISPR adaptation, short pieces of DNA ('spacers') are acquired from foreign elements and integrated into the CRISPR array. So far, it has remained a mystery how spacers are preferentially acquired from the foreign DNA while the self chromosome is avoided. Here we show that spacer acquisition is replication-dependent, and that DNA breaks formed at stalled replication forks promote spacer acquisition. Chromosomal hotspots of spacer acquisition were confined by Chi sites, which are sequence octamers highly enr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.990348+00:00"
+}

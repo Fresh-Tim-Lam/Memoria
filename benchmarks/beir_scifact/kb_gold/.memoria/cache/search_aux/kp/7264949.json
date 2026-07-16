@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7264949",
+  "source_fingerprint": "6ab57eac5e95aa3c1d1e3b038e7849bf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7264949",
+    "seroepidemiological-survey-of-feline-retrovirus-infections-in-cats-in-taiwan-in-1993-and-1994."
+  ],
+  "key_phrases": [
+    "seroepidemiological",
+    "survey",
+    "feline",
+    "retrovirus",
+    "infections",
+    "cats",
+    "taiwan",
+    "1993"
+  ],
+  "summary_1l": "Seroepidemiological survey of feline retrovirus infections in cats in Taiwan in 1993 and 1994.",
+  "query_hits": [],
+  "embed_text": "7264949 Seroepidemiological survey of feline retrovirus infections in cats in Taiwan in 1993 and 1994. science scifact In order to investigate the prevalence of infections with three feline retroviruses feline immunodeficiency virus (FIV), feline leukemia virus (FeLV) and feline syncytial virus (FSV) in Taiwan, we collected a total of 75 blood samples from… 7264949 seroepidemiological-survey-of-feline-retrovirus-infections-in-cats-in-taiwan-in-1993-and-1994. seroepidemiological survey feline retrovirus infections cats taiwan 1993 Seroepidemiological survey of feline retrovirus infections in cats in Taiwan in 1993 and 1994. Seroepidemiological survey of feline retrovirus infections in cats in Taiwan in 1993 and 1994. In order to investigate the prevalence of infections with three feline retroviruses feline immunodeficiency virus (FIV), feline leukemia virus (FeLV) and feline syncytial virus (FSV) in Taiwan, we collected a total of 75 blood samples from cats from veterinary hospitals, a breeding cattery and a homeless shelter in 1993 and 1994. We examined the presences of anti-FIV and FSV antibodies and FeLV-p27 antigen in these samples by the indirect immunofluorescence and/or enzyme-linked immunosorbent assays. All of the serum samples positive for FIV were obtained from homeless cats and the overall FIV positive rate was 4%. The overall positive rates of FSV and FeLV were 28% and 1.3%, respectively. From th",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.952739+00:00"
+}

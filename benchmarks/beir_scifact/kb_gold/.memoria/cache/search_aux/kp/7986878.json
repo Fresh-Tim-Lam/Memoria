@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7986878",
+  "source_fingerprint": "c2d546a0596f9a4a412f3af1c3c58526",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7986878",
+    "anti-alphav-integrin-monoclonal-antibody-intetumumab-enhances-the-efficacy-of-radiation-therapy-and-reduces-metastasis-of-human-cancer-xenografts-in-nude-rats."
+  ],
+  "key_phrases": [
+    "anti",
+    "alphav",
+    "integrin",
+    "monoclonal",
+    "antibody",
+    "intetumumab",
+    "enhances",
+    "efficacy"
+  ],
+  "summary_1l": "Anti-alphav integrin monoclonal antibody intetumumab enhances the efficacy of radiation therapy and reduces metastasis of human cancer xenografts in nude rats.",
+  "query_hits": [],
+  "embed_text": "7986878 Anti-alphav integrin monoclonal antibody intetumumab enhances the efficacy of radiation therapy and reduces metastasis of human cancer xenografts in nude rats. science scifact We previously reported that intetumumab (CNTO 95), a fully human anti-αv integrin monoclonal antibody, is a radiosensitizer in mice with xenograft tumors. Because intetumumab does not cross-react with mouse integrins, but has… 7986878 anti-alphav-integrin-monoclonal-antibody-intetumumab-enhances-the-efficacy-of-radiation-therapy-and-reduces-metastasis-of-human-cancer-xenografts-in-nude-rats. anti alphav integrin monoclonal antibody intetumumab enhances efficacy Anti-alphav integrin monoclonal antibody intetumumab enhances the efficacy of radiation therapy and reduces metastasis of human cancer xenografts in nude rats. Anti-alphav integrin monoclonal antibody intetumumab enhances the efficacy of radiation therapy and reduces metastasis of human cancer xenografts in nude rats. We previously reported that intetumumab (CNTO 95), a fully human anti-αv integrin monoclonal antibody, is a radiosensitizer in mice with xenograft tumors. Because intetumumab does not cross-react with mouse integrins, but has cross-reactivity with rat integrins, we next studied the potential combined use of radiation therapy and intetumumab in human cancer xenograft models in nude rats to assess effects on both tumor cells and the tumor microenvironment. Nude rats bearing human head and neck cancer and non-small cell lung cancer (NSCLC) xenografts were treated with intetumumab and fractionated local tumor radiotherapy. Effects on tu",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.644611+00:00"
+}

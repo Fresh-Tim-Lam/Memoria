@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4410181",
+  "source_fingerprint": "59b19098f943283fc71cb1c34efd054e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4410181",
+    "metabolic-rescue-in-pluripotent-cells-from-patients-with-mtdna-disease"
+  ],
+  "key_phrases": [
+    "metabolic",
+    "rescue",
+    "pluripotent",
+    "cells",
+    "from",
+    "patients",
+    "with",
+    "mtdna"
+  ],
+  "summary_1l": "Mitochondria have a major role in energy production via oxidative phosphorylation, which is dependent on the expression of critic",
+  "query_hits": [],
+  "embed_text": "4410181 Metabolic rescue in pluripotent cells from patients with mtDNA disease science scifact Mitochondria have a major role in energy production via oxidative phosphorylation, which is dependent on the expression of critical genes encoded by mitochondrial (mt)DNA. Mutations in mtDNA can cause fatal or severely debilitating… 4410181 metabolic-rescue-in-pluripotent-cells-from-patients-with-mtdna-disease metabolic rescue pluripotent cells from patients with mtdna Mitochondria have a major role in energy production via oxidative phosphorylation, which is dependent on the expression of critic Metabolic rescue in pluripotent cells from patients with mtDNA disease Mitochondria have a major role in energy production via oxidative phosphorylation, which is dependent on the expression of critical genes encoded by mitochondrial (mt)DNA. Mutations in mtDNA can cause fatal or severely debilitating disorders with limited treatment options. Clinical manifestations vary based on mutation type and heteroplasmy (that is, the relative levels of mutant and wild-type mtDNA within each cell). Here we generated genetically corrected pluripotent stem cells (PSCs) from patients with mtDNA disease. Multiple induced pluripotent stem (iPS) cell lines were derived from patients with common heteroplasmic mutations including 3243A>G, causing mitochondrial encephalomyopathy and stroke-like episodes (MELA",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.759461+00:00"
+}

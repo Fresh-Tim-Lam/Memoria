@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20179918",
+  "source_fingerprint": "dea3dfa5b309aab93852ab827b67bf7e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20179918",
+    "signal-transducer-and-activator-of-transcription-3-is-a-transcriptional-factor-regulating-the-gene-expression-of-sall4."
+  ],
+  "key_phrases": [
+    "signal",
+    "transducer",
+    "activator",
+    "transcription",
+    "transcriptional",
+    "factor",
+    "regulating",
+    "gene"
+  ],
+  "summary_1l": "Signal transducer and activator of transcription 3 is a transcriptional factor regulating the gene expression of SALL4.",
+  "query_hits": [],
+  "embed_text": "20179918 Signal transducer and activator of transcription 3 is a transcriptional factor regulating the gene expression of SALL4. science scifact Both signal transducer and activator of transcription 3 (STAT3) and SALL4 are important in maintaining the pluripotent and self-renewal state of embryonic stem cells. We hypothesized that STAT3, a latent transcriptional factor, may… 20179918 signal-transducer-and-activator-of-transcription-3-is-a-transcriptional-factor-regulating-the-gene-expression-of-sall4. signal transducer activator transcription transcriptional factor regulating gene Signal transducer and activator of transcription 3 is a transcriptional factor regulating the gene expression of SALL4. Signal transducer and activator of transcription 3 is a transcriptional factor regulating the gene expression of SALL4. Both signal transducer and activator of transcription 3 (STAT3) and SALL4 are important in maintaining the pluripotent and self-renewal state of embryonic stem cells. We hypothesized that STAT3, a latent transcriptional factor, may regulate the gene expression of SALL4. In support of this hypothesis, DNA sequence analysis of the SALL4 gene promoter revealed four putative STAT3-binding sites. Using a SALL4-luciferase reporter gene assay, we found that modulation of the STAT3 activity significantly up-regulated the luciferase activity. By chromatin immunoprecipitation, the segment of the SALL4 promoter showing the highest affinity to STAT3 was localized to -366 to -163, in",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.750773+00:00"
+}

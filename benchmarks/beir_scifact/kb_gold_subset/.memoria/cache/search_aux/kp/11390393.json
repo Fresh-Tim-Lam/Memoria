@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11390393",
+  "source_fingerprint": "f8acdc90d017852449f729afcff6d3c6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11390393",
+    "reorganization-of-enhancer-patterns-in-transition-from-naive-to-primed-pluripotency."
+  ],
+  "key_phrases": [
+    "reorganization",
+    "enhancer",
+    "patterns",
+    "transition",
+    "from",
+    "naive",
+    "primed",
+    "pluripotency"
+  ],
+  "summary_1l": "Reorganization of enhancer patterns in transition from naive to primed pluripotency.",
+  "query_hits": [],
+  "embed_text": "11390393 Reorganization of enhancer patterns in transition from naive to primed pluripotency. science scifact Naive and primed pluripotency is characterized by distinct signaling requirements, transcriptomes, and developmental properties, but both cellular states share key transcriptional regulators: Oct4, Sox2, and Nanog. Here, we demonstrate… 11390393 reorganization-of-enhancer-patterns-in-transition-from-naive-to-primed-pluripotency. reorganization enhancer patterns transition from naive primed pluripotency Reorganization of enhancer patterns in transition from naive to primed pluripotency. Reorganization of enhancer patterns in transition from naive to primed pluripotency. Naive and primed pluripotency is characterized by distinct signaling requirements, transcriptomes, and developmental properties, but both cellular states share key transcriptional regulators: Oct4, Sox2, and Nanog. Here, we demonstrate that transition between these two pluripotent states is associated with widespread Oct4 relocalization, mirrored by global rearrangement of enhancer chromatin landscapes. Our genomic and biochemical analyses identified candidate mediators of primed state-specific Oct4 binding, including Otx2 and Zic2/3. Even when differentiation cues are blocked, premature Otx2 overexpression is sufficient to exit the naive state, induce transcription of a substantial subset of primed plurip",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:06.802676+00:00"
+}

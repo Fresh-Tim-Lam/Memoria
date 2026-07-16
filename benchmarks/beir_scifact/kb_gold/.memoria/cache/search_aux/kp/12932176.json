@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "12932176",
+  "source_fingerprint": "fdc78b9f4f25379c3a796645f242faea",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12932176"
+  ],
+  "key_phrases": [
+    "wnt7a",
+    "signaling",
+    "promotes",
+    "dendritic",
+    "spine",
+    "growth",
+    "synaptic",
+    "strength"
+  ],
+  "summary_1l": "Wnt7a signaling promotes dendritic spine growth and synaptic strength through Ca²⁺/Calmodulin-dependent protein kinase II.",
+  "query_hits": [],
+  "embed_text": "12932176 Wnt7a signaling promotes dendritic spine growth and synaptic strength through Ca²⁺/Calmodulin-dependent protein kinase II. science scifact The balance between excitatory and inhibitory synapses is crucial for normal brain function. Wnt proteins stimulate synapse formation by increasing synaptic assembly. However, it is unclear whether Wnt signaling differentially regulates… 12932176 wnt7a signaling promotes dendritic spine growth synaptic strength Wnt7a signaling promotes dendritic spine growth and synaptic strength through Ca²⁺/Calmodulin-dependent protein kinase II. Wnt7a signaling promotes dendritic spine growth and synaptic strength through Ca²⁺/Calmodulin-dependent protein kinase II. The balance between excitatory and inhibitory synapses is crucial for normal brain function. Wnt proteins stimulate synapse formation by increasing synaptic assembly. However, it is unclear whether Wnt signaling differentially regulates the formation of excitatory and inhibitory synapses. Here, we demonstrate that Wnt7a preferentially stimulates excitatory synapse formation and function. In hippocampal neurons, Wnt7a increases the number of excitatory synapses, whereas inhibitory synapses are unaffected. Wnt7a or postsynaptic expression of Dishevelled-1 (Dvl1), a core Wnt signaling component, increases the frequency and amplitude of miniature excitatory postsynaptic cu",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:09.331779+00:00"
+}

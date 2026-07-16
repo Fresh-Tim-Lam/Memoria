@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "343052",
+  "source_fingerprint": "c71e8d02ab947c72df5d76a17a3fbf5b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "343052",
+    "curcumin-attenuates-inflammatory-response-in-il-1beta-induced-human-synovial-fibroblasts-and-collagen-induced-arthritis-in-mouse-model."
+  ],
+  "key_phrases": [
+    "curcumin",
+    "attenuates",
+    "inflammatory",
+    "response",
+    "il",
+    "1beta",
+    "induced",
+    "human"
+  ],
+  "summary_1l": "Curcumin attenuates inflammatory response in IL-1beta-induced human synovial fibroblasts and collagen-induced arthritis in mouse model.",
+  "query_hits": [],
+  "embed_text": "343052 Curcumin attenuates inflammatory response in IL-1beta-induced human synovial fibroblasts and collagen-induced arthritis in mouse model. science scifact Curcumin, a major component of turmeric, has been shown to exhibit anti-oxidant and anti-inflammatory activities. The present study was performed to determine whether curcumin is efficacious against both collagen-induced arthritis (CIA) in… 343052 curcumin-attenuates-inflammatory-response-in-il-1beta-induced-human-synovial-fibroblasts-and-collagen-induced-arthritis-in-mouse-model. curcumin attenuates inflammatory response il 1beta induced human Curcumin attenuates inflammatory response in IL-1beta-induced human synovial fibroblasts and collagen-induced arthritis in mouse model. Curcumin attenuates inflammatory response in IL-1beta-induced human synovial fibroblasts and collagen-induced arthritis in mouse model. Curcumin, a major component of turmeric, has been shown to exhibit anti-oxidant and anti-inflammatory activities. The present study was performed to determine whether curcumin is efficacious against both collagen-induced arthritis (CIA) in mice and IL-1beta-induced activation in fibroblast-like synoviocytes (FLSs). DBA/1 mice were immunized with bovine type II collagen (CII) and treated with curcumin every other day for 2weeks after the initial immunization. For arthritis, we evaluated the incidence of disease and used an arthritis index based on paw thickness. In vitro proliferation of CII- or concanavalin A-induced splenic T cells was examined using IFN-",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.326579+00:00"
+}

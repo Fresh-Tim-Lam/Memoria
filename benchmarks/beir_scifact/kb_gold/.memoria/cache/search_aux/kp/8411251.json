@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8411251",
+  "source_fingerprint": "9b56fca89ca98a671a78d1c9c1f65dd9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8411251",
+    "the-right-place-at-the-right-time:-chaperoning-core-histone-variants."
+  ],
+  "key_phrases": [
+    "right",
+    "place",
+    "at",
+    "time",
+    "chaperoning",
+    "core",
+    "histone",
+    "variants"
+  ],
+  "summary_1l": "The right place at the right time: chaperoning core histone variants.",
+  "query_hits": [],
+  "embed_text": "8411251 The right place at the right time: chaperoning core histone variants. science scifact Histone proteins dynamically regulate chromatin structure and epigenetic signaling to maintain cell homeostasis. These processes require controlled spatial and temporal deposition and eviction of histones by their dedicated chaperones.… 8411251 the-right-place-at-the-right-time:-chaperoning-core-histone-variants. right place at time chaperoning core histone variants The right place at the right time: chaperoning core histone variants. The right place at the right time: chaperoning core histone variants. Histone proteins dynamically regulate chromatin structure and epigenetic signaling to maintain cell homeostasis. These processes require controlled spatial and temporal deposition and eviction of histones by their dedicated chaperones. With the evolution of histone variants, a network of functionally specific histone chaperones has emerged. Molecular details of the determinants of chaperone specificity for different histone variants are only slowly being resolved. A complete understanding of these processes is essential to shed light on the genuine biological roles of histone variants, their chaperones, and their impact on chromatin dynamics.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.550982+00:00"
+}

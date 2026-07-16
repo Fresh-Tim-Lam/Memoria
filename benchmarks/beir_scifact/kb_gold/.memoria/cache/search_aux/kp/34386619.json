@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "34386619",
+  "source_fingerprint": "b0deda9088724f49b22379fa866a2f23",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "34386619",
+    "the-first-gene-of-the-bacillus-subtilis-clpc-operon,-ctsr,-encodes-a-negative-regulator-of-its-own-operon-and-other-class-iii-heat-shock-genes."
+  ],
+  "key_phrases": [
+    "first",
+    "gene",
+    "bacillus",
+    "subtilis",
+    "clpc",
+    "operon",
+    "ctsr",
+    "encodes"
+  ],
+  "summary_1l": "The first gene of the Bacillus subtilis clpC operon, ctsR, encodes a negative regulator of its own operon and other class III heat shock genes.",
+  "query_hits": [],
+  "embed_text": "34386619 The first gene of the Bacillus subtilis clpC operon, ctsR, encodes a negative regulator of its own operon and other class III heat shock genes. science scifact The Bacillus subtilis clpC operon is regulated by two stress induction pathways relying on either sigmaB or a class III stress induction mechanism acting at a sigmaA-like promoter. When the clpC operon was placed under the control of the… 34386619 the-first-gene-of-the-bacillus-subtilis-clpc-operon,-ctsr,-encodes-a-negative-regulator-of-its-own-operon-and-other-class-iii-heat-shock-genes. first gene bacillus subtilis clpc operon ctsr encodes The first gene of the Bacillus subtilis clpC operon, ctsR, encodes a negative regulator of its own operon and other class III heat shock genes. The first gene of the Bacillus subtilis clpC operon, ctsR, encodes a negative regulator of its own operon and other class III heat shock genes. The Bacillus subtilis clpC operon is regulated by two stress induction pathways relying on either sigmaB or a class III stress induction mechanism acting at a sigmaA-like promoter. When the clpC operon was placed under the control of the isopropyl-beta-D-thiogalactopyranoside (IPTG)-inducible Pspac promoter, dramatic repression of the natural clpC promoters fused to a lacZ reporter gene was noticed after IPTG induction. This result strongly indicated negative regulation of the clpC operon by one of its gene products. Indeed, the negative regulator could be identified which is encoded by the first gene of the clpC operon, ctsR, containing a predicte",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.423329+00:00"
+}

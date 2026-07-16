@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16090672",
+  "source_fingerprint": "707643d08cdc0726940f0412433e6e1c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16090672",
+    "cortical-dynein-controls-microtubule-dynamics-to-generate-pulling-forces-that-position-microtubule-asters"
+  ],
+  "key_phrases": [
+    "cortical",
+    "dynein",
+    "controls",
+    "microtubule",
+    "dynamics",
+    "generate",
+    "pulling",
+    "forces"
+  ],
+  "summary_1l": "Dynein at the cortex contributes to microtubule-based positioning processes such as spindle po",
+  "query_hits": [],
+  "embed_text": "16090672 Cortical Dynein Controls Microtubule Dynamics to Generate Pulling Forces that Position Microtubule Asters science scifact Dynein at the cortex contributes to microtubule-based positioning processes such as spindle positioning during embryonic cell division and centrosome positioning during fibroblast migration. To investigate how cortical dynein interacts… 16090672 cortical-dynein-controls-microtubule-dynamics-to-generate-pulling-forces-that-position-microtubule-asters cortical dynein controls microtubule dynamics generate pulling forces Dynein at the cortex contributes to microtubule-based positioning processes such as spindle po Cortical Dynein Controls Microtubule Dynamics to Generate Pulling Forces that Position Microtubule Asters Dynein at the cortex contributes to microtubule-based positioning processes such as spindle positioning during embryonic cell division and centrosome positioning during fibroblast migration. To investigate how cortical dynein interacts with microtubule ends to generate force and how this functional association impacts positioning, we have reconstituted the 'cortical' interaction between dynein and dynamic microtubule ends in an in vitro system using microfabricated barriers. We show that barrier-attached dynein captures microtubule ends, inhibits growth, and triggers microtubule catastrophes, thereby controlling microtubule length. The subsequent interaction with shrinking microtubule",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.812760+00:00"
+}

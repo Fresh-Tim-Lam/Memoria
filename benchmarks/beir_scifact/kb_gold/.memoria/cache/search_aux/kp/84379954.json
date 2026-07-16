@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "84379954",
+  "source_fingerprint": "109ab1d904261dafab943ab73550bc6c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "84379954",
+    "diversity-and-evenness:-a-unifying-notation-and-its-consequences"
+  ],
+  "key_phrases": [
+    "diversity",
+    "evenness",
+    "unifying",
+    "notation",
+    "its",
+    "consequences",
+    "three",
+    "commonly"
+  ],
+  "summary_1l": "Three commonly used measures of diversity, Simpson's index, Shannon's entropy, and the total number of species, are related to Renyi's",
+  "query_hits": [],
+  "embed_text": "84379954 Diversity and Evenness: A Unifying Notation and Its Consequences science scifact Three commonly used measures of diversity, Simpson's index, Shannon's entropy, and the total number of species, are related to Renyi's definition of a generalized entropy. A unified concept of diversity is presented, according to which… 84379954 diversity-and-evenness:-a-unifying-notation-and-its-consequences diversity evenness unifying notation its consequences three commonly Three commonly used measures of diversity, Simpson's index, Shannon's entropy, and the total number of species, are related to Renyi's Diversity and Evenness: A Unifying Notation and Its Consequences Three commonly used measures of diversity, Simpson's index, Shannon's entropy, and the total number of species, are related to Renyi's definition of a generalized entropy. A unified concept of diversity is presented, according to which there is a continuum of possible diversity measures. In a sense which becomes apparent, these measures provide estimates of the effective number of species present, and differ only in their tendency to include or to ignore the relatively rarer species. The notion of the diversity of a community as opposed to that of a sample is examined, and is related to the asymptotic form of the species—abundance curve. A new and plausible definition of evenness is derived.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.661640+00:00"
+}

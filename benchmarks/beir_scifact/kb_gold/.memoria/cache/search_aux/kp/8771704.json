@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8771704",
+  "source_fingerprint": "831b53baa831d4478083ffb47712d05b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8771704",
+    "pharmacological-blockage-of-fibro/adipogenic-progenitor-expansion-and-suppression-of-regenerative-fibrogenesis-is-associated-with-impaired-skeletal-muscle-regeneration."
+  ],
+  "key_phrases": [
+    "pharmacological",
+    "blockage",
+    "fibro",
+    "adipogenic",
+    "progenitor",
+    "expansion",
+    "suppression",
+    "regenerative"
+  ],
+  "summary_1l": "Pharmacological blockage of fibro/adipogenic progenitor expansion and suppression of regenerative fibrogenesis is associated with impaired skeletal muscle regeneration.",
+  "query_hits": [],
+  "embed_text": "8771704 Pharmacological blockage of fibro/adipogenic progenitor expansion and suppression of regenerative fibrogenesis is associated with impaired skeletal muscle regeneration. science scifact Acute skeletal muscle injury triggers an expansion of fibro/adipogenic progenitors (FAPs) and a transient stage of fibrogenesis characterized by extracellular matrix deposition. While the perpetuation of such phase can lead to permanent… 8771704 pharmacological-blockage-of-fibro/adipogenic-progenitor-expansion-and-suppression-of-regenerative-fibrogenesis-is-associated-with-impaired-skeletal-muscle-regeneration. pharmacological blockage fibro adipogenic progenitor expansion suppression regenerative Pharmacological blockage of fibro/adipogenic progenitor expansion and suppression of regenerative fibrogenesis is associated with impaired skeletal muscle regeneration. Pharmacological blockage of fibro/adipogenic progenitor expansion and suppression of regenerative fibrogenesis is associated with impaired skeletal muscle regeneration. Acute skeletal muscle injury triggers an expansion of fibro/adipogenic progenitors (FAPs) and a transient stage of fibrogenesis characterized by extracellular matrix deposition. While the perpetuation of such phase can lead to permanent tissue scarring, the consequences of its suppression remain to be studied. Using a model of acute muscle damage we were able to determine that pharmacological inhibition of FAP expansion by Nilotinib, a tyrosine kinase inhibitor with potent antifibrotic activity, exerts a detrimental effect on myogenesis during regeneration. We found that Nilotinib inhibits the damage-induced expansion of sa",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.676416+00:00"
+}

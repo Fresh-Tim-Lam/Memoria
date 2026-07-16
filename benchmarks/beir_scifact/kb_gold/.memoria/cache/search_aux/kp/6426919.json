@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6426919",
+  "source_fingerprint": "8155bcf7ceb4979a660aa6fbacf67030",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6426919",
+    "a-novel-molecular-mechanism-of-dual-resistance-to-nucleoside-and-nonnucleoside-reverse-transcriptase-inhibitors."
+  ],
+  "key_phrases": [
+    "novel",
+    "molecular",
+    "mechanism",
+    "dual",
+    "resistance",
+    "nucleoside",
+    "nonnucleoside",
+    "reverse"
+  ],
+  "summary_1l": "A novel molecular mechanism of dual resistance to nucleoside and nonnucleoside reverse transcriptase inhibitors.",
+  "query_hits": [],
+  "embed_text": "6426919 A novel molecular mechanism of dual resistance to nucleoside and nonnucleoside reverse transcriptase inhibitors. science scifact Recently, mutations in the connection subdomain (CN) and RNase H domain of HIV-1 reverse transcriptase (RT) were observed to exhibit dual resistance to nucleoside and nonnucleoside reverse transcriptase inhibitors (NRTIs and NNRTIs). To… 6426919 a-novel-molecular-mechanism-of-dual-resistance-to-nucleoside-and-nonnucleoside-reverse-transcriptase-inhibitors. novel molecular mechanism dual resistance nucleoside nonnucleoside reverse A novel molecular mechanism of dual resistance to nucleoside and nonnucleoside reverse transcriptase inhibitors. A novel molecular mechanism of dual resistance to nucleoside and nonnucleoside reverse transcriptase inhibitors. Recently, mutations in the connection subdomain (CN) and RNase H domain of HIV-1 reverse transcriptase (RT) were observed to exhibit dual resistance to nucleoside and nonnucleoside reverse transcriptase inhibitors (NRTIs and NNRTIs). To elucidate the mechanism by which CN and RH mutations confer resistance to NNRTIs, we hypothesized that these mutations reduce RNase H cleavage and provide more time for the NNRTI to dissociate from the RT, resulting in the resumption of DNA synthesis and enhanced NNRTI resistance. We observed that the effect of the reduction in RNase H cleavage on NNRTI resistance is dependent upon the affinity of each NNRTI to the RT and further influenced by th",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.857029+00:00"
+}

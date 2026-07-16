@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "2559303",
+  "source_fingerprint": "d65cd36d39994ecbb6dea8b9c85fc759",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2559303"
+  ],
+  "key_phrases": [
+    "engraftment",
+    "engineered",
+    "es",
+    "cell",
+    "derived",
+    "cardiomyocytes",
+    "but",
+    "not"
+  ],
+  "summary_1l": "Cellular cardiomyoplasty is an attractive option for the treatment o",
+  "query_hits": [],
+  "embed_text": "2559303 Engraftment of engineered ES cell–derived cardiomyocytes but not BM cells restores contractile function to the infarcted myocardium science scifact Cellular cardiomyoplasty is an attractive option for the treatment of severe heart failure. It is, however, still unclear and controversial which is the most promising cell source. Therefore, we investigated and examined the fate and… 2559303 engraftment engineered es cell derived cardiomyocytes but not Cellular cardiomyoplasty is an attractive option for the treatment o Engraftment of engineered ES cell–derived cardiomyocytes but not BM cells restores contractile function to the infarcted myocardium Cellular cardiomyoplasty is an attractive option for the treatment of severe heart failure. It is, however, still unclear and controversial which is the most promising cell source. Therefore, we investigated and examined the fate and functional impact of bone marrow (BM) cells and embryonic stem cell (ES cell)–derived cardiomyocytes after transplantation into the infarcted mouse heart. This proved particularly challenging for the ES cells, as their enrichment into cardiomyocytes and their long-term engraftment and tumorigenicity are still poorly understood. We generated transgenic ES cells expressing puromycin resistance and enhanced green fluorescent protein",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.955818+00:00"
+}

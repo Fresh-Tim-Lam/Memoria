@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26996935",
+  "source_fingerprint": "25294a9c8e7d61fc4b449e8def7b9f0f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26996935",
+    "strong-bias-in-the-bacterial-crispr-elements-that-confer-immunity-to-phage."
+  ],
+  "key_phrases": [
+    "strong",
+    "bias",
+    "bacterial",
+    "crispr",
+    "elements",
+    "that",
+    "confer",
+    "immunity"
+  ],
+  "summary_1l": "Strong bias in the bacterial CRISPR elements that confer immunity to phage.",
+  "query_hits": [],
+  "embed_text": "26996935 Strong bias in the bacterial CRISPR elements that confer immunity to phage. science scifact Clustered regularly interspaced short palindromic repeats (CRISPR)-Cas systems provide adaptive immunity against phage via spacer-encoded CRISPR RNAs that are complementary to invasive nucleic acids. Here, we challenge Streptococcus… 26996935 strong-bias-in-the-bacterial-crispr-elements-that-confer-immunity-to-phage. strong bias bacterial crispr elements that confer immunity Strong bias in the bacterial CRISPR elements that confer immunity to phage. Strong bias in the bacterial CRISPR elements that confer immunity to phage. Clustered regularly interspaced short palindromic repeats (CRISPR)-Cas systems provide adaptive immunity against phage via spacer-encoded CRISPR RNAs that are complementary to invasive nucleic acids. Here, we challenge Streptococcus thermophilus with a bacteriophage, and used PCR-based metagenomics to monitor phage-derived spacers daily for 15 days in two experiments. Spacers that target the host chromosome are infrequent and strongly selected against, suggesting autoimmunity is lethal. In experiments that recover over half a million spacers, we observe early dominance by a few spacer sub-populations and rapid oscillations in sub-population abundances. In two CRISPR systems and in replicate experiments, a few space",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.337721+00:00"
+}

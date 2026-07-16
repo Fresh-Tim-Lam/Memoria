@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "31311495",
+  "source_fingerprint": "9209b13849cfe437e9fcbe050ffd86ec",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "31311495",
+    "tamoxifen-resistance-in-mcf7-cells-promotes-emt-like-behaviour-and-involves-modulation-of-beta-catenin-phosphorylation."
+  ],
+  "key_phrases": [
+    "tamoxifen",
+    "resistance",
+    "mcf7",
+    "cells",
+    "promotes",
+    "emt",
+    "like",
+    "behaviour"
+  ],
+  "summary_1l": "Tamoxifen resistance in MCF7 cells promotes EMT-like behaviour and involves modulation of beta-catenin phosphorylation.",
+  "query_hits": [],
+  "embed_text": "31311495 Tamoxifen resistance in MCF7 cells promotes EMT-like behaviour and involves modulation of beta-catenin phosphorylation. science scifact We have previously demonstrated that, following acquisition of endocrine resistance, breast cancer cells display an altered growth rate together with increased aggressive behaviour in vitro. Since dysfunctional cell-cell adhesive… 31311495 tamoxifen-resistance-in-mcf7-cells-promotes-emt-like-behaviour-and-involves-modulation-of-beta-catenin-phosphorylation. tamoxifen resistance mcf7 cells promotes emt like behaviour Tamoxifen resistance in MCF7 cells promotes EMT-like behaviour and involves modulation of beta-catenin phosphorylation. Tamoxifen resistance in MCF7 cells promotes EMT-like behaviour and involves modulation of beta-catenin phosphorylation. We have previously demonstrated that, following acquisition of endocrine resistance, breast cancer cells display an altered growth rate together with increased aggressive behaviour in vitro. Since dysfunctional cell-cell adhesive interactions can promote an aggressive phenotype, we investigated the integrity of this protein complex in our breast cancer model of tamoxifen resistance. In culture, tamoxifen-resistant MCF7 (TamR) cells grew as loosely packed colonies with loss of cell-cell junctions and demonstrated altered morphology characteristic of cells undergoing epithelial-to-mesenchymal transition (EMT). Neutralising E-cadherin function promoted the invasion and inhib",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.473315+00:00"
+}

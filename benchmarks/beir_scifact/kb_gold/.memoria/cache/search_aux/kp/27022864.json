@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27022864",
+  "source_fingerprint": "3815f4d1e8e0467aaa37a6fd40d66480",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27022864",
+    "chronic-hypoxia-induces-modification-of-the-n-methyl-d-aspartate-receptor-in-rat-brain."
+  ],
+  "key_phrases": [
+    "chronic",
+    "hypoxia",
+    "induces",
+    "modification",
+    "methyl",
+    "aspartate",
+    "receptor",
+    "rat"
+  ],
+  "summary_1l": "Chronic hypoxia induces modification of the N-methyl-D-aspartate receptor in rat brain.",
+  "query_hits": [],
+  "embed_text": "27022864 Chronic hypoxia induces modification of the N-methyl-D-aspartate receptor in rat brain. science scifact This study examined [3H]MK-801 binding to the N-methyl-D-aspartate (NMDA) receptor in membranes prepared from cerebral cortex, hippocampus and corpus striatum of 3 week old rats exposed to 10 weeks of intermittent hypobaric hypoxia (4300… 27022864 chronic-hypoxia-induces-modification-of-the-n-methyl-d-aspartate-receptor-in-rat-brain. chronic hypoxia induces modification methyl aspartate receptor rat Chronic hypoxia induces modification of the N-methyl-D-aspartate receptor in rat brain. Chronic hypoxia induces modification of the N-methyl-D-aspartate receptor in rat brain. This study examined [3H]MK-801 binding to the N-methyl-D-aspartate (NMDA) receptor in membranes prepared from cerebral cortex, hippocampus and corpus striatum of 3 week old rats exposed to 10 weeks of intermittent hypobaric hypoxia (4300 m; 450 Torr) and compared results with those of normoxic controls. The cortex, hippocampus and striatum of hypoxic animals had a 36, 35 and 31% reduction in binding sites (Bmax) and a 29, 32 and 17% decrease (reflecting increased affinity) in the dissociation constant (Kd) when compared to controls. In the cerebral cortex, both glutamate (100 microM) and glycine (10 microM) enhanced 3[H]MK-801 binding by two to 3-fold. Coagonist glutamate, however, had a higher EC50 (0.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.358397+00:00"
+}

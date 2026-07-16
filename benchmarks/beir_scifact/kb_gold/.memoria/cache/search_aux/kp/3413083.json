@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3413083",
+  "source_fingerprint": "8a80724c219400320f8b78a77ff981c3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3413083",
+    "patterns-of-chlamydia-testing-in-different-settings-and-implications-for-wider-sti-diagnosis-and-care:-a-probability-sample-survey-of-the-british-population"
+  ],
+  "key_phrases": [
+    "patterns",
+    "chlamydia",
+    "testing",
+    "different",
+    "settings",
+    "implications",
+    "wider",
+    "sti"
+  ],
+  "summary_1l": "BACKGROUND Following widespread rollout of",
+  "query_hits": [],
+  "embed_text": "3413083 Patterns of chlamydia testing in different settings and implications for wider STI diagnosis and care: a probability sample survey of the British population science scifact BACKGROUND Following widespread rollout of chlamydia testing to non-specialist and community settings in the UK, many individuals receive a chlamydia test without being offered comprehensive STI and HIV testing. We assess sexual behaviour… 3413083 patterns-of-chlamydia-testing-in-different-settings-and-implications-for-wider-sti-diagnosis-and-care:-a-probability-sample-survey-of-the-british-population patterns chlamydia testing different settings implications wider sti BACKGROUND Following widespread rollout of Patterns of chlamydia testing in different settings and implications for wider STI diagnosis and care: a probability sample survey of the British population BACKGROUND Following widespread rollout of chlamydia testing to non-specialist and community settings in the UK, many individuals receive a chlamydia test without being offered comprehensive STI and HIV testing. We assess sexual behaviour among testers in different settings with a view to understanding their need for other STI diagnostic services. METHODS A probability sample survey of the British population undertaken 2010-2012 (the third National Survey of Sexual Attitudes and Lifestyles). We analysed weighted data on chlamydia testing (past year), including location of most recent test, and diagnoses (past 5 years) from individuals",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.144274+00:00"
+}

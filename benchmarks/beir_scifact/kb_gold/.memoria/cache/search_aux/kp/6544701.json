@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6544701",
+  "source_fingerprint": "a93f9299bea916bc114e816adcdb8e59",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6544701",
+    "a-more-efficient-method-to-generate-integration-free-human-ips-cells"
+  ],
+  "key_phrases": [
+    "more",
+    "efficient",
+    "method",
+    "generate",
+    "integration",
+    "free",
+    "human",
+    "ips"
+  ],
+  "summary_1l": "We report a simple method, using p53 suppression and nontransforming L-Myc, to generate human induced pluripotent stem cells (iPSCs",
+  "query_hits": [],
+  "embed_text": "6544701 A more efficient method to generate integration-free human iPS cells science scifact We report a simple method, using p53 suppression and nontransforming L-Myc, to generate human induced pluripotent stem cells (iPSCs) with episomal plasmid vectors. We generated human iPSCs from multiple donors, including two putative human… 6544701 a-more-efficient-method-to-generate-integration-free-human-ips-cells more efficient method generate integration free human ips We report a simple method, using p53 suppression and nontransforming L-Myc, to generate human induced pluripotent stem cells (iPSCs A more efficient method to generate integration-free human iPS cells We report a simple method, using p53 suppression and nontransforming L-Myc, to generate human induced pluripotent stem cells (iPSCs) with episomal plasmid vectors. We generated human iPSCs from multiple donors, including two putative human leukocyte antigen (HLA)-homozygous donors who match ∼20% of the Japanese population at major HLA loci; most iPSCs are integrated transgene-free. This method may provide iPSCs suitable for autologous and allologous stem-cell therapy in the future.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.163331+00:00"
+}

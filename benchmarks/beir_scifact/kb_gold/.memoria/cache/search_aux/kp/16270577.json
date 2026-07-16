@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16270577",
+  "source_fingerprint": "08907a8f43e196a9dd1edc5625214ef3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16270577",
+    "nonclassical-binding-of-formylated-peptide-in-crystal-structure-of-the-mhc-class-lb-molecule-h2-m3"
+  ],
+  "key_phrases": [
+    "nonclassical",
+    "binding",
+    "formylated",
+    "peptide",
+    "crystal",
+    "structure",
+    "mhc",
+    "class"
+  ],
+  "summary_1l": "H2-M3 is a class Ib MHC molecule of the mouse with a 10(4)-fold preference for binding N-formylated p",
+  "query_hits": [],
+  "embed_text": "16270577 Nonclassical binding of formylated peptide in crystal structure of the MHC class lb molecule H2-M3 science scifact H2-M3 is a class Ib MHC molecule of the mouse with a 10(4)-fold preference for binding N-formylated peptides. To elucidate the basis of this unusual specificity, we expressed and crystallized a soluble form of M3 with a formylated nonamer… 16270577 nonclassical-binding-of-formylated-peptide-in-crystal-structure-of-the-mhc-class-lb-molecule-h2-m3 nonclassical binding formylated peptide crystal structure mhc class H2-M3 is a class Ib MHC molecule of the mouse with a 10(4)-fold preference for binding N-formylated p Nonclassical binding of formylated peptide in crystal structure of the MHC class lb molecule H2-M3 H2-M3 is a class Ib MHC molecule of the mouse with a 10(4)-fold preference for binding N-formylated peptides. To elucidate the basis of this unusual specificity, we expressed and crystallized a soluble form of M3 with a formylated nonamer peptide, fMYFINILTL, and determined the structure by X-ray crystallography. M3, refined at 2.1 A resolution, resembles class la MHC molecules in its overall structure, but differs in the peptide-binding groove. The A pocket, which usually accommodates the free N-terminus of a bound peptide, is closed, and the peptide is shifted one residue, such that the P1 side chain is lodged in the B pocket. The formyl group is coordinated by His-9 and a bound water on th",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.048531+00:00"
+}

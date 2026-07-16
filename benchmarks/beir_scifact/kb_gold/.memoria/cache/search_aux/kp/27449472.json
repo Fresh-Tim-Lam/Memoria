@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27449472",
+  "source_fingerprint": "5e87a8ab45ed1220af7404dc7598e1e2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27449472",
+    "metabolic-syndrome-as-a-risk-factor-for-diabetes."
+  ],
+  "key_phrases": [
+    "metabolic",
+    "syndrome",
+    "as",
+    "risk",
+    "factor",
+    "diabetes",
+    "was",
+    "initially"
+  ],
+  "summary_1l": "Metabolic syndrome as a risk factor for diabetes.",
+  "query_hits": [],
+  "embed_text": "27449472 Metabolic syndrome as a risk factor for diabetes. science scifact The metabolic syndrome was initially described as an insulin-resistance syndrome characterized by the clustering of metabolic traits such as high triglycerides, low high-density lipoprotein cholesterol, high blood pressure, abdominal… 27449472 metabolic-syndrome-as-a-risk-factor-for-diabetes. metabolic syndrome as risk factor diabetes was initially Metabolic syndrome as a risk factor for diabetes. Metabolic syndrome as a risk factor for diabetes. The metabolic syndrome was initially described as an insulin-resistance syndrome characterized by the clustering of metabolic traits such as high triglycerides, low high-density lipoprotein cholesterol, high blood pressure, abdominal obesity and different degrees of impaired glucose regulation. Although different definitions have been developed by various consensus groups, epidemiological studies demonstrate that they all associate the metabolic syndrome with a similar cardiometabolic risk, which is high for diabetes (ranging between three- and 20-fold), depending on the number of components and the inclusion of impaired fasting glucose, impaired glucose tolerance or both. The latter appear to indicate the failure of the beta cell to produc",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.938508+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22067786",
+  "source_fingerprint": "30502ee7f85d748833421303bd7fcff7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22067786",
+    "monte-carlo-tests-for-associations-between-disease-and-alleles-at-highly-polymorphic-loci."
+  ],
+  "key_phrases": [
+    "monte",
+    "carlo",
+    "tests",
+    "associations",
+    "between",
+    "disease",
+    "alleles",
+    "at"
+  ],
+  "summary_1l": "Monte Carlo tests for associations between disease and alleles at highly polymorphic loci.",
+  "query_hits": [],
+  "embed_text": "22067786 Monte Carlo tests for associations between disease and alleles at highly polymorphic loci. science scifact In an association analysis comparing cases and controls with respect to allele frequencies at a highly polymorphic locus, a potential problem is that the conventional chi-squared test may not be valid for a large, sparse contingency table.… 22067786 monte-carlo-tests-for-associations-between-disease-and-alleles-at-highly-polymorphic-loci. monte carlo tests associations between disease alleles at Monte Carlo tests for associations between disease and alleles at highly polymorphic loci. Monte Carlo tests for associations between disease and alleles at highly polymorphic loci. In an association analysis comparing cases and controls with respect to allele frequencies at a highly polymorphic locus, a potential problem is that the conventional chi-squared test may not be valid for a large, sparse contingency table. However, reliance on statistics with known asymptotic distribution is now unnecessary, as Monte Carlo simulations can be performed to estimate the significance level of any test statistic. We have implemented a Monte Carlo method for four 'chi-squared' test statistics, three of which involved combination of alleles, and evaluated their performance on a real data set. Combining rare alleles to avoid small expected cell counts, and considering each allele in turn aga",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.213398+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21557614",
+  "source_fingerprint": "4e5b3531b7ad274279e940510315be1a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21557614",
+    "pleiotropic-effects-of-statins."
+  ],
+  "key_phrases": [
+    "pleiotropic",
+    "effects",
+    "statins",
+    "potent",
+    "inhibitors",
+    "cholesterol",
+    "biosynthesis",
+    "clinical"
+  ],
+  "summary_1l": "Pleiotropic effects of statins.",
+  "query_hits": [],
+  "embed_text": "21557614 Pleiotropic effects of statins. science scifact Statins are potent inhibitors of cholesterol biosynthesis. In clinical trials, statins are beneficial in the primary and secondary prevention of coronary heart disease. However, the overall benefits observed with statins appear to be… 21557614 pleiotropic-effects-of-statins. pleiotropic effects statins potent inhibitors cholesterol biosynthesis clinical Pleiotropic effects of statins. Pleiotropic effects of statins. Statins are potent inhibitors of cholesterol biosynthesis. In clinical trials, statins are beneficial in the primary and secondary prevention of coronary heart disease. However, the overall benefits observed with statins appear to be greater than what might be expected from changes in lipid levels alone, suggesting effects beyond cholesterol lowering. Indeed, recent studies indicate that some of the cholesterol-independent or \"pleiotropic\" effects of statins involve improving endothelial function, enhancing the stability of atherosclerotic plaques, decreasing oxidative stress and inflammation, and inhibiting the thrombogenic response. Furthermore, statins have beneficial extrahepatic effects on the immune system, CNS, and bone. Many of these pleiotropic effe",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.368347+00:00"
+}

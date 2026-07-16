@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "32101982",
+  "source_fingerprint": "a34771424ef2aba7bc7c63c09d1b1f05",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "32101982"
+  ],
+  "key_phrases": [
+    "kr",
+    "ppel",
+    "like",
+    "factor",
+    "klf2",
+    "regulates",
+    "cell",
+    "reactivity"
+  ],
+  "summary_1l": "Krüppel-like factor 2 (KLF2) regulates B-cell reactivity, subset differentiation, and trafficking molecule expression.",
+  "query_hits": [],
+  "embed_text": "32101982 Krüppel-like factor 2 (KLF2) regulates B-cell reactivity, subset differentiation, and trafficking molecule expression. science scifact The transcription factor Krüppel-like factor 2 (KLF2) is critical for normal trafficking of T lymphocytes, but its role in B cells is unclear. We report that B cell-specific KLF2 deficiency leads to decreased expression of the trafficking… 32101982 kr ppel like factor klf2 regulates cell reactivity Krüppel-like factor 2 (KLF2) regulates B-cell reactivity, subset differentiation, and trafficking molecule expression. Krüppel-like factor 2 (KLF2) regulates B-cell reactivity, subset differentiation, and trafficking molecule expression. The transcription factor Krüppel-like factor 2 (KLF2) is critical for normal trafficking of T lymphocytes, but its role in B cells is unclear. We report that B cell-specific KLF2 deficiency leads to decreased expression of the trafficking molecules CD62L and β7-integrin, yet expression of sphingosine-1 phosphate receptor 1 (which is a critical target of KLF2 in T cells) was, unexpectedly, minimally altered. Unexpectedly, Klf2 deletion led to a drastic reduction in the B1 B-cell pool and a substantial increase in transitional and marginal zone B-cell numbers. In addition, we observed that KLF2-deficient B cells showed increased apoptosis and impaired proliferation after B-c",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.201028+00:00"
+}

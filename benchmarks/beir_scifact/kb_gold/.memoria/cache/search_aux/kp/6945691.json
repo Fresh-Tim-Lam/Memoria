@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6945691",
+  "source_fingerprint": "b8aa4c17421689906a62ec8695d524fa",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6945691",
+    "the-modulation-of-human-natural-killer-cell-activity-by-prostaglandins."
+  ],
+  "key_phrases": [
+    "modulation",
+    "human",
+    "natural",
+    "killer",
+    "cell",
+    "activity",
+    "by",
+    "prostaglandins"
+  ],
+  "summary_1l": "The modulation of human natural killer cell activity by prostaglandins.",
+  "query_hits": [],
+  "embed_text": "6945691 The modulation of human natural killer cell activity by prostaglandins. science scifact Prostaglandins (PGs) have been implicated as a regulator of tumor growth in mice and humans. Since natural killer cell (NK) cytotoxicity may be an important component of immune surveillance against cancer, it is appropriate to study… 6945691 the-modulation-of-human-natural-killer-cell-activity-by-prostaglandins. modulation human natural killer cell activity by prostaglandins The modulation of human natural killer cell activity by prostaglandins. The modulation of human natural killer cell activity by prostaglandins. Prostaglandins (PGs) have been implicated as a regulator of tumor growth in mice and humans. Since natural killer cell (NK) cytotoxicity may be an important component of immune surveillance against cancer, it is appropriate to study whether the amount of PGs produced by tumors may be sufficient to suppress NK activity. Accordingly, the effect of various PGs on the NK activity of human peripheral mononuclear cells was investigated. The percentage cytotoxicity was measured by the release of Cr51 from labeled K562 and other target cells. At very high concentrations of PG (10(-6) M), suppression was seen with PGE2, PGD2, PGA2, and PGF2 alpha. However, at concentrations of PG in the physiologic range (10(-8) M), significant",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.031559+00:00"
+}

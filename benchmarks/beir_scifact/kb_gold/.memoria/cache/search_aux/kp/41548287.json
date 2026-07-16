@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "41548287",
+  "source_fingerprint": "086ed789c81e55e810ae2c5b91b1b61a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "41548287",
+    "dnmt1-inhibition-reprograms-pancreatic-cancer-stem-cells-via-upregulation-of-the-mir-17-92-cluster."
+  ],
+  "key_phrases": [
+    "dnmt1",
+    "inhibition",
+    "reprograms",
+    "pancreatic",
+    "cancer",
+    "stem",
+    "cells",
+    "via"
+  ],
+  "summary_1l": "DNMT1 Inhibition Reprograms Pancreatic Cancer Stem Cells via Upregulation of the miR-17-92 Cluster.",
+  "query_hits": [],
+  "embed_text": "41548287 DNMT1 Inhibition Reprograms Pancreatic Cancer Stem Cells via Upregulation of the miR-17-92 Cluster. science scifact Pancreatic ductal adenocarcinoma (PDAC) and other carcinomas are hierarchically organized, with cancer stem cells (CSC) residing at the top of the hierarchy, where they drive tumor progression, metastasis, and chemoresistance. As CSC and… 41548287 dnmt1-inhibition-reprograms-pancreatic-cancer-stem-cells-via-upregulation-of-the-mir-17-92-cluster. dnmt1 inhibition reprograms pancreatic cancer stem cells via DNMT1 Inhibition Reprograms Pancreatic Cancer Stem Cells via Upregulation of the miR-17-92 Cluster. DNMT1 Inhibition Reprograms Pancreatic Cancer Stem Cells via Upregulation of the miR-17-92 Cluster. Pancreatic ductal adenocarcinoma (PDAC) and other carcinomas are hierarchically organized, with cancer stem cells (CSC) residing at the top of the hierarchy, where they drive tumor progression, metastasis, and chemoresistance. As CSC and non-CSC share an identical genetic background, we hypothesize that differences in epigenetics account for the striking functional differences between these two cell populations. Epigenetic mechanisms, such as DNA methylation, play an important role in maintaining pluripotency and regulating the differentiation of stem cells, but the role of DNA methylation in pancreatic CSC is obscure. In this study, we investigated the genome-wide DNA methylation profile of",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.453178+00:00"
+}

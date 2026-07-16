@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "25606339",
+  "source_fingerprint": "fed6411a9278c61215cc132fd1af13c3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25606339"
+  ],
+  "key_phrases": [
+    "toll",
+    "like",
+    "receptor",
+    "mediates",
+    "hiv",
+    "transactivation",
+    "via",
+    "nf"
+  ],
+  "summary_1l": "Toll-like receptor-3 mediates HIV-1 transactivation via NFκB and JNK pathways and histone acetylation, but prolonged activation suppresses Tat and HIV-1 replication.",
+  "query_hits": [],
+  "embed_text": "25606339 Toll-like receptor-3 mediates HIV-1 transactivation via NFκB and JNK pathways and histone acetylation, but prolonged activation suppresses Tat and HIV-1 replication. science scifact TLR3 has been implicated in the pathogenesis of several viral infections, including SIV- and HIV-1-induced inflammation and AIDS. However the molecular mechanisms of these TLR3-mediated effects are not known, and it is not known whether… 25606339 toll like receptor mediates hiv transactivation via nf Toll-like receptor-3 mediates HIV-1 transactivation via NFκB and JNK pathways and histone acetylation, but prolonged activation suppresses Tat and HIV-1 replication. Toll-like receptor-3 mediates HIV-1 transactivation via NFκB and JNK pathways and histone acetylation, but prolonged activation suppresses Tat and HIV-1 replication. TLR3 has been implicated in the pathogenesis of several viral infections, including SIV- and HIV-1-induced inflammation and AIDS. However the molecular mechanisms of these TLR3-mediated effects are not known, and it is not known whether HIV interacts with cellular TLR3 to affect disease process. Here we investigate the effects of TLR3 ligands on HIV-1 transactivation using both primary human macrophages and cells containing integrated copies of the HIV-1 promoter. We demonstrate that TLR3 activation induced upregulation of transcription factors such as c-Jun, CCAAT/enhancer-binding protein alpha (CEBPA), signal transducer and",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.001528+00:00"
+}

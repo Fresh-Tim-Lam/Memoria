@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12804937",
+  "source_fingerprint": "5fcc72e94522e6ede14fd4473b63e0e0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12804937",
+    "nature,-nurture,-or-chance:-stochastic-gene-expression-and-its-consequences"
+  ],
+  "key_phrases": [
+    "nature",
+    "nurture",
+    "chance",
+    "stochastic",
+    "gene",
+    "expression",
+    "its",
+    "consequences"
+  ],
+  "summary_1l": "Gene expression is a fundamentally stochastic process, with randomness in transcription and translation leading to cell-to-c",
+  "query_hits": [],
+  "embed_text": "12804937 Nature, Nurture, or Chance: Stochastic Gene Expression and Its Consequences science scifact Gene expression is a fundamentally stochastic process, with randomness in transcription and translation leading to cell-to-cell variations in mRNA and protein levels. This variation appears in organisms ranging from microbes to metazoans,… 12804937 nature,-nurture,-or-chance:-stochastic-gene-expression-and-its-consequences nature nurture chance stochastic gene expression its consequences Gene expression is a fundamentally stochastic process, with randomness in transcription and translation leading to cell-to-c Nature, Nurture, or Chance: Stochastic Gene Expression and Its Consequences Gene expression is a fundamentally stochastic process, with randomness in transcription and translation leading to cell-to-cell variations in mRNA and protein levels. This variation appears in organisms ranging from microbes to metazoans, and its characteristics depend both on the biophysical parameters governing gene expression and on gene network structure. Stochastic gene expression has important consequences for cellular function, being beneficial in some contexts and harmful in others. These situations include the stress response, metabolism, development, the cell cycle, circadian rhythms, and aging.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:09.618205+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2437807",
+  "source_fingerprint": "33df8f3acb4b362947ac95316f1e73ab",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2437807",
+    "in-vitro-differentiation-of-transplantable-neural-precursors-from-human-embryonic-stem-cells"
+  ],
+  "key_phrases": [
+    "vitro",
+    "differentiation",
+    "transplantable",
+    "neural",
+    "precursors",
+    "from",
+    "human",
+    "embryonic"
+  ],
+  "summary_1l": "The remarkable developmental potential and replicative capacity of human embryonic stem (ES) cells promise",
+  "query_hits": [],
+  "embed_text": "2437807 In vitro differentiation of transplantable neural precursors from human embryonic stem cells science scifact The remarkable developmental potential and replicative capacity of human embryonic stem (ES) cells promise an almost unlimited supply of specific cell types for transplantation therapies. Here we describe the in vitro differentiation,… 2437807 in-vitro-differentiation-of-transplantable-neural-precursors-from-human-embryonic-stem-cells vitro differentiation transplantable neural precursors from human embryonic The remarkable developmental potential and replicative capacity of human embryonic stem (ES) cells promise In vitro differentiation of transplantable neural precursors from human embryonic stem cells The remarkable developmental potential and replicative capacity of human embryonic stem (ES) cells promise an almost unlimited supply of specific cell types for transplantation therapies. Here we describe the in vitro differentiation, enrichment, and transplantation of neural precursor cells from human ES cells. Upon aggregation to embryoid bodies, differentiating ES cells formed large numbers of neural tube–like structures in the presence of fibroblast growth factor 2 (FGF-2). Neural precursors within these formations were isolated by selective enzymatic digestion and further purified on the basis of differential adhesion. Following withdrawal of FGF-2, they differentiated into neurons, astrocytes",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.384747+00:00"
+}

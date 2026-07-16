@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "46353045",
+  "source_fingerprint": "76cc28724005152044eeb544b80a93e7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "46353045",
+    "late-presentation-of-hiv-infected-individuals."
+  ],
+  "key_phrases": [
+    "late",
+    "presentation",
+    "hiv",
+    "infected",
+    "individuals",
+    "remains",
+    "major",
+    "concern"
+  ],
+  "summary_1l": "Late presentation of HIV-infected individuals.",
+  "query_hits": [],
+  "embed_text": "46353045 Late presentation of HIV-infected individuals. science scifact Late presentation remains a major concern despite the dramatically improved prognosis realized by ART. We define a first presentation for HIV care during the course of HIV infection as 'late' if an AIDS-defining opportunistic disease is… 46353045 late-presentation-of-hiv-infected-individuals. late presentation hiv infected individuals remains major concern Late presentation of HIV-infected individuals. Late presentation of HIV-infected individuals. Late presentation remains a major concern despite the dramatically improved prognosis realized by ART. We define a first presentation for HIV care during the course of HIV infection as 'late' if an AIDS-defining opportunistic disease is apparent, or if CD4+ T-cells are <200/microl. In the Western world, approximately 10 and 30% of HIV-infected individuals still present with CD4+ T-cells <50 and <200/microl, respectively; estimates are substantially higher for developing countries. Diagnosis and treatment of opportunistic diseases and intense supportive in-hospital care take precedence over ART. Benefits of starting ART without delay, that is, when opportunistic diseases are still active, include faster resolution of opportunistic diseases and",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.801811+00:00"
+}

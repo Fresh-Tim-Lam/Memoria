@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "kp_id": "898864#1",
+  "source_fingerprint": "e60f7b63cce0d2e4fcade31ccebddb04",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "甲骨文公司"
+  ],
+  "aliases": [
+    "898864#1"
+  ],
+  "key_phrases": [
+    "印第安纳",
+    "威尔斯",
+    "公开赛",
+    "业主",
+    "劳伦斯",
+    "埃里森",
+    "甲骨文公司",
+    "创始人"
+  ],
+  "summary_1l": "新业主劳伦斯·埃里森，甲骨文公司的创始人和CEO，于2009年12月买下了法国巴黎银行公开赛和印第安维尔斯网球花园。",
+  "query_hits": [],
+  "embed_text": "898864#1 印第安纳威尔斯公开赛 印第安纳威尔斯公开赛 新业主劳伦斯·埃里森，甲骨文公司的创始人和CEO，于2009年12月买下了法国巴黎银行公开赛和印第安维尔斯网球花园。 甲骨文公司 898864#1 印第安纳 威尔斯 公开赛 业主 劳伦斯 埃里森 甲骨文公司 创始人 新业主劳伦斯·埃里森，甲骨文公司的创始人和CEO，于2009年12月买下了法国巴黎银行公开赛和印第安维尔斯网球花园。 印第安纳威尔斯公开赛 新业主劳伦斯·埃里森，甲骨文公司的创始人和CEO，于2009年12月买下了法国巴黎银行公开赛和印第安维尔斯网球花园。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:21:05.767698+00:00"
+}

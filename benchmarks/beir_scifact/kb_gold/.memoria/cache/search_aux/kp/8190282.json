@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8190282",
+  "source_fingerprint": "e66811936ffe7ca9dcfc4a042d8accf1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8190282",
+    "noninvasive-ventilation-for-treatment-of-acute-respiratory-failure-in-patients-undergoing-solid-organ-transplantation:-a-randomized-trial."
+  ],
+  "key_phrases": [
+    "noninvasive",
+    "ventilation",
+    "treatment",
+    "acute",
+    "respiratory",
+    "failure",
+    "patients",
+    "undergoing"
+  ],
+  "summary_1l": "Noninvasive ventilation for treatment of acute respiratory failure in patients undergoing solid organ transplantation: a randomized trial.",
+  "query_hits": [],
+  "embed_text": "8190282 Noninvasive ventilation for treatment of acute respiratory failure in patients undergoing solid organ transplantation: a randomized trial. science scifact CONTEXT Noninvasive ventilation (NIV) has been associated with lower rates of endotracheal intubation in populations of patients with acute respiratory failure. OBJECTIVE To compare NIV with standard treatment using supplemental oxygen… 8190282 noninvasive-ventilation-for-treatment-of-acute-respiratory-failure-in-patients-undergoing-solid-organ-transplantation:-a-randomized-trial. noninvasive ventilation treatment acute respiratory failure patients undergoing Noninvasive ventilation for treatment of acute respiratory failure in patients undergoing solid organ transplantation: a randomized trial. Noninvasive ventilation for treatment of acute respiratory failure in patients undergoing solid organ transplantation: a randomized trial. CONTEXT Noninvasive ventilation (NIV) has been associated with lower rates of endotracheal intubation in populations of patients with acute respiratory failure. OBJECTIVE To compare NIV with standard treatment using supplemental oxygen administration to avoid endotracheal intubation in recipients of solid organ transplantation with acute hypoxemic respiratory failure. DESIGN AND SETTING Prospective randomized study conducted at a 14-bed, general intensive care unit of a university hospital. PATIENTS Of 238 patients who underwent solid organ transplantation from December 1995 to October 1997, 51 were treated for acute respiratory failure. Of these, 40 we",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.079186+00:00"
+}

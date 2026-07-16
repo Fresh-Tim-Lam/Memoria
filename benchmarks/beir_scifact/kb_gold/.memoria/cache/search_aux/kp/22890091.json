@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22890091",
+  "source_fingerprint": "ee16515cb63ec11ea41349744bc71d3d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22890091",
+    "differential-expression-of-bcl-2-and-susceptibility-to-anti-fas-mediated-cell-death-in-peripheral-blood-lymphocytes,-monocytes,-and-neutrophils."
+  ],
+  "key_phrases": [
+    "differential",
+    "expression",
+    "bcl",
+    "susceptibility",
+    "anti",
+    "fas",
+    "mediated",
+    "cell"
+  ],
+  "summary_1l": "Differential expression of bcl-2 and susceptibility to anti-Fas-mediated cell death in peripheral blood lymphocytes, monocytes, and neutrophils.",
+  "query_hits": [],
+  "embed_text": "22890091 Differential expression of bcl-2 and susceptibility to anti-Fas-mediated cell death in peripheral blood lymphocytes, monocytes, and neutrophils. science scifact The recently identified Fas antigen (Ag) is a cell surface molecule that can mediate apoptosis. The cytoplasmic product of proto-oncogene bcl-2 has been shown to prolong the cellular survival by inhibiting apoptosis. To elucidate the… 22890091 differential-expression-of-bcl-2-and-susceptibility-to-anti-fas-mediated-cell-death-in-peripheral-blood-lymphocytes,-monocytes,-and-neutrophils. differential expression bcl susceptibility anti fas mediated cell Differential expression of bcl-2 and susceptibility to anti-Fas-mediated cell death in peripheral blood lymphocytes, monocytes, and neutrophils. Differential expression of bcl-2 and susceptibility to anti-Fas-mediated cell death in peripheral blood lymphocytes, monocytes, and neutrophils. The recently identified Fas antigen (Ag) is a cell surface molecule that can mediate apoptosis. The cytoplasmic product of proto-oncogene bcl-2 has been shown to prolong the cellular survival by inhibiting apoptosis. To elucidate the physiologic significance of expression of both molecules, we examined the expression of Fas Ag and bcl-2 on blood leukocyte populations and evaluated their sensitivity to the cytolytic action of anti-Fas antibody. Although Fas Ag was expressed on a fraction of lymphocytes, both neutrophils and monocytes expressed Fas Ag constitutively. In contrast, there was marked difference among these leukocytes regarding bcl-2 exp",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.460833+00:00"
+}

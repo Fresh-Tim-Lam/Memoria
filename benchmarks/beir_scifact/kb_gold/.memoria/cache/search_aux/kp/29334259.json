@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29334259",
+  "source_fingerprint": "9591dceaf1c4016ea6d0ff4197257213",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29334259",
+    "sequence-based-species-delimitation-for-the-dna-taxonomy-of-undescribed-insects."
+  ],
+  "key_phrases": [
+    "sequence",
+    "based",
+    "species",
+    "delimitation",
+    "dna",
+    "taxonomy",
+    "undescribed",
+    "insects"
+  ],
+  "summary_1l": "Sequence-based species delimitation for the DNA taxonomy of undescribed insects.",
+  "query_hits": [],
+  "embed_text": "29334259 Sequence-based species delimitation for the DNA taxonomy of undescribed insects. science scifact Cataloging the very large number of undescribed species of insects could be greatly accelerated by automated DNA based approaches, but procedures for large-scale species discovery from sequence data are currently lacking. Here, we use… 29334259 sequence-based-species-delimitation-for-the-dna-taxonomy-of-undescribed-insects. sequence based species delimitation dna taxonomy undescribed insects Sequence-based species delimitation for the DNA taxonomy of undescribed insects. Sequence-based species delimitation for the DNA taxonomy of undescribed insects. Cataloging the very large number of undescribed species of insects could be greatly accelerated by automated DNA based approaches, but procedures for large-scale species discovery from sequence data are currently lacking. Here, we use mitochondrial DNA variation to delimit species in a poorly known beetle radiation in the genus Rivacindela from arid Australia. Among 468 individuals sampled from 65 sites and multiple morphologically distinguishable types, sequence variation in three mtDNA genes (cytochrome oxidase subunit 1, cytochrome b, 16S ribosomal RNA) was strongly partitioned between 46 or 47 putative species identified with quantitative methods of species recognition based on fixed unique (\"diagnostic\")",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.782818+00:00"
+}

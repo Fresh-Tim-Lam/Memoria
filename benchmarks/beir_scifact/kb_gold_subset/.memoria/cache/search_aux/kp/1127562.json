@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1127562",
+  "source_fingerprint": "274943c2733b891925b0ee46733a2603",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1127562",
+    "loss-of-the-rhogap-srgp-1-promotes-the-clearance-of-dead-and-injured-cells-in-caenorhabditis-elegans"
+  ],
+  "key_phrases": [
+    "loss",
+    "rhogap",
+    "srgp",
+    "promotes",
+    "clearance",
+    "dead",
+    "injured",
+    "cells"
+  ],
+  "summary_1l": "Multicellular animals rapidly clear dying cells from their bodies.",
+  "query_hits": [],
+  "embed_text": "1127562 Loss of the RhoGAP SRGP-1 promotes the clearance of dead and injured cells in Caenorhabditis elegans science scifact Multicellular animals rapidly clear dying cells from their bodies. Many of the pathways that mediate this cell removal are conserved through evolution. Here, we identify srgp-1 as a negative regulator of cell clearance in both… 1127562 loss-of-the-rhogap-srgp-1-promotes-the-clearance-of-dead-and-injured-cells-in-caenorhabditis-elegans loss rhogap srgp promotes clearance dead injured cells Multicellular animals rapidly clear dying cells from their bodies. Loss of the RhoGAP SRGP-1 promotes the clearance of dead and injured cells in Caenorhabditis elegans Multicellular animals rapidly clear dying cells from their bodies. Many of the pathways that mediate this cell removal are conserved through evolution. Here, we identify srgp-1 as a negative regulator of cell clearance in both Caenorhabditis elegans and mammalian cells. Loss of srgp-1 function results in improved engulfment of apoptotic cells, whereas srgp-1 overexpression inhibits apoptotic cell corpse removal. We show that SRGP-1 functions in engulfing cells and functions as a GTPase activating protein (GAP) for CED-10 (Rac1). Interestingly, loss of srgp-1 function promotes not only the clearance of already dead cells, but also the removal of cells that have been brought to the verge of d",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:06.615672+00:00"
+}

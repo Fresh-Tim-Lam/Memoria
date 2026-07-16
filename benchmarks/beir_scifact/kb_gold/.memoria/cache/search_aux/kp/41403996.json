@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "41403996",
+  "source_fingerprint": "9f6b3a2f1fab0b8ef0798072f204cf0d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "41403996",
+    "dna-joint-dependence-of-pol-x-family-polymerase-action-in-nonhomologous-end-joining."
+  ],
+  "key_phrases": [
+    "dna",
+    "joint",
+    "dependence",
+    "pol",
+    "family",
+    "polymerase",
+    "action",
+    "nonhomologous"
+  ],
+  "summary_1l": "DNA joint dependence of pol X family polymerase action in nonhomologous end joining.",
+  "query_hits": [],
+  "embed_text": "41403996 DNA joint dependence of pol X family polymerase action in nonhomologous end joining. science scifact DNA double strand breaks (DSBs) can be rejoined directly by the nonhomologous end-joining (NHEJ) pathway of repair. Nucleases and polymerases are required to promote accurate NHEJ when the terminal bases of the DSB are damaged. The same… 41403996 dna-joint-dependence-of-pol-x-family-polymerase-action-in-nonhomologous-end-joining. dna joint dependence pol family polymerase action nonhomologous DNA joint dependence of pol X family polymerase action in nonhomologous end joining. DNA joint dependence of pol X family polymerase action in nonhomologous end joining. DNA double strand breaks (DSBs) can be rejoined directly by the nonhomologous end-joining (NHEJ) pathway of repair. Nucleases and polymerases are required to promote accurate NHEJ when the terminal bases of the DSB are damaged. The same enzymes also participate in imprecise rejoining and joining of incompatible ends, important mutagenic events. Previous work has shown that the Pol X family polymerase Pol4 is required for some but not all NHEJ events that require gap filling in Saccharomyces cerevisiae. Here, we systematically analyzed DSB end configurations and found that gaps on both strands and overhang polarity are the principal factors that determine whether a joint requires Pol4. DSBs with 3'-overhang",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.418927+00:00"
+}

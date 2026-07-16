@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "kp_id": "95400#14",
+  "source_fingerprint": "95100d9e29bc59dc13ab7a9c2e52e26a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "(林俊杰单曲)",
+    "2015年歐霸盃決賽",
+    "马来西亚－新加坡边界"
+  ],
+  "aliases": [
+    "95400#14"
+  ],
+  "key_phrases": [
+    "林俊杰",
+    "2015",
+    "受邀",
+    "演唱",
+    "新加坡",
+    "國慶慶典",
+    "主題",
+    "our"
+  ],
+  "summary_1l": "2015年受邀演唱新加坡國慶慶典主題曲《Our Singapore》。",
+  "query_hits": [],
+  "embed_text": "95400#14 林俊杰 林俊杰 2015年受邀演唱新加坡國慶慶典主題曲《Our Singapore》。 (林俊杰单曲) 2015年歐霸盃決賽 马来西亚－新加坡边界 95400#14 林俊杰 2015 受邀 演唱 新加坡 國慶慶典 主題 our 2015年受邀演唱新加坡國慶慶典主題曲《Our Singapore》。 林俊杰 2015年受邀演唱新加坡國慶慶典主題曲《Our Singapore》。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:19:26.364579+00:00"
+}

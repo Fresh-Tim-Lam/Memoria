@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10617916",
+  "source_fingerprint": "09e119d577994cb2fa2f4dd2321bf751",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10617916",
+    "moderate-effect-of-artemisinin-based-combination-therapy-on-transmission-of-plasmodium-falciparum."
+  ],
+  "key_phrases": [
+    "moderate",
+    "effect",
+    "artemisinin",
+    "based",
+    "combination",
+    "therapy",
+    "transmission",
+    "plasmodium"
+  ],
+  "summary_1l": "Moderate effect of artemisinin-based combination therapy on transmission of Plasmodium falciparum.",
+  "query_hits": [],
+  "embed_text": "10617916 Moderate effect of artemisinin-based combination therapy on transmission of Plasmodium falciparum. science scifact Background. Artemisinin-based combination therapy (ACT) reduces microscopically confirmed gametocytemia and mosquito infection. However, molecular techniques have recently revealed high prevalences of submicroscopic gametocytemia. Our… 10617916 moderate-effect-of-artemisinin-based-combination-therapy-on-transmission-of-plasmodium-falciparum. moderate effect artemisinin based combination therapy transmission plasmodium Moderate effect of artemisinin-based combination therapy on transmission of Plasmodium falciparum. Moderate effect of artemisinin-based combination therapy on transmission of Plasmodium falciparum. Background. Artemisinin-based combination therapy (ACT) reduces microscopically confirmed gametocytemia and mosquito infection. However, molecular techniques have recently revealed high prevalences of submicroscopic gametocytemia. Our objective here was to determine the effect of sulfadoxine-pyrimethamine (SP) monotherapy and treatment with SP plus amodiaquine (AQ), SP plus artesunate (AS), and artemether-lumefantrine (AL; Coartem) on submicroscopic gametocytemia and infectiousness. Methods. Kenyan children (n=528) 6 months-10 years of age were randomized to 4 treatment arms. Gametocytemia was determined by both microscopy and Pfs25 RNA-based quantitative nucleic acid sequence-based amplifica",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.771700+00:00"
+}

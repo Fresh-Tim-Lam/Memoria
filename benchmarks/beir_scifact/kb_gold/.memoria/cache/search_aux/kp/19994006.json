@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19994006",
+  "source_fingerprint": "0771018e507acf1dd5dc2abcd63650d2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19994006",
+    "relevance-of-asystole-during-head-up-tilt-testing."
+  ],
+  "key_phrases": [
+    "relevance",
+    "asystole",
+    "during",
+    "head",
+    "up",
+    "tilt",
+    "testing",
+    "prognosis"
+  ],
+  "summary_1l": "Relevance of asystole during head-up tilt testing.",
+  "query_hits": [],
+  "embed_text": "19994006 Relevance of asystole during head-up tilt testing. science scifact The prognosis of patients manifesting prolonged asystole during head-up tilt testing is unclear. In 209 consecutive patients with a history of syncope and positive head-up tilt tests, 19 had asystole lasting > 5 seconds (mean duration 15… 19994006 relevance-of-asystole-during-head-up-tilt-testing. relevance asystole during head up tilt testing prognosis Relevance of asystole during head-up tilt testing. Relevance of asystole during head-up tilt testing. The prognosis of patients manifesting prolonged asystole during head-up tilt testing is unclear. In 209 consecutive patients with a history of syncope and positive head-up tilt tests, 19 had asystole lasting > 5 seconds (mean duration 15 +/- 10) (group 1a). When compared with patients without asystole (group 1b), group 1a patients were younger (32 +/- 12 vs 47 +/- 21 years, p < 0.005), but clinical manifestations were not any more dramatic (the number of episodes of syncope [7 +/- 5 vs 8 +/- 6 episodes, p = NS] and injury during syncope [2 vs 13 patients, p = NS] were similar). During follow-up (mean 2 +/- 1 year), with the patient taking pharmacologic therapy such as beta blockers, ephedrine, theophylline, or disopyramide, the recurrence",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.506563+00:00"
+}

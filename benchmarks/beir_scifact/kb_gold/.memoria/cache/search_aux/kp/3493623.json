@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "3493623",
+  "source_fingerprint": "8df4c6e82b661a9701b7e4dd1e564926",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3493623"
+  ],
+  "key_phrases": [
+    "suppression",
+    "interferon",
+    "mediated",
+    "anti",
+    "hbv",
+    "response",
+    "by",
+    "single"
+  ],
+  "summary_1l": "Objective Interferons (IFNs) mediate direct antiviral activity.",
+  "query_hits": [],
+  "embed_text": "3493623 Suppression of interferon-mediated anti-HBV response by single CpG methylation in the 5′-UTR of TRIM22 science scifact Objective Interferons (IFNs) mediate direct antiviral activity. They play a crucial role in the early host immune response against viral infections. However, IFN therapy for HBV infection is less effective than for other viral infections.… 3493623 suppression interferon mediated anti hbv response by single Objective Interferons (IFNs) mediate direct antiviral activity. Suppression of interferon-mediated anti-HBV response by single CpG methylation in the 5′-UTR of TRIM22 Objective Interferons (IFNs) mediate direct antiviral activity. They play a crucial role in the early host immune response against viral infections. However, IFN therapy for HBV infection is less effective than for other viral infections. Design We explored the cellular targets of HBV in response to IFNs using proteome-wide screening. Results Using LC-MS/MS, we identified proteins downregulated and upregulated by IFN treatment in HBV X protein (HBx)-stable and control cells. We found several IFN-stimulated genes downregulated by HBx, including TRIM22, which is known as an antiretroviral protein. We demonstrated that HBx suppresses the transcription of TRIM22 through a single CpG methylati",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.833945+00:00"
+}

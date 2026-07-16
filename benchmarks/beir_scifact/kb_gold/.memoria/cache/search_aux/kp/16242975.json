@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16242975",
+  "source_fingerprint": "17c6014d6ef09dc9b97b20dcad6c47aa",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16242975",
+    "a-complete-landscape-of-post-transcriptional-modifications-in-mammalian-mitochondrial-trnas"
+  ],
+  "key_phrases": [
+    "complete",
+    "landscape",
+    "post",
+    "transcriptional",
+    "modifications",
+    "mammalian",
+    "mitochondrial",
+    "trnas"
+  ],
+  "summary_1l": "In mammalian mitochondria, 22 species of tRNAs encoded in mitochondrial DNA play crucial roles in the transl",
+  "query_hits": [],
+  "embed_text": "16242975 A complete landscape of post-transcriptional modifications in mammalian mitochondrial tRNAs science scifact In mammalian mitochondria, 22 species of tRNAs encoded in mitochondrial DNA play crucial roles in the translation of 13 essential subunits of the respiratory chain complexes involved in oxidative phosphorylation. Following transcription,… 16242975 a-complete-landscape-of-post-transcriptional-modifications-in-mammalian-mitochondrial-trnas complete landscape post transcriptional modifications mammalian mitochondrial trnas In mammalian mitochondria, 22 species of tRNAs encoded in mitochondrial DNA play crucial roles in the transl A complete landscape of post-transcriptional modifications in mammalian mitochondrial tRNAs In mammalian mitochondria, 22 species of tRNAs encoded in mitochondrial DNA play crucial roles in the translation of 13 essential subunits of the respiratory chain complexes involved in oxidative phosphorylation. Following transcription, mitochondrial tRNAs are modified by nuclear-encoded tRNA-modifying enzymes. These modifications are required for the proper functioning of mitochondrial tRNAs (mt tRNAs), and the absence of these modifications can cause pathological consequences. To date, however, the information available about these modifications has been incomplete. To address this issue, we isolated all 22 species of mt tRNAs from bovine liver and comprehensively determined the post-transcriptio",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.000711+00:00"
+}

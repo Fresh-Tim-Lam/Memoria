@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3845894",
+  "source_fingerprint": "1b154a6f41e07b2a8271c054cdc21e4d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3845894",
+    "computational-and-statistical-analyses-of-amino-acid-usage-and-physico-chemical-properties-of-the-twelve-late-embryogenesis-abundant-protein-classes"
+  ],
+  "key_phrases": [
+    "computational",
+    "statistical",
+    "analyses",
+    "amino",
+    "acid",
+    "usage",
+    "physico",
+    "chemical"
+  ],
+  "summary_1l": "Late Embryogenesis Abundant Proteins (LEAPs) are ub",
+  "query_hits": [],
+  "embed_text": "3845894 Computational and Statistical Analyses of Amino Acid Usage and Physico-Chemical Properties of the Twelve Late Embryogenesis Abundant Protein Classes science scifact Late Embryogenesis Abundant Proteins (LEAPs) are ubiquitous proteins expected to play major roles in desiccation tolerance. Little is known about their structure - function relationships because of the scarcity of 3-D structures for LEAPs.… 3845894 computational-and-statistical-analyses-of-amino-acid-usage-and-physico-chemical-properties-of-the-twelve-late-embryogenesis-abundant-protein-classes computational statistical analyses amino acid usage physico chemical Late Embryogenesis Abundant Proteins (LEAPs) are ub Computational and Statistical Analyses of Amino Acid Usage and Physico-Chemical Properties of the Twelve Late Embryogenesis Abundant Protein Classes Late Embryogenesis Abundant Proteins (LEAPs) are ubiquitous proteins expected to play major roles in desiccation tolerance. Little is known about their structure - function relationships because of the scarcity of 3-D structures for LEAPs. The previous building of LEAPdb, a database dedicated to LEAPs from plants and other organisms, led to the classification of 710 LEAPs into 12 non-overlapping classes with distinct properties. Using this resource, numerous physico-chemical properties of LEAPs and amino acid usage by LEAPs have been computed and statistically analyzed, revealing distinctive features for each class. This unprecedented analysis",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.498678+00:00"
+}

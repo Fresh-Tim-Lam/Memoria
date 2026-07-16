@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6722522",
+  "source_fingerprint": "1b2db92f8d3c08abf2c23db5bf673140",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6722522",
+    "heparan-sulfate-proteoglycans-mediate-internalization-and-propagation-of-specific-proteopathic-seeds."
+  ],
+  "key_phrases": [
+    "heparan",
+    "sulfate",
+    "proteoglycans",
+    "mediate",
+    "internalization",
+    "propagation",
+    "specific",
+    "proteopathic"
+  ],
+  "summary_1l": "Heparan sulfate proteoglycans mediate internalization and propagation of specific proteopathic seeds.",
+  "query_hits": [],
+  "embed_text": "6722522 Heparan sulfate proteoglycans mediate internalization and propagation of specific proteopathic seeds. science scifact Recent experimental evidence suggests that transcellular propagation of fibrillar protein aggregates drives the progression of neurodegenerative diseases in a prion-like manner. This phenomenon is now well described in cell and animal… 6722522 heparan-sulfate-proteoglycans-mediate-internalization-and-propagation-of-specific-proteopathic-seeds. heparan sulfate proteoglycans mediate internalization propagation specific proteopathic Heparan sulfate proteoglycans mediate internalization and propagation of specific proteopathic seeds. Heparan sulfate proteoglycans mediate internalization and propagation of specific proteopathic seeds. Recent experimental evidence suggests that transcellular propagation of fibrillar protein aggregates drives the progression of neurodegenerative diseases in a prion-like manner. This phenomenon is now well described in cell and animal models and involves the release of protein aggregates into the extracellular space. Free aggregates then enter neighboring cells to seed further fibrillization. The mechanism by which aggregated extracellular proteins such as tau and α-synuclein bind and enter cells to trigger intracellular fibril formation is unknown. Prior work indicates that prion protein aggregates bind heparan sulfate proteoglycans (HSPGs) on the cell surface to transmit pathologic proce",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.527398+00:00"
+}

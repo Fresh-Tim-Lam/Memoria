@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "33569870",
+  "source_fingerprint": "546c694869d0fd3e0f4c60346d6718c3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "33569870",
+    "intact-endothelial-autophagy-is-required-to-maintain-vascular-lipid-homeostasis."
+  ],
+  "key_phrases": [
+    "intact",
+    "endothelial",
+    "autophagy",
+    "required",
+    "maintain",
+    "vascular",
+    "lipid",
+    "homeostasis"
+  ],
+  "summary_1l": "Intact endothelial autophagy is required to maintain vascular lipid homeostasis.",
+  "query_hits": [],
+  "embed_text": "33569870 Intact endothelial autophagy is required to maintain vascular lipid homeostasis. science scifact The physiological role of autophagic flux within the vascular endothelial layer remains poorly understood. Here, we show that in primary endothelial cells, oxidized and native LDL stimulates autophagosome formation. Moreover, by both… 33569870 intact-endothelial-autophagy-is-required-to-maintain-vascular-lipid-homeostasis. intact endothelial autophagy required maintain vascular lipid homeostasis Intact endothelial autophagy is required to maintain vascular lipid homeostasis. Intact endothelial autophagy is required to maintain vascular lipid homeostasis. The physiological role of autophagic flux within the vascular endothelial layer remains poorly understood. Here, we show that in primary endothelial cells, oxidized and native LDL stimulates autophagosome formation. Moreover, by both confocal and electron microscopy, excess native or modified LDL appears to be engulfed within autophagic structures. Transient knockdown of the essential autophagy gene ATG7 resulted in higher levels of intracellular (125) I-LDL and oxidized LDL (OxLDL) accumulation, suggesting that in endothelial cells, autophagy may represent an important mechanism to regulate excess, exogenous lipids. The physiological importance of these observations was assessed using mice containing a condit",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.530732+00:00"
+}

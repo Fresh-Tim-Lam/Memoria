@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29947146",
+  "source_fingerprint": "ea4839414d107df81b02eb1022a2a13c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29947146",
+    "intestinal-methane-production-in-obese-individuals-is-associated-with-a-higher-body-mass-index."
+  ],
+  "key_phrases": [
+    "intestinal",
+    "methane",
+    "production",
+    "obese",
+    "individuals",
+    "associated",
+    "with",
+    "higher"
+  ],
+  "summary_1l": "Intestinal methane production in obese individuals is associated with a higher body mass index.",
+  "query_hits": [],
+  "embed_text": "29947146 Intestinal methane production in obese individuals is associated with a higher body mass index. science scifact BACKGROUND Obesity is an epidemic that affects 1 in 3 individuals in the United States, and recent evidence suggests that enteric microbiota may play a significant role in the development of obesity. This study evaluated the association… 29947146 intestinal-methane-production-in-obese-individuals-is-associated-with-a-higher-body-mass-index. intestinal methane production obese individuals associated with higher Intestinal methane production in obese individuals is associated with a higher body mass index. Intestinal methane production in obese individuals is associated with a higher body mass index. BACKGROUND Obesity is an epidemic that affects 1 in 3 individuals in the United States, and recent evidence suggests that enteric microbiota may play a significant role in the development of obesity. This study evaluated the association between methanogenic archaea and obesity in human subjects. METHODS Subjects with a body mass index (BMI) of 30 kg/m² or higher were prospectively recruited from the weight loss program of a tertiary care medical center. Subjects who met the study's inclusion criteria were asked to complete a questionnaire that included a series of visual analogue scores for bowel symptom severities. Subjects then provided a single end-expiratory breath sample to quantitate metha",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.308590+00:00"
+}

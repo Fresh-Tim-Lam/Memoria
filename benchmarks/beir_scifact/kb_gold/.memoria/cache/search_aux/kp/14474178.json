@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14474178",
+  "source_fingerprint": "2571e8ecfe6a53fdc04883d0f6191bbd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14474178",
+    "role-of-chicken-melanoma-differentiation-associated-gene-5-in-induction-and-activation-of-innate-and-adaptive-immune-responses-to-infectious-bursal-disease-virus-in-cultured-macrophages"
+  ],
+  "key_phrases": [
+    "role",
+    "chicken",
+    "melanoma",
+    "differentiation",
+    "associated",
+    "gene",
+    "induction",
+    "activation"
+  ],
+  "summary_1l": "The objective",
+  "query_hits": [],
+  "embed_text": "14474178 Role of chicken melanoma differentiation-associated gene 5 in induction and activation of innate and adaptive immune responses to infectious bursal disease virus in cultured macrophages science scifact The objective of the present study was to determine if chicken melanoma-differentiation-associated gene 5 (MDA5) senses infectious bursal disease virus infection to induce innate immunity that bridges to adaptive immunity. During IBDV… 14474178 role-of-chicken-melanoma-differentiation-associated-gene-5-in-induction-and-activation-of-innate-and-adaptive-immune-responses-to-infectious-bursal-disease-virus-in-cultured-macrophages role chicken melanoma differentiation associated gene induction activation The objective Role of chicken melanoma differentiation-associated gene 5 in induction and activation of innate and adaptive immune responses to infectious bursal disease virus in cultured macrophages The objective of the present study was to determine if chicken melanoma-differentiation-associated gene 5 (MDA5) senses infectious bursal disease virus infection to induce innate immunity that bridges to adaptive immunity. During IBDV infection in HD11 cells, IBDV titers and RNA loads increased up to 3.4 × 107 plaque-forming units (PFU)/mL and 1114 ng/µL, respectively, at 24 hours postinfection (hpi). IBDV infection in HD11 cells induced significantly upregulated (p < 0.05) expression levels of chicken MDA5 (59-fold), interferon-β (IFN-β) (693-fold), dsRNA-dependent protein kinase (PKR) (4-fold), 2’, 5’-oli",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.955519+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2443495",
+  "source_fingerprint": "4b799c8c6e55fdb0647eb813dff37632",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2443495",
+    "characterization-of-prostaglandin-e2-production-by-candida-albicans."
+  ],
+  "key_phrases": [
+    "characterization",
+    "prostaglandin",
+    "e2",
+    "production",
+    "by",
+    "candida",
+    "albicans",
+    "produces"
+  ],
+  "summary_1l": "Characterization of prostaglandin E2 production by Candida albicans.",
+  "query_hits": [],
+  "embed_text": "2443495 Characterization of prostaglandin E2 production by Candida albicans. science scifact Candida albicans produces lipid metabolites that are functionally similar to host prostaglandins. These studies, using mass spectrometry, demonstrate that C. albicans produces authentic prostaglandin E(2) (PGE(2)) from arachidonic acid.… 2443495 characterization-of-prostaglandin-e2-production-by-candida-albicans. characterization prostaglandin e2 production by candida albicans produces Characterization of prostaglandin E2 production by Candida albicans. Characterization of prostaglandin E2 production by Candida albicans. Candida albicans produces lipid metabolites that are functionally similar to host prostaglandins. These studies, using mass spectrometry, demonstrate that C. albicans produces authentic prostaglandin E(2) (PGE(2)) from arachidonic acid. Maximal PGE(2) production was achieved at 37 degrees C in stationary-phase culture supernatants and in cell-free lysates generated from stationary-phase cells. Interestingly, PGE(2) production is inhibited by both nonspecific cyclooxygenase and lipoxygenase inhibitors but not by inhibitors specific for the cyclooxygenase 2 isoenzyme. The C. albicans genome does not possess a cyclooxygenase homolog; however, several genes that may play a role in prostaglandin production from C. albicans wer",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.468697+00:00"
+}

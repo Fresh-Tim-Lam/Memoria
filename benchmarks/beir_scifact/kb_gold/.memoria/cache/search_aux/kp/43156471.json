@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "43156471",
+  "source_fingerprint": "baf79a5721b299a327542340027d09f6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "43156471",
+    "genomewide-analysis-of-nucleosome-density-histone-acetylation-and-hdac-function-in-fission-yeast."
+  ],
+  "key_phrases": [
+    "genomewide",
+    "analysis",
+    "nucleosome",
+    "density",
+    "histone",
+    "acetylation",
+    "hdac",
+    "function"
+  ],
+  "summary_1l": "Genomewide analysis of nucleosome density histone acetylation and HDAC function in fission yeast.",
+  "query_hits": [],
+  "embed_text": "43156471 Genomewide analysis of nucleosome density histone acetylation and HDAC function in fission yeast. science scifact We have conducted a genomewide investigation into the enzymatic specificity, expression profiles, and binding locations of four histone deacetylases (HDACs), representing the three different phylogenetic classes in fission yeast… 43156471 genomewide-analysis-of-nucleosome-density-histone-acetylation-and-hdac-function-in-fission-yeast. genomewide analysis nucleosome density histone acetylation hdac function Genomewide analysis of nucleosome density histone acetylation and HDAC function in fission yeast. Genomewide analysis of nucleosome density histone acetylation and HDAC function in fission yeast. We have conducted a genomewide investigation into the enzymatic specificity, expression profiles, and binding locations of four histone deacetylases (HDACs), representing the three different phylogenetic classes in fission yeast (Schizosaccharomyces pombe). By directly comparing nucleosome density, histone acetylation patterns and HDAC binding in both intergenic and coding regions with gene expression profiles, we found that Sir2 (class III) and Hos2 (class I) have a role in preventing histone loss; Clr6 (class I) is the principal enzyme in promoter-localized repression. Hos2 has an unexpected role in promoting high expression of growth-related genes by deacetylating H4K16Ac in their open read",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.513979+00:00"
+}

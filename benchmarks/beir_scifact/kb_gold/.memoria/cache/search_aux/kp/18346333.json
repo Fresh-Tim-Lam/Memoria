@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18346333",
+  "source_fingerprint": "9648053536246e4a12fee456ef3523bd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18346333",
+    "ampa-receptor-ligand-binding-domain-mobility-revealed-by-functional-cross-linking."
+  ],
+  "key_phrases": [
+    "ampa",
+    "receptor",
+    "ligand",
+    "binding",
+    "domain",
+    "mobility",
+    "revealed",
+    "by"
+  ],
+  "summary_1l": "AMPA receptor ligand binding domain mobility revealed by functional cross linking.",
+  "query_hits": [],
+  "embed_text": "18346333 AMPA receptor ligand binding domain mobility revealed by functional cross linking. science scifact Glutamate receptors mediate the majority of excitatory synaptic transmission in the CNS. The AMPA-subtype has rapid kinetics, with activation, deactivation and desensitization proceeding on the millisecond timescale or faster.… 18346333 ampa-receptor-ligand-binding-domain-mobility-revealed-by-functional-cross-linking. ampa receptor ligand binding domain mobility revealed by AMPA receptor ligand binding domain mobility revealed by functional cross linking. AMPA receptor ligand binding domain mobility revealed by functional cross linking. Glutamate receptors mediate the majority of excitatory synaptic transmission in the CNS. The AMPA-subtype has rapid kinetics, with activation, deactivation and desensitization proceeding on the millisecond timescale or faster. Crystallographic, biochemical, and functional studies suggest that GluR2 Cys mutants which form intermolecular disulfide cross-links between the lower D2 lobes of the ligand binding cores can be trapped in a conformation that represents the desensitized state. We used multi-channel rapid perfusion techniques to examine the state dependence of cross-linking in these mutants. Under reducing conditions, both wild-type GluR2 and the G725C and S729C mutants have normal activation and desens",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.126533+00:00"
+}

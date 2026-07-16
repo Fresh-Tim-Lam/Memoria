@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7486516",
+  "source_fingerprint": "0af7adf2e39b6b2a007eb2d5d81a7662",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7486516",
+    "independently-evolving-species-in-asexual-bdelloid-rotifers"
+  ],
+  "key_phrases": [
+    "independently",
+    "evolving",
+    "species",
+    "asexual",
+    "bdelloid",
+    "rotifers",
+    "asexuals",
+    "important"
+  ],
+  "summary_1l": "Asexuals are an important test case for theories of why species exist.",
+  "query_hits": [],
+  "embed_text": "7486516 Independently Evolving Species in Asexual Bdelloid Rotifers science scifact Asexuals are an important test case for theories of why species exist. If asexual clades displayed the same pattern of discrete variation as sexual clades, this would challenge the traditional view that sex is necessary for diversification… 7486516 independently-evolving-species-in-asexual-bdelloid-rotifers independently evolving species asexual bdelloid rotifers asexuals important Asexuals are an important test case for theories of why species exist. Independently Evolving Species in Asexual Bdelloid Rotifers Asexuals are an important test case for theories of why species exist. If asexual clades displayed the same pattern of discrete variation as sexual clades, this would challenge the traditional view that sex is necessary for diversification into species. However, critical evidence has been lacking: all putative examples have involved organisms with recent or ongoing histories of recombination and have relied on visual interpretation of patterns of genetic and phenotypic variation rather than on formal tests of alternative evolutionary scenarios. Here we show that a classic asexual clade, the bdelloid rotifers, has diversified into distinct evolutionary species. Intensive sampling of the genus Rotaria reveals the presence of well-se",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.436977+00:00"
+}

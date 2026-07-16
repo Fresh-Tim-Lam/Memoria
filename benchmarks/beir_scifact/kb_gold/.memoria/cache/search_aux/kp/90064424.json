@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "90064424",
+  "source_fingerprint": "89c9023f50b587d7755722c16ca82f22",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "90064424",
+    "mitotic-chromosomes-fold-by-condensin-dependent-helical-winding-of-chromatin-loop-arrays"
+  ],
+  "key_phrases": [
+    "mitotic",
+    "chromosomes",
+    "fold",
+    "by",
+    "condensin",
+    "dependent",
+    "helical",
+    "winding"
+  ],
+  "summary_1l": "During mitosis, chromosomes fold into compacted rod shaped structures.",
+  "query_hits": [],
+  "embed_text": "90064424 Mitotic chromosomes fold by condensin-dependent helical winding of chromatin loop arrays science scifact During mitosis, chromosomes fold into compacted rod shaped structures. We combined imaging and Hi-C of synchronous DT40 cell cultures with polymer simulations to determine how interphase chromosomes are converted into compressed arrays of… 90064424 mitotic-chromosomes-fold-by-condensin-dependent-helical-winding-of-chromatin-loop-arrays mitotic chromosomes fold by condensin dependent helical winding During mitosis, chromosomes fold into compacted rod shaped structures. Mitotic chromosomes fold by condensin-dependent helical winding of chromatin loop arrays During mitosis, chromosomes fold into compacted rod shaped structures. We combined imaging and Hi-C of synchronous DT40 cell cultures with polymer simulations to determine how interphase chromosomes are converted into compressed arrays of loops characteristic of mitotic chromosomes. We found that the interphase organization is disassembled within minutes of prophase entry and by late prophase chromosomes are already folded as arrays of consecutive loops. During prometaphase, this array reorganizes to form a helical arrangement of nested loops. Polymer simulations reveal that Hi-C data are inconsistent with solenoidal coiling of the entire chromatid, but instead suggest a centrally located helically twi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.066794+00:00"
+}

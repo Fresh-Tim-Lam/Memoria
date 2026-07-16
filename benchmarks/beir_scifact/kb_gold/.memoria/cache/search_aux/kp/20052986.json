@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20052986",
+  "source_fingerprint": "0fb1004fe8233111abdc5d2aeac813f5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20052986",
+    "jtk_cycle:-an-efficient-nonparametric-algorithm-for-detecting-rhythmic-components-in-genome-scale-data-sets."
+  ],
+  "key_phrases": [
+    "jtk",
+    "cycle",
+    "efficient",
+    "nonparametric",
+    "algorithm",
+    "detecting",
+    "rhythmic",
+    "components"
+  ],
+  "summary_1l": "JTK_CYCLE: an efficient nonparametric algorithm for detecting rhythmic components in genome-scale data sets.",
+  "query_hits": [],
+  "embed_text": "20052986 JTK_CYCLE: an efficient nonparametric algorithm for detecting rhythmic components in genome-scale data sets. science scifact Circadian rhythms are oscillations of physiology, behavior, and metabolism that have period lengths near 24 hours. In several model organisms and humans, circadian clock genes have been characterized and found to be transcription factors.… 20052986 jtk_cycle:-an-efficient-nonparametric-algorithm-for-detecting-rhythmic-components-in-genome-scale-data-sets. jtk cycle efficient nonparametric algorithm detecting rhythmic components JTK_CYCLE: an efficient nonparametric algorithm for detecting rhythmic components in genome-scale data sets. JTK_CYCLE: an efficient nonparametric algorithm for detecting rhythmic components in genome-scale data sets. Circadian rhythms are oscillations of physiology, behavior, and metabolism that have period lengths near 24 hours. In several model organisms and humans, circadian clock genes have been characterized and found to be transcription factors. Because of this, researchers have used microarrays to characterize global regulation of gene expression and algorithmic approaches to detect cycling. This article presents a new algorithm, JTK_CYCLE, designed to efficiently identify and characterize cycling variables in large data sets. Compared with COSOPT and the Fisher's G test, two commonly used methods for detecting cycling transcripts, JTK_CYCLE distinguishes between rhythmic and nonrhythmic",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.595357+00:00"
+}

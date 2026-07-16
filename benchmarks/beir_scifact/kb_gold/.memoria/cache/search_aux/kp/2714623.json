@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "2714623",
+  "source_fingerprint": "18209fba9c8f6ff5307a7c64d1e10de9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2714623"
+  ],
+  "key_phrases": [
+    "recruitment",
+    "nck",
+    "by",
+    "cd3",
+    "reveals",
+    "ligand",
+    "induced",
+    "conformational"
+  ],
+  "summary_1l": "How membrane receptors initiate signal transduction upon ligand",
+  "query_hits": [],
+  "embed_text": "2714623 Recruitment of Nck by CD3ϵ Reveals a Ligand-Induced Conformational Change Essential for T Cell Receptor Signaling and Synapse Formation science scifact How membrane receptors initiate signal transduction upon ligand binding is a matter of intense scrutiny. The T cell receptor complex (TCR-CD3) is composed of TCR alpha/beta ligand binding subunits bound to the CD3 subunits responsible for… 2714623 recruitment nck by cd3 reveals ligand induced conformational How membrane receptors initiate signal transduction upon ligand Recruitment of Nck by CD3ϵ Reveals a Ligand-Induced Conformational Change Essential for T Cell Receptor Signaling and Synapse Formation How membrane receptors initiate signal transduction upon ligand binding is a matter of intense scrutiny. The T cell receptor complex (TCR-CD3) is composed of TCR alpha/beta ligand binding subunits bound to the CD3 subunits responsible for signal transduction. Although it has long been speculated that TCR-CD3 may undergo a conformational change, confirmation is still lacking. We present strong evidence that ligand engagement of TCR-CD3 induces a conformational change that exposes a proline-rich sequence in CD3 epsilon and results in recruitment of the adaptor protein Nck. This occurs earlier than and independently of tyrosine kinase activation. Finally, by",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.557955+00:00"
+}

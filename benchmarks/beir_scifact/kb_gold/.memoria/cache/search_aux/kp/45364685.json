@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "45364685",
+  "source_fingerprint": "8a933577b2d9b99a365f047311cc6ae9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "45364685",
+    "induction-of-the-heat-shock-response-by-carbon-dioxide-in-chironomus-thummi."
+  ],
+  "key_phrases": [
+    "induction",
+    "heat",
+    "shock",
+    "response",
+    "by",
+    "carbon",
+    "dioxide",
+    "chironomus"
+  ],
+  "summary_1l": "Induction of the heat-shock response by carbon dioxide in Chironomus thummi.",
+  "query_hits": [],
+  "embed_text": "45364685 Induction of the heat-shock response by carbon dioxide in Chironomus thummi. science scifact The effects of a set of stress treatments on gene expression of Chironomus thummi salivary gland cells have been analyzed. Among the treatments assayed, only during recovery from carbon dioxide have we observed a response similar to that… 45364685 induction-of-the-heat-shock-response-by-carbon-dioxide-in-chironomus-thummi. induction heat shock response by carbon dioxide chironomus Induction of the heat-shock response by carbon dioxide in Chironomus thummi. Induction of the heat-shock response by carbon dioxide in Chironomus thummi. The effects of a set of stress treatments on gene expression of Chironomus thummi salivary gland cells have been analyzed. Among the treatments assayed, only during recovery from carbon dioxide have we observed a response similar to that previously described after heat-shock treatment: induction of the heat-shock puffs and synthesis of the heat-shock polypeptides. In these conditions, puffing and transcription of telomeric regions were observed, which led to the appearance of the temperature-inducible telomeric Balbiani ring T-BR-III. Other treatments failed to induce the heat-shock response, despite promoting real stress conditions to C. thummi larvae or salivary gland cells.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.313639+00:00"
+}

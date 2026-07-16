@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1507222",
+  "source_fingerprint": "bdbaa0bdd00353b0d4a2333b3b5480f9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1507222",
+    "increased-gene-expression-of-brown-fat-uncoupling-protein-(ucp)1-and-skeletal-muscle-ucp2-and-ucp3-in-mac16-induced-cancer-cachexia."
+  ],
+  "key_phrases": [
+    "increased",
+    "gene",
+    "expression",
+    "brown",
+    "fat",
+    "uncoupling",
+    "protein",
+    "ucp"
+  ],
+  "summary_1l": "Increased gene expression of brown fat uncoupling protein (UCP)1 and skeletal muscle UCP2 and UCP3 in MAC16-induced cancer cachexia.",
+  "query_hits": [],
+  "embed_text": "1507222 Increased gene expression of brown fat uncoupling protein (UCP)1 and skeletal muscle UCP2 and UCP3 in MAC16-induced cancer cachexia. science scifact Weight loss in cancer cachexia is attributable to decreased food intake and/or enhanced energy expenditure. We investigated the roles of the uncoupling proteins (UCPs) UCPI, -2, and -3 in a murine model of cachexia, the MAC16… 1507222 increased-gene-expression-of-brown-fat-uncoupling-protein-(ucp)1-and-skeletal-muscle-ucp2-and-ucp3-in-mac16-induced-cancer-cachexia. increased gene expression brown fat uncoupling protein ucp Increased gene expression of brown fat uncoupling protein (UCP)1 and skeletal muscle UCP2 and UCP3 in MAC16-induced cancer cachexia. Increased gene expression of brown fat uncoupling protein (UCP)1 and skeletal muscle UCP2 and UCP3 in MAC16-induced cancer cachexia. Weight loss in cancer cachexia is attributable to decreased food intake and/or enhanced energy expenditure. We investigated the roles of the uncoupling proteins (UCPs) UCPI, -2, and -3 in a murine model of cachexia, the MAC16 adenocarcinoma. Weight fell to 24% below that of non-tumor-bearing controls (P < 0.01) 18 days after MAC16 inoculation, with significant reductions in fat-pad mass (-67%; P < 0.01) and muscle mass (-20%; P < 0.01). Food intake was 26-60% lower (P < 0.01) than in controls on days 17-18. Non-tumor-bearing mice, pair-fed to match MAC16-induced hypophagia, showed less weight loss (10% below controls, P < 0.01; 16% above MAC-16, P < 0.01) and",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.053109+00:00"
+}

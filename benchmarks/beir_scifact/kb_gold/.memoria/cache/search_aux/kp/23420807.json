@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23420807",
+  "source_fingerprint": "5a7d6970fc510be7a30e8557ea7a446b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23420807",
+    "anti-angiogenic-activity-of-selected-receptor-tyrosine-kinase-inhibitors,-pd166285-and-pd173074:-implications-for-combination-treatment-with-photodynamic-therapy"
+  ],
+  "key_phrases": [
+    "anti",
+    "angiogenic",
+    "activity",
+    "selected",
+    "receptor",
+    "tyrosine",
+    "kinase",
+    "inhibitors"
+  ],
+  "summary_1l": "Angiogenesis, the formation of new blo",
+  "query_hits": [],
+  "embed_text": "23420807 Anti-Angiogenic Activity of Selected Receptor Tyrosine Kinase Inhibitors, PD166285 and PD173074: Implications for Combination Treatment with Photodynamic Therapy science scifact Angiogenesis, the formation of new blood vessels from an existing vasculature, is requisite for tumor growth. It entails intercellular coordination of endothelial and tumor cells through angiogenic growth factor signaling. Interruption of… 23420807 anti-angiogenic-activity-of-selected-receptor-tyrosine-kinase-inhibitors,-pd166285-and-pd173074:-implications-for-combination-treatment-with-photodynamic-therapy anti angiogenic activity selected receptor tyrosine kinase inhibitors Angiogenesis, the formation of new blo Anti-Angiogenic Activity of Selected Receptor Tyrosine Kinase Inhibitors, PD166285 and PD173074: Implications for Combination Treatment with Photodynamic Therapy Angiogenesis, the formation of new blood vessels from an existing vasculature, is requisite for tumor growth. It entails intercellular coordination of endothelial and tumor cells through angiogenic growth factor signaling. Interruption of these events has implications in the suppression of tumor growth. PD166285, a broad-spectrum receptor tyrosine kinase (RTK) inhibitor, and PD173074, a selective FGFR1TK inhibitor, were evaluated for their anti-angiogenic activity and anti-tumor efficacy in combination with photodynamic therapy (PDT). To evaluate the anti-angiogenic and anti-tumor activities of these compounds, RTK assays, in vitr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.491966+00:00"
+}

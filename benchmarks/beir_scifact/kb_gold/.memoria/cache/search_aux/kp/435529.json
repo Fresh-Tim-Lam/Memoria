@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "435529",
+  "source_fingerprint": "b1f74055d7f9a83279bc57a560a2ed26",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "435529",
+    "uridylation-of-mirnas-by-hen1-suppressor1-in-arabidopsis"
+  ],
+  "key_phrases": [
+    "uridylation",
+    "mirnas",
+    "by",
+    "hen1",
+    "suppressor1",
+    "arabidopsis",
+    "mediated",
+    "methylation"
+  ],
+  "summary_1l": "HEN1-mediated 2'-O-methylation has been shown to be a key mechanism to protect plant microRNAs (miRNAs) and small interfering RNAs (siRNAs) as",
+  "query_hits": [],
+  "embed_text": "435529 Uridylation of miRNAs by HEN1 SUPPRESSOR1 in Arabidopsis science scifact HEN1-mediated 2'-O-methylation has been shown to be a key mechanism to protect plant microRNAs (miRNAs) and small interfering RNAs (siRNAs) as well as animal piwi-interacting RNAs (piRNAs) from degradation and 3' terminal uridylation… 435529 uridylation-of-mirnas-by-hen1-suppressor1-in-arabidopsis uridylation mirnas by hen1 suppressor1 arabidopsis mediated methylation HEN1-mediated 2'-O-methylation has been shown to be a key mechanism to protect plant microRNAs (miRNAs) and small interfering RNAs (siRNAs) as Uridylation of miRNAs by HEN1 SUPPRESSOR1 in Arabidopsis HEN1-mediated 2'-O-methylation has been shown to be a key mechanism to protect plant microRNAs (miRNAs) and small interfering RNAs (siRNAs) as well as animal piwi-interacting RNAs (piRNAs) from degradation and 3' terminal uridylation [1-8]. However, enzymes uridylating unmethylated miRNAs, siRNAs, or piRNAs in hen1 are unknown. In this study, a genetic screen identified a second-site mutation hen1 suppressor1-2 (heso1-2) that partially suppresses the morphological phenotypes of the hypomorphic hen1-2 allele and the null hen1-1 allele in Arabidopsis. HESO1 encodes a terminal nucleotidyl transferase that prefers to add untemplated uridine to the 3' end of RNA, which is completely abolished by 2'-O-methylation. heso1-2 affects the profi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.020220+00:00"
+}

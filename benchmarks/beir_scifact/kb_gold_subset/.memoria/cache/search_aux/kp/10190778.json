@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10190778",
+  "source_fingerprint": "eb13ad0a437e2359c8ab774f9b8dcf59",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10190778",
+    "maternal-alloantigens-promote-the-development-of-tolerogenic-fetal-regulatory-t-cells-in-utero."
+  ],
+  "key_phrases": [
+    "maternal",
+    "alloantigens",
+    "promote",
+    "development",
+    "tolerogenic",
+    "fetal",
+    "regulatory",
+    "cells"
+  ],
+  "summary_1l": "Maternal alloantigens promote the development of tolerogenic fetal regulatory T cells in utero.",
+  "query_hits": [],
+  "embed_text": "10190778 Maternal alloantigens promote the development of tolerogenic fetal regulatory T cells in utero. science scifact As the immune system develops, T cells are selected or regulated to become tolerant of self antigens and reactive against foreign antigens. In mice, the induction of such tolerance is thought to be attributable to the deletion of… 10190778 maternal-alloantigens-promote-the-development-of-tolerogenic-fetal-regulatory-t-cells-in-utero. maternal alloantigens promote development tolerogenic fetal regulatory cells Maternal alloantigens promote the development of tolerogenic fetal regulatory T cells in utero. Maternal alloantigens promote the development of tolerogenic fetal regulatory T cells in utero. As the immune system develops, T cells are selected or regulated to become tolerant of self antigens and reactive against foreign antigens. In mice, the induction of such tolerance is thought to be attributable to the deletion of self-reactive cells. Here, we show that the human fetal immune system takes advantage of an additional mechanism: the generation of regulatory T cells (Tregs) that suppress fetal immune responses. We find that substantial numbers of maternal cells cross the placenta to reside in fetal lymph nodes, inducing the development of CD4+CD25highFoxP3+ Tregs that suppress fetal antimaternal immunity and persist at least until early adulthood. These findings reveal a form of anti",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.346928+00:00"
+}

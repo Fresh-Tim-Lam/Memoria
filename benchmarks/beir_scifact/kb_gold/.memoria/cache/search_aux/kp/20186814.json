@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20186814",
+  "source_fingerprint": "d93e66cbd5d8169614a4729a1ceb941c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20186814",
+    "a-new-look-at-the-origin,-function,-and-\"stem-cell\"-status-of-muscle-satellite-cells."
+  ],
+  "key_phrases": [
+    "new",
+    "look",
+    "at",
+    "origin",
+    "function",
+    "stem",
+    "cell",
+    "status"
+  ],
+  "summary_1l": "A new look at the origin, function, and \"stem-cell\" status of muscle satellite cells.",
+  "query_hits": [],
+  "embed_text": "20186814 A new look at the origin, function, and \"stem-cell\" status of muscle satellite cells. science scifact Muscle satellite cells have long been considered a distinct myogenic lineage responsible for postnatal growth, repair, and maintenance of skeletal muscle. Recent studies in mice, however, have revealed the potential for highly purified… 20186814 a-new-look-at-the-origin,-function,-and-\"stem-cell\"-status-of-muscle-satellite-cells. new look at origin function stem cell status A new look at the origin, function, and \"stem-cell\" status of muscle satellite cells. A new look at the origin, function, and \"stem-cell\" status of muscle satellite cells. Muscle satellite cells have long been considered a distinct myogenic lineage responsible for postnatal growth, repair, and maintenance of skeletal muscle. Recent studies in mice, however, have revealed the potential for highly purified hematopoietic stem cells from bone marrow to participate in muscle regeneration. Perhaps more significantly, a population of putative stem cells isolated directly from skeletal muscle efficiently reconstitutes the hematopoietic compartment and participates in muscle regeneration following intravenous injection in mice. The plasticity of muscle stem cells has raised important questions regarding the relationship between the muscle-derived stem cells and the skeletal muscle s",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.784893+00:00"
+}

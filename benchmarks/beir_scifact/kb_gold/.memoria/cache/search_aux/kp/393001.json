@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "393001",
+  "source_fingerprint": "7cef1708efbd5e9d280b73abeab3b337",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "393001",
+    "high-km-soluble-5'-nucleotidase-from-human-placenta.-properties-and-allosteric-regulation-by-imp-and-atp."
+  ],
+  "key_phrases": [
+    "high",
+    "km",
+    "soluble",
+    "nucleotidase",
+    "from",
+    "human",
+    "placenta",
+    "properties"
+  ],
+  "summary_1l": "High Km soluble 5'-nucleotidase from human placenta.",
+  "query_hits": [],
+  "embed_text": "393001 High Km soluble 5'-nucleotidase from human placenta. Properties and allosteric regulation by IMP and ATP. science scifact A human placental soluble \"high Km\" 5'-nucleotidase has been separated from \"low Km\" 5'-nucleotidase and nonspecific phosphatase by AMP-Sepharose affinity chromatography. The enzyme was purified 8000-fold to a specific activity of 25.6… 393001 high-km-soluble-5'-nucleotidase-from-human-placenta.-properties-and-allosteric-regulation-by-imp-and-atp. high km soluble nucleotidase from human placenta properties High Km soluble 5'-nucleotidase from human placenta. High Km soluble 5'-nucleotidase from human placenta. Properties and allosteric regulation by IMP and ATP. A human placental soluble \"high Km\" 5'-nucleotidase has been separated from \"low Km\" 5'-nucleotidase and nonspecific phosphatase by AMP-Sepharose affinity chromatography. The enzyme was purified 8000-fold to a specific activity of 25.6 mumol/min/mg. The subunit molecular mass is 53 kDa, and the native molecular mass is 210 kDa, suggesting a tetrameric structure. Soluble high Km 5'-nucleotidase is most active with IMP and GMP and their deoxy derivatives. IMP is hydrolyzed 15 times faster than AMP. The enzyme has a virtually absolute requirement for magnesium ions and is regulated by them. Purine nucleoside 5'-triphosphates strongly activate the enzyme with the potency order dATP greater",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.428378+00:00"
+}

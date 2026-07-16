@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21425864",
+  "source_fingerprint": "8e7e2cb41f130b3c72e217a6dd4149c7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21425864",
+    "a-conditionally-lethal-yeast-mutant-blocked-at-the-first-step-in-glycosyl-phosphatidylinositol-anchor-synthesis."
+  ],
+  "key_phrases": [
+    "conditionally",
+    "lethal",
+    "yeast",
+    "mutant",
+    "blocked",
+    "at",
+    "first",
+    "step"
+  ],
+  "summary_1l": "A conditionally lethal yeast mutant blocked at the first step in glycosyl phosphatidylinositol anchor synthesis.",
+  "query_hits": [],
+  "embed_text": "21425864 A conditionally lethal yeast mutant blocked at the first step in glycosyl phosphatidylinositol anchor synthesis. science scifact Glycosyl phosphatidylinositols (GPIs) anchor many proteins to the surface of eukaryotic cells and may also serve as sorting signals on proteins and participate in signal transduction. We have isolated a Saccharomyces cerevisiae GPI… 21425864 a-conditionally-lethal-yeast-mutant-blocked-at-the-first-step-in-glycosyl-phosphatidylinositol-anchor-synthesis. conditionally lethal yeast mutant blocked at first step A conditionally lethal yeast mutant blocked at the first step in glycosyl phosphatidylinositol anchor synthesis. A conditionally lethal yeast mutant blocked at the first step in glycosyl phosphatidylinositol anchor synthesis. Glycosyl phosphatidylinositols (GPIs) anchor many proteins to the surface of eukaryotic cells and may also serve as sorting signals on proteins and participate in signal transduction. We have isolated a Saccharomyces cerevisiae GPI anchoring mutant, gpi1, using a colony screen for cells blocked in [3H]inositol incorporation into protein. The gpi1 mutant is defective in vitro in the synthesis of N-acetylglucosaminyl phosphatidylinositol, the first intermediate in GPI synthesis, and is also temperature-sensitive for growth. Completion of the first step in GPI assembly is therefore required for growth of the unicellular eukaryote S. cerevisiae. GPI synthesis could therefore be expl",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.104407+00:00"
+}

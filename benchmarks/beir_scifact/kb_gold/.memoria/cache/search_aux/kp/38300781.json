@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "38300781",
+  "source_fingerprint": "1b3c5e5ed0e341416c62c7d1d52bc81e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "38300781",
+    "ionic-protein-lipid-interaction-at-the-plasma-membrane:-what-can-the-charge-do?"
+  ],
+  "key_phrases": [
+    "ionic",
+    "protein",
+    "lipid",
+    "interaction",
+    "at",
+    "plasma",
+    "membrane",
+    "what"
+  ],
+  "summary_1l": "Ionic protein-lipid interaction at the plasma membrane: what can the charge do?",
+  "query_hits": [],
+  "embed_text": "38300781 Ionic protein-lipid interaction at the plasma membrane: what can the charge do? science scifact Phospholipids are the major components of cell membranes, but they have functional roles beyond forming lipid bilayers. In particular, acidic phospholipids form microdomains in the plasma membrane and can ionically interact with proteins… 38300781 ionic-protein-lipid-interaction-at-the-plasma-membrane:-what-can-the-charge-do? ionic protein lipid interaction at plasma membrane what Ionic protein-lipid interaction at the plasma membrane: what can the charge do? Ionic protein-lipid interaction at the plasma membrane: what can the charge do? Phospholipids are the major components of cell membranes, but they have functional roles beyond forming lipid bilayers. In particular, acidic phospholipids form microdomains in the plasma membrane and can ionically interact with proteins via polybasic sequences, which can have functional consequences for the protein. The list of proteins regulated by ionic protein-lipid interaction has been quickly expanding, and now includes membrane proteins, cytoplasmic soluble proteins, and viral proteins. Here we review how acidic phospholipids in the plasma membrane regulate protein structure and function via ionic interactions, and how Ca(2+) regulates ionic protein-lipid interactions via direct and indirect mechanisms.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.378401+00:00"
+}

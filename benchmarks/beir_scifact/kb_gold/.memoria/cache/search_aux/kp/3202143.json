@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3202143",
+  "source_fingerprint": "57f33a1c6728f167404e2bbdc4dc281d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3202143",
+    "insulin-signaling-and-dietary-restriction-differentially-influence-the-decline-of-learning-and-memory-with-age"
+  ],
+  "key_phrases": [
+    "insulin",
+    "signaling",
+    "dietary",
+    "restriction",
+    "differentially",
+    "influence",
+    "decline",
+    "learning"
+  ],
+  "summary_1l": "Of all the age-related declines, memory loss is one of the most devastating.",
+  "query_hits": [],
+  "embed_text": "3202143 Insulin Signaling and Dietary Restriction Differentially Influence the Decline of Learning and Memory with Age science scifact Of all the age-related declines, memory loss is one of the most devastating. While conditions that increase longevity have been identified, the effects of these longevity-promoting factors on learning and memory are unknown. Here we show… 3202143 insulin-signaling-and-dietary-restriction-differentially-influence-the-decline-of-learning-and-memory-with-age insulin signaling dietary restriction differentially influence decline learning Of all the age-related declines, memory loss is one of the most devastating. Insulin Signaling and Dietary Restriction Differentially Influence the Decline of Learning and Memory with Age Of all the age-related declines, memory loss is one of the most devastating. While conditions that increase longevity have been identified, the effects of these longevity-promoting factors on learning and memory are unknown. Here we show that the C. elegans Insulin/IGF-1 receptor mutant daf-2 improves memory performance early in adulthood and maintains learning ability better with age but, surprisingly, demonstrates no extension in long-term memory with age. By contrast, eat-2 mutants, a model of Dietary Restriction (DR), exhibit impaired long-term memory in young adulthood but maintain this level of memory longer with age. We find that crh-1, the C. elegans homolog of the CREB tr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.106199+00:00"
+}

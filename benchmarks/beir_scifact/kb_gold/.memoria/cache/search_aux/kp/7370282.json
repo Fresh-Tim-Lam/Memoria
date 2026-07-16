@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7370282",
+  "source_fingerprint": "d943f01eaf31630147214226c84acffb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7370282",
+    "podoplanin-rich-stromal-networks-induce-dendritic-cell-motility-via-activation-of-the-c-type-lectin-receptor-clec-2"
+  ],
+  "key_phrases": [
+    "podoplanin",
+    "rich",
+    "stromal",
+    "networks",
+    "induce",
+    "dendritic",
+    "cell",
+    "motility"
+  ],
+  "summary_1l": "To initiate adaptive immunity, dendritic cells (DCs) move from parenchymal tissues t",
+  "query_hits": [],
+  "embed_text": "7370282 Podoplanin-Rich Stromal Networks Induce Dendritic Cell Motility via Activation of the C-type Lectin Receptor CLEC-2 science scifact To initiate adaptive immunity, dendritic cells (DCs) move from parenchymal tissues to lymphoid organs by migrating along stromal scaffolds that display the glycoprotein podoplanin (PDPN). PDPN is expressed by lymphatic endothelial and… 7370282 podoplanin-rich-stromal-networks-induce-dendritic-cell-motility-via-activation-of-the-c-type-lectin-receptor-clec-2 podoplanin rich stromal networks induce dendritic cell motility To initiate adaptive immunity, dendritic cells (DCs) move from parenchymal tissues t Podoplanin-Rich Stromal Networks Induce Dendritic Cell Motility via Activation of the C-type Lectin Receptor CLEC-2 To initiate adaptive immunity, dendritic cells (DCs) move from parenchymal tissues to lymphoid organs by migrating along stromal scaffolds that display the glycoprotein podoplanin (PDPN). PDPN is expressed by lymphatic endothelial and fibroblastic reticular cells and promotes blood-lymph separation during development by activating the C-type lectin receptor, CLEC-2, on platelets. Here, we describe a role for CLEC-2 in the morphodynamic behavior and motility of DCs. CLEC-2 deficiency in DCs impaired their entry into lymphatics and trafficking to and within lymph nodes, thereby reducing T cell priming. CLEC-2 engagement of PDPN was necessary for DCs to spread and migrate along",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.137362+00:00"
+}

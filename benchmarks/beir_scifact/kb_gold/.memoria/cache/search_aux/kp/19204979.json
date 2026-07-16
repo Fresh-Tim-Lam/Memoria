@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19204979",
+  "source_fingerprint": "7dc74ff1fbcd6d3199b7905b87a1bab1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19204979",
+    "pericytes-of-human-skeletal-muscle-are-myogenic-precursors-distinct-from-satellite-cells"
+  ],
+  "key_phrases": [
+    "pericytes",
+    "human",
+    "skeletal",
+    "muscle",
+    "myogenic",
+    "precursors",
+    "distinct",
+    "from"
+  ],
+  "summary_1l": "Cells derived from blood vessels of human skeletal muscle can regenerate skeletal muscle, similarly to embryoni",
+  "query_hits": [],
+  "embed_text": "19204979 Pericytes of human skeletal muscle are myogenic precursors distinct from satellite cells science scifact Cells derived from blood vessels of human skeletal muscle can regenerate skeletal muscle, similarly to embryonic mesoangioblasts. However, adult cells do not express endothelial markers, but instead express markers of pericytes, such as… 19204979 pericytes-of-human-skeletal-muscle-are-myogenic-precursors-distinct-from-satellite-cells pericytes human skeletal muscle myogenic precursors distinct from Cells derived from blood vessels of human skeletal muscle can regenerate skeletal muscle, similarly to embryoni Pericytes of human skeletal muscle are myogenic precursors distinct from satellite cells Cells derived from blood vessels of human skeletal muscle can regenerate skeletal muscle, similarly to embryonic mesoangioblasts. However, adult cells do not express endothelial markers, but instead express markers of pericytes, such as NG2 proteoglycan and alkaline phosphatase (ALP), and can be prospectively isolated from freshly dissociated ALP+ cells. Unlike canonical myogenic precursors (satellite cells), pericyte-derived cells express myogenic markers only in differentiated myotubes, which they form spontaneously with high efficiency. When transplanted into severe combined immune deficient–X-linked, mouse muscular dystrophy (scid–mdx) mice, pericyte-derived cells colonize host muscle and generate",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.278892+00:00"
+}

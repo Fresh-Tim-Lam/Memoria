@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "31890716",
+  "source_fingerprint": "fb5738c41c22a6dd7e7d6760c58da1d0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "31890716",
+    "association-of-plasma-resistin-with-glomerular-filtration-rate-and-albuminuria-in-hypertensive-adults."
+  ],
+  "key_phrases": [
+    "association",
+    "plasma",
+    "resistin",
+    "with",
+    "glomerular",
+    "filtration",
+    "rate",
+    "albuminuria"
+  ],
+  "summary_1l": "Association of plasma resistin with glomerular filtration rate and albuminuria in hypertensive adults.",
+  "query_hits": [],
+  "embed_text": "31890716 Association of plasma resistin with glomerular filtration rate and albuminuria in hypertensive adults. science scifact Resistin, a recently discovered proinflammatory cytokine, has been variably associated with insulin resistance, inflammation, and renal dysfunction. We investigated the association of plasma resistin with estimated glomerular filtration… 31890716 association-of-plasma-resistin-with-glomerular-filtration-rate-and-albuminuria-in-hypertensive-adults. association plasma resistin with glomerular filtration rate albuminuria Association of plasma resistin with glomerular filtration rate and albuminuria in hypertensive adults. Association of plasma resistin with glomerular filtration rate and albuminuria in hypertensive adults. Resistin, a recently discovered proinflammatory cytokine, has been variably associated with insulin resistance, inflammation, and renal dysfunction. We investigated the association of plasma resistin with estimated glomerular filtration rate and albuminuria in 1575 hypertensive adults without known coronary heart disease or stroke (857 blacks and 718 non-Hispanic whites). Resistin was measured by a solid phase sandwich immunoassay, estimated glomerular filtration rate was estimated from serum creatinine, and albuminuria was expressed as urine albumin:creatinine ratio. After adjustment for coronary heart disease risk factors (age, sex, body mass index, smoking history, systolic blood press",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.972259+00:00"
+}

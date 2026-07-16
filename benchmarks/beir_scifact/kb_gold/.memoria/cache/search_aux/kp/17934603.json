@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17934603",
+  "source_fingerprint": "4d976bd9e8f8548d9d91c4fd0a710ae6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17934603",
+    "ccr2-and-cxcr4-regulate-peripheral-blood-monocyte-pharmacodynamics-and-link-to-efficacy-in-experimental-autoimmune-encephalomyelitis"
+  ],
+  "key_phrases": [
+    "ccr2",
+    "cxcr4",
+    "regulate",
+    "peripheral",
+    "blood",
+    "monocyte",
+    "pharmacodynamics",
+    "link"
+  ],
+  "summary_1l": "BACKGROUND CCR2 plays a key role in regulating monocyte trafficking",
+  "query_hits": [],
+  "embed_text": "17934603 CCR2 and CXCR4 regulate peripheral blood monocyte pharmacodynamics and link to efficacy in experimental autoimmune encephalomyelitis science scifact BACKGROUND CCR2 plays a key role in regulating monocyte trafficking to sites of inflammation and therefore has been the focus of much interest as a target for inflammatory disease. METHODS Here we examined the effects of CCR2 blockade with… 17934603 ccr2-and-cxcr4-regulate-peripheral-blood-monocyte-pharmacodynamics-and-link-to-efficacy-in-experimental-autoimmune-encephalomyelitis ccr2 cxcr4 regulate peripheral blood monocyte pharmacodynamics link BACKGROUND CCR2 plays a key role in regulating monocyte trafficking CCR2 and CXCR4 regulate peripheral blood monocyte pharmacodynamics and link to efficacy in experimental autoimmune encephalomyelitis BACKGROUND CCR2 plays a key role in regulating monocyte trafficking to sites of inflammation and therefore has been the focus of much interest as a target for inflammatory disease. METHODS Here we examined the effects of CCR2 blockade with a potent small molecule antagonist to determine the pharmacodynamic consequences on the peripheral blood monocyte compartment in the context of acute and chronic inflammatory processes. RESULTS We demonstrate that CCR2 antagonism in vivo led to a rapid decrease in the number of circulating Ly6Chi monocytes and that this decrease was largely due to the CXCR4-dependent sequestration of these cells in the bone marrow, providin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.522978+00:00"
+}

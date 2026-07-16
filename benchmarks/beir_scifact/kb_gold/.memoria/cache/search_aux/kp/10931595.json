@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10931595",
+  "source_fingerprint": "56b55c763d82f40f2ace9056583864da",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10931595",
+    "geometry,-epistasis,-and-developmental-patterning."
+  ],
+  "key_phrases": [
+    "geometry",
+    "epistasis",
+    "developmental",
+    "patterning",
+    "signaling",
+    "networks",
+    "composed",
+    "dozens"
+  ],
+  "summary_1l": "Geometry, epistasis, and developmental patterning.",
+  "query_hits": [],
+  "embed_text": "10931595 Geometry, epistasis, and developmental patterning. science scifact Developmental signaling networks are composed of dozens of components whose interactions are very difficult to quantify in an embryo. Geometric reasoning enumerates a discrete hierarchy of phenotypic models with a few composite variables… 10931595 geometry,-epistasis,-and-developmental-patterning. geometry epistasis developmental patterning signaling networks composed dozens Geometry, epistasis, and developmental patterning. Geometry, epistasis, and developmental patterning. Developmental signaling networks are composed of dozens of components whose interactions are very difficult to quantify in an embryo. Geometric reasoning enumerates a discrete hierarchy of phenotypic models with a few composite variables whose parameters may be defined by in vivo data. Vulval development in the nematode Caenorhabditis elegans is a classic model for the integration of two signaling pathways; induction by EGF and lateral signaling through Notch. Existing data for the relative probabilities of the three possible terminal cell types in diverse genetic backgrounds as well as timed ablation of the inductive signal favor one geometric model and suffice to fit most of its parameters. The model is fully dynamic and encompasses both",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:05.690342+00:00"
+}

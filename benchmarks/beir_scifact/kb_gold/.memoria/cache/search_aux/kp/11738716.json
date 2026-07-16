@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11738716",
+  "source_fingerprint": "72c03e34ea9c1c259f8050e068a02179",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11738716",
+    "steroid-hormone-signalling-links-reproduction-to-lifespan-in-dietary-restricted-caenorhabditis-elegans."
+  ],
+  "key_phrases": [
+    "steroid",
+    "hormone",
+    "signalling",
+    "links",
+    "reproduction",
+    "lifespan",
+    "dietary",
+    "restricted"
+  ],
+  "summary_1l": "Steroid hormone signalling links reproduction to lifespan in dietary-restricted Caenorhabditis elegans.",
+  "query_hits": [],
+  "embed_text": "11738716 Steroid hormone signalling links reproduction to lifespan in dietary-restricted Caenorhabditis elegans. science scifact Dietary restriction (DR) increases healthspan and longevity in many species, including primates, but it is often accompanied by impaired reproductive function. Whether signals associated with the reproductive system contribute to or are… 11738716 steroid-hormone-signalling-links-reproduction-to-lifespan-in-dietary-restricted-caenorhabditis-elegans. steroid hormone signalling links reproduction lifespan dietary restricted Steroid hormone signalling links reproduction to lifespan in dietary-restricted Caenorhabditis elegans. Steroid hormone signalling links reproduction to lifespan in dietary-restricted Caenorhabditis elegans. Dietary restriction (DR) increases healthspan and longevity in many species, including primates, but it is often accompanied by impaired reproductive function. Whether signals associated with the reproductive system contribute to or are required for DR effects on lifespan has not been established. Here we show that expression of the cytochrome P450 DAF-9/CYP450 and production of the steroid hormone Δ(7)-dafachronic acid (DA) are increased in C. elegans subjected to DR. DA signalling through the non-canonical nuclear hormone receptor NHR-8/NHR and the nutrient-responsive kinase let-363/mTOR is essential for DR-mediated longevity. Steroid signalling also affects germline plasticity in resp",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:07.061079+00:00"
+}

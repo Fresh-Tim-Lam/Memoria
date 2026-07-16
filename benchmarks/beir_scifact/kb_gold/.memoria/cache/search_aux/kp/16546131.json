@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16546131",
+  "source_fingerprint": "7dd2ccf22c76934c4ef1732ab94f5b98",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16546131",
+    "activator-protein-1-(ap-1)-dna-binding-activity-is-induced-by-hydroxyurea-in-organogenesis-stage-mouse-embryos"
+  ],
+  "key_phrases": [
+    "activator",
+    "protein",
+    "ap",
+    "dna",
+    "binding",
+    "activity",
+    "induced",
+    "by"
+  ],
+  "summary_1l": "Hydroxyurea is a potent teratogen; free radical scavengers or antioxidants reduce its ter",
+  "query_hits": [],
+  "embed_text": "16546131 Activator protein-1 (AP-1) DNA binding activity is induced by hydroxyurea in organogenesis stage mouse embryos science scifact Hydroxyurea is a potent teratogen; free radical scavengers or antioxidants reduce its teratogenicity. Activator Protein-1 (AP-1) and NF-kappaB are redox-sensitive transcription factors with important roles in normal development and the… 16546131 activator-protein-1-(ap-1)-dna-binding-activity-is-induced-by-hydroxyurea-in-organogenesis-stage-mouse-embryos activator protein ap dna binding activity induced by Hydroxyurea is a potent teratogen; free radical scavengers or antioxidants reduce its ter Activator protein-1 (AP-1) DNA binding activity is induced by hydroxyurea in organogenesis stage mouse embryos Hydroxyurea is a potent teratogen; free radical scavengers or antioxidants reduce its teratogenicity. Activator Protein-1 (AP-1) and NF-kappaB are redox-sensitive transcription factors with important roles in normal development and the stress response. This study was designed to determine if exposure to teratogenic doses of hydroxyurea induces oxidative stress and alters gene expression by activating these transcription factors. Pregnant mice were treated with saline or hydroxyurea (400, 500, or 600 mg/kg) on gestation day 9 (GD 9) and killed either on GD 9, 0.5, 3, or 6 h after treatment, to assess oxidative stress and transcription factor activities, or on GD 18, to assess fetal",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.441699+00:00"
+}

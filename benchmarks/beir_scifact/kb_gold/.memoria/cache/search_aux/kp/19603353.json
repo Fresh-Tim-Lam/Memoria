@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19603353",
+  "source_fingerprint": "8361c4218570fd78703dc3cb616aecda",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19603353",
+    "balancing-co-stimulation-and-inhibition-with-btla-and-hvem"
+  ],
+  "key_phrases": [
+    "balancing",
+    "co",
+    "stimulation",
+    "inhibition",
+    "with",
+    "btla",
+    "hvem",
+    "interaction"
+  ],
+  "summary_1l": "The interaction between B- and T-lymphocyte attenuator (BTLA), an inhibitory receptor whose extracellular domain belongs to the immunoglobuli",
+  "query_hits": [],
+  "embed_text": "19603353 Balancing co-stimulation and inhibition with BTLA and HVEM science scifact The interaction between B- and T-lymphocyte attenuator (BTLA), an inhibitory receptor whose extracellular domain belongs to the immunoglobulin superfamily, and herpesvirus-entry mediator (HVEM), a co-stimulatory tumour-necrosis factor… 19603353 balancing-co-stimulation-and-inhibition-with-btla-and-hvem balancing co stimulation inhibition with btla hvem interaction The interaction between B- and T-lymphocyte attenuator (BTLA), an inhibitory receptor whose extracellular domain belongs to the immunoglobuli Balancing co-stimulation and inhibition with BTLA and HVEM The interaction between B- and T-lymphocyte attenuator (BTLA), an inhibitory receptor whose extracellular domain belongs to the immunoglobulin superfamily, and herpesvirus-entry mediator (HVEM), a co-stimulatory tumour-necrosis factor receptor, is unique in that it is the only receptor–ligand interaction that directly bridges these two families of receptors. This interaction has raised many questions about how receptors from two different families could interact and what downstream signalling events might occur as a result of receptor ligation. As we discuss, recent studies show that engagement of HVEM with its endogenous ligand (LIGHT) from the tumour-necrosis factor family induces a powerful immune response, whereas HVEM interact",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.901950+00:00"
+}

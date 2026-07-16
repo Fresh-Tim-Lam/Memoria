@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20864487",
+  "source_fingerprint": "b1ee6e8ce3f7c16b5cd43ab0263d3fae",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20864487",
+    "virus-specific-cytotoxic-t-lymphocyte-responses-select-for-amino-acid-variation-in-simian-immunodeficiency-virus-env-and-nef"
+  ],
+  "key_phrases": [
+    "virus",
+    "specific",
+    "cytotoxic",
+    "lymphocyte",
+    "responses",
+    "select",
+    "amino",
+    "acid"
+  ],
+  "summary_1l": "Cytotoxic T-lymphocyte (CTL) responses to human immunodeficiency virus aris",
+  "query_hits": [],
+  "embed_text": "20864487 Virus-specific cytotoxic T-lymphocyte responses select for amino-acid variation in simian immunodeficiency virus Env and Nef science scifact Cytotoxic T-lymphocyte (CTL) responses to human immunodeficiency virus arise early after infection, but ultimately fail to prevent progression to AIDS. Human immunodeficiency virus may evade the CTL response by accumulating amino-acid… 20864487 virus-specific-cytotoxic-t-lymphocyte-responses-select-for-amino-acid-variation-in-simian-immunodeficiency-virus-env-and-nef virus specific cytotoxic lymphocyte responses select amino acid Cytotoxic T-lymphocyte (CTL) responses to human immunodeficiency virus aris Virus-specific cytotoxic T-lymphocyte responses select for amino-acid variation in simian immunodeficiency virus Env and Nef Cytotoxic T-lymphocyte (CTL) responses to human immunodeficiency virus arise early after infection, but ultimately fail to prevent progression to AIDS. Human immunodeficiency virus may evade the CTL response by accumulating amino-acid replacements within CTL epitopes. We studied 10 CTL epitopes during the course of simian immunodeficiency virus disease progression in three related macaques. All 10 of these CTL epitopes accumulated amino-acid replacements and showed evidence of positive selection by the time the macaques died. Many of the amino-acid replacements in these epitopes reduced or eliminated major histocompatibility complex class I binding and/or CTL recogni",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.021956+00:00"
+}

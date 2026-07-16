@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36653415",
+  "source_fingerprint": "b81cfd01e0d638160e4e7bab6aeb8996",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36653415",
+    "lactate-metabolism-in-human-lung-tumors"
+  ],
+  "key_phrases": [
+    "lactate",
+    "metabolism",
+    "human",
+    "lung",
+    "tumors",
+    "cancer",
+    "cells",
+    "consume"
+  ],
+  "summary_1l": "Cancer cells consume glucose and secrete lactate in culture.",
+  "query_hits": [],
+  "embed_text": "36653415 Lactate Metabolism in Human Lung Tumors science scifact Cancer cells consume glucose and secrete lactate in culture. It is unknown whether lactate contributes to energy metabolism in living tumors. We previously reported that human non-small-cell lung cancers (NSCLCs) oxidize glucose in the… 36653415 lactate-metabolism-in-human-lung-tumors lactate metabolism human lung tumors cancer cells consume Cancer cells consume glucose and secrete lactate in culture. Lactate Metabolism in Human Lung Tumors Cancer cells consume glucose and secrete lactate in culture. It is unknown whether lactate contributes to energy metabolism in living tumors. We previously reported that human non-small-cell lung cancers (NSCLCs) oxidize glucose in the tricarboxylic acid (TCA) cycle. Here, we show that lactate is also a TCA cycle carbon source for NSCLC. In human NSCLC, evidence of lactate utilization was most apparent in tumors with high 18fluorodeoxyglucose uptake and aggressive oncological behavior. Infusing human NSCLC patients with 13C-lactate revealed extensive labeling of TCA cycle metabolites. In mice, deleting monocarboxylate transporter-1 (MCT1) from tumor cells eliminated lactate-dependent metabolite labeling, confirming tumor-cell-autonomous lactate uptak",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:43.611948+00:00"
+}

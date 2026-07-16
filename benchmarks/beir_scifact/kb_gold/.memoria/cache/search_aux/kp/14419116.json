@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14419116",
+  "source_fingerprint": "0ac72b8a8ec9b7bfa9f663f0b15416b3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14419116",
+    "potentiation-of-nmda-currents-by-pituitary-adenylate-cyclase-activating-polypeptide-in-neonatal-rat-sympathetic-preganglionic-neurons."
+  ],
+  "key_phrases": [
+    "potentiation",
+    "nmda",
+    "currents",
+    "by",
+    "pituitary",
+    "adenylate",
+    "cyclase",
+    "activating"
+  ],
+  "summary_1l": "Potentiation of NMDA currents by pituitary adenylate cyclase activating polypeptide in neonatal rat sympathetic preganglionic neurons.",
+  "query_hits": [],
+  "embed_text": "14419116 Potentiation of NMDA currents by pituitary adenylate cyclase activating polypeptide in neonatal rat sympathetic preganglionic neurons. science scifact Whole cell patch-clamp recordings were made from sympathetic preganglionic neurons (SPNs) in the intermediolateral cell column of thoracolumbar spinal cord slices of 12- to 16-day-old rats, and the effects of pituitary adenylate cyclase… 14419116 potentiation-of-nmda-currents-by-pituitary-adenylate-cyclase-activating-polypeptide-in-neonatal-rat-sympathetic-preganglionic-neurons. potentiation nmda currents by pituitary adenylate cyclase activating Potentiation of NMDA currents by pituitary adenylate cyclase activating polypeptide in neonatal rat sympathetic preganglionic neurons. Potentiation of NMDA currents by pituitary adenylate cyclase activating polypeptide in neonatal rat sympathetic preganglionic neurons. Whole cell patch-clamp recordings were made from sympathetic preganglionic neurons (SPNs) in the intermediolateral cell column of thoracolumbar spinal cord slices of 12- to 16-day-old rats, and the effects of pituitary adenylate cyclase activating polypeptide (PACAP)-38 on N-methyl-D-aspartate (NMDA)- and kainate (KA)-induced inward currents were examined. PACAP, in concentrations (10-30 nM) that caused no significant change of holding currents, reversibly increased NMDA-induced currents but not KA-induced currents. At higher concentrations (>30 nM), the peptide produced a sustained inward current. The potentiating effect of PACAP was nullified by prior inc",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.850853+00:00"
+}

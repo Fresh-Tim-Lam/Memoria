@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36721932",
+  "source_fingerprint": "e3e04e455019071cb0aeef6e592d9501",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36721932",
+    "paindetect:-a-new-screening-questionnaire-to-identify-neuropathic-components-in-patients-with-back-pain."
+  ],
+  "key_phrases": [
+    "paindetect",
+    "new",
+    "screening",
+    "questionnaire",
+    "identify",
+    "neuropathic",
+    "components",
+    "patients"
+  ],
+  "summary_1l": "painDETECT: a new screening questionnaire to identify neuropathic components in patients with back pain.",
+  "query_hits": [],
+  "embed_text": "36721932 painDETECT: a new screening questionnaire to identify neuropathic components in patients with back pain. science scifact OBJECTIVE Nociceptive and neuropathic components both contribute to pain. Since these components require different pain management strategies, correct pain diagnosis before and during treatment is highly desirable. As low back pain (LBP)… 36721932 paindetect:-a-new-screening-questionnaire-to-identify-neuropathic-components-in-patients-with-back-pain. paindetect new screening questionnaire identify neuropathic components patients painDETECT: a new screening questionnaire to identify neuropathic components in patients with back pain. painDETECT: a new screening questionnaire to identify neuropathic components in patients with back pain. OBJECTIVE Nociceptive and neuropathic components both contribute to pain. Since these components require different pain management strategies, correct pain diagnosis before and during treatment is highly desirable. As low back pain (LBP) patients constitute an important subgroup of chronic pain patients, we addressed the following issues: (i) to establish a simple, validated screening tool to detect neuropathic pain (NeP) components in chronic LBP patients, (ii) to determine the prevalence of neuropathic pain components in LBP in a large-scale survey, and (iii) to determine whether LBP patients with an NeP component suffer from worse, or different, co-morbidities. METHODS In co-operatio",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:43.673958+00:00"
+}

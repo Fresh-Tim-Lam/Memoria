@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25670099",
+  "source_fingerprint": "6363c138bc9956abca18c5a297d0ce1c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25670099",
+    "studies-of-nuclear-and-cytoplasmic-behaviour-during-the-five-mitotic-cycles-that-precede-gastrulation-in-drosophila-embryogenesis."
+  ],
+  "key_phrases": [
+    "studies",
+    "nuclear",
+    "cytoplasmic",
+    "behaviour",
+    "during",
+    "five",
+    "mitotic",
+    "cycles"
+  ],
+  "summary_1l": "Studies of nuclear and cytoplasmic behaviour during the five mitotic cycles that precede gastrulation in Drosophila embryogenesis.",
+  "query_hits": [],
+  "embed_text": "25670099 Studies of nuclear and cytoplasmic behaviour during the five mitotic cycles that precede gastrulation in Drosophila embryogenesis. science scifact Using differential interference contrast optics, combined with cinematography, we have studied the morphological changes that the living, syncytial embryo undergoes from stage 10 through 14 of Drosophila embryogenesis, that is just prior… 25670099 studies-of-nuclear-and-cytoplasmic-behaviour-during-the-five-mitotic-cycles-that-precede-gastrulation-in-drosophila-embryogenesis. studies nuclear cytoplasmic behaviour during five mitotic cycles Studies of nuclear and cytoplasmic behaviour during the five mitotic cycles that precede gastrulation in Drosophila embryogenesis. Studies of nuclear and cytoplasmic behaviour during the five mitotic cycles that precede gastrulation in Drosophila embryogenesis. Using differential interference contrast optics, combined with cinematography, we have studied the morphological changes that the living, syncytial embryo undergoes from stage 10 through 14 of Drosophila embryogenesis, that is just prior to and during formation of the cellular blastoderm. We have supplemented these studies with data collected from fixed, stained, whole embryos. The following information has been obtained. The average duration of nuclear cycles 10, 11, 12 and 13 is about 9, 10, 12 and 21 min, respectively (25 degrees C). In these four cycles, the duration of that portion of the mitotic period that lacks a discrete nuclear envelope is 3, 3, 3 and",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.156328+00:00"
+}

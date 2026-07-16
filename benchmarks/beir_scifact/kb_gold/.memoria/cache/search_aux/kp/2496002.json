@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2496002",
+  "source_fingerprint": "bf55118ea5e6fa8d9975bfc0970ef9a6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2496002",
+    "familial-amyloidotic-polyneuropathy:-current-and-emerging-treatment-options-for-transthyretin-mediated-amyloidosis"
+  ],
+  "key_phrases": [
+    "familial",
+    "amyloidotic",
+    "polyneuropathy",
+    "current",
+    "emerging",
+    "treatment",
+    "options",
+    "transthyretin"
+  ],
+  "summary_1l": "Transthyretin familial amyloid polyneuropathy (TTR-FAP) is a fatal clinical disorder",
+  "query_hits": [],
+  "embed_text": "2496002 Familial amyloidotic polyneuropathy: current and emerging treatment options for transthyretin-mediated amyloidosis science scifact Transthyretin familial amyloid polyneuropathy (TTR-FAP) is a fatal clinical disorder characterized by extracellular deposition of abnormal fibrils derived from misfolded, normally soluble transthyretin (TTR) molecules. The disease is most… 2496002 familial-amyloidotic-polyneuropathy:-current-and-emerging-treatment-options-for-transthyretin-mediated-amyloidosis familial amyloidotic polyneuropathy current emerging treatment options transthyretin Transthyretin familial amyloid polyneuropathy (TTR-FAP) is a fatal clinical disorder Familial amyloidotic polyneuropathy: current and emerging treatment options for transthyretin-mediated amyloidosis Transthyretin familial amyloid polyneuropathy (TTR-FAP) is a fatal clinical disorder characterized by extracellular deposition of abnormal fibrils derived from misfolded, normally soluble transthyretin (TTR) molecules. The disease is most commonly caused by a point mutation within the TTR gene inherited in an autosomal dominant fashion. Over 100 of such mutations have been identified, leading to destabilization of the physiological TTR tetramer. As a result, many monomers originate with a tendency for spontaneous conformational changes and self-aggregation. The main clinical feature of TTR-FAP is progressive sensorimotor and autonomic neuropathy. In the beginning, this polyneu",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.653912+00:00"
+}

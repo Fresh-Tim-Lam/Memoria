@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8446324",
+  "source_fingerprint": "eb6b5bc00777dde4c23923a3596de7df",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8446324",
+    "advances-in-brain-tumor-surgery."
+  ],
+  "key_phrases": [
+    "advances",
+    "brain",
+    "tumor",
+    "surgery",
+    "fields",
+    "molecular",
+    "translational",
+    "research"
+  ],
+  "summary_1l": "Advances in brain tumor surgery.",
+  "query_hits": [],
+  "embed_text": "8446324 Advances in brain tumor surgery. science scifact Advances in the fields of molecular and translational research, oncology, and surgery have emboldened the medical community to believe that intrinsic brain tumors may be treatable. Intraoperative imaging and brain mapping allow operations… 8446324 advances-in-brain-tumor-surgery. advances brain tumor surgery fields molecular translational research Advances in brain tumor surgery. Advances in brain tumor surgery. Advances in the fields of molecular and translational research, oncology, and surgery have emboldened the medical community to believe that intrinsic brain tumors may be treatable. Intraoperative imaging and brain mapping allow operations adjacent to eloquent cortex and more radical resection of tumors with increased confidence and safety. Despite these advances, the infiltrating edge of a neoplasm and distant microscopic satellite lesions will never be amendable to a surgical cure. Indeed, it is continued research into the delivery of an efficacious chemobiologic agent that will eventually allows us to manage this primary cause of treatment failure.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.683926+00:00"
+}

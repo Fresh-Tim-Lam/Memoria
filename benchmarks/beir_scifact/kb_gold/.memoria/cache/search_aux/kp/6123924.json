@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6123924",
+  "source_fingerprint": "7c5bc8d3bc9eaa9ff4c7e347cf0b9434",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6123924",
+    "ccr7-provides-localized-access-to-il-2-and-defines-homeostatically-distinct-regulatory-t-cell-subsets"
+  ],
+  "key_phrases": [
+    "ccr7",
+    "provides",
+    "localized",
+    "access",
+    "il",
+    "defines",
+    "homeostatically",
+    "distinct"
+  ],
+  "summary_1l": "Immune tolerance and activation depend on precise control over the number and function of immunosu",
+  "query_hits": [],
+  "embed_text": "6123924 CCR7 provides localized access to IL-2 and defines homeostatically distinct regulatory T cell subsets science scifact Immune tolerance and activation depend on precise control over the number and function of immunosuppressive Foxp3(+) regulatory T (T reg) cells, and the importance of IL-2 in maintaining tolerance and preventing autoimmunity is clear.… 6123924 ccr7-provides-localized-access-to-il-2-and-defines-homeostatically-distinct-regulatory-t-cell-subsets ccr7 provides localized access il defines homeostatically distinct Immune tolerance and activation depend on precise control over the number and function of immunosu CCR7 provides localized access to IL-2 and defines homeostatically distinct regulatory T cell subsets Immune tolerance and activation depend on precise control over the number and function of immunosuppressive Foxp3(+) regulatory T (T reg) cells, and the importance of IL-2 in maintaining tolerance and preventing autoimmunity is clear. However, the homeostatic requirement for IL-2 among specific populations of peripheral T reg cells remains poorly understood. We show that IL-2 selectively maintains a population of quiescent CD44(lo)CD62L(hi) T reg cells that gain access to paracrine IL-2 produced in the T cell zones of secondary lymphoid tissues due to their expression of the chemokine receptor CCR7. In contrast, CD44(hi)CD62L(lo)CCR7(lo) T reg cells that populate nonlymphoid tissues do not",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.014096+00:00"
+}

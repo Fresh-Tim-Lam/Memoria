@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3524352",
+  "source_fingerprint": "ceebf8117d7f8d92bcf5f4c431629831",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3524352",
+    "breast-cancer-clusters-in-the-northeast-united-states:-a-geographic-analysis."
+  ],
+  "key_phrases": [
+    "breast",
+    "cancer",
+    "clusters",
+    "northeast",
+    "united",
+    "states",
+    "geographic",
+    "analysis"
+  ],
+  "summary_1l": "Breast cancer clusters in the northeast United States: a geographic analysis.",
+  "query_hits": [],
+  "embed_text": "3524352 Breast cancer clusters in the northeast United States: a geographic analysis. science scifact High breast cancer mortality rates have been reported in the northeastern part of the United States, with recent attention focused on Long Island, New York. In this study, the authors investigate whether the high breast cancer mortality is… 3524352 breast-cancer-clusters-in-the-northeast-united-states:-a-geographic-analysis. breast cancer clusters northeast united states geographic analysis Breast cancer clusters in the northeast United States: a geographic analysis. Breast cancer clusters in the northeast United States: a geographic analysis. High breast cancer mortality rates have been reported in the northeastern part of the United States, with recent attention focused on Long Island, New York. In this study, the authors investigate whether the high breast cancer mortality is evenly spread over the Northeast, in the sense that any observed clusters of deaths can be explained by chance alone, or whether there are clusters of statistical significance. Demographic data and age-specific breast cancer mortality rates for women were obtained for all 244 counties in 11 northeastern states and for the District of Columbia for 1988-1992. A recently developed spatial scan statistic is used, which searches for clusters of cases without specifying their size or",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.063847+00:00"
+}

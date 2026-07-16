@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17482507",
+  "source_fingerprint": "d0874667a181df441c5e8428efe066c2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17482507",
+    "systematic-review-of-role-of-bisphosphonates-on-skeletal-morbidity-in-metastatic-cancer."
+  ],
+  "key_phrases": [
+    "systematic",
+    "review",
+    "role",
+    "bisphosphonates",
+    "skeletal",
+    "morbidity",
+    "metastatic",
+    "cancer"
+  ],
+  "summary_1l": "Systematic review of role of bisphosphonates on skeletal morbidity in metastatic cancer.",
+  "query_hits": [],
+  "embed_text": "17482507 Systematic review of role of bisphosphonates on skeletal morbidity in metastatic cancer. science scifact OBJECTIVE To review the evidence for the use of bisphosphonates to reduce skeletal morbidity in cancer patients with bone metastases. DATA SOURCES Electronic databases, scanning reference lists, and consultation with experts and… 17482507 systematic-review-of-role-of-bisphosphonates-on-skeletal-morbidity-in-metastatic-cancer. systematic review role bisphosphonates skeletal morbidity metastatic cancer Systematic review of role of bisphosphonates on skeletal morbidity in metastatic cancer. Systematic review of role of bisphosphonates on skeletal morbidity in metastatic cancer. OBJECTIVE To review the evidence for the use of bisphosphonates to reduce skeletal morbidity in cancer patients with bone metastases. DATA SOURCES Electronic databases, scanning reference lists, and consultation with experts and pharmaceutical companies. Foreign language papers were included. STUDY SELECTION Included trials were randomised controlled trials of patients with malignant disease and bone metastases who were treated with oral or intravenous bisphosphonate compared with another bisphosphonate, placebo, or standard care. All trials measured at least one outcome of skeletal morbidity. RESULTS 95 articles were identified; 30 studies fulfilled inclusion criteria. In studies that lasted > or = 6",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.849751+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13583615",
+  "source_fingerprint": "93f5ca8bd56ec75777e7ff267f79ce96",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13583615",
+    "repositioning-of-aurora-b-promoted-by-chiasmata-ensures-sister-chromatid-mono-orientation-in-meiosis-i."
+  ],
+  "key_phrases": [
+    "repositioning",
+    "aurora",
+    "promoted",
+    "by",
+    "chiasmata",
+    "ensures",
+    "sister",
+    "chromatid"
+  ],
+  "summary_1l": "Repositioning of aurora B promoted by chiasmata ensures sister chromatid mono-orientation in meiosis I.",
+  "query_hits": [],
+  "embed_text": "13583615 Repositioning of aurora B promoted by chiasmata ensures sister chromatid mono-orientation in meiosis I. science scifact During meiosis I, kinetochores of sister chromatids are juxtaposed or fused and mono-orient, while homologous chromosomes that are paired by chiasmata (bivalents) have to biorient. In the absence of chiasmata, biorientation of sister… 13583615 repositioning-of-aurora-b-promoted-by-chiasmata-ensures-sister-chromatid-mono-orientation-in-meiosis-i. repositioning aurora promoted by chiasmata ensures sister chromatid Repositioning of aurora B promoted by chiasmata ensures sister chromatid mono-orientation in meiosis I. Repositioning of aurora B promoted by chiasmata ensures sister chromatid mono-orientation in meiosis I. During meiosis I, kinetochores of sister chromatids are juxtaposed or fused and mono-orient, while homologous chromosomes that are paired by chiasmata (bivalents) have to biorient. In the absence of chiasmata, biorientation of sister chromatids (univalents), which carries a risk of aneuploidy, has been occasionally detected in several species, including humans. We show in fission yeast that biorientation of fused sister kinetochores predominates during early prometaphase I. Without chiasmata, this undesirable biorientation of univalents persists and eventually evades the spindle assembly checkpoint, provoking abnormal anaphase. When univalents are connected by chiasmata or by an artifici",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.575864+00:00"
+}

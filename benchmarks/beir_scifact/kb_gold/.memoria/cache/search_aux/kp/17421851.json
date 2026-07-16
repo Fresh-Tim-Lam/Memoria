@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17421851",
+  "source_fingerprint": "512352732d74bbe813837b1237c1f6e0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17421851",
+    "expression-of-interleukin-18-in-human-atherosclerotic-plaques-and-relation-to-plaque-instability."
+  ],
+  "key_phrases": [
+    "expression",
+    "interleukin",
+    "18",
+    "human",
+    "atherosclerotic",
+    "plaques",
+    "relation",
+    "plaque"
+  ],
+  "summary_1l": "Expression of interleukin-18 in human atherosclerotic plaques and relation to plaque instability.",
+  "query_hits": [],
+  "embed_text": "17421851 Expression of interleukin-18 in human atherosclerotic plaques and relation to plaque instability. science scifact BACKGROUND Interleukin (IL)-18 is a potent proinflammatory cytokine with potential atherogenic properties. Its expression and role in atherosclerosis, however, are unknown. METHODS AND RESULTS In the present study, we examined stable and… 17421851 expression-of-interleukin-18-in-human-atherosclerotic-plaques-and-relation-to-plaque-instability. expression interleukin 18 human atherosclerotic plaques relation plaque Expression of interleukin-18 in human atherosclerotic plaques and relation to plaque instability. Expression of interleukin-18 in human atherosclerotic plaques and relation to plaque instability. BACKGROUND Interleukin (IL)-18 is a potent proinflammatory cytokine with potential atherogenic properties. Its expression and role in atherosclerosis, however, are unknown. METHODS AND RESULTS In the present study, we examined stable and unstable human carotid atherosclerotic plaques retrieved by endarterectomy for the presence of IL-18 using reverse transcription-polymerase chain reaction (PCR), Western blot, and immunohistochemical techniques. IL-18 was highly expressed in the atherosclerotic plaques compared with control normal arteries and was localized mainly in plaque macrophages. IL-18 receptor was also upregulated in plaque macrophages and endothelial cells, suggesting potential biolog",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.700719+00:00"
+}

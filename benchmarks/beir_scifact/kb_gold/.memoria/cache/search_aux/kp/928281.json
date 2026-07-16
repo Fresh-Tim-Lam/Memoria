@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "928281",
+  "source_fingerprint": "67723ed50639970d7398377a7a9690e3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "928281",
+    "failure-of-cell-cleavage-induces-senescence-in-tetraploid-primary-cells"
+  ],
+  "key_phrases": [
+    "failure",
+    "cell",
+    "cleavage",
+    "induces",
+    "senescence",
+    "tetraploid",
+    "primary",
+    "cells"
+  ],
+  "summary_1l": "Tetraploidy can arise from various mitotic or cleavage defects in mammalian cells, and inheritance of multiple centrosomes induc",
+  "query_hits": [],
+  "embed_text": "928281 Failure of cell cleavage induces senescence in tetraploid primary cells science scifact Tetraploidy can arise from various mitotic or cleavage defects in mammalian cells, and inheritance of multiple centrosomes induces aneuploidy when tetraploid cells continue to cycle. Arrest of the tetraploid cell cycle is therefore… 928281 failure-of-cell-cleavage-induces-senescence-in-tetraploid-primary-cells failure cell cleavage induces senescence tetraploid primary cells Tetraploidy can arise from various mitotic or cleavage defects in mammalian cells, and inheritance of multiple centrosomes induc Failure of cell cleavage induces senescence in tetraploid primary cells Tetraploidy can arise from various mitotic or cleavage defects in mammalian cells, and inheritance of multiple centrosomes induces aneuploidy when tetraploid cells continue to cycle. Arrest of the tetraploid cell cycle is therefore potentially a critical cellular control. We report here that primary rat embryo fibroblasts (REF52) and human foreskin fibroblasts become senescent in tetraploid G1 after drug- or small interfering RNA (siRNA)-induced failure of cell cleavage. In contrast, T-antigen-transformed REF52 and p53+/+ HCT116 tumor cells rapidly become aneuploid by continuing to cycle after cleavage failure. Tetraploid primary cells quickly become quiescent, as determined by loss of the Ki-67 proliferation marker an",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.623095+00:00"
+}

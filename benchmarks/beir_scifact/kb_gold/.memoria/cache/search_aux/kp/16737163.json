@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16737163",
+  "source_fingerprint": "5d9159768f804ab6e30c958713d22616",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16737163",
+    "myelin-oligodendrocyte-glycoprotein-antibodies-are-associated-with-a-non-ms-course-in-children"
+  ],
+  "key_phrases": [
+    "myelin",
+    "oligodendrocyte",
+    "glycoprotein",
+    "antibodies",
+    "associated",
+    "with",
+    "non",
+    "ms"
+  ],
+  "summary_1l": "OBJECTIVE To determine whether myelin oligodendrocyte glycoprotein antibodies (MOG-Abs) were predictive o",
+  "query_hits": [],
+  "embed_text": "16737163 Myelin oligodendrocyte glycoprotein antibodies are associated with a non-MS course in children science scifact OBJECTIVE To determine whether myelin oligodendrocyte glycoprotein antibodies (MOG-Abs) were predictive of a demyelination phenotype in children presenting with acquired demyelinating syndrome (ADS). METHOD Sixty-five children with a first… 16737163 myelin-oligodendrocyte-glycoprotein-antibodies-are-associated-with-a-non-ms-course-in-children myelin oligodendrocyte glycoprotein antibodies associated with non ms OBJECTIVE To determine whether myelin oligodendrocyte glycoprotein antibodies (MOG-Abs) were predictive o Myelin oligodendrocyte glycoprotein antibodies are associated with a non-MS course in children OBJECTIVE To determine whether myelin oligodendrocyte glycoprotein antibodies (MOG-Abs) were predictive of a demyelination phenotype in children presenting with acquired demyelinating syndrome (ADS). METHOD Sixty-five children with a first episode of ADS (12 acute disseminated encephalomyelitis, 24 optic neuritis, 18 transverse myelitis, 11 other clinically isolated syndrome) were identified from 2 national demyelination programs in the United Kingdom and France. Acute serum samples were tested for MOG-Abs by cell-based assay. Antibodies were used to predict diagnosis of multiple sclerosis (MS) at 1 year. RESULTS Twenty-three of 65 (35%) children had MOG-Abs. Antibody-positive and antibody-negati",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.752860+00:00"
+}

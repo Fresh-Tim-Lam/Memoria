@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6820680",
+  "source_fingerprint": "e086123a3dbf950b807d87ab35e4874f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6820680",
+    "engineered-rna-viral-synthesis-of-micrornas."
+  ],
+  "key_phrases": [
+    "engineered",
+    "rna",
+    "viral",
+    "synthesis",
+    "micrornas",
+    "mirnas",
+    "short",
+    "noncoding"
+  ],
+  "summary_1l": "Engineered RNA viral synthesis of microRNAs.",
+  "query_hits": [],
+  "embed_text": "6820680 Engineered RNA viral synthesis of microRNAs. science scifact MicroRNAs (miRNAs) are short noncoding RNAs that exert posttranscriptional gene silencing and regulate gene expression. In addition to the hundreds of conserved cellular miRNAs that have been identified, miRNAs of viral origin have been… 6820680 engineered-rna-viral-synthesis-of-micrornas. engineered rna viral synthesis micrornas mirnas short noncoding Engineered RNA viral synthesis of microRNAs. Engineered RNA viral synthesis of microRNAs. MicroRNAs (miRNAs) are short noncoding RNAs that exert posttranscriptional gene silencing and regulate gene expression. In addition to the hundreds of conserved cellular miRNAs that have been identified, miRNAs of viral origin have been isolated and found to modulate both the viral life cycle and the cellular transcriptome. Thus far, detection of virus-derived miRNAs has been largely limited to DNA viruses, suggesting that RNA viruses may be unable to exploit this aspect of transcriptional regulation. Lack of RNA virus-produced miRNAs has been attributed to the replicative constraints that would incur following RNase III processing of a genomic hairpin. To ascertain whether the generation of viral miRNAs is limited to DNA viruses, we investigate",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.763521+00:00"
+}

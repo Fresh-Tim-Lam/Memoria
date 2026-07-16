@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3419802",
+  "source_fingerprint": "95133863f5ef5e025f3f9b7621591f33",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3419802",
+    "microenvironment-dependent-growth-of-pre-neoplastic-and-malignant-plasma-cells-in-humanized-mice"
+  ],
+  "key_phrases": [
+    "microenvironment",
+    "dependent",
+    "growth",
+    "pre",
+    "neoplastic",
+    "malignant",
+    "plasma",
+    "cells"
+  ],
+  "summary_1l": "Most human cancers, including myeloma, are preceded by a precursor state.",
+  "query_hits": [],
+  "embed_text": "3419802 Microenvironment-dependent growth of pre-neoplastic and malignant plasma cells in humanized mice science scifact Most human cancers, including myeloma, are preceded by a precursor state. There is an unmet need for in vivo models to study the interaction of human preneoplastic cells in the bone marrow microenvironment with non-malignant cells. Here,… 3419802 microenvironment-dependent-growth-of-pre-neoplastic-and-malignant-plasma-cells-in-humanized-mice microenvironment dependent growth pre neoplastic malignant plasma cells Most human cancers, including myeloma, are preceded by a precursor state. Microenvironment-dependent growth of pre-neoplastic and malignant plasma cells in humanized mice Most human cancers, including myeloma, are preceded by a precursor state. There is an unmet need for in vivo models to study the interaction of human preneoplastic cells in the bone marrow microenvironment with non-malignant cells. Here, we genetically humanized mice to permit the growth of primary human preneoplastic and malignant plasma cells together with non-malignant cells in vivo. Growth was largely restricted to the bone marrow, mirroring the pattern in patients with myeloma. Xenografts captured the genomic complexity of parental tumors and revealed additional somatic changes. Moreover, xenografts from patients with preneoplastic gammopathy showed progressive growth, suggesting that the",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.209903+00:00"
+}

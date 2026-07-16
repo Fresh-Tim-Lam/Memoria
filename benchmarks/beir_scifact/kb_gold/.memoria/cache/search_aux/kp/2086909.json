@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2086909",
+  "source_fingerprint": "c1eaa35242e547ce4f8c923fe5b5fa6c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2086909",
+    "tet1-is-dispensable-for-maintaining-pluripotency-and-its-loss-is-compatible-with-embryonic-and-postnatal-development."
+  ],
+  "key_phrases": [
+    "tet1",
+    "dispensable",
+    "maintaining",
+    "pluripotency",
+    "its",
+    "loss",
+    "compatible",
+    "with"
+  ],
+  "summary_1l": "Tet1 is dispensable for maintaining pluripotency and its loss is compatible with embryonic and postnatal development.",
+  "query_hits": [],
+  "embed_text": "2086909 Tet1 is dispensable for maintaining pluripotency and its loss is compatible with embryonic and postnatal development. science scifact The Tet family of enzymes (Tet1/2/3) converts 5-methylcytosine (5mC) to 5-hydroxymethylcytosine (5hmC). Mouse embryonic stem cells (mESCs) highly express Tet1 and have an elevated level of 5hmC. Tet1 has been implicated in ESC maintenance… 2086909 tet1-is-dispensable-for-maintaining-pluripotency-and-its-loss-is-compatible-with-embryonic-and-postnatal-development. tet1 dispensable maintaining pluripotency its loss compatible with Tet1 is dispensable for maintaining pluripotency and its loss is compatible with embryonic and postnatal development. Tet1 is dispensable for maintaining pluripotency and its loss is compatible with embryonic and postnatal development. The Tet family of enzymes (Tet1/2/3) converts 5-methylcytosine (5mC) to 5-hydroxymethylcytosine (5hmC). Mouse embryonic stem cells (mESCs) highly express Tet1 and have an elevated level of 5hmC. Tet1 has been implicated in ESC maintenance and lineage specification in vitro but its precise function in development is not well defined. To establish the role of Tet1 in pluripotency and development, we have generated Tet1 mutant mESCs and mice. Tet1(-/-) ESCs have reduced levels of 5hmC and subtle changes in global gene expression, and are pluripotent and support development of live-born mice in tetraploid complementation assay, but display skewed differentiation toward trophect",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.046623+00:00"
+}

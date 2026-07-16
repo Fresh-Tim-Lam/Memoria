@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9159125",
+  "source_fingerprint": "86bd5043fe9dc9080a959b68bee87d9e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9159125",
+    "lipopolysaccharide-dependent-prostaglandin-e(2)-production-is-regulated-by-the-glutathione-dependent-prostaglandin-e(2)-synthase-gene-induced-by-the-toll-like-receptor-4/myd88/nf-il6-pathway."
+  ],
+  "key_phrases": [
+    "lipopolysaccharide",
+    "dependent",
+    "prostaglandin",
+    "production",
+    "regulated",
+    "by",
+    "glutathione",
+    "synthase"
+  ],
+  "summary_1l": "Lipopolysaccharide-dependent prostaglandin E(2) production is regulated by the glutathione-dependent prostaglandin E(2) synthase gene induced by the Toll-like receptor 4/MyD88/NF-IL6 pathway.",
+  "query_hits": [],
+  "embed_text": "9159125 Lipopolysaccharide-dependent prostaglandin E(2) production is regulated by the glutathione-dependent prostaglandin E(2) synthase gene induced by the Toll-like receptor 4/MyD88/NF-IL6 pathway. science scifact Macrophages produce a large amount of PGE(2) during inflammation. This lipid mediator modulates various immune responses. PGE(2) acts on macrophages and inhibits production of cytokines such as TNF-alpha and IL-12. Membrane-bound… 9159125 lipopolysaccharide-dependent-prostaglandin-e(2)-production-is-regulated-by-the-glutathione-dependent-prostaglandin-e(2)-synthase-gene-induced-by-the-toll-like-receptor-4/myd88/nf-il6-pathway. lipopolysaccharide dependent prostaglandin production regulated by glutathione synthase Lipopolysaccharide-dependent prostaglandin E(2) production is regulated by the glutathione-dependent prostaglandin E(2) synthase gene induced by the Toll-like receptor 4/MyD88/NF-IL6 pathway. Lipopolysaccharide-dependent prostaglandin E(2) production is regulated by the glutathione-dependent prostaglandin E(2) synthase gene induced by the Toll-like receptor 4/MyD88/NF-IL6 pathway. Macrophages produce a large amount of PGE(2) during inflammation. This lipid mediator modulates various immune responses. PGE(2) acts on macrophages and inhibits production of cytokines such as TNF-alpha and IL-12. Membrane-bound glutathione-dependent PGE(2) synthase (mPGES) has been shown to be a terminal enzyme of the cyclooxygenase-2-mediated PGE(2) biosynthesis. Here we identified mPGES as a molecule that is induced by LPS in macrophages. The expression of mPGES was not induced by LPS in mice lacking Toll-like receptor 4 or MyD88. Furthermore, mice deficient in NF-IL6 showed neither induction of m",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.252662+00:00"
+}

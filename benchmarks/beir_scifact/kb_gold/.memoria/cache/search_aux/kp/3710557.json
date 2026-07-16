@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "3710557",
+  "source_fingerprint": "f58b292443a4cd5f88d70c4a76a4b7b0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3710557"
+  ],
+  "key_phrases": [
+    "catenin",
+    "signaling",
+    "roles",
+    "liver",
+    "homeostasis",
+    "injury",
+    "tumorigenesis",
+    "encoded"
+  ],
+  "summary_1l": "β-Catenin Signaling and Roles in Liver Homeostasis, Injury, and Tumorigenesis.",
+  "query_hits": [],
+  "embed_text": "3710557 β-Catenin Signaling and Roles in Liver Homeostasis, Injury, and Tumorigenesis. science scifact β-catenin (encoded by CTNNB1) is a subunit of the cell surface cadherin protein complex that acts as an intracellular signal transducer in the WNT signaling pathway; alterations in its activity have been associated with the development of… 3710557 catenin signaling roles liver homeostasis injury tumorigenesis encoded β-Catenin Signaling and Roles in Liver Homeostasis, Injury, and Tumorigenesis. β-Catenin Signaling and Roles in Liver Homeostasis, Injury, and Tumorigenesis. β-catenin (encoded by CTNNB1) is a subunit of the cell surface cadherin protein complex that acts as an intracellular signal transducer in the WNT signaling pathway; alterations in its activity have been associated with the development of hepatocellular carcinoma and other liver diseases. Other than WNT, additional signaling pathways also can converge at β-catenin. β-catenin also interacts with transcription factors such as T-cell factor, forkhead box protein O, and hypoxia inducible factor 1α to regulate the expression of target genes. We discuss the role of β-catenin in metabolic zonation of the adult liver. β-catenin also regulates the expression of genes that control metabolism of glucose, nutrients, and xen",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.120854+00:00"
+}

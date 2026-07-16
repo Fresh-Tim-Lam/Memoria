@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1391126",
+  "source_fingerprint": "ff3ee45c62376f8380b717ec1ec40fa6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1391126",
+    "activation-of-frontal-neocortical-areas-by-vocal-production-in-marmosets"
+  ],
+  "key_phrases": [
+    "activation",
+    "frontal",
+    "neocortical",
+    "areas",
+    "by",
+    "vocal",
+    "production",
+    "marmosets"
+  ],
+  "summary_1l": "Primates often rely on vocal communication to mediate social interactions.",
+  "query_hits": [],
+  "embed_text": "1391126 Activation of Frontal Neocortical Areas by Vocal Production in Marmosets science scifact Primates often rely on vocal communication to mediate social interactions. Although much is known about the acoustic structure of primate vocalizations and the social context in which they are usually uttered, our knowledge about the… 1391126 activation-of-frontal-neocortical-areas-by-vocal-production-in-marmosets activation frontal neocortical areas by vocal production marmosets Primates often rely on vocal communication to mediate social interactions. Activation of Frontal Neocortical Areas by Vocal Production in Marmosets Primates often rely on vocal communication to mediate social interactions. Although much is known about the acoustic structure of primate vocalizations and the social context in which they are usually uttered, our knowledge about the neocortical control of audio-vocal interactions in primates is still incipient, being mostly derived from lesion studies in squirrel monkeys and macaques. To map the neocortical areas related to vocal control in a New World primate species, the common marmoset, we employed a method previously used with success in other vertebrate species: Analysis of the expression of the immediate early gene Egr-1 in freely behaving animals. The neocortical distribution of Egr-1 immunoreactive cells in t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.508306+00:00"
+}

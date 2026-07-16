@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9483851",
+  "source_fingerprint": "d853ed61d3271b4b3c39fe992581b1a2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9483851",
+    "unravelling-mechanisms-of-p53-mediated-tumour-suppression"
+  ],
+  "key_phrases": [
+    "unravelling",
+    "mechanisms",
+    "p53",
+    "mediated",
+    "tumour",
+    "suppression",
+    "crucial",
+    "suppressor"
+  ],
+  "summary_1l": "p53 is a crucial tumour suppressor that responds to diverse stress signals by orchestrating specific cellular responses, including transient c",
+  "query_hits": [],
+  "embed_text": "9483851 Unravelling mechanisms of p53-mediated tumour suppression science scifact p53 is a crucial tumour suppressor that responds to diverse stress signals by orchestrating specific cellular responses, including transient cell cycle arrest, cellular senescence and apoptosis, which are all processes associated with… 9483851 unravelling-mechanisms-of-p53-mediated-tumour-suppression unravelling mechanisms p53 mediated tumour suppression crucial suppressor p53 is a crucial tumour suppressor that responds to diverse stress signals by orchestrating specific cellular responses, including transient c Unravelling mechanisms of p53-mediated tumour suppression p53 is a crucial tumour suppressor that responds to diverse stress signals by orchestrating specific cellular responses, including transient cell cycle arrest, cellular senescence and apoptosis, which are all processes associated with tumour suppression. However, recent studies have challenged the relative importance of these canonical cellular responses for p53-mediated tumour suppression and have highlighted roles for p53 in modulating other cellular processes, including metabolism, stem cell maintenance, invasion and metastasis, as well as communication within the tumour microenvironment. In this Opinion article, we discuss the roles of classical p53 functions, as well as emerging p53-regulated processes, in tumour suppression.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.993673+00:00"
+}

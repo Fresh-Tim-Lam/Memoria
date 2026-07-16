@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4416964",
+  "source_fingerprint": "32a816328858e7cb201fa11eecba4b57",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4416964",
+    "immunogenicity-of-induced-pluripotent-stem-cells"
+  ],
+  "key_phrases": [
+    "immunogenicity",
+    "induced",
+    "pluripotent",
+    "stem",
+    "cells",
+    "ipscs",
+    "reprogrammed",
+    "from"
+  ],
+  "summary_1l": "Induced pluripotent stem cells (iPSCs), reprogrammed from somatic cells with defined factors, hold great promise for regenerative medicine as the renew",
+  "query_hits": [],
+  "embed_text": "4416964 Immunogenicity of induced pluripotent stem cells science scifact Induced pluripotent stem cells (iPSCs), reprogrammed from somatic cells with defined factors, hold great promise for regenerative medicine as the renewable source of autologous cells. Whereas it has been generally assumed that these… 4416964 immunogenicity-of-induced-pluripotent-stem-cells immunogenicity induced pluripotent stem cells ipscs reprogrammed from Induced pluripotent stem cells (iPSCs), reprogrammed from somatic cells with defined factors, hold great promise for regenerative medicine as the renew Immunogenicity of induced pluripotent stem cells Induced pluripotent stem cells (iPSCs), reprogrammed from somatic cells with defined factors, hold great promise for regenerative medicine as the renewable source of autologous cells. Whereas it has been generally assumed that these autologous cells should be immune-tolerated by the recipient from whom the iPSCs are derived, their immunogenicity has not been vigorously examined. We show here that, whereas embryonic stem cells (ESCs) derived from inbred C57BL/6 (B6) mice can efficiently form teratomas in B6 mice without any evident immune rejection, the allogeneic ESCs from 129/SvJ mice fail to form teratomas in B6 mice due to rapid rejection by recipients. B6 mouse embryonic fibroblasts (MEFs) were reprogrammed into iPSCs by either retrovira",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.833673+00:00"
+}

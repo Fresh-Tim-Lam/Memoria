@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15153602",
+  "source_fingerprint": "2d4848a665be2ea56993d2ec6c24b6a9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15153602",
+    "haplotype-based-variant-detection-from-short-read-sequencing"
+  ],
+  "key_phrases": [
+    "haplotype",
+    "based",
+    "variant",
+    "detection",
+    "from",
+    "short",
+    "read",
+    "sequencing"
+  ],
+  "summary_1l": "The direct detection of haplotypes from short-read DNA sequencing data requires changes to existing small-variant detection methods.",
+  "query_hits": [],
+  "embed_text": "15153602 Haplotype-based variant detection from short-read sequencing science scifact The direct detection of haplotypes from short-read DNA sequencing data requires changes to existing small-variant detection methods. Here, we develop a Bayesian statistical framework which is capable of modeling multiallelic loci in sets… 15153602 haplotype-based-variant-detection-from-short-read-sequencing haplotype based variant detection from short read sequencing The direct detection of haplotypes from short-read DNA sequencing data requires changes to existing small-variant detection methods. Haplotype-based variant detection from short-read sequencing The direct detection of haplotypes from short-read DNA sequencing data requires changes to existing small-variant detection methods. Here, we develop a Bayesian statistical framework which is capable of modeling multiallelic loci in sets of individuals with non-uniform copy number. We then describe our implementation of this framework in a haplotype-based variant detector, FreeBayes.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.144277+00:00"
+}

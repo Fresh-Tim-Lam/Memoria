@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17462437",
+  "source_fingerprint": "693f08fd34f22d336f01bb01824b904d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17462437",
+    "prognostic-and-predictive-value-of-kras-mutations-in-advanced-non-small-cell-lung-cancer"
+  ],
+  "key_phrases": [
+    "prognostic",
+    "predictive",
+    "value",
+    "kras",
+    "mutations",
+    "advanced",
+    "non",
+    "small"
+  ],
+  "summary_1l": "Clinical implications of KRAS mutations in advanced non-small cell lung cancer remain unclear.",
+  "query_hits": [],
+  "embed_text": "17462437 Prognostic and Predictive Value of KRAS Mutations in Advanced Non-Small Cell Lung Cancer science scifact Clinical implications of KRAS mutations in advanced non-small cell lung cancer remain unclear. We retrospectively evaluated the prognostic and predictive value of KRAS mutations in patients with advanced NSCLC. Among 484 patients with… 17462437 prognostic-and-predictive-value-of-kras-mutations-in-advanced-non-small-cell-lung-cancer prognostic predictive value kras mutations advanced non small Clinical implications of KRAS mutations in advanced non-small cell lung cancer remain unclear. Prognostic and Predictive Value of KRAS Mutations in Advanced Non-Small Cell Lung Cancer Clinical implications of KRAS mutations in advanced non-small cell lung cancer remain unclear. We retrospectively evaluated the prognostic and predictive value of KRAS mutations in patients with advanced NSCLC. Among 484 patients with available results for both KRAS and EGFR mutations, 39 (8%) had KRAS and 182 (38%) EGFR mutations, with two cases having both mutations. The median overall survivals for patients with KRAS mutations, EGFR mutations, or both wild types were 7.7, 38.0, and 15.0 months, respectively (P<0.001). The KRAS mutation was an independent poor prognostic factor in the multivariate analysis (hazard ratio = 2.6, 95% CI: 1.8-3.7). Response rates and progression-free survival (PFS) for t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.806690+00:00"
+}

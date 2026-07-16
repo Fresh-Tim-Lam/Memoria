@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "3848469",
+  "source_fingerprint": "6b2b4042ce800476b6c94f9616f4563f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3848469"
+  ],
+  "key_phrases": [
+    "epithelial",
+    "mesenchymal",
+    "transition",
+    "by",
+    "tgf",
+    "induction",
+    "increases",
+    "stemness"
+  ],
+  "summary_1l": "BACKGROUND Cancer Stem Cells (CSCs) hypothesis asserts that",
+  "query_hits": [],
+  "embed_text": "3848469 Epithelial to Mesenchymal Transition by TGFβ-1 Induction Increases Stemness Characteristics in Primary Non Small Cell Lung Cancer Cell Line science scifact BACKGROUND Cancer Stem Cells (CSCs) hypothesis asserts that only a small subset of cells within a tumour is capable of both tumour initiation and sustainment. The Epithelial-Mesenchymal Transition (EMT) is an embryonic developmental… 3848469 epithelial mesenchymal transition by tgf induction increases stemness BACKGROUND Cancer Stem Cells (CSCs) hypothesis asserts that Epithelial to Mesenchymal Transition by TGFβ-1 Induction Increases Stemness Characteristics in Primary Non Small Cell Lung Cancer Cell Line BACKGROUND Cancer Stem Cells (CSCs) hypothesis asserts that only a small subset of cells within a tumour is capable of both tumour initiation and sustainment. The Epithelial-Mesenchymal Transition (EMT) is an embryonic developmental program that is often activated during cancer invasion and metastasis. The aim of this study is to shed light on the relationship between EMT and CSCs by using LC31 lung cancer primary cell line. MATERIALS AND METHODS A549 and LC31 cell lines were treated with 2 ng/ml TGFβ-1 for 30 days, and 80 days, respectively. To evaluate EMT, morphological changes were assessed by light microscopy, immunofluorescence and cytometry for",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.539413+00:00"
+}

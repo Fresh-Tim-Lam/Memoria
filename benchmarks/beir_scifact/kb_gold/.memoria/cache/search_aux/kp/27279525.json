@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27279525",
+  "source_fingerprint": "9285bd251a4d7616395ab4032244c5c9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27279525",
+    "detection,-characterization,-and-spontaneous-differentiation-in-vitro-of-very-small-embryonic-like-putative-stem-cells-in-adult-mammalian-ovary."
+  ],
+  "key_phrases": [
+    "detection",
+    "characterization",
+    "spontaneous",
+    "differentiation",
+    "vitro",
+    "very",
+    "small",
+    "embryonic"
+  ],
+  "summary_1l": "Detection, characterization, and spontaneous differentiation in vitro of very small embryonic-like putative stem cells in adult mammalian ovary.",
+  "query_hits": [],
+  "embed_text": "27279525 Detection, characterization, and spontaneous differentiation in vitro of very small embryonic-like putative stem cells in adult mammalian ovary. science scifact The present study was undertaken to detect, characterize, and study differentiation potential of stem cells in adult rabbit, sheep, monkey, and menopausal human ovarian surface epithelium (OSE). Two distinct populations of putative stem… 27279525 detection,-characterization,-and-spontaneous-differentiation-in-vitro-of-very-small-embryonic-like-putative-stem-cells-in-adult-mammalian-ovary. detection characterization spontaneous differentiation vitro very small embryonic Detection, characterization, and spontaneous differentiation in vitro of very small embryonic-like putative stem cells in adult mammalian ovary. Detection, characterization, and spontaneous differentiation in vitro of very small embryonic-like putative stem cells in adult mammalian ovary. The present study was undertaken to detect, characterize, and study differentiation potential of stem cells in adult rabbit, sheep, monkey, and menopausal human ovarian surface epithelium (OSE). Two distinct populations of putative stem cells (PSCs) of variable size were detected in scraped OSE, one being smaller and other similar in size to the surrounding red blood cells in the scraped OSE. The smaller 1-3 μm very small embryonic-like PSCs were pluripotent in nature with nuclear Oct-4 and cell surface SSEA-4, whereas the bigger 4-7 μm cells with cytoplasmic localization of Oct-4 and minimal expression of SSEA-4 were possibly the tissue committed",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.770959+00:00"
+}

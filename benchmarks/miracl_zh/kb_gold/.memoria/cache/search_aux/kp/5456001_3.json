@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "kp_id": "5456001#3",
+  "source_fingerprint": "4cbd6f57cdcf76b7a796e1e5791d6f81",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "德国",
+    "独立",
+    "美国独立日",
+    "中国国家铁路集团",
+    "中国网络视听节目服务协会",
+    "大陆篮球协会",
+    "瑞士诗篇",
+    "联合国主要机构"
+  ],
+  "aliases": [
+    "5456001#3"
+  ],
+  "key_phrases": [
+    "組織",
+    "经过",
+    "历年",
+    "合并",
+    "现在",
+    "德国",
+    "五家",
+    "nord"
+  ],
+  "summary_1l": "经过历年的合并，现在德国有五家TÜV——TÜV SÜD, TÜV NORD, TÜV Rheinland, TÜV Thüringen, and TÜV Saarland / SGS TÜV；以及奥地利TÜV。",
+  "query_hits": [],
+  "embed_text": "5456001#3 TÜV組織 TÜV組織 经过历年的合并，现在德国有五家TÜV——TÜV SÜD, TÜV NORD, TÜV Rheinland, TÜV Thüringen, and TÜV Saarland / SGS TÜV；以及奥地利TÜV。它们共享商标，但是独立运营互为竞争对手。 这六家组成了“TÜV Markenverbund” (TÜV商标协会)以维护商标的商誉。最大的是TÜV SÜD集团有24,000多名雇员分布在全世界超过1000个地点。仅有的与之匹敌的商业性认证机构是瑞士通用公证行(SGS), 德国 独立 美国独立日 中国国家铁路集团 中国网络视听节目服务协会 大陆篮球协会 瑞士诗篇 联合国主要机构 5456001#3 組織 经过 历年 合并 现在 德国 五家 nord 经过历年的合并，现在德国有五家TÜV——TÜV SÜD, TÜV NORD, TÜV Rheinland, TÜV Thüringen, and TÜV Saarland / SGS TÜV；以及奥地利TÜV。 TÜV組織 经过历年的合并，现在德国有五家TÜV——TÜV SÜD, TÜV NORD, TÜV Rheinland, TÜV Thüringen, and TÜV Saarland / SGS TÜV；以及奥地利TÜV。它们共享商标，但是独立运营互为竞争对手。 这六家组成了“TÜV Markenverbund” (TÜV商标协会)以维护商标的商誉。最大的是TÜV SÜD集团有24,000多名雇员分布在全世界超过1000个地点。仅有的与之匹敌的商业性认证机构是瑞士通用公证行(SGS), 超过8万雇员.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:22:29.031685+00:00"
+}

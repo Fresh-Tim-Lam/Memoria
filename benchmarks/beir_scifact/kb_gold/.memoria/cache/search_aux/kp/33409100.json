@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "33409100",
+  "source_fingerprint": "86a47c3181a6c93f8b02043c39b23122",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "33409100",
+    "effect-of-homocysteine-lowering-on-mortality-and-vascular-disease-in-advanced-chronic-kidney-disease-and-end-stage-renal-disease:-a-randomized-controlled-trial."
+  ],
+  "key_phrases": [
+    "effect",
+    "homocysteine",
+    "lowering",
+    "mortality",
+    "vascular",
+    "disease",
+    "advanced",
+    "chronic"
+  ],
+  "summary_1l": "Effect of homocysteine lowering on mortality and vascular disease in advanced chronic kidney disease and end-stage renal disease: a randomized controlled trial.",
+  "query_hits": [],
+  "embed_text": "33409100 Effect of homocysteine lowering on mortality and vascular disease in advanced chronic kidney disease and end-stage renal disease: a randomized controlled trial. science scifact CONTEXT High plasma homocysteine levels are a risk factor for mortality and vascular disease in observational studies of patients with chronic kidney disease. Folic acid and B vitamins decrease homocysteine levels in this population but… 33409100 effect-of-homocysteine-lowering-on-mortality-and-vascular-disease-in-advanced-chronic-kidney-disease-and-end-stage-renal-disease:-a-randomized-controlled-trial. effect homocysteine lowering mortality vascular disease advanced chronic Effect of homocysteine lowering on mortality and vascular disease in advanced chronic kidney disease and end-stage renal disease: a randomized controlled trial. Effect of homocysteine lowering on mortality and vascular disease in advanced chronic kidney disease and end-stage renal disease: a randomized controlled trial. CONTEXT High plasma homocysteine levels are a risk factor for mortality and vascular disease in observational studies of patients with chronic kidney disease. Folic acid and B vitamins decrease homocysteine levels in this population but whether they lower mortality is unknown. OBJECTIVE To determine whether high doses of folic acid and B vitamins administered daily reduce mortality in patients with chronic kidney disease. DESIGN, SETTING, AND PARTICIPANTS Double-blind randomized controlled trial (2001-2006) in 36 US Department of Veterans Affairs medical centers. Median follow-up was 3.2 years for 2056 participants aged 21 years or",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.381031+00:00"
+}

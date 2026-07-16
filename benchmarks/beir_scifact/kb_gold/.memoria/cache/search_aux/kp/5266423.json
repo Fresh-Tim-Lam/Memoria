@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5266423",
+  "source_fingerprint": "0d8709d7292ee1263837326b02181fdb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5266423",
+    "historical-review:-megakaryopoiesis-and-thrombopoiesis."
+  ],
+  "key_phrases": [
+    "historical",
+    "review",
+    "megakaryopoiesis",
+    "thrombopoiesis",
+    "study",
+    "has",
+    "evolved",
+    "greatly"
+  ],
+  "summary_1l": "Historical review: megakaryopoiesis and thrombopoiesis.",
+  "query_hits": [],
+  "embed_text": "5266423 Historical review: megakaryopoiesis and thrombopoiesis. science scifact The study of thrombopoiesis has evolved greatly since an era when platelets were termed \"the dust of the blood,\" only about 100 years ago. During this time megakaryocytes were identified as the origin of blood platelets; marrow-derived… 5266423 historical-review:-megakaryopoiesis-and-thrombopoiesis. historical review megakaryopoiesis thrombopoiesis study has evolved greatly Historical review: megakaryopoiesis and thrombopoiesis. Historical review: megakaryopoiesis and thrombopoiesis. The study of thrombopoiesis has evolved greatly since an era when platelets were termed \"the dust of the blood,\" only about 100 years ago. During this time megakaryocytes were identified as the origin of blood platelets; marrow-derived megakaryocytic progenitor cells were functionally defined and then purified; and the primary regulator of the process, thrombopoietin, was cloned and characterized and therapeutic thrombopoietic agents developed. During this journey we continue to learn that the physiologic mechanisms that drive proplatelet formation can be recapitulated in cell-free systems and their biochemistry evaluated; the molecular underpinnings of endomitosis are being increasingly understood; the intracellular signals sent by e",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.678619+00:00"
+}

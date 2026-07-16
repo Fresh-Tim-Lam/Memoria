@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6580081",
+  "source_fingerprint": "6e83ba7bf64bce02bd7f632d66115c1d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6580081",
+    "molecular-mechanisms-of-hepatic-ischemia-reperfusion-injury-and-preconditioning."
+  ],
+  "key_phrases": [
+    "molecular",
+    "mechanisms",
+    "hepatic",
+    "ischemia",
+    "reperfusion",
+    "injury",
+    "preconditioning",
+    "at"
+  ],
+  "summary_1l": "Molecular mechanisms of hepatic ischemia-reperfusion injury and preconditioning.",
+  "query_hits": [],
+  "embed_text": "6580081 Molecular mechanisms of hepatic ischemia-reperfusion injury and preconditioning. science scifact Ischemia-reperfusion injury is, at least in part, responsible for the morbidity associated with liver surgery under total vascular exclusion or after liver transplantation. The pathophysiology of hepatic ischemia-reperfusion includes a… 6580081 molecular-mechanisms-of-hepatic-ischemia-reperfusion-injury-and-preconditioning. molecular mechanisms hepatic ischemia reperfusion injury preconditioning at Molecular mechanisms of hepatic ischemia-reperfusion injury and preconditioning. Molecular mechanisms of hepatic ischemia-reperfusion injury and preconditioning. Ischemia-reperfusion injury is, at least in part, responsible for the morbidity associated with liver surgery under total vascular exclusion or after liver transplantation. The pathophysiology of hepatic ischemia-reperfusion includes a number of mechanisms that contribute to various degrees in the overall injury. Some of the topics discussed in this review include cellular mechanisms of injury, formation of pro- and anti-inflammatory mediators, expression of adhesion molecules, and the role of oxidant stress during the inflammatory response. Furthermore, the roles of nitric oxide in preventing microcirculatory disturbances and as a substrate for peroxynitrite formation are reviewed. In addition, emerging mecha",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.262695+00:00"
+}

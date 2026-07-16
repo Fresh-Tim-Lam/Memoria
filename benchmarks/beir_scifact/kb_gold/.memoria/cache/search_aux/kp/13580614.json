@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13580614",
+  "source_fingerprint": "e089f24dc11e31b511ff7ce5c4e1d998",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13580614",
+    "lactic-acidosis-in-patients-with-diabetes-treated-with-metformin."
+  ],
+  "key_phrases": [
+    "lactic",
+    "acidosis",
+    "patients",
+    "with",
+    "diabetes",
+    "treated",
+    "metformin",
+    "editor"
+  ],
+  "summary_1l": "Lactic acidosis in patients with diabetes treated with metformin.",
+  "query_hits": [],
+  "embed_text": "13580614 Lactic acidosis in patients with diabetes treated with metformin. science scifact To the Editor: From May 1995, when metformin was introduced in the United States, through June 30, 1996, the Food and Drug Administration (FDA) received reports of lactic acidosis in 66 patients treated with metformin. In 47 patients, the… 13580614 lactic-acidosis-in-patients-with-diabetes-treated-with-metformin. lactic acidosis patients with diabetes treated metformin editor Lactic acidosis in patients with diabetes treated with metformin. Lactic acidosis in patients with diabetes treated with metformin. To the Editor: From May 1995, when metformin was introduced in the United States, through June 30, 1996, the Food and Drug Administration (FDA) received reports of lactic acidosis in 66 patients treated with metformin. In 47 patients, the diagnosis was confirmed on the basis of circulating lactate values (>5 mmol per liter), in accordance with established criteria for the diagnosis of lactic acidosis (Table 1).1,2 Of the 47 patients with confirmed diagnoses, 43 had one or more risk factors for lactic acidosis. Thirty (64 percent) had preexisting cardiac disease, of whom 18 had histories of congestive heart failure. . . .",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.555207+00:00"
+}

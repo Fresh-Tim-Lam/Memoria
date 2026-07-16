@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14145440",
+  "source_fingerprint": "804ba508a218afba9cb146ce4998a309",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14145440",
+    "s-phase-promoting-cyclin-dependent-kinases-prevent-re-replication-by-inhibiting-the-transition-of-replication-origins-to-a-pre-replicative-state"
+  ],
+  "key_phrases": [
+    "phase",
+    "promoting",
+    "cyclin",
+    "dependent",
+    "kinases",
+    "prevent",
+    "re",
+    "replication"
+  ],
+  "summary_1l": "BACKGROUND DNA replication and mitosis are triggered by",
+  "query_hits": [],
+  "embed_text": "14145440 S-phase-promoting cyclin-dependent kinases prevent re-replication by inhibiting the transition of replication origins to a pre-replicative state science scifact BACKGROUND DNA replication and mitosis are triggered by activation of kinase complexes, each made up of a cyclin and a cyclin-dependent kinase (Cdk). It had seemed possible that the association of Cdks with different classes of cyclins… 14145440 s-phase-promoting-cyclin-dependent-kinases-prevent-re-replication-by-inhibiting-the-transition-of-replication-origins-to-a-pre-replicative-state phase promoting cyclin dependent kinases prevent re replication BACKGROUND DNA replication and mitosis are triggered by S-phase-promoting cyclin-dependent kinases prevent re-replication by inhibiting the transition of replication origins to a pre-replicative state BACKGROUND DNA replication and mitosis are triggered by activation of kinase complexes, each made up of a cyclin and a cyclin-dependent kinase (Cdk). It had seemed possible that the association of Cdks with different classes of cyclins specifies whether S phase (replication) or M phase (mitosis) will occur. The recent finding that individual B-type cyclins (encoded by the genes CLB1-CLB6) can have functions in both processes in the budding yeast Saccharomyces cerevisiae casts doubt on this notion. RESULTS S. cerevisiae strains lacking C1b1-C1b4 undergo DNA replication once but fail to enter mitosis. We have isolated mutations in two genes, SIM1 an",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.205932+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2888272",
+  "source_fingerprint": "b803e457d63ba359b0f121eee4e61661",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2888272",
+    "detection-of-histone-modifications-at-specific-gene-loci-in-single-cells-in-histological-sections"
+  ],
+  "key_phrases": [
+    "detection",
+    "histone",
+    "modifications",
+    "at",
+    "specific",
+    "gene",
+    "loci",
+    "single"
+  ],
+  "summary_1l": "Chromatin immunoprecipitation assays have contributed greatly to our understanding of the role of hist",
+  "query_hits": [],
+  "embed_text": "2888272 Detection of Histone Modifications at Specific Gene Loci in Single Cells in Histological Sections science scifact Chromatin immunoprecipitation assays have contributed greatly to our understanding of the role of histone modifications in gene regulation. However, they do not permit analysis with single-cell resolution, thus confounding analyses of… 2888272 detection-of-histone-modifications-at-specific-gene-loci-in-single-cells-in-histological-sections detection histone modifications at specific gene loci single Chromatin immunoprecipitation assays have contributed greatly to our understanding of the role of hist Detection of Histone Modifications at Specific Gene Loci in Single Cells in Histological Sections Chromatin immunoprecipitation assays have contributed greatly to our understanding of the role of histone modifications in gene regulation. However, they do not permit analysis with single-cell resolution, thus confounding analyses of heterogeneous cell populations. Here we present a method that permits visualization of histone modifications of single genomic loci with single-cell resolution in formaldehyde-fixed paraffin-embedded tissue sections based on combined use of in situ hybridization and proximity ligation assays. We show that dimethylation of lysine 4 of histone H3 (H3K4me2) at the MYH11 locus is restricted to the smooth muscle cell (SMC) lineage in human and mouse tissue sections an",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.393244+00:00"
+}

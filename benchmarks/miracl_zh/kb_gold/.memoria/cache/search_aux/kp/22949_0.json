@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "kp_id": "22949#0",
+  "source_fingerprint": "bd0900bcc16cce5be899fdd3551f69d1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "明朝",
+    "清朝",
+    "明朝文学",
+    "明朝皇室",
+    "清朝历史",
+    "清朝君主列表"
+  ],
+  "aliases": [
+    "22949#0"
+  ],
+  "key_phrases": [
+    "崇禎",
+    "朱由檢",
+    "字德约",
+    "明朝",
+    "17",
+    "皇帝",
+    "清朝",
+    "入關"
+  ],
+  "summary_1l": "崇禎帝朱由檢（），字德约，明朝第17任皇帝，亦是清朝入關前最後一任明朝皇帝。",
+  "query_hits": [],
+  "embed_text": "22949#0 崇禎帝 崇禎帝 崇禎帝朱由檢（），字德约，明朝第17任皇帝，亦是清朝入關前最後一任明朝皇帝。 明朝 清朝 明朝文学 明朝皇室 清朝历史 清朝君主列表 22949#0 崇禎 朱由檢 字德约 明朝 17 皇帝 清朝 入關 崇禎帝朱由檢（），字德约，明朝第17任皇帝，亦是清朝入關前最後一任明朝皇帝。 崇禎帝 崇禎帝朱由檢（），字德约，明朝第17任皇帝，亦是清朝入關前最後一任明朝皇帝。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:18:40.745365+00:00"
+}

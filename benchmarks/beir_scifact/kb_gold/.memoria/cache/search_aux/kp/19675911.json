@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19675911",
+  "source_fingerprint": "5c8f916cb30154cfb28810f70fb1e2f4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19675911",
+    "trends-in-heart-failure-incidence-and-survival-in-a-community-based-population."
+  ],
+  "key_phrases": [
+    "trends",
+    "heart",
+    "failure",
+    "incidence",
+    "survival",
+    "community",
+    "based",
+    "population"
+  ],
+  "summary_1l": "Trends in heart failure incidence and survival in a community-based population.",
+  "query_hits": [],
+  "embed_text": "19675911 Trends in heart failure incidence and survival in a community-based population. science scifact CONTEXT The epidemic of heart failure has yet to be fully investigated, and data on incidence, survival, and sex-specific temporal trends in community-based populations are limited. OBJECTIVE To test the hypothesis that the incidence of… 19675911 trends-in-heart-failure-incidence-and-survival-in-a-community-based-population. trends heart failure incidence survival community based population Trends in heart failure incidence and survival in a community-based population. Trends in heart failure incidence and survival in a community-based population. CONTEXT The epidemic of heart failure has yet to be fully investigated, and data on incidence, survival, and sex-specific temporal trends in community-based populations are limited. OBJECTIVE To test the hypothesis that the incidence of heart failure has declined and survival after heart failure diagnosis has improved over time but that secular trends have diverged by sex. DESIGN, SETTING, AND PARTICIPANTS Population-based cohort study using the resources of the Rochester Epidemiology Project conducted in Olmsted County, Minnesota. Patients were 4537 Olmsted County residents (57% women; mean [SD] age, 74 [14] years) with a diagnosis of heart failure between 1979 and 2000. Framingham criteria and clinical criter",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.012139+00:00"
+}

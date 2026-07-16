@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12631182",
+  "source_fingerprint": "3c47115cc8918b66fb65ea6dd2f53a4a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12631182",
+    "nadph-oxidase-controls-phagosomal-ph-and-antigen-cross-presentation-in-human-dendritic-cells."
+  ],
+  "key_phrases": [
+    "nadph",
+    "oxidase",
+    "controls",
+    "phagosomal",
+    "ph",
+    "antigen",
+    "cross",
+    "presentation"
+  ],
+  "summary_1l": "NADPH oxidase controls phagosomal pH and antigen cross-presentation in human dendritic cells.",
+  "query_hits": [],
+  "embed_text": "12631182 NADPH oxidase controls phagosomal pH and antigen cross-presentation in human dendritic cells. science scifact The phagocyte NADPH oxidase (NOX2) is critical for the bactericidal activity of phagocytic cells and plays a major role in innate immunity. We showed recently that NOX2 activity in mouse dendritic cells (DCs) prevents acidification of… 12631182 nadph-oxidase-controls-phagosomal-ph-and-antigen-cross-presentation-in-human-dendritic-cells. nadph oxidase controls phagosomal ph antigen cross presentation NADPH oxidase controls phagosomal pH and antigen cross-presentation in human dendritic cells. NADPH oxidase controls phagosomal pH and antigen cross-presentation in human dendritic cells. The phagocyte NADPH oxidase (NOX2) is critical for the bactericidal activity of phagocytic cells and plays a major role in innate immunity. We showed recently that NOX2 activity in mouse dendritic cells (DCs) prevents acidification of phagosomes, promoting antigen cross-presentation. In order to investigate the role of NOX2 in the regulation of the phagosomal pH in human DCs, we analyzed the production of reactive oxygen species (ROS) and the phagosomal/endosomal pH in monocyte-derived DCs and macrophages (M(diameter)s) from healthy donors or patients with chronic granulomatous disease (CGD). As expected, we found that human M(diameter)s acidify their phagosomes more efficiently than human DCs. Ac",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:08.634006+00:00"
+}

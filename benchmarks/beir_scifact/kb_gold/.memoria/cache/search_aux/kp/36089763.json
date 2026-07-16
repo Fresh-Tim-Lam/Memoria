@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36089763",
+  "source_fingerprint": "17daf67443d7adc19e08574998843827",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36089763",
+    "neutrophil-extracellular-traps-capture-and-kill-candida-albicans-yeast-and-hyphal-forms."
+  ],
+  "key_phrases": [
+    "neutrophil",
+    "extracellular",
+    "traps",
+    "capture",
+    "kill",
+    "candida",
+    "albicans",
+    "yeast"
+  ],
+  "summary_1l": "Neutrophil extracellular traps capture and kill Candida albicans yeast and hyphal forms.",
+  "query_hits": [],
+  "embed_text": "36089763 Neutrophil extracellular traps capture and kill Candida albicans yeast and hyphal forms. science scifact Neutrophils phagocytose and kill microbes upon phagolysosomal fusion. Recently we found that activated neutrophils form extracellular fibres that consist of granule proteins and chromatin. These neutrophil extracellular traps (NETs)… 36089763 neutrophil-extracellular-traps-capture-and-kill-candida-albicans-yeast-and-hyphal-forms. neutrophil extracellular traps capture kill candida albicans yeast Neutrophil extracellular traps capture and kill Candida albicans yeast and hyphal forms. Neutrophil extracellular traps capture and kill Candida albicans yeast and hyphal forms. Neutrophils phagocytose and kill microbes upon phagolysosomal fusion. Recently we found that activated neutrophils form extracellular fibres that consist of granule proteins and chromatin. These neutrophil extracellular traps (NETs) degrade virulence factors and kill Gram positive and negative bacteria. Here we show for the first time that Candida albicans, a eukaryotic pathogen, induces NET-formation and is susceptible to NET-mediated killing. C. albicans is the predominant aetiologic agent of fungal infections in humans, particularly in immunocompromised hosts. One major virulence trait of C. albicans is its ability to reversibly switch from singular budding cells to filamentous hyphae. We demonstrat",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.849062+00:00"
+}

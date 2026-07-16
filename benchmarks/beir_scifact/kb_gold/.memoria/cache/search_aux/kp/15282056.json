@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15282056",
+  "source_fingerprint": "e3d7f6e7deed80d78150c64b11f55899",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15282056",
+    "combinatorial-modulation-of-galp-and-glk-gene-expression-for-improved-alternative-glucose-utilization"
+  ],
+  "key_phrases": [
+    "combinatorial",
+    "modulation",
+    "galp",
+    "glk",
+    "gene",
+    "expression",
+    "improved",
+    "alternative"
+  ],
+  "summary_1l": "Phosphoenolpyruvate (PEP) is an important precursor for anaerobic production of succinate and mala",
+  "query_hits": [],
+  "embed_text": "15282056 Combinatorial modulation of galP and glk gene expression for improved alternative glucose utilization science scifact Phosphoenolpyruvate (PEP) is an important precursor for anaerobic production of succinate and malate. Although inactivating PEP/carbohydrate phosphotransferase systems (PTS) could increase PEP supply, the resulting strain had a low glucose… 15282056 combinatorial-modulation-of-galp-and-glk-gene-expression-for-improved-alternative-glucose-utilization combinatorial modulation galp glk gene expression improved alternative Phosphoenolpyruvate (PEP) is an important precursor for anaerobic production of succinate and mala Combinatorial modulation of galP and glk gene expression for improved alternative glucose utilization Phosphoenolpyruvate (PEP) is an important precursor for anaerobic production of succinate and malate. Although inactivating PEP/carbohydrate phosphotransferase systems (PTS) could increase PEP supply, the resulting strain had a low glucose utilization rate. In order to improve anaerobic glucose utilization rate for efficient production of succinate and malate, combinatorial modulation of galactose permease (galP) and glucokinase (glk) gene expression was carried out in chromosome of an Escherichia coli strain with inactivated PTS. Libraries of artificial regulatory parts, including promoter and messenger RNA stabilizing region (mRS), were firstly constructed in front of β-galactosidase gen",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.283746+00:00"
+}

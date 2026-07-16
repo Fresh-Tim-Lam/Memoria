@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "623486",
+  "source_fingerprint": "3d17f4d155980e80cd83cb126def60bc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "623486",
+    "centrifugal-elutriation-as-a-method-for-isolation-of-large-numbers-of-functionally-intact-human-peripheral-blood-monocytes."
+  ],
+  "key_phrases": [
+    "centrifugal",
+    "elutriation",
+    "as",
+    "method",
+    "isolation",
+    "large",
+    "numbers",
+    "functionally"
+  ],
+  "summary_1l": "Centrifugal elutriation as a method for isolation of large numbers of functionally intact human peripheral blood monocytes.",
+  "query_hits": [],
+  "embed_text": "623486 Centrifugal elutriation as a method for isolation of large numbers of functionally intact human peripheral blood monocytes. science scifact Centrifugal elutriation was used further to isolate human peripheral blood monocytes (HPBM) from mononuclear-enriched cells harvested as a secondary component following platelet concentration collection samples. HPBM were recovered in… 623486 centrifugal-elutriation-as-a-method-for-isolation-of-large-numbers-of-functionally-intact-human-peripheral-blood-monocytes. centrifugal elutriation as method isolation large numbers functionally Centrifugal elutriation as a method for isolation of large numbers of functionally intact human peripheral blood monocytes. Centrifugal elutriation as a method for isolation of large numbers of functionally intact human peripheral blood monocytes. Centrifugal elutriation was used further to isolate human peripheral blood monocytes (HPBM) from mononuclear-enriched cells harvested as a secondary component following platelet concentration collection samples. HPBM were recovered in either one or two populations consisting of either total HPBM or small (SM) and large monocytes (LM). The elutriation was carried out at 3,500 +/- 5 rpm for the separation of lymphocytes and HPBM in Ca++- and Mg++-free PBS without EDTA. An average of 5.05 +/- 1.50 X 10(8) HPBM were recovered in the total HPBM with a purity of 95% +/- 3%. The SM and LM were obtained by splitting the total HPBM into two equal populations with an HPBM purit",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.339749+00:00"
+}

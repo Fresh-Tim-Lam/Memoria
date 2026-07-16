@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "30720103",
+  "source_fingerprint": "5bba1aa04e0b79f927a079a289e6eecd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "30720103",
+    "vitamin-d-status:-measurement,-interpretation,-and-clinical-application."
+  ],
+  "key_phrases": [
+    "vitamin",
+    "status",
+    "measurement",
+    "interpretation",
+    "clinical",
+    "application",
+    "sunshine",
+    "now"
+  ],
+  "summary_1l": "Vitamin D status: measurement, interpretation, and clinical application.",
+  "query_hits": [],
+  "embed_text": "30720103 Vitamin D status: measurement, interpretation, and clinical application. science scifact Vitamin D, the sunshine vitamin, is now recognized not only for its importance in promoting bone health in children and adults but also for other health benefits, including reducing the risk of chronic diseases such as autoimmune diseases,… 30720103 vitamin-d-status:-measurement,-interpretation,-and-clinical-application. vitamin status measurement interpretation clinical application sunshine now Vitamin D status: measurement, interpretation, and clinical application. Vitamin D status: measurement, interpretation, and clinical application. Vitamin D, the sunshine vitamin, is now recognized not only for its importance in promoting bone health in children and adults but also for other health benefits, including reducing the risk of chronic diseases such as autoimmune diseases, common cancer, and cardiovascular disease. Vitamin D made in the skin or ingested in the diet is biologically inert and requires 2 successive hydroxylations first in the liver on carbon 25 to form 25-hydroxyvitamin D [25(OH)D], and then in the kidney for a hydroxylation on carbon 1 to form the biologically active form of vitamin D, 1,25-dihydroxyvitamin D [1,25(OH)(2)D]. With the identification of 25(OH)D and 1,25(OH)(2)D, methods were developed to measure these metabolites in the c",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.909433+00:00"
+}

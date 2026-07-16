@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23985464",
+  "source_fingerprint": "14180fe2bd1c77f2d535216945c88f92",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23985464",
+    "modulation-of-cellular-and-viral-promoters-by-mutant-human-p53-proteins-found-in-tumor-cells."
+  ],
+  "key_phrases": [
+    "modulation",
+    "cellular",
+    "viral",
+    "promoters",
+    "by",
+    "mutant",
+    "human",
+    "p53"
+  ],
+  "summary_1l": "Modulation of cellular and viral promoters by mutant human p53 proteins found in tumor cells.",
+  "query_hits": [],
+  "embed_text": "23985464 Modulation of cellular and viral promoters by mutant human p53 proteins found in tumor cells. science scifact Wild-type p53 has recently been shown to repress transcription from several cellular and viral promoters. Since p53 mutations are the most frequently reported genetic defects in human cancers, it becomes important to study the effects of… 23985464 modulation-of-cellular-and-viral-promoters-by-mutant-human-p53-proteins-found-in-tumor-cells. modulation cellular viral promoters by mutant human p53 Modulation of cellular and viral promoters by mutant human p53 proteins found in tumor cells. Modulation of cellular and viral promoters by mutant human p53 proteins found in tumor cells. Wild-type p53 has recently been shown to repress transcription from several cellular and viral promoters. Since p53 mutations are the most frequently reported genetic defects in human cancers, it becomes important to study the effects of mutations of p53 on promoter functions. We, therefore, have studied the effects of wild-type and mutant human p53 on the human proliferating-cell nuclear antigen (PCNA) promoter and on several viral promoters, including the herpes simplex virus type 1 UL9 promoter, the human cytomegalovirus major immediate-early promoter-enhancer, and the long terminal repeat promoters of Rous sarcoma virus and human T-cell lymphotropic virus type I. HeLa cells were cotransfected",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.596524+00:00"
+}

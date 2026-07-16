@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "34189936",
+  "source_fingerprint": "16d4d7330adc2de24eba4008ea3b6541",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "34189936",
+    "the-circadian-clock-gene-bmal1-is-a-novel-therapeutic-target-for-malignant-pleural-mesothelioma."
+  ],
+  "key_phrases": [
+    "circadian",
+    "clock",
+    "gene",
+    "bmal1",
+    "novel",
+    "therapeutic",
+    "target",
+    "malignant"
+  ],
+  "summary_1l": "The circadian clock gene BMAL1 is a novel therapeutic target for malignant pleural mesothelioma.",
+  "query_hits": [],
+  "embed_text": "34189936 The circadian clock gene BMAL1 is a novel therapeutic target for malignant pleural mesothelioma. science scifact Malignant pleural mesothelioma (MPM) is a highly aggressive neoplasm arising from the mesothelial cells lining the parietal pleura and it exhibits poor prognosis. Although there has been significant progress in MPM treatment, development… 34189936 the-circadian-clock-gene-bmal1-is-a-novel-therapeutic-target-for-malignant-pleural-mesothelioma. circadian clock gene bmal1 novel therapeutic target malignant The circadian clock gene BMAL1 is a novel therapeutic target for malignant pleural mesothelioma. The circadian clock gene BMAL1 is a novel therapeutic target for malignant pleural mesothelioma. Malignant pleural mesothelioma (MPM) is a highly aggressive neoplasm arising from the mesothelial cells lining the parietal pleura and it exhibits poor prognosis. Although there has been significant progress in MPM treatment, development of more efficient therapeutic approaches is needed. BMAL1 is a core component of the circadian clock machinery and its constitutive overexpression in MPM has been reported. Here, we demonstrate that BMAL1 may serve as a molecular target for MPM. The majority of MPM cell lines and a subset of MPM clinical specimens expressed higher levels of BMAL1 compared to a nontumorigenic mesothelial cell line (MeT-5A) and normal parietal pleural specimens, respectively. A s",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.187638+00:00"
+}

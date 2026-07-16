@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9822397",
+  "source_fingerprint": "b0aaef7d598f62ad99617ce732cdb728",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9822397",
+    "sugar-sweetened-beverages,-weight-gain,-and-incidence-of-type-2-diabetes-in-young-and-middle-aged-women."
+  ],
+  "key_phrases": [
+    "sugar",
+    "sweetened",
+    "beverages",
+    "weight",
+    "gain",
+    "incidence",
+    "type",
+    "diabetes"
+  ],
+  "summary_1l": "Sugar-sweetened beverages, weight gain, and incidence of type 2 diabetes in young and middle-aged women.",
+  "query_hits": [],
+  "embed_text": "9822397 Sugar-sweetened beverages, weight gain, and incidence of type 2 diabetes in young and middle-aged women. science scifact CONTEXT Sugar-sweetened beverages like soft drinks and fruit punches contain large amounts of readily absorbable sugars and may contribute to weight gain and an increased risk of type 2 diabetes, but these relationships have been minimally… 9822397 sugar-sweetened-beverages,-weight-gain,-and-incidence-of-type-2-diabetes-in-young-and-middle-aged-women. sugar sweetened beverages weight gain incidence type diabetes Sugar-sweetened beverages, weight gain, and incidence of type 2 diabetes in young and middle-aged women. Sugar-sweetened beverages, weight gain, and incidence of type 2 diabetes in young and middle-aged women. CONTEXT Sugar-sweetened beverages like soft drinks and fruit punches contain large amounts of readily absorbable sugars and may contribute to weight gain and an increased risk of type 2 diabetes, but these relationships have been minimally addressed in adults. OBJECTIVE To examine the association between consumption of sugar-sweetened beverages and weight change and risk of type 2 diabetes in women. DESIGN, SETTING, AND PARTICIPANTS Prospective cohort analyses conducted from 1991 to 1999 among women in the Nurses' Health Study II. The diabetes analysis included 91,249 women free of diabetes and other major chronic diseases at baseline in 1991. The weight change analysis included 51,603",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.926380+00:00"
+}

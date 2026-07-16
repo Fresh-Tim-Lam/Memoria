@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "28086354",
+  "source_fingerprint": "104aba9beae3ef9c174bcf139c0d7a4e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "28086354",
+    "tenectin-is-a-novel-alphaps2betaps-integrin-ligand-required-for-wing-morphogenesis-and-male-genital-looping-in-drosophila."
+  ],
+  "key_phrases": [
+    "tenectin",
+    "novel",
+    "alphaps2betaps",
+    "integrin",
+    "ligand",
+    "required",
+    "wing",
+    "morphogenesis"
+  ],
+  "summary_1l": "Tenectin is a novel alphaPS2betaPS integrin ligand required for wing morphogenesis and male genital looping in Drosophila.",
+  "query_hits": [],
+  "embed_text": "28086354 Tenectin is a novel alphaPS2betaPS integrin ligand required for wing morphogenesis and male genital looping in Drosophila. science scifact Morphogenesis of the adult structures of holometabolous insects is regulated by ecdysteroids and juvenile hormones and involves cell-cell interactions mediated in part by the cell surface integrin receptors and their extracellular matrix… 28086354 tenectin-is-a-novel-alphaps2betaps-integrin-ligand-required-for-wing-morphogenesis-and-male-genital-looping-in-drosophila. tenectin novel alphaps2betaps integrin ligand required wing morphogenesis Tenectin is a novel alphaPS2betaPS integrin ligand required for wing morphogenesis and male genital looping in Drosophila. Tenectin is a novel alphaPS2betaPS integrin ligand required for wing morphogenesis and male genital looping in Drosophila. Morphogenesis of the adult structures of holometabolous insects is regulated by ecdysteroids and juvenile hormones and involves cell-cell interactions mediated in part by the cell surface integrin receptors and their extracellular matrix (ECM) ligands. These adhesion molecules and their regulation by hormones are not well characterized. We describe the gene structure of a newly described ECM molecule, tenectin, and demonstrate that it is a hormonally regulated ECM protein required for proper morphogenesis of the adult wing and male genitalia. Tenectin's function as a new ligand of the PS2 integrins is demonstrated by both genetic interactions in the fly and by cell spr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.571478+00:00"
+}

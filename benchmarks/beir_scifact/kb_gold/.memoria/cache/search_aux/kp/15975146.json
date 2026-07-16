@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15975146",
+  "source_fingerprint": "216540b1a63572d71664b92d57190701",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15975146",
+    "modulation-of-replicative-lifespan-in-cryptococcus-neoformans:-implications-for-virulence"
+  ],
+  "key_phrases": [
+    "modulation",
+    "replicative",
+    "lifespan",
+    "cryptococcus",
+    "neoformans",
+    "implications",
+    "virulence",
+    "fungal"
+  ],
+  "summary_1l": "The fungal pathogen, Cryptococcus neoformans, has been shown to undergo replicative aging.",
+  "query_hits": [],
+  "embed_text": "15975146 Modulation of Replicative Lifespan in Cryptococcus neoformans: Implications for Virulence science scifact The fungal pathogen, Cryptococcus neoformans, has been shown to undergo replicative aging. Old cells are characterized by advanced generational age and phenotypic changes that appear to mediate enhanced resistance to host and… 15975146 modulation-of-replicative-lifespan-in-cryptococcus-neoformans:-implications-for-virulence modulation replicative lifespan cryptococcus neoformans implications virulence fungal The fungal pathogen, Cryptococcus neoformans, has been shown to undergo replicative aging. Modulation of Replicative Lifespan in Cryptococcus neoformans: Implications for Virulence The fungal pathogen, Cryptococcus neoformans, has been shown to undergo replicative aging. Old cells are characterized by advanced generational age and phenotypic changes that appear to mediate enhanced resistance to host and antifungal-based killing. As a consequence of this age-associated resilience, old cells accumulate during chronic infection. Based on these findings, we hypothesized that shifting the generational age of a pathogenic yeast population would alter its vulnerability to the host and affect its virulence. SIR2 is a well-conserved histone deacetylase, and a pivotal target for the development of anti-aging drugs. We tested its effect on C. neoformans' replicative lifespan (RLS). First,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.623236+00:00"
+}

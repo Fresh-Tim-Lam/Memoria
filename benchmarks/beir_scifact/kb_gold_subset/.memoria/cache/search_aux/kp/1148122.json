@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1148122",
+  "source_fingerprint": "21edf4804c8f8115a90f4915308c69d4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1148122",
+    "regulatory-and-metabolic-rewiring-during-laboratory-evolution-of-ethanol-tolerance-in-e.-coli"
+  ],
+  "key_phrases": [
+    "regulatory",
+    "metabolic",
+    "rewiring",
+    "during",
+    "laboratory",
+    "evolution",
+    "ethanol",
+    "tolerance"
+  ],
+  "summary_1l": "Regulatory and metabolic rewiring during laboratory evolution of ethanol tolerance in E.",
+  "query_hits": [],
+  "embed_text": "1148122 Regulatory and metabolic rewiring during laboratory evolution of ethanol tolerance in E. coli science scifact Understanding the genetic basis of adaptation is a central problem in biology. However, revealing the underlying molecular mechanisms has been challenging as changes in fitness may result from perturbations to many pathways, any of which… 1148122 regulatory-and-metabolic-rewiring-during-laboratory-evolution-of-ethanol-tolerance-in-e.-coli regulatory metabolic rewiring during laboratory evolution ethanol tolerance Regulatory and metabolic rewiring during laboratory evolution of ethanol tolerance in E. Regulatory and metabolic rewiring during laboratory evolution of ethanol tolerance in E. coli Understanding the genetic basis of adaptation is a central problem in biology. However, revealing the underlying molecular mechanisms has been challenging as changes in fitness may result from perturbations to many pathways, any of which may contribute relatively little. We have developed a combined experimental/computational framework to address this problem and used it to understand the genetic basis of ethanol tolerance in Escherichia coli. We used fitness profiling to measure the consequences of single-locus perturbations in the context of ethanol exposure. A module-level computational analysis was then used to reveal the organization of the contributing loci into cellular processes and regula",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:06.974136+00:00"
+}

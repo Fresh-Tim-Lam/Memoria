@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2543135",
+  "source_fingerprint": "9c2372fd295fb984496eefaf8ab44fc9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2543135",
+    "autophagic-programmed-cell-death-by-selective-catalase-degradation."
+  ],
+  "key_phrases": [
+    "autophagic",
+    "programmed",
+    "cell",
+    "death",
+    "by",
+    "selective",
+    "catalase",
+    "degradation"
+  ],
+  "summary_1l": "Autophagic programmed cell death by selective catalase degradation.",
+  "query_hits": [],
+  "embed_text": "2543135 Autophagic programmed cell death by selective catalase degradation. science scifact Autophagy plays a central role in regulating important cellular functions such as cell survival during starvation and control of infectious pathogens. Recently, it has been shown that autophagy can induce cells to die; however, the… 2543135 autophagic-programmed-cell-death-by-selective-catalase-degradation. autophagic programmed cell death by selective catalase degradation Autophagic programmed cell death by selective catalase degradation. Autophagic programmed cell death by selective catalase degradation. Autophagy plays a central role in regulating important cellular functions such as cell survival during starvation and control of infectious pathogens. Recently, it has been shown that autophagy can induce cells to die; however, the mechanism of the autophagic cell death program is unclear. We now show that caspase inhibition leading to cell death by means of autophagy involves reactive oxygen species (ROS) accumulation, membrane lipid oxidation, and loss of plasma membrane integrity. Inhibition of autophagy by chemical compounds or knocking down the expression of key autophagy proteins such as ATG7, ATG8, and receptor interacting protein (RIP) blocks ROS accumulation and cell death. The cause of abnormal ROS accumulation i",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.597275+00:00"
+}

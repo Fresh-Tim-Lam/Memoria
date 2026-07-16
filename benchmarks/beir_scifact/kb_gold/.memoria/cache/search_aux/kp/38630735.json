@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "38630735",
+  "source_fingerprint": "788385ca5e6c547d6fdc3cad89bfb2c3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "38630735",
+    "a-prospective-natural-history-study-of-coronary-atherosclerosis."
+  ],
+  "key_phrases": [
+    "prospective",
+    "natural",
+    "history",
+    "study",
+    "coronary",
+    "atherosclerosis",
+    "background",
+    "atherosclerotic"
+  ],
+  "summary_1l": "A prospective natural-history study of coronary atherosclerosis.",
+  "query_hits": [],
+  "embed_text": "38630735 A prospective natural-history study of coronary atherosclerosis. science scifact BACKGROUND Atherosclerotic plaques that lead to acute coronary syndromes often occur at sites of angiographically mild coronary-artery stenosis. Lesion-related risk factors for such events are poorly understood. METHODS In a prospective… 38630735 a-prospective-natural-history-study-of-coronary-atherosclerosis. prospective natural history study coronary atherosclerosis background atherosclerotic A prospective natural-history study of coronary atherosclerosis. A prospective natural-history study of coronary atherosclerosis. BACKGROUND Atherosclerotic plaques that lead to acute coronary syndromes often occur at sites of angiographically mild coronary-artery stenosis. Lesion-related risk factors for such events are poorly understood. METHODS In a prospective study, 697 patients with acute coronary syndromes underwent three-vessel coronary angiography and gray-scale and radiofrequency intravascular ultrasonographic imaging after percutaneous coronary intervention. Subsequent major adverse cardiovascular events (death from cardiac causes, cardiac arrest, myocardial infarction, or rehospitalization due to unstable or progressive angina) were adjudicated to be related to either originally treated (culprit) lesions or untreated (nonculprit) lesions. Th",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.680710+00:00"
+}

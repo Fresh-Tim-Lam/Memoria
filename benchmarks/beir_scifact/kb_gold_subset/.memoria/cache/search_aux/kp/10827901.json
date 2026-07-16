@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10827901",
+  "source_fingerprint": "f1a96a7fd7ceab41c79064d541d06665",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10827901",
+    "cohort-profile:-the-china-health-and-retirement-longitudinal-study-(charls)."
+  ],
+  "key_phrases": [
+    "cohort",
+    "profile",
+    "china",
+    "health",
+    "retirement",
+    "longitudinal",
+    "study",
+    "charls"
+  ],
+  "summary_1l": "Cohort profile: the China Health and Retirement Longitudinal Study (CHARLS).",
+  "query_hits": [],
+  "embed_text": "10827901 Cohort profile: the China Health and Retirement Longitudinal Study (CHARLS). science scifact The China Health and Retirement Longitudinal Study (CHARLS) is a nationally representative longitudinal survey of persons in China 45 years of age or older and their spouses, including assessments of social, economic, and health… 10827901 cohort-profile:-the-china-health-and-retirement-longitudinal-study-(charls). cohort profile china health retirement longitudinal study charls Cohort profile: the China Health and Retirement Longitudinal Study (CHARLS). Cohort profile: the China Health and Retirement Longitudinal Study (CHARLS). The China Health and Retirement Longitudinal Study (CHARLS) is a nationally representative longitudinal survey of persons in China 45 years of age or older and their spouses, including assessments of social, economic, and health circumstances of community-residents. CHARLS examines health and economic adjustments to rapid ageing of the population in China. The national baseline survey for the study was conducted between June 2011 and March 2012 and involved 17 708 respondents. CHARLS respondents are followed every 2 years, using a face-to-face computer-assisted personal interview (CAPI). Physical measurements are made at every 2-year follow-up, and blood sample collection is done once in every two follow-up period",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:06.004658+00:00"
+}

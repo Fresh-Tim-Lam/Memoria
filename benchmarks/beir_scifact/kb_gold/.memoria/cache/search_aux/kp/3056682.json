@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3056682",
+  "source_fingerprint": "1efa7e66bba8256b050171661b57aeca",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3056682",
+    "a-classification-of-unstable-angina-revisited."
+  ],
+  "key_phrases": [
+    "classification",
+    "unstable",
+    "angina",
+    "revisited",
+    "critical",
+    "phase",
+    "coronary",
+    "heart"
+  ],
+  "summary_1l": "A classification of unstable angina revisited.",
+  "query_hits": [],
+  "embed_text": "3056682 A classification of unstable angina revisited. science scifact Unstable angina is a critical phase of coronary heart disease with widely variable symptoms and prognosis. A decade ago, a classification of unstable angina based on clinical symptoms was introduced. This system was then validated by… 3056682 a-classification-of-unstable-angina-revisited. classification unstable angina revisited critical phase coronary heart A classification of unstable angina revisited. A classification of unstable angina revisited. Unstable angina is a critical phase of coronary heart disease with widely variable symptoms and prognosis. A decade ago, a classification of unstable angina based on clinical symptoms was introduced. This system was then validated by prospective clinical studies to correlate with the prognosis and was linked to angiographic and histological findings. It has been used to categorize patients in many large clinical trials. In recent years, the pathophysiological roles of platelet activation and inflammation in unstable angina have been elucidated. Subsequently, improved markers of myocardial injury, acute-phase proteins, and hemostatic markers that may be associated with clinical outcomes have been identified. Particularly, cardiac-specific tropo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.795085+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3825750",
+  "source_fingerprint": "d8bce50f27b1c6d77c4915c7840f2ac1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3825750",
+    "aliskiren-combined-with-losartan-in-type-2-diabetes-and-nephropathy."
+  ],
+  "key_phrases": [
+    "aliskiren",
+    "combined",
+    "with",
+    "losartan",
+    "type",
+    "diabetes",
+    "nephropathy",
+    "background"
+  ],
+  "summary_1l": "Aliskiren combined with losartan in type 2 diabetes and nephropathy.",
+  "query_hits": [],
+  "embed_text": "3825750 Aliskiren combined with losartan in type 2 diabetes and nephropathy. science scifact BACKGROUND Diabetic nephropathy is the leading cause of end-stage renal disease in developed countries. We evaluated the renoprotective effects of dual blockade of the renin-angiotensin-aldosterone system by adding treatment with… 3825750 aliskiren-combined-with-losartan-in-type-2-diabetes-and-nephropathy. aliskiren combined with losartan type diabetes nephropathy background Aliskiren combined with losartan in type 2 diabetes and nephropathy. Aliskiren combined with losartan in type 2 diabetes and nephropathy. BACKGROUND Diabetic nephropathy is the leading cause of end-stage renal disease in developed countries. We evaluated the renoprotective effects of dual blockade of the renin-angiotensin-aldosterone system by adding treatment with aliskiren, an oral direct renin inhibitor, to treatment with the maximal recommended dose of losartan (100 mg daily) and optimal antihypertensive therapy in patients who had hypertension and type 2 diabetes with nephropathy. METHODS We enrolled 599 patients in this multinational, randomized, double-blind study. After a 3-month, open-label, run-in period during which patients received 100 mg of losartan daily, patients were randomly assigned to receive 6 months of treatment with aliskiren (150 mg",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.331123+00:00"
+}

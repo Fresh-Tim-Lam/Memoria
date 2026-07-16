@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2291922",
+  "source_fingerprint": "6b03363531371e85f07dbaf400545381",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2291922",
+    "the-surgical-anatomy-of-the-conduction-tissues."
+  ],
+  "key_phrases": [
+    "surgical",
+    "anatomy",
+    "conduction",
+    "tissues",
+    "basis",
+    "our",
+    "collective",
+    "experience"
+  ],
+  "summary_1l": "The surgical anatomy of the conduction tissues.",
+  "query_hits": [],
+  "embed_text": "2291922 The surgical anatomy of the conduction tissues. science scifact On the basis of our collective experience we have reviewed the disposition of the cardiac conduction tissues as they might be observed by the surgeon in both normal and abnormal hearts. The sinus node lies subepicardially in the terminal… 2291922 the-surgical-anatomy-of-the-conduction-tissues. surgical anatomy conduction tissues basis our collective experience The surgical anatomy of the conduction tissues. The surgical anatomy of the conduction tissues. On the basis of our collective experience we have reviewed the disposition of the cardiac conduction tissues as they might be observed by the surgeon in both normal and abnormal hearts. The sinus node lies subepicardially in the terminal sulcus; because of its variable blood supply the entire superior cavoatrial junction is a potential danger area. There are no morphologically discrete tracts extending through the atrial tissues between sinus and atrioventricular nodes. The atrioventricular node, the atrial extent of the atrioventricular conduction axis, is contained exclusively within the triangle of Koch. The axis penetrates through the central fibrous body and branches on the muscular ventricular septum immediately beneath the interventric",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.526376+00:00"
+}

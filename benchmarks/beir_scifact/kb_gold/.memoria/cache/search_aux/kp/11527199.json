@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11527199",
+  "source_fingerprint": "624aaf94765381533d90808add3d7318",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11527199",
+    "mhc-haplotype-matching-for-unrelated-hematopoietic-cell-transplantation"
+  ],
+  "key_phrases": [
+    "mhc",
+    "haplotype",
+    "matching",
+    "unrelated",
+    "hematopoietic",
+    "cell",
+    "transplantation",
+    "background"
+  ],
+  "summary_1l": "Background Current criteria for the selection of unrelated donors for hematopoietic cell transplantation (HCT) include matching",
+  "query_hits": [],
+  "embed_text": "11527199 MHC Haplotype Matching for Unrelated Hematopoietic Cell Transplantation science scifact Background  Current criteria for the selection of unrelated donors for hematopoietic cell transplantation (HCT) include matching for the alleles of each human leukocyte antigen (HLA) locus within the major histocompatibility complex (MHC).… 11527199 mhc-haplotype-matching-for-unrelated-hematopoietic-cell-transplantation mhc haplotype matching unrelated hematopoietic cell transplantation background Background Current criteria for the selection of unrelated donors for hematopoietic cell transplantation (HCT) include matching MHC Haplotype Matching for Unrelated Hematopoietic Cell Transplantation Background Current criteria for the selection of unrelated donors for hematopoietic cell transplantation (HCT) include matching for the alleles of each human leukocyte antigen (HLA) locus within the major histocompatibility complex (MHC). Graft-versus-host disease (GVHD), however, remains a significant and potentially life-threatening complication even after HLA-identical unrelated HCT. The MHC harbors more than 400 genes, but the total number of transplantation antigens is unknown. Genes that influence transplantation outcome could be identified by using linkage disequilibrium (LD)-mapping approaches, if the extended MHC haplotypes of the unrelated donor and recipient could be defined.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:06.637937+00:00"
+}

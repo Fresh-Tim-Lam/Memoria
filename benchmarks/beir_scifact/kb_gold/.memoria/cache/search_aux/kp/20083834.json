@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20083834",
+  "source_fingerprint": "b079f9120b319ec8bbea8c59f8ec3777",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20083834",
+    "consumption-of-isoflavone-rich-soy-protein-does-not-alter-homocysteine-or-markers-of-inflammation-in-postmenopausal-women"
+  ],
+  "key_phrases": [
+    "consumption",
+    "isoflavone",
+    "rich",
+    "soy",
+    "protein",
+    "does",
+    "not",
+    "alter"
+  ],
+  "summary_1l": "Background/Objective:To investigate the effect of soy protein containing isofl",
+  "query_hits": [],
+  "embed_text": "20083834 Consumption of isoflavone-rich soy protein does not alter homocysteine or markers of inflammation in postmenopausal women science scifact Background/Objective:To investigate the effect of soy protein containing isoflavones on homocysteine (Hcy), C-reactive protein (CRP), soluble E-selectin (sE-selectin), soluble vascular adhesion molecule-1 (sVCAM-1) and soluble… 20083834 consumption-of-isoflavone-rich-soy-protein-does-not-alter-homocysteine-or-markers-of-inflammation-in-postmenopausal-women consumption isoflavone rich soy protein does not alter Background/Objective:To investigate the effect of soy protein containing isofl Consumption of isoflavone-rich soy protein does not alter homocysteine or markers of inflammation in postmenopausal women Background/Objective:To investigate the effect of soy protein containing isoflavones on homocysteine (Hcy), C-reactive protein (CRP), soluble E-selectin (sE-selectin), soluble vascular adhesion molecule-1 (sVCAM-1) and soluble intercellular adhesion molecule-1 (sICAM-1).Subject/Methods:In a randomized crossover design, 34 postmenopausal women consumed soy protein isolate (26±5 g protein containing 44±8 mg isoflavones per day) or milk protein isolate (26±5 g protein per day) for 6 weeks each. Fasting blood samples were collected at the end of each diet period and end points analyzed by enzyme-linked immunosorbent assay. Results:Concentrations of Hcy, CRP, sE-selectin, sV",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.616015+00:00"
+}

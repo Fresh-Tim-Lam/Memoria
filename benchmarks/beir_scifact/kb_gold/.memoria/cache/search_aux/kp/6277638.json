@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6277638",
+  "source_fingerprint": "40cfe9298520e0d3a83d3e7859719154",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6277638",
+    "mechanisms-of-life-span-extension-by-rapamycin-in-the-fruit-fly-drosophila-melanogaster"
+  ],
+  "key_phrases": [
+    "mechanisms",
+    "life",
+    "span",
+    "extension",
+    "by",
+    "rapamycin",
+    "fruit",
+    "fly"
+  ],
+  "summary_1l": "The target of rapamycin (TOR) pathway is a major nutrient-sensing pathway that, when genetically downregulated,",
+  "query_hits": [],
+  "embed_text": "6277638 Mechanisms of Life Span Extension by Rapamycin in the Fruit Fly Drosophila melanogaster science scifact The target of rapamycin (TOR) pathway is a major nutrient-sensing pathway that, when genetically downregulated, increases life span in evolutionarily diverse organisms including mammals. The central component of this pathway, TOR kinase,… 6277638 mechanisms-of-life-span-extension-by-rapamycin-in-the-fruit-fly-drosophila-melanogaster mechanisms life span extension by rapamycin fruit fly The target of rapamycin (TOR) pathway is a major nutrient-sensing pathway that, when genetically downregulated, Mechanisms of Life Span Extension by Rapamycin in the Fruit Fly Drosophila melanogaster The target of rapamycin (TOR) pathway is a major nutrient-sensing pathway that, when genetically downregulated, increases life span in evolutionarily diverse organisms including mammals. The central component of this pathway, TOR kinase, is the target of the inhibitory drug rapamycin, a highly specific and well-described drug approved for human use. We show here that feeding rapamycin to adult Drosophila produces the life span extension seen in some TOR mutants. Increase in life span by rapamycin was associated with increased resistance to both starvation and paraquat. Analysis of the underlying mechanisms revealed that rapamycin increased longevity specifically through the TORC1 branch of the TOR pathw",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.428254+00:00"
+}

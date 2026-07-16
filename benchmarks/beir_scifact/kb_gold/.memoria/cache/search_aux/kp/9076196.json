@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9076196",
+  "source_fingerprint": "5ce4e7ad1b1e91e0b6467ca7f0c5b183",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9076196",
+    "gfi1-and-gfi1b-control-the-loss-of-endothelial-identity-of-hemogenic-endothelium-during-hematopoietic-commitment."
+  ],
+  "key_phrases": [
+    "gfi1",
+    "gfi1b",
+    "control",
+    "loss",
+    "endothelial",
+    "identity",
+    "hemogenic",
+    "endothelium"
+  ],
+  "summary_1l": "GFI1 and GFI1B control the loss of endothelial identity of hemogenic endothelium during hematopoietic commitment.",
+  "query_hits": [],
+  "embed_text": "9076196 GFI1 and GFI1B control the loss of endothelial identity of hemogenic endothelium during hematopoietic commitment. science scifact Recent studies have established that during embryonic development, hematopoietic progenitors and stem cells are generated from hemogenic endothelium precursors through a process termed endothelial to hematopoietic transition (EHT). The… 9076196 gfi1-and-gfi1b-control-the-loss-of-endothelial-identity-of-hemogenic-endothelium-during-hematopoietic-commitment. gfi1 gfi1b control loss endothelial identity hemogenic endothelium GFI1 and GFI1B control the loss of endothelial identity of hemogenic endothelium during hematopoietic commitment. GFI1 and GFI1B control the loss of endothelial identity of hemogenic endothelium during hematopoietic commitment. Recent studies have established that during embryonic development, hematopoietic progenitors and stem cells are generated from hemogenic endothelium precursors through a process termed endothelial to hematopoietic transition (EHT). The transcription factor RUNX1 is essential for this process, but its main downstream effectors remain largely unknown. Here, we report the identification of Gfi1 and Gfi1b as direct targets of RUNX1 and critical regulators of EHT. GFI1 and GFI1B are able to trigger, in the absence of RUNX1, the down-regulation of endothelial markers and the formation of round cells, a morphologic change characteristic of EHT. Conversely, blood progenitors in Gfi1- a",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.140638+00:00"
+}

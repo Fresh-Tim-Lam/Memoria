@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2151983",
+  "source_fingerprint": "d89dace4bae4d842a707f84a64107545",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2151983",
+    "epigenetic-switch-involved-in-activation-of-pioneer-factor-foxa1-dependent-enhancers."
+  ],
+  "key_phrases": [
+    "epigenetic",
+    "switch",
+    "involved",
+    "activation",
+    "pioneer",
+    "factor",
+    "foxa1",
+    "dependent"
+  ],
+  "summary_1l": "Epigenetic switch involved in activation of pioneer factor FOXA1-dependent enhancers.",
+  "query_hits": [],
+  "embed_text": "2151983 Epigenetic switch involved in activation of pioneer factor FOXA1-dependent enhancers. science scifact Transcription factors (TFs) bind specifically to discrete regions of mammalian genomes called cis-regulatory elements. Among those are enhancers, which play key roles in regulation of gene expression during development and differentiation.… 2151983 epigenetic-switch-involved-in-activation-of-pioneer-factor-foxa1-dependent-enhancers. epigenetic switch involved activation pioneer factor foxa1 dependent Epigenetic switch involved in activation of pioneer factor FOXA1-dependent enhancers. Epigenetic switch involved in activation of pioneer factor FOXA1-dependent enhancers. Transcription factors (TFs) bind specifically to discrete regions of mammalian genomes called cis-regulatory elements. Among those are enhancers, which play key roles in regulation of gene expression during development and differentiation. Despite the recognized central regulatory role exerted by chromatin in control of TF functions, much remains to be learned regarding the chromatin structure of enhancers and how it is established. Here, we have analyzed on a genomic-scale enhancers that recruit FOXA1, a pioneer transcription factor that triggers transcriptional competency of these cis-regulatory sites. Importantly, we found that FOXA1 binds to genomic regions showing local DNA hypomethylation and that i",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.278232+00:00"
+}

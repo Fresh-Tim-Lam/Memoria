@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "39903312",
+  "source_fingerprint": "0f7050ca1353609defd553790185e45a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "39903312",
+    "a-randomized-trial-of-aspirin-to-prevent-colorectal-adenomas-in-patients-with-previous-colorectal-cancer."
+  ],
+  "key_phrases": [
+    "randomized",
+    "trial",
+    "aspirin",
+    "prevent",
+    "colorectal",
+    "adenomas",
+    "patients",
+    "with"
+  ],
+  "summary_1l": "A randomized trial of aspirin to prevent colorectal adenomas in patients with previous colorectal cancer.",
+  "query_hits": [],
+  "embed_text": "39903312 A randomized trial of aspirin to prevent colorectal adenomas in patients with previous colorectal cancer. science scifact BACKGROUND Experimental studies in animals and observational studies in humans suggest that regular aspirin use may decrease the risk of colorectal adenomas, the precursors to most colorectal cancers. METHODS We conducted a randomized,… 39903312 a-randomized-trial-of-aspirin-to-prevent-colorectal-adenomas-in-patients-with-previous-colorectal-cancer. randomized trial aspirin prevent colorectal adenomas patients with A randomized trial of aspirin to prevent colorectal adenomas in patients with previous colorectal cancer. A randomized trial of aspirin to prevent colorectal adenomas in patients with previous colorectal cancer. BACKGROUND Experimental studies in animals and observational studies in humans suggest that regular aspirin use may decrease the risk of colorectal adenomas, the precursors to most colorectal cancers. METHODS We conducted a randomized, double-blind trial to determine the effect of aspirin on the incidence of colorectal adenomas. We randomly assigned 635 patients with previous colorectal cancer to receive either 325 mg of aspirin per day or placebo. We determined the proportion of patients with adenomas, the number of recurrent adenomas, and the time to the development of adenoma between randomization and subsequent colonoscopic examinations. Relative risks were adjusted for age, sex, c",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.078168+00:00"
+}

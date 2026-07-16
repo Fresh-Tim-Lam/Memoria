@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "41650417",
+  "source_fingerprint": "32c9c3c1c7a76920526d2319709cb914",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "41650417",
+    "role-of-kras-and-egfr-as-biomarkers-of-response-to-erlotinib-in-national-cancer-institute-of-canada-clinical-trials-group-study-br.21."
+  ],
+  "key_phrases": [
+    "role",
+    "kras",
+    "egfr",
+    "as",
+    "biomarkers",
+    "response",
+    "erlotinib",
+    "national"
+  ],
+  "summary_1l": "Role of KRAS and EGFR as biomarkers of response to erlotinib in National Cancer Institute of Canada Clinical Trials Group Study BR.",
+  "query_hits": [],
+  "embed_text": "41650417 Role of KRAS and EGFR as biomarkers of response to erlotinib in National Cancer Institute of Canada Clinical Trials Group Study BR.21. science scifact PURPOSE To evaluate the effect of KRAS and epidermal growth factor receptor (EGFR) genotype on the response to erlotinib treatment in the BR.21, placebo-controlled trial. PATIENTS AND METHODS We analyzed 206 tumors for KRAS mutation, 204… 41650417 role-of-kras-and-egfr-as-biomarkers-of-response-to-erlotinib-in-national-cancer-institute-of-canada-clinical-trials-group-study-br.21. role kras egfr as biomarkers response erlotinib national Role of KRAS and EGFR as biomarkers of response to erlotinib in National Cancer Institute of Canada Clinical Trials Group Study BR. Role of KRAS and EGFR as biomarkers of response to erlotinib in National Cancer Institute of Canada Clinical Trials Group Study BR.21. PURPOSE To evaluate the effect of KRAS and epidermal growth factor receptor (EGFR) genotype on the response to erlotinib treatment in the BR.21, placebo-controlled trial. PATIENTS AND METHODS We analyzed 206 tumors for KRAS mutation, 204 tumors for EGFR mutation, and 159 tumors for EGFR gene copy by fluorescent in situ hybridization (FISH). We reanalyzed EGFR deletion/mutation using two highly sensitive techniques that detect abnormalities in samples with 5% to 10% tumor cellularity. KRAS mutation was analyzed by direct sequencing. RESULTS Thirty patients (15%) had KRAS mutations, 34 (17%) had EGFR exon 19 deletion or exon 21 L858R mutations, and 61 (38%) h",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.533797+00:00"
+}

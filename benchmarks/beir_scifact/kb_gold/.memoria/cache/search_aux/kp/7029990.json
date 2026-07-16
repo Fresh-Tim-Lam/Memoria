@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7029990",
+  "source_fingerprint": "8f056f05903a80e9a5ee1bee435a33cc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7029990",
+    "stress-induced-apoptosis-associated-with-null-mutation-of-adar1-rna-editing-deaminase-gene."
+  ],
+  "key_phrases": [
+    "stress",
+    "induced",
+    "apoptosis",
+    "associated",
+    "with",
+    "null",
+    "mutation",
+    "adar1"
+  ],
+  "summary_1l": "Stress-induced apoptosis associated with null mutation of ADAR1 RNA editing deaminase gene.",
+  "query_hits": [],
+  "embed_text": "7029990 Stress-induced apoptosis associated with null mutation of ADAR1 RNA editing deaminase gene. science scifact One type of RNA editing involves the conversion of adenosine residues into inosine in double-stranded RNA through the action of adenosine deaminases acting on RNA (ADAR). A-to-I RNA editing of the coding sequence could result in synthesis… 7029990 stress-induced-apoptosis-associated-with-null-mutation-of-adar1-rna-editing-deaminase-gene. stress induced apoptosis associated with null mutation adar1 Stress-induced apoptosis associated with null mutation of ADAR1 RNA editing deaminase gene. Stress-induced apoptosis associated with null mutation of ADAR1 RNA editing deaminase gene. One type of RNA editing involves the conversion of adenosine residues into inosine in double-stranded RNA through the action of adenosine deaminases acting on RNA (ADAR). A-to-I RNA editing of the coding sequence could result in synthesis of proteins not directly encoded in the genome. ADAR edits also non-coding sequences of target RNAs, such as introns and 3'-untranslated regions, which may affect splicing, translation, and mRNA stability. Three mammalian ADAR gene family members (ADAR1-3) have been identified. Here we investigated phenotypes of mice homozygous for ADAR1 null mutation. Although live ADAR1-/- embryos with normal gross appearance could be recovered up to E11.5, widespread apoptosis w",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.246920+00:00"
+}

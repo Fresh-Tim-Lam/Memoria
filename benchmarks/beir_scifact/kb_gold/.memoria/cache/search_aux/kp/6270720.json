@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6270720",
+  "source_fingerprint": "b67215774a9d65351167a767db3d08f6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6270720",
+    "myeloid-differentiation-factor-88/interleukin-1-signaling-controls-cardiac-fibrosis-and-heart-failure-progression-in-inflammatory-dilated-cardiomyopathy."
+  ],
+  "key_phrases": [
+    "myeloid",
+    "differentiation",
+    "factor",
+    "88",
+    "interleukin",
+    "signaling",
+    "controls",
+    "cardiac"
+  ],
+  "summary_1l": "Myeloid differentiation factor-88/interleukin-1 signaling controls cardiac fibrosis and heart failure progression in inflammatory dilated cardiomyopathy.",
+  "query_hits": [],
+  "embed_text": "6270720 Myeloid differentiation factor-88/interleukin-1 signaling controls cardiac fibrosis and heart failure progression in inflammatory dilated cardiomyopathy. science scifact RATIONALE The myeloid differentiation factor (MyD)88/interleukin (IL)-1 axis activates self-antigen-presenting cells and promotes autoreactive CD4(+) T-cell expansion in experimental autoimmune myocarditis, a mouse model of inflammatory… 6270720 myeloid-differentiation-factor-88/interleukin-1-signaling-controls-cardiac-fibrosis-and-heart-failure-progression-in-inflammatory-dilated-cardiomyopathy. myeloid differentiation factor 88 interleukin signaling controls cardiac Myeloid differentiation factor-88/interleukin-1 signaling controls cardiac fibrosis and heart failure progression in inflammatory dilated cardiomyopathy. Myeloid differentiation factor-88/interleukin-1 signaling controls cardiac fibrosis and heart failure progression in inflammatory dilated cardiomyopathy. RATIONALE The myeloid differentiation factor (MyD)88/interleukin (IL)-1 axis activates self-antigen-presenting cells and promotes autoreactive CD4(+) T-cell expansion in experimental autoimmune myocarditis, a mouse model of inflammatory heart disease. OBJECTIVE The aim of this study was to determine the role of MyD88 and IL-1 in the progression of acute myocarditis to an end-stage heart failure. METHODS AND RESULTS Using alpha-myosin heavy chain peptide (MyHC-alpha)-loaded, activated dendritic cells, we induced myocarditis in wild-type and MyD88(-/-) mice with similar distributions of heart-infiltrating cell subsets and comparable CD4(+)",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.418173+00:00"
+}

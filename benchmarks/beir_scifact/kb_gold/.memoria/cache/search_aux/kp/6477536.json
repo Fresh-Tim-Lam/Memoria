@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6477536",
+  "source_fingerprint": "719aca163d075b0d5990d940ae6797f9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6477536",
+    "discontinuation-and-non-publication-of-surgical-randomised-controlled-trials:-observational-study"
+  ],
+  "key_phrases": [
+    "discontinuation",
+    "non",
+    "publication",
+    "surgical",
+    "randomised",
+    "controlled",
+    "trials",
+    "observational"
+  ],
+  "summary_1l": "OBJECTIVE To determine the rate of early discontinuation and non-publication of randomised controlled",
+  "query_hits": [],
+  "embed_text": "6477536 Discontinuation and non-publication of surgical randomised controlled trials: observational study science scifact OBJECTIVE To determine the rate of early discontinuation and non-publication of randomised controlled trials involving patients undergoing surgery. DESIGN Cross sectional observational study of registered and published trials. SETTING… 6477536 discontinuation-and-non-publication-of-surgical-randomised-controlled-trials:-observational-study discontinuation non publication surgical randomised controlled trials observational OBJECTIVE To determine the rate of early discontinuation and non-publication of randomised controlled Discontinuation and non-publication of surgical randomised controlled trials: observational study OBJECTIVE To determine the rate of early discontinuation and non-publication of randomised controlled trials involving patients undergoing surgery. DESIGN Cross sectional observational study of registered and published trials. SETTING Randomised controlled trials of interventions in patients undergoing a surgical procedure. DATA SOURCES The ClinicalTrials.gov database was searched for interventional trials registered between January 2008 and December 2009 using the keyword \"surgery\". Recruitment status was extracted from the ClinicalTrials.gov database. A systematic search for studies published in peer reviewed journals was performed; if they were not found, results posted on the ClinicalTrial",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.950786+00:00"
+}

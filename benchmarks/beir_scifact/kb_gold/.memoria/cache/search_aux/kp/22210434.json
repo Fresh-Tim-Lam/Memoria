@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22210434",
+  "source_fingerprint": "33f3f701eef8f0adaf3568c2bd14be66",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22210434",
+    "the-kinase-tak1-integrates-antigen-and-cytokine-receptor-signaling-for-t-cell-development,-survival-and-function"
+  ],
+  "key_phrases": [
+    "kinase",
+    "tak1",
+    "integrates",
+    "antigen",
+    "cytokine",
+    "receptor",
+    "signaling",
+    "cell"
+  ],
+  "summary_1l": "The kinase TAK1 is critical for innate and B cell immunity.",
+  "query_hits": [],
+  "embed_text": "22210434 The kinase TAK1 integrates antigen and cytokine receptor signaling for T cell development, survival and function science scifact The kinase TAK1 is critical for innate and B cell immunity. The function of TAK1 in T cells is unclear, however. We show here that T cell–specific deletion of the gene encoding TAK1 resulted in reduced development of thymocytes, especially… 22210434 the-kinase-tak1-integrates-antigen-and-cytokine-receptor-signaling-for-t-cell-development,-survival-and-function kinase tak1 integrates antigen cytokine receptor signaling cell The kinase TAK1 is critical for innate and B cell immunity. The kinase TAK1 integrates antigen and cytokine receptor signaling for T cell development, survival and function The kinase TAK1 is critical for innate and B cell immunity. The function of TAK1 in T cells is unclear, however. We show here that T cell–specific deletion of the gene encoding TAK1 resulted in reduced development of thymocytes, especially of regulatory T cells expressing the transcription factor Foxp3. In mature thymocytes, TAK1 was required for interleukin 7–mediated survival and T cell receptor–dependent activation of transcription factor NF-κB and the kinase Jnk. In effector T cells, TAK1 was dispensable for T cell receptor–dependent NF-κB activation and cytokine production, but was important for proliferation and activation of the kinase p38 in response to interleukins 2, 7",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.450876+00:00"
+}

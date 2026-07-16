@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2048139",
+  "source_fingerprint": "67bfd5d98a3de79d4190af4301f50afd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2048139",
+    "interferon-alpha-therapy-for-hepatitis-c:-treatment-completion-and-response-rates-among-patients-with-substance-use-disorders"
+  ],
+  "key_phrases": [
+    "interferon",
+    "alpha",
+    "therapy",
+    "hepatitis",
+    "treatment",
+    "completion",
+    "response",
+    "rates"
+  ],
+  "summary_1l": "BackgroundIndividuals with substance use disorders (SUDs) are at increased",
+  "query_hits": [],
+  "embed_text": "2048139 Interferon alpha therapy for hepatitis C: treatment completion and response rates among patients with substance use disorders science scifact BackgroundIndividuals with substance use disorders (SUDs) are at increased risk for hepatitis C viral infection (HCV), and few studies have explored their treatment responses empirically. The objective of this study was to assess… 2048139 interferon-alpha-therapy-for-hepatitis-c:-treatment-completion-and-response-rates-among-patients-with-substance-use-disorders interferon alpha therapy hepatitis treatment completion response rates BackgroundIndividuals with substance use disorders (SUDs) are at increased Interferon alpha therapy for hepatitis C: treatment completion and response rates among patients with substance use disorders BackgroundIndividuals with substance use disorders (SUDs) are at increased risk for hepatitis C viral infection (HCV), and few studies have explored their treatment responses empirically. The objective of this study was to assess interferon alpha therapy (IFN) completion and response rates among patients with HCV who had a history of comorbid SUDs. More data is needed to inform treatment strategies and guidelines for these patients. Using a medical record database, information was retrospectively collected on 307,437 veterans seen in the Veterans Integrated Service Network 20 (VISN 20) of the Veterans Healthcare Administration (VHA) between 1998 and 2003. For patien",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.386889+00:00"
+}

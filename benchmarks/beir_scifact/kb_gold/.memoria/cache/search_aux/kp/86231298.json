@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "86231298",
+  "source_fingerprint": "a99a8442f5ff37a10fd9862eae3578d7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "86231298",
+    "the-ulp1-sumo-isopeptidase-distinct-domains-required-for-viability,-nuclear-envelope-localization,-and-substrate-specificity"
+  ],
+  "key_phrases": [
+    "ulp1",
+    "sumo",
+    "isopeptidase",
+    "distinct",
+    "domains",
+    "required",
+    "viability",
+    "nuclear"
+  ],
+  "summary_1l": "Protein modification by the ubiquitin-like SUMO protein contributes to many",
+  "query_hits": [],
+  "embed_text": "86231298 The Ulp1 SUMO isopeptidase distinct domains required for viability, nuclear envelope localization, and substrate specificity science scifact Protein modification by the ubiquitin-like SUMO protein contributes to many cellular regulatory mechanisms. In Saccharomyces cerevisiae, both sumoylating and desumoylating activities are essential for viability. Of its two known… 86231298 the-ulp1-sumo-isopeptidase-distinct-domains-required-for-viability,-nuclear-envelope-localization,-and-substrate-specificity ulp1 sumo isopeptidase distinct domains required viability nuclear Protein modification by the ubiquitin-like SUMO protein contributes to many The Ulp1 SUMO isopeptidase distinct domains required for viability, nuclear envelope localization, and substrate specificity Protein modification by the ubiquitin-like SUMO protein contributes to many cellular regulatory mechanisms. In Saccharomyces cerevisiae, both sumoylating and desumoylating activities are essential for viability. Of its two known desumoylating enzymes, Ubl-specific protease (Ulp)1 and Ulp2/Smt4, Ulp1 is specifically required for cell cycle progression. A ∼200-residue segment, the Ulp domain (UD), is conserved among Ulps and includes a core cysteine protease domain that is even more widespread. Here we demonstrate that the Ulp1 UD by itself can support wild-type growth rates and in vitro can cleave SUMO from substrates. However, in cells expressing only the UD of Ulp1,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.272997+00:00"
+}

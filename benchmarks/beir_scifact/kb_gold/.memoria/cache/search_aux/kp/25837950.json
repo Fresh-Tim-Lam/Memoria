@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25837950",
+  "source_fingerprint": "6d4faeceebe315a7e3d27f5caa568f46",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25837950",
+    "association-of-body-mass-index-with-outcomes-in-patients-with-ckd."
+  ],
+  "key_phrases": [
+    "association",
+    "body",
+    "mass",
+    "index",
+    "with",
+    "outcomes",
+    "patients",
+    "ckd"
+  ],
+  "summary_1l": "Association of body mass index with outcomes in patients with CKD.",
+  "query_hits": [],
+  "embed_text": "25837950 Association of body mass index with outcomes in patients with CKD. science scifact Obesity is associated with higher mortality in the general population, but this association is reversed in patients on dialysis. The nature of the relationship of obesity with adverse clinical outcomes in nondialysis-dependent CKD and the… 25837950 association-of-body-mass-index-with-outcomes-in-patients-with-ckd. association body mass index with outcomes patients ckd Association of body mass index with outcomes in patients with CKD. Association of body mass index with outcomes in patients with CKD. Obesity is associated with higher mortality in the general population, but this association is reversed in patients on dialysis. The nature of the relationship of obesity with adverse clinical outcomes in nondialysis-dependent CKD and the putative interaction of the severity of disease with this association are unclear. We analyzed data from a nationally representative cohort of 453,946 United States veterans with eGFR<60 ml/min per 1.73 m(2). The associations of body mass index categories (<20, 20 to <25, 25 to <30, 30 to <35, 35 to <40, 40 to <45, 45 to <50, and ≥50 kg/m(2)) with all-cause mortality and disease progression (using multiple definitions, including incidence of ESRD, doubling of serum creatinine, and the slop",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.574041+00:00"
+}

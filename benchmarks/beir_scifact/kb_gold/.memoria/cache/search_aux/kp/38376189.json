@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "38376189",
+  "source_fingerprint": "1e9df4695185b8344e4ffc6dbb13e079",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "38376189",
+    "a-live-attenuated-chimeric-west-nile-virus-vaccine,-rwn/den4&dgr;30,-is-well-tolerated-and-immunogenic-in-flavivirus-naive-older-adult-volunteers"
+  ],
+  "key_phrases": [
+    "live",
+    "attenuated",
+    "chimeric",
+    "west",
+    "nile",
+    "virus",
+    "vaccine",
+    "rwn"
+  ],
+  "summary_1l": "West Nile virus (WNV) is a major cause of mosquito-bor",
+  "query_hits": [],
+  "embed_text": "38376189 A Live Attenuated Chimeric West Nile Virus Vaccine, rWN/DEN4&Dgr;30, Is Well Tolerated and Immunogenic in Flavivirus-Naive Older Adult Volunteers science scifact West Nile virus (WNV) is a major cause of mosquito-borne illness in the United States. Human disease ranges from mild febrile illness to severe fatal neurologic infection. Adults aged >60 years are more susceptible to neuroinvasive disease… 38376189 a-live-attenuated-chimeric-west-nile-virus-vaccine,-rwn/den4&dgr;30,-is-well-tolerated-and-immunogenic-in-flavivirus-naive-older-adult-volunteers live attenuated chimeric west nile virus vaccine rwn West Nile virus (WNV) is a major cause of mosquito-bor A Live Attenuated Chimeric West Nile Virus Vaccine, rWN/DEN4&Dgr;30, Is Well Tolerated and Immunogenic in Flavivirus-Naive Older Adult Volunteers West Nile virus (WNV) is a major cause of mosquito-borne illness in the United States. Human disease ranges from mild febrile illness to severe fatal neurologic infection. Adults aged >60 years are more susceptible to neuroinvasive disease accompanied by a high mortality rate or long-lasting neurologic sequelae. A chimeric live attenuated West Nile virus vaccine, rWN/DEN4&Dgr;30, was shown to be safe and immunogenic in healthy adults aged 18–50 years. This study evaluated rWN/DEN4&Dgr;30 in flavivirus-naive adults aged 50–65 years and found it to be safe and immunogenic. Outbreaks of WNV infection tend to be unpredictable, and a safe and effectiv",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.437645+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24770122",
+  "source_fingerprint": "d61584464df4fc9a74e5903fbd254d74",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24770122",
+    "chronic-daily-headache.-a-clinical-and-psychological-profile-before-and-after-treatment."
+  ],
+  "key_phrases": [
+    "chronic",
+    "daily",
+    "headache",
+    "clinical",
+    "psychological",
+    "profile",
+    "before",
+    "after"
+  ],
+  "summary_1l": "Chronic daily headache.",
+  "query_hits": [],
+  "embed_text": "24770122 Chronic daily headache. A clinical and psychological profile before and after treatment. science scifact To assess the clinical and personality characteristics of patients with chronic daily headache before and after treatment, 20 patients were examined and the Minnesota Multiphasic Personality Inventory (MMPI [Italian 356-item abbreviated… 24770122 chronic-daily-headache.-a-clinical-and-psychological-profile-before-and-after-treatment. chronic daily headache clinical psychological profile before after Chronic daily headache. Chronic daily headache. A clinical and psychological profile before and after treatment. To assess the clinical and personality characteristics of patients with chronic daily headache before and after treatment, 20 patients were examined and the Minnesota Multiphasic Personality Inventory (MMPI [Italian 356-item abbreviated version]) and the Strait and Trait Anxiety Index 1,2 (STAI) administered. There were two groups: group 1 (n = 6), with a \"conversion V\" configuration (with elevation of hypochondria and hysteria scales, the depression scale being somewhat lower); and group 2 (n = 13) with elevation of depression and of other MMPI scales. One patient had no scale elevation. STAI 1,2 scores were high in both groups. Several psychosomatic symptoms and some migraine features were present in",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.277758+00:00"
+}

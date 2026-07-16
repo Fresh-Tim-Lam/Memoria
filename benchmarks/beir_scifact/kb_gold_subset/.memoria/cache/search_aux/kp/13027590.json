@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13027590",
+  "source_fingerprint": "aff61b6fa519996c91b1feff89e77dd3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13027590",
+    "laparoscopic-uterosacral-nerve-ablation-for-alleviating-chronic-pelvic-pain:-a-randomized-controlled-trial."
+  ],
+  "key_phrases": [
+    "laparoscopic",
+    "uterosacral",
+    "nerve",
+    "ablation",
+    "alleviating",
+    "chronic",
+    "pelvic",
+    "pain"
+  ],
+  "summary_1l": "Laparoscopic uterosacral nerve ablation for alleviating chronic pelvic pain: a randomized controlled trial.",
+  "query_hits": [],
+  "embed_text": "13027590 Laparoscopic uterosacral nerve ablation for alleviating chronic pelvic pain: a randomized controlled trial. science scifact CONTEXT Chronic pelvic pain is a common condition with a major effect on health-related quality of life, work productivity, and health care use. Operative interruption of nerve trunks in the uterosacral ligaments by laparoscopic… 13027590 laparoscopic-uterosacral-nerve-ablation-for-alleviating-chronic-pelvic-pain:-a-randomized-controlled-trial. laparoscopic uterosacral nerve ablation alleviating chronic pelvic pain Laparoscopic uterosacral nerve ablation for alleviating chronic pelvic pain: a randomized controlled trial. Laparoscopic uterosacral nerve ablation for alleviating chronic pelvic pain: a randomized controlled trial. CONTEXT Chronic pelvic pain is a common condition with a major effect on health-related quality of life, work productivity, and health care use. Operative interruption of nerve trunks in the uterosacral ligaments by laparoscopic uterosacral nerve ablation (LUNA) is a treatment option for patients with chronic pelvic pain. OBJECTIVE To assess the effectiveness of LUNA in patients with chronic pelvic pain. DESIGN, SETTING, AND PARTICIPANTS Randomized controlled trial of 487 women with chronic pelvic pain lasting longer than 6 months without or with minimal endometriosis, adhesions, or pelvic inflammatory disease, who were recruited to the study by consultant gynecological surgeons from",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:10.164609+00:00"
+}

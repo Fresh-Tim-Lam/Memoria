@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36540079",
+  "source_fingerprint": "4226b8ffedc243ee95517b115ce486a8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36540079",
+    "glutamine-specific-n-terminal-amidase,-a-component-of-the-n-end-rule-pathway."
+  ],
+  "key_phrases": [
+    "glutamine",
+    "specific",
+    "terminal",
+    "amidase",
+    "component",
+    "end",
+    "rule",
+    "pathway"
+  ],
+  "summary_1l": "Glutamine-specific N-terminal amidase, a component of the N-end rule pathway.",
+  "query_hits": [],
+  "embed_text": "36540079 Glutamine-specific N-terminal amidase, a component of the N-end rule pathway. science scifact Deamidation of N-terminal Gln by Nt(Q)-amidase, an N-terminal amidohydrolase, is a part of the N-end rule pathway of protein degradation. We detected the activity of Nt(Q)-amidase, termed Ntaq1, in mouse tissues, purified Ntaq1 from bovine… 36540079 glutamine-specific-n-terminal-amidase,-a-component-of-the-n-end-rule-pathway. glutamine specific terminal amidase component end rule pathway Glutamine-specific N-terminal amidase, a component of the N-end rule pathway. Glutamine-specific N-terminal amidase, a component of the N-end rule pathway. Deamidation of N-terminal Gln by Nt(Q)-amidase, an N-terminal amidohydrolase, is a part of the N-end rule pathway of protein degradation. We detected the activity of Nt(Q)-amidase, termed Ntaq1, in mouse tissues, purified Ntaq1 from bovine brains, identified its gene, and began analyzing this enzyme. Ntaq1 is highly conserved among animals, plants, and some fungi, but its sequence is dissimilar to sequences of other amidases. An earlier mutant in the Drosophila Cg8253 gene that we show here to encode Nt(Q)-amidase has defective long-term memory. Other studies identified protein ligands of the uncharacterized human C8orf32 protein that we show here to be the Ntaq1 Nt(Q)-amidase. Remarkably, \"high-throughput\" studi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:43.448057+00:00"
+}

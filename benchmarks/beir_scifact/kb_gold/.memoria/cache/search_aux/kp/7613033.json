@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7613033",
+  "source_fingerprint": "39851dffbf4e85d65398221177876838",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7613033",
+    "aspirin-in-the-chemoprevention-of-colorectal-neoplasia:-an-overview."
+  ],
+  "key_phrases": [
+    "aspirin",
+    "chemoprevention",
+    "colorectal",
+    "neoplasia",
+    "overview",
+    "considerable",
+    "evidence",
+    "supports"
+  ],
+  "summary_1l": "Aspirin in the chemoprevention of colorectal neoplasia: an overview.",
+  "query_hits": [],
+  "embed_text": "7613033 Aspirin in the chemoprevention of colorectal neoplasia: an overview. science scifact Considerable evidence supports the effectiveness of aspirin for chemoprevention of colorectal cancer (CRC) in addition to its well-established benefits in the prevention of vascular disease. Epidemiologic studies have consistently observed… 7613033 aspirin-in-the-chemoprevention-of-colorectal-neoplasia:-an-overview. aspirin chemoprevention colorectal neoplasia overview considerable evidence supports Aspirin in the chemoprevention of colorectal neoplasia: an overview. Aspirin in the chemoprevention of colorectal neoplasia: an overview. Considerable evidence supports the effectiveness of aspirin for chemoprevention of colorectal cancer (CRC) in addition to its well-established benefits in the prevention of vascular disease. Epidemiologic studies have consistently observed an inverse association between aspirin use and risk of CRC. A recent pooled analysis of a long-term posttrial follow-up of nearly 14,000 patients from four randomized, cardiovascular disease prevention trials showed that daily aspirin treatment for about five years was associated with a 34% reduction in 20-year CRC mortality. A separate metaanalysis of nearly 3,000 patients with a history of colorectal adenoma or cancer in four randomized adenoma prevention trials showed that aspirin re",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.785457+00:00"
+}

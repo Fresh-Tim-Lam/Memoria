@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27240667",
+  "source_fingerprint": "9b3f496979efc87f725421aa06205863",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27240667",
+    "breast-cancer-mortality-trends-in-the-united-states-according-to-estrogen-receptor-status-and-age-at-diagnosis."
+  ],
+  "key_phrases": [
+    "breast",
+    "cancer",
+    "mortality",
+    "trends",
+    "united",
+    "states",
+    "according",
+    "estrogen"
+  ],
+  "summary_1l": "Breast cancer mortality trends in the United States according to estrogen receptor status and age at diagnosis.",
+  "query_hits": [],
+  "embed_text": "27240667 Breast cancer mortality trends in the United States according to estrogen receptor status and age at diagnosis. science scifact PURPOSE Since 1990, overall breast cancer mortality rates in the United States decreased 24%. This decline has been attributed to mammography screening and adjuvant systemic therapy. However, the efficacy of these modalities may depend on… 27240667 breast-cancer-mortality-trends-in-the-united-states-according-to-estrogen-receptor-status-and-age-at-diagnosis. breast cancer mortality trends united states according estrogen Breast cancer mortality trends in the United States according to estrogen receptor status and age at diagnosis. Breast cancer mortality trends in the United States according to estrogen receptor status and age at diagnosis. PURPOSE Since 1990, overall breast cancer mortality rates in the United States decreased 24%. This decline has been attributed to mammography screening and adjuvant systemic therapy. However, the efficacy of these modalities may depend on estrogen receptor (ER) expression and age. We therefore examined breast cancer mortality trends in the United States according to ER status and age. METHODS Using the Surveillance, Epidemiology, and End Results (SEER) program (1990-2003), we calculated trends in incidence-based mortality (IBM), annual hazard rates for breast cancer deaths after diagnosis, and relative hazard rates for women with ER-positive and ER-negative tumors. Relative hazar",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.662586+00:00"
+}

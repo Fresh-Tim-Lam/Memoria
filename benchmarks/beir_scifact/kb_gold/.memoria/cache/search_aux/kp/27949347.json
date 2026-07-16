@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27949347",
+  "source_fingerprint": "bc0963d39a8df1f95b48a5b2356f07be",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27949347",
+    "putting-p53-in-context"
+  ],
+  "key_phrases": [
+    "putting",
+    "p53",
+    "context",
+    "tp53",
+    "most",
+    "frequently",
+    "mutated",
+    "gene"
+  ],
+  "summary_1l": "TP53 is the most frequently mutated gene in human cancer.",
+  "query_hits": [],
+  "embed_text": "27949347 Putting p53 in Context science scifact TP53 is the most frequently mutated gene in human cancer. Functionally, p53 is activated by a host of stress stimuli and, in turn, governs an exquisitely complex anti-proliferative transcriptional program that touches upon a bewildering… 27949347 putting-p53-in-context putting p53 context tp53 most frequently mutated gene TP53 is the most frequently mutated gene in human cancer. Putting p53 in Context TP53 is the most frequently mutated gene in human cancer. Functionally, p53 is activated by a host of stress stimuli and, in turn, governs an exquisitely complex anti-proliferative transcriptional program that touches upon a bewildering array of biological responses. Despite the many unveiled facets of the p53 network, a clear appreciation of how and in what contexts p53 exerts its diverse effects remains unclear. How can we interpret p53's disparate activities and the consequences of its dysfunction to understand how cell type, mutation profile, and epigenetic cell state dictate outcomes, and how might we restore its tumor-suppressive activities in cancer?",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.480802+00:00"
+}

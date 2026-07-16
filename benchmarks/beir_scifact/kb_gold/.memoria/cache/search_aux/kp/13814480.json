@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "13814480",
+  "source_fingerprint": "d3d31706746c9f86f9653ba6dd396ce2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13814480"
+  ],
+  "key_phrases": [
+    "induced",
+    "pluripotent",
+    "stem",
+    "cells",
+    "alzheimer",
+    "disease",
+    "applications",
+    "modeling"
+  ],
+  "summary_1l": "Alzheimer's disease (AD) is the most common cause of dementia in those over the ag",
+  "query_hits": [],
+  "embed_text": "13814480 Induced pluripotent stem cells in Alzheimer’s disease: applications for disease modeling and cell-replacement therapy science scifact Alzheimer's disease (AD) is the most common cause of dementia in those over the age of 65. While a numerous of disease-causing genes and risk factors have been identified, the exact etiological mechanisms of AD are not yet completely… 13814480 induced pluripotent stem cells alzheimer disease applications modeling Alzheimer's disease (AD) is the most common cause of dementia in those over the ag Induced pluripotent stem cells in Alzheimer’s disease: applications for disease modeling and cell-replacement therapy Alzheimer's disease (AD) is the most common cause of dementia in those over the age of 65. While a numerous of disease-causing genes and risk factors have been identified, the exact etiological mechanisms of AD are not yet completely understood, due to the inability to test theoretical hypotheses on non-postmortem and patient-specific research systems. The use of recently developed and optimized induced pluripotent stem cells (iPSCs) technology may provide a promising platform to create reliable models, not only for better understanding the etiopathological process of AD, but also for efficient anti-AD drugs screening. More importantly, human-sourced iPSCs may also provide",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.106019+00:00"
+}

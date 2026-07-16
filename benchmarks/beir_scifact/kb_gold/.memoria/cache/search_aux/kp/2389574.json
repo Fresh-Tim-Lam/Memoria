@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2389574",
+  "source_fingerprint": "406511fea5ff646f7ddbf92fc523bf93",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2389574",
+    "stathmin-overexpression-identifies-high-risk-patients-and-lymph-node-metastasis-in-endometrial-cancer."
+  ],
+  "key_phrases": [
+    "stathmin",
+    "overexpression",
+    "identifies",
+    "high",
+    "risk",
+    "patients",
+    "lymph",
+    "node"
+  ],
+  "summary_1l": "Stathmin overexpression identifies high-risk patients and lymph node metastasis in endometrial cancer.",
+  "query_hits": [],
+  "embed_text": "2389574 Stathmin overexpression identifies high-risk patients and lymph node metastasis in endometrial cancer. science scifact PURPOSE Overexpression of the oncogen Stathmin has been linked to aggressive endometrial carcinoma and a potential for PI3Kinase inhibitors in this disease. We wanted to validate the prognostic value of Stathmin expression in a large… 2389574 stathmin-overexpression-identifies-high-risk-patients-and-lymph-node-metastasis-in-endometrial-cancer. stathmin overexpression identifies high risk patients lymph node Stathmin overexpression identifies high-risk patients and lymph node metastasis in endometrial cancer. Stathmin overexpression identifies high-risk patients and lymph node metastasis in endometrial cancer. PURPOSE Overexpression of the oncogen Stathmin has been linked to aggressive endometrial carcinoma and a potential for PI3Kinase inhibitors in this disease. We wanted to validate the prognostic value of Stathmin expression in a large prospective multicenter setting. As lymph node sampling is part of current surgical staging, we also aimed to test if Stathmin expression in endometrial curettage specimens could predict lymph node metastasis. EXPERIMENTAL DESIGN A total of 1,076 endometrial cancer patients have been recruited from 10 centers to investigate the biological tumor marker Stathmin in relation to clinicopathologic variables, including lymph node status and survival. Stathmin immun",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.364007+00:00"
+}

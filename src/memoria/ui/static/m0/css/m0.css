@@ -667,6 +667,49 @@
     min-height: 0;
     overflow-y: auto;
 }
+/* 配置模态框：页签栏固定不滚动，内容区紧贴页签栏下方独立滚动 */
+#config-body.m0-modal-body {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 12px 0 0;
+}
+#config-body > .m0-config-summary,
+#config-body > .m0-config-error,
+#config-body > .m0-config-warn {
+    flex-shrink: 0;
+    padding: 0 14px;
+    margin-bottom: 8px;
+}
+#config-body > .m0-config-tabs {
+    flex-shrink: 0;
+    margin: 0 0 12px;
+    padding: 0 14px;
+}
+#config-body > .m0-config-tab-panel {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 0 14px 12px;
+}
+/* 知识点模态框（非范围模式）：页签栏固定不滚动，内容区紧贴页签栏下方独立滚动 */
+#kp-body.m0-modal-body:not(.m0-modal-body-kp-range) {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 12px 0 0;
+}
+#kp-body.m0-modal-body:not(.m0-modal-body-kp-range) > .m0-config-tabs {
+    flex-shrink: 0;
+    margin: 0 0 12px;
+    padding: 0 14px;
+}
+#kp-body.m0-modal-body:not(.m0-modal-body-kp-range) > .m0-kp-tab-panel {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 0 14px 12px;
+}
 #kp-body.m0-modal-body-kp-range {
     flex: 1;
     min-height: 0;
@@ -706,6 +749,125 @@
 .m0-kp-range-panel .m0-assist-preview-wrap {
     flex: 1;
     min-height: 120px;
+}
+
+/* ── KP Edges Tab ── */
+.m0-kp-edges-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.m0-edge-section {
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 8px 10px;
+}
+.m0-edge-section-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-bright);
+    margin: 0 0 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.m0-edge-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.m0-edge-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    padding: 4px 6px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    background: var(--bg-primary);
+    flex-wrap: wrap;
+}
+.m0-edge-main {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    min-width: 0;
+}
+.m0-edge-type-badge {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 1px 6px;
+    border-radius: 2px;
+    white-space: nowrap;
+    letter-spacing: 0.3px;
+}
+.m0-edge-arrow {
+    font-size: 11px;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.m0-edge-relevance {
+    font-size: 10px;
+    color: var(--text-secondary);
+    font-variant-numeric: tabular-nums;
+}
+.m0-edge-origin {
+    font-size: 10px;
+    color: var(--text-secondary);
+    background: var(--bg-tertiary);
+    padding: 1px 5px;
+    border-radius: 2px;
+}
+.m0-edge-no-build {
+    font-size: 10px;
+    color: #888;
+    background: var(--bg-tertiary);
+    padding: 1px 5px;
+    border-radius: 2px;
+    border: 1px solid var(--border);
+}
+.m0-edge-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+}
+.m0-edge-create-form {
+    margin-top: 4px;
+}
+.m0-edge-create-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.m0-edge-create-fields .m0-link-field {
+    position: relative;
+}
+.m0-edge-create-fields .m0-btn {
+    align-self: flex-start;
+}
+.m0-edge-target-datalist {
+    position: absolute;
+    z-index: 10;
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    max-height: 140px;
+    overflow-y: auto;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+.m0-edge-target-option {
+    padding: 4px 8px;
+    font-size: 11px;
+    cursor: pointer;
+    color: var(--text-primary);
+}
+.m0-edge-target-option:hover {
+    background: var(--bg-hover);
+    color: var(--text-bright);
 }
 #kp-modal-box.m0-modal-tabbed {
     resize: both;
@@ -2984,6 +3146,38 @@ body.m0-win-resizing {
     transition: opacity 1.5s ease-out;
 }
 
+/* 检查面板"打开"跳转的错误红色高亮（不自动淡出，用户手动清除） */
+.m0-line.kp-error-flash .m0-line-content {
+    background: rgba(241, 76, 76, 0.28);
+}
+.m0-line.kp-error-flash .m0-line-content::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--error);
+    pointer-events: none;
+}
+.m0-preview-range-band.error {
+    background: rgba(241, 76, 76, 0.18);
+    box-shadow: inset 3px 0 0 var(--error);
+}
+.m0-preview-range-band.error.fade-out {
+    background: transparent;
+    box-shadow: inset 3px 0 0 transparent;
+}
+
+/* 左侧知识点列表错误高亮（检查面板跳转定位） */
+.m0-kp-item.error-highlight {
+    background: rgba(241, 76, 76, 0.15);
+    box-shadow: inset 3px 0 0 var(--error);
+}
+.m0-kp-item.error-highlight .m0-kp-name {
+    color: var(--error);
+}
+
 #preview-status {
     padding: 6px 16px;
     font-size: 11px;
@@ -3065,6 +3259,10 @@ body.m0-win-resizing {
     border-bottom: 1px solid var(--border);
     font-weight: 600;
     color: var(--text-bright);
+    cursor: grab;
+}
+.m0-modal-header:active {
+    cursor: grabbing;
 }
 .m0-modal-body {
     padding: 12px 14px;
@@ -3112,4 +3310,103 @@ body.m0-win-resizing {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+/* ── R11: 导入对话框 ────────────────────────────────────────── */
+
+.m0-modal-import-conflict,
+.m0-modal-import-result {
+    width: min(640px, 92vw);
+    max-height: 82vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.m0-import-scan-summary {
+    margin-bottom: 12px;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.m0-import-conflict-report {
+    margin-bottom: 12px;
+}
+
+.m0-import-report-textarea {
+    width: 100%;
+    font-family: Consolas, monospace;
+    font-size: 11px;
+    line-height: 1.5;
+    padding: 8px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    resize: vertical;
+    box-sizing: border-box;
+}
+
+.m0-import-conflict-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.m0-import-conflict-item {
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 8px 10px;
+    background: var(--bg-tertiary);
+}
+
+.m0-import-conflict-header {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.m0-import-conflict-kp-id {
+    font-weight: 600;
+    font-family: Consolas, monospace;
+    font-size: 13px;
+    color: var(--error);
+}
+
+.m0-import-conflict-resolution {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 12px;
+}
+
+.m0-import-conflict-resolution label {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.m0-import-rename-input {
+    width: 140px;
+    padding: 2px 6px;
+    font-size: 12px;
+    font-family: Consolas, monospace;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+.m0-import-result-summary {
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.m0-import-result-summary ul {
+    margin: 4px 0;
+    padding-left: 20px;
+    font-size: 12px;
+    color: var(--error);
 }

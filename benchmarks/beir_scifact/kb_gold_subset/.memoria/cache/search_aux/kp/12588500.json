@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12588500",
+  "source_fingerprint": "010bd57cb41ded7859d2c98788aed096",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12588500",
+    "acetylation-of-histone-h3-lysine-56-regulates-replication-coupled-nucleosome-assembly"
+  ],
+  "key_phrases": [
+    "acetylation",
+    "histone",
+    "h3",
+    "lysine",
+    "56",
+    "regulates",
+    "replication",
+    "coupled"
+  ],
+  "summary_1l": "Chromatin assembly factor 1 (CAF-1) and Rtt106 participate in the deposition of newly synthesized histones onto re",
+  "query_hits": [],
+  "embed_text": "12588500 Acetylation of Histone H3 Lysine 56 Regulates Replication-Coupled Nucleosome Assembly science scifact Chromatin assembly factor 1 (CAF-1) and Rtt106 participate in the deposition of newly synthesized histones onto replicating DNA to form nucleosomes. This process is critical for the maintenance of genome stability and inheritance of… 12588500 acetylation-of-histone-h3-lysine-56-regulates-replication-coupled-nucleosome-assembly acetylation histone h3 lysine 56 regulates replication coupled Chromatin assembly factor 1 (CAF-1) and Rtt106 participate in the deposition of newly synthesized histones onto re Acetylation of Histone H3 Lysine 56 Regulates Replication-Coupled Nucleosome Assembly Chromatin assembly factor 1 (CAF-1) and Rtt106 participate in the deposition of newly synthesized histones onto replicating DNA to form nucleosomes. This process is critical for the maintenance of genome stability and inheritance of functionally specialized chromatin structures in proliferating cells. However, the molecular functions of the acetylation of newly synthesized histones in this DNA replication-coupled nucleosome assembly pathway remain enigmatic. Here we show that histone H3 acetylated at lysine 56 (H3K56Ac) is incorporated onto replicating DNA and, by increasing the binding affinity of CAF-1 and Rtt106 for histone H3, H3K56Ac enhances the ability of these histone chaperones to assemble DNA in",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:09.167664+00:00"
+}

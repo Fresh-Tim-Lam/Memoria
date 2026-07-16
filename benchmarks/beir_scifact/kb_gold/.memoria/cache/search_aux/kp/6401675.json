@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6401675",
+  "source_fingerprint": "f7f65021f7cb0bea6a6f3a9c27564911",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6401675",
+    "transposable-elements-have-rewired-the-core-regulatory-network-of-human-embryonic-stem-cells"
+  ],
+  "key_phrases": [
+    "transposable",
+    "elements",
+    "have",
+    "rewired",
+    "core",
+    "regulatory",
+    "network",
+    "human"
+  ],
+  "summary_1l": "Detection of new genomic control elements is critical in understanding transcriptional regulatory networks",
+  "query_hits": [],
+  "embed_text": "6401675 Transposable elements have rewired the core regulatory network of human embryonic stem cells science scifact Detection of new genomic control elements is critical in understanding transcriptional regulatory networks in their entirety. We studied the genome-wide binding locations of three key regulatory proteins (POU5F1, also known as OCT4; NANOG;… 6401675 transposable-elements-have-rewired-the-core-regulatory-network-of-human-embryonic-stem-cells transposable elements have rewired core regulatory network human Detection of new genomic control elements is critical in understanding transcriptional regulatory networks Transposable elements have rewired the core regulatory network of human embryonic stem cells Detection of new genomic control elements is critical in understanding transcriptional regulatory networks in their entirety. We studied the genome-wide binding locations of three key regulatory proteins (POU5F1, also known as OCT4; NANOG; and CTCF) in human and mouse embryonic stem cells. In contrast to CTCF, we found that the binding profiles of OCT4 and NANOG are markedly different, with only ∼5% of the regions being homologously occupied. We show that transposable elements contributed up to 25% of the bound sites in humans and mice and have wired new genes into the core regulatory network of embryonic stem cells. These data indicate that species-specific transposable elements have substantially",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.725082+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6082738",
+  "source_fingerprint": "b84d2f67bb57547d649aa5be8f32b107",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6082738",
+    "cell-fusion-hypothesis-of-the-cancer-stem-cell."
+  ],
+  "key_phrases": [
+    "cell",
+    "fusion",
+    "hypothesis",
+    "cancer",
+    "stem",
+    "major",
+    "advance",
+    "recent"
+  ],
+  "summary_1l": "Cell fusion hypothesis of the cancer stem cell.",
+  "query_hits": [],
+  "embed_text": "6082738 Cell fusion hypothesis of the cancer stem cell. science scifact A major advance in recent cancer research is the identification of tumor cells with stem cell-like properties. Cancer stem cells (CSCs) often represent a rare population in the tumor mass and possess the exclusive ability to initiate the… 6082738 cell-fusion-hypothesis-of-the-cancer-stem-cell. cell fusion hypothesis cancer stem major advance recent Cell fusion hypothesis of the cancer stem cell. Cell fusion hypothesis of the cancer stem cell. A major advance in recent cancer research is the identification of tumor cells with stem cell-like properties. Cancer stem cells (CSCs) often represent a rare population in the tumor mass and possess the exclusive ability to initiate the growth of a heterogeneous tumor. The origin of CSCs remains elusive and is likely to be cancer type specific. One possible but under-appreciated potential mechanism for the generation of CSCs is through fusion between stem cells and differentiated cells. The cell fusion hypothesis of CSCs adds an important functional underpinning to the potential multifaceted roles of cell fusion in the initiation and progression of cancer.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.880801+00:00"
+}

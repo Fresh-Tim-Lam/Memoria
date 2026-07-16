@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "28530299",
+  "source_fingerprint": "b9210eb9cb34f2388d6b6280bf63aae2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "28530299",
+    "division-coupled-astrocytic-differentiation-and-age-related-depletion-of-neural-stem-cells-in-the-adult-hippocampus."
+  ],
+  "key_phrases": [
+    "division",
+    "coupled",
+    "astrocytic",
+    "differentiation",
+    "age",
+    "related",
+    "depletion",
+    "neural"
+  ],
+  "summary_1l": "Division-coupled astrocytic differentiation and age-related depletion of neural stem cells in the adult hippocampus.",
+  "query_hits": [],
+  "embed_text": "28530299 Division-coupled astrocytic differentiation and age-related depletion of neural stem cells in the adult hippocampus. science scifact Production of new neurons in the adult hippocampus decreases with age; this decline may underlie age-related cognitive impairment. Here we show that continuous depletion of the neural stem cell pool, as a consequence of their division, may… 28530299 division-coupled-astrocytic-differentiation-and-age-related-depletion-of-neural-stem-cells-in-the-adult-hippocampus. division coupled astrocytic differentiation age related depletion neural Division-coupled astrocytic differentiation and age-related depletion of neural stem cells in the adult hippocampus. Division-coupled astrocytic differentiation and age-related depletion of neural stem cells in the adult hippocampus. Production of new neurons in the adult hippocampus decreases with age; this decline may underlie age-related cognitive impairment. Here we show that continuous depletion of the neural stem cell pool, as a consequence of their division, may contribute to the age-related decrease in hippocampal neurogenesis. Our results indicate that adult hippocampal stem cells, upon exiting their quiescent state, rapidly undergo a series of asymmetric divisions to produce dividing progeny destined to become neurons and subsequently convert into mature astrocytes. Thus, the decrease in the number of neural stem cells is a division-coupled process and is directly related to their production of",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.091124+00:00"
+}

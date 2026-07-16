@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "kp_id": "核心要素",
+  "source_fingerprint": "83bf6feaba0e315f15e265808748bf19",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [],
+  "key_phrases": [
+    "核心",
+    "要素",
+    "mdp",
+    "以下",
+    "定义",
+    "状态",
+    "空间",
+    "环境"
+  ],
+  "summary_1l": "MDP 由以下要素定义： **S（状态空间）**：环境可能处于的所有状态的集合。",
+  "query_hits": [],
+  "embed_text": "核心要素 核心要素 阴阳割昏晓 核心 要素 mdp 以下 定义 状态 空间 环境 MDP 由以下要素定义： **S（状态空间）**：环境可能处于的所有状态的集合。 核心要素 MDP 由以下要素定义： **S（状态空间）**：环境可能处于的所有状态的集合。状态应该包含做出最优决策所需的全部信息（马尔可夫性）。 - 有限 MDP： 有限，如棋盘游戏 - 连续 MDP： ，如机器人控制 **A（动作空间）**：智能体可以采取的所有动作的集合。 - 离散动作：如上下左右 - 连续动作：如关节力矩 **P（状态转移概率）**： 定义了在状态 执行动作 后转移到 的概率。这是环境的\"物理法则\"。 **R（奖励函数）**： 或 定义了即时奖励。它编码了智能体的目标。 **γ（折扣因子）**： 控制对未来奖励的重视程度。 表示只关心即时奖励， 表示越来越重视长远。 策略 定义了在每个状态选择每个动作的概率。最优策略 使得期望累积奖励最大化。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T08:16:53.040282+00:00"
+}

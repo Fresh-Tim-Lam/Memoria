@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "980008",
+  "source_fingerprint": "0074cb9bbeeeafc72b57eea3105a5cb9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "980008",
+    "mild-overexpression-of-mecp2-causes-a-progressive-neurological-disorder-in-mice."
+  ],
+  "key_phrases": [
+    "mild",
+    "overexpression",
+    "mecp2",
+    "causes",
+    "progressive",
+    "neurological",
+    "disorder",
+    "mice"
+  ],
+  "summary_1l": "Mild overexpression of MeCP2 causes a progressive neurological disorder in mice.",
+  "query_hits": [],
+  "embed_text": "980008 Mild overexpression of MeCP2 causes a progressive neurological disorder in mice. science scifact Mutations in the X-linked methyl-CpG-binding protein 2 (MECP2), encoding a transcriptional repressor, cause Rett syndrome and a variety of related neurodevelopmental disorders. The vast majority of mutations associated with human disease… 980008 mild-overexpression-of-mecp2-causes-a-progressive-neurological-disorder-in-mice. mild overexpression mecp2 causes progressive neurological disorder mice Mild overexpression of MeCP2 causes a progressive neurological disorder in mice. Mild overexpression of MeCP2 causes a progressive neurological disorder in mice. Mutations in the X-linked methyl-CpG-binding protein 2 (MECP2), encoding a transcriptional repressor, cause Rett syndrome and a variety of related neurodevelopmental disorders. The vast majority of mutations associated with human disease are loss-of-function mutations, but precisely what aspect of MeCP2 function is responsible for these phenotypes remains unknown. We overexpressed wild-type human protein in transgenic mice using a large genomic clone containing the entire human MECP2 locus. Detailed neurobehavioral and electrophysiological studies in transgenic line MeCP2(Tg1), which expresses MeCP2 at approximately 2-fold wild-type levels, demonstrated onset of phenotypes around 10 weeks of age. Surprisingly,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.868788+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "38844612",
+  "source_fingerprint": "7eefef0a4ea41e8a3e6708e7a1c6c130",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "38844612",
+    "the-basics-of-epithelial-mesenchymal-transition."
+  ],
+  "key_phrases": [
+    "basics",
+    "epithelial",
+    "mesenchymal",
+    "transition",
+    "origins",
+    "cells",
+    "participating",
+    "tissue"
+  ],
+  "summary_1l": "The basics of epithelial-mesenchymal transition.",
+  "query_hits": [],
+  "embed_text": "38844612 The basics of epithelial-mesenchymal transition. science scifact The origins of the mesenchymal cells participating in tissue repair and pathological processes, notably tissue fibrosis, tumor invasiveness, and metastasis, are poorly understood. However, emerging evidence suggests that… 38844612 the-basics-of-epithelial-mesenchymal-transition. basics epithelial mesenchymal transition origins cells participating tissue The basics of epithelial-mesenchymal transition. The basics of epithelial-mesenchymal transition. The origins of the mesenchymal cells participating in tissue repair and pathological processes, notably tissue fibrosis, tumor invasiveness, and metastasis, are poorly understood. However, emerging evidence suggests that epithelial-mesenchymal transitions (EMTs) represent one important source of these cells. As we discuss here, processes similar to the EMTs associated with embryo implantation, embryogenesis, and organ development are appropriated and subverted by chronically inflamed tissues and neoplasias. The identification of the signaling pathways that lead to activation of EMT programs during these disease processes is providing new insights into the plasticity of cellular phenotypes and possible therapeutic interventions.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.062795+00:00"
+}

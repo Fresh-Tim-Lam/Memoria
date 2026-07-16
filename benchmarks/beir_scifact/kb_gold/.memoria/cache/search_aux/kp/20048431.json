@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20048431",
+  "source_fingerprint": "1a01f5a846eb6f169891558b6472cfca",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20048431",
+    "development-and-evaluation-of-a-self-administered-computerized-24-h-dietary-recall-method-for-adolescents-in-europe"
+  ],
+  "key_phrases": [
+    "development",
+    "evaluation",
+    "self",
+    "administered",
+    "computerized",
+    "24",
+    "dietary",
+    "recall"
+  ],
+  "summary_1l": "Objective:To describe the development of a European computerized 24-h dietary recall",
+  "query_hits": [],
+  "embed_text": "20048431 Development and evaluation of a self-administered computerized 24-h dietary recall method for adolescents in Europe science scifact Objective:To describe the development of a European computerized 24-h dietary recall method for adolescents, and to investigate the feasibility of self-administration (self report) by comparison with administration by a dietician… 20048431 development-and-evaluation-of-a-self-administered-computerized-24-h-dietary-recall-method-for-adolescents-in-europe development evaluation self administered computerized 24 dietary recall Objective:To describe the development of a European computerized 24-h dietary recall Development and evaluation of a self-administered computerized 24-h dietary recall method for adolescents in Europe Objective:To describe the development of a European computerized 24-h dietary recall method for adolescents, and to investigate the feasibility of self-administration (self report) by comparison with administration by a dietician (interview).Methods:Two hundred and thirty-six adolescents (mean age 14.6 years (s.d.=1.7)) of eight European cities completed the 24-h recall (Young Adolescents Nutrition Assessment on Computer (YANA-C)) twice (once by self-report and once by interview).Results:A small but significant underestimate in energy (61 (s.e.=31) kcal) and fat (4.2 (s.e.=1.7) g) intake was found in the self-reports in comparison with the interviews; no significant differenc",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.582699+00:00"
+}

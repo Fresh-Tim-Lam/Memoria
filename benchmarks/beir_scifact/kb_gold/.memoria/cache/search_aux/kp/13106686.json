@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13106686",
+  "source_fingerprint": "a597366cd83bf0e21f918fed2f8ef07f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13106686",
+    "oxidative-damage-of-dna-confers-resistance-to-cytosolic-nuclease-trex1-degradation-and-potentiates-sting-dependent-immune-sensing."
+  ],
+  "key_phrases": [
+    "oxidative",
+    "damage",
+    "dna",
+    "confers",
+    "resistance",
+    "cytosolic",
+    "nuclease",
+    "trex1"
+  ],
+  "summary_1l": "Oxidative damage of DNA confers resistance to cytosolic nuclease TREX1 degradation and potentiates STING-dependent immune sensing.",
+  "query_hits": [],
+  "embed_text": "13106686 Oxidative damage of DNA confers resistance to cytosolic nuclease TREX1 degradation and potentiates STING-dependent immune sensing. science scifact Immune sensing of DNA is critical for antiviral immunity but can also trigger autoimmune diseases such as lupus erythematosus (LE). Here we have provided evidence for the involvement of a damage-associated DNA modification in the detection… 13106686 oxidative-damage-of-dna-confers-resistance-to-cytosolic-nuclease-trex1-degradation-and-potentiates-sting-dependent-immune-sensing. oxidative damage dna confers resistance cytosolic nuclease trex1 Oxidative damage of DNA confers resistance to cytosolic nuclease TREX1 degradation and potentiates STING-dependent immune sensing. Oxidative damage of DNA confers resistance to cytosolic nuclease TREX1 degradation and potentiates STING-dependent immune sensing. Immune sensing of DNA is critical for antiviral immunity but can also trigger autoimmune diseases such as lupus erythematosus (LE). Here we have provided evidence for the involvement of a damage-associated DNA modification in the detection of cytosolic DNA. The oxidized base 8-hydroxyguanosine (8-OHG), a marker of oxidative damage in DNA, potentiated cytosolic immune recognition by decreasing its susceptibility to 3' repair exonuclease 1 (TREX1)-mediated degradation. Oxidizative modifications arose physiologically in pathogen DNA during lysosomal reactive oxygen species (ROS) exposure, as well as in neutrophil extracellular trap (NET) DNA during the oxidative b",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:09.663020+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19683625",
+  "source_fingerprint": "191a3e98e3d9cbc1916d522f20660363",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19683625",
+    "doxycycline-induces-apoptosis-in-panc-1-pancreatic-cancer-cells."
+  ],
+  "key_phrases": [
+    "doxycycline",
+    "induces",
+    "apoptosis",
+    "panc",
+    "pancreatic",
+    "cancer",
+    "cells",
+    "background"
+  ],
+  "summary_1l": "Doxycycline induces apoptosis in PANC-1 pancreatic cancer cells.",
+  "query_hits": [],
+  "embed_text": "19683625 Doxycycline induces apoptosis in PANC-1 pancreatic cancer cells. science scifact BACKGROUND Tetracyclines such as doxycycline are reported to possess cytotoxic activity against mammalian tumor cells, but the mechanism of their effects on cell proliferation remains unclear. MATERIALS AND METHODS The antitumor effect of… 19683625 doxycycline-induces-apoptosis-in-panc-1-pancreatic-cancer-cells. doxycycline induces apoptosis panc pancreatic cancer cells background Doxycycline induces apoptosis in PANC-1 pancreatic cancer cells. Doxycycline induces apoptosis in PANC-1 pancreatic cancer cells. BACKGROUND Tetracyclines such as doxycycline are reported to possess cytotoxic activity against mammalian tumor cells, but the mechanism of their effects on cell proliferation remains unclear. MATERIALS AND METHODS The antitumor effect of doxycycline was investigated in human pancreatic cancer cell line, PANC-1. We also investigated the effect of doxycycline on expression of a potent proangiogenic factor, interleukin (IL)-8. RESULTS In excess of 20 microg/ml, cytotoxic effects of doxycycline were accompanied by G(1)-S cell cycle arrest and DNA fragmentation in PANC-1 cells. Doxycycline consistently activated transcription of p53, p21 and Fas/FasL-cascade-related genes, while reducing the expression of Bcl-xL and Mcl-1. Doxycy",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.023774+00:00"
+}

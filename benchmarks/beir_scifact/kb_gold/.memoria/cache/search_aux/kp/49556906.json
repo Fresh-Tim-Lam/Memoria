@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "49556906",
+  "source_fingerprint": "20ec838b7283dfca502cc38b1f5f2c91",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "49556906",
+    "metformin-reverses-established-lung-fibrosis-in-a-bleomycin-model"
+  ],
+  "key_phrases": [
+    "metformin",
+    "reverses",
+    "established",
+    "lung",
+    "fibrosis",
+    "bleomycin",
+    "model",
+    "pathological"
+  ],
+  "summary_1l": "Fibrosis is a pathological result of a dysfunctional repair response to tissue injury and occurs in a number of organs, including the",
+  "query_hits": [],
+  "embed_text": "49556906 Metformin reverses established lung fibrosis in a bleomycin model science scifact Fibrosis is a pathological result of a dysfunctional repair response to tissue injury and occurs in a number of organs, including the lungs1. Cellular metabolism regulates tissue repair and remodelling responses to injury2-4. AMPK is a… 49556906 metformin-reverses-established-lung-fibrosis-in-a-bleomycin-model metformin reverses established lung fibrosis bleomycin model pathological Fibrosis is a pathological result of a dysfunctional repair response to tissue injury and occurs in a number of organs, including the Metformin reverses established lung fibrosis in a bleomycin model Fibrosis is a pathological result of a dysfunctional repair response to tissue injury and occurs in a number of organs, including the lungs1. Cellular metabolism regulates tissue repair and remodelling responses to injury2-4. AMPK is a critical sensor of cellular bioenergetics and controls the switch from anabolic to catabolic metabolism5. However, the role of AMPK in fibrosis is not well understood. Here, we demonstrate that in humans with idiopathic pulmonary fibrosis (IPF) and in an experimental mouse model of lung fibrosis, AMPK activity is lower in fibrotic regions associated with metabolically active and apoptosis-resistant myofibroblasts. Pharmacological activation of AMPK in myofibroblasts from lungs of humans with I",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.881447+00:00"
+}

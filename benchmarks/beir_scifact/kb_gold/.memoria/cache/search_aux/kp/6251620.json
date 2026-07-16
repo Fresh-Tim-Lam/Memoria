@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6251620",
+  "source_fingerprint": "0bec33764d05df01fe9be833d135617a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6251620",
+    "antineutrophil-cytoplasmic-antibodies-(anca)."
+  ],
+  "key_phrases": [
+    "antineutrophil",
+    "cytoplasmic",
+    "antibodies",
+    "anca",
+    "sensitive",
+    "specific",
+    "marker",
+    "associated"
+  ],
+  "summary_1l": "Antineutrophil cytoplasmic antibodies (ANCA).",
+  "query_hits": [],
+  "embed_text": "6251620 Antineutrophil cytoplasmic antibodies (ANCA). science scifact Antineutrophil cytoplasmic antibodies (ANCA) are a sensitive and specific marker for ANCA-associated systemic vasculitis. Using indirect immunofluorescence on ethanol-fixed neutrophils, two major fluoroscopic patterns can be recognised: a… 6251620 antineutrophil-cytoplasmic-antibodies-(anca). antineutrophil cytoplasmic antibodies anca sensitive specific marker associated Antineutrophil cytoplasmic antibodies (ANCA). Antineutrophil cytoplasmic antibodies (ANCA). Antineutrophil cytoplasmic antibodies (ANCA) are a sensitive and specific marker for ANCA-associated systemic vasculitis. Using indirect immunofluorescence on ethanol-fixed neutrophils, two major fluoroscopic patterns can be recognised: a diffuse cytoplasmic staining (C-ANCA), and a perinuclear/nuclear staining (P-ANCA). In patients with vasculitis, more of 90% of C-ANCA are directed against proteinase 3 (PR3-ANCA) whereas approximately 80-90% of P-ANCA recognise myelperoxidase (MPO-ANCA). Although C-ANCA (PR3-ANCA) is preferentially associated with Wegener's granulomatosis (WG), and P-ANCA (MPO-ANCA) with microscopic polyangiitis (MPA), idiopathic necrotising crescentic glomerulonephritis (iNCGN) and Churg-Strauss syndrome (CSS), there is not",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.367317+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22688699",
+  "source_fingerprint": "aa04c0688a75f56de4eae3349736363a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22688699",
+    "awake-craniotomy-with-brain-mapping-as-the-routine-surgical-approach-to-treating-patients-with-supratentorial-intraaxial-tumors:-a-prospective-trial-of-200-cases."
+  ],
+  "key_phrases": [
+    "awake",
+    "craniotomy",
+    "with",
+    "brain",
+    "mapping",
+    "as",
+    "routine",
+    "surgical"
+  ],
+  "summary_1l": "Awake craniotomy with brain mapping as the routine surgical approach to treating patients with supratentorial intraaxial tumors: a prospective trial of 200 cases.",
+  "query_hits": [],
+  "embed_text": "22688699 Awake craniotomy with brain mapping as the routine surgical approach to treating patients with supratentorial intraaxial tumors: a prospective trial of 200 cases. science scifact OBJECT Awake craniotomy was performed as the standard surgical approach to supratentorial intraaxial tumors, regardless of the involvement of eloquent cortex, in a prospective trial of 200 patients surgically treated by the same surgeon at… 22688699 awake-craniotomy-with-brain-mapping-as-the-routine-surgical-approach-to-treating-patients-with-supratentorial-intraaxial-tumors:-a-prospective-trial-of-200-cases. awake craniotomy with brain mapping as routine surgical Awake craniotomy with brain mapping as the routine surgical approach to treating patients with supratentorial intraaxial tumors: a prospective trial of 200 cases. Awake craniotomy with brain mapping as the routine surgical approach to treating patients with supratentorial intraaxial tumors: a prospective trial of 200 cases. OBJECT Awake craniotomy was performed as the standard surgical approach to supratentorial intraaxial tumors, regardless of the involvement of eloquent cortex, in a prospective trial of 200 patients surgically treated by the same surgeon at a single institution. METHODS Patient presentations, comorbid conditions, tumor locations, and the histological characteristics of lesions were recorded. Brain mapping was possible in 195 (97.5%) of 200 patients. The total number of patients sustaining complications was 33 for an overall complication rate of 16.5%. There were two deaths in this series, for a mortality rate of 1%. New postoperat",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.210046+00:00"
+}

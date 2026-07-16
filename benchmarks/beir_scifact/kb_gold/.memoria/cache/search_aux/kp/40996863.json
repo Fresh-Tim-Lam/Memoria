@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "40996863",
+  "source_fingerprint": "49dfecd8b8f1a890e891ceea512b1236",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "40996863",
+    "restless-legs-syndrome-and-attention-deficit/hyperactivity-disorder:-a-review-of-the-literature."
+  ],
+  "key_phrases": [
+    "restless",
+    "legs",
+    "syndrome",
+    "attention",
+    "deficit",
+    "hyperactivity",
+    "disorder",
+    "review"
+  ],
+  "summary_1l": "Restless legs syndrome and attention-deficit/hyperactivity disorder: a review of the literature.",
+  "query_hits": [],
+  "embed_text": "40996863 Restless legs syndrome and attention-deficit/hyperactivity disorder: a review of the literature. science scifact STUDY OBJECTIVE To review evidence on the association between restless legs syndrome (RLS) and attention-deficit/hyperactivity disorder (ADHD), to discuss the hypothetical mechanisms underlying this association, and to consider the… 40996863 restless-legs-syndrome-and-attention-deficit/hyperactivity-disorder:-a-review-of-the-literature. restless legs syndrome attention deficit hyperactivity disorder review Restless legs syndrome and attention-deficit/hyperactivity disorder: a review of the literature. Restless legs syndrome and attention-deficit/hyperactivity disorder: a review of the literature. STUDY OBJECTIVE To review evidence on the association between restless legs syndrome (RLS) and attention-deficit/hyperactivity disorder (ADHD), to discuss the hypothetical mechanisms underlying this association, and to consider the potential interest for common pharmacologic treatments of RLS and ADHD when co-occurring. METHOD A PubMed search. RESULTS In clinical samples, up to 44% of subjects with ADHD have been found to have RLS or RLS symptoms, and up to 26% of subjects with RLS have been found to have ADHD or ADHD symptoms. Several mechanisms may explain this association. Sleep disruption associated with RLS might lead to inattentiveness, moodiness, and paradoxical overactivity. Diurnal man",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.039415+00:00"
+}

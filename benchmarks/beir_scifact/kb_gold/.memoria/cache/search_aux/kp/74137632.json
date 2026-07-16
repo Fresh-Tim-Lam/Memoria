@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "74137632",
+  "source_fingerprint": "a33cf8eff1640495fba9026ca7e7eb9c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "74137632",
+    "rembrandt-scholz"
+  ],
+  "key_phrases": [
+    "rembrandt",
+    "scholz",
+    "this",
+    "paper",
+    "examines",
+    "potential",
+    "impact",
+    "changes"
+  ],
+  "summary_1l": "This paper examines the potential impact of changes in medical care on changing population health in Lithuania, Hungary and Romania, with west Germany included for comparison.",
+  "query_hits": [],
+  "embed_text": "74137632 Rembrandt Scholz science scifact This paper examines the potential impact of changes in medical care on changing population health in Lithuania, Hungary and Romania, with west Germany included for comparison. We used the concept of deaths from certain causes that should… 74137632 rembrandt-scholz rembrandt scholz this paper examines potential impact changes This paper examines the potential impact of changes in medical care on changing population health in Lithuania, Hungary and Romania, with west Germany included for comparison. Rembrandt Scholz This paper examines the potential impact of changes in medical care on changing population health in Lithuania, Hungary and Romania, with west Germany included for comparison. We used the concept of deaths from certain causes that should not occur in the presence of timely and effective health care (amenable mortality) and calculated the contribution of changes in mortality from these conditions to changes in life expectancy between birth and age 75 [e (0-75)] for the periods 1980/81 to 1988 and 1992 to 1997. Temporary life expectancy improved consistently in west Germany (men: 2.7 years, women: 1.6 years). In contrast, gains were relatively small in the other countries, except among Hungarian women, who gained 1.3 years. Romanian men lost 1.3 years. In the 1980s, falling",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.228105+00:00"
+}

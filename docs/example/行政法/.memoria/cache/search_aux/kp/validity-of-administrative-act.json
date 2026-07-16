@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "kp_id": "validity-of-administrative-act",
+  "source_fingerprint": "3f6ce04c775e2a387117bd54e2ca4741",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "validity-of-administrative-act"
+  ],
+  "key_phrases": [
+    "行政",
+    "主体",
+    "xingzhengzhuti",
+    "行政主体"
+  ],
+  "summary_1l": "行政主体",
+  "query_hits": [],
+  "embed_text": "validity-of-administrative-act 行政行为效力 validity-of-administrative-act 行政 主体 xingzhengzhuti 行政主体 行政主体 行政主体",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-15T12:51:06.225587+00:00"
+}

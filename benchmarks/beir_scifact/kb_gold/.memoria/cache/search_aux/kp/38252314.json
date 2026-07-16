@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "38252314",
+  "source_fingerprint": "e59234830202ed8849b3d17397a2770c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "38252314",
+    "the-mcm8-mcm9-complex-promotes-rad51-recruitment-at-dna-damage-sites-to-facilitate-homologous-recombination."
+  ],
+  "key_phrases": [
+    "mcm8",
+    "mcm9",
+    "complex",
+    "promotes",
+    "rad51",
+    "recruitment",
+    "at",
+    "dna"
+  ],
+  "summary_1l": "The MCM8-MCM9 complex promotes RAD51 recruitment at DNA damage sites to facilitate homologous recombination.",
+  "query_hits": [],
+  "embed_text": "38252314 The MCM8-MCM9 complex promotes RAD51 recruitment at DNA damage sites to facilitate homologous recombination. science scifact The minichromosome maintenance protein homologs MCM8 and MCM9 have previously been implicated in DNA replication elongation and prereplication complex (pre-RC) formation, respectively. We found that MCM8 and MCM9 physically associate with… 38252314 the-mcm8-mcm9-complex-promotes-rad51-recruitment-at-dna-damage-sites-to-facilitate-homologous-recombination. mcm8 mcm9 complex promotes rad51 recruitment at dna The MCM8-MCM9 complex promotes RAD51 recruitment at DNA damage sites to facilitate homologous recombination. The MCM8-MCM9 complex promotes RAD51 recruitment at DNA damage sites to facilitate homologous recombination. The minichromosome maintenance protein homologs MCM8 and MCM9 have previously been implicated in DNA replication elongation and prereplication complex (pre-RC) formation, respectively. We found that MCM8 and MCM9 physically associate with each other and that MCM8 is required for the stability of MCM9 protein in mammalian cells. Depletion of MCM8 or MCM9 in human cancer cells or the loss of function MCM9 mutation in mouse embryo fibroblasts sensitizes cells to the DNA interstrand cross-linking (ICL) agent cisplatin. Consistent with a role in the repair of ICLs by homologous recombination (HR), knockdown of MCM8 or MCM9 significantly reduces HR repair efficiency. Chromatin immunopreci",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.303943+00:00"
+}

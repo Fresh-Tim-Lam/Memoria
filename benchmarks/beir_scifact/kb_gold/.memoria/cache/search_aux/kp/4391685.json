@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4391685",
+  "source_fingerprint": "2cda98f6a0374b06d5a8c69c25029315",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4391685",
+    "experimental-and-theoretical-study-of-mitotic-spindle-orientation"
+  ],
+  "key_phrases": [
+    "experimental",
+    "theoretical",
+    "study",
+    "mitotic",
+    "spindle",
+    "orientation",
+    "architecture",
+    "adhesiveness"
+  ],
+  "summary_1l": "The architecture and adhesiveness of a cell microenvironment is a critical factor for the regulation of spindle orientation in vivo.",
+  "query_hits": [],
+  "embed_text": "4391685 Experimental and theoretical study of mitotic spindle orientation science scifact The architecture and adhesiveness of a cell microenvironment is a critical factor for the regulation of spindle orientation in vivo. Using a combination of theory and experiments, we have investigated spindle orientation in HeLa (human)… 4391685 experimental-and-theoretical-study-of-mitotic-spindle-orientation experimental theoretical study mitotic spindle orientation architecture adhesiveness The architecture and adhesiveness of a cell microenvironment is a critical factor for the regulation of spindle orientation in vivo. Experimental and theoretical study of mitotic spindle orientation The architecture and adhesiveness of a cell microenvironment is a critical factor for the regulation of spindle orientation in vivo. Using a combination of theory and experiments, we have investigated spindle orientation in HeLa (human) cells. Here we show that spindle orientation can be understood as the result of the action of cortical force generators, which interact with spindle microtubules and are activated by cortical cues. We develop a simple physical description of this spindle mechanics, which allows us to calculate angular profiles of the torque acting on the spindle, as well as the angular distribution of spindle orientations. Our model accounts for the preferred spindle orientation and the shape of the full angu",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.478649+00:00"
+}

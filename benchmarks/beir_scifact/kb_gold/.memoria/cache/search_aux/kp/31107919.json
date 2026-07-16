@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "31107919",
+  "source_fingerprint": "8b72721dab21596cb1676163fa4892dc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "31107919",
+    "differential-requirement-of-the-extracellular-domain-in-activation-of-class-b-g-protein-coupled-receptors."
+  ],
+  "key_phrases": [
+    "differential",
+    "requirement",
+    "extracellular",
+    "domain",
+    "activation",
+    "class",
+    "protein",
+    "coupled"
+  ],
+  "summary_1l": "Differential Requirement of the Extracellular Domain in Activation of Class B G Protein-coupled Receptors.",
+  "query_hits": [],
+  "embed_text": "31107919 Differential Requirement of the Extracellular Domain in Activation of Class B G Protein-coupled Receptors. science scifact G protein-coupled receptors (GPCRs) from the secretin-like (class B) family are key players in hormonal homeostasis and are important drug targets for the treatment of metabolic disorders and neuronal diseases. They consist of a large… 31107919 differential-requirement-of-the-extracellular-domain-in-activation-of-class-b-g-protein-coupled-receptors. differential requirement extracellular domain activation class protein coupled Differential Requirement of the Extracellular Domain in Activation of Class B G Protein-coupled Receptors. Differential Requirement of the Extracellular Domain in Activation of Class B G Protein-coupled Receptors. G protein-coupled receptors (GPCRs) from the secretin-like (class B) family are key players in hormonal homeostasis and are important drug targets for the treatment of metabolic disorders and neuronal diseases. They consist of a large N-terminal extracellular domain (ECD) and a transmembrane domain (TMD) with the GPCR signature of seven transmembrane helices. Class B GPCRs are activated by peptide hormones with their C termini bound to the receptor ECD and their N termini bound to the TMD. It is thought that the ECD functions as an affinity trap to bind and localize the hormone to the receptor. This in turn would allow the hormone N terminus to insert into the TMD and induce conformat",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.300793+00:00"
+}

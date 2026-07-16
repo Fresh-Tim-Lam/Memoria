@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11288846",
+  "source_fingerprint": "eb43510a41b90c44a4f50a09c2e68669",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11288846",
+    "evaluation-of-networks-of-randomized-trials."
+  ],
+  "key_phrases": [
+    "evaluation",
+    "networks",
+    "randomized",
+    "trials",
+    "may",
+    "be",
+    "designed",
+    "interpreted"
+  ],
+  "summary_1l": "Evaluation of networks of randomized trials.",
+  "query_hits": [],
+  "embed_text": "11288846 Evaluation of networks of randomized trials. science scifact Randomized trials may be designed and interpreted as single experiments or they may be seen in the context of other similar or relevant evidence. The amount and complexity of available randomized evidence vary for different topics.… 11288846 evaluation-of-networks-of-randomized-trials. evaluation networks randomized trials may be designed interpreted Evaluation of networks of randomized trials. Evaluation of networks of randomized trials. Randomized trials may be designed and interpreted as single experiments or they may be seen in the context of other similar or relevant evidence. The amount and complexity of available randomized evidence vary for different topics. Systematic reviews may be useful in identifying gaps in the existing randomized evidence, pointing to discrepancies between trials, and planning future trials. A new, promising, but also very much debated extension of systematic reviews, mixed treatment comparison (MTC) meta-analysis, has become increasingly popular recently. MTC meta-analysis may have value in interpreting the available randomized evidence from networks of trials and can rank many different treatments, going beyond focusing on simple pairwise-compari",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:06.642186+00:00"
+}

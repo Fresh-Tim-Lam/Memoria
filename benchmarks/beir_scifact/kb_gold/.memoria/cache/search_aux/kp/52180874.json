@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "52180874",
+  "source_fingerprint": "655024eb8d3dfa64d445671fa7d76004",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "52180874",
+    "efficacy-of-pd-1-or-pd-l1-inhibitors-and-pd-l1-expression-status-in-cancer:-meta-analysis"
+  ],
+  "key_phrases": [
+    "efficacy",
+    "pd",
+    "l1",
+    "inhibitors",
+    "expression",
+    "status",
+    "cancer",
+    "meta"
+  ],
+  "summary_1l": "OBJECTIVE To evaluate the relative efficacy of programmed cell death 1 (PD-1) or programmed cell death ligand",
+  "query_hits": [],
+  "embed_text": "52180874 Efficacy of PD-1 or PD-L1 inhibitors and PD-L1 expression status in cancer: meta-analysis science scifact OBJECTIVE To evaluate the relative efficacy of programmed cell death 1 (PD-1) or programmed cell death ligand 1 (PD-L1) inhibitors versus conventional drugs in patients with cancer that were PD-L1 positive and PD-L1 negative. DESIGN… 52180874 efficacy-of-pd-1-or-pd-l1-inhibitors-and-pd-l1-expression-status-in-cancer:-meta-analysis efficacy pd l1 inhibitors expression status cancer meta OBJECTIVE To evaluate the relative efficacy of programmed cell death 1 (PD-1) or programmed cell death ligand Efficacy of PD-1 or PD-L1 inhibitors and PD-L1 expression status in cancer: meta-analysis OBJECTIVE To evaluate the relative efficacy of programmed cell death 1 (PD-1) or programmed cell death ligand 1 (PD-L1) inhibitors versus conventional drugs in patients with cancer that were PD-L1 positive and PD-L1 negative. DESIGN Meta-analysis of randomised controlled trials. DATA SOURCES PubMed, Embase, Cochrane database, and conference abstracts presented at the American Society of Clinical Oncology and European Society of Medical Oncology up to March 2018. REVIEW METHODS Studies of PD-1 or PD-L1 inhibitors (avelumab, atezolizumab, durvalumab, nivolumab, and pembrolizumab) that had available hazard ratios for death based on PD-L1 positivity or negativity were included. The threshold for PD-L1 pos",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.524036+00:00"
+}

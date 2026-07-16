@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "37362689",
+  "source_fingerprint": "d86074acbc53b36a3df364c978b80e4e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "37362689",
+    "oxidative-phosphorylation:-synthesis-of-mitochondrially-encoded-proteins-and-assembly-of-individual-structural-subunits-into-functional-holoenzyme-complexes."
+  ],
+  "key_phrases": [
+    "oxidative",
+    "phosphorylation",
+    "synthesis",
+    "mitochondrially",
+    "encoded",
+    "proteins",
+    "assembly",
+    "individual"
+  ],
+  "summary_1l": "Oxidative phosphorylation: synthesis of mitochondrially encoded proteins and assembly of individual structural subunits into functional holoenzyme complexes.",
+  "query_hits": [],
+  "embed_text": "37362689 Oxidative phosphorylation: synthesis of mitochondrially encoded proteins and assembly of individual structural subunits into functional holoenzyme complexes. science scifact The bulk of ATP consumed by various cellular processes in higher eukaryotes is normally produced by five multimeric protein complexes (I-V) embedded within the inner mitochondrial membrane, in a process known as oxidative phosphorylation… 37362689 oxidative-phosphorylation:-synthesis-of-mitochondrially-encoded-proteins-and-assembly-of-individual-structural-subunits-into-functional-holoenzyme-complexes. oxidative phosphorylation synthesis mitochondrially encoded proteins assembly individual Oxidative phosphorylation: synthesis of mitochondrially encoded proteins and assembly of individual structural subunits into functional holoenzyme complexes. Oxidative phosphorylation: synthesis of mitochondrially encoded proteins and assembly of individual structural subunits into functional holoenzyme complexes. The bulk of ATP consumed by various cellular processes in higher eukaryotes is normally produced by five multimeric protein complexes (I-V) embedded within the inner mitochondrial membrane, in a process known as oxidative phosphorylation (OXPHOS). Maintenance of energy homeostasis under most physiological conditions is therefore contingent upon the ability of OXPHOS to meet cellular changes in bioenergetic demand, with a chronic failure to do so being a frequent cause of human disease. With the exception of Complex II, the structural subunits of OXPHOS complexes are encoded by both the nuclear and the mitochondrial genomes. The physic",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.412189+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21855837",
+  "source_fingerprint": "3e4b33a517221e446f83f1818aa3cf84",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21855837",
+    "epigenetic-instability-in-es-cells-and-cloned-mice."
+  ],
+  "key_phrases": [
+    "epigenetic",
+    "instability",
+    "es",
+    "cells",
+    "cloned",
+    "mice",
+    "cloning",
+    "by"
+  ],
+  "summary_1l": "Epigenetic instability in ES cells and cloned mice.",
+  "query_hits": [],
+  "embed_text": "21855837 Epigenetic instability in ES cells and cloned mice. science scifact Cloning by nuclear transfer (NT) is an inefficient process in which most clones die before birth and survivors often display growth abnormalities. In an effort to correlate gene expression with survival and fetal overgrowth, we have… 21855837 epigenetic-instability-in-es-cells-and-cloned-mice. epigenetic instability es cells cloned mice cloning by Epigenetic instability in ES cells and cloned mice. Epigenetic instability in ES cells and cloned mice. Cloning by nuclear transfer (NT) is an inefficient process in which most clones die before birth and survivors often display growth abnormalities. In an effort to correlate gene expression with survival and fetal overgrowth, we have examined imprinted gene expression in both mice cloned by nuclear transfer and in the embryonic stem (ES) cell donor populations from which they were derived. The epigenetic state of the ES cell genome was found to be extremely unstable. Similarly, variation in imprinted gene expression was observed in most cloned mice, even in those derived from ES cells of the same subclone. Many of the animals survived to adulthood despite widespread gene dysregulation, indicating that mammalian development may be rather to",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.763939+00:00"
+}

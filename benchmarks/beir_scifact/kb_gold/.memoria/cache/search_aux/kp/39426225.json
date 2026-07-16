@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "39426225",
+  "source_fingerprint": "882cac643acd3e288295bd1cc964c0be",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "39426225",
+    "adipose-stem-cells-originate-from-perivascular-cells."
+  ],
+  "key_phrases": [
+    "adipose",
+    "stem",
+    "cells",
+    "originate",
+    "from",
+    "perivascular",
+    "recent",
+    "research"
+  ],
+  "summary_1l": "Adipose stem cells originate from perivascular cells.",
+  "query_hits": [],
+  "embed_text": "39426225 Adipose stem cells originate from perivascular cells. science scifact Recent research has shown that adipose tissues contain abundant MSCs (mesenchymal stem cells). The origin and location of the adipose stem cells, however, remain unknown, presenting an obstacle to the further purification and study of… 39426225 adipose-stem-cells-originate-from-perivascular-cells. adipose stem cells originate from perivascular recent research Adipose stem cells originate from perivascular cells. Adipose stem cells originate from perivascular cells. Recent research has shown that adipose tissues contain abundant MSCs (mesenchymal stem cells). The origin and location of the adipose stem cells, however, remain unknown, presenting an obstacle to the further purification and study of these cells. In the present study, we aimed at investigating the origins of adipose stem cells. α-SMA (α-smooth muscle actin) is one of the markers of pericytes. We harvested ASCs (adipose stromal cells) from α-SMA-GFP (green fluorescent protein) transgenic mice and sorted them into GFP-positive and GFP-negative cells by FACS. Multilineage differentiation tests were applied to examine the pluripotent ability of the α-SMA-GFP-positive and -negative cells. Immunofluorescent staining for α-SMA and PDGF-Rβ (pl",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.591680+00:00"
+}

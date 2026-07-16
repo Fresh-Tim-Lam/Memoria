@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "85693958",
+  "source_fingerprint": "0bef6b445585898ab67d4211482fff16",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "85693958",
+    "the-regulation-of-numbers-of-tropical-oceanic-birds"
+  ],
+  "key_phrases": [
+    "regulation",
+    "numbers",
+    "tropical",
+    "oceanic",
+    "birds",
+    "summary",
+    "ways",
+    "which"
+  ],
+  "summary_1l": "SUMMARY The ways in which the numbers of tropical sea-birds might be limited are considered; it is argued that food is the only factor likely to be",
+  "query_hits": [],
+  "embed_text": "85693958 THE REGULATION OF NUMBERS OF TROPICAL OCEANIC BIRDS science scifact SUMMARY    The ways in which the numbers of tropical sea-birds might be limited are considered; it is argued that food is the only factor likely to be generally effective in limiting numbers, but it seems improbable that food shortage… 85693958 the-regulation-of-numbers-of-tropical-oceanic-birds regulation numbers tropical oceanic birds summary ways which SUMMARY The ways in which the numbers of tropical sea-birds might be limited are considered; it is argued that food is the only factor likely to be THE REGULATION OF NUMBERS OF TROPICAL OCEANIC BIRDS SUMMARY The ways in which the numbers of tropical sea-birds might be limited are considered; it is argued that food is the only factor likely to be generally effective in limiting numbers, but it seems improbable that food shortage could exert a density-dependent control of the mortality of the birds outside the breeding season. Wynne-Edwards' hypothesis that colonies of sea-birds are able to keep their own numbers below the level at which food shortage would become acute, primarily by exerting control on the output of young, is rejected as unproven and improbable. It is suggested that colonies of tropical oceanic birds deplete the food in the waters round them, and that as the populations increase competition for food becomes more intens",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.054664+00:00"
+}

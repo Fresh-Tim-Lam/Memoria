@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21943141",
+  "source_fingerprint": "61aa042f4d085a9b29bcc2c55f37efac",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21943141",
+    "tatc-is-a-specificity-determinant-for-protein-secretion-via-the-twin-arginine-translocation-pathway."
+  ],
+  "key_phrases": [
+    "tatc",
+    "specificity",
+    "determinant",
+    "protein",
+    "secretion",
+    "via",
+    "twin",
+    "arginine"
+  ],
+  "summary_1l": "TatC is a specificity determinant for protein secretion via the twin-arginine translocation pathway.",
+  "query_hits": [],
+  "embed_text": "21943141 TatC is a specificity determinant for protein secretion via the twin-arginine translocation pathway. science scifact The recent discovery of a ubiquitous translocation pathway, specifically required for proteins with a twin-arginine motif in their signal peptide, has focused interest on its membrane-bound components, one of which is known as TatC. Unlike… 21943141 tatc-is-a-specificity-determinant-for-protein-secretion-via-the-twin-arginine-translocation-pathway. tatc specificity determinant protein secretion via twin arginine TatC is a specificity determinant for protein secretion via the twin-arginine translocation pathway. TatC is a specificity determinant for protein secretion via the twin-arginine translocation pathway. The recent discovery of a ubiquitous translocation pathway, specifically required for proteins with a twin-arginine motif in their signal peptide, has focused interest on its membrane-bound components, one of which is known as TatC. Unlike most organisms of which the genome has been sequenced completely, the Gram-positive eubacterium Bacillus subtilis contains two tatC-like genes denoted tatCd and tatCy. The corresponding TatCd and TatCy proteins have the potential to be involved in the translocation of 27 proteins with putative twin-arginine signal peptides of which approximately 6-14 are likely to be secreted into the growth medium. Using a proteomic approach, we show that PhoD of B. subt",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.986112+00:00"
+}

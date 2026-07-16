@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5492542",
+  "source_fingerprint": "28a5898b5d02339282aa0d67c3c59fe8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5492542",
+    "oral-ciclopirox-olamine-displays-biological-activity-in-a-phase-i-study-in-patients-with-advanced-hematologic-malignancies."
+  ],
+  "key_phrases": [
+    "oral",
+    "ciclopirox",
+    "olamine",
+    "displays",
+    "biological",
+    "activity",
+    "phase",
+    "study"
+  ],
+  "summary_1l": "Oral ciclopirox olamine displays biological activity in a phase I study in patients with advanced hematologic malignancies.",
+  "query_hits": [],
+  "embed_text": "5492542 Oral ciclopirox olamine displays biological activity in a phase I study in patients with advanced hematologic malignancies. science scifact The antimycotic ciclopirox olamine is an intracellular iron chelator that has anticancer activity in vitro and in vivo. We developed an oral formulation of ciclopirox olamine and conducted the first-in-human phase I study of this drug in… 5492542 oral-ciclopirox-olamine-displays-biological-activity-in-a-phase-i-study-in-patients-with-advanced-hematologic-malignancies. oral ciclopirox olamine displays biological activity phase study Oral ciclopirox olamine displays biological activity in a phase I study in patients with advanced hematologic malignancies. Oral ciclopirox olamine displays biological activity in a phase I study in patients with advanced hematologic malignancies. The antimycotic ciclopirox olamine is an intracellular iron chelator that has anticancer activity in vitro and in vivo. We developed an oral formulation of ciclopirox olamine and conducted the first-in-human phase I study of this drug in patients with relapsed or refractory hematologic malignancies (Trial registration ID: NCT00990587). Patients were treated with 5-80 mg/m² oral ciclopirox olamine once daily for five days in 21-day treatment cycles. Pharmacokinetic and pharmacodynamic companion studies were performed in a subset of patients. Following definition of the half-life of ciclopirox olamine, an additional cohort was enrolled and treated with 80 mg/m² ciclopir",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.454952+00:00"
+}

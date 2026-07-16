@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "41915616",
+  "source_fingerprint": "b798ac7ffda8db74efcfb5643eebac25",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "41915616",
+    "zinc-supplementation-during-lactation:-effects-on-maternal-status-and-milk-zinc-concentrations."
+  ],
+  "key_phrases": [
+    "zinc",
+    "supplementation",
+    "during",
+    "lactation",
+    "effects",
+    "maternal",
+    "status",
+    "milk"
+  ],
+  "summary_1l": "Zinc supplementation during lactation: effects on maternal status and milk zinc concentrations.",
+  "query_hits": [],
+  "embed_text": "41915616 Zinc supplementation during lactation: effects on maternal status and milk zinc concentrations. science scifact The effects of a zinc supplement on maternal zinc status and milk zinc concentrations through > or = 7 mo of lactation were examined. Seventy-one lactating women received either a daily 15-mg zinc supplement (ZS, n = 40) or placebo (NZS, n… 41915616 zinc-supplementation-during-lactation:-effects-on-maternal-status-and-milk-zinc-concentrations. zinc supplementation during lactation effects maternal status milk Zinc supplementation during lactation: effects on maternal status and milk zinc concentrations. Zinc supplementation during lactation: effects on maternal status and milk zinc concentrations. The effects of a zinc supplement on maternal zinc status and milk zinc concentrations through > or = 7 mo of lactation were examined. Seventy-one lactating women received either a daily 15-mg zinc supplement (ZS, n = 40) or placebo (NZS, n = 31) started by 2 wk postpartum in a double-blind, randomized design. Overall mean zinc intakes were 13.0 +/- 3.4 mg/d for the NZS group and 25.7 +/- 3.9 mg/d (including supplement) for the ZS group. Plasma zinc concentrations of the ZS group were significantly higher than those of the NZS group (P = 0.05). Milk zinc concentrations declined significantly over the course of the study for all subjects but were not affected by zinc supplementation. The mean diet",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.663489+00:00"
+}

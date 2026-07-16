@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4418878",
+  "source_fingerprint": "d3b422c600d4301d8de637673922efe7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4418878",
+    "oncogenic-pathway-signatures-in-human-cancers-as-a-guide-to-targeted-therapies"
+  ],
+  "key_phrases": [
+    "oncogenic",
+    "pathway",
+    "signatures",
+    "human",
+    "cancers",
+    "as",
+    "guide",
+    "targeted"
+  ],
+  "summary_1l": "The development of an oncogenic state is a complex process involving the accumulation of multiple independent mutations t",
+  "query_hits": [],
+  "embed_text": "4418878 Oncogenic pathway signatures in human cancers as a guide to targeted therapies science scifact The development of an oncogenic state is a complex process involving the accumulation of multiple independent mutations that lead to deregulation of cell signalling pathways central to the control of cell growth and cell fate. The ability… 4418878 oncogenic-pathway-signatures-in-human-cancers-as-a-guide-to-targeted-therapies oncogenic pathway signatures human cancers as guide targeted The development of an oncogenic state is a complex process involving the accumulation of multiple independent mutations t Oncogenic pathway signatures in human cancers as a guide to targeted therapies The development of an oncogenic state is a complex process involving the accumulation of multiple independent mutations that lead to deregulation of cell signalling pathways central to the control of cell growth and cell fate. The ability to define cancer subtypes, recurrence of disease and response to specific therapies using DNA microarray-based gene expression signatures has been demonstrated in multiple studies. Various studies have also demonstrated the potential for using gene expression profiles for the analysis of oncogenic pathways. Here we show that gene expression signatures can be identified that reflect the activation status of several oncogenic pathways. When evaluated in several large collections",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.934760+00:00"
+}

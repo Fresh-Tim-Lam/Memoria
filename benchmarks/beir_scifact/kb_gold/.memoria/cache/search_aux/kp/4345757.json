@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4345757",
+  "source_fingerprint": "52f9528caef4ab535f214b282ebc5992",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4345757",
+    "obesity-as-a-medical-problem."
+  ],
+  "key_phrases": [
+    "obesity",
+    "as",
+    "medical",
+    "problem",
+    "now",
+    "so",
+    "common",
+    "within"
+  ],
+  "summary_1l": "Obesity as a medical problem.",
+  "query_hits": [],
+  "embed_text": "4345757 Obesity as a medical problem. science scifact Obesity is now so common within the world's population that it is beginning to replace undernutrition and infectious diseases as the most significant contributor to ill health. In particular, obesity is associated with diabetes mellitus,… 4345757 obesity-as-a-medical-problem. obesity as medical problem now so common within Obesity as a medical problem. Obesity as a medical problem. Obesity is now so common within the world's population that it is beginning to replace undernutrition and infectious diseases as the most significant contributor to ill health. In particular, obesity is associated with diabetes mellitus, coronary heart disease, certain forms of cancer, and sleep-breathing disorders. Obesity is defined by a body-mass index (weight divided by square of the height) of 30 kg m(-2) or greater, but this does not take into account the morbidity and mortality associated with more modest degrees of overweight, nor the detrimental effect of intra-abdominal fat. The global epidemic of obesity results from a combination of genetic susceptibility, increased availability of high-energy foods and decreased requirement for physical activity i",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.956408+00:00"
+}

@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "kp_id": "175429#1",
+  "source_fingerprint": "106dbb00d411cb09f8508ce77023abaf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "曼徹斯特聯足球俱樂部",
+    "公司秘書",
+    "电子公司",
+    "中国国家铁路集团",
+    "国家石油公司",
+    "山东省足球代表队",
+    "已解散的NBA球队列表",
+    "巴塞罗那足球俱乐部",
+    "法本公司",
+    "白俄羅斯足球超級聯賽",
+    "英格兰足球超级联赛",
+    "足球週刊"
+  ],
+  "aliases": [
+    "175429#1"
+  ],
+  "key_phrases": [
+    "曼聯",
+    "足球",
+    "俱樂部",
+    "歷史",
+    "曼联",
+    "创建",
+    "1878",
+    "当时"
+  ],
+  "summary_1l": "曼联创建于1878年，当时的名称是紐頓希夫LYR（Newton Heath LYR F.",
+  "query_hits": [],
+  "embed_text": "175429#1 曼聯足球俱樂部歷史 曼聯足球俱樂部歷史 曼联创建于1878年，当时的名称是紐頓希夫LYR（Newton Heath LYR F.C.）。这是因为球队最早是由兰开郡和约克郡铁路公司的工人在紐頓希夫工場上组成的。球队在1902年改成现在的名字－曼彻斯特联（Manchester United，簡稱曼聯）。 曼徹斯特聯足球俱樂部 公司秘書 电子公司 中国国家铁路集团 国家石油公司 山东省足球代表队 已解散的NBA球队列表 巴塞罗那足球俱乐部 法本公司 白俄羅斯足球超級聯賽 英格兰足球超级联赛 足球週刊 175429#1 曼聯 足球 俱樂部 歷史 曼联 创建 1878 当时 曼联创建于1878年，当时的名称是紐頓希夫LYR（Newton Heath LYR F. 曼聯足球俱樂部歷史 曼联创建于1878年，当时的名称是紐頓希夫LYR（Newton Heath LYR F.C.）。这是因为球队最早是由兰开郡和约克郡铁路公司的工人在紐頓希夫工場上组成的。球队在1902年改成现在的名字－曼彻斯特联（Manchester United，簡稱曼聯）。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:19:55.147736+00:00"
+}

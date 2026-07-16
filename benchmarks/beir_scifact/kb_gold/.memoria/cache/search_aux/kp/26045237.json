@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26045237",
+  "source_fingerprint": "e3ddf04ed1ed2e2504bbea5307bf7b9c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26045237",
+    "safety-and-efficacy-of-rnai-therapy-for-transthyretin-amyloidosis."
+  ],
+  "key_phrases": [
+    "safety",
+    "efficacy",
+    "rnai",
+    "therapy",
+    "transthyretin",
+    "amyloidosis",
+    "background",
+    "caused"
+  ],
+  "summary_1l": "Safety and efficacy of RNAi therapy for transthyretin amyloidosis.",
+  "query_hits": [],
+  "embed_text": "26045237 Safety and efficacy of RNAi therapy for transthyretin amyloidosis. science scifact BACKGROUND Transthyretin amyloidosis is caused by the deposition of hepatocyte-derived transthyretin amyloid in peripheral nerves and the heart. A therapeutic approach mediated by RNA interference (RNAi) could reduce the production of… 26045237 safety-and-efficacy-of-rnai-therapy-for-transthyretin-amyloidosis. safety efficacy rnai therapy transthyretin amyloidosis background caused Safety and efficacy of RNAi therapy for transthyretin amyloidosis. Safety and efficacy of RNAi therapy for transthyretin amyloidosis. BACKGROUND Transthyretin amyloidosis is caused by the deposition of hepatocyte-derived transthyretin amyloid in peripheral nerves and the heart. A therapeutic approach mediated by RNA interference (RNAi) could reduce the production of transthyretin. METHODS We identified a potent antitransthyretin small interfering RNA, which was encapsulated in two distinct first- and second-generation formulations of lipid nanoparticles, generating ALN-TTR01 and ALN-TTR02, respectively. Each formulation was studied in a single-dose, placebo-controlled phase 1 trial to assess safety and effect on transthyretin levels. We first evaluated ALN-TTR01 (at doses of 0.01 to 1.0 mg per kilogram of body weight) in 32 patients with transthyretin amy",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.155879+00:00"
+}

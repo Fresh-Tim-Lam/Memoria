@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25988622",
+  "source_fingerprint": "d6351225727cc8dfaf977f10be657a6b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25988622",
+    "cns-repair-requires-both-effector-and-regulatory-t-cells-with-distinct-temporal-and-spatial-profiles."
+  ],
+  "key_phrases": [
+    "cns",
+    "repair",
+    "requires",
+    "both",
+    "effector",
+    "regulatory",
+    "cells",
+    "with"
+  ],
+  "summary_1l": "CNS repair requires both effector and regulatory T cells with distinct temporal and spatial profiles.",
+  "query_hits": [],
+  "embed_text": "25988622 CNS repair requires both effector and regulatory T cells with distinct temporal and spatial profiles. science scifact Monocyte-derived macrophages (mo-MΦs) and T cells have been shown to contribute to spinal cord repair. Recently, the remote brain choroid plexus epithelium (CP) was identified as a portal for monocyte recruitment, and its activation for… 25988622 cns-repair-requires-both-effector-and-regulatory-t-cells-with-distinct-temporal-and-spatial-profiles. cns repair requires both effector regulatory cells with CNS repair requires both effector and regulatory T cells with distinct temporal and spatial profiles. CNS repair requires both effector and regulatory T cells with distinct temporal and spatial profiles. Monocyte-derived macrophages (mo-MΦs) and T cells have been shown to contribute to spinal cord repair. Recently, the remote brain choroid plexus epithelium (CP) was identified as a portal for monocyte recruitment, and its activation for leukocyte trafficking was found to be IFN-γ-dependent. Here, we addressed how the need for effector T cells can be reconciled with the role of inflammation-resolving immune cells in the repair process. Using an acute spinal cord injury model, we show that in mice deficient in IFN-γ-producing T cells, the CP was not activated, and recruitment of inflammation-resolving mo-MΦ to the spinal cord parenchyma was limited. We further demonstrate that mo-MΦ locally",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.901001+00:00"
+}

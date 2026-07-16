@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22309946",
+  "source_fingerprint": "8a8bb22ead7fcd1820f9950412c7526a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22309946",
+    "asymptomatic-spinal-cord-lesions-predict-disease-progression-in-radiologically-isolated-syndrome."
+  ],
+  "key_phrases": [
+    "asymptomatic",
+    "spinal",
+    "cord",
+    "lesions",
+    "predict",
+    "disease",
+    "progression",
+    "radiologically"
+  ],
+  "summary_1l": "Asymptomatic spinal cord lesions predict disease progression in radiologically isolated syndrome.",
+  "query_hits": [],
+  "embed_text": "22309946 Asymptomatic spinal cord lesions predict disease progression in radiologically isolated syndrome. science scifact BACKGROUND Technological advancements in neuroimaging and the increased use of these diagnostic modalities are responsible for the discovery of incidentally identified anomalies within the CNS. In addition to the identification of… 22309946 asymptomatic-spinal-cord-lesions-predict-disease-progression-in-radiologically-isolated-syndrome. asymptomatic spinal cord lesions predict disease progression radiologically Asymptomatic spinal cord lesions predict disease progression in radiologically isolated syndrome. Asymptomatic spinal cord lesions predict disease progression in radiologically isolated syndrome. BACKGROUND Technological advancements in neuroimaging and the increased use of these diagnostic modalities are responsible for the discovery of incidentally identified anomalies within the CNS. In addition to the identification of unanticipated brain MRI abnormalities suggestive of demyelinating disease in patients undergoing neuroimaging for a medical reason other than evaluation for multiple sclerosis (MS), asymptomatic spinal cord lesions are periodically identified. OBJECTIVE To determine if asymptomatic spinal cord lesions are associated with clinical progression in subjects with radiologically isolated syndrome (RIS). METHODS A retrospective review of RIS cases at the University of Calif",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.541042+00:00"
+}

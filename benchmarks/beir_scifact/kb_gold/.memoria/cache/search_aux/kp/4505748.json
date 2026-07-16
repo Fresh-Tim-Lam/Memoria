@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4505748",
+  "source_fingerprint": "efb1bc7635f2221de4f526334542a033",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4505748",
+    "disclosure-of-apoe-genotype-for-risk-of-alzheimer's-disease."
+  ],
+  "key_phrases": [
+    "disclosure",
+    "apoe",
+    "genotype",
+    "risk",
+    "alzheimer",
+    "disease",
+    "background",
+    "apolipoprotein"
+  ],
+  "summary_1l": "Disclosure of APOE genotype for risk of Alzheimer's disease.",
+  "query_hits": [],
+  "embed_text": "4505748 Disclosure of APOE genotype for risk of Alzheimer's disease. science scifact BACKGROUND The apolipoprotein E (APOE) genotype provides information on the risk of Alzheimer's disease, but the genotyping of patients and their family members has been discouraged. We examined the effect of genotype disclosure in a… 4505748 disclosure-of-apoe-genotype-for-risk-of-alzheimer's-disease. disclosure apoe genotype risk alzheimer disease background apolipoprotein Disclosure of APOE genotype for risk of Alzheimer's disease. Disclosure of APOE genotype for risk of Alzheimer's disease. BACKGROUND The apolipoprotein E (APOE) genotype provides information on the risk of Alzheimer's disease, but the genotyping of patients and their family members has been discouraged. We examined the effect of genotype disclosure in a prospective, randomized, controlled trial. METHODS We randomly assigned 162 asymptomatic adults who had a parent with Alzheimer's disease to receive the results of their own APOE genotyping (disclosure group) or not to receive such results (nondisclosure group). We measured symptoms of anxiety, depression, and test-related distress 6 weeks, 6 months, and 1 year after disclosure or nondisclosure. RESULTS There were no significant differences between the two groups in changes in time-averaged measures",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.089141+00:00"
+}

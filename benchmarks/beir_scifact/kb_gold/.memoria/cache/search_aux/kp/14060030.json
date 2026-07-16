@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14060030",
+  "source_fingerprint": "68fa61d308395c38756cbaf1e6922671",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14060030",
+    "life-and-death-of-cardiac-stem-cells:-a-paradigm-shift-in-cardiac-biology."
+  ],
+  "key_phrases": [
+    "life",
+    "death",
+    "cardiac",
+    "stem",
+    "cells",
+    "paradigm",
+    "shift",
+    "biology"
+  ],
+  "summary_1l": "Life and death of cardiac stem cells: a paradigm shift in cardiac biology.",
+  "query_hits": [],
+  "embed_text": "14060030 Life and death of cardiac stem cells: a paradigm shift in cardiac biology. science scifact The recognition that myocyte mitosis occurs in the fetal, neonatal, adult, and hypertrophied heart and that a pool of primitive, undifferentiated cells is present in the myocardium has put forward a different view of the biology of the… 14060030 life-and-death-of-cardiac-stem-cells:-a-paradigm-shift-in-cardiac-biology. life death cardiac stem cells paradigm shift biology Life and death of cardiac stem cells: a paradigm shift in cardiac biology. Life and death of cardiac stem cells: a paradigm shift in cardiac biology. The recognition that myocyte mitosis occurs in the fetal, neonatal, adult, and hypertrophied heart and that a pool of primitive, undifferentiated cells is present in the myocardium has put forward a different view of the biology of the heart. The new paradigm suggests that myocyte formation is preserved during postnatal life, in adulthood or senescence, pointing to a remarkable growth reserve of the heart throughout the course of life of the organism. This article reviews a large body of novel information, which has been obtained in the last 2 decades, in favor of the notion that the mammalian heart has the inherent ability to continuously replace its parenchymal cells and that this unexpected characteristic has imp",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.990662+00:00"
+}

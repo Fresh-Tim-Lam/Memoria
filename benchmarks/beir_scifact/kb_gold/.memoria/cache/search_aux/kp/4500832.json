@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4500832",
+  "source_fingerprint": "9fc3d68cce8bf8a8333e4d85a26be343",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4500832",
+    "gamma-tocopherol,-the-major-form-of-vitamin-e-in-the-us-diet,-deserves-more-attention."
+  ],
+  "key_phrases": [
+    "gamma",
+    "tocopherol",
+    "major",
+    "form",
+    "vitamin",
+    "us",
+    "diet",
+    "deserves"
+  ],
+  "summary_1l": "gamma-tocopherol, the major form of vitamin E in the US diet, deserves more attention.",
+  "query_hits": [],
+  "embed_text": "4500832 gamma-tocopherol, the major form of vitamin E in the US diet, deserves more attention. science scifact gamma-tocopherol is the major form of vitamin E in many plant seeds and in the US diet, but has drawn little attention compared with alpha-tocopherol, the predominant form of vitamin E in tissues and the primary form in supplements.… 4500832 gamma-tocopherol,-the-major-form-of-vitamin-e-in-the-us-diet,-deserves-more-attention. gamma tocopherol major form vitamin us diet deserves gamma-tocopherol, the major form of vitamin E in the US diet, deserves more attention. gamma-tocopherol, the major form of vitamin E in the US diet, deserves more attention. gamma-tocopherol is the major form of vitamin E in many plant seeds and in the US diet, but has drawn little attention compared with alpha-tocopherol, the predominant form of vitamin E in tissues and the primary form in supplements. However, recent studies indicate that gamma-tocopherol may be important to human health and that it possesses unique features that distinguish it from alpha-tocopherol. gamma-Tocopherol appears to be a more effective trap for lipophilic electrophiles than is alpha-tocopherol. gamma-Tocopherol is well absorbed and accumulates to a significant degree in some human tissues; it is metabolized, however, largely to 2,7,8-trimethyl-2-(beta-carboxyethyl)-6-hydroxychroman (gamma-CEHC)",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.046611+00:00"
+}

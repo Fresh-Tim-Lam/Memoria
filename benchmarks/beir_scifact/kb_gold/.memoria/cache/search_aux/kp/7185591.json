@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7185591",
+  "source_fingerprint": "10d58684dfc82aa8b9911c005df0879b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7185591",
+    "sir2-independent-life-span-extension-by-calorie-restriction-in-yeast"
+  ],
+  "key_phrases": [
+    "sir2",
+    "independent",
+    "life",
+    "span",
+    "extension",
+    "by",
+    "calorie",
+    "restriction"
+  ],
+  "summary_1l": "Calorie restriction slows aging and increases life span in many organisms.",
+  "query_hits": [],
+  "embed_text": "7185591 Sir2-Independent Life Span Extension by Calorie Restriction in Yeast science scifact Calorie restriction slows aging and increases life span in many organisms. In yeast, a mechanistic explanation has been proposed whereby calorie restriction slows aging by activating Sir2. Here we report the identification of a… 7185591 sir2-independent-life-span-extension-by-calorie-restriction-in-yeast sir2 independent life span extension by calorie restriction Calorie restriction slows aging and increases life span in many organisms. Sir2-Independent Life Span Extension by Calorie Restriction in Yeast Calorie restriction slows aging and increases life span in many organisms. In yeast, a mechanistic explanation has been proposed whereby calorie restriction slows aging by activating Sir2. Here we report the identification of a Sir2-independent pathway responsible for a majority of the longevity benefit associated with calorie restriction. Deletion of FOB1 and overexpression of SIR2 have been previously found to increase life span by reducing the levels of toxic rDNA circles in aged mother cells. We find that combining calorie restriction with either of these genetic interventions dramatically enhances longevity, resulting in the longest-lived yeast strain reported thus far. Further, calorie restriction results in a great",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.712506+00:00"
+}

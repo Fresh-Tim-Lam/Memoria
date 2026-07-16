@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3127341",
+  "source_fingerprint": "29d8659b2c02525615683f8455abc666",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3127341",
+    "polymorphism-and-ligand-dependent-changes-in-human-glucagon-like-peptide-1-receptor-(glp-1r)-function:-allosteric-rescue-of-loss-of-function-mutation."
+  ],
+  "key_phrases": [
+    "polymorphism",
+    "ligand",
+    "dependent",
+    "changes",
+    "human",
+    "glucagon",
+    "like",
+    "peptide"
+  ],
+  "summary_1l": "Polymorphism and ligand dependent changes in human glucagon-like peptide-1 receptor (GLP-1R) function: allosteric rescue of loss of function mutation.",
+  "query_hits": [],
+  "embed_text": "3127341 Polymorphism and ligand dependent changes in human glucagon-like peptide-1 receptor (GLP-1R) function: allosteric rescue of loss of function mutation. science scifact The glucagon-like peptide-1 receptor (GLP-1R) is a key physiological regulator of insulin secretion and a major therapeutic target for the treatment of type II diabetes. However, regulation of GLP-1R function is complex with multiple… 3127341 polymorphism-and-ligand-dependent-changes-in-human-glucagon-like-peptide-1-receptor-(glp-1r)-function:-allosteric-rescue-of-loss-of-function-mutation. polymorphism ligand dependent changes human glucagon like peptide Polymorphism and ligand dependent changes in human glucagon-like peptide-1 receptor (GLP-1R) function: allosteric rescue of loss of function mutation. Polymorphism and ligand dependent changes in human glucagon-like peptide-1 receptor (GLP-1R) function: allosteric rescue of loss of function mutation. The glucagon-like peptide-1 receptor (GLP-1R) is a key physiological regulator of insulin secretion and a major therapeutic target for the treatment of type II diabetes. However, regulation of GLP-1R function is complex with multiple endogenous peptides that interact with the receptor, including full-length (1-37) and truncated (7-37) forms of GLP-1 that can exist in an amidated form (GLP-1(1-36)NH₂ and GLP-1(7-36)NH₂) and the related peptide oxyntomodulin. In addition, the GLP-1R possesses exogenous agonists, including exendin-4, and the allosteric modulator, compound 2 (6,7-dichloro-2-methylsulfonyl-3-tert-butylaminoquinoxaline). The compl",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.440639+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1649738",
+  "source_fingerprint": "093452ee8935f6e3eb762b5a718afe85",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1649738",
+    "variants-at-6q21-implicate-prdm1-in-the-etiology-of-therapy-induced-second-malignancies-after-hodgkin's-lymphoma"
+  ],
+  "key_phrases": [
+    "variants",
+    "at",
+    "6q21",
+    "implicate",
+    "prdm1",
+    "etiology",
+    "therapy",
+    "induced"
+  ],
+  "summary_1l": "Survivors of pediatric Hodgkin's lymphoma are at risk for radiation therapy–induced sec",
+  "query_hits": [],
+  "embed_text": "1649738 Variants at 6q21 implicate PRDM1 in the etiology of therapy-induced second malignancies after Hodgkin's lymphoma science scifact Survivors of pediatric Hodgkin's lymphoma are at risk for radiation therapy–induced second malignant neoplasms (SMNs). We identified two variants at chromosome 6q21 associated with SMNs in survivors of Hodgkin's lymphoma treated with… 1649738 variants-at-6q21-implicate-prdm1-in-the-etiology-of-therapy-induced-second-malignancies-after-hodgkin's-lymphoma variants at 6q21 implicate prdm1 etiology therapy induced Survivors of pediatric Hodgkin's lymphoma are at risk for radiation therapy–induced sec Variants at 6q21 implicate PRDM1 in the etiology of therapy-induced second malignancies after Hodgkin's lymphoma Survivors of pediatric Hodgkin's lymphoma are at risk for radiation therapy–induced second malignant neoplasms (SMNs). We identified two variants at chromosome 6q21 associated with SMNs in survivors of Hodgkin's lymphoma treated with radiation therapy as children but not as adults. The variants comprise a risk locus associated with decreased basal expression of PRDM1 (encoding PR domain containing 1, with ZNF domain) and impaired induction of the PRDM1 protein after radiation exposure. These data suggest a new gene-exposure interaction that may implicate PRDM1 in the etiology of radiation therapy-induced SMNs.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.360662+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25576204",
+  "source_fingerprint": "ea419e88b06bb1d66f1aef5800ccd0c3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25576204",
+    "promotion-of-tumorigenesis-by-heterozygous-disruption-of-the-beclin-1-autophagy-gene."
+  ],
+  "key_phrases": [
+    "promotion",
+    "tumorigenesis",
+    "by",
+    "heterozygous",
+    "disruption",
+    "beclin",
+    "autophagy",
+    "gene"
+  ],
+  "summary_1l": "Promotion of tumorigenesis by heterozygous disruption of the beclin 1 autophagy gene.",
+  "query_hits": [],
+  "embed_text": "25576204 Promotion of tumorigenesis by heterozygous disruption of the beclin 1 autophagy gene. science scifact Malignant cells often display defects in autophagy, an evolutionarily conserved pathway for degrading long-lived proteins and cytoplasmic organelles. However, as yet, there is no genetic evidence for a role of autophagy genes in tumor… 25576204 promotion-of-tumorigenesis-by-heterozygous-disruption-of-the-beclin-1-autophagy-gene. promotion tumorigenesis by heterozygous disruption beclin autophagy gene Promotion of tumorigenesis by heterozygous disruption of the beclin 1 autophagy gene. Promotion of tumorigenesis by heterozygous disruption of the beclin 1 autophagy gene. Malignant cells often display defects in autophagy, an evolutionarily conserved pathway for degrading long-lived proteins and cytoplasmic organelles. However, as yet, there is no genetic evidence for a role of autophagy genes in tumor suppression. The beclin 1 autophagy gene is monoallelically deleted in 40-75% of cases of human sporadic breast, ovarian, and prostate cancer. Therefore, we used a targeted mutant mouse model to test the hypothesis that monoallelic deletion of beclin 1 promotes tumorigenesis. Here we show that heterozygous disruption of beclin 1 increases the frequency of spontaneous malignancies and accelerates the development of hepatitis B virus-induced premalignant lesions. Molecular ana",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.928749+00:00"
+}

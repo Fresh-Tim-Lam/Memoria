@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14405193",
+  "source_fingerprint": "af24326eda829183bb3be6c29970174a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14405193",
+    "tyrosine-phosphorylation-regulates-the-endocytosis-and-surface-expression-of-glun3a-containing-nmda-receptors."
+  ],
+  "key_phrases": [
+    "tyrosine",
+    "phosphorylation",
+    "regulates",
+    "endocytosis",
+    "surface",
+    "expression",
+    "glun3a",
+    "containing"
+  ],
+  "summary_1l": "Tyrosine phosphorylation regulates the endocytosis and surface expression of GluN3A-containing NMDA receptors.",
+  "query_hits": [],
+  "embed_text": "14405193 Tyrosine phosphorylation regulates the endocytosis and surface expression of GluN3A-containing NMDA receptors. science scifact Selective control of receptor trafficking provides a mechanism for remodeling the receptor composition of excitatory synapses, and thus supports synaptic transmission, plasticity, and development. GluN3A (formerly NR3A) is a… 14405193 tyrosine-phosphorylation-regulates-the-endocytosis-and-surface-expression-of-glun3a-containing-nmda-receptors. tyrosine phosphorylation regulates endocytosis surface expression glun3a containing Tyrosine phosphorylation regulates the endocytosis and surface expression of GluN3A-containing NMDA receptors. Tyrosine phosphorylation regulates the endocytosis and surface expression of GluN3A-containing NMDA receptors. Selective control of receptor trafficking provides a mechanism for remodeling the receptor composition of excitatory synapses, and thus supports synaptic transmission, plasticity, and development. GluN3A (formerly NR3A) is a nonconventional member of the NMDA receptor (NMDAR) subunit family, which endows NMDAR channels with low calcium permeability and reduced magnesium sensitivity compared with NMDARs comprising only GluN1 and GluN2 subunits. Because of these special properties, GluN3A subunits act as a molecular brake to limit the plasticity and maturation of excitatory synapses, pointing toward GluN3A removal as a critical step in the development of neuronal circuitry. However,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.808885+00:00"
+}

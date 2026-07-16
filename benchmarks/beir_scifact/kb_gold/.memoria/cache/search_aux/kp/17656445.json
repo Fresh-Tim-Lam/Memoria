@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17656445",
+  "source_fingerprint": "355e86ae1468ef68961e66daa0427b7f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17656445",
+    "alternative-markers-of-hyperglycemia-and-risk-of-diabetes"
+  ],
+  "key_phrases": [
+    "alternative",
+    "markers",
+    "hyperglycemia",
+    "risk",
+    "diabetes",
+    "objective",
+    "fructosamine",
+    "glycated"
+  ],
+  "summary_1l": "OBJECTIVE Fructosamine, glycated albumin, and 1,5-anhydroglucitol (1,5-AG) are of interest for monitoring short-term glycemic control in patie",
+  "query_hits": [],
+  "embed_text": "17656445 Alternative Markers of Hyperglycemia and Risk of Diabetes science scifact OBJECTIVE Fructosamine, glycated albumin, and 1,5-anhydroglucitol (1,5-AG) are of interest for monitoring short-term glycemic control in patients with diabetes; however, their associations with diabetes risk are uncharacterized. RESEARCH… 17656445 alternative-markers-of-hyperglycemia-and-risk-of-diabetes alternative markers hyperglycemia risk diabetes objective fructosamine glycated OBJECTIVE Fructosamine, glycated albumin, and 1,5-anhydroglucitol (1,5-AG) are of interest for monitoring short-term glycemic control in patie Alternative Markers of Hyperglycemia and Risk of Diabetes OBJECTIVE Fructosamine, glycated albumin, and 1,5-anhydroglucitol (1,5-AG) are of interest for monitoring short-term glycemic control in patients with diabetes; however, their associations with diabetes risk are uncharacterized. RESEARCH DESIGN AND METHODS We used Cox proportional hazards models to examine the associations of fructosamine, glycated albumin, and 1,5-AG with incident diabetes in 1,299 participants, from the Atherosclerosis Risk in Communities (ARIC) Study (2005-2006), who had no history of diagnosed diabetes at baseline. Incident diabetes was self-reported during annual telephone calls. RESULTS There were 119 new cases of diabetes during a median follow-up of 3.3 years. When compared with the lowest quartile, the four",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.068875+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13614794",
+  "source_fingerprint": "ab2c6e773458abc71fd5acb99286e7b7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13614794",
+    "the-p21-cdk-interacting-protein-cip1-is-a-potent-inhibitor-of-g1-cyclin-dependent-kinases."
+  ],
+  "key_phrases": [
+    "p21",
+    "cdk",
+    "interacting",
+    "protein",
+    "cip1",
+    "potent",
+    "inhibitor",
+    "g1"
+  ],
+  "summary_1l": "The p21 Cdk-interacting protein Cip1 is a potent inhibitor of G1 cyclin-dependent kinases.",
+  "query_hits": [],
+  "embed_text": "13614794 The p21 Cdk-interacting protein Cip1 is a potent inhibitor of G1 cyclin-dependent kinases. science scifact The cyclin-dependent kinase Cdk2 associates with cyclins A, D, and E and has been implicated in the control of the G1 to S phase transition in mammals. To identify potential Cdk2 regulators, we have employed an improved two-hybrid system… 13614794 the-p21-cdk-interacting-protein-cip1-is-a-potent-inhibitor-of-g1-cyclin-dependent-kinases. p21 cdk interacting protein cip1 potent inhibitor g1 The p21 Cdk-interacting protein Cip1 is a potent inhibitor of G1 cyclin-dependent kinases. The p21 Cdk-interacting protein Cip1 is a potent inhibitor of G1 cyclin-dependent kinases. The cyclin-dependent kinase Cdk2 associates with cyclins A, D, and E and has been implicated in the control of the G1 to S phase transition in mammals. To identify potential Cdk2 regulators, we have employed an improved two-hybrid system to isolate human genes encoding Cdk-interacting proteins (Cips). CIP1 encodes a novel 21 kd protein that is found in cyclin A, cyclin D1, cyclin E, and Cdk2 immunoprecipitates. p21CIP1 is a potent, tight-binding inhibitor of Cdks and can inhibit the phosphorylation of Rb by cyclin A-Cdk2, cyclin E-Cdk2, cyclin D1-Cdk4, and cyclin D2-Cdk4 complexes. Cotransfection experiments indicate that CIP1 and SV40 T antigen function in a mutually antagonistic manner to control c",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.625980+00:00"
+}

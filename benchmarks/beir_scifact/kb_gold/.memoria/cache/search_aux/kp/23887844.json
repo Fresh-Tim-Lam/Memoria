@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23887844",
+  "source_fingerprint": "a9e31ced74f8748e6e86a56216503a1a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23887844",
+    "glucose-metabolism-inhibits-apoptosis-in-neurons-and-cancer-cells-by-redox-inactivation-of-cytochrome-c"
+  ],
+  "key_phrases": [
+    "glucose",
+    "metabolism",
+    "inhibits",
+    "apoptosis",
+    "neurons",
+    "cancer",
+    "cells",
+    "by"
+  ],
+  "summary_1l": "Neurons and cancer cells use glucose extensively, yet the precise advantage of this adaptation r",
+  "query_hits": [],
+  "embed_text": "23887844 Glucose Metabolism Inhibits Apoptosis in Neurons and Cancer Cells by Redox Inactivation of Cytochrome c science scifact Neurons and cancer cells use glucose extensively, yet the precise advantage of this adaptation remains unclear. These two seemingly disparate cell types also show an increased regulation of the apoptotic pathway, which allows for their… 23887844 glucose-metabolism-inhibits-apoptosis-in-neurons-and-cancer-cells-by-redox-inactivation-of-cytochrome-c glucose metabolism inhibits apoptosis neurons cancer cells by Neurons and cancer cells use glucose extensively, yet the precise advantage of this adaptation r Glucose Metabolism Inhibits Apoptosis in Neurons and Cancer Cells by Redox Inactivation of Cytochrome c Neurons and cancer cells use glucose extensively, yet the precise advantage of this adaptation remains unclear. These two seemingly disparate cell types also show an increased regulation of the apoptotic pathway, which allows for their long-term survival. Here we show that both neurons and cancer cells strictly inhibit cytochrome c-mediated apoptosis by a mechanism dependent on glucose metabolism. We report that the pro-apoptotic activity of cytochrome c is influenced by its redox state and that increases in reactive oxygen species (ROS) following an apoptotic insult lead to the oxidation and activation of cytochrome c. In healthy neurons and cancer cells, however, cytochrome c is reduce",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.331234+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8227227",
+  "source_fingerprint": "59ce74577f014ba5933c2e29661bcb17",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8227227",
+    "locations-of-cerebral-infarctions-in-tuberculous-meningitis"
+  ],
+  "key_phrases": [
+    "locations",
+    "cerebral",
+    "infarctions",
+    "tuberculous",
+    "meningitis",
+    "were",
+    "studied",
+    "14"
+  ],
+  "summary_1l": "The locations of cerebral infarctions were studied in 14 patients with tuberculous meningitis (TBM) and 173 patients with noninflammatory is",
+  "query_hits": [],
+  "embed_text": "8227227 Locations of cerebral infarctions in tuberculous meningitis science scifact The locations of cerebral infarctions were studied in 14 patients with tuberculous meningitis (TBM) and 173 patients with noninflammatory ischemic stroke (IS). In patients with TBM, 75% of infarctions occurred in the “TB zone” supplied by… 8227227 locations-of-cerebral-infarctions-in-tuberculous-meningitis locations cerebral infarctions tuberculous meningitis were studied 14 The locations of cerebral infarctions were studied in 14 patients with tuberculous meningitis (TBM) and 173 patients with noninflammatory is Locations of cerebral infarctions in tuberculous meningitis The locations of cerebral infarctions were studied in 14 patients with tuberculous meningitis (TBM) and 173 patients with noninflammatory ischemic stroke (IS). In patients with TBM, 75% of infarctions occurred in the “TB zone” supplied by medial striate and thalamoperforating arteries; only 11% occurred in the “IS zone” supplied by lateral striate, anterior choroidal and thalamogeniculate arteries. In patients with IS 29% of infarctions occurred in the IS zone, 29% in the subcortical white matter, and 24% in (or involving) the cerebral cortex. Only 11% occurred in the TB zone. Bilaterally symmetrical infarctions of the TB zone were common with TMB (71%) but rare with IS (5%).",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.128648+00:00"
+}

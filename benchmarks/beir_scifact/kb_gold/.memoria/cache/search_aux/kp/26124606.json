@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26124606",
+  "source_fingerprint": "4bccc512a42ba970080ce58b877372c8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26124606",
+    "interferon-alpha-for-the-treatment-of-chronic-hepatitis-c-in-patients-infected-with-human-immunodeficiency-virus.-hepatitis-hiv-spanish-study-group."
+  ],
+  "key_phrases": [
+    "interferon",
+    "alpha",
+    "treatment",
+    "chronic",
+    "hepatitis",
+    "patients",
+    "infected",
+    "with"
+  ],
+  "summary_1l": "Interferon alpha for the treatment of chronic hepatitis C in patients infected with human immunodeficiency virus.",
+  "query_hits": [],
+  "embed_text": "26124606 Interferon alpha for the treatment of chronic hepatitis C in patients infected with human immunodeficiency virus. Hepatitis-HIV Spanish Study Group. science scifact Liver disease secondary to hepatitis C virus (HCV) infection is a rising cause of morbidity and mortality among individuals who have been infected parenterally with human immunodeficiency virus (HIV) such as injection drug users,… 26124606 interferon-alpha-for-the-treatment-of-chronic-hepatitis-c-in-patients-infected-with-human-immunodeficiency-virus.-hepatitis-hiv-spanish-study-group. interferon alpha treatment chronic hepatitis patients infected with Interferon alpha for the treatment of chronic hepatitis C in patients infected with human immunodeficiency virus. Interferon alpha for the treatment of chronic hepatitis C in patients infected with human immunodeficiency virus. Hepatitis-HIV Spanish Study Group. Liver disease secondary to hepatitis C virus (HCV) infection is a rising cause of morbidity and mortality among individuals who have been infected parenterally with human immunodeficiency virus (HIV) such as injection drug users, hemophiliacs, and transfused patients. We analyzed both the efficacy of interferon (IFN) alpha therapy in these patients and the predictors of response to this agent. A total of 119 patients with chronic hepatitis C (90 of whom were infected with HIV and 29 of whom were not) were included in a multicenter, prospective, open, nonrandomized observational study. IFN-alpha was given subcutaneously in a dosage of 5 million",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.442941+00:00"
+}

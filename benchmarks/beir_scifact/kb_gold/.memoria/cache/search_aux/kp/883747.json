@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "883747",
+  "source_fingerprint": "3ed6966f7604bf0eb033030a2de32c4e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "883747"
+  ],
+  "key_phrases": [
+    "il",
+    "12",
+    "control",
+    "fate",
+    "group",
+    "innate",
+    "lymphoid",
+    "cells"
+  ],
+  "summary_1l": "Group 2 innate lymphoid cells (ILC2s) secrete type 2 cytokines, which protect against",
+  "query_hits": [],
+  "embed_text": "883747 IL-1β, IL-4 and IL-12 control the fate of group 2 innate lymphoid cells in human airway inflammation in the lungs science scifact Group 2 innate lymphoid cells (ILC2s) secrete type 2 cytokines, which protect against parasites but can also contribute to a variety of inflammatory airway diseases. We report here that interleukin 1β (IL-1β) directly activated human ILC2s… 883747 il 12 control fate group innate lymphoid cells Group 2 innate lymphoid cells (ILC2s) secrete type 2 cytokines, which protect against IL-1β, IL-4 and IL-12 control the fate of group 2 innate lymphoid cells in human airway inflammation in the lungs Group 2 innate lymphoid cells (ILC2s) secrete type 2 cytokines, which protect against parasites but can also contribute to a variety of inflammatory airway diseases. We report here that interleukin 1β (IL-1β) directly activated human ILC2s and that IL-12 induced the conversion of these activated ILC2s into interferon-γ (IFN-γ)-producing ILC1s, which was reversed by IL-4. The plasticity of ILCs was manifested in diseased tissues of patients with severe chronic obstructive pulmonary disease (COPD) or chronic rhinosinusitis with nasal polyps (CRSwNP), which displayed IL-12 or IL-4 signatures and the accumulation of ILC1s or ILC2s, respectively. Eosinophils were a major cellular so",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.800969+00:00"
+}

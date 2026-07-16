@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17168045",
+  "source_fingerprint": "253266d1544470467f5c2e226e54210f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17168045",
+    "direct-in-vivo-assessment-of-microcirculatory-dysfunction-in-severe-falciparum-malaria."
+  ],
+  "key_phrases": [
+    "direct",
+    "vivo",
+    "assessment",
+    "microcirculatory",
+    "dysfunction",
+    "severe",
+    "falciparum",
+    "malaria"
+  ],
+  "summary_1l": "Direct in vivo assessment of microcirculatory dysfunction in severe falciparum malaria.",
+  "query_hits": [],
+  "embed_text": "17168045 Direct in vivo assessment of microcirculatory dysfunction in severe falciparum malaria. science scifact BACKGROUND This study sought to describe and quantify microcirculatory changes in the mucosal surfaces of patients with severe malaria, by direct in vivo observation using orthogonal polarization spectral (OPS) imaging. METHODS The… 17168045 direct-in-vivo-assessment-of-microcirculatory-dysfunction-in-severe-falciparum-malaria. direct vivo assessment microcirculatory dysfunction severe falciparum malaria Direct in vivo assessment of microcirculatory dysfunction in severe falciparum malaria. Direct in vivo assessment of microcirculatory dysfunction in severe falciparum malaria. BACKGROUND This study sought to describe and quantify microcirculatory changes in the mucosal surfaces of patients with severe malaria, by direct in vivo observation using orthogonal polarization spectral (OPS) imaging. METHODS The microcirculation in the rectal mucosa of adult patients with severe malaria was assessed by use of OPS imaging, at admission and then daily. Comparison groups comprised patients with uncomplicated falciparum malaria, patients with bacterial sepsis, and healthy individuals. RESULTS Erythrocyte velocities were measured directly in 43 adult patients with severe falciparum malaria, of whom 20 died. Microcirculatory blood flow was markedly disturbed, with heterogeneous obstruction",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.416963+00:00"
+}

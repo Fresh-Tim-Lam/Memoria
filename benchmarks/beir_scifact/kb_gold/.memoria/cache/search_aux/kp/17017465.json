@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17017465",
+  "source_fingerprint": "075263cc7cf608e629a08d9f519be10d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17017465",
+    "endocytic-trafficking-of-rac-is-required-for-the-spatial-restriction-of-signaling-in-cell-migration"
+  ],
+  "key_phrases": [
+    "endocytic",
+    "trafficking",
+    "rac",
+    "required",
+    "spatial",
+    "restriction",
+    "signaling",
+    "cell"
+  ],
+  "summary_1l": "The small GTPases, Rab5 and Rac, are essential for endocytosis and actin remodeling, respectively.",
+  "query_hits": [],
+  "embed_text": "17017465 Endocytic Trafficking of Rac Is Required for the Spatial Restriction of Signaling in Cell Migration science scifact The small GTPases, Rab5 and Rac, are essential for endocytosis and actin remodeling, respectively. Coordination of these processes is critical to achieve spatial restriction of intracellular signaling, which is essential for a variety of… 17017465 endocytic-trafficking-of-rac-is-required-for-the-spatial-restriction-of-signaling-in-cell-migration endocytic trafficking rac required spatial restriction signaling cell The small GTPases, Rab5 and Rac, are essential for endocytosis and actin remodeling, respectively. Endocytic Trafficking of Rac Is Required for the Spatial Restriction of Signaling in Cell Migration The small GTPases, Rab5 and Rac, are essential for endocytosis and actin remodeling, respectively. Coordination of these processes is critical to achieve spatial restriction of intracellular signaling, which is essential for a variety of polarized functions. Here, we show that clathrin- and Rab5-mediated endocytosis are required for the activation of Rac induced by motogenic stimuli. Rac activation occurs on early endosomes, where the RacGEF Tiam1 is also recruited. Subsequent recycling of Rac to the plasma membrane ensures localized signaling, leading to the formation of actin-based migratory protrusions. Thus, membrane trafficking of Rac is required for the spatial resolution of Rac-depend",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.186365+00:00"
+}

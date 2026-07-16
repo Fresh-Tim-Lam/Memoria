@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20781656",
+  "source_fingerprint": "0611f50b1cf1e3e56cb30c8dba31b25f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20781656",
+    "histone-chaperones:-30-years-from-isolation-to-elucidation-of-the-mechanisms-of-nucleosome-assembly-and-disassembly"
+  ],
+  "key_phrases": [
+    "histone",
+    "chaperones",
+    "30",
+    "years",
+    "from",
+    "isolation",
+    "elucidation",
+    "mechanisms"
+  ],
+  "summary_1l": "Some three decades have passed since the discovery of nucleosomes in 1974 and the fi",
+  "query_hits": [],
+  "embed_text": "20781656 Histone chaperones: 30 years from isolation to elucidation of the mechanisms of nucleosome assembly and disassembly science scifact Some three decades have passed since the discovery of nucleosomes in 1974 and the first isolation of a histone chaperone in 1978. While various types of histone chaperones have been isolated and functionally analyzed, the elementary… 20781656 histone-chaperones:-30-years-from-isolation-to-elucidation-of-the-mechanisms-of-nucleosome-assembly-and-disassembly histone chaperones 30 years from isolation elucidation mechanisms Some three decades have passed since the discovery of nucleosomes in 1974 and the fi Histone chaperones: 30 years from isolation to elucidation of the mechanisms of nucleosome assembly and disassembly Some three decades have passed since the discovery of nucleosomes in 1974 and the first isolation of a histone chaperone in 1978. While various types of histone chaperones have been isolated and functionally analyzed, the elementary processes of nucleosome assembly and disassembly have been less well characterized. Recently, the tertiary structure of a hetero-trimeric complex composed of the histone chaperone CIA/ASF1 and the histone H3-H4 dimer was determined, and this complex was proposed to be an intermediate in nucleosome assembly and disassembly reactions. In addition, CIA alone was biochemically shown to dissociate the histone (H3-H4)2 tetramer into two histone H3-H4 di",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.942283+00:00"
+}

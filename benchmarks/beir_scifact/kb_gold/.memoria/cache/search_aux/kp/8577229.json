@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8577229",
+  "source_fingerprint": "595a866bcb27bcb771ab6921d4865c3f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8577229",
+    "break-induced-dna-replication."
+  ],
+  "key_phrases": [
+    "break",
+    "induced",
+    "dna",
+    "replication",
+    "recombination",
+    "dependent",
+    "often",
+    "called"
+  ],
+  "summary_1l": "Break-induced DNA replication.",
+  "query_hits": [],
+  "embed_text": "8577229 Break-induced DNA replication. science scifact Recombination-dependent DNA replication, often called break-induced replication (BIR), was initially invoked to explain recombination events in bacteriophage but it has recently been recognized as a fundamentally important mechanism to… 8577229 break-induced-dna-replication. break induced dna replication recombination dependent often called Break-induced DNA replication. Break-induced DNA replication. Recombination-dependent DNA replication, often called break-induced replication (BIR), was initially invoked to explain recombination events in bacteriophage but it has recently been recognized as a fundamentally important mechanism to repair double-strand chromosome breaks in eukaryotes. This mechanism appears to be critically important in the restarting of stalled and broken replication forks and in maintaining the integrity of eroded telomeres. Although BIR helps preserve genome integrity during replication, it also promotes genome instability by the production of loss of heterozygosity and the formation of nonreciprocal translocations, as well as in the generation of complex chromosomal rearrangements.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.108635+00:00"
+}

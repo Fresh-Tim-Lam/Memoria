@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5254741",
+  "source_fingerprint": "f0bdb85ae0d0fe9a0742bad2b394b7cd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5254741",
+    "the-shunt-problem:-control-of-functional-shunting-in-normal-and-tumour-vasculature"
+  ],
+  "key_phrases": [
+    "shunt",
+    "problem",
+    "control",
+    "functional",
+    "shunting",
+    "normal",
+    "tumour",
+    "vasculature"
+  ],
+  "summary_1l": "Networks of blood vessels in normal and tumour tissues have heterogeneous structures, with widely varying blood flow",
+  "query_hits": [],
+  "embed_text": "5254741 The shunt problem: control of functional shunting in normal and tumour vasculature science scifact Networks of blood vessels in normal and tumour tissues have heterogeneous structures, with widely varying blood flow pathway lengths. To achieve efficient blood flow distribution, mechanisms for the structural adaptation of vessel… 5254741 the-shunt-problem:-control-of-functional-shunting-in-normal-and-tumour-vasculature shunt problem control functional shunting normal tumour vasculature Networks of blood vessels in normal and tumour tissues have heterogeneous structures, with widely varying blood flow The shunt problem: control of functional shunting in normal and tumour vasculature Networks of blood vessels in normal and tumour tissues have heterogeneous structures, with widely varying blood flow pathway lengths. To achieve efficient blood flow distribution, mechanisms for the structural adaptation of vessel diameters must be able to inhibit the formation of functional shunts (whereby short pathways become enlarged and flow bypasses long pathways). Such adaptation requires information about tissue metabolic status to be communicated upstream to feeding vessels, through conducted responses. We propose that impaired vascular communication in tumour microvascular networks, leading to functional shunting, is a primary cause of dysfunctional microcirculation and local hypoxia in cancer. We",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.628594+00:00"
+}

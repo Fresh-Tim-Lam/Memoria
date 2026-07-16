@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "46695481",
+  "source_fingerprint": "6e0736f1340af56d31b103cafed78b43",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "46695481",
+    "human-papillomavirus-and-papanicolaou-tests-to-screen-for-cervical-cancer."
+  ],
+  "key_phrases": [
+    "human",
+    "papillomavirus",
+    "papanicolaou",
+    "tests",
+    "screen",
+    "cervical",
+    "cancer",
+    "background"
+  ],
+  "summary_1l": "Human papillomavirus and Papanicolaou tests to screen for cervical cancer.",
+  "query_hits": [],
+  "embed_text": "46695481 Human papillomavirus and Papanicolaou tests to screen for cervical cancer. science scifact BACKGROUND Screening for cervical cancer based on testing for human papillomavirus (HPV) increases the sensitivity of detection of high-grade (grade 2 or 3) cervical intraepithelial neoplasia, but whether this gain represents overdiagnosis… 46695481 human-papillomavirus-and-papanicolaou-tests-to-screen-for-cervical-cancer. human papillomavirus papanicolaou tests screen cervical cancer background Human papillomavirus and Papanicolaou tests to screen for cervical cancer. Human papillomavirus and Papanicolaou tests to screen for cervical cancer. BACKGROUND Screening for cervical cancer based on testing for human papillomavirus (HPV) increases the sensitivity of detection of high-grade (grade 2 or 3) cervical intraepithelial neoplasia, but whether this gain represents overdiagnosis or protection against future high-grade cervical epithelial neoplasia or cervical cancer is unknown. METHODS In a population-based screening program in Sweden, 12,527 women 32 to 38 years of age were randomly assigned at a 1:1 ratio to have an HPV test plus a Papanicolaou (Pap) test (intervention group) or a Pap test alone (control group). Women with a positive HPV test and a normal Pap test result were offered a second HPV test at least 1 year later, and those who were found to b",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:13.429004+00:00"
+}

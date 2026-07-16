@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19487477",
+  "source_fingerprint": "6c557163239a46660a7d32e79daedd3f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19487477",
+    "mutation-of-the-fumarase-gene-in-two-siblings-with-progressive-encephalopathy-and-fumarase-deficiency."
+  ],
+  "key_phrases": [
+    "mutation",
+    "fumarase",
+    "gene",
+    "two",
+    "siblings",
+    "with",
+    "progressive",
+    "encephalopathy"
+  ],
+  "summary_1l": "Mutation of the fumarase gene in two siblings with progressive encephalopathy and fumarase deficiency.",
+  "query_hits": [],
+  "embed_text": "19487477 Mutation of the fumarase gene in two siblings with progressive encephalopathy and fumarase deficiency. science scifact We report an inborn error of the tricarboxylic acid cycle, fumarase deficiency, in two siblings born to first cousin parents. They presented with progressive encephalopathy, dystonia, leucopenia, and neutropenia. Elevation of lactate in… 19487477 mutation-of-the-fumarase-gene-in-two-siblings-with-progressive-encephalopathy-and-fumarase-deficiency. mutation fumarase gene two siblings with progressive encephalopathy Mutation of the fumarase gene in two siblings with progressive encephalopathy and fumarase deficiency. Mutation of the fumarase gene in two siblings with progressive encephalopathy and fumarase deficiency. We report an inborn error of the tricarboxylic acid cycle, fumarase deficiency, in two siblings born to first cousin parents. They presented with progressive encephalopathy, dystonia, leucopenia, and neutropenia. Elevation of lactate in the cerebrospinal fluid and high fumarate excretion in the urine led us to investigate the activities of the respiratory chain and of the Krebs cycle, and to finally identify fumarase deficiency in these two children. The deficiency was profound and present in all tissues investigated, affecting the cytosolic and the mitochondrial fumarase isoenzymes to the same degree. Analysis of fumarase cDNA demonstrated that both patients were homozygous for a missens",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.650660+00:00"
+}

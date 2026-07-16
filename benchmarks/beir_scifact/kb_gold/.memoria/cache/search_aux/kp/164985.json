@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "164985",
+  "source_fingerprint": "eb824255c737cf9d323481809672ac89",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "164985",
+    "fra-1-protooncogene-regulates-il-6-expression-in-macrophages-and-promotes-the-generation-of-m2d-macrophages"
+  ],
+  "key_phrases": [
+    "fra",
+    "protooncogene",
+    "regulates",
+    "il",
+    "expression",
+    "macrophages",
+    "promotes",
+    "generation"
+  ],
+  "summary_1l": "The tumor microenvironment (TME) plays a prominent role in the growth of tumor cells.",
+  "query_hits": [],
+  "embed_text": "164985 Fra-1 protooncogene regulates IL-6 expression in macrophages and promotes the generation of M2d macrophages science scifact The tumor microenvironment (TME) plays a prominent role in the growth of tumor cells. As the major inflammatory component of the TME, M2d macrophages are educated by the TME such that they adopt an immunosuppressive role that promotes… 164985 fra-1-protooncogene-regulates-il-6-expression-in-macrophages-and-promotes-the-generation-of-m2d-macrophages fra protooncogene regulates il expression macrophages promotes generation The tumor microenvironment (TME) plays a prominent role in the growth of tumor cells. Fra-1 protooncogene regulates IL-6 expression in macrophages and promotes the generation of M2d macrophages The tumor microenvironment (TME) plays a prominent role in the growth of tumor cells. As the major inflammatory component of the TME, M2d macrophages are educated by the TME such that they adopt an immunosuppressive role that promotes tumor metastasis and progression. Fra-1 forms activator protein-1 heterodimers with Jun partners and drives gene transcription. Fra-1 is thought to drastically induce tumorigenesis and progression. However, the functional role of Fra-1 in the generation of M2d macrophages is poorly understood to date. Here, we demonstrate that 4T1 mammary carcinoma cells, when co-cultured with RAW264.7 macrophage cells, skew the RAW264.7 macrophage cell differentiation",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.370685+00:00"
+}

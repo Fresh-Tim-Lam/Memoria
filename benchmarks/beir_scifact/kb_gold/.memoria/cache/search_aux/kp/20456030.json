@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20456030",
+  "source_fingerprint": "db9298b6afc5972f05c504e44c706342",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20456030",
+    "intracellular-coenzymes-as-natural-biomarkers-for-metabolic-activities-and-mitochondrial-anomalies."
+  ],
+  "key_phrases": [
+    "intracellular",
+    "coenzymes",
+    "as",
+    "natural",
+    "biomarkers",
+    "metabolic",
+    "activities",
+    "mitochondrial"
+  ],
+  "summary_1l": "Intracellular coenzymes as natural biomarkers for metabolic activities and mitochondrial anomalies.",
+  "query_hits": [],
+  "embed_text": "20456030 Intracellular coenzymes as natural biomarkers for metabolic activities and mitochondrial anomalies. science scifact Mitochondria play a pivotal role in energy metabolism, programmed cell death and oxidative stress. Mutated mitochondrial DNA in diseased cells compromises the structure of key enzyme complexes and, therefore, mitochondrial function, which… 20456030 intracellular-coenzymes-as-natural-biomarkers-for-metabolic-activities-and-mitochondrial-anomalies. intracellular coenzymes as natural biomarkers metabolic activities mitochondrial Intracellular coenzymes as natural biomarkers for metabolic activities and mitochondrial anomalies. Intracellular coenzymes as natural biomarkers for metabolic activities and mitochondrial anomalies. Mitochondria play a pivotal role in energy metabolism, programmed cell death and oxidative stress. Mutated mitochondrial DNA in diseased cells compromises the structure of key enzyme complexes and, therefore, mitochondrial function, which leads to a myriad of health-related conditions such as cancer, neurodegenerative diseases, diabetes and aging. Early detection of mitochondrial and metabolic anomalies is an essential step towards effective diagnoses and therapeutic intervention. Reduced nicotinamide adenine dinucleotide (NADH) and flavin adenine dinucleotide (FAD) play important roles in a wide range of cellular oxidation-reduction reactions. Importantly, NADH and FAD are naturally fluores",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.315263+00:00"
+}

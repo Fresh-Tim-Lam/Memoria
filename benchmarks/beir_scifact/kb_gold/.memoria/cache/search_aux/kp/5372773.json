@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5372773",
+  "source_fingerprint": "b216461158ec866b0ee55d2a6eb692f7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5372773",
+    "enhanced-monocyte-fc-phagocytosis-by-a-homologue-of-interleukin-10-encoded-by-human-cytomegalovirus."
+  ],
+  "key_phrases": [
+    "enhanced",
+    "monocyte",
+    "fc",
+    "phagocytosis",
+    "by",
+    "homologue",
+    "interleukin",
+    "10"
+  ],
+  "summary_1l": "Enhanced monocyte Fc phagocytosis by a homologue of interleukin-10 encoded by human cytomegalovirus.",
+  "query_hits": [],
+  "embed_text": "5372773 Enhanced monocyte Fc phagocytosis by a homologue of interleukin-10 encoded by human cytomegalovirus. science scifact Human cytomegalovirus (HCMV) expresses several homologues of human interleukin 10 (hIL-10) possessing immunomodulatory properties which may promote viral infection by modulating the function of myeloid cells. We examined the phenotype and… 5372773 enhanced-monocyte-fc-phagocytosis-by-a-homologue-of-interleukin-10-encoded-by-human-cytomegalovirus. enhanced monocyte fc phagocytosis by homologue interleukin 10 Enhanced monocyte Fc phagocytosis by a homologue of interleukin-10 encoded by human cytomegalovirus. Enhanced monocyte Fc phagocytosis by a homologue of interleukin-10 encoded by human cytomegalovirus. Human cytomegalovirus (HCMV) expresses several homologues of human interleukin 10 (hIL-10) possessing immunomodulatory properties which may promote viral infection by modulating the function of myeloid cells. We examined the phenotype and phagocytic capability of human monocytes exposed to hIL-10, an HCMV-encoded hIL-10 homologue expressed during the productive phase of infection (cmvIL-10), and a differentially spliced form of cmvIL-10 expressed during latent and productive phases of infection, (LAcmvIL-10). hIL-10 and cmvIL-10 upregulated expression of Fcgamma receptors, stimulated phagocytosis of IgG-opsonised erythrocytes and decreased MHC class II (HLA-DR) expression on purified monocy",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.041615+00:00"
+}

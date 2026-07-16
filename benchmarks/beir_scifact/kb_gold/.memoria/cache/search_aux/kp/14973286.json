@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14973286",
+  "source_fingerprint": "c784e8ae698d9595d42ea6d817e8a4d5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14973286",
+    "recurrent-venous-thromboembolism-and-bleeding-complications-during-anticoagulant-treatment-in-patients-with-cancer-and-venous-thrombosis."
+  ],
+  "key_phrases": [
+    "recurrent",
+    "venous",
+    "thromboembolism",
+    "bleeding",
+    "complications",
+    "during",
+    "anticoagulant",
+    "treatment"
+  ],
+  "summary_1l": "Recurrent venous thromboembolism and bleeding complications during anticoagulant treatment in patients with cancer and venous thrombosis.",
+  "query_hits": [],
+  "embed_text": "14973286 Recurrent venous thromboembolism and bleeding complications during anticoagulant treatment in patients with cancer and venous thrombosis. science scifact A small proportion of patients with deep vein thrombosis develop recurrent venous thromboembolic complications or bleeding during anticoagulant treatment. These complications may occur more frequently if these patients have concomitant… 14973286 recurrent-venous-thromboembolism-and-bleeding-complications-during-anticoagulant-treatment-in-patients-with-cancer-and-venous-thrombosis. recurrent venous thromboembolism bleeding complications during anticoagulant treatment Recurrent venous thromboembolism and bleeding complications during anticoagulant treatment in patients with cancer and venous thrombosis. Recurrent venous thromboembolism and bleeding complications during anticoagulant treatment in patients with cancer and venous thrombosis. A small proportion of patients with deep vein thrombosis develop recurrent venous thromboembolic complications or bleeding during anticoagulant treatment. These complications may occur more frequently if these patients have concomitant cancer. This prospective follow-up study sought to determine whether in thrombosis patients those with cancer have a higher risk for recurrent venous thromboembolism or bleeding during anticoagulant treatment than those without cancer. Of the 842 included patients, 181 had known cancer at entry. The 12-month cumulative incidence of recurrent thromboembolism in cancer patients was 20.7% (95% CI, 15.6%-25.8%) versus 6.8% (95",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.977396+00:00"
+}

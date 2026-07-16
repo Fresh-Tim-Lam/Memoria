@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "16389141",
+  "source_fingerprint": "dab7d9425edb7a9b96bf4756bf71fa01",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16389141"
+  ],
+  "key_phrases": [
+    "tissue",
+    "specific",
+    "knockout",
+    "insulin",
+    "receptor",
+    "pancreatic",
+    "cells",
+    "creates"
+  ],
+  "summary_1l": "Dysfunction of the pancreatic beta cell is an important de",
+  "query_hits": [],
+  "embed_text": "16389141 Tissue-Specific Knockout of the Insulin Receptor in Pancreatic β Cells Creates an Insulin Secretory Defect Similar to that in Type 2 Diabetes science scifact Dysfunction of the pancreatic beta cell is an important defect in the pathogenesis of type 2 diabetes, although its exact relationship to the insulin resistance is unclear. To determine whether insulin signaling has a functional role in… 16389141 tissue specific knockout insulin receptor pancreatic cells creates Dysfunction of the pancreatic beta cell is an important de Tissue-Specific Knockout of the Insulin Receptor in Pancreatic β Cells Creates an Insulin Secretory Defect Similar to that in Type 2 Diabetes Dysfunction of the pancreatic beta cell is an important defect in the pathogenesis of type 2 diabetes, although its exact relationship to the insulin resistance is unclear. To determine whether insulin signaling has a functional role in the beta cell we have used the Cre-loxP system to specifically inactivate the insulin receptor gene in the beta cells. The resultant mice exhibit a selective loss of insulin secretion in response to glucose and a progressive impairment of glucose tolerance. These data indicate an important functional role for the insulin receptor in glucose sensing by the pancreatic beta cell and suggest that defects in insulin signal",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.198002+00:00"
+}

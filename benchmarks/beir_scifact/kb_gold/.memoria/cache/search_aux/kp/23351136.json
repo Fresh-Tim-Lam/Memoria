@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23351136",
+  "source_fingerprint": "f2714e9e7954c867c2e2fc1d425eb59d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23351136",
+    "detection-of-sweet-and-umami-taste-in-the-absence-of-taste-receptor-t1r3."
+  ],
+  "key_phrases": [
+    "detection",
+    "sweet",
+    "umami",
+    "taste",
+    "absence",
+    "receptor",
+    "t1r3",
+    "tastes"
+  ],
+  "summary_1l": "Detection of sweet and umami taste in the absence of taste receptor T1r3.",
+  "query_hits": [],
+  "embed_text": "23351136 Detection of sweet and umami taste in the absence of taste receptor T1r3. science scifact The tastes of sugars (sweet) and glutamate (umami) are thought to be detected by T1r receptors expressed in taste cells. Molecular genetics and heterologous expression implicate T1r2 plus T1r3 as a sweet-responsive receptor,and T1r1 plus… 23351136 detection-of-sweet-and-umami-taste-in-the-absence-of-taste-receptor-t1r3. detection sweet umami taste absence receptor t1r3 tastes Detection of sweet and umami taste in the absence of taste receptor T1r3. Detection of sweet and umami taste in the absence of taste receptor T1r3. The tastes of sugars (sweet) and glutamate (umami) are thought to be detected by T1r receptors expressed in taste cells. Molecular genetics and heterologous expression implicate T1r2 plus T1r3 as a sweet-responsive receptor,and T1r1 plus T1r3,as well as a truncated form of the type 4 metabotropic glutamate receptor (taste-mGluR4),as umami-responsive receptors. Here,we show that mice lacking T1r3 showed no preference for artificial sweeteners and had diminished but not abolished behavioral and nerve responses to sugars and umami compounds. These results indicate that T1r3-independent sweet- and umami-responsive receptors and/or pathways exist in taste cells.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.331657+00:00"
+}

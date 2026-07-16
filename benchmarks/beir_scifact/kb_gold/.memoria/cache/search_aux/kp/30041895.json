@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "30041895",
+  "source_fingerprint": "c65c5b97af293f095821ba619321f2b7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "30041895",
+    "mechanosensitive-ion-channel-piezo2-is-important-for-enterochromaffin-cell-response-to-mechanical-forces"
+  ],
+  "key_phrases": [
+    "mechanosensitive",
+    "ion",
+    "channel",
+    "piezo2",
+    "important",
+    "enterochromaffin",
+    "cell",
+    "response"
+  ],
+  "summary_1l": "KEY POINTS The gastrointestinal epithelial enterochromaffin (EC) cell synthesizes the vast majo",
+  "query_hits": [],
+  "embed_text": "30041895 Mechanosensitive ion channel Piezo2 is important for enterochromaffin cell response to mechanical forces science scifact KEY POINTS The gastrointestinal epithelial enterochromaffin (EC) cell synthesizes the vast majority of the body's serotonin. As a specialized mechanosensor, the EC cell releases this serotonin in response to mechanical forces. However, the… 30041895 mechanosensitive-ion-channel-piezo2-is-important-for-enterochromaffin-cell-response-to-mechanical-forces mechanosensitive ion channel piezo2 important enterochromaffin cell response KEY POINTS The gastrointestinal epithelial enterochromaffin (EC) cell synthesizes the vast majo Mechanosensitive ion channel Piezo2 is important for enterochromaffin cell response to mechanical forces KEY POINTS The gastrointestinal epithelial enterochromaffin (EC) cell synthesizes the vast majority of the body's serotonin. As a specialized mechanosensor, the EC cell releases this serotonin in response to mechanical forces. However, the molecular mechanism of EC cell mechanotransduction is unknown. In the present study, we show, for the first time, that the mechanosensitive ion channel Piezo2 is specifically expressed by the human and mouse EC cells. Activation of Piezo2 by mechanical forces results in a characteristic ionic current, the release of serotonin and stimulation of gastrointestinal secretion. Piezo2 inhibition by drugs or molecular knockdown decreases mechanosensitive cur",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.388001+00:00"
+}

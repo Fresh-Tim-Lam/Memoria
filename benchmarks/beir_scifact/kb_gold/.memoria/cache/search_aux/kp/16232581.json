@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16232581",
+  "source_fingerprint": "a5da8296aba3bb9f23358ced7ea3409b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16232581",
+    "bayesian-selection-of-continuous-time-markov-chain-evolutionary-models."
+  ],
+  "key_phrases": [
+    "bayesian",
+    "selection",
+    "continuous",
+    "time",
+    "markov",
+    "chain",
+    "evolutionary",
+    "models"
+  ],
+  "summary_1l": "Bayesian selection of continuous-time Markov chain evolutionary models.",
+  "query_hits": [],
+  "embed_text": "16232581 Bayesian selection of continuous-time Markov chain evolutionary models. science scifact We develop a reversible jump Markov chain Monte Carlo approach to estimating the posterior distribution of phylogenies based on aligned DNA/RNA sequences under several hierarchical evolutionary models. Using a proper, yet nontruncated and… 16232581 bayesian-selection-of-continuous-time-markov-chain-evolutionary-models. bayesian selection continuous time markov chain evolutionary models Bayesian selection of continuous-time Markov chain evolutionary models. Bayesian selection of continuous-time Markov chain evolutionary models. We develop a reversible jump Markov chain Monte Carlo approach to estimating the posterior distribution of phylogenies based on aligned DNA/RNA sequences under several hierarchical evolutionary models. Using a proper, yet nontruncated and uninformative prior, we demonstrate the advantages of the Bayesian approach to hypothesis testing and estimation in phylogenetics by comparing different models for the infinitesimal rates of change among nucleotides, for the number of rate classes, and for the relationships among branch lengths. We compare the relative probabilities of these models and the appropriateness of a molecular clock using Bayes factors. Our most general model, first proposed by Tamura and Nei, parameterizes",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.959825+00:00"
+}

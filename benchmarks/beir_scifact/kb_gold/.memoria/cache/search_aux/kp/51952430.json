@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "51952430",
+  "source_fingerprint": "3c1325c86b8cc175d9dea11aa7b78771",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "51952430"
+  ],
+  "key_phrases": [
+    "bcap",
+    "links",
+    "il",
+    "1r",
+    "pi3k",
+    "mtor",
+    "pathway",
+    "regulates"
+  ],
+  "summary_1l": "The toll-like receptor (TLR) and interleukin (IL)-1 family of receptors share several signaling components,",
+  "query_hits": [],
+  "embed_text": "51952430 BCAP links IL-1R to the PI3K–mTOR pathway and regulates pathogenic Th17 cell differentiation science scifact The toll-like receptor (TLR) and interleukin (IL)-1 family of receptors share several signaling components, including the most upstream adapter, MyD88. We previously reported the discovery of B cell adapter for phosphoinositide 3-kinase… 51952430 bcap links il 1r pi3k mtor pathway regulates The toll-like receptor (TLR) and interleukin (IL)-1 family of receptors share several signaling components, BCAP links IL-1R to the PI3K–mTOR pathway and regulates pathogenic Th17 cell differentiation The toll-like receptor (TLR) and interleukin (IL)-1 family of receptors share several signaling components, including the most upstream adapter, MyD88. We previously reported the discovery of B cell adapter for phosphoinositide 3-kinase (BCAP) as a novel toll-IL-1 receptor homology domain-containing adapter that regulates inflammatory responses downstream of TLR signaling. Here we find that BCAP plays a critical role downstream of both IL-1 and IL-18 receptors to regulate T helper (Th) 17 and Th1 cell differentiation, respectively. Absence of T cell intrinsic BCAP did not alter development of naturally arising Th1 and Th17 lineages but led to defects in differentiation to pathogenic Th17 lineage ce",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.416298+00:00"
+}

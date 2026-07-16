@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "718601",
+  "source_fingerprint": "067d98d62b7ee6c8ca90400f79e2230c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "718601",
+    "coding-of-sweet,-bitter,-and-umami-tastes-different-receptor-cells-sharing-similar-signaling-pathways"
+  ],
+  "key_phrases": [
+    "coding",
+    "sweet",
+    "bitter",
+    "umami",
+    "tastes",
+    "different",
+    "receptor",
+    "cells"
+  ],
+  "summary_1l": "Mammals can taste a wide repertoire of chemosensory stimuli.",
+  "query_hits": [],
+  "embed_text": "718601 Coding of Sweet, Bitter, and Umami Tastes Different Receptor Cells Sharing Similar Signaling Pathways science scifact Mammals can taste a wide repertoire of chemosensory stimuli. Two unrelated families of receptors (T1Rs and T2Rs) mediate responses to sweet, amino acids, and bitter compounds. Here, we demonstrate that knockouts of TRPM5, a taste TRP ion… 718601 coding-of-sweet,-bitter,-and-umami-tastes-different-receptor-cells-sharing-similar-signaling-pathways coding sweet bitter umami tastes different receptor cells Mammals can taste a wide repertoire of chemosensory stimuli. Coding of Sweet, Bitter, and Umami Tastes Different Receptor Cells Sharing Similar Signaling Pathways Mammals can taste a wide repertoire of chemosensory stimuli. Two unrelated families of receptors (T1Rs and T2Rs) mediate responses to sweet, amino acids, and bitter compounds. Here, we demonstrate that knockouts of TRPM5, a taste TRP ion channel, or PLCbeta2, a phospholipase C selectively expressed in taste tissue, abolish sweet, amino acid, and bitter taste reception, but do not impact sour or salty tastes. Therefore, despite relying on different receptors, sweet, amino acid, and bitter transduction converge on common signaling molecules. Using PLCbeta2 taste-blind animals, we then examined a fundamental question in taste perception: how taste modalities are encoded at the cellular level.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.721688+00:00"
+}

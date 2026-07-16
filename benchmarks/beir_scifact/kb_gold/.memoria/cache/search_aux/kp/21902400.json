@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21902400",
+  "source_fingerprint": "99cb8bfe4740b4b66304aed93d719f80",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21902400",
+    "hypoxia-in-cancer:-significance-and-impact-on-clinical-outcome"
+  ],
+  "key_phrases": [
+    "hypoxia",
+    "cancer",
+    "significance",
+    "impact",
+    "clinical",
+    "outcome",
+    "characteristic",
+    "feature"
+  ],
+  "summary_1l": "Hypoxia, a characteristic feature of locally advanced solid tumors, has emerged as a pivotal factor of the tumor (patho-)physiome since i",
+  "query_hits": [],
+  "embed_text": "21902400 Hypoxia in cancer: significance and impact on clinical outcome science scifact Hypoxia, a characteristic feature of locally advanced solid tumors, has emerged as a pivotal factor of the tumor (patho-)physiome since it can promote tumor progression and resistance to therapy. Hypoxia represents a “Janus face” in tumor… 21902400 hypoxia-in-cancer:-significance-and-impact-on-clinical-outcome hypoxia cancer significance impact clinical outcome characteristic feature Hypoxia, a characteristic feature of locally advanced solid tumors, has emerged as a pivotal factor of the tumor (patho-)physiome since i Hypoxia in cancer: significance and impact on clinical outcome Hypoxia, a characteristic feature of locally advanced solid tumors, has emerged as a pivotal factor of the tumor (patho-)physiome since it can promote tumor progression and resistance to therapy. Hypoxia represents a “Janus face” in tumor biology because (a) it is associated with restrained proliferation, differentiation, necrosis or apoptosis, and (b) it can also lead to the development of an aggressive phenotype. Independent of standard prognostic factors, such as tumor stage and nodal status, hypoxia has been suggested as an adverse prognostic factor for patient outcome. Studies of tumor hypoxia involving the direct assessment of the oxygenation status have suggested worse disease-free survival for patients with hypoxic cerv",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.883977+00:00"
+}

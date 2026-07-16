@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "45166582",
+  "source_fingerprint": "a515f0cec895c85a8cafd0bd1563c5de",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "45166582",
+    "intracellular-sterol-dynamics."
+  ],
+  "key_phrases": [
+    "intracellular",
+    "sterol",
+    "dynamics",
+    "we",
+    "review",
+    "cellular",
+    "mechanisms",
+    "implicated"
+  ],
+  "summary_1l": "Intracellular sterol dynamics.",
+  "query_hits": [],
+  "embed_text": "45166582 Intracellular sterol dynamics. science scifact We review the cellular mechanisms implicated in cholesterol trafficking and distribution. Recent studies have provided new information about the distribution of sterols within cells, including analysis of its transbilayer distribution. The… 45166582 intracellular-sterol-dynamics. intracellular sterol dynamics we review cellular mechanisms implicated Intracellular sterol dynamics. Intracellular sterol dynamics. We review the cellular mechanisms implicated in cholesterol trafficking and distribution. Recent studies have provided new information about the distribution of sterols within cells, including analysis of its transbilayer distribution. The cholesterol interaction with other lipids and its engagement in various trafficking processes will determine its proper level in a specific membrane; making the cholesterol distribution uneven among the various intracellular organelles. The cholesterol content is important since cholesterol plays an essential role in membranes by controlling their physicochemical properties as well as key cellular events such as signal transduction and protein trafficking. Cholesterol movement between cellular organelles is highly dynamic,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.195687+00:00"
+}

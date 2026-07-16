@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4816339",
+  "source_fingerprint": "59956f47cc02c8af88a6595af3d90e74",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4816339",
+    "survivin-is-not-required-for-the-endomitotic-cell-cycle-of-megakaryocytes."
+  ],
+  "key_phrases": [
+    "survivin",
+    "not",
+    "required",
+    "endomitotic",
+    "cell",
+    "cycle",
+    "megakaryocytes",
+    "member"
+  ],
+  "summary_1l": "Survivin is not required for the endomitotic cell cycle of megakaryocytes.",
+  "query_hits": [],
+  "embed_text": "4816339 Survivin is not required for the endomitotic cell cycle of megakaryocytes. science scifact Survivin is a member of the chromosome passenger complex, which plays an important role in chromosome alignment, separation, and cytokinesis. Although survivin is required for the proliferation and survival of hematopoietic stem and… 4816339 survivin-is-not-required-for-the-endomitotic-cell-cycle-of-megakaryocytes. survivin not required endomitotic cell cycle megakaryocytes member Survivin is not required for the endomitotic cell cycle of megakaryocytes. Survivin is not required for the endomitotic cell cycle of megakaryocytes. Survivin is a member of the chromosome passenger complex, which plays an important role in chromosome alignment, separation, and cytokinesis. Although survivin is required for the proliferation and survival of hematopoietic stem and progenitor cells, the extent to which it is necessary for endomitosis of megakaryocytes remains controversial. To determine whether survivin is required for polyploidization, we analyzed mice with a megakaryocyte-specific deletion. PF4-Cre/survivin(fl/fl) mice harbored normal platelet counts with megakaryocytes that reached ploidy states comparable with those of control littermates. The CD41(+) cells within these animals showed little excision but increased annexin V staining, implying t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.461360+00:00"
+}

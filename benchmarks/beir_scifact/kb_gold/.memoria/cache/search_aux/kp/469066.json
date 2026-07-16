@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "469066",
+  "source_fingerprint": "5175afa92cdda241848a6369142b6e87",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "469066",
+    "lpd-depletion-reveals-that-srf-specifies-radial-versus-tangential-migration-of-pyramidal-neurons"
+  ],
+  "key_phrases": [
+    "lpd",
+    "depletion",
+    "reveals",
+    "that",
+    "srf",
+    "specifies",
+    "radial",
+    "versus"
+  ],
+  "summary_1l": "During corticogenesis, pyramidal neurons (∼80% of cortical neurons) arise from the ventricular zone, pa",
+  "query_hits": [],
+  "embed_text": "469066 Lpd depletion reveals that SRF specifies radial versus tangential migration of pyramidal neurons science scifact During corticogenesis, pyramidal neurons (∼80% of cortical neurons) arise from the ventricular zone, pass through a multipolar stage to become bipolar and attach to radial glia, and then migrate to their proper position within the cortex.… 469066 lpd-depletion-reveals-that-srf-specifies-radial-versus-tangential-migration-of-pyramidal-neurons lpd depletion reveals that srf specifies radial versus During corticogenesis, pyramidal neurons (∼80% of cortical neurons) arise from the ventricular zone, pa Lpd depletion reveals that SRF specifies radial versus tangential migration of pyramidal neurons During corticogenesis, pyramidal neurons (∼80% of cortical neurons) arise from the ventricular zone, pass through a multipolar stage to become bipolar and attach to radial glia, and then migrate to their proper position within the cortex. As pyramidal neurons migrate radially, they remain attached to their glial substrate as they pass through the subventricular and intermediate zones, regions rich in tangentially migrating interneurons and axon fibre tracts. We examined the role of lamellipodin (Lpd), a homologue of a key regulator of neuronal migration and polarization in Caenorhabditis elegans, in corticogenesis. Lpd depletion caused bipolar pyramidal neurons to adopt a tangential, rather tha",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.208408+00:00"
+}

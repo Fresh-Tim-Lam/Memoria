@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "34287602",
+  "source_fingerprint": "4e1ab98e5a1f5f9e3027b88c0f52b77f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "34287602",
+    "genetic-variation-in-west-nile-virus-from-naturally-infected-mosquitoes-and-birds-suggests-quasispecies-structure-and-strong-purifying-selection."
+  ],
+  "key_phrases": [
+    "genetic",
+    "variation",
+    "west",
+    "nile",
+    "virus",
+    "from",
+    "naturally",
+    "infected"
+  ],
+  "summary_1l": "Genetic variation in West Nile virus from naturally infected mosquitoes and birds suggests quasispecies structure and strong purifying selection.",
+  "query_hits": [],
+  "embed_text": "34287602 Genetic variation in West Nile virus from naturally infected mosquitoes and birds suggests quasispecies structure and strong purifying selection. science scifact Intrahost genetic diversity was analysed in naturally infected mosquitoes and birds to determine whether West Nile virus (WNV) exists in nature as a quasispecies and to quantify selective pressures within and between hosts. WNV was sampled… 34287602 genetic-variation-in-west-nile-virus-from-naturally-infected-mosquitoes-and-birds-suggests-quasispecies-structure-and-strong-purifying-selection. genetic variation west nile virus from naturally infected Genetic variation in West Nile virus from naturally infected mosquitoes and birds suggests quasispecies structure and strong purifying selection. Genetic variation in West Nile virus from naturally infected mosquitoes and birds suggests quasispecies structure and strong purifying selection. Intrahost genetic diversity was analysed in naturally infected mosquitoes and birds to determine whether West Nile virus (WNV) exists in nature as a quasispecies and to quantify selective pressures within and between hosts. WNV was sampled from ten infected birds and ten infected mosquito pools collected on Long Island, NY, USA, during the peak of the 2003 WNV transmission season. A 1938 nt fragment comprising the 3' 1159 nt of the WNV envelope (E) coding region and the 5' 779 nt of the non-structural protein 1 (NS1) coding region was amplified and cloned and 20 clones per specimen were sequenced. Results from this analysis demonstrate that WNV i",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.314003+00:00"
+}

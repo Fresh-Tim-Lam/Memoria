@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1243475",
+  "source_fingerprint": "2ab8876342861183b738810a836fdf2f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1243475",
+    "histone-acetylation-and-dna-demethylation-of-t-cells-result-in-an-anaplastic-large-cell-lymphoma-like-phenotype."
+  ],
+  "key_phrases": [
+    "histone",
+    "acetylation",
+    "dna",
+    "demethylation",
+    "cells",
+    "result",
+    "anaplastic",
+    "large"
+  ],
+  "summary_1l": "Histone acetylation and DNA demethylation of T cells result in an anaplastic large cell lymphoma-like phenotype.",
+  "query_hits": [],
+  "embed_text": "1243475 Histone acetylation and DNA demethylation of T cells result in an anaplastic large cell lymphoma-like phenotype. science scifact A characteristic feature of anaplastic large cell lymphoma is the significant repression of the T-cell expression program despite its T-cell origin. The reasons for this down-regulation of T-cell phenotype are still unknown. To elucidate… 1243475 histone-acetylation-and-dna-demethylation-of-t-cells-result-in-an-anaplastic-large-cell-lymphoma-like-phenotype. histone acetylation dna demethylation cells result anaplastic large Histone acetylation and DNA demethylation of T cells result in an anaplastic large cell lymphoma-like phenotype. Histone acetylation and DNA demethylation of T cells result in an anaplastic large cell lymphoma-like phenotype. A characteristic feature of anaplastic large cell lymphoma is the significant repression of the T-cell expression program despite its T-cell origin. The reasons for this down-regulation of T-cell phenotype are still unknown. To elucidate whether epigenetic mechanisms are responsible for the loss of the T-cell phenotype, we treated anaplastic large cell lymphoma and T-cell lymphoma/leukemia cell lines (n=4, each) with epigenetic modifiers to evoke DNA demethylation and histone acetylation. Global gene expression data from treated and untreated cell lines were generated and selected, and differentially expressed genes were evaluated by real-time reverse transcriptase polymerase ch",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:08.878214+00:00"
+}

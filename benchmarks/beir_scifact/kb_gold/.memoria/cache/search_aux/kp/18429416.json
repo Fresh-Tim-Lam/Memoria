@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18429416",
+  "source_fingerprint": "db7d1c94de20cf84dc45b90a1f108522",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18429416",
+    "immunological-mechanisms-for-desensitization-and-tolerance-in-food-allergy"
+  ],
+  "key_phrases": [
+    "immunological",
+    "mechanisms",
+    "desensitization",
+    "tolerance",
+    "food",
+    "allergy",
+    "major",
+    "public"
+  ],
+  "summary_1l": "Food allergy is a major public health concern in westernized countries, estimated to affect 5 % of children and 3–4 % of adul",
+  "query_hits": [],
+  "embed_text": "18429416 Immunological mechanisms for desensitization and tolerance in food allergy science scifact Food allergy is a major public health concern in westernized countries, estimated to affect 5 % of children and 3–4 % of adults. Allergen-specific immunotherapy for food allergy is currently being actively evaluated, but is still… 18429416 immunological-mechanisms-for-desensitization-and-tolerance-in-food-allergy immunological mechanisms desensitization tolerance food allergy major public Food allergy is a major public health concern in westernized countries, estimated to affect 5 % of children and 3–4 % of adul Immunological mechanisms for desensitization and tolerance in food allergy Food allergy is a major public health concern in westernized countries, estimated to affect 5 % of children and 3–4 % of adults. Allergen-specific immunotherapy for food allergy is currently being actively evaluated, but is still experimental. The optimal protocol, in terms of the route of administration of the food, target maintenance dose, and duration of maintenance therapy, and the optimal patient for these procedures are still being worked out. The mechanisms underlying successful food desensitization are also unclear, in part, because there is no standard immunotherapy protocol. The mechanisms involved, however, may include mast cell and basophil suppression, development of food-specific IgG4 antibodies, reduc",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.269275+00:00"
+}

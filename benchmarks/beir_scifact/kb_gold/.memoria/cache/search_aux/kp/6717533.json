@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6717533",
+  "source_fingerprint": "85d3be364bb6adedcdf32f4dc1f97d15",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6717533",
+    "maximal-activation-of-transcription-by-statl-and-stat3-requires-both-tyrosine-and-serine-phosphorylation"
+  ],
+  "key_phrases": [
+    "maximal",
+    "activation",
+    "transcription",
+    "by",
+    "statl",
+    "stat3",
+    "requires",
+    "both"
+  ],
+  "summary_1l": "Stat1 and Stat3 are latent transcriptional factors activated initially through phosphorylation",
+  "query_hits": [],
+  "embed_text": "6717533 Maximal activation of transcription by statl and stat3 requires both tyrosine and serine phosphorylation science scifact Stat1 and Stat3 are latent transcriptional factors activated initially through phosphorylation on single tyrosine residues induced by cytokine and growth factor occupation of cell surface receptors. Here we show that phosphorylation on a… 6717533 maximal-activation-of-transcription-by-statl-and-stat3-requires-both-tyrosine-and-serine-phosphorylation maximal activation transcription by statl stat3 requires both Stat1 and Stat3 are latent transcriptional factors activated initially through phosphorylation Maximal activation of transcription by statl and stat3 requires both tyrosine and serine phosphorylation Stat1 and Stat3 are latent transcriptional factors activated initially through phosphorylation on single tyrosine residues induced by cytokine and growth factor occupation of cell surface receptors. Here we show that phosphorylation on a single serine (residue 727) in each protein is also required for maximal transcriptional activity. Both cytokines and growth factors are capable of inducing the serine phosphorylation of Stat1 and Stat3. These experiments show that gene activation by Stat1 and Stat3, which obligatorily require tyrosine phosphorylation to become active, also depends for maximal activation on one or more of the many serine kinases.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.500911+00:00"
+}

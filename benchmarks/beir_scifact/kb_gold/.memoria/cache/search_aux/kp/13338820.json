@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13338820",
+  "source_fingerprint": "9c27f103d9c24c4d9fb2cc79c82cf52a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13338820",
+    "complementary-foods-for-infant-feeding-in-developing-countries:-their-nutrient-adequacy-and-improvement"
+  ],
+  "key_phrases": [
+    "complementary",
+    "foods",
+    "infant",
+    "feeding",
+    "developing",
+    "countries",
+    "their",
+    "nutrient"
+  ],
+  "summary_1l": "Objective: To assess the energy and nutrient adequacy of a variety of complementary foods used i",
+  "query_hits": [],
+  "embed_text": "13338820 Complementary foods for infant feeding in developing countries: their nutrient adequacy and improvement science scifact Objective: To assess the energy and nutrient adequacy of a variety of complementary foods used in parts of Africa, India, Papua New Guinea, the Philippines and Thailand. Method: The energy, nutrient and anti-nutrient (dietary fibre and… 13338820 complementary-foods-for-infant-feeding-in-developing-countries:-their-nutrient-adequacy-and-improvement complementary foods infant feeding developing countries their nutrient Objective: To assess the energy and nutrient adequacy of a variety of complementary foods used i Complementary foods for infant feeding in developing countries: their nutrient adequacy and improvement Objective: To assess the energy and nutrient adequacy of a variety of complementary foods used in parts of Africa, India, Papua New Guinea, the Philippines and Thailand. Method: The energy, nutrient and anti-nutrient (dietary fibre and phytic acid) content (per 100 g as eaten, per 100 kcal, and per day) of twenty-three plant-based complementary foods consumed in developing countries was calculated from food composition values based on chemical analysis for the trace minerals, non-starch polysaccharide and phytic acid, and the literature. Results were compared with the estimated nutrient needs (per day; per 100 kcal) from complementary foods for infants 9–11 months, assuming a breast milk",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.076015+00:00"
+}

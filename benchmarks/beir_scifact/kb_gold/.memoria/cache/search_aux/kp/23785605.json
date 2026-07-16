@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23785605",
+  "source_fingerprint": "f4d021fc3f4c98a4aa7545fba077de13",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23785605",
+    "cardiovascular-risk-factors-and-migraine:-the-gem-population-based-study."
+  ],
+  "key_phrases": [
+    "cardiovascular",
+    "risk",
+    "factors",
+    "migraine",
+    "gem",
+    "population",
+    "based",
+    "study"
+  ],
+  "summary_1l": "Cardiovascular risk factors and migraine: the GEM population-based study.",
+  "query_hits": [],
+  "embed_text": "23785605 Cardiovascular risk factors and migraine: the GEM population-based study. science scifact BACKGROUND Migraine, particularly with aura, is a risk factor for early-onset ischemic stroke. The underlying mechanisms are unknown, but may in part be due to migraineurs having an increased risk profile for cardiovascular disease. In… 23785605 cardiovascular-risk-factors-and-migraine:-the-gem-population-based-study. cardiovascular risk factors migraine gem population based study Cardiovascular risk factors and migraine: the GEM population-based study. Cardiovascular risk factors and migraine: the GEM population-based study. BACKGROUND Migraine, particularly with aura, is a risk factor for early-onset ischemic stroke. The underlying mechanisms are unknown, but may in part be due to migraineurs having an increased risk profile for cardiovascular disease. In this study, the authors compare the cardiovascular risk profile of adult migraineurs to that of nonmigraineurs. METHODS Participants (n = 5,755, 48% men, age 20 to 65 years) are from the Genetic Epidemiology of Migraine (GEM) study, a population-based study in the Netherlands. A total of 620 current migraineurs were identified: 31% with aura (MA), 64% without aura (MO), and 5% unclassified. Controls were 5,135 individuals without lifetime migraine. Measured cardiovascular risk factors",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.128472+00:00"
+}

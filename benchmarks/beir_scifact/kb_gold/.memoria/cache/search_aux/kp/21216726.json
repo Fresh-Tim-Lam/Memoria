@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21216726",
+  "source_fingerprint": "3821c2e56f9781201cb4451a898f1c6c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21216726",
+    "human-herpesvirus-8-infection-and-kaposi's-sarcoma-among-human-immunodeficiency-virus-infected-and--uninfected-women."
+  ],
+  "key_phrases": [
+    "human",
+    "herpesvirus",
+    "infection",
+    "kaposi",
+    "sarcoma",
+    "among",
+    "immunodeficiency",
+    "virus"
+  ],
+  "summary_1l": "Human herpesvirus 8 infection and Kaposi's sarcoma among human immunodeficiency virus-infected and -uninfected women.",
+  "query_hits": [],
+  "embed_text": "21216726 Human herpesvirus 8 infection and Kaposi's sarcoma among human immunodeficiency virus-infected and -uninfected women. science scifact Little is known about the epidemiology of human herpesvirus 8 (HHV-8) infections among women. A cross-sectional study was conducted of HHV-8 infection among human immunodeficiency virus (HIV)-infected and high-risk HIV-uninfected women.… 21216726 human-herpesvirus-8-infection-and-kaposi's-sarcoma-among-human-immunodeficiency-virus-infected-and--uninfected-women. human herpesvirus infection kaposi sarcoma among immunodeficiency virus Human herpesvirus 8 infection and Kaposi's sarcoma among human immunodeficiency virus-infected and -uninfected women. Human herpesvirus 8 infection and Kaposi's sarcoma among human immunodeficiency virus-infected and -uninfected women. Little is known about the epidemiology of human herpesvirus 8 (HHV-8) infections among women. A cross-sectional study was conducted of HHV-8 infection among human immunodeficiency virus (HIV)-infected and high-risk HIV-uninfected women. Serological tests with noninduced (latent) and induced (lytic) HHV-8 antigens were used to detect infection among 2483 participants of a multisite cohort. Reactivity to latent antigen was present in 4.1% and to induced antigens in 12.0% of women. Seven of 8 women who reported Kaposi's sarcoma had HHV-8 antibodies. Among HIV-positive women, HHV-8 infection was associated with use of crack, cocaine, or heroin (76% vs. 65%; P<.001), past syphil",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.553582+00:00"
+}

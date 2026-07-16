@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "41074251",
+  "source_fingerprint": "dc353f65a1b026c8a8680b42b7f7a516",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "41074251",
+    "knowledge,-attitudes,-risk-perception,-and-cancer-screening-behaviors-among-cancer-survivors."
+  ],
+  "key_phrases": [
+    "knowledge",
+    "attitudes",
+    "risk",
+    "perception",
+    "cancer",
+    "screening",
+    "behaviors",
+    "among"
+  ],
+  "summary_1l": "Knowledge, attitudes, risk perception, and cancer screening behaviors among cancer survivors.",
+  "query_hits": [],
+  "embed_text": "41074251 Knowledge, attitudes, risk perception, and cancer screening behaviors among cancer survivors. science scifact BACKGROUND Knowledge, attitudes, and risk perception in relation to second primary cancer (SPC) screening and their impact on screening practices in cancer survivors are largely unknown. METHODS A total of 326 cancer survivors who had… 41074251 knowledge,-attitudes,-risk-perception,-and-cancer-screening-behaviors-among-cancer-survivors. knowledge attitudes risk perception cancer screening behaviors among Knowledge, attitudes, risk perception, and cancer screening behaviors among cancer survivors. Knowledge, attitudes, risk perception, and cancer screening behaviors among cancer survivors. BACKGROUND Knowledge, attitudes, and risk perception in relation to second primary cancer (SPC) screening and their impact on screening practices in cancer survivors are largely unknown. METHODS A total of 326 cancer survivors who had completed primary treatment for cancer >1 year previously were recruited from 6 oncology care outpatient clinics in the Republic of Korea. Survivors' knowledge, attitudes, perceived risk, and screening practices were assessed along with sociodemographic, behavioral, and clinical characteristics. Multivariate logistic regression was used to examine behavioral factors associated with the completion of all appropriate SPC screening according to national guidelines. RESU",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.086340+00:00"
+}

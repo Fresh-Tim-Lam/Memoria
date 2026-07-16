@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16691520",
+  "source_fingerprint": "1c8bfbc12c60d183dfcd252944e57622",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16691520",
+    "genome-wide-analysis-of-estrogen-receptor-binding-sites"
+  ],
+  "key_phrases": [
+    "genome",
+    "wide",
+    "analysis",
+    "estrogen",
+    "receptor",
+    "binding",
+    "sites",
+    "master"
+  ],
+  "summary_1l": "The estrogen receptor is the master transcriptional regulator of breast cancer phenotype and the archetype of a molecular therapeutic target.",
+  "query_hits": [],
+  "embed_text": "16691520 Genome-wide analysis of estrogen receptor binding sites science scifact The estrogen receptor is the master transcriptional regulator of breast cancer phenotype and the archetype of a molecular therapeutic target. We mapped all estrogen receptor and RNA polymerase II binding sites on a genome-wide scale,… 16691520 genome-wide-analysis-of-estrogen-receptor-binding-sites genome wide analysis estrogen receptor binding sites master The estrogen receptor is the master transcriptional regulator of breast cancer phenotype and the archetype of a molecular therapeutic target. Genome-wide analysis of estrogen receptor binding sites The estrogen receptor is the master transcriptional regulator of breast cancer phenotype and the archetype of a molecular therapeutic target. We mapped all estrogen receptor and RNA polymerase II binding sites on a genome-wide scale, identifying the authentic cis binding sites and target genes, in breast cancer cells. Combining this unique resource with gene expression data demonstrates distinct temporal mechanisms of estrogen-mediated gene regulation, particularly in the case of estrogen-suppressed genes. Furthermore, this resource has allowed the identification of cis-regulatory sites in previously unexplored regions of the genome and the cooperating transcription factors underlying estrogen signaling in breast cancer.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.631562+00:00"
+}

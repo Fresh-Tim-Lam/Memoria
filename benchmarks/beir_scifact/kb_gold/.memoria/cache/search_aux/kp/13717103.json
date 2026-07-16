@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13717103",
+  "source_fingerprint": "04f67f6683ce8dda28ec7bc24b41d476",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13717103",
+    "als-fus-pathology-revisited:-singleton-fus-mutations-and-an-unusual-case-with-both-a-fus-and-tardbp-mutation"
+  ],
+  "key_phrases": [
+    "als",
+    "fus",
+    "pathology",
+    "revisited",
+    "singleton",
+    "mutations",
+    "unusual",
+    "case"
+  ],
+  "summary_1l": "INTRODUCTION Mutations in the FUS gene have been shown to be a rare cause of amyotrophic la",
+  "query_hits": [],
+  "embed_text": "13717103 ALS-FUS pathology revisited: singleton FUS mutations and an unusual case with both a FUS and TARDBP mutation science scifact INTRODUCTION Mutations in the FUS gene have been shown to be a rare cause of amyotrophic lateral sclerosis (ALS-FUS) and whilst well documented clinically and genetically there have been relatively few neuropathological studies. Recent… 13717103 als-fus-pathology-revisited:-singleton-fus-mutations-and-an-unusual-case-with-both-a-fus-and-tardbp-mutation als fus pathology revisited singleton mutations unusual case INTRODUCTION Mutations in the FUS gene have been shown to be a rare cause of amyotrophic la ALS-FUS pathology revisited: singleton FUS mutations and an unusual case with both a FUS and TARDBP mutation INTRODUCTION Mutations in the FUS gene have been shown to be a rare cause of amyotrophic lateral sclerosis (ALS-FUS) and whilst well documented clinically and genetically there have been relatively few neuropathological studies. Recent work suggested a possible correlation between pathological features such as frequency of basophilic inclusions in neurons and rate of clinical decline, other studies have revealed a discrepancy between the upper motor neuron features detected clinically and the associated pathology. The purpose of this study was to describe the pathological features associated with more recently discovered FUS mutations and reinvestigate those with well recognised mut",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.773881+00:00"
+}

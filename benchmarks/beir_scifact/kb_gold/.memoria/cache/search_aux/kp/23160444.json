@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23160444",
+  "source_fingerprint": "726e8fe7bb5280cbb678c55bc03b421f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23160444",
+    "two-tiered-coupling-between-flowing-actin-and-immobilized-n-cadherin/catenin-complexes-in-neuronal-growth-cones."
+  ],
+  "key_phrases": [
+    "two",
+    "tiered",
+    "coupling",
+    "between",
+    "flowing",
+    "actin",
+    "immobilized",
+    "cadherin"
+  ],
+  "summary_1l": "Two-tiered coupling between flowing actin and immobilized N-cadherin/catenin complexes in neuronal growth cones.",
+  "query_hits": [],
+  "embed_text": "23160444 Two-tiered coupling between flowing actin and immobilized N-cadherin/catenin complexes in neuronal growth cones. science scifact Neuronal growth cones move forward by dynamically connecting actin-based motility to substrate adhesion, but the mechanisms at the individual molecular level remain unclear. We cultured primary neurons on N-cadherin-coated micropatterned… 23160444 two-tiered-coupling-between-flowing-actin-and-immobilized-n-cadherin/catenin-complexes-in-neuronal-growth-cones. two tiered coupling between flowing actin immobilized cadherin Two-tiered coupling between flowing actin and immobilized N-cadherin/catenin complexes in neuronal growth cones. Two-tiered coupling between flowing actin and immobilized N-cadherin/catenin complexes in neuronal growth cones. Neuronal growth cones move forward by dynamically connecting actin-based motility to substrate adhesion, but the mechanisms at the individual molecular level remain unclear. We cultured primary neurons on N-cadherin-coated micropatterned substrates, and imaged adhesion and cytoskeletal proteins at the ventral surface of growth cones using single particle tracking combined to photoactivated localization microscopy (sptPALM). We demonstrate transient interactions in the second time scale between flowing actin filaments and immobilized N-cadherin/catenin complexes, translating into a local reduction of the actin retrograde flow. Normal actin flow on micropatterns was rescued by exp",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.953504+00:00"
+}

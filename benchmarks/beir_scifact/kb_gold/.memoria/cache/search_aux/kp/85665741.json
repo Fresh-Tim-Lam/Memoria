@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "85665741",
+  "source_fingerprint": "eda0d4fe493b68e1d9ede3053e746a99",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "85665741",
+    "braf-mutation-predicts-for-mek-dependence-in-non-small-cell-lung-cancer-(nsclc)."
+  ],
+  "key_phrases": [
+    "braf",
+    "mutation",
+    "predicts",
+    "mek",
+    "dependence",
+    "non",
+    "small",
+    "cell"
+  ],
+  "summary_1l": "BRAF mutation predicts for MEK-dependence in non-small cell lung cancer (NSCLC).",
+  "query_hits": [],
+  "embed_text": "85665741 BRAF mutation predicts for MEK-dependence in non-small cell lung cancer (NSCLC). science scifact 5247 Constitutive ERK signaling is common in human cancer and is often the result of activating mutations of BRAF, RAS and upstream receptor tyrosine kinases. Missense BRAF kinase domain mutations are frequently observed in melanoma, colon… 85665741 braf-mutation-predicts-for-mek-dependence-in-non-small-cell-lung-cancer-(nsclc). braf mutation predicts mek dependence non small cell BRAF mutation predicts for MEK-dependence in non-small cell lung cancer (NSCLC). BRAF mutation predicts for MEK-dependence in non-small cell lung cancer (NSCLC). 5247 Constitutive ERK signaling is common in human cancer and is often the result of activating mutations of BRAF, RAS and upstream receptor tyrosine kinases. Missense BRAF kinase domain mutations are frequently observed in melanoma, colon and thyroid cancers and less frequently in lung and other cancer types. The vast majority (>90%) involve a glutamic acid for valine substitution at codon 600 (V600E), which results in elevated BRAF kinase activity. BRAF kinase domain mutations with intermediate and impaired kinase activity have also been identified, most frequently in NSCLC. We have previously reported that tumors with V600E BRAF mutation are selectively sensitive to MEK inhibition. Using the potent and sele",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.042234+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16201748",
+  "source_fingerprint": "48d16d11ed3d5d6023c584dcffb1d420",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16201748",
+    "altered-pten-expression;-a-diagnostic-marker-for-differentiating-normal,-hyperplastic-and-neoplastic-endometrium"
+  ],
+  "key_phrases": [
+    "altered",
+    "pten",
+    "expression",
+    "diagnostic",
+    "marker",
+    "differentiating",
+    "normal",
+    "hyperplastic"
+  ],
+  "summary_1l": "BACKGROUND Different molecular alterations have been described in endometrioid endometr",
+  "query_hits": [],
+  "embed_text": "16201748 Altered PTEN expression; a diagnostic marker for differentiating normal, hyperplastic and neoplastic endometrium science scifact BACKGROUND Different molecular alterations have been described in endometrioid endometrial carcinoma (EECA). Among them the most frequently altered is loss of the PTEN protein, a tumor suppressor gene. The purpose of this study was to… 16201748 altered-pten-expression;-a-diagnostic-marker-for-differentiating-normal,-hyperplastic-and-neoplastic-endometrium altered pten expression diagnostic marker differentiating normal hyperplastic BACKGROUND Different molecular alterations have been described in endometrioid endometr Altered PTEN expression; a diagnostic marker for differentiating normal, hyperplastic and neoplastic endometrium BACKGROUND Different molecular alterations have been described in endometrioid endometrial carcinoma (EECA). Among them the most frequently altered is loss of the PTEN protein, a tumor suppressor gene. The purpose of this study was to evaluate the expression pattern of PTEN gene in normal, hyperplastic and neoplastic endometrium. METHODS In a study in a referral gynecologic hospital in Tehran, Iran, immunohistochemical (IHC) evaluation of PTEN was performed on 87 consecutive specimens to the following three groups; group A- normal proliferative endometrium(n = 29); group B- hyperplastic endometrium [including simple hyperplasia without atypia(n = 21) and complex hyperplasia with",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.915647+00:00"
+}

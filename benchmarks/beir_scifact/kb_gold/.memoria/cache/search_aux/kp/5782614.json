@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5782614",
+  "source_fingerprint": "f915e65e2635186e31d7dcac9b3ffd76",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5782614",
+    "clonal-hematopoiesis-of-indeterminate-potential-and-its-distinction-from-myelodysplastic-syndromes."
+  ],
+  "key_phrases": [
+    "clonal",
+    "hematopoiesis",
+    "indeterminate",
+    "potential",
+    "its",
+    "distinction",
+    "from",
+    "myelodysplastic"
+  ],
+  "summary_1l": "Clonal hematopoiesis of indeterminate potential and its distinction from myelodysplastic syndromes.",
+  "query_hits": [],
+  "embed_text": "5782614 Clonal hematopoiesis of indeterminate potential and its distinction from myelodysplastic syndromes. science scifact Recent genetic analyses of large populations have revealed that somatic mutations in hematopoietic cells leading to clonal expansion are commonly acquired during human aging. Clonally restricted hematopoiesis is associated with an… 5782614 clonal-hematopoiesis-of-indeterminate-potential-and-its-distinction-from-myelodysplastic-syndromes. clonal hematopoiesis indeterminate potential its distinction from myelodysplastic Clonal hematopoiesis of indeterminate potential and its distinction from myelodysplastic syndromes. Clonal hematopoiesis of indeterminate potential and its distinction from myelodysplastic syndromes. Recent genetic analyses of large populations have revealed that somatic mutations in hematopoietic cells leading to clonal expansion are commonly acquired during human aging. Clonally restricted hematopoiesis is associated with an increased risk of subsequent diagnosis of myeloid or lymphoid neoplasia and increased all-cause mortality. Although myelodysplastic syndromes (MDS) are defined by cytopenias, dysplastic morphology of blood and marrow cells, and clonal hematopoiesis, most individuals who acquire clonal hematopoiesis during aging will never develop MDS. Therefore, acquisition of somatic mutations that drive clonal expansion in the absence of cytopenias and dysplastic hematopoiesis ca",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.077624+00:00"
+}

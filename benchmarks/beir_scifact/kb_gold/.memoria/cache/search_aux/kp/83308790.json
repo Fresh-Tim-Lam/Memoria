@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "83308790",
+  "source_fingerprint": "6caa9da11b36ef2c4b1131aa12a00886",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "83308790"
+  ],
+  "key_phrases": [
+    "activation",
+    "by",
+    "ikk",
+    "second",
+    "evolutionary",
+    "conserved",
+    "nf",
+    "signaling"
+  ],
+  "summary_1l": "In mammals, the canonical nuclear factor κB (NF-κB) signaling pathway activated in response to infections is based on de",
+  "query_hits": [],
+  "embed_text": "83308790 Activation by IKKα of a second, evolutionary conserved, NF-κB signaling pathway science scifact In mammals, the canonical nuclear factor κB (NF-κB) signaling pathway activated in response to infections is based on degradation of IκB inhibitors. This pathway depends on the IκB kinase (IKK), which contains two catalytic subunits, IKKα… 83308790 activation by ikk second evolutionary conserved nf signaling In mammals, the canonical nuclear factor κB (NF-κB) signaling pathway activated in response to infections is based on de Activation by IKKα of a second, evolutionary conserved, NF-κB signaling pathway In mammals, the canonical nuclear factor κB (NF-κB) signaling pathway activated in response to infections is based on degradation of IκB inhibitors. This pathway depends on the IκB kinase (IKK), which contains two catalytic subunits, IKKα and IKKβ. IKKβ is essential for inducible IκB phosphorylation and degradation, whereas IKKα is not. Here we show that IKKα is required for B cell maturation, formation of secondary lymphoid organs, increased expression of certain NF-κB target genes, and processing of the NF-κB2 (p100) precursor. IKKα preferentially phosphorylates NF-κB2, and this activity requires its phosphorylation by upstream kinases, one of which may be NF-κB–inducing kinase (NIK). IKKα is therefore a pivo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.392889+00:00"
+}

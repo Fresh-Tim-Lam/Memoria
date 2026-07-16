@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14131683",
+  "source_fingerprint": "c2948ef95a69888c75fe2ed6e226b67f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14131683",
+    "divergent-clonal-evolution-of-castration-resistant-neuroendocrine-prostate-cancer"
+  ],
+  "key_phrases": [
+    "divergent",
+    "clonal",
+    "evolution",
+    "castration",
+    "resistant",
+    "neuroendocrine",
+    "prostate",
+    "cancer"
+  ],
+  "summary_1l": "An increasingly recognized resistance mechanism to androgen receptor (AR)-directed therapy in prostate cancer involves",
+  "query_hits": [],
+  "embed_text": "14131683 Divergent clonal evolution of castration resistant neuroendocrine prostate cancer science scifact An increasingly recognized resistance mechanism to androgen receptor (AR)-directed therapy in prostate cancer involves epithelial plasticity, in which tumor cells demonstrate low to absent AR expression and often have neuroendocrine… 14131683 divergent-clonal-evolution-of-castration-resistant-neuroendocrine-prostate-cancer divergent clonal evolution castration resistant neuroendocrine prostate cancer An increasingly recognized resistance mechanism to androgen receptor (AR)-directed therapy in prostate cancer involves Divergent clonal evolution of castration resistant neuroendocrine prostate cancer An increasingly recognized resistance mechanism to androgen receptor (AR)-directed therapy in prostate cancer involves epithelial plasticity, in which tumor cells demonstrate low to absent AR expression and often have neuroendocrine features. The etiology and molecular basis for this 'alternative' treatment-resistant cell state remain incompletely understood. Here, by analyzing whole-exome sequencing data of metastatic biopsies from patients, we observed substantial genomic overlap between castration-resistant tumors that were histologically characterized as prostate adenocarcinomas (CRPC-Adeno) and neuroendocrine prostate cancer (CRPC-NE); analysis of biopsy samples from the same individuals over time points",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.191896+00:00"
+}

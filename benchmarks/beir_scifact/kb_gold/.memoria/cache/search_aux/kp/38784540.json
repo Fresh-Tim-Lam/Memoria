@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "38784540",
+  "source_fingerprint": "65ecb40c30ed1b7303d297982d4d0e3f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "38784540",
+    "life-course-breast-cancer-risk-factors-and-adult-breast-density-(united-kingdom)"
+  ],
+  "key_phrases": [
+    "life",
+    "course",
+    "breast",
+    "cancer",
+    "risk",
+    "factors",
+    "adult",
+    "density"
+  ],
+  "summary_1l": "Objective To determine whether risk factors in childhood and early adulthood affect later mammographic breast density.",
+  "query_hits": [],
+  "embed_text": "38784540 Life course breast cancer risk factors and adult breast density (United Kingdom) science scifact Objective To determine whether risk factors in childhood and early adulthood affect later mammographic breast density. Methods: Subjects were 628 women who attended a medical examination at the University of Glasgow Student Health Service… 38784540 life-course-breast-cancer-risk-factors-and-adult-breast-density-(united-kingdom) life course breast cancer risk factors adult density Objective To determine whether risk factors in childhood and early adulthood affect later mammographic breast density. Life course breast cancer risk factors and adult breast density (United Kingdom) Objective To determine whether risk factors in childhood and early adulthood affect later mammographic breast density. Methods: Subjects were 628 women who attended a medical examination at the University of Glasgow Student Health Service (1948–1968), responded to a questionnaire (2001) and had a screening mammogram in Scotland (1989–2002). Mammograms (median age of 59years) were classified using a six category classification (SCC) of breast density percent. Logistic regression was used to determine associations between risk factors and having a high-risk mammogram (≥25 dense). Results: In multi-variable analyses, high-risk mammograms were associated with parity (adjusted odds ratio (OR) per child: 0.77 (95 co",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.885207+00:00"
+}

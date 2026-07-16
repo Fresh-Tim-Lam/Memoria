@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "31803596",
+  "source_fingerprint": "ab48f86c562e0ac9084f1bf1331d7418",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "31803596",
+    "gene-expression-analysis-by-cdna-microarray-in-oral-squamous-cell-carcinoma."
+  ],
+  "key_phrases": [
+    "gene",
+    "expression",
+    "analysis",
+    "by",
+    "cdna",
+    "microarray",
+    "oral",
+    "squamous"
+  ],
+  "summary_1l": "Gene expression analysis by cDNA microarray in oral squamous cell carcinoma.",
+  "query_hits": [],
+  "embed_text": "31803596 Gene expression analysis by cDNA microarray in oral squamous cell carcinoma. science scifact BACKGROUND Oral squamous cell carcinoma (OSCC) is common type of human cancer, but little is known about the molecular mechanisms deciding on this malignancy. Comprehensive gene expression profiling is essential for understanding OSCC.… 31803596 gene-expression-analysis-by-cdna-microarray-in-oral-squamous-cell-carcinoma. gene expression analysis by cdna microarray oral squamous Gene expression analysis by cDNA microarray in oral squamous cell carcinoma. Gene expression analysis by cDNA microarray in oral squamous cell carcinoma. BACKGROUND Oral squamous cell carcinoma (OSCC) is common type of human cancer, but little is known about the molecular mechanisms deciding on this malignancy. Comprehensive gene expression profiling is essential for understanding OSCC. METHODS cDNA microarray was used to analyze expression patterns of 16 617 genes in nine OSCC patients. RESULTS Forty-seven genes with altered expression among all cases were extracted. The ontology of these 47 genes was classified into 10 categories. To validate the microarray data, the expression of genes, including TGFBI, FADD and DUSP1 was analyzed by reverse transcriptase-polymerase chain reaction (RT-PCR). By hierarchical clustering analysis, the nine cases were divided into tw",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.885528+00:00"
+}

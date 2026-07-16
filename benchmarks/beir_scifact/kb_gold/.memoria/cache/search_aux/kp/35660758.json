@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "35660758",
+  "source_fingerprint": "3fe4e6668f0f95cc1579aaf60d152dda",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "35660758",
+    "d3-phosphoinositides-and-outside-in-integrin-signaling-by-glycoprotein-iib-iiia-mediate-platelet-actin-assembly-and-filopodial-extension-induced-by-phorbol-12-myristate-13-acetate."
+  ],
+  "key_phrases": [
+    "d3",
+    "phosphoinositides",
+    "outside",
+    "integrin",
+    "signaling",
+    "by",
+    "glycoprotein",
+    "iib"
+  ],
+  "summary_1l": "D3 phosphoinositides and outside-in integrin signaling by glycoprotein IIb-IIIa mediate platelet actin assembly and filopodial extension induced by phorbol 12-myristate 13-acetate.",
+  "query_hits": [],
+  "embed_text": "35660758 D3 phosphoinositides and outside-in integrin signaling by glycoprotein IIb-IIIa mediate platelet actin assembly and filopodial extension induced by phorbol 12-myristate 13-acetate. science scifact Phorbol 12-myristate 13-acetate (PMA) uncaps a small number of the fast-growing (barbed) ends of actin filaments, thereby eliciting slow actin assembly and extension of filopodia in human blood platelets. These reactions, which also occur… 35660758 d3-phosphoinositides-and-outside-in-integrin-signaling-by-glycoprotein-iib-iiia-mediate-platelet-actin-assembly-and-filopodial-extension-induced-by-phorbol-12-myristate-13-acetate. d3 phosphoinositides outside integrin signaling by glycoprotein iib D3 phosphoinositides and outside-in integrin signaling by glycoprotein IIb-IIIa mediate platelet actin assembly and filopodial extension induced by phorbol 12-myristate 13-acetate. D3 phosphoinositides and outside-in integrin signaling by glycoprotein IIb-IIIa mediate platelet actin assembly and filopodial extension induced by phorbol 12-myristate 13-acetate. Phorbol 12-myristate 13-acetate (PMA) uncaps a small number of the fast-growing (barbed) ends of actin filaments, thereby eliciting slow actin assembly and extension of filopodia in human blood platelets. These reactions, which also occur in response to immunologic perturbation of the integrin glycoprotein (GP) IIb-IIIa, are sensitive to the phosphoinositide 3-kinase inhibitor wortmannin. Platelets deficient in GPIIb-IIIa integrins or with GPIIb-IIIa function inhibited by calcium chelation or the peptide RGDS have diminished PMA responsiveness. The effects of PMA contrast with thrombin receptor stimulation by >/",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.466858+00:00"
+}

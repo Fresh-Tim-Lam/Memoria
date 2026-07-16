@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "30655442",
+  "source_fingerprint": "ce26b4520d109d71b01355f40b826eac",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "30655442",
+    "the-embl-nucleotide-sequence-database."
+  ],
+  "key_phrases": [
+    "embl",
+    "nucleotide",
+    "sequence",
+    "database",
+    "http",
+    "www",
+    "ebi",
+    "ac"
+  ],
+  "summary_1l": "The EMBL nucleotide sequence database.",
+  "query_hits": [],
+  "embed_text": "30655442 The EMBL nucleotide sequence database. science scifact The EMBL Nucleotide Sequence Database (http://www.ebi.ac.uk/embl. html ) constitutes Europe's primary nucleotide sequence resource. DNA and RNA sequences are directly submitted from researchers and genome sequencing groups and collected… 30655442 the-embl-nucleotide-sequence-database. embl nucleotide sequence database http www ebi ac The EMBL nucleotide sequence database. The EMBL nucleotide sequence database. The EMBL Nucleotide Sequence Database (http://www.ebi.ac.uk/embl. html ) constitutes Europe's primary nucleotide sequence resource. DNA and RNA sequences are directly submitted from researchers and genome sequencing groups and collected from the scientific literature and patent applications (Fig. 1). In collaboration with DDBJ and GenBank the database is produced, maintained and distributed at the European Bioinformatics Institute. Database releases are produced quarterly and are distributed on CD-ROM. EBI's network services allow access to the most up-to-date data collection via Internet and World Wide Web interface, providing database searching and sequence similarity facilities plus access to a large number of additional databases.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.853126+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "35766603",
+  "source_fingerprint": "9c1f554a97feb7acf1b78820efc63eb9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "35766603",
+    "high-dose-recombinant-tumor-necrosis-factor-alpha-in-combination-with-interferon-gamma-and-melphalan-in-isolation-perfusion-of-the-limbs-for-melanoma-and-sarcoma."
+  ],
+  "key_phrases": [
+    "high",
+    "dose",
+    "recombinant",
+    "tumor",
+    "necrosis",
+    "factor",
+    "alpha",
+    "combination"
+  ],
+  "summary_1l": "High-dose recombinant tumor necrosis factor alpha in combination with interferon gamma and melphalan in isolation perfusion of the limbs for melanoma and sarcoma.",
+  "query_hits": [],
+  "embed_text": "35766603 High-dose recombinant tumor necrosis factor alpha in combination with interferon gamma and melphalan in isolation perfusion of the limbs for melanoma and sarcoma. science scifact PURPOSE To determine the toxicity and the therapeutic efficacy of the combination of the recombinant tumor necrosis factor alpha (rTNF alpha), recombinant interferon gamma (rIFN-gamma), and melphalan, we designed a protocol using isolation… 35766603 high-dose-recombinant-tumor-necrosis-factor-alpha-in-combination-with-interferon-gamma-and-melphalan-in-isolation-perfusion-of-the-limbs-for-melanoma-and-sarcoma. high dose recombinant tumor necrosis factor alpha combination High-dose recombinant tumor necrosis factor alpha in combination with interferon gamma and melphalan in isolation perfusion of the limbs for melanoma and sarcoma. High-dose recombinant tumor necrosis factor alpha in combination with interferon gamma and melphalan in isolation perfusion of the limbs for melanoma and sarcoma. PURPOSE To determine the toxicity and the therapeutic efficacy of the combination of the recombinant tumor necrosis factor alpha (rTNF alpha), recombinant interferon gamma (rIFN-gamma), and melphalan, we designed a protocol using isolation limb perfusion (ILP) with hyperthermia for in-transit metastases of melanoma and recurrent sarcoma. The triple combination was chosen because of the reported synergistic antitumor effect of rTNF alpha with IFN-gamma and of rTNF alpha with alkylating agents. PATIENTS AND METHODS Twenty-three patients received a total of 25 ILPs with the triple combination. There were 19 females and four males wi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.604698+00:00"
+}

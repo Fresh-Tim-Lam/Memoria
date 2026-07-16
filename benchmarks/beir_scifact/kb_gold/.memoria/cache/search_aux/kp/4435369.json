@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4435369",
+  "source_fingerprint": "9f111127ae66ecab1ee793ddd44510f0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4435369",
+    "extracellular-vesicles-for-drug-delivery."
+  ],
+  "key_phrases": [
+    "extracellular",
+    "vesicles",
+    "drug",
+    "delivery",
+    "evs",
+    "cell",
+    "derived",
+    "membrane"
+  ],
+  "summary_1l": "Extracellular vesicles for drug delivery.",
+  "query_hits": [],
+  "embed_text": "4435369 Extracellular vesicles for drug delivery. science scifact Extracellular vesicles (EVs) are cell-derived membrane vesicles, and represent an endogenous mechanism for intercellular communication. Since the discovery that EVs are capable of functionally transferring biological information, the… 4435369 extracellular-vesicles-for-drug-delivery. extracellular vesicles drug delivery evs cell derived membrane Extracellular vesicles for drug delivery. Extracellular vesicles for drug delivery. Extracellular vesicles (EVs) are cell-derived membrane vesicles, and represent an endogenous mechanism for intercellular communication. Since the discovery that EVs are capable of functionally transferring biological information, the potential use of EVs as drug delivery vehicles has gained considerable scientific interest. EVs may have multiple advantages over currently available drug delivery vehicles, such as their ability to overcome natural barriers, their intrinsic cell targeting properties, and stability in the circulation. However, therapeutic applications of EVs as drug delivery systems have been limited due to a lack of methods for scalable EV isolation and efficient drug loading. Furthermore, in order to achieve targeted drug delivery, t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.248588+00:00"
+}

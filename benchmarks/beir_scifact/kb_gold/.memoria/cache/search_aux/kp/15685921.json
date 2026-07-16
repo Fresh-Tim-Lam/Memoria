@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15685921",
+  "source_fingerprint": "21fb946666c40a9bb5f7db25e08429f3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15685921",
+    "differential-effects-of-charybdotoxin-on-the-activity-of-retinal-ganglion-cells-in-the-dark--and-light-adapted-mouse-retina"
+  ],
+  "key_phrases": [
+    "differential",
+    "effects",
+    "charybdotoxin",
+    "activity",
+    "retinal",
+    "ganglion",
+    "cells",
+    "dark"
+  ],
+  "summary_1l": "Patch-clamp recordings were made from retinal ganglion cells in the mouse re",
+  "query_hits": [],
+  "embed_text": "15685921 Differential effects of charybdotoxin on the activity of retinal ganglion cells in the dark- and light-adapted mouse retina science scifact Patch-clamp recordings were made from retinal ganglion cells in the mouse retina. Under dark adaptation, blockage of BK(Ca) channels increases the spontaneous excitatory postsynaptic currents (EPSCs) and light-evoked On-EPSCs, while it… 15685921 differential-effects-of-charybdotoxin-on-the-activity-of-retinal-ganglion-cells-in-the-dark--and-light-adapted-mouse-retina differential effects charybdotoxin activity retinal ganglion cells dark Patch-clamp recordings were made from retinal ganglion cells in the mouse re Differential effects of charybdotoxin on the activity of retinal ganglion cells in the dark- and light-adapted mouse retina Patch-clamp recordings were made from retinal ganglion cells in the mouse retina. Under dark adaptation, blockage of BK(Ca) channels increases the spontaneous excitatory postsynaptic currents (EPSCs) and light-evoked On-EPSCs, while it decreases the light-evoked Off inhibitory postsynaptic currents (IPSCs). However, under light adaptation it decreases the light-evoked On-EPSCs, the spontaneous IPSCs and the light-evoked On- and Off-IPSCs. Blockage of BK(Ca) channels significantly altered the outputs of RGCs by changing their light-evoked responses into a bursting pattern and increasing the light-evoked depolarization of the membrane potentials, while it did not signif",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.103376+00:00"
+}

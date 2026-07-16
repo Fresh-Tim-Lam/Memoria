@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24864273",
+  "source_fingerprint": "3a18ac3c1726d910eb37345588cec116",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24864273",
+    "caenorhabditis-elegans-cyclin-a--and-b-type-genes:-a-cyclin-a-multigene-family,-an-ancestral-cyclin-b3-and-differential-germline-expression."
+  ],
+  "key_phrases": [
+    "caenorhabditis",
+    "elegans",
+    "cyclin",
+    "type",
+    "genes",
+    "multigene",
+    "family",
+    "ancestral"
+  ],
+  "summary_1l": "Caenorhabditis elegans cyclin A- and B-type genes: a cyclin A multigene family, an ancestral cyclin B3 and differential germline expression.",
+  "query_hits": [],
+  "embed_text": "24864273 Caenorhabditis elegans cyclin A- and B-type genes: a cyclin A multigene family, an ancestral cyclin B3 and differential germline expression. science scifact We have cloned cDNAs for Caenorhabditis elegans cyclins A1, B and B3. While cyclins A1 and B are most closely related to either A- or B-type cyclins of other species, cyclin B3 is less related to these cyclins. However, this cyclin is most… 24864273 caenorhabditis-elegans-cyclin-a--and-b-type-genes:-a-cyclin-a-multigene-family,-an-ancestral-cyclin-b3-and-differential-germline-expression. caenorhabditis elegans cyclin type genes multigene family ancestral Caenorhabditis elegans cyclin A- and B-type genes: a cyclin A multigene family, an ancestral cyclin B3 and differential germline expression. Caenorhabditis elegans cyclin A- and B-type genes: a cyclin A multigene family, an ancestral cyclin B3 and differential germline expression. We have cloned cDNAs for Caenorhabditis elegans cyclins A1, B and B3. While cyclins A1 and B are most closely related to either A- or B-type cyclins of other species, cyclin B3 is less related to these cyclins. However, this cyclin is most similar to the recently identified chicken cyclin B3. Our identification of a Caenorhabditis homolog demonstrates that cyclin B3 has been conserved in evolution. Cyclin A1 is a member of an A-type multigene family; however the cyclin A1 cDNA only recognizes a single band on northern blots. A single-sized RNA is also observed for the cyclin B3 cDNA. In contrast, three different transcripts are observed for the cyclin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.408571+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9056874",
+  "source_fingerprint": "28c51fa14cfedb0006c6242e9b77c896",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9056874",
+    "incidence-of-cancer-after-immunosuppressive-treatment-for-heart-transplantation."
+  ],
+  "key_phrases": [
+    "incidence",
+    "cancer",
+    "after",
+    "immunosuppressive",
+    "treatment",
+    "heart",
+    "transplantation",
+    "prolonged"
+  ],
+  "summary_1l": "Incidence of cancer after immunosuppressive treatment for heart transplantation.",
+  "query_hits": [],
+  "embed_text": "9056874 Incidence of cancer after immunosuppressive treatment for heart transplantation. science scifact Prolonged or intensive immunosuppressive therapy used after organ transplantation is complicated by an increased incidence of cancer. Striking differences in incidence are observed in heart and heart-lung transplant recipients when… 9056874 incidence-of-cancer-after-immunosuppressive-treatment-for-heart-transplantation. incidence cancer after immunosuppressive treatment heart transplantation prolonged Incidence of cancer after immunosuppressive treatment for heart transplantation. Incidence of cancer after immunosuppressive treatment for heart transplantation. Prolonged or intensive immunosuppressive therapy used after organ transplantation is complicated by an increased incidence of cancer. Striking differences in incidence are observed in heart and heart-lung transplant recipients when compared with renal transplant patients. The most significant increase was in the incidence of lymphomas in cardiac versus renal patients. Moreover, a two-fold greater increase of all neoplasms was found in cardiac recipients, with nearly a six-fold increase in visceral tumors. Several factors may account for these differences. In cardiac allograft recipients, intensive immunosuppression is frequently used to reverse acute rejection and the highest number of cardiac transplants was",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.112733+00:00"
+}

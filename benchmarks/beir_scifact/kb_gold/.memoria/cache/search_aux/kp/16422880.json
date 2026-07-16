@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16422880",
+  "source_fingerprint": "7b4dd4833ca5fcc66e9de504956b7e57",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16422880",
+    "effect-of-smoking-reduction-on-lung-cancer-risk."
+  ],
+  "key_phrases": [
+    "effect",
+    "smoking",
+    "reduction",
+    "lung",
+    "cancer",
+    "risk",
+    "context",
+    "many"
+  ],
+  "summary_1l": "Effect of smoking reduction on lung cancer risk.",
+  "query_hits": [],
+  "embed_text": "16422880 Effect of smoking reduction on lung cancer risk. science scifact CONTEXT Many smokers are unable or unwilling to completely quit smoking. A proposed means of harm reduction is to reduce the number of cigarettes smoked per day. However, it is not clear whether this strategy decreases the risk for… 16422880 effect-of-smoking-reduction-on-lung-cancer-risk. effect smoking reduction lung cancer risk context many Effect of smoking reduction on lung cancer risk. Effect of smoking reduction on lung cancer risk. CONTEXT Many smokers are unable or unwilling to completely quit smoking. A proposed means of harm reduction is to reduce the number of cigarettes smoked per day. However, it is not clear whether this strategy decreases the risk for tobacco-related diseases. OBJECTIVE To assess the effects of smoking reduction on lung cancer incidence. DESIGN, SETTING, AND PARTICIPANTS Observational population-based cohort study with up to 31 years of follow-up from the Copenhagen Centre for Prospective Population Studies, which administrates data from 3 longitudinal studies conducted in Copenhagen and suburbs, the Copenhagen City Heart Study, the Copenhagen Male Study, and the Glostrup Population Studies, Denmark. Participants were 11,151 men and 8563 women",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.268752+00:00"
+}

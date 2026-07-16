@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "23576726",
+  "source_fingerprint": "11ee40b856746e0c73b2734ed1ad3c60",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23576726"
+  ],
+  "key_phrases": [
+    "enhanced",
+    "waterlogging",
+    "tolerance",
+    "barley",
+    "by",
+    "manipulation",
+    "expression",
+    "end"
+  ],
+  "summary_1l": "Increased tolerance of crops to low oxygen (hypoxia) during flooding is a key t",
+  "query_hits": [],
+  "embed_text": "23576726 Enhanced waterlogging tolerance in barley by manipulation of expression of the N‐end rule pathway E3 ligase PROTEOLYSIS6 science scifact Increased tolerance of crops to low oxygen (hypoxia) during flooding is a key target for food security. In Arabidopsis thaliana (L.) Heynh., the N-end rule pathway of targeted proteolysis controls plant responses to hypoxia by regulating… 23576726 enhanced waterlogging tolerance barley by manipulation expression end Increased tolerance of crops to low oxygen (hypoxia) during flooding is a key t Enhanced waterlogging tolerance in barley by manipulation of expression of the N‐end rule pathway E3 ligase PROTEOLYSIS6 Increased tolerance of crops to low oxygen (hypoxia) during flooding is a key target for food security. In Arabidopsis thaliana (L.) Heynh., the N-end rule pathway of targeted proteolysis controls plant responses to hypoxia by regulating the stability of group VII ethylene response factor (ERFVII) transcription factors, controlled by the oxidation status of amino terminal (Nt)-cysteine (Cys). Here, we show that the barley (Hordeum vulgare L.) ERFVII BERF1 is a substrate of the N-end rule pathway in vitro. Furthermore, we show that Nt-Cys acts as a sensor for hypoxia in vivo, as the stability of the oxygen-sensor reporter protein MCGGAIL-GUS increased in waterlogged trans",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.715071+00:00"
+}

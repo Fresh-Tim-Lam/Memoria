@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4325137",
+  "source_fingerprint": "98b6858daf8775cd7f7314d4bd5c3f59",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4325137",
+    "inhibition-of-pluripotential-embryonic-stem-cell-differentiation-by-purified-polypeptides"
+  ],
+  "key_phrases": [
+    "inhibition",
+    "pluripotential",
+    "embryonic",
+    "stem",
+    "cell",
+    "differentiation",
+    "by",
+    "purified"
+  ],
+  "summary_1l": "Murine embryonic stem (ES) cells are pluripotent cell lines established directly from the early embryo1,2 whic",
+  "query_hits": [],
+  "embed_text": "4325137 Inhibition of pluripotential embryonic stem cell differentiation by purified polypeptides science scifact Murine embryonic stem (ES) cells are pluripotent cell lines established directly from the early embryo1,2 which can contribute differentiated progeny to all adult tissues, including the germ-cell lineage3, after re-incorporation into the… 4325137 inhibition-of-pluripotential-embryonic-stem-cell-differentiation-by-purified-polypeptides inhibition pluripotential embryonic stem cell differentiation by purified Murine embryonic stem (ES) cells are pluripotent cell lines established directly from the early embryo1,2 whic Inhibition of pluripotential embryonic stem cell differentiation by purified polypeptides Murine embryonic stem (ES) cells are pluripotent cell lines established directly from the early embryo1,2 which can contribute differentiated progeny to all adult tissues, including the germ-cell lineage3, after re-incorporation into the normal embryo. They provide both a cellular vector for the generation of transgenic animals4 and a useful system for the identification of polypeptide factors controlling differentiation processes in early development5. In particular, medium conditioned by Buffalo rat liver cells contains a polypeptide factor, ES cell differentiation inhibitory activity (DIA), which specifically suppresses the spontaneous differentiation of ES cells in vitro, thereby permitting their",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.705348+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12691537",
+  "source_fingerprint": "056d8cfa5b6e88d92791221c1b11e9dc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12691537",
+    "atp-binding-to-pan-or-the-26s-atpases-causes-association-with-the-20s-proteasome,-gate-opening,-and-translocation-of-unfolded-proteins."
+  ],
+  "key_phrases": [
+    "atp",
+    "binding",
+    "pan",
+    "26s",
+    "atpases",
+    "causes",
+    "association",
+    "with"
+  ],
+  "summary_1l": "ATP binding to PAN or the 26S ATPases causes association with the 20S proteasome, gate opening, and translocation of unfolded proteins.",
+  "query_hits": [],
+  "embed_text": "12691537 ATP binding to PAN or the 26S ATPases causes association with the 20S proteasome, gate opening, and translocation of unfolded proteins. science scifact The archaeal ATPase complex PAN, the homolog of the eukaryotic 26S proteasome-regulatory ATPases, was shown to associate transiently with the 20S proteasome upon binding of ATP or ATPgammaS, but not ADP. By electron microscopy (EM), PAN… 12691537 atp-binding-to-pan-or-the-26s-atpases-causes-association-with-the-20s-proteasome,-gate-opening,-and-translocation-of-unfolded-proteins. atp binding pan 26s atpases causes association with ATP binding to PAN or the 26S ATPases causes association with the 20S proteasome, gate opening, and translocation of unfolded proteins. ATP binding to PAN or the 26S ATPases causes association with the 20S proteasome, gate opening, and translocation of unfolded proteins. The archaeal ATPase complex PAN, the homolog of the eukaryotic 26S proteasome-regulatory ATPases, was shown to associate transiently with the 20S proteasome upon binding of ATP or ATPgammaS, but not ADP. By electron microscopy (EM), PAN appears as a two-ring structure, capping the 20S, and resembles two densities in the 19S complex. The N termini of the archaeal 20S alpha subunits were found to function as a gate that prevents entry of seven-residue peptides but allows entry of tetrapeptides. Upon association with the 20S particle, PAN stimulates gate opening. Although degradation of globular proteins requires ATP hydrolysis, the PAN-20S complex with ATPga",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:08.835552+00:00"
+}

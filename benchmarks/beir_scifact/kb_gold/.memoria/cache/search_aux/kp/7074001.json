@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7074001",
+  "source_fingerprint": "ea2629dcff1c8c4e670b255f991a3828",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7074001",
+    "evidence-into-practice.-application-of-psychological-models-of-change-in-evidence-based-implementation."
+  ],
+  "key_phrases": [
+    "evidence",
+    "into",
+    "practice",
+    "application",
+    "psychological",
+    "models",
+    "change",
+    "based"
+  ],
+  "summary_1l": "Evidence into practice.",
+  "query_hits": [],
+  "embed_text": "7074001 Evidence into practice. Application of psychological models of change in evidence-based implementation. science scifact Psychiatrists have long recognised that routine clinical practice needs to be shaped and informed by external evidence (Lewis, 1958). Psychiatric researchers were among the first to utilise multi-centre randomised controlled trials… 7074001 evidence-into-practice.-application-of-psychological-models-of-change-in-evidence-based-implementation. evidence into practice application psychological models change based Evidence into practice. Evidence into practice. Application of psychological models of change in evidence-based implementation. Psychiatrists have long recognised that routine clinical practice needs to be shaped and informed by external evidence (Lewis, 1958). Psychiatric researchers were among the first to utilise multi-centre randomised controlled trials (demonstrating the effectiveness of antipsychotics), and psychologists were among the first in the health field to develop techniques of meta-analysis. Social workers, too, point to their tradition with the publication of one of the earliest controlled trials (Lehrman, 1949).",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.406725+00:00"
+}

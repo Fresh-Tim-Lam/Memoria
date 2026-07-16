@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4385779",
+  "source_fingerprint": "34ed9869c03fb6da9c045c13f527d5ba",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4385779",
+    "circadian-clocks-in-human-red-blood-cells"
+  ],
+  "key_phrases": [
+    "circadian",
+    "clocks",
+    "human",
+    "red",
+    "blood",
+    "cells",
+    "24",
+    "hour"
+  ],
+  "summary_1l": "Circadian (∼24 hour) clocks are fundamentally important for coordinated physiology in organisms as diverse as cyanobacteria and humans.",
+  "query_hits": [],
+  "embed_text": "4385779 Circadian Clocks in Human Red Blood Cells science scifact Circadian (∼24 hour) clocks are fundamentally important for coordinated physiology in organisms as diverse as cyanobacteria and humans. All current models of the molecular circadian clockwork in eukaryotic cells are based on… 4385779 circadian-clocks-in-human-red-blood-cells circadian clocks human red blood cells 24 hour Circadian (∼24 hour) clocks are fundamentally important for coordinated physiology in organisms as diverse as cyanobacteria and humans. Circadian Clocks in Human Red Blood Cells Circadian (∼24 hour) clocks are fundamentally important for coordinated physiology in organisms as diverse as cyanobacteria and humans. All current models of the molecular circadian clockwork in eukaryotic cells are based on transcription-translation feedback loops. Non-transcriptional mechanisms in the clockwork have been difficult to study in mammalian systems. We circumvented these problems by developing novel assays using human red blood cells, which have no nucleus (or DNA) and therefore cannot perform transcription. Our results show that transcription is not required for circadian oscillations in humans, and that non-transcriptional events seem to be sufficient to sustain cellular circadian rhythms. Using red blood cells, we found that peroxi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.339729+00:00"
+}

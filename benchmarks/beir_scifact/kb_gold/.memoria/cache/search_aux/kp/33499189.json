@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "33499189",
+  "source_fingerprint": "3738778856535ac242c85b6c9c7aee22",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "33499189",
+    "full-activation-of-the-t-cell-receptor-requires-both-clustering-and-conformational-changes-at-cd3."
+  ],
+  "key_phrases": [
+    "full",
+    "activation",
+    "cell",
+    "receptor",
+    "requires",
+    "both",
+    "clustering",
+    "conformational"
+  ],
+  "summary_1l": "Full activation of the T cell receptor requires both clustering and conformational changes at CD3.",
+  "query_hits": [],
+  "embed_text": "33499189 Full activation of the T cell receptor requires both clustering and conformational changes at CD3. science scifact T cell receptor (TCR-CD3) triggering involves both receptor clustering and conformational changes at the cytoplasmic tails of the CD3 subunits. The mechanism by which TCRalphabeta ligand binding confers conformational changes to CD3 is… 33499189 full-activation-of-the-t-cell-receptor-requires-both-clustering-and-conformational-changes-at-cd3. full activation cell receptor requires both clustering conformational Full activation of the T cell receptor requires both clustering and conformational changes at CD3. Full activation of the T cell receptor requires both clustering and conformational changes at CD3. T cell receptor (TCR-CD3) triggering involves both receptor clustering and conformational changes at the cytoplasmic tails of the CD3 subunits. The mechanism by which TCRalphabeta ligand binding confers conformational changes to CD3 is unknown. By using well-defined ligands, we showed that induction of the conformational change requires both multivalent engagement and the mobility restriction of the TCR-CD3 imposed by the plasma membrane. The conformational change is elicited by cooperative rearrangements of two TCR-CD3 complexes and does not require accompanying changes in the structure of the TCRalphabeta ectodomains. This conformational change at CD3 reverts upon ligand dissociation and is",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.424210+00:00"
+}

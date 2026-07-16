@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "39334724",
+  "source_fingerprint": "a5f9f5bb5b3bb36d1f48ceec87c841fc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "39334724",
+    "evaluation-of-spatial-filters-to-create-smoothed-maps-of-health-data."
+  ],
+  "key_phrases": [
+    "evaluation",
+    "spatial",
+    "filters",
+    "create",
+    "smoothed",
+    "maps",
+    "health",
+    "data"
+  ],
+  "summary_1l": "Evaluation of spatial filters to create smoothed maps of health data.",
+  "query_hits": [],
+  "embed_text": "39334724 Evaluation of spatial filters to create smoothed maps of health data. science scifact Spatial filters have been used as an easy and intuitive way to create smoothed disease maps. Birth weight data from New York State for 1994 and 1995 are used to compare the traditional filter type of fixed geographical size with a filter… 39334724 evaluation-of-spatial-filters-to-create-smoothed-maps-of-health-data. evaluation spatial filters create smoothed maps health data Evaluation of spatial filters to create smoothed maps of health data. Evaluation of spatial filters to create smoothed maps of health data. Spatial filters have been used as an easy and intuitive way to create smoothed disease maps. Birth weight data from New York State for 1994 and 1995 are used to compare the traditional filter type of fixed geographical size with a filter size of constant or nearly constant population size. The latter are more appropriate for mapping disease in geographic areas with widely varying population density, such as New York State. Issues such as the choice of population size for the filter, the scale of smoothing, the ability to detect true spatial variation and the ability to smooth over random spatial noise are evaluated and discussed.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.487018+00:00"
+}

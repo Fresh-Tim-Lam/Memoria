@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26008462",
+  "source_fingerprint": "462c3070576e0ac44cbcb244648ebf52",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26008462",
+    "tissue-transglutaminase-(tg2)--a-wound-response-enzyme."
+  ],
+  "key_phrases": [
+    "tissue",
+    "transglutaminase",
+    "tg2",
+    "--",
+    "wound",
+    "response",
+    "enzyme",
+    "repair"
+  ],
+  "summary_1l": "Tissue transglutaminase (TG2)--a wound response enzyme.",
+  "query_hits": [],
+  "embed_text": "26008462 Tissue transglutaminase (TG2)--a wound response enzyme. science scifact Repair of tissue after injury depends on a series of concerted but overlapping events including, inflammation, re-epithelialization, neovascularization and synthesis and stabilization of a fibrous extracellular matrix (ECM) that is… 26008462 tissue-transglutaminase-(tg2)--a-wound-response-enzyme. tissue transglutaminase tg2 -- wound response enzyme repair Tissue transglutaminase (TG2)--a wound response enzyme. Tissue transglutaminase (TG2)--a wound response enzyme. Repair of tissue after injury depends on a series of concerted but overlapping events including, inflammation, re-epithelialization, neovascularization and synthesis and stabilization of a fibrous extracellular matrix (ECM) that is remodeled to emulate normal tissue over time. Particular members of the transglutaminase (TG) family are upregulated during wound healing and act as a novel class of wound-healing mediators during the repair process. This group of enzymes which crosslink proteins via epsilon(gamma-glutamyl) lysine bridges are involved in wound healing through their ability to stabilize proteins and also by regulating the behavior of a wide variety of cell types that are recruited to the damaged area in order to carry out ti",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.973807+00:00"
+}

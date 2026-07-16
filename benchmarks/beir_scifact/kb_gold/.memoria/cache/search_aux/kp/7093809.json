@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7093809",
+  "source_fingerprint": "2b0c6549e57d4e6310586c6c8c5c60b3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7093809",
+    "wnt-signaling-establishes-anteroposterior-neuronal-polarity-and-requires-retromer-in-c.-elegans."
+  ],
+  "key_phrases": [
+    "wnt",
+    "signaling",
+    "establishes",
+    "anteroposterior",
+    "neuronal",
+    "polarity",
+    "requires",
+    "retromer"
+  ],
+  "summary_1l": "Wnt signaling establishes anteroposterior neuronal polarity and requires retromer in C.",
+  "query_hits": [],
+  "embed_text": "7093809 Wnt signaling establishes anteroposterior neuronal polarity and requires retromer in C. elegans. science scifact Secreted Wnt proteins influence neural connectivity by regulating axon guidance, dendritic morphogenesis and synapse formation. We report a new role for Wnt and Frizzled proteins in establishing the anteroposterior polarity of the… 7093809 wnt-signaling-establishes-anteroposterior-neuronal-polarity-and-requires-retromer-in-c.-elegans. wnt signaling establishes anteroposterior neuronal polarity requires retromer Wnt signaling establishes anteroposterior neuronal polarity and requires retromer in C. Wnt signaling establishes anteroposterior neuronal polarity and requires retromer in C. elegans. Secreted Wnt proteins influence neural connectivity by regulating axon guidance, dendritic morphogenesis and synapse formation. We report a new role for Wnt and Frizzled proteins in establishing the anteroposterior polarity of the mechanosensory neurons ALM and PLM in C. elegans. Disruption of Wnt signaling leads to a complete inversion of ALM and PLM polarity: the anterior process adopts the length, branching pattern and synaptic properties of the wild-type posterior process, and vice versa. Different but overlapping sets of Wnt proteins regulate neuronal polarity in different body regions. Wnts act directly on PLM via the Frizzled LIN-17. In addition, we show that they are needed for axon bra",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.440977+00:00"
+}

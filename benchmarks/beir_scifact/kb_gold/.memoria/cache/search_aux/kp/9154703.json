@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9154703",
+  "source_fingerprint": "a892ba6729849adf3390fe4577ae93b6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9154703",
+    "single-cell-rna-seq-reveals-dynamic,-random-monoallelic-gene-expression-in-mammalian-cells"
+  ],
+  "key_phrases": [
+    "single",
+    "cell",
+    "rna",
+    "seq",
+    "reveals",
+    "dynamic",
+    "random",
+    "monoallelic"
+  ],
+  "summary_1l": "Expression from both alleles is generally observed in analyses of diploid cell populations, but studies addre",
+  "query_hits": [],
+  "embed_text": "9154703 Single-Cell RNA-Seq Reveals Dynamic, Random Monoallelic Gene Expression in Mammalian Cells science scifact Expression from both alleles is generally observed in analyses of diploid cell populations, but studies addressing allelic expression patterns genome-wide in single cells are lacking. Here, we present global analyses of allelic expression… 9154703 single-cell-rna-seq-reveals-dynamic,-random-monoallelic-gene-expression-in-mammalian-cells single cell rna seq reveals dynamic random monoallelic Expression from both alleles is generally observed in analyses of diploid cell populations, but studies addre Single-Cell RNA-Seq Reveals Dynamic, Random Monoallelic Gene Expression in Mammalian Cells Expression from both alleles is generally observed in analyses of diploid cell populations, but studies addressing allelic expression patterns genome-wide in single cells are lacking. Here, we present global analyses of allelic expression across individual cells of mouse preimplantation embryos of mixed background (CAST/EiJ × C57BL/6J). We discovered abundant (12 to 24%) monoallelic expression of autosomal genes and that expression of the two alleles occurs independently. The monoallelic expression appeared random and dynamic because there was considerable variation among closely related embryonic cells. Similar patterns of monoallelic expression were observed in mature cells. Our allelic expression",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.240947+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16712164",
+  "source_fingerprint": "ee37086cf57ef4d2a10dc7df68d08e23",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16712164",
+    "exploiting-the-yeast-stress-activated-signaling-network-to-inform-on-stress-biology-and-disease-signaling"
+  ],
+  "key_phrases": [
+    "exploiting",
+    "yeast",
+    "stress",
+    "activated",
+    "signaling",
+    "network",
+    "inform",
+    "biology"
+  ],
+  "summary_1l": "Healthy cells utilize intricate systems to monitor their environment and mount robust response",
+  "query_hits": [],
+  "embed_text": "16712164 Exploiting the yeast stress-activated signaling network to inform on stress biology and disease signaling science scifact Healthy cells utilize intricate systems to monitor their environment and mount robust responses in the event of cellular stress. Whether stress arises from external insults or defects due to mutation and disease, cells must be able to… 16712164 exploiting-the-yeast-stress-activated-signaling-network-to-inform-on-stress-biology-and-disease-signaling exploiting yeast stress activated signaling network inform biology Healthy cells utilize intricate systems to monitor their environment and mount robust response Exploiting the yeast stress-activated signaling network to inform on stress biology and disease signaling Healthy cells utilize intricate systems to monitor their environment and mount robust responses in the event of cellular stress. Whether stress arises from external insults or defects due to mutation and disease, cells must be able to respond precisely to mount the appropriate defenses. Multi-faceted stress responses are generally coupled with arrest of growth and cell-cycle progression, which both limits the transmission of damaged materials and serves to reallocate limited cellular resources toward defense. Therefore, stress defense versus rapid growth represent competing interests in the cell. How eukaryotic cells set the balance between defense versus proliferation, and in particul",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.686952+00:00"
+}

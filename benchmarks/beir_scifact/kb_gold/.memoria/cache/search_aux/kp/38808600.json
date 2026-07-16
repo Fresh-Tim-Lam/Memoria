@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "38808600",
+  "source_fingerprint": "22568a5cceb0bf5f336ae62d6def3a57",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "38808600"
+  ],
+  "key_phrases": [
+    "99m",
+    "tc",
+    "hisodgr",
+    "as",
+    "potential",
+    "spect",
+    "probe",
+    "orthotopic"
+  ],
+  "summary_1l": "(99m)Tc-HisoDGR as a Potential SPECT Probe for Orthotopic Glioma Detection via Targeting of Integrin α5β1.",
+  "query_hits": [],
+  "embed_text": "38808600 (99m)Tc-HisoDGR as a Potential SPECT Probe for Orthotopic Glioma Detection via Targeting of Integrin α5β1. science scifact Integrins, a large family of cell adhesion receptors, have been shown to play an important role for glioma proliferation and invasion. Several integrin receptors, including αvβ3, αvβ5, and α5β1, have generated clinical interest for glioma… 38808600 99m tc hisodgr as potential spect probe orthotopic (99m)Tc-HisoDGR as a Potential SPECT Probe for Orthotopic Glioma Detection via Targeting of Integrin α5β1. (99m)Tc-HisoDGR as a Potential SPECT Probe for Orthotopic Glioma Detection via Targeting of Integrin α5β1. Integrins, a large family of cell adhesion receptors, have been shown to play an important role for glioma proliferation and invasion. Several integrin receptors, including αvβ3, αvβ5, and α5β1, have generated clinical interest for glioma diagnosis and antitumor therapy. Integrin α5β1 has been highlighted as a prognostic and diagnostic marker in glioma, and its expression is correlated with a worse prognosis in high-grade glioma. However, unlike extensively studied integrins αvβ3 and αvβ5, very few integrin α5β1-specific radiotracers have been reported. Developing α5β1-specific radiotracers may provide alternative diagnosis and evaluation options in addition to well-studied αvβ3/αvβ5-",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.962077+00:00"
+}

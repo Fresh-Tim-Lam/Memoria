@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6415816",
+  "source_fingerprint": "9063d6addf7979a30c9324dfbb1e0513",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6415816",
+    "the-porphyrias:-advances-in-diagnosis-and-treatment."
+  ],
+  "key_phrases": [
+    "porphyrias",
+    "advances",
+    "diagnosis",
+    "treatment",
+    "inborn",
+    "errors",
+    "heme",
+    "biosynthesis"
+  ],
+  "summary_1l": "The porphyrias: advances in diagnosis and treatment.",
+  "query_hits": [],
+  "embed_text": "6415816 The porphyrias: advances in diagnosis and treatment. science scifact The inborn errors of heme biosynthesis, the porphyrias, are 8 genetically distinct metabolic disorders that can be classified as \"acute hepatic,\" \"hepatic cutaneous,\" and \"erythropoietic cutaneous\" diseases. Recent advances in… 6415816 the-porphyrias:-advances-in-diagnosis-and-treatment. porphyrias advances diagnosis treatment inborn errors heme biosynthesis The porphyrias: advances in diagnosis and treatment. The porphyrias: advances in diagnosis and treatment. The inborn errors of heme biosynthesis, the porphyrias, are 8 genetically distinct metabolic disorders that can be classified as \"acute hepatic,\" \"hepatic cutaneous,\" and \"erythropoietic cutaneous\" diseases. Recent advances in understanding their pathogenesis and molecular genetic heterogeneity have led to improved diagnosis and treatment. These advances include DNA-based diagnoses for all the porphyrias, new understanding of the pathogenesis of the acute hepatic porphyrias, identification of the iron overload-induced inhibitor of hepatic uroporphyrin decarboxylase activity that causes the most common porphyria, porphyria cutanea tarda, the identification of an X-linked form of erythropoietic protoporphyria due to gain-of-function mutati",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.780240+00:00"
+}

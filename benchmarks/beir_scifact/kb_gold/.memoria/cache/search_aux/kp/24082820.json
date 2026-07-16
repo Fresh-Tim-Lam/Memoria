@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24082820",
+  "source_fingerprint": "0bc35864d3eb1cdd6e5e1be2075e3d99",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24082820",
+    "emtricitabine-tenofovir-concentrations-and-pre-exposure-prophylaxis-efficacy-in-men-who-have-sex-with-men."
+  ],
+  "key_phrases": [
+    "emtricitabine",
+    "tenofovir",
+    "concentrations",
+    "pre",
+    "exposure",
+    "prophylaxis",
+    "efficacy",
+    "men"
+  ],
+  "summary_1l": "Emtricitabine-tenofovir concentrations and pre-exposure prophylaxis efficacy in men who have sex with men.",
+  "query_hits": [],
+  "embed_text": "24082820 Emtricitabine-tenofovir concentrations and pre-exposure prophylaxis efficacy in men who have sex with men. science scifact Drug concentrations associated with protection from HIV-1 acquisition have not been determined. We evaluated drug concentrations among men who have sex with men in a substudy of the iPrEx trial (1). In this randomized placebo-controlled… 24082820 emtricitabine-tenofovir-concentrations-and-pre-exposure-prophylaxis-efficacy-in-men-who-have-sex-with-men. emtricitabine tenofovir concentrations pre exposure prophylaxis efficacy men Emtricitabine-tenofovir concentrations and pre-exposure prophylaxis efficacy in men who have sex with men. Emtricitabine-tenofovir concentrations and pre-exposure prophylaxis efficacy in men who have sex with men. Drug concentrations associated with protection from HIV-1 acquisition have not been determined. We evaluated drug concentrations among men who have sex with men in a substudy of the iPrEx trial (1). In this randomized placebo-controlled trial, daily oral doses of emtricitabine/tenofovir disoproxil fumarate were used as pre-exposure prophylaxis (PrEP) in men who have sex with men. Drug was detected less frequently in blood plasma and in viable cryopreserved peripheral blood mononuclear cells (PBMCs) in HIV-infected cases at the visit when HIV was first discovered compared with controls at the matched time point of the study (8% versus 44%; P < 0.001) and in the 90 days before that visi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.753474+00:00"
+}

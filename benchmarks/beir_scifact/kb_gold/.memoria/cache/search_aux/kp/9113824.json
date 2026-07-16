@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9113824",
+  "source_fingerprint": "75ea424e7872564c2bf05c80cd3cc977",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9113824",
+    "chronic-pancreatitis-is-essential-for-induction-of-pancreatic-ductal-adenocarcinoma-by-k-ras-oncogenes-in-adult-mice."
+  ],
+  "key_phrases": [
+    "chronic",
+    "pancreatitis",
+    "essential",
+    "induction",
+    "pancreatic",
+    "ductal",
+    "adenocarcinoma",
+    "by"
+  ],
+  "summary_1l": "Chronic pancreatitis is essential for induction of pancreatic ductal adenocarcinoma by K-Ras oncogenes in adult mice.",
+  "query_hits": [],
+  "embed_text": "9113824 Chronic pancreatitis is essential for induction of pancreatic ductal adenocarcinoma by K-Ras oncogenes in adult mice. science scifact Pancreatic ductal adenocarcinoma (PDA), one of the deadliest human cancers, often involves somatic activation of K-Ras oncogenes. We report that selective expression of an endogenous K-Ras(G12V) oncogene in embryonic cells of… 9113824 chronic-pancreatitis-is-essential-for-induction-of-pancreatic-ductal-adenocarcinoma-by-k-ras-oncogenes-in-adult-mice. chronic pancreatitis essential induction pancreatic ductal adenocarcinoma by Chronic pancreatitis is essential for induction of pancreatic ductal adenocarcinoma by K-Ras oncogenes in adult mice. Chronic pancreatitis is essential for induction of pancreatic ductal adenocarcinoma by K-Ras oncogenes in adult mice. Pancreatic ductal adenocarcinoma (PDA), one of the deadliest human cancers, often involves somatic activation of K-Ras oncogenes. We report that selective expression of an endogenous K-Ras(G12V) oncogene in embryonic cells of acinar/centroacinar lineage results in pancreatic intraepithelial neoplasias (PanINs) and invasive PDA, suggesting that PDA originates by differentiation of acinar/centroacinar cells or their precursors into ductal-like cells. Surprisingly, adult mice become refractory to K-Ras(G12V)-induced PanINs and PDA. However, if these mice are challenged with a mild form of chronic pancreatitis, they develop the full spectrum of PanINs and invasive PDA. These ob",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.205252+00:00"
+}

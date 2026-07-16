@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20330519",
+  "source_fingerprint": "d915ecc6363d59f52af383a513c186f0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20330519",
+    "cholesterol-glucosylation-promotes-immune-evasion-by-helicobacter-pylori"
+  ],
+  "key_phrases": [
+    "cholesterol",
+    "glucosylation",
+    "promotes",
+    "immune",
+    "evasion",
+    "by",
+    "helicobacter",
+    "pylori"
+  ],
+  "summary_1l": "Helicobacter pylori infection causes gastric pathology such as ulcer and carcinoma.",
+  "query_hits": [],
+  "embed_text": "20330519 Cholesterol glucosylation promotes immune evasion by Helicobacter pylori science scifact Helicobacter pylori infection causes gastric pathology such as ulcer and carcinoma. Because H. pylori is auxotrophic for cholesterol, we have explored the assimilation of cholesterol by H. pylori in infection. Here we show that H. pylori… 20330519 cholesterol-glucosylation-promotes-immune-evasion-by-helicobacter-pylori cholesterol glucosylation promotes immune evasion by helicobacter pylori Helicobacter pylori infection causes gastric pathology such as ulcer and carcinoma. Cholesterol glucosylation promotes immune evasion by Helicobacter pylori Helicobacter pylori infection causes gastric pathology such as ulcer and carcinoma. Because H. pylori is auxotrophic for cholesterol, we have explored the assimilation of cholesterol by H. pylori in infection. Here we show that H. pylori follows a cholesterol gradient and extracts the lipid from plasma membranes of epithelial cells for subsequent glucosylation. Excessive cholesterol promotes phagocytosis of H. pylori by antigen-presenting cells, such as macrophages and dendritic cells, and enhances antigen-specific T cell responses. A cholesterol-rich diet during bacterial challenge leads to T cell–dependent reduction of the H. pylori burden in the stomach. Intrinsic α-glucosylation of cholesterol abrogates phagocytos",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.053496+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2576811",
+  "source_fingerprint": "885492e2622161abc80c5bbd38cf44c2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2576811",
+    "junctional-actin-assembly-is-mediated-by-formin-like-2-downstream-of-rac1"
+  ],
+  "key_phrases": [
+    "junctional",
+    "actin",
+    "assembly",
+    "mediated",
+    "by",
+    "formin",
+    "like",
+    "downstream"
+  ],
+  "summary_1l": "Epithelial integrity is vitally important, and its deregulation causes early stage cancer.",
+  "query_hits": [],
+  "embed_text": "2576811 Junctional actin assembly is mediated by Formin-like 2 downstream of Rac1 science scifact Epithelial integrity is vitally important, and its deregulation causes early stage cancer. De novo formation of an adherens junction (AJ) between single epithelial cells requires coordinated, spatial actin dynamics, but the mechanisms… 2576811 junctional-actin-assembly-is-mediated-by-formin-like-2-downstream-of-rac1 junctional actin assembly mediated by formin like downstream Epithelial integrity is vitally important, and its deregulation causes early stage cancer. Junctional actin assembly is mediated by Formin-like 2 downstream of Rac1 Epithelial integrity is vitally important, and its deregulation causes early stage cancer. De novo formation of an adherens junction (AJ) between single epithelial cells requires coordinated, spatial actin dynamics, but the mechanisms steering nascent actin polymerization for cell-cell adhesion initiation are not well understood. Here we investigated real-time actin assembly during daughter cell-cell adhesion formation in human breast epithelial cells in 3D environments. We identify formin-like 2 (FMNL2) as being specifically required for actin assembly and turnover at newly formed cell-cell contacts as well as for human epithelial lumen formation. FMNL2 associates with components of the AJ complex involving Rac1 act",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.376020+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7433668",
+  "source_fingerprint": "97e5fca2ea7865003c0e9d463117aa33",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7433668",
+    "preexisting-helminth-infection-induces-inhibition-of-innate-pulmonary-anti-tuberculosis-defense-by-engaging-the-il-4-receptor-pathway"
+  ],
+  "key_phrases": [
+    "preexisting",
+    "helminth",
+    "infection",
+    "induces",
+    "inhibition",
+    "innate",
+    "pulmonary",
+    "anti"
+  ],
+  "summary_1l": "Tuberculosis and helminthic infections coexist in many parts of th",
+  "query_hits": [],
+  "embed_text": "7433668 Preexisting helminth infection induces inhibition of innate pulmonary anti-tuberculosis defense by engaging the IL-4 receptor pathway science scifact Tuberculosis and helminthic infections coexist in many parts of the world, yet the impact of helminth-elicited Th2 responses on the ability of the host to control Mycobacterium tuberculosis (Mtb) infection has not been fully explored. We… 7433668 preexisting-helminth-infection-induces-inhibition-of-innate-pulmonary-anti-tuberculosis-defense-by-engaging-the-il-4-receptor-pathway preexisting helminth infection induces inhibition innate pulmonary anti Tuberculosis and helminthic infections coexist in many parts of th Preexisting helminth infection induces inhibition of innate pulmonary anti-tuberculosis defense by engaging the IL-4 receptor pathway Tuberculosis and helminthic infections coexist in many parts of the world, yet the impact of helminth-elicited Th2 responses on the ability of the host to control Mycobacterium tuberculosis (Mtb) infection has not been fully explored. We show that mice infected with the intestinal helminth Nippostrongylus brasiliensis (Nb) exhibit a transitory impairment of resistance to airborne Mtb infection. Furthermore, a second dose of Nb infection substantially increases the bacterial burden in the lungs of co-infected mice. Interestingly, the Th2 response in the co-infected animals did not impair the onset and development of the protective Mtb-specific Th1 cellular im",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.289602+00:00"
+}

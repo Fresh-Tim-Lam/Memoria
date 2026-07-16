@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11557602",
+  "source_fingerprint": "d5dcb563c30a6e065de8945909b9d39a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11557602",
+    "control-of-cellular-cholesterol-efflux-by-the-nuclear-oxysterol-receptor-lxr-alpha."
+  ],
+  "key_phrases": [
+    "control",
+    "cellular",
+    "cholesterol",
+    "efflux",
+    "by",
+    "nuclear",
+    "oxysterol",
+    "receptor"
+  ],
+  "summary_1l": "Control of cellular cholesterol efflux by the nuclear oxysterol receptor LXR alpha.",
+  "query_hits": [],
+  "embed_text": "11557602 Control of cellular cholesterol efflux by the nuclear oxysterol receptor LXR alpha. science scifact LXR alpha is a nuclear receptor that has previously been shown to regulate the metabolic conversion of cholesterol to bile acids. Here we define a role for this transcription factor in the control of cellular cholesterol efflux. We… 11557602 control-of-cellular-cholesterol-efflux-by-the-nuclear-oxysterol-receptor-lxr-alpha. control cellular cholesterol efflux by nuclear oxysterol receptor Control of cellular cholesterol efflux by the nuclear oxysterol receptor LXR alpha. Control of cellular cholesterol efflux by the nuclear oxysterol receptor LXR alpha. LXR alpha is a nuclear receptor that has previously been shown to regulate the metabolic conversion of cholesterol to bile acids. Here we define a role for this transcription factor in the control of cellular cholesterol efflux. We demonstrate that retroviral expression of LXR alpha in NIH 3T3 fibroblasts or RAW264.7 macrophages and/or treatment of these cells with oxysterol ligands of LXR results in 7- to 30-fold induction of the mRNA encoding the putative cholesterol/phospholipid transporter ATP-binding cassette (ABC)A1. In contrast, induction of ABCA1 mRNA in response to oxysterols is attenuated in cells that constitutively express dominant-negative forms of LXR alpha or LXR beta that lack the AF2 transc",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:06.704547+00:00"
+}

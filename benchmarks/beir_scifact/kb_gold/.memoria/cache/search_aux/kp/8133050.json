@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8133050",
+  "source_fingerprint": "4d5cade3fd4599202b451b981adb7531",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8133050",
+    "quantifying-transmission-investment-in-malaria-parasites"
+  ],
+  "key_phrases": [
+    "quantifying",
+    "transmission",
+    "investment",
+    "malaria",
+    "parasites",
+    "many",
+    "microparasites",
+    "infect"
+  ],
+  "summary_1l": "Many microparasites infect new hosts with specialized life stages, requiring a subset of the parasite population to forgo proliferation and dev",
+  "query_hits": [],
+  "embed_text": "8133050 Quantifying Transmission Investment in Malaria Parasites science scifact Many microparasites infect new hosts with specialized life stages, requiring a subset of the parasite population to forgo proliferation and develop into transmission forms. Transmission stage production influences infectivity, host… 8133050 quantifying-transmission-investment-in-malaria-parasites quantifying transmission investment malaria parasites many microparasites infect Many microparasites infect new hosts with specialized life stages, requiring a subset of the parasite population to forgo proliferation and dev Quantifying Transmission Investment in Malaria Parasites Many microparasites infect new hosts with specialized life stages, requiring a subset of the parasite population to forgo proliferation and develop into transmission forms. Transmission stage production influences infectivity, host exploitation, and the impact of medical interventions like drug treatment. Predicting how parasites will respond to public health efforts on both epidemiological and evolutionary timescales requires understanding transmission strategies. These strategies can rarely be observed directly and must typically be inferred from infection dynamics. Using malaria as a case study, we test previously described methods for inferring transmission stage investment against simulated data generated with a model of within-",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.955600+00:00"
+}

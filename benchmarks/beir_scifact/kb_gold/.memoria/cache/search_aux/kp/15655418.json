@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15655418",
+  "source_fingerprint": "7ff9c6d08d1a019c3131220bcf993ade",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15655418",
+    "drosophila-cpeb-orb2a-mediates-memory-independent-of-its-rna-binding-domain"
+  ],
+  "key_phrases": [
+    "drosophila",
+    "cpeb",
+    "orb2a",
+    "mediates",
+    "memory",
+    "independent",
+    "its",
+    "rna"
+  ],
+  "summary_1l": "Long-term memory and synaptic plasticity are thought to require the synthesis of new proteins at activated synapses.",
+  "query_hits": [],
+  "embed_text": "15655418 Drosophila CPEB Orb2A Mediates Memory Independent of Its RNA-Binding Domain science scifact Long-term memory and synaptic plasticity are thought to require the synthesis of new proteins at activated synapses. The CPEB family of RNA binding proteins, including Drosophila Orb2, has been implicated in this process. The precise… 15655418 drosophila-cpeb-orb2a-mediates-memory-independent-of-its-rna-binding-domain drosophila cpeb orb2a mediates memory independent its rna Long-term memory and synaptic plasticity are thought to require the synthesis of new proteins at activated synapses. Drosophila CPEB Orb2A Mediates Memory Independent of Its RNA-Binding Domain Long-term memory and synaptic plasticity are thought to require the synthesis of new proteins at activated synapses. The CPEB family of RNA binding proteins, including Drosophila Orb2, has been implicated in this process. The precise mechanism by which these molecules regulate memory formation is however poorly understood. We used gene targeting and site-specific transgenesis to specifically modify the endogenous orb2 gene in order to investigate its role in long-term memory formation. We show that the Orb2A and Orb2B isoforms, while both essential, have distinct functions in memory formation. These two isoforms have common glutamine-rich and RNA-binding domains, yet Orb2A uniquely requires the former and Orb2B the",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.019975+00:00"
+}

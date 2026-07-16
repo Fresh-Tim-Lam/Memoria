@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "34198365",
+  "source_fingerprint": "7ba3ffd7cb94d7f1e5e592f4b6b79d3a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "34198365",
+    "mechanism-and-regulation-of-dna-protein-crosslink-repair-by-the-dna-dependent-metalloprotease-sprtn"
+  ],
+  "key_phrases": [
+    "mechanism",
+    "regulation",
+    "dna",
+    "protein",
+    "crosslink",
+    "repair",
+    "by",
+    "dependent"
+  ],
+  "summary_1l": "Covalent DNA-protein crosslinks (DPCs) are toxic DNA lesions that interfere with essential chromatin",
+  "query_hits": [],
+  "embed_text": "34198365 Mechanism and Regulation of DNA-Protein Crosslink Repair by the DNA-Dependent Metalloprotease SPRTN science scifact Covalent DNA-protein crosslinks (DPCs) are toxic DNA lesions that interfere with essential chromatin transactions, such as replication and transcription. Little was known about DPC-specific repair mechanisms until the recent identification… 34198365 mechanism-and-regulation-of-dna-protein-crosslink-repair-by-the-dna-dependent-metalloprotease-sprtn mechanism regulation dna protein crosslink repair by dependent Covalent DNA-protein crosslinks (DPCs) are toxic DNA lesions that interfere with essential chromatin Mechanism and Regulation of DNA-Protein Crosslink Repair by the DNA-Dependent Metalloprotease SPRTN Covalent DNA-protein crosslinks (DPCs) are toxic DNA lesions that interfere with essential chromatin transactions, such as replication and transcription. Little was known about DPC-specific repair mechanisms until the recent identification of a DPC-processing protease in yeast. The existence of a DPC protease in higher eukaryotes is inferred from data in Xenopus laevis egg extracts, but its identity remains elusive. Here we identify the metalloprotease SPRTN as the DPC protease acting in metazoans. Loss of SPRTN results in failure to repair DPCs and hypersensitivity to DPC-inducing agents. SPRTN accomplishes DPC processing through a unique DNA-induced protease activity, which is controlled b",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.220465+00:00"
+}

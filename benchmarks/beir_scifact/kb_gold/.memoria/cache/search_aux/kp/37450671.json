@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "37450671",
+  "source_fingerprint": "798ddaa8a8dda5f2d73966e3ad7c0b99",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "37450671",
+    "neuronal-origin-of-a-cerebral-amyloid:-neurofibrillary-tangles-of-alzheimer's-disease-contain-the-same-protein-as-the-amyloid-of-plaque-cores-and-blood-vessels."
+  ],
+  "key_phrases": [
+    "neuronal",
+    "origin",
+    "cerebral",
+    "amyloid",
+    "neurofibrillary",
+    "tangles",
+    "alzheimer",
+    "disease"
+  ],
+  "summary_1l": "Neuronal origin of a cerebral amyloid: neurofibrillary tangles of Alzheimer's disease contain the same protein as the amyloid of plaque cores and blood vessels.",
+  "query_hits": [],
+  "embed_text": "37450671 Neuronal origin of a cerebral amyloid: neurofibrillary tangles of Alzheimer's disease contain the same protein as the amyloid of plaque cores and blood vessels. science scifact The protein component of Alzheimer's disease amyloid [neurofibrillary tangles (NFT), amyloid plaque core and congophilic angiopathy] is an aggregated polypeptide with a subunit mass of 4 kd (the A4 monomer). Based on the degree of… 37450671 neuronal-origin-of-a-cerebral-amyloid:-neurofibrillary-tangles-of-alzheimer's-disease-contain-the-same-protein-as-the-amyloid-of-plaque-cores-and-blood-vessels. neuronal origin cerebral amyloid neurofibrillary tangles alzheimer disease Neuronal origin of a cerebral amyloid: neurofibrillary tangles of Alzheimer's disease contain the same protein as the amyloid of plaque cores and blood vessels. Neuronal origin of a cerebral amyloid: neurofibrillary tangles of Alzheimer's disease contain the same protein as the amyloid of plaque cores and blood vessels. The protein component of Alzheimer's disease amyloid [neurofibrillary tangles (NFT), amyloid plaque core and congophilic angiopathy] is an aggregated polypeptide with a subunit mass of 4 kd (the A4 monomer). Based on the degree of N-terminal heterogeneity, the amyloid is first deposited in the neuron, and later in the extracellular space. Using antisera raised against synthetic peptides, we show that the N terminus of A4 (residues 1-11) contains an epitope for neurofibrillary tangles, and the inner region of the molecule (residues 11-23) contains an epitope for plaque cores and vascular amyloid. The non-protein component of the amy",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.508810+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "129199129",
+  "source_fingerprint": "c36ece7d015b2e6d3d56b4e7be748d1c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "129199129",
+    "a-second-generation-of-homogenized-canadian-monthly-surface-air-temperature-for-climate-trend-analysis"
+  ],
+  "key_phrases": [
+    "second",
+    "generation",
+    "homogenized",
+    "canadian",
+    "monthly",
+    "surface",
+    "air",
+    "temperature"
+  ],
+  "summary_1l": "[1] This study presents a second generation of homogenized monthly mean surface air temperature d",
+  "query_hits": [],
+  "embed_text": "129199129 A second generation of homogenized Canadian monthly surface air temperature for climate trend analysis science scifact [1] This study presents a second generation of homogenized monthly mean surface air temperature data set for Canadian climate trend analysis. Monthly means of daily maximum and of daily minimum temperatures were examined at 338 Canadian… 129199129 a-second-generation-of-homogenized-canadian-monthly-surface-air-temperature-for-climate-trend-analysis second generation homogenized canadian monthly surface air temperature [1] This study presents a second generation of homogenized monthly mean surface air temperature d A second generation of homogenized Canadian monthly surface air temperature for climate trend analysis [1] This study presents a second generation of homogenized monthly mean surface air temperature data set for Canadian climate trend analysis. Monthly means of daily maximum and of daily minimum temperatures were examined at 338 Canadian locations. Data from co-located observing sites were sometimes combined to create longer time series for use in trend analysis. Time series of observations were then adjusted to account for nation-wide change in observing time in July 1961, affecting daily minimum temperatures recorded at 120 synoptic stations; these were adjusted using hourly temperatures at the same sites. Next, homogeneity testing was performed to detect and adjust for other discontinui",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:09.940037+00:00"
+}

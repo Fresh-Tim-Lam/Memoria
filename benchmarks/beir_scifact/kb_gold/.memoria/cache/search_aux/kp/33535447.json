@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "33535447",
+  "source_fingerprint": "5a6c787472731ece44106db3bb6a3b88",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "33535447",
+    "expression-of-the-gene-encoding-the-chemorepellent-semaphorin-iii-is-induced-in-the-fibroblast-component-of-neural-scar-tissue-formed-following-injuries-of-adult-but-not-neonatal-cns."
+  ],
+  "key_phrases": [
+    "expression",
+    "gene",
+    "encoding",
+    "chemorepellent",
+    "semaphorin",
+    "iii",
+    "induced",
+    "fibroblast"
+  ],
+  "summary_1l": "Expression of the gene encoding the chemorepellent semaphorin III is induced in the fibroblast component of neural scar tissue formed following injuries of adult but not neonatal CNS.",
+  "query_hits": [],
+  "embed_text": "33535447 Expression of the gene encoding the chemorepellent semaphorin III is induced in the fibroblast component of neural scar tissue formed following injuries of adult but not neonatal CNS. science scifact This study evaluates the expression of the chemorepellent semaphorin III (D)/collapsin-1 (sema III) following lesions to the rat CNS. Scar tissue, formed after penetrating injuries to the lateral olfactory tract (LOT), cortex, perforant… 33535447 expression-of-the-gene-encoding-the-chemorepellent-semaphorin-iii-is-induced-in-the-fibroblast-component-of-neural-scar-tissue-formed-following-injuries-of-adult-but-not-neonatal-cns. expression gene encoding chemorepellent semaphorin iii induced fibroblast Expression of the gene encoding the chemorepellent semaphorin III is induced in the fibroblast component of neural scar tissue formed following injuries of adult but not neonatal CNS. Expression of the gene encoding the chemorepellent semaphorin III is induced in the fibroblast component of neural scar tissue formed following injuries of adult but not neonatal CNS. This study evaluates the expression of the chemorepellent semaphorin III (D)/collapsin-1 (sema III) following lesions to the rat CNS. Scar tissue, formed after penetrating injuries to the lateral olfactory tract (LOT), cortex, perforant pathway, and spinal cord, contained numerous spindle-shaped cells expressing high levels of sema III mRNA. The properties of these cells were investigated in detail in the lesioned LOT. Most sema III mRNA-positive cells were located in the core of the scar and expressed proteins characteristic for fibroblast-like cells. Neuropilin-1, a sema III receptor, was expressed in injur",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.485343+00:00"
+}

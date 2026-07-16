@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "kp_id": "233416#22",
+  "source_fingerprint": "d42cbc934b95f49ccef16f8be5a3699a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "Harry",
+    "J·K·罗琳",
+    "Potter",
+    "法兰西第一帝国",
+    "(小说)",
+    "中铁第一勘察设计院",
+    "西班牙第一共和國",
+    "邦联第一白宫"
+  ],
+  "aliases": [
+    "233416#22"
+  ],
+  "key_phrases": [
+    "特里",
+    "列姆",
+    "哈利波",
+    "harry",
+    "potter",
+    "系列小说",
+    "作者",
+    "罗琳"
+  ],
+  "summary_1l": "《哈利波特》（Harry Potter）系列小说的作者J·K·罗琳（J.",
+  "query_hits": [],
+  "embed_text": "233416#22 特里·吉列姆 特里·吉列姆 《哈利波特》（Harry Potter）系列小说的作者J·K·罗琳（J.K.Rowling）是吉列姆的影迷。因此当华纳公司准备将第一部小说《哈利波特与魔法石》搬上银幕时，吉列姆成了罗琳的第一选择。但华纳拒绝了吉列姆，将导筒交给了克里斯·哥伦布（Chris Columbus）。吉列姆多年后就此事回忆道”我是拍哈利波特的完美人选。记得离开会议室后，我驾车沿着穆赫兰道（Mulholland Drive）开了足足两个钟头，我实在是太愤怒了。克里斯·哥伦布的版本拍得太烂了，十足地呆板无 Harry J·K·罗琳 Potter 法兰西第一帝国 (小说) 中铁第一勘察设计院 西班牙第一共和國 邦联第一白宫 233416#22 特里 列姆 哈利波 harry potter 系列小说 作者 罗琳 《哈利波特》（Harry Potter）系列小说的作者J·K·罗琳（J. 特里·吉列姆 《哈利波特》（Harry Potter）系列小说的作者J·K·罗琳（J.K.Rowling）是吉列姆的影迷。因此当华纳公司准备将第一部小说《哈利波特与魔法石》搬上银幕时，吉列姆成了罗琳的第一选择。但华纳拒绝了吉列姆，将导筒交给了克里斯·哥伦布（Chris Columbus）。吉列姆多年后就此事回忆道”我是拍哈利波特的完美人选。记得离开会议室后，我驾车沿着穆赫兰道（Mulholland Drive）开了足足两个钟头，我实在是太愤怒了。克里斯·哥伦布的版本拍得太烂了，十足地呆板无趣。“（\"I was the perfect guy to do Harry Potter. I remember leaving the meeting, getting in my car, and driving for about two hours along Mulholland Drive just so angry. I mean, Chris Columbus' versions are terrible. Just dull. Pedestrian.\"）",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:20:06.633027+00:00"
+}

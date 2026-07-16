@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8037453",
+  "source_fingerprint": "223c4046fcc6d1a683d8a8dec3878443",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8037453",
+    "predictive-value-of-bone-resorption-and-formation-markers-in-cancer-patients-with-bone-metastases-receiving-the-bisphosphonate-zoledronic-acid."
+  ],
+  "key_phrases": [
+    "predictive",
+    "value",
+    "bone",
+    "resorption",
+    "formation",
+    "markers",
+    "cancer",
+    "patients"
+  ],
+  "summary_1l": "Predictive value of bone resorption and formation markers in cancer patients with bone metastases receiving the bisphosphonate zoledronic acid.",
+  "query_hits": [],
+  "embed_text": "8037453 Predictive value of bone resorption and formation markers in cancer patients with bone metastases receiving the bisphosphonate zoledronic acid. science scifact PURPOSE Three large, randomized trials of patients with bone metastases recently demonstrated that zoledronic acid reduces the risk of skeletal-related events. These trials provide an opportunity for investigating the correlation between… 8037453 predictive-value-of-bone-resorption-and-formation-markers-in-cancer-patients-with-bone-metastases-receiving-the-bisphosphonate-zoledronic-acid. predictive value bone resorption formation markers cancer patients Predictive value of bone resorption and formation markers in cancer patients with bone metastases receiving the bisphosphonate zoledronic acid. Predictive value of bone resorption and formation markers in cancer patients with bone metastases receiving the bisphosphonate zoledronic acid. PURPOSE Three large, randomized trials of patients with bone metastases recently demonstrated that zoledronic acid reduces the risk of skeletal-related events. These trials provide an opportunity for investigating the correlation between bone metabolism and clinical outcome during bisphosphonate therapy. PATIENTS AND METHODS Urinary measurements of N-telopeptide (Ntx) and serum bone alkaline phosphatase (BAP) were obtained in 1,824 bisphosphonate-treated patients-1,462 with zoledronic acid (breast, 490; prostate, 411; myeloma, 210; non-small-cell lung, 183; other, 168) and 362 with pamidronate (breast, 254; myeloma, 108). This exploratory cohort an",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.767849+00:00"
+}

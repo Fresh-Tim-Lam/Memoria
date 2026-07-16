@@ -100,7 +100,13 @@ window.MemoriaMarkdownPreview = (function () {
     );
     out = out.replace(/\\\[([\s\S]+?)\\\]/g, (m) => stashBlock(allBlocks, m));
     out = out.replace(/\\\(([\s\S]+?)\\\)/g, (m) => stashInline(allBlocks, m));
-    out = out.replace(/\$(?:\\.|[^\$\n\\])+\$/g, (m) => stashInline(allBlocks, m));
+    // Inline math: $...$ where the $ is not part of $$ (block).
+    // Match only within a single line to prevent swallowing ** or other
+    // markdown delimiters across lines when stray $ signs exist in the text.
+    // Multi-line math should use $$...$$ block delimiters instead.
+    out = out.replace(/\$(?!\$)((?:\\.|[^\$\n\\])+?)\$/g, (m) =>
+      stashInline(allBlocks, m)
+    );
 
     return { text: out, blocks: allBlocks };
   }
@@ -108,7 +114,9 @@ window.MemoriaMarkdownPreview = (function () {
   function toInlineDelimiters(tex) {
     const t = tex.trim();
     if (t.startsWith("\\(") && t.endsWith("\\)")) return t;
-    if (t.startsWith("$") && t.endsWith("$") && !t.startsWith("$$")) {
+    // Only convert single-$ delimiters; $$...$$ is block math and should
+    // never be converted to inline \(...\).
+    if (t.startsWith("$") && t.endsWith("$") && !t.startsWith("$$") && !t.endsWith("$$")) {
       return "\\(" + t.slice(1, -1) + "\\)";
     }
     return t;

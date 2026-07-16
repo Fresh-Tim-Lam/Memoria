@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17628888",
+  "source_fingerprint": "815489f505a390a75c605e4120b6d8ce",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17628888",
+    "atpase-dependent-control-of-the-mms21-sumo-ligase-during-dna-repair"
+  ],
+  "key_phrases": [
+    "atpase",
+    "dependent",
+    "control",
+    "mms21",
+    "sumo",
+    "ligase",
+    "during",
+    "dna"
+  ],
+  "summary_1l": "Modification of proteins by SUMO is essential for the maintenance of genome integrity.",
+  "query_hits": [],
+  "embed_text": "17628888 ATPase-Dependent Control of the Mms21 SUMO Ligase during DNA Repair science scifact Modification of proteins by SUMO is essential for the maintenance of genome integrity. During DNA replication, the Mms21-branch of the SUMO pathway counteracts recombination intermediates at damaged replication forks, thus facilitating… 17628888 atpase-dependent-control-of-the-mms21-sumo-ligase-during-dna-repair atpase dependent control mms21 sumo ligase during dna Modification of proteins by SUMO is essential for the maintenance of genome integrity. ATPase-Dependent Control of the Mms21 SUMO Ligase during DNA Repair Modification of proteins by SUMO is essential for the maintenance of genome integrity. During DNA replication, the Mms21-branch of the SUMO pathway counteracts recombination intermediates at damaged replication forks, thus facilitating sister chromatid disjunction. The Mms21 SUMO ligase docks to the arm region of the Smc5 protein in the Smc5/6 complex; together, they cooperate during recombinational DNA repair. Yet how the activity of the SUMO ligase is controlled remains unknown. Here we show that the SUMO ligase and the chromosome disjunction functions of Mms21 depend on its docking to an intact and active Smc5/6 complex, indicating that the Smc5/6-Mms21 complex operates as a large SUMO ligase in vivo. In spite of the ph",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:11.893017+00:00"
+}

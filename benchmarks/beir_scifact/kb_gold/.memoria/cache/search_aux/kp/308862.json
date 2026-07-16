@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "308862",
+  "source_fingerprint": "a0bda58403e296edd706b767ace95446",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "308862",
+    "duration-of-androgen-suppression-in-the-treatment-of-prostate-cancer."
+  ],
+  "key_phrases": [
+    "duration",
+    "androgen",
+    "suppression",
+    "treatment",
+    "prostate",
+    "cancer",
+    "background",
+    "combination"
+  ],
+  "summary_1l": "Duration of androgen suppression in the treatment of prostate cancer.",
+  "query_hits": [],
+  "embed_text": "308862 Duration of androgen suppression in the treatment of prostate cancer. science scifact BACKGROUND The combination of radiotherapy plus long-term medical suppression of androgens (> or = 2 years) improves overall survival in patients with locally advanced prostate cancer. We compared the use of radiotherapy plus short-term… 308862 duration-of-androgen-suppression-in-the-treatment-of-prostate-cancer. duration androgen suppression treatment prostate cancer background combination Duration of androgen suppression in the treatment of prostate cancer. Duration of androgen suppression in the treatment of prostate cancer. BACKGROUND The combination of radiotherapy plus long-term medical suppression of androgens (> or = 2 years) improves overall survival in patients with locally advanced prostate cancer. We compared the use of radiotherapy plus short-term androgen suppression with the use of radiotherapy plus long-term androgen suppression in the treatment of locally advanced prostate cancer. METHODS We randomly assigned patients with locally advanced prostate cancer who had received external-beam radiotherapy plus 6 months of androgen suppression to two groups, one to receive no further treatment (short-term suppression) and the other to receive 2.5 years of further treatment with a luteinizing hormone-releasing hormone agonist (long-term",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.100435+00:00"
+}

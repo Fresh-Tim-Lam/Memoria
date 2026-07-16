@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "39776978",
+  "source_fingerprint": "ddde1cc73c4dc0a323c2391d56101d4d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "39776978",
+    "advances-in-osteoclast-biology:-old-findings-and-new-insights-from-mouse-models"
+  ],
+  "key_phrases": [
+    "advances",
+    "osteoclast",
+    "biology",
+    "old",
+    "findings",
+    "new",
+    "insights",
+    "from"
+  ],
+  "summary_1l": "The maintenance of adequate bone mass is dependent upon the controlled and timely removal of old, damaged bone.",
+  "query_hits": [],
+  "embed_text": "39776978 Advances in osteoclast biology: old findings and new insights from mouse models science scifact The maintenance of adequate bone mass is dependent upon the controlled and timely removal of old, damaged bone. This complex process is performed by the highly specialized, multinucleated osteoclast. Over the past 15 years, a detailed… 39776978 advances-in-osteoclast-biology:-old-findings-and-new-insights-from-mouse-models advances osteoclast biology old findings new insights from The maintenance of adequate bone mass is dependent upon the controlled and timely removal of old, damaged bone. Advances in osteoclast biology: old findings and new insights from mouse models The maintenance of adequate bone mass is dependent upon the controlled and timely removal of old, damaged bone. This complex process is performed by the highly specialized, multinucleated osteoclast. Over the past 15 years, a detailed picture has emerged describing the origins, differentiation pathways and activation stages that contribute to normal osteoclast function. This information has primarily been obtained by the development and skeletal analysis of genetically modified mouse models. Mice harboring mutations in specific genetic loci exhibit bone defects as a direct result of aberrations in normal osteoclast recruitment, formation or function. These findings include the identification of the RANK–RANKL–O",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.933417+00:00"
+}

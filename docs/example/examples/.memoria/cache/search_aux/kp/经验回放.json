@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "经验回放",
+  "source_fingerprint": "57e4928d777967846c91a6c873ad6ece",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "机器学习"
+  ],
+  "aliases": [],
+  "key_phrases": [
+    "经验",
+    "回放",
+    "experience",
+    "replay",
+    "转移",
+    "存入",
+    "缓冲区",
+    "训练"
+  ],
+  "summary_1l": "经验回放（Experience Replay）将转移 存入回放缓冲区 ，训练时随机采样 mini-batch。",
+  "query_hits": [],
+  "embed_text": "经验回放 经验回放 机器学习 经验 回放 experience replay 转移 存入 缓冲区 训练 经验回放（Experience Replay）将转移 存入回放缓冲区 ，训练时随机采样 mini-batch。 经验回放 经验回放（Experience Replay）将转移 存入回放缓冲区 ，训练时随机采样 mini-batch。 为什么需要经验回放？ 1. **打破时序相关性**：连续样本高度相关，违反 i.i.d. 假设 2. **提高数据效率**：一条经验可以被多次使用 3. **稳定训练**：均匀采样避免最近经验主导梯度 回放缓冲区的大小通常为 ，mini-batch 大小为 64-256。 DDPG 的关键技巧： **目标网络 + 软更新**： ， （通常 ） **探索噪声**：Ornstein-Uhlenbeck 过程或高斯噪声 **梯度裁剪**：防止梯度爆炸 DDPG 基于 Q-Learning 和策略梯度的思想，是深度强化学习在连续控制领域的里程碑。后续改进包括 TD3（Twin Delayed DDPG）和 SAC（Soft Actor-Critic）。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T03:38:46.413416+00:00"
+}

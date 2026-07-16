@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "31962403",
+  "source_fingerprint": "49378548df06cb115959ff2a1f553c41",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "31962403",
+    "the-anaphase-promoting-complex/cyclosome:-a-machine-designed-to-destroy"
+  ],
+  "key_phrases": [
+    "anaphase",
+    "promoting",
+    "complex",
+    "cyclosome",
+    "machine",
+    "designed",
+    "destroy",
+    "apc"
+  ],
+  "summary_1l": "The anaphase promoting complex/cyclosome (APC/C) is a ubiquitin ligase that has essential functions in and outside the eukaryoti",
+  "query_hits": [],
+  "embed_text": "31962403 The anaphase promoting complex/cyclosome: a machine designed to destroy science scifact The anaphase promoting complex/cyclosome (APC/C) is a ubiquitin ligase that has essential functions in and outside the eukaryotic cell cycle. It is the most complex molecular machine that is known to catalyse ubiquitylation reactions, and… 31962403 the-anaphase-promoting-complex/cyclosome:-a-machine-designed-to-destroy anaphase promoting complex cyclosome machine designed destroy apc The anaphase promoting complex/cyclosome (APC/C) is a ubiquitin ligase that has essential functions in and outside the eukaryoti The anaphase promoting complex/cyclosome: a machine designed to destroy The anaphase promoting complex/cyclosome (APC/C) is a ubiquitin ligase that has essential functions in and outside the eukaryotic cell cycle. It is the most complex molecular machine that is known to catalyse ubiquitylation reactions, and it contains more than a dozen subunits that assemble into a large 1.5-MDa complex. Recent discoveries have revealed an unexpected multitude of mechanisms that control APC/C activity, and have provided a first insight into how this unusual ubiquitin ligase recognizes its substrates.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.053726+00:00"
+}

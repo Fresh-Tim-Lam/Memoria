@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12685434",
+  "source_fingerprint": "3c5bc5782ccc0d7ea7d5654290c118ab",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12685434",
+    "guanylate-binding-protein-1-is-a-novel-effector-of-egfr-driven-invasion-in-glioblastoma"
+  ],
+  "key_phrases": [
+    "guanylate",
+    "binding",
+    "protein",
+    "novel",
+    "effector",
+    "egfr",
+    "driven",
+    "invasion"
+  ],
+  "summary_1l": "Although GBP1 (guanylate binding protein 1) was among the first interferon-inducible proteins identified, its fu",
+  "query_hits": [],
+  "embed_text": "12685434 Guanylate binding protein 1 is a novel effector of EGFR-driven invasion in glioblastoma science scifact Although GBP1 (guanylate binding protein 1) was among the first interferon-inducible proteins identified, its function is still largely unknown. Epidermal growth factor receptor (EGFR) activation by amplification or mutation is one of the… 12685434 guanylate-binding-protein-1-is-a-novel-effector-of-egfr-driven-invasion-in-glioblastoma guanylate binding protein novel effector egfr driven invasion Although GBP1 (guanylate binding protein 1) was among the first interferon-inducible proteins identified, its fu Guanylate binding protein 1 is a novel effector of EGFR-driven invasion in glioblastoma Although GBP1 (guanylate binding protein 1) was among the first interferon-inducible proteins identified, its function is still largely unknown. Epidermal growth factor receptor (EGFR) activation by amplification or mutation is one of the most frequent genetic lesions in a variety of human tumors. These include glioblastoma multiforme (GBM), which is characterized by independent but interrelated features of extensive invasion into normal brain parenchyma, rapid growth, necrosis, and angiogenesis. In this study, we show that EGFR activation promoted GBP1 expression in GBM cell lines through a signaling pathway involving Src and p38 mitogen-activated protein kinase. Moreover, we identified YY1 (Yin Yang 1",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:08.823704+00:00"
+}

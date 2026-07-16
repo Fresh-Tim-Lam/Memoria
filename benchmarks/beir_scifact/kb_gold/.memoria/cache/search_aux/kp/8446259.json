@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "8446259",
+  "source_fingerprint": "e86e543c4704023158c77962c5c8e3bd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8446259"
+  ],
+  "key_phrases": [
+    "vascular",
+    "calcification",
+    "chronic",
+    "kidney",
+    "disease",
+    "induced",
+    "by",
+    "bone"
+  ],
+  "summary_1l": "Background: Vascular calcification (VC), in which vascul",
+  "query_hits": [],
+  "embed_text": "8446259 Vascular Calcification in Chronic Kidney Disease is Induced by Bone Morphogenetic Protein-2 via a Mechanism Involving the Wnt/β-Catenin Pathway science scifact Background: Vascular calcification (VC), in which vascular smooth muscle cells (VSMCs) undergo a phenotypic transformation into osteoblast-like cells, is one of the emergent risk factors for the accelerated atherosclerosis process… 8446259 vascular calcification chronic kidney disease induced by bone Background: Vascular calcification (VC), in which vascul Vascular Calcification in Chronic Kidney Disease is Induced by Bone Morphogenetic Protein-2 via a Mechanism Involving the Wnt/β-Catenin Pathway Background: Vascular calcification (VC), in which vascular smooth muscle cells (VSMCs) undergo a phenotypic transformation into osteoblast-like cells, is one of the emergent risk factors for the accelerated atherosclerosis process characteristic of chronic kidney disease (CKD). Phosphate is an important regulator of VC. Methods: The expression of different smooth muscle cell or osteogenesis markers in response to high concentrations of phosphate or exogenous bone morphogenetic protein 2 (BMP-2) was examined by qRT-PCR and western blotting in rat VSMCs. Osteocalcin secretion was measured by radioimmunoassay. Differentiation and calcification of VSMC",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.674196+00:00"
+}

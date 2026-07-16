@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "195352",
+  "source_fingerprint": "1764d5d0354418b403ea124e4a833176",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "195352",
+    "insulin-action-and-resistance-in-obesity-and-type-2-diabetes"
+  ],
+  "key_phrases": [
+    "insulin",
+    "action",
+    "resistance",
+    "obesity",
+    "type",
+    "diabetes",
+    "nutritional",
+    "excess"
+  ],
+  "summary_1l": "Nutritional excess is a major forerunner of type 2 diabetes.",
+  "query_hits": [],
+  "embed_text": "195352 Insulin action and resistance in obesity and type 2 diabetes science scifact Nutritional excess is a major forerunner of type 2 diabetes. It enhances the secretion of insulin, but attenuates insulin's metabolic actions in the liver, skeletal muscle and adipose tissue. However, conflicting evidence indicates a lack… 195352 insulin-action-and-resistance-in-obesity-and-type-2-diabetes insulin action resistance obesity type diabetes nutritional excess Nutritional excess is a major forerunner of type 2 diabetes. Insulin action and resistance in obesity and type 2 diabetes Nutritional excess is a major forerunner of type 2 diabetes. It enhances the secretion of insulin, but attenuates insulin's metabolic actions in the liver, skeletal muscle and adipose tissue. However, conflicting evidence indicates a lack of knowledge of the timing of these events during the development of obesity and diabetes, pointing to a key gap in our understanding of metabolic disease. This Perspective reviews alternate viewpoints and recent results on the temporal and mechanistic connections between hyperinsulinemia, obesity and insulin resistance. Although much attention has addressed early steps in the insulin signaling cascade, insulin resistance in obesity seems to be largely elicited downstream of these steps. New fin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.758501+00:00"
+}

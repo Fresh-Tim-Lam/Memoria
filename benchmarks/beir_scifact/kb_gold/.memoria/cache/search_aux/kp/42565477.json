@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "42565477",
+  "source_fingerprint": "f20d1bf602c98346cda8b7f7f025b446",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "42565477",
+    "high-dub3-expression-in-mouse-escs-couples-the-g1/s-checkpoint-to-pluripotency."
+  ],
+  "key_phrases": [
+    "high",
+    "dub3",
+    "expression",
+    "mouse",
+    "escs",
+    "couples",
+    "g1",
+    "checkpoint"
+  ],
+  "summary_1l": "High Dub3 expression in mouse ESCs couples the G1/S checkpoint to pluripotency.",
+  "query_hits": [],
+  "embed_text": "42565477 High Dub3 expression in mouse ESCs couples the G1/S checkpoint to pluripotency. science scifact The molecular mechanism underlying G1/S checkpoint bypass in mouse embryonic stem cells (ESCs) remains unknown. DNA damage blocks S phase entry by inhibiting the CDK2 kinase through destruction of its activator, the Cdc25A phosphatase. We… 42565477 high-dub3-expression-in-mouse-escs-couples-the-g1/s-checkpoint-to-pluripotency. high dub3 expression mouse escs couples g1 checkpoint High Dub3 expression in mouse ESCs couples the G1/S checkpoint to pluripotency. High Dub3 expression in mouse ESCs couples the G1/S checkpoint to pluripotency. The molecular mechanism underlying G1/S checkpoint bypass in mouse embryonic stem cells (ESCs) remains unknown. DNA damage blocks S phase entry by inhibiting the CDK2 kinase through destruction of its activator, the Cdc25A phosphatase. We observed high Cdc25A levels in G1 that persist even after DNA damage in mouse ESCs. We also found higher expression of Dub3, a deubiquitylase that controls Cdc25A protein abundance. Moreover, we demonstrate that the Dub3 gene is a direct target of Esrrb, a key transcription factor of the self-renewal machinery. We show that Dub3 expression is strongly downregulated during neural conversion and precedes Cdc25A destabilization, while forced Dub3 expression in ESCs becomes lethal",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.112563+00:00"
+}

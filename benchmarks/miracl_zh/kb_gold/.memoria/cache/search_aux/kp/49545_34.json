@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "kp_id": "49545#34",
+  "source_fingerprint": "3a4bd6b12ad212c7b3bcea4d58b43fda",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "中国国家女子足球队",
+    "首都",
+    "国家公务员考试",
+    "西班牙语国家和地区列表",
+    "(喀麦隆)",
+    "中国国家铁路集团",
+    "中国科学院国家天文台",
+    "亚美尼亚国家美术馆",
+    "俄语国家和地区列表",
+    "全国人民政权代表大会",
+    "南美洲国家联盟",
+    "国家石油公司"
+  ],
+  "aliases": [
+    "49545#34"
+  ],
+  "key_phrases": [
+    "喀麦隆",
+    "座落",
+    "首都",
+    "雅温得",
+    "国家",
+    "劳动",
+    "管理部",
+    "fonds"
+  ],
+  "summary_1l": "座落于喀麦隆首都雅温得——国家劳动管理部（Fonds National de l'Emploi）在全国境内拥有7座劳动保障局，致力与解决失业问题。",
+  "query_hits": [],
+  "embed_text": "49545#34 喀麦隆 喀麦隆 座落于喀麦隆首都雅温得——国家劳动管理部（Fonds National de l'Emploi）在全国境内拥有7座劳动保障局，致力与解决失业问题。 中国国家女子足球队 首都 国家公务员考试 西班牙语国家和地区列表 (喀麦隆) 中国国家铁路集团 中国科学院国家天文台 亚美尼亚国家美术馆 俄语国家和地区列表 全国人民政权代表大会 南美洲国家联盟 国家石油公司 49545#34 喀麦隆 座落 首都 雅温得 国家 劳动 管理部 fonds 座落于喀麦隆首都雅温得——国家劳动管理部（Fonds National de l'Emploi）在全国境内拥有7座劳动保障局，致力与解决失业问题。 喀麦隆 座落于喀麦隆首都雅温得——国家劳动管理部（Fonds National de l'Emploi）在全国境内拥有7座劳动保障局，致力与解决失业问题。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:19:04.905848+00:00"
+}

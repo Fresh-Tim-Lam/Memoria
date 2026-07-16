@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "28894097",
+  "source_fingerprint": "4cbfd7581e8af2197fccb5c31f79a47a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "28894097",
+    "qtc-interval-length-and-qt-dispersion-as-predictors-of-mortality-in-patients-with-non-insulin-dependent-diabetes."
+  ],
+  "key_phrases": [
+    "qtc",
+    "interval",
+    "length",
+    "qt",
+    "dispersion",
+    "as",
+    "predictors",
+    "mortality"
+  ],
+  "summary_1l": "QTc interval length and QT dispersion as predictors of mortality in patients with non-insulin-dependent diabetes.",
+  "query_hits": [],
+  "embed_text": "28894097 QTc interval length and QT dispersion as predictors of mortality in patients with non-insulin-dependent diabetes. science scifact Patients with non-insulin-dependent diabetes (NIDDM) are at independent risk of cardiovascular death. The reason is only partially understood. The aim of our study was therefore to evaluate the impact of corrected QT interval length (QTc)… 28894097 qtc-interval-length-and-qt-dispersion-as-predictors-of-mortality-in-patients-with-non-insulin-dependent-diabetes. qtc interval length qt dispersion as predictors mortality QTc interval length and QT dispersion as predictors of mortality in patients with non-insulin-dependent diabetes. QTc interval length and QT dispersion as predictors of mortality in patients with non-insulin-dependent diabetes. Patients with non-insulin-dependent diabetes (NIDDM) are at independent risk of cardiovascular death. The reason is only partially understood. The aim of our study was therefore to evaluate the impact of corrected QT interval length (QTc) and QT dispersion (QT-disp) on mortality in a cohort of 324 Caucasian NIDDM patients. A resting 12-lead ECG was recorded at baseline. Maximum (QT-max) and minimum QT (QT-min) intervals were measured, and QT-max was corrected for heart rate (QTc-max). QT-disp was defined as the difference between QT-max and QT-min. QTc-max was 454 (376-671) ms(1/2) (median (range)) and QT-disp 61 (0-240) ms. Prolonged QTc interval (PQTc), defined as QTc-max > 4",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.406674+00:00"
+}

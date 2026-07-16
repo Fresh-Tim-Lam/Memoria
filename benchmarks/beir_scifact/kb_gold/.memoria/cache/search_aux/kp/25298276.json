@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25298276",
+  "source_fingerprint": "c8e63a008d9ce06806d8113f1e31f2f2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25298276",
+    "emerging-role-of-bisphosphonates-in-the-clinic--antitumor-activity-and-prevention-of-metastasis-to-bone."
+  ],
+  "key_phrases": [
+    "emerging",
+    "role",
+    "bisphosphonates",
+    "clinic",
+    "--",
+    "antitumor",
+    "activity",
+    "prevention"
+  ],
+  "summary_1l": "Emerging role of bisphosphonates in the clinic--antitumor activity and prevention of metastasis to bone.",
+  "query_hits": [],
+  "embed_text": "25298276 Emerging role of bisphosphonates in the clinic--antitumor activity and prevention of metastasis to bone. science scifact Bisphosphonates are currently used for the treatment of bone metastases, and emerging data suggest that they may also have antitumor properties. Preclinical studies have demonstrated that zoledronic acid can inhibit angiogenesis, invasion… 25298276 emerging-role-of-bisphosphonates-in-the-clinic--antitumor-activity-and-prevention-of-metastasis-to-bone. emerging role bisphosphonates clinic -- antitumor activity prevention Emerging role of bisphosphonates in the clinic--antitumor activity and prevention of metastasis to bone. Emerging role of bisphosphonates in the clinic--antitumor activity and prevention of metastasis to bone. Bisphosphonates are currently used for the treatment of bone metastases, and emerging data suggest that they may also have antitumor properties. Preclinical studies have demonstrated that zoledronic acid can inhibit angiogenesis, invasion and adhesion of tumor cells, and overall tumor progression, and emerging evidence suggests that the use of these agents may impede the development of skeletal metastases. In a recent clinical study in patients with metastatic bone disease, basal levels of vascular endothelial growth factor, a factor essential for angiogenesis, were significantly reduced in patients receiving zoledronic acid, suggesting that zoledronic acid may have clinically relevant",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.319039+00:00"
+}

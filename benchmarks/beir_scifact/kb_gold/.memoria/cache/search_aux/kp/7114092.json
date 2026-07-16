@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7114092",
+  "source_fingerprint": "ec3e551ea78809aafcb68209f2d9786a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7114092",
+    "from-bloodjournal.hematologylibrary.org-at-penn-state-university-on-february-23,-2013.-for-personal-use-only."
+  ],
+  "key_phrases": [
+    "from",
+    "bloodjournal",
+    "hematologylibrary",
+    "org",
+    "at",
+    "penn",
+    "state",
+    "university"
+  ],
+  "summary_1l": "From bloodjournal.",
+  "query_hits": [],
+  "embed_text": "7114092 From bloodjournal.hematologylibrary.org at PENN STATE UNIVERSITY on February 23, 2013. For personal use only. science scifact Megakaryocyte (MK) is the naturally polyploid cell that gives rise to platelets. Polyploidization occurs by endomitosis, which was a process considered to be an incomplete mitosis aborted in anaphase. Here, we used time-lapse confocal… 7114092 from-bloodjournal.hematologylibrary.org-at-penn-state-university-on-february-23,-2013.-for-personal-use-only. from bloodjournal hematologylibrary org at penn state university From bloodjournal. From bloodjournal.hematologylibrary.org at PENN STATE UNIVERSITY on February 23, 2013. For personal use only. Megakaryocyte (MK) is the naturally polyploid cell that gives rise to platelets. Polyploidization occurs by endomitosis, which was a process considered to be an incomplete mitosis aborted in anaphase. Here, we used time-lapse confocal video microscopy to visualize the endomitotic process of primary human megakaryocytes. Our results show that the switch from mitosis to endomitosis corresponds to a late failure of cytokinesis accompanied by a backward movement of the 2 daughter cells. No abnormality was observed in the central spindle of endomitotic MKs. A furrow formation was present, but the contractile ring was abnormal because accumulation of nonmuscle myosin IIA was lacking. In",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.494842+00:00"
+}

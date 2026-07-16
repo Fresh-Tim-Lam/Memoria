@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6503185",
+  "source_fingerprint": "5d82f511984ce7dab4c51146fefff438",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6503185",
+    "malaria-biology-and-disease-pathogenesis:-insights-for-new-treatments"
+  ],
+  "key_phrases": [
+    "malaria",
+    "biology",
+    "disease",
+    "pathogenesis",
+    "insights",
+    "new",
+    "treatments",
+    "plasmodium"
+  ],
+  "summary_1l": "Plasmodium falciparum malaria, an infectious disease caused by a parasitic protozoan, claims the lives of nearly a million childre",
+  "query_hits": [],
+  "embed_text": "6503185 Malaria biology and disease pathogenesis: insights for new treatments science scifact Plasmodium falciparum malaria, an infectious disease caused by a parasitic protozoan, claims the lives of nearly a million children each year in Africa alone and is a top public health concern. Evidence is accumulating that resistance to… 6503185 malaria-biology-and-disease-pathogenesis:-insights-for-new-treatments malaria biology disease pathogenesis insights new treatments plasmodium Plasmodium falciparum malaria, an infectious disease caused by a parasitic protozoan, claims the lives of nearly a million childre Malaria biology and disease pathogenesis: insights for new treatments Plasmodium falciparum malaria, an infectious disease caused by a parasitic protozoan, claims the lives of nearly a million children each year in Africa alone and is a top public health concern. Evidence is accumulating that resistance to artemisinin derivatives, the frontline therapy for the asexual blood stage of the infection, is developing in southeast Asia. Renewed initiatives to eliminate malaria will benefit from an expanded repertoire of antimalarials, including new drugs that kill circulating P. falciparum gametocytes, thereby preventing transmission. Our current understanding of the biology of asexual blood-stage parasites and gametocytes and the ability to culture them in vitro lends optimism that high-throughp",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.053410+00:00"
+}

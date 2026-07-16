@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14296612",
+  "source_fingerprint": "922e08c88f62450f78b1e822c2869307",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14296612",
+    "dorsomorphin,-a-selective-small-molecule-inhibitor-of-bmp-signaling,-promotes-cardiomyogenesis-in-embryonic-stem-cells"
+  ],
+  "key_phrases": [
+    "dorsomorphin",
+    "selective",
+    "small",
+    "molecule",
+    "inhibitor",
+    "bmp",
+    "signaling",
+    "promotes"
+  ],
+  "summary_1l": "BACKGROUND Pluripotent embryonic stem (ES) cells, which have the capacity to give",
+  "query_hits": [],
+  "embed_text": "14296612 Dorsomorphin, a Selective Small Molecule Inhibitor of BMP Signaling, Promotes Cardiomyogenesis in Embryonic Stem Cells science scifact BACKGROUND Pluripotent embryonic stem (ES) cells, which have the capacity to give rise to all tissue types in the body, show great promise as a versatile source of cells for regenerative therapy. However, the basic mechanisms of lineage… 14296612 dorsomorphin,-a-selective-small-molecule-inhibitor-of-bmp-signaling,-promotes-cardiomyogenesis-in-embryonic-stem-cells dorsomorphin selective small molecule inhibitor bmp signaling promotes BACKGROUND Pluripotent embryonic stem (ES) cells, which have the capacity to give Dorsomorphin, a Selective Small Molecule Inhibitor of BMP Signaling, Promotes Cardiomyogenesis in Embryonic Stem Cells BACKGROUND Pluripotent embryonic stem (ES) cells, which have the capacity to give rise to all tissue types in the body, show great promise as a versatile source of cells for regenerative therapy. However, the basic mechanisms of lineage specification of pluripotent stem cells are largely unknown, and generating sufficient quantities of desired cell types remains a formidable challenge. Small molecules, particularly those that modulate key developmental pathways like the bone morphogenetic protein (BMP) signaling cascade, hold promise as tools to study in vitro lineage specification and to direct differentiation of stem cells toward particular cell types. METHODOLOGY/ PRINC",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.500694+00:00"
+}

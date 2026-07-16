@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12370881",
+  "source_fingerprint": "325c62fa3bf722945b1b8592c2d1af14",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12370881",
+    "inflammatory-monocyte/macrophage-modulation-by-liposome-entrapped-spironolactone-ameliorates-acute-lung-injury-in-mice."
+  ],
+  "key_phrases": [
+    "inflammatory",
+    "monocyte",
+    "macrophage",
+    "modulation",
+    "by",
+    "liposome",
+    "entrapped",
+    "spironolactone"
+  ],
+  "summary_1l": "Inflammatory monocyte/macrophage modulation by liposome-entrapped spironolactone ameliorates acute lung injury in mice.",
+  "query_hits": [],
+  "embed_text": "12370881 Inflammatory monocyte/macrophage modulation by liposome-entrapped spironolactone ameliorates acute lung injury in mice. science scifact AIM To examine the therapeutic/preventive potential of liposome-encapsulated spironolactone (SP; Lipo-SP) for acute lung injury (ALI) and fibrosis. MATERIALS & METHODS Lipo-SP was prepared by the film-ultrasonic method, and physicochemical… 12370881 inflammatory-monocyte/macrophage-modulation-by-liposome-entrapped-spironolactone-ameliorates-acute-lung-injury-in-mice. inflammatory monocyte macrophage modulation by liposome entrapped spironolactone Inflammatory monocyte/macrophage modulation by liposome-entrapped spironolactone ameliorates acute lung injury in mice. Inflammatory monocyte/macrophage modulation by liposome-entrapped spironolactone ameliorates acute lung injury in mice. AIM To examine the therapeutic/preventive potential of liposome-encapsulated spironolactone (SP; Lipo-SP) for acute lung injury (ALI) and fibrosis. MATERIALS & METHODS Lipo-SP was prepared by the film-ultrasonic method, and physicochemical and pharmacokinetic characterized for oral administration (10 and 20 mg/kg for SP-loaded liposome; 20 mg/kg for free SP) in a mouse model bleomycin-induced ALI. RESULTS Lipo-SP enhanced bioavailability of SP with significant amelioration in lung pathology. Mechanistically, SP-mediated mineralocorticoid receptor antagonism contributes to inflammatory monocyte/macrophage modulation via an inhibitory effect on Ly6C(hi) monocytosis-directed",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:08.761157+00:00"
+}

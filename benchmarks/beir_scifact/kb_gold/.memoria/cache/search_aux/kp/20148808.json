@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20148808",
+  "source_fingerprint": "1a2ca4621f7757e2d4d1d695feae2185",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20148808",
+    "microbiome-driven-allergic-lung-inflammation-is-ameliorated-by-short-chain-fatty-acids"
+  ],
+  "key_phrases": [
+    "microbiome",
+    "driven",
+    "allergic",
+    "lung",
+    "inflammation",
+    "ameliorated",
+    "by",
+    "short"
+  ],
+  "summary_1l": "The mammalian gastrointestinal tract harbors a microbial community with metabolic activity critical for host heal",
+  "query_hits": [],
+  "embed_text": "20148808 Microbiome-driven allergic lung inflammation is ameliorated by short-chain fatty acids science scifact The mammalian gastrointestinal tract harbors a microbial community with metabolic activity critical for host health, including metabolites that can modulate effector functions of immune cells. Mice treated with vancomycin have an altered… 20148808 microbiome-driven-allergic-lung-inflammation-is-ameliorated-by-short-chain-fatty-acids microbiome driven allergic lung inflammation ameliorated by short The mammalian gastrointestinal tract harbors a microbial community with metabolic activity critical for host heal Microbiome-driven allergic lung inflammation is ameliorated by short-chain fatty acids The mammalian gastrointestinal tract harbors a microbial community with metabolic activity critical for host health, including metabolites that can modulate effector functions of immune cells. Mice treated with vancomycin have an altered microbiome and metabolite profile, exhibit exacerbated T helper type 2 cell (Th2) responses, and are more susceptible to allergic lung inflammation. Here we show that dietary supplementation with short-chain fatty acids (SCFAs) ameliorates this enhanced asthma susceptibility by modulating the activity of T cells and dendritic cells (DCs). Dysbiotic mice treated with SCFAs have fewer interleukin-4 (IL4)-producing CD4+ T cells and decreased levels of circulating immunoglob",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.697392+00:00"
+}

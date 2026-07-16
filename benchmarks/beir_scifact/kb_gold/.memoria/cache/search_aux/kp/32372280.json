@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "32372280",
+  "source_fingerprint": "2ba3c63f1c29a645df852edfc9bcad49",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "32372280",
+    "expression-of-optineurin,-a-glaucoma-linked-gene,-is-influenced-by-elevated-intraocular-pressure."
+  ],
+  "key_phrases": [
+    "expression",
+    "optineurin",
+    "glaucoma",
+    "linked",
+    "gene",
+    "influenced",
+    "by",
+    "elevated"
+  ],
+  "summary_1l": "Expression of optineurin, a glaucoma-linked gene, is influenced by elevated intraocular pressure.",
+  "query_hits": [],
+  "embed_text": "32372280 Expression of optineurin, a glaucoma-linked gene, is influenced by elevated intraocular pressure. science scifact Optineurin (optic neuropathy inducing protein; OPTN) was recently linked to 16.7% of families with primary open-angle glaucoma. The function of OPTN in the eye is not known, but is present in the trabecular meshwork, which is responsible… 32372280 expression-of-optineurin,-a-glaucoma-linked-gene,-is-influenced-by-elevated-intraocular-pressure. expression optineurin glaucoma linked gene influenced by elevated Expression of optineurin, a glaucoma-linked gene, is influenced by elevated intraocular pressure. Expression of optineurin, a glaucoma-linked gene, is influenced by elevated intraocular pressure. Optineurin (optic neuropathy inducing protein; OPTN) was recently linked to 16.7% of families with primary open-angle glaucoma. The function of OPTN in the eye is not known, but is present in the trabecular meshwork, which is responsible for maintenance of intraocular pressure (IOP). To gain insight into the role of OPTN in the development of glaucoma we studied its expression in response to factors known to be associated with the disease: elevated IOP, tumor necrosis factor-alpha (TNFalpha), and dexamethasone (DEX). We performed the treatments in human organ cultures under conditions mimicking physiological pressure. We find OPTN significantly upregulated after 2, 4, and 7 days of sustained e",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.477375+00:00"
+}

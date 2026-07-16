@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2052720",
+  "source_fingerprint": "dd1d26f1666a3d7b8e80878c44e5a1ee",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2052720",
+    "association-between-infection-with-helicobacter-pylori-and-risk-of-gastric-cancer:-evidence-from-a-prospective-investigation."
+  ],
+  "key_phrases": [
+    "association",
+    "between",
+    "infection",
+    "with",
+    "helicobacter",
+    "pylori",
+    "risk",
+    "gastric"
+  ],
+  "summary_1l": "Association between infection with Helicobacter pylori and risk of gastric cancer: evidence from a prospective investigation.",
+  "query_hits": [],
+  "embed_text": "2052720 Association between infection with Helicobacter pylori and risk of gastric cancer: evidence from a prospective investigation. science scifact OBJECTIVE To investigate the association between gastric cancer and prior infection with Helicobacter pylori. DESIGN Case-control comparison of prevalence of IgG antibodies to H pylori in blood samples collected prospectively, before… 2052720 association-between-infection-with-helicobacter-pylori-and-risk-of-gastric-cancer:-evidence-from-a-prospective-investigation. association between infection with helicobacter pylori risk gastric Association between infection with Helicobacter pylori and risk of gastric cancer: evidence from a prospective investigation. Association between infection with Helicobacter pylori and risk of gastric cancer: evidence from a prospective investigation. OBJECTIVE To investigate the association between gastric cancer and prior infection with Helicobacter pylori. DESIGN Case-control comparison of prevalence of IgG antibodies to H pylori in blood samples collected prospectively, before diagnosis of gastric cancer in the cases. Presence of H pylori antibody (greater than 10 micrograms IgG/ml) determined by enzyme linked immunosorbent assay (ELISA). SUBJECTS 29 men with a subsequent diagnosis of gastric cancer and 116 aged matched controls selected from over 22,000 middle aged men participating in two ongoing cohort studies (the British United Provident Association study and the Caerphilly collaborative heart disease st",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.446002+00:00"
+}

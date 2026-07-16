@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2139357",
+  "source_fingerprint": "48ac6fd74694fb9434d4fe9551c98dd1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2139357",
+    "involvement-of-s-nitrosylation-of-actin-in-inhibition-of-neurotransmitter-release-by-nitric-oxide"
+  ],
+  "key_phrases": [
+    "involvement",
+    "nitrosylation",
+    "actin",
+    "inhibition",
+    "neurotransmitter",
+    "release",
+    "by",
+    "nitric"
+  ],
+  "summary_1l": "BACKGROUND The role of the diffusible messenger nitric oxide (NO) in the regulation of pain transmissi",
+  "query_hits": [],
+  "embed_text": "2139357 Involvement of S-nitrosylation of actin in inhibition of neurotransmitter release by nitric oxide science scifact BACKGROUND The role of the diffusible messenger nitric oxide (NO) in the regulation of pain transmission is still a debate of matter, pro-nociceptive and/or anti-nociceptive. S-Nitrosylation, the reversible post-translational modification… 2139357 involvement-of-s-nitrosylation-of-actin-in-inhibition-of-neurotransmitter-release-by-nitric-oxide involvement nitrosylation actin inhibition neurotransmitter release by nitric BACKGROUND The role of the diffusible messenger nitric oxide (NO) in the regulation of pain transmissi Involvement of S-nitrosylation of actin in inhibition of neurotransmitter release by nitric oxide BACKGROUND The role of the diffusible messenger nitric oxide (NO) in the regulation of pain transmission is still a debate of matter, pro-nociceptive and/or anti-nociceptive. S-Nitrosylation, the reversible post-translational modification of selective cysteine residues in proteins, has emerged as an important mechanism by which NO acts as a signaling molecule. The occurrence of S-nitrosylation in the spinal cord and its targets that may modulate pain transmission remain unclarified. The \"biotin-switch\" method and matrix-assisted laser desorption/ionization time-of-flight mass spectrometry were employed for identifying S-nitrosylated proteins. RESULTS Here we show that actin was a major protein",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.049379+00:00"
+}

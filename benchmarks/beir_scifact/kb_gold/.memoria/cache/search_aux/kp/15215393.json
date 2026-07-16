@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15215393",
+  "source_fingerprint": "b3db42d62ca694633f3586aeb5f30141",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15215393",
+    "inhibition-of-lsd1-sensitizes-glioblastoma-cells-to-histone-deacetylase-inhibitors."
+  ],
+  "key_phrases": [
+    "inhibition",
+    "lsd1",
+    "sensitizes",
+    "glioblastoma",
+    "cells",
+    "histone",
+    "deacetylase",
+    "inhibitors"
+  ],
+  "summary_1l": "Inhibition of LSD1 sensitizes glioblastoma cells to histone deacetylase inhibitors.",
+  "query_hits": [],
+  "embed_text": "15215393 Inhibition of LSD1 sensitizes glioblastoma cells to histone deacetylase inhibitors. science scifact Glioblastoma multiforme (GBM) is a particularly aggressive brain tumor and remains a clinically devastating disease. Despite innovative therapies for the treatment of GBM, there has been no significant increase in patient survival over the… 15215393 inhibition-of-lsd1-sensitizes-glioblastoma-cells-to-histone-deacetylase-inhibitors. inhibition lsd1 sensitizes glioblastoma cells histone deacetylase inhibitors Inhibition of LSD1 sensitizes glioblastoma cells to histone deacetylase inhibitors. Inhibition of LSD1 sensitizes glioblastoma cells to histone deacetylase inhibitors. Glioblastoma multiforme (GBM) is a particularly aggressive brain tumor and remains a clinically devastating disease. Despite innovative therapies for the treatment of GBM, there has been no significant increase in patient survival over the past decade. Enzymes that control epigenetic alterations are of considerable interest as targets for cancer therapy because of their critical roles in cellular processes that lead to oncogenesis. Several inhibitors of histone deacetylases (HDACs) have been developed and tested in GBM with moderate success. We found that treatment of GBM cells with HDAC inhibitors caused the accumulation of histone methylation, a modification removed by the lysine specific demethylase 1 (L",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.191706+00:00"
+}

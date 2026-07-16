@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23576165",
+  "source_fingerprint": "fdc9a43e5492a120f784fef10c307860",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23576165",
+    "metabolic-interplay-between-glycolysis-and-mitochondrial-oxidation:-the-reverse-warburg-effect-and-its-therapeutic-implication."
+  ],
+  "key_phrases": [
+    "metabolic",
+    "interplay",
+    "between",
+    "glycolysis",
+    "mitochondrial",
+    "oxidation",
+    "reverse",
+    "warburg"
+  ],
+  "summary_1l": "Metabolic interplay between glycolysis and mitochondrial oxidation: The reverse Warburg effect and its therapeutic implication.",
+  "query_hits": [],
+  "embed_text": "23576165 Metabolic interplay between glycolysis and mitochondrial oxidation: The reverse Warburg effect and its therapeutic implication. science scifact Aerobic glycolysis, i.e., the Warburg effect, may contribute to the aggressive phenotype of hepatocellular carcinoma. However, increasing evidence highlights the limitations of the Warburg effect, such as high mitochondrial respiration and… 23576165 metabolic-interplay-between-glycolysis-and-mitochondrial-oxidation:-the-reverse-warburg-effect-and-its-therapeutic-implication. metabolic interplay between glycolysis mitochondrial oxidation reverse warburg Metabolic interplay between glycolysis and mitochondrial oxidation: The reverse Warburg effect and its therapeutic implication. Metabolic interplay between glycolysis and mitochondrial oxidation: The reverse Warburg effect and its therapeutic implication. Aerobic glycolysis, i.e., the Warburg effect, may contribute to the aggressive phenotype of hepatocellular carcinoma. However, increasing evidence highlights the limitations of the Warburg effect, such as high mitochondrial respiration and low glycolysis rates in cancer cells. To explain such contradictory phenomena with regard to the Warburg effect, a metabolic interplay between glycolytic and oxidative cells was proposed, i.e., the \"reverse Warburg effect\". Aerobic glycolysis may also occur in the stromal compartment that surrounds the tumor; thus, the stromal cells feed the cancer cells with lactate and this interaction prevents the creation of an acidic condit",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.702356+00:00"
+}

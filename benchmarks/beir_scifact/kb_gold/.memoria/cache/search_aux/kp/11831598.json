@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11831598",
+  "source_fingerprint": "2f84a82d311537894632309e669c263a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11831598",
+    "bmp/smad1-signaling-sets-a-threshold-for-the-left/right-pathway-in-lateral-plate-mesoderm-and-limits-availability-of-smad4."
+  ],
+  "key_phrases": [
+    "bmp",
+    "smad1",
+    "signaling",
+    "sets",
+    "threshold",
+    "left",
+    "right",
+    "pathway"
+  ],
+  "summary_1l": "BMP/SMAD1 signaling sets a threshold for the left/right pathway in lateral plate mesoderm and limits availability of SMAD4.",
+  "query_hits": [],
+  "embed_text": "11831598 BMP/SMAD1 signaling sets a threshold for the left/right pathway in lateral plate mesoderm and limits availability of SMAD4. science scifact Bistability in developmental pathways refers to the generation of binary outputs from graded or noisy inputs. Signaling thresholds are critical for bistability. Specification of the left/right (LR) axis in vertebrate embryos involves… 11831598 bmp/smad1-signaling-sets-a-threshold-for-the-left/right-pathway-in-lateral-plate-mesoderm-and-limits-availability-of-smad4. bmp smad1 signaling sets threshold left right pathway BMP/SMAD1 signaling sets a threshold for the left/right pathway in lateral plate mesoderm and limits availability of SMAD4. BMP/SMAD1 signaling sets a threshold for the left/right pathway in lateral plate mesoderm and limits availability of SMAD4. Bistability in developmental pathways refers to the generation of binary outputs from graded or noisy inputs. Signaling thresholds are critical for bistability. Specification of the left/right (LR) axis in vertebrate embryos involves bistable expression of transforming growth factor beta (TGFbeta) member NODAL in the left lateral plate mesoderm (LPM) controlled by feed-forward and feedback loops. Here we provide evidence that bone morphogenetic protein (BMP)/SMAD1 signaling sets a repressive threshold in the LPM essential for the integrity of LR signaling. Conditional deletion of Smad1 in the LPM led to precocious and bilateral pathway activation. NODAL expression fro",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:07.167596+00:00"
+}

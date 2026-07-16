@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "24521894",
+  "source_fingerprint": "66e5dd43e2b9abfcd63b5d716ca30cc0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24521894"
+  ],
+  "key_phrases": [
+    "eif2ak3",
+    "encoding",
+    "translation",
+    "initiation",
+    "factor",
+    "kinase",
+    "mutated",
+    "patients"
+  ],
+  "summary_1l": "Wolcott-Rallison syndrome (WRS) is a rare, autosomal recessive disorder characterize",
+  "query_hits": [],
+  "embed_text": "24521894 EIF2AK3, encoding translation initiation factor 2-α kinase 3, is mutated in patients with Wolcott-Rallison syndrome science scifact Wolcott-Rallison syndrome (WRS) is a rare, autosomal recessive disorder characterized by permanent neonatal or early infancy insulin-dependent diabetes. Epiphyseal dysplasia, osteoporosis and growth retardation occur at a later age. Other… 24521894 eif2ak3 encoding translation initiation factor kinase mutated patients Wolcott-Rallison syndrome (WRS) is a rare, autosomal recessive disorder characterize EIF2AK3, encoding translation initiation factor 2-α kinase 3, is mutated in patients with Wolcott-Rallison syndrome Wolcott-Rallison syndrome (WRS) is a rare, autosomal recessive disorder characterized by permanent neonatal or early infancy insulin-dependent diabetes. Epiphyseal dysplasia, osteoporosis and growth retardation occur at a later age. Other frequent multisystemic manifestations include hepatic and renal dysfunction, mental retardation and cardiovascular abnormalities. On the basis of two consanguineous families, we mapped WRS to a region of less than 3 cM on chromosome 2p12, with maximal evidence of linkage and homozygosity at 4 microsatellite markers within an interval of approximately 1 cM. The gene encoding the eukaryotic translation initiation factor 2-α kinase 3 (EIF2AK3)",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.591951+00:00"
+}

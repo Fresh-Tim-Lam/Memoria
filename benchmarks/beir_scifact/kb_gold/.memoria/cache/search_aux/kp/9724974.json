@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9724974",
+  "source_fingerprint": "52e3a24327c8796317ac69da0a9e7b7a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9724974",
+    "promoter-decoding-of-transcription-factor-dynamics-involves-a-trade-off-between-noise-and-control-of-gene-expression"
+  ],
+  "key_phrases": [
+    "promoter",
+    "decoding",
+    "transcription",
+    "factor",
+    "dynamics",
+    "involves",
+    "trade",
+    "off"
+  ],
+  "summary_1l": "Numerous transcription factors (TFs) encode information about upstream signals in t",
+  "query_hits": [],
+  "embed_text": "9724974 Promoter decoding of transcription factor dynamics involves a trade-off between noise and control of gene expression science scifact Numerous transcription factors (TFs) encode information about upstream signals in the dynamics of their activation, but how downstream genes decode these dynamics remains poorly understood. Using microfluidics to control the… 9724974 promoter-decoding-of-transcription-factor-dynamics-involves-a-trade-off-between-noise-and-control-of-gene-expression promoter decoding transcription factor dynamics involves trade off Numerous transcription factors (TFs) encode information about upstream signals in t Promoter decoding of transcription factor dynamics involves a trade-off between noise and control of gene expression Numerous transcription factors (TFs) encode information about upstream signals in the dynamics of their activation, but how downstream genes decode these dynamics remains poorly understood. Using microfluidics to control the nucleocytoplasmic translocation dynamics of the budding yeast TF Msn2, we elucidate the principles that govern how different promoters convert dynamical Msn2 input into gene expression output in single cells. Combining modeling and experiments, we classify promoters according to their signal-processing behavior and reveal that multiple, distinct gene expression programs can be encoded in the dynamics of Msn2. We show that both oscillatory TF dynamics and",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.631042+00:00"
+}

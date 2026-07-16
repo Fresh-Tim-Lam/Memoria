@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10494012",
+  "source_fingerprint": "5c0892d68d421e2daa20bb1d5bd89b4d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10494012",
+    "a-primate-virus-generates-transformed-human-cells-by-fusion"
+  ],
+  "key_phrases": [
+    "primate",
+    "virus",
+    "generates",
+    "transformed",
+    "human",
+    "cells",
+    "by",
+    "fusion"
+  ],
+  "summary_1l": "Amodel that explains both the origin and sporadic nature of cancer argues that cancer cells are a chance result of events that cause genomic",
+  "query_hits": [],
+  "embed_text": "10494012 A primate virus generates transformed human cells by fusion science scifact Amodel that explains both the origin and sporadic nature of cancer argues that cancer cells are a chance result of events that cause genomic and epigenetic variability. The prevailing view is that these events are mutations that affect… 10494012 a-primate-virus-generates-transformed-human-cells-by-fusion primate virus generates transformed human cells by fusion Amodel that explains both the origin and sporadic nature of cancer argues that cancer cells are a chance result of events that cause genomic A primate virus generates transformed human cells by fusion Amodel that explains both the origin and sporadic nature of cancer argues that cancer cells are a chance result of events that cause genomic and epigenetic variability. The prevailing view is that these events are mutations that affect chromosome segregation or stability. However, genomic and epigenetic variability is also triggered by cell fusion, which is often caused by viruses. Yet, cells fused by viruses are considered harmless because they die. We provide evidence that a primate virus uses both viral and exosomal proteins involved in cell fusion to produce transformed proliferating human cells. Although normal cells indeed fail to proliferate after fusion, expression of an oncogene or a mutated tumor suppressor p53 in just o",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:04.877639+00:00"
+}

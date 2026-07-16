@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15953181",
+  "source_fingerprint": "a8d51abbf5efd05722985799c9898a50",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15953181",
+    "a-method-of-comparing-the-areas-under-receiver-operating-characteristic-curves-derived-from-the-same-cases."
+  ],
+  "key_phrases": [
+    "method",
+    "comparing",
+    "areas",
+    "under",
+    "receiver",
+    "operating",
+    "characteristic",
+    "curves"
+  ],
+  "summary_1l": "A method of comparing the areas under receiver operating characteristic curves derived from the same cases.",
+  "query_hits": [],
+  "embed_text": "15953181 A method of comparing the areas under receiver operating characteristic curves derived from the same cases. science scifact Receiver operating characteristic (ROC) curves are used to describe and compare the performance of diagnostic technology and diagnostic algorithms. This paper refines the statistical comparison of the areas under two ROC curves derived… 15953181 a-method-of-comparing-the-areas-under-receiver-operating-characteristic-curves-derived-from-the-same-cases. method comparing areas under receiver operating characteristic curves A method of comparing the areas under receiver operating characteristic curves derived from the same cases. A method of comparing the areas under receiver operating characteristic curves derived from the same cases. Receiver operating characteristic (ROC) curves are used to describe and compare the performance of diagnostic technology and diagnostic algorithms. This paper refines the statistical comparison of the areas under two ROC curves derived from the same set of patients by taking into account the correlation between the areas that is induced by the paired nature of the data. The correspondence between the area under an ROC curve and the Wilcoxon statistic is used and underlying Gaussian distributions (binormal) are assumed to provide a table that converts the observed correlations in paired ratings of images into a correlation between the two ROC areas. This between-area correlation can b",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.533293+00:00"
+}

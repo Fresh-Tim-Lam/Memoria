@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7968532",
+  "source_fingerprint": "c8cdd934eab57efe5c2cce76f31a1727",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7968532",
+    "sting-and-the-innate-immune-response-to-nucleic-acids-in-the-cytosol"
+  ],
+  "key_phrases": [
+    "sting",
+    "innate",
+    "immune",
+    "response",
+    "nucleic",
+    "acids",
+    "cytosol",
+    "cytosolic"
+  ],
+  "summary_1l": "Cytosolic detection of pathogen-derived nucleic acids is critical for the initiation of innate immune defense against diverse bacte",
+  "query_hits": [],
+  "embed_text": "7968532 STING and the innate immune response to nucleic acids in the cytosol science scifact Cytosolic detection of pathogen-derived nucleic acids is critical for the initiation of innate immune defense against diverse bacterial, viral and eukaryotic pathogens. Conversely, inappropriate responses to cytosolic nucleic acids can… 7968532 sting-and-the-innate-immune-response-to-nucleic-acids-in-the-cytosol sting innate immune response nucleic acids cytosol cytosolic Cytosolic detection of pathogen-derived nucleic acids is critical for the initiation of innate immune defense against diverse bacte STING and the innate immune response to nucleic acids in the cytosol Cytosolic detection of pathogen-derived nucleic acids is critical for the initiation of innate immune defense against diverse bacterial, viral and eukaryotic pathogens. Conversely, inappropriate responses to cytosolic nucleic acids can produce severe autoimmune pathology. The host protein STING has been identified as a central signaling molecule in the innate immune response to cytosolic nucleic acids. STING seems to be especially critical for responses to cytosolic DNA and the unique bacterial nucleic acids called 'cyclic dinucleotides'. Here we discuss advances in the understanding of STING and highlight the many unresolved issues in the field.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.565223+00:00"
+}

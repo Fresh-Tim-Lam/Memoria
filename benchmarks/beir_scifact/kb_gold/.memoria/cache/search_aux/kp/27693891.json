@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27693891",
+  "source_fingerprint": "eb53a3268c4159342bc61ca8db596b20",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27693891",
+    "transcriptional-integration-of-mitochondrial-biogenesis."
+  ],
+  "key_phrases": [
+    "transcriptional",
+    "integration",
+    "mitochondrial",
+    "biogenesis",
+    "gene",
+    "regulatory",
+    "factors",
+    "encoded"
+  ],
+  "summary_1l": "Transcriptional integration of mitochondrial biogenesis.",
+  "query_hits": [],
+  "embed_text": "27693891 Transcriptional integration of mitochondrial biogenesis. science scifact Gene regulatory factors encoded by the nuclear genome are essential for mitochondrial biogenesis and function. Some of these factors act exclusively within the mitochondria to regulate the control of mitochondrial transcription,… 27693891 transcriptional-integration-of-mitochondrial-biogenesis. transcriptional integration mitochondrial biogenesis gene regulatory factors encoded Transcriptional integration of mitochondrial biogenesis. Transcriptional integration of mitochondrial biogenesis. Gene regulatory factors encoded by the nuclear genome are essential for mitochondrial biogenesis and function. Some of these factors act exclusively within the mitochondria to regulate the control of mitochondrial transcription, translation, and other functions. Others govern the expression of nuclear genes required for mitochondrial metabolism and organelle biogenesis. The peroxisome proliferator-activated receptor γ coactivator-1 (PGC-1) family of transcriptional coactivators play a major role in transducing and integrating physiological signals governing metabolism, differentiation, and cell growth to the transcriptional machinery controlling mitochondrial functional capacity. Thus, the PGC-1 coactivators serve as a central compon",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.217674+00:00"
+}

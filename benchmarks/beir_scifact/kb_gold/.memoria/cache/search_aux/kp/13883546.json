@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13883546",
+  "source_fingerprint": "586f7947f4c03bf96b2de25695afc1d0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13883546",
+    "do-antidepressants-cure-or-create-abnormal-brain-states?"
+  ],
+  "key_phrases": [
+    "do",
+    "antidepressants",
+    "cure",
+    "create",
+    "abnormal",
+    "brain",
+    "states",
+    "term"
+  ],
+  "summary_1l": "Do Antidepressants Cure or Create Abnormal Brain States?",
+  "query_hits": [],
+  "embed_text": "13883546 Do Antidepressants Cure or Create Abnormal Brain States? science scifact The term antidepressant refers to a drug that helps to rectify specific biological abnormalities that give rise to the symptoms of depression. This exemplifies what we have called the “disease-centred” model of psychotropic drug action [… 13883546 do-antidepressants-cure-or-create-abnormal-brain-states? do antidepressants cure create abnormal brain states term Do Antidepressants Cure or Create Abnormal Brain States? Do Antidepressants Cure or Create Abnormal Brain States? The term antidepressant refers to a drug that helps to rectify specific biological abnormalities that give rise to the symptoms of depression. This exemplifies what we have called the “disease-centred” model of psychotropic drug action [ 1]. Modelled on paradigmatic situations in general medicine—such as the use of insulin in diabetes, antibiotics in infectious disease, chemotherapy in cancer—the disease-centred model suggests that antidepressants help restore normal functioning by acting on the neuropathology of depression or of depressive symptoms. In contrast, we propose in this Essay that an alternative “drug-centred” model can better explain observed drug effects in psychiatric conditions. This drug-centred model suggests that i",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.311178+00:00"
+}

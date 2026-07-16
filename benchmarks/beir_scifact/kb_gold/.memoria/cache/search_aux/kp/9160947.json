@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9160947",
+  "source_fingerprint": "2ec01420f31575009a302ca1ffa00e83",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9160947",
+    "early-lymphocyte-expansion-is-severely-impaired-in-interleukin-7-receptor-deficient-mice"
+  ],
+  "key_phrases": [
+    "early",
+    "lymphocyte",
+    "expansion",
+    "severely",
+    "impaired",
+    "interleukin",
+    "receptor",
+    "deficient"
+  ],
+  "summary_1l": "Interleukin 7 (IL-7) stimulates the proliferation of B cell progenitors, thymocytes, and mature T cells through",
+  "query_hits": [],
+  "embed_text": "9160947 Early lymphocyte expansion is severely impaired in interleukin 7 receptor-deficient mice science scifact Interleukin 7 (IL-7) stimulates the proliferation of B cell progenitors, thymocytes, and mature T cells through an interaction with a high affinity receptor (IL-7R) belonging to the hematopoietin receptor superfamily. We have further… 9160947 early-lymphocyte-expansion-is-severely-impaired-in-interleukin-7-receptor-deficient-mice early lymphocyte expansion severely impaired interleukin receptor deficient Interleukin 7 (IL-7) stimulates the proliferation of B cell progenitors, thymocytes, and mature T cells through Early lymphocyte expansion is severely impaired in interleukin 7 receptor-deficient mice Interleukin 7 (IL-7) stimulates the proliferation of B cell progenitors, thymocytes, and mature T cells through an interaction with a high affinity receptor (IL-7R) belonging to the hematopoietin receptor superfamily. We have further addressed the role of IL-7 and its receptor during B and T cell development by generating mice genetically deficient in IL-7R. Mutant mice display a profound reduction in thymic and peripheral lymphoid cellularity. Analyses of lymphoid progenitor populations in IL-7R-deficient mice define precisely those developmental stages affected by the mutation and reveal a critical role for IL-7R during early lymphoid development. Significantly, these studies indicate that the phase",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.273982+00:00"
+}

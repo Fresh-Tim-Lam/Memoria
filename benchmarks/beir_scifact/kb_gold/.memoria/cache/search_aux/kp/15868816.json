@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15868816",
+  "source_fingerprint": "6ea2db5eed074e3ae8fc08297ba40b0c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15868816",
+    "the-par-proteins:-fundamental-players-in-animal-cell-polarization."
+  ],
+  "key_phrases": [
+    "par",
+    "proteins",
+    "fundamental",
+    "players",
+    "animal",
+    "cell",
+    "polarization",
+    "genes"
+  ],
+  "summary_1l": "The PAR proteins: fundamental players in animal cell polarization.",
+  "query_hits": [],
+  "embed_text": "15868816 The PAR proteins: fundamental players in animal cell polarization. science scifact The par genes were discovered in genetic screens for regulators of cytoplasmic partitioning in the early embryo of C. elegans, and encode six different proteins required for asymmetric cell division by the worm zygote. Some of the PAR… 15868816 the-par-proteins:-fundamental-players-in-animal-cell-polarization. par proteins fundamental players animal cell polarization genes The PAR proteins: fundamental players in animal cell polarization. The PAR proteins: fundamental players in animal cell polarization. The par genes were discovered in genetic screens for regulators of cytoplasmic partitioning in the early embryo of C. elegans, and encode six different proteins required for asymmetric cell division by the worm zygote. Some of the PAR proteins are localized asymmetrically and form physical complexes with one another. Strikingly, the PAR proteins have been found to regulate cell polarization in many different contexts in diverse animals, suggesting they form part of an ancient and fundamental mechanism for cell polarization. Although the picture of how the PAR proteins function remains incomplete, cell biology and biochemistry are beginning to explain how PAR proteins polarize cells.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.365655+00:00"
+}

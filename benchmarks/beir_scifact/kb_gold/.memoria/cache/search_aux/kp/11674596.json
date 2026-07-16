@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11674596",
+  "source_fingerprint": "cb47732e2ef2a9dfe839a4ab07aae1c3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11674596",
+    "spatiotemporal-control-of-mitosis-by-the-conserved-spindle-matrix-protein-megator"
+  ],
+  "key_phrases": [
+    "spatiotemporal",
+    "control",
+    "mitosis",
+    "by",
+    "conserved",
+    "spindle",
+    "matrix",
+    "protein"
+  ],
+  "summary_1l": "A putative spindle matrix has been hypothesized to mediate chromosome motion, but its existence and functionality rema",
+  "query_hits": [],
+  "embed_text": "11674596 Spatiotemporal control of mitosis by the conserved spindle matrix protein Megator science scifact A putative spindle matrix has been hypothesized to mediate chromosome motion, but its existence and functionality remain controversial. In this report, we show that Megator (Mtor), the Drosophila melanogaster counterpart of the human… 11674596 spatiotemporal-control-of-mitosis-by-the-conserved-spindle-matrix-protein-megator spatiotemporal control mitosis by conserved spindle matrix protein A putative spindle matrix has been hypothesized to mediate chromosome motion, but its existence and functionality rema Spatiotemporal control of mitosis by the conserved spindle matrix protein Megator A putative spindle matrix has been hypothesized to mediate chromosome motion, but its existence and functionality remain controversial. In this report, we show that Megator (Mtor), the Drosophila melanogaster counterpart of the human nuclear pore complex protein translocated promoter region (Tpr), and the spindle assembly checkpoint (SAC) protein Mad2 form a conserved complex that localizes to a nuclear derived spindle matrix in living cells. Fluorescence recovery after photobleaching experiments supports that Mtor is retained around spindle microtubules, where it shows distinct dynamic properties. Mtor/Tpr promotes the recruitment of Mad2 and Mps1 but not Mad1 to unattached kinetochores (KTs), mediating norm",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:06.931033+00:00"
+}

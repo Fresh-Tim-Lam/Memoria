@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7277084",
+  "source_fingerprint": "371bd773c396921af91a5ea58ba6474b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7277084",
+    "extraction-and-analysis-of-multiple-periodic-motions-in-video-sequences"
+  ],
+  "key_phrases": [
+    "extraction",
+    "analysis",
+    "multiple",
+    "periodic",
+    "motions",
+    "video",
+    "sequences",
+    "repetitive"
+  ],
+  "summary_1l": "The analysis of periodic or repetitive motions is useful in many applications, such as the recognition and classification of hum",
+  "query_hits": [],
+  "embed_text": "7277084 Extraction and Analysis of Multiple Periodic Motions in Video Sequences science scifact The analysis of periodic or repetitive motions is useful in many applications, such as the recognition and classification of human and animal activities. Existing methods for the analysis of periodic motions first extract motion… 7277084 extraction-and-analysis-of-multiple-periodic-motions-in-video-sequences extraction analysis multiple periodic motions video sequences repetitive The analysis of periodic or repetitive motions is useful in many applications, such as the recognition and classification of hum Extraction and Analysis of Multiple Periodic Motions in Video Sequences The analysis of periodic or repetitive motions is useful in many applications, such as the recognition and classification of human and animal activities. Existing methods for the analysis of periodic motions first extract motion trajectories using spatial information and then determine if they are periodic. These approaches are mostly based on feature matching or spatial correlation, which are often infeasible, unreliable, or computationally demanding. In this paper, we present a new approach, based on the time- frequency analysis of the video sequence as a whole. Multiple periodic trajectories are extracted and their periods are estimated simultaneously. The objects that are moving in a periodic manner are extracted u",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.969676+00:00"
+}

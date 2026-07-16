@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20943272",
+  "source_fingerprint": "87c241028a4ae0f1099e77a06a96c4a3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20943272",
+    "adam13-disintegrin-and-cysteine-rich-domains-bind-to-the-second-heparin-binding-domain-of-fibronectin."
+  ],
+  "key_phrases": [
+    "adam13",
+    "disintegrin",
+    "cysteine",
+    "rich",
+    "domains",
+    "bind",
+    "second",
+    "heparin"
+  ],
+  "summary_1l": "ADAM13 disintegrin and cysteine-rich domains bind to the second heparin-binding domain of fibronectin.",
+  "query_hits": [],
+  "embed_text": "20943272 ADAM13 disintegrin and cysteine-rich domains bind to the second heparin-binding domain of fibronectin. science scifact ADAM13 is a member of the disintegrin and metalloprotease protein family that is expressed on cranial neural crest cells surface and is essential for their migration. ADAM13 is an active protease that can cleave fibronectin in vitro and… 20943272 adam13-disintegrin-and-cysteine-rich-domains-bind-to-the-second-heparin-binding-domain-of-fibronectin. adam13 disintegrin cysteine rich domains bind second heparin ADAM13 disintegrin and cysteine-rich domains bind to the second heparin-binding domain of fibronectin. ADAM13 disintegrin and cysteine-rich domains bind to the second heparin-binding domain of fibronectin. ADAM13 is a member of the disintegrin and metalloprotease protein family that is expressed on cranial neural crest cells surface and is essential for their migration. ADAM13 is an active protease that can cleave fibronectin in vitro and remodel a fibronectin substrate in vivo. Using a recombinant secreted protein containing both disintegrin and cysteine-rich domains of ADAM13, we show that this \"adhesive\" region of the protein binds directly to fibronectin. Fibronectin fusion proteins corresponding to the various functional domains were used to define the second heparin-binding domain as the ADAM13 binding site. Mutation of the syndecan-binding site (PPRR --> PPTM) within this domain abol",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.153799+00:00"
+}

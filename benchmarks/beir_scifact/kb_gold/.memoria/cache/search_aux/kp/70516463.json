@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "70516463",
+  "source_fingerprint": "a7d1bbdfc3b09acf784c54cce4fd4743",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "70516463",
+    "to-err-is-human.-building-a-safer-health-system"
+  ],
+  "key_phrases": [
+    "err",
+    "human",
+    "building",
+    "safer",
+    "health",
+    "system",
+    "beings",
+    "make"
+  ],
+  "summary_1l": "To err is human.",
+  "query_hits": [],
+  "embed_text": "70516463 To err is human. Building a safer health system science scifact Human beings, make errors Healthcare Services is a complex industry prone to accidents. The IOM Report [1] points out that some systems are more prone to accidents than others. When a system fails there are often multiple faults. In… 70516463 to-err-is-human.-building-a-safer-health-system err human building safer health system beings make To err is human. To err is human. Building a safer health system Human beings, make errors Healthcare Services is a complex industry prone to accidents. The IOM Report [1] points out that some systems are more prone to accidents than others. When a system fails there are often multiple faults. In healthcare,human errors are the greatest contributors to accidents,however when human error is to blame it often depends upon failures within the system. These failures exists in the system before the error occurs, the same as with latent errors which are difficult to identify since they may be hidden in computers or within the various managerial layers. Most of the errors can be prevented by designing systems that make it hard for people to do the wrong thing and easy for people to do the right thing. In healthca",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.365295+00:00"
+}

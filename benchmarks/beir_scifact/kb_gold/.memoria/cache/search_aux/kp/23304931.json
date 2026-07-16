@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23304931",
+  "source_fingerprint": "febb6dbcbe594738a0e4d86d2aa7b286",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23304931",
+    "immunophenotypic-analysis-of-aids-related-diffuse-large-b-cell-lymphoma-and-clinical-implications-in-patients-from-aids-malignancies-consortium-clinical-trials-010-and-034"
+  ],
+  "key_phrases": [
+    "immunophenotypic",
+    "analysis",
+    "aids",
+    "related",
+    "diffuse",
+    "large",
+    "cell",
+    "lymphoma"
+  ],
+  "summary_1l": "PURPOSE Diffuse large B-cell",
+  "query_hits": [],
+  "embed_text": "23304931 Immunophenotypic analysis of AIDS-related diffuse large B-cell lymphoma and clinical implications in patients from AIDS malignancies consortium clinical trials 010 and 034 science scifact PURPOSE Diffuse large B-cell lymphoma (DLBCL) represents a clinically heterogeneous disease. Models based on immunohistochemistry predict clinical outcome. These include subdivision into germinal center (GC) versus non-GC subtypes;… 23304931 immunophenotypic-analysis-of-aids-related-diffuse-large-b-cell-lymphoma-and-clinical-implications-in-patients-from-aids-malignancies-consortium-clinical-trials-010-and-034 immunophenotypic analysis aids related diffuse large cell lymphoma PURPOSE Diffuse large B-cell Immunophenotypic analysis of AIDS-related diffuse large B-cell lymphoma and clinical implications in patients from AIDS malignancies consortium clinical trials 010 and 034 PURPOSE Diffuse large B-cell lymphoma (DLBCL) represents a clinically heterogeneous disease. Models based on immunohistochemistry predict clinical outcome. These include subdivision into germinal center (GC) versus non-GC subtypes; proliferation index (measured by expression of Ki-67), and expression of BCL-2, FOXP1, or B-lymphocyte-induced maturation protein (Blimp-1)/PRDM1. We sought to determine whether immunohistochemical analyses of biopsies from patients with DLBCL having HIV infection are similarly relevant for prognosis. PATIENTS AND METHODS We examined 81 DLBCLs from patients with AIDS in AMC010 (cyclophosphamid",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.231498+00:00"
+}

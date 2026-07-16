@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22968257",
+  "source_fingerprint": "4af90a053cd5f5cbd147fe01e698489a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22968257",
+    "histone/protein-deacetylase-inhibitors-increase-suppressive-functions-of-human-foxp3+-tregs."
+  ],
+  "key_phrases": [
+    "histone",
+    "protein",
+    "deacetylase",
+    "inhibitors",
+    "increase",
+    "suppressive",
+    "functions",
+    "human"
+  ],
+  "summary_1l": "Histone/protein deacetylase inhibitors increase suppressive functions of human FOXP3+ Tregs.",
+  "query_hits": [],
+  "embed_text": "22968257 Histone/protein deacetylase inhibitors increase suppressive functions of human FOXP3+ Tregs. science scifact Histone/protein deacetylases (HDACs) decrease histone and protein acetylation, typically leading to suppression of gene transcription and modulation of various protein functions. We found significant differences in expression of HDAC… 22968257 histone/protein-deacetylase-inhibitors-increase-suppressive-functions-of-human-foxp3+-tregs. histone protein deacetylase inhibitors increase suppressive functions human Histone/protein deacetylase inhibitors increase suppressive functions of human FOXP3+ Tregs. Histone/protein deacetylase inhibitors increase suppressive functions of human FOXP3+ Tregs. Histone/protein deacetylases (HDACs) decrease histone and protein acetylation, typically leading to suppression of gene transcription and modulation of various protein functions. We found significant differences in expression of HDAC before and after stimulation of human T regulatory (Treg) and T effector cells, suggesting the potential for future selective targeting of Tregs with HDAC inhibitors (HDACi). Use of various HDACi small molecules enhanced, by up to 4.5-fold (average 2-fold), the suppressive functions of both freshly isolated and expanded human Tregs, consistent with our previous murine data. HDACi use increased Treg expression of CTLA-4, a key negative regulator of immune response, and",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.641832+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "52925737",
+  "source_fingerprint": "19ced5edfe1b5b05a83e6d40ccee42a5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "52925737",
+    "tumor-derived-exosomes-induce-n2-polarization-of-neutrophils-to-promote-gastric-cancer-cell-migration"
+  ],
+  "key_phrases": [
+    "tumor",
+    "derived",
+    "exosomes",
+    "induce",
+    "n2",
+    "polarization",
+    "neutrophils",
+    "promote"
+  ],
+  "summary_1l": "BACKGROUND Exosomes are extracellular vesicles that mediate cellular communication in health and d",
+  "query_hits": [],
+  "embed_text": "52925737 Tumor-derived exosomes induce N2 polarization of neutrophils to promote gastric cancer cell migration science scifact BACKGROUND Exosomes are extracellular vesicles that mediate cellular communication in health and diseases. Neutrophils could be polarized to a pro-tumor phenotype by tumor. The function of tumor-derived exosomes in neutrophil regulation… 52925737 tumor-derived-exosomes-induce-n2-polarization-of-neutrophils-to-promote-gastric-cancer-cell-migration tumor derived exosomes induce n2 polarization neutrophils promote BACKGROUND Exosomes are extracellular vesicles that mediate cellular communication in health and d Tumor-derived exosomes induce N2 polarization of neutrophils to promote gastric cancer cell migration BACKGROUND Exosomes are extracellular vesicles that mediate cellular communication in health and diseases. Neutrophils could be polarized to a pro-tumor phenotype by tumor. The function of tumor-derived exosomes in neutrophil regulation remains unclear. METHODS We investigated the effects of gastric cancer cell-derived exosomes (GC-Ex) on the pro-tumor activation of neutrophils and elucidated the underlying mechanisms. RESULTS GC-Ex prolonged neutrophil survival and induced expression of inflammatory factors in neutrophils. GC-Ex-activated neutrophils, in turn, promoted gastric cancer cell migration. GC-Ex transported high mobility group box-1 (HMGB1) that activated NF-κB pathway through i",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.905372+00:00"
+}

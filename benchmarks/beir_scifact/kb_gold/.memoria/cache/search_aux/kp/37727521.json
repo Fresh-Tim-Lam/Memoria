@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "37727521",
+  "source_fingerprint": "88047a6e45038fedb3e2ae1075580676",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "37727521",
+    "eb-virus-encoded-rnas-are-recognized-by-rig-i-and-activate-signaling-to-induce-type-i-ifn."
+  ],
+  "key_phrases": [
+    "eb",
+    "virus",
+    "encoded",
+    "rnas",
+    "recognized",
+    "by",
+    "rig",
+    "activate"
+  ],
+  "summary_1l": "EB virus-encoded RNAs are recognized by RIG-I and activate signaling to induce type I IFN.",
+  "query_hits": [],
+  "embed_text": "37727521 EB virus-encoded RNAs are recognized by RIG-I and activate signaling to induce type I IFN. science scifact Epstein-Barr virus (EBV)-encoded small RNAs (EBERs) are nonpolyadenylated, untranslated RNAs, exist most abundantly in latently EBV-infected cells, and are expected to show secondary structures with many short stem-loops. Retinoic… 37727521 eb-virus-encoded-rnas-are-recognized-by-rig-i-and-activate-signaling-to-induce-type-i-ifn. eb virus encoded rnas recognized by rig activate EB virus-encoded RNAs are recognized by RIG-I and activate signaling to induce type I IFN. EB virus-encoded RNAs are recognized by RIG-I and activate signaling to induce type I IFN. Epstein-Barr virus (EBV)-encoded small RNAs (EBERs) are nonpolyadenylated, untranslated RNAs, exist most abundantly in latently EBV-infected cells, and are expected to show secondary structures with many short stem-loops. Retinoic acid-inducible gene I (RIG-I) is a cytosolic protein that detects viral double-stranded RNA (dsRNA) inside the cell and initiates signaling pathways leading to the induction of protective cellular genes, including type I interferons (IFNs). We investigated whether EBERs were recognized by RIG-I as dsRNA. Transfection of RIG-I plasmid induced IFNs and IFN-stimulated genes (ISGs) in EBV-positive Burkitt's lymphoma (BL) cells, but not in their EBV-negative counterparts or EBER",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.891477+00:00"
+}

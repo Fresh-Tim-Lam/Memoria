@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5278233",
+  "source_fingerprint": "d83df8df66c1b3a4e183f2cd64fb41e5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5278233",
+    "a-maternally-methylated-cpg-island-in-kvlqt1-is-associated-with-an-antisense-paternal-transcript-and-loss-of-imprinting-in-beckwith-wiedemann-syndrome."
+  ],
+  "key_phrases": [
+    "maternally",
+    "methylated",
+    "cpg",
+    "island",
+    "kvlqt1",
+    "associated",
+    "with",
+    "antisense"
+  ],
+  "summary_1l": "A maternally methylated CpG island in KvLQT1 is associated with an antisense paternal transcript and loss of imprinting in Beckwith-Wiedemann syndrome.",
+  "query_hits": [],
+  "embed_text": "5278233 A maternally methylated CpG island in KvLQT1 is associated with an antisense paternal transcript and loss of imprinting in Beckwith-Wiedemann syndrome. science scifact Loss of imprinting at IGF2, generally through an H19-independent mechanism, is associated with a large percentage of patients with the overgrowth and cancer predisposition condition Beckwith-Wiedemann syndrome (BWS). Imprinting control… 5278233 a-maternally-methylated-cpg-island-in-kvlqt1-is-associated-with-an-antisense-paternal-transcript-and-loss-of-imprinting-in-beckwith-wiedemann-syndrome. maternally methylated cpg island kvlqt1 associated with antisense A maternally methylated CpG island in KvLQT1 is associated with an antisense paternal transcript and loss of imprinting in Beckwith-Wiedemann syndrome. A maternally methylated CpG island in KvLQT1 is associated with an antisense paternal transcript and loss of imprinting in Beckwith-Wiedemann syndrome. Loss of imprinting at IGF2, generally through an H19-independent mechanism, is associated with a large percentage of patients with the overgrowth and cancer predisposition condition Beckwith-Wiedemann syndrome (BWS). Imprinting control elements are proposed to exist within the KvLQT1 locus, because multiple BWS-associated chromosome rearrangements disrupt this gene. We have identified an evolutionarily conserved, maternally methylated CpG island (KvDMR1) in an intron of the KvLQT1 gene. Among 12 cases of BWS with normal H19 methylation, 5 showed demethylation of KvDMR1 in fibroblast or lymphocyte DNA; whereas, in 4 cases of BWS with H19 hyp",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.735254+00:00"
+}

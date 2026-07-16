@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36242796",
+  "source_fingerprint": "6c8d86426e77e0b0edd65c6b9a485e73",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36242796",
+    "coordinate-regulation-of-the-il-4,-il-13,-and-il-5-cytokine-cluster-in-th2-clones-revealed-by-allelic-expression-patterns."
+  ],
+  "key_phrases": [
+    "coordinate",
+    "regulation",
+    "il",
+    "13",
+    "cytokine",
+    "cluster",
+    "th2",
+    "clones"
+  ],
+  "summary_1l": "Coordinate regulation of the IL-4, IL-13, and IL-5 cytokine cluster in Th2 clones revealed by allelic expression patterns.",
+  "query_hits": [],
+  "embed_text": "36242796 Coordinate regulation of the IL-4, IL-13, and IL-5 cytokine cluster in Th2 clones revealed by allelic expression patterns. science scifact The cytokines IL-4, IL-13, and IL-5 are markers for the Th2 subset of effector T cells and are often expressed together. These cytokine genes are organized within 140 kb of orthologous DNA in both mouse and human. Using IL-4-expressing… 36242796 coordinate-regulation-of-the-il-4,-il-13,-and-il-5-cytokine-cluster-in-th2-clones-revealed-by-allelic-expression-patterns. coordinate regulation il 13 cytokine cluster th2 clones Coordinate regulation of the IL-4, IL-13, and IL-5 cytokine cluster in Th2 clones revealed by allelic expression patterns. Coordinate regulation of the IL-4, IL-13, and IL-5 cytokine cluster in Th2 clones revealed by allelic expression patterns. The cytokines IL-4, IL-13, and IL-5 are markers for the Th2 subset of effector T cells and are often expressed together. These cytokine genes are organized within 140 kb of orthologous DNA in both mouse and human. Using IL-4-expressing CD4+ T cell clones derived from F1 mice, we identified allelic polymorphisms for each of these cytokines and assessed the parental identity of the cytokine mRNAs. Both monoallelic and biallelic expression occurred for each gene and for an additional gene, IL-3, that lies with GM-CSF over 450 kb telomeric on the same chromosome. When coexpressed in T cell clones, IL-4 was expressed from the same allele as IL-13 or IL-5 in 81% of instances",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:43.079476+00:00"
+}

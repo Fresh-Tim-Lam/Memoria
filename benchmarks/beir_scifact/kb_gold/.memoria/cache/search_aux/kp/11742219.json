@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11742219",
+  "source_fingerprint": "3e1eb40844cc5943db816a27990c8736",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11742219",
+    "regulation-and-effects-of-hypothalamic-galanin:-relation-to-dietary-fat,-alcohol-ingestion,-circulating-lipids-and-energy-homeostasis."
+  ],
+  "key_phrases": [
+    "regulation",
+    "effects",
+    "hypothalamic",
+    "galanin",
+    "relation",
+    "dietary",
+    "fat",
+    "alcohol"
+  ],
+  "summary_1l": "Regulation and effects of hypothalamic galanin: relation to dietary fat, alcohol ingestion, circulating lipids and energy homeostasis.",
+  "query_hits": [],
+  "embed_text": "11742219 Regulation and effects of hypothalamic galanin: relation to dietary fat, alcohol ingestion, circulating lipids and energy homeostasis. science scifact Galanin (GAL) is known to stimulate feeding behavior. This peptide has different properties and functions from other feeding stimulants, e.g., neuropeptide Y and agouti-related protein. Hypothalamic GAL is relatively unresponsive to food… 11742219 regulation-and-effects-of-hypothalamic-galanin:-relation-to-dietary-fat,-alcohol-ingestion,-circulating-lipids-and-energy-homeostasis. regulation effects hypothalamic galanin relation dietary fat alcohol Regulation and effects of hypothalamic galanin: relation to dietary fat, alcohol ingestion, circulating lipids and energy homeostasis. Regulation and effects of hypothalamic galanin: relation to dietary fat, alcohol ingestion, circulating lipids and energy homeostasis. Galanin (GAL) is known to stimulate feeding behavior. This peptide has different properties and functions from other feeding stimulants, e.g., neuropeptide Y and agouti-related protein. Hypothalamic GAL is relatively unresponsive to food deprivation and to changes in corticosterone, glucose utilization, dietary carbohydrate and leptin. This indicates that this peptide is not essential under conditions when food is scarce or low-energy, high-carbohydrate diets are being consumed. In contrast, recent evidence suggests that GAL in the paraventricular nucleus (PVN) functions in close relation to dietary fat and alcohol. In particular, it mediates functions that",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:07.072656+00:00"
+}

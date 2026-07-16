@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16510361",
+  "source_fingerprint": "ab5f0a046a4c4b9dd1d3a6c409e55ce2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16510361",
+    "feature-selection-with-the-boruta-package"
+  ],
+  "key_phrases": [
+    "feature",
+    "selection",
+    "with",
+    "boruta",
+    "package",
+    "this",
+    "article",
+    "describes"
+  ],
+  "summary_1l": "This article describes a R package Boruta, implementing a novel feature selection algorithm for finding emph{all relevant variables}.",
+  "query_hits": [],
+  "embed_text": "16510361 Feature Selection with the Boruta Package science scifact This article describes a R package Boruta, implementing a novel feature selection algorithm for finding emph{all relevant variables}. The algorithm is designed as a wrapper around a Random Forest classification algorithm. It iteratively… 16510361 feature-selection-with-the-boruta-package feature selection with boruta package this article describes This article describes a R package Boruta, implementing a novel feature selection algorithm for finding emph{all relevant variables}. Feature Selection with the Boruta Package This article describes a R package Boruta, implementing a novel feature selection algorithm for finding emph{all relevant variables}. The algorithm is designed as a wrapper around a Random Forest classification algorithm. It iteratively removes the features which are proved by a statistical test to be less relevant than random probes. The Boruta package provides a convenient interface to the algorithm. The short description of the algorithm and examples of its application are presented.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.379287+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5572127",
+  "source_fingerprint": "12233381fc0576a40ca0529a339b8f12",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5572127",
+    "atm-deficient-mice-exhibit-increased-sensitivity-to-dextran-sulfate-sodium-induced-colitis-characterized-by-elevated-dna-damage-and-persistent-immune-activation."
+  ],
+  "key_phrases": [
+    "atm",
+    "deficient",
+    "mice",
+    "exhibit",
+    "increased",
+    "sensitivity",
+    "dextran",
+    "sulfate"
+  ],
+  "summary_1l": "Atm-deficient mice exhibit increased sensitivity to dextran sulfate sodium-induced colitis characterized by elevated DNA damage and persistent immune activation.",
+  "query_hits": [],
+  "embed_text": "5572127 Atm-deficient mice exhibit increased sensitivity to dextran sulfate sodium-induced colitis characterized by elevated DNA damage and persistent immune activation. science scifact The role of ataxia telangiectasia mutated (ATM), a DNA double-strand break recognition and response protein, in inflammation and inflammatory diseases is unclear. We have previously shown that high levels of systemic DNA damage are induced… 5572127 atm-deficient-mice-exhibit-increased-sensitivity-to-dextran-sulfate-sodium-induced-colitis-characterized-by-elevated-dna-damage-and-persistent-immune-activation. atm deficient mice exhibit increased sensitivity dextran sulfate Atm-deficient mice exhibit increased sensitivity to dextran sulfate sodium-induced colitis characterized by elevated DNA damage and persistent immune activation. Atm-deficient mice exhibit increased sensitivity to dextran sulfate sodium-induced colitis characterized by elevated DNA damage and persistent immune activation. The role of ataxia telangiectasia mutated (ATM), a DNA double-strand break recognition and response protein, in inflammation and inflammatory diseases is unclear. We have previously shown that high levels of systemic DNA damage are induced by intestinal inflammation in wild-type mice. To determine the effect of Atm deficiency in inflammation, we induced experimental colitis in Atm(-/-), Atm(+/-), and wild-type mice via dextran sulfate sodium (DSS) administration. Atm(-/-) mice had higher disease activity indices and rates of mortality compared with heterozygous and wild-type mice. Systemic DNA damage and immune response were chara",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.642859+00:00"
+}

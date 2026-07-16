@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20501163",
+  "source_fingerprint": "be5e3905e848a5099439af6ccb1f0758",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20501163",
+    "tumor-induced-il-6-reprograms-host-metabolism-to-suppress-anti-tumor-immunity"
+  ],
+  "key_phrases": [
+    "tumor",
+    "induced",
+    "il",
+    "reprograms",
+    "host",
+    "metabolism",
+    "suppress",
+    "anti"
+  ],
+  "summary_1l": "In patients with cancer, the wasting syndrome, cachexia, is associated with caloric deficiency.",
+  "query_hits": [],
+  "embed_text": "20501163 Tumor-Induced IL-6 Reprograms Host Metabolism to Suppress Anti-tumor Immunity science scifact In patients with cancer, the wasting syndrome, cachexia, is associated with caloric deficiency. Here, we describe tumor-induced alterations of the host metabolic response to caloric deficiency that cause intratumoral immune suppression. In… 20501163 tumor-induced-il-6-reprograms-host-metabolism-to-suppress-anti-tumor-immunity tumor induced il reprograms host metabolism suppress anti In patients with cancer, the wasting syndrome, cachexia, is associated with caloric deficiency. Tumor-Induced IL-6 Reprograms Host Metabolism to Suppress Anti-tumor Immunity In patients with cancer, the wasting syndrome, cachexia, is associated with caloric deficiency. Here, we describe tumor-induced alterations of the host metabolic response to caloric deficiency that cause intratumoral immune suppression. In pre-cachectic mice with transplanted colorectal cancer or autochthonous pancreatic ductal adenocarcinoma (PDA), we find that IL-6 reduces the hepatic ketogenic potential through suppression of PPARalpha, the transcriptional master regulator of ketogenesis. When these mice are challenged with caloric deficiency, the resulting relative hypoketonemia triggers a marked rise in glucocorticoid levels. Multiple intratumoral immune pathways are suppressed by this hormonal stress respon",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.413350+00:00"
+}

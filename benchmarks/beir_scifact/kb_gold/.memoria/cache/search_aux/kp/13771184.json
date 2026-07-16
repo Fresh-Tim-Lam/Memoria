@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13771184",
+  "source_fingerprint": "39bbf20b22198cf2b3da84ed5a304b50",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13771184",
+    "human-recq-helicases-in-dna-repair,-recombination,-and-replication."
+  ],
+  "key_phrases": [
+    "human",
+    "recq",
+    "helicases",
+    "dna",
+    "repair",
+    "recombination",
+    "replication",
+    "important"
+  ],
+  "summary_1l": "Human RecQ helicases in DNA repair, recombination, and replication.",
+  "query_hits": [],
+  "embed_text": "13771184 Human RecQ helicases in DNA repair, recombination, and replication. science scifact RecQ helicases are an important family of genome surveillance proteins conserved from bacteria to humans. Each of the five human RecQ helicases plays critical roles in genome maintenance and stability, and the RecQ protein family members… 13771184 human-recq-helicases-in-dna-repair,-recombination,-and-replication. human recq helicases dna repair recombination replication important Human RecQ helicases in DNA repair, recombination, and replication. Human RecQ helicases in DNA repair, recombination, and replication. RecQ helicases are an important family of genome surveillance proteins conserved from bacteria to humans. Each of the five human RecQ helicases plays critical roles in genome maintenance and stability, and the RecQ protein family members are often referred to as guardians of the genome. The importance of these proteins in cellular homeostasis is underscored by the fact that defects in BLM, WRN, and RECQL4 are linked to distinct heritable human disease syndromes. Each human RecQ helicase has a unique set of protein-interacting partners, and these interactions dictate its specialized functions in genome maintenance, including DNA repair, recombination, replication, and transcription. Human RecQ helicases also interact with e",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.926367+00:00"
+}

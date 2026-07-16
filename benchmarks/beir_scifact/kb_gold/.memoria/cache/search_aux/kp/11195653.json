@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "11195653",
+  "source_fingerprint": "175c44b7f2154491e57d5c1b4d47b8ab",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11195653"
+  ],
+  "key_phrases": [
+    "opposing",
+    "effects",
+    "pkc",
+    "wasp",
+    "symmetry",
+    "breaking",
+    "relocation",
+    "immunological"
+  ],
+  "summary_1l": "The immunological synapse (IS) is a junction between the T cell and antigen-presenting cell and is co",
+  "query_hits": [],
+  "embed_text": "11195653 Opposing Effects of PKCθ and WASp on Symmetry Breaking and Relocation of the Immunological Synapse science scifact The immunological synapse (IS) is a junction between the T cell and antigen-presenting cell and is composed of supramolecular activation clusters (SMACs). No studies have been published on naive T cell IS dynamics. Here, we find that IS… 11195653 opposing effects pkc wasp symmetry breaking relocation immunological The immunological synapse (IS) is a junction between the T cell and antigen-presenting cell and is co Opposing Effects of PKCθ and WASp on Symmetry Breaking and Relocation of the Immunological Synapse The immunological synapse (IS) is a junction between the T cell and antigen-presenting cell and is composed of supramolecular activation clusters (SMACs). No studies have been published on naive T cell IS dynamics. Here, we find that IS formation during antigen recognition comprises cycles of stable IS formation and autonomous naive T cell migration. The migration phase is driven by PKCtheta, which is localized to the F-actin-dependent peripheral (p)SMAC. PKCtheta(-/-) T cells formed hyperstable IS in vitro and in vivo and, like WT cells, displayed fast oscillations in the distal SMAC, but they showed reduced slow oscillations in pSMAC integrity. IS reformation is driven by the Wiscott Aldric",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:06.053916+00:00"
+}

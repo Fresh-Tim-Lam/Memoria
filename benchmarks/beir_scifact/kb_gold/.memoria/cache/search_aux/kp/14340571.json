@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14340571",
+  "source_fingerprint": "fff4010efd020277bdb4487acb4f0ece",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14340571",
+    "the-molecular-basis-for-oat-intolerance-in-patients-with-celiac-disease"
+  ],
+  "key_phrases": [
+    "molecular",
+    "basis",
+    "oat",
+    "intolerance",
+    "patients",
+    "with",
+    "celiac",
+    "disease"
+  ],
+  "summary_1l": "Background Celiac disease is a small intestinal inflammatory disorder characterized by malabsorption, nutrient deficiency, and a",
+  "query_hits": [],
+  "embed_text": "14340571 The Molecular Basis for Oat Intolerance in Patients with Celiac Disease science scifact Background  Celiac disease is a small intestinal inflammatory disorder characterized by malabsorption, nutrient deficiency, and a range of clinical manifestations. It is caused by an inappropriate immune response to dietary gluten and is… 14340571 the-molecular-basis-for-oat-intolerance-in-patients-with-celiac-disease molecular basis oat intolerance patients with celiac disease Background Celiac disease is a small intestinal inflammatory disorder characterized by malabsorption, nutrient deficiency, and a The Molecular Basis for Oat Intolerance in Patients with Celiac Disease Background Celiac disease is a small intestinal inflammatory disorder characterized by malabsorption, nutrient deficiency, and a range of clinical manifestations. It is caused by an inappropriate immune response to dietary gluten and is treated with a gluten-free diet. Recent feeding studies have indicated oats to be safe for celiac disease patients, and oats are now often included in the celiac disease diet. This study aimed to investigate whether oat intolerance exists in celiac disease and to characterize the cells and processes underlying this intolerance. Methods and Findings We selected for study nine adults with celiac disease who had a history of oats exposure. Four of the patients had clinical symptoms on an o",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.661805+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "485020",
+  "source_fingerprint": "7df0bf4a3d582d089b7b26990f3e696b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "485020",
+    "case-management-and-client-access-to-health-and-social-services-in-outpatient-substance-abuse-treatment"
+  ],
+  "key_phrases": [
+    "case",
+    "management",
+    "client",
+    "access",
+    "health",
+    "social",
+    "services",
+    "outpatient"
+  ],
+  "summary_1l": "A primary goal of case management is to coordinate services across treatment settings and to int",
+  "query_hits": [],
+  "embed_text": "485020 Case Management and Client Access to Health and Social Services in Outpatient Substance Abuse Treatment science scifact A primary goal of case management is to coordinate services across treatment settings and to integrate substance abuse services with other types of services offered in the community, including housing, mental health, medical, and social… 485020 case-management-and-client-access-to-health-and-social-services-in-outpatient-substance-abuse-treatment case management client access health social services outpatient A primary goal of case management is to coordinate services across treatment settings and to int Case Management and Client Access to Health and Social Services in Outpatient Substance Abuse Treatment A primary goal of case management is to coordinate services across treatment settings and to integrate substance abuse services with other types of services offered in the community, including housing, mental health, medical, and social services. However, case management is a global construct that consists of several key dimensions, which include extent of case management coverage, the degree of management of the referral process, and the location of case management activity (on-site, off-site, or both). This study examines the relationship between specific dimensions of case management and the utilization of health and ancillary social services in outpatient substance abuse treatment. I",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.556875+00:00"
+}

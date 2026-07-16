@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17553026",
+  "source_fingerprint": "d11491bc554d09d1fa25a28f5870529e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17553026",
+    "a-specific-loop-in-human-dna-polymerase-mu-allows-switching-between-creative-and-dna-instructed-synthesis"
+  ],
+  "key_phrases": [
+    "specific",
+    "loop",
+    "human",
+    "dna",
+    "polymerase",
+    "mu",
+    "allows",
+    "switching"
+  ],
+  "summary_1l": "Human DNA polymerase mu (Polμ) is a family X member that has terminal transferase activity but",
+  "query_hits": [],
+  "embed_text": "17553026 A specific loop in human DNA polymerase mu allows switching between creative and DNA-instructed synthesis science scifact Human DNA polymerase mu (Polμ) is a family X member that has terminal transferase activity but, in spite of a non-orthodox selection of the template information, displays its maximal catalytic efficiency in DNA-templated reactions. As… 17553026 a-specific-loop-in-human-dna-polymerase-mu-allows-switching-between-creative-and-dna-instructed-synthesis specific loop human dna polymerase mu allows switching Human DNA polymerase mu (Polμ) is a family X member that has terminal transferase activity but A specific loop in human DNA polymerase mu allows switching between creative and DNA-instructed synthesis Human DNA polymerase mu (Polμ) is a family X member that has terminal transferase activity but, in spite of a non-orthodox selection of the template information, displays its maximal catalytic efficiency in DNA-templated reactions. As terminal deoxynucleotidyl transferase (TdT), Polμ has a specific loop (loop1) that could provide this enzyme with its terminal transferase activity. When loop1 was deleted, human Polμ lacked TdT activity but improved DNA-binding and DNA template-dependent polymerization. Interestingly, when loop1 from TdT was inserted in Polμ (substituting its cognate loop1), the resulting chimaera displayed TdT activity, preferentially inserting dGTP residues, but had a",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.940846+00:00"
+}

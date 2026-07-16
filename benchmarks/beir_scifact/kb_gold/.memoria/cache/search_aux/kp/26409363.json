@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26409363",
+  "source_fingerprint": "46f7576390eaab1911834b725f05c12d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26409363",
+    "diminished-linear-growth-during-intermittent-calcitriol-therapy-in-children-undergoing-ccpd."
+  ],
+  "key_phrases": [
+    "diminished",
+    "linear",
+    "growth",
+    "during",
+    "intermittent",
+    "calcitriol",
+    "therapy",
+    "children"
+  ],
+  "summary_1l": "Diminished linear growth during intermittent calcitriol therapy in children undergoing CCPD.",
+  "query_hits": [],
+  "embed_text": "26409363 Diminished linear growth during intermittent calcitriol therapy in children undergoing CCPD. science scifact Daily calcitriol therapy has been reported to improve linear growth in children with renal bone disease, and 1,25-dihydroxyvitamin D is a key regultor of chondrocyte proliferation and differentiation. Whereas large intermittent doses of… 26409363 diminished-linear-growth-during-intermittent-calcitriol-therapy-in-children-undergoing-ccpd. diminished linear growth during intermittent calcitriol therapy children Diminished linear growth during intermittent calcitriol therapy in children undergoing CCPD. Diminished linear growth during intermittent calcitriol therapy in children undergoing CCPD. Daily calcitriol therapy has been reported to improve linear growth in children with renal bone disease, and 1,25-dihydroxyvitamin D is a key regultor of chondrocyte proliferation and differentiation. Whereas large intermittent doses of calcitriol can lower serum parathyroid hormone (PTH) levels and reverse the skeletal changes of secondary hyperparathyroidism, the impact of intermittent calcitriol therapy on linear growth in children is not known. Thus, we studied 16 pre-pubertal patients with bone biopsy-proven secondary hyperparathyroidism who completed a 12-month prospective clinical trial of intermittent calcitriol therapy. Biochemical results and growth data obtained during intermittent calci",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.707319+00:00"
+}

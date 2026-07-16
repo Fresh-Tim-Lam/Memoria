@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25263942",
+  "source_fingerprint": "97733491071441be40353dc9aea2f031",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25263942",
+    "stromal-p16-expression-differentiates-endometrial-polyp-from-endometrial-hyperplasia"
+  ],
+  "key_phrases": [
+    "stromal",
+    "p16",
+    "expression",
+    "differentiates",
+    "endometrial",
+    "polyp",
+    "from",
+    "hyperplasia"
+  ],
+  "summary_1l": "Endometrial polyps are very common benign endometrial lesions, but their pathogenesis is poorly understood, except",
+  "query_hits": [],
+  "embed_text": "25263942 Stromal p16 expression differentiates endometrial polyp from endometrial hyperplasia science scifact Endometrial polyps are very common benign endometrial lesions, but their pathogenesis is poorly understood, except for a few studies indicating the possibility of benign stromal neoplasm. Although the histopathological diagnosis of… 25263942 stromal-p16-expression-differentiates-endometrial-polyp-from-endometrial-hyperplasia stromal p16 expression differentiates endometrial polyp from hyperplasia Endometrial polyps are very common benign endometrial lesions, but their pathogenesis is poorly understood, except Stromal p16 expression differentiates endometrial polyp from endometrial hyperplasia Endometrial polyps are very common benign endometrial lesions, but their pathogenesis is poorly understood, except for a few studies indicating the possibility of benign stromal neoplasm. Although the histopathological diagnosis of endometrial polyp on a surgical specimen is straightforward, it is often difficult to differentiate endometrial polyp from endometrial hyperplasia on a biopsy or curettage specimen. Presently, there is no immunohistochemical marker helpful in this differential diagnosis. In this study, we examined p16 expression in 35 endometrial polyps and 33 cases of endometrial hyperplasia that included 16 simple hyperplasias, 14 complex atypical hyperplasias, and 3 complex hyperplasias witho",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.271509+00:00"
+}

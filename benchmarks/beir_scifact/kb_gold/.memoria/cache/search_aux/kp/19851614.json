@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19851614",
+  "source_fingerprint": "7a9d9c7a03c8ed65f0bc012cb6459373",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19851614",
+    "polyphosphate-kinase-1,-a-central-node-in-the-stress-response-network-of-mycobacterium-tuberculosis,-connects-the-two-component-systems-mprab-and-senx3-regx3-and-the-extracytoplasmic-function-sigma-factor,-sigma-e."
+  ],
+  "key_phrases": [
+    "polyphosphate",
+    "kinase",
+    "central",
+    "node",
+    "stress",
+    "response",
+    "network",
+    "mycobacterium"
+  ],
+  "summary_1l": "Polyphosphate kinase 1, a central node in the stress response network of Mycobacterium tuberculosis, connects the two-component systems MprAB and SenX3-RegX3 and the extracytoplasmic function sigma fa",
+  "query_hits": [],
+  "embed_text": "19851614 Polyphosphate kinase 1, a central node in the stress response network of Mycobacterium tuberculosis, connects the two-component systems MprAB and SenX3-RegX3 and the extracytoplasmic function sigma factor, sigma E. science scifact Polyphosphate (poly P) metabolism regulates the stress response in mycobacteria. Here we describe the regulatory architecture of a signal transduction system involving the two-component system (TCS) SenX3-RegX3, the extracytoplasmic… 19851614 polyphosphate-kinase-1,-a-central-node-in-the-stress-response-network-of-mycobacterium-tuberculosis,-connects-the-two-component-systems-mprab-and-senx3-regx3-and-the-extracytoplasmic-function-sigma-factor,-sigma-e. polyphosphate kinase central node stress response network mycobacterium Polyphosphate kinase 1, a central node in the stress response network of Mycobacterium tuberculosis, connects the two-component systems MprAB and SenX3-RegX3 and the extracytoplasmic function sigma fa Polyphosphate kinase 1, a central node in the stress response network of Mycobacterium tuberculosis, connects the two-component systems MprAB and SenX3-RegX3 and the extracytoplasmic function sigma factor, sigma E. Polyphosphate (poly P) metabolism regulates the stress response in mycobacteria. Here we describe the regulatory architecture of a signal transduction system involving the two-component system (TCS) SenX3-RegX3, the extracytoplasmic function sigma factor sigma E (SigE) and the poly P-synthesizing enzyme polyphosphate kinase 1 (PPK1). The ppk1 promoter of Mycobacterium tuberculosis is activated under phosphate starvation. This is attenuated upon deletion of an imperfect palindrome likely representing a binding site for the response regulator RegX3, a component of the two-componen",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.292337+00:00"
+}

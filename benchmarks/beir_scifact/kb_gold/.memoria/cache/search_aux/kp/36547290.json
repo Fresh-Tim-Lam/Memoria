@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36547290",
+  "source_fingerprint": "b31d21bc0460b7882ecd791b66a6db33",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36547290",
+    "brahma-related-gene-1-dependent-stat3-recruitment-at-il-6-inducible-genes."
+  ],
+  "key_phrases": [
+    "brahma",
+    "related",
+    "gene",
+    "dependent",
+    "stat3",
+    "recruitment",
+    "at",
+    "il"
+  ],
+  "summary_1l": "Brahma-related gene 1-dependent STAT3 recruitment at IL-6-inducible genes.",
+  "query_hits": [],
+  "embed_text": "36547290 Brahma-related gene 1-dependent STAT3 recruitment at IL-6-inducible genes. science scifact IL-6 is an immunoregulatory cytokine with multiple functions in hemopoiesis, proliferation, and tumorigenesis. IL-6 triggers phosphorylation, dimerization, and nuclear translocation of STAT3, which binds to target promoters and activates… 36547290 brahma-related-gene-1-dependent-stat3-recruitment-at-il-6-inducible-genes. brahma related gene dependent stat3 recruitment at il Brahma-related gene 1-dependent STAT3 recruitment at IL-6-inducible genes. Brahma-related gene 1-dependent STAT3 recruitment at IL-6-inducible genes. IL-6 is an immunoregulatory cytokine with multiple functions in hemopoiesis, proliferation, and tumorigenesis. IL-6 triggers phosphorylation, dimerization, and nuclear translocation of STAT3, which binds to target promoters and activates transcription. Brahma-related gene 1 (BRG1), the enzymatic engine of the yeast-mating type-switching and sucrose-nonfermenting chromatin-remodeling complex, is essential for recruitment of STAT1 or STAT1/STAT2-containing complexes to IFN targets. We hypothesized that BRG1 might also be required for STAT3 recruitment. In this study, we show that induction of a subset of human IL-6-responsive genes is BRG1 dependent. BRG1 is constitutively present at these targets and is required for",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:43.475103+00:00"
+}

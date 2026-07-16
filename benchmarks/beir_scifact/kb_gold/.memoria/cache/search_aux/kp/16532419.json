@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16532419",
+  "source_fingerprint": "1ecb1c2522b446a19d0ea1cc3b5aab10",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16532419",
+    "induction-of-stem-like-cells-with-malignant-properties-by-chronic-exposure-of-human-lung-epithelial-cells-to-single-walled-carbon-nanotubes"
+  ],
+  "key_phrases": [
+    "induction",
+    "stem",
+    "like",
+    "cells",
+    "with",
+    "malignant",
+    "properties",
+    "by"
+  ],
+  "summary_1l": "BACKGROUND Carbon nanotubes (CNT) hold great promise to crea",
+  "query_hits": [],
+  "embed_text": "16532419 Induction of stem-like cells with malignant properties by chronic exposure of human lung epithelial cells to single-walled carbon nanotubes science scifact BACKGROUND Carbon nanotubes (CNT) hold great promise to create new and better products for commercial and biomedical applications, but their long-term adverse health effects are a major concern. The objective of this study was to address… 16532419 induction-of-stem-like-cells-with-malignant-properties-by-chronic-exposure-of-human-lung-epithelial-cells-to-single-walled-carbon-nanotubes induction stem like cells with malignant properties by BACKGROUND Carbon nanotubes (CNT) hold great promise to crea Induction of stem-like cells with malignant properties by chronic exposure of human lung epithelial cells to single-walled carbon nanotubes BACKGROUND Carbon nanotubes (CNT) hold great promise to create new and better products for commercial and biomedical applications, but their long-term adverse health effects are a major concern. The objective of this study was to address human lung cancer risks associated with chronic pulmonary exposure to single-walled (SW) CNT through the fundamental understanding of cellular and molecular processes leading to carcinogenesis. We hypothesized that the acquisition of cancer stem cells (CSC), a subpopulation that drive tumor initiation and progression, may contribute to CNT carcinogenesis. METHODS Non-tumorigenic human lung epithelial cells were chronic",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.417795+00:00"
+}

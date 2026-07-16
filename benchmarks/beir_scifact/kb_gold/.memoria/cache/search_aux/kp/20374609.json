@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20374609",
+  "source_fingerprint": "323fde006a7ab80a59b03f4a83d82e06",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20374609",
+    "in-vitro-splicing-pathways-of-pre-mrnas-containing-multiple-intervening-sequences?"
+  ],
+  "key_phrases": [
+    "vitro",
+    "splicing",
+    "pathways",
+    "pre",
+    "mrnas",
+    "containing",
+    "multiple",
+    "intervening"
+  ],
+  "summary_1l": "In vitro splicing pathways of pre-mRNAs containing multiple intervening sequences?",
+  "query_hits": [],
+  "embed_text": "20374609 In vitro splicing pathways of pre-mRNAs containing multiple intervening sequences? science scifact We analyzed the in vitro splicing pathways of three multi-intervening-sequence (IVS) pre-mRNAs: human beta-globin, which contains two IVSs (K. M. Lang, V. L. van Santen, and R. A. Spritz, EMBO J. 4:1991-1996, 1985); rat alpha-lactalbumin,… 20374609 in-vitro-splicing-pathways-of-pre-mrnas-containing-multiple-intervening-sequences? vitro splicing pathways pre mrnas containing multiple intervening In vitro splicing pathways of pre-mRNAs containing multiple intervening sequences? In vitro splicing pathways of pre-mRNAs containing multiple intervening sequences? We analyzed the in vitro splicing pathways of three multi-intervening-sequence (IVS) pre-mRNAs: human beta-globin, which contains two IVSs (K. M. Lang, V. L. van Santen, and R. A. Spritz, EMBO J. 4:1991-1996, 1985); rat alpha-lactalbumin, which contains three IVSs; and murine interleukin-3, which contains four IVSs. We found that there are highly preferred pathways of IVS removal from these multi-IVS pre-mRNAs in vitro. The three IVSs of rat alpha-lactalbumin pre-mRNA were excised sequentially from 5' to 3'; in most molecules, IVS1 was removed first, followed by IVS2 and finally by IVS3. The splicing pathway of interleukin-3 pre-mRNA in vitro was more complex. The four IVSs were excised in a highly preferred",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.153686+00:00"
+}

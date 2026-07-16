@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6061927",
+  "source_fingerprint": "b136a86cabeff3191ecdc68ecfc88ba9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6061927",
+    "glucose-sensing-in-l-cells:-a-primary-cell-study"
+  ],
+  "key_phrases": [
+    "glucose",
+    "sensing",
+    "cells",
+    "primary",
+    "cell",
+    "study",
+    "glucagon",
+    "like"
+  ],
+  "summary_1l": "Glucagon-like peptide-1 (GLP-1) is an enteric hormone that stimulates insulin secretion and improves glycaemia in type 2 diabetes.",
+  "query_hits": [],
+  "embed_text": "6061927 Glucose Sensing in L Cells: A Primary Cell Study science scifact Glucagon-like peptide-1 (GLP-1) is an enteric hormone that stimulates insulin secretion and improves glycaemia in type 2 diabetes. Although GLP-1-based treatments are clinically available, alternative strategies to increase endogenous… 6061927 glucose-sensing-in-l-cells:-a-primary-cell-study glucose sensing cells primary cell study glucagon like Glucagon-like peptide-1 (GLP-1) is an enteric hormone that stimulates insulin secretion and improves glycaemia in type 2 diabetes. Glucose Sensing in L Cells: A Primary Cell Study Glucagon-like peptide-1 (GLP-1) is an enteric hormone that stimulates insulin secretion and improves glycaemia in type 2 diabetes. Although GLP-1-based treatments are clinically available, alternative strategies to increase endogenous GLP-1 release from L cells are hampered by our limited physiological understanding of this cell type. By generating transgenic mice with L cell-specific expression of a fluorescent protein, we studied the characteristics of primary L cells by electrophysiology, fluorescence calcium imaging, and expression analysis and show that single L cells are electrically excitable and glucose responsive. Sensitivity to tolbutamide and low-millimolar concentrations of glucose and alpha-methylglucopyranoside, assessed in sin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.822575+00:00"
+}

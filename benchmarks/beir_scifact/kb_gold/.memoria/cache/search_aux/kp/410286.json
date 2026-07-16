@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "410286",
+  "source_fingerprint": "f4ecd70c36bfdd47a16587be2e953bd4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "410286",
+    "technical-advance-floral-dip:-a-simplified-method-for-agrobacterium-mediated"
+  ],
+  "key_phrases": [
+    "technical",
+    "advance",
+    "floral",
+    "dip",
+    "simplified",
+    "method",
+    "agrobacterium",
+    "mediated"
+  ],
+  "summary_1l": "The Agrobacterium vacuum infiltration method has made it possible to transform Arabidopsis thaliana without plant tissue cu",
+  "query_hits": [],
+  "embed_text": "410286 TECHNICAL ADVANCE Floral dip: a simplified method for Agrobacterium-mediated science scifact The Agrobacterium vacuum infiltration method has made it possible to transform Arabidopsis thaliana without plant tissue culture or regeneration. In the present study, this method was evaluated and a substantially modified transformation… 410286 technical-advance-floral-dip:-a-simplified-method-for-agrobacterium-mediated technical advance floral dip simplified method agrobacterium mediated The Agrobacterium vacuum infiltration method has made it possible to transform Arabidopsis thaliana without plant tissue cu TECHNICAL ADVANCE Floral dip: a simplified method for Agrobacterium-mediated The Agrobacterium vacuum infiltration method has made it possible to transform Arabidopsis thaliana without plant tissue culture or regeneration. In the present study, this method was evaluated and a substantially modified transformation method was developed. The labor-intensive vacuum infiltration process was eliminated in favor of simple dipping of developing floral tissues into a solution containing Agrobacterium tumefaciens, 5% sucrose and 500 microliters per litre of surfactant Silwet L-77. Sucrose and surfactant were critical to the success of the floral dip method. Plants inoculated when numerous immature floral buds and few siliques were present produced transformed progeny at the highest rate. Plant tissu",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.074389+00:00"
+}

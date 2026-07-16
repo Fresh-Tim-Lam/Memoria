@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "1031534",
+  "source_fingerprint": "e4ab37e5f34fe1fa452edb3241b937c3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1031534"
+  ],
+  "key_phrases": [
+    "scaling",
+    "dorsal",
+    "ventral",
+    "patterning",
+    "by",
+    "embryo",
+    "size",
+    "dependent"
+  ],
+  "summary_1l": "Spemann's organizer plays a key role in dorsal-ventral (DV) patterning in the amphibian embryo",
+  "query_hits": [],
+  "embed_text": "1031534 Scaling of Dorsal-Ventral Patterning by Embryo Size-Dependent Degradation of Spemann’s Organizer Signals science scifact Spemann's organizer plays a key role in dorsal-ventral (DV) patterning in the amphibian embryo by secreting diffusible proteins such as Chordin, an antagonist to ventralizing bone morphogenetic proteins (BMPs). The DV patterning is so… 1031534 scaling dorsal ventral patterning by embryo size dependent Spemann's organizer plays a key role in dorsal-ventral (DV) patterning in the amphibian embryo Scaling of Dorsal-Ventral Patterning by Embryo Size-Dependent Degradation of Spemann’s Organizer Signals Spemann's organizer plays a key role in dorsal-ventral (DV) patterning in the amphibian embryo by secreting diffusible proteins such as Chordin, an antagonist to ventralizing bone morphogenetic proteins (BMPs). The DV patterning is so robust that an amphibian embryo with its ventral half surgically removed can develop into a smaller but proportionally patterned larva. Here, we show that this robust patterning depends on facilitated Chordin degradation and requires the expression of the Chordin-proteinase inhibitor Sizzled on the opposite side. Sizzled, which is stable and diffuses widely along the DV axis, stabilizes Chordin and expands its distribution in the ventral direction. This ex",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.451648+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9555784",
+  "source_fingerprint": "f45165b75400bef913099c4194adf24d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9555784",
+    "vitamin-d-deficiency-in-postmenopausal-women---biological-correlates."
+  ],
+  "key_phrases": [
+    "vitamin",
+    "deficiency",
+    "postmenopausal",
+    "women",
+    "biological",
+    "correlates",
+    "introduction",
+    "low"
+  ],
+  "summary_1l": "Vitamin d deficiency in postmenopausal women - biological correlates.",
+  "query_hits": [],
+  "embed_text": "9555784 Vitamin d deficiency in postmenopausal women - biological correlates. science scifact INTRODUCTION Low vitamin D (VD) is associated with secondary hyperparathyroidism and both contribute to deleterious consequences (reduced bone mineral density (BMD), risk of fractures and falls). OBJECTIVE To study the VD status and… 9555784 vitamin-d-deficiency-in-postmenopausal-women---biological-correlates. vitamin deficiency postmenopausal women biological correlates introduction low Vitamin d deficiency in postmenopausal women - biological correlates. Vitamin d deficiency in postmenopausal women - biological correlates. INTRODUCTION Low vitamin D (VD) is associated with secondary hyperparathyroidism and both contribute to deleterious consequences (reduced bone mineral density (BMD), risk of fractures and falls). OBJECTIVE To study the VD status and biological correlates in a group of postmenopausal women. MATERIAL AND METHODS We studied 123 postmenopausal women evaluated in the C.I.Parhon National Institute of Endocrinology, the Pituitary and Neuroendocrine Diseases department. All cases had been reffered for the evaluation of BMD by the general practitioner. The evaluation included serum measurements of total and ionised calcium, phosphorus, alkaline phosphatase (ALP), 25 hydroxi vitaminD (25OHD), parathyroid hormone (PTH), osteocalcin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.217344+00:00"
+}

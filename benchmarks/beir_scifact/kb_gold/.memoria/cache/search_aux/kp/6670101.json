@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6670101",
+  "source_fingerprint": "3a2132bd95b42d4a482161b2a63c8633",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6670101",
+    "ribosome-biogenesis:-achilles-heel-of-cancer?"
+  ],
+  "key_phrases": [
+    "ribosome",
+    "biogenesis",
+    "achilles",
+    "heel",
+    "cancer",
+    "it",
+    "long",
+    "been"
+  ],
+  "summary_1l": "Ribosome biogenesis: Achilles heel of cancer?",
+  "query_hits": [],
+  "embed_text": "6670101 Ribosome biogenesis: Achilles heel of cancer? science scifact It is long been known that cancer and non-cancer cells can be distinguished on the basis of their nucleolar morphologies. As early as the 19th century, it was reported that cancer cells have larger and more irregularly shaped nucleoli.… 6670101 ribosome-biogenesis:-achilles-heel-of-cancer? ribosome biogenesis achilles heel cancer it long been Ribosome biogenesis: Achilles heel of cancer? Ribosome biogenesis: Achilles heel of cancer? It is long been known that cancer and non-cancer cells can be distinguished on the basis of their nucleolar morphologies. As early as the 19th century, it was reported that cancer cells have larger and more irregularly shaped nucleoli. Since then, pathologists have used nucleolar morphology to predict the clinical outcome [1]. Nucleolar morphology is altered due to the up-regulation of ribosomal gene transcription. Within nucleoli, ribosomal genes (rDNA) are transcribed by RNA polymerase I (pol I). The pre-ribosomal RNA (pre-rRNA) transcripts are subsequently modified and processed into the mature 18S, 5.8S and 28S rRNAs. 5S rRNA is transcribed by RNA polymerase III in the nucleoplasm. Together with the ribosomal proteins, the 5S rRNA is import",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.406195+00:00"
+}

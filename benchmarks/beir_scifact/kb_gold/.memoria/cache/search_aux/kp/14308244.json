@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14308244",
+  "source_fingerprint": "0226eff7279475c11e58628db60c231e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14308244",
+    "interneuronal-disc1-regulates-nrg1-erbb4-signalling-and-excitatory-inhibitory-synapse-formation-in-the-mature-cortex."
+  ],
+  "key_phrases": [
+    "interneuronal",
+    "disc1",
+    "regulates",
+    "nrg1",
+    "erbb4",
+    "signalling",
+    "excitatory",
+    "inhibitory"
+  ],
+  "summary_1l": "Interneuronal DISC1 regulates NRG1-ErbB4 signalling and excitatory-inhibitory synapse formation in the mature cortex.",
+  "query_hits": [],
+  "embed_text": "14308244 Interneuronal DISC1 regulates NRG1-ErbB4 signalling and excitatory-inhibitory synapse formation in the mature cortex. science scifact Neuregulin-1 (NRG1) and its receptor ErbB4 influence several processes of neurodevelopment, but the mechanisms regulating this signalling in the mature brain are not well known. DISC1 is a multifunctional scaffold protein that mediates… 14308244 interneuronal-disc1-regulates-nrg1-erbb4-signalling-and-excitatory-inhibitory-synapse-formation-in-the-mature-cortex. interneuronal disc1 regulates nrg1 erbb4 signalling excitatory inhibitory Interneuronal DISC1 regulates NRG1-ErbB4 signalling and excitatory-inhibitory synapse formation in the mature cortex. Interneuronal DISC1 regulates NRG1-ErbB4 signalling and excitatory-inhibitory synapse formation in the mature cortex. Neuregulin-1 (NRG1) and its receptor ErbB4 influence several processes of neurodevelopment, but the mechanisms regulating this signalling in the mature brain are not well known. DISC1 is a multifunctional scaffold protein that mediates many cellular processes. Here we present a functional relationship between DISC1 and NRG1-ErbB4 signalling in mature cortical interneurons. By cell type-specific gene modulation in vitro and in vivo including in a mutant DISC1 mouse model, we demonstrate that DISC1 inhibits NRG1-induced ErbB4 activation and signalling. This effect is likely mediated by competitive inhibition of binding of ErbB4 to PSD95. Finally, we show that interneuronal DI",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.521756+00:00"
+}

@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "kp_id": "2871036#9",
+  "source_fingerprint": "9dde16bf8cbecd30532def30aecc145e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "中国国家女子足球队",
+    "国家公务员考试",
+    "西班牙语国家和地区列表",
+    "美国人口",
+    "中国国家铁路集团",
+    "中国科学院国家天文台",
+    "亚美尼亚国家美术馆",
+    "俄语国家和地区列表",
+    "再城市化",
+    "南美洲国家联盟",
+    "印度人口",
+    "印度人口政策"
+  ],
+  "aliases": [
+    "2871036#9"
+  ],
+  "key_phrases": [
+    "城市化",
+    "过度",
+    "over",
+    "urbanization",
+    "或称",
+    "虚假",
+    "pseudo",
+    "指因"
+  ],
+  "summary_1l": "过度城市化（over-urbanization），或称虚假城市化（pseudo-urbanization），是指因城市发展水平和速度超出了当地的工农业发展水平而无力承担大量涌入的人口。",
+  "query_hits": [],
+  "embed_text": "2871036#9 城市化 城市化 过度城市化（over-urbanization），或称虚假城市化（pseudo-urbanization），是指因城市发展水平和速度超出了当地的工农业发展水平而无力承担大量涌入的人口。由此导致城市人口严重超载、失业率居高不下、城市贫富悬殊、贫困人口向城市转移、城市被贫民窟包围、环境污染、治安混乱、社会失序、政局动荡、资源生态遭到破坏等后果。许多拉丁美洲国家正面临过度城市化的困扰。 中国国家女子足球队 国家公务员考试 西班牙语国家和地区列表 美国人口 中国国家铁路集团 中国科学院国家天文台 亚美尼亚国家美术馆 俄语国家和地区列表 再城市化 南美洲国家联盟 印度人口 印度人口政策 2871036#9 城市化 过度 over urbanization 或称 虚假 pseudo 指因 过度城市化（over-urbanization），或称虚假城市化（pseudo-urbanization），是指因城市发展水平和速度超出了当地的工农业发展水平而无力承担大量涌入的人口。 城市化 过度城市化（over-urbanization），或称虚假城市化（pseudo-urbanization），是指因城市发展水平和速度超出了当地的工农业发展水平而无力承担大量涌入的人口。由此导致城市人口严重超载、失业率居高不下、城市贫富悬殊、贫困人口向城市转移、城市被贫民窟包围、环境污染、治安混乱、社会失序、政局动荡、资源生态遭到破坏等后果。许多拉丁美洲国家正面临过度城市化的困扰。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:21:43.922686+00:00"
+}

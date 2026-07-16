@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1605196",
+  "source_fingerprint": "52f9e5423490c5ba14eb7ba133667409",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1605196",
+    "atg5-independent-autophagy-regulates-mitochondrial-clearance-and-is-essential-for-ipsc-reprogramming"
+  ],
+  "key_phrases": [
+    "atg5",
+    "independent",
+    "autophagy",
+    "regulates",
+    "mitochondrial",
+    "clearance",
+    "essential",
+    "ipsc"
+  ],
+  "summary_1l": "Successful generation of induced pluripotent stem cells entails a major metabolic switch from mitoc",
+  "query_hits": [],
+  "embed_text": "1605196 Atg5-independent autophagy regulates mitochondrial clearance and is essential for iPSC reprogramming science scifact Successful generation of induced pluripotent stem cells entails a major metabolic switch from mitochondrial oxidative phosphorylation to glycolysis during the reprogramming process. The mechanism of this metabolic reprogramming, however,… 1605196 atg5-independent-autophagy-regulates-mitochondrial-clearance-and-is-essential-for-ipsc-reprogramming atg5 independent autophagy regulates mitochondrial clearance essential ipsc Successful generation of induced pluripotent stem cells entails a major metabolic switch from mitoc Atg5-independent autophagy regulates mitochondrial clearance and is essential for iPSC reprogramming Successful generation of induced pluripotent stem cells entails a major metabolic switch from mitochondrial oxidative phosphorylation to glycolysis during the reprogramming process. The mechanism of this metabolic reprogramming, however, remains elusive. Here, our results suggest that an Atg5-independent autophagic process mediates mitochondrial clearance, a characteristic event involved in the metabolic switch. We found that blocking such autophagy, but not canonical autophagy, inhibits mitochondrial clearance, in turn, preventing iPSC induction. Furthermore, AMPK seems to be upstream of this autophagic pathway and can be targeted by small molecules to modulate mitochondrial clearance duri",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.706074+00:00"
+}

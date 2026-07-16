@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3761017",
+  "source_fingerprint": "e673a7ed93c2419d74f297d39d96b77f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3761017",
+    "metformin-attenuates-blood-brain-barrier-disruption-in-mice-following-middle-cerebral-artery-occlusion"
+  ],
+  "key_phrases": [
+    "metformin",
+    "attenuates",
+    "blood",
+    "brain",
+    "barrier",
+    "disruption",
+    "mice",
+    "following"
+  ],
+  "summary_1l": "BACKGROUND Metformin, a widely used hypoglycemic drug, reduces stroke incidence and alleviates ch",
+  "query_hits": [],
+  "embed_text": "3761017 Metformin attenuates blood-brain barrier disruption in mice following middle cerebral artery occlusion science scifact BACKGROUND Metformin, a widely used hypoglycemic drug, reduces stroke incidence and alleviates chronic inflammation in clinical trials. However, the effect of metformin in ischemic stroke is unclear. Here, we investigated the effect of… 3761017 metformin-attenuates-blood-brain-barrier-disruption-in-mice-following-middle-cerebral-artery-occlusion metformin attenuates blood brain barrier disruption mice following BACKGROUND Metformin, a widely used hypoglycemic drug, reduces stroke incidence and alleviates ch Metformin attenuates blood-brain barrier disruption in mice following middle cerebral artery occlusion BACKGROUND Metformin, a widely used hypoglycemic drug, reduces stroke incidence and alleviates chronic inflammation in clinical trials. However, the effect of metformin in ischemic stroke is unclear. Here, we investigated the effect of metformin on ischemic stroke in mice and further explored the possible underlying mechanisms. METHODS Ninety-eight adult male CD-1 mice underwent 90-minute transient middle cerebral artery occlusion (tMCAO). Metformin (200 mg/kg) was administrated for up to 14 days. Neurobehavioral outcomes, brain infarct volume, inflammatory factors, blood-brain barrier (BBB) permeability and AMPK signaling pathways were evaluated following tMCAO. Oxygen glucose deprivatio",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.684512+00:00"
+}

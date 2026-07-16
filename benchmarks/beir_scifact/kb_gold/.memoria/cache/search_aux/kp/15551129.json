@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15551129",
+  "source_fingerprint": "ece84485d0d5958c353b7a2bbcddcd09",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15551129",
+    "the-role-of-iron-in-mycobacterium-smegmatis-biofilm-formation:-the-exochelin-siderophore-is-essential-in-limiting-iron-conditions-for-biofilm-formation-but-not-for-planktonic-growth"
+  ],
+  "key_phrases": [
+    "role",
+    "iron",
+    "mycobacterium",
+    "smegmatis",
+    "biofilm",
+    "formation",
+    "exochelin",
+    "siderophore"
+  ],
+  "summary_1l": "Many species of my",
+  "query_hits": [],
+  "embed_text": "15551129 The role of iron in Mycobacterium smegmatis biofilm formation: the exochelin siderophore is essential in limiting iron conditions for biofilm formation but not for planktonic growth science scifact Many species of mycobacteria form structured biofilm communities at liquid–air interfaces and on solid surfaces. Full development of Mycobacterium smegmatis biofilms requires addition of supplemental iron above 1 μM ferrous sulphate,… 15551129 the-role-of-iron-in-mycobacterium-smegmatis-biofilm-formation:-the-exochelin-siderophore-is-essential-in-limiting-iron-conditions-for-biofilm-formation-but-not-for-planktonic-growth role iron mycobacterium smegmatis biofilm formation exochelin siderophore Many species of my The role of iron in Mycobacterium smegmatis biofilm formation: the exochelin siderophore is essential in limiting iron conditions for biofilm formation but not for planktonic growth Many species of mycobacteria form structured biofilm communities at liquid–air interfaces and on solid surfaces. Full development of Mycobacterium smegmatis biofilms requires addition of supplemental iron above 1 μM ferrous sulphate, although addition of iron is not needed for planktonic growth. Microarray analysis of the M. smegmatis transcriptome shows that iron-responsive genes – especially those involved in siderophore synthesis and iron uptake – are strongly induced during biofilm formation reflecting a response to iron deprivation, even when 2 μM iron is present. The acquisition of iron under these condit",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.831603+00:00"
+}

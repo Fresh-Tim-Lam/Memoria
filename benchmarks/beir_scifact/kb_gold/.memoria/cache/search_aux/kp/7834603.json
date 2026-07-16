@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7834603",
+  "source_fingerprint": "d4a6d6acf429756ed3991e4000023744",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7834603",
+    "age-related-behaviors-have-distinct-transcriptional-profiles-in-caenorhabditis-elegans."
+  ],
+  "key_phrases": [
+    "age",
+    "related",
+    "behaviors",
+    "have",
+    "distinct",
+    "transcriptional",
+    "profiles",
+    "caenorhabditis"
+  ],
+  "summary_1l": "Age-related behaviors have distinct transcriptional profiles in Caenorhabditis elegans.",
+  "query_hits": [],
+  "embed_text": "7834603 Age-related behaviors have distinct transcriptional profiles in Caenorhabditis elegans. science scifact There has been a great deal of interest in identifying potential biomarkers of aging. Biomarkers of aging would be useful to predict potential vulnerabilities in an individual that may arise well before they are chronologically expected,… 7834603 age-related-behaviors-have-distinct-transcriptional-profiles-in-caenorhabditis-elegans. age related behaviors have distinct transcriptional profiles caenorhabditis Age-related behaviors have distinct transcriptional profiles in Caenorhabditis elegans. Age-related behaviors have distinct transcriptional profiles in Caenorhabditis elegans. There has been a great deal of interest in identifying potential biomarkers of aging. Biomarkers of aging would be useful to predict potential vulnerabilities in an individual that may arise well before they are chronologically expected, due to idiosyncratic aging rates that occur between individuals. Prior attempts to identify biomarkers of aging have often relied on the comparisons of long-lived animals to a wild-type control. However, the effect of interventions in model systems that prolong lifespan (such as single gene mutations or caloric restriction) can sometimes be difficult to interpret due to the manipulation itself having multiple unforeseen consequences on physiology, unrelated to aging its",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.270893+00:00"
+}

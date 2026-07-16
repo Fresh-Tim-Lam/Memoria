@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "5867679#0",
+  "source_fingerprint": "4f466191b56e1c1f17a03a12b4d56868",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5867679#0"
+  ],
+  "key_phrases": [
+    "翻筋斗",
+    "somersault",
+    "翻跟頭",
+    "空翻",
+    "一種",
+    "體育動作",
+    "一個",
+    "人旋轉"
+  ],
+  "summary_1l": "翻筋斗（somersault）也稱為翻觔斗、翻跟頭、空翻，是一種體育動作，是一個人旋轉一圈，過程中腳要越過頭部。",
+  "query_hits": [],
+  "embed_text": "5867679#0 翻筋斗 翻筋斗 翻筋斗（somersault）也稱為翻觔斗、翻跟頭、空翻，是一種體育動作，是一個人旋轉一圈，過程中腳要越過頭部。翻筋斗可以是往前的、往後的、或是側面的，可以在空中旋轉，也可以在地面旋轉，但當中都會有頭下腳上的瞬間。若是跳躍在空中旋轉，理想上旋轉後要著地恢復站立姿勢。若是在地面上的旋轉，也可以稱為。 5867679#0 翻筋斗 somersault 翻跟頭 空翻 一種 體育動作 一個 人旋轉 翻筋斗（somersault）也稱為翻觔斗、翻跟頭、空翻，是一種體育動作，是一個人旋轉一圈，過程中腳要越過頭部。 翻筋斗 翻筋斗（somersault）也稱為翻觔斗、翻跟頭、空翻，是一種體育動作，是一個人旋轉一圈，過程中腳要越過頭部。翻筋斗可以是往前的、往後的、或是側面的，可以在空中旋轉，也可以在地面旋轉，但當中都會有頭下腳上的瞬間。若是跳躍在空中旋轉，理想上旋轉後要著地恢復站立姿勢。若是在地面上的旋轉，也可以稱為。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:22:46.527298+00:00"
+}

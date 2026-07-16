@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "32263707",
+  "source_fingerprint": "0513e360180f0f5215e93bfd5ca1f01c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "32263707",
+    "oral-fingolimod-(fty720)-for-relapsing-multiple-sclerosis."
+  ],
+  "key_phrases": [
+    "oral",
+    "fingolimod",
+    "fty720",
+    "relapsing",
+    "multiple",
+    "sclerosis",
+    "background",
+    "new"
+  ],
+  "summary_1l": "Oral fingolimod (FTY720) for relapsing multiple sclerosis.",
+  "query_hits": [],
+  "embed_text": "32263707 Oral fingolimod (FTY720) for relapsing multiple sclerosis. science scifact BACKGROUND Fingolimod (FTY720) is a new oral immunomodulating agent under evaluation for the treatment of relapsing multiple sclerosis. METHODS We randomly assigned 281 patients to receive oral fingolimod, at a dose of 1.25 mg or 5.0 mg,… 32263707 oral-fingolimod-(fty720)-for-relapsing-multiple-sclerosis. oral fingolimod fty720 relapsing multiple sclerosis background new Oral fingolimod (FTY720) for relapsing multiple sclerosis. Oral fingolimod (FTY720) for relapsing multiple sclerosis. BACKGROUND Fingolimod (FTY720) is a new oral immunomodulating agent under evaluation for the treatment of relapsing multiple sclerosis. METHODS We randomly assigned 281 patients to receive oral fingolimod, at a dose of 1.25 mg or 5.0 mg, or a placebo once daily, and we followed these patients for 6 months with magnetic resonance imaging (MRI) and clinical evaluations (core study, months 0 to 6). The primary end point was the total number of gadolinium-enhanced lesions recorded on T(1)-weighted MRI at monthly intervals for 6 months. In an extension study in which the investigators and patients remained unaware of the dose assignments (months 7 to 12), patients who received placebo underwent randomization again to one of the fingolim",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.339046+00:00"
+}

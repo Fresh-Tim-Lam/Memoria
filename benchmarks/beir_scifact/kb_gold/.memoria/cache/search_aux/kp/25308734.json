@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25308734",
+  "source_fingerprint": "eb87f3c6b4664766c16d2de53d665848",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25308734",
+    "a-dynamic-population-model-to-investigate-effects-of-climate-on-geographic-range-and-seasonality-of-the-tick-ixodes-scapularis."
+  ],
+  "key_phrases": [
+    "dynamic",
+    "population",
+    "model",
+    "investigate",
+    "effects",
+    "climate",
+    "geographic",
+    "range"
+  ],
+  "summary_1l": "A dynamic population model to investigate effects of climate on geographic range and seasonality of the tick Ixodes scapularis.",
+  "query_hits": [],
+  "embed_text": "25308734 A dynamic population model to investigate effects of climate on geographic range and seasonality of the tick Ixodes scapularis. science scifact A dynamic population model of Ixodes scapularis, the vector of a number of tick-borne zoonoses in North America, was developed to simulate effects of temperature on tick survival and seasonality. Tick development rates were modelled as… 25308734 a-dynamic-population-model-to-investigate-effects-of-climate-on-geographic-range-and-seasonality-of-the-tick-ixodes-scapularis. dynamic population model investigate effects climate geographic range A dynamic population model to investigate effects of climate on geographic range and seasonality of the tick Ixodes scapularis. A dynamic population model to investigate effects of climate on geographic range and seasonality of the tick Ixodes scapularis. A dynamic population model of Ixodes scapularis, the vector of a number of tick-borne zoonoses in North America, was developed to simulate effects of temperature on tick survival and seasonality. Tick development rates were modelled as temperature-dependent time delays, calculated using mean monthly normal temperature data from specific meteorological stations. Temperature also influenced host-finding success in the model. Using data from stations near endemic populations of I. scapularis, the model reached repeatable, stable, cyclical equilibria with seasonal activity of different instars being very close to that observed in the field. In simulations run using da",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.373541+00:00"
+}

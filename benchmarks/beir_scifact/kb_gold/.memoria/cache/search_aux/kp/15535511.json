@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15535511",
+  "source_fingerprint": "24db789e538b51f0bdfe2033474fc60e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15535511",
+    "role-for-insulin-signaling-in-catecholaminergic-neurons-in-control-of-energy-homeostasis."
+  ],
+  "key_phrases": [
+    "role",
+    "insulin",
+    "signaling",
+    "catecholaminergic",
+    "neurons",
+    "control",
+    "energy",
+    "homeostasis"
+  ],
+  "summary_1l": "Role for insulin signaling in catecholaminergic neurons in control of energy homeostasis.",
+  "query_hits": [],
+  "embed_text": "15535511 Role for insulin signaling in catecholaminergic neurons in control of energy homeostasis. science scifact Dopaminergic midbrain neurons integrate signals on food palatability and food-associated reward into the complex control of energy homeostasis. To define the role of insulin receptor (IR) signaling in this circuitry, we inactivated IR… 15535511 role-for-insulin-signaling-in-catecholaminergic-neurons-in-control-of-energy-homeostasis. role insulin signaling catecholaminergic neurons control energy homeostasis Role for insulin signaling in catecholaminergic neurons in control of energy homeostasis. Role for insulin signaling in catecholaminergic neurons in control of energy homeostasis. Dopaminergic midbrain neurons integrate signals on food palatability and food-associated reward into the complex control of energy homeostasis. To define the role of insulin receptor (IR) signaling in this circuitry, we inactivated IR signaling in tyrosine hydroxylase (Th)-expressing cells of mice (IR(ΔTh)). IR inactivation in Th-expressing cells of mice resulted in increased body weight, increased fat mass, and hyperphagia. While insulin acutely stimulated firing frequency in 50% of dopaminergic VTA/SN neurons, this response was abolished in IR(ΔTh) mice. Moreover, these mice exhibited an altered response to cocaine under food-restricted conditions. Taken together, these data provide in vivo evidence",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.786366+00:00"
+}

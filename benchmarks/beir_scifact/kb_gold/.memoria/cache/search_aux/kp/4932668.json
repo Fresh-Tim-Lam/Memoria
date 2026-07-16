@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4932668",
+  "source_fingerprint": "36a02963cc4b4636af41ac88403d70f1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4932668",
+    "cardiac-neural-crest-contributes-to-cardiomyogenesis-in-zebrafish."
+  ],
+  "key_phrases": [
+    "cardiac",
+    "neural",
+    "crest",
+    "contributes",
+    "cardiomyogenesis",
+    "zebrafish",
+    "birds",
+    "mammals"
+  ],
+  "summary_1l": "Cardiac neural crest contributes to cardiomyogenesis in zebrafish.",
+  "query_hits": [],
+  "embed_text": "4932668 Cardiac neural crest contributes to cardiomyogenesis in zebrafish. science scifact In birds and mammals, cardiac neural crest is essential for heart development and contributes to conotruncal cushion formation and outflow tract septation. The zebrafish prototypical heart lacks outflow tract septation, raising the… 4932668 cardiac-neural-crest-contributes-to-cardiomyogenesis-in-zebrafish. cardiac neural crest contributes cardiomyogenesis zebrafish birds mammals Cardiac neural crest contributes to cardiomyogenesis in zebrafish. Cardiac neural crest contributes to cardiomyogenesis in zebrafish. In birds and mammals, cardiac neural crest is essential for heart development and contributes to conotruncal cushion formation and outflow tract septation. The zebrafish prototypical heart lacks outflow tract septation, raising the question of whether cardiac neural crest exists in zebrafish. Here, results from three distinct lineage-labeling approaches identify zebrafish cardiac neural crest cells and indicate that these cells have the ability to generate MF20-positive muscle cells in the myocardium of the major chambers during development. Fate-mapping demonstrates that cardiac neural crest cells originate both from neural tube regions analogous to those found in birds, as well as from a novel region rostral to the otic v",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.789764+00:00"
+}

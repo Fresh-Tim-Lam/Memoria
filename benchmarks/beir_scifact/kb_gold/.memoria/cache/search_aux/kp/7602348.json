@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7602348",
+  "source_fingerprint": "4411b1906c98de46437ad015a398a6fd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7602348",
+    "progression-of-preclinical-diastolic-dysfunction-to-the-development-of-symptoms."
+  ],
+  "key_phrases": [
+    "progression",
+    "preclinical",
+    "diastolic",
+    "dysfunction",
+    "development",
+    "symptoms",
+    "background",
+    "pdd"
+  ],
+  "summary_1l": "Progression of preclinical diastolic dysfunction to the development of symptoms.",
+  "query_hits": [],
+  "embed_text": "7602348 Progression of preclinical diastolic dysfunction to the development of symptoms. science scifact BACKGROUND Preclinical diastolic dysfunction (PDD) has been defined as subjects with normal systolic function, diastolic dysfunction but no symptoms of heart failure (HF). The clinical phenotype and natural history of the syndrome remains… 7602348 progression-of-preclinical-diastolic-dysfunction-to-the-development-of-symptoms. progression preclinical diastolic dysfunction development symptoms background pdd Progression of preclinical diastolic dysfunction to the development of symptoms. Progression of preclinical diastolic dysfunction to the development of symptoms. BACKGROUND Preclinical diastolic dysfunction (PDD) has been defined as subjects with normal systolic function, diastolic dysfunction but no symptoms of heart failure (HF). The clinical phenotype and natural history of the syndrome remains poorly defined. This study's objective was to determine the clinical phenotype and progression to HF in a group of patients with normal systolic function and moderate or severe diastolic dysfunction as determinate by Doppler criteria without any clinical diagnosis of HF according to the Framingham criteria or any symptoms of HF, specifically dyspnoea, oedema or fatigue at the time of echocardiography. METHODS The authors used resources of the Mayo Clinic echocardiography data",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.772278+00:00"
+}

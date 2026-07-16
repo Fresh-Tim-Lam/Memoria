@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "85394684",
+  "source_fingerprint": "8becfe0f06348b1996795095a05d5633",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "85394684",
+    "investigating-the-intron-recognition-mechanism-in-eukaryotes"
+  ],
+  "key_phrases": [
+    "investigating",
+    "intron",
+    "recognition",
+    "mechanism",
+    "eukaryotes",
+    "recent",
+    "studies",
+    "indicate"
+  ],
+  "summary_1l": "Recent studies indicate that many introns, as well as the complex spliceosomal mechanism to remove them, were present early in eukaryotic e",
+  "query_hits": [],
+  "embed_text": "85394684 Investigating the Intron Recognition Mechanism in Eukaryotes science scifact Recent studies indicate that many introns, as well as the complex spliceosomal mechanism to remove them, were present early in eukaryotic evolution. This study examines intron and exon characteristics from annotations of whole genomes to… 85394684 investigating-the-intron-recognition-mechanism-in-eukaryotes investigating intron recognition mechanism eukaryotes recent studies indicate Recent studies indicate that many introns, as well as the complex spliceosomal mechanism to remove them, were present early in eukaryotic e Investigating the Intron Recognition Mechanism in Eukaryotes Recent studies indicate that many introns, as well as the complex spliceosomal mechanism to remove them, were present early in eukaryotic evolution. This study examines intron and exon characteristics from annotations of whole genomes to investigate the intron recognition mechanism. Exon definition uses the exon as the unit of recognition, placing length constraints on the exon but not on the intron (allowing it a greater range of lengths). In contrast, intron definition uses the intron itself as the unit of recognition and thus removes constraints on internal exon length forced by the use of an exon definition mechanism. Thus, intron and exon lengths within a genome can reflect the constraints imposed by its splicing. This study",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.976770+00:00"
+}

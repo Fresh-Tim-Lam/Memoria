@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9813098",
+  "source_fingerprint": "cbceb8d71f2d635cf64f293054c1d7a5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9813098",
+    "plasma-homocysteine-is-a-risk-factor-for-recurrent-vascular-events-in-young-patients-with-an-ischaemic-stroke-or-tia"
+  ],
+  "key_phrases": [
+    "plasma",
+    "homocysteine",
+    "risk",
+    "factor",
+    "recurrent",
+    "vascular",
+    "events",
+    "young"
+  ],
+  "summary_1l": "Young patients with an ischaemic stroke or transient ischaemic attack (TIA) often h",
+  "query_hits": [],
+  "embed_text": "9813098 Plasma homocysteine is a risk factor for recurrent vascular events in young patients with an ischaemic stroke or TIA science scifact Young patients with an ischaemic stroke or transient ischaemic attack (TIA) often have no vascular risk factors. Hyperhomocysteinaemia is an established risk factor for stroke in elderly patients but it is uncertain whether it is also… 9813098 plasma-homocysteine-is-a-risk-factor-for-recurrent-vascular-events-in-young-patients-with-an-ischaemic-stroke-or-tia plasma homocysteine risk factor recurrent vascular events young Young patients with an ischaemic stroke or transient ischaemic attack (TIA) often h Plasma homocysteine is a risk factor for recurrent vascular events in young patients with an ischaemic stroke or TIA Young patients with an ischaemic stroke or transient ischaemic attack (TIA) often have no vascular risk factors. Hyperhomocysteinaemia is an established risk factor for stroke in elderly patients but it is uncertain whether it is also important for the prognosis of young ischaemic stroke and TIA patients. We examined the possible effect of the plasma homocysteine level on the risk of recurrent vascular events in patients between 18 and 45 years of age. The study population consisted of 161 consecutive patients with a recent cerebral infarction or TIA. Data on the primary event and the homocysteine level were collected retrospectively from hospital records. General practition",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.896546+00:00"
+}

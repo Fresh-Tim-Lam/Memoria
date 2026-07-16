@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6969753",
+  "source_fingerprint": "7a1ba329e0a758c6ad10867b72863bc7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6969753",
+    "dynamic-interactions-of-cortactin-and-membrane-type-1-matrix-metalloproteinase-at-invadopodia:-defining-the-stages-of-invadopodia-formation-and-function."
+  ],
+  "key_phrases": [
+    "dynamic",
+    "interactions",
+    "cortactin",
+    "membrane",
+    "type",
+    "matrix",
+    "metalloproteinase",
+    "at"
+  ],
+  "summary_1l": "Dynamic interactions of cortactin and membrane type 1 matrix metalloproteinase at invadopodia: defining the stages of invadopodia formation and function.",
+  "query_hits": [],
+  "embed_text": "6969753 Dynamic interactions of cortactin and membrane type 1 matrix metalloproteinase at invadopodia: defining the stages of invadopodia formation and function. science scifact Metastatic tumor cells that actively migrate and invade surrounding tissues rely on invadopodia to degrade extracellular matrix (ECM) barriers. Invadopodia are membrane protrusions that localize enzymes required for ECM degradation. Little… 6969753 dynamic-interactions-of-cortactin-and-membrane-type-1-matrix-metalloproteinase-at-invadopodia:-defining-the-stages-of-invadopodia-formation-and-function. dynamic interactions cortactin membrane type matrix metalloproteinase at Dynamic interactions of cortactin and membrane type 1 matrix metalloproteinase at invadopodia: defining the stages of invadopodia formation and function. Dynamic interactions of cortactin and membrane type 1 matrix metalloproteinase at invadopodia: defining the stages of invadopodia formation and function. Metastatic tumor cells that actively migrate and invade surrounding tissues rely on invadopodia to degrade extracellular matrix (ECM) barriers. Invadopodia are membrane protrusions that localize enzymes required for ECM degradation. Little is known about the formation, function, and regulation of invadopodia. Here, we show that invadopodia have two distinct aspects: (a) structural for organizing the cellular actin cytoskeleton to form membrane protrusions and (b) functional for using proteolytic enzyme(s) for ECM degradation. Small interfering RNA (siRNA) inhibition established that organization of invadopodia structure requires cortactin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:13.832979+00:00"
+}

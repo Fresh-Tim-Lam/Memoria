@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13242763",
+  "source_fingerprint": "13871b05020bea6605a07f30a05b07ce",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13242763",
+    "interaction-between-oct3/4-and-cdx2-determines-trophectoderm-differentiation"
+  ],
+  "key_phrases": [
+    "interaction",
+    "between",
+    "oct3",
+    "cdx2",
+    "determines",
+    "trophectoderm",
+    "differentiation",
+    "te"
+  ],
+  "summary_1l": "Trophectoderm (TE), the first differentiated cell lineage of mammalian embryogenesis, forms the placenta, a structure uniqu",
+  "query_hits": [],
+  "embed_text": "13242763 Interaction between Oct3/4 and Cdx2 Determines Trophectoderm Differentiation science scifact Trophectoderm (TE), the first differentiated cell lineage of mammalian embryogenesis, forms the placenta, a structure unique to mammalian development. The differentiation of TE is a hallmark event in early mammalian development, but… 13242763 interaction-between-oct3/4-and-cdx2-determines-trophectoderm-differentiation interaction between oct3 cdx2 determines trophectoderm differentiation te Trophectoderm (TE), the first differentiated cell lineage of mammalian embryogenesis, forms the placenta, a structure uniqu Interaction between Oct3/4 and Cdx2 Determines Trophectoderm Differentiation Trophectoderm (TE), the first differentiated cell lineage of mammalian embryogenesis, forms the placenta, a structure unique to mammalian development. The differentiation of TE is a hallmark event in early mammalian development, but molecular mechanisms underlying this first differentiation event remain obscure. Embryonic stem (ES) cells can be induced to differentiate into the TE lineage by forced repression of the POU-family transcription factor, Oct3/4. We show here that this event can be mimicked by overexpression of Caudal-related homeobox 2 (Cdx2), which is sufficient to generate proper trophoblast stem (TS) cells. Cdx2 is dispensable for trophectoderm differentiation induced by Oct3/4 repression but essenti",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:10.576669+00:00"
+}

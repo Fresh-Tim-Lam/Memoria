@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2844897",
+  "source_fingerprint": "600dc6718f25d718e2ccf57b2314a122",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2844897",
+    "statistical-methods-for-assessing-agreement-between-two-methods-of-clinical-measurement"
+  ],
+  "key_phrases": [
+    "statistical",
+    "methods",
+    "assessing",
+    "agreement",
+    "between",
+    "two",
+    "clinical",
+    "measurement"
+  ],
+  "summary_1l": "In clinical measurement comparison of a new measurement technique with an established one is often needed to see",
+  "query_hits": [],
+  "embed_text": "2844897 STATISTICAL METHODS FOR ASSESSING AGREEMENT BETWEEN TWO METHODS OF CLINICAL MEASUREMENT science scifact In clinical measurement comparison of a new measurement technique with an established one is often needed to see whether they agree sufficiently for the new to replace the old. Such investigations are often analysed inappropriately,… 2844897 statistical-methods-for-assessing-agreement-between-two-methods-of-clinical-measurement statistical methods assessing agreement between two clinical measurement In clinical measurement comparison of a new measurement technique with an established one is often needed to see STATISTICAL METHODS FOR ASSESSING AGREEMENT BETWEEN TWO METHODS OF CLINICAL MEASUREMENT In clinical measurement comparison of a new measurement technique with an established one is often needed to see whether they agree sufficiently for the new to replace the old. Such investigations are often analysed inappropriately, notably by using correlation coefficients. The use of correlation is misleading. An alternative approach, based on graphical techniques and simple calculations, is described, together with the relation between this analysis and the assessment of repeatability.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.048499+00:00"
+}

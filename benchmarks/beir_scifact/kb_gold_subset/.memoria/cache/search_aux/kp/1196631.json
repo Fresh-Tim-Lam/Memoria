@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1196631",
+  "source_fingerprint": "cf1e47067e417a7c5d87376e0cf2f556",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1196631",
+    "immtac-redirected-tumour-cell-killing-induces-and-potentiates-antigen-cross-presentation-by-dendritic-cells"
+  ],
+  "key_phrases": [
+    "immtac",
+    "redirected",
+    "tumour",
+    "cell",
+    "killing",
+    "induces",
+    "potentiates",
+    "antigen"
+  ],
+  "summary_1l": "Antigen cross-presentation by dendritic cells (DCs) is thought to play a critical role in dr",
+  "query_hits": [],
+  "embed_text": "1196631 ImmTAC-redirected tumour cell killing induces and potentiates antigen cross-presentation by dendritic cells science scifact Antigen cross-presentation by dendritic cells (DCs) is thought to play a critical role in driving a polyclonal and durable T cell response against cancer. It follows, therefore, that the capacity of emerging immunotherapeutic agents to… 1196631 immtac-redirected-tumour-cell-killing-induces-and-potentiates-antigen-cross-presentation-by-dendritic-cells immtac redirected tumour cell killing induces potentiates antigen Antigen cross-presentation by dendritic cells (DCs) is thought to play a critical role in dr ImmTAC-redirected tumour cell killing induces and potentiates antigen cross-presentation by dendritic cells Antigen cross-presentation by dendritic cells (DCs) is thought to play a critical role in driving a polyclonal and durable T cell response against cancer. It follows, therefore, that the capacity of emerging immunotherapeutic agents to orchestrate tumour eradication may depend on their ability to induce antigen cross-presentation. ImmTACs [immune-mobilising monoclonal TCRs (T cell receptors) against cancer] are a new class of soluble bi-specific anti-cancer agents that combine pico-molar affinity TCR-based antigen recognition with T cell activation via a CD3-specific antibody fragment. ImmTACs specifically recognise human leucocyte antigen (HLA)-restricted tumour-associated antigens,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:08.016881+00:00"
+}

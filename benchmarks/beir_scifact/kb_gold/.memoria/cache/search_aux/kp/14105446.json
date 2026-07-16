@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14105446",
+  "source_fingerprint": "6baa87f643bde4092300e537f15b75bb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14105446",
+    "inhibition-of-limb-regeneration-in-the-axolotl-after-treatment-of-the-skin-with-actinomycin-d."
+  ],
+  "key_phrases": [
+    "inhibition",
+    "limb",
+    "regeneration",
+    "axolotl",
+    "after",
+    "treatment",
+    "skin",
+    "with"
+  ],
+  "summary_1l": "Inhibition of limb regeneration in the axolotl after treatment of the skin with actinomycin D.",
+  "query_hits": [],
+  "embed_text": "14105446 Inhibition of limb regeneration in the axolotl after treatment of the skin with actinomycin D. science scifact In this experiment actinomycin D was used to explore the action of the wound epidermis on underlying tissues during limb regeneration. In axolotl forelimbs the skin was removed from the elbow to the shoulder. Skin from the right limbs was… 14105446 inhibition-of-limb-regeneration-in-the-axolotl-after-treatment-of-the-skin-with-actinomycin-d. inhibition limb regeneration axolotl after treatment skin with Inhibition of limb regeneration in the axolotl after treatment of the skin with actinomycin D. Inhibition of limb regeneration in the axolotl after treatment of the skin with actinomycin D. In this experiment actinomycin D was used to explore the action of the wound epidermis on underlying tissues during limb regeneration. In axolotl forelimbs the skin was removed from the elbow to the shoulder. Skin from the right limbs was soaked for three hours in actinomycin D (5.0 or 10.0 μg/ml 0.6% NaCl). For controls, skin from left limbs was soaked in 0.6% NaCl for the same period of time. Each piece of skin was orthotopically replanted, and both limbs were amputated through the treated skin, proximal to the elbow. After an initial healing period, the control limbs regenerated normally. Except for a slightly paler color, limbs bearing actinomycin-treated skin were indistinguishable from the",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.108658+00:00"
+}

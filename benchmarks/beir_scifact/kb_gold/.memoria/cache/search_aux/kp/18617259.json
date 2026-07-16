@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18617259",
+  "source_fingerprint": "f28e788cccbe7027279835fa7a75cb87",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18617259",
+    "research-letters"
+  ],
+  "key_phrases": [
+    "research",
+    "letters",
+    "we",
+    "report",
+    "case",
+    "preclinical",
+    "variant",
+    "creutzfeldt"
+  ],
+  "summary_1l": "We report a case of preclinical variant Creutzfeldt-Jakob disease (vCJD) in a patient who died from a non-neurological disorder 5 years after receiving a blood transfusion from a dono",
+  "query_hits": [],
+  "embed_text": "18617259 Research Letters science scifact We report a case of preclinical variant Creutzfeldt-Jakob disease (vCJD) in a patient who died from a non-neurological disorder 5 years after receiving a blood transfusion from a donor who subsequently developed vCJD. Protease-resistant… 18617259 research-letters research letters we report case preclinical variant creutzfeldt We report a case of preclinical variant Creutzfeldt-Jakob disease (vCJD) in a patient who died from a non-neurological disorder 5 years after receiving a blood transfusion from a dono Research Letters We report a case of preclinical variant Creutzfeldt-Jakob disease (vCJD) in a patient who died from a non-neurological disorder 5 years after receiving a blood transfusion from a donor who subsequently developed vCJD. Protease-resistant prion protein (PrP(res)) was detected by western blot, paraffin-embedded tissue blot, and immunohistochemistry in the spleen, but not in the brain. Immunohistochemistry for prion protein was also positive in a cervical lymph node. The patient was a heterozygote at codon 129 of PRNP, suggesting that susceptibility to vCJD infection is not confined to the methionine homozygous PRNP genotype. These findings have major implications for future estimates and surveillance of vCJD in the UK.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.500845+00:00"
+}

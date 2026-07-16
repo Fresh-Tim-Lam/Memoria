@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5238341",
+  "source_fingerprint": "a7e6ab2d53fa13d955d2fb584bf830e1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5238341",
+    "platelets-at-the-interface-of-thrombosis,-inflammation,-and-cancer."
+  ],
+  "key_phrases": [
+    "platelets",
+    "at",
+    "interface",
+    "thrombosis",
+    "inflammation",
+    "cancer",
+    "although",
+    "once"
+  ],
+  "summary_1l": "Platelets at the interface of thrombosis, inflammation, and cancer.",
+  "query_hits": [],
+  "embed_text": "5238341 Platelets at the interface of thrombosis, inflammation, and cancer. science scifact Although once primarily recognized for its roles in hemostasis and thrombosis, the platelet has been increasingly recognized as a multipurpose cell. Indeed, circulating platelets have the ability to influence a wide range of seemingly… 5238341 platelets-at-the-interface-of-thrombosis,-inflammation,-and-cancer. platelets at interface thrombosis inflammation cancer although once Platelets at the interface of thrombosis, inflammation, and cancer. Platelets at the interface of thrombosis, inflammation, and cancer. Although once primarily recognized for its roles in hemostasis and thrombosis, the platelet has been increasingly recognized as a multipurpose cell. Indeed, circulating platelets have the ability to influence a wide range of seemingly unrelated pathophysiologic events. Here, we highlight some of the notable observations that link platelets to inflammation, reinforcing the platelet's origin from a lower vertebrate cell type with both hemostatic and immunologic roles. In addition, we consider the relevance of platelets in cancer biology by focusing on the hallmarks of cancer and the ways platelets can influence multistep development of tumors. Beyond its traditional role in hemostasis and thrombosis, the platelet's involveme",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.588001+00:00"
+}

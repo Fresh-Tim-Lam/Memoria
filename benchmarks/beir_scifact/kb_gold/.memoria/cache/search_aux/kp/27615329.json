@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27615329",
+  "source_fingerprint": "0ef6f9d4d9b45482d13def7865bc987e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27615329",
+    "prostaglandin-e2-as-an-inhibitory-modulator-of-fibrogenesis-in-human-lung-allografts."
+  ],
+  "key_phrases": [
+    "prostaglandin",
+    "e2",
+    "as",
+    "inhibitory",
+    "modulator",
+    "fibrogenesis",
+    "human",
+    "lung"
+  ],
+  "summary_1l": "Prostaglandin E2 as an inhibitory modulator of fibrogenesis in human lung allografts.",
+  "query_hits": [],
+  "embed_text": "27615329 Prostaglandin E2 as an inhibitory modulator of fibrogenesis in human lung allografts. science scifact RATIONALE Donor mesenchymal stromal/stem cell (MSC) expansion and fibrotic differentiation is associated with development of bronchiolitis obliterans syndrome (BOS) in human lung allografts. However, the regulators of fibrotic… 27615329 prostaglandin-e2-as-an-inhibitory-modulator-of-fibrogenesis-in-human-lung-allografts. prostaglandin e2 as inhibitory modulator fibrogenesis human lung Prostaglandin E2 as an inhibitory modulator of fibrogenesis in human lung allografts. Prostaglandin E2 as an inhibitory modulator of fibrogenesis in human lung allografts. RATIONALE Donor mesenchymal stromal/stem cell (MSC) expansion and fibrotic differentiation is associated with development of bronchiolitis obliterans syndrome (BOS) in human lung allografts. However, the regulators of fibrotic differentiation of these resident mesenchymal cells are not well understood. OBJECTIVES This study examines the role of endogenous and exogenous prostaglandin (PG)E2 as a modulator of fibrotic differentiation of human lung allograft-derived MSCs. METHODS Effect of PGE2 on proliferation, collagen secretion, and α-smooth muscle actin (α-SMA) expression was assessed in lung-resident MSCs (LR-MSCs) derived from patients with and without BOS. The response pathway involved was elucidated",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.142278+00:00"
+}

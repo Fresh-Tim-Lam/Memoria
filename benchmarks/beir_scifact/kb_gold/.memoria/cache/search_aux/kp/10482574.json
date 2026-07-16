@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "10482574",
+  "source_fingerprint": "db3fcdab41a1440af359437c22c69939",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10482574"
+  ],
+  "key_phrases": [
+    "cell",
+    "survival",
+    "during",
+    "complete",
+    "nutrient",
+    "deprivation",
+    "depends",
+    "lipid"
+  ],
+  "summary_1l": "Cell survival during complete nutrient deprivation depends on lipid droplet-fueled β-oxidation of fatty acids.",
+  "query_hits": [],
+  "embed_text": "10482574 Cell survival during complete nutrient deprivation depends on lipid droplet-fueled β-oxidation of fatty acids. science scifact Cells exposed to stress of different origins synthesize triacylglycerols and generate lipid droplets (LD), but the physiological relevance of this response is uncertain. Using complete nutrient deprivation of cells in culture as a simple… 10482574 cell survival during complete nutrient deprivation depends lipid Cell survival during complete nutrient deprivation depends on lipid droplet-fueled β-oxidation of fatty acids. Cell survival during complete nutrient deprivation depends on lipid droplet-fueled β-oxidation of fatty acids. Cells exposed to stress of different origins synthesize triacylglycerols and generate lipid droplets (LD), but the physiological relevance of this response is uncertain. Using complete nutrient deprivation of cells in culture as a simple model of stress, we have addressed whether LD biogenesis has a protective role in cells committed to die. Complete nutrient deprivation induced the biogenesis of LD in human LN18 glioblastoma and HeLa cells and also in CHO and rat primary astrocytes. In all cell types, death was associated with LD depletion and was accelerated by blocking LD biogenesis after pharmacological inhibition of Group IVA phospholipase A2 (cPLA2α) or down-regulation of ce",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:04.827906+00:00"
+}

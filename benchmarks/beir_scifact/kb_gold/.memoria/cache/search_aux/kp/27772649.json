@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27772649",
+  "source_fingerprint": "d6ee805daa8c0dc426984857892ff4f7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27772649",
+    "serum-immunoglobulin-a-from-patients-with-celiac-disease-inhibits-human-t84-intestinal-crypt-epithelial-cell-differentiation."
+  ],
+  "key_phrases": [
+    "serum",
+    "immunoglobulin",
+    "from",
+    "patients",
+    "with",
+    "celiac",
+    "disease",
+    "inhibits"
+  ],
+  "summary_1l": "Serum immunoglobulin A from patients with celiac disease inhibits human T84 intestinal crypt epithelial cell differentiation.",
+  "query_hits": [],
+  "embed_text": "27772649 Serum immunoglobulin A from patients with celiac disease inhibits human T84 intestinal crypt epithelial cell differentiation. science scifact BACKGROUND & AIMS Celiac disease is characterized by disturbed jejunal crypt-villus axis biology with immunoglobulin (Ig) A deposits underlining the epithelium. The aim of this study was to test whether celiac disease serum IgA… 27772649 serum-immunoglobulin-a-from-patients-with-celiac-disease-inhibits-human-t84-intestinal-crypt-epithelial-cell-differentiation. serum immunoglobulin from patients with celiac disease inhibits Serum immunoglobulin A from patients with celiac disease inhibits human T84 intestinal crypt epithelial cell differentiation. Serum immunoglobulin A from patients with celiac disease inhibits human T84 intestinal crypt epithelial cell differentiation. BACKGROUND & AIMS Celiac disease is characterized by disturbed jejunal crypt-villus axis biology with immunoglobulin (Ig) A deposits underlining the epithelium. The aim of this study was to test whether celiac disease serum IgA (reticulin/endomysial autoantibodies) interferes with the mesenchymal-epithelial cell cross-talk. METHODS Differentiation of T84 epithelial cells was induced with IMR-90 fibroblasts or transforming growth factor beta in three-dimensional collagen gel cultures. The effects of purified celiac IgA and monoclonal tissue transglutaminase antibodies (CUB7402) were studied by adding the antibodies to the cocultures. RESULTS Active celiac disease IgA",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.305023+00:00"
+}

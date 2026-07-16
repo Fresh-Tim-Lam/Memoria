@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "34559336",
+  "source_fingerprint": "31db68c5c92b3514de0a09b8c76967db",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "34559336",
+    "a-gradient-of-template-dependence-defines-distinct-biological-roles-for-family-x-polymerases-in-nonhomologous-end-joining."
+  ],
+  "key_phrases": [
+    "gradient",
+    "template",
+    "dependence",
+    "defines",
+    "distinct",
+    "biological",
+    "roles",
+    "family"
+  ],
+  "summary_1l": "A gradient of template dependence defines distinct biological roles for family X polymerases in nonhomologous end joining.",
+  "query_hits": [],
+  "embed_text": "34559336 A gradient of template dependence defines distinct biological roles for family X polymerases in nonhomologous end joining. science scifact Three Pol X family members have been linked to nonhomologous end joining (NHEJ) in mammals. Template-independent TdT promotes diversity during NHEJ-dependent repair of V(D)J recombination intermediates, but the roles of the… 34559336 a-gradient-of-template-dependence-defines-distinct-biological-roles-for-family-x-polymerases-in-nonhomologous-end-joining. gradient template dependence defines distinct biological roles family A gradient of template dependence defines distinct biological roles for family X polymerases in nonhomologous end joining. A gradient of template dependence defines distinct biological roles for family X polymerases in nonhomologous end joining. Three Pol X family members have been linked to nonhomologous end joining (NHEJ) in mammals. Template-independent TdT promotes diversity during NHEJ-dependent repair of V(D)J recombination intermediates, but the roles of the template-dependent polymerases mu and lambda in NHEJ remain unclear. We show here that pol mu and pol lambda are similarly recruited by NHEJ factors to fill gaps when ends have partially complementary overhangs, suggesting equivalent roles promoting accuracy in NHEJ. However, only pol mu promotes accuracy during immunoglobulin kappa recombination. This distinctive in vivo role correlates with the TdT-like ability of pol mu, but not pol lambda, to ac",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.583620+00:00"
+}

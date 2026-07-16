@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29090823",
+  "source_fingerprint": "1eb4792693ae711bfb108efbbdb8d5ad",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29090823",
+    "the-epidemiology-of-trachoma-in-eastern-equatoria-and-upper-nile-states,-southern-sudan."
+  ],
+  "key_phrases": [
+    "epidemiology",
+    "trachoma",
+    "eastern",
+    "equatoria",
+    "upper",
+    "nile",
+    "states",
+    "southern"
+  ],
+  "summary_1l": "The epidemiology of trachoma in Eastern Equatoria and Upper Nile States, southern Sudan.",
+  "query_hits": [],
+  "embed_text": "29090823 The epidemiology of trachoma in Eastern Equatoria and Upper Nile States, southern Sudan. science scifact OBJECTIVE Limited surveys and anecdotal data indicate that trachoma is endemic in the states of Eastern Equatoria and Upper Nile in southern Sudan. However, its magnitude and geographical distribution are largely unknown. We conducted… 29090823 the-epidemiology-of-trachoma-in-eastern-equatoria-and-upper-nile-states,-southern-sudan. epidemiology trachoma eastern equatoria upper nile states southern The epidemiology of trachoma in Eastern Equatoria and Upper Nile States, southern Sudan. The epidemiology of trachoma in Eastern Equatoria and Upper Nile States, southern Sudan. OBJECTIVE Limited surveys and anecdotal data indicate that trachoma is endemic in the states of Eastern Equatoria and Upper Nile in southern Sudan. However, its magnitude and geographical distribution are largely unknown. We conducted surveys to ascertain the prevalence and geographical distribution of trachoma, and to identify targets for control interventions. METHODS Population-based cross-sectional surveys were conducted in nine sites in southern Sudan between September 2001 and June 2004. Two-stage random cluster sampling with probability proportional to size was used to select the sample. Trachoma grading was done using the WHO simplified grading system. FINDINGS A total of 17 016 persons were ex",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.567406+00:00"
+}

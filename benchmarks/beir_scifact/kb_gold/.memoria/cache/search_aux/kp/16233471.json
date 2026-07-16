@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16233471",
+  "source_fingerprint": "deb0caa21407f6cab3d37da5565d180b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16233471",
+    "the-intersection-between-aging-and-cardiovascular-disease."
+  ],
+  "key_phrases": [
+    "intersection",
+    "between",
+    "aging",
+    "cardiovascular",
+    "disease",
+    "average",
+    "lifespan",
+    "humans"
+  ],
+  "summary_1l": "The intersection between aging and cardiovascular disease.",
+  "query_hits": [],
+  "embed_text": "16233471 The intersection between aging and cardiovascular disease. science scifact The average lifespan of humans is increasing, and with it the percentage of people entering the 65 and older age group is growing rapidly and will continue to do so in the next 20 years. Within this age group, cardiovascular disease will… 16233471 the-intersection-between-aging-and-cardiovascular-disease. intersection between aging cardiovascular disease average lifespan humans The intersection between aging and cardiovascular disease. The intersection between aging and cardiovascular disease. The average lifespan of humans is increasing, and with it the percentage of people entering the 65 and older age group is growing rapidly and will continue to do so in the next 20 years. Within this age group, cardiovascular disease will remain the leading cause of death, and the cost associated with treatment will continue to increase. Aging is an inevitable part of life and unfortunately poses the largest risk factor for cardiovascular disease. Although numerous studies in the cardiovascular field have considered both young and aged humans, there are still many unanswered questions as to how the genetic pathways that regulate aging in model organisms influence cardiovascular aging. Likewise, in the molecular biology of aging fiel",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.970903+00:00"
+}

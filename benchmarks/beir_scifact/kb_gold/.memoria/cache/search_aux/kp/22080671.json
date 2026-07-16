@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22080671",
+  "source_fingerprint": "e0c2b2800ec5e1de4d503ec246788e18",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22080671",
+    "klf4-dependent-phenotypic-modulation-of-smooth-muscle-cells-has-a-key-role-in-atherosclerotic-plaque-pathogenesis"
+  ],
+  "key_phrases": [
+    "klf4",
+    "dependent",
+    "phenotypic",
+    "modulation",
+    "smooth",
+    "muscle",
+    "cells",
+    "has"
+  ],
+  "summary_1l": "Previous studies investigating the role of smooth muscle cells (SMCs) and macrophages",
+  "query_hits": [],
+  "embed_text": "22080671 KLF4-dependent phenotypic modulation of smooth muscle cells has a key role in atherosclerotic plaque pathogenesis science scifact Previous studies investigating the role of smooth muscle cells (SMCs) and macrophages in the pathogenesis of atherosclerosis have provided controversial results owing to the use of unreliable methods for clearly identifying each of these… 22080671 klf4-dependent-phenotypic-modulation-of-smooth-muscle-cells-has-a-key-role-in-atherosclerotic-plaque-pathogenesis klf4 dependent phenotypic modulation smooth muscle cells has Previous studies investigating the role of smooth muscle cells (SMCs) and macrophages KLF4-dependent phenotypic modulation of smooth muscle cells has a key role in atherosclerotic plaque pathogenesis Previous studies investigating the role of smooth muscle cells (SMCs) and macrophages in the pathogenesis of atherosclerosis have provided controversial results owing to the use of unreliable methods for clearly identifying each of these cell types. Here, using Myh11-CreERT2 ROSA floxed STOP eYFP Apoe−/− mice to perform SMC lineage tracing, we find that traditional methods for detecting SMCs based on immunostaining for SMC markers fail to detect >80% of SMC-derived cells within advanced atherosclerotic lesions. These unidentified SMC-derived cells exhibit phenotypes of other cell lineages, including macrophages and mesenchymal stem cells (MSCs). SMC-specific conditional knockou",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.224972+00:00"
+}

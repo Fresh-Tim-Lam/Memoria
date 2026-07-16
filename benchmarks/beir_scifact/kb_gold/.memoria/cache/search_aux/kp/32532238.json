@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "32532238",
+  "source_fingerprint": "54986407fbdfac0ca1dd2c3c30b7b222",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "32532238",
+    "cellular-adaptation-to-mechanical-stress:-role-of-integrins,-rho,-cytoskeletal-tension-and-mechanosensitive-ion-channels."
+  ],
+  "key_phrases": [
+    "cellular",
+    "adaptation",
+    "mechanical",
+    "stress",
+    "role",
+    "integrins",
+    "rho",
+    "cytoskeletal"
+  ],
+  "summary_1l": "Cellular adaptation to mechanical stress: role of integrins, Rho, cytoskeletal tension and mechanosensitive ion channels.",
+  "query_hits": [],
+  "embed_text": "32532238 Cellular adaptation to mechanical stress: role of integrins, Rho, cytoskeletal tension and mechanosensitive ion channels. science scifact To understand how cells sense and adapt to mechanical stress, we applied tensional forces to magnetic microbeads bound to cell-surface integrin receptors and measured changes in bead displacement with sub-micrometer resolution using… 32532238 cellular-adaptation-to-mechanical-stress:-role-of-integrins,-rho,-cytoskeletal-tension-and-mechanosensitive-ion-channels. cellular adaptation mechanical stress role integrins rho cytoskeletal Cellular adaptation to mechanical stress: role of integrins, Rho, cytoskeletal tension and mechanosensitive ion channels. Cellular adaptation to mechanical stress: role of integrins, Rho, cytoskeletal tension and mechanosensitive ion channels. To understand how cells sense and adapt to mechanical stress, we applied tensional forces to magnetic microbeads bound to cell-surface integrin receptors and measured changes in bead displacement with sub-micrometer resolution using optical microscopy. Cells exhibited four types of mechanical responses: (1) an immediate viscoelastic response; (2) early adaptive behavior characterized by pulse-to-pulse attenuation in response to oscillatory forces; (3) later adaptive cell stiffening with sustained (>15 second) static stresses; and (4) a large-scale repositioning response with prolonged (>1 minute) stress. Importantly, these adaptation responses differed biochemically. Th",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.631278+00:00"
+}

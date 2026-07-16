@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17081238",
+  "source_fingerprint": "3ca0967bc7ad3fc38980cd2a70c22a3b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17081238",
+    "specific-deficit-of-the-on-response-in-visual-transmission-by-targeted-disruption-of-the-mgiur6-gene"
+  ],
+  "key_phrases": [
+    "specific",
+    "deficit",
+    "response",
+    "visual",
+    "transmission",
+    "by",
+    "targeted",
+    "disruption"
+  ],
+  "summary_1l": "Taking advantage of the restricted expression of metabotropic glutamate receptor subtype 6 (mGluR6)",
+  "query_hits": [],
+  "embed_text": "17081238 Specific deficit of the ON response in visual transmission by targeted disruption of the mGIuR6 gene science scifact Taking advantage of the restricted expression of metabotropic glutamate receptor subtype 6 (mGluR6) in retinal ON bipolar cells, we generated knockout mice lacking mGluR6 expression. The homozygous mutant mice showed a loss of ON responses… 17081238 specific-deficit-of-the-on-response-in-visual-transmission-by-targeted-disruption-of-the-mgiur6-gene specific deficit response visual transmission by targeted disruption Taking advantage of the restricted expression of metabotropic glutamate receptor subtype 6 (mGluR6) Specific deficit of the ON response in visual transmission by targeted disruption of the mGIuR6 gene Taking advantage of the restricted expression of metabotropic glutamate receptor subtype 6 (mGluR6) in retinal ON bipolar cells, we generated knockout mice lacking mGluR6 expression. The homozygous mutant mice showed a loss of ON responses but unchanged OFF responses to light. The mutant mice displayed no obvious changes in retinal cell organization nor in the projection of optic fibers to the brain. Furthermore, the mGluR6-deficient mice showed visual behavioral responses to light stimulation as examined by shuttle box avoidance behavior experiments using light exposure as a conditioned stimulus. The results demonstrate that mGluR6 is essential in synaptic transmission to the ON bipolar ce",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:11.852416+00:00"
+}

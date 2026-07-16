@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25937484",
+  "source_fingerprint": "2a3aa6304d458cc21ef980b538f68018",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25937484",
+    "increased-release-of-ferritin-and-iron-by-iron-loaded-alveolar-macrophages-in-cigarette-smokers."
+  ],
+  "key_phrases": [
+    "increased",
+    "release",
+    "ferritin",
+    "iron",
+    "by",
+    "loaded",
+    "alveolar",
+    "macrophages"
+  ],
+  "summary_1l": "Increased release of ferritin and iron by iron-loaded alveolar macrophages in cigarette smokers.",
+  "query_hits": [],
+  "embed_text": "25937484 Increased release of ferritin and iron by iron-loaded alveolar macrophages in cigarette smokers. science scifact The lower respiratory tract of cigarette smokers contains an increased amount of iron that is predominantly sequestered within alveolar macrophages (AM), but is also present in alveolar epithelial fluid. Extracellular ferritin-bound iron… 25937484 increased-release-of-ferritin-and-iron-by-iron-loaded-alveolar-macrophages-in-cigarette-smokers. increased release ferritin iron by loaded alveolar macrophages Increased release of ferritin and iron by iron-loaded alveolar macrophages in cigarette smokers. Increased release of ferritin and iron by iron-loaded alveolar macrophages in cigarette smokers. The lower respiratory tract of cigarette smokers contains an increased amount of iron that is predominantly sequestered within alveolar macrophages (AM), but is also present in alveolar epithelial fluid. Extracellular ferritin-bound iron could potentially be released by reductants present in cigarette smoke and catalyze generation of highly reactive hydroxyl radicals capable of causing oxidant injury. To determine whether AM are a source of alveolar extracellular ferritin and iron, we assessed in vitro release of iron, ferritin, and transferrin by AM recovered by bronchoalveolar lavage (BAL) of 27 healthy subjects including nine nonsmokers (NS), nine light smokers (LS), and nine heavy smokers (",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.750636+00:00"
+}

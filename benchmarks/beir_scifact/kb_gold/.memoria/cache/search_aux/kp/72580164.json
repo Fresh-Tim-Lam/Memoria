@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "72580164",
+  "source_fingerprint": "d7da6f8bc6068f59d6972dd6d6e47121",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "72580164"
+  ],
+  "key_phrases": [
+    "ansichten",
+    "von",
+    "haus",
+    "rzten",
+    "zur",
+    "versorgung",
+    "unheilbar",
+    "kranken"
+  ],
+  "summary_1l": "Background: Family doctors play an important role in the health care",
+  "query_hits": [],
+  "embed_text": "72580164 Ansichten von Hausärzten zur Versorgung von unheilbar kranken Patienten am Lebensende - Ergebnisse einer Befragung in Niedersachsen science scifact Background: Family doctors play an important role in the health care for terminal ill and patients. The current level of palliative care in Germany is strongly criticised, however, empirical data is scare, particularly with respect to… 72580164 ansichten von haus rzten zur versorgung unheilbar kranken Background: Family doctors play an important role in the health care Ansichten von Hausärzten zur Versorgung von unheilbar kranken Patienten am Lebensende - Ergebnisse einer Befragung in Niedersachsen Background: Family doctors play an important role in the health care for terminal ill and patients. The current level of palliative care in Germany is strongly criticised, however, empirical data is scare, particularly with respect to family doctors. Methods: Therefore, the attitudes of family doctors (sample: n= 257) in four representative regions in Lower Saxony were studied by using semi-structured telephone interviews. This was part of a health system researchers’ expert report. Results: 71doctors could be interviewed (28%). On the average, they cared for four palliative patients with cancer diseases and eight palliative patients with other diseases than c",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.919499+00:00"
+}

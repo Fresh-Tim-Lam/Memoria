@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22800314",
+  "source_fingerprint": "20549da7b4a8cc8d79f2486c613fe1ef",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22800314",
+    "il-15-receptor-deletion-results-in-circadian-changes-of-locomotor-and-metabolic-activity"
+  ],
+  "key_phrases": [
+    "il",
+    "15",
+    "receptor",
+    "deletion",
+    "results",
+    "circadian",
+    "changes",
+    "locomotor"
+  ],
+  "summary_1l": "Interleukin-15 (IL-15) is a cytokine produced in the normal brain that acts on its specific receptor IL-15Rα an",
+  "query_hits": [],
+  "embed_text": "22800314 IL-15 Receptor Deletion Results in Circadian Changes of Locomotor and Metabolic Activity science scifact Interleukin-15 (IL-15) is a cytokine produced in the normal brain that acts on its specific receptor IL-15Rα and co-receptors IL-2Rβ and IL-2Rγ in neuronal cells. The functions of the cerebral IL-15 system, however, are not yet clear. To… 22800314 il-15-receptor-deletion-results-in-circadian-changes-of-locomotor-and-metabolic-activity il 15 receptor deletion results circadian changes locomotor Interleukin-15 (IL-15) is a cytokine produced in the normal brain that acts on its specific receptor IL-15Rα an IL-15 Receptor Deletion Results in Circadian Changes of Locomotor and Metabolic Activity Interleukin-15 (IL-15) is a cytokine produced in the normal brain that acts on its specific receptor IL-15Rα and co-receptors IL-2Rβ and IL-2Rγ in neuronal cells. The functions of the cerebral IL-15 system, however, are not yet clear. To test the hypothesis that IL-15Rα regulates metabolic activity and body temperature, we quantified the specific metabolic phenotype of IL-15Rα knockout mice. These normal-appearing mice were leaner with lower fat composition. During the entire circadian cycle, the knockout mice had a significantly higher acrophase in locomotor activity and heat dissipation. During the light phase, there was significantly greater food intake, oxygen consumption, and carbon dioxide produc",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.354171+00:00"
+}

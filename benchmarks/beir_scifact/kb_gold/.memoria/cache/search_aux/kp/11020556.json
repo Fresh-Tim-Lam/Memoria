@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11020556",
+  "source_fingerprint": "3a859225fc75494ab1d6e9599006cb6f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11020556",
+    "migratory-dendritic-cells-transfer-antigen-to-a-lymph-node-resident-dendritic-cell-population-for-efficient-ctl-priming."
+  ],
+  "key_phrases": [
+    "migratory",
+    "dendritic",
+    "cells",
+    "transfer",
+    "antigen",
+    "lymph",
+    "node",
+    "resident"
+  ],
+  "summary_1l": "Migratory dendritic cells transfer antigen to a lymph node-resident dendritic cell population for efficient CTL priming.",
+  "query_hits": [],
+  "embed_text": "11020556 Migratory dendritic cells transfer antigen to a lymph node-resident dendritic cell population for efficient CTL priming. science scifact Skin dendritic cells (DCs) are thought to act as key initiators of local T cell immunity. Here we show that after skin infection with herpes simplex virus (HSV), cytotoxic T lymphocyte (CTL) activation required MHC class I-restricted… 11020556 migratory-dendritic-cells-transfer-antigen-to-a-lymph-node-resident-dendritic-cell-population-for-efficient-ctl-priming. migratory dendritic cells transfer antigen lymph node resident Migratory dendritic cells transfer antigen to a lymph node-resident dendritic cell population for efficient CTL priming. Migratory dendritic cells transfer antigen to a lymph node-resident dendritic cell population for efficient CTL priming. Skin dendritic cells (DCs) are thought to act as key initiators of local T cell immunity. Here we show that after skin infection with herpes simplex virus (HSV), cytotoxic T lymphocyte (CTL) activation required MHC class I-restricted presentation by nonmigratory CD8(+) DCs rather than skin-derived DCs. Despite a lack of direct presentation by migratory DCs, blocking their egress from infected skin substantially inhibited class I-restricted presentation and HSV-specific CTL responses. These results support the argument for initial transport of antigen by migrating DCs, followed by its transfer to the lymphoid-resident DCs for presentation and CTL priming. Given that relat",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:05.847436+00:00"
+}

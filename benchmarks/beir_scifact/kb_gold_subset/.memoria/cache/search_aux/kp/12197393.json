@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12197393",
+  "source_fingerprint": "a7407c66b61757606ed8e1b125733ff5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12197393",
+    "arachidonic-acid-cytochrome-p450-epoxygenase-pathway."
+  ],
+  "key_phrases": [
+    "arachidonic",
+    "acid",
+    "cytochrome",
+    "p450",
+    "epoxygenase",
+    "pathway",
+    "cyp",
+    "epoxygenases"
+  ],
+  "summary_1l": "Arachidonic acid cytochrome P450 epoxygenase pathway.",
+  "query_hits": [],
+  "embed_text": "12197393 Arachidonic acid cytochrome P450 epoxygenase pathway. science scifact Cytochrome P450 (CYP) epoxygenases convert arachidonic acid to four epoxyeicosatrienoic acid (EET) regioisomers, 5,6-, 8,9-, 11,12-, and 14,15-EET, that function as autacrine and paracrine mediators. EETs produce vascular relaxation by… 12197393 arachidonic-acid-cytochrome-p450-epoxygenase-pathway. arachidonic acid cytochrome p450 epoxygenase pathway cyp epoxygenases Arachidonic acid cytochrome P450 epoxygenase pathway. Arachidonic acid cytochrome P450 epoxygenase pathway. Cytochrome P450 (CYP) epoxygenases convert arachidonic acid to four epoxyeicosatrienoic acid (EET) regioisomers, 5,6-, 8,9-, 11,12-, and 14,15-EET, that function as autacrine and paracrine mediators. EETs produce vascular relaxation by activating smooth muscle large-conductance Ca2+-activated K+ channels (BKCa). In addition, they have anti-inflammatory effects on blood vessels and in the kidney, promote angiogenesis, and protect ischemic myocardium and brain. CYP epoxygenases also convert eicosapentaenoic acid to vasoactive epoxy-derivatives, and endocannabinoids containing 11,12- and 14,15-EET are formed. Many EET actions appear to be initiated by EET binding to a membrane receptor that activates ion channels and intracellular signal t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:08.415909+00:00"
+}

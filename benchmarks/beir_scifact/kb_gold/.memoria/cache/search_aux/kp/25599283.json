@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25599283",
+  "source_fingerprint": "49385008ae6e068da8bbec484882bf87",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25599283",
+    "low-serum-vitamin-d-is-associated-with-high-risk-of-diabetes-in-korean-adults."
+  ],
+  "key_phrases": [
+    "low",
+    "serum",
+    "vitamin",
+    "associated",
+    "with",
+    "high",
+    "risk",
+    "diabetes"
+  ],
+  "summary_1l": "Low serum vitamin D is associated with high risk of diabetes in Korean adults.",
+  "query_hits": [],
+  "embed_text": "25599283 Low serum vitamin D is associated with high risk of diabetes in Korean adults. science scifact Vitamin D may play a role in glucose metabolism. A low vitamin D level has been associated with increased risk of diabetes mellitus, but the association has not been confirmed in Asians. Our objective was to examine the association of… 25599283 low-serum-vitamin-d-is-associated-with-high-risk-of-diabetes-in-korean-adults. low serum vitamin associated with high risk diabetes Low serum vitamin D is associated with high risk of diabetes in Korean adults. Low serum vitamin D is associated with high risk of diabetes in Korean adults. Vitamin D may play a role in glucose metabolism. A low vitamin D level has been associated with increased risk of diabetes mellitus, but the association has not been confirmed in Asians. Our objective was to examine the association of serum 25-hydroxyvitamin D [25(OH)D] levels with insulin resistance and diabetes mellitus in Korean adults based on a large population-based survey. Cross-sectional analyses were carried out on 5787 Korean adults (2453 men and 3334 women) who were 20 y or older and participated in the Fourth Korea NHANES conducted in 2008. Diabetes mellitus was defined as fasting plasma glucose ≥7 mmol/L or current use of oral hypoglycemic agents or insulin. Insulin resistance was estimated by homeo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.979608+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20675284",
+  "source_fingerprint": "c94936a384da283299100aff76da0cc1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20675284",
+    "tgf-beta-inhibition-of-endothelial-cell-proliferation:-alteration-of-egf-binding-and-egf-induced-growth-regulatory-(competence)-gene-expression."
+  ],
+  "key_phrases": [
+    "tgf",
+    "beta",
+    "inhibition",
+    "endothelial",
+    "cell",
+    "proliferation",
+    "alteration",
+    "egf"
+  ],
+  "summary_1l": "TGF-beta inhibition of endothelial cell proliferation: alteration of EGF binding and EGF-induced growth-regulatory (competence) gene expression.",
+  "query_hits": [],
+  "embed_text": "20675284 TGF-beta inhibition of endothelial cell proliferation: alteration of EGF binding and EGF-induced growth-regulatory (competence) gene expression. science scifact Transforming growth factor-beta (TGF-beta) inhibits the growth of endothelial cells derived from various sources, including human umbilical vein, bovine aorta, and rat heart. Long-term exposure of rat heart endothelial cells to TGF-beta… 20675284 tgf-beta-inhibition-of-endothelial-cell-proliferation:-alteration-of-egf-binding-and-egf-induced-growth-regulatory-(competence)-gene-expression. tgf beta inhibition endothelial cell proliferation alteration egf TGF-beta inhibition of endothelial cell proliferation: alteration of EGF binding and EGF-induced growth-regulatory (competence) gene expression. TGF-beta inhibition of endothelial cell proliferation: alteration of EGF binding and EGF-induced growth-regulatory (competence) gene expression. Transforming growth factor-beta (TGF-beta) inhibits the growth of endothelial cells derived from various sources, including human umbilical vein, bovine aorta, and rat heart. Long-term exposure of rat heart endothelial cells to TGF-beta also induces dramatic changes in morphology that are characteristic of senescent cells. These changes are accompanied by a decrease in the number of high-affinity receptors for epidermal growth factor (EGF), with almost no change in total receptor number. Additionally, the EGF-induced expression of specific competence genes (c-myc, JE, KC) is decreased, whereas the induction of c-fos gene expression by EGF is unalt",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.758487+00:00"
+}

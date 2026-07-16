@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24707550",
+  "source_fingerprint": "2e9eb026c462823f895b2ca2abfd9f21",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24707550",
+    "a-systemic-granulomatous-response-to-schistosoma-mansoni-eggs-alters-responsiveness-of-bone-marrow-derived-macrophages-to-toll-like-receptor-agonists."
+  ],
+  "key_phrases": [
+    "systemic",
+    "granulomatous",
+    "response",
+    "schistosoma",
+    "mansoni",
+    "eggs",
+    "alters",
+    "responsiveness"
+  ],
+  "summary_1l": "A systemic granulomatous response to Schistosoma mansoni eggs alters responsiveness of bone-marrow-derived macrophages to Toll-like receptor agonists.",
+  "query_hits": [],
+  "embed_text": "24707550 A systemic granulomatous response to Schistosoma mansoni eggs alters responsiveness of bone-marrow-derived macrophages to Toll-like receptor agonists. science scifact Macrophages play a pivotal role in innate and acquired immune responses to Schistosoma mansoni. Classical (M1) or alternative (M2) activation states of these cells further delineate their roles in tissue damage through innate immunity or… 24707550 a-systemic-granulomatous-response-to-schistosoma-mansoni-eggs-alters-responsiveness-of-bone-marrow-derived-macrophages-to-toll-like-receptor-agonists. systemic granulomatous response schistosoma mansoni eggs alters responsiveness A systemic granulomatous response to Schistosoma mansoni eggs alters responsiveness of bone-marrow-derived macrophages to Toll-like receptor agonists. A systemic granulomatous response to Schistosoma mansoni eggs alters responsiveness of bone-marrow-derived macrophages to Toll-like receptor agonists. Macrophages play a pivotal role in innate and acquired immune responses to Schistosoma mansoni. Classical (M1) or alternative (M2) activation states of these cells further delineate their roles in tissue damage through innate immunity or fibrotic remodeling, respectively. In the present study, we addressed the following question: Does systemic Th2-type cytokine polarization evoked by S. mansoni affect macrophage differentiation and activation? To this end, we analyzed bone marrow-derived macrophages from mice with S. mansoni egg-induced pulmonary granulomas and unchallenged (or naïve) mice to determine their activation state and their respon",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.062749+00:00"
+}

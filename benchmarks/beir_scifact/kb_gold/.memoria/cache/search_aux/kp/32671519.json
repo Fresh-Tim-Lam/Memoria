@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "32671519",
+  "source_fingerprint": "f551d0fc6b383e271bf31683034adbf4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "32671519",
+    "evaluation-of-systemic-amyloidosis-by-scintigraphy-with-123i-labeled-serum-amyloid-p-component."
+  ],
+  "key_phrases": [
+    "evaluation",
+    "systemic",
+    "amyloidosis",
+    "by",
+    "scintigraphy",
+    "with",
+    "123i",
+    "labeled"
+  ],
+  "summary_1l": "Evaluation of systemic amyloidosis by scintigraphy with 123I-labeled serum amyloid P component.",
+  "query_hits": [],
+  "embed_text": "32671519 Evaluation of systemic amyloidosis by scintigraphy with 123I-labeled serum amyloid P component. science scifact BACKGROUND In systemic amyloidosis the distribution and progression of disease have been difficult to monitor, because they can be demonstrated only by biopsy. Serum amyloid P component (SAP) is a normal circulating plasma protein that is… 32671519 evaluation-of-systemic-amyloidosis-by-scintigraphy-with-123i-labeled-serum-amyloid-p-component. evaluation systemic amyloidosis by scintigraphy with 123i labeled Evaluation of systemic amyloidosis by scintigraphy with 123I-labeled serum amyloid P component. Evaluation of systemic amyloidosis by scintigraphy with 123I-labeled serum amyloid P component. BACKGROUND In systemic amyloidosis the distribution and progression of disease have been difficult to monitor, because they can be demonstrated only by biopsy. Serum amyloid P component (SAP) is a normal circulating plasma protein that is deposited on amyloid fibrils because of its specific binding affinity for them. We investigated whether labeled SAP could be used to locate amyloid deposits. METHODS Purified human SAP labeled with iodine-123 was given intravenously to 50 patients with biopsy-proved systemic amyloidosis--25 with the AL (primary) type and 25 with the AA (secondary) type--and to 26 control patients with disease and 10 healthy subjects. Whole-body images and regional views were ob",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.726799+00:00"
+}

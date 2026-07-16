@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "86602746",
+  "source_fingerprint": "9c18420906e571e718e191bbd3a8d69f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "86602746",
+    "micrornas:-small-rnas-with-a-big-role-in-gene-regulation"
+  ],
+  "key_phrases": [
+    "micrornas",
+    "small",
+    "rnas",
+    "with",
+    "big",
+    "role",
+    "gene",
+    "regulation"
+  ],
+  "summary_1l": "Key PointsMicroRNAs (miRNAs) are a family of ∼21–25-nucleotide small RNAs that negatively regulate gene expression at the post-transcriptional",
+  "query_hits": [],
+  "embed_text": "86602746 MicroRNAs: small RNAs with a big role in gene regulation science scifact Key PointsMicroRNAs (miRNAs) are a family of ∼21–25-nucleotide small RNAs that negatively regulate gene expression at the post-transcriptional level. The founding members of the miRNA family, lin-4 and let-7, were identified through… 86602746 micrornas:-small-rnas-with-a-big-role-in-gene-regulation micrornas small rnas with big role gene regulation Key PointsMicroRNAs (miRNAs) are a family of ∼21–25-nucleotide small RNAs that negatively regulate gene expression at the post-transcriptional MicroRNAs: small RNAs with a big role in gene regulation Key PointsMicroRNAs (miRNAs) are a family of ∼21–25-nucleotide small RNAs that negatively regulate gene expression at the post-transcriptional level. The founding members of the miRNA family, lin-4 and let-7, were identified through genetic screens for defects in the temporal regulation of Caenorhabditis elegans larval development. Owing to genome-wide cloning efforts, hundreds of miRNAs have now been identified in almost all metazoans, including flies, plants and mammals. MiRNAs exhibit temporally and spatially regulated expression patterns during diverse developmental and physiological processes. Most of the miRNAs that have been characterized so far seem to regulate aspects of development, including larval developmental transition",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.384301+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23929297",
+  "source_fingerprint": "42b7a71ae3d767c69af5e5d19b4f827c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23929297",
+    "ghrelin-secretion-stimulated-by-{beta}1-adrenergic-receptors-in-cultured-ghrelinoma-cells-and-in-fasted-mice."
+  ],
+  "key_phrases": [
+    "ghrelin",
+    "secretion",
+    "stimulated",
+    "by",
+    "beta",
+    "adrenergic",
+    "receptors",
+    "cultured"
+  ],
+  "summary_1l": "Ghrelin secretion stimulated by {beta}1-adrenergic receptors in cultured ghrelinoma cells and in fasted mice.",
+  "query_hits": [],
+  "embed_text": "23929297 Ghrelin secretion stimulated by {beta}1-adrenergic receptors in cultured ghrelinoma cells and in fasted mice. science scifact Ghrelin, an octanoylated peptide hormone produced in the stomach, rises dramatically in mouse plasma during chronic severe calorie deprivation, an event that is essential to maintain life. The mechanism for this increase is not understood.… 23929297 ghrelin-secretion-stimulated-by-{beta}1-adrenergic-receptors-in-cultured-ghrelinoma-cells-and-in-fasted-mice. ghrelin secretion stimulated by beta adrenergic receptors cultured Ghrelin secretion stimulated by {beta}1-adrenergic receptors in cultured ghrelinoma cells and in fasted mice. Ghrelin secretion stimulated by {beta}1-adrenergic receptors in cultured ghrelinoma cells and in fasted mice. Ghrelin, an octanoylated peptide hormone produced in the stomach, rises dramatically in mouse plasma during chronic severe calorie deprivation, an event that is essential to maintain life. The mechanism for this increase is not understood. Here, we study the control of ghrelin secretion in tissue culture cells derived from mice bearing ghrelinomas induced by a tissue-specific SV40 T-antigen transgene. We found that the ghrelin-secreting cells express high levels of mRNA encoding beta(1)-adrenergic receptors. Addition of norepinephrine or epinephrine to the culture medium stimulated ghrelin secretion, and this effect was blocked by atenolol, a selective beta(1)-adrenergic antagonist",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.482343+00:00"
+}

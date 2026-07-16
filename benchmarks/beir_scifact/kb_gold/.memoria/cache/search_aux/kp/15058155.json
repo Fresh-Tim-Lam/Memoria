@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "15058155",
+  "source_fingerprint": "52a4ebf4bfd5e02c6c278c57511d02fb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15058155"
+  ],
+  "key_phrases": [
+    "25",
+    "dihydroxycholesterol",
+    "mediated",
+    "activation",
+    "ebi2",
+    "immune",
+    "regulation",
+    "diseases"
+  ],
+  "summary_1l": "EBI2, aka GPR183, is a G-couple receptor originally identified in 1993 as one of main genes induced in Burkitt",
+  "query_hits": [],
+  "embed_text": "15058155 7α, 25-dihydroxycholesterol-mediated activation of EBI2 in immune regulation and diseases science scifact EBI2, aka GPR183, is a G-couple receptor originally identified in 1993 as one of main genes induced in Burkitt's lymphoma cell line BL41 by Epstein-Barr virus (EBV) infection. After it was reported in 2009 that the receptor played a key… 15058155 25 dihydroxycholesterol mediated activation ebi2 immune regulation diseases EBI2, aka GPR183, is a G-couple receptor originally identified in 1993 as one of main genes induced in Burkitt 7α, 25-dihydroxycholesterol-mediated activation of EBI2 in immune regulation and diseases EBI2, aka GPR183, is a G-couple receptor originally identified in 1993 as one of main genes induced in Burkitt's lymphoma cell line BL41 by Epstein-Barr virus (EBV) infection. After it was reported in 2009 that the receptor played a key role in regulating B cell migration and responses, we initiated an effort in looking for its endogenous ligand. In 2011 we and another group reported the identification of 7α, 25-dihydroxyxcholesterol (7α, 25-OHC), an oxysterol, as the likely physiological ligand of EBI2. A few subsequently published studies further elucidated how 7α, 25-OHC bound to EBI2, and how a gradient of 7α, 25-OHC could be generated in vivo and regulated migration, activation, and functions of",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.037950+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23017040",
+  "source_fingerprint": "f46263583be52367647b8c127535e293",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23017040",
+    "methionine-restriction-decreases-visceral-fat-mass-and-preserves-insulin-action-in-aging-male-fischer-344-rats-independent-of-energy-restriction."
+  ],
+  "key_phrases": [
+    "methionine",
+    "restriction",
+    "decreases",
+    "visceral",
+    "fat",
+    "mass",
+    "preserves",
+    "insulin"
+  ],
+  "summary_1l": "Methionine restriction decreases visceral fat mass and preserves insulin action in aging male Fischer 344 rats independent of energy restriction.",
+  "query_hits": [],
+  "embed_text": "23017040 Methionine restriction decreases visceral fat mass and preserves insulin action in aging male Fischer 344 rats independent of energy restriction. science scifact Reduced dietary methionine intake (0.17% methionine, MR) and calorie restriction (CR) prolong lifespan in male Fischer 344 rats. Although the mechanisms are unclear, both regimens feature lower body weight and reductions in adiposity.… 23017040 methionine-restriction-decreases-visceral-fat-mass-and-preserves-insulin-action-in-aging-male-fischer-344-rats-independent-of-energy-restriction. methionine restriction decreases visceral fat mass preserves insulin Methionine restriction decreases visceral fat mass and preserves insulin action in aging male Fischer 344 rats independent of energy restriction. Methionine restriction decreases visceral fat mass and preserves insulin action in aging male Fischer 344 rats independent of energy restriction. Reduced dietary methionine intake (0.17% methionine, MR) and calorie restriction (CR) prolong lifespan in male Fischer 344 rats. Although the mechanisms are unclear, both regimens feature lower body weight and reductions in adiposity. Reduced fat deposition in CR is linked to preservation of insulin responsiveness in older animals. These studies examine the relationship between insulin responsiveness and visceral fat in MR and test whether, despite lower food intake observed in MR animals, decreased visceral fat accretion and preservation of insulin sensitivity is not secondary to CR. Accordingly, rats pair fed (pf) control diet (0.86% methinone,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.751294+00:00"
+}

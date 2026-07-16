@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22547508",
+  "source_fingerprint": "2bdb099864ce9d8ce7146d75ae400d94",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22547508",
+    "predictors-of-survival-after-acute-paraquat-poisoning."
+  ],
+  "key_phrases": [
+    "predictors",
+    "survival",
+    "after",
+    "acute",
+    "paraquat",
+    "poisoning",
+    "often",
+    "fatal"
+  ],
+  "summary_1l": "Predictors of survival after acute paraquat poisoning.",
+  "query_hits": [],
+  "embed_text": "22547508 Predictors of survival after acute paraquat poisoning. science scifact Acute paraquat poisoning is often fatal. Many studies have investigated successful treatment modalities, but no standard treatment yet exists. The purpose of this study was to determine the predictors of survival after acute paraquat… 22547508 predictors-of-survival-after-acute-paraquat-poisoning. predictors survival after acute paraquat poisoning often fatal Predictors of survival after acute paraquat poisoning. Predictors of survival after acute paraquat poisoning. Acute paraquat poisoning is often fatal. Many studies have investigated successful treatment modalities, but no standard treatment yet exists. The purpose of this study was to determine the predictors of survival after acute paraquat poisoning in 602 patients. The paraquat exposure was assessed based on the amount of ingested paraquat and a semiquantitative measure of the urine level of paraquat. Initial clinical parameters including vital signs, hemoglobin, white-blood-cell count, pH, PaCO2, PaO2, blood urea nitrogen, creatinine, aspartate aminotransferase, alanine aminotransferase, total bilirubin, amylase, and glucose were obtained at the time of arrival at the emergency room. Outcomes after acute paraquat poisoning were categorized",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.030674+00:00"
+}

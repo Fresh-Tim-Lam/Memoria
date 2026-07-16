@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "40867854",
+  "source_fingerprint": "978adc40a9ba3740cbf6884a7a038963",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "40867854",
+    "acute-respiratory-failure-in-patients-with-severe-community-acquired-pneumonia:-a-prospective-randomized-evaluation-of-noninvasive-ventilation."
+  ],
+  "key_phrases": [
+    "acute",
+    "respiratory",
+    "failure",
+    "patients",
+    "with",
+    "severe",
+    "community",
+    "acquired"
+  ],
+  "summary_1l": "Acute respiratory failure in patients with severe community-acquired pneumonia: a prospective randomized evaluation of noninvasive ventilation.",
+  "query_hits": [],
+  "embed_text": "40867854 Acute respiratory failure in patients with severe community-acquired pneumonia: a prospective randomized evaluation of noninvasive ventilation. science scifact In uncontrolled studies, noninvasive positive pressure ventilation (NPPV) was found useful in avoiding endotracheal intubation in patients with acute respiratory failure (ARF) caused by severe community-acquired pneumonia (CAP). We… 40867854 acute-respiratory-failure-in-patients-with-severe-community-acquired-pneumonia:-a-prospective-randomized-evaluation-of-noninvasive-ventilation. acute respiratory failure patients with severe community acquired Acute respiratory failure in patients with severe community-acquired pneumonia: a prospective randomized evaluation of noninvasive ventilation. Acute respiratory failure in patients with severe community-acquired pneumonia: a prospective randomized evaluation of noninvasive ventilation. In uncontrolled studies, noninvasive positive pressure ventilation (NPPV) was found useful in avoiding endotracheal intubation in patients with acute respiratory failure (ARF) caused by severe community-acquired pneumonia (CAP). We conducted a prospective, randomized study comparing standard treatment plus NPPV delivered through a face mask to standard treatment alone in patients with severe CAP and ARF. Patients fitting the American Thoracic Society criteria for severe CAP were included in presence of ARF (refractory hypoxemia and/or hypercapnia with acidosis). Exclusion criteria were: severe hemodynamic instability, requirement for emergent cardi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.886593+00:00"
+}

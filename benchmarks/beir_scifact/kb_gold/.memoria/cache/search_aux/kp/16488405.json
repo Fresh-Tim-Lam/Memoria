@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16488405",
+  "source_fingerprint": "b496a8b454ce6bb6d3930b6bf6bd3868",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16488405",
+    "downloaded-from"
+  ],
+  "key_phrases": [
+    "downloaded",
+    "from",
+    "physical",
+    "activity",
+    "induces",
+    "subclinical",
+    "inflammatory",
+    "response"
+  ],
+  "summary_1l": "Physical activity induces a subclinical inflammatory response, mediated in part by leukocytes, and manifested by elevated concentrations of circulating proinflammatory cytokines, inclu",
+  "query_hits": [],
+  "embed_text": "16488405 Downloaded from science scifact Physical activity induces a subclinical inflammatory response, mediated in part by leukocytes, and manifested by elevated concentrations of circulating proinflammatory cytokines, including interleukin (IL)-1β, IL-6, and tumor necrosis… 16488405 downloaded-from downloaded from physical activity induces subclinical inflammatory response Physical activity induces a subclinical inflammatory response, mediated in part by leukocytes, and manifested by elevated concentrations of circulating proinflammatory cytokines, inclu Downloaded from Physical activity induces a subclinical inflammatory response, mediated in part by leukocytes, and manifested by elevated concentrations of circulating proinflammatory cytokines, including interleukin (IL)-1β, IL-6, and tumor necrosis factor-α (TNF-α). However, the source of the cytokines that appear during exercise remains unknown. In this study, we examined exercise-induced changes in plasma cytokine concentrations and their corresponding mRNA expression in peripheral blood mononuclear cells. Ten healthy [peak oxygen uptake = 48.8 ± 6.5 (SD) ml · kg−1 · min−1] but untrained men [age = 25 ± 5 (SD) yr] undertook 3 h of exercise (cycling and inclined walking) at 60–65% peak oxygen uptake. Circulating leukocyte subset counts were elevated during and 2 h postexercise but retur",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.332737+00:00"
+}

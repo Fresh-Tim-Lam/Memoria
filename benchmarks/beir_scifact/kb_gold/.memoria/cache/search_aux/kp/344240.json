@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "344240",
+  "source_fingerprint": "c68a37c8c2305947ab81e1b115b34512",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "344240",
+    "loss-of-igf-iea-or-igf-ieb-impairs-myogenic-differentiation."
+  ],
+  "key_phrases": [
+    "loss",
+    "igf",
+    "iea",
+    "ieb",
+    "impairs",
+    "myogenic",
+    "differentiation",
+    "actions"
+  ],
+  "summary_1l": "Loss of IGF-IEa or IGF-IEb impairs myogenic differentiation.",
+  "query_hits": [],
+  "embed_text": "344240 Loss of IGF-IEa or IGF-IEb impairs myogenic differentiation. science scifact Actions of protein products resulting from alternative splicing of the Igf1 gene have received increasing attention in recent years. However, the significance and functional relevance of these observations remain poorly defined. To address… 344240 loss-of-igf-iea-or-igf-ieb-impairs-myogenic-differentiation. loss igf iea ieb impairs myogenic differentiation actions Loss of IGF-IEa or IGF-IEb impairs myogenic differentiation. Loss of IGF-IEa or IGF-IEb impairs myogenic differentiation. Actions of protein products resulting from alternative splicing of the Igf1 gene have received increasing attention in recent years. However, the significance and functional relevance of these observations remain poorly defined. To address functions of IGF-I splice variants, we examined the impact of loss of IGF-IEa and IGF-IEb on the proliferation and differentiation of cultured mouse myoblasts. RNA interference-mediated reductions in total IGF-I, IGF-IEa alone, or IGF-IEb alone had no effect on cell viability in growth medium. However, cells deficient in total IGF-I or IGF-IEa alone proliferated significantly slower than control cells or cells deficient in IGF-IEb in serum-free media. Simultaneous loss of both or specific loss",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.445557+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "33397197",
+  "source_fingerprint": "ef19708a526678ea3323a4a3eb7c3a0e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "33397197",
+    "re-engineered-cd40-receptor-enables-potent-pharmacological-activation-of-dendritic-cell-cancer-vaccines-in-vivo"
+  ],
+  "key_phrases": [
+    "re",
+    "engineered",
+    "cd40",
+    "receptor",
+    "enables",
+    "potent",
+    "pharmacological",
+    "activation"
+  ],
+  "summary_1l": "Modest clinical outcomes of dendritic-cell (DC) vaccine trials call for the refinement o",
+  "query_hits": [],
+  "embed_text": "33397197 Re-engineered CD40 receptor enables potent pharmacological activation of dendritic-cell cancer vaccines in vivo science scifact Modest clinical outcomes of dendritic-cell (DC) vaccine trials call for the refinement of DC vaccine design. Although many potential antigens have been identified, development of methods to enhance antigen presentation by DCs has lagged.… 33397197 re-engineered-cd40-receptor-enables-potent-pharmacological-activation-of-dendritic-cell-cancer-vaccines-in-vivo re engineered cd40 receptor enables potent pharmacological activation Modest clinical outcomes of dendritic-cell (DC) vaccine trials call for the refinement o Re-engineered CD40 receptor enables potent pharmacological activation of dendritic-cell cancer vaccines in vivo Modest clinical outcomes of dendritic-cell (DC) vaccine trials call for the refinement of DC vaccine design. Although many potential antigens have been identified, development of methods to enhance antigen presentation by DCs has lagged. We have engineered a potent, drug-inducible CD40 (iCD40) receptor that permits temporally controlled, lymphoid-localized, DC-specific activation. iCD40 is comprised of a membrane-localized cytoplasmic domain of CD40 fused to drug-binding domains. This allows it to respond to a lipid-permeable, high-affinity dimerizer drug while circumventing ectodomain-dependent negative-feedback mechanisms. These modifications permit prolonged activation of iCD4",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.365939+00:00"
+}

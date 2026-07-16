@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6532806",
+  "source_fingerprint": "0b87862146ed5cec0d30836d9a0e5de8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6532806",
+    "an-integrated-database-of-genes-responsive-to-the-myc-oncogenic-transcription-factor:-identification-of-direct-genomic-targets"
+  ],
+  "key_phrases": [
+    "integrated",
+    "database",
+    "genes",
+    "responsive",
+    "myc",
+    "oncogenic",
+    "transcription",
+    "factor"
+  ],
+  "summary_1l": "We report a database of genes responsive to the Myc oncogenic transcripti",
+  "query_hits": [],
+  "embed_text": "6532806 An integrated database of genes responsive to the Myc oncogenic transcription factor: identification of direct genomic targets science scifact We report a database of genes responsive to the Myc oncogenic transcription factor. The database Myc Target Gene prioritizes candidate target genes according to experimental evidence and clusters responsive genes into functional groups. We… 6532806 an-integrated-database-of-genes-responsive-to-the-myc-oncogenic-transcription-factor:-identification-of-direct-genomic-targets integrated database genes responsive myc oncogenic transcription factor We report a database of genes responsive to the Myc oncogenic transcripti An integrated database of genes responsive to the Myc oncogenic transcription factor: identification of direct genomic targets We report a database of genes responsive to the Myc oncogenic transcription factor. The database Myc Target Gene prioritizes candidate target genes according to experimental evidence and clusters responsive genes into functional groups. We coupled the prioritization of target genes with phylogenetic sequence comparisons to predict c-Myc target binding sites, which are in turn validated by chromatin immunoprecipitation assays. This database is essential for the understanding of the genetic regulatory networks underlying the genesis of cancers.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.120928+00:00"
+}

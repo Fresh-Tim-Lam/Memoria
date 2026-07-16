@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6209599",
+  "source_fingerprint": "ff122ea283ffdcfab260bb8ea2d3c46b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6209599",
+    "extensive-translation-of-circular-rnas-driven-by-n6-methyladenosine"
+  ],
+  "key_phrases": [
+    "extensive",
+    "translation",
+    "circular",
+    "rnas",
+    "driven",
+    "by",
+    "n6",
+    "methyladenosine"
+  ],
+  "summary_1l": "Extensive pre-mRNA back-splicing generates numerous circular RNAs (circRNAs) in human transcriptome.",
+  "query_hits": [],
+  "embed_text": "6209599 Extensive translation of circular RNAs driven by N6-methyladenosine science scifact Extensive pre-mRNA back-splicing generates numerous circular RNAs (circRNAs) in human transcriptome. However, the biological functions of these circRNAs remain largely unclear. Here we report that N6-methyladenosine (m6A), the most… 6209599 extensive-translation-of-circular-rnas-driven-by-n6-methyladenosine extensive translation circular rnas driven by n6 methyladenosine Extensive pre-mRNA back-splicing generates numerous circular RNAs (circRNAs) in human transcriptome. Extensive translation of circular RNAs driven by N6-methyladenosine Extensive pre-mRNA back-splicing generates numerous circular RNAs (circRNAs) in human transcriptome. However, the biological functions of these circRNAs remain largely unclear. Here we report that N6-methyladenosine (m6A), the most abundant base modification of RNA, promotes efficient initiation of protein translation from circRNAs in human cells. We discover that consensus m6A motifs are enriched in circRNAs and a single m6A site is sufficient to drive translation initiation. This m6A-driven translation requires initiation factor eIF4G2 and m6A reader YTHDF3, and is enhanced by methyltransferase METTL3/14, inhibited by demethylase FTO, and upregulated upon heat shock. Further analyses through polysome profiling, computati",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.288641+00:00"
+}

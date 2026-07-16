@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9547722",
+  "source_fingerprint": "1b76626a7b2e8fb2435b32af9c384b15",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9547722",
+    "cancer-survivors-in-the-united-states:-prevalence-across-the-survivorship-trajectory-and-implications-for-care."
+  ],
+  "key_phrases": [
+    "cancer",
+    "survivors",
+    "united",
+    "states",
+    "prevalence",
+    "across",
+    "survivorship",
+    "trajectory"
+  ],
+  "summary_1l": "Cancer survivors in the United States: prevalence across the survivorship trajectory and implications for care.",
+  "query_hits": [],
+  "embed_text": "9547722 Cancer survivors in the United States: prevalence across the survivorship trajectory and implications for care. science scifact BACKGROUND Cancer survivors represent a growing population, heterogeneous in their need for medical care, psychosocial support, and practical assistance. To inform survivorship research and practice, this manuscript will describe the… 9547722 cancer-survivors-in-the-united-states:-prevalence-across-the-survivorship-trajectory-and-implications-for-care. cancer survivors united states prevalence across survivorship trajectory Cancer survivors in the United States: prevalence across the survivorship trajectory and implications for care. Cancer survivors in the United States: prevalence across the survivorship trajectory and implications for care. BACKGROUND Cancer survivors represent a growing population, heterogeneous in their need for medical care, psychosocial support, and practical assistance. To inform survivorship research and practice, this manuscript will describe the prevalent population of cancer survivors in terms of overall numbers and prevalence by cancer site and time since diagnosis. METHODS Incidence and survival data from 1975-2007 were obtained from the Surveillance, Epidemiology, and End Results Program and population projections from the United States Census Bureau. Cancer prevalence for 2012 and beyond was estimated using the Prevalence Incidence Approach Model, assuming constant future incidence and",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.182590+00:00"
+}

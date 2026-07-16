@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10017612",
+  "source_fingerprint": "4450dee785ba2edcd1607349e76a35ac",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10017612",
+    "behavioral-characterization-of-neuropeptide-y-knockout-mice."
+  ],
+  "key_phrases": [
+    "behavioral",
+    "characterization",
+    "neuropeptide",
+    "knockout",
+    "mice",
+    "extensive",
+    "was",
+    "conducted"
+  ],
+  "summary_1l": "Behavioral characterization of neuropeptide Y knockout mice.",
+  "query_hits": [],
+  "embed_text": "10017612 Behavioral characterization of neuropeptide Y knockout mice. science scifact An extensive behavioral characterization was conducted with mice lacking the gene for neuropeptide Y (NPY) including response to 24 and 48 h fast and challenge with small molecule antagonists of NPY receptors implicated in mediating the… 10017612 behavioral-characterization-of-neuropeptide-y-knockout-mice. behavioral characterization neuropeptide knockout mice extensive was conducted Behavioral characterization of neuropeptide Y knockout mice. Behavioral characterization of neuropeptide Y knockout mice. An extensive behavioral characterization was conducted with mice lacking the gene for neuropeptide Y (NPY) including response to 24 and 48 h fast and challenge with small molecule antagonists of NPY receptors implicated in mediating the feeding effects of NPY (i.e., Y1 and Y5). In addition, wildtype (WT) and NPY knockout (KO) mice were tested in locomotor monitors, elevated plus maze, inhibitory avoidance, acoustic startle, prepulse inhibition, and hot plate assays. One of the major findings was that the NPY KO mice have a reduced food intake relative to WT controls in response to fasting. Also, based on data from the behavioral models, the NPY KO mice may have an anxiogenic-like phenotype, and appear to be hypoalgesic in the hot",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T12:29:53.462500+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "44724517",
+  "source_fingerprint": "97622da8e13b0e798cf30e7df18fe625",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "44724517",
+    "kruppel-like-factor-2-is-a-transcriptional-regulator-of-chronic-and-acute-inflammation."
+  ],
+  "key_phrases": [
+    "kruppel",
+    "like",
+    "factor",
+    "transcriptional",
+    "regulator",
+    "chronic",
+    "acute",
+    "inflammation"
+  ],
+  "summary_1l": "Kruppel-like factor 2 is a transcriptional regulator of chronic and acute inflammation.",
+  "query_hits": [],
+  "embed_text": "44724517 Kruppel-like factor 2 is a transcriptional regulator of chronic and acute inflammation. science scifact Although myeloid cell activation is requisite for an optimal innate immune response, this process must be tightly controlled to prevent collateral host tissue damage. Kruppel-like factor 2 (KLF2) is a potent regulator of myeloid cell… 44724517 kruppel-like-factor-2-is-a-transcriptional-regulator-of-chronic-and-acute-inflammation. kruppel like factor transcriptional regulator chronic acute inflammation Kruppel-like factor 2 is a transcriptional regulator of chronic and acute inflammation. Kruppel-like factor 2 is a transcriptional regulator of chronic and acute inflammation. Although myeloid cell activation is requisite for an optimal innate immune response, this process must be tightly controlled to prevent collateral host tissue damage. Kruppel-like factor 2 (KLF2) is a potent regulator of myeloid cell proinflammatory activation. As an approximately 30% to 50% reduction in KLF2 levels has been observed in human subjects with acute or chronic inflammatory disorders, we studied the biological response to inflammation in KLF2(+/-) mice. Herein, we show that partial deficiency of KLF2 modulates the in vivo response to acute (sepsis) and subacute (skin) inflammatory challenge. Mechanistically, we link the anti-inflammatory effects of KLF2 to the inhibition of NF-κB transcripti",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.897805+00:00"
+}

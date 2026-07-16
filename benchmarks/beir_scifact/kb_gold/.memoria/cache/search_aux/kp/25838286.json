@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25838286",
+  "source_fingerprint": "6ad98531cb6846ce443c6df9a93233cd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25838286",
+    "wrn,-the-protein-deficient-in-werner-syndrome,-plays-a-critical-structural-role-in-optimizing-dna-repair."
+  ],
+  "key_phrases": [
+    "wrn",
+    "protein",
+    "deficient",
+    "werner",
+    "syndrome",
+    "plays",
+    "critical",
+    "structural"
+  ],
+  "summary_1l": "WRN, the protein deficient in Werner syndrome, plays a critical structural role in optimizing DNA repair.",
+  "query_hits": [],
+  "embed_text": "25838286 WRN, the protein deficient in Werner syndrome, plays a critical structural role in optimizing DNA repair. science scifact Werner syndrome (WS) predisposes patients to cancer and premature aging, owing to mutations in WRN. The WRN protein is a RECQ-like helicase and is thought to participate in DNA double-strand break (DSB) repair by non-homologous end joining… 25838286 wrn,-the-protein-deficient-in-werner-syndrome,-plays-a-critical-structural-role-in-optimizing-dna-repair. wrn protein deficient werner syndrome plays critical structural WRN, the protein deficient in Werner syndrome, plays a critical structural role in optimizing DNA repair. WRN, the protein deficient in Werner syndrome, plays a critical structural role in optimizing DNA repair. Werner syndrome (WS) predisposes patients to cancer and premature aging, owing to mutations in WRN. The WRN protein is a RECQ-like helicase and is thought to participate in DNA double-strand break (DSB) repair by non-homologous end joining (NHEJ) or homologous recombination (HR). It has been previously shown that non-homologous DNA ends develop extensive deletions during repair in WS cells, and that this WS phenotype was complemented by wild-type (wt) WRN. WRN possesses both 3' --> 5' exonuclease and 3' --> 5' helicase activities. To determine the relative contributions of each of these distinct enzymatic activities to DSB repair, we examined NHEJ and HR in WS cells (WRN-/-) complement",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.586073+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25827024",
+  "source_fingerprint": "8f1bef382534b5c893f59e8b91b711de",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25827024",
+    "neuron-specific-expression-of-cuznsod-prevents-the-loss-of-muscle-mass-and-function-that-occurs-in-homozygous-cuznsod-knockout-mice."
+  ],
+  "key_phrases": [
+    "neuron",
+    "specific",
+    "expression",
+    "cuznsod",
+    "prevents",
+    "loss",
+    "muscle",
+    "mass"
+  ],
+  "summary_1l": "Neuron-specific expression of CuZnSOD prevents the loss of muscle mass and function that occurs in homozygous CuZnSOD-knockout mice.",
+  "query_hits": [],
+  "embed_text": "25827024 Neuron-specific expression of CuZnSOD prevents the loss of muscle mass and function that occurs in homozygous CuZnSOD-knockout mice. science scifact Deletion of copper-zinc superoxide dismutase (CuZnSOD) in Sod1(-/-) mice leads to accelerated loss of muscle mass and force during aging, but the losses do not occur with muscle-specific deletion of CuZnSOD. To determine the role of motor… 25827024 neuron-specific-expression-of-cuznsod-prevents-the-loss-of-muscle-mass-and-function-that-occurs-in-homozygous-cuznsod-knockout-mice. neuron specific expression cuznsod prevents loss muscle mass Neuron-specific expression of CuZnSOD prevents the loss of muscle mass and function that occurs in homozygous CuZnSOD-knockout mice. Neuron-specific expression of CuZnSOD prevents the loss of muscle mass and function that occurs in homozygous CuZnSOD-knockout mice. Deletion of copper-zinc superoxide dismutase (CuZnSOD) in Sod1(-/-) mice leads to accelerated loss of muscle mass and force during aging, but the losses do not occur with muscle-specific deletion of CuZnSOD. To determine the role of motor neurons in the muscle decline, we generated transgenic Sod1(-/-) mice in which CuZnSOD was expressed under control of the synapsin 1 promoter (SynTgSod1(-/-) mice). SynTgSod1(-/-) mice expressed CuZnSOD in brain, spinal cord, and peripheral nerve, but not in other tissues. Sciatic nerve CuZnSOD content in SynTgSod1(-/-) mice was ~20% that of control mice, but no reduction in muscle mass or isometric force was observed in Syn",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.536744+00:00"
+}

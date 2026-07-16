@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "46764350",
+  "source_fingerprint": "b555504073f817ed8f5aa3812d7abc76",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "46764350",
+    "frontal-stroke-syndromes."
+  ],
+  "key_phrases": [
+    "frontal",
+    "stroke",
+    "syndromes",
+    "lobe",
+    "largest",
+    "brain",
+    "it",
+    "thus"
+  ],
+  "summary_1l": "Frontal stroke syndromes.",
+  "query_hits": [],
+  "embed_text": "46764350 Frontal stroke syndromes. science scifact The frontal lobe is the largest lobe of the brain, and it is thus commonly involved in stroke. Moreover, almost one in five strokes is limited to the prerolandic areas. This high frequency of anatomical involvement is in sharp contrast… 46764350 frontal-stroke-syndromes. frontal stroke syndromes lobe largest brain it thus Frontal stroke syndromes. Frontal stroke syndromes. The frontal lobe is the largest lobe of the brain, and it is thus commonly involved in stroke. Moreover, almost one in five strokes is limited to the prerolandic areas. This high frequency of anatomical involvement is in sharp contrast with the apparent rarity of clinical frontal dysfunction in stroke. It is remarkable that frontal behavioral syndromes have been rather uncommonly reported in patients with stroke as compared to patients with other diseases, such as brain tumor. This fact is paradoxical, because an acute process (stroke) is expected to yield more clinical dysfunction than a more chronic disease (tumor). A volume effect may be the main factor leading to this phenomenon. Another interesting aspect of frontal strokes is the contribution of so-called 's",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.083703+00:00"
+}

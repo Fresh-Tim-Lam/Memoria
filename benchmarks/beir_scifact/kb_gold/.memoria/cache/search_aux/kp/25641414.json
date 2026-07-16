@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25641414",
+  "source_fingerprint": "e1da62ab3e0eb9a350f96b1cfe55914a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25641414",
+    "suicides-after-pregnancy-in-finland,-1987-94:-register-linkage-study."
+  ],
+  "key_phrases": [
+    "suicides",
+    "after",
+    "pregnancy",
+    "finland",
+    "1987",
+    "94",
+    "register",
+    "linkage"
+  ],
+  "summary_1l": "Suicides after pregnancy in Finland, 1987-94: register linkage study.",
+  "query_hits": [],
+  "embed_text": "25641414 Suicides after pregnancy in Finland, 1987-94: register linkage study. science scifact OBJECTIVE To determine rates of suicide associated with pregnancy by the type of pregnancy. DESIGN Register linkage study. Information on suicides in women of reproductive age was linked with the Finnish birth, abortion, and hospital… 25641414 suicides-after-pregnancy-in-finland,-1987-94:-register-linkage-study. suicides after pregnancy finland 1987 94 register linkage Suicides after pregnancy in Finland, 1987-94: register linkage study. Suicides after pregnancy in Finland, 1987-94: register linkage study. OBJECTIVE To determine rates of suicide associated with pregnancy by the type of pregnancy. DESIGN Register linkage study. Information on suicides in women of reproductive age was linked with the Finnish birth, abortion, and hospital discharge registers to find out how many women who committed suicide had had a completed pregnancy during her last year of life. SETTING Nationwide data from Finland. SUBJECTS Women who committed suicide in 1987-94. RESULTS There were 73 suicides associated with pregnancy, representing 5.4% of all suicides in women in this age group. The mean annual suicide rate was 11.3 per 100,000. The suicide rate associated with birth was significantly lower (5.9) and the rates associated with miscarriag",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.061258+00:00"
+}

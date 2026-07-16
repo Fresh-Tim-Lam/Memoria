@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14550841",
+  "source_fingerprint": "458a3b05f3e04cbce23f05fcb7b9322f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14550841",
+    "asymmetric-cell-divisions-sustain-long-term--hematopoiesis-from-single-sorted-human-fetal-liver-cells"
+  ],
+  "key_phrases": [
+    "asymmetric",
+    "cell",
+    "divisions",
+    "sustain",
+    "long",
+    "term",
+    "hematopoiesis",
+    "from"
+  ],
+  "summary_1l": "Asymmetric Cell Divisions Sustain Long-Term Hematopoiesis from Single-sorted Human Fetal Liver Cells Hematopoietic stem cells (HSCs) in adult marrow are believed to be derived from fetal liver precurs",
+  "query_hits": [],
+  "embed_text": "14550841 Asymmetric Cell Divisions Sustain Long-Term  Hematopoiesis from Single-sorted Human Fetal Liver Cells science scifact Hematopoietic stem cells (HSCs) in adult marrow are believed to be derived from fetal liver precursors. To study cell kinetics involved in long-term hematopoiesis, we studied single-sorted candidate HSCs from fetal liver that were cultured… 14550841 asymmetric-cell-divisions-sustain-long-term--hematopoiesis-from-single-sorted-human-fetal-liver-cells asymmetric cell divisions sustain long term hematopoiesis from Asymmetric Cell Divisions Sustain Long-Term Hematopoiesis from Single-sorted Human Fetal Liver Cells Hematopoietic stem cells (HSCs) in adult marrow are believed to be derived from fetal liver precurs Asymmetric Cell Divisions Sustain Long-Term Hematopoiesis from Single-sorted Human Fetal Liver Cells Hematopoietic stem cells (HSCs) in adult marrow are believed to be derived from fetal liver precursors. To study cell kinetics involved in long-term hematopoiesis, we studied single-sorted candidate HSCs from fetal liver that were cultured in the presence of a mixture of stimulatory cytokines. After 8–10 d, the number of cells in primary cultures varied from 10,000 cells. Single cells in slow growing colonies were recloned upon reaching a 100–200 cell stage. Strikingly, the number of cells in subclones varied widely again. These results are indicative of asymmetric divisions in primitive hematopoietic cells in which proliferative potential and cell cycle properties are unevenly distributed",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.172276+00:00"
+}

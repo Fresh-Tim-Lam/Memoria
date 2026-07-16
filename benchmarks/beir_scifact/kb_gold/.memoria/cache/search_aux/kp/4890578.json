@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4890578",
+  "source_fingerprint": "b4f2dd97f28eb6dc7b0991786cef79d4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4890578",
+    "atherosclerotic-plaque-rupture--pathologic-basis-of-plaque-stability-and-instability."
+  ],
+  "key_phrases": [
+    "atherosclerotic",
+    "plaque",
+    "rupture",
+    "--",
+    "pathologic",
+    "basis",
+    "stability",
+    "instability"
+  ],
+  "summary_1l": "Atherosclerotic plaque rupture--pathologic basis of plaque stability and instability.",
+  "query_hits": [],
+  "embed_text": "4890578 Atherosclerotic plaque rupture--pathologic basis of plaque stability and instability. science scifact Time for primary reveiw 27 days   Atherosclerosis continues to be one of the main subjects in pathology research. The intriguing complexity of its pathogenesis as well as the importance of its clinical sequelae provide a rationale for this… 4890578 atherosclerotic-plaque-rupture--pathologic-basis-of-plaque-stability-and-instability. atherosclerotic plaque rupture -- pathologic basis stability instability Atherosclerotic plaque rupture--pathologic basis of plaque stability and instability. Atherosclerotic plaque rupture--pathologic basis of plaque stability and instability. Time for primary reveiw 27 days Atherosclerosis continues to be one of the main subjects in pathology research. The intriguing complexity of its pathogenesis as well as the importance of its clinical sequelae provide a rationale for this [1]. A large number of diseases with totally different clinical presentations are basically atherosclerosis related, and among these, myocardial infarction, stroke, abdominal aneurysms and lower limb ischemia determine to a large extent the morbidity and mortality in Western style populations. But, despite this broad spectrum of clinical disease, most of the acute manifestations of atherosclerosis share a common pathogenetic feature: rupture of an atherosclerotic plaque [",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.661152+00:00"
+}

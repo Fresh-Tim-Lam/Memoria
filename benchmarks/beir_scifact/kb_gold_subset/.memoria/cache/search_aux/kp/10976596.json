@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10976596",
+  "source_fingerprint": "ba30c556358d03e88a6b6a0fda895c01",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10976596",
+    "the-curious-case-of-the-tumour-virus:-50-years-of-burkitt's-lymphoma"
+  ],
+  "key_phrases": [
+    "curious",
+    "case",
+    "tumour",
+    "virus",
+    "50",
+    "years",
+    "burkitt",
+    "lymphoma"
+  ],
+  "summary_1l": "Burkitt's lymphoma (BL) was first described 50 years ago, and the first human tumour virus Epstein–Barr virus (EBV) was discovered",
+  "query_hits": [],
+  "embed_text": "10976596 The curious case of the tumour virus: 50 years of Burkitt's lymphoma science scifact Burkitt's lymphoma (BL) was first described 50 years ago, and the first human tumour virus Epstein–Barr virus (EBV) was discovered in BL tumours soon after. Since then, the role of EBV in the development of BL has become more and more… 10976596 the-curious-case-of-the-tumour-virus:-50-years-of-burkitt's-lymphoma curious case tumour virus 50 years burkitt lymphoma Burkitt's lymphoma (BL) was first described 50 years ago, and the first human tumour virus Epstein–Barr virus (EBV) was discovered The curious case of the tumour virus: 50 years of Burkitt's lymphoma Burkitt's lymphoma (BL) was first described 50 years ago, and the first human tumour virus Epstein–Barr virus (EBV) was discovered in BL tumours soon after. Since then, the role of EBV in the development of BL has become more and more enigmatic. Only recently have we finally begun to understand, at the cellular and molecular levels, the complex and interesting interaction of EBV with B cells that creates a predisposition for the development of BL. Here, we discuss the intertwined histories of EBV and BL and their relationship to the cofactors in BL pathogenesis: malaria and the MYC translocation.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:06.116619+00:00"
+}

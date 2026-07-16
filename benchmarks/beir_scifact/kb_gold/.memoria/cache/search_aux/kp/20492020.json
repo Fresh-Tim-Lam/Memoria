@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20492020",
+  "source_fingerprint": "e2ff4de1cfe57ac3924ee678a0fe0e2c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20492020",
+    "a-brief-history-of-long-term-potentiation"
+  ],
+  "key_phrases": [
+    "brief",
+    "history",
+    "long",
+    "term",
+    "potentiation",
+    "since",
+    "discovery",
+    "ltp"
+  ],
+  "summary_1l": "Since the discovery of long-term potentiation (LTP) in 1973, thousands of papers have been published on this intriguing phenomenon, which provides a compellin",
+  "query_hits": [],
+  "embed_text": "20492020 A Brief History of Long-Term Potentiation science scifact Since the discovery of long-term potentiation (LTP) in 1973, thousands of papers have been published on this intriguing phenomenon, which provides a compelling cellular model for learning and memory. Although LTP has suffered considerable… 20492020 a-brief-history-of-long-term-potentiation brief history long term potentiation since discovery ltp Since the discovery of long-term potentiation (LTP) in 1973, thousands of papers have been published on this intriguing phenomenon, which provides a compellin A Brief History of Long-Term Potentiation Since the discovery of long-term potentiation (LTP) in 1973, thousands of papers have been published on this intriguing phenomenon, which provides a compelling cellular model for learning and memory. Although LTP has suffered considerable growing pains over the years, LTP has finally come of age. Here the rich history of LTP is reviewed. These are exciting times and the pace of discovery is remarkable.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.403642+00:00"
+}

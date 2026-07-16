@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15426878",
+  "source_fingerprint": "15b0dcc80e3ed8c443a2cfbdc6c5e1ee",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15426878",
+    "model-for-unidirectional-movement-of-axonemal-and-cytoplasmic-dynein-molecules"
+  ],
+  "key_phrases": [
+    "model",
+    "unidirectional",
+    "movement",
+    "axonemal",
+    "cytoplasmic",
+    "dynein",
+    "molecules",
+    "presented"
+  ],
+  "summary_1l": "A model for the unidirectional movement of dynein is presented based on structural observations and biochemical experimen",
+  "query_hits": [],
+  "embed_text": "15426878 Model for unidirectional movement of axonemal and cytoplasmic dynein molecules science scifact A model for the unidirectional movement of dynein is presented based on structural observations and biochemical experimental results available. In this model, the binding affinity of dynein for microtubule is independent of its nucleotide… 15426878 model-for-unidirectional-movement-of-axonemal-and-cytoplasmic-dynein-molecules model unidirectional movement axonemal cytoplasmic dynein molecules presented A model for the unidirectional movement of dynein is presented based on structural observations and biochemical experimen Model for unidirectional movement of axonemal and cytoplasmic dynein molecules A model for the unidirectional movement of dynein is presented based on structural observations and biochemical experimental results available. In this model, the binding affinity of dynein for microtubule is independent of its nucleotide state and the change between strong and weak microtubule-binding is determined naturally by the variation of relative orientation between the stalk and microtubule as the stalk rotates following nucleotide-state transition. Thus the enigmatic communication from the ATP binding site in the globular domain to the far MT-binding site in the tip of the stalk, which is prerequisite in conventional models, is not required. Using the present model, the previous experimental results su",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.549462+00:00"
+}

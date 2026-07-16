@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "kp_id": "405228#11",
+  "source_fingerprint": "e59537a3b8ed1f11d3f8a0d3d9e0663e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "围棋"
+  ],
+  "aliases": [
+    "405228#11"
+  ],
+  "key_phrases": [
+    "计算机",
+    "围棋",
+    "其它",
+    "棋盘",
+    "游戏",
+    "相比",
+    "几乎",
+    "规则"
+  ],
+  "summary_1l": "与其它棋盘游戏相比，围棋的着法几乎不受规则限制。",
+  "query_hits": [],
+  "embed_text": "405228#11 计算机围棋 计算机围棋 与其它棋盘游戏相比，围棋的着法几乎不受规则限制。中国象棋第一步有42种选择，国际象棋有20种选择，但围棋有361种选择。有些着法较常见，有些几乎从未走过（例如第一步下在边线上），但所有着法都有可能。 围棋 405228#11 计算机 围棋 其它 棋盘 游戏 相比 几乎 规则 与其它棋盘游戏相比，围棋的着法几乎不受规则限制。 计算机围棋 与其它棋盘游戏相比，围棋的着法几乎不受规则限制。中国象棋第一步有42种选择，国际象棋有20种选择，但围棋有361种选择。有些着法较常见，有些几乎从未走过（例如第一步下在边线上），但所有着法都有可能。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:20:27.515893+00:00"
+}

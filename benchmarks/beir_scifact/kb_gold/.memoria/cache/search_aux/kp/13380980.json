@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13380980",
+  "source_fingerprint": "3248eed37ca530dfba6af28c8c8fe0e5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13380980",
+    "isolated-liver-perfusion-for-non-resectable-liver-tumours:-a-review."
+  ],
+  "key_phrases": [
+    "isolated",
+    "liver",
+    "perfusion",
+    "non",
+    "resectable",
+    "tumours",
+    "review",
+    "many"
+  ],
+  "summary_1l": "Isolated liver perfusion for non-resectable liver tumours: a review.",
+  "query_hits": [],
+  "embed_text": "13380980 Isolated liver perfusion for non-resectable liver tumours: a review. science scifact Many treatments have been proposed for non-resectable primary or secondary hepatic cancer but the results have generally been disappointing. Isolated Hepatic Perfusion (IHP) was first attempted four decades ago but it gained acceptance… 13380980 isolated-liver-perfusion-for-non-resectable-liver-tumours:-a-review. isolated liver perfusion non resectable tumours review many Isolated liver perfusion for non-resectable liver tumours: a review. Isolated liver perfusion for non-resectable liver tumours: a review. Many treatments have been proposed for non-resectable primary or secondary hepatic cancer but the results have generally been disappointing. Isolated Hepatic Perfusion (IHP) was first attempted four decades ago but it gained acceptance only recently, after spectacular tumour responses were obtained by isolated limb perfusion with melphalan and tumour necrosis factor (TNF) for melanomas and sarcomas. Surgical isolation of the liver is a technically demanding operation that allows the safe administration of high doses of chemotherapeutics and TNF. Percutaneous techniques using balloon occlusion catheters are simpler but result in higher leakage rates from the perfusion circuit into the systemic circulation. Several phase I-",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.144466+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2374637",
+  "source_fingerprint": "2820ed348f153b718c3298b1aaf112ae",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2374637",
+    "gene-set-enrichment-analysis:-a-knowledge-based-approach-for-interpreting-genome-wide-expression-profiles."
+  ],
+  "key_phrases": [
+    "gene",
+    "set",
+    "enrichment",
+    "analysis",
+    "knowledge",
+    "based",
+    "approach",
+    "interpreting"
+  ],
+  "summary_1l": "Gene set enrichment analysis: a knowledge-based approach for interpreting genome-wide expression profiles.",
+  "query_hits": [],
+  "embed_text": "2374637 Gene set enrichment analysis: a knowledge-based approach for interpreting genome-wide expression profiles. science scifact Although genomewide RNA expression analysis has become a routine tool in biomedical research, extracting biological insight from such information remains a major challenge. Here, we describe a powerful analytical method called Gene Set… 2374637 gene-set-enrichment-analysis:-a-knowledge-based-approach-for-interpreting-genome-wide-expression-profiles. gene set enrichment analysis knowledge based approach interpreting Gene set enrichment analysis: a knowledge-based approach for interpreting genome-wide expression profiles. Gene set enrichment analysis: a knowledge-based approach for interpreting genome-wide expression profiles. Although genomewide RNA expression analysis has become a routine tool in biomedical research, extracting biological insight from such information remains a major challenge. Here, we describe a powerful analytical method called Gene Set Enrichment Analysis (GSEA) for interpreting gene expression data. The method derives its power by focusing on gene sets, that is, groups of genes that share common biological function, chromosomal location, or regulation. We demonstrate how GSEA yields insights into several cancer-related data sets, including leukemia and lung cancer. Notably, where single-gene analysis finds little similarity between two independent studies of patient survival in lung",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.077425+00:00"
+}

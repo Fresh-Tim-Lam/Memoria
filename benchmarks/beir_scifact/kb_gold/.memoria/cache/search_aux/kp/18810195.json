@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18810195",
+  "source_fingerprint": "46784ba88313b63b0fad6a223489a4fa",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18810195",
+    "tyr26-phosphorylation-of-pgam1-provides-a-metabolic-advantage-to-tumours-by-stabilizing-the-active-conformation"
+  ],
+  "key_phrases": [
+    "tyr26",
+    "phosphorylation",
+    "pgam1",
+    "provides",
+    "metabolic",
+    "advantage",
+    "tumours",
+    "by"
+  ],
+  "summary_1l": "How oncogenic signalling coordinates glycolysis and anabolic biosynthesis in cancer cell",
+  "query_hits": [],
+  "embed_text": "18810195 Tyr26 phosphorylation of PGAM1 provides a metabolic advantage to tumours by stabilizing the active conformation science scifact How oncogenic signalling coordinates glycolysis and anabolic biosynthesis in cancer cells remains unclear. We recently reported that the glycolytic enzyme phosphoglycerate mutase 1 (PGAM1) regulates anabolic biosynthesis by controlling… 18810195 tyr26-phosphorylation-of-pgam1-provides-a-metabolic-advantage-to-tumours-by-stabilizing-the-active-conformation tyr26 phosphorylation pgam1 provides metabolic advantage tumours by How oncogenic signalling coordinates glycolysis and anabolic biosynthesis in cancer cell Tyr26 phosphorylation of PGAM1 provides a metabolic advantage to tumours by stabilizing the active conformation How oncogenic signalling coordinates glycolysis and anabolic biosynthesis in cancer cells remains unclear. We recently reported that the glycolytic enzyme phosphoglycerate mutase 1 (PGAM1) regulates anabolic biosynthesis by controlling intracellular levels of its substrate 3-phosphoglycerate and product 2-phosphoglycerate. Here we report a novel mechanism in which Y26 phosphorylation enhances PGAM1 activation through release of inhibitory E19 that blocks the active site, stabilising cofactor 2,3-bisphosphoglycerate binding and H11 phosphorylation. We also report the crystal structure of H11-phosphorylated PGAM1 and find that phospho-H11 activates PGAM1 at least in part by promoti",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.723228+00:00"
+}

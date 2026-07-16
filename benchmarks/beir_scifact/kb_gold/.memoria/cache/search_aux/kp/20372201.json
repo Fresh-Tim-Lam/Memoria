@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20372201",
+  "source_fingerprint": "9f258cbc1dd9f6734e90fe7df7a3dc64",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20372201",
+    "cancer-stem-cell-theory-in-gastrointestinal-malignancies:-recent-progress-and-upcoming-challenges"
+  ],
+  "key_phrases": [
+    "cancer",
+    "stem",
+    "cell",
+    "theory",
+    "gastrointestinal",
+    "malignancies",
+    "recent",
+    "progress"
+  ],
+  "summary_1l": "A growing body of evidence supports the notion that malignant tumors are heterogeneous and contain div",
+  "query_hits": [],
+  "embed_text": "20372201 Cancer stem cell theory in gastrointestinal malignancies: recent progress and upcoming challenges science scifact A growing body of evidence supports the notion that malignant tumors are heterogeneous and contain diverse subpopulations of cells with unique characteristics including the ability to initiate a tumor and metastasize. This phenomenon might… 20372201 cancer-stem-cell-theory-in-gastrointestinal-malignancies:-recent-progress-and-upcoming-challenges cancer stem cell theory gastrointestinal malignancies recent progress A growing body of evidence supports the notion that malignant tumors are heterogeneous and contain div Cancer stem cell theory in gastrointestinal malignancies: recent progress and upcoming challenges A growing body of evidence supports the notion that malignant tumors are heterogeneous and contain diverse subpopulations of cells with unique characteristics including the ability to initiate a tumor and metastasize. This phenomenon might be explained by the so-called cancer stem cell (CSC) theory. Recent technological developments have allowed a deeper understanding and characterization of CSCs. Even though the application of this theory to hematopoietic malignancies and solid tumors holds promise for new ways to treat cancer, it also brings some skepticism. Efficacious therapeutic approaches targeting the CSC population should be explored to overcome therapeutic failure and improve patient",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.141402+00:00"
+}

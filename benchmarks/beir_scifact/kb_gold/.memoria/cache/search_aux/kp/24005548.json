@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24005548",
+  "source_fingerprint": "b87d78f81efc7eba4ce6219d7f61cb64",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24005548",
+    "the-hmg-coa-reductase-inhibitor-simvastatin-activates-the-protein-kinase-akt-and-promotes-angiogenesis-in-normocholesterolemic-animals."
+  ],
+  "key_phrases": [
+    "hmg",
+    "coa",
+    "reductase",
+    "inhibitor",
+    "simvastatin",
+    "activates",
+    "protein",
+    "kinase"
+  ],
+  "summary_1l": "The HMG-CoA reductase inhibitor simvastatin activates the protein kinase Akt and promotes angiogenesis in normocholesterolemic animals.",
+  "query_hits": [],
+  "embed_text": "24005548 The HMG-CoA reductase inhibitor simvastatin activates the protein kinase Akt and promotes angiogenesis in normocholesterolemic animals. science scifact Recent studies suggest that statins can function to protect the vasculature in a manner that is independent of their lipid-lowering activity. We show here that statins rapidly activate the protein kinase Akt/PKB in endothelial cells.… 24005548 the-hmg-coa-reductase-inhibitor-simvastatin-activates-the-protein-kinase-akt-and-promotes-angiogenesis-in-normocholesterolemic-animals. hmg coa reductase inhibitor simvastatin activates protein kinase The HMG-CoA reductase inhibitor simvastatin activates the protein kinase Akt and promotes angiogenesis in normocholesterolemic animals. The HMG-CoA reductase inhibitor simvastatin activates the protein kinase Akt and promotes angiogenesis in normocholesterolemic animals. Recent studies suggest that statins can function to protect the vasculature in a manner that is independent of their lipid-lowering activity. We show here that statins rapidly activate the protein kinase Akt/PKB in endothelial cells. Accordingly, simvastatin enhanced phosphorylation of the endogenous Akt substrate endothelial nitric oxide synthase (eNOS), inhibited apoptosis and accelerated vascular structure formation in vitro in an Akt-dependent manner. Similar to vascular endothelial growth factor (VEGF) treatment, both simvastatin administration and enhanced Akt signaling in the endothelium promoted angiogenesis in ischemic limbs of normocholesterolemi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.620881+00:00"
+}

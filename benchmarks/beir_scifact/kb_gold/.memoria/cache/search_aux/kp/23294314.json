@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23294314",
+  "source_fingerprint": "f5df46a73acc204eb5f0314bccca1ba6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23294314",
+    "emergency-contraception:-advance-provision-in-a-young,-high-risk-clinic-population."
+  ],
+  "key_phrases": [
+    "emergency",
+    "contraception",
+    "advance",
+    "provision",
+    "young",
+    "high",
+    "risk",
+    "clinic"
+  ],
+  "summary_1l": "Emergency contraception: advance provision in a young, high-risk clinic population.",
+  "query_hits": [],
+  "embed_text": "23294314 Emergency contraception: advance provision in a young, high-risk clinic population. science scifact OBJECTIVE To assess whether advance provision of emergency contraception increases its use and whether it has secondary effects on regular contraceptive use. METHODS We conducted a controlled trial of female clients, aged 16-24 years, who… 23294314 emergency-contraception:-advance-provision-in-a-young,-high-risk-clinic-population. emergency contraception advance provision young high risk clinic Emergency contraception: advance provision in a young, high-risk clinic population. Emergency contraception: advance provision in a young, high-risk clinic population. OBJECTIVE To assess whether advance provision of emergency contraception increases its use and whether it has secondary effects on regular contraceptive use. METHODS We conducted a controlled trial of female clients, aged 16-24 years, who attended a publicly funded family planning clinic. Women were systematically assigned to receive an advance provision of emergency contraception and education (treatment) or education only (control). Among 263 participants enrolled (133 treatment, 130 control), follow-up was completed in 213 (111 treatment, 102 control). The main outcome measures were emergency contraception knowledge and use, frequency of unprotected sex, and pattern of contraceptive use in the past 4 mon",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.218420+00:00"
+}

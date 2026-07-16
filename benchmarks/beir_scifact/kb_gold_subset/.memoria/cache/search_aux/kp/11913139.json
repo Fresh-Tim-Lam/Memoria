@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11913139",
+  "source_fingerprint": "fc7c9db00301029e0bb1e4d9bc3e492a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11913139",
+    "the-neurobiology-of-sleep:-genetics,-cellular-physiology-and-subcortical-networks"
+  ],
+  "key_phrases": [
+    "neurobiology",
+    "sleep",
+    "genetics",
+    "cellular",
+    "physiology",
+    "subcortical",
+    "networks",
+    "appreciate"
+  ],
+  "summary_1l": "To appreciate the neural underpinnings of sleep, it is important to view this universal mammalian behaviour at multipl",
+  "query_hits": [],
+  "embed_text": "11913139 The Neurobiology of Sleep: Genetics, cellular physiology and subcortical networks science scifact To appreciate the neural underpinnings of sleep, it is important to view this universal mammalian behaviour at multiple levels of its biological organization. Molecularly, the circadian rhythm of sleep involves interlocking positive- and… 11913139 the-neurobiology-of-sleep:-genetics,-cellular-physiology-and-subcortical-networks neurobiology sleep genetics cellular physiology subcortical networks appreciate To appreciate the neural underpinnings of sleep, it is important to view this universal mammalian behaviour at multipl The Neurobiology of Sleep: Genetics, cellular physiology and subcortical networks To appreciate the neural underpinnings of sleep, it is important to view this universal mammalian behaviour at multiple levels of its biological organization. Molecularly, the circadian rhythm of sleep involves interlocking positive- and negative-feedback mechanisms of circadian genes and their protein products in cells of the suprachiasmatic nucleus that are entrained to ambient conditions by light. Circadian information is integrated with information on homeostatic sleep need in nuclei of the anterior hypothalamus. These nuclei interact with arousal systems in the posterior hypothalamus, basal forebrain and brainstem to control sleep onset. During sleep, an ultradian oscillator in the mesopontine junction c",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:07.828145+00:00"
+}

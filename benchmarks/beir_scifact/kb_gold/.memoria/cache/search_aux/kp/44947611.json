@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "44947611",
+  "source_fingerprint": "1296f2e00fd74aab8835f82c57c544cf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "44947611",
+    "three-dimensional-structure-of-the-aah26994.1-protein-from-mus-musculus,-a-putative-eukaryotic-urm1."
+  ],
+  "key_phrases": [
+    "three",
+    "dimensional",
+    "structure",
+    "aah26994.1",
+    "protein",
+    "from",
+    "mus",
+    "musculus"
+  ],
+  "summary_1l": "Three-dimensional structure of the AAH26994.",
+  "query_hits": [],
+  "embed_text": "44947611 Three-dimensional structure of the AAH26994.1 protein from Mus musculus, a putative eukaryotic Urm1. science scifact We have used NMR spectroscopy to determine the solution structure of protein AAH26994.1 from Mus musculus and propose that it represents the first three-dimensional structure of a ubiquitin-related modifier 1 (Urm1) protein. Amino acid… 44947611 three-dimensional-structure-of-the-aah26994.1-protein-from-mus-musculus,-a-putative-eukaryotic-urm1. three dimensional structure aah26994.1 protein from mus musculus Three-dimensional structure of the AAH26994. Three-dimensional structure of the AAH26994.1 protein from Mus musculus, a putative eukaryotic Urm1. We have used NMR spectroscopy to determine the solution structure of protein AAH26994.1 from Mus musculus and propose that it represents the first three-dimensional structure of a ubiquitin-related modifier 1 (Urm1) protein. Amino acid sequence comparisons indicate that AAH26994.1 belongs to the Urm1 family of ubiquitin-like modifier proteins. The best characterized member of this family has been shown to be involved in nutrient sensing, invasive growth, and budding in yeast. Proteins in this family have only a weak sequence similarity to ubiquitin, and the structure of AAH26994.1 showed a much closer resemblance to MoaD subunits of molybdopterin synthases (known structures are of three bac",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.032192+00:00"
+}

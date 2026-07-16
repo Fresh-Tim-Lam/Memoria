@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25543207",
+  "source_fingerprint": "183ea22c2dab6898fcf4db2bd02e5766",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25543207",
+    "pharmacokinetic,-pharmacodynamic-and-clinical-profile-of-novel-antiplatelet-drugs-targeting-vascular-diseases."
+  ],
+  "key_phrases": [
+    "pharmacokinetic",
+    "pharmacodynamic",
+    "clinical",
+    "profile",
+    "novel",
+    "antiplatelet",
+    "drugs",
+    "targeting"
+  ],
+  "summary_1l": "Pharmacokinetic, pharmacodynamic and clinical profile of novel antiplatelet drugs targeting vascular diseases.",
+  "query_hits": [],
+  "embed_text": "25543207 Pharmacokinetic, pharmacodynamic and clinical profile of novel antiplatelet drugs targeting vascular diseases. science scifact Platelet inhibitors are the mainstay treatment for patients with vascular diseases. The current 'gold standard' antiplatelet agent clopidogrel has several pharmacological and clinical limitations that have prompted the search for more… 25543207 pharmacokinetic,-pharmacodynamic-and-clinical-profile-of-novel-antiplatelet-drugs-targeting-vascular-diseases. pharmacokinetic pharmacodynamic clinical profile novel antiplatelet drugs targeting Pharmacokinetic, pharmacodynamic and clinical profile of novel antiplatelet drugs targeting vascular diseases. Pharmacokinetic, pharmacodynamic and clinical profile of novel antiplatelet drugs targeting vascular diseases. Platelet inhibitors are the mainstay treatment for patients with vascular diseases. The current 'gold standard' antiplatelet agent clopidogrel has several pharmacological and clinical limitations that have prompted the search for more effective platelet antagonists. The candidates include various blockers of the purinergic P2Y12 receptor such as prasugrel, an oral irreversible thienopyridine; two adenosine triphosphate analogues that bind reversibly to the P2Y12 receptor: ticagrelor (oral) and cangrelor (intravenous); elinogrel, a direct-acting reversible P2Y12 receptor inhibitor (the only antiplatelet compound that can be administered both intravenously and orally); BX 667, an or",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.880917+00:00"
+}

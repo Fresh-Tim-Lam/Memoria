@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13768432",
+  "source_fingerprint": "f39d2f33f26d1ce619a6c390759c5d84",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13768432",
+    "prognostic-value-of-late-gadolinium-enhancement-cardiovascular-magnetic-resonance-in-cardiac-amyloidosis"
+  ],
+  "key_phrases": [
+    "prognostic",
+    "value",
+    "late",
+    "gadolinium",
+    "enhancement",
+    "cardiovascular",
+    "magnetic",
+    "resonance"
+  ],
+  "summary_1l": "BACKGROUND The prognosis and treatment of the 2 main types of cardiac amyloidosis, immunoglobul",
+  "query_hits": [],
+  "embed_text": "13768432 Prognostic Value of Late Gadolinium Enhancement Cardiovascular Magnetic Resonance in Cardiac Amyloidosis science scifact BACKGROUND The prognosis and treatment of the 2 main types of cardiac amyloidosis, immunoglobulin light chain (AL) and transthyretin (ATTR) amyloidosis, are substantially influenced by cardiac involvement. Cardiovascular magnetic resonance… 13768432 prognostic-value-of-late-gadolinium-enhancement-cardiovascular-magnetic-resonance-in-cardiac-amyloidosis prognostic value late gadolinium enhancement cardiovascular magnetic resonance BACKGROUND The prognosis and treatment of the 2 main types of cardiac amyloidosis, immunoglobul Prognostic Value of Late Gadolinium Enhancement Cardiovascular Magnetic Resonance in Cardiac Amyloidosis BACKGROUND The prognosis and treatment of the 2 main types of cardiac amyloidosis, immunoglobulin light chain (AL) and transthyretin (ATTR) amyloidosis, are substantially influenced by cardiac involvement. Cardiovascular magnetic resonance with late gadolinium enhancement (LGE) is a reference standard for the diagnosis of cardiac amyloidosis, but its potential for stratifying risk is unknown. METHODS AND RESULTS Two hundred fifty prospectively recruited subjects, 122 patients with ATTR amyloid, 9 asymptomatic mutation carriers, and 119 patients with AL amyloidosis, underwent LGE cardiovascular magnetic resonance. Subjects were followed up for a mean of 24±13 months. LGE was performed wi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:11.214225+00:00"
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "13135544",
+  "source_fingerprint": "8cf4d8f6a9b7ea0f82435a824a814057",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13135544"
+  ],
+  "key_phrases": [
+    "synthetic",
+    "escherichia",
+    "coli",
+    "predator",
+    "prey",
+    "ecosystem",
+    "we",
+    "have"
+  ],
+  "summary_1l": "We have constructed a synthetic ecosystem consisting of two Escherichia coli populations, which communicate bi-directionally through quorum sensing",
+  "query_hits": [],
+  "embed_text": "13135544 A synthetic Escherichia coli predator–prey ecosystem science scifact We have constructed a synthetic ecosystem consisting of two Escherichia coli populations, which communicate bi-directionally through quorum sensing and regulate each other's gene expression and survival via engineered gene circuits. Our… 13135544 synthetic escherichia coli predator prey ecosystem we have We have constructed a synthetic ecosystem consisting of two Escherichia coli populations, which communicate bi-directionally through quorum sensing A synthetic Escherichia coli predator–prey ecosystem We have constructed a synthetic ecosystem consisting of two Escherichia coli populations, which communicate bi-directionally through quorum sensing and regulate each other's gene expression and survival via engineered gene circuits. Our synthetic ecosystem resembles canonical predator-prey systems in terms of logic and dynamics. The predator cells kill the prey by inducing expression of a killer protein in the prey, while the prey rescue the predators by eliciting expression of an antidote protein in the predator. Extinction, coexistence and oscillatory dynamics of the predator and prey populations are possible depending on the operating conditions as experimentally validated by long-term culturing of the system in microchemostats. A sim",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:09.711425+00:00"
+}

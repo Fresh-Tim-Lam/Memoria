@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23816832",
+  "source_fingerprint": "314182b480d1ec532add1c7138630f74",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23816832",
+    "the-utility-of-cerebrospinal-fluid-analysis-in-patients-with-multiple-sclerosis"
+  ],
+  "key_phrases": [
+    "utility",
+    "cerebrospinal",
+    "fluid",
+    "analysis",
+    "patients",
+    "with",
+    "multiple",
+    "sclerosis"
+  ],
+  "summary_1l": "Diagnosis of multiple sclerosis (MS) requires the exclusion of other possible diagnoses.",
+  "query_hits": [],
+  "embed_text": "23816832 The utility of cerebrospinal fluid analysis in patients with multiple sclerosis science scifact Diagnosis of multiple sclerosis (MS) requires the exclusion of other possible diagnoses. For this reason, the cerebrospinal fluid (CSF) should be routinely analysed in patients with a first clinical event suggestive of MS. CSF analysis is… 23816832 the-utility-of-cerebrospinal-fluid-analysis-in-patients-with-multiple-sclerosis utility cerebrospinal fluid analysis patients with multiple sclerosis Diagnosis of multiple sclerosis (MS) requires the exclusion of other possible diagnoses. The utility of cerebrospinal fluid analysis in patients with multiple sclerosis Diagnosis of multiple sclerosis (MS) requires the exclusion of other possible diagnoses. For this reason, the cerebrospinal fluid (CSF) should be routinely analysed in patients with a first clinical event suggestive of MS. CSF analysis is no longer mandatory for diagnosis of relapsing–remitting MS, as long as MRI diagnostic criteria are fulfilled. However, caution is required in diagnosing MS in patients with negative MRI findings or in the absence of CSF analysis, as CSF investigation is useful to eliminate other causes of disease. The detection of oligoclonal IgG bands in CSF has potential prognostic value and is helpful for clinical decision-making. In addition, CSF analysis is important for research into th",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.182986+00:00"
+}

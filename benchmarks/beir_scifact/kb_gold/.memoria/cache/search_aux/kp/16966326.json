@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16966326",
+  "source_fingerprint": "cc28a770568f6b18bc6aa363bd31dfda",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16966326",
+    "the-inhibition-of-tdp-43-mitochondrial-localization-blocks-its-neuronal-toxicity"
+  ],
+  "key_phrases": [
+    "inhibition",
+    "tdp",
+    "43",
+    "mitochondrial",
+    "localization",
+    "blocks",
+    "its",
+    "neuronal"
+  ],
+  "summary_1l": "Genetic mutations in TAR DNA-binding protein 43 (TARDBP, also known as TDP-43) cause amyotrophic lateral sclerosis (ALS",
+  "query_hits": [],
+  "embed_text": "16966326 The Inhibition of TDP-43 Mitochondrial Localization Blocks Its Neuronal Toxicity science scifact Genetic mutations in TAR DNA-binding protein 43 (TARDBP, also known as TDP-43) cause amyotrophic lateral sclerosis (ALS), and an increase in the presence of TDP-43 (encoded by TARDBP) in the cytoplasm is a prominent histopathological… 16966326 the-inhibition-of-tdp-43-mitochondrial-localization-blocks-its-neuronal-toxicity inhibition tdp 43 mitochondrial localization blocks its neuronal Genetic mutations in TAR DNA-binding protein 43 (TARDBP, also known as TDP-43) cause amyotrophic lateral sclerosis (ALS The Inhibition of TDP-43 Mitochondrial Localization Blocks Its Neuronal Toxicity Genetic mutations in TAR DNA-binding protein 43 (TARDBP, also known as TDP-43) cause amyotrophic lateral sclerosis (ALS), and an increase in the presence of TDP-43 (encoded by TARDBP) in the cytoplasm is a prominent histopathological feature of degenerating neurons in various neurodegenerative diseases. However, the molecular mechanisms by which TDP-43 contributes to ALS pathophysiology remain elusive. Here we have found that TDP-43 accumulates in the mitochondria of neurons in subjects with ALS or frontotemporal dementia (FTD). Disease-associated mutations increase TDP-43 mitochondrial localization. In mitochondria, wild-type (WT) and mutant TDP-43 preferentially bind mitochondria-transcribed messenger RNAs (",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.111489+00:00"
+}

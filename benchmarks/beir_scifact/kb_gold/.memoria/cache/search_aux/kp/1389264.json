@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1389264",
+  "source_fingerprint": "4b833734542e0f0bf1504f24969f259b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1389264",
+    "combination-inhibition-of-pi3k-and-mtorc1-yields-durable-remissions-in-orthotopic-patient-derived-xenografts-of-her2-positive-breast-cancer-brain-metastases"
+  ],
+  "key_phrases": [
+    "combination",
+    "inhibition",
+    "pi3k",
+    "mtorc1",
+    "yields",
+    "durable",
+    "remissions",
+    "orthotopic"
+  ],
+  "summary_1l": "Brain metastases represent the greatest cli",
+  "query_hits": [],
+  "embed_text": "1389264 Combination inhibition of PI3K and mTORC1 yields durable remissions in orthotopic patient-derived xenografts of HER2-positive breast cancer brain metastases science scifact Brain metastases represent the greatest clinical challenge in treating HER2-positive breast cancer. We report the development of orthotopic patient-derived xenografts (PDXs) of HER2-expressing breast cancer brain metastases (BCBM), and… 1389264 combination-inhibition-of-pi3k-and-mtorc1-yields-durable-remissions-in-orthotopic-patient-derived-xenografts-of-her2-positive-breast-cancer-brain-metastases combination inhibition pi3k mtorc1 yields durable remissions orthotopic Brain metastases represent the greatest cli Combination inhibition of PI3K and mTORC1 yields durable remissions in orthotopic patient-derived xenografts of HER2-positive breast cancer brain metastases Brain metastases represent the greatest clinical challenge in treating HER2-positive breast cancer. We report the development of orthotopic patient-derived xenografts (PDXs) of HER2-expressing breast cancer brain metastases (BCBM), and their use for the identification of targeted combination therapies. Combined inhibition of PI3K and mTOR resulted in durable tumor regressions in three of five PDXs, and therapeutic response was correlated with a reduction in the phosphorylation of 4EBP1, an mTORC1 effector. The two nonresponding PDXs showed hypermutated genomes with enrichment of mutations in DNA-repair genes, which suggests an associat",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.354652+00:00"
+}

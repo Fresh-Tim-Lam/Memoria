@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11349166",
+  "source_fingerprint": "04b0e7ebbcb69ea58c0a167a26941fd2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11349166",
+    "lack-of-evidence-of-transfusion-transmission-of-creutzfeldt-jakob-disease-in-a-us-surveillance-study."
+  ],
+  "key_phrases": [
+    "lack",
+    "evidence",
+    "transfusion",
+    "transmission",
+    "creutzfeldt",
+    "jakob",
+    "disease",
+    "us"
+  ],
+  "summary_1l": "Lack of evidence of transfusion transmission of Creutzfeldt-Jakob disease in a US surveillance study.",
+  "query_hits": [],
+  "embed_text": "11349166 Lack of evidence of transfusion transmission of Creutzfeldt-Jakob disease in a US surveillance study. science scifact BACKGROUND Since 2004, several reported transfusion transmissions of variant Creutzfeldt-Jakob disease (vCJD) in the United Kingdom have reawakened concerns about the possible risk of similar transmissions of nonvariant or classic forms of… 11349166 lack-of-evidence-of-transfusion-transmission-of-creutzfeldt-jakob-disease-in-a-us-surveillance-study. lack evidence transfusion transmission creutzfeldt jakob disease us Lack of evidence of transfusion transmission of Creutzfeldt-Jakob disease in a US surveillance study. Lack of evidence of transfusion transmission of Creutzfeldt-Jakob disease in a US surveillance study. BACKGROUND Since 2004, several reported transfusion transmissions of variant Creutzfeldt-Jakob disease (vCJD) in the United Kingdom have reawakened concerns about the possible risk of similar transmissions of nonvariant or classic forms of CJD. STUDY DESIGN AND METHODS Patients with a CJD diagnosis and a history of donating blood were reported to the study coordinator. Through review of blood distribution and hospital records, the recipients of blood components from these donors were identified. We then determined each recipient's vital status and, if deceased, the cause(s) of death identified by matching the recipient's personal identifiers with the Centers for Disease Control and Prevent",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:06.423628+00:00"
+}

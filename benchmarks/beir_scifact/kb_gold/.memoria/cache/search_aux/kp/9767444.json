@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9767444",
+  "source_fingerprint": "ed3b79361e0342881944a1e312e42857",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9767444",
+    "epigenetic-therapy-activates-type-i-interferon-signaling-in-murine-ovarian-cancer-to-reduce-immunosuppression-and-tumor-burden."
+  ],
+  "key_phrases": [
+    "epigenetic",
+    "therapy",
+    "activates",
+    "type",
+    "interferon",
+    "signaling",
+    "murine",
+    "ovarian"
+  ],
+  "summary_1l": "Epigenetic therapy activates type I interferon signaling in murine ovarian cancer to reduce immunosuppression and tumor burden.",
+  "query_hits": [],
+  "embed_text": "9767444 Epigenetic therapy activates type I interferon signaling in murine ovarian cancer to reduce immunosuppression and tumor burden. science scifact Ovarian cancer is the most lethal of all gynecological cancers, and there is an urgent unmet need to develop new therapies. Epithelial ovarian cancer (EOC) is characterized by an immune suppressive microenvironment, and response of ovarian… 9767444 epigenetic-therapy-activates-type-i-interferon-signaling-in-murine-ovarian-cancer-to-reduce-immunosuppression-and-tumor-burden. epigenetic therapy activates type interferon signaling murine ovarian Epigenetic therapy activates type I interferon signaling in murine ovarian cancer to reduce immunosuppression and tumor burden. Epigenetic therapy activates type I interferon signaling in murine ovarian cancer to reduce immunosuppression and tumor burden. Ovarian cancer is the most lethal of all gynecological cancers, and there is an urgent unmet need to develop new therapies. Epithelial ovarian cancer (EOC) is characterized by an immune suppressive microenvironment, and response of ovarian cancers to immune therapies has thus far been disappointing. We now find, in a mouse model of EOC, that clinically relevant doses of DNA methyltransferase and histone deacetylase inhibitors (DNMTi and HDACi, respectively) reduce the immune suppressive microenvironment through type I IFN signaling and improve response to immune checkpoint therapy. These data indicate that the type I IFN response is required for effective in vivo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.774543+00:00"
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "17821387",
+  "source_fingerprint": "1589561af34a8ed12e8252a1064e7eb4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17821387"
+  ],
+  "key_phrases": [
+    "applicability",
+    "current",
+    "staging",
+    "categorization",
+    "synuclein",
+    "pathology",
+    "their",
+    "clinical"
+  ],
+  "summary_1l": "In Parkinson's disease (PD) and dementia with Lewy bodies (DLB) alpha-synuclein (alphaS) pathology",
+  "query_hits": [],
+  "embed_text": "17821387 Applicability of current staging/categorization of α-synuclein pathology and their clinical relevance science scifact In Parkinson's disease (PD) and dementia with Lewy bodies (DLB) alpha-synuclein (alphaS) pathology is seen that displays a predictable topographic distribution. There are two staging/categorization systems, i.e. Braak's and McKeith's,… 17821387 applicability current staging categorization synuclein pathology their clinical In Parkinson's disease (PD) and dementia with Lewy bodies (DLB) alpha-synuclein (alphaS) pathology Applicability of current staging/categorization of α-synuclein pathology and their clinical relevance In Parkinson's disease (PD) and dementia with Lewy bodies (DLB) alpha-synuclein (alphaS) pathology is seen that displays a predictable topographic distribution. There are two staging/categorization systems, i.e. Braak's and McKeith's, currently in use for the assessment of alphaS pathology. The aim of these diagnostic strategies in pathology is, in addition to assess the stage/severity of pathology, to assess the probabilities of the related clinical symptomatology i.e. dementia and extrapyramidal symptoms (EPS). Herein, we assessed the applicability of these two staging/categorization systems and the frequency of dementia and EPS in a cohort of 226 alphaS-positive-subjects. These subject",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.339154+00:00"
+}

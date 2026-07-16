@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11071351",
+  "source_fingerprint": "59bf4e2cc5a19596ad9e19f170e27fe2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11071351",
+    "primary-prevention-of-hypertension:-clinical-and-public-health-advisory-from-the-national-high-blood-pressure-education-program."
+  ],
+  "key_phrases": [
+    "primary",
+    "prevention",
+    "hypertension",
+    "clinical",
+    "public",
+    "health",
+    "advisory",
+    "from"
+  ],
+  "summary_1l": "Primary prevention of hypertension: clinical and public health advisory from The National High Blood Pressure Education Program.",
+  "query_hits": [],
+  "embed_text": "11071351 Primary prevention of hypertension: clinical and public health advisory from The National High Blood Pressure Education Program. science scifact The National High Blood Pressure Education Program Coordinating Committee published its first statement on the primary prevention of hypertension in 1993. This article updates the 1993 report, using new and further evidence from the… 11071351 primary-prevention-of-hypertension:-clinical-and-public-health-advisory-from-the-national-high-blood-pressure-education-program. primary prevention hypertension clinical public health advisory from Primary prevention of hypertension: clinical and public health advisory from The National High Blood Pressure Education Program. Primary prevention of hypertension: clinical and public health advisory from The National High Blood Pressure Education Program. The National High Blood Pressure Education Program Coordinating Committee published its first statement on the primary prevention of hypertension in 1993. This article updates the 1993 report, using new and further evidence from the scientific literature. Current recommendations for primary prevention of hypertension involve a population-based approach and an intensive targeted strategy focused on individuals at high risk for hypertension. These 2 strategies are complementary and emphasize 6 approaches with proven efficacy for prevention of hypertension: engage in moderate physical activity; maintain normal body weight; limit alcohol consumption; reduce sodium in",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:06.306866+00:00"
+}

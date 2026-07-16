@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24724242",
+  "source_fingerprint": "8f0bd35124f3787c5a780fa173701ea9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24724242",
+    "evaluation-of-cortical-bone-by-peripheral-quantitative-computed-tomography-in-renal-transplant-recipients."
+  ],
+  "key_phrases": [
+    "evaluation",
+    "cortical",
+    "bone",
+    "by",
+    "peripheral",
+    "quantitative",
+    "computed",
+    "tomography"
+  ],
+  "summary_1l": "Evaluation of cortical bone by peripheral quantitative computed tomography in renal transplant recipients.",
+  "query_hits": [],
+  "embed_text": "24724242 Evaluation of cortical bone by peripheral quantitative computed tomography in renal transplant recipients. science scifact BACKGROUND The absolute risk of fractures in renal transplant patients is 3 times that of matched controls. Most of the symptomatic fractures are peripheral, suggesting a greater compromise of cortical bone. Peripheral quantitative… 24724242 evaluation-of-cortical-bone-by-peripheral-quantitative-computed-tomography-in-renal-transplant-recipients. evaluation cortical bone by peripheral quantitative computed tomography Evaluation of cortical bone by peripheral quantitative computed tomography in renal transplant recipients. Evaluation of cortical bone by peripheral quantitative computed tomography in renal transplant recipients. BACKGROUND The absolute risk of fractures in renal transplant patients is 3 times that of matched controls. Most of the symptomatic fractures are peripheral, suggesting a greater compromise of cortical bone. Peripheral quantitative computed tomography (pQCT) is a new imaging technique that allows separate noninvasive evaluations of cortical and trabecular bones. We investigated cortical bone by pQCT in 12 renal transplant patients (seven men and five women) for comparison with 27 normal controls. METHODS pQCT (XCT 960, Stratec, Pforheim, Germany) was performed upon the distal radius of the nondominant forearm (15% the length of the ulna, proximal from the radius end plate). We evaluat",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.124742+00:00"
+}

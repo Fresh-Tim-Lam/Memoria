@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15419873",
+  "source_fingerprint": "1ec3095adb4fd6b92ce9c5421af11c50",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15419873",
+    "cytosolic-viral-sensor-rig-i-is-a-5'-triphosphate-dependent-translocase-on-double-stranded-rna."
+  ],
+  "key_phrases": [
+    "cytosolic",
+    "viral",
+    "sensor",
+    "rig",
+    "triphosphate",
+    "dependent",
+    "translocase",
+    "double"
+  ],
+  "summary_1l": "Cytosolic viral sensor RIG-I is a 5'-triphosphate-dependent translocase on double-stranded RNA.",
+  "query_hits": [],
+  "embed_text": "15419873 Cytosolic viral sensor RIG-I is a 5'-triphosphate-dependent translocase on double-stranded RNA. science scifact Retinoic acid inducible-gene I (RIG-I) is a cytosolic multidomain protein that detects viral RNA and elicits an antiviral immune response. Two N-terminal caspase activation and recruitment domains (CARDs) transmit the signal, and the… 15419873 cytosolic-viral-sensor-rig-i-is-a-5'-triphosphate-dependent-translocase-on-double-stranded-rna. cytosolic viral sensor rig triphosphate dependent translocase double Cytosolic viral sensor RIG-I is a 5'-triphosphate-dependent translocase on double-stranded RNA. Cytosolic viral sensor RIG-I is a 5'-triphosphate-dependent translocase on double-stranded RNA. Retinoic acid inducible-gene I (RIG-I) is a cytosolic multidomain protein that detects viral RNA and elicits an antiviral immune response. Two N-terminal caspase activation and recruitment domains (CARDs) transmit the signal, and the regulatory domain prevents signaling in the absence of viral RNA. 5'-triphosphate and double-stranded RNA (dsRNA) are two molecular patterns that enable RIG-I to discriminate pathogenic from self-RNA. However, the function of the DExH box helicase domain that is also required for activity is less clear. Using single-molecule protein-induced fluorescence enhancement, we discovered a robust adenosine 5'-triphosphate-powered dsRNA translocation activity of RIG-I. The C",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.502783+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "30835854",
+  "source_fingerprint": "9b6ad1d9c1dba6559cdceebb558db2b0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "30835854",
+    "complex-formation-of-smap/kap3,-a-kif3a/b-atpase-motor-associated-protein,-with-a-human-chromosome-associated-polypeptide."
+  ],
+  "key_phrases": [
+    "complex",
+    "formation",
+    "smap",
+    "kap3",
+    "kif3a",
+    "atpase",
+    "motor",
+    "associated"
+  ],
+  "summary_1l": "Complex formation of SMAP/KAP3, a KIF3A/B ATPase motor-associated protein, with a human chromosome-associated polypeptide.",
+  "query_hits": [],
+  "embed_text": "30835854 Complex formation of SMAP/KAP3, a KIF3A/B ATPase motor-associated protein, with a human chromosome-associated polypeptide. science scifact We have recently isolated SMAP (Smg GDS-associated protein; Smg GDS: small G protein GDP dissociation stimulator) as a novel Smg GDS-associated protein, which has Armadillo repeats and is phosphorylated by Src tyrosine kinase. SMAP is a… 30835854 complex-formation-of-smap/kap3,-a-kif3a/b-atpase-motor-associated-protein,-with-a-human-chromosome-associated-polypeptide. complex formation smap kap3 kif3a atpase motor associated Complex formation of SMAP/KAP3, a KIF3A/B ATPase motor-associated protein, with a human chromosome-associated polypeptide. Complex formation of SMAP/KAP3, a KIF3A/B ATPase motor-associated protein, with a human chromosome-associated polypeptide. We have recently isolated SMAP (Smg GDS-associated protein; Smg GDS: small G protein GDP dissociation stimulator) as a novel Smg GDS-associated protein, which has Armadillo repeats and is phosphorylated by Src tyrosine kinase. SMAP is a human counterpart of mouse KAP3 (kinesin superfamily-associated protein) that is associated with mouse KIF3A/B (a kinesin superfamily protein), which functions as a microtubule-based ATPase motor for organelle transport. We isolated here a SMAP-interacting protein from a human brain cDNA library, identified it to be a human homolog of Xenopus XCAP-E (Xenopus chromosome-associated polypeptide), a subunit of condensins that regulate the a",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.015071+00:00"
+}

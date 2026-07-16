@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2140513",
+  "source_fingerprint": "5bd325687712aaea37560fe4a7d29b34",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2140513",
+    "pleiotropy-as-a-mechanism-to-stabilize-cooperation"
+  ],
+  "key_phrases": [
+    "pleiotropy",
+    "as",
+    "mechanism",
+    "stabilize",
+    "cooperation",
+    "most",
+    "genes",
+    "affect"
+  ],
+  "summary_1l": "Most genes affect many traits.",
+  "query_hits": [],
+  "embed_text": "2140513 Pleiotropy as a mechanism to stabilize cooperation science scifact Most genes affect many traits. This phenomenon, known as pleiotropy, is a major constraint on evolution because adaptive change in one trait may be prevented because it would compromise other traits affected by the same genes. Here we show… 2140513 pleiotropy-as-a-mechanism-to-stabilize-cooperation pleiotropy as mechanism stabilize cooperation most genes affect Most genes affect many traits. Pleiotropy as a mechanism to stabilize cooperation Most genes affect many traits. This phenomenon, known as pleiotropy, is a major constraint on evolution because adaptive change in one trait may be prevented because it would compromise other traits affected by the same genes. Here we show that pleiotropy can have an unexpected effect and benefit one of the most enigmatic of adaptations—cooperation. A spectacular act of cooperation occurs in the social amoeba Dictyostelium discoideum, in which some cells die to form a stalk that holds the other cells aloft as reproductive spores. We have identified a gene, dimA, in D. discoideum that has two contrasting effects. It is required to receive the signalling molecule DIF-1 that causes differentiation into prestalk cells. Ignoring DIF-1 and not b",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.082727+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8519911",
+  "source_fingerprint": "a8cd9bf995012a72b41768af811516c7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8519911",
+    "p38mapk-controls-expression-of-multiple-cell-cycle-inhibitors-and-islet-proliferation-with-advancing-age."
+  ],
+  "key_phrases": [
+    "p38mapk",
+    "controls",
+    "expression",
+    "multiple",
+    "cell",
+    "cycle",
+    "inhibitors",
+    "islet"
+  ],
+  "summary_1l": "p38MAPK controls expression of multiple cell cycle inhibitors and islet proliferation with advancing age.",
+  "query_hits": [],
+  "embed_text": "8519911 p38MAPK controls expression of multiple cell cycle inhibitors and islet proliferation with advancing age. science scifact Aging is a complex organismal process that is controlled by genetic, environmental, and behavioral factors. Accumulating evidence supports a role for different cell cycle inhibitors in mammalian aging. Little is known, however, about the… 8519911 p38mapk-controls-expression-of-multiple-cell-cycle-inhibitors-and-islet-proliferation-with-advancing-age. p38mapk controls expression multiple cell cycle inhibitors islet p38MAPK controls expression of multiple cell cycle inhibitors and islet proliferation with advancing age. p38MAPK controls expression of multiple cell cycle inhibitors and islet proliferation with advancing age. Aging is a complex organismal process that is controlled by genetic, environmental, and behavioral factors. Accumulating evidence supports a role for different cell cycle inhibitors in mammalian aging. Little is known, however, about the upstream signals that induce their expression. Here, we explore the role of p38MAPK by generating a dominant-negative allele (p38(AF)) in which activating phosphorylation sites Thr180 and Tyr182 are mutated. Heterozygous p38(AF) mice show a marked attenuation of p38-dependent signaling and age-induced expression of multiple cell cycle inhibitors in different organs, including pancreatic islets. As a result, aged p38(AF/+) mice show enhanced proliferati",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.880053+00:00"
+}

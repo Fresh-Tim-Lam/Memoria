@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1606628",
+  "source_fingerprint": "81ed5b4766ba537ef61340ba1390a493",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1606628",
+    "estimates-of-global-prevalence-of-childhood-underweight-in-1990-and-2015."
+  ],
+  "key_phrases": [
+    "estimates",
+    "global",
+    "prevalence",
+    "childhood",
+    "underweight",
+    "1990",
+    "2015",
+    "context"
+  ],
+  "summary_1l": "Estimates of global prevalence of childhood underweight in 1990 and 2015.",
+  "query_hits": [],
+  "embed_text": "1606628 Estimates of global prevalence of childhood underweight in 1990 and 2015. science scifact CONTEXT One key target of the United Nations Millennium Development goals is to reduce the prevalence of underweight among children younger than 5 years by half between 1990 and 2015. OBJECTIVE To estimate trends in childhood underweight… 1606628 estimates-of-global-prevalence-of-childhood-underweight-in-1990-and-2015. estimates global prevalence childhood underweight 1990 2015 context Estimates of global prevalence of childhood underweight in 1990 and 2015. Estimates of global prevalence of childhood underweight in 1990 and 2015. CONTEXT One key target of the United Nations Millennium Development goals is to reduce the prevalence of underweight among children younger than 5 years by half between 1990 and 2015. OBJECTIVE To estimate trends in childhood underweight by geographic regions of the world. DESIGN, SETTING, AND PARTICIPANTS Time series study of prevalence of underweight, defined as weight 2 SDs below the mean weight for age of the National Center for Health Statistics and World Health Organization (WHO) reference population. National prevalence rates derived from the WHO Global Database on Child Growth and Malnutrition, which includes data on approximately 31 million children younger than 5 years who participated in 419 national nutri",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:11.639625+00:00"
+}

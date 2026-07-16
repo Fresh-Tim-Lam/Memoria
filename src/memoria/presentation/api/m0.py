@@ -2,9 +2,19 @@
 
 from __future__ import annotations
 
+import os
+
 from typing import TYPE_CHECKING
 
 from memoria.services.document import DocumentService
+from memoria.services.import_engine import (
+    ImportConflict,
+    ImportResult,
+    ImportScanResult,
+    execute_import,
+    parse_flat_file,
+    pre_scan_import,
+)
 from memoria.storage.ui_settings import load_ui_settings, save_ui_settings, settings_path
 
 if TYPE_CHECKING:
@@ -122,15 +132,15 @@ class M0API:
         except RuntimeError as e:
             return {"status": "error", "message": str(e), "available": False}
 
-    def suggest_tags(self, rel_path: str, kp_id: str, limit: int = 8) -> dict:
+    def suggest_tags(self, rel_path: str, kp_id: str, limit: int = 8, temp_kp: dict | None = None) -> dict:
         try:
-            return self._svc.suggest_tags_api(rel_path, kp_id, limit=limit)
+            return self._svc.suggest_tags_api(rel_path, kp_id, limit=limit, temp_kp=temp_kp)
         except RuntimeError as e:
             return {"status": "error", "message": str(e), "available": False}
 
-    def suggest_description(self, rel_path: str, kp_id: str) -> dict:
+    def suggest_description(self, rel_path: str, kp_id: str, temp_kp: dict | None = None) -> dict:
         try:
-            return self._svc.suggest_description_api(rel_path, kp_id)
+            return self._svc.suggest_description_api(rel_path, kp_id, temp_kp=temp_kp)
         except RuntimeError as e:
             return {"status": "error", "message": str(e), "available": False}
 
@@ -160,6 +170,9 @@ class M0API:
         tags: list[str] | None = None,
         description: str | None = None,
         tag_candidates: list | None = None,
+        alias_candidates: list | None = None,
+        aliases: list[str] | None = None,
+        description_candidates: list | None = None,
     ) -> dict:
         try:
             kwargs: dict = {}
@@ -171,9 +184,21 @@ class M0API:
                 kwargs["description"] = description
             if tag_candidates is not None:
                 kwargs["tag_candidates"] = tag_candidates
+            if alias_candidates is not None:
+                kwargs["alias_candidates"] = alias_candidates
+            if aliases is not None:
+                kwargs["aliases"] = aliases
+            if description_candidates is not None:
+                kwargs["description_candidates"] = description_candidates
             if not kwargs:
                 return {"status": "error", "message": "无更新字段"}
             return self._svc.update_kp(rel_path, kp_id, **kwargs)
+        except (RuntimeError, FileNotFoundError) as e:
+            return {"status": "error", "message": str(e)}
+
+    def sync_implicit_proposals(self, rel_path: str, kp_id: str, temp_kp: dict | None = None) -> dict:
+        try:
+            return self._svc.sync_implicit_proposals_api(rel_path, kp_id, temp_kp=temp_kp)
         except (RuntimeError, FileNotFoundError) as e:
             return {"status": "error", "message": str(e)}
 
@@ -559,4 +584,137 @@ class M0API:
             merged = save_ui_settings(partial)
             return {"status": "ok", "settings": merged}
         except OSError as e:
+            return {"status": "error", "message": str(e)}
+
+    # ── U12: 纯边 & no_build 管理 ──────────────────────────────────
+
+    def create_edge(
+        self,
+        rel_path: str,
+        source_id: str,
+        target_id: str,
+        edge_type: str,
+        relevance: float | None = None,
+    ) -> dict:
+        try:
+            return self._svc.create_edge(
+                rel_path, source_id, target_id, edge_type,
+                relevance=relevance,
+            )
+        except (RuntimeError, FileNotFoundError) as e:
+            return {"status": "error", "message": str(e)}
+
+    def delete_edge(
+        self,
+        rel_path: str,
+        source_id: str,
+        target_id: str,
+        edge_type: str,
+    ) -> dict:
+        try:
+            return self._svc.delete_edge(
+                rel_path, source_id, target_id, edge_type,
+            )
+        except (RuntimeError, FileNotFoundError) as e:
+            return {"status": "error", "message": str(e)}
+
+    def set_contain_no_build(
+        self,
+        rel_path: str,
+        parent_id: str,
+        child_id: str,
+        no_build: bool = True,
+    ) -> dict:
+        try:
+            return self._svc.set_contain_no_build(
+                rel_path, parent_id, child_id, no_build=no_build,
+            )
+        except (RuntimeError, FileNotFoundError) as e:
+            return {"status": "error", "message": str(e)}
+
+    # ── R11: 平面文件导入 ──────────────────────────────────────────
+
+    def select_import_files(self) -> list[dict]:
+        """Open file picker and return list of {name, content} for selected files."""
+        if self._host is None:
+            return []
+        paths = self._host.pick_import_files()
+        if not paths:
+            return []
+        result = []
+        for p in paths:
+            try:
+                with open(p, "r", encoding="utf-8") as f:
+                    content = f.read()
+                result.append({"name": os.path.basename(p), "content": content})
+            except Exception:
+                continue
+        return result
+
+    def pre_scan_import(self, file_contents: list[dict]) -> dict:
+        """预扫描导入文件，检测 KP id 冲突。
+
+        file_contents: [{"name": "batch1.txt", "content": "..."}]
+        Returns ImportScanResult as dict.
+        """
+        try:
+            if not self._svc.kb_path:
+                return {"status": "error", "message": "未打开知识库"}
+            sections: list = []
+            for fc in file_contents or []:
+                name = fc.get("name", "")
+                content = fc.get("content", "")
+                sections.extend(parse_flat_file(content, source_name=name))
+            result = pre_scan_import(sections, self._svc.kb_path)
+            return {
+                "status": "ok",
+                "total_files": result.total_files,
+                "total_sections": result.total_sections,
+                "total_kp_declarations": result.total_kp_declarations,
+                "has_conflicts": result.has_conflicts,
+                "conflict_report": result.conflict_report,
+                "conflicts": [
+                    {
+                        "kp_id": c.kp_id,
+                        "import_source": c.import_source,
+                        "import_line": c.import_line,
+                        "existing_file": c.existing_file,
+                        "existing_name": c.existing_name,
+                    }
+                    for c in result.conflicts
+                ],
+            }
+        except Exception as e:
+            return {"status": "error", "message": str(e)}
+
+    def execute_import(self, file_contents: list[dict], conflict_resolution: dict | None = None) -> dict:
+        """执行导入。
+
+        file_contents: [{"name": "batch1.txt", "content": "..."}]
+        conflict_resolution: {"kp_id": "skip"|"overwrite"|"rename:new-id"}
+        Returns ImportResult as dict.
+        """
+        try:
+            if not self._svc.kb_path:
+                return {"status": "error", "message": "未打开知识库"}
+            sections: list = []
+            for fc in file_contents or []:
+                name = fc.get("name", "")
+                content = fc.get("content", "")
+                sections.extend(parse_flat_file(content, source_name=name))
+            result = execute_import(
+                sections, self._svc.kb_path, conflict_resolution=conflict_resolution or {}
+            )
+            return {
+                "status": result.status,
+                "files_written": result.files_written,
+                "sidecars_written": result.sidecars_written,
+                "kp_imported": result.kp_imported,
+                "kp_skipped": result.kp_skipped,
+                "kp_renamed": result.kp_renamed,
+                "kp_overwritten": result.kp_overwritten,
+                "errors": result.errors,
+                "build_report": result.build_report,
+            }
+        except Exception as e:
             return {"status": "error", "message": str(e)}

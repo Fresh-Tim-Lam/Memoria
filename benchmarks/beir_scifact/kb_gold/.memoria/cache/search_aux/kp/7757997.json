@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7757997",
+  "source_fingerprint": "d9ff8afbd808784ea2963b2101ba905c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7757997",
+    "report-of-the-national-heart,-lung,-and-blood-institute-workshop-on-lipoprotein(a)-and-cardiovascular-disease:-recent-advances-and-future-directions."
+  ],
+  "key_phrases": [
+    "report",
+    "national",
+    "heart",
+    "lung",
+    "blood",
+    "institute",
+    "workshop",
+    "lipoprotein"
+  ],
+  "summary_1l": "Report of the National Heart, Lung, and Blood Institute Workshop on Lipoprotein(a) and Cardiovascular Disease: recent advances and future directions.",
+  "query_hits": [],
+  "embed_text": "7757997 Report of the National Heart, Lung, and Blood Institute Workshop on Lipoprotein(a) and Cardiovascular Disease: recent advances and future directions. science scifact It has been estimated that approximately 37% of the US population judged to be at high risk for developing coronary artery disease (CAD), based on the National Cholesterol Education Program guidelines, have increased plasma lipoprotein(a)… 7757997 report-of-the-national-heart,-lung,-and-blood-institute-workshop-on-lipoprotein(a)-and-cardiovascular-disease:-recent-advances-and-future-directions. report national heart lung blood institute workshop lipoprotein Report of the National Heart, Lung, and Blood Institute Workshop on Lipoprotein(a) and Cardiovascular Disease: recent advances and future directions. Report of the National Heart, Lung, and Blood Institute Workshop on Lipoprotein(a) and Cardiovascular Disease: recent advances and future directions. It has been estimated that approximately 37% of the US population judged to be at high risk for developing coronary artery disease (CAD), based on the National Cholesterol Education Program guidelines, have increased plasma lipoprotein(a) [Lp(a)], whereas Lp(a) is increased in only 14% of those judged to be at low risk. Therefore, the importance of establishing a better understanding of the relative contribution of Lp(a) to the risk burden for CAD and other forms of vascular disease, as well as the underlying mechanisms, is clearly evident. However, the structural complexity and size heterogeneity of Lp(a) have hindered the development of imm",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.157453+00:00"
+}

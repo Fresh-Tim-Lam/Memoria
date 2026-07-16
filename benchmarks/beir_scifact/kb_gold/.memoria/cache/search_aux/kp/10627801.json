@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10627801",
+  "source_fingerprint": "17e0a974aed4c0020c3edd2614087d39",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10627801",
+    "loss-of-dexd/h-box-rna-helicase-lgp2-manifests-disparate-antiviral-responses."
+  ],
+  "key_phrases": [
+    "loss",
+    "dexd",
+    "box",
+    "rna",
+    "helicase",
+    "lgp2",
+    "manifests",
+    "disparate"
+  ],
+  "summary_1l": "Loss of DExD/H box RNA helicase LGP2 manifests disparate antiviral responses.",
+  "query_hits": [],
+  "embed_text": "10627801 Loss of DExD/H box RNA helicase LGP2 manifests disparate antiviral responses. science scifact The DExD/H box RNA helicase retinoic acid-inducible gene I (RIG-I) and the melanoma differentiation-associated gene 5 (MDA5) are key intracellular receptors that recognize virus infection to produce type I IFN. A third helicase gene, Lgp2,… 10627801 loss-of-dexd/h-box-rna-helicase-lgp2-manifests-disparate-antiviral-responses. loss dexd box rna helicase lgp2 manifests disparate Loss of DExD/H box RNA helicase LGP2 manifests disparate antiviral responses. Loss of DExD/H box RNA helicase LGP2 manifests disparate antiviral responses. The DExD/H box RNA helicase retinoic acid-inducible gene I (RIG-I) and the melanoma differentiation-associated gene 5 (MDA5) are key intracellular receptors that recognize virus infection to produce type I IFN. A third helicase gene, Lgp2, is homologous to Rig-I and Mda5 but lacks a caspase activation and recruitment domain. We generated Lgp2-deficient mice and report that the loss of this gene greatly sensitizes cells to cytosolic polyinosinic/polycytidylic acid-mediated induction of type I IFN. However, negative feedback inhibition of IFN-beta transcription was found to be normal in the absence of LGP2, indicating that LGP2 is not the primary negative regulator of type I IFN production. Our data further indicat",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:05.162904+00:00"
+}

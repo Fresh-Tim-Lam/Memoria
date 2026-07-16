@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "28247027",
+  "source_fingerprint": "b01402db7b71cd5152bc2bd482217210",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "28247027"
+  ],
+  "key_phrases": [
+    "antigen",
+    "availability",
+    "determines",
+    "cd8",
+    "cell",
+    "dendritic",
+    "interaction",
+    "kinetics"
+  ],
+  "summary_1l": "Antigen availability determines CD8⁺ T cell-dendritic cell interaction kinetics and memory fate decisions.",
+  "query_hits": [],
+  "embed_text": "28247027 Antigen availability determines CD8⁺ T cell-dendritic cell interaction kinetics and memory fate decisions. science scifact T cells are activated by antigen (Ag)-bearing dendritic cells (DCs) in lymph nodes in three phases. The duration of the initial phase of transient, serial DC-T cell interactions is inversely correlated with Ag dose. The second phase,… 28247027 antigen availability determines cd8 cell dendritic interaction kinetics Antigen availability determines CD8⁺ T cell-dendritic cell interaction kinetics and memory fate decisions. Antigen availability determines CD8⁺ T cell-dendritic cell interaction kinetics and memory fate decisions. T cells are activated by antigen (Ag)-bearing dendritic cells (DCs) in lymph nodes in three phases. The duration of the initial phase of transient, serial DC-T cell interactions is inversely correlated with Ag dose. The second phase, characterized by stable DC-T cell contacts, is believed to be necessary for full-fledged T cell activation. Here we have shown that this is not the case. CD8⁺ T cells interacting with DCs presenting low-dose, short-lived Ag did not transition to phase 2, whereas higher Ag dose yielded phase 2 transition. Both antigenic constellations promoted T cell proliferation and effector differentiation but yielded different transcriptome signatures at 12 hr and 24 h",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.736730+00:00"
+}

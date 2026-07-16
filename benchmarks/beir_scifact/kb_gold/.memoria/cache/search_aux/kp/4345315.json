@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4345315",
+  "source_fingerprint": "9aa43d776a6054d1140b5ac928782bc7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4345315",
+    "bacterial-rna-and-small-antiviral-compounds-activate-caspase-1-through-cryopyrin/nalp3"
+  ],
+  "key_phrases": [
+    "bacterial",
+    "rna",
+    "small",
+    "antiviral",
+    "compounds",
+    "activate",
+    "caspase",
+    "through"
+  ],
+  "summary_1l": "Missense mutations in the CIAS1 gene cause three autoinflammatory disorders: familial cold autoinflammatory syndr",
+  "query_hits": [],
+  "embed_text": "4345315 Bacterial RNA and small antiviral compounds activate caspase-1 through cryopyrin/Nalp3 science scifact Missense mutations in the CIAS1 gene cause three autoinflammatory disorders: familial cold autoinflammatory syndrome, Muckle–Wells syndrome and neonatal-onset multiple-system inflammatory disease. Cryopyrin (also called Nalp3), the product… 4345315 bacterial-rna-and-small-antiviral-compounds-activate-caspase-1-through-cryopyrin/nalp3 bacterial rna small antiviral compounds activate caspase through Missense mutations in the CIAS1 gene cause three autoinflammatory disorders: familial cold autoinflammatory syndr Bacterial RNA and small antiviral compounds activate caspase-1 through cryopyrin/Nalp3 Missense mutations in the CIAS1 gene cause three autoinflammatory disorders: familial cold autoinflammatory syndrome, Muckle–Wells syndrome and neonatal-onset multiple-system inflammatory disease. Cryopyrin (also called Nalp3), the product of CIAS1, is a member of the NOD-LRR protein family that has been linked to the activation of intracellular host defence signalling pathways. Cryopyrin forms a multi-protein complex termed ‘the inflammasome’, which contains the apoptosis-associated speck-like protein (ASC) and caspase-1, and promotes caspase-1 activation and processing of pro-interleukin (IL)-1β (ref. 4). Here we show the effect of cryopyrin deficiency on inflammasome function and immune responses. Cry",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.933812+00:00"
+}

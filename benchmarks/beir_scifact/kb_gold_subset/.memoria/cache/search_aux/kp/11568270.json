@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11568270",
+  "source_fingerprint": "bd5ccf7da14ed95742a711399589e9d6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11568270",
+    "mdc1-collaborates-with-topbp1-in-dna-replication-checkpoint-control"
+  ],
+  "key_phrases": [
+    "mdc1",
+    "collaborates",
+    "with",
+    "topbp1",
+    "dna",
+    "replication",
+    "checkpoint",
+    "control"
+  ],
+  "summary_1l": "Human TopBP1 is a major player in the control of the DNA replication checkpoint.",
+  "query_hits": [],
+  "embed_text": "11568270 MDC1 collaborates with TopBP1 in DNA replication checkpoint control science scifact Human TopBP1 is a major player in the control of the DNA replication checkpoint. In this study, we identified MDC1, a key checkpoint protein involved in the cellular response to DNA double-strand breaks, as a TopBP1-associated protein. The… 11568270 mdc1-collaborates-with-topbp1-in-dna-replication-checkpoint-control mdc1 collaborates with topbp1 dna replication checkpoint control Human TopBP1 is a major player in the control of the DNA replication checkpoint. MDC1 collaborates with TopBP1 in DNA replication checkpoint control Human TopBP1 is a major player in the control of the DNA replication checkpoint. In this study, we identified MDC1, a key checkpoint protein involved in the cellular response to DNA double-strand breaks, as a TopBP1-associated protein. The specific TopBP1-MDC1 interaction is mediated by the fifth BRCT domain of TopBP1 and the Ser-Asp-Thr (SDT) repeats of MDC1. In addition, we demonstrated that TopBP1 accumulation at stalled replication forks is promoted by the H2AX/MDC1 signaling cascade. Moreover, MDC1 is important for ATR-dependent Chk1 activation in response to replication stress. Collectively, our data suggest that MDC1 facilitates several important steps in both cellular DNA damage response and the DNA replication che",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:07.131532+00:00"
+}

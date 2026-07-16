@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12337611",
+  "source_fingerprint": "d22cb79a2e55c9cb6679851b743ef7bd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12337611",
+    "lin28b-induces-neuroblastoma-and-enhances-mycn-levels-via-let-7-suppression"
+  ],
+  "key_phrases": [
+    "lin28b",
+    "induces",
+    "neuroblastoma",
+    "enhances",
+    "mycn",
+    "levels",
+    "via",
+    "let"
+  ],
+  "summary_1l": "LIN28B regulates developmental processes by modulating microRNAs (miRNAs) of the let-7 family.",
+  "query_hits": [],
+  "embed_text": "12337611 LIN28B induces neuroblastoma and enhances MYCN levels via let-7 suppression science scifact LIN28B regulates developmental processes by modulating microRNAs (miRNAs) of the let-7 family. A role for LIN28B in cancer has been proposed but has not been established in vivo. Here, we report that LIN28B showed genomic aberrations and… 12337611 lin28b-induces-neuroblastoma-and-enhances-mycn-levels-via-let-7-suppression lin28b induces neuroblastoma enhances mycn levels via let LIN28B regulates developmental processes by modulating microRNAs (miRNAs) of the let-7 family. LIN28B induces neuroblastoma and enhances MYCN levels via let-7 suppression LIN28B regulates developmental processes by modulating microRNAs (miRNAs) of the let-7 family. A role for LIN28B in cancer has been proposed but has not been established in vivo. Here, we report that LIN28B showed genomic aberrations and extensive overexpression in high-risk neuroblastoma compared to several other tumor entities and normal tissues. High LIN28B expression was an independent risk factor for adverse outcome in neuroblastoma. LIN28B signaled through repression of the let-7 miRNAs and consequently resulted in elevated MYCN protein expression in neuroblastoma cells. LIN28B–let-7–MYCN signaling blocked differentiation of normal neuroblasts and neuroblastoma cells. These findings were fully recapitulated i",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:08.701077+00:00"
+}

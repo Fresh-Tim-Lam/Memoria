@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "40349336",
+  "source_fingerprint": "9cc9a33572b1a0c83ca351de13e4c181",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "40349336",
+    "deletion-of-the-developmentally-essential-gene-atr-in-adult-mice-leads-to-age-related-phenotypes-and-stem-cell-loss."
+  ],
+  "key_phrases": [
+    "deletion",
+    "developmentally",
+    "essential",
+    "gene",
+    "atr",
+    "adult",
+    "mice",
+    "leads"
+  ],
+  "summary_1l": "Deletion of the developmentally essential gene ATR in adult mice leads to age-related phenotypes and stem cell loss.",
+  "query_hits": [],
+  "embed_text": "40349336 Deletion of the developmentally essential gene ATR in adult mice leads to age-related phenotypes and stem cell loss. science scifact Developmental abnormalities, cancer, and premature aging each have been linked to defects in the DNA damage response (DDR). Mutations in the ATR checkpoint regulator cause developmental defects in mice (pregastrulation lethality) and… 40349336 deletion-of-the-developmentally-essential-gene-atr-in-adult-mice-leads-to-age-related-phenotypes-and-stem-cell-loss. deletion developmentally essential gene atr adult mice leads Deletion of the developmentally essential gene ATR in adult mice leads to age-related phenotypes and stem cell loss. Deletion of the developmentally essential gene ATR in adult mice leads to age-related phenotypes and stem cell loss. Developmental abnormalities, cancer, and premature aging each have been linked to defects in the DNA damage response (DDR). Mutations in the ATR checkpoint regulator cause developmental defects in mice (pregastrulation lethality) and humans (Seckel syndrome). Here we show that eliminating ATR in adult mice leads to defects in tissue homeostasis and the rapid appearance of age-related phenotypes, such as hair graying, alopecia, kyphosis, osteoporosis, thymic involution, fibrosis, and other abnormalities. Histological and genetic analyses indicate that ATR deletion causes acute cellular loss in tissues in which continuous cell proliferation is required for maintenance. Importa",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.451903+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13162391",
+  "source_fingerprint": "c9f41987de3bf5c736311e50b6e191fa",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13162391",
+    "funnel-trap-for-the-capture-of-phlebotomine-sand-flies-(diptera:-psychodidae)-from-tree-holes."
+  ],
+  "key_phrases": [
+    "funnel",
+    "trap",
+    "capture",
+    "phlebotomine",
+    "sand",
+    "flies",
+    "diptera",
+    "psychodidae"
+  ],
+  "summary_1l": "Funnel trap for the capture of phlebotomine sand flies (Diptera: Psychodidae) from tree holes.",
+  "query_hits": [],
+  "embed_text": "13162391 Funnel trap for the capture of phlebotomine sand flies (Diptera: Psychodidae) from tree holes. science scifact A funnel trap that fitted over holes leading into hollow trees was used to capture adult phlebotomine sand flies, Lutzomyia shannoni Dyar, on Ossabaw Island, Chatham County, Ga. These insects rested in hollow trees during the day and were… 13162391 funnel-trap-for-the-capture-of-phlebotomine-sand-flies-(diptera:-psychodidae)-from-tree-holes. funnel trap capture phlebotomine sand flies diptera psychodidae Funnel trap for the capture of phlebotomine sand flies (Diptera: Psychodidae) from tree holes. Funnel trap for the capture of phlebotomine sand flies (Diptera: Psychodidae) from tree holes. A funnel trap that fitted over holes leading into hollow trees was used to capture adult phlebotomine sand flies, Lutzomyia shannoni Dyar, on Ossabaw Island, Chatham County, Ga. These insects rested in hollow trees during the day and were collected by funnel traps as they egressed from the tree holes at night. The trap is lightweight, durable, inexpensive, waterproof, and selective. Using this trap, greater than 100 healthy L. shannoni ++were captured per night by a single investigator during July and August 1988 when adult flies were abundant on the island.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:09.720434+00:00"
+}

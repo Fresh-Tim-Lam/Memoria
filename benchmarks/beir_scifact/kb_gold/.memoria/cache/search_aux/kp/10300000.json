@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10300000",
+  "source_fingerprint": "9bd44f6f56484ccf06b07984bb3c268c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10300000",
+    "knowledge-and-use-of-secondary-contraception-among-patients-requesting-termination-of-pregnancy."
+  ],
+  "key_phrases": [
+    "knowledge",
+    "use",
+    "secondary",
+    "contraception",
+    "among",
+    "patients",
+    "requesting",
+    "termination"
+  ],
+  "summary_1l": "Knowledge and use of secondary contraception among patients requesting termination of pregnancy.",
+  "query_hits": [],
+  "embed_text": "10300000 Knowledge and use of secondary contraception among patients requesting termination of pregnancy. science scifact The results of a survey of 769 patients attending the St. James's University Fertility Control Clinic, England, for abortion services showed that patients seeing general practitioners were less knowledgeable than those attending specialist… 10300000 knowledge-and-use-of-secondary-contraception-among-patients-requesting-termination-of-pregnancy. knowledge use secondary contraception among patients requesting termination Knowledge and use of secondary contraception among patients requesting termination of pregnancy. Knowledge and use of secondary contraception among patients requesting termination of pregnancy. The results of a survey of 769 patients attending the St. James's University Fertility Control Clinic, England, for abortion services showed that patients seeing general practitioners were less knowledgeable than those attending specialist clinics. There was a demonstrated need for counseling on pill and condom use and protection against sexually transmitted diseases. Knowledge of postcoital methods was also found to be lacking. The survey was conducted between April 1, 1991, and January 31, 1992. Respondents included minorities such as Afro-Caribbean (8%) and Asian (9%). 307 of the cases were using a less effective form of contraception at the time of conception, usually a change from the pill",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:04.545034+00:00"
+}

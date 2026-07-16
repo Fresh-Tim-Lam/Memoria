@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1780819",
+  "source_fingerprint": "698d4508466bc7c62d8cd9d70465034c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1780819",
+    "role-of-dna-methylation-and-epigenetic-silencing-of-hand2-in-endometrial-cancer-development"
+  ],
+  "key_phrases": [
+    "role",
+    "dna",
+    "methylation",
+    "epigenetic",
+    "silencing",
+    "hand2",
+    "endometrial",
+    "cancer"
+  ],
+  "summary_1l": "BACKGROUND Endometrial cancer incidence is continuing to rise in the wake of the current ageing and obesity",
+  "query_hits": [],
+  "embed_text": "1780819 Role of DNA Methylation and Epigenetic Silencing of HAND2 in Endometrial Cancer Development science scifact BACKGROUND Endometrial cancer incidence is continuing to rise in the wake of the current ageing and obesity epidemics. Much of the risk for endometrial cancer development is influenced by the environment and lifestyle. Accumulating… 1780819 role-of-dna-methylation-and-epigenetic-silencing-of-hand2-in-endometrial-cancer-development role dna methylation epigenetic silencing hand2 endometrial cancer BACKGROUND Endometrial cancer incidence is continuing to rise in the wake of the current ageing and obesity Role of DNA Methylation and Epigenetic Silencing of HAND2 in Endometrial Cancer Development BACKGROUND Endometrial cancer incidence is continuing to rise in the wake of the current ageing and obesity epidemics. Much of the risk for endometrial cancer development is influenced by the environment and lifestyle. Accumulating evidence suggests that the epigenome serves as the interface between the genome and the environment and that hypermethylation of stem cell polycomb group target genes is an epigenetic hallmark of cancer. The objective of this study was to determine the functional role of epigenetic factors in endometrial cancer development. METHODS AND FINDINGS Epigenome-wide methylation analysis of >27,000 CpG sites in endometrial cancer tissue samples (n = 64) and control samples (n = 2",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.300633+00:00"
+}

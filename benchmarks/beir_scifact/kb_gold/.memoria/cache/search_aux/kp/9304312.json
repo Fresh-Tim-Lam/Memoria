@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9304312",
+  "source_fingerprint": "942a943c38c85fa421850e4370886018",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9304312",
+    "molecular-basis-of-synaptic-vesicle-cargo-recognition-by-the-endocytic-sorting-adaptor-stonin-2"
+  ],
+  "key_phrases": [
+    "molecular",
+    "basis",
+    "synaptic",
+    "vesicle",
+    "cargo",
+    "recognition",
+    "by",
+    "endocytic"
+  ],
+  "summary_1l": "Synaptic transmission depends on clathrin-mediated recycling of synaptic vesicles (SVs).",
+  "query_hits": [],
+  "embed_text": "9304312 Molecular basis of synaptic vesicle cargo recognition by the endocytic sorting adaptor stonin 2 science scifact Synaptic transmission depends on clathrin-mediated recycling of synaptic vesicles (SVs). How select SV proteins are targeted for internalization has remained elusive. Stonins are evolutionarily conserved adaptors dedicated to endocytic… 9304312 molecular-basis-of-synaptic-vesicle-cargo-recognition-by-the-endocytic-sorting-adaptor-stonin-2 molecular basis synaptic vesicle cargo recognition by endocytic Synaptic transmission depends on clathrin-mediated recycling of synaptic vesicles (SVs). Molecular basis of synaptic vesicle cargo recognition by the endocytic sorting adaptor stonin 2 Synaptic transmission depends on clathrin-mediated recycling of synaptic vesicles (SVs). How select SV proteins are targeted for internalization has remained elusive. Stonins are evolutionarily conserved adaptors dedicated to endocytic sorting of the SV protein synaptotagmin. Our data identify the molecular determinants for recognition of synaptotagmin by stonin 2 or its Caenorhabditis elegans orthologue UNC-41B. The interaction involves the direct association of clusters of basic residues on the surface of the cytoplasmic domain of synaptotagmin 1 and a beta strand within the mu-homology domain of stonin 2. Mutation of K783, Y784, and E785 to alanine within this stonin 2 beta strand results in",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.711223+00:00"
+}

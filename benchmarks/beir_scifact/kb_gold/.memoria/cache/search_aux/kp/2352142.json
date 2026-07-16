@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2352142",
+  "source_fingerprint": "4d3d90911221b99841ef8b15c48f9589",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2352142",
+    "cerebral-perfusion-and-stroke."
+  ],
+  "key_phrases": [
+    "cerebral",
+    "perfusion",
+    "stroke",
+    "heterogeneous",
+    "syndrome",
+    "caused",
+    "by",
+    "multiple"
+  ],
+  "summary_1l": "Cerebral perfusion and stroke.",
+  "query_hits": [],
+  "embed_text": "2352142 Cerebral perfusion and stroke. science scifact Stroke is a heterogeneous syndrome caused by multiple disease mechanisms, but all result in a disruption of cerebral blood flow with subsequent tissue damage. This review covers the mechanisms responsible for regulation of the normal… 2352142 cerebral-perfusion-and-stroke. cerebral perfusion stroke heterogeneous syndrome caused by multiple Cerebral perfusion and stroke. Cerebral perfusion and stroke. Stroke is a heterogeneous syndrome caused by multiple disease mechanisms, but all result in a disruption of cerebral blood flow with subsequent tissue damage. This review covers the mechanisms responsible for regulation of the normal cerebral circulation, and how they are disrupted in disease states. A central concept in treating patients with acute ischaemic stroke is the existence of an ischaemic penumbra of potentially salvageable tissue, and the evidence for its existence in humans is reviewed.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.633085+00:00"
+}

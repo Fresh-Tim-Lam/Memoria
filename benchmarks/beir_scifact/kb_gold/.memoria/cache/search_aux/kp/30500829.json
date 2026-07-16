@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "30500829",
+  "source_fingerprint": "82ca5f512a33bce64cac4dbe5018203c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "30500829",
+    "correlation-and-variable-importance-in-random-forests"
+  ],
+  "key_phrases": [
+    "correlation",
+    "variable",
+    "importance",
+    "random",
+    "forests",
+    "this",
+    "paper",
+    "about"
+  ],
+  "summary_1l": "This paper is about variable selection with the random forests algorithm in presence of correlated predictors.",
+  "query_hits": [],
+  "embed_text": "30500829 Correlation and variable importance in random forests science scifact This paper is about variable selection with the random forests algorithm in presence of correlated predictors. In high-dimensional regression or classification frameworks, variable selection is a difficult task, that becomes even more… 30500829 correlation-and-variable-importance-in-random-forests correlation variable importance random forests this paper about This paper is about variable selection with the random forests algorithm in presence of correlated predictors. Correlation and variable importance in random forests This paper is about variable selection with the random forests algorithm in presence of correlated predictors. In high-dimensional regression or classification frameworks, variable selection is a difficult task, that becomes even more challenging in the presence of highly correlated predictors. Firstly we provide a theoretical study of the permutation importance measure for an additive regression model. This allows us to describe how the correlation between predictors impacts the permutation importance. Our results motivate the use of the Recursive Feature Elimination (RFE) algorithm for variable selection in this context. This algorithm recursively eliminates the variables using permutation importance measure as a ranking criterion. Ne",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.715888+00:00"
+}

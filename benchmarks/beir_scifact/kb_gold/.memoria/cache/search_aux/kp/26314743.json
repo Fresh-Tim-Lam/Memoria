@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26314743",
+  "source_fingerprint": "67df4733ec5b7b547dc0310e5464d93e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26314743",
+    "systemic-inflammatory-response-syndrome,-quick-sequential-organ-function-assessment,-and-organ-dysfunction:-insights-from-a-prospective-database-of-ed-patients-with-infection"
+  ],
+  "key_phrases": [
+    "systemic",
+    "inflammatory",
+    "response",
+    "syndrome",
+    "quick",
+    "sequential",
+    "organ",
+    "function"
+  ],
+  "summary_1l": "BACKGROUND: A proposed re",
+  "query_hits": [],
+  "embed_text": "26314743 Systemic Inflammatory Response Syndrome, Quick Sequential Organ Function Assessment, and Organ Dysfunction: Insights From a Prospective Database of ED Patients With Infection science scifact BACKGROUND: A proposed revision of sepsis definitions has abandoned the systemic inflammatory response syndrome (SIRS), defined organ dysfunction as an increase in total Sequential Organ Function Assessment (SOFA) score of ≥ 2, and… 26314743 systemic-inflammatory-response-syndrome,-quick-sequential-organ-function-assessment,-and-organ-dysfunction:-insights-from-a-prospective-database-of-ed-patients-with-infection systemic inflammatory response syndrome quick sequential organ function BACKGROUND: A proposed re Systemic Inflammatory Response Syndrome, Quick Sequential Organ Function Assessment, and Organ Dysfunction: Insights From a Prospective Database of ED Patients With Infection BACKGROUND: A proposed revision of sepsis definitions has abandoned the systemic inflammatory response syndrome (SIRS), defined organ dysfunction as an increase in total Sequential Organ Function Assessment (SOFA) score of ≥ 2, and conceived “qSOFA” (quick SOFA) as a bedside indicator of organ dysfunction. We aimed to (1) determine the prognostic impact of SIRS, (2) compare the diagnostic accuracy of SIRS and qSOFA for organ dysfunction, and (3) compare standard (Sepsis‐2) and revised (Sepsis‐3) definitions for organ dysfunction in ED patients with infection. METHODS: Consecutive ED patients admitted with presumed inf",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.612217+00:00"
+}

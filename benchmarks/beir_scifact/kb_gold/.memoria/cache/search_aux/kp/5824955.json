@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5824955",
+  "source_fingerprint": "716af87e7446058909073885c7264933",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5824955",
+    "sirt1-redistribution-on-chromatin-promotes-genomic-stability-but-alters-gene-expression-during-aging"
+  ],
+  "key_phrases": [
+    "sirt1",
+    "redistribution",
+    "chromatin",
+    "promotes",
+    "genomic",
+    "stability",
+    "but",
+    "alters"
+  ],
+  "summary_1l": "Genomic instability and alterations in gene expression are hallmarks of eukaryotic aging.",
+  "query_hits": [],
+  "embed_text": "5824955 SIRT1 Redistribution on Chromatin Promotes Genomic Stability but Alters Gene Expression during Aging science scifact Genomic instability and alterations in gene expression are hallmarks of eukaryotic aging. The yeast histone deacetylase Sir2 silences transcription and stabilizes repetitive DNA, but during aging or in response to a DNA break, the Sir… 5824955 sirt1-redistribution-on-chromatin-promotes-genomic-stability-but-alters-gene-expression-during-aging sirt1 redistribution chromatin promotes genomic stability but alters Genomic instability and alterations in gene expression are hallmarks of eukaryotic aging. SIRT1 Redistribution on Chromatin Promotes Genomic Stability but Alters Gene Expression during Aging Genomic instability and alterations in gene expression are hallmarks of eukaryotic aging. The yeast histone deacetylase Sir2 silences transcription and stabilizes repetitive DNA, but during aging or in response to a DNA break, the Sir complex relocalizes to sites of genomic instability, resulting in the desilencing of genes that cause sterility, a characteristic of yeast aging. Using embryonic stem cells, we show that mammalian Sir2, SIRT1, represses repetitive DNA and a functionally diverse set of genes across the mouse genome. In response to DNA damage, SIRT1 dissociates from these loci and relocalizes to DNA breaks to promote repair, resulting in transcriptional changes that parallel tho",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.201609+00:00"
+}

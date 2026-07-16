@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6144337",
+  "source_fingerprint": "a7a368dd12b2bb81eb39a43c6bd93565",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6144337",
+    "agdscam,-a-hypervariable-immunoglobulin-domain-containing-receptor-of-the-------anopheles-gambiae-innate-immune-system"
+  ],
+  "key_phrases": [
+    "agdscam",
+    "hypervariable",
+    "immunoglobulin",
+    "domain",
+    "containing",
+    "receptor",
+    "anopheles",
+    "gambiae"
+  ],
+  "summary_1l": "AgDscam, a Hypervariable Immunoglobulin Domain-Containing Receptor of the Anopheles gambiae Innate Immune System Activation of the insect innate immune system is dependent on a limited number of patte",
+  "query_hits": [],
+  "embed_text": "6144337 AgDscam, a Hypervariable Immunoglobulin Domain-Containing Receptor of the       Anopheles gambiae Innate Immune System science scifact Activation of the insect innate immune system is dependent on a limited number of pattern recognition receptors (PRRs) capable of interacting with pathogen-associated molecular pattern. Here we report a novel role of an alternatively… 6144337 agdscam,-a-hypervariable-immunoglobulin-domain-containing-receptor-of-the-------anopheles-gambiae-innate-immune-system agdscam hypervariable immunoglobulin domain containing receptor anopheles gambiae AgDscam, a Hypervariable Immunoglobulin Domain-Containing Receptor of the Anopheles gambiae Innate Immune System Activation of the insect innate immune system is dependent on a limited number of patte AgDscam, a Hypervariable Immunoglobulin Domain-Containing Receptor of the Anopheles gambiae Innate Immune System Activation of the insect innate immune system is dependent on a limited number of pattern recognition receptors (PRRs) capable of interacting with pathogen-associated molecular pattern. Here we report a novel role of an alternatively spliced hypervariable immunoglobulin domain-encoding gene, Dscam, in generating a broad range of PRRs implicated in immune defense in the malaria vector Anopheles gambiae. The mosquito Down syndrome cell adhesion molecule gene, AgDscam, has a complex genome organization with 101 exons that can produce over 31,000 potential alternative splice forms with different combinations of adhesive domains and interaction specificities. AgDscam responds to infe",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.063970+00:00"
+}

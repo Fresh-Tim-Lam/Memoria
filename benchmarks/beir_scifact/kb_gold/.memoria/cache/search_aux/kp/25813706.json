@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25813706",
+  "source_fingerprint": "f9a71f5a98f8cd22ee1b1e45e64085d6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25813706",
+    "strand-specific-mismatch-correction-in-nuclear-extracts-of-human-and-drosophila-melanogaster-cell-lines."
+  ],
+  "key_phrases": [
+    "strand",
+    "specific",
+    "mismatch",
+    "correction",
+    "nuclear",
+    "extracts",
+    "human",
+    "drosophila"
+  ],
+  "summary_1l": "Strand-specific mismatch correction in nuclear extracts of human and Drosophila melanogaster cell lines.",
+  "query_hits": [],
+  "embed_text": "25813706 Strand-specific mismatch correction in nuclear extracts of human and Drosophila melanogaster cell lines. science scifact Nuclear extracts derived from HeLa and Drosophila melanogaster KC cell lines have been found to correct single base-base mispairs within open circular DNA heteroduplexes containing a strand-specific, site-specific incision located 808 base… 25813706 strand-specific-mismatch-correction-in-nuclear-extracts-of-human-and-drosophila-melanogaster-cell-lines. strand specific mismatch correction nuclear extracts human drosophila Strand-specific mismatch correction in nuclear extracts of human and Drosophila melanogaster cell lines. Strand-specific mismatch correction in nuclear extracts of human and Drosophila melanogaster cell lines. Nuclear extracts derived from HeLa and Drosophila melanogaster KC cell lines have been found to correct single base-base mispairs within open circular DNA heteroduplexes containing a strand-specific, site-specific incision located 808 base pairs from the mismatch. Correction in both extract systems is strand specific, being highly biased to the incised DNA strand. Different mispairs within a homologous set of heteroduplexes were processed with different efficiencies (G.T greater than G.G approximately equal to A.C greater than C.C), and correction was accompanied by mismatch-dependent DNA synthesis localized to the region spanning the mispair and the strand break, thus demonstrating tha",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.462439+00:00"
+}

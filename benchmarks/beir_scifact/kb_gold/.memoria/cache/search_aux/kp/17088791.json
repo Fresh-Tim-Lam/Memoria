@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17088791",
+  "source_fingerprint": "28c20055c0e70a239fae0a876177001e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17088791",
+    "common-brca1-variants-and-susceptibility-to-breast-and-ovarian-cancer-in-the-general-population."
+  ],
+  "key_phrases": [
+    "common",
+    "brca1",
+    "variants",
+    "susceptibility",
+    "breast",
+    "ovarian",
+    "cancer",
+    "general"
+  ],
+  "summary_1l": "Common BRCA1 variants and susceptibility to breast and ovarian cancer in the general population.",
+  "query_hits": [],
+  "embed_text": "17088791 Common BRCA1 variants and susceptibility to breast and ovarian cancer in the general population. science scifact Most multiple case families of young onset breast cancer and ovarian cancer are thought to be due to highly penetrant mutations in the predisposing genes BRCA1 and BRCA2. However, these mutations are uncommon in the population and they… 17088791 common-brca1-variants-and-susceptibility-to-breast-and-ovarian-cancer-in-the-general-population. common brca1 variants susceptibility breast ovarian cancer general Common BRCA1 variants and susceptibility to breast and ovarian cancer in the general population. Common BRCA1 variants and susceptibility to breast and ovarian cancer in the general population. Most multiple case families of young onset breast cancer and ovarian cancer are thought to be due to highly penetrant mutations in the predisposing genes BRCA1 and BRCA2. However, these mutations are uncommon in the population and they probably account for only a few percent of all breast cancer incidence. A much larger fraction of breast cancer might, in principle, be due to common variants which confer more modest individual risks. There are several common polymorphisms in the BRCA1 gene which generate amino acid substitutions. We have examined the frequency of four of these polymorphisms: Gln356Arg, Pro871Leu, Glu1038Gly and Ser1613Gly in large series of breast and ovarian cancer cases and m",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.276688+00:00"
+}

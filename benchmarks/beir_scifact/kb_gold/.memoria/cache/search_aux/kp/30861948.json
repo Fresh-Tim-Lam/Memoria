@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "30861948",
+  "source_fingerprint": "a4aee0b64926fae1075ef3d30b7bfb7b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "30861948",
+    "nuclear-cytoplasmic-shuttling-of-c-abl-tyrosine-kinase."
+  ],
+  "key_phrases": [
+    "nuclear",
+    "cytoplasmic",
+    "shuttling",
+    "abl",
+    "tyrosine",
+    "kinase",
+    "ubiquitously",
+    "expressed"
+  ],
+  "summary_1l": "Nuclear-cytoplasmic shuttling of C-ABL tyrosine kinase.",
+  "query_hits": [],
+  "embed_text": "30861948 Nuclear-cytoplasmic shuttling of C-ABL tyrosine kinase. science scifact The ubiquitously expressed nonreceptor tyrosine kinase c-Abl contains three nuclear localization signals, however, it is found in both the nucleus and the cytoplasm of proliferating fibroblasts. A rapid and transient loss of c-Abl from the… 30861948 nuclear-cytoplasmic-shuttling-of-c-abl-tyrosine-kinase. nuclear cytoplasmic shuttling abl tyrosine kinase ubiquitously expressed Nuclear-cytoplasmic shuttling of C-ABL tyrosine kinase. Nuclear-cytoplasmic shuttling of C-ABL tyrosine kinase. The ubiquitously expressed nonreceptor tyrosine kinase c-Abl contains three nuclear localization signals, however, it is found in both the nucleus and the cytoplasm of proliferating fibroblasts. A rapid and transient loss of c-Abl from the nucleus is observed upon the initial adhesion of fibroblasts onto a fibronectin matrix, suggesting the possibility of nuclear export [Lewis, J., Baskaran, R. , Taagepera, S., Schwartz, M. & Wang, J. (1996) Proc. Natl. Acad. Sci. USA 93, 15174-15179]. Here we show that the C terminus of c-Abl does indeed contain a functional nuclear export signal (NES) with the characteristic leucine-rich motif. The c-Abl NES can functionally complement an NES-defective HIV Rev protein (RevDelta3NI) and can mediate t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.070298+00:00"
+}

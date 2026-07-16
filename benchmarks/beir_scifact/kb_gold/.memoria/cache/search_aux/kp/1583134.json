@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1583134",
+  "source_fingerprint": "18eaa6e0a5b1732bf526fbdbc9c228ef",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1583134",
+    "positional-cloning-of-the-apeced-gene"
+  ],
+  "key_phrases": [
+    "positional",
+    "cloning",
+    "apeced",
+    "gene",
+    "autoimmune",
+    "polyglandular",
+    "syndrome",
+    "type"
+  ],
+  "summary_1l": "Autoimmune polyglandular syndrome type I (APS 1, also called APECED) is an autosomal-recessive disorder that maps to human chromosome 21q22.",
+  "query_hits": [],
+  "embed_text": "1583134 Positional cloning of the APECED gene science scifact Autoimmune polyglandular syndrome type I (APS 1, also called APECED) is an autosomal-recessive disorder that maps to human chromosome 21q22.3 between markers D21S49 and D21S171 by linkage studies. We have isolated a novel gene from this… 1583134 positional-cloning-of-the-apeced-gene positional cloning apeced gene autoimmune polyglandular syndrome type Autoimmune polyglandular syndrome type I (APS 1, also called APECED) is an autosomal-recessive disorder that maps to human chromosome 21q22. Positional cloning of the APECED gene Autoimmune polyglandular syndrome type I (APS 1, also called APECED) is an autosomal-recessive disorder that maps to human chromosome 21q22.3 between markers D21S49 and D21S171 by linkage studies. We have isolated a novel gene from this region, AIRE (autoimmune regulator), which encodes a protein containing motifs suggestive of a transcription factor including two zinc-finger (PHD-finger) motifs, a proline-rich region and three LXXLL motifs. Two mutations, a C→T substitution that changes the Arg 257 (CGA) to a stop codon (TGA) and an A→G substitution that changes the Lys 83 (AAG) to a Glu codon (GAG), were found in this novel gene in Swiss and Finnish APECED patients. The Arg257stop (R257X) is the predominant mutation in Finnish APECED patients, accoun",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.315739+00:00"
+}

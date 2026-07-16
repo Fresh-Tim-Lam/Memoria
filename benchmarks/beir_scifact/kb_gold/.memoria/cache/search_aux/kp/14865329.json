@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14865329",
+  "source_fingerprint": "7375ddbe2f72f25d41a5a7e912040f4a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14865329",
+    "brown-fat-and-browning-for-the-treatment-of-obesity-and-related-metabolic-disorders"
+  ],
+  "key_phrases": [
+    "brown",
+    "fat",
+    "browning",
+    "treatment",
+    "obesity",
+    "related",
+    "metabolic",
+    "disorders"
+  ],
+  "summary_1l": "Brown fat is a specialized fat depot that can increase energy expenditure and produce heat.",
+  "query_hits": [],
+  "embed_text": "14865329 Brown Fat and Browning for the Treatment of Obesity and Related Metabolic Disorders science scifact Brown fat is a specialized fat depot that can increase energy expenditure and produce heat. After the recent discovery of the presence of active brown fat in human adults and novel transcription factors controlling brown adipocyte… 14865329 brown-fat-and-browning-for-the-treatment-of-obesity-and-related-metabolic-disorders brown fat browning treatment obesity related metabolic disorders Brown fat is a specialized fat depot that can increase energy expenditure and produce heat. Brown Fat and Browning for the Treatment of Obesity and Related Metabolic Disorders Brown fat is a specialized fat depot that can increase energy expenditure and produce heat. After the recent discovery of the presence of active brown fat in human adults and novel transcription factors controlling brown adipocyte differentiation, the field of the study of brown fat has gained great interest and is rapidly growing. Brown fat expansion and/or activation results in increased energy expenditure and a negative energy balance in mice and limits weight gain. Brown fat is also able to utilize blood glucose and lipid and results in improved glucose metabolism and blood lipid independent of weight loss. Prolonged cold exposure and beta adrenergic agonists can induce browning of white adipose tissue.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.816293+00:00"
+}

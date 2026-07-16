@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "41380943",
+  "source_fingerprint": "c8d47f5cce9b0c6f652ce89ca538e74e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "41380943",
+    "male-japanese-quails-with-female-brains-do-not-show-male-sexual-behaviors."
+  ],
+  "key_phrases": [
+    "male",
+    "japanese",
+    "quails",
+    "with",
+    "female",
+    "brains",
+    "do",
+    "not"
+  ],
+  "summary_1l": "Male Japanese quails with female brains do not show male sexual behaviors.",
+  "query_hits": [],
+  "embed_text": "41380943 Male Japanese quails with female brains do not show male sexual behaviors. science scifact During embryonic development, gonadal steroid hormones (androgens and estrogens) are thought to organize the sexual differentiation of the brain in the heterogametic sexes of higher vertebrates (males in mammals, females in birds). Brain… 41380943 male-japanese-quails-with-female-brains-do-not-show-male-sexual-behaviors. male japanese quails with female brains do not Male Japanese quails with female brains do not show male sexual behaviors. Male Japanese quails with female brains do not show male sexual behaviors. During embryonic development, gonadal steroid hormones (androgens and estrogens) are thought to organize the sexual differentiation of the brain in the heterogametic sexes of higher vertebrates (males in mammals, females in birds). Brain differentiation of the homogametic sexes is thought to proceed by default, not requiring sex hormones for sex-specific organization. In gallinaceous birds such as the Japanese quail, female brain organization is thought to develop via estrogen-dependent demasculinization of a default male brain phenotype. We performed male donor-to-female host (MF), female-to-male (FM), male-to-male (MM), and female-to-female (FF) isotopic, isochronic transplantation of the forebrain primordium in J",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.397136+00:00"
+}

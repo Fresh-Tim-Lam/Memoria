@@ -1,0 +1,11 @@
+schema_version: 1
+file: corpus/doc-python.md
+knowledge_points:
+  - id: doc-python
+    name: Python Async Programming
+    tags: [noise, programming]
+    description: Asyncio event-loop concurrency for Python.
+    range:
+      start: { line_hint: 1, snippet: "# Python Async Programming" }
+      end: { line_hint: 3, snippet: using coroutines. }
+links: []

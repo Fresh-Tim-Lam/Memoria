@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4452318",
+  "source_fingerprint": "149403d6d8484a5856d51fed5c53c615",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4452318",
+    "divergent-reprogramming-routes-lead-to-alternative-stem-cell-states"
+  ],
+  "key_phrases": [
+    "divergent",
+    "reprogramming",
+    "routes",
+    "lead",
+    "alternative",
+    "stem",
+    "cell",
+    "states"
+  ],
+  "summary_1l": "Pluripotency is defined by the ability of a cell to differentiate to the derivatives of all the three embryonic germ layers: ectoder",
+  "query_hits": [],
+  "embed_text": "4452318 Divergent reprogramming routes lead to alternative stem-cell states science scifact Pluripotency is defined by the ability of a cell to differentiate to the derivatives of all the three embryonic germ layers: ectoderm, mesoderm and endoderm. Pluripotent cells can be captured via the archetypal derivation of embryonic stem… 4452318 divergent-reprogramming-routes-lead-to-alternative-stem-cell-states divergent reprogramming routes lead alternative stem cell states Pluripotency is defined by the ability of a cell to differentiate to the derivatives of all the three embryonic germ layers: ectoder Divergent reprogramming routes lead to alternative stem-cell states Pluripotency is defined by the ability of a cell to differentiate to the derivatives of all the three embryonic germ layers: ectoderm, mesoderm and endoderm. Pluripotent cells can be captured via the archetypal derivation of embryonic stem cells or via somatic cell reprogramming. Somatic cells are induced to acquire a pluripotent stem cell (iPSC) state through the forced expression of key transcription factors, and in the mouse these cells can fulfil the strictest of all developmental assays for pluripotent cells by generating completely iPSC-derived embryos and mice. However, it is not known whether there are additional classes of pluripotent cells, or what the spectrum of reprogrammed phenotypes encompasses. Here we expl",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.430581+00:00"
+}

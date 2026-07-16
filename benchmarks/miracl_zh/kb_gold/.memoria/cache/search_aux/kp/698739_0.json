@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "698739#0",
+  "source_fingerprint": "bc93c46d3e6c0848471d9b1e2094510d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "698739#0"
+  ],
+  "key_phrases": [
+    "铵盐",
+    "稱四級",
+    "活性",
+    "四級",
+    "化合物",
+    "典型",
+    "陽離子",
+    "界面"
+  ],
+  "summary_1l": "季铵盐，又稱四級銨鹽或活性四級化合物，屬於典型的陽離子界面活性劑。。",
+  "query_hits": [],
+  "embed_text": "698739#0 季铵盐 季铵盐 季铵盐，又稱四級銨鹽或活性四級化合物，屬於典型的陽離子界面活性劑。。是铵离子的四个氢离子都被烃基取代后形成的季铵阳离子的盐，具有通式 RNX。其中四个烃基可以相同，也可以不相同，X多为卤素阴离子，HSO，RCOO及OH（季铵碱）。 698739#0 铵盐 稱四級 活性 四級 化合物 典型 陽離子 界面 季铵盐，又稱四級銨鹽或活性四級化合物，屬於典型的陽離子界面活性劑。。 季铵盐 季铵盐，又稱四級銨鹽或活性四級化合物，屬於典型的陽離子界面活性劑。。是铵离子的四个氢离子都被烃基取代后形成的季铵阳离子的盐，具有通式 RNX。其中四个烃基可以相同，也可以不相同，X多为卤素阴离子，HSO，RCOO及OH（季铵碱）。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:20:56.151321+00:00"
+}

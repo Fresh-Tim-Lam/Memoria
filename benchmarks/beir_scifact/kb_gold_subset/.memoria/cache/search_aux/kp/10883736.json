@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10883736",
+  "source_fingerprint": "35066fdb663cd4a5821b2a7f829522f0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10883736",
+    "alterations-in-liver-atp-homeostasis-in-human-nonalcoholic-steatohepatitis:-a-pilot-study."
+  ],
+  "key_phrases": [
+    "alterations",
+    "liver",
+    "atp",
+    "homeostasis",
+    "human",
+    "nonalcoholic",
+    "steatohepatitis",
+    "pilot"
+  ],
+  "summary_1l": "Alterations in liver ATP homeostasis in human nonalcoholic steatohepatitis: a pilot study.",
+  "query_hits": [],
+  "embed_text": "10883736 Alterations in liver ATP homeostasis in human nonalcoholic steatohepatitis: a pilot study. science scifact CONTEXT The mechanisms that drive progression from fatty liver to steatohepatitis and cirrhosis are unknown. In animal models, obese mice with fatty livers are vulnerable to liver adenosine triphosphate (ATP) depletion and necrosis,… 10883736 alterations-in-liver-atp-homeostasis-in-human-nonalcoholic-steatohepatitis:-a-pilot-study. alterations liver atp homeostasis human nonalcoholic steatohepatitis pilot Alterations in liver ATP homeostasis in human nonalcoholic steatohepatitis: a pilot study. Alterations in liver ATP homeostasis in human nonalcoholic steatohepatitis: a pilot study. CONTEXT The mechanisms that drive progression from fatty liver to steatohepatitis and cirrhosis are unknown. In animal models, obese mice with fatty livers are vulnerable to liver adenosine triphosphate (ATP) depletion and necrosis, suggesting that altered hepatic energy homeostasis may be involved. OBJECTIVE To determine if patients with fatty liver disease exhibit impaired recovery from hepatic ATP depletion. DESIGN Laboratory analysis of liver ATP stores monitored by nuclear magnetic resonance spectroscopy before and after transient hepatic ATP depletion was induced by fructose injection. The study was conducted between July 15 and August 30, 1998. SETTING University hospital. PATIENTS Eight conse",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:06.059077+00:00"
+}

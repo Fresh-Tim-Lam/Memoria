@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7421677",
+  "source_fingerprint": "02058b0a92d3edd74be44671af2c389f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7421677",
+    "queueing-up-for-enzymatic-processing:-correlated-signaling-through-coupled-degradation"
+  ],
+  "key_phrases": [
+    "queueing",
+    "up",
+    "enzymatic",
+    "processing",
+    "correlated",
+    "signaling",
+    "through",
+    "coupled"
+  ],
+  "summary_1l": "High-throughput technologies have led to the generation of complex wiring diagrams as a post-sequencing paradigm",
+  "query_hits": [],
+  "embed_text": "7421677 Queueing up for enzymatic processing: correlated signaling through coupled degradation science scifact High-throughput technologies have led to the generation of complex wiring diagrams as a post-sequencing paradigm for depicting the interactions between vast and diverse cellular species. While these diagrams are useful for analyzing… 7421677 queueing-up-for-enzymatic-processing:-correlated-signaling-through-coupled-degradation queueing up enzymatic processing correlated signaling through coupled High-throughput technologies have led to the generation of complex wiring diagrams as a post-sequencing paradigm Queueing up for enzymatic processing: correlated signaling through coupled degradation High-throughput technologies have led to the generation of complex wiring diagrams as a post-sequencing paradigm for depicting the interactions between vast and diverse cellular species. While these diagrams are useful for analyzing biological systems on a large scale, a detailed understanding of the molecular mechanisms that underlie the observed network connections is critical for the further development of systems and synthetic biology. Here, we use queueing theory to investigate how 'waiting lines' can lead to correlations between protein 'customers' that are coupled solely through a downstream set of enzymatic 'servers'. Using the E. coli ClpXP degradation machine as a model processing system, we ob",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.265535+00:00"
+}

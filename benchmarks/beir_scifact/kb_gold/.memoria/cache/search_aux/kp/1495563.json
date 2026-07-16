@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1495563",
+  "source_fingerprint": "f78c01ef32cd40b1b51b19b7318a6194",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1495563",
+    "[clinical-study-on-the-therapeutic-effect-of-acupuncture-in-the-treatment-of-post-stroke-depression]."
+  ],
+  "key_phrases": [
+    "clinical",
+    "study",
+    "therapeutic",
+    "effect",
+    "acupuncture",
+    "treatment",
+    "post",
+    "stroke"
+  ],
+  "summary_1l": "[Clinical study on the therapeutic effect of acupuncture in the treatment of post-stroke depression].",
+  "query_hits": [],
+  "embed_text": "1495563 [Clinical study on the therapeutic effect of acupuncture in the treatment of post-stroke depression]. science scifact OBJECTIVE To observe the therapeutic effect of \"Xingnao Kaiqiao Zhenfa\" (Acupuncture Technique for Restoring Consciousness) in the treatment of post-stroke depression. METHODS A total of 256 stroke patients were divided into acupuncture… 1495563 [clinical-study-on-the-therapeutic-effect-of-acupuncture-in-the-treatment-of-post-stroke-depression]. clinical study therapeutic effect acupuncture treatment post stroke [Clinical study on the therapeutic effect of acupuncture in the treatment of post-stroke depression]. [Clinical study on the therapeutic effect of acupuncture in the treatment of post-stroke depression]. OBJECTIVE To observe the therapeutic effect of \"Xingnao Kaiqiao Zhenfa\" (Acupuncture Technique for Restoring Consciousness) in the treatment of post-stroke depression. METHODS A total of 256 stroke patients were divided into acupuncture group (n = 180, male 138, female 42) and medication group (n = 76, male 57 and female 19) according to their visiting sequence to our hospital. Acupoints used were Neiguan (PC 6), Renzhong (GV 26), Baihui (GV 20), Yintang (EX-HN 3) and Sanyinjiao (SP 6,the affected side) and the needles were retained for 20 min every time. Patients of medication group were asked to take Amitriptyline (50 mg/d at first, 200 mg/d). Acupuncture treatment was conducted twice da",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.942050+00:00"
+}

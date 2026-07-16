@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14938990",
+  "source_fingerprint": "1b965ee7f310be25d431b70082b894f8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14938990",
+    "upregulated-pd-1-expression-is-associated-with-the-development-of-systemic-lupus-erythematosus,-but-not-the-pd-1.1-allele-of-the-pdcd1-gene"
+  ],
+  "key_phrases": [
+    "upregulated",
+    "pd",
+    "expression",
+    "associated",
+    "with",
+    "development",
+    "systemic",
+    "lupus"
+  ],
+  "summary_1l": "Upregulated PD-1 Expression Is Associated with the Development of Systemic Lupus Erythematosus, but Not the PD-1.",
+  "query_hits": [],
+  "embed_text": "14938990 Upregulated PD-1 Expression Is Associated with the Development of Systemic Lupus Erythematosus, but Not the PD-1.1 Allele of the PDCD1 Gene science scifact Systemic lupus erythematosus (SLE) is a multisystem autoimmune disease with complicated genetic inheritance. Programmed death 1 (PD-1), a negative T cell regulator to maintain peripheral tolerance, induces negative signals to T cells… 14938990 upregulated-pd-1-expression-is-associated-with-the-development-of-systemic-lupus-erythematosus,-but-not-the-pd-1.1-allele-of-the-pdcd1-gene upregulated pd expression associated with development systemic lupus Upregulated PD-1 Expression Is Associated with the Development of Systemic Lupus Erythematosus, but Not the PD-1. Upregulated PD-1 Expression Is Associated with the Development of Systemic Lupus Erythematosus, but Not the PD-1.1 Allele of the PDCD1 Gene Systemic lupus erythematosus (SLE) is a multisystem autoimmune disease with complicated genetic inheritance. Programmed death 1 (PD-1), a negative T cell regulator to maintain peripheral tolerance, induces negative signals to T cells during interaction with its ligands and is therefore a candidate gene in the development of SLE. In order to examine whether expression levels of PD-1 contribute to the pathogenesis of SLE, 30 patients with SLE and 30 controls were recruited and their PD-1 expression levels in peripheral blood mononuclear cells (PBMCs) were measured via flow cytometry and quantitative real-time-reverse transcription polymerase chain reacti",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.926753+00:00"
+}

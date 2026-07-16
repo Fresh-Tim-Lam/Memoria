@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "32001951",
+  "source_fingerprint": "b4f3c1271e52d437ff2a724743f27f20",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "32001951",
+    "regulation-of-the-expression-of-alkaline-phosphatase-in-a-human-breast-cancer-cell-line."
+  ],
+  "key_phrases": [
+    "regulation",
+    "expression",
+    "alkaline",
+    "phosphatase",
+    "human",
+    "breast",
+    "cancer",
+    "cell"
+  ],
+  "summary_1l": "Regulation of the expression of alkaline phosphatase in a human breast-cancer cell line.",
+  "query_hits": [],
+  "embed_text": "32001951 Regulation of the expression of alkaline phosphatase in a human breast-cancer cell line. science scifact Treatment of the cultured human breast-cancer cells BC-M1 with dexamethasone induced a placental-type alkaline phosphatase (ALP). Both the ALP activity and the mRNA level in the cells were increased. The induction of ALP activity by… 32001951 regulation-of-the-expression-of-alkaline-phosphatase-in-a-human-breast-cancer-cell-line. regulation expression alkaline phosphatase human breast cancer cell Regulation of the expression of alkaline phosphatase in a human breast-cancer cell line. Regulation of the expression of alkaline phosphatase in a human breast-cancer cell line. Treatment of the cultured human breast-cancer cells BC-M1 with dexamethasone induced a placental-type alkaline phosphatase (ALP). Both the ALP activity and the mRNA level in the cells were increased. The induction of ALP activity by dexamethasone was time- and dose-dependent. The accumulation of ALP mRNA was inhibited by both actinomycin D and cycloheximide, indicating that its induction is a complex event and may involve other regulatory proteins. Retinoic acid showed opposing effects with dexamethasone on the expression of alkaline phosphatase. Retinoic acid (RA) and phorbol 12-myristate 13-acetate also substantially reduced the dexamethasone-induced expression of ALP. Studies on thermostability and",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.066302+00:00"
+}

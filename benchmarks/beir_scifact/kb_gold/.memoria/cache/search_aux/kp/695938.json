@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "695938",
+  "source_fingerprint": "640447872ff9d754236b77cae4c46168",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "695938",
+    "grass-plants-bind,-retain,-uptake,-and-transport-infectious-prions."
+  ],
+  "key_phrases": [
+    "grass",
+    "plants",
+    "bind",
+    "retain",
+    "uptake",
+    "transport",
+    "infectious",
+    "prions"
+  ],
+  "summary_1l": "Grass plants bind, retain, uptake, and transport infectious prions.",
+  "query_hits": [],
+  "embed_text": "695938 Grass plants bind, retain, uptake, and transport infectious prions. science scifact Prions are the protein-based infectious agents responsible for prion diseases. Environmental prion contamination has been implicated in disease transmission. Here, we analyzed the binding and retention of infectious prion protein (PrP(Sc))… 695938 grass-plants-bind,-retain,-uptake,-and-transport-infectious-prions. grass plants bind retain uptake transport infectious prions Grass plants bind, retain, uptake, and transport infectious prions. Grass plants bind, retain, uptake, and transport infectious prions. Prions are the protein-based infectious agents responsible for prion diseases. Environmental prion contamination has been implicated in disease transmission. Here, we analyzed the binding and retention of infectious prion protein (PrP(Sc)) to plants. Small quantities of PrP(Sc) contained in diluted brain homogenate or in excretory materials (urine and feces) can bind to wheat grass roots and leaves. Wild-type hamsters were efficiently infected by ingestion of prion-contaminated plants. The prion-plant interaction occurs with prions from diverse origins, including chronic wasting disease. Furthermore, leaves contaminated by spraying with a prion-containing preparation retained PrP(Sc) for several weeks in the living plant.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.087424+00:00"
+}

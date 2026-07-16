@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19532163",
+  "source_fingerprint": "14b6a2355d3760e643416ed545871e7f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19532163",
+    "surgical-therapy-for-dystonia."
+  ],
+  "key_phrases": [
+    "surgical",
+    "therapy",
+    "dystonia",
+    "treatments",
+    "have",
+    "been",
+    "available",
+    "since"
+  ],
+  "summary_1l": "Surgical therapy for dystonia.",
+  "query_hits": [],
+  "embed_text": "19532163 Surgical therapy for dystonia. science scifact Surgical treatments for dystonia have been available since the early 20th century, but have improved in their efficacy to adversity ratio through a combination of technologic advances and better understanding of the role of the basal… 19532163 surgical-therapy-for-dystonia. surgical therapy dystonia treatments have been available since Surgical therapy for dystonia. Surgical therapy for dystonia. Surgical treatments for dystonia have been available since the early 20th century, but have improved in their efficacy to adversity ratio through a combination of technologic advances and better understanding of the role of the basal ganglia in dystonia. The word \"dystonia\" describes a phenotype of involuntary movement that may manifest from a variety of conditions. Dystonia may affect only certain regions of the body or may be generalized. It appears to be critical to determine whether the etiology underlying the dystonia is \"primary\" (ie, occurring from a genetic or idiopathic origin) or \"secondary\" (ie, occurring as a result of structural, metabolic, or neurodegenerative disorders). Secondary dystonias are far more common than primary dystonias. Primary dy",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.748107+00:00"
+}

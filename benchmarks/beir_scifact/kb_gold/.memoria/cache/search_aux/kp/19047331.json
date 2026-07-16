@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19047331",
+  "source_fingerprint": "fed994fdadf1c6cf28bd6ec0f6e7c7fe",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19047331",
+    "direct-upregulation-of-stat3-by-microrna-551b-3p-deregulates-growth-and-metastasis-of-ovarian-cancer."
+  ],
+  "key_phrases": [
+    "direct",
+    "upregulation",
+    "stat3",
+    "by",
+    "microrna",
+    "551b",
+    "3p",
+    "deregulates"
+  ],
+  "summary_1l": "Direct Upregulation of STAT3 by MicroRNA-551b-3p Deregulates Growth and Metastasis of Ovarian Cancer.",
+  "query_hits": [],
+  "embed_text": "19047331 Direct Upregulation of STAT3 by MicroRNA-551b-3p Deregulates Growth and Metastasis of Ovarian Cancer. science scifact 3q26.2 amplification in high-grade serous ovarian cancer leads to increased expression of mature microRNA miR551b-3p, which is associated with poor clinical outcome. Importantly, miR551b-3p contributes to resistance to apoptosis and… 19047331 direct-upregulation-of-stat3-by-microrna-551b-3p-deregulates-growth-and-metastasis-of-ovarian-cancer. direct upregulation stat3 by microrna 551b 3p deregulates Direct Upregulation of STAT3 by MicroRNA-551b-3p Deregulates Growth and Metastasis of Ovarian Cancer. Direct Upregulation of STAT3 by MicroRNA-551b-3p Deregulates Growth and Metastasis of Ovarian Cancer. 3q26.2 amplification in high-grade serous ovarian cancer leads to increased expression of mature microRNA miR551b-3p, which is associated with poor clinical outcome. Importantly, miR551b-3p contributes to resistance to apoptosis and increased survival and proliferation of cancer cells in vitro and in vivo. miR551b-3p upregulates STAT3 protein levels, and STAT3 is required for the effects of miR551b-3p on cell proliferation. Rather than decreasing levels of target mRNA as expected, we demonstrate that miR551b-3p binds a complementary sequence on the STAT3 promoter, recruiting RNA polymerase II and the TWIST1 transcription factor to activate STAT3 transcription, and thus directly upregulates",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.073566+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5123516",
+  "source_fingerprint": "ef882d77e3d96b742d591733f05dabd1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5123516",
+    "epha3-maintains-tumorigenicity-and-is-a-therapeutic-target-in-glioblastoma-multiforme."
+  ],
+  "key_phrases": [
+    "epha3",
+    "maintains",
+    "tumorigenicity",
+    "therapeutic",
+    "target",
+    "glioblastoma",
+    "multiforme",
+    "significant"
+  ],
+  "summary_1l": "EphA3 maintains tumorigenicity and is a therapeutic target in glioblastoma multiforme.",
+  "query_hits": [],
+  "embed_text": "5123516 EphA3 maintains tumorigenicity and is a therapeutic target in glioblastoma multiforme. science scifact Significant endeavor has been applied to identify functional therapeutic targets in glioblastoma (GBM) to halt the growth of this aggressive cancer. We show that the receptor tyrosine kinase EphA3 is frequently overexpressed in GBM and, in… 5123516 epha3-maintains-tumorigenicity-and-is-a-therapeutic-target-in-glioblastoma-multiforme. epha3 maintains tumorigenicity therapeutic target glioblastoma multiforme significant EphA3 maintains tumorigenicity and is a therapeutic target in glioblastoma multiforme. EphA3 maintains tumorigenicity and is a therapeutic target in glioblastoma multiforme. Significant endeavor has been applied to identify functional therapeutic targets in glioblastoma (GBM) to halt the growth of this aggressive cancer. We show that the receptor tyrosine kinase EphA3 is frequently overexpressed in GBM and, in particular, in the most aggressive mesenchymal subtype. Importantly, EphA3 is highly expressed on the tumor-initiating cell population in glioma and appears critically involved in maintaining tumor cells in a less differentiated state by modulating mitogen-activated protein kinase signaling. EphA3 knockdown or depletion of EphA3-positive tumor cells reduced tumorigenic potential to a degree comparable to treatment with a therapeutic radiolabelled EphA3-specific monoclo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.189291+00:00"
+}

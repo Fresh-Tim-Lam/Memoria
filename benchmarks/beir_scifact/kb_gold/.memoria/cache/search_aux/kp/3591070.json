@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3591070",
+  "source_fingerprint": "5130503baf1e8c2d5424e42588d70f4e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3591070",
+    "speed-limits-for-nonvesicular-intracellular-sterol-transport."
+  ],
+  "key_phrases": [
+    "speed",
+    "limits",
+    "nonvesicular",
+    "intracellular",
+    "sterol",
+    "transport",
+    "between",
+    "endoplasmic"
+  ],
+  "summary_1l": "Speed Limits for Nonvesicular Intracellular Sterol Transport.",
+  "query_hits": [],
+  "embed_text": "3591070 Speed Limits for Nonvesicular Intracellular Sterol Transport. science scifact Sterol transport between the endoplasmic reticulum (ER) and plasma membrane (PM) occurs by nonvesicular mechanisms requiring sterol transport proteins (STPs). Here we examine the idea that transport is enhanced at membrane contact sites… 3591070 speed-limits-for-nonvesicular-intracellular-sterol-transport. speed limits nonvesicular intracellular sterol transport between endoplasmic Speed Limits for Nonvesicular Intracellular Sterol Transport. Speed Limits for Nonvesicular Intracellular Sterol Transport. Sterol transport between the endoplasmic reticulum (ER) and plasma membrane (PM) occurs by nonvesicular mechanisms requiring sterol transport proteins (STPs). Here we examine the idea that transport is enhanced at membrane contact sites where the ER is closely apposed to the PM. We conclude that sterol desorption from the membrane, rather than STP-mediated diffusion, is rate limiting in the cellular context, so there is no apparent kinetic benefit to having STP-mediated sterol transfer occur at contact sites. Contact sites may instead compartmentalize lipid synthesis or transport machinery, providing opportunities for regulation.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.749013+00:00"
+}

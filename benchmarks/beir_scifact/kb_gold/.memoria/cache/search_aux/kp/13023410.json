@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13023410",
+  "source_fingerprint": "6d4191d7884799aaeb244451e61bd8a6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13023410",
+    "bcr/abl-oncogenic-kinase-promotes-unfaithful-repair-of-the-reactive-oxygen-species-dependent-dna-double-strand-breaks."
+  ],
+  "key_phrases": [
+    "bcr",
+    "abl",
+    "oncogenic",
+    "kinase",
+    "promotes",
+    "unfaithful",
+    "repair",
+    "reactive"
+  ],
+  "summary_1l": "BCR/ABL oncogenic kinase promotes unfaithful repair of the reactive oxygen species-dependent DNA double-strand breaks.",
+  "query_hits": [],
+  "embed_text": "13023410 BCR/ABL oncogenic kinase promotes unfaithful repair of the reactive oxygen species-dependent DNA double-strand breaks. science scifact The oncogenic BCR/ABL tyrosine kinase induces constitutive DNA damage in Philadelphia chromosome (Ph)-positive leukemia cells. We find that BCR/ABL-induced reactive oxygen species (ROSs) cause chronic oxidative DNA damage resulting in… 13023410 bcr/abl-oncogenic-kinase-promotes-unfaithful-repair-of-the-reactive-oxygen-species-dependent-dna-double-strand-breaks. bcr abl oncogenic kinase promotes unfaithful repair reactive BCR/ABL oncogenic kinase promotes unfaithful repair of the reactive oxygen species-dependent DNA double-strand breaks. BCR/ABL oncogenic kinase promotes unfaithful repair of the reactive oxygen species-dependent DNA double-strand breaks. The oncogenic BCR/ABL tyrosine kinase induces constitutive DNA damage in Philadelphia chromosome (Ph)-positive leukemia cells. We find that BCR/ABL-induced reactive oxygen species (ROSs) cause chronic oxidative DNA damage resulting in double-strand breaks (DSBs) in S and G(2)/M cell cycle phases. These lesions are repaired by BCR/ABL-stimulated homologous recombination repair (HRR) and nonhomologous end-joining (NHEJ) mechanisms. A high mutation rate is detected in HRR products in BCR/ABL-positive cells, but not in the normal counterparts. In addition, large deletions are found in NHEJ products exclusively in BCR/ABL cells. We propose that the following series of events ma",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:09.470993+00:00"
+}

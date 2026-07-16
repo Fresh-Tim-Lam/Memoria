@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4387784",
+  "source_fingerprint": "21d5059280dcf988de6eb3be5f034e9e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4387784",
+    "structure-of-the-proton-gated-urea-channel-from-the-gastric-pathogen-helicobacter-pylori"
+  ],
+  "key_phrases": [
+    "structure",
+    "proton",
+    "gated",
+    "urea",
+    "channel",
+    "from",
+    "gastric",
+    "pathogen"
+  ],
+  "summary_1l": "Half the world's population is chronically infected with Helicobacter pylori, causing gastritis, gastric ulcers",
+  "query_hits": [],
+  "embed_text": "4387784 Structure of the proton-gated urea channel from the gastric pathogen Helicobacter pylori science scifact Half the world's population is chronically infected with Helicobacter pylori, causing gastritis, gastric ulcers and an increased incidence of gastric adenocarcinoma. Its proton-gated inner-membrane urea channel, HpUreI, is essential for… 4387784 structure-of-the-proton-gated-urea-channel-from-the-gastric-pathogen-helicobacter-pylori structure proton gated urea channel from gastric pathogen Half the world's population is chronically infected with Helicobacter pylori, causing gastritis, gastric ulcers Structure of the proton-gated urea channel from the gastric pathogen Helicobacter pylori Half the world's population is chronically infected with Helicobacter pylori, causing gastritis, gastric ulcers and an increased incidence of gastric adenocarcinoma. Its proton-gated inner-membrane urea channel, HpUreI, is essential for survival in the acidic environment of the stomach. The channel is closed at neutral pH and opens at acidic pH to allow the rapid access of urea to cytoplasmic urease. Urease produces NH(3) and CO(2), neutralizing entering protons and thus buffering the periplasm to a pH of roughly 6.1 even in gastric juice at a pH below 2.0. Here we report the structure of HpUreI, revealing six protomers assembled in a hexameric ring surrounding a central bilayer plug of ordered lipids.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:13.299039+00:00"
+}

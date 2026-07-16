@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "44830890",
+  "source_fingerprint": "1075fe00edd56731f59849fafde92cdb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "44830890",
+    "comorbidity-of-depressive-and-anxiety-disorders-in-chronic-daily-headache-and-its-subtypes."
+  ],
+  "key_phrases": [
+    "comorbidity",
+    "depressive",
+    "anxiety",
+    "disorders",
+    "chronic",
+    "daily",
+    "headache",
+    "its"
+  ],
+  "summary_1l": "Comorbidity of depressive and anxiety disorders in chronic daily headache and its subtypes.",
+  "query_hits": [],
+  "embed_text": "44830890 Comorbidity of depressive and anxiety disorders in chronic daily headache and its subtypes. science scifact OBJECTIVE To investigate the frequency of depressive and anxiety disorders in patients with chronic daily headache. BACKGROUND There is a lack of data in the literature on the extent of psychiatric comorbidity in patients with different… 44830890 comorbidity-of-depressive-and-anxiety-disorders-in-chronic-daily-headache-and-its-subtypes. comorbidity depressive anxiety disorders chronic daily headache its Comorbidity of depressive and anxiety disorders in chronic daily headache and its subtypes. Comorbidity of depressive and anxiety disorders in chronic daily headache and its subtypes. OBJECTIVE To investigate the frequency of depressive and anxiety disorders in patients with chronic daily headache. BACKGROUND There is a lack of data in the literature on the extent of psychiatric comorbidity in patients with different subtypes of chronic daily headache. METHODS We recruited consecutive patients with chronic daily headache seen in a headache clinic from November 1998 to December 1999. The subtypes of chronic daily headache were classified according to the criteria proposed by Silberstein et al. A psychiatrist evaluated the patients according to the structured Mini-International Neuropsychiatric Interview to assess the comorbidity of depressive and anxiety disorders. RESULTS Two hun",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.965275+00:00"
+}

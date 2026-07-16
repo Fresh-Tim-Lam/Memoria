@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21874414",
+  "source_fingerprint": "fb7dca62dd2dd396138c9b3d68f62885",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21874414",
+    "accurate-coarse-grained-modeling-of-red-blood-cells."
+  ],
+  "key_phrases": [
+    "accurate",
+    "coarse",
+    "grained",
+    "modeling",
+    "red",
+    "blood",
+    "cells",
+    "we"
+  ],
+  "summary_1l": "Accurate coarse-grained modeling of red blood cells.",
+  "query_hits": [],
+  "embed_text": "21874414 Accurate coarse-grained modeling of red blood cells. science scifact We develop a systematic coarse-graining procedure for modeling red blood cells (RBCs) using arguments based on mean-field theory. The three-dimensional RBC membrane model takes into account the bending energy, in-plane shear energy, and… 21874414 accurate-coarse-grained-modeling-of-red-blood-cells. accurate coarse grained modeling red blood cells we Accurate coarse-grained modeling of red blood cells. Accurate coarse-grained modeling of red blood cells. We develop a systematic coarse-graining procedure for modeling red blood cells (RBCs) using arguments based on mean-field theory. The three-dimensional RBC membrane model takes into account the bending energy, in-plane shear energy, and constraints of fixed surface area and fixed enclosed volume. The coarse-graining procedure is general, it can be used for arbitrary level of coarse-graining and does not employ any fitting parameters. The sensitivity of the coarse-grained model is investigated and its behavior is validated against available experimental data and in dissipative particle dynamics (DPD) simulations of RBCs in capillary and shear flows.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.824807+00:00"
+}

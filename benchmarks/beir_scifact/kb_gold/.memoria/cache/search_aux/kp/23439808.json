@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23439808",
+  "source_fingerprint": "2367aac8cb56b07a0623fdccbfe56ce1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23439808",
+    "serum-cystatin-c-is-related-to-pulse-wave-velocity-even-in-subjects-with-normal-serum-creatinine"
+  ],
+  "key_phrases": [
+    "serum",
+    "cystatin",
+    "related",
+    "pulse",
+    "wave",
+    "velocity",
+    "even",
+    "subjects"
+  ],
+  "summary_1l": "We hypothesized that serum cystatin C can be a more predictable marker of arterial stiffness than serum",
+  "query_hits": [],
+  "embed_text": "23439808 Serum Cystatin C Is Related to Pulse Wave Velocity Even in Subjects with Normal Serum Creatinine science scifact We hypothesized that serum cystatin C can be a more predictable marker of arterial stiffness than serum creatinine and creatinine-based glomerular filtration rate (GFR). The aim of this study is to evaluate whether serum cystatin C is… 23439808 serum-cystatin-c-is-related-to-pulse-wave-velocity-even-in-subjects-with-normal-serum-creatinine serum cystatin related pulse wave velocity even subjects We hypothesized that serum cystatin C can be a more predictable marker of arterial stiffness than serum Serum Cystatin C Is Related to Pulse Wave Velocity Even in Subjects with Normal Serum Creatinine We hypothesized that serum cystatin C can be a more predictable marker of arterial stiffness than serum creatinine and creatinine-based glomerular filtration rate (GFR). The aim of this study is to evaluate whether serum cystatin C is related to arterial stiffness independently of serum creatinine in subjects for whom serum creatinine is normal. A total of 2,018 individuals (1,120 males, 898 females) were enrolled. Mean brachial-ankle pulse wave velocity (baPWV) was used as a marker of arterial stiffness and sex-specific analysis was performed. A positive relationship between baPWV and serum cystatin C (Y=1109.0548+329.9102X, r2=0.056, p<0.001) was found in males. Stepwise multivariate regressi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.518636+00:00"
+}

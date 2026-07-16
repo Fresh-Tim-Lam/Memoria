@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20054396",
+  "source_fingerprint": "fcdd53ffbed20a1f4b4f998b58940c3a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20054396",
+    "polo-like-kinase-1-regulates-nlp,-a-centrosome-protein-involved-in-microtubule-nucleation."
+  ],
+  "key_phrases": [
+    "polo",
+    "like",
+    "kinase",
+    "regulates",
+    "nlp",
+    "centrosome",
+    "protein",
+    "involved"
+  ],
+  "summary_1l": "Polo-like kinase 1 regulates Nlp, a centrosome protein involved in microtubule nucleation.",
+  "query_hits": [],
+  "embed_text": "20054396 Polo-like kinase 1 regulates Nlp, a centrosome protein involved in microtubule nucleation. science scifact In animal cells, most microtubules are nucleated at centrosomes. At the onset of mitosis, centrosomes undergo a structural reorganization, termed maturation, which leads to increased microtubule nucleation activity. Centrosome maturation… 20054396 polo-like-kinase-1-regulates-nlp,-a-centrosome-protein-involved-in-microtubule-nucleation. polo like kinase regulates nlp centrosome protein involved Polo-like kinase 1 regulates Nlp, a centrosome protein involved in microtubule nucleation. Polo-like kinase 1 regulates Nlp, a centrosome protein involved in microtubule nucleation. In animal cells, most microtubules are nucleated at centrosomes. At the onset of mitosis, centrosomes undergo a structural reorganization, termed maturation, which leads to increased microtubule nucleation activity. Centrosome maturation is regulated by several kinases, including Polo-like kinase 1 (Plk1). Here, we identify a centrosomal Plk1 substrate, termed Nlp (ninein-like protein), whose properties suggest an important role in microtubule organization. Nlp interacts with two components of the gamma-tubulin ring complex and stimulates microtubule nucleation. Plk1 phosphorylates Nlp and disrupts both its centrosome association and its gamma-tubulin interaction. Overexpression of an Nlp mutant lack",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.605445+00:00"
+}

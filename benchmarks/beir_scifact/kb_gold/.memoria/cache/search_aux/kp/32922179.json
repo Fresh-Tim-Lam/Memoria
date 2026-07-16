@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "32922179",
+  "source_fingerprint": "befcc40834bef7674661500e37736173",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "32922179",
+    "alzheimer's-disease:-the-two-hit-hypothesis."
+  ],
+  "key_phrases": [
+    "alzheimer",
+    "disease",
+    "two",
+    "hit",
+    "hypothesis",
+    "there",
+    "many",
+    "lines"
+  ],
+  "summary_1l": "Alzheimer's disease: the two-hit hypothesis.",
+  "query_hits": [],
+  "embed_text": "32922179 Alzheimer's disease: the two-hit hypothesis. science scifact There are many lines of evidence showing that oxidative stress and aberrant mitogenic changes have important roles in the pathogenesis of Alzheimer's disease (AD). However, although both oxidative stress and cell cycle-related… 32922179 alzheimer's-disease:-the-two-hit-hypothesis. alzheimer disease two hit hypothesis there many lines Alzheimer's disease: the two-hit hypothesis. Alzheimer's disease: the two-hit hypothesis. There are many lines of evidence showing that oxidative stress and aberrant mitogenic changes have important roles in the pathogenesis of Alzheimer's disease (AD). However, although both oxidative stress and cell cycle-related abnormalities are early events, occurring before any cytopathology, the relation between these two events, and their role in pathophysiology was, until recently, unclear. However, on the basis of studies of mitogenic and oxidative stress signalling pathways in AD, we proposed a \"two-hit hypothesis\" which states that although either oxidative stress or abnormalities in mitotic signalling can independently serve as initiators, both processes are necessary to propagate disease pathogenesis. In this paper, we summarise evidenc",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.072962+00:00"
+}

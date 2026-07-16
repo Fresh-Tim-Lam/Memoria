@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19912367",
+  "source_fingerprint": "2eb4a36ee070264a46607e5f1015fe43",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19912367",
+    "loss-of-fibronectin-from-the-aged-stem-cell-niche-affects-the-regenerative-capacity-of-skeletal-muscle-in-mice"
+  ],
+  "key_phrases": [
+    "loss",
+    "fibronectin",
+    "from",
+    "aged",
+    "stem",
+    "cell",
+    "niche",
+    "affects"
+  ],
+  "summary_1l": "Age-related changes in the niche have long been postulated to impair the function of soma",
+  "query_hits": [],
+  "embed_text": "19912367 Loss of fibronectin from the aged stem cell niche affects the regenerative capacity of skeletal muscle in mice science scifact Age-related changes in the niche have long been postulated to impair the function of somatic stem cells. Here we demonstrate that the aged stem cell niche in skeletal muscle contains substantially reduced levels of fibronectin (FN),… 19912367 loss-of-fibronectin-from-the-aged-stem-cell-niche-affects-the-regenerative-capacity-of-skeletal-muscle-in-mice loss fibronectin from aged stem cell niche affects Age-related changes in the niche have long been postulated to impair the function of soma Loss of fibronectin from the aged stem cell niche affects the regenerative capacity of skeletal muscle in mice Age-related changes in the niche have long been postulated to impair the function of somatic stem cells. Here we demonstrate that the aged stem cell niche in skeletal muscle contains substantially reduced levels of fibronectin (FN), leading to detrimental consequences for the function and maintenance of muscle stem cells (MuSCs). Deletion of the gene encoding FN from young regenerating muscles replicates the aging phenotype and leads to a loss of MuSC numbers. By using an extracellular matrix (ECM) library screen and pathway profiling, we characterize FN as a preferred adhesion substrate for MuSCs and demonstrate that integrin-mediated signaling through focal adhesion kinase and t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.376581+00:00"
+}

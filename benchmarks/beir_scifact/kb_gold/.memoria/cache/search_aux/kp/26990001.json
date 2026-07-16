@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26990001",
+  "source_fingerprint": "481f97b7ad75463244f0480c236c28e7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26990001",
+    "an-organ-culture-model-for-the-study-of-metanephric-development."
+  ],
+  "key_phrases": [
+    "organ",
+    "culture",
+    "model",
+    "study",
+    "metanephric",
+    "development",
+    "murine",
+    "whole"
+  ],
+  "summary_1l": "An organ culture model for the study of metanephric development.",
+  "query_hits": [],
+  "embed_text": "26990001 An organ culture model for the study of metanephric development. science scifact A murine whole organ metanephric culture system was designed to study the developmental aspects of mammalian nephrogenesis. Metanephros and ureteric bud were removed from CFI albino mouse embryos at 13.5 +/- 0.4 days gestation, and grown… 26990001 an-organ-culture-model-for-the-study-of-metanephric-development. organ culture model study metanephric development murine whole An organ culture model for the study of metanephric development. An organ culture model for the study of metanephric development. A murine whole organ metanephric culture system was designed to study the developmental aspects of mammalian nephrogenesis. Metanephros and ureteric bud were removed from CFI albino mouse embryos at 13.5 +/- 0.4 days gestation, and grown in Dulbecco's modified Eagle's Minimal Essential Medium supplemented with 20 per cent donor bovine serum at 37C in a mixed air--5 per cent CO2 environment. Under the experimental conditions employed, the metanephric explants showed organotypic tubular and glomerular epithelial development. A well-developed proximal tubule with microvilli, and characteristic intracellular organelles and intercellular junctions developed by 72 hours of culture. By 120 hours of culture, unique devascularized glo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.318205+00:00"
+}

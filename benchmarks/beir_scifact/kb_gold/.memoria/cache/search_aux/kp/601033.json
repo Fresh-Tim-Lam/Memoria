@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "601033",
+  "source_fingerprint": "2c4710fd1a114b1138ee7e3eb186772b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "601033",
+    "human-t-cell-leukemia-virus-reactivation-with-progression-of-adult-t-cell-leukemia-lymphoma"
+  ],
+  "key_phrases": [
+    "human",
+    "cell",
+    "leukemia",
+    "virus",
+    "reactivation",
+    "with",
+    "progression",
+    "adult"
+  ],
+  "summary_1l": "BACKGROUND Human T-cell leukemia virus-associated adult T-cell leukemia-lymphoma (ATLL) has a very poor prog",
+  "query_hits": [],
+  "embed_text": "601033 Human T Cell Leukemia Virus Reactivation with Progression of Adult T-Cell Leukemia-Lymphoma science scifact BACKGROUND Human T-cell leukemia virus-associated adult T-cell leukemia-lymphoma (ATLL) has a very poor prognosis, despite trials of a variety of different treatment regimens. Virus expression has been reported to be limited or absent when… 601033 human-t-cell-leukemia-virus-reactivation-with-progression-of-adult-t-cell-leukemia-lymphoma human cell leukemia virus reactivation with progression adult BACKGROUND Human T-cell leukemia virus-associated adult T-cell leukemia-lymphoma (ATLL) has a very poor prog Human T Cell Leukemia Virus Reactivation with Progression of Adult T-Cell Leukemia-Lymphoma BACKGROUND Human T-cell leukemia virus-associated adult T-cell leukemia-lymphoma (ATLL) has a very poor prognosis, despite trials of a variety of different treatment regimens. Virus expression has been reported to be limited or absent when ATLL is diagnosed, and this has suggested that secondary genetic or epigenetic changes are important in disease pathogenesis. METHODS AND FINDINGS We prospectively investigated combination chemotherapy followed by antiretroviral therapy for this disorder. Nineteen patients were prospectively enrolled between 2002 and 2006 at five medical centers in a phase II clinical trial of infusional chemotherapy with etoposide, doxorubicin, and vincristine, daily prednisone,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.716354+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "41131087",
+  "source_fingerprint": "dbcb0bb0e54e15ad8cc5bad4e7442aa1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "41131087",
+    "human-placental-lactogen-and-unconjugated-estriol-concentrations-in-twin-pregnancy:-monitoring-of-fetal-development-in-intrauterine-growth-retardation-and-single-intrauterine-fetal-death."
+  ],
+  "key_phrases": [
+    "human",
+    "placental",
+    "lactogen",
+    "unconjugated",
+    "estriol",
+    "concentrations",
+    "twin",
+    "pregnancy"
+  ],
+  "summary_1l": "Human placental lactogen and unconjugated estriol concentrations in twin pregnancy: monitoring of fetal development in intrauterine growth retardation and single intrauterine fetal death.",
+  "query_hits": [],
+  "embed_text": "41131087 Human placental lactogen and unconjugated estriol concentrations in twin pregnancy: monitoring of fetal development in intrauterine growth retardation and single intrauterine fetal death. science scifact Human placental lactogen and unconjugated estriol concentrations in maternal serum were evaluated in 100 uneventful twin pregnancies, and these values were compared with those observed in 16 twin pregnancies associated with intrauterine… 41131087 human-placental-lactogen-and-unconjugated-estriol-concentrations-in-twin-pregnancy:-monitoring-of-fetal-development-in-intrauterine-growth-retardation-and-single-intrauterine-fetal-death. human placental lactogen unconjugated estriol concentrations twin pregnancy Human placental lactogen and unconjugated estriol concentrations in twin pregnancy: monitoring of fetal development in intrauterine growth retardation and single intrauterine fetal death. Human placental lactogen and unconjugated estriol concentrations in twin pregnancy: monitoring of fetal development in intrauterine growth retardation and single intrauterine fetal death. Human placental lactogen and unconjugated estriol concentrations in maternal serum were evaluated in 100 uneventful twin pregnancies, and these values were compared with those observed in 16 twin pregnancies associated with intrauterine growth retardation or single intrauterine fetal death. In pregnancies associated with intrauterine growth retardation (n = 8), human placental lactogen levels were at the lower limit of normal range for singleton pregnancies, whereas estriol levels were normal in most cases. When one of the fetuses had died before week 33 of pregnancy (n = 5), both human placental lactogen",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.119635+00:00"
+}

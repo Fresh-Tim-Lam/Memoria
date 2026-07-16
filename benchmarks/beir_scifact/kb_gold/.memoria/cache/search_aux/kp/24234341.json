@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24234341",
+  "source_fingerprint": "4e4fc7770745ed01c209539823637320",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24234341",
+    "lumi:-a-pipeline-for-processing-illumina-microarray."
+  ],
+  "key_phrases": [
+    "lumi",
+    "pipeline",
+    "processing",
+    "illumina",
+    "microarray",
+    "unlabelled",
+    "becoming",
+    "popular"
+  ],
+  "summary_1l": "lumi: a pipeline for processing Illumina microarray.",
+  "query_hits": [],
+  "embed_text": "24234341 lumi: a pipeline for processing Illumina microarray. science scifact UNLABELLED Illumina microarray is becoming a popular microarray platform. The BeadArray technology from Illumina makes its preprocessing and quality control different from other microarray technologies. Unfortunately, most other analyses… 24234341 lumi:-a-pipeline-for-processing-illumina-microarray. lumi pipeline processing illumina microarray unlabelled becoming popular lumi: a pipeline for processing Illumina microarray. lumi: a pipeline for processing Illumina microarray. UNLABELLED Illumina microarray is becoming a popular microarray platform. The BeadArray technology from Illumina makes its preprocessing and quality control different from other microarray technologies. Unfortunately, most other analyses have not taken advantage of the unique properties of the BeadArray system, and have just incorporated preprocessing methods originally designed for Affymetrix microarrays. lumi is a Bioconductor package especially designed to process the Illumina microarray data. It includes data input, quality control, variance stabilization, normalization and gene annotation portions. In specific, the lumi package includes a variance-stabilizing transformation (VST) algorithm that takes advantage of the technical repli",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.993784+00:00"
+}

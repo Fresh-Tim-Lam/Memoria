@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6710699",
+  "source_fingerprint": "71b22e6abdd9af84b63c532de6ef4c33",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6710699",
+    "homologous-recombination-resolution-defect-in-werner-syndrome."
+  ],
+  "key_phrases": [
+    "homologous",
+    "recombination",
+    "resolution",
+    "defect",
+    "werner",
+    "syndrome",
+    "wrn",
+    "uncommon"
+  ],
+  "summary_1l": "Homologous recombination resolution defect in werner syndrome.",
+  "query_hits": [],
+  "embed_text": "6710699 Homologous recombination resolution defect in werner syndrome. science scifact Werner syndrome (WRN) is an uncommon autosomal recessive disease whose phenotype includes features of premature aging, genetic instability, and an elevated risk of cancer. We used three different experimental strategies to show that WRN… 6710699 homologous-recombination-resolution-defect-in-werner-syndrome. homologous recombination resolution defect werner syndrome wrn uncommon Homologous recombination resolution defect in werner syndrome. Homologous recombination resolution defect in werner syndrome. Werner syndrome (WRN) is an uncommon autosomal recessive disease whose phenotype includes features of premature aging, genetic instability, and an elevated risk of cancer. We used three different experimental strategies to show that WRN cellular phenotypes of limited cell division potential, DNA damage hypersensitivity, and defective homologous recombination (HR) are interrelated. WRN cell survival and the generation of viable mitotic recombinant progeny could be rescued by expressing wild-type WRN protein or by expressing the bacterial resolvase protein RusA. The dependence of WRN cellular phenotypes on RAD51-dependent HR pathways was demonstrated by using a dominant-negative RAD51 protein to suppress mitotic recombination in",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.467853+00:00"
+}

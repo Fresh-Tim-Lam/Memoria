@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "40447899",
+  "source_fingerprint": "15571c4f613192cd4cd304f18deba52f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "40447899",
+    "archaeal-chromatin-and-transcription."
+  ],
+  "key_phrases": [
+    "archaeal",
+    "chromatin",
+    "transcription",
+    "archaea",
+    "contain",
+    "variety",
+    "sequence",
+    "independent"
+  ],
+  "summary_1l": "Archaeal chromatin and transcription.",
+  "query_hits": [],
+  "embed_text": "40447899 Archaeal chromatin and transcription. science scifact Archaea contain a variety of sequence-independent DNA binding proteins consistent with the evolution of several different, sometimes overlapping and exchangeable solutions to the problem of genome compaction. Some of these proteins undergo… 40447899 archaeal-chromatin-and-transcription. archaeal chromatin transcription archaea contain variety sequence independent Archaeal chromatin and transcription. Archaeal chromatin and transcription. Archaea contain a variety of sequence-independent DNA binding proteins consistent with the evolution of several different, sometimes overlapping and exchangeable solutions to the problem of genome compaction. Some of these proteins undergo residue-specific post-translational lysine acetylation or methylation, hinting at analogues of the histone modifications that regulate eukaryotic chromatin structure and transcription. Archaeal transcription initiation most closely resembles the eukaryotic RNA polymerase II (RNAPII) system, but Archaea do not appear to have homologues of the multisubunit complexes that remodel eukaryotic chromatin and activate RNAPII initiation. In contrast, they have sequence-specific regulators that repress and perhaps activate arc",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.560030+00:00"
+}

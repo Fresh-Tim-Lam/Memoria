@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18153456",
+  "source_fingerprint": "03df058e07260031cd6598947e1565f8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18153456",
+    "pilot-testing-of-dipsticks-as-point-of-care-assays-for-rapid-diagnosis-of-poor-quality-artemisinin-drugs-in-endemic-settings"
+  ],
+  "key_phrases": [
+    "pilot",
+    "testing",
+    "dipsticks",
+    "as",
+    "point",
+    "care",
+    "assays",
+    "rapid"
+  ],
+  "summary_1l": "BACKGROUND Good-quality artemisinin drugs are essential for malaria treatme",
+  "query_hits": [],
+  "embed_text": "18153456 Pilot testing of dipsticks as point-of-care assays for rapid diagnosis of poor-quality artemisinin drugs in endemic settings science scifact BACKGROUND Good-quality artemisinin drugs are essential for malaria treatment, but increasing prevalence of poor-quality artemisinin drugs in many endemic countries hinders effective management of malaria cases. METHODS To develop a… 18153456 pilot-testing-of-dipsticks-as-point-of-care-assays-for-rapid-diagnosis-of-poor-quality-artemisinin-drugs-in-endemic-settings pilot testing dipsticks as point care assays rapid BACKGROUND Good-quality artemisinin drugs are essential for malaria treatme Pilot testing of dipsticks as point-of-care assays for rapid diagnosis of poor-quality artemisinin drugs in endemic settings BACKGROUND Good-quality artemisinin drugs are essential for malaria treatment, but increasing prevalence of poor-quality artemisinin drugs in many endemic countries hinders effective management of malaria cases. METHODS To develop a point-of-care assay for rapid identification of counterfeit and substandard artemisinin drugs for resource-limited areas, we used specific monoclonal antibodies against artesunate and artemether, and developed prototypes of lateral flow dipstick assays. In this pilot test, we evaluated the feasibility of these dipsticks under different endemic settings and their performance in the hands of untrained personnel. RESULTS The results showed t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.844031+00:00"
+}

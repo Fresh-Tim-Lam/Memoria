@@ -22,7 +22,7 @@ from memoria.storage.sidecar import load_sidecar_for_md
 EXAMPLES = Path(__file__).resolve().parents[3] / "examples"
 
 
-def _derive(rel: str, body: str, sidecar: dict | None) -> tuple[list[dict], list[dict]]:
+def _derive(rel: str, body: str, sidecar: dict | None) -> tuple[list[dict], list[dict], list[dict]]:
     resolve = build_target_kp_resolver(str(EXAMPLES))
     return derive_file_graph_edges(rel, body, sidecar, resolve_target_kp=resolve)
 
@@ -111,7 +111,7 @@ def test_derive_parent_intro_link_edge():
     }
     body = "# 注意力\n\n[[transformer#extend]] here.\n\n## QKV\n\nqkv end\n\ntail\n"
     resolve = build_target_kp_resolver(str(EXAMPLES))
-    _, edges = derive_file_graph_edges("x.md", body, sidecar, resolve_target_kp=resolve)
+    _, edges, _se = derive_file_graph_edges("x.md", body, sidecar, resolve_target_kp=resolve)
     assert len(edges) == 1
     assert edges[0]["source_id"] == "attention"
     assert edges[0]["type"] == "extend"
@@ -121,7 +121,7 @@ def test_derive_contain_mdp():
     md = EXAMPLES / "mdp.md"
     sc = load_sidecar_for_md(md, EXAMPLES)
     body, _ = strip_frontmatter(md.read_text(encoding="utf-8"))
-    contain, _ = _derive("mdp.md", body, sc)
+    contain, _, _ = _derive("mdp.md", body, sc)
     pairs = {(e["source_id"], e["targets"][0]) for e in contain}
     assert ("mdp", "核心要素") in pairs
     assert ("mdp", "贝尔曼方程") in pairs
@@ -149,7 +149,7 @@ def test_wikilink_extend_in_body_not_used_for_graph():
         ],
     }
     body = "start\n[[tgt#extend]] here\nend\n"
-    _, link_edges = _derive("x.md", body, sidecar)
+    _, link_edges, _ = _derive("x.md", body, sidecar)
     assert len(link_edges) == 1
     assert link_edges[0]["type"] == "reference"
 
@@ -281,7 +281,7 @@ def test_navigation_demo_link_to_mdp_kp():
     md = EXAMPLES / "navigation-demo.md"
     sc = load_sidecar_for_md(md, EXAMPLES)
     body, _ = strip_frontmatter(md.read_text(encoding="utf-8"))
-    _, link_edges = _derive("navigation-demo.md", body, sc)
+    _, link_edges, _ = _derive("navigation-demo.md", body, sc)
     mdp_links = [
         e
         for e in link_edges
@@ -314,7 +314,7 @@ def test_link_outside_kp_range_is_ignored():
         ],
     }
     body = "start\nmiddle\nend\n"
-    _, link_edges = _derive("x.md", body, sidecar)
+    _, link_edges, _ = _derive("x.md", body, sidecar)
     assert link_edges == []
 
 
@@ -332,7 +332,7 @@ def test_preamble_wikilink_without_kp_range_skipped():
         ],
     }
     body = "# Title\n\nSee [[mdp#extend]] here.\n\n## A\n\nend a\n"
-    _, link_edges = _derive("intro.md", body, sidecar)
+    _, link_edges, _ = _derive("intro.md", body, sidecar)
     assert link_edges == []
 
 
@@ -340,7 +340,7 @@ def test_file_stem_wikilink_without_kp_id_skipped():
     md = EXAMPLES / "bert.md"
     sc = load_sidecar_for_md(md, EXAMPLES)
     body, _ = strip_frontmatter(md.read_text(encoding="utf-8"))
-    _, link_edges = _derive("bert.md", body, sc)
+    _, link_edges, _ = _derive("bert.md", body, sc)
     bad = [e for e in link_edges if e["targets"][0] == "自注意力机制"]
     assert bad == []
 

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18144189",
+  "source_fingerprint": "6bf3dc72ed31ab329b4b160c902dd618",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18144189",
+    "dna-topoisomerases:-structure,-function,-and-mechanism."
+  ],
+  "key_phrases": [
+    "dna",
+    "topoisomerases",
+    "structure",
+    "function",
+    "mechanism",
+    "solve",
+    "topological",
+    "problems"
+  ],
+  "summary_1l": "DNA topoisomerases: structure, function, and mechanism.",
+  "query_hits": [],
+  "embed_text": "18144189 DNA topoisomerases: structure, function, and mechanism. science scifact DNA topoisomerases solve the topological problems associated with DNA replication, transcription, recombination, and chromatin remodeling by introducing temporary single- or double-strand breaks in the DNA. In addition, these enzymes… 18144189 dna-topoisomerases:-structure,-function,-and-mechanism. dna topoisomerases structure function mechanism solve topological problems DNA topoisomerases: structure, function, and mechanism. DNA topoisomerases: structure, function, and mechanism. DNA topoisomerases solve the topological problems associated with DNA replication, transcription, recombination, and chromatin remodeling by introducing temporary single- or double-strand breaks in the DNA. In addition, these enzymes fine-tune the steady-state level of DNA supercoiling both to facilitate protein interactions with the DNA and to prevent excessive supercoiling that is deleterious. In recent years, the crystal structures of a number of topoisomerase fragments, representing nearly all the known classes of enzymes, have been solved. These structures provide remarkable insights into the mechanisms of these enzymes and complement previous conclusions based on biochemical analyses. Surprisingly, despite little or no sequence",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.833444+00:00"
+}

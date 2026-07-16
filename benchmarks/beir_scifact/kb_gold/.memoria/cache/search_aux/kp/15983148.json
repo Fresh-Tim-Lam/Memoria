@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15983148",
+  "source_fingerprint": "0bac76002d8a4cc040b88f7dd99b71ad",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15983148",
+    "lin-44/wnt-directs-dendrite-outgrowth-through-lin-17/frizzled-in-c.-elegans-neurons"
+  ],
+  "key_phrases": [
+    "lin",
+    "44",
+    "wnt",
+    "directs",
+    "dendrite",
+    "outgrowth",
+    "through",
+    "17"
+  ],
+  "summary_1l": "LIN-44/Wnt Directs Dendrite Outgrowth through LIN-17/Frizzled in C.",
+  "query_hits": [],
+  "embed_text": "15983148 LIN-44/Wnt Directs Dendrite Outgrowth through LIN-17/Frizzled in C. elegans Neurons science scifact Nervous system function requires proper development of two functional and morphological domains of neurons, axons and dendrites. Although both these domains are equally important for signal transmission, our understanding of dendrite… 15983148 lin-44/wnt-directs-dendrite-outgrowth-through-lin-17/frizzled-in-c.-elegans-neurons lin 44 wnt directs dendrite outgrowth through 17 LIN-44/Wnt Directs Dendrite Outgrowth through LIN-17/Frizzled in C. LIN-44/Wnt Directs Dendrite Outgrowth through LIN-17/Frizzled in C. elegans Neurons Nervous system function requires proper development of two functional and morphological domains of neurons, axons and dendrites. Although both these domains are equally important for signal transmission, our understanding of dendrite development remains relatively poor. Here, we show that in C. elegans the Wnt ligand, LIN-44, and its Frizzled receptor, LIN-17, regulate dendrite development of the PQR oxygen sensory neuron. In lin-44 and lin-17 mutants, PQR dendrites fail to form, display stunted growth, or are misrouted. Manipulation of temporal and spatial expression of LIN-44, combined with cell-ablation experiments, indicates that this molecule is patterned during embryogenesis and acts as an attractive",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.643435+00:00"
+}

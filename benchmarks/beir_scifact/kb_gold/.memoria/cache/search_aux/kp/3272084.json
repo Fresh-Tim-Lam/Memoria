@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3272084",
+  "source_fingerprint": "2c1f207ba3ad3d6a3482344627507c79",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3272084",
+    "characterisation-of-antibiotic-prescriptions-for-acute-respiratory-tract-infections-in-danish-general-practice:-a-retrospective-registry-based-cohort-study"
+  ],
+  "key_phrases": [
+    "characterisation",
+    "antibiotic",
+    "prescriptions",
+    "acute",
+    "respiratory",
+    "tract",
+    "infections",
+    "danish"
+  ],
+  "summary_1l": "Inappropriate use of antibiotics is contribu",
+  "query_hits": [],
+  "embed_text": "3272084 Characterisation of antibiotic prescriptions for acute respiratory tract infections in Danish general practice: a retrospective registry based cohort study science scifact Inappropriate use of antibiotics is contributing to the increasing rates of antimicrobial resistance. Several Danish guidelines on antibiotic prescribing for acute respiratory tract infections in general practice have been issued to… 3272084 characterisation-of-antibiotic-prescriptions-for-acute-respiratory-tract-infections-in-danish-general-practice:-a-retrospective-registry-based-cohort-study characterisation antibiotic prescriptions acute respiratory tract infections danish Inappropriate use of antibiotics is contribu Characterisation of antibiotic prescriptions for acute respiratory tract infections in Danish general practice: a retrospective registry based cohort study Inappropriate use of antibiotics is contributing to the increasing rates of antimicrobial resistance. Several Danish guidelines on antibiotic prescribing for acute respiratory tract infections in general practice have been issued to promote rational prescribing of antibiotics, however it is unclear if these recommendations are followed. We aimed to characterise the pattern of antibiotic prescriptions for patients diagnosed with acute respiratory tract infections, by means of electronic prescriptions, labeled with clinical indications, from Danish general practice. Acute respiratory tract infections accounted for 456,532 antibiotic presc",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.776466+00:00"
+}

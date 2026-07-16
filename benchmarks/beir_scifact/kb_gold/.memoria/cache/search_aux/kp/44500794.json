@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "44500794",
+  "source_fingerprint": "83cb20a1a41d86b3ee19431cb3aafd56",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "44500794",
+    "the-effects-of-genetic-and-pharmacological-blockade-of-the-cb1-cannabinoid-receptor-on-anxiety."
+  ],
+  "key_phrases": [
+    "effects",
+    "genetic",
+    "pharmacological",
+    "blockade",
+    "cb1",
+    "cannabinoid",
+    "receptor",
+    "anxiety"
+  ],
+  "summary_1l": "The effects of genetic and pharmacological blockade of the CB1 cannabinoid receptor on anxiety.",
+  "query_hits": [],
+  "embed_text": "44500794 The effects of genetic and pharmacological blockade of the CB1 cannabinoid receptor on anxiety. science scifact The aim of this study was to compare the effects of the genetic and pharmacological disruption of CB1 cannabinoid receptors on the elevated plus-maze test of anxiety. In the first experiment, the behaviour of CB1-knockout mice and… 44500794 the-effects-of-genetic-and-pharmacological-blockade-of-the-cb1-cannabinoid-receptor-on-anxiety. effects genetic pharmacological blockade cb1 cannabinoid receptor anxiety The effects of genetic and pharmacological blockade of the CB1 cannabinoid receptor on anxiety. The effects of genetic and pharmacological blockade of the CB1 cannabinoid receptor on anxiety. The aim of this study was to compare the effects of the genetic and pharmacological disruption of CB1 cannabinoid receptors on the elevated plus-maze test of anxiety. In the first experiment, the behaviour of CB1-knockout mice and wild-type mice was compared. In the second experiment, the cannabinoid antagonist SR141716A (0, 1, and 3 mg/kg) was administered to both CB1-knockout and wild type mice. Untreated CB1-knockout mice showed a reduced exploration of the open arms of the plus-maze apparatus, thus appearing more anxious than the wild-type animals, however no changes in locomotion were noticed. The vehicle-injected CB1-knockout mice from the second experiment also showed increased anxiety as",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.419509+00:00"
+}

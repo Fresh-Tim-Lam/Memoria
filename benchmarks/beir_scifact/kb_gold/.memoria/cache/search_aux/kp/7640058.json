@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7640058",
+  "source_fingerprint": "c1b0c7c7fc076d568444649d6049ad32",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7640058",
+    "epigenetic-reprogramming-and-induced-pluripotency."
+  ],
+  "key_phrases": [
+    "epigenetic",
+    "reprogramming",
+    "induced",
+    "pluripotency",
+    "cloning",
+    "animals",
+    "from",
+    "adult"
+  ],
+  "summary_1l": "Epigenetic reprogramming and induced pluripotency.",
+  "query_hits": [],
+  "embed_text": "7640058 Epigenetic reprogramming and induced pluripotency. science scifact The cloning of animals from adult cells has demonstrated that the developmental state of adult cells can be reprogrammed into that of embryonic cells by uncharacterized factors within the oocyte. More recently, transcription factors have… 7640058 epigenetic-reprogramming-and-induced-pluripotency. epigenetic reprogramming induced pluripotency cloning animals from adult Epigenetic reprogramming and induced pluripotency. Epigenetic reprogramming and induced pluripotency. The cloning of animals from adult cells has demonstrated that the developmental state of adult cells can be reprogrammed into that of embryonic cells by uncharacterized factors within the oocyte. More recently, transcription factors have been identified that can induce pluripotency in somatic cells without the use of oocytes, generating induced pluripotent stem (iPS) cells. iPS cells provide a unique platform to dissect the molecular mechanisms that underlie epigenetic reprogramming. Moreover, iPS cells can teach us about principles of normal development and disease, and might ultimately facilitate the treatment of patients by custom-tailored cell therapy.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.846779+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1617327",
+  "source_fingerprint": "ea7d8ba62a59efb9798a0a88db72fe30",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1617327",
+    "bone-progenitor-dysfunction-induces-myelodysplasia-and-secondary-leukemia"
+  ],
+  "key_phrases": [
+    "bone",
+    "progenitor",
+    "dysfunction",
+    "induces",
+    "myelodysplasia",
+    "secondary",
+    "leukemia",
+    "mesenchymal"
+  ],
+  "summary_1l": "Mesenchymal cells contribute to the 'stroma' of most normal and malignant tissues, with specific mesenchymal cells participati",
+  "query_hits": [],
+  "embed_text": "1617327 Bone progenitor dysfunction induces myelodysplasia and secondary leukemia science scifact Mesenchymal cells contribute to the 'stroma' of most normal and malignant tissues, with specific mesenchymal cells participating in the regulatory niches of stem cells. By examining how mesenchymal osteolineage cells modulate… 1617327 bone-progenitor-dysfunction-induces-myelodysplasia-and-secondary-leukemia bone progenitor dysfunction induces myelodysplasia secondary leukemia mesenchymal Mesenchymal cells contribute to the 'stroma' of most normal and malignant tissues, with specific mesenchymal cells participati Bone progenitor dysfunction induces myelodysplasia and secondary leukemia Mesenchymal cells contribute to the 'stroma' of most normal and malignant tissues, with specific mesenchymal cells participating in the regulatory niches of stem cells. By examining how mesenchymal osteolineage cells modulate haematopoiesis, here we show that deletion of Dicer1 specifically in mouse osteoprogenitors, but not in mature osteoblasts, disrupts the integrity of haematopoiesis. Myelodysplasia resulted and acute myelogenous leukaemia emerged that had acquired several genetic abnormalities while having intact Dicer1. Examining gene expression altered in osteoprogenitors as a result of Dicer1 deletion showed reduced expression of Sbds, the gene mutated in Schwachman-Bodian-Diamond syndrome-a human bone marrow",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.903102+00:00"
+}

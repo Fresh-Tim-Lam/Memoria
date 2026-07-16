@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10699587",
+  "source_fingerprint": "788d1aef8e25623be2dbd2b9d1f01a0b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10699587",
+    "four-prognostic-groups-predict-long-term-survival-from-prostate-cancer-following-radiotherapy-alone-on-radiation-therapy-oncology-group-clinical-trials."
+  ],
+  "key_phrases": [
+    "four",
+    "prognostic",
+    "groups",
+    "predict",
+    "long",
+    "term",
+    "survival",
+    "from"
+  ],
+  "summary_1l": "Four prognostic groups predict long-term survival from prostate cancer following radiotherapy alone on Radiation Therapy Oncology Group clinical trials.",
+  "query_hits": [],
+  "embed_text": "10699587 Four prognostic groups predict long-term survival from prostate cancer following radiotherapy alone on Radiation Therapy Oncology Group clinical trials. science scifact PURPOSE Gleason score (GS), T stage, and pathologic lymph node status have been described as major independent predictors of death due to prostate cancer in men treated with external beam radiotherapy (XRT). In this analysis we combine… 10699587 four-prognostic-groups-predict-long-term-survival-from-prostate-cancer-following-radiotherapy-alone-on-radiation-therapy-oncology-group-clinical-trials. four prognostic groups predict long term survival from Four prognostic groups predict long-term survival from prostate cancer following radiotherapy alone on Radiation Therapy Oncology Group clinical trials. Four prognostic groups predict long-term survival from prostate cancer following radiotherapy alone on Radiation Therapy Oncology Group clinical trials. PURPOSE Gleason score (GS), T stage, and pathologic lymph node status have been described as major independent predictors of death due to prostate cancer in men treated with external beam radiotherapy (XRT). In this analysis we combine these three factors to define prognostic subgroups that correlate with disease-specific survival (DSS) death from prostate cancer. METHODS AND MATERIALS Men entered on one of four Radiation Therapy Oncology Group (RTOG) Phase III randomized trials between 1975 and 1992, for clinically localized prostate cancer (CAP) (n = 1557), were selected for this analysis. Patients were included if: 1) they were evaluabl",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.912651+00:00"
+}

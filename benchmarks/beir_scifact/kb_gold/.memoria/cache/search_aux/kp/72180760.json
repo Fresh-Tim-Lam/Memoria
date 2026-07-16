@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "72180760",
+  "source_fingerprint": "5bdc0b286e92b76ab92825c5e74bedcb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "72180760",
+    "oncologists'-perceptions-of-the-effects-of-cancer-patients'-companions-on-physician-patient-interactions"
+  ],
+  "key_phrases": [
+    "oncologists",
+    "perceptions",
+    "effects",
+    "cancer",
+    "patients",
+    "companions",
+    "physician",
+    "patient"
+  ],
+  "summary_1l": "To determine physicians' perceptions of the effects that the companions of cancer patients have",
+  "query_hits": [],
+  "embed_text": "72180760 Oncologists' perceptions of the effects of cancer patients' companions on physician-patient interactions science scifact To determine physicians' perceptions of the effects that the companions of cancer patients have on physician-patient communication, semistructured interviews were conducted with 12 oncologists (6 medical, 4 surgical, and 2 radiation) from… 72180760 oncologists'-perceptions-of-the-effects-of-cancer-patients'-companions-on-physician-patient-interactions oncologists perceptions effects cancer patients companions physician patient To determine physicians' perceptions of the effects that the companions of cancer patients have Oncologists' perceptions of the effects of cancer patients' companions on physician-patient interactions To determine physicians' perceptions of the effects that the companions of cancer patients have on physician-patient communication, semistructured interviews were conducted with 12 oncologists (6 medical, 4 surgical, and 2 radiation) from a total population of 21 oncologists. The physicians estimated that threefourths of their patients brought companions with them to consultations and said that these consultations were more complex for the physician. The behaviors of the companions varied from domination to passive note taking, and the companions who were young professional men or older women who accompanied their husbands were the most assertive and asked the most questions. All possib",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.789467+00:00"
+}

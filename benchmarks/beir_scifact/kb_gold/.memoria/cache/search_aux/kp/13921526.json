@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13921526",
+  "source_fingerprint": "f24c43f20f0f28310b9c40def21f1200",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13921526",
+    "an-rna-sequencing-transcriptome-and-splicing-database-of-glia,-neurons,-and-vascular-cells-of-the-cerebral-cortex."
+  ],
+  "key_phrases": [
+    "rna",
+    "sequencing",
+    "transcriptome",
+    "splicing",
+    "database",
+    "glia",
+    "neurons",
+    "vascular"
+  ],
+  "summary_1l": "An RNA-sequencing transcriptome and splicing database of glia, neurons, and vascular cells of the cerebral cortex.",
+  "query_hits": [],
+  "embed_text": "13921526 An RNA-sequencing transcriptome and splicing database of glia, neurons, and vascular cells of the cerebral cortex. science scifact The major cell classes of the brain differ in their developmental processes, metabolism, signaling, and function. To better understand the functions and interactions of the cell types that comprise these classes, we acutely purified… 13921526 an-rna-sequencing-transcriptome-and-splicing-database-of-glia,-neurons,-and-vascular-cells-of-the-cerebral-cortex. rna sequencing transcriptome splicing database glia neurons vascular An RNA-sequencing transcriptome and splicing database of glia, neurons, and vascular cells of the cerebral cortex. An RNA-sequencing transcriptome and splicing database of glia, neurons, and vascular cells of the cerebral cortex. The major cell classes of the brain differ in their developmental processes, metabolism, signaling, and function. To better understand the functions and interactions of the cell types that comprise these classes, we acutely purified representative populations of neurons, astrocytes, oligodendrocyte precursor cells, newly formed oligodendrocytes, myelinating oligodendrocytes, microglia, endothelial cells, and pericytes from mouse cerebral cortex. We generated a transcriptome database for these eight cell types by RNA sequencing and used a sensitive algorithm to detect alternative splicing events in each cell type. Bioinformatic analyses identified thousands of new cell type-enr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.586966+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26445118",
+  "source_fingerprint": "77e0654237e4cf9e981a4dcbdca4c1b4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26445118",
+    "comparison-of-pain-syndromes-associated-with-nervous-or-somatic-lesions-and-development-of-a-new-neuropathic-pain-diagnostic-questionnaire-(dn4)"
+  ],
+  "key_phrases": [
+    "comparison",
+    "pain",
+    "syndromes",
+    "associated",
+    "with",
+    "nervous",
+    "somatic",
+    "lesions"
+  ],
+  "summary_1l": "Few studies have directly compared the clinical feature",
+  "query_hits": [],
+  "embed_text": "26445118 Comparison of pain syndromes associated with nervous or somatic lesions and development of a new neuropathic pain diagnostic questionnaire (DN4) science scifact Few studies have directly compared the clinical features of neuropathic and non-neuropathic pains. For this purpose, the French Neuropathic Pain Group developed a clinician-administered questionnaire named DN4 consisting of both sensory… 26445118 comparison-of-pain-syndromes-associated-with-nervous-or-somatic-lesions-and-development-of-a-new-neuropathic-pain-diagnostic-questionnaire-(dn4) comparison pain syndromes associated with nervous somatic lesions Few studies have directly compared the clinical feature Comparison of pain syndromes associated with nervous or somatic lesions and development of a new neuropathic pain diagnostic questionnaire (DN4) Few studies have directly compared the clinical features of neuropathic and non-neuropathic pains. For this purpose, the French Neuropathic Pain Group developed a clinician-administered questionnaire named DN4 consisting of both sensory descriptors and signs related to bedside sensory examination. This questionnaire was used in a prospective study of 160 patients presenting with pain associated with a definite neurological or somatic lesion. The most common aetiologies of nervous lesions (n=89) were traumatic nerve injury, post herpetic neuralgia and post stroke pain. Non-neurological lesions (n=71) were represented by osteoarthritis, inflammatory",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.719088+00:00"
+}

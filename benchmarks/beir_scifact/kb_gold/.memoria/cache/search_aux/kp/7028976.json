@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7028976",
+  "source_fingerprint": "60f5b02b0e583abb8aabfef3456a362b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7028976",
+    "epidermal-growth-factor-receptor-expression-identifies-functionally-and-molecularly-distinct-tumor-initiating-cells-in-human-glioblastoma-multiforme-and-is-required-for-gliomagenesis."
+  ],
+  "key_phrases": [
+    "epidermal",
+    "growth",
+    "factor",
+    "receptor",
+    "expression",
+    "identifies",
+    "functionally",
+    "molecularly"
+  ],
+  "summary_1l": "Epidermal growth factor receptor expression identifies functionally and molecularly distinct tumor-initiating cells in human glioblastoma multiforme and is required for gliomagenesis.",
+  "query_hits": [],
+  "embed_text": "7028976 Epidermal growth factor receptor expression identifies functionally and molecularly distinct tumor-initiating cells in human glioblastoma multiforme and is required for gliomagenesis. science scifact Epidermal growth factor receptor (EGFR) is a known diagnostic and, although controversial, prognostic marker of human glioblastoma multiforme (GBM). However, its functional role and biological significance in GBM remain elusive. Here, we… 7028976 epidermal-growth-factor-receptor-expression-identifies-functionally-and-molecularly-distinct-tumor-initiating-cells-in-human-glioblastoma-multiforme-and-is-required-for-gliomagenesis. epidermal growth factor receptor expression identifies functionally molecularly Epidermal growth factor receptor expression identifies functionally and molecularly distinct tumor-initiating cells in human glioblastoma multiforme and is required for gliomagenesis. Epidermal growth factor receptor expression identifies functionally and molecularly distinct tumor-initiating cells in human glioblastoma multiforme and is required for gliomagenesis. Epidermal growth factor receptor (EGFR) is a known diagnostic and, although controversial, prognostic marker of human glioblastoma multiforme (GBM). However, its functional role and biological significance in GBM remain elusive. Here, we show that multiple GBM cell subpopulations could be purified from the specimens of patients with GBM and from cancer stem cell (CSC) lines based on the expression of EGFR and of other putative CSC markers. All these subpopulations are molecularly and functionally distinct, are tumorigenic, and need to express EGFR to promote experimental tumorigenesis. Among them, EGFR-expres",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.235905+00:00"
+}

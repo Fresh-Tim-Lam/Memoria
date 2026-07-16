@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10786948",
+  "source_fingerprint": "f68f0e3557f6aab7a58b2d07f2b726d8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10786948",
+    "an-efficient-nonviral-method-to-generate-integration-free-human-induced-pluripotent-stem-cells-from-cord-blood-and-peripheral-blood-cells."
+  ],
+  "key_phrases": [
+    "efficient",
+    "nonviral",
+    "method",
+    "generate",
+    "integration",
+    "free",
+    "human",
+    "induced"
+  ],
+  "summary_1l": "An efficient nonviral method to generate integration-free human-induced pluripotent stem cells from cord blood and peripheral blood cells.",
+  "query_hits": [],
+  "embed_text": "10786948 An efficient nonviral method to generate integration-free human-induced pluripotent stem cells from cord blood and peripheral blood cells. science scifact The generation of induced pluripotent stem cells (iPSCs) provides the opportunity to use patient-specific somatic cells, which are a valuable source for disease modeling and drug discovery. To promote research involving these cells, it is… 10786948 an-efficient-nonviral-method-to-generate-integration-free-human-induced-pluripotent-stem-cells-from-cord-blood-and-peripheral-blood-cells. efficient nonviral method generate integration free human induced An efficient nonviral method to generate integration-free human-induced pluripotent stem cells from cord blood and peripheral blood cells. An efficient nonviral method to generate integration-free human-induced pluripotent stem cells from cord blood and peripheral blood cells. The generation of induced pluripotent stem cells (iPSCs) provides the opportunity to use patient-specific somatic cells, which are a valuable source for disease modeling and drug discovery. To promote research involving these cells, it is important to make iPSCs from easily accessible and less invasive tissues, like blood. We have recently reported the efficient generation of human iPSCs from adult fibroblasts using a combination of plasmids encoding OCT3/4, SOX2, KLF4, L-MYC, LIN28, and shRNA for TP53. We herein report a modified protocol enabling efficient iPSC induction from CD34+ cord blood cells and from peripheral blood isolated from healthy donor",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.973801+00:00"
+}

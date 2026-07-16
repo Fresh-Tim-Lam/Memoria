@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "kp_id": "1518756#0",
+  "source_fingerprint": "677478654c643725501e19fb0c069feb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "心跳过速",
+    "慈善组织",
+    "细胞分化"
+  ],
+  "aliases": [
+    "1518756#0"
+  ],
+  "key_phrases": [
+    "窦房结",
+    "英文",
+    "sinus",
+    "node",
+    "sinoatrial",
+    "sa",
+    "心脏",
+    "一个"
+  ],
+  "summary_1l": "窦房结（英文：Sinus node, sinoatrial node, 或 SA node）是心脏里一个组织部位，又稱為節律點。",
+  "query_hits": [],
+  "embed_text": "1518756#0 窦房结 窦房结 窦房结（英文：Sinus node, sinoatrial node, 或 SA node）是心脏里一个组织部位，又稱為節律點。窦房结是正常心跳的产生部位，由其产生的心跳速率约为每分钟72次。当窦房结病变时可能会引发心跳过速、心跳过缓等心脏病，也可能由心脏的其他部位如心房、心室、浦氏纤维接管起搏功能，它们的搏动速率均要低于窦房结。成年人窦房结的大小约为长15毫米，宽5毫米，厚2毫米。窦房结内部由起搏细胞（P细胞）和过渡细胞两种细胞组成，前者舒张快组成数个集群，后者则包围着这些 心跳过速 慈善组织 细胞分化 1518756#0 窦房结 英文 sinus node sinoatrial sa 心脏 一个 窦房结（英文：Sinus node, sinoatrial node, 或 SA node）是心脏里一个组织部位，又稱為節律點。 窦房结 窦房结（英文：Sinus node, sinoatrial node, 或 SA node）是心脏里一个组织部位，又稱為節律點。窦房结是正常心跳的产生部位，由其产生的心跳速率约为每分钟72次。当窦房结病变时可能会引发心跳过速、心跳过缓等心脏病，也可能由心脏的其他部位如心房、心室、浦氏纤维接管起搏功能，它们的搏动速率均要低于窦房结。成年人窦房结的大小约为长15毫米，宽5毫米，厚2毫米。窦房结内部由起搏细胞（P细胞）和过渡细胞两种细胞组成，前者舒张快组成数个集群，后者则包围着这些集群负责传导。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:21:31.618861+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29460384",
+  "source_fingerprint": "029141053822b48f036be04c9874be9a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29460384",
+    "estimates-of-animal-and-plant-protein-intake-in-us-adults:-results-from-the-third-national-health-and-nutrition-examination-survey,-1988-1991."
+  ],
+  "key_phrases": [
+    "estimates",
+    "animal",
+    "plant",
+    "protein",
+    "intake",
+    "us",
+    "adults",
+    "results"
+  ],
+  "summary_1l": "Estimates of animal and plant protein intake in US adults: results from the Third National Health and Nutrition Examination Survey, 1988-1991.",
+  "query_hits": [],
+  "embed_text": "29460384 Estimates of animal and plant protein intake in US adults: results from the Third National Health and Nutrition Examination Survey, 1988-1991. science scifact OBJECTIVE To describe the sources of protein intake in a sample of the US adult population and among subgroups defined by race-ethnicity, age, and gender. DESIGN The Third National Health and Nutrition Examination Survey, 1988-1991, is a… 29460384 estimates-of-animal-and-plant-protein-intake-in-us-adults:-results-from-the-third-national-health-and-nutrition-examination-survey,-1988-1991. estimates animal plant protein intake us adults results Estimates of animal and plant protein intake in US adults: results from the Third National Health and Nutrition Examination Survey, 1988-1991. Estimates of animal and plant protein intake in US adults: results from the Third National Health and Nutrition Examination Survey, 1988-1991. OBJECTIVE To describe the sources of protein intake in a sample of the US adult population and among subgroups defined by race-ethnicity, age, and gender. DESIGN The Third National Health and Nutrition Examination Survey, 1988-1991, is a stratified random sample of the total civilian noninstitutionalized population, drawn from the 50 United States and the District of Columbia. For all foods consumed by the participants, based on a 24-hour dietary recall, protein sources and the contribution of each protein type to the total protein intake were determined. SUBJECTS Adult participants in the third National Health and Nutrition Examination Survey (n =",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.933775+00:00"
+}

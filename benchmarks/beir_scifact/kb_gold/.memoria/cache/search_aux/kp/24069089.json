@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24069089",
+  "source_fingerprint": "c44558eb7896bb526405d57c38fdcb0c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24069089",
+    "tcr-stimulation-with-modified-anti-cd3-mab-expands-cd8+-t-cell-population-and-induces-cd8+cd25+-tregs."
+  ],
+  "key_phrases": [
+    "tcr",
+    "stimulation",
+    "with",
+    "modified",
+    "anti",
+    "cd3",
+    "mab",
+    "expands"
+  ],
+  "summary_1l": "TCR stimulation with modified anti-CD3 mAb expands CD8+ T cell population and induces CD8+CD25+ Tregs.",
+  "query_hits": [],
+  "embed_text": "24069089 TCR stimulation with modified anti-CD3 mAb expands CD8+ T cell population and induces CD8+CD25+ Tregs. science scifact Modified anti-CD3 mAbs are emerging as a possible means of inducing immunologic tolerance in settings including transplantation and autoimmunity such as in type 1 diabetes. In a trial of a modified anti-CD3 mAb [hOKT3gamma1(Ala-Ala)] in… 24069089 tcr-stimulation-with-modified-anti-cd3-mab-expands-cd8+-t-cell-population-and-induces-cd8+cd25+-tregs. tcr stimulation with modified anti cd3 mab expands TCR stimulation with modified anti-CD3 mAb expands CD8+ T cell population and induces CD8+CD25+ Tregs. TCR stimulation with modified anti-CD3 mAb expands CD8+ T cell population and induces CD8+CD25+ Tregs. Modified anti-CD3 mAbs are emerging as a possible means of inducing immunologic tolerance in settings including transplantation and autoimmunity such as in type 1 diabetes. In a trial of a modified anti-CD3 mAb [hOKT3gamma1(Ala-Ala)] in patients with type 1 diabetes, we identified clinical responders by an increase in the number of peripheral blood CD8+ cells following treatment with the mAb. Here we show that the anti-CD3 mAb caused activation of CD8+ T cells that was similar in vitro and in vivo and induced regulatory CD8+CD25+ T cells. These cells inhibited the responses of CD4+ cells to the mAb itself and to antigen. The regulatory CD8+CD25+ cells were CTLA4 and Foxp3 and required con",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.726568+00:00"
+}

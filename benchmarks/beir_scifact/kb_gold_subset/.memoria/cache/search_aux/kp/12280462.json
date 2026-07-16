@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12280462",
+  "source_fingerprint": "c81c2e095b5a58fb9639a0b30ecaeee8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12280462",
+    "inhibition-of-apical-sodium-dependent-bile-acid-transporter-as-a-novel-treatment-for-diabetes."
+  ],
+  "key_phrases": [
+    "inhibition",
+    "apical",
+    "sodium",
+    "dependent",
+    "bile",
+    "acid",
+    "transporter",
+    "as"
+  ],
+  "summary_1l": "Inhibition of apical sodium-dependent bile acid transporter as a novel treatment for diabetes.",
+  "query_hits": [],
+  "embed_text": "12280462 Inhibition of apical sodium-dependent bile acid transporter as a novel treatment for diabetes. science scifact Bile acids are recognized as metabolic modulators. The present study was aimed at evaluating the effects of a potent Asbt inhibitor (264W94), which blocks intestinal absorption of bile acids, on glucose homeostasis in Zucker Diabetic Fatty… 12280462 inhibition-of-apical-sodium-dependent-bile-acid-transporter-as-a-novel-treatment-for-diabetes. inhibition apical sodium dependent bile acid transporter as Inhibition of apical sodium-dependent bile acid transporter as a novel treatment for diabetes. Inhibition of apical sodium-dependent bile acid transporter as a novel treatment for diabetes. Bile acids are recognized as metabolic modulators. The present study was aimed at evaluating the effects of a potent Asbt inhibitor (264W94), which blocks intestinal absorption of bile acids, on glucose homeostasis in Zucker Diabetic Fatty (ZDF) rats. Oral administration of 264W94 for two wk increased fecal bile acid concentrations and elevated non-fasting plasma total Glp-1. Treatment of 264W94 significantly decreased HbA1c and glucose, and prevented the drop of insulin levels typical of ZDF rats in a dose-dependent manner. An oral glucose tolerance test revealed up to two-fold increase in plasma total Glp-1 and three-fold increase in insulin in 264W94 treated ZDF rats at doses sufficient to ach",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:08.666478+00:00"
+}

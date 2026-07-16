@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29467201",
+  "source_fingerprint": "580711b32d5406e00713e4ada8b08814",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29467201",
+    "cyp18a1,-a-key-enzyme-of-drosophila-steroid-hormone-inactivation,-is-essential-for-metamorphosis."
+  ],
+  "key_phrases": [
+    "cyp18a1",
+    "key",
+    "enzyme",
+    "drosophila",
+    "steroid",
+    "hormone",
+    "inactivation",
+    "essential"
+  ],
+  "summary_1l": "CYP18A1, a key enzyme of Drosophila steroid hormone inactivation, is essential for metamorphosis.",
+  "query_hits": [],
+  "embed_text": "29467201 CYP18A1, a key enzyme of Drosophila steroid hormone inactivation, is essential for metamorphosis. science scifact Ecdysteroids are steroid hormones, which coordinate major developmental transitions in insects. Both the rises and falls in circulating levels of active hormones are important for coordinating molting and metamorphosis, making both… 29467201 cyp18a1,-a-key-enzyme-of-drosophila-steroid-hormone-inactivation,-is-essential-for-metamorphosis. cyp18a1 key enzyme drosophila steroid hormone inactivation essential CYP18A1, a key enzyme of Drosophila steroid hormone inactivation, is essential for metamorphosis. CYP18A1, a key enzyme of Drosophila steroid hormone inactivation, is essential for metamorphosis. Ecdysteroids are steroid hormones, which coordinate major developmental transitions in insects. Both the rises and falls in circulating levels of active hormones are important for coordinating molting and metamorphosis, making both ecdysteroid biosynthesis and inactivation of physiological relevance. We demonstrate that Drosophila melanogaster Cyp18a1 encodes a cytochrome P450 enzyme (CYP) with 26-hydroxylase activity, a prominent step in ecdysteroid catabolism. A clear ortholog of Cyp18a1 exists in most insects and crustaceans. When Cyp18a1 is transfected in Drosophila S2 cells, extensive conversion of 20-hydroxyecdysone (20E) into 20-hydroxyecdysonoic acid is observed. This is a multi-step p",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.944361+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29473081",
+  "source_fingerprint": "969a9a082d274fb3c3262be5cccf6baf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29473081",
+    "the-sialyltransferase-st3gal6-influences-homing-and-survival-in-multiple-myeloma."
+  ],
+  "key_phrases": [
+    "sialyltransferase",
+    "st3gal6",
+    "influences",
+    "homing",
+    "survival",
+    "multiple",
+    "myeloma",
+    "glycosylation"
+  ],
+  "summary_1l": "The sialyltransferase ST3GAL6 influences homing and survival in multiple myeloma.",
+  "query_hits": [],
+  "embed_text": "29473081 The sialyltransferase ST3GAL6 influences homing and survival in multiple myeloma. science scifact Glycosylation is a stepwise procedure of covalent attachment of oligosaccharide chains to proteins or lipids, and alterations in this process, especially increased sialylation, have been associated with malignant transformation and… 29473081 the-sialyltransferase-st3gal6-influences-homing-and-survival-in-multiple-myeloma. sialyltransferase st3gal6 influences homing survival multiple myeloma glycosylation The sialyltransferase ST3GAL6 influences homing and survival in multiple myeloma. The sialyltransferase ST3GAL6 influences homing and survival in multiple myeloma. Glycosylation is a stepwise procedure of covalent attachment of oligosaccharide chains to proteins or lipids, and alterations in this process, especially increased sialylation, have been associated with malignant transformation and metastasis. The role of altered sialylation in multiple myeloma (MM) cell trafficking has not been previously investigated. In the present study we identified high expression of β-galactoside α-2,3-sialyltransferase, ST3GAL6, in MM cell lines and patients. This gene plays a key role in selectin ligand synthesis in humans through the generation of functional sialyl Lewis X. In MRC IX patients, high expression of this gene is associated with inferior overall survival. In this study w",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.966951+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25515662",
+  "source_fingerprint": "b3d4fae0a75e138310898f0ca9cb9d82",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25515662",
+    "in-vitro-substrate-specificity-of-protein-tyrosine-kinases"
+  ],
+  "key_phrases": [
+    "vitro",
+    "substrate",
+    "specificity",
+    "protein",
+    "tyrosine",
+    "kinases",
+    "synthetic",
+    "peptides"
+  ],
+  "summary_1l": "Synthetic peptides such as P60stc autophosphorylation site peptides and angiotensin are indiscriminately phosphorylated by protein tyrosine k",
+  "query_hits": [],
+  "embed_text": "25515662 In vitro substrate specificity of protein tyrosine kinases science scifact Synthetic peptides such as P60stc autophosphorylation site peptides and angiotensin are indiscriminately phosphorylated by protein tyrosine kinases. The observation has led to the general belief that protein tyrosine kinases are highly… 25515662 in-vitro-substrate-specificity-of-protein-tyrosine-kinases vitro substrate specificity protein tyrosine kinases synthetic peptides Synthetic peptides such as P60stc autophosphorylation site peptides and angiotensin are indiscriminately phosphorylated by protein tyrosine k In vitro substrate specificity of protein tyrosine kinases Synthetic peptides such as P60stc autophosphorylation site peptides and angiotensin are indiscriminately phosphorylated by protein tyrosine kinases. The observation has led to the general belief that protein tyrosine kinases are highly promiscuous, displaying littlein vitro site specificity. In recent years, evidence has been accumulating to indicate that such a belief requires close examination. Synthetic peptides showing high substrate activity for specific groups of protein tyrosine kinases have been obtained. Systematic modification of certain substrate peptides suggests that kinase substrate determinants reside with specific amino acid residues proximal to the target tyrosine. A number of protein kinases have been shown to be",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.814973+00:00"
+}

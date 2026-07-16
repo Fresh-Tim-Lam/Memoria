@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1576955",
+  "source_fingerprint": "a19e1e57fa1aed4bfd81dc87c76c4d84",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1576955",
+    "an-insulin-like-signaling-pathway-affects-both-longevity-and-reproduction-in-caenorhabditis-elegans."
+  ],
+  "key_phrases": [
+    "insulin",
+    "like",
+    "signaling",
+    "pathway",
+    "affects",
+    "both",
+    "longevity",
+    "reproduction"
+  ],
+  "summary_1l": "An insulin-like signaling pathway affects both longevity and reproduction in Caenorhabditis elegans.",
+  "query_hits": [],
+  "embed_text": "1576955 An insulin-like signaling pathway affects both longevity and reproduction in Caenorhabditis elegans. science scifact Mutations in daf-2 and age-1 cause a dramatic increase in longevity as well as developmental arrest at the dauer diapause stage in Caenorhabditis elegans. daf-2 and age-1 encode components of an insulin-like signaling pathway. Both daf-2… 1576955 an-insulin-like-signaling-pathway-affects-both-longevity-and-reproduction-in-caenorhabditis-elegans. insulin like signaling pathway affects both longevity reproduction An insulin-like signaling pathway affects both longevity and reproduction in Caenorhabditis elegans. An insulin-like signaling pathway affects both longevity and reproduction in Caenorhabditis elegans. Mutations in daf-2 and age-1 cause a dramatic increase in longevity as well as developmental arrest at the dauer diapause stage in Caenorhabditis elegans. daf-2 and age-1 encode components of an insulin-like signaling pathway. Both daf-2 and age-1 act at a similar point in the genetic epistasis pathway for dauer arrest and longevity and regulate the activity of the daf-16 gene. Mutations in daf-16 cause a dauer-defective phenotype and are epistatic to the diapause arrest and life span extension phenotypes of daf-2 and age-1 mutants. Here we show that mutations in this pathway also affect fertility and embryonic development. Weak daf-2 alleles, and maternally rescued age-1 alleles that cause",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.219272+00:00"
+}

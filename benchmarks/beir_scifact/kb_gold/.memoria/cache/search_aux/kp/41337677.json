@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "41337677",
+  "source_fingerprint": "973899ea28f551089c327acc6a2d2d8e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "41337677",
+    "the-helicase-ddx41-senses-intracellular-dna-mediated-by-the-adaptor-sting-in-dendritic-cells"
+  ],
+  "key_phrases": [
+    "helicase",
+    "ddx41",
+    "senses",
+    "intracellular",
+    "dna",
+    "mediated",
+    "by",
+    "adaptor"
+  ],
+  "summary_1l": "The recognition of pathogenic DNA is important to the initiation of antiviral responses.",
+  "query_hits": [],
+  "embed_text": "41337677 The helicase DDX41 senses intracellular DNA mediated by the adaptor STING in dendritic cells science scifact The recognition of pathogenic DNA is important to the initiation of antiviral responses. Here we report the identification of DDX41, a member of the DEXDc family of helicases, as an intracellular DNA sensor in myeloid dendritic cells… 41337677 the-helicase-ddx41-senses-intracellular-dna-mediated-by-the-adaptor-sting-in-dendritic-cells helicase ddx41 senses intracellular dna mediated by adaptor The recognition of pathogenic DNA is important to the initiation of antiviral responses. The helicase DDX41 senses intracellular DNA mediated by the adaptor STING in dendritic cells The recognition of pathogenic DNA is important to the initiation of antiviral responses. Here we report the identification of DDX41, a member of the DEXDc family of helicases, as an intracellular DNA sensor in myeloid dendritic cells (mDCs). Knockdown of DDX41 expression by short hairpin RNA blocked the ability of mDCs to mount type I interferon and cytokine responses to DNA and DNA viruses. Overexpression of both DDX41 and the membrane-associated adaptor STING together had a synergistic effect in promoting Ifnb promoter activity. DDX41 bound both DNA and STING and localized together with STING in the cytosol. Knockdown of DDX41 expression blocked activation of the mitogen-activated protein kinase",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.353785+00:00"
+}

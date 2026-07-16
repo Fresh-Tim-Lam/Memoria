@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2739854",
+  "source_fingerprint": "ea6ecc9ef898cb48a938bcf78468fdc5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2739854",
+    "rare-and-common-variants:-twenty-arguments"
+  ],
+  "key_phrases": [
+    "rare",
+    "common",
+    "variants",
+    "twenty",
+    "arguments",
+    "genome",
+    "wide",
+    "association"
+  ],
+  "summary_1l": "Genome-wide association studies have greatly improved our understanding of the genetic basis of disease risk.",
+  "query_hits": [],
+  "embed_text": "2739854 Rare and common variants: twenty arguments science scifact Genome-wide association studies have greatly improved our understanding of the genetic basis of disease risk. The fact that they tend not to identify more than a fraction of the specific causal loci has led to divergence of opinion over… 2739854 rare-and-common-variants:-twenty-arguments rare common variants twenty arguments genome wide association Genome-wide association studies have greatly improved our understanding of the genetic basis of disease risk. Rare and common variants: twenty arguments Genome-wide association studies have greatly improved our understanding of the genetic basis of disease risk. The fact that they tend not to identify more than a fraction of the specific causal loci has led to divergence of opinion over whether most of the variance is hidden as numerous rare variants of large effect or as common variants of very small effect. Here I review 20 arguments for and against each of these models of the genetic basis of complex traits and conclude that both classes of effect can be readily reconciled.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.845694+00:00"
+}

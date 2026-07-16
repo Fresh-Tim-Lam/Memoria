@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3107733",
+  "source_fingerprint": "af8348ef42db79d2b283055740f57287",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3107733",
+    "peroxisomes-are-signaling-platforms-for-antiviral-innate-immunity"
+  ],
+  "key_phrases": [
+    "peroxisomes",
+    "signaling",
+    "platforms",
+    "antiviral",
+    "innate",
+    "immunity",
+    "have",
+    "long"
+  ],
+  "summary_1l": "Peroxisomes have long been established to play a central role in regulating various metabolic activities in mammalian cells.",
+  "query_hits": [],
+  "embed_text": "3107733 Peroxisomes Are Signaling Platforms for Antiviral Innate Immunity science scifact Peroxisomes have long been established to play a central role in regulating various metabolic activities in mammalian cells. These organelles act in concert with mitochondria to control the metabolism of lipids and reactive oxygen species.… 3107733 peroxisomes-are-signaling-platforms-for-antiviral-innate-immunity peroxisomes signaling platforms antiviral innate immunity have long Peroxisomes have long been established to play a central role in regulating various metabolic activities in mammalian cells. Peroxisomes Are Signaling Platforms for Antiviral Innate Immunity Peroxisomes have long been established to play a central role in regulating various metabolic activities in mammalian cells. These organelles act in concert with mitochondria to control the metabolism of lipids and reactive oxygen species. However, while mitochondria have emerged as an important site of antiviral signal transduction, a role for peroxisomes in immune defense is unknown. Here, we report that the RIG-I-like receptor (RLR) adaptor protein MAVS is located on peroxisomes and mitochondria. We find that peroxisomal and mitochondrial MAVS act sequentially to create an antiviral cellular state. Upon viral infection, peroxisomal MAVS induces the rapid interferon-independent expression of defense factors that provide sh",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.288638+00:00"
+}

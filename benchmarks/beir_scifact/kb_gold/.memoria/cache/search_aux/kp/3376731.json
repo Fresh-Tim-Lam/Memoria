@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3376731",
+  "source_fingerprint": "0fdae01e08d7f0f1fb9ecc7a54ada1df",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3376731",
+    "il6-derived-from-cancer-associated-fibroblasts-promotes-chemoresistance-via-cxcr7-in-esophageal-squamous-cell-carcinoma"
+  ],
+  "key_phrases": [
+    "il6",
+    "derived",
+    "from",
+    "cancer",
+    "associated",
+    "fibroblasts",
+    "promotes",
+    "chemoresistance"
+  ],
+  "summary_1l": "Various factors and cellular components in the tumor microenvironment are key dr",
+  "query_hits": [],
+  "embed_text": "3376731 IL6 derived from cancer-associated fibroblasts promotes chemoresistance via CXCR7 in esophageal squamous cell carcinoma science scifact Various factors and cellular components in the tumor microenvironment are key drivers associated with drug resistance in many cancers. Here, we analyzed the factors and molecular mechanisms involved in chemoresistance in patients with… 3376731 il6-derived-from-cancer-associated-fibroblasts-promotes-chemoresistance-via-cxcr7-in-esophageal-squamous-cell-carcinoma il6 derived from cancer associated fibroblasts promotes chemoresistance Various factors and cellular components in the tumor microenvironment are key dr IL6 derived from cancer-associated fibroblasts promotes chemoresistance via CXCR7 in esophageal squamous cell carcinoma Various factors and cellular components in the tumor microenvironment are key drivers associated with drug resistance in many cancers. Here, we analyzed the factors and molecular mechanisms involved in chemoresistance in patients with esophageal squamous cell carcinoma (ESCC). We found that interleukin 6 (IL6) derived mainly from cancer-associated fibroblasts played the most important role in chemoresistance by upregulating C-X-C motif chemokine receptor 7 (CXCR7) expression through signal transducer and activator of transcription 3/nuclear factor-κB pathway. CXCR7 knockdown resulted in the inhibition of IL6-induced proliferation and chemoresistance. In addition, CXCR7 si",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.701112+00:00"
+}

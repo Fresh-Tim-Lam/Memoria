@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "38180456",
+  "source_fingerprint": "8d429322e5b6750ec1f9a5448da8b260",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "38180456",
+    "short-term-medical-service-trips:-a-systematic-review-of-the-evidence."
+  ],
+  "key_phrases": [
+    "short",
+    "term",
+    "medical",
+    "service",
+    "trips",
+    "systematic",
+    "review",
+    "evidence"
+  ],
+  "summary_1l": "Short-term medical service trips: a systematic review of the evidence.",
+  "query_hits": [],
+  "embed_text": "38180456 Short-term medical service trips: a systematic review of the evidence. science scifact Short-term medical service trips (MSTs) aim to address unmet health care needs of low- and middle-income countries. The lack of critically reviewed empirical evidence of activities and outcomes is a concern. Developing evidence-based… 38180456 short-term-medical-service-trips:-a-systematic-review-of-the-evidence. short term medical service trips systematic review evidence Short-term medical service trips: a systematic review of the evidence. Short-term medical service trips: a systematic review of the evidence. Short-term medical service trips (MSTs) aim to address unmet health care needs of low- and middle-income countries. The lack of critically reviewed empirical evidence of activities and outcomes is a concern. Developing evidence-based recommendations for health care delivery requires systematic research review. I focused on MST publications with empirical results. Searches in May 2013 identified 67 studies published since 1993, only 6% of the published articles on the topic in the past 20 years. Nearly 80% reported on surgical trips. Although the MST field is growing, its medical literature lags behind, with nearly all of the scholarly publications lacking significant data collection. By incorporating data collection int",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.245997+00:00"
+}

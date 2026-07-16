@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "54562433",
+  "source_fingerprint": "9e3cd2d1b466e135d25d186def329588",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "54562433",
+    "the-mammalian-specific-protein-armcx1-regulates-mitochondrial-transport-during-axon-regeneration"
+  ],
+  "key_phrases": [
+    "mammalian",
+    "specific",
+    "protein",
+    "armcx1",
+    "regulates",
+    "mitochondrial",
+    "transport",
+    "during"
+  ],
+  "summary_1l": "Mitochondrial transport is crucial for neuronal and axonal physiology.",
+  "query_hits": [],
+  "embed_text": "54562433 The Mammalian-Specific Protein Armcx1 Regulates Mitochondrial Transport during Axon Regeneration science scifact Mitochondrial transport is crucial for neuronal and axonal physiology. However, whether and how it impacts neuronal injury responses, such as neuronal survival and axon regeneration, remain largely unknown. In an established mouse model… 54562433 the-mammalian-specific-protein-armcx1-regulates-mitochondrial-transport-during-axon-regeneration mammalian specific protein armcx1 regulates mitochondrial transport during Mitochondrial transport is crucial for neuronal and axonal physiology. The Mammalian-Specific Protein Armcx1 Regulates Mitochondrial Transport during Axon Regeneration Mitochondrial transport is crucial for neuronal and axonal physiology. However, whether and how it impacts neuronal injury responses, such as neuronal survival and axon regeneration, remain largely unknown. In an established mouse model with robust axon regeneration, we show that Armcx1, a mammalian-specific gene encoding a mitochondria-localized protein, is upregulated after axotomy in this high regeneration condition. Armcx1 overexpression enhances mitochondrial transport in adult retinal ganglion cells (RGCs). Importantly, Armcx1 also promotes both neuronal survival and axon regeneration after injury, and these effects depend on its mitochondrial localization. Furthermore, Armcx1 knockdown u",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.362754+00:00"
+}

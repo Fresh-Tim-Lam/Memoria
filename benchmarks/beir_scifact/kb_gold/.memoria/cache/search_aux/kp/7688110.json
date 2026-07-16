@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7688110",
+  "source_fingerprint": "bb1984c4d84e2c255681f5e83ab68348",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7688110",
+    "e2f-6:-a-novel-member-of-the-e2f-family-is-an-inhibitor-of-e2f-dependent-transcription"
+  ],
+  "key_phrases": [
+    "e2f",
+    "novel",
+    "member",
+    "family",
+    "inhibitor",
+    "dependent",
+    "transcription",
+    "factors"
+  ],
+  "summary_1l": "The E2F family of transcription factors are essential for the regulation of genes required for appropriate progre",
+  "query_hits": [],
+  "embed_text": "7688110 E2F-6: a novel member of the E2F family is an inhibitor of E2F-dependent transcription science scifact The E2F family of transcription factors are essential for the regulation of genes required for appropriate progression through the cell cycle. Five members of the E2F family have been previously reported, namely E2F1-5. All five are key… 7688110 e2f-6:-a-novel-member-of-the-e2f-family-is-an-inhibitor-of-e2f-dependent-transcription e2f novel member family inhibitor dependent transcription factors The E2F family of transcription factors are essential for the regulation of genes required for appropriate progre E2F-6: a novel member of the E2F family is an inhibitor of E2F-dependent transcription The E2F family of transcription factors are essential for the regulation of genes required for appropriate progression through the cell cycle. Five members of the E2F family have been previously reported, namely E2F1-5. All five are key elements in transcriptional regulation of essential genes, and they can be divided into two functional groups, those that induce S-phase progression when overexpressed in quiescent cells (E2Fs 1–3), and those that do not (E2Fs 4–5). Here, we describe the identification of a novel member of this family, which we refer to as E2F-6. E2F-6 shares significant homology with E2Fs 1–5, especially within the DNA binding, heterodimerization and marked box domains. Unlike E2Fs 1–5,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.026657+00:00"
+}

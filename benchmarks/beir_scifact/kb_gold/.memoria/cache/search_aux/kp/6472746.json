@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6472746",
+  "source_fingerprint": "a0c05eb028fcc0223802c600edb62c49",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6472746",
+    "increased-cdk1-activity-determines-the-timing-of-kinetochore-microtubule-attachments-in-meiosis-i"
+  ],
+  "key_phrases": [
+    "increased",
+    "cdk1",
+    "activity",
+    "determines",
+    "timing",
+    "kinetochore",
+    "microtubule",
+    "attachments"
+  ],
+  "summary_1l": "Chromosome segregation during cell division depends on stable attachment of kinetochores to spindle mi",
+  "query_hits": [],
+  "embed_text": "6472746 Increased CDK1 activity determines the timing of kinetochore-microtubule attachments in meiosis I science scifact Chromosome segregation during cell division depends on stable attachment of kinetochores to spindle microtubules. Mitotic spindle formation and kinetochore-microtubule (K-MT) capture typically occur within minutes of nuclear envelope… 6472746 increased-cdk1-activity-determines-the-timing-of-kinetochore-microtubule-attachments-in-meiosis-i increased cdk1 activity determines timing kinetochore microtubule attachments Chromosome segregation during cell division depends on stable attachment of kinetochores to spindle mi Increased CDK1 activity determines the timing of kinetochore-microtubule attachments in meiosis I Chromosome segregation during cell division depends on stable attachment of kinetochores to spindle microtubules. Mitotic spindle formation and kinetochore-microtubule (K-MT) capture typically occur within minutes of nuclear envelope breakdown. In contrast, during meiosis I in mouse oocytes, formation of the acentrosomal bipolar spindle takes 3-4 h, and stabilization of K-MT attachments is delayed an additional 3-4 h. The mechanism responsible for this delay, which likely prevents stabilization of erroneous attachments during spindle formation, is unknown. Here we show that during meiosis I, attachments are regulated by CDK1 activity, which gradually increases through prometaphase and metaphas",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.935698+00:00"
+}

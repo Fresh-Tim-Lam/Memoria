@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "335029",
+  "source_fingerprint": "e00e7d07a50f364a8b12ebcf82285a7d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "335029",
+    "condensin-mediated-remodeling-of-the-mitotic-chromatin-landscape-in-fission-yeast"
+  ],
+  "key_phrases": [
+    "condensin",
+    "mediated",
+    "remodeling",
+    "mitotic",
+    "chromatin",
+    "landscape",
+    "fission",
+    "yeast"
+  ],
+  "summary_1l": "The eukaryotic genome consists of DNA molecules far longer than the cells that contain them.",
+  "query_hits": [],
+  "embed_text": "335029 Condensin-mediated remodeling of the mitotic chromatin landscape in fission yeast science scifact The eukaryotic genome consists of DNA molecules far longer than the cells that contain them. They reach their greatest compaction during chromosome condensation in mitosis. This process is aided by condensin, a structural maintenance of… 335029 condensin-mediated-remodeling-of-the-mitotic-chromatin-landscape-in-fission-yeast condensin mediated remodeling mitotic chromatin landscape fission yeast The eukaryotic genome consists of DNA molecules far longer than the cells that contain them. Condensin-mediated remodeling of the mitotic chromatin landscape in fission yeast The eukaryotic genome consists of DNA molecules far longer than the cells that contain them. They reach their greatest compaction during chromosome condensation in mitosis. This process is aided by condensin, a structural maintenance of chromosomes (SMC) family member. The spatial organization of mitotic chromosomes and how condensin shapes chromatin architecture are not yet fully understood. Here we use chromosome conformation capture (Hi-C) to study mitotic chromosome condensation in the fission yeast Schizosaccharomyces pombe. This showed that the interphase landscape characterized by small chromatin domains is replaced by fewer but larger domains in mitosis. Condensin achieves this by setting up longer-ra",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.434578+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "31902335",
+  "source_fingerprint": "d6c5323053799e312047dfa8078a1c6e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "31902335",
+    "the-cancer-stem-cell-hypothesis:-a-guide-to-potential-molecular-targets."
+  ],
+  "key_phrases": [
+    "cancer",
+    "stem",
+    "cell",
+    "hypothesis",
+    "guide",
+    "potential",
+    "molecular",
+    "targets"
+  ],
+  "summary_1l": "The cancer stem cell hypothesis: a guide to potential molecular targets.",
+  "query_hits": [],
+  "embed_text": "31902335 The cancer stem cell hypothesis: a guide to potential molecular targets. science scifact Common cancer theories hold that tumor is an uncontrolled somatic cell proliferation caused by the progressive addition of random mutations in critical genes that control cell growth. Nevertheless, various contradictions related to the… 31902335 the-cancer-stem-cell-hypothesis:-a-guide-to-potential-molecular-targets. cancer stem cell hypothesis guide potential molecular targets The cancer stem cell hypothesis: a guide to potential molecular targets. The cancer stem cell hypothesis: a guide to potential molecular targets. Common cancer theories hold that tumor is an uncontrolled somatic cell proliferation caused by the progressive addition of random mutations in critical genes that control cell growth. Nevertheless, various contradictions related to the mutation theory have been reported previously. These events may be elucidated by the persistence of residual tumor cells, called Cancer Stem Cells (CSCs) responsible for tumorigenesis, tumor maintenance, tumor spread, and tumor relapse. Herein, we summarize the current understanding of CSCs, with a focus on the possibility to identify specific markers of CSCs, and discuss the clinical application of targeting CSCs for cancer treatment.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.990894+00:00"
+}

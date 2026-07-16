@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10450725",
+  "source_fingerprint": "f7155b12fb03d8839060ff0d3e370356",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10450725",
+    "pamidronate-induced-anti-proliferative,-apoptotic,-and-anti-migratory-effects-in-hepatocellular-carcinoma."
+  ],
+  "key_phrases": [
+    "pamidronate",
+    "induced",
+    "anti",
+    "proliferative",
+    "apoptotic",
+    "migratory",
+    "effects",
+    "hepatocellular"
+  ],
+  "summary_1l": "Pamidronate induced anti-proliferative, apoptotic, and anti-migratory effects in hepatocellular carcinoma.",
+  "query_hits": [],
+  "embed_text": "10450725 Pamidronate induced anti-proliferative, apoptotic, and anti-migratory effects in hepatocellular carcinoma. science scifact BACKGROUND/AIMS The small GTPase of Ras and Rho families are widely involved in human tumorgenesis and metastasis. It has recently been reported that pamidronate inhibits the mevalonate pathway, which is required for the prenylation of the… 10450725 pamidronate-induced-anti-proliferative,-apoptotic,-and-anti-migratory-effects-in-hepatocellular-carcinoma. pamidronate induced anti proliferative apoptotic migratory effects hepatocellular Pamidronate induced anti-proliferative, apoptotic, and anti-migratory effects in hepatocellular carcinoma. Pamidronate induced anti-proliferative, apoptotic, and anti-migratory effects in hepatocellular carcinoma. BACKGROUND/AIMS The small GTPase of Ras and Rho families are widely involved in human tumorgenesis and metastasis. It has recently been reported that pamidronate inhibits the mevalonate pathway, which is required for the prenylation of the small GTPase. We demonstrated a possible beneficial use of pamidronate in the treatment of hepatocellular carcinoma (HCC). METHODS The effect of pamidronate on cell proliferation was analyzed with five hepatoma cell lines using MTT assay. Apoptosis was evaluated by staining with DAPI and a histon ELISA assay. A cell migration assay was performed using the Modified Boyden Chamber. To analyze anti-proliferation effect of pamidronate in vivo, tumor vol",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:04.794210+00:00"
+}

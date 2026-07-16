@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "470625",
+  "source_fingerprint": "89d2fc495f106653b09cc4afce4952b0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "470625",
+    "identification-of-p18-ink4c-as-a-tumor-suppressor-gene-in-glioblastoma-multiforme."
+  ],
+  "key_phrases": [
+    "identification",
+    "p18",
+    "ink4c",
+    "as",
+    "tumor",
+    "suppressor",
+    "gene",
+    "glioblastoma"
+  ],
+  "summary_1l": "Identification of p18 INK4c as a tumor suppressor gene in glioblastoma multiforme.",
+  "query_hits": [],
+  "embed_text": "470625 Identification of p18 INK4c as a tumor suppressor gene in glioblastoma multiforme. science scifact Genomic alterations leading to aberrant activation of cyclin/cyclin-dependent kinase (cdk) complexes drive the pathogenesis of many common human tumor types. In the case of glioblastoma multiforme (GBM), these alterations are most commonly… 470625 identification-of-p18-ink4c-as-a-tumor-suppressor-gene-in-glioblastoma-multiforme. identification p18 ink4c as tumor suppressor gene glioblastoma Identification of p18 INK4c as a tumor suppressor gene in glioblastoma multiforme. Identification of p18 INK4c as a tumor suppressor gene in glioblastoma multiforme. Genomic alterations leading to aberrant activation of cyclin/cyclin-dependent kinase (cdk) complexes drive the pathogenesis of many common human tumor types. In the case of glioblastoma multiforme (GBM), these alterations are most commonly due to homozygous deletion of p16(INK4a) and less commonly due to genomic amplifications of individual genes encoding cyclins or cdks. Here, we describe deletion of the p18(INK4c) cdk inhibitor as a novel genetic alteration driving the pathogenesis of GBM. Deletions of p18(INK4c) often occurred in tumors also harboring homozygous deletions of p16(INK4a). Expression of p18(INK4c) was completely absent in 43% of GBM primary tumors studied by immunohistochemistry. Lentiviral",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.303123+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12030735",
+  "source_fingerprint": "c8901d27b98c65803612855130f76b63",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12030735",
+    "can-we-apply-the-national-cholesterol-education-program-adult-treatment-panel-definition-of-the-metabolic-syndrome-to-asians?"
+  ],
+  "key_phrases": [
+    "can",
+    "we",
+    "apply",
+    "national",
+    "cholesterol",
+    "education",
+    "program",
+    "adult"
+  ],
+  "summary_1l": "Can we apply the National Cholesterol Education Program Adult Treatment Panel definition of the metabolic syndrome to Asians?",
+  "query_hits": [],
+  "embed_text": "12030735 Can we apply the National Cholesterol Education Program Adult Treatment Panel definition of the metabolic syndrome to Asians? science scifact OBJECTIVE Limited information is available about the metabolic syndrome in Asians. Furthermore, the definition of central obesity using waist circumference may not be appropriate for Asians. The objectives of this study were to determine… 12030735 can-we-apply-the-national-cholesterol-education-program-adult-treatment-panel-definition-of-the-metabolic-syndrome-to-asians? can we apply national cholesterol education program adult Can we apply the National Cholesterol Education Program Adult Treatment Panel definition of the metabolic syndrome to Asians? Can we apply the National Cholesterol Education Program Adult Treatment Panel definition of the metabolic syndrome to Asians? OBJECTIVE Limited information is available about the metabolic syndrome in Asians. Furthermore, the definition of central obesity using waist circumference may not be appropriate for Asians. The objectives of this study were to determine the optimal waist circumference for diagnosing central obesity in Asians and to estimate the prevalence of the metabolic syndrome in an Asian population. RESEARCH DESIGN AND METHODS We used data from the 1998 Singapore National Health Survey, a cross-sectional survey involving 4,723 men and women of Chinese, Malay, and Asian-Indian ethnicity aged 18-69 years. Receiver operating characteristic analysis suggested that waist circumfere",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:08.124491+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4325398",
+  "source_fingerprint": "e86a0ef49dcbcc6b1d3c3252322964fb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4325398",
+    "pancreatic-cancer-genomes-reveal-aberrations-in-axon-guidance-pathway-genes"
+  ],
+  "key_phrases": [
+    "pancreatic",
+    "cancer",
+    "genomes",
+    "reveal",
+    "aberrations",
+    "axon",
+    "guidance",
+    "pathway"
+  ],
+  "summary_1l": "Pancreatic cancer is a highly lethal malignancy with few effective therapies.",
+  "query_hits": [],
+  "embed_text": "4325398 Pancreatic cancer genomes reveal aberrations in axon guidance pathway genes science scifact Pancreatic cancer is a highly lethal malignancy with few effective therapies. We performed exome sequencing and copy number analysis to define genomic aberrations in a prospectively accrued clinical cohort (n = 142) of early (stage I and… 4325398 pancreatic-cancer-genomes-reveal-aberrations-in-axon-guidance-pathway-genes pancreatic cancer genomes reveal aberrations axon guidance pathway Pancreatic cancer is a highly lethal malignancy with few effective therapies. Pancreatic cancer genomes reveal aberrations in axon guidance pathway genes Pancreatic cancer is a highly lethal malignancy with few effective therapies. We performed exome sequencing and copy number analysis to define genomic aberrations in a prospectively accrued clinical cohort (n = 142) of early (stage I and II) sporadic pancreatic ductal adenocarcinoma. Detailed analysis of 99 informative tumours identified substantial heterogeneity with 2,016 non-silent mutations and 1,628 copy-number variations. We define 16 significantly mutated genes, reaffirming known mutations (KRAS, TP53, CDKN2A, SMAD4, MLL3, TGFBR2, ARID1A and SF3B1), and uncover novel mutated genes including additional genes involved in chromatin modification (EPC1 and ARID2), DNA damage repair (ATM) and other mechanisms (ZIM",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.717986+00:00"
+}

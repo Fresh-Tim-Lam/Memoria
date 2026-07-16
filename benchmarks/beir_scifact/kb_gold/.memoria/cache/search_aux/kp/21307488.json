@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21307488",
+  "source_fingerprint": "5d30714995bbc87cccb5f1920ce03622",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21307488",
+    "her-2/neu-induces-p53-ubiquitination-via-akt-mediated-mdm2-phosphorylation"
+  ],
+  "key_phrases": [
+    "her",
+    "neu",
+    "induces",
+    "p53",
+    "ubiquitination",
+    "via",
+    "akt",
+    "mediated"
+  ],
+  "summary_1l": "HER-2/neu amplification or overexpression can make cancer cells resistant to apoptosis and promotes their growth.",
+  "query_hits": [],
+  "embed_text": "21307488 HER-2/neu induces p53 ubiquitination via Akt-mediated MDM2 phosphorylation science scifact HER-2/neu amplification or overexpression can make cancer cells resistant to apoptosis and promotes their growth. p53 is crucial in regulating cell growth and apoptosis, and is often mutated or deleted in many types of tumour. Moreover,… 21307488 her-2/neu-induces-p53-ubiquitination-via-akt-mediated-mdm2-phosphorylation her neu induces p53 ubiquitination via akt mediated HER-2/neu amplification or overexpression can make cancer cells resistant to apoptosis and promotes their growth. HER-2/neu induces p53 ubiquitination via Akt-mediated MDM2 phosphorylation HER-2/neu amplification or overexpression can make cancer cells resistant to apoptosis and promotes their growth. p53 is crucial in regulating cell growth and apoptosis, and is often mutated or deleted in many types of tumour. Moreover, many tumours with a wild-type gene for p53 do not have normal p53 function, suggesting that some oncogenic signals suppress the function of p53. In this study, we show that HER-2/neu-mediated resistance to DNA-damaging agents requires the activation of Akt, which enhances MDM2-mediated ubiquitination and degradation of p53. Akt physically associates with MDM2 and phosphorylates it at Ser166 and Ser186. Phosphorylation of MDM2 enhances its nuclear localization and its interaction with",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.817264+00:00"
+}

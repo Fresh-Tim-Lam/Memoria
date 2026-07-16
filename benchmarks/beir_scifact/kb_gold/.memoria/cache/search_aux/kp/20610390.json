@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20610390",
+  "source_fingerprint": "383067c9aa71a348119b9fc009e99a57",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20610390",
+    "exploring-the-epidemiological-characteristics-of-cancers-of-unknown-primary-site-in-an-australian-population:-implications-for-research-and-clinical-care."
+  ],
+  "key_phrases": [
+    "exploring",
+    "epidemiological",
+    "characteristics",
+    "cancers",
+    "unknown",
+    "primary",
+    "site",
+    "australian"
+  ],
+  "summary_1l": "Exploring the epidemiological characteristics of cancers of unknown primary site in an Australian population: implications for research and clinical care.",
+  "query_hits": [],
+  "embed_text": "20610390 Exploring the epidemiological characteristics of cancers of unknown primary site in an Australian population: implications for research and clinical care. science scifact OBJECTIVES To investigate incidence, mortality and case survival trends for cancer of unknown primary site (CUP) and consider clinical implications. METHOD South Australian Cancer Registry data were used to calculate age-standardised… 20610390 exploring-the-epidemiological-characteristics-of-cancers-of-unknown-primary-site-in-an-australian-population:-implications-for-research-and-clinical-care. exploring epidemiological characteristics cancers unknown primary site australian Exploring the epidemiological characteristics of cancers of unknown primary site in an Australian population: implications for research and clinical care. Exploring the epidemiological characteristics of cancers of unknown primary site in an Australian population: implications for research and clinical care. OBJECTIVES To investigate incidence, mortality and case survival trends for cancer of unknown primary site (CUP) and consider clinical implications. METHOD South Australian Cancer Registry data were used to calculate age-standardised incidence and mortality rates from 1977 to 2004. Disease-specific survivals, socio-demographic, histological and secular predictors of CUP, compared with cancers of known primary site, and of CUP histological types, using multivariable logistic regression were investigated. RESULTS Incidence and mortality rates increased approximately 60% between 1977--80 and 1981--84. Rates peaked in 1993--96. Male to femal",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.595629+00:00"
+}

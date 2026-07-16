@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "831167",
+  "source_fingerprint": "4796fcb12e2f6f774f08557f9a80960d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "831167",
+    "investigating-survival-prognosis-of-glioblastoma-using-evolutional-properties-of-gene-networks"
+  ],
+  "key_phrases": [
+    "investigating",
+    "survival",
+    "prognosis",
+    "glioblastoma",
+    "using",
+    "evolutional",
+    "properties",
+    "gene"
+  ],
+  "summary_1l": "In recent years, there has been widespread interest and a large number of publications on the application",
+  "query_hits": [],
+  "embed_text": "831167 Investigating survival prognosis of glioblastoma using evolutional properties of gene networks science scifact In recent years, there has been widespread interest and a large number of publications on the application of graph theory techniques into constructing and analyzing biologically-informed gene networks from cancer cell line data sets.… 831167 investigating-survival-prognosis-of-glioblastoma-using-evolutional-properties-of-gene-networks investigating survival prognosis glioblastoma using evolutional properties gene In recent years, there has been widespread interest and a large number of publications on the application Investigating survival prognosis of glioblastoma using evolutional properties of gene networks In recent years, there has been widespread interest and a large number of publications on the application of graph theory techniques into constructing and analyzing biologically-informed gene networks from cancer cell line data sets. Current research efforts have predominantly looked at an overall static, topological, representation of the network, and have not investigated the application of graph theoretical techniques to evolutionary investigations of cancer. A number of these studies have used graph theory metrics, such as degree, betweenness, and closeness centrality, to identify important hub genes in these networks. However, these have not fully investigated the importance of genes across",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.321694+00:00"
+}

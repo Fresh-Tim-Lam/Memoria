@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15928989",
+  "source_fingerprint": "7d5bd4b994f519e1038163ac6fa145b3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15928989",
+    "liver-receptor-homolog-1-is-essential-for-pregnancy"
+  ],
+  "key_phrases": [
+    "liver",
+    "receptor",
+    "homolog",
+    "essential",
+    "pregnancy",
+    "successful",
+    "requires",
+    "coordination"
+  ],
+  "summary_1l": "Successful pregnancy requires coordination of an array of signals and factors from multiple tissues.",
+  "query_hits": [],
+  "embed_text": "15928989 Liver receptor homolog-1 is essential for pregnancy science scifact Successful pregnancy requires coordination of an array of signals and factors from multiple tissues. One such element, liver receptor homolog-1 (Lrh-1), is an orphan nuclear receptor that regulates metabolism and hormone synthesis. It is… 15928989 liver-receptor-homolog-1-is-essential-for-pregnancy liver receptor homolog essential pregnancy successful requires coordination Successful pregnancy requires coordination of an array of signals and factors from multiple tissues. Liver receptor homolog-1 is essential for pregnancy Successful pregnancy requires coordination of an array of signals and factors from multiple tissues. One such element, liver receptor homolog-1 (Lrh-1), is an orphan nuclear receptor that regulates metabolism and hormone synthesis. It is strongly expressed in granulosa cells of ovarian follicles and in the corpus luteum of rodents and humans. Germline ablation of Nr5a2 (also called Lrh-1), the gene coding for Lrh-1, in mice is embryonically lethal at gastrulation. Depletion of Lrh-1 in the ovarian follicle shows that it regulates genes required for both steroid synthesis and ovulation. To study the effects of Lrh-1 on mouse gestation, we genetically disrupted its expression in the corpus luteum, resulting in luteal insufficiency. Hormone",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.474931+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25806385",
+  "source_fingerprint": "61b4e9a9d69ca6af0d7802c674d04791",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25806385",
+    "attempted-suicide-in-europe:-rates,-trends-and-sociodemographic-characteristics-of-suicide-attempters-during-the-period-1989-1992.-results-of-the-who/euro-multicentre-study-on-parasuicide."
+  ],
+  "key_phrases": [
+    "attempted",
+    "suicide",
+    "europe",
+    "rates",
+    "trends",
+    "sociodemographic",
+    "characteristics",
+    "attempters"
+  ],
+  "summary_1l": "Attempted suicide in Europe: rates, trends and sociodemographic characteristics of suicide attempters during the period 1989-1992.",
+  "query_hits": [],
+  "embed_text": "25806385 Attempted suicide in Europe: rates, trends and sociodemographic characteristics of suicide attempters during the period 1989-1992. Results of the WHO/EURO Multicentre Study on Parasuicide. science scifact The World Health Organization/EURO Multicentre Project on Parasuicide is part of the action to implement target 12 of the WHO programme, \"Health for All by the Year 2000', for the European region. Sixteen centres in 13 European countries… 25806385 attempted-suicide-in-europe:-rates,-trends-and-sociodemographic-characteristics-of-suicide-attempters-during-the-period-1989-1992.-results-of-the-who/euro-multicentre-study-on-parasuicide. attempted suicide europe rates trends sociodemographic characteristics attempters Attempted suicide in Europe: rates, trends and sociodemographic characteristics of suicide attempters during the period 1989-1992. Attempted suicide in Europe: rates, trends and sociodemographic characteristics of suicide attempters during the period 1989-1992. Results of the WHO/EURO Multicentre Study on Parasuicide. The World Health Organization/EURO Multicentre Project on Parasuicide is part of the action to implement target 12 of the WHO programme, \"Health for All by the Year 2000', for the European region. Sixteen centres in 13 European countries are participating in the monitoring aspect of the project, in which trends in the epidemiology of suicide attempts are assessed. The highest average male age-standardized rate of suicide attempts was found for Helsinki, Finland (314/100,000), and the lowest rate (45/100,000) was for Guipuzcoa, Spain, representing a sevenfold difference. The highest average female age-sta",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.440965+00:00"
+}

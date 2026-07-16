@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24155601",
+  "source_fingerprint": "400deaf21786d2e640eeef730821a7bd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24155601",
+    "accumulation-of-hydroxyethyl-starch-in-human-and-animal-tissues:-a-systematic-review"
+  ],
+  "key_phrases": [
+    "accumulation",
+    "hydroxyethyl",
+    "starch",
+    "human",
+    "animal",
+    "tissues",
+    "systematic",
+    "review"
+  ],
+  "summary_1l": "To systematically review clinical and preclinical data on hydroxyethyl starch (HES) tissue storage.",
+  "query_hits": [],
+  "embed_text": "24155601 Accumulation of hydroxyethyl starch in human and animal tissues: a systematic review science scifact To systematically review clinical and preclinical data on hydroxyethyl starch (HES) tissue storage. MEDLINE (PubMed) was searched and abstracts were screened using defined criteria to identify articles containing original data on HES… 24155601 accumulation-of-hydroxyethyl-starch-in-human-and-animal-tissues:-a-systematic-review accumulation hydroxyethyl starch human animal tissues systematic review To systematically review clinical and preclinical data on hydroxyethyl starch (HES) tissue storage. Accumulation of hydroxyethyl starch in human and animal tissues: a systematic review To systematically review clinical and preclinical data on hydroxyethyl starch (HES) tissue storage. MEDLINE (PubMed) was searched and abstracts were screened using defined criteria to identify articles containing original data on HES tissue accumulation. Forty-eight studies were included: 37 human studies with a total of 635 patients and 11 animal studies. The most frequent indication for fluid infusion was surgery accounting for 282 patients (45.9 %). HES localization in skin was shown by 17 studies, in kidney by 12, in liver by 8, and in bone marrow by 5. Additional sites of HES deposition were lymph nodes, spleen, lung, pancreas, intestine, muscle, trophoblast, and placental stroma. Among major organs t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.856303+00:00"
+}

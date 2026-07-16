@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6106004",
+  "source_fingerprint": "99a78ba3794ebd50f685f865fdbbda2a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6106004",
+    "separation-of-mother-and-daughter-cells."
+  ],
+  "key_phrases": [
+    "separation",
+    "mother",
+    "daughter",
+    "cells",
+    "publisher",
+    "summary",
+    "budding",
+    "yeast"
+  ],
+  "summary_1l": "Separation of mother and daughter cells.",
+  "query_hits": [],
+  "embed_text": "6106004 Separation of mother and daughter cells. science scifact Publisher Summary The budding yeast Saccharomyces cerevisiae ( S. cerevisiae ) divides asymmetrically. In vegetative growth, yeast cells reproduce by budding, and the position where the bud forms ultimately determines the plane of cell… 6106004 separation-of-mother-and-daughter-cells. separation mother daughter cells publisher summary budding yeast Separation of mother and daughter cells. Separation of mother and daughter cells. Publisher Summary The budding yeast Saccharomyces cerevisiae ( S. cerevisiae ) divides asymmetrically. In vegetative growth, yeast cells reproduce by budding, and the position where the bud forms ultimately determines the plane of cell division. This chapter describes the detailed procedures for the separation and isolation of mothers and daughters. These protocols have been used by investigators studying aging, bud site selection, and other aspects of asymmetric cell division. The chapter describes the procedures for performing life span analysis by micromanipulation and the steps for the large-scale collection of old cells. At the beginning and the end of a life span, it can be difficult to distinguish mothers from daughters. At most points in the",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.929207+00:00"
+}

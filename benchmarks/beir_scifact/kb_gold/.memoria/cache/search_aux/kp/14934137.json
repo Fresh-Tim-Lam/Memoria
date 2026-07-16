@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14934137",
+  "source_fingerprint": "97915959a6573c4a1b063d3ee4edd2d2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14934137",
+    "class-ia-mhc-deficient-balb/c-mice-generate-cd8+-t-cell-mediated-protective-immunity-against-listeria-monocytogenes-infection."
+  ],
+  "key_phrases": [
+    "class",
+    "ia",
+    "mhc",
+    "deficient",
+    "balb",
+    "mice",
+    "generate",
+    "cd8"
+  ],
+  "summary_1l": "Class Ia MHC-deficient BALB/c mice generate CD8+ T cell-mediated protective immunity against Listeria monocytogenes infection.",
+  "query_hits": [],
+  "embed_text": "14934137 Class Ia MHC-deficient BALB/c mice generate CD8+ T cell-mediated protective immunity against Listeria monocytogenes infection. science scifact CD8(+) T cells are required for protective immunity against intracellular pathogens such as Listeria monocytogenes. In this study, we used class Ia MHC-deficient mice, which have a severe reduction in circulating CD8(+) T cells, to… 14934137 class-ia-mhc-deficient-balb/c-mice-generate-cd8+-t-cell-mediated-protective-immunity-against-listeria-monocytogenes-infection. class ia mhc deficient balb mice generate cd8 Class Ia MHC-deficient BALB/c mice generate CD8+ T cell-mediated protective immunity against Listeria monocytogenes infection. Class Ia MHC-deficient BALB/c mice generate CD8+ T cell-mediated protective immunity against Listeria monocytogenes infection. CD8(+) T cells are required for protective immunity against intracellular pathogens such as Listeria monocytogenes. In this study, we used class Ia MHC-deficient mice, which have a severe reduction in circulating CD8(+) T cells, to determine the protective capacity of class Ib MHC-restricted T cells during L. monocytogenes infection. The K(b-/-)D(b-/-) mutation was backcrossed onto a C.B10 (BALB/c congenic at H-2 locus with C57BL/10) background, because BALB/c mice are more susceptible to Listeria infection than other commonly studied mouse strains such as C57BL/6. C.B10 K(b-/-)D(b-/-) mice immunized with a sublethal dose of L. monocytogenes were fully protected ag",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.914693+00:00"
+}

@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "kp_id": "46764#29",
+  "source_fingerprint": "21c3c1206f88c916b5abd0c5028f4579",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "2011年印度人口普查"
+  ],
+  "aliases": [
+    "46764#29"
+  ],
+  "key_phrases": [
+    "韶关市",
+    "2011",
+    "全市",
+    "生产总值",
+    "gdp",
+    "813.95",
+    "亿元",
+    "其中"
+  ],
+  "summary_1l": "2011年全市生产总值（GDP）813.",
+  "query_hits": [],
+  "embed_text": "46764#29 韶关市 韶关市 2011年全市生产总值（GDP）813.95亿元，其中：第一产业增加值112.26亿元，第二产业增加值353.37亿元，第三产业增加值348.32亿元。三次产业结构为13.8:43.4:42.8。按常住人口计算，全市人均生产总值2.87万元。 2011年印度人口普查 46764#29 韶关市 2011 全市 生产总值 gdp 813.95 亿元 其中 2011年全市生产总值（GDP）813. 韶关市 2011年全市生产总值（GDP）813.95亿元，其中：第一产业增加值112.26亿元，第二产业增加值353.37亿元，第三产业增加值348.32亿元。三次产业结构为13.8:43.4:42.8。按常住人口计算，全市人均生产总值2.87万元。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:19:02.621811+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23639838",
+  "source_fingerprint": "9bcfb913e531bdb018ee02864e435c4e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23639838",
+    "surgical-resection-for-patients-with-solid-brain-metastases:-current-status"
+  ],
+  "key_phrases": [
+    "surgical",
+    "resection",
+    "patients",
+    "with",
+    "solid",
+    "brain",
+    "metastases",
+    "current"
+  ],
+  "summary_1l": "Brain metastases occur in up to 40% of patients with cancer.",
+  "query_hits": [],
+  "embed_text": "23639838 Surgical Resection for Patients with Solid Brain Metastases: Current Status science scifact Brain metastases occur in up to 40% of patients with cancer. Their management has been revolutionized in the last decade by three developments: improved imaging and detection of metastases, better treatment of systemic disease with the… 23639838 surgical-resection-for-patients-with-solid-brain-metastases:-current-status surgical resection patients with solid brain metastases current Brain metastases occur in up to 40% of patients with cancer. Surgical Resection for Patients with Solid Brain Metastases: Current Status Brain metastases occur in up to 40% of patients with cancer. Their management has been revolutionized in the last decade by three developments: improved imaging and detection of metastases, better treatment of systemic disease with the result that metastases occur more often; and improved surgical techniques including image-guided surgery to treat metastatic lesions. Class 1 data suggest that surgery is a better treatment for metastases than whole brain radiation. Other data suggest that metastases even in eloquent cortex can be removed safely. The complication rate is low and the recurrence rate is less than 10%. In general, indications for surgery include a mass with an unknown primary; a symptomatic mass includi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.903096+00:00"
+}

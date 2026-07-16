@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14806256",
+  "source_fingerprint": "123cdab7a0e3b31c2e5f1d5ad8eaa582",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14806256",
+    "hepatotoxicity-associated-with-antiretroviral-therapy-in-adults-infected-with-human-immunodeficiency-virus-and-the-role-of-hepatitis-c-or-b-virus-infection."
+  ],
+  "key_phrases": [
+    "hepatotoxicity",
+    "associated",
+    "with",
+    "antiretroviral",
+    "therapy",
+    "adults",
+    "infected",
+    "human"
+  ],
+  "summary_1l": "Hepatotoxicity associated with antiretroviral therapy in adults infected with human immunodeficiency virus and the role of hepatitis C or B virus infection.",
+  "query_hits": [],
+  "embed_text": "14806256 Hepatotoxicity associated with antiretroviral therapy in adults infected with human immunodeficiency virus and the role of hepatitis C or B virus infection. science scifact CONTEXT Use of antiretroviral drugs, including protease inhibitors, for treatment of human immunodeficiency virus (HIV) infection has been anecdotally associated with hepatotoxicity, particularly in persons coinfected with hepatitis C or B… 14806256 hepatotoxicity-associated-with-antiretroviral-therapy-in-adults-infected-with-human-immunodeficiency-virus-and-the-role-of-hepatitis-c-or-b-virus-infection. hepatotoxicity associated with antiretroviral therapy adults infected human Hepatotoxicity associated with antiretroviral therapy in adults infected with human immunodeficiency virus and the role of hepatitis C or B virus infection. Hepatotoxicity associated with antiretroviral therapy in adults infected with human immunodeficiency virus and the role of hepatitis C or B virus infection. CONTEXT Use of antiretroviral drugs, including protease inhibitors, for treatment of human immunodeficiency virus (HIV) infection has been anecdotally associated with hepatotoxicity, particularly in persons coinfected with hepatitis C or B virus. OBJECTIVES To ascertain if incidence of severe hepatotoxicity during antiretroviral therapy is similar for all antiretroviral drug combinations, and to define the role of chronic viral hepatitis in its development. DESIGN Prospective cohort study. SETTING University-based urban HIV clinic. PATIENTS A total of 298 patients who were prescribed new antiretroviral therapies between January 1996 an",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.675118+00:00"
+}

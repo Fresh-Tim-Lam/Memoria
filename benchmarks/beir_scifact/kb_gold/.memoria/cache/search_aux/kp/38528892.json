@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "38528892",
+  "source_fingerprint": "2499da13346bf0c6acd079a943f6c591",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "38528892",
+    "the-aurora-b-kinase-promotes-inner-and-outer-kinetochore-interactions-in-budding-yeast."
+  ],
+  "key_phrases": [
+    "aurora",
+    "kinase",
+    "promotes",
+    "inner",
+    "outer",
+    "kinetochore",
+    "interactions",
+    "budding"
+  ],
+  "summary_1l": "The aurora B kinase promotes inner and outer kinetochore interactions in budding yeast.",
+  "query_hits": [],
+  "embed_text": "38528892 The aurora B kinase promotes inner and outer kinetochore interactions in budding yeast. science scifact The kinetochore is the macromolecular protein complex that mediates chromosome segregation. The Dsn1 component is crucial for kinetochore assembly and is phosphorylated by the Aurora B kinase. We found that Aurora B phosphorylation of Dsn1… 38528892 the-aurora-b-kinase-promotes-inner-and-outer-kinetochore-interactions-in-budding-yeast. aurora kinase promotes inner outer kinetochore interactions budding The aurora B kinase promotes inner and outer kinetochore interactions in budding yeast. The aurora B kinase promotes inner and outer kinetochore interactions in budding yeast. The kinetochore is the macromolecular protein complex that mediates chromosome segregation. The Dsn1 component is crucial for kinetochore assembly and is phosphorylated by the Aurora B kinase. We found that Aurora B phosphorylation of Dsn1 promotes the interaction between outer and inner kinetochore proteins in budding yeast.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.605521+00:00"
+}

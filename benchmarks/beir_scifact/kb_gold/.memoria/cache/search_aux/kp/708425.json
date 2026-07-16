@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "708425",
+  "source_fingerprint": "cb77fd8848a1cd92c625fb5c2ff1eae8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "708425",
+    "intermittent-prophylaxis-with-oral-truvada-protects-macaques-from-rectal-shiv-infection."
+  ],
+  "key_phrases": [
+    "intermittent",
+    "prophylaxis",
+    "with",
+    "oral",
+    "truvada",
+    "protects",
+    "macaques",
+    "from"
+  ],
+  "summary_1l": "Intermittent prophylaxis with oral truvada protects macaques from rectal SHIV infection.",
+  "query_hits": [],
+  "embed_text": "708425 Intermittent prophylaxis with oral truvada protects macaques from rectal SHIV infection. science scifact HIV continues to spread globally, mainly through sexual contact. Despite advances in treatment and care, preventing transmission with vaccines or microbicides has proven difficult. A promising strategy to avoid transmission is prophylactic… 708425 intermittent-prophylaxis-with-oral-truvada-protects-macaques-from-rectal-shiv-infection. intermittent prophylaxis with oral truvada protects macaques from Intermittent prophylaxis with oral truvada protects macaques from rectal SHIV infection. Intermittent prophylaxis with oral truvada protects macaques from rectal SHIV infection. HIV continues to spread globally, mainly through sexual contact. Despite advances in treatment and care, preventing transmission with vaccines or microbicides has proven difficult. A promising strategy to avoid transmission is prophylactic treatment with antiretroviral drugs before exposure to HIV. Clinical trials evaluating the efficacy of daily treatment with the reverse transcriptase inhibitors tenofovir disoproxil fumarate (TDF) or Truvada (TDF plus emtricitabine) are under way. We hypothesized that intermittent prophylactic treatment with long-acting antiviral drugs would be as effective as daily dosing in blocking the earliest stages of viral replication and preventing mucosal transmission. We te",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.423570+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19572798",
+  "source_fingerprint": "fb8b753cf92d2b713f58e67251c782cd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19572798",
+    "compaction-of-chromatin-by-diverse-polycomb-group-proteins-requires-localized-regions-of-high-charge."
+  ],
+  "key_phrases": [
+    "compaction",
+    "chromatin",
+    "by",
+    "diverse",
+    "polycomb",
+    "group",
+    "proteins",
+    "requires"
+  ],
+  "summary_1l": "Compaction of chromatin by diverse Polycomb group proteins requires localized regions of high charge.",
+  "query_hits": [],
+  "embed_text": "19572798 Compaction of chromatin by diverse Polycomb group proteins requires localized regions of high charge. science scifact Polycomb group (PcG) proteins are required for the epigenetic maintenance of developmental genes in a silent state. Proteins in the Polycomb-repressive complex 1 (PRC1) class of the PcG are conserved from flies to humans and inhibit… 19572798 compaction-of-chromatin-by-diverse-polycomb-group-proteins-requires-localized-regions-of-high-charge. compaction chromatin by diverse polycomb group proteins requires Compaction of chromatin by diverse Polycomb group proteins requires localized regions of high charge. Compaction of chromatin by diverse Polycomb group proteins requires localized regions of high charge. Polycomb group (PcG) proteins are required for the epigenetic maintenance of developmental genes in a silent state. Proteins in the Polycomb-repressive complex 1 (PRC1) class of the PcG are conserved from flies to humans and inhibit transcription. One hypothesis for PRC1 mechanism is that it compacts chromatin, based in part on electron microscopy experiments demonstrating that Drosophila PRC1 compacts nucleosomal arrays. We show that this function is conserved between Drosophila and mouse PRC1 complexes and requires a region with an overrepresentation of basic amino acids. While the active region is found in the Posterior Sex Combs (PSC) subunit in Drosophila, it is unexpectedly found in",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.876288+00:00"
+}

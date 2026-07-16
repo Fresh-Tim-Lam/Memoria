@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24670522",
+  "source_fingerprint": "f1ee35e6a16ad4d1b76a7a501a3e60f1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24670522",
+    "r93w-mutation-in-orai1-causes-impaired-calcium-influx-in-platelets."
+  ],
+  "key_phrases": [
+    "r93w",
+    "mutation",
+    "orai1",
+    "causes",
+    "impaired",
+    "calcium",
+    "influx",
+    "platelets"
+  ],
+  "summary_1l": "R93W mutation in Orai1 causes impaired calcium influx in platelets.",
+  "query_hits": [],
+  "embed_text": "24670522 R93W mutation in Orai1 causes impaired calcium influx in platelets. science scifact The intracellular Ca(2+) concentration of many nonexcitable cells is regulated by calcium store release and store-operated calcium entry (SOCE). In platelets, STIM1 was recently identified as the main calcium sensor expressed in the… 24670522 r93w-mutation-in-orai1-causes-impaired-calcium-influx-in-platelets. r93w mutation orai1 causes impaired calcium influx platelets R93W mutation in Orai1 causes impaired calcium influx in platelets. R93W mutation in Orai1 causes impaired calcium influx in platelets. The intracellular Ca(2+) concentration of many nonexcitable cells is regulated by calcium store release and store-operated calcium entry (SOCE). In platelets, STIM1 was recently identified as the main calcium sensor expressed in the endoplasmic reticulum. To evaluate the role of the SOC channel moiety, Orai1, in platelet SOCE, we generated mice expressing a mutated, inactive form of Orai1 in blood cells only (Orai1(R93W)). Platelets expressing Orai1(R93W) were characterized by markedly reduced SOCE and impaired agonist-induced increases in [Ca(2+)](i). Orai1(R93W) platelets showed reduced integrin activation and impaired degranulation when stimulated with low agonist concentrations under static conditions. This defect, how",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.987615+00:00"
+}

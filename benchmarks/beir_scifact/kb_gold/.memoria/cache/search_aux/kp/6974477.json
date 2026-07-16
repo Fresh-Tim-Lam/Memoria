@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6974477",
+  "source_fingerprint": "4ad2a857663e0be7a4e15dafc70e0d42",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6974477",
+    "pep-fold:-an-updated-de-novo-structure-prediction-server-for-both-linear-and-disulfide-bonded-cyclic-peptides"
+  ],
+  "key_phrases": [
+    "pep",
+    "fold",
+    "updated",
+    "de",
+    "novo",
+    "structure",
+    "prediction",
+    "server"
+  ],
+  "summary_1l": "In the context of the renewed interest of peptides as therapeutics, it is important to hav",
+  "query_hits": [],
+  "embed_text": "6974477 PEP-FOLD: an updated de novo structure prediction server for both linear and disulfide bonded cyclic peptides science scifact In the context of the renewed interest of peptides as therapeutics, it is important to have an on-line resource for 3D structure prediction of peptides with well-defined structures in aqueous solution. We present an updated version of… 6974477 pep-fold:-an-updated-de-novo-structure-prediction-server-for-both-linear-and-disulfide-bonded-cyclic-peptides pep fold updated de novo structure prediction server In the context of the renewed interest of peptides as therapeutics, it is important to hav PEP-FOLD: an updated de novo structure prediction server for both linear and disulfide bonded cyclic peptides In the context of the renewed interest of peptides as therapeutics, it is important to have an on-line resource for 3D structure prediction of peptides with well-defined structures in aqueous solution. We present an updated version of PEP-FOLD allowing the treatment of both linear and disulphide bonded cyclic peptides with 9-36 amino acids. The server makes possible to define disulphide bonds and any residue-residue proximity under the guidance of the biologists. Using a benchmark of 34 cyclic peptides with one, two and three disulphide bonds, the best PEP-FOLD models deviate by an average RMS of 2.75 Å from the full NMR structures. Using a benchmark of 37 linear peptides, PEP-FOLD",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.143891+00:00"
+}

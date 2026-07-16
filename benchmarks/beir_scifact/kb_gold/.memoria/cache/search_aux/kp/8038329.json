@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8038329",
+  "source_fingerprint": "2535b0ff60a280b763e45893229ac6cc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8038329",
+    "role-of-cd28-b7-interactions-in-generation-and-maintenance-of-cd8-t-cell-memory."
+  ],
+  "key_phrases": [
+    "role",
+    "cd28",
+    "b7",
+    "interactions",
+    "generation",
+    "maintenance",
+    "cd8",
+    "cell"
+  ],
+  "summary_1l": "Role of CD28-B7 interactions in generation and maintenance of CD8 T cell memory.",
+  "query_hits": [],
+  "embed_text": "8038329 Role of CD28-B7 interactions in generation and maintenance of CD8 T cell memory. science scifact Although the role of CD28-B7 interaction in the activation of naive T cells is well established, its importance in the generation and maintenance of T cell memory is not well understood. In this study, we examined the requirement for… 8038329 role-of-cd28-b7-interactions-in-generation-and-maintenance-of-cd8-t-cell-memory. role cd28 b7 interactions generation maintenance cd8 cell Role of CD28-B7 interactions in generation and maintenance of CD8 T cell memory. Role of CD28-B7 interactions in generation and maintenance of CD8 T cell memory. Although the role of CD28-B7 interaction in the activation of naive T cells is well established, its importance in the generation and maintenance of T cell memory is not well understood. In this study, we examined the requirement for CD28-B7 interactions in primary T cell activation and immune memory. Ag-specific CD8 T cell responses were compared between wild-type (+/+) and CD28-deficient (CD28(-/-)) mice following an acute infection with lymphocytic choriomeningitis virus (LCMV). During the primary response, there was a substantial activation and expansion of LCMV-specific CD8 T cells in both +/+ and CD28(-/-) mice. However, the magnitude of the primary CD8 T cell response to both dominant and subdominant LC",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.781582+00:00"
+}

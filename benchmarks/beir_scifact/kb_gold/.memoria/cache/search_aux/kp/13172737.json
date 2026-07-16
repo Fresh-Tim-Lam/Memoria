@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13172737",
+  "source_fingerprint": "011a82de391b1198aee46a6925d5140f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13172737",
+    "cystine/glutamate-exchange-regulates-metabotropic-glutamate-receptor-presynaptic-inhibition-of-excitatory-transmission-and-vulnerability-to-cocaine-seeking."
+  ],
+  "key_phrases": [
+    "cystine",
+    "glutamate",
+    "exchange",
+    "regulates",
+    "metabotropic",
+    "receptor",
+    "presynaptic",
+    "inhibition"
+  ],
+  "summary_1l": "Cystine/glutamate exchange regulates metabotropic glutamate receptor presynaptic inhibition of excitatory transmission and vulnerability to cocaine seeking.",
+  "query_hits": [],
+  "embed_text": "13172737 Cystine/glutamate exchange regulates metabotropic glutamate receptor presynaptic inhibition of excitatory transmission and vulnerability to cocaine seeking. science scifact Withdrawal from chronic cocaine reduces extracellular glutamate levels in the nucleus accumbens by decreasing cystine/glutamate exchange (xc-). Activating xc- with N-acetylcysteine restores extracellular glutamate and prevents… 13172737 cystine/glutamate-exchange-regulates-metabotropic-glutamate-receptor-presynaptic-inhibition-of-excitatory-transmission-and-vulnerability-to-cocaine-seeking. cystine glutamate exchange regulates metabotropic receptor presynaptic inhibition Cystine/glutamate exchange regulates metabotropic glutamate receptor presynaptic inhibition of excitatory transmission and vulnerability to cocaine seeking. Cystine/glutamate exchange regulates metabotropic glutamate receptor presynaptic inhibition of excitatory transmission and vulnerability to cocaine seeking. Withdrawal from chronic cocaine reduces extracellular glutamate levels in the nucleus accumbens by decreasing cystine/glutamate exchange (xc-). Activating xc- with N-acetylcysteine restores extracellular glutamate and prevents cocaine-induced drug seeking. It was hypothesized that the activation of xc- prevents drug seeking by increasing glutamatergic tone on presynaptic group II metabotropic glutamate receptors (mGluR2/3) and thereby inhibiting excitatory transmission. In the first experiment, the capacity of glutamate derived from xc- to regulate excitatory transmission via mGluR2/3 was determined. Physiological levels of cystine (10",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:09.730979+00:00"
+}

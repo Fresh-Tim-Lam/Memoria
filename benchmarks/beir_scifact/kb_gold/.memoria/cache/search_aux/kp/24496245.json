@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24496245",
+  "source_fingerprint": "2ee293b25d1e2de730b2c048f2844eae",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24496245",
+    "selective-enhancement-of-endothelial-bmpr-ii-with-bmp9-reverses-pulmonary-arterial-hypertension"
+  ],
+  "key_phrases": [
+    "selective",
+    "enhancement",
+    "endothelial",
+    "bmpr",
+    "ii",
+    "with",
+    "bmp9",
+    "reverses"
+  ],
+  "summary_1l": "Genetic evidence implicates the loss of bone morphogenetic protein type II receptor (BMPR-II) signaling",
+  "query_hits": [],
+  "embed_text": "24496245 Selective enhancement of endothelial BMPR-II with BMP9 reverses pulmonary arterial hypertension science scifact Genetic evidence implicates the loss of bone morphogenetic protein type II receptor (BMPR-II) signaling in the endothelium as an initiating factor in pulmonary arterial hypertension (PAH). However, selective targeting of this signaling… 24496245 selective-enhancement-of-endothelial-bmpr-ii-with-bmp9-reverses-pulmonary-arterial-hypertension selective enhancement endothelial bmpr ii with bmp9 reverses Genetic evidence implicates the loss of bone morphogenetic protein type II receptor (BMPR-II) signaling Selective enhancement of endothelial BMPR-II with BMP9 reverses pulmonary arterial hypertension Genetic evidence implicates the loss of bone morphogenetic protein type II receptor (BMPR-II) signaling in the endothelium as an initiating factor in pulmonary arterial hypertension (PAH). However, selective targeting of this signaling pathway using BMP ligands has not yet been explored as a therapeutic strategy. Here, we identify BMP9 as the preferred ligand for preventing apoptosis and enhancing monolayer integrity in both pulmonary arterial endothelial cells and blood outgrowth endothelial cells from subjects with PAH who bear mutations in the gene encoding BMPR-II, BMPR2. Mice bearing a heterozygous knock-in allele of a human BMPR2 mutation, R899X, which we generated as an animal model of PA",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.529263+00:00"
+}

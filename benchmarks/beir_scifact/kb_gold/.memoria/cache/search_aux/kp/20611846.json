@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20611846",
+  "source_fingerprint": "c00c8c5ce56db7936c6c9b6ffc56a788",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20611846",
+    "influence-of-cigarette-smoking-on-inhaled-corticosteroid-treatment-in-mild-asthma."
+  ],
+  "key_phrases": [
+    "influence",
+    "cigarette",
+    "smoking",
+    "inhaled",
+    "corticosteroid",
+    "treatment",
+    "mild",
+    "asthma"
+  ],
+  "summary_1l": "Influence of cigarette smoking on inhaled corticosteroid treatment in mild asthma.",
+  "query_hits": [],
+  "embed_text": "20611846 Influence of cigarette smoking on inhaled corticosteroid treatment in mild asthma. science scifact BACKGROUND Although inhaled corticosteroids have an established role in the treatment of asthma, studies have tended to concentrate on non-smokers and little is known about the possible effect of cigarette smoking on the efficacy of… 20611846 influence-of-cigarette-smoking-on-inhaled-corticosteroid-treatment-in-mild-asthma. influence cigarette smoking inhaled corticosteroid treatment mild asthma Influence of cigarette smoking on inhaled corticosteroid treatment in mild asthma. Influence of cigarette smoking on inhaled corticosteroid treatment in mild asthma. BACKGROUND Although inhaled corticosteroids have an established role in the treatment of asthma, studies have tended to concentrate on non-smokers and little is known about the possible effect of cigarette smoking on the efficacy of treatment with inhaled steroids in asthma. A study was undertaken to investigate the effect of active cigarette smoking on responses to treatment with inhaled corticosteroids in patients with mild asthma. METHODS The effect of treatment with inhaled fluticasone propionate (1000 microg daily) or placebo for 3 weeks was studied in a double blind, prospective, randomised, placebo controlled study of 38 steroid naïve adult asthmatic patients (21 non-smokers). Efficacy was assessed us",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.622993+00:00"
+}

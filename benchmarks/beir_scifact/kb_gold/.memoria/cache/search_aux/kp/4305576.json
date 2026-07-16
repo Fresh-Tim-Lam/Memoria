@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4305576",
+  "source_fingerprint": "46b30597a281c7140fedad69ec6ddf26",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4305576",
+    "chromatin-remodelling-at-promoters-suppresses-antisense-transcription"
+  ],
+  "key_phrases": [
+    "chromatin",
+    "remodelling",
+    "at",
+    "promoters",
+    "suppresses",
+    "antisense",
+    "transcription",
+    "allows"
+  ],
+  "summary_1l": "Chromatin allows the eukaryotic cell to package its DNA efficiently.",
+  "query_hits": [],
+  "embed_text": "4305576 Chromatin remodelling at promoters suppresses antisense transcription science scifact Chromatin allows the eukaryotic cell to package its DNA efficiently. To understand how chromatin structure is controlled across the Saccharomyces cerevisiae genome, we have investigated the role of the ATP-dependent chromatin remodelling… 4305576 chromatin-remodelling-at-promoters-suppresses-antisense-transcription chromatin remodelling at promoters suppresses antisense transcription allows Chromatin allows the eukaryotic cell to package its DNA efficiently. Chromatin remodelling at promoters suppresses antisense transcription Chromatin allows the eukaryotic cell to package its DNA efficiently. To understand how chromatin structure is controlled across the Saccharomyces cerevisiae genome, we have investigated the role of the ATP-dependent chromatin remodelling complex Isw2 in positioning nucleosomes. We find that Isw2 functions adjacent to promoter regions where it repositions nucleosomes at the interface between genic and intergenic sequences. Nucleosome repositioning by Isw2 is directional and results in increased nucleosome occupancy of the intergenic region. Loss of Isw2 activity leads to inappropriate transcription, resulting in the generation of both coding and noncoding transcripts. Here we show that Isw2 repositions nucleosomes to enfo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.430665+00:00"
+}

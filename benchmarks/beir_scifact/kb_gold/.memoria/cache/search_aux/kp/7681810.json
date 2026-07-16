@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7681810",
+  "source_fingerprint": "74ae8d42b47fda9c6f3c175ba15c8190",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7681810",
+    "nusap-is-essential-for-chromatin-induced-spindle-formation-during-early-embryogenesis."
+  ],
+  "key_phrases": [
+    "nusap",
+    "essential",
+    "chromatin",
+    "induced",
+    "spindle",
+    "formation",
+    "during",
+    "early"
+  ],
+  "summary_1l": "NuSAP is essential for chromatin-induced spindle formation during early embryogenesis.",
+  "query_hits": [],
+  "embed_text": "7681810 NuSAP is essential for chromatin-induced spindle formation during early embryogenesis. science scifact Mitotic spindle assembly is mediated by two processes: a centrosomal and a chromosomal pathway. RanGTP regulates the latter process by releasing microtubule-associated proteins from inhibitory complexes. NuSAP, a microtubule- and… 7681810 nusap-is-essential-for-chromatin-induced-spindle-formation-during-early-embryogenesis. nusap essential chromatin induced spindle formation during early NuSAP is essential for chromatin-induced spindle formation during early embryogenesis. NuSAP is essential for chromatin-induced spindle formation during early embryogenesis. Mitotic spindle assembly is mediated by two processes: a centrosomal and a chromosomal pathway. RanGTP regulates the latter process by releasing microtubule-associated proteins from inhibitory complexes. NuSAP, a microtubule- and DNA-binding protein, is a target of RanGTP and promotes the formation of microtubules near chromosomes. However, the contribution of NuSAP to cell proliferation in vivo is unknown. Here, we demonstrate that the expression of NuSAP highly correlates with cell proliferation during embryogenesis and adult life, making it a reliable marker of proliferating cells. Additionally, we show that NuSAP deficiency in mice leads to early embryonic lethality. Spindle assembly in NuSAP-deficie",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.010893+00:00"
+}

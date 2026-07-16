@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "40323148",
+  "source_fingerprint": "f4b8eac8724cfab08fefa07a63f0666e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "40323148",
+    "infection-and-apoptosis-as-a-combined-inflammatory-trigger."
+  ],
+  "key_phrases": [
+    "infection",
+    "apoptosis",
+    "as",
+    "combined",
+    "inflammatory",
+    "trigger",
+    "while",
+    "phagocytosis"
+  ],
+  "summary_1l": "Infection and apoptosis as a combined inflammatory trigger.",
+  "query_hits": [],
+  "embed_text": "40323148 Infection and apoptosis as a combined inflammatory trigger. science scifact While inflammatory phagocytosis of microbial pathogens and non-inflammatory phagocytosis of apoptotic cells have each been studied extensively, the consequences of innate immune recognition of host cells undergoing apoptosis as a direct… 40323148 infection-and-apoptosis-as-a-combined-inflammatory-trigger. infection apoptosis as combined inflammatory trigger while phagocytosis Infection and apoptosis as a combined inflammatory trigger. Infection and apoptosis as a combined inflammatory trigger. While inflammatory phagocytosis of microbial pathogens and non-inflammatory phagocytosis of apoptotic cells have each been studied extensively, the consequences of innate immune recognition of host cells undergoing apoptosis as a direct result of infection are unclear. In this situation, the innate immune system is confronted with mixed signals, those from apoptotic cells and those from the infecting pathogen. Nuclear receptor activation has been implicated downstream of apoptotic cell recognition while Toll-like receptors are the prototypical inflammatory receptors engaged during infection. When the two signals combine, a new set of events takes place beginning with transrepression of a subset of inflammatory-response genes and e",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.413008+00:00"
+}

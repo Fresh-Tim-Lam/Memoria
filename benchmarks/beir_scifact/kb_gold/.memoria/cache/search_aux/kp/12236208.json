@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12236208",
+  "source_fingerprint": "e4aee8079cc4006317a1aa345b9b9b81",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12236208",
+    "hormone-replacement-therapy-prevents-bone-loss-in-patients-with-inflammatory-bowel-disease."
+  ],
+  "key_phrases": [
+    "hormone",
+    "replacement",
+    "therapy",
+    "prevents",
+    "bone",
+    "loss",
+    "patients",
+    "with"
+  ],
+  "summary_1l": "Hormone replacement therapy prevents bone loss in patients with inflammatory bowel disease.",
+  "query_hits": [],
+  "embed_text": "12236208 Hormone replacement therapy prevents bone loss in patients with inflammatory bowel disease. science scifact Patients with inflammatory bowel disease have an increased prevalence of osteoporosis, and suffer high rates of spinal bone loss. Hormone replacement therapy (HRT) is effective in the treatment and prevention of osteoporosis but has not… 12236208 hormone-replacement-therapy-prevents-bone-loss-in-patients-with-inflammatory-bowel-disease. hormone replacement therapy prevents bone loss patients with Hormone replacement therapy prevents bone loss in patients with inflammatory bowel disease. Hormone replacement therapy prevents bone loss in patients with inflammatory bowel disease. Patients with inflammatory bowel disease have an increased prevalence of osteoporosis, and suffer high rates of spinal bone loss. Hormone replacement therapy (HRT) is effective in the treatment and prevention of osteoporosis but has not been studied in patients with inflammatory bowel disease. A two year prospective study of HRT in inflammatory bowel disease was performed in 47 postmenopausal women aged 44 to 67 years with ulcerative colitis (25) or Crohn's disease (22). Patients had radial and spinal bone density measured annually by single photon absorptiometry and quantitative computed tomography respectively. The mean (95% confidence intervals) annual change in radial bone density was +1.42%/yr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:08.035828+00:00"
+}

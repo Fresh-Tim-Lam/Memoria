@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "4999633",
+  "source_fingerprint": "b02d0ae50eda8fa12b2788ab15da2010",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4999633"
+  ],
+  "key_phrases": [
+    "membrane",
+    "estrogen",
+    "receptor",
+    "levels",
+    "mcf",
+    "breast",
+    "cancer",
+    "cells"
+  ],
+  "summary_1l": "17β-estradiol (E2) can rapidly induce cAMP production, but the conditions under which these cA",
+  "query_hits": [],
+  "embed_text": "4999633 Membrane estrogen receptor-α levels in MCF-7 breast cancer cells predict cAMP and proliferation responses science scifact 17β-estradiol (E2) can rapidly induce cAMP production, but the conditions under which these cAMP levels are best measured and the signaling pathways responsible for the consequent proliferative effects on breast cancer cells are not fully… 4999633 membrane estrogen receptor levels mcf breast cancer cells 17β-estradiol (E2) can rapidly induce cAMP production, but the conditions under which these cA Membrane estrogen receptor-α levels in MCF-7 breast cancer cells predict cAMP and proliferation responses 17β-estradiol (E2) can rapidly induce cAMP production, but the conditions under which these cAMP levels are best measured and the signaling pathways responsible for the consequent proliferative effects on breast cancer cells are not fully understood. To help resolve these issues, we compared cAMP mechanistic responses in MCF-7 cell lines selected for low (mERlow) and high (mERhigh) expression of the membrane form of estrogen receptor (mER)-α, and thus addressed the receptor subform involved in cAMP signaling. MCF-7 cells were immunopanned and subsequently separated by fluorescence activated cell sorting into mERhigh (mER-α-enriched) and mERlow (mER-α-depleted) populations. Unique (comp",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.990262+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7640792",
+  "source_fingerprint": "96e333559a47d96ab75ebdd07bdfa23a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7640792",
+    "sex-differences-in-mortality-following-acute-coronary-syndromes."
+  ],
+  "key_phrases": [
+    "sex",
+    "differences",
+    "mortality",
+    "following",
+    "acute",
+    "coronary",
+    "syndromes",
+    "context"
+  ],
+  "summary_1l": "Sex differences in mortality following acute coronary syndromes.",
+  "query_hits": [],
+  "embed_text": "7640792 Sex differences in mortality following acute coronary syndromes. science scifact CONTEXT Conflicting information exists about whether sex differences modulate short-term mortality following acute coronary syndromes (ACS). OBJECTIVES To investigate the relationship between sex and 30-day mortality in ACS, and to… 7640792 sex-differences-in-mortality-following-acute-coronary-syndromes. sex differences mortality following acute coronary syndromes context Sex differences in mortality following acute coronary syndromes. Sex differences in mortality following acute coronary syndromes. CONTEXT Conflicting information exists about whether sex differences modulate short-term mortality following acute coronary syndromes (ACS). OBJECTIVES To investigate the relationship between sex and 30-day mortality in ACS, and to determine whether this relationship was modified by clinical syndrome or coronary anatomy using a large database across the spectrum of ACS and adjusting for potentially confounding clinical covariates. DESIGN, SETTING, AND PARTICIPANTS A convenience sample of patients pooled from 11 independent, international, randomized ACS clinical trials between 1993 and 2006 whose databases are maintained at the Duke Clinical Research Institute, Durham, North Carolina. Of 136 247 patients, 38 048 (28%) were wo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.862420+00:00"
+}

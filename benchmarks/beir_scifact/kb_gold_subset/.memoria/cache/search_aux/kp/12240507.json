@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "12240507",
+  "source_fingerprint": "588fedafe5835147dc78c2bae2abd8bc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12240507"
+  ],
+  "key_phrases": [
+    "disruption",
+    "5s",
+    "rnp",
+    "mdm2",
+    "interaction",
+    "significantly",
+    "improves",
+    "erythroid"
+  ],
+  "summary_1l": "Diamond-Blackfan anemia (DBA) is a congenital erythroid hypoplasia ca",
+  "query_hits": [],
+  "embed_text": "12240507 Disruption of the 5S RNP–Mdm2 interaction significantly improves the erythroid defect in a mouse model for Diamond-Blackfan anemia science scifact Diamond-Blackfan anemia (DBA) is a congenital erythroid hypoplasia caused by haploinsufficiency of genes encoding ribosomal proteins (RPs). Perturbed ribosome biogenesis in DBA has been shown to induce a p53-mediated ribosomal stress… 12240507 disruption 5s rnp mdm2 interaction significantly improves erythroid Diamond-Blackfan anemia (DBA) is a congenital erythroid hypoplasia ca Disruption of the 5S RNP–Mdm2 interaction significantly improves the erythroid defect in a mouse model for Diamond-Blackfan anemia Diamond-Blackfan anemia (DBA) is a congenital erythroid hypoplasia caused by haploinsufficiency of genes encoding ribosomal proteins (RPs). Perturbed ribosome biogenesis in DBA has been shown to induce a p53-mediated ribosomal stress response. However, the mechanisms of p53 activation and its relevance for the erythroid defect remain elusive. Previous studies have indicated that activation of p53 is caused by the inhibition of mouse double minute 2 (Mdm2), the main negative regulator of p53, by the 5S ribonucleoprotein particle (RNP). Meanwhile, it is not clear whether this mechanism solely mediates the p53-dependent component found in DBA. To approach this que",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:08.573071+00:00"
+}

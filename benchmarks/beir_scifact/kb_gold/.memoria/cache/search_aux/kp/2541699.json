@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2541699",
+  "source_fingerprint": "99967eb807ae5db12d7d8fef680fd23d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2541699",
+    "a-nuclear-argonaute-promotes-multi-generational-epigenetic-inheritance-and-germline-immortality"
+  ],
+  "key_phrases": [
+    "nuclear",
+    "argonaute",
+    "promotes",
+    "multi",
+    "generational",
+    "epigenetic",
+    "inheritance",
+    "germline"
+  ],
+  "summary_1l": "Epigenetic information is frequently erased near the start of each new generation.",
+  "query_hits": [],
+  "embed_text": "2541699 A nuclear Argonaute promotes multi-generational epigenetic inheritance and germline immortality science scifact Epigenetic information is frequently erased near the start of each new generation. In some cases, however, epigenetic information can be transmitted from parent to progeny (multigenerational epigenetic inheritance). A particularly notable… 2541699 a-nuclear-argonaute-promotes-multi-generational-epigenetic-inheritance-and-germline-immortality nuclear argonaute promotes multi generational epigenetic inheritance germline Epigenetic information is frequently erased near the start of each new generation. A nuclear Argonaute promotes multi-generational epigenetic inheritance and germline immortality Epigenetic information is frequently erased near the start of each new generation. In some cases, however, epigenetic information can be transmitted from parent to progeny (multigenerational epigenetic inheritance). A particularly notable example of this type of epigenetic inheritance is double-stranded RNA-mediated gene silencing in Caenorhabditis elegans. This RNA-mediated interference (RNAi) can be inherited for more than five generations. To understand this process, here we conduct a genetic screen for nematodes defective in transmitting RNAi silencing signals to future generations. This screen identified the heritable RNAi defective 1 (hrde-1) gene. hrde-1 encodes an Argonaute protein that",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.560461+00:00"
+}

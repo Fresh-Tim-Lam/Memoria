@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21719289",
+  "source_fingerprint": "8c960d31947ee1c37b770199c772b4e7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21719289",
+    "cd64-expression-distinguishes-monocyte-derived-and-conventional-dendritic-cells-and-reveals-their-distinct-role-during-intramuscular-immunization."
+  ],
+  "key_phrases": [
+    "cd64",
+    "expression",
+    "distinguishes",
+    "monocyte",
+    "derived",
+    "conventional",
+    "dendritic",
+    "cells"
+  ],
+  "summary_1l": "CD64 expression distinguishes monocyte-derived and conventional dendritic cells and reveals their distinct role during intramuscular immunization.",
+  "query_hits": [],
+  "embed_text": "21719289 CD64 expression distinguishes monocyte-derived and conventional dendritic cells and reveals their distinct role during intramuscular immunization. science scifact Although most vaccines are administered i.m., little is known about the dendritic cells (DCs) that are present within skeletal muscles. In this article, we show that expression of CD64, the high-affinity IgG receptor FcγRI, distinguishes… 21719289 cd64-expression-distinguishes-monocyte-derived-and-conventional-dendritic-cells-and-reveals-their-distinct-role-during-intramuscular-immunization. cd64 expression distinguishes monocyte derived conventional dendritic cells CD64 expression distinguishes monocyte-derived and conventional dendritic cells and reveals their distinct role during intramuscular immunization. CD64 expression distinguishes monocyte-derived and conventional dendritic cells and reveals their distinct role during intramuscular immunization. Although most vaccines are administered i.m., little is known about the dendritic cells (DCs) that are present within skeletal muscles. In this article, we show that expression of CD64, the high-affinity IgG receptor FcγRI, distinguishes conventional DCs from monocyte-derived DCs (Mo-DCs). By using such a discriminatory marker, we defined the distinct DC subsets that reside in skeletal muscles and identified their migratory counterparts in draining lymph nodes (LNs). We further used this capability to analyze the functional specialization that exists among muscle DCs. After i.m. administration of Ag adsorbed to alum, we showed that alum-injected",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.663574+00:00"
+}

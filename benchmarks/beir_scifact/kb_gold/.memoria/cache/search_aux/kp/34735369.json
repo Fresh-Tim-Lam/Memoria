@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "34735369",
+  "source_fingerprint": "6664aa2b2dec4769dd285ca4c994ff1d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "34735369",
+    "actin-dynamics-and-cell-cell-adhesion-in-epithelia."
+  ],
+  "key_phrases": [
+    "actin",
+    "dynamics",
+    "cell",
+    "adhesion",
+    "epithelia",
+    "recent",
+    "advances",
+    "field"
+  ],
+  "summary_1l": "Actin dynamics and cell-cell adhesion in epithelia.",
+  "query_hits": [],
+  "embed_text": "34735369 Actin dynamics and cell-cell adhesion in epithelia. science scifact Recent advances in the field of intercellular adhesion highlight the importance of adherens junction association with the underlying actin cytoskeleton. In skin epithelial cells a dynamic feature of adherens junction formation involves… 34735369 actin-dynamics-and-cell-cell-adhesion-in-epithelia. actin dynamics cell adhesion epithelia recent advances field Actin dynamics and cell-cell adhesion in epithelia. Actin dynamics and cell-cell adhesion in epithelia. Recent advances in the field of intercellular adhesion highlight the importance of adherens junction association with the underlying actin cytoskeleton. In skin epithelial cells a dynamic feature of adherens junction formation involves filopodia, which physically project into the membrane of adjacent cells, catalyzing the clustering of adherens junction protein complexes at their tips. In turn, actin polymerization is stimulated at the cytoplasmic interface of these complexes. Although the mechanism remains unclear, the VASP/Mena family of proteins seems to be involved in organizing actin polymerization at these sites. In vivo, adherens junction formation appears to rely upon filopodia in processes where epithelial sheets must be physical",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.708406+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22405338",
+  "source_fingerprint": "dc8fee8f88db2ac80443374a1be2bedc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22405338",
+    "cnn1-inhibits-the-interactions-between-the-kmn-complexes-of-the-yeast-kinetochore"
+  ],
+  "key_phrases": [
+    "cnn1",
+    "inhibits",
+    "interactions",
+    "between",
+    "kmn",
+    "complexes",
+    "yeast",
+    "kinetochore"
+  ],
+  "summary_1l": "Kinetochores attach the replicated chromosomes to the mitotic spindle and orchestrate their transmission to the daught",
+  "query_hits": [],
+  "embed_text": "22405338 Cnn1 inhibits the interactions between the KMN complexes of the yeast kinetochore science scifact Kinetochores attach the replicated chromosomes to the mitotic spindle and orchestrate their transmission to the daughter cells. Kinetochore–spindle binding and chromosome segregation are mediated by the multi-copy KNL1Spc105, MIS12Mtw1 and… 22405338 cnn1-inhibits-the-interactions-between-the-kmn-complexes-of-the-yeast-kinetochore cnn1 inhibits interactions between kmn complexes yeast kinetochore Kinetochores attach the replicated chromosomes to the mitotic spindle and orchestrate their transmission to the daught Cnn1 inhibits the interactions between the KMN complexes of the yeast kinetochore Kinetochores attach the replicated chromosomes to the mitotic spindle and orchestrate their transmission to the daughter cells. Kinetochore–spindle binding and chromosome segregation are mediated by the multi-copy KNL1Spc105, MIS12Mtw1 and NDC80Ndc80 complexes that form the so-called KMN network. KMN–spindle attachment is regulated by the Aurora BIpl1 and MPS1Mps1 kinases. It is unclear whether other mechanisms exist that support KMN activity during the cell cycle. Using budding yeast, we show that kinetochore protein Cnn1 localizes to the base of the Ndc80 complex and promotes a functionally competent configuration of the KMN network. Cnn1 regulates KMN activity in a spatiotemporal manner by inhibiting the i",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.661697+00:00"
+}

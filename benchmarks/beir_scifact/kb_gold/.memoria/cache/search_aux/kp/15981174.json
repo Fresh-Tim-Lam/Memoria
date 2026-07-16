@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15981174",
+  "source_fingerprint": "5b79d312e9119008b50077bfebe5a385",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15981174",
+    "pf4-cre-transgenic-mice-allow-the-generation-of-lineage-restricted-gene-knockouts-for-studying-megakaryocyte-and-platelet-function-in-vivo."
+  ],
+  "key_phrases": [
+    "pf4",
+    "cre",
+    "transgenic",
+    "mice",
+    "allow",
+    "generation",
+    "lineage",
+    "restricted"
+  ],
+  "summary_1l": "Pf4-Cre transgenic mice allow the generation of lineage-restricted gene knockouts for studying megakaryocyte and platelet function in vivo.",
+  "query_hits": [],
+  "embed_text": "15981174 Pf4-Cre transgenic mice allow the generation of lineage-restricted gene knockouts for studying megakaryocyte and platelet function in vivo. science scifact To generate transgenic mice that express Cre-recombinase exclusively in the megakaryocytic lineage, we modified a mouse bacterial artificial chromosome (BAC) clone by homologous recombination and replaced the first exon of the platelet… 15981174 pf4-cre-transgenic-mice-allow-the-generation-of-lineage-restricted-gene-knockouts-for-studying-megakaryocyte-and-platelet-function-in-vivo. pf4 cre transgenic mice allow generation lineage restricted Pf4-Cre transgenic mice allow the generation of lineage-restricted gene knockouts for studying megakaryocyte and platelet function in vivo. Pf4-Cre transgenic mice allow the generation of lineage-restricted gene knockouts for studying megakaryocyte and platelet function in vivo. To generate transgenic mice that express Cre-recombinase exclusively in the megakaryocytic lineage, we modified a mouse bacterial artificial chromosome (BAC) clone by homologous recombination and replaced the first exon of the platelet factor 4 (Pf4), also called CXCL4, with a codon-improved Cre cDNA. Several strains expressing the transgene were obtained and one strain, Q3, was studied in detail. Crossing Q3 mice with the ROSA26-lacZ reporter strain showed that Cre-recombinase activity was confined to megakaryocytes. These results were further verified by crossing the Q3 mice with a strain containing loxP-flanked integrin beta1. Excision of this condi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.631797+00:00"
+}

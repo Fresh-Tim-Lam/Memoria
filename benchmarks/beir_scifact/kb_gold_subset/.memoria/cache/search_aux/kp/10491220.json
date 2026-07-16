@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10491220",
+  "source_fingerprint": "74e41913be7b1025f9992641d8fa5bdc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10491220",
+    "the-dhr96-nuclear-receptor-regulates-xenobiotic-responses-in-drosophila."
+  ],
+  "key_phrases": [
+    "dhr96",
+    "nuclear",
+    "receptor",
+    "regulates",
+    "xenobiotic",
+    "responses",
+    "drosophila",
+    "exposure"
+  ],
+  "summary_1l": "The DHR96 nuclear receptor regulates xenobiotic responses in Drosophila.",
+  "query_hits": [],
+  "embed_text": "10491220 The DHR96 nuclear receptor regulates xenobiotic responses in Drosophila. science scifact Exposure to xenobiotics such as plant toxins, pollutants, or prescription drugs triggers a defense response, inducing genes that encode key detoxification enzymes. Although xenobiotic responses have been studied in vertebrates, little… 10491220 the-dhr96-nuclear-receptor-regulates-xenobiotic-responses-in-drosophila. dhr96 nuclear receptor regulates xenobiotic responses drosophila exposure The DHR96 nuclear receptor regulates xenobiotic responses in Drosophila. The DHR96 nuclear receptor regulates xenobiotic responses in Drosophila. Exposure to xenobiotics such as plant toxins, pollutants, or prescription drugs triggers a defense response, inducing genes that encode key detoxification enzymes. Although xenobiotic responses have been studied in vertebrates, little effort has been made to exploit a simple genetic system for characterizing the molecular basis of this coordinated transcriptional response. We show here that approximately 1000 transcripts are significantly affected by phenobarbital treatment in Drosophila. We also demonstrate that the Drosophila ortholog of the human SXR and CAR xenobiotic receptors, DHR96, plays a role in this response. A DHR96 null mutant displays increased sensitivity to the sedative effects of phenobarbital and the",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.604964+00:00"
+}

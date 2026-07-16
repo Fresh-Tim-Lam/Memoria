@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "23974474",
+  "source_fingerprint": "11e5e7056ac52b6541cc97dbcd2912bc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23974474"
+  ],
+  "key_phrases": [
+    "pkd1",
+    "inhibits",
+    "ampk",
+    "through",
+    "phosphorylation",
+    "serine",
+    "491",
+    "impairs"
+  ],
+  "summary_1l": "PKD1 Inhibits AMPKα2 through Phosphorylation of Serine 491 and Impairs Insulin Signaling in Skeletal Muscle Cells.",
+  "query_hits": [],
+  "embed_text": "23974474 PKD1 Inhibits AMPKα2 through Phosphorylation of Serine 491 and Impairs Insulin Signaling in Skeletal Muscle Cells. science scifact AMP-activated protein kinase (AMPK) is an energy-sensing enzyme whose activity is inhibited in settings of insulin resistance. Exposure to a high glucose concentration has recently been shown to increase phosphorylation of AMPK at… 23974474 pkd1 inhibits ampk through phosphorylation serine 491 impairs PKD1 Inhibits AMPKα2 through Phosphorylation of Serine 491 and Impairs Insulin Signaling in Skeletal Muscle Cells. PKD1 Inhibits AMPKα2 through Phosphorylation of Serine 491 and Impairs Insulin Signaling in Skeletal Muscle Cells. AMP-activated protein kinase (AMPK) is an energy-sensing enzyme whose activity is inhibited in settings of insulin resistance. Exposure to a high glucose concentration has recently been shown to increase phosphorylation of AMPK at Ser(485/491) of its α1/α2 subunit; however, the mechanism by which it does so is not known. Diacylglycerol (DAG), which is also increased in muscle exposed to high glucose, activates a number of signaling molecules including protein kinase (PK)C and PKD1. We sought to determine whether PKC or PKD1 is involved in inhibition of AMPK by causing Ser(485/491) phosphorylation in skeletal muscle cells. C2C12 myotubes were treated with the PKC/D1 activator p",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.570266+00:00"
+}

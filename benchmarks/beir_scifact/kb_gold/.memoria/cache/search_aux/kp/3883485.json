@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3883485",
+  "source_fingerprint": "04c73d56eb39809ddbb673b91305aa3f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3883485",
+    "genetic-drift-can-compromise-mitochondrial-replacement-by-nuclear-transfer-in-human-oocytes."
+  ],
+  "key_phrases": [
+    "genetic",
+    "drift",
+    "can",
+    "compromise",
+    "mitochondrial",
+    "replacement",
+    "by",
+    "nuclear"
+  ],
+  "summary_1l": "Genetic Drift Can Compromise Mitochondrial Replacement by Nuclear Transfer in Human Oocytes.",
+  "query_hits": [],
+  "embed_text": "3883485 Genetic Drift Can Compromise Mitochondrial Replacement by Nuclear Transfer in Human Oocytes. science scifact Replacement of mitochondria through nuclear transfer between oocytes of two different women has emerged recently as a strategy for preventing inheritance of mtDNA diseases. Although experiments in human oocytes have shown effective… 3883485 genetic-drift-can-compromise-mitochondrial-replacement-by-nuclear-transfer-in-human-oocytes. genetic drift can compromise mitochondrial replacement by nuclear Genetic Drift Can Compromise Mitochondrial Replacement by Nuclear Transfer in Human Oocytes. Genetic Drift Can Compromise Mitochondrial Replacement by Nuclear Transfer in Human Oocytes. Replacement of mitochondria through nuclear transfer between oocytes of two different women has emerged recently as a strategy for preventing inheritance of mtDNA diseases. Although experiments in human oocytes have shown effective replacement, the consequences of small amounts of mtDNA carryover have not been studied sufficiently. Using human mitochondrial replacement stem cell lines, we show that, even though the low levels of heteroplasmy introduced into human oocytes by mitochondrial carryover during nuclear transfer often vanish, they can sometimes instead result in mtDNA genotypic drift and reversion to the original genotype. Comparison of cells with identical oocyte-derived nuclear DNA but d",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.047407+00:00"
+}

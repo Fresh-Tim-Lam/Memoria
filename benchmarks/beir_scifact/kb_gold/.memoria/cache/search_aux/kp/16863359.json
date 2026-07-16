@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "16863359",
+  "source_fingerprint": "ed0d2b942393c34d9665b0400a3677ef",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16863359"
+  ],
+  "key_phrases": [
+    "inflammasome",
+    "induced",
+    "il",
+    "secretion",
+    "microglia",
+    "characterized",
+    "by",
+    "delayed"
+  ],
+  "summary_1l": "Inflammasome-induced IL-1β secretion in microglia is characterized by delayed kinetics and is only partially dependent on inflammatory caspases.",
+  "query_hits": [],
+  "embed_text": "16863359 Inflammasome-induced IL-1β secretion in microglia is characterized by delayed kinetics and is only partially dependent on inflammatory caspases. science scifact Inflammasomes are multiprotein complexes that link pathogen recognition and cellular stress to the processing of the proinflammatory cytokine interleukin-1β (IL-1β). Whereas inflammasome-mediated activation is heavily studied in… 16863359 inflammasome induced il secretion microglia characterized by delayed Inflammasome-induced IL-1β secretion in microglia is characterized by delayed kinetics and is only partially dependent on inflammatory caspases. Inflammasome-induced IL-1β secretion in microglia is characterized by delayed kinetics and is only partially dependent on inflammatory caspases. Inflammasomes are multiprotein complexes that link pathogen recognition and cellular stress to the processing of the proinflammatory cytokine interleukin-1β (IL-1β). Whereas inflammasome-mediated activation is heavily studied in hematopoietic macrophages and dendritic cells, much less is known about microglia, resident tissue macrophages of the brain that originate from a distinct progenitor. To directly compare inflammasome-mediated activation in different types of macrophages, we isolated primary microglia and hematopoietic macrophages from adult, healthy rhesus macaques. We analyzed the expression profile of NOD (nucleotide-binding oligomerizat",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.964815+00:00"
+}

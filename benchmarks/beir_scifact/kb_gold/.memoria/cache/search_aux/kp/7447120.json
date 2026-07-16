@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7447120",
+  "source_fingerprint": "276d4b81a839e97a2628e43abab66d24",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7447120",
+    "novel-proteinaceous-infectious-particles-cause-scrapie."
+  ],
+  "key_phrases": [
+    "novel",
+    "proteinaceous",
+    "infectious",
+    "particles",
+    "cause",
+    "scrapie",
+    "after",
+    "infection"
+  ],
+  "summary_1l": "Novel proteinaceous infectious particles cause scrapie.",
+  "query_hits": [],
+  "embed_text": "7447120 Novel proteinaceous infectious particles cause scrapie. science scifact After infection and a prolonged incubation period, the scrapie agent causes a degenerative disease of the central nervous system in sheep and goats. Six lines of evidence including sensitivity to proteases demonstrate that this agent… 7447120 novel-proteinaceous-infectious-particles-cause-scrapie. novel proteinaceous infectious particles cause scrapie after infection Novel proteinaceous infectious particles cause scrapie. Novel proteinaceous infectious particles cause scrapie. After infection and a prolonged incubation period, the scrapie agent causes a degenerative disease of the central nervous system in sheep and goats. Six lines of evidence including sensitivity to proteases demonstrate that this agent contains a protein that is required for infectivity. Although the scrapie agent is irreversibly inactivated by alkali, five procedures with more specificity for modifying nucleic acids failed to cause inactivation. The agent shows heterogeneity with respect to size, apparently a result of its hydrophobicity; the smallest form may have a molecular weight of 50,000 or less. Because the novel properties of the scrapie agent distinguish it from viruses, plasmids, and viroids, a new term \"prion\" is proposed to",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.314987+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "40608679",
+  "source_fingerprint": "3bc9e3813faa97675871e5a9c1df2534",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "40608679",
+    "sustained-survivin-expression-from-ox40-costimulatory-signals-drives-t-cell-clonal-expansion."
+  ],
+  "key_phrases": [
+    "sustained",
+    "survivin",
+    "expression",
+    "from",
+    "ox40",
+    "costimulatory",
+    "signals",
+    "drives"
+  ],
+  "summary_1l": "Sustained survivin expression from OX40 costimulatory signals drives T cell clonal expansion.",
+  "query_hits": [],
+  "embed_text": "40608679 Sustained survivin expression from OX40 costimulatory signals drives T cell clonal expansion. science scifact Sustained signaling from the T cell receptor (TCR) and costimulatory molecules is thought necessary for generating high numbers of effector T cells. Here, we show that Survivin is controlled in peripheral T cells by OX40 cosignaling via… 40608679 sustained-survivin-expression-from-ox40-costimulatory-signals-drives-t-cell-clonal-expansion. sustained survivin expression from ox40 costimulatory signals drives Sustained survivin expression from OX40 costimulatory signals drives T cell clonal expansion. Sustained survivin expression from OX40 costimulatory signals drives T cell clonal expansion. Sustained signaling from the T cell receptor (TCR) and costimulatory molecules is thought necessary for generating high numbers of effector T cells. Here, we show that Survivin is controlled in peripheral T cells by OX40 cosignaling via sustained PI3k and PKB activation. Survivin is induced by OX40 independent of mitotic progression in late G1, and blocking Survivin suppresses S-phase transition and division of T cells and leads to apoptosis. Moreover, Survivin expression alone is sufficient to restore proliferation and to antagonize apoptosis in costimulation-deficient T cells and can rescue T cell expansion in vivo. Survivin allows effector T cells to accumulate in large numbers, but Bcl-2 famil",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.652051+00:00"
+}

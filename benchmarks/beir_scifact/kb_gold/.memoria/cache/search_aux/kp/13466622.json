@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "13466622",
+  "source_fingerprint": "6dd01ee131abd0777f067575eb3d35f2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13466622"
+  ],
+  "key_phrases": [
+    "metformin",
+    "mode",
+    "action",
+    "clinical",
+    "implications",
+    "diabetes",
+    "cancer",
+    "has"
+  ],
+  "summary_1l": "Metformin has been the mainstay of therapy for diabetes mellitus for many years; however, the mechanistic aspects of metformi",
+  "query_hits": [],
+  "embed_text": "13466622 Metformin—mode of action and clinical implications for diabetes and cancer science scifact Metformin has been the mainstay of therapy for diabetes mellitus for many years; however, the mechanistic aspects of metformin action remained ill-defined. Recent advances revealed that this drug, in addition to its glucose-lowering… 13466622 metformin mode action clinical implications diabetes cancer has Metformin has been the mainstay of therapy for diabetes mellitus for many years; however, the mechanistic aspects of metformi Metformin—mode of action and clinical implications for diabetes and cancer Metformin has been the mainstay of therapy for diabetes mellitus for many years; however, the mechanistic aspects of metformin action remained ill-defined. Recent advances revealed that this drug, in addition to its glucose-lowering action, might be promising for specifically targeting metabolic differences between normal and abnormal metabolic signalling. The knowledge gained from dissecting the principal mechanisms by which metformin works can help us to develop novel treatments. The centre of metformin's mechanism of action is the alteration of the energy metabolism of the cell. Metformin exerts its prevailing, glucose-lowering effect by inhibiting hepatic gluconeogenesis and opposing the action of glucagon. The",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.326706+00:00"
+}

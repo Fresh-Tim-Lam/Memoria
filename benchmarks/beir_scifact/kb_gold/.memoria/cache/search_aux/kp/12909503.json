@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12909503",
+  "source_fingerprint": "0078742b944daa569c9df2aec55857b2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12909503",
+    "distinct-roles-for-dna-pk,-atm-and-atr-in-rpa-phosphorylation-and-checkpoint-activation-in-response-to-replication-stress"
+  ],
+  "key_phrases": [
+    "distinct",
+    "roles",
+    "dna",
+    "pk",
+    "atm",
+    "atr",
+    "rpa",
+    "phosphorylation"
+  ],
+  "summary_1l": "DNA damage encountered by DNA replication forks poses risks of genome destabil",
+  "query_hits": [],
+  "embed_text": "12909503 Distinct roles for DNA-PK, ATM and ATR in RPA phosphorylation and checkpoint activation in response to replication stress science scifact DNA damage encountered by DNA replication forks poses risks of genome destabilization, a precursor to carcinogenesis. Damage checkpoint systems cause cell cycle arrest, promote repair and induce programed cell death when damage is severe.… 12909503 distinct-roles-for-dna-pk,-atm-and-atr-in-rpa-phosphorylation-and-checkpoint-activation-in-response-to-replication-stress distinct roles dna pk atm atr rpa phosphorylation DNA damage encountered by DNA replication forks poses risks of genome destabil Distinct roles for DNA-PK, ATM and ATR in RPA phosphorylation and checkpoint activation in response to replication stress DNA damage encountered by DNA replication forks poses risks of genome destabilization, a precursor to carcinogenesis. Damage checkpoint systems cause cell cycle arrest, promote repair and induce programed cell death when damage is severe. Checkpoints are critical parts of the DNA damage response network that act to suppress cancer. DNA damage and perturbation of replication machinery causes replication stress, characterized by accumulation of single-stranded DNA bound by replication protein A (RPA), which triggers activation of ataxia telangiectasia and Rad3 related (ATR) and phosphorylation of the RPA32, subunit of RPA, leading to Chk1 activation and arrest. DNA-depend",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:09.281155+00:00"
+}

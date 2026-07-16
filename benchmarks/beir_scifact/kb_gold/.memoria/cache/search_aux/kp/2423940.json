@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2423940",
+  "source_fingerprint": "725990eccb2a9d9aa12115b01e6f14c4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2423940",
+    "the-drosophila-dhr96-nuclear-receptor-binds-cholesterol-and-regulates-cholesterol-homeostasis."
+  ],
+  "key_phrases": [
+    "drosophila",
+    "dhr96",
+    "nuclear",
+    "receptor",
+    "binds",
+    "cholesterol",
+    "regulates",
+    "homeostasis"
+  ],
+  "summary_1l": "The Drosophila DHR96 nuclear receptor binds cholesterol and regulates cholesterol homeostasis.",
+  "query_hits": [],
+  "embed_text": "2423940 The Drosophila DHR96 nuclear receptor binds cholesterol and regulates cholesterol homeostasis. science scifact Cholesterol homeostasis is required to maintain normal cellular function and avoid the deleterious effects of hypercholesterolemia. Here we show that the Drosophila DHR96 nuclear receptor binds cholesterol and is required for the… 2423940 the-drosophila-dhr96-nuclear-receptor-binds-cholesterol-and-regulates-cholesterol-homeostasis. drosophila dhr96 nuclear receptor binds cholesterol regulates homeostasis The Drosophila DHR96 nuclear receptor binds cholesterol and regulates cholesterol homeostasis. The Drosophila DHR96 nuclear receptor binds cholesterol and regulates cholesterol homeostasis. Cholesterol homeostasis is required to maintain normal cellular function and avoid the deleterious effects of hypercholesterolemia. Here we show that the Drosophila DHR96 nuclear receptor binds cholesterol and is required for the coordinate transcriptional response of genes that are regulated by cholesterol and involved in cholesterol uptake, trafficking, and storage. DHR96 mutants die when grown on low levels of cholesterol and accumulate excess cholesterol when maintained on a high-cholesterol diet. The cholesterol accumulation phenotype can be attributed to misregulation of npc1b, an ortholog of the mammalian Niemann-Pick C1-like 1 gene NPC1L1, which is essential for dietary cholesterol uptake",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.016087+00:00"
+}

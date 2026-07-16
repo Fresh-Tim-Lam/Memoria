@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "33118292",
+  "source_fingerprint": "2f854c0f649da066860dd89cd2dd5961",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "33118292",
+    "optimal-therapy-for-reduction-of-lipoprotein(a)."
+  ],
+  "key_phrases": [
+    "optimal",
+    "therapy",
+    "reduction",
+    "lipoprotein",
+    "what",
+    "known",
+    "objective",
+    "there"
+  ],
+  "summary_1l": "Optimal therapy for reduction of lipoprotein(a).",
+  "query_hits": [],
+  "embed_text": "33118292 Optimal therapy for reduction of lipoprotein(a). science scifact WHAT IS KNOWN AND OBJECTIVE There is a growing body of experimental and clinical evidence for the atherogenic and pro-thrombotic potential of Lipoprotein(a) [Lp(a)], as well as for its causative role in coronary heart disease and stroke.… 33118292 optimal-therapy-for-reduction-of-lipoprotein(a). optimal therapy reduction lipoprotein what known objective there Optimal therapy for reduction of lipoprotein(a). Optimal therapy for reduction of lipoprotein(a). WHAT IS KNOWN AND OBJECTIVE There is a growing body of experimental and clinical evidence for the atherogenic and pro-thrombotic potential of Lipoprotein(a) [Lp(a)], as well as for its causative role in coronary heart disease and stroke. We comment on novel strategies for reducing Lp(a) levels. COMMENT Irrespective of the underlying biological mechanisms explaining the athero-thrombotic potential of this lipoprotein, most work has focused on the identification of suitable therapies for hyperlipoproteinemia(a). These include apheresis techniques, nicotinic acid and statins. None of these strategies have been shown to be definitely effective or convenient for the patient and new strategies are being attempted. Promising results are emerging wi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.220985+00:00"
+}

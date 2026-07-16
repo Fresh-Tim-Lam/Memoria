@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1834762",
+  "source_fingerprint": "a77bd5ab804335bdb1825abaf71c3400",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1834762",
+    "amyloid-dna-composites-of-bacterial-biofilms-stimulate-autoimmunity."
+  ],
+  "key_phrases": [
+    "amyloid",
+    "dna",
+    "composites",
+    "bacterial",
+    "biofilms",
+    "stimulate",
+    "autoimmunity",
+    "research"
+  ],
+  "summary_1l": "Amyloid-DNA Composites of Bacterial Biofilms Stimulate Autoimmunity.",
+  "query_hits": [],
+  "embed_text": "1834762 Amyloid-DNA Composites of Bacterial Biofilms Stimulate Autoimmunity. science scifact Research on the human microbiome has established that commensal and pathogenic bacteria can influence obesity, cancer, and autoimmunity through mechanisms mostly unknown. We found that a component of bacterial biofilms, the amyloid protein… 1834762 amyloid-dna-composites-of-bacterial-biofilms-stimulate-autoimmunity. amyloid dna composites bacterial biofilms stimulate autoimmunity research Amyloid-DNA Composites of Bacterial Biofilms Stimulate Autoimmunity. Amyloid-DNA Composites of Bacterial Biofilms Stimulate Autoimmunity. Research on the human microbiome has established that commensal and pathogenic bacteria can influence obesity, cancer, and autoimmunity through mechanisms mostly unknown. We found that a component of bacterial biofilms, the amyloid protein curli, irreversibly formed fibers with bacterial DNA during biofilm formation. This interaction accelerated amyloid polymerization and created potent immunogenic complexes that activated immune cells, including dendritic cells, to produce cytokines such as type I interferons, which are pathogenic in systemic lupus erythematosus (SLE). When given systemically, curli-DNA composites triggered immune activation and production of autoantibodies in lupus-prone and wild-type mice. We also foun",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:12.019779+00:00"
+}

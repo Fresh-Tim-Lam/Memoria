@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20732789",
+  "source_fingerprint": "79d11af9ccf521b8995487cfdd792ea5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20732789",
+    "chronic-obstructive-pulmonary-disease-and-neutrophil-infiltration:-role-of-cigarette-smoke-and-cyclooxygenase-products."
+  ],
+  "key_phrases": [
+    "chronic",
+    "obstructive",
+    "pulmonary",
+    "disease",
+    "neutrophil",
+    "infiltration",
+    "role",
+    "cigarette"
+  ],
+  "summary_1l": "Chronic obstructive pulmonary disease and neutrophil infiltration: role of cigarette smoke and cyclooxygenase products.",
+  "query_hits": [],
+  "embed_text": "20732789 Chronic obstructive pulmonary disease and neutrophil infiltration: role of cigarette smoke and cyclooxygenase products. science scifact Cigarette smoke is the main cause of chronic obstructive pulmonary disease (COPD), where it can contribute to the observed airway inflammation. PGE(2) is produced within human airways, and both pro- and anti-inflammatory activities have… 20732789 chronic-obstructive-pulmonary-disease-and-neutrophil-infiltration:-role-of-cigarette-smoke-and-cyclooxygenase-products. chronic obstructive pulmonary disease neutrophil infiltration role cigarette Chronic obstructive pulmonary disease and neutrophil infiltration: role of cigarette smoke and cyclooxygenase products. Chronic obstructive pulmonary disease and neutrophil infiltration: role of cigarette smoke and cyclooxygenase products. Cigarette smoke is the main cause of chronic obstructive pulmonary disease (COPD), where it can contribute to the observed airway inflammation. PGE(2) is produced within human airways, and both pro- and anti-inflammatory activities have been reported. We quantitated PGE(2) concentrations in induced sputum supernatants from different groups of subjects and correlated the obtained values to neutrophil infiltration as well as to the expression of cyclooxygenase-2 (COX-2). Cigarette smoke extract (CSE) was used to evaluate the effect of smoking on COX-2 and PGE(2) receptor expression as well as on PGE(2) release in neutrophils and alveolar macrophages (AM) obtained from norma",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.838657+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10555591",
+  "source_fingerprint": "54c9bdb643b0619424c2f3347327a7aa",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10555591",
+    "the-actions-of-synaptically-released-zinc-at-hippocampal-mossy-fiber-synapses"
+  ],
+  "key_phrases": [
+    "actions",
+    "synaptically",
+    "released",
+    "zinc",
+    "at",
+    "hippocampal",
+    "mossy",
+    "fiber"
+  ],
+  "summary_1l": "Zn2+ is present at high concentrations in the synaptic vesicles of hippocampal mossy fibers.",
+  "query_hits": [],
+  "embed_text": "10555591 The Actions of Synaptically Released Zinc at Hippocampal Mossy Fiber Synapses science scifact Zn2+ is present at high concentrations in the synaptic vesicles of hippocampal mossy fibers. We have used Zn2+ chelators and the mocha mutant mouse to address the physiological role of Zn2+ in this pathway. Zn2+ is not involved in the… 10555591 the-actions-of-synaptically-released-zinc-at-hippocampal-mossy-fiber-synapses actions synaptically released zinc at hippocampal mossy fiber Zn2+ is present at high concentrations in the synaptic vesicles of hippocampal mossy fibers. The Actions of Synaptically Released Zinc at Hippocampal Mossy Fiber Synapses Zn2+ is present at high concentrations in the synaptic vesicles of hippocampal mossy fibers. We have used Zn2+ chelators and the mocha mutant mouse to address the physiological role of Zn2+ in this pathway. Zn2+ is not involved in the unique presynaptic plasticities observed at mossy fiber synapses but is coreleased with glutamate from these synapses, both spontaneously and with electrical stimulation, where it exerts a strong modulatory effect on the NMDA receptors. Zn2+ tonically occupies the high-affinity binding site of NMDA receptors at mossy fiber synapses, whereas the lower affinity voltage-dependent Zn2+ binding site is occupied during action potential driven-release. We conclude that Zn2+ is a modulatory",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.685636+00:00"
+}

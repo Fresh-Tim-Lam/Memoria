@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "28069701",
+  "source_fingerprint": "3e80ddde57ed08024e52d41f6be78035",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "28069701",
+    "detecting-selective-sweeps:-a-new-approach-based-on-hidden-markov-models."
+  ],
+  "key_phrases": [
+    "detecting",
+    "selective",
+    "sweeps",
+    "new",
+    "approach",
+    "based",
+    "hidden",
+    "markov"
+  ],
+  "summary_1l": "Detecting selective sweeps: a new approach based on hidden markov models.",
+  "query_hits": [],
+  "embed_text": "28069701 Detecting selective sweeps: a new approach based on hidden markov models. science scifact Detecting and localizing selective sweeps on the basis of SNP data has recently received considerable attention. Here we introduce the use of hidden Markov models (HMMs) for the detection of selective sweeps in DNA sequences. Like… 28069701 detecting-selective-sweeps:-a-new-approach-based-on-hidden-markov-models. detecting selective sweeps new approach based hidden markov Detecting selective sweeps: a new approach based on hidden markov models. Detecting selective sweeps: a new approach based on hidden markov models. Detecting and localizing selective sweeps on the basis of SNP data has recently received considerable attention. Here we introduce the use of hidden Markov models (HMMs) for the detection of selective sweeps in DNA sequences. Like previously published methods, our HMMs use the site frequency spectrum, and the spatial pattern of diversity along the sequence, to identify selection. In contrast to earlier approaches, our HMMs explicitly model the correlation structure between linked sites. The detection power of our methods, and their accuracy for estimating the selected site location, is similar to that of competing methods for constant size populations. In the case of population bottlenecks, however, our methods frequ",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.550782+00:00"
+}

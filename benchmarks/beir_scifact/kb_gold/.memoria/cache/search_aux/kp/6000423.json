@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6000423",
+  "source_fingerprint": "38ca3b01867ad1a0021c1a6b3654e370",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6000423",
+    "the-nlrp3-inflammasome-functions-as-a-driver-of-the-myelodysplastic-syndrome-phenotype."
+  ],
+  "key_phrases": [
+    "nlrp3",
+    "inflammasome",
+    "functions",
+    "as",
+    "driver",
+    "myelodysplastic",
+    "syndrome",
+    "phenotype"
+  ],
+  "summary_1l": "The NLRP3 inflammasome functions as a driver of the myelodysplastic syndrome phenotype.",
+  "query_hits": [],
+  "embed_text": "6000423 The NLRP3 inflammasome functions as a driver of the myelodysplastic syndrome phenotype. science scifact Despite genetic heterogeneity, myelodysplastic syndromes (MDSs) share features of cytological dysplasia and ineffective hematopoiesis. We report that a hallmark of MDSs is activation of the NLRP3 inflammasome, which drives clonal expansion… 6000423 the-nlrp3-inflammasome-functions-as-a-driver-of-the-myelodysplastic-syndrome-phenotype. nlrp3 inflammasome functions as driver myelodysplastic syndrome phenotype The NLRP3 inflammasome functions as a driver of the myelodysplastic syndrome phenotype. The NLRP3 inflammasome functions as a driver of the myelodysplastic syndrome phenotype. Despite genetic heterogeneity, myelodysplastic syndromes (MDSs) share features of cytological dysplasia and ineffective hematopoiesis. We report that a hallmark of MDSs is activation of the NLRP3 inflammasome, which drives clonal expansion and pyroptotic cell death. Independent of genotype, MDS hematopoietic stem and progenitor cells (HSPCs) overexpress inflammasome proteins and manifest activated NLRP3 complexes that direct activation of caspase-1, generation of interleukin-1β (IL-1β) and IL-18, and pyroptotic cell death. Mechanistically, pyroptosis is triggered by the alarmin S100A9 that is found in excess in MDS HSPCs and bone marrow plasma. Further, like somatic gene mutations, S100A9-induced signal",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.679933+00:00"
+}

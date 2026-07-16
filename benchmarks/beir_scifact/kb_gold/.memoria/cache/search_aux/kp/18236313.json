@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18236313",
+  "source_fingerprint": "18d8174facfa0803ad4d215569518670",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18236313",
+    "ultrafast-evolution-and-loss-of-crisprs-following-a-host-shift-in-a-novel-wildlife-pathogen,-mycoplasma-gallisepticum"
+  ],
+  "key_phrases": [
+    "ultrafast",
+    "evolution",
+    "loss",
+    "crisprs",
+    "following",
+    "host",
+    "shift",
+    "novel"
+  ],
+  "summary_1l": "Measureable rates of genome evolution are well documented in human pathogens but a",
+  "query_hits": [],
+  "embed_text": "18236313 Ultrafast Evolution and Loss of CRISPRs Following a Host Shift in a Novel Wildlife Pathogen, Mycoplasma gallisepticum science scifact Measureable rates of genome evolution are well documented in human pathogens but are less well understood in bacterial pathogens in the wild, particularly during and after host switches. Mycoplasma gallisepticum (MG) is a pathogenic… 18236313 ultrafast-evolution-and-loss-of-crisprs-following-a-host-shift-in-a-novel-wildlife-pathogen,-mycoplasma-gallisepticum ultrafast evolution loss crisprs following host shift novel Measureable rates of genome evolution are well documented in human pathogens but a Ultrafast Evolution and Loss of CRISPRs Following a Host Shift in a Novel Wildlife Pathogen, Mycoplasma gallisepticum Measureable rates of genome evolution are well documented in human pathogens but are less well understood in bacterial pathogens in the wild, particularly during and after host switches. Mycoplasma gallisepticum (MG) is a pathogenic bacterium that has evolved predominantly in poultry and recently jumped to wild house finches (Carpodacus mexicanus), a common North American songbird. For the first time we characterize the genome and measure rates of genome evolution in House Finch isolates of MG, as well as in poultry outgroups. Using whole-genome sequences of 12 House Finch isolates across a 13-year serial sample and an additional four newly sequenced poultry strains, we est",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.961732+00:00"
+}

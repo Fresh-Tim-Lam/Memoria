@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36399109",
+  "source_fingerprint": "80c0bb4d9001397416819ddf64b0ca81",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36399109",
+    "genome-wide-rnai-screen-of-ca(2+)-influx-identifies-genes-that-regulate-ca(2+)-release-activated-ca(2+)-channel-activity."
+  ],
+  "key_phrases": [
+    "genome",
+    "wide",
+    "rnai",
+    "screen",
+    "ca",
+    "influx",
+    "identifies",
+    "genes"
+  ],
+  "summary_1l": "Genome-wide RNAi screen of Ca(2+) influx identifies genes that regulate Ca(2+) release-activated Ca(2+) channel activity.",
+  "query_hits": [],
+  "embed_text": "36399109 Genome-wide RNAi screen of Ca(2+) influx identifies genes that regulate Ca(2+) release-activated Ca(2+) channel activity. science scifact Recent studies by our group and others demonstrated a required and conserved role of Stim in store-operated Ca(2+) influx and Ca(2+) release-activated Ca(2+) (CRAC) channel activity. By using an unbiased genome-wide RNA interference screen… 36399109 genome-wide-rnai-screen-of-ca(2+)-influx-identifies-genes-that-regulate-ca(2+)-release-activated-ca(2+)-channel-activity. genome wide rnai screen ca influx identifies genes Genome-wide RNAi screen of Ca(2+) influx identifies genes that regulate Ca(2+) release-activated Ca(2+) channel activity. Genome-wide RNAi screen of Ca(2+) influx identifies genes that regulate Ca(2+) release-activated Ca(2+) channel activity. Recent studies by our group and others demonstrated a required and conserved role of Stim in store-operated Ca(2+) influx and Ca(2+) release-activated Ca(2+) (CRAC) channel activity. By using an unbiased genome-wide RNA interference screen in Drosophila S2 cells, we now identify 75 hits that strongly inhibited Ca(2+) influx upon store emptying by thapsigargin. Among these hits are 11 predicted transmembrane proteins, including Stim, and one, olf186-F, that upon RNA interference-mediated knockdown exhibited a profound reduction of thapsigargin-evoked Ca(2+) entry and CRAC current, and upon overexpression a 3-fold augmentation of CRAC current. CRAC currents were further i",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:43.219444+00:00"
+}

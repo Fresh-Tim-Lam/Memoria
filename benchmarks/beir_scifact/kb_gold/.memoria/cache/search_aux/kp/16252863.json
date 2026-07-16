@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16252863",
+  "source_fingerprint": "0097b82aedc37ef8f8770113f3cf0de9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16252863",
+    "preventing-coronary-heart-disease:-b-vitamins-and-homocysteine."
+  ],
+  "key_phrases": [
+    "preventing",
+    "coronary",
+    "heart",
+    "disease",
+    "vitamins",
+    "homocysteine",
+    "list",
+    "preventable"
+  ],
+  "summary_1l": "Preventing coronary heart disease: B vitamins and homocysteine.",
+  "query_hits": [],
+  "embed_text": "16252863 Preventing coronary heart disease: B vitamins and homocysteine. science scifact The list of preventable and reversible risk factors for atherosclerotic cardiovascular disease continues to grow. Cigarette smoking, high blood pressure, physical inactivity, elevated cholesterol, underlying lipoprotein abnormalities,… 16252863 preventing-coronary-heart-disease:-b-vitamins-and-homocysteine. preventing coronary heart disease vitamins homocysteine list preventable Preventing coronary heart disease: B vitamins and homocysteine. Preventing coronary heart disease: B vitamins and homocysteine. The list of preventable and reversible risk factors for atherosclerotic cardiovascular disease continues to grow. Cigarette smoking, high blood pressure, physical inactivity, elevated cholesterol, underlying lipoprotein abnormalities, lipoprotein(a), diabetes, overweight, male gender, and age are well-established risk factors. During the 1990s, there have been many reports associating elevated plasma homocysteine levels with arteriosclerotic cardiovascular disease and consistent evidence that dietary and supplemental folic acid can reduce homocysteine levels.1 2 The article by Robinson and colleagues3 in this issue of Circulation presents further evidence of the importance of homocysteine and suggestive evidence that plasma fo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.014867+00:00"
+}

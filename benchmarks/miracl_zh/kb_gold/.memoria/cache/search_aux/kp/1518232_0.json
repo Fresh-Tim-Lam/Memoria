@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "1518232#0",
+  "source_fingerprint": "ba910edc035d5b975fda54ec70c34c71",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1518232#0"
+  ],
+  "key_phrases": [
+    "心跳",
+    "过速",
+    "tachycardia",
+    "tachyarrhythmia",
+    "过快",
+    "速度",
+    "超出",
+    "正常"
+  ],
+  "summary_1l": "心跳过速（tachycardia、tachyarrhythmia），也稱心跳过快，是指心跳速度超出正常范围。",
+  "query_hits": [],
+  "embed_text": "1518232#0 心跳过速 心跳过速 心跳过速（tachycardia、tachyarrhythmia），也稱心跳过快，是指心跳速度超出正常范围。一般來說，成年人在靜止狀態下心跳达到每分钟一百下以上即屬心跳過速。剧烈的体育运动、紧张、焦虑或服用某些药物等可能会造成生理上的心跳过速，而心血管疾病、贫血、甲亢等疾病则会造成病理性心跳过速。 1518232#0 心跳 过速 tachycardia tachyarrhythmia 过快 速度 超出 正常 心跳过速（tachycardia、tachyarrhythmia），也稱心跳过快，是指心跳速度超出正常范围。 心跳过速 心跳过速（tachycardia、tachyarrhythmia），也稱心跳过快，是指心跳速度超出正常范围。一般來說，成年人在靜止狀態下心跳达到每分钟一百下以上即屬心跳過速。剧烈的体育运动、紧张、焦虑或服用某些药物等可能会造成生理上的心跳过速，而心血管疾病、贫血、甲亢等疾病则会造成病理性心跳过速。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:21:31.290133+00:00"
+}

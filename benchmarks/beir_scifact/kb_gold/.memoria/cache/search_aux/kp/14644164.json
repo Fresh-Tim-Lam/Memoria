@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14644164",
+  "source_fingerprint": "90096ef6eb66575c7299945ce22d993b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14644164",
+    "tlr-activated-b-cells-suppress-t-cell-mediated-autoimmunity."
+  ],
+  "key_phrases": [
+    "tlr",
+    "activated",
+    "cells",
+    "suppress",
+    "cell",
+    "mediated",
+    "autoimmunity",
+    "sense"
+  ],
+  "summary_1l": "TLR-activated B cells suppress T cell-mediated autoimmunity.",
+  "query_hits": [],
+  "embed_text": "14644164 TLR-activated B cells suppress T cell-mediated autoimmunity. science scifact TLR sense microbial infections, and control activation of immune responses. Dendritic cells, macrophages, and B lymphocytes express TLR and the TLR-signaling adaptor protein MyD88. The impact of TLR-activated B cells on T cell-mediated… 14644164 tlr-activated-b-cells-suppress-t-cell-mediated-autoimmunity. tlr activated cells suppress cell mediated autoimmunity sense TLR-activated B cells suppress T cell-mediated autoimmunity. TLR-activated B cells suppress T cell-mediated autoimmunity. TLR sense microbial infections, and control activation of immune responses. Dendritic cells, macrophages, and B lymphocytes express TLR and the TLR-signaling adaptor protein MyD88. The impact of TLR-activated B cells on T cell-mediated inflammation is unknown. In this study, we have used mice carrying B cell-restricted deficiencies in MyD88 or in distinct TLR to examine the impact of TLR-activated B cells on a T cell-mediated autoimmune disease, experimental autoimmune encephalomyelitis (EAE). We demonstrate that TLR-signaling in B cells suppresses inflammatory T cell responses (both Th1 and Th17), and stimulates recovery from EAE. Only certain TLR are required on B cells for resolution of EAE, and these are dispensable for disea",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.313271+00:00"
+}

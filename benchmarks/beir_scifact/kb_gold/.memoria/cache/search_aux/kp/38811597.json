@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "38811597",
+  "source_fingerprint": "d00a97d2554d44dde4beae3993f58168",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "38811597",
+    "effect-of-cyclic-amp-dependent-protein-phosphorylating-conditions-on-the-ph-dependent-activity-of-tyrosine-hydroxylase-from-beef-and-rat-striata."
+  ],
+  "key_phrases": [
+    "effect",
+    "cyclic",
+    "amp",
+    "dependent",
+    "protein",
+    "phosphorylating",
+    "conditions",
+    "ph"
+  ],
+  "summary_1l": "Effect of cyclic AMP-dependent protein phosphorylating conditions on the pH-dependent activity of tyrosine hydroxylase from beef and rat striata.",
+  "query_hits": [],
+  "embed_text": "38811597 Effect of cyclic AMP-dependent protein phosphorylating conditions on the pH-dependent activity of tyrosine hydroxylase from beef and rat striata. science scifact Tyrosine hydroxylase (TH, EC 1.14.16.2) from beef brain striata was purified 23-fold from an extract of an acetone powder. If this enzyme preparation is treated with a cyclic AMP[-dependent protein phosphorylation system, there is a change… 38811597 effect-of-cyclic-amp-dependent-protein-phosphorylating-conditions-on-the-ph-dependent-activity-of-tyrosine-hydroxylase-from-beef-and-rat-striata. effect cyclic amp dependent protein phosphorylating conditions ph Effect of cyclic AMP-dependent protein phosphorylating conditions on the pH-dependent activity of tyrosine hydroxylase from beef and rat striata. Effect of cyclic AMP-dependent protein phosphorylating conditions on the pH-dependent activity of tyrosine hydroxylase from beef and rat striata. Tyrosine hydroxylase (TH, EC 1.14.16.2) from beef brain striata was purified 23-fold from an extract of an acetone powder. If this enzyme preparation is treated with a cyclic AMP[-dependent protein phosphorylation system, there is a change in the pH dependence of the enzyme activity. The pH optimum at saturating tetrahydrobiopterin (BH4) concentration is shifted from below pH 6 to about pH 6.7. At pH 7, activation is expressed mainly as an increase in Vmax, whereas at pH 6, activation is expressed mainly as a decrease in Km for the pterin cofactor. Further, even with the control enzyme the Km for pterin cofactor declines precipitously as the pH i",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.986525+00:00"
+}

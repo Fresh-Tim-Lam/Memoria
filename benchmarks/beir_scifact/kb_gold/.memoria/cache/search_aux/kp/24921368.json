@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24921368",
+  "source_fingerprint": "112ef1fa7903259e9fa15f9f96a59332",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24921368",
+    "impaired-awareness-of-hypoglycaemia:-a-review."
+  ],
+  "key_phrases": [
+    "impaired",
+    "awareness",
+    "hypoglycaemia",
+    "review",
+    "iah",
+    "acquired",
+    "complication",
+    "insulin"
+  ],
+  "summary_1l": "Impaired awareness of hypoglycaemia: a review.",
+  "query_hits": [],
+  "embed_text": "24921368 Impaired awareness of hypoglycaemia: a review. science scifact Impaired awareness of hypoglycaemia (IAH) is an acquired complication of insulin therapy, which affects people with type 1 and insulin-treated type 2 diabetes mellitus, whereby the ability to perceive the onset of hypoglycaemia becomes… 24921368 impaired-awareness-of-hypoglycaemia:-a-review. impaired awareness hypoglycaemia review iah acquired complication insulin Impaired awareness of hypoglycaemia: a review. Impaired awareness of hypoglycaemia: a review. Impaired awareness of hypoglycaemia (IAH) is an acquired complication of insulin therapy, which affects people with type 1 and insulin-treated type 2 diabetes mellitus, whereby the ability to perceive the onset of hypoglycaemia becomes diminished or absent. Deficiencies of the counter-regulatory hormonal responses to hypoglycaemia usually co-exist. The development of IAH and counter-regulatory failure greatly increases the risk of severe hypoglycaemia. Scoring systems have been developed that can be used in the clinical setting and assist with identification of this group of individuals at risk of severe hypoglycaemia. The mainstay of treatment of IAH is the scrupulous avoidance of hypoglycaemia.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.551779+00:00"
+}

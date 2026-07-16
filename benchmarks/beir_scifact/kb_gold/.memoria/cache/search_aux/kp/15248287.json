@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15248287",
+  "source_fingerprint": "98ef5b63f1da8c5ceb8bfac8b3eae36a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15248287",
+    "proliferating-cell-nuclear-antigen-acts-as-a-cytoplasmic-platform-controlling-human-neutrophil-survival"
+  ],
+  "key_phrases": [
+    "proliferating",
+    "cell",
+    "nuclear",
+    "antigen",
+    "acts",
+    "as",
+    "cytoplasmic",
+    "platform"
+  ],
+  "summary_1l": "Neutrophil apoptosis is a highly regulated process essential for inflammation resolution, the mo",
+  "query_hits": [],
+  "embed_text": "15248287 Proliferating cell nuclear antigen acts as a cytoplasmic platform controlling human neutrophil survival science scifact Neutrophil apoptosis is a highly regulated process essential for inflammation resolution, the molecular mechanisms of which are only partially elucidated. In this study, we describe a survival pathway controlled by proliferating cell… 15248287 proliferating-cell-nuclear-antigen-acts-as-a-cytoplasmic-platform-controlling-human-neutrophil-survival proliferating cell nuclear antigen acts as cytoplasmic platform Neutrophil apoptosis is a highly regulated process essential for inflammation resolution, the mo Proliferating cell nuclear antigen acts as a cytoplasmic platform controlling human neutrophil survival Neutrophil apoptosis is a highly regulated process essential for inflammation resolution, the molecular mechanisms of which are only partially elucidated. In this study, we describe a survival pathway controlled by proliferating cell nuclear antigen (PCNA), a nuclear factor involved in DNA replication and repairing of proliferating cells. We show that mature neutrophils, despite their inability to proliferate, express high levels of PCNA exclusively in their cytosol and constitutively associated with procaspases, presumably to prevent their activation. Notably, cytosolic PCNA abundance decreased during apoptosis, and increased during in vitro and in vivo exposure to the survival factor g",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.259066+00:00"
+}

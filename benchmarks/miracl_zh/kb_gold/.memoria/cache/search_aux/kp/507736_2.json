@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "kp_id": "507736#2",
+  "source_fingerprint": "708880ecb94f66985f6c9190d51337ae",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "香港地質"
+  ],
+  "aliases": [
+    "507736#2"
+  ],
+  "key_phrases": [
+    "蒙古",
+    "龍屬",
+    "正模",
+    "標本",
+    "編號",
+    "amnh",
+    "6710",
+    "一顆"
+  ],
+  "summary_1l": "蒙古龍的正模標本（編號AMNH 6710）是一顆牙齒。",
+  "query_hits": [],
+  "embed_text": "507736#2 蒙古龍屬 蒙古龍屬 蒙古龍的正模標本（編號AMNH 6710）是一顆牙齒。同一挖掘地點還發現10多顆相同型態的牙齒、基枕骨、前三節部分頸椎。這些牙齒長、呈圓柱狀。這些化石發現於On Gong組地層，地質年代相當於白堊紀晚期 香港地質 507736#2 蒙古 龍屬 正模 標本 編號 amnh 6710 一顆 蒙古龍的正模標本（編號AMNH 6710）是一顆牙齒。 蒙古龍屬 蒙古龍的正模標本（編號AMNH 6710）是一顆牙齒。同一挖掘地點還發現10多顆相同型態的牙齒、基枕骨、前三節部分頸椎。這些牙齒長、呈圓柱狀。這些化石發現於On Gong組地層，地質年代相當於白堊紀晚期",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:20:37.466481+00:00"
+}

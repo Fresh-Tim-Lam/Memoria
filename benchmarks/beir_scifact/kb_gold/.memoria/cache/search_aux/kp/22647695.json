@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22647695",
+  "source_fingerprint": "3228f5fd44f4dc3203056cb208ac3dea",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22647695",
+    "autoimmune-t-cell-responses-in-the-central-nervous-system"
+  ],
+  "key_phrases": [
+    "autoimmune",
+    "cell",
+    "responses",
+    "central",
+    "nervous",
+    "system",
+    "autoreactive",
+    "have"
+  ],
+  "summary_1l": "Autoreactive T cell responses have a crucial role in central nervous system (CNS) diseases such as multiple sclerosis.",
+  "query_hits": [],
+  "embed_text": "22647695 Autoimmune T cell responses in the central nervous system science scifact Autoreactive T cell responses have a crucial role in central nervous system (CNS) diseases such as multiple sclerosis. Recent data indicate that CNS autoimmunity can be mediated by two distinct lineages of CD4+ T cells that are defined by… 22647695 autoimmune-t-cell-responses-in-the-central-nervous-system autoimmune cell responses central nervous system autoreactive have Autoreactive T cell responses have a crucial role in central nervous system (CNS) diseases such as multiple sclerosis. Autoimmune T cell responses in the central nervous system Autoreactive T cell responses have a crucial role in central nervous system (CNS) diseases such as multiple sclerosis. Recent data indicate that CNS autoimmunity can be mediated by two distinct lineages of CD4+ T cells that are defined by the production of either interferon-γ or interleukin-17. The activity of these CD4+ T cell subsets within the CNS influences the pathology and clinical course of disease. New animal models show that myelin-specific CD8+ T cells can also mediate CNS autoimmunity. This Review focuses on recent progress in delineating the pathogenic mechanisms, regulation and interplay between these different T cell subsets in CNS autoimmunity.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.153083+00:00"
+}

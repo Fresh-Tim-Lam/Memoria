@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3863543",
+  "source_fingerprint": "3030bd063b8ff020cbf2eb0cb2212503",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3863543",
+    "mesenchymal-inflammation-drives-genotoxic-stress-in-hematopoietic-stem-cells-and-predicts-disease-evolution-in-human-pre-leukemia."
+  ],
+  "key_phrases": [
+    "mesenchymal",
+    "inflammation",
+    "drives",
+    "genotoxic",
+    "stress",
+    "hematopoietic",
+    "stem",
+    "cells"
+  ],
+  "summary_1l": "Mesenchymal Inflammation Drives Genotoxic Stress in Hematopoietic Stem Cells and Predicts Disease Evolution in Human Pre-leukemia.",
+  "query_hits": [],
+  "embed_text": "3863543 Mesenchymal Inflammation Drives Genotoxic Stress in Hematopoietic Stem Cells and Predicts Disease Evolution in Human Pre-leukemia. science scifact Mesenchymal niche cells may drive tissue failure and malignant transformation in the hematopoietic system, but the underlying molecular mechanisms and relevance to human disease remain poorly defined. Here, we show that perturbation of… 3863543 mesenchymal-inflammation-drives-genotoxic-stress-in-hematopoietic-stem-cells-and-predicts-disease-evolution-in-human-pre-leukemia. mesenchymal inflammation drives genotoxic stress hematopoietic stem cells Mesenchymal Inflammation Drives Genotoxic Stress in Hematopoietic Stem Cells and Predicts Disease Evolution in Human Pre-leukemia. Mesenchymal Inflammation Drives Genotoxic Stress in Hematopoietic Stem Cells and Predicts Disease Evolution in Human Pre-leukemia. Mesenchymal niche cells may drive tissue failure and malignant transformation in the hematopoietic system, but the underlying molecular mechanisms and relevance to human disease remain poorly defined. Here, we show that perturbation of mesenchymal cells in a mouse model of the pre-leukemic disorder Shwachman-Diamond syndrome (SDS) induces mitochondrial dysfunction, oxidative stress, and activation of DNA damage responses in hematopoietic stem and progenitor cells. Massive parallel RNA sequencing of highly purified mesenchymal cells in the SDS mouse model and a range of human pre-leukemic syndromes identified p53-S100A8/9-TLR inflammatory signaling as a common d",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.691444+00:00"
+}

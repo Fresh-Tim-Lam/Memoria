@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "84884645",
+  "source_fingerprint": "df7e32ac3a59cbca118fa86b87e28729",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "84884645",
+    "reproductive-physiology-of-marsupials"
+  ],
+  "key_phrases": [
+    "reproductive",
+    "physiology",
+    "marsupials",
+    "preface",
+    "historical",
+    "introduction",
+    "breeding",
+    "biology"
+  ],
+  "summary_1l": "Preface 1.",
+  "query_hits": [],
+  "embed_text": "84884645 Reproductive physiology of marsupials science scifact Preface 1. Historical introduction 2. Breeding biology of marsupials by family 3. Sexual differentiation and development 4. Male anatomy and spermatogenesis 5. The female urogenital tract and oogenesis 6. Ovarian function and control 7.… 84884645 reproductive-physiology-of-marsupials reproductive physiology marsupials preface historical introduction breeding biology Preface 1. Reproductive physiology of marsupials Preface 1. Historical introduction 2. Breeding biology of marsupials by family 3. Sexual differentiation and development 4. Male anatomy and spermatogenesis 5. The female urogenital tract and oogenesis 6. Ovarian function and control 7. Pregnancy and parturition 8. Lactation 9. Neuroendocrine control of seasonal breeding 10. Marsupials and the evolution of mammalian reproduction References Index.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.785827+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1748921",
+  "source_fingerprint": "49c4352709c8a76b2c25d3d5520f1fa4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1748921",
+    "innate-immune-and-chemically-triggered-oxidative-stress-modifies-translational-fidelity"
+  ],
+  "key_phrases": [
+    "innate",
+    "immune",
+    "chemically",
+    "triggered",
+    "oxidative",
+    "stress",
+    "modifies",
+    "translational"
+  ],
+  "summary_1l": "Translational fidelity, essential for protein and cell function, requires accurate transfer RNA (tRNA) aminoacyl",
+  "query_hits": [],
+  "embed_text": "1748921 Innate Immune and Chemically Triggered Oxidative Stress Modifies Translational Fidelity science scifact Translational fidelity, essential for protein and cell function, requires accurate transfer RNA (tRNA) aminoacylation. Purified aminoacyl-tRNA synthetases exhibit a fidelity of one error per 10,000 to 100,000 couplings. The accuracy of… 1748921 innate-immune-and-chemically-triggered-oxidative-stress-modifies-translational-fidelity innate immune chemically triggered oxidative stress modifies translational Translational fidelity, essential for protein and cell function, requires accurate transfer RNA (tRNA) aminoacyl Innate Immune and Chemically Triggered Oxidative Stress Modifies Translational Fidelity Translational fidelity, essential for protein and cell function, requires accurate transfer RNA (tRNA) aminoacylation. Purified aminoacyl-tRNA synthetases exhibit a fidelity of one error per 10,000 to 100,000 couplings. The accuracy of tRNA aminoacylation in vivo is uncertain, however, and might be considerably lower. Here we show that in mammalian cells, approximately 1% of methionine (Met) residues used in protein synthesis are aminoacylated to non-methionyl-tRNAs. Remarkably, Met-misacylation increases up to tenfold upon exposing cells to live or non-infectious viruses, toll-like receptor ligands or chemically induced oxidative stress. Met is misacylated to specific non-methionyl-tRNA families, and t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.860867+00:00"
+}

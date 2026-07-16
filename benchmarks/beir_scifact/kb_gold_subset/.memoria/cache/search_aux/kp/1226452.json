@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1226452",
+  "source_fingerprint": "3e13860919ead73ee12879bc386faf0b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1226452",
+    "hnrnp-a1-associates-with-telomere-ends-and-stimulates-telomerase-activity."
+  ],
+  "key_phrases": [
+    "hnrnp",
+    "a1",
+    "associates",
+    "with",
+    "telomere",
+    "ends",
+    "stimulates",
+    "telomerase"
+  ],
+  "summary_1l": "hnRNP A1 associates with telomere ends and stimulates telomerase activity.",
+  "query_hits": [],
+  "embed_text": "1226452 hnRNP A1 associates with telomere ends and stimulates telomerase activity. science scifact Telomerase is a ribonucleoprotein enzyme complex that reverse-transcribes an integral RNA template to add short DNA repeats to the 3'-ends of telomeres. G-quadruplex structure in a DNA substrate can block its extension by telomerase. We… 1226452 hnrnp-a1-associates-with-telomere-ends-and-stimulates-telomerase-activity. hnrnp a1 associates with telomere ends stimulates telomerase hnRNP A1 associates with telomere ends and stimulates telomerase activity. hnRNP A1 associates with telomere ends and stimulates telomerase activity. Telomerase is a ribonucleoprotein enzyme complex that reverse-transcribes an integral RNA template to add short DNA repeats to the 3'-ends of telomeres. G-quadruplex structure in a DNA substrate can block its extension by telomerase. We have found that hnRNP A1--which was previously implicated in telomere length regulation--binds to both single-stranded and structured human telomeric repeats, and in the latter case, it disrupts their higher-order structure. Using an in vitro telomerase assay, we observed that depletion of hnRNP A/B proteins from 293 human embryonic kidney cell extracts dramatically reduced telomerase activity, which was fully recovered upon addition of purified recombinant hnRNP A1. This finding sug",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:08.617143+00:00"
+}

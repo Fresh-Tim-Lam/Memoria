@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "878526",
+  "source_fingerprint": "27dd5a9d7636a7c0eea7b18347bb243a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "878526",
+    "neutrophils-support-lung-colonization-of-metastasis-initiating-breast-cancer-cells"
+  ],
+  "key_phrases": [
+    "neutrophils",
+    "support",
+    "lung",
+    "colonization",
+    "metastasis",
+    "initiating",
+    "breast",
+    "cancer"
+  ],
+  "summary_1l": "Despite progress in the development of drugs that efficiently target cancer cells, treatments for metastatic tumours",
+  "query_hits": [],
+  "embed_text": "878526 Neutrophils support lung colonization of metastasis-initiating breast cancer cells science scifact Despite progress in the development of drugs that efficiently target cancer cells, treatments for metastatic tumours are often ineffective. The now well-established dependency of cancer cells on their microenvironment suggests that… 878526 neutrophils-support-lung-colonization-of-metastasis-initiating-breast-cancer-cells neutrophils support lung colonization metastasis initiating breast cancer Despite progress in the development of drugs that efficiently target cancer cells, treatments for metastatic tumours Neutrophils support lung colonization of metastasis-initiating breast cancer cells Despite progress in the development of drugs that efficiently target cancer cells, treatments for metastatic tumours are often ineffective. The now well-established dependency of cancer cells on their microenvironment suggests that targeting the non-cancer-cell component of the tumour might form a basis for the development of novel therapeutic approaches. However, the as-yet poorly characterized contribution of host responses during tumour growth and metastatic progression represents a limitation to exploiting this approach. Here we identify neutrophils as the main component and driver of metastatic establishment within the (pre-)metastatic lung microenvironment in mouse breast cancer models. Neutrophils hav",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.728078+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21060008",
+  "source_fingerprint": "4e0336cec027fa0b3a484c2be20697ce",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21060008",
+    "celiac-disease-screening-by-immunochromatographic-visual-assays:-results-of-a-multicenter-study."
+  ],
+  "key_phrases": [
+    "celiac",
+    "disease",
+    "screening",
+    "by",
+    "immunochromatographic",
+    "visual",
+    "assays",
+    "results"
+  ],
+  "summary_1l": "Celiac disease screening by immunochromatographic visual assays: results of a multicenter study.",
+  "query_hits": [],
+  "embed_text": "21060008 Celiac disease screening by immunochromatographic visual assays: results of a multicenter study. science scifact OBJECTIVE To assay the efficiency for celiac disease (CD) screening of 2 immunochromatographic visual stick assays based on human recombinant tissue transglutaminase (tTG). One was the antitissue transglutaminase antibodies (AtTGA) stick… 21060008 celiac-disease-screening-by-immunochromatographic-visual-assays:-results-of-a-multicenter-study. celiac disease screening by immunochromatographic visual assays results Celiac disease screening by immunochromatographic visual assays: results of a multicenter study. Celiac disease screening by immunochromatographic visual assays: results of a multicenter study. OBJECTIVE To assay the efficiency for celiac disease (CD) screening of 2 immunochromatographic visual stick assays based on human recombinant tissue transglutaminase (tTG). One was the antitissue transglutaminase antibodies (AtTGA) stick for IgA/G antibodies to tTG detection, the other was the AtTGA/antigliadin antibodies (AGA) stick for IgA antibodies for tTG and/or gliadins. PATIENTS AND METHODS In a prospective multicenter study, 4 pediatric gastroenterology units from Spain and 2 from Latin America enrolled 72 control children with a normal small bowel mucosa and 113 untreated patients with CD with Marsh type 3 lesions. RESULTS Evaluation of results by the gastroenterologists and by 2 indep",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.362028+00:00"
+}

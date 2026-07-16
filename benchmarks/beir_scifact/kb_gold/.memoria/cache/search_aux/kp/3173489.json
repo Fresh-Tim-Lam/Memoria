@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3173489",
+  "source_fingerprint": "9dffdf40543a02b106038ed79997aeb7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3173489",
+    "defective-replication-stress-response-inhibits-lymphomagenesis-and-impairs-lymphocyte-reconstitution"
+  ],
+  "key_phrases": [
+    "defective",
+    "replication",
+    "stress",
+    "response",
+    "inhibits",
+    "lymphomagenesis",
+    "impairs",
+    "lymphocyte"
+  ],
+  "summary_1l": "DNA replication stress promotes genome instability in cancer.",
+  "query_hits": [],
+  "embed_text": "3173489 Defective replication stress response inhibits lymphomagenesis and impairs lymphocyte reconstitution science scifact DNA replication stress promotes genome instability in cancer. However, the contribution of the replication stress response to the development of malignancies remains unresolved. The DNA replication stress response protein SMARCAL1… 3173489 defective-replication-stress-response-inhibits-lymphomagenesis-and-impairs-lymphocyte-reconstitution defective replication stress response inhibits lymphomagenesis impairs lymphocyte DNA replication stress promotes genome instability in cancer. Defective replication stress response inhibits lymphomagenesis and impairs lymphocyte reconstitution DNA replication stress promotes genome instability in cancer. However, the contribution of the replication stress response to the development of malignancies remains unresolved. The DNA replication stress response protein SMARCAL1 stabilizes DNA replication forks and prevents replication fork collapse, a cause of DNA breaks and apoptosis. While the fork regression/remodeling functions of SMARCAL1 have been investigated, its in vivo functions in replication stress and cancer are unclear. Using a gamma radiation (IR)-induced replication stress T-cell lymphoma mouse model, we observed a significant inhibition of lymphomagenesis in mice lacking one or both alleles of Smarcal1. Notably, a quarte",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.850735+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13778710",
+  "source_fingerprint": "eac81d3e1da03863d9e8e7cea45c90b8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13778710",
+    "chemokine-like-receptor-1-(cmklr1)-and-chemokine-(c-c-motif)-receptor-like-2-(ccrl2);-two-multifunctional-receptors-with-unusual-properties."
+  ],
+  "key_phrases": [
+    "chemokine",
+    "like",
+    "receptor",
+    "cmklr1",
+    "motif",
+    "ccrl2",
+    "two",
+    "multifunctional"
+  ],
+  "summary_1l": "Chemokine-like receptor 1 (CMKLR1) and chemokine (C-C motif) receptor-like 2 (CCRL2); two multifunctional receptors with unusual properties.",
+  "query_hits": [],
+  "embed_text": "13778710 Chemokine-like receptor 1 (CMKLR1) and chemokine (C-C motif) receptor-like 2 (CCRL2); two multifunctional receptors with unusual properties. science scifact Chemokine-like receptor 1 (CMKLR1), also known as ChemR23, and chemokine (C-C motif) receptor-like 2 (CCRL2) are 7-transmembrane receptors that were cloned in the late 1990s based on their homology to known G-protein-coupled receptors.… 13778710 chemokine-like-receptor-1-(cmklr1)-and-chemokine-(c-c-motif)-receptor-like-2-(ccrl2);-two-multifunctional-receptors-with-unusual-properties. chemokine like receptor cmklr1 motif ccrl2 two multifunctional Chemokine-like receptor 1 (CMKLR1) and chemokine (C-C motif) receptor-like 2 (CCRL2); two multifunctional receptors with unusual properties. Chemokine-like receptor 1 (CMKLR1) and chemokine (C-C motif) receptor-like 2 (CCRL2); two multifunctional receptors with unusual properties. Chemokine-like receptor 1 (CMKLR1), also known as ChemR23, and chemokine (C-C motif) receptor-like 2 (CCRL2) are 7-transmembrane receptors that were cloned in the late 1990s based on their homology to known G-protein-coupled receptors. They were previously orphan receptors without any known biological roles; however, recent studies identified ligands for these receptors and their functions have begun to be unveiled. The plasma protein-derived chemoattractant chemerin is a ligand for CMKLR1 and activation of CMKLR1 with chemerin induces the migration of macrophages and dendritic cells (DCs) in vitro, suggesting a proinflammatory role. However, in vivo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.976502+00:00"
+}

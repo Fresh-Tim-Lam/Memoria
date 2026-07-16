@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10279084",
+  "source_fingerprint": "ef2031305caf8d1153b8fba61ae8a0b2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10279084",
+    "differential-regulation-of-map-kinase-activation-by-a-novel-splice-variant-of-human-map-kinase-phosphatase-2."
+  ],
+  "key_phrases": [
+    "differential",
+    "regulation",
+    "map",
+    "kinase",
+    "activation",
+    "by",
+    "novel",
+    "splice"
+  ],
+  "summary_1l": "Differential regulation of MAP kinase activation by a novel splice variant of human MAP kinase phosphatase-2.",
+  "query_hits": [],
+  "embed_text": "10279084 Differential regulation of MAP kinase activation by a novel splice variant of human MAP kinase phosphatase-2. science scifact MAP kinase phosphatase-2 (MKP-2) is a member of the family of dual specificity phosphatases that functions to inactivate the ERK and JNK MAP kinase signalling pathways. Here, we identify a novel human MKP-2 variant (MKP-2-S) lacking the… 10279084 differential-regulation-of-map-kinase-activation-by-a-novel-splice-variant-of-human-map-kinase-phosphatase-2. differential regulation map kinase activation by novel splice Differential regulation of MAP kinase activation by a novel splice variant of human MAP kinase phosphatase-2. Differential regulation of MAP kinase activation by a novel splice variant of human MAP kinase phosphatase-2. MAP kinase phosphatase-2 (MKP-2) is a member of the family of dual specificity phosphatases that functions to inactivate the ERK and JNK MAP kinase signalling pathways. Here, we identify a novel human MKP-2 variant (MKP-2-S) lacking the MAP kinase binding site but retaining the phosphatase catalytic domain. Endogenous MKP-2-S transcripts and proteins were found in PC3 prostate and MDA-MB-231 breast cancer cells and also human prostate biopsies. Cellular transfection of MKP-2-S gave rise to a nuclear protein of 33kDa which displayed phosphatase activity comparable to the formerly described long form of MKP-2 (MKP-2-L). Due to its lack of a kinase interacting motif (KIM), MKP-2-S did",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.415371+00:00"
+}

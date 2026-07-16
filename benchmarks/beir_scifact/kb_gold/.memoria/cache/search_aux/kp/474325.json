@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "474325",
+  "source_fingerprint": "e8e44d55321ef4fc6b21895d576ff26c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "474325",
+    "non-invasive-ventilation-in-chronic-obstructive-pulmonary-disease-patients:-helmet-versus-facial-mask"
+  ],
+  "key_phrases": [
+    "non",
+    "invasive",
+    "ventilation",
+    "chronic",
+    "obstructive",
+    "pulmonary",
+    "disease",
+    "patients"
+  ],
+  "summary_1l": "The helmet is a new interface with the potential of increasing the success rate of non-invasive ve",
+  "query_hits": [],
+  "embed_text": "474325 Non-invasive ventilation in chronic obstructive pulmonary disease patients: helmet versus facial mask science scifact The helmet is a new interface with the potential of increasing the success rate of non-invasive ventilation by improving tolerance. To perform a physiological comparison between the helmet and the conventional facial mask in delivering… 474325 non-invasive-ventilation-in-chronic-obstructive-pulmonary-disease-patients:-helmet-versus-facial-mask non invasive ventilation chronic obstructive pulmonary disease patients The helmet is a new interface with the potential of increasing the success rate of non-invasive ve Non-invasive ventilation in chronic obstructive pulmonary disease patients: helmet versus facial mask The helmet is a new interface with the potential of increasing the success rate of non-invasive ventilation by improving tolerance. To perform a physiological comparison between the helmet and the conventional facial mask in delivering non-invasive ventilation in hypercapnic patients with chronic obstructive pulmonary disease. Prospective, controlled, randomized study with cross-over design. In 10 patients we evaluated gas exchange, inspiratory effort, patient–ventilator synchrony and patient tolerance after 30 min of non-invasive ventilation delivered either by helmet or facial mask; both trials were preceded by periods of spontaneous unassisted breathing. Arterial blood gases, inspirator",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.389620+00:00"
+}

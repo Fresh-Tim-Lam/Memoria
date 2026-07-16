@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17388232",
+  "source_fingerprint": "9a44f3beec2289f553ca45c91c7f3ba7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17388232",
+    "mechanical-regulation-of-cell-function-with-geometrically-modulated-elastomeric-substrates"
+  ],
+  "key_phrases": [
+    "mechanical",
+    "regulation",
+    "cell",
+    "function",
+    "with",
+    "geometrically",
+    "modulated",
+    "elastomeric"
+  ],
+  "summary_1l": "We report the establishment of a library of micromolded elastomeric micropost arrays to modulate substrate ri",
+  "query_hits": [],
+  "embed_text": "17388232 Mechanical regulation of cell function with geometrically modulated elastomeric substrates science scifact We report the establishment of a library of micromolded elastomeric micropost arrays to modulate substrate rigidity independently of effects on adhesive and other material surface properties. We demonstrated that micropost rigidity impacts… 17388232 mechanical-regulation-of-cell-function-with-geometrically-modulated-elastomeric-substrates mechanical regulation cell function with geometrically modulated elastomeric We report the establishment of a library of micromolded elastomeric micropost arrays to modulate substrate ri Mechanical regulation of cell function with geometrically modulated elastomeric substrates We report the establishment of a library of micromolded elastomeric micropost arrays to modulate substrate rigidity independently of effects on adhesive and other material surface properties. We demonstrated that micropost rigidity impacts cell morphology, focal adhesions, cytoskeletal contractility and stem cell differentiation. Furthermore, early changes in cytoskeletal contractility predicted later stem cell fate decisions in single cells.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.646056+00:00"
+}

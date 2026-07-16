@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5468807",
+  "source_fingerprint": "38bb700d7c30ba214dafbe0ac5a56eef",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5468807",
+    "arid1a-mutated-ovarian-cancers-depend-on-hdac6-activity"
+  ],
+  "key_phrases": [
+    "arid1a",
+    "mutated",
+    "ovarian",
+    "cancers",
+    "depend",
+    "hdac6",
+    "activity",
+    "encoding"
+  ],
+  "summary_1l": "ARID1A, encoding a subunit of the SWI/SNF chromatin-remodelling complex, is the most frequently mutated epigenetic regulator across all human ca",
+  "query_hits": [],
+  "embed_text": "5468807 ARID1A-mutated ovarian cancers depend on HDAC6 activity science scifact ARID1A, encoding a subunit of the SWI/SNF chromatin-remodelling complex, is the most frequently mutated epigenetic regulator across all human cancers. ARID1A and TP53 mutations are typically mutually exclusive. Therapeutic approaches that… 5468807 arid1a-mutated-ovarian-cancers-depend-on-hdac6-activity arid1a mutated ovarian cancers depend hdac6 activity encoding ARID1A, encoding a subunit of the SWI/SNF chromatin-remodelling complex, is the most frequently mutated epigenetic regulator across all human ca ARID1A-mutated ovarian cancers depend on HDAC6 activity ARID1A, encoding a subunit of the SWI/SNF chromatin-remodelling complex, is the most frequently mutated epigenetic regulator across all human cancers. ARID1A and TP53 mutations are typically mutually exclusive. Therapeutic approaches that correlate with this genetic characteristic remain to be explored. Here, we show that HDAC6 activity is essential in ARID1A-mutated ovarian cancers. Inhibition of HDAC6 activity using a clinically applicable small-molecule inhibitor significantly improved the survival of mice bearing ARID1A-mutated tumours. This correlated with the suppression of growth and dissemination of ARID1A-mutated, but not wild-type, tumours. The dependence on HDAC6 activity in ARID1A-mutated cells correlated with a direct tra",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.374025+00:00"
+}

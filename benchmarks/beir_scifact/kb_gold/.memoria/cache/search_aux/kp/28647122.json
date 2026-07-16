@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "28647122",
+  "source_fingerprint": "f844b870a2a397d595274c0e260dd38d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "28647122",
+    "endotoxin-tolerance:-new-mechanisms,-molecules-and-clinical-significance."
+  ],
+  "key_phrases": [
+    "endotoxin",
+    "tolerance",
+    "new",
+    "mechanisms",
+    "molecules",
+    "clinical",
+    "significance",
+    "prior"
+  ],
+  "summary_1l": "Endotoxin tolerance: new mechanisms, molecules and clinical significance.",
+  "query_hits": [],
+  "embed_text": "28647122 Endotoxin tolerance: new mechanisms, molecules and clinical significance. science scifact Prior exposure of innate immune cells like monocytes/macrophages to minute amounts of endotoxin cause them to become refractory to subsequent endotoxin challenge, a phenomenon called \"endotoxin tolerance\". Clinically, this state is… 28647122 endotoxin-tolerance:-new-mechanisms,-molecules-and-clinical-significance. endotoxin tolerance new mechanisms molecules clinical significance prior Endotoxin tolerance: new mechanisms, molecules and clinical significance. Endotoxin tolerance: new mechanisms, molecules and clinical significance. Prior exposure of innate immune cells like monocytes/macrophages to minute amounts of endotoxin cause them to become refractory to subsequent endotoxin challenge, a phenomenon called \"endotoxin tolerance\". Clinically, this state is associated with monocytes/macrophages in sepsis patients where they contribute to \"immunosuppression\" and mortality. The molecular mechanisms underlying endotoxin tolerance remain elusive. The recent appreciation of inflammation as a self-regulating process, the relative contribution of MyD88 versus TRIF signaling pathways in inducing activation or tolerance, plasticity of NF-kappaB function and the role of chromatin modification and microRNAs in LPS-induced gene reprogramming urges a re-e",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.230791+00:00"
+}

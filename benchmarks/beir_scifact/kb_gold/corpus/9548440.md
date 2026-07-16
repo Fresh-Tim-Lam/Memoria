@@ -1,0 +1,3 @@
+# Human aneuploidy: mechanisms and new insights into an age-old problem
+
+Trisomic and monosomic (aneuploid) embryos account for at least 10% of human pregnancies and, for women nearing the end of their reproductive lifespan, the incidence may exceed 50%. The errors that lead to aneuploidy almost always occur in the oocyte but, despite intensive investigation, the underlying molecular basis has remained elusive. Recent studies of humans and model organisms have shed new light on the complexity of meiotic defects, providing evidence that the age-related increase in errors in the human female is not attributable to a single factor but to an interplay between unique features of oogenesis and a host of endogenous and exogenous factors.

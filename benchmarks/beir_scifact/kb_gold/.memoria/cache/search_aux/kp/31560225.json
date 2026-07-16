@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "31560225",
+  "source_fingerprint": "37c286ba217442d221475e2d1464214d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "31560225",
+    "sivrcm-infection-of-macaques."
+  ],
+  "key_phrases": [
+    "sivrcm",
+    "infection",
+    "macaques",
+    "prior",
+    "report",
+    "we",
+    "described",
+    "isolation"
+  ],
+  "summary_1l": "SIVrcm infection of macaques.",
+  "query_hits": [],
+  "embed_text": "31560225 SIVrcm infection of macaques. science scifact In a prior report, we described the isolation and characterization of SIVrcm, a distinct primate lentivirus found in a household pet Red-Capped Mangabey (RCM) in Gabon. SIVrcm is divergent from HIV-1 and HIV-2/SIV families of primate… 31560225 sivrcm-infection-of-macaques. sivrcm infection macaques prior report we described isolation SIVrcm infection of macaques. SIVrcm infection of macaques. In a prior report, we described the isolation and characterization of SIVrcm, a distinct primate lentivirus found in a household pet Red-Capped Mangabey (RCM) in Gabon. SIVrcm is divergent from HIV-1 and HIV-2/SIV families of primate lentiviruses. In this report, additional in vitro replication studies and the results of SIVrcm infection in macaques are presented. SIVrcm causes little cytopathic effedct in Molt 4 Clone 8 cells and in rhesus and human PBMCs. In vivo, SIVrcm is non-pathogenic after 200 days in rhesus macaques and after one year in cynomolgous macaques, but does cause a chronic infection in both macaques.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.716790+00:00"
+}

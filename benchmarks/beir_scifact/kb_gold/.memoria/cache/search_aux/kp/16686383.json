@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16686383",
+  "source_fingerprint": "e680ea6f7f3692c4e9d3d44507d5212e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16686383",
+    "phosphorylation-of-centromeric-histone-h3-variant-regulates-chromosome-segregation-in-saccharomyces-cerevisiae"
+  ],
+  "key_phrases": [
+    "phosphorylation",
+    "centromeric",
+    "histone",
+    "h3",
+    "variant",
+    "regulates",
+    "chromosome",
+    "segregation"
+  ],
+  "summary_1l": "The centromeric histone H3 variant (CenH3) is essential for chromosome segregation in euk",
+  "query_hits": [],
+  "embed_text": "16686383 Phosphorylation of centromeric histone H3 variant regulates chromosome segregation in Saccharomyces cerevisiae science scifact The centromeric histone H3 variant (CenH3) is essential for chromosome segregation in eukaryotes. We identify posttranslational modifications of Saccharomyces cerevisiae CenH3, Cse4. Functional characterization of cse4 phosphorylation… 16686383 phosphorylation-of-centromeric-histone-h3-variant-regulates-chromosome-segregation-in-saccharomyces-cerevisiae phosphorylation centromeric histone h3 variant regulates chromosome segregation The centromeric histone H3 variant (CenH3) is essential for chromosome segregation in euk Phosphorylation of centromeric histone H3 variant regulates chromosome segregation in Saccharomyces cerevisiae The centromeric histone H3 variant (CenH3) is essential for chromosome segregation in eukaryotes. We identify posttranslational modifications of Saccharomyces cerevisiae CenH3, Cse4. Functional characterization of cse4 phosphorylation mutants shows growth and chromosome segregation defects when combined with kinetochore mutants okp1 and ame1. Using a phosphoserine-specific antibody, we show that the association of phosphorylated Cse4 with centromeres increases in response to defective microtubule attachment or reduced cohesion. We determine that evolutionarily conserved Ipl1/Aurora B contributes to phosphorylation of Cse4, as levels of phosphorylated Cse4 are reduced at centromere",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.623537+00:00"
+}

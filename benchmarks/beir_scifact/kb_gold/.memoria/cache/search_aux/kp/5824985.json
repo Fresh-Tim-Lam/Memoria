@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5824985",
+  "source_fingerprint": "81d25b91f811390875353efac682793c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5824985",
+    "bariatric-surgery-in-the-united-kingdom:-a-cohort-study-of-weight-loss-and-clinical-outcomes-in-routine-clinical-care."
+  ],
+  "key_phrases": [
+    "bariatric",
+    "surgery",
+    "united",
+    "kingdom",
+    "cohort",
+    "study",
+    "weight",
+    "loss"
+  ],
+  "summary_1l": "Bariatric Surgery in the United Kingdom: A Cohort Study of Weight Loss and Clinical Outcomes in Routine Clinical Care.",
+  "query_hits": [],
+  "embed_text": "5824985 Bariatric Surgery in the United Kingdom: A Cohort Study of Weight Loss and Clinical Outcomes in Routine Clinical Care. science scifact BACKGROUND Bariatric surgery is becoming a more widespread treatment for obesity. Comprehensive evidence of the long-term effects of contemporary surgery on a broad range of clinical outcomes in large populations treated in routine… 5824985 bariatric-surgery-in-the-united-kingdom:-a-cohort-study-of-weight-loss-and-clinical-outcomes-in-routine-clinical-care. bariatric surgery united kingdom cohort study weight loss Bariatric Surgery in the United Kingdom: A Cohort Study of Weight Loss and Clinical Outcomes in Routine Clinical Care. Bariatric Surgery in the United Kingdom: A Cohort Study of Weight Loss and Clinical Outcomes in Routine Clinical Care. BACKGROUND Bariatric surgery is becoming a more widespread treatment for obesity. Comprehensive evidence of the long-term effects of contemporary surgery on a broad range of clinical outcomes in large populations treated in routine clinical practice is lacking. The objective of this study was to measure the association between bariatric surgery, weight, body mass index, and obesity-related co-morbidities. METHODS AND FINDINGS This was an observational retrospective cohort study using data from the United Kingdom Clinical Practice Research Datalink. All 3,882 patients registered in the database and with bariatric surgery on or before 31 December 2014 were included and match",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.218180+00:00"
+}

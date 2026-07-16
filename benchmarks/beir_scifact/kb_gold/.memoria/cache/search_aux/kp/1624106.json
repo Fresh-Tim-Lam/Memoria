@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1624106",
+  "source_fingerprint": "9c7a30e6be16a10f1579b138bd1703ee",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1624106",
+    "generating-diploid-embryos-from-xenopus-tropicalis."
+  ],
+  "key_phrases": [
+    "generating",
+    "diploid",
+    "embryos",
+    "from",
+    "xenopus",
+    "tropicalis",
+    "spectacular",
+    "advantage"
+  ],
+  "summary_1l": "Generating diploid embryos from Xenopus tropicalis.",
+  "query_hits": [],
+  "embed_text": "1624106 Generating diploid embryos from Xenopus tropicalis. science scifact A spectacular advantage of Xenopus tropicalis is the ease with which diploid embryos can be generated year round. By the simple administration of human chorionic gonadotropin, an investigator can generate many hundreds of synchronized… 1624106 generating-diploid-embryos-from-xenopus-tropicalis. generating diploid embryos from xenopus tropicalis spectacular advantage Generating diploid embryos from Xenopus tropicalis. Generating diploid embryos from Xenopus tropicalis. A spectacular advantage of Xenopus tropicalis is the ease with which diploid embryos can be generated year round. By the simple administration of human chorionic gonadotropin, an investigator can generate many hundreds of synchronized embryos by in vitro fertilization or thousands of embryos from a mating pair. The ability to induce ovulations when desired facilitates many different experiments such as experimental embryology, molecular manipulation of gene products, and genetics.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.989199+00:00"
+}

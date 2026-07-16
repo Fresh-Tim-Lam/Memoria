@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11238951",
+  "source_fingerprint": "49746ea905b5698fa9825a44e946b6c0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11238951",
+    "kaposi's-sarcoma-associated-herpesvirus/human-herpesvirus-type-8-positive-solid-lymphomas:-a-tissue-based-variant-of-primary-effusion-lymphoma."
+  ],
+  "key_phrases": [
+    "kaposi",
+    "sarcoma",
+    "associated",
+    "herpesvirus",
+    "human",
+    "type",
+    "positive",
+    "solid"
+  ],
+  "summary_1l": "Kaposi's sarcoma-associated herpesvirus/human herpesvirus type 8-positive solid lymphomas: a tissue-based variant of primary effusion lymphoma.",
+  "query_hits": [],
+  "embed_text": "11238951 Kaposi's sarcoma-associated herpesvirus/human herpesvirus type 8-positive solid lymphomas: a tissue-based variant of primary effusion lymphoma. science scifact Kaposi's sarcoma-associated herpesvirus (KSHV), also termed human herpesvirus type 8, is consistently identified in Kaposi's sarcoma, primary effusion lymphoma (PEL), and multicentric Castleman's disease. Here we report four cases of… 11238951 kaposi's-sarcoma-associated-herpesvirus/human-herpesvirus-type-8-positive-solid-lymphomas:-a-tissue-based-variant-of-primary-effusion-lymphoma. kaposi sarcoma associated herpesvirus human type positive solid Kaposi's sarcoma-associated herpesvirus/human herpesvirus type 8-positive solid lymphomas: a tissue-based variant of primary effusion lymphoma. Kaposi's sarcoma-associated herpesvirus/human herpesvirus type 8-positive solid lymphomas: a tissue-based variant of primary effusion lymphoma. Kaposi's sarcoma-associated herpesvirus (KSHV), also termed human herpesvirus type 8, is consistently identified in Kaposi's sarcoma, primary effusion lymphoma (PEL), and multicentric Castleman's disease. Here we report four cases of KSHV-bearing solid lymphomas that occurred in AIDS patients (cases 1 to 3) and in a human immunodeficiency virus (HIV)-seronegative person (case 4). The patients presented extranodal masses in the abdomen (cases 1, 3, and 4) or skin (case 2), and nodal involvement, together with Kaposi's sarcoma (case 3). The gastrointestinal tract was involved in two patients (cases 1 and 3). The patients did not develop a lymphomatou",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:06.147002+00:00"
+}

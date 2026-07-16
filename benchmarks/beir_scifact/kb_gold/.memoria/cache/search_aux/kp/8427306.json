@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8427306",
+  "source_fingerprint": "b17fd8c0570e12b5cee780d857b7b106",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8427306",
+    "isolation-of-a-fusion-transcript,-amll-ieto,-with-similarity-to"
+  ],
+  "key_phrases": [
+    "isolation",
+    "fusion",
+    "transcript",
+    "amll",
+    "ieto",
+    "with",
+    "similarity",
+    "we"
+  ],
+  "summary_1l": "We have developed a restriction map of the chromosome 21 breakpoint region involved in t(8;21)(q22;q22.",
+  "query_hits": [],
+  "embed_text": "8427306 Isolation of a Fusion Transcript, AMLl IETO, With Similarity to science scifact We have developed a restriction map of the chromosome 21 breakpoint region involved in t(8;21)(q22;q22.3) acute myelogenous leukemia (AML) and have isolated a genomic junction clone containing chromosome 8 and 21 material. Using probes… 8427306 isolation-of-a-fusion-transcript,-amll-ieto,-with-similarity-to isolation fusion transcript amll ieto with similarity we We have developed a restriction map of the chromosome 21 breakpoint region involved in t(8;21)(q22;q22. Isolation of a Fusion Transcript, AMLl IETO, With Similarity to We have developed a restriction map of the chromosome 21 breakpoint region involved in t(8;21)(q22;q22.3) acute myelogenous leukemia (AML) and have isolated a genomic junction clone containing chromosome 8 and 21 material. Using probes from these regions, rearrangements have been identified in each of nine cases of t(8;21) AML examined. In addition, we have isolated cDNA clones from a t(8;21) AML cDNA library that contain fused sequences from chromosome 8 and 21. The chromosome 8 component, referred to as ETO (for eight twenty-one), is encoded over a large genomic region, as suggested by the analysis of corresponding yeast artificial chromosomes (YACs). The DNA sequence of the chromosome 21 portion of the fusion transcript is",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.623078+00:00"
+}

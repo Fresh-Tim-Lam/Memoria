@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "15670968",
+  "source_fingerprint": "9f792a392922974cfd827740ac29fd96",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15670968"
+  ],
+  "key_phrases": [
+    "thresholds",
+    "cost",
+    "effectiveness",
+    "interventions",
+    "alternative",
+    "approaches",
+    "many",
+    "countries"
+  ],
+  "summary_1l": "Many countries use the cost-effectiveness thresholds recommended by the World Health Organization's Choosing Intervention",
+  "query_hits": [],
+  "embed_text": "15670968 Thresholds for the cost–effectiveness of interventions: alternative approaches science scifact Many countries use the cost-effectiveness thresholds recommended by the World Health Organization's Choosing Interventions that are Cost-Effective project (WHO-CHOICE) when evaluating health interventions. This project sets the threshold… 15670968 thresholds cost effectiveness interventions alternative approaches many countries Many countries use the cost-effectiveness thresholds recommended by the World Health Organization's Choosing Intervention Thresholds for the cost–effectiveness of interventions: alternative approaches Many countries use the cost-effectiveness thresholds recommended by the World Health Organization's Choosing Interventions that are Cost-Effective project (WHO-CHOICE) when evaluating health interventions. This project sets the threshold for cost-effectiveness as the cost of the intervention per disability-adjusted life-year (DALY) averted less than three times the country's annual gross domestic product (GDP) per capita. Highly cost-effective interventions are defined as meeting a threshold per DALY averted of once the annual GDP per capita. We argue that reliance on these thresholds reduces the value of cost-effectiveness analyses and makes such analyses too blunt to be useful for most decision-making in the f",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.082726+00:00"
+}

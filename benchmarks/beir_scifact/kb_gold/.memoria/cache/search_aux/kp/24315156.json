@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24315156",
+  "source_fingerprint": "54368d5a501edaf544ecfc46bd6eebe8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24315156",
+    "role-of-the-cytoskeleton-during-leukocyte-responses"
+  ],
+  "key_phrases": [
+    "role",
+    "cytoskeleton",
+    "during",
+    "leukocyte",
+    "responses",
+    "cellular",
+    "network",
+    "structural"
+  ],
+  "summary_1l": "The cytoskeleton is a cellular network of structural, adaptor and signalling molecules that regulates most cellular functions that are related to th",
+  "query_hits": [],
+  "embed_text": "24315156 Role of the cytoskeleton during leukocyte responses science scifact The cytoskeleton is a cellular network of structural, adaptor and signalling molecules that regulates most cellular functions that are related to the immune response, including migration, extravasation, antigen recognition, activation and… 24315156 role-of-the-cytoskeleton-during-leukocyte-responses role cytoskeleton during leukocyte responses cellular network structural The cytoskeleton is a cellular network of structural, adaptor and signalling molecules that regulates most cellular functions that are related to th Role of the cytoskeleton during leukocyte responses The cytoskeleton is a cellular network of structural, adaptor and signalling molecules that regulates most cellular functions that are related to the immune response, including migration, extravasation, antigen recognition, activation and phagocytosis by different subsets of leukocytes. Recently, a large number of regulatory elements and structural constituents of the leukocyte cytoskeleton have been identified. In this review, we discuss the composition and regulation of the different cytoskeletal elements and their role in immune responses.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.197209+00:00"
+}

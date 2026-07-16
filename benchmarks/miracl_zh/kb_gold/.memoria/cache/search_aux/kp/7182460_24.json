@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "kp_id": "7182460#24",
+  "source_fingerprint": "efb18fdd6359c2c7e87192aa85a4f295",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "亚美尼亚国家美术馆",
+    "中国国家女子足球队",
+    "国家公务员考试",
+    "西班牙语国家和地区列表",
+    "圣经博物馆",
+    "2020年瑞典羽毛球公開賽",
+    "中国国家铁路集团",
+    "中国科学院国家天文台",
+    "俄语国家和地区列表",
+    "南美洲国家联盟",
+    "国家石油公司",
+    "巴基斯坦国家图书馆"
+  ],
+  "aliases": [
+    "7182460#24"
+  ],
+  "key_phrases": [
+    "2019",
+    "冠狀",
+    "病毒",
+    "病疫情",
+    "旅游业",
+    "影响",
+    "2020",
+    "16"
+  ],
+  "summary_1l": "2020年3月16日当日，旅游部门，艺术部门和文化部门宣布，马来西亚周边的几个旅游景点将关闭至2020年3月30日，其中包括游客中心，国家美术馆（National Arts Gallery），手工艺品中心，玲珑谷地考古遗址内的博物馆（Lenggong Archaeological Museum），马来西亚国家档案馆（National Archives of M",
+  "query_hits": [],
+  "embed_text": "7182460#24 2019冠狀病毒病疫情对旅游业的影响 2019冠狀病毒病疫情对旅游业的影响 2020年3月16日当日，旅游部门，艺术部门和文化部门宣布，马来西亚周边的几个旅游景点将关闭至2020年3月30日，其中包括游客中心，国家美术馆（National Arts Gallery），手工艺品中心，玲珑谷地考古遗址内的博物馆（Lenggong Archaeological Museum），马来西亚国家档案馆（National Archives of Malaysia）以及马来西亚国家图书馆（National Library of Malaysia）。 亚美尼亚国家美术馆 中国国家女子足球队 国家公务员考试 西班牙语国家和地区列表 圣经博物馆 2020年瑞典羽毛球公開賽 中国国家铁路集团 中国科学院国家天文台 俄语国家和地区列表 南美洲国家联盟 国家石油公司 巴基斯坦国家图书馆 7182460#24 2019 冠狀 病毒 病疫情 旅游业 影响 2020 16 2020年3月16日当日，旅游部门，艺术部门和文化部门宣布，马来西亚周边的几个旅游景点将关闭至2020年3月30日，其中包括游客中心，国家美术馆（National Arts Gallery），手工艺品中心，玲珑谷地考古遗址内的博物馆（Lenggong Archaeological Museum），马来西亚国家档案馆（National Archives of M 2019冠狀病毒病疫情对旅游业的影响 2020年3月16日当日，旅游部门，艺术部门和文化部门宣布，马来西亚周边的几个旅游景点将关闭至2020年3月30日，其中包括游客中心，国家美术馆（National Arts Gallery），手工艺品中心，玲珑谷地考古遗址内的博物馆（Lenggong Archaeological Museum），马来西亚国家档案馆（National Archives of Malaysia）以及马来西亚国家图书馆（National Library of Malaysia）。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:23:14.831582+00:00"
+}

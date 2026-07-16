@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6836086",
+  "source_fingerprint": "140bc4b37c9acbe1c081264bd25a5671",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6836086",
+    "identification-of-a-multicomponent-complex-required-for-outer-membrane-biogenesis-in-escherichia-coli"
+  ],
+  "key_phrases": [
+    "identification",
+    "multicomponent",
+    "complex",
+    "required",
+    "outer",
+    "membrane",
+    "biogenesis",
+    "escherichia"
+  ],
+  "summary_1l": "Gram-negative bacteria have an outer membrane (OM) that functions as a barrier to protect the cell",
+  "query_hits": [],
+  "embed_text": "6836086 Identification of a Multicomponent Complex Required for Outer Membrane Biogenesis in Escherichia coli science scifact Gram-negative bacteria have an outer membrane (OM) that functions as a barrier to protect the cell from toxic compounds such as antibiotics and detergents. The OM is a highly asymmetric bilayer composed of phospholipids, glycolipids, and… 6836086 identification-of-a-multicomponent-complex-required-for-outer-membrane-biogenesis-in-escherichia-coli identification multicomponent complex required outer membrane biogenesis escherichia Gram-negative bacteria have an outer membrane (OM) that functions as a barrier to protect the cell Identification of a Multicomponent Complex Required for Outer Membrane Biogenesis in Escherichia coli Gram-negative bacteria have an outer membrane (OM) that functions as a barrier to protect the cell from toxic compounds such as antibiotics and detergents. The OM is a highly asymmetric bilayer composed of phospholipids, glycolipids, and proteins. Assembly of this essential organelle occurs outside the cytoplasm in an environment that lacks obvious energy sources such as ATP, and the mechanisms involved are poorly understood. We describe the identification of a multiprotein complex required for the assembly of proteins in the OM of Escherichia coli. We also demonstrate genetic interactions between genes encoding components of this protein assembly complex and imp, which encodes a protein i",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.832153+00:00"
+}

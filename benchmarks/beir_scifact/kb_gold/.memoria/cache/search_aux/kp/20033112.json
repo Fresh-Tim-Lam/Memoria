@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20033112",
+  "source_fingerprint": "2ee67adc321e4cedf9b60203645cc225",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20033112",
+    "reprogramming-fibroblasts-into-bipotential-hepatic-stem-cells-by-defined-factors."
+  ],
+  "key_phrases": [
+    "reprogramming",
+    "fibroblasts",
+    "into",
+    "bipotential",
+    "hepatic",
+    "stem",
+    "cells",
+    "by"
+  ],
+  "summary_1l": "Reprogramming fibroblasts into bipotential hepatic stem cells by defined factors.",
+  "query_hits": [],
+  "embed_text": "20033112 Reprogramming fibroblasts into bipotential hepatic stem cells by defined factors. science scifact Recent studies have demonstrated direct reprogramming of fibroblasts into a range of somatic cell types, but to date stem or progenitor cells have only been reprogrammed for the blood and neuronal lineages. We previously reported… 20033112 reprogramming-fibroblasts-into-bipotential-hepatic-stem-cells-by-defined-factors. reprogramming fibroblasts into bipotential hepatic stem cells by Reprogramming fibroblasts into bipotential hepatic stem cells by defined factors. Reprogramming fibroblasts into bipotential hepatic stem cells by defined factors. Recent studies have demonstrated direct reprogramming of fibroblasts into a range of somatic cell types, but to date stem or progenitor cells have only been reprogrammed for the blood and neuronal lineages. We previously reported generation of induced hepatocyte-like (iHep) cells by transduction of Gata4, Hnf1α, and Foxa3 in p19 Arf null mouse embryonic fibroblasts (MEFs). Here, we show that Hnf1β and Foxa3, liver organogenesis transcription factors, are sufficient to reprogram MEFs into induced hepatic stem cells (iHepSCs). iHepSCs can be stably expanded in vitro and possess the potential of bidirectional differentiation into both hepatocytic and cholangiocytic lineages. In the injured liver of fumarylacetoa",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.558155+00:00"
+}

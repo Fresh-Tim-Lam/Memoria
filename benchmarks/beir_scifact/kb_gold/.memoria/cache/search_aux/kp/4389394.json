@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4389394",
+  "source_fingerprint": "24ea9417a7b70045abd8f26ea0dabc63",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4389394",
+    "deubiquitination-of-p53-by-hausp-is-an-important-pathway-for-p53-stabilization"
+  ],
+  "key_phrases": [
+    "deubiquitination",
+    "p53",
+    "by",
+    "hausp",
+    "important",
+    "pathway",
+    "stabilization",
+    "tumour"
+  ],
+  "summary_1l": "The p53 tumour suppressor is a short-lived protein that is maintained at low levels in normal cells by Mdm2-mediated ubiq",
+  "query_hits": [],
+  "embed_text": "4389394 Deubiquitination of p53 by HAUSP is an important pathway for p53 stabilization science scifact The p53 tumour suppressor is a short-lived protein that is maintained at low levels in normal cells by Mdm2-mediated ubiquitination and subsequent proteolysis. Stabilization of p53 is crucial for its tumour suppressor function. However,… 4389394 deubiquitination-of-p53-by-hausp-is-an-important-pathway-for-p53-stabilization deubiquitination p53 by hausp important pathway stabilization tumour The p53 tumour suppressor is a short-lived protein that is maintained at low levels in normal cells by Mdm2-mediated ubiq Deubiquitination of p53 by HAUSP is an important pathway for p53 stabilization The p53 tumour suppressor is a short-lived protein that is maintained at low levels in normal cells by Mdm2-mediated ubiquitination and subsequent proteolysis. Stabilization of p53 is crucial for its tumour suppressor function. However, the precise mechanism by which ubiquitinated p53 levels are regulated in vivo is not completely understood. By mass spectrometry of affinity-purified p53-associated factors, we have identified herpesvirus-associated ubiquitin-specific protease (HAUSP) as a novel p53-interacting protein. HAUSP strongly stabilizes p53 even in the presence of excess Mdm2, and also induces p53-dependent cell growth repression and apoptosis. Significantly, HAUSP has an intrinsic enzymatic activity tha",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.451692+00:00"
+}

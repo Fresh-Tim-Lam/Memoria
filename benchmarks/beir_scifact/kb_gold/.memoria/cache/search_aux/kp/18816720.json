@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18816720",
+  "source_fingerprint": "8c5abe3134eecde1e2ed57a4f61e4dd0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18816720",
+    "spatial-and-temporal-clustering-of-dengue-virus-transmission-in-thai-villages"
+  ],
+  "key_phrases": [
+    "spatial",
+    "temporal",
+    "clustering",
+    "dengue",
+    "virus",
+    "transmission",
+    "thai",
+    "villages"
+  ],
+  "summary_1l": "BACKGROUND Transmission of dengue viruses (DENV), the leading cause of arboviral disease worldwide, is known to vary throu",
+  "query_hits": [],
+  "embed_text": "18816720 Spatial and Temporal Clustering of Dengue Virus Transmission in Thai Villages science scifact BACKGROUND Transmission of dengue viruses (DENV), the leading cause of arboviral disease worldwide, is known to vary through time and space, likely owing to a combination of factors related to the human host, virus, mosquito vector, and… 18816720 spatial-and-temporal-clustering-of-dengue-virus-transmission-in-thai-villages spatial temporal clustering dengue virus transmission thai villages BACKGROUND Transmission of dengue viruses (DENV), the leading cause of arboviral disease worldwide, is known to vary throu Spatial and Temporal Clustering of Dengue Virus Transmission in Thai Villages BACKGROUND Transmission of dengue viruses (DENV), the leading cause of arboviral disease worldwide, is known to vary through time and space, likely owing to a combination of factors related to the human host, virus, mosquito vector, and environment. An improved understanding of variation in transmission patterns is fundamental to conducting surveillance and implementing disease prevention strategies. To test the hypothesis that DENV transmission is spatially and temporally focal, we compared geographic and temporal characteristics within Thai villages where DENV are and are not being actively transmitted. METHODS AND FINDINGS Cluster investigations were conducted within 100 m of homes where febrile index children",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.738432+00:00"
+}

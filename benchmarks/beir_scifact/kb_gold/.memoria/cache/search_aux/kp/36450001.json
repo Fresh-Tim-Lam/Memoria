@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36450001",
+  "source_fingerprint": "1026ae2bfa52c06d6391a372353dbc2c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36450001",
+    "proteogenomics-to-discover-the-full-coding-content-of-genomes:-a-computational-perspective."
+  ],
+  "key_phrases": [
+    "proteogenomics",
+    "discover",
+    "full",
+    "coding",
+    "content",
+    "genomes",
+    "computational",
+    "perspective"
+  ],
+  "summary_1l": "Proteogenomics to discover the full coding content of genomes: a computational perspective.",
+  "query_hits": [],
+  "embed_text": "36450001 Proteogenomics to discover the full coding content of genomes: a computational perspective. science scifact Proteogenomics has emerged as a field at the junction of genomics and proteomics. It is a loose collection of technologies that allow the search of tandem mass spectra against genomic databases to identify and characterize protein-coding… 36450001 proteogenomics-to-discover-the-full-coding-content-of-genomes:-a-computational-perspective. proteogenomics discover full coding content genomes computational perspective Proteogenomics to discover the full coding content of genomes: a computational perspective. Proteogenomics to discover the full coding content of genomes: a computational perspective. Proteogenomics has emerged as a field at the junction of genomics and proteomics. It is a loose collection of technologies that allow the search of tandem mass spectra against genomic databases to identify and characterize protein-coding genes. Proteogenomic peptides provide invaluable information for gene annotation, which is difficult or impossible to ascertain using standard annotation methods. Examples include confirmation of translation, reading-frame determination, identification of gene and exon boundaries, evidence for post-translational processing, identification of splice-forms including alternative splicing, and also, prediction of completely novel genes. For proteogenomics to deliver on",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:43.256229+00:00"
+}

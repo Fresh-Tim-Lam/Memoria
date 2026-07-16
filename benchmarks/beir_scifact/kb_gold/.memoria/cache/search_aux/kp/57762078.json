@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "57762078",
+  "source_fingerprint": "2d71973568a688e3bd8b1b1734cc92d9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "57762078",
+    "influence-of-antidepressant-therapy-on-sick-leave-in-primary-care:-adas,-a-comparative-observational-study"
+  ],
+  "key_phrases": [
+    "influence",
+    "antidepressant",
+    "therapy",
+    "sick",
+    "leave",
+    "primary",
+    "care",
+    "adas"
+  ],
+  "summary_1l": "Background Compared to other European countries, Sweden's yearly sick leave expenditures are",
+  "query_hits": [],
+  "embed_text": "57762078 Influence of antidepressant therapy on sick leave in primary care: ADAS, a comparative observational study science scifact Background Compared to other European countries, Sweden's yearly sick leave expenditures are moderate. Common mental disorders (CMD) are important causes of sick leave, affecting 10-15% of the adult population. A Swedish register based… 57762078 influence-of-antidepressant-therapy-on-sick-leave-in-primary-care:-adas,-a-comparative-observational-study influence antidepressant therapy sick leave primary care adas Background Compared to other European countries, Sweden's yearly sick leave expenditures are Influence of antidepressant therapy on sick leave in primary care: ADAS, a comparative observational study Background Compared to other European countries, Sweden's yearly sick leave expenditures are moderate. Common mental disorders (CMD) are important causes of sick leave, affecting 10-15% of the adult population. A Swedish register based study indicates that antidepressant therapy for patients on long-term sick leave for CMD leads to longer sick leave and higher frequency of non-time-limited sickness compensation as compared to psychotherapy, work oriented rehabilitation, and other therapies. Aim To verify if patients on antidepressant therapy and on long-term sick leave for depression, anxiety and stress-related mental disorders have a longer sick leave than patients treated with other",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.052448+00:00"
+}

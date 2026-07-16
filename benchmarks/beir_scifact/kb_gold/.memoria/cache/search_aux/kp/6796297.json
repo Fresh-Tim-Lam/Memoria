@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6796297",
+  "source_fingerprint": "a700edd9ced01fbb22ec0288185ac8fe",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6796297",
+    "pdgf-bb-secreted-by-preosteoclasts-induces-angiogenesis-during-coupling-with-osteogenesis"
+  ],
+  "key_phrases": [
+    "pdgf",
+    "bb",
+    "secreted",
+    "by",
+    "preosteoclasts",
+    "induces",
+    "angiogenesis",
+    "during"
+  ],
+  "summary_1l": "Osteogenesis during bone modeling and remodeling is coupled with angiogenesis.",
+  "query_hits": [],
+  "embed_text": "6796297 PDGF-BB secreted by preosteoclasts induces angiogenesis during coupling with osteogenesis science scifact Osteogenesis during bone modeling and remodeling is coupled with angiogenesis. A recent study showed that a specific vessel subtype, strongly positive for CD31 and endomucin (CD31hiEmcnhi), couples angiogenesis and osteogenesis. Here, we… 6796297 pdgf-bb-secreted-by-preosteoclasts-induces-angiogenesis-during-coupling-with-osteogenesis pdgf bb secreted by preosteoclasts induces angiogenesis during Osteogenesis during bone modeling and remodeling is coupled with angiogenesis. PDGF-BB secreted by preosteoclasts induces angiogenesis during coupling with osteogenesis Osteogenesis during bone modeling and remodeling is coupled with angiogenesis. A recent study showed that a specific vessel subtype, strongly positive for CD31 and endomucin (CD31hiEmcnhi), couples angiogenesis and osteogenesis. Here, we found that platelet-derived growth factor-BB (PDGF-BB) secreted by preosteoclasts induces CD31hiEmcnhi vessel formation during bone modeling and remodeling. Mice with depletion of PDGF-BB in the tartrate-resistant acid phosphatase–positive cell lineage show significantly lower trabecular and cortical bone mass, serum and bone marrow PDGF-BB concentrations, and fewer CD31hiEmcnhi vessels compared to wild-type mice. In the ovariectomy (OVX)-induced osteoporotic mouse mo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.716097+00:00"
+}

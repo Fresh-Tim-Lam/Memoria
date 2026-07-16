@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25104843",
+  "source_fingerprint": "8160a0e5188c15b5288f4c760dd41662",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25104843",
+    "hemoperfusion-hemodialysis-ineffective-for-paraquat-removal-in-life-threatening-poisoning?"
+  ],
+  "key_phrases": [
+    "hemoperfusion",
+    "hemodialysis",
+    "ineffective",
+    "paraquat",
+    "removal",
+    "life",
+    "threatening",
+    "poisoning"
+  ],
+  "summary_1l": "Hemoperfusion-hemodialysis ineffective for paraquat removal in life-threatening poisoning?",
+  "query_hits": [],
+  "embed_text": "25104843 Hemoperfusion-hemodialysis ineffective for paraquat removal in life-threatening poisoning? science scifact We report on a patient treated with hemoperfusion-hemodialysis (HP-HD) for severe paraquat poisoning. This procedure was adopted since the combination of adsorption and dialysis may improve overall drug removal. On admission blood paraquat… 25104843 hemoperfusion-hemodialysis-ineffective-for-paraquat-removal-in-life-threatening-poisoning? hemoperfusion hemodialysis ineffective paraquat removal life threatening poisoning Hemoperfusion-hemodialysis ineffective for paraquat removal in life-threatening poisoning? Hemoperfusion-hemodialysis ineffective for paraquat removal in life-threatening poisoning? We report on a patient treated with hemoperfusion-hemodialysis (HP-HD) for severe paraquat poisoning. This procedure was adopted since the combination of adsorption and dialysis may improve overall drug removal. On admission blood paraquat was 15.8 micrograms/ml. He received conventional treatment and combined HP-HD which started within 3 hours after ingestion of the chemical and lasted 5 hours. Blood samples were obtained during and after HP-HD. The samples during HP-HD were taken before the charcoal column, between the charcoal column and the artificial kidney and after the artificial kidney. Blood clearances of paraquat were 116 +/- 32 ml/min (n=6) for the charcoal column (HP), 90 +/- 54 ml/min (n",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.017969+00:00"
+}

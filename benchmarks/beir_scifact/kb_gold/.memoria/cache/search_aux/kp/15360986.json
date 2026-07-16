@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15360986",
+  "source_fingerprint": "6bf1b15b1615beac176baf25382d34ba",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15360986",
+    "estimating-low-density-lipoprotein-cholesterol-by-the-friedewald-equation-is-adequate-for-classifying-patients-on-the-basis-of-nationally-recommended-cutpoints."
+  ],
+  "key_phrases": [
+    "estimating",
+    "low",
+    "density",
+    "lipoprotein",
+    "cholesterol",
+    "by",
+    "friedewald",
+    "equation"
+  ],
+  "summary_1l": "Estimating low-density lipoprotein cholesterol by the Friedewald equation is adequate for classifying patients on the basis of nationally recommended cutpoints.",
+  "query_hits": [],
+  "embed_text": "15360986 Estimating low-density lipoprotein cholesterol by the Friedewald equation is adequate for classifying patients on the basis of nationally recommended cutpoints. science scifact We compared low-density lipoprotein cholesterol (LDL) values obtained by the Friedewald formula--i.e., total cholesterol minus high-density lipoprotein (HDL) cholesterol minus very-low-density lipoprotein (VLDL) cholesterol (estimated as… 15360986 estimating-low-density-lipoprotein-cholesterol-by-the-friedewald-equation-is-adequate-for-classifying-patients-on-the-basis-of-nationally-recommended-cutpoints. estimating low density lipoprotein cholesterol by friedewald equation Estimating low-density lipoprotein cholesterol by the Friedewald equation is adequate for classifying patients on the basis of nationally recommended cutpoints. Estimating low-density lipoprotein cholesterol by the Friedewald equation is adequate for classifying patients on the basis of nationally recommended cutpoints. We compared low-density lipoprotein cholesterol (LDL) values obtained by the Friedewald formula--i.e., total cholesterol minus high-density lipoprotein (HDL) cholesterol minus very-low-density lipoprotein (VLDL) cholesterol (estimated as triglyceride divided by 5)--with those obtained by lipoprotein fractionation, using 4736 specimens. When triglycerides were less than 2.0 g/L, greater than 90% of estimated LDL cholesterol values were acceptable, within +/- 10% of measured values. At triglyceride concentrations of 2.0-4.0 g/L and 4.0-6.0 g/L, only 72% and 39%, respectively, of the estimates were acceptable. LDL values derived from",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.387968+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13245542",
+  "source_fingerprint": "f30d5109750cf5722140695167b92990",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13245542",
+    "temporal-regulation-of-topoisomerase-iv-activity-in-e.-coli."
+  ],
+  "key_phrases": [
+    "temporal",
+    "regulation",
+    "topoisomerase",
+    "iv",
+    "activity",
+    "coli",
+    "we",
+    "isolated"
+  ],
+  "summary_1l": "Temporal regulation of topoisomerase IV activity in E.",
+  "query_hits": [],
+  "embed_text": "13245542 Temporal regulation of topoisomerase IV activity in E. coli. science scifact We isolated a mutant allele of dnaX, encoding the tau and gamma subunits of the DNA polymerase III holoenzyme, that causes extreme cell filamentation but does not affect either cell growth or DNA replication. This phenotype results from a… 13245542 temporal-regulation-of-topoisomerase-iv-activity-in-e.-coli. temporal regulation topoisomerase iv activity coli we isolated Temporal regulation of topoisomerase IV activity in E. Temporal regulation of topoisomerase IV activity in E. coli. We isolated a mutant allele of dnaX, encoding the tau and gamma subunits of the DNA polymerase III holoenzyme, that causes extreme cell filamentation but does not affect either cell growth or DNA replication. This phenotype results from a defect in daughter chromosome decatenation during rapid growth. In these cells, ParC, one subunit of topoisomerase IV, no longer associated with the replication factory, as occurs in wild-type cells, and was instead distributed uniformly on the nucleoid; the distribution of ParE, the other subunit of topoisomerase IV, was unaffected. In addition, the majority of topoisomerase IV activity in synchronized cell populations was restricted to late in the cell cycle, when replication was essentially c",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:09.890685+00:00"
+}

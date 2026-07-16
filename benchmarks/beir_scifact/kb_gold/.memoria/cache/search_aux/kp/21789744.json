@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21789744",
+  "source_fingerprint": "eec44715f88674c1c224ffe84fcafee2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21789744",
+    "effect-of-exercise-induced-ischemia-on-qt-interval-dispersion."
+  ],
+  "key_phrases": [
+    "effect",
+    "exercise",
+    "induced",
+    "ischemia",
+    "qt",
+    "interval",
+    "dispersion",
+    "increased"
+  ],
+  "summary_1l": "Effect of exercise-induced ischemia on QT interval dispersion.",
+  "query_hits": [],
+  "embed_text": "21789744 Effect of exercise-induced ischemia on QT interval dispersion. science scifact An increased spatial dispersion of ventricular repolarization duration (QT dispersion) is associated with an increased vulnerability to arrhythmias. This study was designed to examine the effect of exercise on QT dispersion in ischemic… 21789744 effect-of-exercise-induced-ischemia-on-qt-interval-dispersion. effect exercise induced ischemia qt interval dispersion increased Effect of exercise-induced ischemia on QT interval dispersion. Effect of exercise-induced ischemia on QT interval dispersion. An increased spatial dispersion of ventricular repolarization duration (QT dispersion) is associated with an increased vulnerability to arrhythmias. This study was designed to examine the effect of exercise on QT dispersion in ischemic heart disease (IHD). QT dispersion, corrected QT dispersion, and percentage change in uncorrected and corrected QT dispersion between rest and peak exercise were examined in 14 members of a control group, 17 patients with IHD, and 14 patients with IHD who were receiving beta-blockers (IHD-B). All subjects had undergone a standard Bruce protocol exercise test, and QT intervals were measured at rest and peak exercise with a digitizing tablet interfaced to a personal computer. QT dispersion at rest",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.718314+00:00"
+}

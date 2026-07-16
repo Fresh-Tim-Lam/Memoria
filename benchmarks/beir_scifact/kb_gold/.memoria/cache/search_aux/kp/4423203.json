@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4423203",
+  "source_fingerprint": "55a1f6a30b21262d1dd892af2aeee50c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4423203",
+    "microbial-engineering-for-the-production-of-advanced-biofuels"
+  ],
+  "key_phrases": [
+    "microbial",
+    "engineering",
+    "production",
+    "advanced",
+    "biofuels",
+    "produced",
+    "by",
+    "microorganisms"
+  ],
+  "summary_1l": "Advanced biofuels produced by microorganisms have similar properties to petroleum-based fuels, and can 'drop in' to the existing transport",
+  "query_hits": [],
+  "embed_text": "4423203 Microbial engineering for the production of advanced biofuels science scifact Advanced biofuels produced by microorganisms have similar properties to petroleum-based fuels, and can 'drop in' to the existing transportation infrastructure. However, producing these biofuels in yields high enough to be useful requires… 4423203 microbial-engineering-for-the-production-of-advanced-biofuels microbial engineering production advanced biofuels produced by microorganisms Advanced biofuels produced by microorganisms have similar properties to petroleum-based fuels, and can 'drop in' to the existing transport Microbial engineering for the production of advanced biofuels Advanced biofuels produced by microorganisms have similar properties to petroleum-based fuels, and can 'drop in' to the existing transportation infrastructure. However, producing these biofuels in yields high enough to be useful requires the engineering of the microorganism's metabolism. Such engineering is not based on just one specific feedstock or host organism. Data-driven and synthetic-biology approaches can be used to optimize both the host and pathways to maximize fuel production. Despite some success, challenges still need to be met to move advanced biofuels towards commercialization, and to compete with more conventional fuels.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.034391+00:00"
+}

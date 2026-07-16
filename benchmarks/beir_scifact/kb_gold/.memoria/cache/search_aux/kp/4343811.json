@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4343811",
+  "source_fingerprint": "7b9516399fe2277a91d2f99ceae2e9d9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4343811",
+    "specific-interference-by-ingested-dsrna."
+  ],
+  "key_phrases": [
+    "specific",
+    "interference",
+    "by",
+    "ingested",
+    "dsrna",
+    "genetic",
+    "phenomenon",
+    "nematode"
+  ],
+  "summary_1l": "Specific interference by ingested dsRNA.",
+  "query_hits": [],
+  "embed_text": "4343811 Specific interference by ingested dsRNA. science scifact A genetic interference phenomenon in the nematode Caenorhabditis elegans has been described in which expression of an individual gene can be specifically reduced by microinjecting a corresponding fragment of double-stranded (ds) RNA. One… 4343811 specific-interference-by-ingested-dsrna. specific interference by ingested dsrna genetic phenomenon nematode Specific interference by ingested dsRNA. Specific interference by ingested dsRNA. A genetic interference phenomenon in the nematode Caenorhabditis elegans has been described in which expression of an individual gene can be specifically reduced by microinjecting a corresponding fragment of double-stranded (ds) RNA. One striking feature of this process is a spreading effect: interference in a broad region of the animal is observed following the injection of dsRNA into the extracellular body cavity. Here we show that C. elegans can respond in a gene-specific manner to dsRNA encountered in the environment. C. elegans normally feed on bacteria, ingesting and grinding them in the pharynx and subsequently absorbing bacterial contents in the gut. We find that Escherichia coli bacteria expressing dsRNAs can confer specific interference ef",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.922752+00:00"
+}

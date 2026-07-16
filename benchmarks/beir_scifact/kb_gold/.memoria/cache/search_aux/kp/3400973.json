@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3400973",
+  "source_fingerprint": "ec174c3aa05ab29ed74066852fb22f74",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3400973",
+    "smc-complexes-differentially-compact-mitotic-chromosomes-according-to-genomic-context"
+  ],
+  "key_phrases": [
+    "smc",
+    "complexes",
+    "differentially",
+    "compact",
+    "mitotic",
+    "chromosomes",
+    "according",
+    "genomic"
+  ],
+  "summary_1l": "Structural maintenance of chromosomes (SMC) protein complexes are key determinants of chromosome conformation.",
+  "query_hits": [],
+  "embed_text": "3400973 SMC complexes differentially compact mitotic chromosomes according to genomic context science scifact Structural maintenance of chromosomes (SMC) protein complexes are key determinants of chromosome conformation. Using Hi-C and polymer modelling, we study how cohesin and condensin, two deeply conserved SMC complexes, organize chromosomes… 3400973 smc-complexes-differentially-compact-mitotic-chromosomes-according-to-genomic-context smc complexes differentially compact mitotic chromosomes according genomic Structural maintenance of chromosomes (SMC) protein complexes are key determinants of chromosome conformation. SMC complexes differentially compact mitotic chromosomes according to genomic context Structural maintenance of chromosomes (SMC) protein complexes are key determinants of chromosome conformation. Using Hi-C and polymer modelling, we study how cohesin and condensin, two deeply conserved SMC complexes, organize chromosomes in the budding yeast Saccharomyces cerevisiae. The canonical role of cohesin is to co-align sister chromatids, while condensin generally compacts mitotic chromosomes. We find strikingly different roles for the two complexes in budding yeast mitosis. First, cohesin is responsible for compacting mitotic chromosome arms, independently of sister chromatid cohesion. Polymer simulations demonstrate that this role can be fully accounted for through cis-looping of chromatin. Seco",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.918280+00:00"
+}

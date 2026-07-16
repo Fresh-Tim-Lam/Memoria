@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15856466",
+  "source_fingerprint": "26687873305bacf453b95b875fc40d8b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15856466",
+    "first-proposal-of-minimum-information-about-a-cellular-assay-for-regenerative-medicine"
+  ],
+  "key_phrases": [
+    "first",
+    "proposal",
+    "minimum",
+    "information",
+    "about",
+    "cellular",
+    "assay",
+    "regenerative"
+  ],
+  "summary_1l": "Advances in stem cell research have triggered scores of studies in regenerative medicine in a large number of i",
+  "query_hits": [],
+  "embed_text": "15856466 First Proposal of Minimum Information About a Cellular Assay for Regenerative Medicine science scifact : Advances in stem cell research have triggered scores of studies in regenerative medicine in a large number of institutions and companies around the world. However, reproducibility and data exchange among laboratories or cell banks are… 15856466 first-proposal-of-minimum-information-about-a-cellular-assay-for-regenerative-medicine first proposal minimum information about cellular assay regenerative Advances in stem cell research have triggered scores of studies in regenerative medicine in a large number of i First Proposal of Minimum Information About a Cellular Assay for Regenerative Medicine : Advances in stem cell research have triggered scores of studies in regenerative medicine in a large number of institutions and companies around the world. However, reproducibility and data exchange among laboratories or cell banks are constrained by the lack of a standardized format for experiments. To enhance information flow in stem cell and derivative cell research, here we propose a minimum information standard to describe cellular assay data to facilitate practical regenerative medicine. Based on the existing Minimum Information About a Cellular Assay, we developed Minimum Information About a Cellular Assay for Regenerative Medicine (MIACARM), which allows for the description of advanced cellular",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.357148+00:00"
+}

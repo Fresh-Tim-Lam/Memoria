@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11615242",
+  "source_fingerprint": "2746dc31e20bfa963b91aaf65d24cda9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11615242",
+    "effect-of-a-c/ebp-gene-replacement-on-mitochondrial-biogenesis-in-fat-cells."
+  ],
+  "key_phrases": [
+    "effect",
+    "ebp",
+    "gene",
+    "replacement",
+    "mitochondrial",
+    "biogenesis",
+    "fat",
+    "cells"
+  ],
+  "summary_1l": "Effect of a C/EBP gene replacement on mitochondrial biogenesis in fat cells.",
+  "query_hits": [],
+  "embed_text": "11615242 Effect of a C/EBP gene replacement on mitochondrial biogenesis in fat cells. science scifact CCAAT/enhancer-binding proteins, C/EBPalpha and C/EBPbeta, are required for fat cell differentiation and maturation. Previous studies showed that replacement of C/EBPalpha with C/EBPbeta, generating the beta/beta alleles in the mouse… 11615242 effect-of-a-c/ebp-gene-replacement-on-mitochondrial-biogenesis-in-fat-cells. effect ebp gene replacement mitochondrial biogenesis fat cells Effect of a C/EBP gene replacement on mitochondrial biogenesis in fat cells. Effect of a C/EBP gene replacement on mitochondrial biogenesis in fat cells. CCAAT/enhancer-binding proteins, C/EBPalpha and C/EBPbeta, are required for fat cell differentiation and maturation. Previous studies showed that replacement of C/EBPalpha with C/EBPbeta, generating the beta/beta alleles in the mouse genome, prevents lipid accumulation in white adipose tissue (WAT). In this study, beta/beta mice lived longer and had higher energy expenditure than their control littermates due to increased WAT energy oxidation. The WAT of beta/beta mice was enriched with metabolically active, thermogenic mitochondria known for energy burning. The beta/beta allele exerted its effect through the elevated expression of the G protein alpha stimulatory subunit (Galphas) in WAT. Galphas, when overexpress",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:06.818172+00:00"
+}

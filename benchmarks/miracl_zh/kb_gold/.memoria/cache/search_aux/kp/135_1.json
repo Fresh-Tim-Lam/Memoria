@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "kp_id": "135#1",
+  "source_fingerprint": "6fe296cef71404b0d71a1344bc1c7608",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "自由软件基金会",
+    "世界主要宗教",
+    "联合国主要机构",
+    "自由软件历史",
+    "计算机围棋"
+  ],
+  "aliases": [
+    "135#1"
+  ],
+  "key_phrases": [
+    "理查德",
+    "斯托",
+    "为了",
+    "创建",
+    "一个",
+    "完全",
+    "自由软件",
+    "组成"
+  ],
+  "summary_1l": "为了创建一个完全由自由软件组成的类Unix计算机操作系统，斯托曼在1983年9月推出了GNU项目。",
+  "query_hits": [],
+  "embed_text": "135#1 理查德·斯托曼 理查德·斯托曼 为了创建一个完全由自由软件组成的类Unix计算机操作系统，斯托曼在1983年9月推出了GNU项目。借此又发起了自由软件运动。他迄今为止一直是GNU项目的组织者，作为主要开发者的他开发了一些被广泛使用的GNU软件，其中包括GCC、GDB、GNU Emacs。在1985年10月他创立了自由软件基金会。 自由软件基金会 世界主要宗教 联合国主要机构 自由软件历史 计算机围棋 135#1 理查德 斯托 为了 创建 一个 完全 自由软件 组成 为了创建一个完全由自由软件组成的类Unix计算机操作系统，斯托曼在1983年9月推出了GNU项目。 理查德·斯托曼 为了创建一个完全由自由软件组成的类Unix计算机操作系统，斯托曼在1983年9月推出了GNU项目。借此又发起了自由软件运动。他迄今为止一直是GNU项目的组织者，作为主要开发者的他开发了一些被广泛使用的GNU软件，其中包括GCC、GDB、GNU Emacs。在1985年10月他创立了自由软件基金会。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:17:44.612713+00:00"
+}

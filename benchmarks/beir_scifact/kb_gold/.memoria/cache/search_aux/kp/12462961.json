@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12462961",
+  "source_fingerprint": "5ca5561ec3a6fdf49fe7f72c14103680",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12462961",
+    "gata-4-and-gata-6-modulate-tissue-specific-transcription-of-the-human-gene-for-p450c17-by-direct-interaction-with-sp1."
+  ],
+  "key_phrases": [
+    "gata",
+    "modulate",
+    "tissue",
+    "specific",
+    "transcription",
+    "human",
+    "gene",
+    "p450c17"
+  ],
+  "summary_1l": "GATA-4 and GATA-6 modulate tissue-specific transcription of the human gene for P450c17 by direct interaction with Sp1.",
+  "query_hits": [],
+  "embed_text": "12462961 GATA-4 and GATA-6 modulate tissue-specific transcription of the human gene for P450c17 by direct interaction with Sp1. science scifact Cytochrome P450c17 catalyzes steroidogenic 17alpha-hydroxylase and 17,20 lyase activities. Expression of the gene for P450c17 is cAMP dependent, tissue specific, developmentally programmed, and varies among species. Binding of Sp1, Sp3,… 12462961 gata-4-and-gata-6-modulate-tissue-specific-transcription-of-the-human-gene-for-p450c17-by-direct-interaction-with-sp1. gata modulate tissue specific transcription human gene p450c17 GATA-4 and GATA-6 modulate tissue-specific transcription of the human gene for P450c17 by direct interaction with Sp1. GATA-4 and GATA-6 modulate tissue-specific transcription of the human gene for P450c17 by direct interaction with Sp1. Cytochrome P450c17 catalyzes steroidogenic 17alpha-hydroxylase and 17,20 lyase activities. Expression of the gene for P450c17 is cAMP dependent, tissue specific, developmentally programmed, and varies among species. Binding of Sp1, Sp3, and NF1-C (nuclear factor 1-C) to the first 227 bp of 5'flanking DNA (-227/LUC) is crucial for basal transcription in human NCI-H295A adrenal cells. Human placental JEG-3 cells contain Sp1, Sp3, and NF1, but do not express -227/LUC, even when transfected with a vector expressing steroidogenic factor 1 (SF-1). Therefore, other factors are essential for basal expression of P450c17. Deoxyribonuclease I footprinting and EMSAs identified a GATA",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:08.405201+00:00"
+}

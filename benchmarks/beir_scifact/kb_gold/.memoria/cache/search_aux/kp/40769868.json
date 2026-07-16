@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "40769868",
+  "source_fingerprint": "d9f20af2638f6fff2476aa96b4e218dd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "40769868",
+    "differential-assembly-of-inwardly-rectifying-k+-channel-subunits,-kir4.1-and-kir5.1,-in-brain-astrocytes."
+  ],
+  "key_phrases": [
+    "differential",
+    "assembly",
+    "inwardly",
+    "rectifying",
+    "channel",
+    "subunits",
+    "kir4.1",
+    "kir5.1"
+  ],
+  "summary_1l": "Differential assembly of inwardly rectifying K+ channel subunits, Kir4.",
+  "query_hits": [],
+  "embed_text": "40769868 Differential assembly of inwardly rectifying K+ channel subunits, Kir4.1 and Kir5.1, in brain astrocytes. science scifact The inwardly rectifying K+ channel subunit Kir5.1 is expressed abundantly in the brain, but its precise distribution and function are still largely unknown. Because Kir5.1 is co-expressed with Kir4.1 in retinal glial Muller cells, we have… 40769868 differential-assembly-of-inwardly-rectifying-k+-channel-subunits,-kir4.1-and-kir5.1,-in-brain-astrocytes. differential assembly inwardly rectifying channel subunits kir4.1 kir5.1 Differential assembly of inwardly rectifying K+ channel subunits, Kir4. Differential assembly of inwardly rectifying K+ channel subunits, Kir4.1 and Kir5.1, in brain astrocytes. The inwardly rectifying K+ channel subunit Kir5.1 is expressed abundantly in the brain, but its precise distribution and function are still largely unknown. Because Kir5.1 is co-expressed with Kir4.1 in retinal glial Muller cells, we have compared the biochemical and immunological properties of Kir5.1 and Kir4.1 in the mouse brain. Immunoprecipitation experiments suggested that brain expressed at least two subsets of Kir channels, heteromeric Kir4.1/5.1 and homomeric Kir4.1. Immunolabeling using specific antibodies showed that channels comprising Kir4.1 and Kir5.1 subunits were assembled in a region-specific fashion. Heteromeric Kir4.1/5.1 was identified in the neocortex and in the glo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.818018+00:00"
+}

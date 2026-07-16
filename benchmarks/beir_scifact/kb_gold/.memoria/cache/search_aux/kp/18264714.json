@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18264714",
+  "source_fingerprint": "d888d05a6145c0adc366395b529b3520",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18264714",
+    "noise-and-interlocking-signaling-pathways-promote-distinct-transcription-factor-dynamics-in-response-to-different-stresses"
+  ],
+  "key_phrases": [
+    "noise",
+    "interlocking",
+    "signaling",
+    "pathways",
+    "promote",
+    "distinct",
+    "transcription",
+    "factor"
+  ],
+  "summary_1l": "All cells perceive and respond to environmental stresses through elaborate st",
+  "query_hits": [],
+  "embed_text": "18264714 Noise and interlocking signaling pathways promote distinct transcription factor dynamics in response to different stresses science scifact All cells perceive and respond to environmental stresses through elaborate stress-sensing networks. Yeast cells sense stress through diverse signaling pathways that converge on the transcription factors Msn2 and Msn4, which respond by… 18264714 noise-and-interlocking-signaling-pathways-promote-distinct-transcription-factor-dynamics-in-response-to-different-stresses noise interlocking signaling pathways promote distinct transcription factor All cells perceive and respond to environmental stresses through elaborate st Noise and interlocking signaling pathways promote distinct transcription factor dynamics in response to different stresses All cells perceive and respond to environmental stresses through elaborate stress-sensing networks. Yeast cells sense stress through diverse signaling pathways that converge on the transcription factors Msn2 and Msn4, which respond by initiating rapid, idiosyncratic cycles into and out of the nucleus. To understand the role of Msn2/4 nuclear localization dynamics, we combined time-lapse studies of Msn2-GFP localization in living cells with computational modeling of stress-sensing signaling networks. We find that several signaling pathways, including Ras/protein kinase A, AMP-activated kinase, the high-osmolarity response mitogen-activated protein kinase pathway, and pr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.019180+00:00"
+}

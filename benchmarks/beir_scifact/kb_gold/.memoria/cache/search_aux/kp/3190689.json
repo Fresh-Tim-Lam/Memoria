@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3190689",
+  "source_fingerprint": "e7fecfbce1a4700cdbd741b0f25e6bca",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3190689",
+    "laparoscopic-adhesiolysis-in-patients-with-chronic-abdominal-pain:-a-blinded-randomised-controlled-multi-centre-trial."
+  ],
+  "key_phrases": [
+    "laparoscopic",
+    "adhesiolysis",
+    "patients",
+    "with",
+    "chronic",
+    "abdominal",
+    "pain",
+    "blinded"
+  ],
+  "summary_1l": "Laparoscopic adhesiolysis in patients with chronic abdominal pain: a blinded randomised controlled multi-centre trial.",
+  "query_hits": [],
+  "embed_text": "3190689 Laparoscopic adhesiolysis in patients with chronic abdominal pain: a blinded randomised controlled multi-centre trial. science scifact BACKGROUND Laparoscopic adhesiolysis for chronic abdominal pain is controversial and is not evidence based. We aimed to test our hypothesis that laparoscopic adhesiolysis leads to substantial pain relief and improvement in quality of life… 3190689 laparoscopic-adhesiolysis-in-patients-with-chronic-abdominal-pain:-a-blinded-randomised-controlled-multi-centre-trial. laparoscopic adhesiolysis patients with chronic abdominal pain blinded Laparoscopic adhesiolysis in patients with chronic abdominal pain: a blinded randomised controlled multi-centre trial. Laparoscopic adhesiolysis in patients with chronic abdominal pain: a blinded randomised controlled multi-centre trial. BACKGROUND Laparoscopic adhesiolysis for chronic abdominal pain is controversial and is not evidence based. We aimed to test our hypothesis that laparoscopic adhesiolysis leads to substantial pain relief and improvement in quality of life in patients with adhesions and chronic abdominal pain. METHODS Patients had diagnostic laparoscopy for chronic abdominal pain attributed to adhesions; other causes for their pain had been excluded. If adhesions were confirmed during diagnostic laparoscopy, patients were randomly assigned either to laparoscopic adhesiolysis or no treatment. Treatment allocation was concealed from patients, and assessors were unaware of patients' treatment",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.004577+00:00"
+}

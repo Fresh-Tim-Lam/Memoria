@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14492964",
+  "source_fingerprint": "62a89c944e3347b97304199114d3ec0b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14492964",
+    "the-spemann-organizer-signal-noggin-binds-and-inactivates-bone-morphogenetic-protein-4"
+  ],
+  "key_phrases": [
+    "spemann",
+    "organizer",
+    "signal",
+    "noggin",
+    "binds",
+    "inactivates",
+    "bone",
+    "morphogenetic"
+  ],
+  "summary_1l": "Signals released by the Spemann organizer of the amphibian gastrula can directly induce neural tissue from ectode",
+  "query_hits": [],
+  "embed_text": "14492964 The Spemann Organizer Signal noggin Binds and Inactivates Bone Morphogenetic Protein 4 science scifact Signals released by the Spemann organizer of the amphibian gastrula can directly induce neural tissue from ectoderm and can dorsalize ventral mesoderm to form muscle. The secreted polypeptide noggin mimics these activities and is expressed… 14492964 the-spemann-organizer-signal-noggin-binds-and-inactivates-bone-morphogenetic-protein-4 spemann organizer signal noggin binds inactivates bone morphogenetic Signals released by the Spemann organizer of the amphibian gastrula can directly induce neural tissue from ectode The Spemann Organizer Signal noggin Binds and Inactivates Bone Morphogenetic Protein 4 Signals released by the Spemann organizer of the amphibian gastrula can directly induce neural tissue from ectoderm and can dorsalize ventral mesoderm to form muscle. The secreted polypeptide noggin mimics these activities and is expressed at the appropriate time and place to participate in the organizer signal. Neural induction and mesoderm dorsalization are antagonized by bone morphogenetic proteins (BMPs), which induce epidermis and ventral mesoderm instead. Here we report that noggin protein binds BMP4 with high affinity and can abolish BMP4 activity by blocking binding to cognate cell-surface receptors. These data suggest that noggin secreted by the organizer patterns the embryo by interrupting BMP",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.028054+00:00"
+}

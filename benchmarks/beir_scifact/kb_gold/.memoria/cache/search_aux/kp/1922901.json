@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1922901",
+  "source_fingerprint": "ba89571751d1ff840894bbdde902a5f2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1922901",
+    "forces-in-tissue-morphogenesis-and-patterning"
+  ],
+  "key_phrases": [
+    "forces",
+    "tissue",
+    "morphogenesis",
+    "patterning",
+    "during",
+    "development",
+    "mechanical",
+    "cause"
+  ],
+  "summary_1l": "During development, mechanical forces cause changes in size, shape, number, position, and gene expression of cells.",
+  "query_hits": [],
+  "embed_text": "1922901 Forces in Tissue Morphogenesis and Patterning science scifact During development, mechanical forces cause changes in size, shape, number, position, and gene expression of cells. They are therefore integral to any morphogenetic processes. Force generation by actin-myosin networks and force… 1922901 forces-in-tissue-morphogenesis-and-patterning forces tissue morphogenesis patterning during development mechanical cause During development, mechanical forces cause changes in size, shape, number, position, and gene expression of cells. Forces in Tissue Morphogenesis and Patterning During development, mechanical forces cause changes in size, shape, number, position, and gene expression of cells. They are therefore integral to any morphogenetic processes. Force generation by actin-myosin networks and force transmission through adhesive complexes are two self-organizing phenomena driving tissue morphogenesis. Coordination and integration of forces by long-range force transmission and mechanosensing of cells within tissues produce large-scale tissue shape changes. Extrinsic mechanical forces also control tissue patterning by modulating cell fate specification and differentiation. Thus, the interplay between tissue mechanics and biochemical signaling orchestrates tissue morphogenesis and patterning in development.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.322868+00:00"
+}

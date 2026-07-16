@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "7795952",
+  "source_fingerprint": "bd4bd33761359d9fe15abf8f2283bdba",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7795952"
+  ],
+  "key_phrases": [
+    "fascin",
+    "protein",
+    "critical",
+    "transforming",
+    "growth",
+    "factor",
+    "induced",
+    "invasion"
+  ],
+  "summary_1l": "Fascin protein is critical for transforming growth factor β protein-induced invasion and filopodia formation in spindle-shaped tumor cells.",
+  "query_hits": [],
+  "embed_text": "7795952 Fascin protein is critical for transforming growth factor β protein-induced invasion and filopodia formation in spindle-shaped tumor cells. science scifact Fascin, an actin-bundling protein overexpressed in all carcinomas, has been associated with poor prognosis, shorter survival, and more metastatic diseases. It is believed that fascin facilitates tumor metastasis by promoting the formation… 7795952 fascin protein critical transforming growth factor induced invasion Fascin protein is critical for transforming growth factor β protein-induced invasion and filopodia formation in spindle-shaped tumor cells. Fascin protein is critical for transforming growth factor β protein-induced invasion and filopodia formation in spindle-shaped tumor cells. Fascin, an actin-bundling protein overexpressed in all carcinomas, has been associated with poor prognosis, shorter survival, and more metastatic diseases. It is believed that fascin facilitates tumor metastasis by promoting the formation of invasive membrane protrusions. However, the mechanisms by which fascin is overexpressed in tumors are not clear. TGFβ is a cytokine secreted by tumor and mesenchymal cells and promotes metastasis in many late stage tumors. The pro-metastasis mechanisms of TGFβ remain to be fully elucidated. Here we demonstrated that TGFβ induced fascin expression in spindle-shaped tumor cells through the canonical Smad-dependent pa",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.194236+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3752408",
+  "source_fingerprint": "c67e0938a6d65c2dce270cc4f0a6f5ae",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3752408",
+    "a-case-mix-classification-system-for-explaining-healthcare-costs-using-administrative-data-in-italy."
+  ],
+  "key_phrases": [
+    "case",
+    "mix",
+    "classification",
+    "system",
+    "explaining",
+    "healthcare",
+    "costs",
+    "using"
+  ],
+  "summary_1l": "A case-mix classification system for explaining healthcare costs using administrative data in Italy.",
+  "query_hits": [],
+  "embed_text": "3752408 A case-mix classification system for explaining healthcare costs using administrative data in Italy. science scifact BACKGROUND The Italian National Health Service (NHS) provides universal coverage to all citizens, granting primary and hospital care with a copayment system for outpatient and drug services. Financing of Local Health Trusts (LHTs) is based… 3752408 a-case-mix-classification-system-for-explaining-healthcare-costs-using-administrative-data-in-italy. case mix classification system explaining healthcare costs using A case-mix classification system for explaining healthcare costs using administrative data in Italy. A case-mix classification system for explaining healthcare costs using administrative data in Italy. BACKGROUND The Italian National Health Service (NHS) provides universal coverage to all citizens, granting primary and hospital care with a copayment system for outpatient and drug services. Financing of Local Health Trusts (LHTs) is based on a capitation system adjusted only for age, gender and area of residence. We applied a risk-adjustment system (Johns Hopkins Adjusted Clinical Groups System, ACG® System) in order to explain health care costs using routinely collected administrative data in the Veneto Region (North-eastern Italy). METHODS All residents in the Veneto Region were included in the study. The ACG system was applied to classify the regional population based on the following i",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.567394+00:00"
+}

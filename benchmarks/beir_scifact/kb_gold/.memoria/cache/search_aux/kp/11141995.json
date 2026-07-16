@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11141995",
+  "source_fingerprint": "3dbe900ac38ffac1a9267b8252e1db80",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11141995",
+    "organization-of-the-mitotic-chromosome."
+  ],
+  "key_phrases": [
+    "organization",
+    "mitotic",
+    "chromosome",
+    "chromosomes",
+    "among",
+    "most",
+    "recognizable",
+    "structures"
+  ],
+  "summary_1l": "Organization of the mitotic chromosome.",
+  "query_hits": [],
+  "embed_text": "11141995 Organization of the mitotic chromosome. science scifact Mitotic chromosomes are among the most recognizable structures in the cell, yet for over a century their internal organization remains largely unsolved. We applied chromosome conformation capture methods, 5C and Hi-C, across the cell cycle… 11141995 organization-of-the-mitotic-chromosome. organization mitotic chromosome chromosomes among most recognizable structures Organization of the mitotic chromosome. Organization of the mitotic chromosome. Mitotic chromosomes are among the most recognizable structures in the cell, yet for over a century their internal organization remains largely unsolved. We applied chromosome conformation capture methods, 5C and Hi-C, across the cell cycle and revealed two distinct three-dimensional folding states of the human genome. We show that the highly compartmentalized and cell type-specific organization described previously for nonsynchronous cells is restricted to interphase. In metaphase, we identified a homogenous folding state that is locus-independent, common to all chromosomes, and consistent among cell types, suggesting a general principle of metaphase chromosome organization. Using polymer simulations, we found that metaphase Hi-C data are inconsisten",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:06.012550+00:00"
+}

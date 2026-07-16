@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6280907",
+  "source_fingerprint": "e99c89b3f37fe8fec3561c857b523c76",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6280907",
+    "conversion-of-vascular-endothelial-cells-into-multipotent-stem-like-cells"
+  ],
+  "key_phrases": [
+    "conversion",
+    "vascular",
+    "endothelial",
+    "cells",
+    "into",
+    "multipotent",
+    "stem",
+    "like"
+  ],
+  "summary_1l": "Mesenchymal stem cells can give rise to several cell types, but varying results depending on isolation methods and tissue sour",
+  "query_hits": [],
+  "embed_text": "6280907 Conversion of vascular endothelial cells into multipotent stem-like cells science scifact Mesenchymal stem cells can give rise to several cell types, but varying results depending on isolation methods and tissue source have led to controversies about their usefulness in clinical medicine. Here we show that vascular endothelial… 6280907 conversion-of-vascular-endothelial-cells-into-multipotent-stem-like-cells conversion vascular endothelial cells into multipotent stem like Mesenchymal stem cells can give rise to several cell types, but varying results depending on isolation methods and tissue sour Conversion of vascular endothelial cells into multipotent stem-like cells Mesenchymal stem cells can give rise to several cell types, but varying results depending on isolation methods and tissue source have led to controversies about their usefulness in clinical medicine. Here we show that vascular endothelial cells can transform into multipotent stem-like cells by an activin-like kinase-2 (ALK2) receptor–dependent mechanism. In lesions from individuals with fibrodysplasia ossificans progressiva (FOP), a disease in which heterotopic ossification occurs as a result of activating ALK2 mutations, or from transgenic mice expressing constitutively active ALK2, chondrocytes and osteoblasts expressed endothelial markers. Lineage tracing of heterotopic ossification in mice using a Tie2-Cre constr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.440898+00:00"
+}

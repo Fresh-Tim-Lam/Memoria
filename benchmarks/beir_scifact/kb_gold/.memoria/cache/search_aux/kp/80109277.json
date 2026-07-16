@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "80109277",
+  "source_fingerprint": "95b21ecb0138faf29985bd778a8bf57d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "80109277",
+    "the-bitterest-pills:-the-troubling-story-of-antipsychotic-drugs"
+  ],
+  "key_phrases": [
+    "bitterest",
+    "pills",
+    "troubling",
+    "story",
+    "antipsychotic",
+    "drugs",
+    "joanna",
+    "moncrieff"
+  ],
+  "summary_1l": "© Joanna Moncrieff 2013.",
+  "query_hits": [],
+  "embed_text": "80109277 The Bitterest Pills: The Troubling Story of Antipsychotic Drugs science scifact © Joanna Moncrieff 2013. All rights reserved. A challenging reappraisal of the history of antipsychotics, revealing how they were transformed from neurological poisons into magical cures, their benefits exaggerated and their toxic effects… 80109277 the-bitterest-pills:-the-troubling-story-of-antipsychotic-drugs bitterest pills troubling story antipsychotic drugs joanna moncrieff © Joanna Moncrieff 2013. The Bitterest Pills: The Troubling Story of Antipsychotic Drugs © Joanna Moncrieff 2013. All rights reserved. A challenging reappraisal of the history of antipsychotics, revealing how they were transformed from neurological poisons into magical cures, their benefits exaggerated and their toxic effects minimized or ignored.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.734279+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4993011",
+  "source_fingerprint": "e7ca7814f4e1f28b12ba14159a2ee9ab",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4993011",
+    "ribosomal-dna-copy-loss-and-repeat-instability-in-atrx-mutated-cancers"
+  ],
+  "key_phrases": [
+    "ribosomal",
+    "dna",
+    "copy",
+    "loss",
+    "repeat",
+    "instability",
+    "atrx",
+    "mutated"
+  ],
+  "summary_1l": "ATRX (alpha thalassemia/mental retardation X-linked) complexes with DAXX to deposit histone variant H3.",
+  "query_hits": [],
+  "embed_text": "4993011 Ribosomal DNA copy loss and repeat instability in ATRX-mutated cancers science scifact ATRX (alpha thalassemia/mental retardation X-linked) complexes with DAXX to deposit histone variant H3.3 into repetitive heterochromatin. Recent genome sequencing studies in cancers have revealed mutations in ATRX and their association… 4993011 ribosomal-dna-copy-loss-and-repeat-instability-in-atrx-mutated-cancers ribosomal dna copy loss repeat instability atrx mutated ATRX (alpha thalassemia/mental retardation X-linked) complexes with DAXX to deposit histone variant H3. Ribosomal DNA copy loss and repeat instability in ATRX-mutated cancers ATRX (alpha thalassemia/mental retardation X-linked) complexes with DAXX to deposit histone variant H3.3 into repetitive heterochromatin. Recent genome sequencing studies in cancers have revealed mutations in ATRX and their association with ALT (alternative lengthening of telomeres) activation. Here we report depletion of ATRX in mouse ES cells leads to selective loss in ribosomal RNA gene (rDNA) copy number. Supporting this, ATRX-mutated human ALT-positive tumors also show a substantially lower rDNA copy than ALT-negative tumors. Further investigation shows that the rDNA copy loss and repeat instability are caused by a disruption in H3.3 deposition and thus a failure in heterochromatin formation at rDNA repeats in the",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.959474+00:00"
+}

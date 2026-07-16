@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "4910408",
+  "source_fingerprint": "58e9bd970d788109b375838f97491f0a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4910408"
+  ],
+  "key_phrases": [
+    "low",
+    "drug",
+    "levels",
+    "thrombotic",
+    "complications",
+    "high",
+    "risk",
+    "atrial"
+  ],
+  "summary_1l": "Essentials Direct oral anticoagulants (DOACs) do not require laboratory m",
+  "query_hits": [],
+  "embed_text": "4910408 Low drug levels and thrombotic complications in high‐risk atrial fibrillation patients treated with direct oral anticoagulants science scifact Essentials Direct oral anticoagulants (DOACs) do not require laboratory monitoring currently. DOAC specific measurements were performed at trough in patients with atrial fibrillation. Patients who developed thromboembolic events showed… 4910408 low drug levels thrombotic complications high risk atrial Essentials Direct oral anticoagulants (DOACs) do not require laboratory m Low drug levels and thrombotic complications in high‐risk atrial fibrillation patients treated with direct oral anticoagulants Essentials Direct oral anticoagulants (DOACs) do not require laboratory monitoring currently. DOAC specific measurements were performed at trough in patients with atrial fibrillation. Patients who developed thromboembolic events showed lower DOAC plasma levels. This study supports the concept of measuring DOAC levels at steady state. SUMMARY Background Direct oral anticoagulants (DOACs) are administered at fixed doses without the need for dose adjustment according to laboratory testing. High interindividual variability in drug blood levels has been shown with all DOACs. To evaluate a possible relationship between DOAC C-trough anticoagulant levels and thromboemboli",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.700948+00:00"
+}

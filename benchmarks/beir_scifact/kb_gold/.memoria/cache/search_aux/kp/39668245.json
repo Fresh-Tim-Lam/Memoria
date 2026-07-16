@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "39668245",
+  "source_fingerprint": "9be05bb2cb2a4ec153d9b1bece50d8f2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "39668245",
+    "development-of-an-insect-model-for-the-in-vivo-pathogenicity-testing-of-yeasts."
+  ],
+  "key_phrases": [
+    "development",
+    "insect",
+    "model",
+    "vivo",
+    "pathogenicity",
+    "testing",
+    "yeasts",
+    "conventional"
+  ],
+  "summary_1l": "Development of an insect model for the in vivo pathogenicity testing of yeasts.",
+  "query_hits": [],
+  "embed_text": "39668245 Development of an insect model for the in vivo pathogenicity testing of yeasts. science scifact Conventional in vivo assays to determine the relative pathogenicity of yeast isolates rely upon the use of a range of mammalian species. The purpose of the work presented here was to investigate the possibility of using an insect (Galleria… 39668245 development-of-an-insect-model-for-the-in-vivo-pathogenicity-testing-of-yeasts. development insect model vivo pathogenicity testing yeasts conventional Development of an insect model for the in vivo pathogenicity testing of yeasts. Development of an insect model for the in vivo pathogenicity testing of yeasts. Conventional in vivo assays to determine the relative pathogenicity of yeast isolates rely upon the use of a range of mammalian species. The purpose of the work presented here was to investigate the possibility of using an insect (Galleria mellonella) as a model system for in vivo pathogenicity testing. The haemolymph of G. mellonella larvae was inoculated with PBS containing different concentrations of stationary phase yeasts of the genus Candida by injection at the last pro-leg. Larvae were incubated at 30 degrees C and monitored over 72 hours. Results indicate that G. mellonella can be killed by the pathogenic yeast Candida albicans and by a range of other Candida species but not to a significant extent by t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.857435+00:00"
+}

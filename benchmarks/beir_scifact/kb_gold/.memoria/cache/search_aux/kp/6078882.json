@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6078882",
+  "source_fingerprint": "ff02cac95ffa1394f6a78326f0fedfc0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6078882",
+    "colorectal-cancers-from-distinct-ancestral-populations-show-variations-in-braf-mutation-frequency"
+  ],
+  "key_phrases": [
+    "colorectal",
+    "cancers",
+    "from",
+    "distinct",
+    "ancestral",
+    "populations",
+    "show",
+    "variations"
+  ],
+  "summary_1l": "It has been demonstrated for some cancers that the frequency of somatic oncogenic mutations may vary i",
+  "query_hits": [],
+  "embed_text": "6078882 Colorectal Cancers from Distinct Ancestral Populations Show Variations in BRAF Mutation Frequency science scifact It has been demonstrated for some cancers that the frequency of somatic oncogenic mutations may vary in ancestral populations. To determine whether key driver alterations might occur at different frequencies in colorectal cancer, we… 6078882 colorectal-cancers-from-distinct-ancestral-populations-show-variations-in-braf-mutation-frequency colorectal cancers from distinct ancestral populations show variations It has been demonstrated for some cancers that the frequency of somatic oncogenic mutations may vary i Colorectal Cancers from Distinct Ancestral Populations Show Variations in BRAF Mutation Frequency It has been demonstrated for some cancers that the frequency of somatic oncogenic mutations may vary in ancestral populations. To determine whether key driver alterations might occur at different frequencies in colorectal cancer, we applied a high-throughput genotyping platform (OncoMap) to query 385 mutations across 33 known cancer genes in colorectal cancer DNA from 83 Asian, 149 Black and 195 White patients. We found that Asian patients had fewer canonical oncogenic mutations in the genes tested (60% vs Black 79% (P = 0.011) and White 77% (P = 0.015)), and that BRAF mutations occurred at a higher frequency in White patients (17% vs Asian 4% (P = 0.004) and Black 7% (P = 0.014)). These resul",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.863224+00:00"
+}

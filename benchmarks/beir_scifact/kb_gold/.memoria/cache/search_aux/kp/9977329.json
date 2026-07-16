@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9977329",
+  "source_fingerprint": "b7412e823ea33a4c0096b7a1da0cc0c9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9977329",
+    "cell-death-and-immune-privilege."
+  ],
+  "key_phrases": [
+    "cell",
+    "death",
+    "immune",
+    "privilege",
+    "host",
+    "response",
+    "pathogens",
+    "involves"
+  ],
+  "summary_1l": "Cell death and immune privilege.",
+  "query_hits": [],
+  "embed_text": "9977329 Cell death and immune privilege. science scifact The host response to pathogens involves complex inflammatory responses and immune reactions. While these are central to host defense and vital to clearing infections, they are often accompanied by injury to surrounding tissue. Most organ… 9977329 cell-death-and-immune-privilege. cell death immune privilege host response pathogens involves Cell death and immune privilege. Cell death and immune privilege. The host response to pathogens involves complex inflammatory responses and immune reactions. While these are central to host defense and vital to clearing infections, they are often accompanied by injury to surrounding tissue. Most organ systems can tolerate these responses without permanent consequences. However, there are sites that limit the spread of inflammation because it can threaten organ function. The most prominent examples of these are the eye, brain, and reproductive organs (testis, ovary), where even minor bouts of inflammation can have long-term consequences for the survival of the organism. In these organs immune responses either do not proceed, or proceed in a manner different from other areas; thus, they are called \"immunologically privileg",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:06.230042+00:00"
+}

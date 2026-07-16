@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "356218",
+  "source_fingerprint": "b08f49971720b6a0783447c817263b66",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "356218",
+    "outcome-of-pregnancy-in-women-with-moderate-or-severe-renal-insufficiency."
+  ],
+  "key_phrases": [
+    "outcome",
+    "pregnancy",
+    "women",
+    "with",
+    "moderate",
+    "severe",
+    "renal",
+    "insufficiency"
+  ],
+  "summary_1l": "Outcome of pregnancy in women with moderate or severe renal insufficiency.",
+  "query_hits": [],
+  "embed_text": "356218 Outcome of pregnancy in women with moderate or severe renal insufficiency. science scifact BACKGROUND Pregnant women with mild preexisting renal disease have relatively few complications of pregnancy, but the risks of maternal and obstetrical complications in women with moderate or severe renal insufficiency remain uncertain.… 356218 outcome-of-pregnancy-in-women-with-moderate-or-severe-renal-insufficiency. outcome pregnancy women with moderate severe renal insufficiency Outcome of pregnancy in women with moderate or severe renal insufficiency. Outcome of pregnancy in women with moderate or severe renal insufficiency. BACKGROUND Pregnant women with mild preexisting renal disease have relatively few complications of pregnancy, but the risks of maternal and obstetrical complications in women with moderate or severe renal insufficiency remain uncertain. METHODS We determined the frequency and types of maternal and obstetrical complications and the outcomes of pregnancy in 67 women with primary renal disease (82 pregnancies). All the women had initial serum creatinine concentrations of at least 1.4 mg per deciliter (124 mumol per liter) and gestations that continued beyond the first trimester. RESULTS The mean (+/- SD) serum creatinine concentration increased from 1.9 +/- 0.8 mg per deciliter (168 +/- 71 mumol per liter) in early pre",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.439546+00:00"
+}

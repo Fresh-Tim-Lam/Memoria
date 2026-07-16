@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13552682",
+  "source_fingerprint": "086fe91ada85f08bcdfdb853edbce3df",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13552682",
+    "decoding-mammalian-ribosome-mrna-states-by-translational-gtpase-complexes"
+  ],
+  "key_phrases": [
+    "decoding",
+    "mammalian",
+    "ribosome",
+    "mrna",
+    "states",
+    "by",
+    "translational",
+    "gtpase"
+  ],
+  "summary_1l": "In eukaryotes, accurate protein synthesis relies on a family of translational GTPases that pair with specific decoding factors",
+  "query_hits": [],
+  "embed_text": "13552682 Decoding Mammalian Ribosome-mRNA States by Translational GTPase Complexes science scifact In eukaryotes, accurate protein synthesis relies on a family of translational GTPases that pair with specific decoding factors to decipher the mRNA code on ribosomes. We present structures of the mammalian ribosome engaged with decoding… 13552682 decoding-mammalian-ribosome-mrna-states-by-translational-gtpase-complexes decoding mammalian ribosome mrna states by translational gtpase In eukaryotes, accurate protein synthesis relies on a family of translational GTPases that pair with specific decoding factors Decoding Mammalian Ribosome-mRNA States by Translational GTPase Complexes In eukaryotes, accurate protein synthesis relies on a family of translational GTPases that pair with specific decoding factors to decipher the mRNA code on ribosomes. We present structures of the mammalian ribosome engaged with decoding factor⋅GTPase complexes representing intermediates of translation elongation (aminoacyl-tRNA⋅eEF1A), termination (eRF1⋅eRF3), and ribosome rescue (Pelota⋅Hbs1l). Comparative analyses reveal that each decoding factor exploits the plasticity of the ribosomal decoding center to differentially remodel ribosomal proteins and rRNA. This leads to varying degrees of large-scale ribosome movements and implies distinct mechanisms for communicating information from the decoding center to each GT",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.521898+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21547032",
+  "source_fingerprint": "8991cdacd49d0122941bc37e41061921",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21547032",
+    "protection-from-olanzapine-induced-metabolic-toxicity-in-mice-by-acetaminophen-and-tetrahydroindenoindole"
+  ],
+  "key_phrases": [
+    "protection",
+    "from",
+    "olanzapine",
+    "induced",
+    "metabolic",
+    "toxicity",
+    "mice",
+    "by"
+  ],
+  "summary_1l": "Objective:In mice and in humans, treatment with the second-generation antipsychotic drug olanz",
+  "query_hits": [],
+  "embed_text": "21547032 Protection from olanzapine-induced metabolic toxicity in mice by acetaminophen and tetrahydroindenoindole science scifact Objective:In mice and in humans, treatment with the second-generation antipsychotic drug olanzapine (OLZ) produces excessive weight gain, adiposity and secondary metabolic complications, including loss of glucose and insulin homeostasis.… 21547032 protection-from-olanzapine-induced-metabolic-toxicity-in-mice-by-acetaminophen-and-tetrahydroindenoindole protection from olanzapine induced metabolic toxicity mice by Objective:In mice and in humans, treatment with the second-generation antipsychotic drug olanz Protection from olanzapine-induced metabolic toxicity in mice by acetaminophen and tetrahydroindenoindole Objective:In mice and in humans, treatment with the second-generation antipsychotic drug olanzapine (OLZ) produces excessive weight gain, adiposity and secondary metabolic complications, including loss of glucose and insulin homeostasis. In mice consuming a high-fat (HF) diet, a similar phenotype develops, which is inhibited by the analgesic acetaminophen (APAP) and by the antioxidant tetrahydroindenoindole (THII). Therefore, we examined the ability of APAP and THII to prevent metabolic changes in mice receiving OLZ.Design and Measurement:C57BL/6J mice received either a normal diet or a HF diet, and were administered daily dosages of OLZ (3 mg kg−1 body weight), alone or with APAP (30",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.312082+00:00"
+}

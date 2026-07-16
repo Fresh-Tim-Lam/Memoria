@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29098525",
+  "source_fingerprint": "9818841ff7fb917fbd902909323c580f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29098525",
+    "a-single-residue-determines-the-cooperative-binding-property-of-a-primosomal-dna-replication-protein,-prib,-to-single-stranded-dna."
+  ],
+  "key_phrases": [
+    "single",
+    "residue",
+    "determines",
+    "cooperative",
+    "binding",
+    "property",
+    "primosomal",
+    "dna"
+  ],
+  "summary_1l": "A single residue determines the cooperative binding property of a primosomal DNA replication protein, PriB, to single-stranded DNA.",
+  "query_hits": [],
+  "embed_text": "29098525 A single residue determines the cooperative binding property of a primosomal DNA replication protein, PriB, to single-stranded DNA. science scifact PriB is a primosomal protein required for re-initiation of replication in bacteria. We characterized and compared the DNA-binding properties of PriB from Salmonella enterica serovar Typhimurium LT2 (StPriB) and Escherichia coli (EcPriB).… 29098525 a-single-residue-determines-the-cooperative-binding-property-of-a-primosomal-dna-replication-protein,-prib,-to-single-stranded-dna. single residue determines cooperative binding property primosomal dna A single residue determines the cooperative binding property of a primosomal DNA replication protein, PriB, to single-stranded DNA. A single residue determines the cooperative binding property of a primosomal DNA replication protein, PriB, to single-stranded DNA. PriB is a primosomal protein required for re-initiation of replication in bacteria. We characterized and compared the DNA-binding properties of PriB from Salmonella enterica serovar Typhimurium LT2 (StPriB) and Escherichia coli (EcPriB). Only one residue of EcPriB, V6, was different in StPriB (replaced by A6). Previous structural information revealed that this residue is located on the putative dimer-dimer interface of PriB and is not involved in single-stranded DNA (ssDNA) binding. The cooperative binding mechanism of StPriB to DNA is, however, very different from that of EcPriB. Unlike EcPriB, which forms a single complex with ssDNAs of various lengths, StPr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.576735+00:00"
+}

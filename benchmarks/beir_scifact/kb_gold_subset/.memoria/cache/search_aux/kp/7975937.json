@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7975937",
+  "source_fingerprint": "7404cf0abac3be6a3c92cb85b0fcd5ef",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7975937",
+    "cyclooxygenase-dependent-tumor-growth-through-evasion-of-immunity"
+  ],
+  "key_phrases": [
+    "cyclooxygenase",
+    "dependent",
+    "tumor",
+    "growth",
+    "through",
+    "evasion",
+    "immunity",
+    "mechanisms"
+  ],
+  "summary_1l": "The mechanisms by which melanoma and other cancer cells evade anti-tumor immunity remain incompletely understood.",
+  "query_hits": [],
+  "embed_text": "7975937 Cyclooxygenase-Dependent Tumor Growth through Evasion of Immunity science scifact The mechanisms by which melanoma and other cancer cells evade anti-tumor immunity remain incompletely understood. Here, we show that the growth of tumors formed by mutant Braf(V600E) mouse melanoma cells in an immunocompetent host requires… 7975937 cyclooxygenase-dependent-tumor-growth-through-evasion-of-immunity cyclooxygenase dependent tumor growth through evasion immunity mechanisms The mechanisms by which melanoma and other cancer cells evade anti-tumor immunity remain incompletely understood. Cyclooxygenase-Dependent Tumor Growth through Evasion of Immunity The mechanisms by which melanoma and other cancer cells evade anti-tumor immunity remain incompletely understood. Here, we show that the growth of tumors formed by mutant Braf(V600E) mouse melanoma cells in an immunocompetent host requires their production of prostaglandin E2, which suppresses immunity and fuels tumor-promoting inflammation. Genetic ablation of cyclooxygenases (COX) or prostaglandin E synthases in Braf(V600E) mouse melanoma cells, as well as in Nras(G12D) melanoma or in breast or colorectal cancer cells, renders them susceptible to immune control and provokes a shift in the tumor inflammatory profile toward classic anti-cancer immune pathways. This mouse COX-dependent inflammatory signature is remarkably con",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:13.924187+00:00"
+}

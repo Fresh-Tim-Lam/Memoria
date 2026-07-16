@@ -24,7 +24,11 @@ def search_body_locate(
     rel_path: str | None = None,
     limit: int = 15,
 ) -> list[dict]:
-    """扫描 md 正文行，返回定位命中（kind=body-locate）。"""
+    """扫描 md 正文行，返回定位命中（kind=body-locate）。
+
+    扫描所有匹配后按 (file, line) 自然顺序排序，再取前 limit 条，
+    避免前序文件占满 limit 而丢失后续文件中的相关结果。
+    """
     q = (query or "").strip()
     if not q or not kb_path:
         return []
@@ -68,7 +72,6 @@ def search_body_locate(
                 "score": 10.0,
                 "sources": ["body-locate"],
             })
-            if len(out) >= max(1, int(limit)):
-                return out
 
-    return out
+    out.sort(key=lambda h: (h.get("file") or "", int(h.get("line") or 0)))
+    return out[: max(1, int(limit))]

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "712078",
+  "source_fingerprint": "c1a87fce22c0826b032cdae8f0848164",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "712078"
+  ],
+  "key_phrases": [
+    "pharmacological",
+    "correction",
+    "defect",
+    "ppar",
+    "signaling",
+    "ameliorates",
+    "disease",
+    "severity"
+  ],
+  "summary_1l": "Cystic fibrosis is caused by mutations in the cystic fibrosis transmembrane conductance re",
+  "query_hits": [],
+  "embed_text": "712078 Pharmacological correction of a defect in PPARγ signaling ameliorates disease severity in Cftr-deficient mice science scifact Cystic fibrosis is caused by mutations in the cystic fibrosis transmembrane conductance regulator (encoded by Cftr) that impair its role as an apical chloride channel that supports bicarbonate transport. Individuals with cystic fibrosis… 712078 pharmacological correction defect ppar signaling ameliorates disease severity Cystic fibrosis is caused by mutations in the cystic fibrosis transmembrane conductance re Pharmacological correction of a defect in PPARγ signaling ameliorates disease severity in Cftr-deficient mice Cystic fibrosis is caused by mutations in the cystic fibrosis transmembrane conductance regulator (encoded by Cftr) that impair its role as an apical chloride channel that supports bicarbonate transport. Individuals with cystic fibrosis show retained, thickened mucus that plugs airways and obstructs luminal organs as well as numerous other abnormalities that include inflammation of affected organs, alterations in lipid metabolism and insulin resistance. Here we show that colonic epithelial cells and whole lung tissue from Cftr-deficient mice show a defect in peroxisome proliferator-activated receptor-gamma (PPAR-gamma, encoded by Pparg) function that contributes to a pathological p",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.534801+00:00"
+}

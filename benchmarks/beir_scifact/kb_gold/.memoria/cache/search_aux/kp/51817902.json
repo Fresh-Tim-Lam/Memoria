@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "51817902",
+  "source_fingerprint": "dd49cc4f911a54221947ee90c396d5c4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "51817902"
+  ],
+  "key_phrases": [
+    "delta",
+    "notch",
+    "then",
+    "protein",
+    "interactions",
+    "proposed",
+    "modes",
+    "repression"
+  ],
+  "summary_1l": "Delta–Notch—and then?",
+  "query_hits": [],
+  "embed_text": "51817902 Delta–Notch—and then? Protein interactions and proposed modes of repression by Hes and Hey bHLH factors science scifact Hes and Hey genes are the mammalian counterparts of the Hairy and Enhancer-of-split type of genes in Drosophila and they represent the primary targets of the Delta-Notch signaling pathway. Hairy-related factors control multiple steps of… 51817902 delta notch then protein interactions proposed modes repression Delta–Notch—and then? Delta–Notch—and then? Protein interactions and proposed modes of repression by Hes and Hey bHLH factors Hes and Hey genes are the mammalian counterparts of the Hairy and Enhancer-of-split type of genes in Drosophila and they represent the primary targets of the Delta-Notch signaling pathway. Hairy-related factors control multiple steps of embryonic development and misregulation is associated with various defects. Hes and Hey genes (also called Hesr, Chf, Hrt, Herp or gridlock) encode transcriptional regulators of the basic helix-loop-helix class that mainly act as repressors. The molecular details of how Hes and Hey proteins control transcription are still poorly understood, however. Proposed modes of action include direct binding to N- or E-box DNA sequences of target promoters as well as",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.369731+00:00"
+}

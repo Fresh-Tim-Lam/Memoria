@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4270992",
+  "source_fingerprint": "de3aaed02c4111ef62c6cb00fc9b186a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4270992",
+    "mhc-class-ii-interaction-with-cd4-mediated-by-a-region-analogous-to-the-mhc-class-i-binding-site-for-cd8"
+  ],
+  "key_phrases": [
+    "mhc",
+    "class",
+    "ii",
+    "interaction",
+    "with",
+    "cd4",
+    "mediated",
+    "by"
+  ],
+  "summary_1l": "INTERACTIONS between major histocompatibility complex (MHC) molecules and the CD4 or CDS corece",
+  "query_hits": [],
+  "embed_text": "4270992 MHC class II interaction with CD4 mediated by a region analogous to the MHC class I binding site for CD8 science scifact INTERACTIONS between major histocompatibility complex (MHC) molecules and the CD4 or CDS coreceptors have a major role in intrathymic T-cell selection1. On mature T cells, each of these two glycoproteins is associated with a class-specific… 4270992 mhc-class-ii-interaction-with-cd4-mediated-by-a-region-analogous-to-the-mhc-class-i-binding-site-for-cd8 mhc class ii interaction with cd4 mediated by INTERACTIONS between major histocompatibility complex (MHC) molecules and the CD4 or CDS corece MHC class II interaction with CD4 mediated by a region analogous to the MHC class I binding site for CD8 INTERACTIONS between major histocompatibility complex (MHC) molecules and the CD4 or CDS coreceptors have a major role in intrathymic T-cell selection1. On mature T cells, each of these two glycoproteins is associated with a class-specific bias in MHC molecule recognition by the T-cell receptor. CD4+ T cells respond to antigen in association with MHC class II molecules and CD8+ T cells respond to antigen in association with MHC class I molecules. Physical interaction between the CD4/MHC class II molecules and CD8/MHC class I molecules has been demonstrated by cell adhesion assay2–5, and a binding site for CDS on class I has been identified6,7. Here we demonstrate that a region of the MH",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.197819+00:00"
+}

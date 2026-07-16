@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4396105",
+  "source_fingerprint": "4ae448a9433eff1b9d012068658a91b2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4396105",
+    "k-ras(g12c)-inhibitors-allosterically-control-gtp-affinity-and-effector-interactions"
+  ],
+  "key_phrases": [
+    "ras",
+    "g12c",
+    "inhibitors",
+    "allosterically",
+    "control",
+    "gtp",
+    "affinity",
+    "effector"
+  ],
+  "summary_1l": "Somatic mutations in the small GTPase K-Ras are the most common activating lesions found in human cancer, and are g",
+  "query_hits": [],
+  "embed_text": "4396105 K-Ras(G12C) inhibitors allosterically control GTP affinity and effector interactions science scifact Somatic mutations in the small GTPase K-Ras are the most common activating lesions found in human cancer, and are generally associated with poor response to standard therapies. Efforts to target this oncogene directly have faced… 4396105 k-ras(g12c)-inhibitors-allosterically-control-gtp-affinity-and-effector-interactions ras g12c inhibitors allosterically control gtp affinity effector Somatic mutations in the small GTPase K-Ras are the most common activating lesions found in human cancer, and are g K-Ras(G12C) inhibitors allosterically control GTP affinity and effector interactions Somatic mutations in the small GTPase K-Ras are the most common activating lesions found in human cancer, and are generally associated with poor response to standard therapies. Efforts to target this oncogene directly have faced difficulties owing to its picomolar affinity for GTP/GDP and the absence of known allosteric regulatory sites. Oncogenic mutations result in functional activation of Ras family proteins by impairing GTP hydrolysis. With diminished regulation by GTPase activity, the nucleotide state of Ras becomes more dependent on relative nucleotide affinity and concentration. This gives GTP an advantage over GDP and increases the proportion of active GTP-bound Ras. Here we report the development",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.548507+00:00"
+}

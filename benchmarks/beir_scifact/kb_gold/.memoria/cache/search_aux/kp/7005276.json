@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7005276",
+  "source_fingerprint": "b8099ec6150b7ec4b6aa8f14dadef3a1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7005276",
+    "acetic-acid-activates-the-amp-activated-protein-kinase-signaling-pathway-to-regulate-lipid-metabolism-in-bovine-hepatocytes"
+  ],
+  "key_phrases": [
+    "acetic",
+    "acid",
+    "activates",
+    "amp",
+    "activated",
+    "protein",
+    "kinase",
+    "signaling"
+  ],
+  "summary_1l": "The effect of acetic acid on hepatic lipid metabolism in ruminants differs s",
+  "query_hits": [],
+  "embed_text": "7005276 Acetic Acid Activates the AMP-Activated Protein Kinase Signaling Pathway to Regulate Lipid Metabolism in Bovine Hepatocytes science scifact The effect of acetic acid on hepatic lipid metabolism in ruminants differs significantly from that in monogastric animals. Therefore, the aim of this study was to investigate the regulation mechanism of acetic acid on the hepatic lipid… 7005276 acetic-acid-activates-the-amp-activated-protein-kinase-signaling-pathway-to-regulate-lipid-metabolism-in-bovine-hepatocytes acetic acid activates amp activated protein kinase signaling The effect of acetic acid on hepatic lipid metabolism in ruminants differs s Acetic Acid Activates the AMP-Activated Protein Kinase Signaling Pathway to Regulate Lipid Metabolism in Bovine Hepatocytes The effect of acetic acid on hepatic lipid metabolism in ruminants differs significantly from that in monogastric animals. Therefore, the aim of this study was to investigate the regulation mechanism of acetic acid on the hepatic lipid metabolism in dairy cows. The AMP-activated protein kinase (AMPK) signaling pathway plays a key role in regulating hepatic lipid metabolism. In vitro, bovine hepatocytes were cultured and treated with different concentrations of sodium acetate (neutralized acetic acid) and BML-275 (an AMPKα inhibitor). Acetic acid consumed a large amount of ATP, resulting in an increase in AMPKα phosphorylation. The increase in AMPKα phosphorylation inc",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.186183+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "33934971",
+  "source_fingerprint": "2f876488a79f0f5da04439886f689e1e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "33934971",
+    "immunology-of-the-tick-host-interaction-and-the-control-of-ticks-and-tick-borne-diseases."
+  ],
+  "key_phrases": [
+    "immunology",
+    "tick",
+    "host",
+    "interaction",
+    "control",
+    "ticks",
+    "borne",
+    "diseases"
+  ],
+  "summary_1l": "Immunology of the tick-host interaction and the control of ticks and tick-borne diseases.",
+  "query_hits": [],
+  "embed_text": "33934971 Immunology of the tick-host interaction and the control of ticks and tick-borne diseases. science scifact The first experimental vaccination against ticks was carried out 60 years ago. Since then, progress has been slow, although the recent commercial release of a recombinant vaccine against Boophilus microplus is significant. The nature of… 33934971 immunology-of-the-tick-host-interaction-and-the-control-of-ticks-and-tick-borne-diseases. immunology tick host interaction control ticks borne diseases Immunology of the tick-host interaction and the control of ticks and tick-borne diseases. Immunology of the tick-host interaction and the control of ticks and tick-borne diseases. The first experimental vaccination against ticks was carried out 60 years ago. Since then, progress has been slow, although the recent commercial release of a recombinant vaccine against Boophilus microplus is significant. The nature of naturally acquired protective immunity against ticks is poorly understood, particularly in the important, domesticated ruminant hosts. Characterization of the antigens of naturally acquired immunity remains limited, although more has been achieved with 'concealed' antigens. Crucial questions remain about the true impact of tick-induced immunosuppression and the effect of immunity on the transmission of tick-borne diseases, despite some fascinating and important recent",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.858197+00:00"
+}

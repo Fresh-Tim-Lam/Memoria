@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12122482",
+  "source_fingerprint": "7b99b4833dfe748e8807d2cf43aaaa76",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12122482",
+    "mri-in-the-diagnosis-of-ms:-a-prospective-study-with-comparison-of-clinical-evaluation,-evoked-potentials,-oligoclonal-banding,-and-ct."
+  ],
+  "key_phrases": [
+    "mri",
+    "diagnosis",
+    "ms",
+    "prospective",
+    "study",
+    "with",
+    "comparison",
+    "clinical"
+  ],
+  "summary_1l": "MRI in the diagnosis of MS: a prospective study with comparison of clinical evaluation, evoked potentials, oligoclonal banding, and CT.",
+  "query_hits": [],
+  "embed_text": "12122482 MRI in the diagnosis of MS: a prospective study with comparison of clinical evaluation, evoked potentials, oligoclonal banding, and CT. science scifact We compared the diagnostic capabilities of MRI to CT, evoked potentials (EP), and CSF oligoclonal banding analysis in a prospective evaluation of 200 patients with suspected multiple sclerosis (MS). MRI was the best method for… 12122482 mri-in-the-diagnosis-of-ms:-a-prospective-study-with-comparison-of-clinical-evaluation,-evoked-potentials,-oligoclonal-banding,-and-ct. mri diagnosis ms prospective study with comparison clinical MRI in the diagnosis of MS: a prospective study with comparison of clinical evaluation, evoked potentials, oligoclonal banding, and CT. MRI in the diagnosis of MS: a prospective study with comparison of clinical evaluation, evoked potentials, oligoclonal banding, and CT. We compared the diagnostic capabilities of MRI to CT, evoked potentials (EP), and CSF oligoclonal banding analysis in a prospective evaluation of 200 patients with suspected multiple sclerosis (MS). MRI was the best method for demonstrating dissemination in space. An abnormal appropriate EP in monosymptomatic disease was usually supported by MRI and CSF analysis as being predictive of MS as a clinical diagnosis. A normal appropriate EP study was not satisfactory because MRI and CSF analysis often did not support a diagnosis of non-MS. When there is agreement between three of these paraclinical studies, the diagnosis of MS is probably unequivocal. For use i",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:07.776642+00:00"
+}

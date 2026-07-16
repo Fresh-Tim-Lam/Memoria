@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3743071",
+  "source_fingerprint": "952275c6837e2abfca6bbffd4a7d8551",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3743071",
+    "gsds-2.0:-an-upgraded-gene-feature-visualization-server"
+  ],
+  "key_phrases": [
+    "gsds",
+    "2.0",
+    "upgraded",
+    "gene",
+    "feature",
+    "visualization",
+    "server",
+    "unlabelled"
+  ],
+  "summary_1l": "GSDS 2.",
+  "query_hits": [],
+  "embed_text": "3743071 GSDS 2.0: an upgraded gene feature visualization server science scifact UNLABELLED : Visualizing genes' structure and annotated features helps biologists to investigate their function and evolution intuitively. The Gene Structure Display Server (GSDS) has been widely used by more than 60 000 users since its… 3743071 gsds-2.0:-an-upgraded-gene-feature-visualization-server gsds 2.0 upgraded gene feature visualization server unlabelled GSDS 2. GSDS 2.0: an upgraded gene feature visualization server UNLABELLED : Visualizing genes' structure and annotated features helps biologists to investigate their function and evolution intuitively. The Gene Structure Display Server (GSDS) has been widely used by more than 60 000 users since its first publication in 2007. Here, we reported the upgraded GSDS 2.0 with a newly designed interface, supports for more types of annotation features and formats, as well as an integrated visual editor for editing the generated figure. Moreover, a user-specified phylogenetic tree can be added to facilitate further evolutionary analysis. The full source code is also available for downloading. AVAILABILITY AND IMPLEMENTATION Web server and source code are freely available at http://gsds.cbi.pku.edu.cn. CONT",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.445586+00:00"
+}

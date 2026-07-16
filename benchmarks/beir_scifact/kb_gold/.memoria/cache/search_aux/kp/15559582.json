@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15559582",
+  "source_fingerprint": "1a8694f0584b78aca77b4be888fbc8bf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15559582",
+    "plasma-lipids-and-prolactin-in-patients-with-breast-cancer."
+  ],
+  "key_phrases": [
+    "plasma",
+    "lipids",
+    "prolactin",
+    "patients",
+    "with",
+    "breast",
+    "cancer",
+    "comparative"
+  ],
+  "summary_1l": "Plasma lipids and prolactin in patients with breast cancer.",
+  "query_hits": [],
+  "embed_text": "15559582 Plasma lipids and prolactin in patients with breast cancer. science scifact In a comparative study of pre- and postmenopausal women with benign and malignant breast disease, a number of differences were observed in circulating plasma prolactin and lipid concentrations. Plasma lipids, phospholipids, triglycerides,… 15559582 plasma-lipids-and-prolactin-in-patients-with-breast-cancer. plasma lipids prolactin patients with breast cancer comparative Plasma lipids and prolactin in patients with breast cancer. Plasma lipids and prolactin in patients with breast cancer. In a comparative study of pre- and postmenopausal women with benign and malignant breast disease, a number of differences were observed in circulating plasma prolactin and lipid concentrations. Plasma lipids, phospholipids, triglycerides, cholesterol and free fatty acids were all higher in blood obtained from breast cancer patients prior to surgery. HDL-Cholesterol levels were significantly lower in these patients. These differences remained when the patient groups were sub-divided according to menopausal status. Plasma prolactin concentrations were also found to be higher in cancer compared with non-cancer patients, this effect being more marked in premenopausal than in postmenopausal patients. Premenopausal patients with invasiv",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.840671+00:00"
+}

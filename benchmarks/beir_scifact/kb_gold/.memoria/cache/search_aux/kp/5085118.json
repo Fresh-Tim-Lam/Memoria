@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5085118",
+  "source_fingerprint": "bbf0fb008d10efaa708cb5659dfbabb5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5085118",
+    "neural-crest-derived-stem-cells-migrate-and-differentiate-into-cardiomyocytes-after-myocardial-infarction."
+  ],
+  "key_phrases": [
+    "neural",
+    "crest",
+    "derived",
+    "stem",
+    "cells",
+    "migrate",
+    "differentiate",
+    "into"
+  ],
+  "summary_1l": "Neural crest-derived stem cells migrate and differentiate into cardiomyocytes after myocardial infarction.",
+  "query_hits": [],
+  "embed_text": "5085118 Neural crest-derived stem cells migrate and differentiate into cardiomyocytes after myocardial infarction. science scifact OBJECTIVE We recently demonstrated that primitive neural crest-derived (NC) cells migrate from the cardiac neural crest during embryonic development and remain in the heart as dormant stem cells, with the capacity to differentiate into… 5085118 neural-crest-derived-stem-cells-migrate-and-differentiate-into-cardiomyocytes-after-myocardial-infarction. neural crest derived stem cells migrate differentiate into Neural crest-derived stem cells migrate and differentiate into cardiomyocytes after myocardial infarction. Neural crest-derived stem cells migrate and differentiate into cardiomyocytes after myocardial infarction. OBJECTIVE We recently demonstrated that primitive neural crest-derived (NC) cells migrate from the cardiac neural crest during embryonic development and remain in the heart as dormant stem cells, with the capacity to differentiate into various cell types, including cardiomyocytes. Here, we examined the migration and differentiation potential of these cells on myocardial infarction (MI). METHODS AND RESULTS We obtained double-transgenic mice by crossing protein-0 promoter-Cre mice with Floxed-enhanced green fluorescent protein mice, in which the NC cells express enhanced green fluorescent protein. In the neonatal heart, NC stem cells (NCSCs) were localized predominantly in the outflow",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.081128+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13072113",
+  "source_fingerprint": "330bac4f96d2f0cb973b2f1994698e63",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13072113",
+    "neurite-sprouting-and-synapse-deterioration-in-the-aging-caenorhabditis-elegans-nervous-system."
+  ],
+  "key_phrases": [
+    "neurite",
+    "sprouting",
+    "synapse",
+    "deterioration",
+    "aging",
+    "caenorhabditis",
+    "elegans",
+    "nervous"
+  ],
+  "summary_1l": "Neurite sprouting and synapse deterioration in the aging Caenorhabditis elegans nervous system.",
+  "query_hits": [],
+  "embed_text": "13072113 Neurite sprouting and synapse deterioration in the aging Caenorhabditis elegans nervous system. science scifact Caenorhabditis elegans is a powerful model for analysis of the conserved mechanisms that modulate healthy aging. In the aging nematode nervous system, neuronal death and/or detectable loss of processes are not readily apparent, but because… 13072113 neurite-sprouting-and-synapse-deterioration-in-the-aging-caenorhabditis-elegans-nervous-system. neurite sprouting synapse deterioration aging caenorhabditis elegans nervous Neurite sprouting and synapse deterioration in the aging Caenorhabditis elegans nervous system. Neurite sprouting and synapse deterioration in the aging Caenorhabditis elegans nervous system. Caenorhabditis elegans is a powerful model for analysis of the conserved mechanisms that modulate healthy aging. In the aging nematode nervous system, neuronal death and/or detectable loss of processes are not readily apparent, but because dendrite restructuring and loss of synaptic integrity are hypothesized to contribute to human brain decline and dysfunction, we combined fluorescence microscopy and electron microscopy (EM) to screen at high resolution for nervous system changes. We report two major components of morphological change in the aging C. elegans nervous system: (1) accumulation of novel outgrowths from specific neurons, and (2) physical decline in synaptic integrity. Novel outgrowt",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:09.620767+00:00"
+}

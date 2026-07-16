@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2988714",
+  "source_fingerprint": "518a0db33351d90b438cff2a0bea5660",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2988714",
+    "coupled-local-translation-and-degradation-regulate-growth-cone-collapse"
+  ],
+  "key_phrases": [
+    "coupled",
+    "local",
+    "translation",
+    "degradation",
+    "regulate",
+    "growth",
+    "cone",
+    "collapse"
+  ],
+  "summary_1l": "Local translation mediates axonal responses to Semaphorin3A (Sema3A) and other guidance cues.",
+  "query_hits": [],
+  "embed_text": "2988714 Coupled local translation and degradation regulate growth cone collapse science scifact Local translation mediates axonal responses to Semaphorin3A (Sema3A) and other guidance cues. However, only a subset of the axonal proteome is locally synthesized, whereas most proteins are trafficked from the soma. The reason why only… 2988714 coupled-local-translation-and-degradation-regulate-growth-cone-collapse coupled local translation degradation regulate growth cone collapse Local translation mediates axonal responses to Semaphorin3A (Sema3A) and other guidance cues. Coupled local translation and degradation regulate growth cone collapse Local translation mediates axonal responses to Semaphorin3A (Sema3A) and other guidance cues. However, only a subset of the axonal proteome is locally synthesized, whereas most proteins are trafficked from the soma. The reason why only specific proteins are locally synthesized is unknown. Here we show that local protein synthesis and degradation are linked events in growth cones. We find that growth cones exhibit high levels of ubiquitination and that local signalling pathways trigger the ubiquitination and degradation of RhoA, a mediator of Sema3A-induced growth cone collapse. Inhibition of RhoA degradation is sufficient to remove the protein-synthesis requirement for Sema3A-induced growth cone collapse. In addition t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:12.830167+00:00"
+}

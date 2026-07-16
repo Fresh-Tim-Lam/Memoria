@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15590539",
+  "source_fingerprint": "ed0c66af5972ab5a9ee57f6428193b5f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15590539",
+    "dual-regulation-of-mirna-biogenesis-generates-target-specificity-in-neurotrophin-induced-protein-synthesis"
+  ],
+  "key_phrases": [
+    "dual",
+    "regulation",
+    "mirna",
+    "biogenesis",
+    "generates",
+    "target",
+    "specificity",
+    "neurotrophin"
+  ],
+  "summary_1l": "Control of translation is a fundamental source of regulation in gene expression.",
+  "query_hits": [],
+  "embed_text": "15590539 Dual Regulation of miRNA Biogenesis Generates Target Specificity in Neurotrophin-Induced Protein Synthesis science scifact Control of translation is a fundamental source of regulation in gene expression. The induction of protein synthesis by brain-derived neurotrophic factor (BDNF) critically contributes to enduring modifications of synaptic function, but how… 15590539 dual-regulation-of-mirna-biogenesis-generates-target-specificity-in-neurotrophin-induced-protein-synthesis dual regulation mirna biogenesis generates target specificity neurotrophin Control of translation is a fundamental source of regulation in gene expression. Dual Regulation of miRNA Biogenesis Generates Target Specificity in Neurotrophin-Induced Protein Synthesis Control of translation is a fundamental source of regulation in gene expression. The induction of protein synthesis by brain-derived neurotrophic factor (BDNF) critically contributes to enduring modifications of synaptic function, but how BDNF selectively affects only a minority of expressed mRNAs is poorly understood. We report that BDNF rapidly elevates Dicer, increasing mature miRNA levels and inducing RNA processing bodies in neurons. BDNF also rapidly induces Lin28, causing selective loss of Lin28-regulated miRNAs and a corresponding upregulation in translation of their target mRNAs. Binding sites for Lin28-regulated miRNAs are necessary and sufficient to confer BDNF responsivene",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.921684+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2721426",
+  "source_fingerprint": "81bd60b54c78ad365bca9b1048548b7f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2721426",
+    "pseudo-seq:-genome-wide-detection-of-pseudouridine-modifications-in-rna."
+  ],
+  "key_phrases": [
+    "pseudo",
+    "seq",
+    "genome",
+    "wide",
+    "detection",
+    "pseudouridine",
+    "modifications",
+    "rna"
+  ],
+  "summary_1l": "Pseudo-Seq: Genome-Wide Detection of Pseudouridine Modifications in RNA.",
+  "query_hits": [],
+  "embed_text": "2721426 Pseudo-Seq: Genome-Wide Detection of Pseudouridine Modifications in RNA. science scifact RNA molecules contain a variety of chemically diverse, posttranscriptionally modified bases. The most abundant modified base found in cellular RNAs, pseudouridine (Ψ), has recently been mapped to hundreds of sites in mRNAs, many of which… 2721426 pseudo-seq:-genome-wide-detection-of-pseudouridine-modifications-in-rna. pseudo seq genome wide detection pseudouridine modifications rna Pseudo-Seq: Genome-Wide Detection of Pseudouridine Modifications in RNA. Pseudo-Seq: Genome-Wide Detection of Pseudouridine Modifications in RNA. RNA molecules contain a variety of chemically diverse, posttranscriptionally modified bases. The most abundant modified base found in cellular RNAs, pseudouridine (Ψ), has recently been mapped to hundreds of sites in mRNAs, many of which are dynamically regulated. Though the pseudouridine landscape has been determined in only a few cell types and growth conditions, the enzymes responsible for mRNA pseudouridylation are universally conserved, suggesting many novel pseudouridylated sites remain to be discovered. Here, we present Pseudo-seq, a technique that allows the identification of sites of pseudouridylation genome-wide with single-nucleotide resolution. In this chapter, we provide a detailed description of Pseudo-s",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.640854+00:00"
+}

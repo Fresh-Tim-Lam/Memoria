@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3514072",
+  "source_fingerprint": "64839d7096c59a82952c43a62107b34b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3514072",
+    "high-resolution-mapping-of-open-chromatin-in-the-rice-genome."
+  ],
+  "key_phrases": [
+    "high",
+    "resolution",
+    "mapping",
+    "open",
+    "chromatin",
+    "rice",
+    "genome",
+    "gene"
+  ],
+  "summary_1l": "High-resolution mapping of open chromatin in the rice genome.",
+  "query_hits": [],
+  "embed_text": "3514072 High-resolution mapping of open chromatin in the rice genome. science scifact Gene expression is controlled by the complex interaction of transcription factors binding to promoters and other regulatory DNA elements. One common characteristic of the genomic regions associated with regulatory proteins is a pronounced… 3514072 high-resolution-mapping-of-open-chromatin-in-the-rice-genome. high resolution mapping open chromatin rice genome gene High-resolution mapping of open chromatin in the rice genome. High-resolution mapping of open chromatin in the rice genome. Gene expression is controlled by the complex interaction of transcription factors binding to promoters and other regulatory DNA elements. One common characteristic of the genomic regions associated with regulatory proteins is a pronounced sensitivity to DNase I digestion. We generated genome-wide high-resolution maps of DNase I hypersensitive (DH) sites from both seedling and callus tissues of rice (Oryza sativa). Approximately 25% of the DH sites from both tissues were found in putative promoters, indicating that the vast majority of the gene regulatory elements in rice are not located in promoter regions. We found 58% more DH sites in the callus than in the seedling. For DH sites detected in both the seedling and callus, 31% d",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.002507+00:00"
+}

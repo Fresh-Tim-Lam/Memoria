@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23599024",
+  "source_fingerprint": "5fc188eb5173cdbd040ad7aa86d9e94d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23599024",
+    "surfactant-protein-b-suppresses-lung-cancer-progression-by-inhibiting-secretory-phospholipase-a2-activity-and-arachidonic-acid-production"
+  ],
+  "key_phrases": [
+    "surfactant",
+    "protein",
+    "suppresses",
+    "lung",
+    "cancer",
+    "progression",
+    "by",
+    "inhibiting"
+  ],
+  "summary_1l": "Background/Aims: Radiotherapy is applied to patients with inop",
+  "query_hits": [],
+  "embed_text": "23599024 Surfactant Protein B Suppresses Lung Cancer Progression by Inhibiting Secretory Phospholipase A2 Activity and Arachidonic Acid Production science scifact Background/Aims: Radiotherapy is applied to patients with inoperable cancer types including advanced stage non-small cell lung cancer (NSCLC) and radioresistance functions as a critical obstacle in radiotherapy. This study was aimed to… 23599024 surfactant-protein-b-suppresses-lung-cancer-progression-by-inhibiting-secretory-phospholipase-a2-activity-and-arachidonic-acid-production surfactant protein suppresses lung cancer progression by inhibiting Background/Aims: Radiotherapy is applied to patients with inop Surfactant Protein B Suppresses Lung Cancer Progression by Inhibiting Secretory Phospholipase A2 Activity and Arachidonic Acid Production Background/Aims: Radiotherapy is applied to patients with inoperable cancer types including advanced stage non-small cell lung cancer (NSCLC) and radioresistance functions as a critical obstacle in radiotherapy. This study was aimed to investigate the mechanism of radioresistance regulated by surfactant protein B (SP-B). Methods: To investigate the role of SP-B in radioresistance, ΔSFTPB A549 cell line was established and SP-B expression was analyzed. In response to ionizing radiation (IR), the change of SP-B expression was analyzed in A549 and NCI-H441 cell lines. Conditioned media (CM) from NSCLC cells were utilized to evaluate the downstream signaling",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.797047+00:00"
+}

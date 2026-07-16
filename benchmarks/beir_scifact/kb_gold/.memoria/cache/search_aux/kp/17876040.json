@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17876040",
+  "source_fingerprint": "87fca64890411b50cbfd0883a570ccd3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17876040",
+    "discovery-and-development-of-the-polo-like-kinase-inhibitor-volasertib-in-cancer-therapy"
+  ],
+  "key_phrases": [
+    "discovery",
+    "development",
+    "polo",
+    "like",
+    "kinase",
+    "inhibitor",
+    "volasertib",
+    "cancer"
+  ],
+  "summary_1l": "Owing to their integral involvement in cell cycle regulation, the Polo-like kinase (Plk) family, particularly P",
+  "query_hits": [],
+  "embed_text": "17876040 Discovery and development of the Polo-like kinase inhibitor volasertib in cancer therapy science scifact Owing to their integral involvement in cell cycle regulation, the Polo-like kinase (Plk) family, particularly Plk1, has emerged as an attractive therapeutic target in oncology. In recent years, several Plk1 inhibitors have been developed,… 17876040 discovery-and-development-of-the-polo-like-kinase-inhibitor-volasertib-in-cancer-therapy discovery development polo like kinase inhibitor volasertib cancer Owing to their integral involvement in cell cycle regulation, the Polo-like kinase (Plk) family, particularly P Discovery and development of the Polo-like kinase inhibitor volasertib in cancer therapy Owing to their integral involvement in cell cycle regulation, the Polo-like kinase (Plk) family, particularly Plk1, has emerged as an attractive therapeutic target in oncology. In recent years, several Plk1 inhibitors have been developed, with some agents showing encouraging results in early-phase clinical trials. This review focuses on volasertib (BI 6727; an investigational agent), a potent and selective Plk inhibitor. Volasertib has shown promising activity in various cancer cell lines and xenograft models of human cancer. Trials performed to date suggest that volasertib has clinical efficacy in a range of malignancies, with the most promising results seen in patients with acute myeloid leukemia (AM",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.381938+00:00"
+}

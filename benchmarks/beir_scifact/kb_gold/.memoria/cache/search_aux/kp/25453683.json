@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25453683",
+  "source_fingerprint": "52227ba55d516aaeada5bbd17f79fdeb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25453683",
+    "blockade-of-tim-1-and-tim-4-enhances-atherosclerosis-in-low-density-lipoprotein-receptor-deficient-mice."
+  ],
+  "key_phrases": [
+    "blockade",
+    "tim",
+    "enhances",
+    "atherosclerosis",
+    "low",
+    "density",
+    "lipoprotein",
+    "receptor"
+  ],
+  "summary_1l": "Blockade of Tim-1 and Tim-4 Enhances Atherosclerosis in Low-Density Lipoprotein Receptor-Deficient Mice.",
+  "query_hits": [],
+  "embed_text": "25453683 Blockade of Tim-1 and Tim-4 Enhances Atherosclerosis in Low-Density Lipoprotein Receptor-Deficient Mice. science scifact OBJECTIVE T cell immunoglobulin and mucin domain (Tim) proteins are expressed by numerous immune cells, recognize phosphatidylserine on apoptotic cells, and function as costimulators or coinhibitors. Tim-1 is expressed by activated T cells… 25453683 blockade-of-tim-1-and-tim-4-enhances-atherosclerosis-in-low-density-lipoprotein-receptor-deficient-mice. blockade tim enhances atherosclerosis low density lipoprotein receptor Blockade of Tim-1 and Tim-4 Enhances Atherosclerosis in Low-Density Lipoprotein Receptor-Deficient Mice. Blockade of Tim-1 and Tim-4 Enhances Atherosclerosis in Low-Density Lipoprotein Receptor-Deficient Mice. OBJECTIVE T cell immunoglobulin and mucin domain (Tim) proteins are expressed by numerous immune cells, recognize phosphatidylserine on apoptotic cells, and function as costimulators or coinhibitors. Tim-1 is expressed by activated T cells but is also found on dendritic cells and B cells. Tim-4, present on macrophages and dendritic cells, plays a critical role in apoptotic cell clearance, regulates the number of phosphatidylserine-expressing activated T cells, and is genetically associated with low low-density lipoprotein and triglyceride levels. Because these functions of Tim-1 and Tim-4 could affect atherosclerosis, their modulation has potential therapeutic value in cardiovascular di",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.670847+00:00"
+}

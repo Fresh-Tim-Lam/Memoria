@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24746892",
+  "source_fingerprint": "6fbc61b512be29baba0dab1ed1e977b9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24746892",
+    "killing-by-bactericidal-antibiotics-does-not-depend-on-reactive-oxygen-species."
+  ],
+  "key_phrases": [
+    "killing",
+    "by",
+    "bactericidal",
+    "antibiotics",
+    "does",
+    "not",
+    "depend",
+    "reactive"
+  ],
+  "summary_1l": "Killing by bactericidal antibiotics does not depend on reactive oxygen species.",
+  "query_hits": [],
+  "embed_text": "24746892 Killing by bactericidal antibiotics does not depend on reactive oxygen species. science scifact Bactericidal antibiotics kill by modulating their respective targets. This traditional view has been challenged by studies that propose an alternative, unified mechanism of killing, whereby toxic reactive oxygen species (ROS) are produced… 24746892 killing-by-bactericidal-antibiotics-does-not-depend-on-reactive-oxygen-species. killing by bactericidal antibiotics does not depend reactive Killing by bactericidal antibiotics does not depend on reactive oxygen species. Killing by bactericidal antibiotics does not depend on reactive oxygen species. Bactericidal antibiotics kill by modulating their respective targets. This traditional view has been challenged by studies that propose an alternative, unified mechanism of killing, whereby toxic reactive oxygen species (ROS) are produced in the presence of antibiotics. We found no correlation between an individual cell's probability of survival in the presence of antibiotic and its level of ROS. An ROS quencher, thiourea, protected cells from antibiotics present at low concentrations, but the effect was observed under anaerobic conditions as well. There was essentially no difference in survival of bacteria treated with various antibiotics under aerobic or anaerobic conditions. This suggests that ROS do not pla",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.213595+00:00"
+}

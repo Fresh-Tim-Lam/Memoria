@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "kp_id": "17358#0",
+  "source_fingerprint": "60ac9e706cd265680371a9a7dd72a5a5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "心跳过速",
+    "納斯達克100指數"
+  ],
+  "aliases": [
+    "17358#0"
+  ],
+  "key_phrases": [
+    "心率",
+    "心脏",
+    "收縮",
+    "contractions",
+    "跳动",
+    "頻率",
+    "beats",
+    "每分钟"
+  ],
+  "summary_1l": "心率（）是指心脏收縮（contractions）跳动的頻率（beats）和每分钟跳动的次数（bpm），正常人平静时（安靜心率）每分钟60到100次（60~100bpm(次/分鐘)），運動時心跳會加速，心肺功能較好的運動員會比正常人的心跳要慢。",
+  "query_hits": [],
+  "embed_text": "17358#0 心率 心率 心率（）是指心脏收縮（contractions）跳动的頻率（beats）和每分钟跳动的次数（bpm），正常人平静时（安靜心率）每分钟60到100次（60~100bpm(次/分鐘)），運動時心跳會加速，心肺功能較好的運動員會比正常人的心跳要慢。 心跳过速 納斯達克100指數 17358#0 心率 心脏 收縮 contractions 跳动 頻率 beats 每分钟 心率（）是指心脏收縮（contractions）跳动的頻率（beats）和每分钟跳动的次数（bpm），正常人平静时（安靜心率）每分钟60到100次（60~100bpm(次/分鐘)），運動時心跳會加速，心肺功能較好的運動員會比正常人的心跳要慢。 心率 心率（）是指心脏收縮（contractions）跳动的頻率（beats）和每分钟跳动的次数（bpm），正常人平静时（安靜心率）每分钟60到100次（60~100bpm(次/分鐘)），運動時心跳會加速，心肺功能較好的運動員會比正常人的心跳要慢。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:18:34.599427+00:00"
+}

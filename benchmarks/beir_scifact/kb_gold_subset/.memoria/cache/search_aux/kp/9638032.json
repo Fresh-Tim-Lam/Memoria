@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9638032",
+  "source_fingerprint": "b9b90a4e37aa287bb88fdb14bdd98f36",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9638032",
+    "increasing-microtubule-acetylation-rescues-axonal-transport-and-locomotor-deficits-caused-by-lrrk2-roc-cor-domain-mutations"
+  ],
+  "key_phrases": [
+    "increasing",
+    "microtubule",
+    "acetylation",
+    "rescues",
+    "axonal",
+    "transport",
+    "locomotor",
+    "deficits"
+  ],
+  "summary_1l": "Leucine-rich repeat kinase 2 (LRRK2) mutations are the most common genetic c",
+  "query_hits": [],
+  "embed_text": "9638032 Increasing microtubule acetylation rescues axonal transport and locomotor deficits caused by LRRK2 Roc-COR domain mutations science scifact Leucine-rich repeat kinase 2 (LRRK2) mutations are the most common genetic cause of Parkinson's disease. LRRK2 is a multifunctional protein affecting many cellular processes and has been described to bind microtubules. Defective… 9638032 increasing-microtubule-acetylation-rescues-axonal-transport-and-locomotor-deficits-caused-by-lrrk2-roc-cor-domain-mutations increasing microtubule acetylation rescues axonal transport locomotor deficits Leucine-rich repeat kinase 2 (LRRK2) mutations are the most common genetic c Increasing microtubule acetylation rescues axonal transport and locomotor deficits caused by LRRK2 Roc-COR domain mutations Leucine-rich repeat kinase 2 (LRRK2) mutations are the most common genetic cause of Parkinson's disease. LRRK2 is a multifunctional protein affecting many cellular processes and has been described to bind microtubules. Defective microtubule-based axonal transport is hypothesized to contribute to Parkinson's disease, but whether LRRK2 mutations affect this process to mediate pathogenesis is not known. Here we find that LRRK2 containing pathogenic Roc-COR domain mutations (R1441C, Y1699C) preferentially associates with deacetylated microtubules, and inhibits axonal transport in primary neurons and in Drosophila, causing locomotor deficits in vivo. In vitro, increasing m",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:14.068219+00:00"
+}

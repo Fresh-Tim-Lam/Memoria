@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "critic-网络",
+  "source_fingerprint": "9c12218cf1cfaede8d20bfc584c01387",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "critic-网络"
+  ],
+  "key_phrases": [
+    "critic",
+    "网络",
+    "接收",
+    "状态",
+    "动作",
+    "输出",
+    "估计",
+    "负责"
+  ],
+  "summary_1l": "Critic 网络 接收状态-动作对 ，输出 Q 值估计。",
+  "query_hits": [],
+  "embed_text": "critic-网络 Critic 网络 critic-网络 critic 网络 接收 状态 动作 输出 估计 负责 Critic 网络 接收状态-动作对 ，输出 Q 值估计。 Critic 网络 Critic 网络 接收状态-动作对 ，输出 Q 值估计。它负责评估当前策略下动作的好坏。 Critic 的更新类似 DQN： 其中 是 TD 目标，使用目标网络计算。 Critic 网络结构： 输入：状态和动作的拼接（先处理状态，中间层再混入动作） 隐藏层：2-3 层全连接 + ReLU + BN 输出：标量 Q 值",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T03:38:46.368895+00:00"
+}

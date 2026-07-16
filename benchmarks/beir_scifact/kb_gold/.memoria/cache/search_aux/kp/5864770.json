@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5864770",
+  "source_fingerprint": "e11773767109337e1bf2719816f9603d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5864770",
+    "estrogens,-progestogens,-normal-breast-cell-proliferation,-and-breast-cancer-risk."
+  ],
+  "key_phrases": [
+    "estrogens",
+    "progestogens",
+    "normal",
+    "breast",
+    "cell",
+    "proliferation",
+    "cancer",
+    "risk"
+  ],
+  "summary_1l": "Estrogens, progestogens, normal breast cell proliferation, and breast cancer risk.",
+  "query_hits": [],
+  "embed_text": "5864770 Estrogens, progestogens, normal breast cell proliferation, and breast cancer risk. science scifact Epidemiologic studies suggest that ovarian hormones contribute to the development of breast cancer at all stages. Early menopause and premenopausal obesity reduces the risk while postmenopausal obesity and menopausal estrogen replacement… 5864770 estrogens,-progestogens,-normal-breast-cell-proliferation,-and-breast-cancer-risk. estrogens progestogens normal breast cell proliferation cancer risk Estrogens, progestogens, normal breast cell proliferation, and breast cancer risk. Estrogens, progestogens, normal breast cell proliferation, and breast cancer risk. Epidemiologic studies suggest that ovarian hormones contribute to the development of breast cancer at all stages. Early menopause and premenopausal obesity reduces the risk while postmenopausal obesity and menopausal estrogen replacement therapy increases the risk. Combined oral contraceptives and Depo-Provera do not reduce the risk. It appears that estrogens and progestogens act through and with proto-oncogenes and growth factors to affect breast cell proliferation and breast cancer etiology. Animal studies suggest that estrogen causes interlobular ductal cell division and progesterone causes increased terminal duct lobular unit cell division in the luteal phase. Most breast carcinomas originate from termin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.396995+00:00"
+}

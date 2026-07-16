@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3899896",
+  "source_fingerprint": "d836278e57db0efa708e5a294afae18d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3899896",
+    "elevated-red-blood-cell-distribution-width-contributes-to-poor-prognosis-in-patients-undergoing-resection-for-nonmetastatic-rectal-cancer"
+  ],
+  "key_phrases": [
+    "elevated",
+    "red",
+    "blood",
+    "cell",
+    "distribution",
+    "width",
+    "contributes",
+    "poor"
+  ],
+  "summary_1l": "Several studies have reported that elevated red blood cell dis",
+  "query_hits": [],
+  "embed_text": "3899896 Elevated red blood cell distribution width contributes to poor prognosis in patients undergoing resection for nonmetastatic rectal cancer science scifact Several studies have reported that elevated red blood cell distribution width (RDW) was associated with the poor prognosis of different kinds of cancers. The aim of this study was to investigate the prognostic role of RDW in patients… 3899896 elevated-red-blood-cell-distribution-width-contributes-to-poor-prognosis-in-patients-undergoing-resection-for-nonmetastatic-rectal-cancer elevated red blood cell distribution width contributes poor Several studies have reported that elevated red blood cell dis Elevated red blood cell distribution width contributes to poor prognosis in patients undergoing resection for nonmetastatic rectal cancer Several studies have reported that elevated red blood cell distribution width (RDW) was associated with the poor prognosis of different kinds of cancers. The aim of this study was to investigate the prognostic role of RDW in patients undergoing resection for nonmetastatic rectal cancer. We retrospectively reviewed a database of 625 consecutive patients who underwent curative resection for nonmetastatic rectal cancer at our institution from January 2009 to December 2014. The cutoff value of RDW was calculated by receiver-operating characteristic curve. The results demonstrated that patients in high RDW-cv group had a lower overall survival (OS) (P = .018)",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.201423+00:00"
+}

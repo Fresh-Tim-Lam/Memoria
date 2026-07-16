@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20457190",
+  "source_fingerprint": "5ac1fc0945ab4888c5b32168b018dc74",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20457190",
+    "biochemical-differences-in-the-alphabeta-t-cell-receptor.cd3-surface-complex-between-cd8+-and-cd4+-human-mature-t-lymphocytes."
+  ],
+  "key_phrases": [
+    "biochemical",
+    "differences",
+    "alphabeta",
+    "cell",
+    "receptor",
+    "cd3",
+    "surface",
+    "complex"
+  ],
+  "summary_1l": "Biochemical differences in the alphabeta T cell receptor.",
+  "query_hits": [],
+  "embed_text": "20457190 Biochemical differences in the alphabeta T cell receptor.CD3 surface complex between CD8+ and CD4+ human mature T lymphocytes. science scifact We have reported the existence of biochemical and conformational differences in the alphabeta T cell receptor (TCR) complex between CD4(+) and CD8(+) CD3gamma-deficient (gamma(-)) mature T cells. In the present study, we have furthered our… 20457190 biochemical-differences-in-the-alphabeta-t-cell-receptor.cd3-surface-complex-between-cd8+-and-cd4+-human-mature-t-lymphocytes. biochemical differences alphabeta cell receptor cd3 surface complex Biochemical differences in the alphabeta T cell receptor. Biochemical differences in the alphabeta T cell receptor.CD3 surface complex between CD8+ and CD4+ human mature T lymphocytes. We have reported the existence of biochemical and conformational differences in the alphabeta T cell receptor (TCR) complex between CD4(+) and CD8(+) CD3gamma-deficient (gamma(-)) mature T cells. In the present study, we have furthered our understanding and extended the observations to primary T lymphocytes from normal (gamma(+)) individuals. Surface TCR.CD3 components from CD4(+) gamma(-) T cells, other than CD3gamma, were detectable and similar in size to CD4(+) gamma(+) controls. Their native TCR.CD3 complex was also similar to CD4(+) gamma(+) controls, except for an alphabeta(deltaepsilon)(2)zeta(2) instead of an alphabetagammaepsilondeltaepsilonzeta(2) stoichi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.328425+00:00"
+}

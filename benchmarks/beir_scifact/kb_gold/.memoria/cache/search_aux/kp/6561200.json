@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6561200",
+  "source_fingerprint": "086148d0677dd9829e50f0a20be85dc0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6561200",
+    "efficacy-of-hpv-dna-testing-with-cytology-triage-and/or-repeat-hpv-dna-testing-in-primary-cervical-cancer-screening."
+  ],
+  "key_phrases": [
+    "efficacy",
+    "hpv",
+    "dna",
+    "testing",
+    "with",
+    "cytology",
+    "triage",
+    "repeat"
+  ],
+  "summary_1l": "Efficacy of HPV DNA testing with cytology triage and/or repeat HPV DNA testing in primary cervical cancer screening.",
+  "query_hits": [],
+  "embed_text": "6561200 Efficacy of HPV DNA testing with cytology triage and/or repeat HPV DNA testing in primary cervical cancer screening. science scifact BACKGROUND Primary cervical screening with both human papillomavirus (HPV) DNA testing and cytological examination of cervical cells with a Pap test (cytology) has been evaluated in randomized clinical trials. Because the vast majority of… 6561200 efficacy-of-hpv-dna-testing-with-cytology-triage-and/or-repeat-hpv-dna-testing-in-primary-cervical-cancer-screening. efficacy hpv dna testing with cytology triage repeat Efficacy of HPV DNA testing with cytology triage and/or repeat HPV DNA testing in primary cervical cancer screening. Efficacy of HPV DNA testing with cytology triage and/or repeat HPV DNA testing in primary cervical cancer screening. BACKGROUND Primary cervical screening with both human papillomavirus (HPV) DNA testing and cytological examination of cervical cells with a Pap test (cytology) has been evaluated in randomized clinical trials. Because the vast majority of women with positive cytology are also HPV DNA positive, screening strategies that use HPV DNA testing as the primary screening test may be more effective. METHODS We used the database from the intervention arm (n = 6,257 women) of a population-based randomized trial of double screening with cytology and HPV DNA testing to evaluate the efficacy of 11 possible cervical screening strategies that are based on HPV DNA testing alone, cytology alo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.239229+00:00"
+}

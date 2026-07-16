@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13867350",
+  "source_fingerprint": "b11bc365b909665a512dcba75447c3db",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13867350",
+    "post-transcriptional-wnt-signaling-governs-epididymal-sperm-maturation"
+  ],
+  "key_phrases": [
+    "post",
+    "transcriptional",
+    "wnt",
+    "signaling",
+    "governs",
+    "epididymal",
+    "sperm",
+    "maturation"
+  ],
+  "summary_1l": "The canonical Wnt signaling pathway is of paramount importance in development and disease.",
+  "query_hits": [],
+  "embed_text": "13867350 Post-transcriptional Wnt Signaling Governs Epididymal Sperm Maturation science scifact The canonical Wnt signaling pathway is of paramount importance in development and disease. An emergent question is whether the upstream cascade of the canonical Wnt pathway has physiologically relevant roles beyond β-catenin-mediated… 13867350 post-transcriptional-wnt-signaling-governs-epididymal-sperm-maturation post transcriptional wnt signaling governs epididymal sperm maturation The canonical Wnt signaling pathway is of paramount importance in development and disease. Post-transcriptional Wnt Signaling Governs Epididymal Sperm Maturation The canonical Wnt signaling pathway is of paramount importance in development and disease. An emergent question is whether the upstream cascade of the canonical Wnt pathway has physiologically relevant roles beyond β-catenin-mediated transcription, which is difficult to study due to the pervasive role of this protein. Here, we show that transcriptionally silent spermatozoa respond to Wnt signals released from the epididymis and that mice mutant for the Wnt regulator Cyclin Y-like 1 are male sterile due to immotile and malformed spermatozoa. Post-transcriptional Wnt signaling impacts spermatozoa through GSK3 by (1) reducing global protein poly-ubiquitination to maintain protein homeostasis; (2) inhibiting septin 4 phosph",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.215302+00:00"
+}

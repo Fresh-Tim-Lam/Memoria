@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23342686",
+  "source_fingerprint": "4d14d5b7469df6ca296e713883b31ad9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23342686",
+    "crystal-structures-of-complexes-of-the-small-ribosomal-subunit-with-tetracycline,-edeine-and-if3."
+  ],
+  "key_phrases": [
+    "crystal",
+    "structures",
+    "complexes",
+    "small",
+    "ribosomal",
+    "subunit",
+    "with",
+    "tetracycline"
+  ],
+  "summary_1l": "Crystal structures of complexes of the small ribosomal subunit with tetracycline, edeine and IF3.",
+  "query_hits": [],
+  "embed_text": "23342686 Crystal structures of complexes of the small ribosomal subunit with tetracycline, edeine and IF3. science scifact The small ribosomal subunit is responsible for the decoding of genetic information and plays a key role in the initiation of protein synthesis. We analyzed by X-ray crystallography the structures of three different complexes of the small… 23342686 crystal-structures-of-complexes-of-the-small-ribosomal-subunit-with-tetracycline,-edeine-and-if3. crystal structures complexes small ribosomal subunit with tetracycline Crystal structures of complexes of the small ribosomal subunit with tetracycline, edeine and IF3. Crystal structures of complexes of the small ribosomal subunit with tetracycline, edeine and IF3. The small ribosomal subunit is responsible for the decoding of genetic information and plays a key role in the initiation of protein synthesis. We analyzed by X-ray crystallography the structures of three different complexes of the small ribosomal subunit of Thermus thermophilus with the A-site inhibitor tetracycline, the universal initiation inhibitor edeine and the C-terminal domain of the translation initiation factor IF3. The crystal structure analysis of the complex with tetracycline revealed the functionally important site responsible for the blockage of the A-site. Five additional tetracycline sites resolve most of the controversial biochemical data on the location of tetracycline. The",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.293352+00:00"
+}

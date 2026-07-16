@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27647593",
+  "source_fingerprint": "3a4c9a6f95f4852c2d3e69799b1a4d9e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27647593",
+    "stromal-epithelial-metabolic-coupling-in-cancer:-integrating-autophagy-and-metabolism-in-the-tumor-microenvironment."
+  ],
+  "key_phrases": [
+    "stromal",
+    "epithelial",
+    "metabolic",
+    "coupling",
+    "cancer",
+    "integrating",
+    "autophagy",
+    "metabolism"
+  ],
+  "summary_1l": "Stromal-epithelial metabolic coupling in cancer: integrating autophagy and metabolism in the tumor microenvironment.",
+  "query_hits": [],
+  "embed_text": "27647593 Stromal-epithelial metabolic coupling in cancer: integrating autophagy and metabolism in the tumor microenvironment. science scifact Cancer cells do not exist as pure homogeneous populations in vivo. Instead they are embedded in \"cancer cell nests\" that are surrounded by stromal cells, especially cancer associated fibroblasts. Thus, it is not unreasonable to suspect… 27647593 stromal-epithelial-metabolic-coupling-in-cancer:-integrating-autophagy-and-metabolism-in-the-tumor-microenvironment. stromal epithelial metabolic coupling cancer integrating autophagy metabolism Stromal-epithelial metabolic coupling in cancer: integrating autophagy and metabolism in the tumor microenvironment. Stromal-epithelial metabolic coupling in cancer: integrating autophagy and metabolism in the tumor microenvironment. Cancer cells do not exist as pure homogeneous populations in vivo. Instead they are embedded in \"cancer cell nests\" that are surrounded by stromal cells, especially cancer associated fibroblasts. Thus, it is not unreasonable to suspect that stromal fibroblasts could influence the metabolism of adjacent cancer cells, and visa versa. In accordance with this idea, we have recently proposed that the Warburg effect in cancer cells may be due to culturing cancer cells by themselves, out of their normal stromal context or tumor microenvironment. In fact, when cancer cells are co-cultured with fibroblasts, then cancer cells increase their mitochondrial mass, while fibroblasts lose t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.183364+00:00"
+}

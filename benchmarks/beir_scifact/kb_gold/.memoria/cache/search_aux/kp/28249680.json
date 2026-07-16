@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "28249680",
+  "source_fingerprint": "3cdea01b4527dc5dd6a37841b2974203",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "28249680",
+    "bax/bak-independent-mitoptosis-during-cell-death-induced-by-proteasome-inhibition?"
+  ],
+  "key_phrases": [
+    "bax",
+    "bak",
+    "independent",
+    "mitoptosis",
+    "during",
+    "cell",
+    "death",
+    "induced"
+  ],
+  "summary_1l": "BAX/BAK-independent mitoptosis during cell death induced by proteasome inhibition?",
+  "query_hits": [],
+  "embed_text": "28249680 BAX/BAK-independent mitoptosis during cell death induced by proteasome inhibition? science scifact Proteasome inhibitors induce rapid death of cancer cells. We show that in epithelial cancer cells, such death is associated with dramatic and simultaneous up-regulation of several BH3-only proteins, including BIK, BIM, MCL-1S, NOXA, and… 28249680 bax/bak-independent-mitoptosis-during-cell-death-induced-by-proteasome-inhibition? bax bak independent mitoptosis during cell death induced BAX/BAK-independent mitoptosis during cell death induced by proteasome inhibition? BAX/BAK-independent mitoptosis during cell death induced by proteasome inhibition? Proteasome inhibitors induce rapid death of cancer cells. We show that in epithelial cancer cells, such death is associated with dramatic and simultaneous up-regulation of several BH3-only proteins, including BIK, BIM, MCL-1S, NOXA, and PUMA, as well as p53. Elevated levels of these proteins seem to be the result of direct inhibition of their proteasomal degradation, induction of transcription, and active translation. Subsequent cell death is independent of BAX, and probably BAK, and proceeds through the intrinsic mitochondrial apoptosis pathway. We identify the cascade of molecular events responsible for cell death induced by a prototypical proteasome inhibitor, MG132, starting with rapid accumulation of BH",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.747020+00:00"
+}

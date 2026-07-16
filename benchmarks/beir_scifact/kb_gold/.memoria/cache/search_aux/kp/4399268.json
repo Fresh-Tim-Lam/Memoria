@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4399268",
+  "source_fingerprint": "67184db8cc9693c61528f7237d730c58",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4399268",
+    "induced-pluripotent-stem-cells-from-a-spinal-muscular-atrophy-patient"
+  ],
+  "key_phrases": [
+    "induced",
+    "pluripotent",
+    "stem",
+    "cells",
+    "from",
+    "spinal",
+    "muscular",
+    "atrophy"
+  ],
+  "summary_1l": "Spinal muscular atrophy is one of the most common inherited forms of neurological disease leading to infant mortality.",
+  "query_hits": [],
+  "embed_text": "4399268 Induced pluripotent stem cells from a spinal muscular atrophy patient science scifact Spinal muscular atrophy is one of the most common inherited forms of neurological disease leading to infant mortality. Patients have selective loss of lower motor neurons resulting in muscle weakness, paralysis and often death. Although… 4399268 induced-pluripotent-stem-cells-from-a-spinal-muscular-atrophy-patient induced pluripotent stem cells from spinal muscular atrophy Spinal muscular atrophy is one of the most common inherited forms of neurological disease leading to infant mortality. Induced pluripotent stem cells from a spinal muscular atrophy patient Spinal muscular atrophy is one of the most common inherited forms of neurological disease leading to infant mortality. Patients have selective loss of lower motor neurons resulting in muscle weakness, paralysis and often death. Although patient fibroblasts have been used extensively to study spinal muscular atrophy, motor neurons have a unique anatomy and physiology which may underlie their vulnerability to the disease process. Here we report the generation of induced pluripotent stem cells from skin fibroblast samples taken from a child with spinal muscular atrophy. These cells expanded robustly in culture, maintained the disease genotype and generated motor neurons that showed selective deficits compared to those deriv",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.596881+00:00"
+}

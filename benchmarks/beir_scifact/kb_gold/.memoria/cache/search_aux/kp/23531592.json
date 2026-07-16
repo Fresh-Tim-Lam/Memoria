@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23531592",
+  "source_fingerprint": "d8aeb5d503deb5963ac4aa30f0b6664c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23531592",
+    "paediatric-hiv-infection."
+  ],
+  "key_phrases": [
+    "paediatric",
+    "hiv",
+    "infection",
+    "by",
+    "year",
+    "2000",
+    "there",
+    "will"
+  ],
+  "summary_1l": "Paediatric HIV infection.",
+  "query_hits": [],
+  "embed_text": "23531592 Paediatric HIV infection. science scifact By the year 2000 there will be six million pregnant women and five to ten million children infected with HIV-1. Intervention strategies have been planned and in some instances already started. A timely and cost-effective strategy needs to… 23531592 paediatric-hiv-infection. paediatric hiv infection by year 2000 there will Paediatric HIV infection. Paediatric HIV infection. By the year 2000 there will be six million pregnant women and five to ten million children infected with HIV-1. Intervention strategies have been planned and in some instances already started. A timely and cost-effective strategy needs to take into account that most HIV-1 infected individuals reside in developing countries. Further studies are needed on immunological and virological factors affecting HIV-1 transmission from mother to child, on differential disease progression in affected children, and on transient infection.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.641662+00:00"
+}

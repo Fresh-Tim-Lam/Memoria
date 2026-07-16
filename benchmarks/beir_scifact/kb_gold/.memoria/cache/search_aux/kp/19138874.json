@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19138874",
+  "source_fingerprint": "632c3f5358e27173a2e1de67bf264afa",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19138874",
+    "nucleation-of-nuclear-bodies-by-rna"
+  ],
+  "key_phrases": [
+    "nucleation",
+    "nuclear",
+    "bodies",
+    "by",
+    "rna",
+    "biogenesis",
+    "many",
+    "functional"
+  ],
+  "summary_1l": "The biogenesis of the many functional compartments contained in the mammalian cell nucleus is poorly understood.",
+  "query_hits": [],
+  "embed_text": "19138874 Nucleation of nuclear bodies by RNA science scifact The biogenesis of the many functional compartments contained in the mammalian cell nucleus is poorly understood. More specifically, little is known regarding the initial nucleation step required for nuclear body formation. Here we show… 19138874 nucleation-of-nuclear-bodies-by-rna nucleation nuclear bodies by rna biogenesis many functional The biogenesis of the many functional compartments contained in the mammalian cell nucleus is poorly understood. Nucleation of nuclear bodies by RNA The biogenesis of the many functional compartments contained in the mammalian cell nucleus is poorly understood. More specifically, little is known regarding the initial nucleation step required for nuclear body formation. Here we show that RNA can function as a structural element and a nucleator of nuclear bodies. We find that several types of coding and noncoding RNAs are sufficient to de novo assemble, and are physiologically enriched in, histone locus bodies (with associated Cajal bodies), nuclear speckles, paraspeckles and nuclear stress bodies. Formation of nuclear bodies occurs through recruitment and accumulation of proteins resident in the nuclear bodies by nucleating RNA. These results demonstrate that transcription is a driving force in nuclea",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.191719+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4362729",
+  "source_fingerprint": "44aa03e5fb3d41b9d469da3c390543c9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4362729",
+    "a-keratin-cytoskeletal-protein-regulates-protein-synthesis-and-epithelial-cell-growth"
+  ],
+  "key_phrases": [
+    "keratin",
+    "cytoskeletal",
+    "protein",
+    "regulates",
+    "synthesis",
+    "epithelial",
+    "cell",
+    "growth"
+  ],
+  "summary_1l": "Cell growth, an increase in mass and size, is a highly regulated cellular event.",
+  "query_hits": [],
+  "embed_text": "4362729 A keratin cytoskeletal protein regulates protein synthesis and epithelial cell growth science scifact Cell growth, an increase in mass and size, is a highly regulated cellular event. The Akt/mTOR (mammalian target of rapamycin) signalling pathway has a central role in the control of protein synthesis and thus the growth of cells, tissues… 4362729 a-keratin-cytoskeletal-protein-regulates-protein-synthesis-and-epithelial-cell-growth keratin cytoskeletal protein regulates synthesis epithelial cell growth Cell growth, an increase in mass and size, is a highly regulated cellular event. A keratin cytoskeletal protein regulates protein synthesis and epithelial cell growth Cell growth, an increase in mass and size, is a highly regulated cellular event. The Akt/mTOR (mammalian target of rapamycin) signalling pathway has a central role in the control of protein synthesis and thus the growth of cells, tissues and organisms. A striking example of a physiological context requiring rapid cell growth is tissue repair in response to injury. Here we show that keratin 17, an intermediate filament protein rapidly induced in wounded stratified epithelia, regulates cell growth through binding to the adaptor protein 14-3-3σ. Mouse skin keratinocytes lacking keratin 17 (ref. 4) show depressed protein translation and are of smaller size, correlating with decreased Akt/mTOR signalling activ",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.102422+00:00"
+}

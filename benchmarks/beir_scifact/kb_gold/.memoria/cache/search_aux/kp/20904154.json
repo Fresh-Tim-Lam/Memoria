@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20904154",
+  "source_fingerprint": "e9467cb6d89f41fb9a9df6369f99668b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20904154",
+    "mutant-sod1-inhibits-er-golgi-transport-in-amyotrophic-lateral-sclerosis."
+  ],
+  "key_phrases": [
+    "mutant",
+    "sod1",
+    "inhibits",
+    "er",
+    "golgi",
+    "transport",
+    "amyotrophic",
+    "lateral"
+  ],
+  "summary_1l": "Mutant SOD1 inhibits ER-Golgi transport in amyotrophic lateral sclerosis.",
+  "query_hits": [],
+  "embed_text": "20904154 Mutant SOD1 inhibits ER-Golgi transport in amyotrophic lateral sclerosis. science scifact Cu/Zn-superoxide dismutase is misfolded in familial and sporadic amyotrophic lateral sclerosis, but it is not clear how this triggers endoplasmic reticulum (ER) stress or other pathogenic processes. Here, we demonstrate that mutant SOD1… 20904154 mutant-sod1-inhibits-er-golgi-transport-in-amyotrophic-lateral-sclerosis. mutant sod1 inhibits er golgi transport amyotrophic lateral Mutant SOD1 inhibits ER-Golgi transport in amyotrophic lateral sclerosis. Mutant SOD1 inhibits ER-Golgi transport in amyotrophic lateral sclerosis. Cu/Zn-superoxide dismutase is misfolded in familial and sporadic amyotrophic lateral sclerosis, but it is not clear how this triggers endoplasmic reticulum (ER) stress or other pathogenic processes. Here, we demonstrate that mutant SOD1 (mSOD1) is predominantly found in the cytoplasm in neuronal cells. Furthermore, we show that mSOD1 inhibits secretory protein transport from the ER to Golgi apparatus. ER-Golgi transport is linked to ER stress, Golgi fragmentation and axonal transport and we also show that inhibition of ER-Golgi trafficking preceded ER stress, Golgi fragmentation, protein aggregation and apoptosis in cells expressing mSOD1. Restoration of ER-Golgi transport by over-expression of coatomer coat protein",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.097215+00:00"
+}

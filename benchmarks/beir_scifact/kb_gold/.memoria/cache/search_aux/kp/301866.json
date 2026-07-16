@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "301866",
+  "source_fingerprint": "452237d6b0c03d9b6f6103e003879945",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "301866",
+    "long-term-immune-deficiency-after-allogeneic-stem-cell-transplantation:-b-cell-deficiency-is-associated-with-late-infections."
+  ],
+  "key_phrases": [
+    "long",
+    "term",
+    "immune",
+    "deficiency",
+    "after",
+    "allogeneic",
+    "stem",
+    "cell"
+  ],
+  "summary_1l": "Long-term immune deficiency after allogeneic stem cell transplantation: B-cell deficiency is associated with late infections.",
+  "query_hits": [],
+  "embed_text": "301866 Long-term immune deficiency after allogeneic stem cell transplantation: B-cell deficiency is associated with late infections. science scifact Immune reconstitution was analyzed in 140 consecutive patients who were 2-year disease-free and who underwent myeloablative allogeneic transplantation. A CD4 and CD8 defect was observed involving naive, terminally differentiated, memory… 301866 long-term-immune-deficiency-after-allogeneic-stem-cell-transplantation:-b-cell-deficiency-is-associated-with-late-infections. long term immune deficiency after allogeneic stem cell Long-term immune deficiency after allogeneic stem cell transplantation: B-cell deficiency is associated with late infections. Long-term immune deficiency after allogeneic stem cell transplantation: B-cell deficiency is associated with late infections. Immune reconstitution was analyzed in 140 consecutive patients who were 2-year disease-free and who underwent myeloablative allogeneic transplantation. A CD4 and CD8 defect was observed involving naive, terminally differentiated, memory and competent cells and above limits values for activated subsets. Natural killer cells normalize at six months while we observed expansion of CD19(+)/CD5(+) B cells after three months and a persisting defect of memory B cells. Chronic graft-versus-host disease did not influence significantly those parameters for CD8 subsets while the naïve and competent CD4 subsets were strongly affected. But the most profound impact of chronic graf",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.465182+00:00"
+}

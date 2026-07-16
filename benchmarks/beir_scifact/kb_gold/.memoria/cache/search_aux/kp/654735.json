@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "654735",
+  "source_fingerprint": "6e5e78f187015d8d8c9588f4836a6d49",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "654735",
+    "exosomal-levels-of-mirna-21-from-cerebrospinal-fluids-associated-with-poor-prognosis-and-tumor-recurrence-of-glioma-patients"
+  ],
+  "key_phrases": [
+    "exosomal",
+    "levels",
+    "mirna",
+    "21",
+    "from",
+    "cerebrospinal",
+    "fluids",
+    "associated"
+  ],
+  "summary_1l": "Glioma is a most common type of primary brain tumors.",
+  "query_hits": [],
+  "embed_text": "654735 Exosomal levels of miRNA-21 from cerebrospinal fluids associated with poor prognosis and tumor recurrence of glioma patients science scifact Glioma is a most common type of primary brain tumors. Extracellular vesicles, in the form of exosomes, are known to mediate cell-cell communication by transporting cell-derived proteins and nucleic acids, including various microRNAs… 654735 exosomal-levels-of-mirna-21-from-cerebrospinal-fluids-associated-with-poor-prognosis-and-tumor-recurrence-of-glioma-patients exosomal levels mirna 21 from cerebrospinal fluids associated Glioma is a most common type of primary brain tumors. Exosomal levels of miRNA-21 from cerebrospinal fluids associated with poor prognosis and tumor recurrence of glioma patients Glioma is a most common type of primary brain tumors. Extracellular vesicles, in the form of exosomes, are known to mediate cell-cell communication by transporting cell-derived proteins and nucleic acids, including various microRNAs (miRNAs). Here we examined the cerebrospinal fluid (CSF) from patients with recurrent glioma for the levels of cancer-related miRNAs, and evaluated the values for prognosis by comparing the measures of CSF-, serum-, and exosome-contained miR-21 levels. Samples from seventy glioma patients following surgery were compared with those from brain trauma patients as a non-tumor control group. Exosomal miR-21 levels in the CSF of glioma patients",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.175960+00:00"
+}

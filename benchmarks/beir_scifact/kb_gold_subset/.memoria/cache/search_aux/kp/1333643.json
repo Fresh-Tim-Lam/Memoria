@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1333643",
+  "source_fingerprint": "d57cf86022ea86474fc4fc2e090a8392",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1333643",
+    "genetic-and-functional-diversification-of-small-rna-pathways-in-plants"
+  ],
+  "key_phrases": [
+    "genetic",
+    "functional",
+    "diversification",
+    "small",
+    "rna",
+    "pathways",
+    "plants",
+    "multicellular"
+  ],
+  "summary_1l": "Multicellular eukaryotes produce small RNA molecules (approximately 21–24 nucleotides) of two general types, microRNA (miRNA) and",
+  "query_hits": [],
+  "embed_text": "1333643 Genetic and Functional Diversification of Small RNA Pathways in Plants science scifact Multicellular eukaryotes produce small RNA molecules (approximately 21–24 nucleotides) of two general types, microRNA (miRNA) and short interfering RNA (siRNA). They collectively function as sequence-specific guides to silence or regulate… 1333643 genetic-and-functional-diversification-of-small-rna-pathways-in-plants genetic functional diversification small rna pathways plants multicellular Multicellular eukaryotes produce small RNA molecules (approximately 21–24 nucleotides) of two general types, microRNA (miRNA) and Genetic and Functional Diversification of Small RNA Pathways in Plants Multicellular eukaryotes produce small RNA molecules (approximately 21–24 nucleotides) of two general types, microRNA (miRNA) and short interfering RNA (siRNA). They collectively function as sequence-specific guides to silence or regulate genes, transposons, and viruses and to modify chromatin and genome structure. Formation or activity of small RNAs requires factors belonging to gene families that encode DICER (or DICER-LIKE [DCL]) and ARGONAUTE proteins and, in the case of some siRNAs, RNA-dependent RNA polymerase (RDR) proteins. Unlike many animals, plants encode multiple DCL and RDR proteins. Using a series of insertion mutants of Arabidopsis thaliana, unique functions for three DCL proteins in miRNA (DCL1), endogen",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:10.789572+00:00"
+}

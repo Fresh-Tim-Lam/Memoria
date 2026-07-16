@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8533245",
+  "source_fingerprint": "2e138dc2e59419ae5d1e16e7308076e7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8533245",
+    "ubiquitin-dependent-intramembrane-rhomboid-protease-promotes-erad-of-membrane-proteins."
+  ],
+  "key_phrases": [
+    "ubiquitin",
+    "dependent",
+    "intramembrane",
+    "rhomboid",
+    "protease",
+    "promotes",
+    "erad",
+    "membrane"
+  ],
+  "summary_1l": "Ubiquitin-dependent intramembrane rhomboid protease promotes ERAD of membrane proteins.",
+  "query_hits": [],
+  "embed_text": "8533245 Ubiquitin-dependent intramembrane rhomboid protease promotes ERAD of membrane proteins. science scifact The ER-associated degradation (ERAD) pathway serves as an important cellular safeguard by directing incorrectly folded and unassembled proteins from the ER to the proteasome. Still, however, little is known about the components mediating… 8533245 ubiquitin-dependent-intramembrane-rhomboid-protease-promotes-erad-of-membrane-proteins. ubiquitin dependent intramembrane rhomboid protease promotes erad membrane Ubiquitin-dependent intramembrane rhomboid protease promotes ERAD of membrane proteins. Ubiquitin-dependent intramembrane rhomboid protease promotes ERAD of membrane proteins. The ER-associated degradation (ERAD) pathway serves as an important cellular safeguard by directing incorrectly folded and unassembled proteins from the ER to the proteasome. Still, however, little is known about the components mediating ERAD of membrane proteins. Here we show that the evolutionary conserved rhomboid family protein RHBDL4 is a ubiquitin-dependent ER-resident intramembrane protease that is upregulated upon ER stress. RHBDL4 cleaves single-spanning and polytopic membrane proteins with unstable transmembrane helices, leading to their degradation by the canonical ERAD machinery. RHBDL4 specifically binds the AAA+-ATPase p97, suggesting that proteolytic processing and dislocation into the cy",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.942714+00:00"
+}

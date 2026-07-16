@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4740447",
+  "source_fingerprint": "4a61f0e1a44e0a99f0575de330123656",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4740447",
+    "antibacterial-peptide-microcin-j25-inhibits-transcription-by-binding-within-and-obstructing-the-rna-polymerase-secondary-channel."
+  ],
+  "key_phrases": [
+    "antibacterial",
+    "peptide",
+    "microcin",
+    "j25",
+    "inhibits",
+    "transcription",
+    "by",
+    "binding"
+  ],
+  "summary_1l": "Antibacterial peptide microcin J25 inhibits transcription by binding within and obstructing the RNA polymerase secondary channel.",
+  "query_hits": [],
+  "embed_text": "4740447 Antibacterial peptide microcin J25 inhibits transcription by binding within and obstructing the RNA polymerase secondary channel. science scifact The antibacterial peptide microcin J25 (MccJ25) inhibits transcription by bacterial RNA polymerase (RNAP). Biochemical results indicate that inhibition of transcription occurs at the level of NTP uptake or NTP binding by RNAP. Genetic… 4740447 antibacterial-peptide-microcin-j25-inhibits-transcription-by-binding-within-and-obstructing-the-rna-polymerase-secondary-channel. antibacterial peptide microcin j25 inhibits transcription by binding Antibacterial peptide microcin J25 inhibits transcription by binding within and obstructing the RNA polymerase secondary channel. Antibacterial peptide microcin J25 inhibits transcription by binding within and obstructing the RNA polymerase secondary channel. The antibacterial peptide microcin J25 (MccJ25) inhibits transcription by bacterial RNA polymerase (RNAP). Biochemical results indicate that inhibition of transcription occurs at the level of NTP uptake or NTP binding by RNAP. Genetic results indicate that inhibition of transcription requires an extensive determinant, comprising more than 50 amino acid residues, within the RNAP secondary channel (also known as the \"NTP-uptake channel\" or \"pore\"). Biophysical results indicate that inhibition of transcription involves binding of MccJ25 within the RNAP secondary channel. Molecular modeling indicates that binding of MccJ25 within the RNAP secondary channel obstructs",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.376012+00:00"
+}

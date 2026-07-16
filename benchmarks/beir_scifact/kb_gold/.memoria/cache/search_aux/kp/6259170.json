@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6259170",
+  "source_fingerprint": "6abf425527529ba52e5d5ad59dc047d5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6259170",
+    "emerging-functional-cross-talk-between-the-keap1-nrf2-system-and-mitochondria"
+  ],
+  "key_phrases": [
+    "emerging",
+    "functional",
+    "cross",
+    "talk",
+    "between",
+    "keap1",
+    "nrf2",
+    "system"
+  ],
+  "summary_1l": "Nuclear factor erythroid-derived 2-related factor 2 (Nrf2) was originally identified as a positive regulator of drug detox",
+  "query_hits": [],
+  "embed_text": "6259170 Emerging functional cross-talk between the Keap1-Nrf2 system and mitochondria science scifact Nuclear factor erythroid-derived 2-related factor 2 (Nrf2) was originally identified as a positive regulator of drug detoxifying enzyme gene expression during exposure to environmental electrophiles. Currently, Nrf2 is known to regulate… 6259170 emerging-functional-cross-talk-between-the-keap1-nrf2-system-and-mitochondria emerging functional cross talk between keap1 nrf2 system Nuclear factor erythroid-derived 2-related factor 2 (Nrf2) was originally identified as a positive regulator of drug detox Emerging functional cross-talk between the Keap1-Nrf2 system and mitochondria Nuclear factor erythroid-derived 2-related factor 2 (Nrf2) was originally identified as a positive regulator of drug detoxifying enzyme gene expression during exposure to environmental electrophiles. Currently, Nrf2 is known to regulate the expression of hundreds of cytoprotective genes to counteract endogenously or exogenously generated oxidative stress. Furthermore, when activated in human tumors by somatic mutations, Nrf2 confers growth advantages and chemoresistance by regulating genes involved in various processes such as the pentose phosphate pathway and nucleotide synthesis in addition to antioxidant proteins. Interestingly, increasing evidence shows that Nrf2 is associated with mitochondrial biogenesis du",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.380168+00:00"
+}

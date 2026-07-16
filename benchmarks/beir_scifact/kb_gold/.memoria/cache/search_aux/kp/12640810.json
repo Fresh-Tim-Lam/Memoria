@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12640810",
+  "source_fingerprint": "171760f9157af9f19e8b5d1d3d99bed3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12640810",
+    "cortactin-regulates-cofilin-and-n-wasp-activities-to-control-the-stages-of-invadopodium-assembly-and-maturation"
+  ],
+  "key_phrases": [
+    "cortactin",
+    "regulates",
+    "cofilin",
+    "wasp",
+    "activities",
+    "control",
+    "stages",
+    "invadopodium"
+  ],
+  "summary_1l": "Invadopodia are matrix-degrading membrane protrusions in invasive carcinoma cells.",
+  "query_hits": [],
+  "embed_text": "12640810 Cortactin regulates cofilin and N-WASp activities to control the stages of invadopodium assembly and maturation science scifact Invadopodia are matrix-degrading membrane protrusions in invasive carcinoma cells. The mechanisms regulating invadopodium assembly and maturation are not understood. We have dissected the stages of invadopodium assembly and maturation and… 12640810 cortactin-regulates-cofilin-and-n-wasp-activities-to-control-the-stages-of-invadopodium-assembly-and-maturation cortactin regulates cofilin wasp activities control stages invadopodium Invadopodia are matrix-degrading membrane protrusions in invasive carcinoma cells. Cortactin regulates cofilin and N-WASp activities to control the stages of invadopodium assembly and maturation Invadopodia are matrix-degrading membrane protrusions in invasive carcinoma cells. The mechanisms regulating invadopodium assembly and maturation are not understood. We have dissected the stages of invadopodium assembly and maturation and show that invadopodia use cortactin phosphorylation as a master switch during these processes. In particular, cortactin phosphorylation was found to regulate cofilin and Arp2/3 complex-dependent actin polymerization. Cortactin directly binds cofilin and inhibits its severing activity. Cortactin phosphorylation is required to release this inhibition so cofilin can sever actin filaments to create barbed ends at invadopodia to support Arp2/3-depend",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:08.670654+00:00"
+}

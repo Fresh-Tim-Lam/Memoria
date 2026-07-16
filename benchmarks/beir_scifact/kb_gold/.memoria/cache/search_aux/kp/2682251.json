@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "2682251",
+  "source_fingerprint": "cb72434fb5d020dd816d6e430f5f32a4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2682251"
+  ],
+  "key_phrases": [
+    "formation",
+    "thymus",
+    "from",
+    "rat",
+    "es",
+    "cells",
+    "xenogeneic",
+    "nude"
+  ],
+  "summary_1l": "Formation of a thymus from rat ES cells in xenogeneic nude mouse↔rat ES chimeras.",
+  "query_hits": [],
+  "embed_text": "2682251 Formation of a thymus from rat ES cells in xenogeneic nude mouse↔rat ES chimeras. science scifact Various conditions for differentiating embryonic stem (ES) cells or induced pluripotent stem (iPS) cells into specific kinds of cell lines are under intensive investigation. However, the production of a functional organ with a… 2682251 formation thymus from rat es cells xenogeneic nude Formation of a thymus from rat ES cells in xenogeneic nude mouse↔rat ES chimeras. Formation of a thymus from rat ES cells in xenogeneic nude mouse↔rat ES chimeras. Various conditions for differentiating embryonic stem (ES) cells or induced pluripotent stem (iPS) cells into specific kinds of cell lines are under intensive investigation. However, the production of a functional organ with a three-dimensional structure from ES or iPS cells is difficult to achieve in vitro. In the present paper, we describe the establishment of a green fluorescent protein-expressing rat ES cell line and production of mouse↔rat ES chimera by injecting rat ES cells into mouse blastocysts. The rat ES cells contributed to various organs in the chimera, including germ cells. When we injected ES cells into blastocysts of nu/nu mice lacking a thymus, the resultant chimeras produced thymus derived f",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.160918+00:00"
+}

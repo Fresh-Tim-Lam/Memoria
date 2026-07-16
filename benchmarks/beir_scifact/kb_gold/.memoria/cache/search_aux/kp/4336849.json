@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4336849",
+  "source_fingerprint": "f84d3d7da8619e4391602706503f82db",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4336849",
+    "chloroquine-resistance-not-linked-to-mdr-like-genes-in-a-plasmodium-falciparum-cross"
+  ],
+  "key_phrases": [
+    "chloroquine",
+    "resistance",
+    "not",
+    "linked",
+    "mdr",
+    "like",
+    "genes",
+    "plasmodium"
+  ],
+  "summary_1l": "CHLOROQUINE is thought to act against falciparum malaria by accumulating in the acid vesicles of the parasite and i",
+  "query_hits": [],
+  "embed_text": "4336849 Chloroquine resistance not linked to mdr-like genes in a Plasmodium falciparum cross science scifact CHLOROQUINE is thought to act against falciparum malaria by accumulating in the acid vesicles of the parasite and interfering with their function14. Parasites resistant to chloroquine expel the drug rapidly in an unaltered form, thereby… 4336849 chloroquine-resistance-not-linked-to-mdr-like-genes-in-a-plasmodium-falciparum-cross chloroquine resistance not linked mdr like genes plasmodium CHLOROQUINE is thought to act against falciparum malaria by accumulating in the acid vesicles of the parasite and i Chloroquine resistance not linked to mdr-like genes in a Plasmodium falciparum cross CHLOROQUINE is thought to act against falciparum malaria by accumulating in the acid vesicles of the parasite and interfering with their function14. Parasites resistant to chloroquine expel the drug rapidly in an unaltered form, thereby reducing levels of accumulation in the vesicles5. The discovery that verapamil partially reverses chloroquine resistance in vitro 6 led to the proposal that efflux may involve an ATP-driven P-glycoprotein pump similar to that in mammalian multidrug-resistant (mdr) tumor cell lines. Indeed, Plasmodium falciparum contains at least two mdr-like genes7,8, one of which has been suggested to confer the chloroquine resistant (CQR) phenotype7,9,10. To determine if either of these",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.814351+00:00"
+}

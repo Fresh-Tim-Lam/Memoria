@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16562534",
+  "source_fingerprint": "f87e7db111fd2ded7a5c683ab2a4dc6a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16562534",
+    "drosophila-mical-regulates-myofilament-organization-and-synaptic-structure"
+  ],
+  "key_phrases": [
+    "drosophila",
+    "mical",
+    "regulates",
+    "myofilament",
+    "organization",
+    "synaptic",
+    "structure",
+    "overall"
+  ],
+  "summary_1l": "The overall size and structure of a synaptic terminal is an important determinant of its function.",
+  "query_hits": [],
+  "embed_text": "16562534 Drosophila MICAL regulates myofilament organization and synaptic structure science scifact The overall size and structure of a synaptic terminal is an important determinant of its function. In a large-scale mutagenesis screen, designed to identify Drosophila mutants with abnormally structured neuromuscular junctions (NMJs), we… 16562534 drosophila-mical-regulates-myofilament-organization-and-synaptic-structure drosophila mical regulates myofilament organization synaptic structure overall The overall size and structure of a synaptic terminal is an important determinant of its function. Drosophila MICAL regulates myofilament organization and synaptic structure The overall size and structure of a synaptic terminal is an important determinant of its function. In a large-scale mutagenesis screen, designed to identify Drosophila mutants with abnormally structured neuromuscular junctions (NMJs), we discovered mutations in Drosophila mical, a conserved gene encoding a multi-domain protein with a N-terminal monooxygenase domain. In mical mutants, synaptic boutons do not sprout normally over the muscle surface and tend to form clusters along synaptic branches and at nerve entry sites. Consistent with high expression of MICAL in somatic muscles, immunohistochemical stainings reveal that the subcellular localization and architecture of contractile muscle filaments are dramatically",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.472300+00:00"
+}

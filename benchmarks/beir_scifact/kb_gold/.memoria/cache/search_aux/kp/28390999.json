@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "28390999",
+  "source_fingerprint": "2c1f05b83fd177e6a5338ed6b067ecf4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "28390999",
+    "gene-expression-during-gonadogenesis-in-the-chicken-embryo."
+  ],
+  "key_phrases": [
+    "gene",
+    "expression",
+    "during",
+    "gonadogenesis",
+    "chicken",
+    "embryo",
+    "genes",
+    "implicated"
+  ],
+  "summary_1l": "Gene expression during gonadogenesis in the chicken embryo.",
+  "query_hits": [],
+  "embed_text": "28390999 Gene expression during gonadogenesis in the chicken embryo. science scifact Genes implicated in vertebrate sex determination and differentiation were studied in embryonic chicken gonads using reverse transcription and the polymerase chain reaction (RT-PCR). Expression profiles were obtained during gonadal sex… 28390999 gene-expression-during-gonadogenesis-in-the-chicken-embryo. gene expression during gonadogenesis chicken embryo genes implicated Gene expression during gonadogenesis in the chicken embryo. Gene expression during gonadogenesis in the chicken embryo. Genes implicated in vertebrate sex determination and differentiation were studied in embryonic chicken gonads using reverse transcription and the polymerase chain reaction (RT-PCR). Expression profiles were obtained during gonadal sex differentiation for AMH, SOX9, SOX3, the Wilm's Tumour gene, WT1, and the orphan nuclear receptor genes, SF1 and DAX1. Some of these genes showed sexually dimorphic expression profiles during gonadal development, whereas others were expressed at similar levels in both sexes. The gene encoding Anti-Müllerian hormone (AMH) was expressed in both sexes prior to and during sexual differentiation of the gonads, with levels of expression consistently higher in males than in females. SOX9 expression was male",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.946357+00:00"
+}

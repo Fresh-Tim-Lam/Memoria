@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1769799",
+  "source_fingerprint": "46e4b80ef954610ef96f1bea8fca58e1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1769799",
+    "the-ins-and-outs-of-dna-transfer-in-bacteria."
+  ],
+  "key_phrases": [
+    "ins",
+    "outs",
+    "dna",
+    "transfer",
+    "bacteria",
+    "transformation",
+    "conjugation",
+    "permit"
+  ],
+  "summary_1l": "The ins and outs of DNA transfer in bacteria.",
+  "query_hits": [],
+  "embed_text": "1769799 The ins and outs of DNA transfer in bacteria. science scifact Transformation and conjugation permit the passage of DNA through the bacterial membranes and represent dominant modes for the transfer of genetic information between bacterial cells or between bacterial and eukaryotic cells. As such, they… 1769799 the-ins-and-outs-of-dna-transfer-in-bacteria. ins outs dna transfer bacteria transformation conjugation permit The ins and outs of DNA transfer in bacteria. The ins and outs of DNA transfer in bacteria. Transformation and conjugation permit the passage of DNA through the bacterial membranes and represent dominant modes for the transfer of genetic information between bacterial cells or between bacterial and eukaryotic cells. As such, they are responsible for the spread of fitness-enhancing traits, including antibiotic resistance. Both processes usually involve the recognition of double-stranded DNA, followed by the transfer of single strands. Elaborate molecular machines are responsible for negotiating the passage of macromolecular DNA through the layers of the cell surface. All or nearly all the machine components involved in transformation and conjugation have been identified, and here we present models for their roles in DNA transport.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.166350+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27995781",
+  "source_fingerprint": "8dfca3f572bf32849f564e67fef3bd82",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27995781",
+    "modeling-the-evolution-of-culture-adapted-human-embryonic-stem-cells."
+  ],
+  "key_phrases": [
+    "modeling",
+    "evolution",
+    "culture",
+    "adapted",
+    "human",
+    "embryonic",
+    "stem",
+    "cells"
+  ],
+  "summary_1l": "Modeling the evolution of culture-adapted human embryonic stem cells.",
+  "query_hits": [],
+  "embed_text": "27995781 Modeling the evolution of culture-adapted human embryonic stem cells. science scifact The long-term culture of human embryonic stem (ES) cells is inevitably subject to evolution, since any mutant that arises with a growth advantage will be selectively amplified. However, the evolutionary influences of population size,… 27995781 modeling-the-evolution-of-culture-adapted-human-embryonic-stem-cells. modeling evolution culture adapted human embryonic stem cells Modeling the evolution of culture-adapted human embryonic stem cells. Modeling the evolution of culture-adapted human embryonic stem cells. The long-term culture of human embryonic stem (ES) cells is inevitably subject to evolution, since any mutant that arises with a growth advantage will be selectively amplified. However, the evolutionary influences of population size, mutation rate, and selection pressure are frequently overlooked. We have constructed a Monte Carlo simulation model to predict how changes in these factors can influence the appearance and spread of mutant ES cells, and verified its applicability by comparison with in vitro data. This simulation provides an estimate for the expected rate of generation of culture-adapted ES cells under different assumptions for the key parameters. In particular, it highlights the effect of population size, su",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.490927+00:00"
+}

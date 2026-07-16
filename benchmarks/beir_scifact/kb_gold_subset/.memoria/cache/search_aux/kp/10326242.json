@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10326242",
+  "source_fingerprint": "2a0dee1039f8844bdf40977837c1b062",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10326242",
+    "biallelic-mutations-in-palb2-cause-fanconi-anemia-subtype-fa-n-and-predispose-to-childhood-cancer"
+  ],
+  "key_phrases": [
+    "biallelic",
+    "mutations",
+    "palb2",
+    "cause",
+    "fanconi",
+    "anemia",
+    "subtype",
+    "fa"
+  ],
+  "summary_1l": "PALB2 was recently identified as a nuclear binding partner of BRCA2.",
+  "query_hits": [],
+  "embed_text": "10326242 Biallelic mutations in PALB2 cause Fanconi anemia subtype FA-N and predispose to childhood cancer science scifact PALB2 was recently identified as a nuclear binding partner of BRCA2. Biallelic BRCA2 mutations cause Fanconi anemia subtype FA-D1 and predispose to childhood malignancies. We identified pathogenic mutations in PALB2 (also known as FANCN)… 10326242 biallelic-mutations-in-palb2-cause-fanconi-anemia-subtype-fa-n-and-predispose-to-childhood-cancer biallelic mutations palb2 cause fanconi anemia subtype fa PALB2 was recently identified as a nuclear binding partner of BRCA2. Biallelic mutations in PALB2 cause Fanconi anemia subtype FA-N and predispose to childhood cancer PALB2 was recently identified as a nuclear binding partner of BRCA2. Biallelic BRCA2 mutations cause Fanconi anemia subtype FA-D1 and predispose to childhood malignancies. We identified pathogenic mutations in PALB2 (also known as FANCN) in seven families affected with Fanconi anemia and cancer in early childhood, demonstrating that biallelic PALB2 mutations cause a new subtype of Fanconi anemia, FA-N, and, similar to biallelic BRCA2 mutations, confer a high risk of childhood cancer.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.460635+00:00"
+}

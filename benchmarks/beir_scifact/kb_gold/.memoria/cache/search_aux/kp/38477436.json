@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "38477436",
+  "source_fingerprint": "2e3daa8d7106445651039e99b82e96b1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "38477436",
+    "ubiquitinylation-of-the-cytosolic-domain-of-a-type-i-membrane-protein-is-not-required-to-initiate-its-dislocation-from-the-endoplasmic-reticulum."
+  ],
+  "key_phrases": [
+    "ubiquitinylation",
+    "cytosolic",
+    "domain",
+    "type",
+    "membrane",
+    "protein",
+    "not",
+    "required"
+  ],
+  "summary_1l": "Ubiquitinylation of the cytosolic domain of a type I membrane protein is not required to initiate its dislocation from the endoplasmic reticulum.",
+  "query_hits": [],
+  "embed_text": "38477436 Ubiquitinylation of the cytosolic domain of a type I membrane protein is not required to initiate its dislocation from the endoplasmic reticulum. science scifact Human cytomegalovirus US2 and US11 target newly synthesized class I major histocompatibility complex (MHC) heavy chains for rapid degradation by the proteasome through a process termed dislocation. The presence of US2 induces the formation… 38477436 ubiquitinylation-of-the-cytosolic-domain-of-a-type-i-membrane-protein-is-not-required-to-initiate-its-dislocation-from-the-endoplasmic-reticulum. ubiquitinylation cytosolic domain type membrane protein not required Ubiquitinylation of the cytosolic domain of a type I membrane protein is not required to initiate its dislocation from the endoplasmic reticulum. Ubiquitinylation of the cytosolic domain of a type I membrane protein is not required to initiate its dislocation from the endoplasmic reticulum. Human cytomegalovirus US2 and US11 target newly synthesized class I major histocompatibility complex (MHC) heavy chains for rapid degradation by the proteasome through a process termed dislocation. The presence of US2 induces the formation of class I MHC heavy chain conjugates of increased molecular weight that are recognized by a conformation-specific monoclonal antibody, W6/32, suggesting that these class I MHC molecules retain their proper tertiary structure. These conjugates are properly folded glycosylated heavy chains modified by attachment of an estimated one, two, and three ubiquitin molecules. The folded ubiquitinated class I MHC heavy c",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.523562+00:00"
+}

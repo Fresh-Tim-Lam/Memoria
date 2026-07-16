@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21700295",
+  "source_fingerprint": "8c32469b5a9c5b9f9f550211f8ad5b72",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21700295",
+    "chronic-hepatitis-b-infection:-a-review"
+  ],
+  "key_phrases": [
+    "chronic",
+    "hepatitis",
+    "infection",
+    "review",
+    "importance",
+    "more",
+    "than",
+    "240"
+  ],
+  "summary_1l": "Importance More than 240 million individuals worldwide are infected with chronic hepatitis B virus (HBV).",
+  "query_hits": [],
+  "embed_text": "21700295 Chronic Hepatitis B Infection: A Review science scifact Importance More than 240 million individuals worldwide are infected with chronic hepatitis B virus (HBV). Among individuals with chronic HBV infection who are untreated, 15% to 40% progress to cirrhosis, which may lead to liver failure and… 21700295 chronic-hepatitis-b-infection:-a-review chronic hepatitis infection review importance more than 240 Importance More than 240 million individuals worldwide are infected with chronic hepatitis B virus (HBV). Chronic Hepatitis B Infection: A Review Importance More than 240 million individuals worldwide are infected with chronic hepatitis B virus (HBV). Among individuals with chronic HBV infection who are untreated, 15% to 40% progress to cirrhosis, which may lead to liver failure and liver cancer. Observations Pegylated interferon and nucleos(t)ide analogues (lamivudine, adefovir, entecavir, tenofovir disoproxil, and tenofovir alafenamide) suppress HBV DNA replication and improve liver inflammation and fibrosis. Long-term viral suppression is associated with regression of liver fibrosis and reduced risk of hepatocellular carcinoma in cohort studies. The cure (defined as hepatitis B surface antigen loss with undetectable HBV DNA) rates after treatment remain low (3%-7% with pegylated interferon",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.649731+00:00"
+}

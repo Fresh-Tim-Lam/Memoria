@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3113630",
+  "source_fingerprint": "d512a7a6a9f096de747e0c5b7a75ff9c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3113630",
+    "nuclear-accumulation-of-hdac4-in-atm-deficiency-promotes-neurodegeneration-in-ataxia-telangiectasia"
+  ],
+  "key_phrases": [
+    "nuclear",
+    "accumulation",
+    "hdac4",
+    "atm",
+    "deficiency",
+    "promotes",
+    "neurodegeneration",
+    "ataxia"
+  ],
+  "summary_1l": "Ataxia telangiectasia is a neurodegenerative disease caused by mutation of the Atm gene.",
+  "query_hits": [],
+  "embed_text": "3113630 Nuclear accumulation of HDAC4 in ATM deficiency promotes neurodegeneration in ataxia-telangiectasia science scifact Ataxia telangiectasia is a neurodegenerative disease caused by mutation of the Atm gene. Here we report that ataxia telangiectasia mutated (ATM) deficiency causes nuclear accumulation of histone deacetylase 4 (HDAC4) in neurons and… 3113630 nuclear-accumulation-of-hdac4-in-atm-deficiency-promotes-neurodegeneration-in-ataxia-telangiectasia nuclear accumulation hdac4 atm deficiency promotes neurodegeneration ataxia Ataxia telangiectasia is a neurodegenerative disease caused by mutation of the Atm gene. Nuclear accumulation of HDAC4 in ATM deficiency promotes neurodegeneration in ataxia-telangiectasia Ataxia telangiectasia is a neurodegenerative disease caused by mutation of the Atm gene. Here we report that ataxia telangiectasia mutated (ATM) deficiency causes nuclear accumulation of histone deacetylase 4 (HDAC4) in neurons and promotes neurodegeneration. Nuclear HDAC4 binds to chromatin, as well as to myocyte enhancer factor 2A (MEF2A) and cAMP-responsive element binding protein (CREB), leading to histone deacetylation and altered neuronal gene expression. Blocking either HDAC4 activity or its nuclear accumulation blunts these neurodegenerative changes and rescues several behavioral abnormalities of ATM-deficient mice. Full rescue of the neurodegeneration, however, also requires the pre",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.322936+00:00"
+}

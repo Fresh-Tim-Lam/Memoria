@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "15659108",
+  "source_fingerprint": "cc68fd77ea43a0cbb9ae7e4bb9bbd029",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15659108"
+  ],
+  "key_phrases": [
+    "human",
+    "rad52",
+    "binds",
+    "wraps",
+    "single",
+    "stranded",
+    "dna",
+    "mediates"
+  ],
+  "summary_1l": "Rad52 promotes the annealing of complementary strands of DNA bound by replication protein A (RPA)",
+  "query_hits": [],
+  "embed_text": "15659108 Human Rad52 binds and wraps single-stranded DNA and mediates annealing via two hRad52–ssDNA complexes science scifact Rad52 promotes the annealing of complementary strands of DNA bound by replication protein A (RPA) during discrete repair pathways. Here, we used a fluorescence resonance energy transfer (FRET) between two fluorescent dyes incorporated into… 15659108 human rad52 binds wraps single stranded dna mediates Rad52 promotes the annealing of complementary strands of DNA bound by replication protein A (RPA) Human Rad52 binds and wraps single-stranded DNA and mediates annealing via two hRad52–ssDNA complexes Rad52 promotes the annealing of complementary strands of DNA bound by replication protein A (RPA) during discrete repair pathways. Here, we used a fluorescence resonance energy transfer (FRET) between two fluorescent dyes incorporated into DNA substrates to probe the mechanism by which human Rad52 (hRad52) interacts with and mediates annealing of ssDNA-hRPA complexes. Human Rad52 bound ssDNA or ssDNA-hRPA complex in two, concentration-dependent modes. At low hRad52 concentrations, ssDNA was wrapped around the circumference of the protein ring, while at higher protein concentrations, ssDNA was stretched between multiple hRad52 rings. Annealing by hRad52 occurred most efficiently when each c",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.044444+00:00"
+}

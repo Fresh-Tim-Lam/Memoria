@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23195674",
+  "source_fingerprint": "cebb7667c70ea867e9084556d73aa550",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23195674",
+    "simvastatin-reduces-platelet-endocardium-adhesion-in-atrial-fibrillation."
+  ],
+  "key_phrases": [
+    "simvastatin",
+    "reduces",
+    "platelet",
+    "endocardium",
+    "adhesion",
+    "atrial",
+    "fibrillation",
+    "objectives"
+  ],
+  "summary_1l": "Simvastatin reduces platelet-endocardium adhesion in atrial fibrillation.",
+  "query_hits": [],
+  "embed_text": "23195674 Simvastatin reduces platelet-endocardium adhesion in atrial fibrillation. science scifact OBJECTIVES To evaluate the relationship between CD40/CD40L system and increased thrombogenesis in AF, and to test the effects of simvastatin treatment. METHODS In vitro study using human tissue, University Hospital (tertiary referral… 23195674 simvastatin-reduces-platelet-endocardium-adhesion-in-atrial-fibrillation. simvastatin reduces platelet endocardium adhesion atrial fibrillation objectives Simvastatin reduces platelet-endocardium adhesion in atrial fibrillation. Simvastatin reduces platelet-endocardium adhesion in atrial fibrillation. OBJECTIVES To evaluate the relationship between CD40/CD40L system and increased thrombogenesis in AF, and to test the effects of simvastatin treatment. METHODS In vitro study using human tissue, University Hospital (tertiary referral center). Experiments on right atrial segments obtained before the onset of cardiopulmonary bypass were done in either presence or absence of 5 microM simvastatin. Two groups of patients in either chronic atrial fibrillation or sinus rhythm at the time of cardiac surgery. The endocardial expression of CD40, the release of CD40L, and adhesion of platelets to endocardium. Additionally, the thickness of platelet aggregates and the platelet distribution on the endocardium were also evaluated.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.028694+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16626846",
+  "source_fingerprint": "9db7c97f7f6c3821df94411bfd13f5e0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16626846",
+    "metagenomic-analysis-of-microbial-consortium-from-natural-crude-oil-that-seeps-into-the-marine-ecosystem-offshore-southern-california"
+  ],
+  "key_phrases": [
+    "metagenomic",
+    "analysis",
+    "microbial",
+    "consortium",
+    "from",
+    "natural",
+    "crude",
+    "oil"
+  ],
+  "summary_1l": "Crude oils can be major contaminants of the marine ecosystem and m",
+  "query_hits": [],
+  "embed_text": "16626846 Metagenomic analysis of microbial consortium from natural crude oil that seeps into the marine ecosystem offshore Southern California science scifact Crude oils can be major contaminants of the marine ecosystem and microorganisms play a significant role in the degradation of its main constituents. To increase our understanding of the microbial hydrocarbon degradation process in the… 16626846 metagenomic-analysis-of-microbial-consortium-from-natural-crude-oil-that-seeps-into-the-marine-ecosystem-offshore-southern-california metagenomic analysis microbial consortium from natural crude oil Crude oils can be major contaminants of the marine ecosystem and m Metagenomic analysis of microbial consortium from natural crude oil that seeps into the marine ecosystem offshore Southern California Crude oils can be major contaminants of the marine ecosystem and microorganisms play a significant role in the degradation of its main constituents. To increase our understanding of the microbial hydrocarbon degradation process in the marine ecosystem, we collected crude oil from an active seep area located in the Santa Barbara Channel (SBC) and generated a total of about 52 Gb of raw metagenomic sequence data. The assembled data comprised ~500 Mb, representing ~1.1 million genes derived primarily from chemolithoautotrophic bacteria. Members of Oceanospirillales, a bacterial order belonging to the Deltaproteobacteria, recruited less than 2% of the assembled",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.532648+00:00"
+}

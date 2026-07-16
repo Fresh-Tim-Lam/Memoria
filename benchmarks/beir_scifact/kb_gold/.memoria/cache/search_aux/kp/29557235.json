@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29557235",
+  "source_fingerprint": "3178078d0ecd81b6b9b6e1747342b1fc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29557235",
+    "evolution-and-function-of-ubiquitin-like-protein-conjugation-systems"
+  ],
+  "key_phrases": [
+    "evolution",
+    "function",
+    "ubiquitin",
+    "like",
+    "protein",
+    "conjugation",
+    "systems",
+    "functions"
+  ],
+  "summary_1l": "Ubiquitin functions by covalently modifying other proteins.",
+  "query_hits": [],
+  "embed_text": "29557235 Evolution and function of ubiquitin-like protein-conjugation systems science scifact Ubiquitin functions by covalently modifying other proteins. In the past few years, a surprising number of other proteins have been identified that, despite often being only slightly similar to ubiquitin, can also be attached to proteins.… 29557235 evolution-and-function-of-ubiquitin-like-protein-conjugation-systems evolution function ubiquitin like protein conjugation systems functions Ubiquitin functions by covalently modifying other proteins. Evolution and function of ubiquitin-like protein-conjugation systems Ubiquitin functions by covalently modifying other proteins. In the past few years, a surprising number of other proteins have been identified that, despite often being only slightly similar to ubiquitin, can also be attached to proteins. Newly discovered parallels between the activation of ubiquitin and the biosynthesis of certain enzyme cofactors now hint at the possible evolutionary origins of the ubiquitin system.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.036587+00:00"
+}

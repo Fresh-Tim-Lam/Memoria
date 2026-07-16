@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "16465895",
+  "source_fingerprint": "44f8a303696ccbeb46a73e22fa2be91f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16465895"
+  ],
+  "key_phrases": [
+    "telomeric",
+    "overhangs",
+    "derive",
+    "from",
+    "resection",
+    "by",
+    "exo1",
+    "apollo"
+  ],
+  "summary_1l": "A 3' overhang is critical for the protection and maintenance of mammalian telomeres, but its synthes",
+  "query_hits": [],
+  "embed_text": "16465895 Telomeric 3′ Overhangs Derive from Resection by Exo1 and Apollo and Fill-In by POT1b-Associated CST science scifact A 3' overhang is critical for the protection and maintenance of mammalian telomeres, but its synthesis must be regulated to avoid excessive resection of the 5' end, which could cause telomere shortening. How this balance is achieved in… 16465895 telomeric overhangs derive from resection by exo1 apollo A 3' overhang is critical for the protection and maintenance of mammalian telomeres, but its synthes Telomeric 3′ Overhangs Derive from Resection by Exo1 and Apollo and Fill-In by POT1b-Associated CST A 3' overhang is critical for the protection and maintenance of mammalian telomeres, but its synthesis must be regulated to avoid excessive resection of the 5' end, which could cause telomere shortening. How this balance is achieved in mammals has not been resolved. Here, we determine the mechanism for 3' overhang synthesis in mouse cells by evaluating changes in telomeric overhangs throughout the cell cycle and at leading- and lagging-end telomeres. Apollo, a nuclease bound to the shelterin subunit TRF2, initiates formation of the 3' overhang at leading-, but not lagging-end telomeres. Hyperresection by Apollo is blocked at both ends by the shelterin protein POT1b. Exo1 extensively resects",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.313008+00:00"
+}

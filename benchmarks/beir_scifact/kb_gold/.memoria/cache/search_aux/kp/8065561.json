@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8065561",
+  "source_fingerprint": "bd5d77c72d1fa167761604c74542571a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8065561",
+    "specific-and-cooperative-binding-of-e.-coli-single-stranded-dna-binding-protein-to-mrna."
+  ],
+  "key_phrases": [
+    "specific",
+    "cooperative",
+    "binding",
+    "coli",
+    "single",
+    "stranded",
+    "dna",
+    "protein"
+  ],
+  "summary_1l": "Specific and cooperative binding of E.",
+  "query_hits": [],
+  "embed_text": "8065561 Specific and cooperative binding of E. coli single-stranded DNA binding protein to mRNA. science scifact Fluorometric titration of E. coli single-stranded DNA binding protein with various RNAs showed that the protein specifically and cooperatively binds to its own mRNA. The binding inhibited in vitro expression of ssb and bla but not nusA.… 8065561 specific-and-cooperative-binding-of-e.-coli-single-stranded-dna-binding-protein-to-mrna. specific cooperative binding coli single stranded dna protein Specific and cooperative binding of E. Specific and cooperative binding of E. coli single-stranded DNA binding protein to mRNA. Fluorometric titration of E. coli single-stranded DNA binding protein with various RNAs showed that the protein specifically and cooperatively binds to its own mRNA. The binding inhibited in vitro expression of ssb and bla but not nusA. This inhibition takes place at a physiological concentration of SSB. The function of the protein in gene regulation is discussed.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.833332+00:00"
+}

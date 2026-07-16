@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7735859",
+  "source_fingerprint": "e4d788db27220a5eed8418ae9f6fae6a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7735859",
+    "identification-of-an-anti-inflammatory-protein-from-faecalibacterium-prausnitzii,-a-commensal-bacterium-deficient-in-crohn's-disease."
+  ],
+  "key_phrases": [
+    "identification",
+    "anti",
+    "inflammatory",
+    "protein",
+    "from",
+    "faecalibacterium",
+    "prausnitzii",
+    "commensal"
+  ],
+  "summary_1l": "Identification of an anti-inflammatory protein from Faecalibacterium prausnitzii, a commensal bacterium deficient in Crohn's disease.",
+  "query_hits": [],
+  "embed_text": "7735859 Identification of an anti-inflammatory protein from Faecalibacterium prausnitzii, a commensal bacterium deficient in Crohn's disease. science scifact BACKGROUND Crohn's disease (CD)-associated dysbiosis is characterised by a loss of Faecalibacterium prausnitzii, whose culture supernatant exerts an anti-inflammatory effect both in vitro and in vivo. However, the chemical nature of the… 7735859 identification-of-an-anti-inflammatory-protein-from-faecalibacterium-prausnitzii,-a-commensal-bacterium-deficient-in-crohn's-disease. identification anti inflammatory protein from faecalibacterium prausnitzii commensal Identification of an anti-inflammatory protein from Faecalibacterium prausnitzii, a commensal bacterium deficient in Crohn's disease. Identification of an anti-inflammatory protein from Faecalibacterium prausnitzii, a commensal bacterium deficient in Crohn's disease. BACKGROUND Crohn's disease (CD)-associated dysbiosis is characterised by a loss of Faecalibacterium prausnitzii, whose culture supernatant exerts an anti-inflammatory effect both in vitro and in vivo. However, the chemical nature of the anti-inflammatory compounds has not yet been determined. METHODS Peptidomic analysis using mass spectrometry was applied to F. prausnitzii supernatant. Anti-inflammatory effects of identified peptides were tested in vitro directly on intestinal epithelial cell lines and on cell lines transfected with a plasmid construction coding for the candidate protein encompassing these peptides. In vivo, the cDNA of the candidate protein",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.112694+00:00"
+}

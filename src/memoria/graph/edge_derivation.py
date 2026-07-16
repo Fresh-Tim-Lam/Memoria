@@ -12,6 +12,8 @@ from dataclasses import dataclass
 
 from memoria.graph.edge_types import (
 
+    EDGE_CONTAIN,
+
     EDGE_EXTEND,
 
     EDGE_REFERENCE,
@@ -228,47 +230,53 @@ def build_target_kp_resolver(kb_path: str):
 
 
 
-def derive_contain_edges(ranges: list[KpRange]) -> list[dict]:
+def derive_contain_edges(
+    ranges: list[KpRange],
+    *,
+    no_build_set: set[tuple[str, str]] | None = None,
+) -> list[dict]:
 
     edges: list[dict] = []
 
     seen: set[tuple[str, str]] = set()
 
-    for outer in ranges:
-
-        for inner in ranges:
-
+    for inner in ranges:
+        # Find direct parents: outers that strictly contain inner, but are not
+        # themselves contained by another outer that also contains inner.
+        # Only generate edges for direct parent-child pairs, skipping transitive
+        # relationships (e.g. a→c when a contains b and b contains c).
+        direct_parents: list[KpRange] = []
+        for outer in ranges:
             if not strictly_contains(outer, inner):
-
                 continue
+            # outer is a candidate parent; check if any other candidate
+            # is a tighter parent (contained by outer but still contains inner)
+            is_direct = True
+            for mid in ranges:
+                if mid.kp_id == outer.kp_id or mid.kp_id == inner.kp_id:
+                    continue
+                if strictly_contains(outer, mid) and strictly_contains(mid, inner):
+                    is_direct = False
+                    break
+            if is_direct:
+                direct_parents.append(outer)
 
+        for outer in direct_parents:
             key = (outer.kp_id, inner.kp_id)
-
             if key in seen:
-
                 continue
-
             seen.add(key)
-
-            edges.append(
-
-                {
-
-                    "type": "contain",
-
-                    "source_id": outer.kp_id,
-
-                    "targets": [inner.kp_id],
-
-                    "relevance": default_relevance("contain"),
-
-                    "derived": True,
-
-                    "origin": "range",
-
-                }
-
-            )
+            edge: dict = {
+                "type": "contain",
+                "source_id": outer.kp_id,
+                "targets": [inner.kp_id],
+                "relevance": default_relevance("contain"),
+                "derived": True,
+                "origin": "range",
+            }
+            if no_build_set and key in no_build_set:
+                edge["no_build"] = True
+            edges.append(edge)
 
     return edges
 
@@ -526,11 +534,11 @@ def derive_link_edges(
 
 def dedupe_graph_edges(edges: list[dict]) -> list[dict]:
 
-    """按 (type, source, target) 去重。"""
+    """按 (type, source, target, no_build) 去重；保留 derived 原值。"""
 
     out: list[dict] = []
 
-    seen: set[tuple[str, str, str]] = set()
+    seen: set[tuple[str, str, str, bool]] = set()
 
 
 
@@ -540,9 +548,11 @@ def dedupe_graph_edges(edges: list[dict]) -> list[dict]:
 
         source_id = (e.get("source_id") or "").strip()
 
+        no_build = bool(e.get("no_build"))
+
         for target_id in _normalize_targets(e.get("targets")):
 
-            key = (edge_type, source_id, target_id)
+            key = (edge_type, source_id, target_id, no_build)
 
             if not edge_type or not source_id or not target_id or key in seen:
 
@@ -556,7 +566,8 @@ def dedupe_graph_edges(edges: list[dict]) -> list[dict]:
 
             item["targets"] = [target_id]
 
-            item["derived"] = True
+            if no_build:
+                item["no_build"] = True
 
             out.append(item)
 
@@ -564,6 +575,62 @@ def dedupe_graph_edges(edges: list[dict]) -> list[dict]:
 
 
 
+
+
+def derive_sidecar_edges(
+    rel_path: str,
+    sidecar: dict | None,
+    *,
+    resolve_target_kp,
+) -> list[dict]:
+    """从 sidecar edges[] 字段读取纯边（不含 no_build 的 contain 标记条目）。"""
+    sidecar = sidecar or {}
+    edges: list[dict] = []
+    for edge in sidecar.get("edges") or []:
+        if not isinstance(edge, dict):
+            continue
+        # no_build 条目仅用于抑制 contain 边，不作为纯边生成
+        if edge.get("no_build"):
+            continue
+        source_id = (edge.get("source_id") or "").strip()
+        edge_type = normalize_edge_type(edge.get("type"))
+        if not source_id or not edge_type:
+            continue
+        targets = _resolve_edge_targets(
+            _normalize_targets(edge.get("targets")),
+            resolve_target_kp=resolve_target_kp,
+        )
+        for target_id in targets:
+            edges.append({
+                "type": edge_type,
+                "source_id": source_id,
+                "targets": [target_id],
+                "relevance": edge.get("relevance") or default_relevance(edge_type),
+                "derived": False,
+                "origin": "sidecar_edge",
+                "file": rel_path,
+            })
+    return edges
+
+
+def _read_no_build_set(sidecar: dict | None) -> set[tuple[str, str]]:
+    """从 sidecar edges[] 中提取 contain 类型的 no_build 标记。"""
+    sidecar = sidecar or {}
+    no_build: set[tuple[str, str]] = set()
+    for edge in sidecar.get("edges") or []:
+        if not isinstance(edge, dict):
+            continue
+        if not edge.get("no_build"):
+            continue
+        et = normalize_edge_type(edge.get("type"))
+        if et != EDGE_CONTAIN:
+            continue
+        source_id = (edge.get("source_id") or "").strip()
+        if not source_id:
+            continue
+        for tgt in _normalize_targets(edge.get("targets")):
+            no_build.add((source_id, tgt))
+    return no_build
 
 
 def derive_file_graph_edges(
@@ -578,15 +645,17 @@ def derive_file_graph_edges(
 
     resolve_target_kp,
 
-) -> tuple[list[dict], list[dict]]:
+) -> tuple[list[dict], list[dict], list[dict]]:
 
-    """返回 (contain_edges, link_edges)。"""
+    """返回 (contain_edges, link_edges, sidecar_edges)。"""
 
     kps = resolve_knowledge_points(body, sidecar)
 
     ranges = kp_ranges_from_resolved(kps)
 
-    contain = derive_contain_edges(ranges)
+    no_build_set = _read_no_build_set(sidecar)
+
+    contain = derive_contain_edges(ranges, no_build_set=no_build_set)
 
     link_edges = derive_link_edges(
 
@@ -594,5 +663,9 @@ def derive_file_graph_edges(
 
     )
 
-    return contain, link_edges
+    sidecar_edges = derive_sidecar_edges(
+        rel_path, sidecar, resolve_target_kp=resolve_target_kp
+    )
+
+    return contain, link_edges, sidecar_edges
 

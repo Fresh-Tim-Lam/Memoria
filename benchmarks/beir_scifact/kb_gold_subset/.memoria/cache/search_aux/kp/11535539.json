@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11535539",
+  "source_fingerprint": "a1da51832bcdd7b85b1165db4d663c12",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11535539",
+    "mechanosignaling-through-yap-and-taz-drives-fibroblast-activation-and-fibrosis."
+  ],
+  "key_phrases": [
+    "mechanosignaling",
+    "through",
+    "yap",
+    "taz",
+    "drives",
+    "fibroblast",
+    "activation",
+    "fibrosis"
+  ],
+  "summary_1l": "Mechanosignaling through YAP and TAZ drives fibroblast activation and fibrosis.",
+  "query_hits": [],
+  "embed_text": "11535539 Mechanosignaling through YAP and TAZ drives fibroblast activation and fibrosis. science scifact Pathological fibrosis is driven by a feedback loop in which the fibrotic extracellular matrix is both a cause and consequence of fibroblast activation. However, the molecular mechanisms underlying this process remain poorly understood.… 11535539 mechanosignaling-through-yap-and-taz-drives-fibroblast-activation-and-fibrosis. mechanosignaling through yap taz drives fibroblast activation fibrosis Mechanosignaling through YAP and TAZ drives fibroblast activation and fibrosis. Mechanosignaling through YAP and TAZ drives fibroblast activation and fibrosis. Pathological fibrosis is driven by a feedback loop in which the fibrotic extracellular matrix is both a cause and consequence of fibroblast activation. However, the molecular mechanisms underlying this process remain poorly understood. Here we identify yes-associated protein (YAP) (homolog of drosophila Yki) and transcriptional coactivator with PDZ-binding motif (TAZ) (also known as Wwtr1), transcriptional effectors of the Hippo pathway, as key matrix stiffness-regulated coordinators of fibroblast activation and matrix synthesis. YAP and TAZ are prominently expressed in fibrotic but not healthy lung tissue, with particularly pronounced nuclear expression of TAZ in spindle-shaped fibroblastic cells. In culture,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:07.068272+00:00"
+}

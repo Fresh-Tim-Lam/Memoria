@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20491205",
+  "source_fingerprint": "45932cb5f8ee60913ee82e32070c985f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20491205",
+    "prison-health-care:-a-review-of-the-literature."
+  ],
+  "key_phrases": [
+    "prison",
+    "health",
+    "care",
+    "review",
+    "literature",
+    "population",
+    "increasing",
+    "problems"
+  ],
+  "summary_1l": "Prison health care: a review of the literature.",
+  "query_hits": [],
+  "embed_text": "20491205 Prison health care: a review of the literature. science scifact The prison population is increasing and the health problems of prisoners are considerable. Prison is designed with punishment, correction and rehabilitation to the community in mind and these goals may conflict with the aims of health… 20491205 prison-health-care:-a-review-of-the-literature. prison health care review literature population increasing problems Prison health care: a review of the literature. Prison health care: a review of the literature. The prison population is increasing and the health problems of prisoners are considerable. Prison is designed with punishment, correction and rehabilitation to the community in mind and these goals may conflict with the aims of health care. A literature review showed that the main issues in prison health care are mental health, substance abuse and communicable diseases. Women prisoners and older prisoners have needs which are distinct from other prisoners. Health promotion and the health of the community outside prisons are desirable aims of prison health care. The delivery of effective health care to prisoners is dependent upon partnership between health and prison services and telemedicine is one possible mode of delivery.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.396444+00:00"
+}

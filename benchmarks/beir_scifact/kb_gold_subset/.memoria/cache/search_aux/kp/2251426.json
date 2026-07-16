@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2251426",
+  "source_fingerprint": "6be5828308bb9bbc886b998158f13b75",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2251426",
+    "micrornas:-a-safeguard-against-turmoil?"
+  ],
+  "key_phrases": [
+    "micrornas",
+    "safeguard",
+    "against",
+    "turmoil",
+    "emerging",
+    "data",
+    "suggest",
+    "that"
+  ],
+  "summary_1l": "microRNAs: A Safeguard against Turmoil?",
+  "query_hits": [],
+  "embed_text": "2251426 microRNAs: A Safeguard against Turmoil? science scifact Emerging data suggest that microRNAs (miRNAs) are instrumental in a variety of stress responses in addition to their more recognized role in development. Surprisingly, miRNAs, which normally suppress expression of target transcripts, may… 2251426 micrornas:-a-safeguard-against-turmoil? micrornas safeguard against turmoil emerging data suggest that microRNAs: A Safeguard against Turmoil? microRNAs: A Safeguard against Turmoil? Emerging data suggest that microRNAs (miRNAs) are instrumental in a variety of stress responses in addition to their more recognized role in development. Surprisingly, miRNAs, which normally suppress expression of target transcripts, may become activators of expression during stress. This might be partially explained by new interactions of miRNA/Argonaute complexes with RNA-binding proteins that relocate from different subcellular compartments during stress.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:12.376939+00:00"
+}

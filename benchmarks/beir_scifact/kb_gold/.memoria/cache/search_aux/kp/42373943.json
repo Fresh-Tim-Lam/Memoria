@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "42373943",
+  "source_fingerprint": "274d7349659e29f96be801f588e7ee3f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "42373943",
+    "can-hematological-parameters-discriminate-malaria-from-nonmalarious-acute-febrile-illness-in-the-tropics?"
+  ],
+  "key_phrases": [
+    "can",
+    "hematological",
+    "parameters",
+    "discriminate",
+    "malaria",
+    "from",
+    "nonmalarious",
+    "acute"
+  ],
+  "summary_1l": "Can hematological parameters discriminate malaria from nonmalarious acute febrile illness in the tropics?",
+  "query_hits": [],
+  "embed_text": "42373943 Can hematological parameters discriminate malaria from nonmalarious acute febrile illness in the tropics? science scifact BACKGROUND Malaria is considered as the main differential diagnosis of acute febrile illness in the tropics, and alteration of various hematological parameters has been observed in patients with malaria. AIM To ascertain if certain… 42373943 can-hematological-parameters-discriminate-malaria-from-nonmalarious-acute-febrile-illness-in-the-tropics? can hematological parameters discriminate malaria from nonmalarious acute Can hematological parameters discriminate malaria from nonmalarious acute febrile illness in the tropics? Can hematological parameters discriminate malaria from nonmalarious acute febrile illness in the tropics? BACKGROUND Malaria is considered as the main differential diagnosis of acute febrile illness in the tropics, and alteration of various hematological parameters has been observed in patients with malaria. AIM To ascertain if certain hematological parameters increase the probability of malaria in patients with acute febrile illnesses. SETTINGS AND DESIGN Hospital based, prospective cohort study. METHODS AND MATERIAL All consecutive in patients with fever of less than seven days in duration were included in the study. Patients where localizing cause for fever could be determined were excluded. Hematological parameters (Hemoglobin, Red cell distribution width (RDW), Leukocyte count, and pl",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.962892+00:00"
+}

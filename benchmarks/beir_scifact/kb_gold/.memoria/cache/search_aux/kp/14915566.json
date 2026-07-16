@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14915566",
+  "source_fingerprint": "c0f645fb33133d501d2054bd142d9def",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14915566",
+    "hierarchical-phylogenetic-models-for-analyzing-multipartite-sequence-data."
+  ],
+  "key_phrases": [
+    "hierarchical",
+    "phylogenetic",
+    "models",
+    "analyzing",
+    "multipartite",
+    "sequence",
+    "data",
+    "debate"
+  ],
+  "summary_1l": "Hierarchical phylogenetic models for analyzing multipartite sequence data.",
+  "query_hits": [],
+  "embed_text": "14915566 Hierarchical phylogenetic models for analyzing multipartite sequence data. science scifact Debate exists over how to incorporate information from multipartite sequence data in phylogenetic analyses. Strict combined-data approaches argue for concatenation of all partitions and estimation of one evolutionary history, maximizing… 14915566 hierarchical-phylogenetic-models-for-analyzing-multipartite-sequence-data. hierarchical phylogenetic models analyzing multipartite sequence data debate Hierarchical phylogenetic models for analyzing multipartite sequence data. Hierarchical phylogenetic models for analyzing multipartite sequence data. Debate exists over how to incorporate information from multipartite sequence data in phylogenetic analyses. Strict combined-data approaches argue for concatenation of all partitions and estimation of one evolutionary history, maximizing the explanatory power of the data. Consensus/independence approaches endorse a two-step procedure where partitions are analyzed independently and then a consensus is determined from the multiple results. Mixtures across the model space of a strict combined-data approach and a priori independent parameters are popular methods to integrate these methods. We propose an alternative middle ground by constructing a Bayesian hierarchical phylogenetic model. Our hierarchical framework enable",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.861582+00:00"
+}

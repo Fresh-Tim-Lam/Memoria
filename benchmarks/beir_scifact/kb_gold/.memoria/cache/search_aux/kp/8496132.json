@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8496132",
+  "source_fingerprint": "4b38427e475335c4f407b4cbc47d6981",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8496132",
+    "regulation-of-bcl-2-expression-by-hur-in-hl60-leukemia-cells-and-a431-carcinoma-cells."
+  ],
+  "key_phrases": [
+    "regulation",
+    "bcl",
+    "expression",
+    "by",
+    "hur",
+    "hl60",
+    "leukemia",
+    "cells"
+  ],
+  "summary_1l": "Regulation of Bcl-2 expression by HuR in HL60 leukemia cells and A431 carcinoma cells.",
+  "query_hits": [],
+  "embed_text": "8496132 Regulation of Bcl-2 expression by HuR in HL60 leukemia cells and A431 carcinoma cells. science scifact Overexpression of the proto-oncogene bcl-2 promotes abnormal cell survival by inhibiting apoptosis. Expression of bcl-2 is determined, in part, by regulatory mechanisms that control the stability of bcl-2 mRNA. Elements in the… 8496132 regulation-of-bcl-2-expression-by-hur-in-hl60-leukemia-cells-and-a431-carcinoma-cells. regulation bcl expression by hur hl60 leukemia cells Regulation of Bcl-2 expression by HuR in HL60 leukemia cells and A431 carcinoma cells. Regulation of Bcl-2 expression by HuR in HL60 leukemia cells and A431 carcinoma cells. Overexpression of the proto-oncogene bcl-2 promotes abnormal cell survival by inhibiting apoptosis. Expression of bcl-2 is determined, in part, by regulatory mechanisms that control the stability of bcl-2 mRNA. Elements in the 3'-untranslated region of bcl-2 mRNA have been shown to play a role in regulating the stability of the message. Previously, it was found that the RNA binding proteins nucleolin and Ebp1 have a role in stabilizing bcl-2 mRNA in HL60 cells. Here, we have identified HuR as a component of bcl-2 messenger ribonucleoprotein (mRNP) complexes. RNA coimmunoprecipitation assays showed that HuR binds to bcl-2 mRNA in vivo. We also observed an RNA-dependent coprecipitation of HuR and nucleolin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.814053+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "30543439",
+  "source_fingerprint": "a0e1f8d2d1a51db91dc550b8b7e2a7da",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "30543439",
+    "crystal-structure,-biochemical-and-cellular-activities-demonstrate-separate-functions-of-mth1-and-mth2"
+  ],
+  "key_phrases": [
+    "crystal",
+    "structure",
+    "biochemical",
+    "cellular",
+    "activities",
+    "demonstrate",
+    "separate",
+    "functions"
+  ],
+  "summary_1l": "Deregulated redox metabolism in cancer leads to oxidative damage to cellular components including",
+  "query_hits": [],
+  "embed_text": "30543439 Crystal structure, biochemical and cellular activities demonstrate separate functions of MTH1 and MTH2 science scifact Deregulated redox metabolism in cancer leads to oxidative damage to cellular components including deoxyribonucleoside triphosphates (dNTPs). Targeting dNTP pool sanitizing enzymes, such as MTH1, is a highly promising anticancer strategy.… 30543439 crystal-structure,-biochemical-and-cellular-activities-demonstrate-separate-functions-of-mth1-and-mth2 crystal structure biochemical cellular activities demonstrate separate functions Deregulated redox metabolism in cancer leads to oxidative damage to cellular components including Crystal structure, biochemical and cellular activities demonstrate separate functions of MTH1 and MTH2 Deregulated redox metabolism in cancer leads to oxidative damage to cellular components including deoxyribonucleoside triphosphates (dNTPs). Targeting dNTP pool sanitizing enzymes, such as MTH1, is a highly promising anticancer strategy. The MTH2 protein, known as NUDT15, is described as the second human homologue of bacterial MutT with 8-oxo-dGTPase activity. We present the first NUDT15 crystal structure and demonstrate that NUDT15 prefers other nucleotide substrates over 8-oxo-dGTP. Key structural features are identified that explain different substrate preferences for NUDT15 and MTH1. We find that depletion of NUDT15 has no effect on incorporation of 8-oxo-dGTP into DNA and does not im",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.772448+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6790197",
+  "source_fingerprint": "e1dd86f6985c8df9c85be5f43b4d669f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6790197",
+    "prostate-cancer-associated-gene-expression-alterations-determined-from-needle-biopsies."
+  ],
+  "key_phrases": [
+    "prostate",
+    "cancer",
+    "associated",
+    "gene",
+    "expression",
+    "alterations",
+    "determined",
+    "from"
+  ],
+  "summary_1l": "Prostate cancer-associated gene expression alterations determined from needle biopsies.",
+  "query_hits": [],
+  "embed_text": "6790197 Prostate cancer-associated gene expression alterations determined from needle biopsies. science scifact PURPOSE To accurately identify gene expression alterations that differentiate neoplastic from normal prostate epithelium using an approach that avoids contamination by unwanted cellular components and is not compromised by acute gene… 6790197 prostate-cancer-associated-gene-expression-alterations-determined-from-needle-biopsies. prostate cancer associated gene expression alterations determined from Prostate cancer-associated gene expression alterations determined from needle biopsies. Prostate cancer-associated gene expression alterations determined from needle biopsies. PURPOSE To accurately identify gene expression alterations that differentiate neoplastic from normal prostate epithelium using an approach that avoids contamination by unwanted cellular components and is not compromised by acute gene expression changes associated with tumor devascularization and resulting ischemia. EXPERIMENTAL DESIGN Approximately 3,000 neoplastic and benign prostate epithelial cells were isolated using laser capture microdissection from snap-frozen prostate biopsy specimens provided by 31 patients who subsequently participated in a clinical trial of preoperative chemotherapy. cDNA synthesized from amplified total RNA was hybridized to custom-made microarrays composed of 6,200 clones d",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.689499+00:00"
+}

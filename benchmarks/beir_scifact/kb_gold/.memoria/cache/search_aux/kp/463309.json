@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "463309",
+  "source_fingerprint": "f92eb3b96d48a2a726524e55772ea7e3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "463309",
+    "transformation-of-intact-yeast-cells-treated-with-alkali-cations."
+  ],
+  "key_phrases": [
+    "transformation",
+    "intact",
+    "yeast",
+    "cells",
+    "treated",
+    "with",
+    "alkali",
+    "cations"
+  ],
+  "summary_1l": "Transformation of intact yeast cells treated with alkali cations.",
+  "query_hits": [],
+  "embed_text": "463309 Transformation of intact yeast cells treated with alkali cations. science scifact Intact yeast cells treated with alkali cations took up plasmid DNA. Li+, Cs+, Rb+, K+, and Na+ were effective in inducing competence. Conditions for the transformation of Saccharomyces cerevisiae D13-1A with plasmid YRp7 were studied in… 463309 transformation-of-intact-yeast-cells-treated-with-alkali-cations. transformation intact yeast cells treated with alkali cations Transformation of intact yeast cells treated with alkali cations. Transformation of intact yeast cells treated with alkali cations. Intact yeast cells treated with alkali cations took up plasmid DNA. Li+, Cs+, Rb+, K+, and Na+ were effective in inducing competence. Conditions for the transformation of Saccharomyces cerevisiae D13-1A with plasmid YRp7 were studied in detail with CsCl. The optimum incubation time was 1 h, and the optimum cell concentration was 5 x 10(7) cells per ml. The optimum concentration of Cs+ was 1.0 M. Transformation efficiency increased with increasing concentrations of plasmid DNA. Polyethylene glycol was absolutely required. Heat pulse and various polyamines or basic proteins stimulated the uptake of plasmid DNA. Besides circular DNA, linear plasmid DNA was also taken up by Cs+-treated yeast cells, although the uptake efficiency",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.777576+00:00"
+}

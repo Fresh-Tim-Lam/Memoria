@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22632303",
+  "source_fingerprint": "5e65db56ca2850370b77db306875214f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22632303",
+    "identification-of-t6ss-dependent-effector-and-immunity-proteins-by-tn-seq-in-vibrio-cholerae."
+  ],
+  "key_phrases": [
+    "identification",
+    "t6ss",
+    "dependent",
+    "effector",
+    "immunity",
+    "proteins",
+    "by",
+    "tn"
+  ],
+  "summary_1l": "Identification of T6SS-dependent effector and immunity proteins by Tn-seq in Vibrio cholerae.",
+  "query_hits": [],
+  "embed_text": "22632303 Identification of T6SS-dependent effector and immunity proteins by Tn-seq in Vibrio cholerae. science scifact Type VI protein secretion system (T6SS) is important for bacterial competition through contact-dependent killing of competitors. T6SS delivers effectors to neighboring cells and corresponding antagonistic proteins confer immunity against… 22632303 identification-of-t6ss-dependent-effector-and-immunity-proteins-by-tn-seq-in-vibrio-cholerae. identification t6ss dependent effector immunity proteins by tn Identification of T6SS-dependent effector and immunity proteins by Tn-seq in Vibrio cholerae. Identification of T6SS-dependent effector and immunity proteins by Tn-seq in Vibrio cholerae. Type VI protein secretion system (T6SS) is important for bacterial competition through contact-dependent killing of competitors. T6SS delivers effectors to neighboring cells and corresponding antagonistic proteins confer immunity against effectors that are delivered by sister cells. Although T6SS has been found in more than 100 gram-negative bacteria including many important human pathogens, few T6SS-dependent effector and immunity proteins have been experimentally determined. Here we report a high-throughput approach using transposon mutagenesis and deep sequencing (Tn-seq) to identify T6SS immunity proteins in Vibrio cholerae. Saturating transposon mutagenesis was performed in wild type and a T6",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.122418+00:00"
+}

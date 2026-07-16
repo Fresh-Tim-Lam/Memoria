@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6729465",
+  "source_fingerprint": "e4910611531a53ca20188771e127e45f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6729465",
+    "planar-cell-polarity-signaling-pathway-in-congenital-heart-diseases"
+  ],
+  "key_phrases": [
+    "planar",
+    "cell",
+    "polarity",
+    "signaling",
+    "pathway",
+    "congenital",
+    "heart",
+    "diseases"
+  ],
+  "summary_1l": "Congenital heart disease (CHD) is a common cardiac disorder in humans.",
+  "query_hits": [],
+  "embed_text": "6729465 Planar Cell Polarity Signaling Pathway in Congenital Heart Diseases science scifact Congenital heart disease (CHD) is a common cardiac disorder in humans. Despite many advances in the understanding of CHD and the identification of many associated genes, the fundamental etiology for the majority of cases remains unclear.… 6729465 planar-cell-polarity-signaling-pathway-in-congenital-heart-diseases planar cell polarity signaling pathway congenital heart diseases Congenital heart disease (CHD) is a common cardiac disorder in humans. Planar Cell Polarity Signaling Pathway in Congenital Heart Diseases Congenital heart disease (CHD) is a common cardiac disorder in humans. Despite many advances in the understanding of CHD and the identification of many associated genes, the fundamental etiology for the majority of cases remains unclear. The planar cell polarity (PCP) signaling pathway, responsible for tissue polarity in Drosophila and gastrulation movements and cardiogenesis in vertebrates, has been shown to play multiple roles during cardiac differentiation and development. The disrupted function of PCP signaling is connected to some CHDs. Here, we summarize our current understanding of how PCP factors affect the pathogenesis of CHD.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.555182+00:00"
+}

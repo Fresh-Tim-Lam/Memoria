@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24525112",
+  "source_fingerprint": "3cc5841ca4970540676860e0733f4ef6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24525112",
+    "a-case-of-paraquat-intoxication-caused-by-intravenous-injection."
+  ],
+  "key_phrases": [
+    "case",
+    "paraquat",
+    "intoxication",
+    "caused",
+    "by",
+    "intravenous",
+    "injection",
+    "fatal"
+  ],
+  "summary_1l": "A case of paraquat intoxication caused by intravenous injection.",
+  "query_hits": [],
+  "embed_text": "24525112 A case of paraquat intoxication caused by intravenous injection. science scifact Paraquat intoxication is a fatal problem. Most paraquat intoxications happen through oral administration. We report a case of death after intravenous paraquat injection. There is little clinical data on parenteral paraquat exposure, and we… 24525112 a-case-of-paraquat-intoxication-caused-by-intravenous-injection. case paraquat intoxication caused by intravenous injection fatal A case of paraquat intoxication caused by intravenous injection. A case of paraquat intoxication caused by intravenous injection. Paraquat intoxication is a fatal problem. Most paraquat intoxications happen through oral administration. We report a case of death after intravenous paraquat injection. There is little clinical data on parenteral paraquat exposure, and we describe this case and fatal progression. Toxic symptoms and severe organ function impairment developed soon after injection. Treatment with repeated activated charcoal hemoperfusion with pulse steroids, cyclophosphamide, and antioxidants was attempted. The patient died from multiple organ failure 3 days after intoxication. This case indicates that paraquat intoxication via intravenous injection, even in very small amounts, has an extremely poor prognosis.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.630616+00:00"
+}

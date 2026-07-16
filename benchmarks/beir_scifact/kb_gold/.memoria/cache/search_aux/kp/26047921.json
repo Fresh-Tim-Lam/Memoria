@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26047921",
+  "source_fingerprint": "439967c5fe5f84e70971f5515b37b745",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26047921",
+    "the-mechanosensitive-ion-channel-piezo1-is-inhibited-by-the-peptide-gsmtx4."
+  ],
+  "key_phrases": [
+    "mechanosensitive",
+    "ion",
+    "channel",
+    "piezo1",
+    "inhibited",
+    "by",
+    "peptide",
+    "gsmtx4"
+  ],
+  "summary_1l": "The mechanosensitive ion channel Piezo1 is inhibited by the peptide GsMTx4.",
+  "query_hits": [],
+  "embed_text": "26047921 The mechanosensitive ion channel Piezo1 is inhibited by the peptide GsMTx4. science scifact Cells can respond to mechanical stress by gating mechanosensitive ion channels (MSCs). The cloning of Piezo1, a eukaryotic cation selective MSC, defines a new system for studying mechanical transduction at the cellular level. Because… 26047921 the-mechanosensitive-ion-channel-piezo1-is-inhibited-by-the-peptide-gsmtx4. mechanosensitive ion channel piezo1 inhibited by peptide gsmtx4 The mechanosensitive ion channel Piezo1 is inhibited by the peptide GsMTx4. The mechanosensitive ion channel Piezo1 is inhibited by the peptide GsMTx4. Cells can respond to mechanical stress by gating mechanosensitive ion channels (MSCs). The cloning of Piezo1, a eukaryotic cation selective MSC, defines a new system for studying mechanical transduction at the cellular level. Because Piezo1 has electrophysiological properties similar to those of endogenous cationic MSCs that are selectively inhibited by the peptide GsMTx4, we tested whether the peptide targets Piezo1 activity. Extracellular GsMTx4 at micromolar concentrations reversibly inhibited ∼80% of the mechanically induced current of outside-out patches from transfected HEK293 cells. The inhibition was voltage insensitive, and as seen with endogenous MSCs, the mirror image d enantiomer inhibited like the l. T",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.168196+00:00"
+}

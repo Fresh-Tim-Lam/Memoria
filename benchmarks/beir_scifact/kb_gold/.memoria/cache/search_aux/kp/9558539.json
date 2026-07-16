@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9558539",
+  "source_fingerprint": "934001fe225e3ff77733b05273c57efb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9558539",
+    "cd44v6-is-a-marker-of-constitutive-and-reprogrammed-cancer-stem-cells-driving-colon-cancer-metastasis."
+  ],
+  "key_phrases": [
+    "cd44v6",
+    "marker",
+    "constitutive",
+    "reprogrammed",
+    "cancer",
+    "stem",
+    "cells",
+    "driving"
+  ],
+  "summary_1l": "CD44v6 is a marker of constitutive and reprogrammed cancer stem cells driving colon cancer metastasis.",
+  "query_hits": [],
+  "embed_text": "9558539 CD44v6 is a marker of constitutive and reprogrammed cancer stem cells driving colon cancer metastasis. science scifact Cancer stem cells drive tumor formation and metastasis, but how they acquire metastatic traits is not well understood. Here, we show that all colorectal cancer stem cells (CR-CSCs) express CD44v6, which is required for their migration and… 9558539 cd44v6-is-a-marker-of-constitutive-and-reprogrammed-cancer-stem-cells-driving-colon-cancer-metastasis. cd44v6 marker constitutive reprogrammed cancer stem cells driving CD44v6 is a marker of constitutive and reprogrammed cancer stem cells driving colon cancer metastasis. CD44v6 is a marker of constitutive and reprogrammed cancer stem cells driving colon cancer metastasis. Cancer stem cells drive tumor formation and metastasis, but how they acquire metastatic traits is not well understood. Here, we show that all colorectal cancer stem cells (CR-CSCs) express CD44v6, which is required for their migration and generation of metastatic tumors. CD44v6 expression is low in primary tumors but demarcated clonogenic CR-CSC populations. Cytokines hepatocyte growth factor (HGF), osteopontin (OPN), and stromal-derived factor 1α (SDF-1), secreted from tumor associated cells, increase CD44v6 expression in CR-CSCs by activating the Wnt/β-catenin pathway, which promotes migration and metastasis. CD44v6(-) progenitor cells do not give rise to metastatic lesions but, when tr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.228426+00:00"
+}

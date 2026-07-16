@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3944632",
+  "source_fingerprint": "38c2bc320c3ee5f7c1c891addfeb0a98",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3944632",
+    "stereotactic-radiosurgery-plus-whole-brain-radiation-therapy-vs-stereotactic-radiosurgery-alone-for-treatment-of-brain-metastases:-a-randomized-controlled-trial."
+  ],
+  "key_phrases": [
+    "stereotactic",
+    "radiosurgery",
+    "plus",
+    "whole",
+    "brain",
+    "radiation",
+    "therapy",
+    "vs"
+  ],
+  "summary_1l": "Stereotactic radiosurgery plus whole-brain radiation therapy vs stereotactic radiosurgery alone for treatment of brain metastases: a randomized controlled trial.",
+  "query_hits": [],
+  "embed_text": "3944632 Stereotactic radiosurgery plus whole-brain radiation therapy vs stereotactic radiosurgery alone for treatment of brain metastases: a randomized controlled trial. science scifact CONTEXT In patients with brain metastases, it is unclear whether adding up-front whole-brain radiation therapy (WBRT) to stereotactic radiosurgery (SRS) has beneficial effects on mortality or neurologic function compared with SRS alone.… 3944632 stereotactic-radiosurgery-plus-whole-brain-radiation-therapy-vs-stereotactic-radiosurgery-alone-for-treatment-of-brain-metastases:-a-randomized-controlled-trial. stereotactic radiosurgery plus whole brain radiation therapy vs Stereotactic radiosurgery plus whole-brain radiation therapy vs stereotactic radiosurgery alone for treatment of brain metastases: a randomized controlled trial. Stereotactic radiosurgery plus whole-brain radiation therapy vs stereotactic radiosurgery alone for treatment of brain metastases: a randomized controlled trial. CONTEXT In patients with brain metastases, it is unclear whether adding up-front whole-brain radiation therapy (WBRT) to stereotactic radiosurgery (SRS) has beneficial effects on mortality or neurologic function compared with SRS alone. OBJECTIVE To determine if WBRT combined with SRS results in improvements in survival, brain tumor control, functional preservation rate, and frequency of neurologic death. DESIGN, SETTING, AND PATIENTS Randomized controlled trial of 132 patients with 1 to 4 brain metastases, each less than 3 cm in diameter, enrolled at 11 hospitals in Japan between October 1999 and December 2003. INTERVENTIONS Pati",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.636075+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "42240424",
+  "source_fingerprint": "6665ff95e8644ffdf0177b5e225a1a43",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "42240424",
+    "the-effects-of-prion-protein-proteolysis-and-disaggregation-on-the-strain-properties-of-hamster-scrapie."
+  ],
+  "key_phrases": [
+    "effects",
+    "prion",
+    "protein",
+    "proteolysis",
+    "disaggregation",
+    "strain",
+    "properties",
+    "hamster"
+  ],
+  "summary_1l": "The effects of prion protein proteolysis and disaggregation on the strain properties of hamster scrapie.",
+  "query_hits": [],
+  "embed_text": "42240424 The effects of prion protein proteolysis and disaggregation on the strain properties of hamster scrapie. science scifact Native mammalian prions exist in self-propagating strains that exhibit distinctive clinical, pathological and biochemical characteristics. Prion strain diversity is associated with variations in PrP(Sc) conformation, but it remains unknown… 42240424 the-effects-of-prion-protein-proteolysis-and-disaggregation-on-the-strain-properties-of-hamster-scrapie. effects prion protein proteolysis disaggregation strain properties hamster The effects of prion protein proteolysis and disaggregation on the strain properties of hamster scrapie. The effects of prion protein proteolysis and disaggregation on the strain properties of hamster scrapie. Native mammalian prions exist in self-propagating strains that exhibit distinctive clinical, pathological and biochemical characteristics. Prion strain diversity is associated with variations in PrP(Sc) conformation, but it remains unknown precisely which physical properties of the PrP(Sc) molecules are required to encipher mammalian prion strain phenotypes. In this study, we subjected prion-infected brain homogenates derived from three different hamster scrapie strains to either (i) proteinase K digestion or (ii) sonication, and inoculated the modified samples into normal hamsters. The results show that the strain-specific clinical features and neuropathological profiles of inoculated",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.842595+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2547636",
+  "source_fingerprint": "e72dcfbabe6cdf2174e6a42b5d4385db",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2547636",
+    "human-epidermal-stem-cell-function-is-regulated-by-circadian-oscillations."
+  ],
+  "key_phrases": [
+    "human",
+    "epidermal",
+    "stem",
+    "cell",
+    "function",
+    "regulated",
+    "by",
+    "circadian"
+  ],
+  "summary_1l": "Human epidermal stem cell function is regulated by circadian oscillations.",
+  "query_hits": [],
+  "embed_text": "2547636 Human epidermal stem cell function is regulated by circadian oscillations. science scifact Human skin copes with harmful environmental factors that are circadian in nature, yet how circadian rhythms modulate the function of human epidermal stem cells is mostly unknown. Here we show that in human epidermal stem cells and their… 2547636 human-epidermal-stem-cell-function-is-regulated-by-circadian-oscillations. human epidermal stem cell function regulated by circadian Human epidermal stem cell function is regulated by circadian oscillations. Human epidermal stem cell function is regulated by circadian oscillations. Human skin copes with harmful environmental factors that are circadian in nature, yet how circadian rhythms modulate the function of human epidermal stem cells is mostly unknown. Here we show that in human epidermal stem cells and their differentiated counterparts, core clock genes peak in a successive and phased manner, establishing distinct temporal intervals during the 24 hr day period. Each of these successive clock waves is associated with a peak in the expression of subsets of transcripts that temporally segregate the predisposition of epidermal stem cells to respond to cues that regulate their proliferation or differentiation, such as TGFβ and calcium. Accordingly, circadian arrhythmia profoundly affects stem",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.706101+00:00"
+}

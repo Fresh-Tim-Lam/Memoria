@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14205246",
+  "source_fingerprint": "d1f911852d64d47d807adab380611bd8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14205246",
+    "a-role-for-nusap-in-linking-microtubules-to-mitotic-chromosomes"
+  ],
+  "key_phrases": [
+    "role",
+    "nusap",
+    "linking",
+    "microtubules",
+    "mitotic",
+    "chromosomes",
+    "spindle",
+    "apparatus"
+  ],
+  "summary_1l": "The spindle apparatus is a microtubule (MT)-based machinery that attaches to and segregates the chromosomes during mitosis and meiosis.",
+  "query_hits": [],
+  "embed_text": "14205246 A Role for NuSAP in Linking Microtubules to Mitotic Chromosomes science scifact The spindle apparatus is a microtubule (MT)-based machinery that attaches to and segregates the chromosomes during mitosis and meiosis. Self-organization of the spindle around chromatin involves the assembly of MTs, their attachment to the… 14205246 a-role-for-nusap-in-linking-microtubules-to-mitotic-chromosomes role nusap linking microtubules mitotic chromosomes spindle apparatus The spindle apparatus is a microtubule (MT)-based machinery that attaches to and segregates the chromosomes during mitosis and meiosis. A Role for NuSAP in Linking Microtubules to Mitotic Chromosomes The spindle apparatus is a microtubule (MT)-based machinery that attaches to and segregates the chromosomes during mitosis and meiosis. Self-organization of the spindle around chromatin involves the assembly of MTs, their attachment to the chromosomes, and their organization into a bipolar array. One regulator of spindle self-organization is RanGTP. RanGTP is generated at chromatin and activates a set of soluble, Ran-regulated spindle factors such as TPX2, NuMA, and NuSAP . How the spindle factors direct and attach MTs to the chromosomes are key open questions. Nucleolar and Spindle-Associated Protein (NuSAP) was recently identified as an essential MT-stabilizing and bundling protein that is enriched at the central part of the",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.354991+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "40631095",
+  "source_fingerprint": "1682f1eaccd7c7aaa2ded5ef5394ed64",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "40631095",
+    "the-combination-of-exercise-and-respiratory-training-improves-respiratory-muscle-function-in-pulmonary-hypertension"
+  ],
+  "key_phrases": [
+    "combination",
+    "exercise",
+    "respiratory",
+    "training",
+    "improves",
+    "muscle",
+    "function",
+    "pulmonary"
+  ],
+  "summary_1l": "Increased dyspnea and reduced exercise capacity in pulmonary arterial hypertension (",
+  "query_hits": [],
+  "embed_text": "40631095 The Combination of Exercise and Respiratory Training Improves Respiratory Muscle Function in Pulmonary Hypertension science scifact Increased dyspnea and reduced exercise capacity in pulmonary arterial hypertension (PAH) can be partly attributed to impaired respiratory muscle function. This prospective study was designed to assess the impact of exercise and respiratory… 40631095 the-combination-of-exercise-and-respiratory-training-improves-respiratory-muscle-function-in-pulmonary-hypertension combination exercise respiratory training improves muscle function pulmonary Increased dyspnea and reduced exercise capacity in pulmonary arterial hypertension ( The Combination of Exercise and Respiratory Training Improves Respiratory Muscle Function in Pulmonary Hypertension Increased dyspnea and reduced exercise capacity in pulmonary arterial hypertension (PAH) can be partly attributed to impaired respiratory muscle function. This prospective study was designed to assess the impact of exercise and respiratory training on respiratory muscle strength and 6-min walking distance (6MWD) in PAH patients. Patients with invasively confirmed PAH underwent 3 weeks of in-hospital exercise and respiratory training, which was continued at home for another 12 weeks. Medication remained constant during the study period. Blinded observers assessed efficacy parameters at baseline (I) and after 3 (II) and 15 weeks (III). Respiratory muscle function was assessed b",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.664746+00:00"
+}

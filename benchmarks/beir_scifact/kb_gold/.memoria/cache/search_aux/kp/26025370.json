@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26025370",
+  "source_fingerprint": "3b8b0475efaf62be1ccd9614b45abb5a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26025370",
+    "differential-effects-of-n-acetylcysteine,-theophylline-or-bicarbonate-on-contrast-induced-rat-renal-vasoconstriction"
+  ],
+  "key_phrases": [
+    "differential",
+    "effects",
+    "acetylcysteine",
+    "theophylline",
+    "bicarbonate",
+    "contrast",
+    "induced",
+    "rat"
+  ],
+  "summary_1l": "Background: Vasoconstriction and reactive oxygen species (ROS) accumulation followi",
+  "query_hits": [],
+  "embed_text": "26025370 Differential Effects of N-Acetylcysteine, Theophylline or Bicarbonate on Contrast-Induced Rat Renal Vasoconstriction science scifact Background: Vasoconstriction and reactive oxygen species (ROS) accumulation following contrast media (CM) injection are the key factors triggering CM-induced nephropathy. We compared the effects of N-acetylcysteine (NAC), theophylline or… 26025370 differential-effects-of-n-acetylcysteine,-theophylline-or-bicarbonate-on-contrast-induced-rat-renal-vasoconstriction differential effects acetylcysteine theophylline bicarbonate contrast induced rat Background: Vasoconstriction and reactive oxygen species (ROS) accumulation followi Differential Effects of N-Acetylcysteine, Theophylline or Bicarbonate on Contrast-Induced Rat Renal Vasoconstriction Background: Vasoconstriction and reactive oxygen species (ROS) accumulation following contrast media (CM) injection are the key factors triggering CM-induced nephropathy. We compared the effects of N-acetylcysteine (NAC), theophylline or sodium bicarbonate on intrarenal vasoconstriction and ROS generation in a rat model of CM-induced nephropathy. Methods: Following a 3-day dehydration, Sprague-Dawley rats received CM (Telebrix) or sham ‘CM’ injection of 0.9% saline. Part of them received NAC, theophylline or bicarbonate prior to CM. Medullar renal blood flow was estimated by laser Doppler. The animals were sacrificed 1, 15 or 30 min after the respective treatments, their kid",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.069415+00:00"
+}

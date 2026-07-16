@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2533768",
+  "source_fingerprint": "7541de7b23fe96ca02ca3f8e069bd441",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2533768",
+    "workshop:-endothelial-cell-dysfunction-leading-to-diabetic-nephropathy-:-focus-on-nitric-oxide."
+  ],
+  "key_phrases": [
+    "workshop",
+    "endothelial",
+    "cell",
+    "dysfunction",
+    "leading",
+    "diabetic",
+    "nephropathy",
+    "focus"
+  ],
+  "summary_1l": "Workshop: endothelial cell dysfunction leading to diabetic nephropathy : focus on nitric oxide.",
+  "query_hits": [],
+  "embed_text": "2533768 Workshop: endothelial cell dysfunction leading to diabetic nephropathy : focus on nitric oxide. science scifact Clinical manifestations of diabetic nephropathy are an expression of diabetic microangiopathy. This review revisits the previously proposed Steno hypothesis and advances our hypothesis that development of endothelial cell dysfunction… 2533768 workshop:-endothelial-cell-dysfunction-leading-to-diabetic-nephropathy-:-focus-on-nitric-oxide. workshop endothelial cell dysfunction leading diabetic nephropathy focus Workshop: endothelial cell dysfunction leading to diabetic nephropathy : focus on nitric oxide. Workshop: endothelial cell dysfunction leading to diabetic nephropathy : focus on nitric oxide. Clinical manifestations of diabetic nephropathy are an expression of diabetic microangiopathy. This review revisits the previously proposed Steno hypothesis and advances our hypothesis that development of endothelial cell dysfunction represents a common pathophysiological pathway of diabetic complications. Specifically, the ability of glucose to scavenge nitric oxide is proposed as the initiation phase of endothelial dysfunction. Gradual accumulation of advanced glycated end products and induction of plasminogen activator inhibitor-1, resulting in the decreased expression of endothelial nitric oxide synthase and reduced generation of nitric oxide, are proposed to be pathophysiologically critical",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.423637+00:00"
+}

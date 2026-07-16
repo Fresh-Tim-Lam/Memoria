@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10666475",
+  "source_fingerprint": "b9ac009e01cc924249963809db5becec",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10666475",
+    "the-serine-protease-inhibitor-serpina3n-attenuates-neuropathic-pain-by-inhibiting-t-cell-derived-leukocyte-elastase"
+  ],
+  "key_phrases": [
+    "serine",
+    "protease",
+    "inhibitor",
+    "serpina3n",
+    "attenuates",
+    "neuropathic",
+    "pain",
+    "by"
+  ],
+  "summary_1l": "Neuropathic pain is a major, intractable clinical problem and its pathophysiology is",
+  "query_hits": [],
+  "embed_text": "10666475 The serine protease inhibitor SerpinA3N attenuates neuropathic pain by inhibiting T cell-derived leukocyte elastase science scifact Neuropathic pain is a major, intractable clinical problem and its pathophysiology is not well understood. Although recent gene expression profiling studies have enabled the identification of novel targets for pain therapy, classical study… 10666475 the-serine-protease-inhibitor-serpina3n-attenuates-neuropathic-pain-by-inhibiting-t-cell-derived-leukocyte-elastase serine protease inhibitor serpina3n attenuates neuropathic pain by Neuropathic pain is a major, intractable clinical problem and its pathophysiology is The serine protease inhibitor SerpinA3N attenuates neuropathic pain by inhibiting T cell-derived leukocyte elastase Neuropathic pain is a major, intractable clinical problem and its pathophysiology is not well understood. Although recent gene expression profiling studies have enabled the identification of novel targets for pain therapy, classical study designs provide unclear results owing to the differential expression of hundreds of genes across sham and nerve-injured groups, which can be difficult to validate, particularly with respect to the specificity of pain modulation. To circumvent this, we used two outbred lines of rats, which are genetically similar except for being genetically segregated as a result of selective breeding for differences in neuropathic pain hypersensitivity. Ser",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:05.240754+00:00"
+}

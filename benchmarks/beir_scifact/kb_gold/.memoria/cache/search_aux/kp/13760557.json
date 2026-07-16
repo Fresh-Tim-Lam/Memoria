@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13760557",
+  "source_fingerprint": "d412f386b3ff171b4e76639baa1d15d0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13760557",
+    "canonical-transient-receptor-potential-5-channel-in-conjunction-with-orai1-and-stim1-allows-sr2+-entry,-optimal-influx-of-ca2+,-and-degranulation-in-a-rat-mast-cell-line."
+  ],
+  "key_phrases": [
+    "canonical",
+    "transient",
+    "receptor",
+    "potential",
+    "channel",
+    "conjunction",
+    "with",
+    "orai1"
+  ],
+  "summary_1l": "Canonical transient receptor potential 5 channel in conjunction with Orai1 and STIM1 allows Sr2+ entry, optimal influx of Ca2+, and degranulation in a rat mast cell line.",
+  "query_hits": [],
+  "embed_text": "13760557 Canonical transient receptor potential 5 channel in conjunction with Orai1 and STIM1 allows Sr2+ entry, optimal influx of Ca2+, and degranulation in a rat mast cell line. science scifact Degranulation of mast cells in response to Ag or the calcium mobilizing agent, thapsigargin, is dependent on emptying of intracellular stores of Ca(2+) and the ensuing influx of external Ca(2+), also referred to as store-operated calcium… 13760557 canonical-transient-receptor-potential-5-channel-in-conjunction-with-orai1-and-stim1-allows-sr2+-entry,-optimal-influx-of-ca2+,-and-degranulation-in-a-rat-mast-cell-line. canonical transient receptor potential channel conjunction with orai1 Canonical transient receptor potential 5 channel in conjunction with Orai1 and STIM1 allows Sr2+ entry, optimal influx of Ca2+, and degranulation in a rat mast cell line. Canonical transient receptor potential 5 channel in conjunction with Orai1 and STIM1 allows Sr2+ entry, optimal influx of Ca2+, and degranulation in a rat mast cell line. Degranulation of mast cells in response to Ag or the calcium mobilizing agent, thapsigargin, is dependent on emptying of intracellular stores of Ca(2+) and the ensuing influx of external Ca(2+), also referred to as store-operated calcium entry. However, it is unlikely that the calcium release-activated calcium channel is the sole mechanism for the entry of Ca(2+) because Sr(2+) and other divalent cations also permeate and support degranulation in stimulated mast cells. In this study we show that influx of Ca(2+) and Sr(2+) as well as degranulation are dependent on the presence of the canonical transient receptor potential",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.855673+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15778034",
+  "source_fingerprint": "7334f197bf34e6e082c2f036690624fa",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15778034",
+    "variant-histone-h2a.z-is-globally-localized-to-the-promoters-of-inactive-yeast-genes-and-regulates-nucleosome-positioning"
+  ],
+  "key_phrases": [
+    "variant",
+    "histone",
+    "h2a",
+    "globally",
+    "localized",
+    "promoters",
+    "inactive",
+    "yeast"
+  ],
+  "summary_1l": "Variant Histone H2A.",
+  "query_hits": [],
+  "embed_text": "15778034 Variant Histone H2A.Z Is Globally Localized to the Promoters of Inactive Yeast Genes and Regulates Nucleosome Positioning science scifact H2A.Z is an evolutionary conserved histone variant involved in transcriptional regulation, antisilencing, silencing, and genome stability. The mechanism(s) by which H2A.Z regulates these various biological functions remains poorly defined,… 15778034 variant-histone-h2a.z-is-globally-localized-to-the-promoters-of-inactive-yeast-genes-and-regulates-nucleosome-positioning variant histone h2a globally localized promoters inactive yeast Variant Histone H2A. Variant Histone H2A.Z Is Globally Localized to the Promoters of Inactive Yeast Genes and Regulates Nucleosome Positioning H2A.Z is an evolutionary conserved histone variant involved in transcriptional regulation, antisilencing, silencing, and genome stability. The mechanism(s) by which H2A.Z regulates these various biological functions remains poorly defined, in part due to the lack of knowledge regarding its physical location along chromosomes and the bearing it has in regulating chromatin structure. Here we mapped H2A.Z across the yeast genome at an approximately 300-bp resolution, using chromatin immunoprecipitation combined with tiling microarrays. We have identified 4,862 small regions—typically one or two nucleosomes wide—decorated with H2A.Z. Those “Z loci” are predominantly found w",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.231841+00:00"
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "1967410",
+  "source_fingerprint": "4afce09c74ce4eae5c27ad5eaaabc434",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1967410"
+  ],
+  "key_phrases": [
+    "potential",
+    "use",
+    "secretase",
+    "modulators",
+    "treatment",
+    "alzheimer",
+    "disease",
+    "although"
+  ],
+  "summary_1l": "Potential use of γ-secretase modulators in the treatment of Alzheimer disease.",
+  "query_hits": [],
+  "embed_text": "1967410 Potential use of γ-secretase modulators in the treatment of Alzheimer disease. science scifact Although significant progress has occurred in the past 20 years regarding our understanding of Alzheimer disease pathogenesis, we have yet to identify disease-modifying therapeutics capable of substantially altering the clinical course of… 1967410 potential use secretase modulators treatment alzheimer disease although Potential use of γ-secretase modulators in the treatment of Alzheimer disease. Potential use of γ-secretase modulators in the treatment of Alzheimer disease. Although significant progress has occurred in the past 20 years regarding our understanding of Alzheimer disease pathogenesis, we have yet to identify disease-modifying therapeutics capable of substantially altering the clinical course of this prevalent neurodegenerative disease. In this short review, we discuss 2 approaches that are currently being tested clinically (γ-secretase inhibition and γ-secretase modulation) and emphasize the significant differences between these 2 therapeutic approaches. We also discuss certain genetic- and biomarker-based translational and clinical trial paradigms that may assist in developing a useful therapeutic agent.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.999580+00:00"
+}

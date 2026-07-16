@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13592721",
+  "source_fingerprint": "e3b6720a5b28cb30d3b0ef20ae4cc15f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13592721",
+    "biophysical-constraints-arising-from-compositional-context-in-synthetic-gene-networks."
+  ],
+  "key_phrases": [
+    "biophysical",
+    "constraints",
+    "arising",
+    "from",
+    "compositional",
+    "context",
+    "synthetic",
+    "gene"
+  ],
+  "summary_1l": "Biophysical Constraints Arising from Compositional Context in Synthetic Gene Networks.",
+  "query_hits": [],
+  "embed_text": "13592721 Biophysical Constraints Arising from Compositional Context in Synthetic Gene Networks. science scifact Synthetic gene expression is highly sensitive to intragenic compositional context (promoter structure, spacing regions between promoter and coding sequences, and ribosome binding sites). However, much less is known about the effects of… 13592721 biophysical-constraints-arising-from-compositional-context-in-synthetic-gene-networks. biophysical constraints arising from compositional context synthetic gene Biophysical Constraints Arising from Compositional Context in Synthetic Gene Networks. Biophysical Constraints Arising from Compositional Context in Synthetic Gene Networks. Synthetic gene expression is highly sensitive to intragenic compositional context (promoter structure, spacing regions between promoter and coding sequences, and ribosome binding sites). However, much less is known about the effects of intergenic compositional context (spatial arrangement and orientation of entire genes on DNA) on expression levels in synthetic gene networks. We compare expression of induced genes arranged in convergent, divergent, or tandem orientations. Induction of convergent genes yielded up to 400% higher expression, greater ultrasensitivity, and dynamic range than divergent- or tandem-oriented genes. Orientation affects gene expression whether one or both genes are induced. We post",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.597167+00:00"
+}

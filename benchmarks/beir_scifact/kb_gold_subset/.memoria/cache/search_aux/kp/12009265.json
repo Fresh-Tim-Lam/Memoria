@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12009265",
+  "source_fingerprint": "27e05c95ad163f602c36db8fc5ad8cf2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12009265",
+    "vitamins-e-and-c-in-the-prevention-of-prostate-and-total-cancer-in-men:-the-physicians'-health-study-ii-randomized-controlled-trial."
+  ],
+  "key_phrases": [
+    "vitamins",
+    "prevention",
+    "prostate",
+    "total",
+    "cancer",
+    "men",
+    "physicians",
+    "health"
+  ],
+  "summary_1l": "Vitamins E and C in the prevention of prostate and total cancer in men: the Physicians' Health Study II randomized controlled trial.",
+  "query_hits": [],
+  "embed_text": "12009265 Vitamins E and C in the prevention of prostate and total cancer in men: the Physicians' Health Study II randomized controlled trial. science scifact CONTEXT Many individuals take vitamins in the hopes of preventing chronic diseases such as cancer, and vitamins E and C are among the most common individual supplements. A large-scale randomized trial suggested that vitamin E may reduce… 12009265 vitamins-e-and-c-in-the-prevention-of-prostate-and-total-cancer-in-men:-the-physicians'-health-study-ii-randomized-controlled-trial. vitamins prevention prostate total cancer men physicians health Vitamins E and C in the prevention of prostate and total cancer in men: the Physicians' Health Study II randomized controlled trial. Vitamins E and C in the prevention of prostate and total cancer in men: the Physicians' Health Study II randomized controlled trial. CONTEXT Many individuals take vitamins in the hopes of preventing chronic diseases such as cancer, and vitamins E and C are among the most common individual supplements. A large-scale randomized trial suggested that vitamin E may reduce risk of prostate cancer; however, few trials have been powered to address this relationship. No previous trial in men at usual risk has examined vitamin C alone in the prevention of cancer. OBJECTIVE To evaluate whether long-term vitamin E or C supplementation decreases risk of prostate and total cancer events among men. DESIGN, SETTING, AND PARTICIPANTS The Physicians' Health Study II is a randomized, double-blind, placebo-co",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:08.067356+00:00"
+}

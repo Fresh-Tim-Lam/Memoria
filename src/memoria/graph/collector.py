@@ -76,11 +76,11 @@ def collect_graph_data(kb_path: str) -> dict:
         full = os.path.join(kb_path, rel)
         sidecar = load_sidecar_for_md(full, kb_path) or {}
         body = _read_body(kb_path, rel)
-        contain, link_edges = derive_file_graph_edges(
+        contain, link_edges, sidecar_edges = derive_file_graph_edges(
             rel_norm, body, sidecar, resolve_target_kp=resolve_target_kp
         )
-        for e in contain + link_edges:
+        for e in contain + link_edges + sidecar_edges:
             e.setdefault("file", rel_norm)
-        all_edges.extend(contain + link_edges)
+        all_edges.extend(contain + link_edges + sidecar_edges)
 
     return {"status": "ok", "nodes": nodes, "edges": dedupe_graph_edges(all_edges)}

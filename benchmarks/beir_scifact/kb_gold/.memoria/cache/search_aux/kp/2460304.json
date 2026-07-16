@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2460304",
+  "source_fingerprint": "ea6c07c41afba1b4fca8c9a6e159f4a1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2460304",
+    "translocation-of-sickle-cell-erythrocyte-micrornas-into-plasmodium-falciparum-inhibits-parasite-translation-and-contributes-to-malaria-resistance."
+  ],
+  "key_phrases": [
+    "translocation",
+    "sickle",
+    "cell",
+    "erythrocyte",
+    "micrornas",
+    "into",
+    "plasmodium",
+    "falciparum"
+  ],
+  "summary_1l": "Translocation of sickle cell erythrocyte microRNAs into Plasmodium falciparum inhibits parasite translation and contributes to malaria resistance.",
+  "query_hits": [],
+  "embed_text": "2460304 Translocation of sickle cell erythrocyte microRNAs into Plasmodium falciparum inhibits parasite translation and contributes to malaria resistance. science scifact Erythrocytes carrying a variant hemoglobin allele (HbS), which causes sickle cell disease and resists infection by the malaria parasite Plasmodium falciparum. The molecular basis of this resistance, which has long been recognized as… 2460304 translocation-of-sickle-cell-erythrocyte-micrornas-into-plasmodium-falciparum-inhibits-parasite-translation-and-contributes-to-malaria-resistance. translocation sickle cell erythrocyte micrornas into plasmodium falciparum Translocation of sickle cell erythrocyte microRNAs into Plasmodium falciparum inhibits parasite translation and contributes to malaria resistance. Translocation of sickle cell erythrocyte microRNAs into Plasmodium falciparum inhibits parasite translation and contributes to malaria resistance. Erythrocytes carrying a variant hemoglobin allele (HbS), which causes sickle cell disease and resists infection by the malaria parasite Plasmodium falciparum. The molecular basis of this resistance, which has long been recognized as multifactorial, remains incompletely understood. Here we show that the dysregulated microRNA (miRNA) composition, of either heterozygous HbAS or homozygous HbSS erythrocytes, contributes to resistance against P. falciparum. During the intraerythrocytic life cycle of P. falciparum, a subset of erythrocyte miRNAs translocate into the parasite. Two miRNAs, miR-451 and let-7i, were highly enriched in HbAS and HbSS erythr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.844071+00:00"
+}

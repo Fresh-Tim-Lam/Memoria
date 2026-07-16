@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "kp_id": "3241#3",
+  "source_fingerprint": "8ad305464e403aed3b7191caabc517cd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "四國聯盟",
+    "多首都國家",
+    "已解散的NBA球队列表",
+    "巴西國家男子籃球隊",
+    "葡萄牙國家圖書館"
+  ],
+  "aliases": [
+    "3241#3"
+  ],
+  "key_phrases": [
+    "nba",
+    "1946",
+    "全美",
+    "籃球",
+    "協會",
+    "baa",
+    "成立",
+    "1949"
+  ],
+  "summary_1l": "1946年6月6日，全美籃球協會（BAA）成立；1949年8月3日，BAA與國家籃球聯盟（NBL）合併，改名“國家籃球協會”（NBA）。",
+  "query_hits": [],
+  "embed_text": "3241#3 NBA NBA 1946年6月6日，全美籃球協會（BAA）成立；1949年8月3日，BAA與國家籃球聯盟（NBL）合併，改名“國家籃球協會”（NBA）。 四國聯盟 多首都國家 已解散的NBA球队列表 巴西國家男子籃球隊 葡萄牙國家圖書館 3241#3 nba 1946 全美 籃球 協會 baa 成立 1949 1946年6月6日，全美籃球協會（BAA）成立；1949年8月3日，BAA與國家籃球聯盟（NBL）合併，改名“國家籃球協會”（NBA）。 NBA 1946年6月6日，全美籃球協會（BAA）成立；1949年8月3日，BAA與國家籃球聯盟（NBL）合併，改名“國家籃球協會”（NBA）。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:18:10.520715+00:00"
+}

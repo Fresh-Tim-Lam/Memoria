@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26089649",
+  "source_fingerprint": "58be4a47a072b7af530cfd4601723b76",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26089649",
+    "the-pathophysiology-of-protein-overload-proteinuria."
+  ],
+  "key_phrases": [
+    "pathophysiology",
+    "protein",
+    "overload",
+    "proteinuria",
+    "alterations",
+    "glomerular",
+    "function",
+    "structure"
+  ],
+  "summary_1l": "The pathophysiology of protein-overload proteinuria.",
+  "query_hits": [],
+  "embed_text": "26089649 The pathophysiology of protein-overload proteinuria. science scifact Alterations in glomerular function and structure were studied in protein-overload nephrosis in the rat induced by intraperitoneal administration of bovine serum albumin (BSA). Fractional clearance (C/GFR) studies using inulin and tracer… 26089649 the-pathophysiology-of-protein-overload-proteinuria. pathophysiology protein overload proteinuria alterations glomerular function structure The pathophysiology of protein-overload proteinuria. The pathophysiology of protein-overload proteinuria. Alterations in glomerular function and structure were studied in protein-overload nephrosis in the rat induced by intraperitoneal administration of bovine serum albumin (BSA). Fractional clearance (C/GFR) studies using inulin and tracer proteins of different molecular size and charge revealed in proteinuric rats 1) unchanged glomerular filtration rate and renal plasma flow; 2) a 34-fold increase in C/GFR of rat serum albumin, reaching values similar to BSA; 3) a 2-fold increase in C/GFR for anionic horse radish peroxidase (HRP), but normal values for neutral and cationic HRP, and 4) an 11- and 3-fold increase for heterologous IgG and IgM, respectively. Glomerular epithelial cells showed degenerative changes, but the distribution of anion",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.314522+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20155713",
+  "source_fingerprint": "0d1f35d3d1910ace321dc7c7a1eefb8a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20155713",
+    "promiscuous-gene-expression-in-medullary-thymic-epithelial-cells-mirrors-the-peripheral-self"
+  ],
+  "key_phrases": [
+    "promiscuous",
+    "gene",
+    "expression",
+    "medullary",
+    "thymic",
+    "epithelial",
+    "cells",
+    "mirrors"
+  ],
+  "summary_1l": "Expression of peripheral antigens in the thymus has been implicated in T cell tolerance and autoimmunity.",
+  "query_hits": [],
+  "embed_text": "20155713 Promiscuous gene expression in medullary thymic epithelial cells mirrors the peripheral self science scifact Expression of peripheral antigens in the thymus has been implicated in T cell tolerance and autoimmunity. Here we identified medullary thymic epithelial cells as being a unique cell type that expresses a diverse range of tissue-specific… 20155713 promiscuous-gene-expression-in-medullary-thymic-epithelial-cells-mirrors-the-peripheral-self promiscuous gene expression medullary thymic epithelial cells mirrors Expression of peripheral antigens in the thymus has been implicated in T cell tolerance and autoimmunity. Promiscuous gene expression in medullary thymic epithelial cells mirrors the peripheral self Expression of peripheral antigens in the thymus has been implicated in T cell tolerance and autoimmunity. Here we identified medullary thymic epithelial cells as being a unique cell type that expresses a diverse range of tissue-specific antigens. We found that this promiscuous gene expression was a cell-autonomous property of medullary epithelial cells and was maintained during the entire period of thymic T cell output. It may facilitate tolerance induction to self-antigens that would otherwise be temporally or spatially secluded from the immune system. However, the array of promiscuously expressed self-antigens appeared random rather than selected and was not confined to secluded self-antigens.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.725426+00:00"
+}

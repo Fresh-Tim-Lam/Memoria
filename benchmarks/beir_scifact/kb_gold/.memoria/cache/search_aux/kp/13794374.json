@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13794374",
+  "source_fingerprint": "4778d8d7193ac45e0a08b0f2f6c3d72f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13794374",
+    "copi-complex-is-a-regulator-of-lipid-homeostasis"
+  ],
+  "key_phrases": [
+    "copi",
+    "complex",
+    "regulator",
+    "lipid",
+    "homeostasis",
+    "droplets",
+    "ubiquitous",
+    "triglyceride"
+  ],
+  "summary_1l": "Lipid droplets are ubiquitous triglyceride and sterol ester storage organelles required for energy storage homeostasis and biosynthesis.",
+  "query_hits": [],
+  "embed_text": "13794374 COPI Complex Is a Regulator of Lipid Homeostasis science scifact Lipid droplets are ubiquitous triglyceride and sterol ester storage organelles required for energy storage homeostasis and biosynthesis. Although little is known about lipid droplet formation and regulation, it is clear that members of the… 13794374 copi-complex-is-a-regulator-of-lipid-homeostasis copi complex regulator lipid homeostasis droplets ubiquitous triglyceride Lipid droplets are ubiquitous triglyceride and sterol ester storage organelles required for energy storage homeostasis and biosynthesis. COPI Complex Is a Regulator of Lipid Homeostasis Lipid droplets are ubiquitous triglyceride and sterol ester storage organelles required for energy storage homeostasis and biosynthesis. Although little is known about lipid droplet formation and regulation, it is clear that members of the PAT (perilipin, adipocyte differentiation related protein, tail interacting protein of 47 kDa) protein family coat the droplet surface and mediate interactions with lipases that remobilize the stored lipids. We identified key Drosophila candidate genes for lipid droplet regulation by RNA interference (RNAi) screening with an image segmentation-based optical read-out system, and show that these regulatory functions are conserved in the mouse. Those include the vesicle-mediated Coat Protein Complex I (COPI)",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.074420+00:00"
+}

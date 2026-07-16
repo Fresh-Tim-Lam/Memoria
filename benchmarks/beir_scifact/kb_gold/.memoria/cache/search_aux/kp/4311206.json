@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "4311206",
+  "source_fingerprint": "f51a1e2926387997d60f3ff9636ee199",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4311206"
+  ],
+  "key_phrases": [
+    "conversion",
+    "adult",
+    "pancreatic",
+    "cells",
+    "after",
+    "extreme",
+    "cell",
+    "loss"
+  ],
+  "summary_1l": "Pancreatic insulin-producing beta-cells have a long lifespan, such that in healthy conditions they replicate little during a",
+  "query_hits": [],
+  "embed_text": "4311206 Conversion of Adult Pancreatic α-cells to β-cells After Extreme β-cell Loss science scifact Pancreatic insulin-producing beta-cells have a long lifespan, such that in healthy conditions they replicate little during a lifetime. Nevertheless, they show increased self-duplication after increased metabolic demand or after injury… 4311206 conversion adult pancreatic cells after extreme cell loss Pancreatic insulin-producing beta-cells have a long lifespan, such that in healthy conditions they replicate little during a Conversion of Adult Pancreatic α-cells to β-cells After Extreme β-cell Loss Pancreatic insulin-producing beta-cells have a long lifespan, such that in healthy conditions they replicate little during a lifetime. Nevertheless, they show increased self-duplication after increased metabolic demand or after injury (that is, beta-cell loss). It is not known whether adult mammals can differentiate (regenerate) new beta-cells after extreme, total beta-cell loss, as in diabetes. This would indicate differentiation from precursors or another heterologous (non-beta-cell) source. Here we show beta-cell regeneration in a transgenic model of diphtheria-toxin-induced acute selective near-total beta-cell ablation. If given insulin, the mice survived and showed beta-cell mass augmentation with time. Lineag",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.453334+00:00"
+}

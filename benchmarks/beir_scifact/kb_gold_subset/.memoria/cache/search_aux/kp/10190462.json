@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "10190462",
+  "source_fingerprint": "f6912fc857fbfec45f9cf0ccdf5bd1ce",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10190462"
+  ],
+  "key_phrases": [
+    "intranasal",
+    "insulin",
+    "improves",
+    "cognition",
+    "modulates",
+    "amyloid",
+    "early",
+    "ad"
+  ],
+  "summary_1l": "Background: Reduced brain insulin signaling and low CSF-to-plasma insulin ratios have been observed in patients with Alzheimer",
+  "query_hits": [],
+  "embed_text": "10190462 INTRANASAL INSULIN IMPROVES COGNITION AND MODULATES β-AMYLOID IN EARLY AD science scifact Background: Reduced brain insulin signaling and low CSF-to-plasma insulin ratios have been observed in patients with Alzheimer disease (AD). Furthermore, intracerebroventricular or IV insulin administration improve memory, alter evoked… 10190462 intranasal insulin improves cognition modulates amyloid early ad Background: Reduced brain insulin signaling and low CSF-to-plasma insulin ratios have been observed in patients with Alzheimer INTRANASAL INSULIN IMPROVES COGNITION AND MODULATES β-AMYLOID IN EARLY AD Background: Reduced brain insulin signaling and low CSF-to-plasma insulin ratios have been observed in patients with Alzheimer disease (AD). Furthermore, intracerebroventricular or IV insulin administration improve memory, alter evoked potentials, and modulate neurotransmitters, possibly by augmenting low brain levels. After intranasal administration, insulin-like peptides follow extracellular pathways to the brain within 15 minutes. Objective: We tested the hypothesis that daily intranasal insulin treatment would facilitate cognition in patients with early AD or its prodrome, amnestic mild cognitive impairment (MCI). The proportion of verbal information retained after a delay period was the planned primary outcome m",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.341888+00:00"
+}

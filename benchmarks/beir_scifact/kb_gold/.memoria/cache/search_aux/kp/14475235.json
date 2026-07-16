@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14475235",
+  "source_fingerprint": "dc5aeb3ad0f904daec70e0f41770eedd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14475235",
+    "age-associated-sperm-dna-methylation-alterations:-possible-implications-in-offspring-disease-susceptibility"
+  ],
+  "key_phrases": [
+    "age",
+    "associated",
+    "sperm",
+    "dna",
+    "methylation",
+    "alterations",
+    "possible",
+    "implications"
+  ],
+  "summary_1l": "Recent evidence demonstrates a role for paternal aging on offspring disease susceptibility.",
+  "query_hits": [],
+  "embed_text": "14475235 Age-Associated Sperm DNA Methylation Alterations: Possible Implications in Offspring Disease Susceptibility science scifact Recent evidence demonstrates a role for paternal aging on offspring disease susceptibility. It is well established that various neuropsychiatric disorders (schizophrenia, autism, etc.), trinucleotide expansion associated diseases (myotonic… 14475235 age-associated-sperm-dna-methylation-alterations:-possible-implications-in-offspring-disease-susceptibility age associated sperm dna methylation alterations possible implications Recent evidence demonstrates a role for paternal aging on offspring disease susceptibility. Age-Associated Sperm DNA Methylation Alterations: Possible Implications in Offspring Disease Susceptibility Recent evidence demonstrates a role for paternal aging on offspring disease susceptibility. It is well established that various neuropsychiatric disorders (schizophrenia, autism, etc.), trinucleotide expansion associated diseases (myotonic dystrophy, Huntington's, etc.) and even some forms of cancer have increased incidence in the offspring of older fathers. Despite strong epidemiological evidence that these alterations are more common in offspring sired by older fathers, in most cases the mechanisms that drive these processes are unclear. However, it is commonly believed that epigenetics, and specifically DNA methylation alterations, likely play a role. In this study we have investi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.968536+00:00"
+}

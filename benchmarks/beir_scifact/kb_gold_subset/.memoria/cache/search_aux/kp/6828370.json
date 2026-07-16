@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6828370",
+  "source_fingerprint": "922a56a9f330ea32e8a7a6dce48786fc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6828370",
+    "a-coding-independent-function-of-gene-and-pseudogene-mrnas-regulates-tumour-biology"
+  ],
+  "key_phrases": [
+    "coding",
+    "independent",
+    "function",
+    "gene",
+    "pseudogene",
+    "mrnas",
+    "regulates",
+    "tumour"
+  ],
+  "summary_1l": "The canonical role of messenger RNA (mRNA) is to deliver protein-coding information to sites of protein synthesis.",
+  "query_hits": [],
+  "embed_text": "6828370 A coding-independent function of gene and pseudogene mRNAs regulates tumour biology science scifact The canonical role of messenger RNA (mRNA) is to deliver protein-coding information to sites of protein synthesis. However, given that microRNAs bind to RNAs, we hypothesized that RNAs could possess a regulatory role that relies on their… 6828370 a-coding-independent-function-of-gene-and-pseudogene-mrnas-regulates-tumour-biology coding independent function gene pseudogene mrnas regulates tumour The canonical role of messenger RNA (mRNA) is to deliver protein-coding information to sites of protein synthesis. A coding-independent function of gene and pseudogene mRNAs regulates tumour biology The canonical role of messenger RNA (mRNA) is to deliver protein-coding information to sites of protein synthesis. However, given that microRNAs bind to RNAs, we hypothesized that RNAs could possess a regulatory role that relies on their ability to compete for microRNA binding, independently of their protein-coding function. As a model for the protein-coding-independent role of RNAs, we describe the functional relationship between the mRNAs produced by the PTEN tumour suppressor gene and its pseudogene PTENP1 and the critical consequences of this interaction. We find that PTENP1 is biologically active as it can regulate cellular levels of PTEN and exert a growth-suppressive role. We also show that the PTENP",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:13.797961+00:00"
+}

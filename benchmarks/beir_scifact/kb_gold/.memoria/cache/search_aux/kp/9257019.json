@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9257019",
+  "source_fingerprint": "8c5b01fa24e224499e1fc2bbf8e9cc89",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9257019",
+    "discovery-of-endogenous-catecholamines-in-lymphocytes-and-evidence-for-catecholamine-regulation-of-lymphocyte-function-via-an-autocrine-loop."
+  ],
+  "key_phrases": [
+    "discovery",
+    "endogenous",
+    "catecholamines",
+    "lymphocytes",
+    "evidence",
+    "catecholamine",
+    "regulation",
+    "lymphocyte"
+  ],
+  "summary_1l": "Discovery of endogenous catecholamines in lymphocytes and evidence for catecholamine regulation of lymphocyte function via an autocrine loop.",
+  "query_hits": [],
+  "embed_text": "9257019 Discovery of endogenous catecholamines in lymphocytes and evidence for catecholamine regulation of lymphocyte function via an autocrine loop. science scifact Evidence has been obtained that catecholamines and their metabolites are present in single lymphocytes and extracts of T- and B-cell clones by use of capillary electrophoresis with electrochemical detection. Pharmacological inhibition of… 9257019 discovery-of-endogenous-catecholamines-in-lymphocytes-and-evidence-for-catecholamine-regulation-of-lymphocyte-function-via-an-autocrine-loop. discovery endogenous catecholamines lymphocytes evidence catecholamine regulation lymphocyte Discovery of endogenous catecholamines in lymphocytes and evidence for catecholamine regulation of lymphocyte function via an autocrine loop. Discovery of endogenous catecholamines in lymphocytes and evidence for catecholamine regulation of lymphocyte function via an autocrine loop. Evidence has been obtained that catecholamines and their metabolites are present in single lymphocytes and extracts of T- and B-cell clones by use of capillary electrophoresis with electrochemical detection. Pharmacological inhibition of tyrosine hydroxylase reduces observed catecholamine levels, suggesting catecholamine synthesis by lymphocytes. Intracellular dopamine levels are shown to be increased by extra-cellular dopamine, suggesting a cellular-uptake mechanism. Furthermore, incubation with either dopamine or L-dihydroxyphenylalanine, a precursor of dopamine, results in a dose-dependent inhibition of lymphocyte proliferation and differentiation",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.559686+00:00"
+}

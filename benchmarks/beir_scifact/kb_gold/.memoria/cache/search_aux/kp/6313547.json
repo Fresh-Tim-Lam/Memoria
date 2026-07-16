@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6313547",
+  "source_fingerprint": "a1e83a2694c029ac3eb4580ad83a7629",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6313547",
+    "effects-of-growth-hormone-and-insulin-like-growth-factor-1-deficiency-on-ageing-and-longevity."
+  ],
+  "key_phrases": [
+    "effects",
+    "growth",
+    "hormone",
+    "insulin",
+    "like",
+    "factor",
+    "deficiency",
+    "ageing"
+  ],
+  "summary_1l": "Effects of growth hormone and insulin-like growth factor 1 deficiency on ageing and longevity.",
+  "query_hits": [],
+  "embed_text": "6313547 Effects of growth hormone and insulin-like growth factor 1 deficiency on ageing and longevity. science scifact Present knowledge on the effects of growth hormone (GH)/insulin-like growth hormone (IGF)1 deficiency on ageing and lifespan are reviewed. Evidence is presented that isolated GH deficiency (IGHD), multiple pituitary hormone deficiencies… 6313547 effects-of-growth-hormone-and-insulin-like-growth-factor-1-deficiency-on-ageing-and-longevity. effects growth hormone insulin like factor deficiency ageing Effects of growth hormone and insulin-like growth factor 1 deficiency on ageing and longevity. Effects of growth hormone and insulin-like growth factor 1 deficiency on ageing and longevity. Present knowledge on the effects of growth hormone (GH)/insulin-like growth hormone (IGF)1 deficiency on ageing and lifespan are reviewed. Evidence is presented that isolated GH deficiency (IGHD), multiple pituitary hormone deficiencies (MPHD) including GH, as well as primary IGE1 deficiency (GH resistance, Laron syndrome) present signs of early ageing such as thin and wrinkled skin, obesity, hyperglycemia and osteoporosis. These changes do not seem to affect the lifespan, as patients reach old age. Animal models of genetic MPHD (Ames and Snell mice) and GH receptor knockout mice (primary IGF1 deficiency) also have a statistically significant higher longevity compared to normal controls. On the c",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.521146+00:00"
+}

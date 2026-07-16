@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7230315",
+  "source_fingerprint": "1d9cf9a226b95700b33c873fdbdea9a4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7230315",
+    "inducible-nitric-oxide-synthase-in-pulmonary-alveolar-macrophages-from-patients-with-tuberculosis"
+  ],
+  "key_phrases": [
+    "inducible",
+    "nitric",
+    "oxide",
+    "synthase",
+    "pulmonary",
+    "alveolar",
+    "macrophages",
+    "from"
+  ],
+  "summary_1l": "The high-output pathway of nitric oxide production helps protect mice from infection by several pathog",
+  "query_hits": [],
+  "embed_text": "7230315 Inducible nitric oxide synthase in pulmonary alveolar macrophages from patients with tuberculosis science scifact The high-output pathway of nitric oxide production helps protect mice from infection by several pathogens, including Mycobacterium tuberculosis. However, based on studies of cells cultured from blood, it is controversial whether human… 7230315 inducible-nitric-oxide-synthase-in-pulmonary-alveolar-macrophages-from-patients-with-tuberculosis inducible nitric oxide synthase pulmonary alveolar macrophages from The high-output pathway of nitric oxide production helps protect mice from infection by several pathog Inducible nitric oxide synthase in pulmonary alveolar macrophages from patients with tuberculosis The high-output pathway of nitric oxide production helps protect mice from infection by several pathogens, including Mycobacterium tuberculosis. However, based on studies of cells cultured from blood, it is controversial whether human mononuclear phagocytes can express the corresponding inducible nitric oxide synthase (iNOS;NOS2). The present study examined alveolar macrophages fixed directly after bronchopulmonary lavage. An average of 65% of the macrophages from 11 of 11 patients with untreated, culture-positive pulmonary tuberculosis reacted with an antibody documented herein to be monospecific for human NOS2. In contrast, a mean of 10% of bronchoalveolar lavage cells were positive from eac",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.888672+00:00"
+}

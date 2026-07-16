@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9291596",
+  "source_fingerprint": "289ce354f979ca4591345d177da5452b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9291596",
+    "dna-replication-is-required-to-elicit-cellular-responses-to-psoralen-induced-dna-interstrand-cross-links."
+  ],
+  "key_phrases": [
+    "dna",
+    "replication",
+    "required",
+    "elicit",
+    "cellular",
+    "responses",
+    "psoralen",
+    "induced"
+  ],
+  "summary_1l": "DNA replication is required To elicit cellular responses to psoralen-induced DNA interstrand cross-links.",
+  "query_hits": [],
+  "embed_text": "9291596 DNA replication is required To elicit cellular responses to psoralen-induced DNA interstrand cross-links. science scifact Following introduction of DNA interstrand cross-links (ICLs), mammalian cells display chromosome breakage or cell cycle delay with a 4N DNA content. To further understand the nature of the delay, previously described as a G(2)/M arrest, we… 9291596 dna-replication-is-required-to-elicit-cellular-responses-to-psoralen-induced-dna-interstrand-cross-links. dna replication required elicit cellular responses psoralen induced DNA replication is required To elicit cellular responses to psoralen-induced DNA interstrand cross-links. DNA replication is required To elicit cellular responses to psoralen-induced DNA interstrand cross-links. Following introduction of DNA interstrand cross-links (ICLs), mammalian cells display chromosome breakage or cell cycle delay with a 4N DNA content. To further understand the nature of the delay, previously described as a G(2)/M arrest, we developed a protocol to generate ICLs during specific intervals of the cell cycle. Synchronous populations of G(1), S, and G(2) cells were treated with photoactivated 4'-hydroxymethyl-4,5',8-trimethylpsoralen (HMT) and scored for normal passage into mitosis. In contrast to what was found for ionizing radiation, ICLs introduced during G(2) did not result in a G(2)/M arrest, mitotic arrest, or chromosome breakage. Rather, subsequent passage through S p",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.676623+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3419709",
+  "source_fingerprint": "1dbe3fc083c0c619e7f4c0391a319801",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3419709",
+    "treatment-of-nonalcoholic-fatty-liver-disease:-role-of-ampk."
+  ],
+  "key_phrases": [
+    "treatment",
+    "nonalcoholic",
+    "fatty",
+    "liver",
+    "disease",
+    "role",
+    "ampk",
+    "nafld"
+  ],
+  "summary_1l": "Treatment of nonalcoholic fatty liver disease: role of AMPK.",
+  "query_hits": [],
+  "embed_text": "3419709 Treatment of nonalcoholic fatty liver disease: role of AMPK. science scifact Nonalcoholic fatty liver disease (NAFLD) is a growing worldwide epidemic and an important risk factor for the development of insulin resistance, type 2 diabetes, nonalcoholic steatohepatitis (NASH), and hepatic cellular carcinoma (HCC).… 3419709 treatment-of-nonalcoholic-fatty-liver-disease:-role-of-ampk. treatment nonalcoholic fatty liver disease role ampk nafld Treatment of nonalcoholic fatty liver disease: role of AMPK. Treatment of nonalcoholic fatty liver disease: role of AMPK. Nonalcoholic fatty liver disease (NAFLD) is a growing worldwide epidemic and an important risk factor for the development of insulin resistance, type 2 diabetes, nonalcoholic steatohepatitis (NASH), and hepatic cellular carcinoma (HCC). Despite the prevalence of NAFLD, lifestyle interventions involving exercise and weight loss are the only accepted treatments for this disease. Over the last decade, numerous experimental compounds have been shown to improve NAFLD in preclinical animal models, and many of these therapeutics have been shown to increase the activity of the cellular energy sensor AMP-activated protein kinase (AMPK). Because AMPK activity is reduced by inflammation, obesity, and diabetes, increasing AMPK activity has b",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.198275+00:00"
+}

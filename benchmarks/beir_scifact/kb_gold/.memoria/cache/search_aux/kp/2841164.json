@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2841164",
+  "source_fingerprint": "7fadcfc372318d17fac85c997e3b7d8b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2841164",
+    "dna-fragments-in-the-blood-plasma-of-cancer-patients:-quantitations-and-evidence-for-their-origin-from-apoptotic-and-necrotic-cells."
+  ],
+  "key_phrases": [
+    "dna",
+    "fragments",
+    "blood",
+    "plasma",
+    "cancer",
+    "patients",
+    "quantitations",
+    "evidence"
+  ],
+  "summary_1l": "DNA fragments in the blood plasma of cancer patients: quantitations and evidence for their origin from apoptotic and necrotic cells.",
+  "query_hits": [],
+  "embed_text": "2841164 DNA fragments in the blood plasma of cancer patients: quantitations and evidence for their origin from apoptotic and necrotic cells. science scifact Increased levels of DNA fragments have frequently been found in the blood plasma of cancer patients. Published data suggest that only a fraction of the DNA in blood plasma is derived from cancer cells. However, it is not known how much of… 2841164 dna-fragments-in-the-blood-plasma-of-cancer-patients:-quantitations-and-evidence-for-their-origin-from-apoptotic-and-necrotic-cells. dna fragments blood plasma cancer patients quantitations evidence DNA fragments in the blood plasma of cancer patients: quantitations and evidence for their origin from apoptotic and necrotic cells. DNA fragments in the blood plasma of cancer patients: quantitations and evidence for their origin from apoptotic and necrotic cells. Increased levels of DNA fragments have frequently been found in the blood plasma of cancer patients. Published data suggest that only a fraction of the DNA in blood plasma is derived from cancer cells. However, it is not known how much of the circulating DNA is from cancer or from noncancer cells. By quantitative methylation-specific PCR of the promoter region of the CDKN2A tumor suppressor gene, we were able to quantify the fraction of plasma DNA derived from tumor cells. In the plasma samples of 30 unselected cancer patients, we detected quantities of tumor DNA from only 3% to as much as 93% of total circulating DNA. We investigated possible origins of nont",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.971140+00:00"
+}

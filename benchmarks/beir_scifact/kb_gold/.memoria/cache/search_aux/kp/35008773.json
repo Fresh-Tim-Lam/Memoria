@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "35008773",
+  "source_fingerprint": "a37b3c8e0f0a9b2d06dd4194b6f04da1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "35008773",
+    "neural-induction-and-early-patterning-in-vertebrates."
+  ],
+  "key_phrases": [
+    "neural",
+    "induction",
+    "early",
+    "patterning",
+    "vertebrates",
+    "development",
+    "nervous",
+    "system"
+  ],
+  "summary_1l": "Neural induction and early patterning in vertebrates.",
+  "query_hits": [],
+  "embed_text": "35008773 Neural induction and early patterning in vertebrates. science scifact In vertebrates, the development of the nervous system is triggered by signals from a powerful 'organizing' region of the early embryo during gastrulation. This phenomenon--neural induction--was originally discovered and given conceptual… 35008773 neural-induction-and-early-patterning-in-vertebrates. neural induction early patterning vertebrates development nervous system Neural induction and early patterning in vertebrates. Neural induction and early patterning in vertebrates. In vertebrates, the development of the nervous system is triggered by signals from a powerful 'organizing' region of the early embryo during gastrulation. This phenomenon--neural induction--was originally discovered and given conceptual definition by experimental embryologists working with amphibian embryos. Work on the molecular circuitry underlying neural induction, also in the same model system, demonstrated that elimination of ongoing transforming growth factor-β (TGFβ) signaling in the ectoderm is the hallmark of anterior neural-fate acquisition. This observation is the basis of the 'default' model of neural induction. Endogenous neural inducers are secreted proteins that act to inhibit TGFβ ligands in the dorsal ectoderm. In the v",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.880671+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12358173",
+  "source_fingerprint": "97f35891b44952ae066f8a5988e06c60",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12358173",
+    "platelet-derived-endothelial-cell-growth-factor-expression-correlates-with-tumour-angiogenesis-and-prognosis-in-non-small-cell-lung-cancer."
+  ],
+  "key_phrases": [
+    "platelet",
+    "derived",
+    "endothelial",
+    "cell",
+    "growth",
+    "factor",
+    "expression",
+    "correlates"
+  ],
+  "summary_1l": "Platelet-derived endothelial cell growth factor expression correlates with tumour angiogenesis and prognosis in non-small-cell lung cancer.",
+  "query_hits": [],
+  "embed_text": "12358173 Platelet-derived endothelial cell growth factor expression correlates with tumour angiogenesis and prognosis in non-small-cell lung cancer. science scifact Angiogenesis is a recently described prognostic factor in non-small-cell lung cancer. Platelet-derived endothelial cell growth factor (PD-ECGF), shown to be the enzyme thymidine phosphorylase (TP), induces angiogenesis in vitro and in… 12358173 platelet-derived-endothelial-cell-growth-factor-expression-correlates-with-tumour-angiogenesis-and-prognosis-in-non-small-cell-lung-cancer. platelet derived endothelial cell growth factor expression correlates Platelet-derived endothelial cell growth factor expression correlates with tumour angiogenesis and prognosis in non-small-cell lung cancer. Platelet-derived endothelial cell growth factor expression correlates with tumour angiogenesis and prognosis in non-small-cell lung cancer. Angiogenesis is a recently described prognostic factor in non-small-cell lung cancer. Platelet-derived endothelial cell growth factor (PD-ECGF), shown to be the enzyme thymidine phosphorylase (TP), induces angiogenesis in vitro and in vivo. High intracellular levels of the enzyme are associated with increased chemosensitivity to pyrimidine antimetabolites. PD-ECGF/TP expression was evaluated immunohistochemically in surgically resected specimens from 107 patients with operable non-small-cell lung cancer using the P-GF,44C monoclonal antibody. High expression of PD-ECGF/TP was found in 25% of cases and was associated with high vascular grade (P = 0.01).",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:08.185664+00:00"
+}

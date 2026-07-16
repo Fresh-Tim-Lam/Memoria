@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8780599",
+  "source_fingerprint": "e4b417505b2f769e0b27693c818d6d66",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8780599",
+    "the-polymeal:-a-more-natural,-safer,-and-probably-tastier-(than-the-polypill)-strategy-to-reduce-cardiovascular-disease-by-more-than-75%."
+  ],
+  "key_phrases": [
+    "polymeal",
+    "more",
+    "natural",
+    "safer",
+    "probably",
+    "tastier",
+    "than",
+    "polypill"
+  ],
+  "summary_1l": "The Polymeal: a more natural, safer, and probably tastier (than the Polypill) strategy to reduce cardiovascular disease by more than 75%.",
+  "query_hits": [],
+  "embed_text": "8780599 The Polymeal: a more natural, safer, and probably tastier (than the Polypill) strategy to reduce cardiovascular disease by more than 75%. science scifact OBJECTIVE Although the Polypill concept (proposed in 2003) is promising in terms of benefits for cardiovascular risk management, the potential costs and adverse effects are its main pitfalls. The objective of this study was to identify a… 8780599 the-polymeal:-a-more-natural,-safer,-and-probably-tastier-(than-the-polypill)-strategy-to-reduce-cardiovascular-disease-by-more-than-75%. polymeal more natural safer probably tastier than polypill The Polymeal: a more natural, safer, and probably tastier (than the Polypill) strategy to reduce cardiovascular disease by more than 75%. The Polymeal: a more natural, safer, and probably tastier (than the Polypill) strategy to reduce cardiovascular disease by more than 75%. OBJECTIVE Although the Polypill concept (proposed in 2003) is promising in terms of benefits for cardiovascular risk management, the potential costs and adverse effects are its main pitfalls. The objective of this study was to identify a tastier and safer alternative to the Polypill: the Polymeal. METHODS Data on the ingredients of the Polymeal were taken from the literature. The evidence based recipe included wine, fish, dark chocolate, fruits, vegetables, garlic, and almonds. Data from the Framingham heart study and the Framingham offspring study were used to build life tables to model the benefits of the Polymeal in the general population from age 50,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.715378+00:00"
+}

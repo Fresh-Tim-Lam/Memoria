@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14338915",
+  "source_fingerprint": "f8a73fce16ee4749a13e025e48224c26",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14338915",
+    "fission-yeast-scm3:-a-cenp-a-receptor-required-for-integrity-of-subkinetochore-chromatin"
+  ],
+  "key_phrases": [
+    "fission",
+    "yeast",
+    "scm3",
+    "cenp",
+    "receptor",
+    "required",
+    "integrity",
+    "subkinetochore"
+  ],
+  "summary_1l": "The mechanisms ensuring specific incorporation of CENP-A at centromeres are poorly understood.",
+  "query_hits": [],
+  "embed_text": "14338915 Fission Yeast Scm3: A CENP-A Receptor Required for Integrity of Subkinetochore Chromatin science scifact The mechanisms ensuring specific incorporation of CENP-A at centromeres are poorly understood. Mis16 and Mis18 are required for CENP-A localization at centromeres and form a complex that is conserved from fission yeast to human. Fission… 14338915 fission-yeast-scm3:-a-cenp-a-receptor-required-for-integrity-of-subkinetochore-chromatin fission yeast scm3 cenp receptor required integrity subkinetochore The mechanisms ensuring specific incorporation of CENP-A at centromeres are poorly understood. Fission Yeast Scm3: A CENP-A Receptor Required for Integrity of Subkinetochore Chromatin The mechanisms ensuring specific incorporation of CENP-A at centromeres are poorly understood. Mis16 and Mis18 are required for CENP-A localization at centromeres and form a complex that is conserved from fission yeast to human. Fission yeast sim1 mutants that alleviate kinetochore domain silencing are defective in Scm3(Sp), the ortholog of budding yeast Scm3(Sc). Scm3(Sp) depends on Mis16/18 for its centromere localization and like them is recruited to centromeres in late anaphase. Importantly, Scm3(Sp) coaffinity purifies with CENP-A(Cnp1) and associates with CENP-A(Cnp1) in vitro, yet localizes independently of intact CENP-A(Cnp1) chromatin and is differentially released from chromatin. While Scm3(S",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.648236+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "31554917",
+  "source_fingerprint": "afd11a76c2e3a9f25862110133646aad",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "31554917",
+    "a-clinical-approach-to-circadian-rhythm-sleep-disorders."
+  ],
+  "key_phrases": [
+    "clinical",
+    "approach",
+    "circadian",
+    "rhythm",
+    "sleep",
+    "disorders",
+    "characterized",
+    "by"
+  ],
+  "summary_1l": "A clinical approach to circadian rhythm sleep disorders.",
+  "query_hits": [],
+  "embed_text": "31554917 A clinical approach to circadian rhythm sleep disorders. science scifact Circadian rhythm sleep disorders are characterized by complaints of insomnia and excessive sleepiness that are primarily due to alterations in the internal circadian timing system or a misalignment between the timing of sleep and the 24-h… 31554917 a-clinical-approach-to-circadian-rhythm-sleep-disorders. clinical approach circadian rhythm sleep disorders characterized by A clinical approach to circadian rhythm sleep disorders. A clinical approach to circadian rhythm sleep disorders. Circadian rhythm sleep disorders are characterized by complaints of insomnia and excessive sleepiness that are primarily due to alterations in the internal circadian timing system or a misalignment between the timing of sleep and the 24-h social and physical environment. In addition to physiological and environmental factors, maladaptive behaviors often play an important role in the development of many of the circadian rhythm sleep disorders. This review will focus on the clinical approach to the diagnosis and management of the various circadian rhythm sleep disorders, including delayed sleep phase disorder, advanced sleep phase disorder, non-entrained type, irregular sleep-wake rhythm, shift work sleep disorder and jet lag disorder.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.698192+00:00"
+}

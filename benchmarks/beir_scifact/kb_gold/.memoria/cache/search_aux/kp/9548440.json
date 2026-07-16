@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9548440",
+  "source_fingerprint": "7eec4b0e71ea8757051e45267c2cd220",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9548440",
+    "human-aneuploidy:-mechanisms-and-new-insights-into-an-age-old-problem"
+  ],
+  "key_phrases": [
+    "human",
+    "aneuploidy",
+    "mechanisms",
+    "new",
+    "insights",
+    "into",
+    "age",
+    "old"
+  ],
+  "summary_1l": "Trisomic and monosomic (aneuploid) embryos account for at least 10% of human pregnancies and, for women nearing the end of their r",
+  "query_hits": [],
+  "embed_text": "9548440 Human aneuploidy: mechanisms and new insights into an age-old problem science scifact Trisomic and monosomic (aneuploid) embryos account for at least 10% of human pregnancies and, for women nearing the end of their reproductive lifespan, the incidence may exceed 50%. The errors that lead to aneuploidy almost always occur in… 9548440 human-aneuploidy:-mechanisms-and-new-insights-into-an-age-old-problem human aneuploidy mechanisms new insights into age old Trisomic and monosomic (aneuploid) embryos account for at least 10% of human pregnancies and, for women nearing the end of their r Human aneuploidy: mechanisms and new insights into an age-old problem Trisomic and monosomic (aneuploid) embryos account for at least 10% of human pregnancies and, for women nearing the end of their reproductive lifespan, the incidence may exceed 50%. The errors that lead to aneuploidy almost always occur in the oocyte but, despite intensive investigation, the underlying molecular basis has remained elusive. Recent studies of humans and model organisms have shed new light on the complexity of meiotic defects, providing evidence that the age-related increase in errors in the human female is not attributable to a single factor but to an interplay between unique features of oogenesis and a host of endogenous and exogenous factors.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.192659+00:00"
+}

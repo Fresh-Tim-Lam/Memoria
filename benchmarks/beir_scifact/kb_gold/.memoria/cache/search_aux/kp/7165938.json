@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7165938",
+  "source_fingerprint": "1ab8cebe5c1087034e6f332e6da7f4eb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7165938",
+    "overexpression-of-the-circadian-clock-gene-bmal1-increases-sensitivity-to-oxaliplatin-in-colorectal-cancer."
+  ],
+  "key_phrases": [
+    "overexpression",
+    "circadian",
+    "clock",
+    "gene",
+    "bmal1",
+    "increases",
+    "sensitivity",
+    "oxaliplatin"
+  ],
+  "summary_1l": "Overexpression of the circadian clock gene Bmal1 increases sensitivity to oxaliplatin in colorectal cancer.",
+  "query_hits": [],
+  "embed_text": "7165938 Overexpression of the circadian clock gene Bmal1 increases sensitivity to oxaliplatin in colorectal cancer. science scifact PURPOSE The circadian clock gene Bmal1 is involved in cancer cell proliferation and DNA damage sensitivity. The aim of this study was to explore the effect of Bmal1 on oxaliplatin sensitivity and to determine its clinical significance in… 7165938 overexpression-of-the-circadian-clock-gene-bmal1-increases-sensitivity-to-oxaliplatin-in-colorectal-cancer. overexpression circadian clock gene bmal1 increases sensitivity oxaliplatin Overexpression of the circadian clock gene Bmal1 increases sensitivity to oxaliplatin in colorectal cancer. Overexpression of the circadian clock gene Bmal1 increases sensitivity to oxaliplatin in colorectal cancer. PURPOSE The circadian clock gene Bmal1 is involved in cancer cell proliferation and DNA damage sensitivity. The aim of this study was to explore the effect of Bmal1 on oxaliplatin sensitivity and to determine its clinical significance in colorectal cancer. EXPERIMENTAL DESIGN Three colorectal cancer cell lines, HCT116, THC8307 and HT29, were used. The Bmal1-mediated control of colorectal cancer cell proliferation was tested in vitro and in vivo. MTT and colony formation assays were performed to determine the sensitivity of colorectal cancer cells to oxaliplatin. Flow cytometry was used to examine changes in the cell-cycle distribution and apoptosis rate. Proteins expressed downstream",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.689638+00:00"
+}

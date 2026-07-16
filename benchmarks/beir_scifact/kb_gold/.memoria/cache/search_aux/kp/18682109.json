@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18682109",
+  "source_fingerprint": "2db602c58b8e15e3e535cb5de55bada5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18682109",
+    "rb-loss-in-resistant-egfr-mutant-lung-adenocarcinomas-that-transform-to-small-cell-lung-cancer"
+  ],
+  "key_phrases": [
+    "rb",
+    "loss",
+    "resistant",
+    "egfr",
+    "mutant",
+    "lung",
+    "adenocarcinomas",
+    "that"
+  ],
+  "summary_1l": "Tyrosine kinase inhibitors are effective treatments for non-small-cell lung cancers (NSCLCs) with epiderm",
+  "query_hits": [],
+  "embed_text": "18682109 RB loss in resistant EGFR mutant lung adenocarcinomas that transform to small-cell lung cancer science scifact Tyrosine kinase inhibitors are effective treatments for non-small-cell lung cancers (NSCLCs) with epidermal growth factor receptor (EGFR) mutations. However, relapse typically occurs after an average of 1 year of continuous treatment. A… 18682109 rb-loss-in-resistant-egfr-mutant-lung-adenocarcinomas-that-transform-to-small-cell-lung-cancer rb loss resistant egfr mutant lung adenocarcinomas that Tyrosine kinase inhibitors are effective treatments for non-small-cell lung cancers (NSCLCs) with epiderm RB loss in resistant EGFR mutant lung adenocarcinomas that transform to small-cell lung cancer Tyrosine kinase inhibitors are effective treatments for non-small-cell lung cancers (NSCLCs) with epidermal growth factor receptor (EGFR) mutations. However, relapse typically occurs after an average of 1 year of continuous treatment. A fundamental histological transformation from NSCLC to small-cell lung cancer (SCLC) is observed in a subset of the resistant cancers, but the molecular changes associated with this transformation remain unknown. Analysis of tumour samples and cell lines derived from resistant EGFR mutant patients revealed that Retinoblastoma (RB) is lost in 100% of these SCLC transformed cases, but rarely in those that remain NSCLC. Further, increased neuroendocrine marker and dec",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.596336+00:00"
+}

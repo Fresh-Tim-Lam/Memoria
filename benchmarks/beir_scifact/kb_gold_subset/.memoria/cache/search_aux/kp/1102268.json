@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1102268",
+  "source_fingerprint": "780491db040166fb018e775948493262",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1102268",
+    "the-incidence-and-repetition-of-hospital-treated-deliberate-self-harm:-findings-from-the-world's-first-national-registry"
+  ],
+  "key_phrases": [
+    "incidence",
+    "repetition",
+    "hospital",
+    "treated",
+    "deliberate",
+    "self",
+    "harm",
+    "findings"
+  ],
+  "summary_1l": "BACKGROUND Suicide is a significant public health issue with almost one million",
+  "query_hits": [],
+  "embed_text": "1102268 The Incidence and Repetition of Hospital-Treated Deliberate Self Harm: Findings from the World's First National Registry science scifact BACKGROUND Suicide is a significant public health issue with almost one million people dying by suicide each year worldwide. Deliberate self harm (DSH) is the single most important risk factor for suicide yet few countries have reliable… 1102268 the-incidence-and-repetition-of-hospital-treated-deliberate-self-harm:-findings-from-the-world's-first-national-registry incidence repetition hospital treated deliberate self harm findings BACKGROUND Suicide is a significant public health issue with almost one million The Incidence and Repetition of Hospital-Treated Deliberate Self Harm: Findings from the World's First National Registry BACKGROUND Suicide is a significant public health issue with almost one million people dying by suicide each year worldwide. Deliberate self harm (DSH) is the single most important risk factor for suicide yet few countries have reliable data on DSH. We developed a national DSH registry in the Republic of Ireland to establish the incidence of hospital-treated DSH at national level and the spectrum and pattern of presentations with DSH and repetition. METHODS AND FINDINGS Between 2003 and 2009, the Irish National Registry of Deliberate Self Harm collected data on DSH presentations to all 40 hospital emergency departments in the country. Data were collected by trained data",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:06.234958+00:00"
+}

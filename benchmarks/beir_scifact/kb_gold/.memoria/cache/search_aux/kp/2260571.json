@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2260571",
+  "source_fingerprint": "44d04d47f37f053efe886526b79116c7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2260571",
+    "vascular-smooth-muscle-cell-calcification-is-mediated-by-regulated-exosome-secretion."
+  ],
+  "key_phrases": [
+    "vascular",
+    "smooth",
+    "muscle",
+    "cell",
+    "calcification",
+    "mediated",
+    "by",
+    "regulated"
+  ],
+  "summary_1l": "Vascular smooth muscle cell calcification is mediated by regulated exosome secretion.",
+  "query_hits": [],
+  "embed_text": "2260571 Vascular smooth muscle cell calcification is mediated by regulated exosome secretion. science scifact RATIONALE Matrix vesicles (MVs), secreted by vascular smooth muscle cells (VSMCs), form the first nidus for mineralization and fetuin-A, a potent circulating inhibitor of calcification, is specifically loaded into MVs. However, the… 2260571 vascular-smooth-muscle-cell-calcification-is-mediated-by-regulated-exosome-secretion. vascular smooth muscle cell calcification mediated by regulated Vascular smooth muscle cell calcification is mediated by regulated exosome secretion. Vascular smooth muscle cell calcification is mediated by regulated exosome secretion. RATIONALE Matrix vesicles (MVs), secreted by vascular smooth muscle cells (VSMCs), form the first nidus for mineralization and fetuin-A, a potent circulating inhibitor of calcification, is specifically loaded into MVs. However, the processes of fetuin-A intracellular trafficking and MV biogenesis are poorly understood. OBJECTIVE The objective of this study is to investigate the regulation, and role, of MV biogenesis in VSMC calcification. METHODS AND RESULTS Alexa488-labeled fetuin-A was internalized by human VSMCs, trafficked via the endosomal system, and exocytosed from multivesicular bodies via exosome release. VSMC-derived exosomes were enriched with the tetraspanins CD9, CD63, and CD81, and their rel",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.075179+00:00"
+}

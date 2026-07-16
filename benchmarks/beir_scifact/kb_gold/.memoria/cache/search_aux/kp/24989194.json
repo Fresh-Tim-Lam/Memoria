@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24989194",
+  "source_fingerprint": "b1802bb9973f79007e837105993d4582",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24989194",
+    "phagocytosis-and-deposition-of-vascular-beta-amyloid-in-rat-brains-injected-with-alzheimer-beta-amyloid."
+  ],
+  "key_phrases": [
+    "phagocytosis",
+    "deposition",
+    "vascular",
+    "beta",
+    "amyloid",
+    "rat",
+    "brains",
+    "injected"
+  ],
+  "summary_1l": "Phagocytosis and deposition of vascular beta-amyloid in rat brains injected with Alzheimer beta-amyloid.",
+  "query_hits": [],
+  "embed_text": "24989194 Phagocytosis and deposition of vascular beta-amyloid in rat brains injected with Alzheimer beta-amyloid. science scifact The presence of extracellular deposits of beta-amyloid protein in the brain is a hallmark of Alzheimer's disease (AD). In an effort to determine the effect of amyloid in an animal model, the authors injected amyloid cores isolated from AD… 24989194 phagocytosis-and-deposition-of-vascular-beta-amyloid-in-rat-brains-injected-with-alzheimer-beta-amyloid. phagocytosis deposition vascular beta amyloid rat brains injected Phagocytosis and deposition of vascular beta-amyloid in rat brains injected with Alzheimer beta-amyloid. Phagocytosis and deposition of vascular beta-amyloid in rat brains injected with Alzheimer beta-amyloid. The presence of extracellular deposits of beta-amyloid protein in the brain is a hallmark of Alzheimer's disease (AD). In an effort to determine the effect of amyloid in an animal model, the authors injected amyloid cores isolated from AD brains into the cortex and hippocampus of rats. Lipofuscin, a major contaminant of the plaque core preparation, was injected on the contralateral side and used as a control to induce an analogous phagocytic cell response. Rats were sacrificed 2 days, 7 days, and 1 month after injection and amyloid located by four histochemical techniques. Amyloid and lipofuscin move from the site of injection into otherwise undamaged neuropil, persist for at least 1 mo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.715984+00:00"
+}

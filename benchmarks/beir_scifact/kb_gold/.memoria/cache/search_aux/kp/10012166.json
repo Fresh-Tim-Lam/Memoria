@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10012166",
+  "source_fingerprint": "49f6ee0466b578920acaf415b5896945",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10012166",
+    "the-role-of-protein-clearance-mechanisms-in-organismal-ageing-and-age-related-diseases."
+  ],
+  "key_phrases": [
+    "role",
+    "protein",
+    "clearance",
+    "mechanisms",
+    "organismal",
+    "ageing",
+    "age",
+    "related"
+  ],
+  "summary_1l": "The role of protein clearance mechanisms in organismal ageing and age-related diseases.",
+  "query_hits": [],
+  "embed_text": "10012166 The role of protein clearance mechanisms in organismal ageing and age-related diseases. science scifact The ability to maintain a functional proteome, or proteostasis, declines during the ageing process. Damaged and misfolded proteins accumulate with age, impairing cell function and tissue homeostasis. The accumulation of damaged proteins… 10012166 the-role-of-protein-clearance-mechanisms-in-organismal-ageing-and-age-related-diseases. role protein clearance mechanisms organismal ageing age related The role of protein clearance mechanisms in organismal ageing and age-related diseases. The role of protein clearance mechanisms in organismal ageing and age-related diseases. The ability to maintain a functional proteome, or proteostasis, declines during the ageing process. Damaged and misfolded proteins accumulate with age, impairing cell function and tissue homeostasis. The accumulation of damaged proteins contributes to multiple age-related diseases such as Alzheimer's, Parkinson's or Huntington's disease. Damaged proteins are degraded by the ubiquitin-proteasome system or through autophagy-lysosome, key components of the proteostasis network. Modulation of either proteasome activity or autophagic-lysosomal potential extends lifespan and protects organisms from symptoms associated with proteostasis disorders, suggesting that protein clearance mechanisms are directly linke",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T12:29:17.750911+00:00"
+}

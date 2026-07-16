@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9909405",
+  "source_fingerprint": "160c9568c445a307bce28576899abdb8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9909405",
+    "immtacs-for-targeted-cancer-therapy:-why,-what,-how,-and-which."
+  ],
+  "key_phrases": [
+    "immtacs",
+    "targeted",
+    "cancer",
+    "therapy",
+    "why",
+    "what",
+    "how",
+    "which"
+  ],
+  "summary_1l": "ImmTACs for targeted cancer therapy: Why, what, how, and which.",
+  "query_hits": [],
+  "embed_text": "9909405 ImmTACs for targeted cancer therapy: Why, what, how, and which. science scifact Overcoming immunosuppression and activating a cytotoxic T cell response has the potential to halt the progression of cancer and, in some circumstances, eradicate it. Designing therapeutic interventions that achieve this goal has proven… 9909405 immtacs-for-targeted-cancer-therapy:-why,-what,-how,-and-which. immtacs targeted cancer therapy why what how which ImmTACs for targeted cancer therapy: Why, what, how, and which. ImmTACs for targeted cancer therapy: Why, what, how, and which. Overcoming immunosuppression and activating a cytotoxic T cell response has the potential to halt the progression of cancer and, in some circumstances, eradicate it. Designing therapeutic interventions that achieve this goal has proven challenging, but now a greater understanding of the complexities of immune responses is beginning to produce some notable breakthroughs. ImmTACs (immune-mobilising monoclonal TCRs against cancer) are a new class of bispecific reagents, based on soluble monoclonal T cell receptors, which have been engineered to possess extremely high affinity for cognate tumour antigen. In this way, ImmTACs overcome the problem of low affinity tumour-specific T cells imposed by thymic selection and provide access",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:06.074011+00:00"
+}

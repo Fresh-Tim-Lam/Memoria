@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "43647194",
+  "source_fingerprint": "ac3ee8b82e29d21c7e2919528e1d62fe",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "43647194",
+    "validation-of-a-migraine-specific-questionnaire-for-use-in-family-studies."
+  ],
+  "key_phrases": [
+    "validation",
+    "migraine",
+    "specific",
+    "questionnaire",
+    "use",
+    "family",
+    "studies",
+    "availability"
+  ],
+  "summary_1l": "Validation of a migraine-specific questionnaire for use in family studies.",
+  "query_hits": [],
+  "embed_text": "43647194 Validation of a migraine-specific questionnaire for use in family studies. science scifact The availability of valid migraine-specific questionnaires is important when large numbers of migraine patients have to be analysed. The Finnish Migraine-Specific Questionnaire has been validated in two stages. In the first, a clinical… 43647194 validation-of-a-migraine-specific-questionnaire-for-use-in-family-studies. validation migraine specific questionnaire use family studies availability Validation of a migraine-specific questionnaire for use in family studies. Validation of a migraine-specific questionnaire for use in family studies. The availability of valid migraine-specific questionnaires is important when large numbers of migraine patients have to be analysed. The Finnish Migraine-Specific Questionnaire has been validated in two stages. In the first, a clinical diagnosis of migraine was reached, using International Headache Society criteria, in 100 consecutive patients. Migraine was then diagnosed independently on the basis of responses to the Finnish Migraine-Specific Questionnaire. In the second stage, responses to 100 questionnaires returned consecutively in a family study in progress were analysed, and respondents were contacted by telephone for interview and diagnosis of migraine. Contact proved impossible in six cases. The sensitivity",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.139311+00:00"
+}

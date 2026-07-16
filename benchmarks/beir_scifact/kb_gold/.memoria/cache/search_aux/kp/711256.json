@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "711256",
+  "source_fingerprint": "d8eb1e54bc0d2cdcb479706c18da6aa4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "711256",
+    "rna-is-favourable-for-analysing-egfr-mutations-in-malignant-pleural-effusion-of-lung-cancer."
+  ],
+  "key_phrases": [
+    "rna",
+    "favourable",
+    "analysing",
+    "egfr",
+    "mutations",
+    "malignant",
+    "pleural",
+    "effusion"
+  ],
+  "summary_1l": "RNA is favourable for analysing EGFR mutations in malignant pleural effusion of lung cancer.",
+  "query_hits": [],
+  "embed_text": "711256 RNA is favourable for analysing EGFR mutations in malignant pleural effusion of lung cancer. science scifact Malignant pleural effusion (MPE) is a useful specimen allowing for the evaluation of EGFR status in nonsmall cell lung cancer (NSCLC). However, direct sequencing of genomic DNA from MPE samples was found not to be sensitive for EGFR… 711256 rna-is-favourable-for-analysing-egfr-mutations-in-malignant-pleural-effusion-of-lung-cancer. rna favourable analysing egfr mutations malignant pleural effusion RNA is favourable for analysing EGFR mutations in malignant pleural effusion of lung cancer. RNA is favourable for analysing EGFR mutations in malignant pleural effusion of lung cancer. Malignant pleural effusion (MPE) is a useful specimen allowing for the evaluation of EGFR status in nonsmall cell lung cancer (NSCLC). However, direct sequencing of genomic DNA from MPE samples was found not to be sensitive for EGFR mutation detection. To test whether EGFR analysis from RNA is less prone to interference from nontumour cells that have no or lower EGFR expression, we compared three methods (sequencing from cell-derived RNA versus sequencing and mass-spectrometric analysis from genomic DNA), in parallel, for EGFR mutation detection from MPE samples in 150 lung adenocarcinoma patients receiving first-line tyrosine kinase inhibitors (TKIs). Among these MPE samples, EGFR mutations were m",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.483473+00:00"
+}

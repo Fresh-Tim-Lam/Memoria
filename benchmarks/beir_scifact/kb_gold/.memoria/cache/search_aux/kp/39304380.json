@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "39304380",
+  "source_fingerprint": "e580fd6300d20dd8fa21e5682021b4b0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "39304380",
+    "lethal-complications-of-typhoid-cholera-vaccination.-(case-report-and-review-of-the-literature)."
+  ],
+  "key_phrases": [
+    "lethal",
+    "complications",
+    "typhoid",
+    "cholera",
+    "vaccination",
+    "case",
+    "report",
+    "review"
+  ],
+  "summary_1l": "Lethal complications of typhoid-cholera-vaccination.",
+  "query_hits": [],
+  "embed_text": "39304380 Lethal complications of typhoid-cholera-vaccination. (Case report and review of the literature). science scifact Simultaneous parenteral vaccination against typhoid and cholera lead to death through either anaphylactic shock or endotoxic shock in a 36-year-old male. At autopsy the charactertic features of shock as well as chronic interstitial… 39304380 lethal-complications-of-typhoid-cholera-vaccination.-(case-report-and-review-of-the-literature). lethal complications typhoid cholera vaccination case report review Lethal complications of typhoid-cholera-vaccination. Lethal complications of typhoid-cholera-vaccination. (Case report and review of the literature). Simultaneous parenteral vaccination against typhoid and cholera lead to death through either anaphylactic shock or endotoxic shock in a 36-year-old male. At autopsy the charactertic features of shock as well as chronic interstitial myocarditis were noted. Moreover, fresh histiocytic and lymphocytic nodules were found in the liver, heart and meninges. A review of the literature dealing with lethal complications following parenteral tyhoid vaccinations shows an increased risk in debilitated persons (emaciation, stress, cold). Most of the fatalities occurred in persons who had previous disturbances of the cardiovascular system, as in the case reviewed here. Cardiac failure, Landry's paralysis, ren",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.464844+00:00"
+}

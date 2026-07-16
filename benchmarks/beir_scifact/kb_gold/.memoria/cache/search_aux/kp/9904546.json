@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9904546",
+  "source_fingerprint": "6e5712fb716cf07790d5783a3f43b59b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9904546",
+    "interferon-alfa-therapy-for-chronic-hepatitis-b-in-children:-a-multinational-randomized-controlled-trial."
+  ],
+  "key_phrases": [
+    "interferon",
+    "alfa",
+    "therapy",
+    "chronic",
+    "hepatitis",
+    "children",
+    "multinational",
+    "randomized"
+  ],
+  "summary_1l": "Interferon alfa therapy for chronic hepatitis B in children: a multinational randomized controlled trial.",
+  "query_hits": [],
+  "embed_text": "9904546 Interferon alfa therapy for chronic hepatitis B in children: a multinational randomized controlled trial. science scifact BACKGROUND & AIMS Treatment of chronic hepatitis B with interferon alfa is not approved in children. The aim of this study was to evaluate the safety and efficacy of interferon alfa (IFN-alpha) in children with chronic hepatitis B and… 9904546 interferon-alfa-therapy-for-chronic-hepatitis-b-in-children:-a-multinational-randomized-controlled-trial. interferon alfa therapy chronic hepatitis children multinational randomized Interferon alfa therapy for chronic hepatitis B in children: a multinational randomized controlled trial. Interferon alfa therapy for chronic hepatitis B in children: a multinational randomized controlled trial. BACKGROUND & AIMS Treatment of chronic hepatitis B with interferon alfa is not approved in children. The aim of this study was to evaluate the safety and efficacy of interferon alfa (IFN-alpha) in children with chronic hepatitis B and increased transaminase levels. METHODS Children were given either IFN-alpha2b (6 megaunits/m2 thrice weekly for 24 weeks) or no treatment. Clearance of markers of viral replication was evaluated 24 weeks after therapy and after 48 weeks of observation in controls. RESULTS Of 149 children enrolled, 144 were evaluable (70 treated and 74 controls). Serum hepatitis B e antigen and viral DNA became negative in 26% of treated children and 11% of controls (P < 0",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:06.060903+00:00"
+}

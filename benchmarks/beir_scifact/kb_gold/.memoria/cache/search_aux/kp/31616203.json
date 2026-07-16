@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "31616203",
+  "source_fingerprint": "8e3669fefa5c69a9391aa9ffe65fdc7b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "31616203",
+    "multicenter-phase-ii-study-of-lapatinib-in-patients-with-brain-metastases-from-her2-positive-breast-cancer."
+  ],
+  "key_phrases": [
+    "multicenter",
+    "phase",
+    "ii",
+    "study",
+    "lapatinib",
+    "patients",
+    "with",
+    "brain"
+  ],
+  "summary_1l": "Multicenter phase II study of lapatinib in patients with brain metastases from HER2-positive breast cancer.",
+  "query_hits": [],
+  "embed_text": "31616203 Multicenter phase II study of lapatinib in patients with brain metastases from HER2-positive breast cancer. science scifact PURPOSE Brain metastases develop in one third of patients with advanced HER2+ breast cancer. Effective therapy for patients with central nervous system (CNS) progression after cranial radiation is extremely limited and represents a major… 31616203 multicenter-phase-ii-study-of-lapatinib-in-patients-with-brain-metastases-from-her2-positive-breast-cancer. multicenter phase ii study lapatinib patients with brain Multicenter phase II study of lapatinib in patients with brain metastases from HER2-positive breast cancer. Multicenter phase II study of lapatinib in patients with brain metastases from HER2-positive breast cancer. PURPOSE Brain metastases develop in one third of patients with advanced HER2+ breast cancer. Effective therapy for patients with central nervous system (CNS) progression after cranial radiation is extremely limited and represents a major clinical challenge. Lapatinib, an epidermal growth factor receptor/HER2 inhibitor, was associated with regressions of CNS lesions in a small phase 2 trial. The current study was done to further evaluate the CNS activity of lapatinib. The study was later amended to allow patients who progressed on lapatinib the option of receiving lapatinib plus capecitabine. EXPERIMENTAL DESIGN Eligible patients had HER2+ breast cancer, progressive brain metastases,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.783660+00:00"
+}

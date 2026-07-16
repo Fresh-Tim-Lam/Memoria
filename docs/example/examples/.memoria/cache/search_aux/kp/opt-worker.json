@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "opt-worker",
+  "source_fingerprint": "91e383a50b481be16cdcbf044ef77e39",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "opt-worker"
+  ],
+  "key_phrases": [
+    "两个",
+    "m2",
+    "图谱",
+    "性能",
+    "优化",
+    "术语",
+    "针对",
+    "压测"
+  ],
+  "summary_1l": "这两个都是 **M2 图谱性能优化** 里的术语，针对的是压测里暴露的两个瓶颈：**布局算力** 和 **3D 交互拾取**。",
+  "query_hits": [],
+  "embed_text": "opt-worker Worker 化布局 opt-worker 两个 m2 图谱 性能 优化 术语 针对 压测 这两个都是 **M2 图谱性能优化** 里的术语，针对的是压测里暴露的两个瓶颈：**布局算力** 和 **3D 交互拾取**。 这两个都是 **M2 图谱性能优化** 里的术语，针对的是压测里暴露的两个瓶颈：**布局算力** 和 **3D 交互拾取**。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T03:38:45.945884+00:00"
+}

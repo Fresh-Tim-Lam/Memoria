@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18953920",
+  "source_fingerprint": "d9a98862b717fee2ec8059ff16d6c212",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18953920",
+    "the-epithelial-mesenchymal-transition-generates-cells-with-properties-of-stem-cells"
+  ],
+  "key_phrases": [
+    "epithelial",
+    "mesenchymal",
+    "transition",
+    "generates",
+    "cells",
+    "with",
+    "properties",
+    "stem"
+  ],
+  "summary_1l": "The epithelial-mesenchymal transition (EMT) is a key developmental program that is often activated during cancer inv",
+  "query_hits": [],
+  "embed_text": "18953920 The Epithelial-Mesenchymal Transition Generates Cells with Properties of Stem Cells science scifact The epithelial-mesenchymal transition (EMT) is a key developmental program that is often activated during cancer invasion and metastasis. We here report that the induction of an EMT in immortalized human mammary epithelial cells (HMLEs)… 18953920 the-epithelial-mesenchymal-transition-generates-cells-with-properties-of-stem-cells epithelial mesenchymal transition generates cells with properties stem The epithelial-mesenchymal transition (EMT) is a key developmental program that is often activated during cancer inv The Epithelial-Mesenchymal Transition Generates Cells with Properties of Stem Cells The epithelial-mesenchymal transition (EMT) is a key developmental program that is often activated during cancer invasion and metastasis. We here report that the induction of an EMT in immortalized human mammary epithelial cells (HMLEs) results in the acquisition of mesenchymal traits and in the expression of stem-cell markers. Furthermore, we show that those cells have an increased ability to form mammospheres, a property associated with mammary epithelial stem cells. Independent of this, stem cell-like cells isolated from HMLE cultures form mammospheres and express markers similar to those of HMLEs that have undergone an EMT. Moreover, stem-like cells isolated either from mouse or human mammary glands or",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.949784+00:00"
+}

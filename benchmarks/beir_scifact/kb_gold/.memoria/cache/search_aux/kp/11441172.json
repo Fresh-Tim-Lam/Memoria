@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11441172",
+  "source_fingerprint": "3c6331bf82ad9c0443200b3c156a5400",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11441172",
+    "fluconazole-prophylaxis:-can-we-eliminate-invasive-candida-infections-in-the-neonatal-icu?"
+  ],
+  "key_phrases": [
+    "fluconazole",
+    "prophylaxis",
+    "can",
+    "we",
+    "eliminate",
+    "invasive",
+    "candida",
+    "infections"
+  ],
+  "summary_1l": "Fluconazole prophylaxis: can we eliminate invasive Candida infections in the neonatal ICU?",
+  "query_hits": [],
+  "embed_text": "11441172 Fluconazole prophylaxis: can we eliminate invasive Candida infections in the neonatal ICU? science scifact PURPOSE OF REVIEW Owing to the high mortality, risk of neurodevelopmental impairment and end-organ involvement with fungal infections in the neonate, prevention of invasive Candida infections in extremely preterm infants should be a… 11441172 fluconazole-prophylaxis:-can-we-eliminate-invasive-candida-infections-in-the-neonatal-icu? fluconazole prophylaxis can we eliminate invasive candida infections Fluconazole prophylaxis: can we eliminate invasive Candida infections in the neonatal ICU? Fluconazole prophylaxis: can we eliminate invasive Candida infections in the neonatal ICU? PURPOSE OF REVIEW Owing to the high mortality, risk of neurodevelopmental impairment and end-organ involvement with fungal infections in the neonate, prevention of invasive Candida infections in extremely preterm infants should be a priority for each neonatal ICU. RECENT FINDINGS Even with prompt or empiric treatment, mortality and neurodevelopmental impairment is high (57%) in infants <1000 g. Multiple studies have been performed with fluconazole prophylaxis, including a recent multicenter randomized controlled trial. All of the studies have demonstrated efficacy and safety with no increase or emergence of fungal resistance. Analysis of these studies demonstrates that fluconazole prophylaxis decreas",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:06.530381+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23746332",
+  "source_fingerprint": "5aa5430273e760fbfb84814931a589af",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23746332",
+    "fast-calcium-and-voltage-sensitive-dye-imaging-in-enteric-neurones-reveal-calcium-peaks-associated-with-single-action-potential-discharge."
+  ],
+  "key_phrases": [
+    "fast",
+    "calcium",
+    "voltage",
+    "sensitive",
+    "dye",
+    "imaging",
+    "enteric",
+    "neurones"
+  ],
+  "summary_1l": "Fast calcium and voltage-sensitive dye imaging in enteric neurones reveal calcium peaks associated with single action potential discharge.",
+  "query_hits": [],
+  "embed_text": "23746332 Fast calcium and voltage-sensitive dye imaging in enteric neurones reveal calcium peaks associated with single action potential discharge. science scifact Slow changes in [Ca(2+)](i) reflect increased neuronal activity. Our study demonstrates that single-trial fast [Ca(2+)](i) imaging (≥200 Hz sampling rate) revealed peaks each of which are associated with single spike discharge recorded by… 23746332 fast-calcium-and-voltage-sensitive-dye-imaging-in-enteric-neurones-reveal-calcium-peaks-associated-with-single-action-potential-discharge. fast calcium voltage sensitive dye imaging enteric neurones Fast calcium and voltage-sensitive dye imaging in enteric neurones reveal calcium peaks associated with single action potential discharge. Fast calcium and voltage-sensitive dye imaging in enteric neurones reveal calcium peaks associated with single action potential discharge. Slow changes in [Ca(2+)](i) reflect increased neuronal activity. Our study demonstrates that single-trial fast [Ca(2+)](i) imaging (≥200 Hz sampling rate) revealed peaks each of which are associated with single spike discharge recorded by consecutive voltage-sensitive dye (VSD) imaging in enteric neurones and nerve fibres. Fast [Ca(2+)](i) imaging also revealed subthreshold fast excitatory postsynaptic potentials. Nicotine-evoked [Ca(2+)](i) peaks were reduced by -conotoxin and blocked by ruthenium red or tetrodotoxin. Fast [Ca(2+)](i) imaging can be used to directly record single action potentials in enteric neurones. [Ca(2+)](i) peaks required opening",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.067117+00:00"
+}

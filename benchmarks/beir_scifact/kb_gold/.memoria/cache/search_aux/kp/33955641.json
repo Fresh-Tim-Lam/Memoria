@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "33955641",
+  "source_fingerprint": "e4fc43e8770be2dbe944ce8f641ede65",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "33955641",
+    "rapid-method-for-the-isolation-of-lipoproteins-from-human-serum-by-precipitation-with-polyanions."
+  ],
+  "key_phrases": [
+    "rapid",
+    "method",
+    "isolation",
+    "lipoproteins",
+    "from",
+    "human",
+    "serum",
+    "by"
+  ],
+  "summary_1l": "Rapid method for the isolation of lipoproteins from human serum by precipitation with polyanions.",
+  "query_hits": [],
+  "embed_text": "33955641 Rapid method for the isolation of lipoproteins from human serum by precipitation with polyanions. science scifact Procedures are described for the isolation of lipoproteins from human serum by precipitation with polyanions and divalent cations. A mixture of low and very low density lipoproteins can be prepared without ultracentrifugation by… 33955641 rapid-method-for-the-isolation-of-lipoproteins-from-human-serum-by-precipitation-with-polyanions. rapid method isolation lipoproteins from human serum by Rapid method for the isolation of lipoproteins from human serum by precipitation with polyanions. Rapid method for the isolation of lipoproteins from human serum by precipitation with polyanions. Procedures are described for the isolation of lipoproteins from human serum by precipitation with polyanions and divalent cations. A mixture of low and very low density lipoproteins can be prepared without ultracentrifugation by precipitation with heparin and either MnCl(2) alone or MgCl(2) plus sucrose. In both cases the precipitation is reversible, selective, and complete. The highly concentrated isolated lipoproteins are free of other plasma proteins as judged by immunological and electrophoretic methods. The low density and very low density lipoproteins can then be separated from each other by ultracentrifugation. The advantage of the method is that large amounts of lipoproteins can be pre",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.869291+00:00"
+}

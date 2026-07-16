@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14501880",
+  "source_fingerprint": "478aa71179907c53ef9b506c20c4590c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14501880",
+    "kynurenic-acid-is-a-nutritional-cue-that-enables-behavioral-plasticity"
+  ],
+  "key_phrases": [
+    "kynurenic",
+    "acid",
+    "nutritional",
+    "cue",
+    "that",
+    "enables",
+    "behavioral",
+    "plasticity"
+  ],
+  "summary_1l": "The kynurenine pathway of tryptophan metabolism is involved in the pathogenesis of several brain diseases, but its physiological",
+  "query_hits": [],
+  "embed_text": "14501880 Kynurenic Acid Is a Nutritional Cue that Enables Behavioral Plasticity science scifact The kynurenine pathway of tryptophan metabolism is involved in the pathogenesis of several brain diseases, but its physiological functions remain unclear. We report that kynurenic acid, a metabolite in this pathway, functions as a… 14501880 kynurenic-acid-is-a-nutritional-cue-that-enables-behavioral-plasticity kynurenic acid nutritional cue that enables behavioral plasticity The kynurenine pathway of tryptophan metabolism is involved in the pathogenesis of several brain diseases, but its physiological Kynurenic Acid Is a Nutritional Cue that Enables Behavioral Plasticity The kynurenine pathway of tryptophan metabolism is involved in the pathogenesis of several brain diseases, but its physiological functions remain unclear. We report that kynurenic acid, a metabolite in this pathway, functions as a regulator of food-dependent behavioral plasticity in C. elegans. The experience of fasting in C. elegans alters a variety of behaviors, including feeding rate, when food is encountered post-fast. Levels of neurally produced kynurenic acid are depleted by fasting, leading to activation of NMDA-receptor-expressing interneurons and initiation of a neuropeptide-y-like signaling axis that promotes elevated feeding through enhanced serotonin release when animals re-encounter food. Upon refeeding, ky",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.076138+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20311968",
+  "source_fingerprint": "8e31047f9e4253d91637e8a0609c323d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20311968",
+    "chimeric-antigen-receptor-redirected-regulatory-t-cells-suppress-experimental-allergic-airway-inflammation,-a-model-of-asthma"
+  ],
+  "key_phrases": [
+    "chimeric",
+    "antigen",
+    "receptor",
+    "redirected",
+    "regulatory",
+    "cells",
+    "suppress",
+    "experimental"
+  ],
+  "summary_1l": "Cellular therapy with chimeric antigen receptor (CAR)-redirected cytotoxic",
+  "query_hits": [],
+  "embed_text": "20311968 Chimeric Antigen Receptor-Redirected Regulatory T Cells Suppress Experimental Allergic Airway Inflammation, a Model of Asthma science scifact Cellular therapy with chimeric antigen receptor (CAR)-redirected cytotoxic T cells has shown impressive efficacy in the treatment of hematologic malignancies. We explored a regulatory T cell (Treg)-based therapy in the treatment of… 20311968 chimeric-antigen-receptor-redirected-regulatory-t-cells-suppress-experimental-allergic-airway-inflammation,-a-model-of-asthma chimeric antigen receptor redirected regulatory cells suppress experimental Cellular therapy with chimeric antigen receptor (CAR)-redirected cytotoxic Chimeric Antigen Receptor-Redirected Regulatory T Cells Suppress Experimental Allergic Airway Inflammation, a Model of Asthma Cellular therapy with chimeric antigen receptor (CAR)-redirected cytotoxic T cells has shown impressive efficacy in the treatment of hematologic malignancies. We explored a regulatory T cell (Treg)-based therapy in the treatment of allergic airway inflammation, a model for asthma, which is characterized by an airway hyper-reactivity (AHR) and a chronic, T helper-2 (Th2) cell-dominated immune response to allergen. To restore the immune balance in the lung, we redirected Tregs by a CAR toward lung epithelia in mice upon experimentally induced allergic asthma, closely mimicking the clinical situation. Adoptively transferred CAR Tregs accumulated in the lung and in trac",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.995192+00:00"
+}

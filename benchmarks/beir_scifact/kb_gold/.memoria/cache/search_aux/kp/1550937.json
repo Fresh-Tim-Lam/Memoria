@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1550937",
+  "source_fingerprint": "0340a482d0058b154bea7bb194ee512d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1550937",
+    "the-transcription-factors-egr2-and-egr3-are-essential-for-the-control-of-inflammation-and-antigen-induced-proliferation-of-b-and-t-cells"
+  ],
+  "key_phrases": [
+    "transcription",
+    "factors",
+    "egr2",
+    "egr3",
+    "essential",
+    "control",
+    "inflammation",
+    "antigen"
+  ],
+  "summary_1l": "Lymphocytes provide optimal responses against pathogens with mi",
+  "query_hits": [],
+  "embed_text": "1550937 The Transcription Factors Egr2 and Egr3 Are Essential for the Control of Inflammation and Antigen-Induced Proliferation of B and T Cells science scifact Lymphocytes provide optimal responses against pathogens with minimal inflammatory pathology. However, the intrinsic mechanisms regulating these responses are unknown. Here, we report that deletion of both transcription factors Egr2 and… 1550937 the-transcription-factors-egr2-and-egr3-are-essential-for-the-control-of-inflammation-and-antigen-induced-proliferation-of-b-and-t-cells transcription factors egr2 egr3 essential control inflammation antigen Lymphocytes provide optimal responses against pathogens with mi The Transcription Factors Egr2 and Egr3 Are Essential for the Control of Inflammation and Antigen-Induced Proliferation of B and T Cells Lymphocytes provide optimal responses against pathogens with minimal inflammatory pathology. However, the intrinsic mechanisms regulating these responses are unknown. Here, we report that deletion of both transcription factors Egr2 and Egr3 in lymphocytes resulted in a lethal autoimmune syndrome with excessive serum proinflammatory cytokines but also impaired antigen receptor-induced proliferation of B and T cells. Egr2- and Egr3-defective B and T cells had hyperactive signal transducer and activator of transcription-1 (STAT1) and STAT3 while antigen receptor-induced activation of transcription factor AP-1 was severely impaired. We discovered that Egr2 an",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.738211+00:00"
+}

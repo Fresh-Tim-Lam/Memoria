@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9973014",
+  "source_fingerprint": "584f9aa46419a02ff549cde650708974",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9973014",
+    "the-effect-of-collinearity-on-parameter-estimates-in-nonlinear-mixed-effect-models"
+  ],
+  "key_phrases": [
+    "effect",
+    "collinearity",
+    "parameter",
+    "estimates",
+    "nonlinear",
+    "mixed",
+    "models",
+    "purpose"
+  ],
+  "summary_1l": "Purpose.",
+  "query_hits": [],
+  "embed_text": "9973014 The Effect of Collinearity on Parameter Estimates in Nonlinear Mixed Effect Models science scifact Purpose. To demonstrate how correlations among predictor variables in a population pharmacokinetic model affect the ability to discern which covariates should enter into the structural pharmacokinetic model. Methods. Monte Carlo simulation… 9973014 the-effect-of-collinearity-on-parameter-estimates-in-nonlinear-mixed-effect-models effect collinearity parameter estimates nonlinear mixed models purpose Purpose. The Effect of Collinearity on Parameter Estimates in Nonlinear Mixed Effect Models Purpose. To demonstrate how correlations among predictor variables in a population pharmacokinetic model affect the ability to discern which covariates should enter into the structural pharmacokinetic model. Methods. Monte Carlo simulation was used to generate multiple-dose concentration-time data similar to that seen in a Phase III clinical trial. The drugs' pharmacokinetics were dependent on two covariates. Five data sets were simulated with increasing correlation between the two covariates. All data sets were analyzed using NONMEM both with and without inclusion of the covariates in the structural pharmacokinetic model. Summary measures for ill-conditioning and sensitivity analysis were used to examine ho",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:06.204265+00:00"
+}

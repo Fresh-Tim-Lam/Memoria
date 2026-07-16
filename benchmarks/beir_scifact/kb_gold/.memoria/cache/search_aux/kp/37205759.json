@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "37205759",
+  "source_fingerprint": "ee929c445b0fcc626c4cfd3e7cab5807",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "37205759",
+    "obesity-occurring-in-apolipoprotein-e-knockout-mice-has-mild-effects-on-fertility."
+  ],
+  "key_phrases": [
+    "obesity",
+    "occurring",
+    "apolipoprotein",
+    "knockout",
+    "mice",
+    "has",
+    "mild",
+    "effects"
+  ],
+  "summary_1l": "Obesity occurring in apolipoprotein E-knockout mice has mild effects on fertility.",
+  "query_hits": [],
+  "embed_text": "37205759 Obesity occurring in apolipoprotein E-knockout mice has mild effects on fertility. science scifact The Apolipoprotein (Apo) family is implicated in lipid metabolism. There are five types of Apo: Apoa, Apob, Apoc, Apod, and Apoe. Apoe has been demonstrated to play a central role in lipoprotein metabolism and to be essential for efficient… 37205759 obesity-occurring-in-apolipoprotein-e-knockout-mice-has-mild-effects-on-fertility. obesity occurring apolipoprotein knockout mice has mild effects Obesity occurring in apolipoprotein E-knockout mice has mild effects on fertility. Obesity occurring in apolipoprotein E-knockout mice has mild effects on fertility. The Apolipoprotein (Apo) family is implicated in lipid metabolism. There are five types of Apo: Apoa, Apob, Apoc, Apod, and Apoe. Apoe has been demonstrated to play a central role in lipoprotein metabolism and to be essential for efficient receptor-mediated plasma clearance of chylomicron remnants and VLDL remnant particles by the liver. Apoe-deficient (Apoe(-/-)) mice develop atherosclerotic plaques spontaneously, followed by obesity. In this study, we investigated whether lipid deposition caused by Apoe knockout affects reproduction in female mice. The results demonstrated that Apoe(-/-) mice were severely hypercholesterolemic, with their cholesterol metabolism disordered, and lipid accumulating in the ova",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.248880+00:00"
+}

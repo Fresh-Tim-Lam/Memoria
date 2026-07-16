@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "28264919",
+  "source_fingerprint": "087c36c5ebf75fe00536311a85260d56",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "28264919",
+    "site-of-action-of-a-ribosomal-rna-methylase-responsible-for-resistance-to-erythromycin-and-other-antibiotics."
+  ],
+  "key_phrases": [
+    "site",
+    "action",
+    "ribosomal",
+    "rna",
+    "methylase",
+    "responsible",
+    "resistance",
+    "erythromycin"
+  ],
+  "summary_1l": "Site of action of a ribosomal RNA methylase responsible for resistance to erythromycin and other antibiotics.",
+  "query_hits": [],
+  "embed_text": "28264919 Site of action of a ribosomal RNA methylase responsible for resistance to erythromycin and other antibiotics. science scifact The enzyme which confers resistance to erythromycin in the producing organism Streptomyces erythraeus dimethylates a single adenine residue in Bacillus stearothermophilus 23 S rRNA. This corresponds to residue Ade 2058 in Escherichia coli… 28264919 site-of-action-of-a-ribosomal-rna-methylase-responsible-for-resistance-to-erythromycin-and-other-antibiotics. site action ribosomal rna methylase responsible resistance erythromycin Site of action of a ribosomal RNA methylase responsible for resistance to erythromycin and other antibiotics. Site of action of a ribosomal RNA methylase responsible for resistance to erythromycin and other antibiotics. The enzyme which confers resistance to erythromycin in the producing organism Streptomyces erythraeus dimethylates a single adenine residue in Bacillus stearothermophilus 23 S rRNA. This corresponds to residue Ade 2058 in Escherichia coli 23 S RNA. The methylase responsible for resistance to macrolides, lincomycin, and streptogramin B-related antibiotics in Staphylococcus aureus also acts at this site.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.781220+00:00"
+}

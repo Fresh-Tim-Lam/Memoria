@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3669694",
+  "source_fingerprint": "1ac3ae520c91b7fcda7d02428368d8b1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3669694",
+    "chromatin-modifying-enzymes-as-modulators-of-reprogramming"
+  ],
+  "key_phrases": [
+    "chromatin",
+    "modifying",
+    "enzymes",
+    "as",
+    "modulators",
+    "reprogramming",
+    "generation",
+    "induced"
+  ],
+  "summary_1l": "Generation of induced pluripotent stem cells (iPSCs) by somatic cell reprogramming involves global epigenetic remodelling.",
+  "query_hits": [],
+  "embed_text": "3669694 Chromatin modifying enzymes as modulators of reprogramming science scifact Generation of induced pluripotent stem cells (iPSCs) by somatic cell reprogramming involves global epigenetic remodelling. Whereas several proteins are known to regulate chromatin marks associated with the distinct epigenetic states of… 3669694 chromatin-modifying-enzymes-as-modulators-of-reprogramming chromatin modifying enzymes as modulators reprogramming generation induced Generation of induced pluripotent stem cells (iPSCs) by somatic cell reprogramming involves global epigenetic remodelling. Chromatin modifying enzymes as modulators of reprogramming Generation of induced pluripotent stem cells (iPSCs) by somatic cell reprogramming involves global epigenetic remodelling. Whereas several proteins are known to regulate chromatin marks associated with the distinct epigenetic states of cells before and after reprogramming, the role of specific chromatin-modifying enzymes in reprogramming remains to be determined. To address how chromatin-modifying proteins influence reprogramming, we used short hairpin RNAs (shRNAs) to target genes in DNA and histone methylation pathways, and identified positive and negative modulators of iPSC generation. Whereas inhibition of the core components of the polycomb repressive complex 1 and 2, including the histone 3 lysine 27 methyltransferase EZH2, r",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:43.636313+00:00"
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "20399078",
+  "source_fingerprint": "45b27c68ae062fb1dc73ee7beaabdeab",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20399078"
+  ],
+  "key_phrases": [
+    "genome",
+    "wide",
+    "association",
+    "il28b",
+    "with",
+    "response",
+    "pegylated",
+    "interferon"
+  ],
+  "summary_1l": "The recommended treatment for patients with chronic hepatitis C, pegylated interf",
+  "query_hits": [],
+  "embed_text": "20399078 Genome-wide association of IL28B with response to pegylated interferon-α and ribavirin therapy for chronic hepatitis C science scifact The recommended treatment for patients with chronic hepatitis C, pegylated interferon-α (PEG-IFN-α) plus ribavirin (RBV), does not provide sustained virologic response (SVR) in all patients. We report a genome-wide association study (GWAS)… 20399078 genome wide association il28b with response pegylated interferon The recommended treatment for patients with chronic hepatitis C, pegylated interf Genome-wide association of IL28B with response to pegylated interferon-α and ribavirin therapy for chronic hepatitis C The recommended treatment for patients with chronic hepatitis C, pegylated interferon-α (PEG-IFN-α) plus ribavirin (RBV), does not provide sustained virologic response (SVR) in all patients. We report a genome-wide association study (GWAS) to null virological response (NVR) in the treatment of patients with hepatitis C virus (HCV) genotype 1 within a Japanese population. We found two SNPs near the gene IL28B on chromosome 19 to be strongly associated with NVR (rs12980275, P = 1.93 × 10−13, and rs8099917, 3.11 × 10−15). We replicated these associations in an independent cohort (combined P values, 2.84 × 10−27 (OR = 17.7; 95% CI = 10.0–31.3) and 2.68 × 10−32 (OR = 27.1; 95%",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.200822+00:00"
+}

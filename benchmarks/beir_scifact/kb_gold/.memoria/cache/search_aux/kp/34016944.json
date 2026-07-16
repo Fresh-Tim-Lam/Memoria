@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "34016944",
+  "source_fingerprint": "adfffc9d59e81ee096f6ebf76182782b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "34016944",
+    "resistance-to-gefitinib-in-pten-null-her-overexpressing-tumor-cells-can-be-overcome-through-restoration-of-pten-function-or-pharmacologic-modulation-of-constitutive-phosphatidylinositol-3'-kinase/akt-pathway-signaling."
+  ],
+  "key_phrases": [
+    "resistance",
+    "gefitinib",
+    "pten",
+    "null",
+    "her",
+    "overexpressing",
+    "tumor",
+    "cells"
+  ],
+  "summary_1l": "Resistance to gefitinib in PTEN-null HER-overexpressing tumor cells can be overcome through restoration of PTEN function or pharmacologic modulation of constitutive phosphatidylinositol 3'-kinase/Akt",
+  "query_hits": [],
+  "embed_text": "34016944 Resistance to gefitinib in PTEN-null HER-overexpressing tumor cells can be overcome through restoration of PTEN function or pharmacologic modulation of constitutive phosphatidylinositol 3'-kinase/Akt pathway signaling. science scifact PURPOSE Tyrosine kinase (TK) inhibitors are emerging as a promising new approach to the treatment of HER overexpressing tumors, however optimal use of these agents awaits further definition of the downstream signaling pathways that mediate… 34016944 resistance-to-gefitinib-in-pten-null-her-overexpressing-tumor-cells-can-be-overcome-through-restoration-of-pten-function-or-pharmacologic-modulation-of-constitutive-phosphatidylinositol-3'-kinase/akt-pathway-signaling. resistance gefitinib pten null her overexpressing tumor cells Resistance to gefitinib in PTEN-null HER-overexpressing tumor cells can be overcome through restoration of PTEN function or pharmacologic modulation of constitutive phosphatidylinositol 3'-kinase/Akt Resistance to gefitinib in PTEN-null HER-overexpressing tumor cells can be overcome through restoration of PTEN function or pharmacologic modulation of constitutive phosphatidylinositol 3'-kinase/Akt pathway signaling. PURPOSE Tyrosine kinase (TK) inhibitors are emerging as a promising new approach to the treatment of HER overexpressing tumors, however optimal use of these agents awaits further definition of the downstream signaling pathways that mediate their effects. We reported previously that both EGFR- and Her2-overexpressing tumors are sensitive to the new EGFR-selective TK inhibitor gefitinib (ZD1839, \"Iressa\"), and sensitivity to this agent correlated with its ability to down-regulate Akt. However, EGFR-overexpressing MDA-468 cells, which lack PTEN function, are resistant to ZD1839",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.932426+00:00"
+}

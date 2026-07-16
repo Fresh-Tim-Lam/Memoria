@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1871499",
+  "source_fingerprint": "055a51c0d63ace2ba66b5e23bcdf7cfe",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1871499",
+    "genome-wide-loss-of-5-hmc-is-a-novel-epigenetic-feature-of-huntington's-disease."
+  ],
+  "key_phrases": [
+    "genome",
+    "wide",
+    "loss",
+    "hmc",
+    "novel",
+    "epigenetic",
+    "feature",
+    "huntington"
+  ],
+  "summary_1l": "Genome-wide loss of 5-hmC is a novel epigenetic feature of Huntington's disease.",
+  "query_hits": [],
+  "embed_text": "1871499 Genome-wide loss of 5-hmC is a novel epigenetic feature of Huntington's disease. science scifact 5-Hydroxymethylcytosine (5-hmC) may represent a new epigenetic modification of cytosine. While the dynamics of 5-hmC during neurodevelopment have recently been reported, little is known about its genomic distribution and function(s) in… 1871499 genome-wide-loss-of-5-hmc-is-a-novel-epigenetic-feature-of-huntington's-disease. genome wide loss hmc novel epigenetic feature huntington Genome-wide loss of 5-hmC is a novel epigenetic feature of Huntington's disease. Genome-wide loss of 5-hmC is a novel epigenetic feature of Huntington's disease. 5-Hydroxymethylcytosine (5-hmC) may represent a new epigenetic modification of cytosine. While the dynamics of 5-hmC during neurodevelopment have recently been reported, little is known about its genomic distribution and function(s) in neurodegenerative diseases such as Huntington's disease (HD). We here observed a marked reduction of the 5-hmC signal in YAC128 (yeast artificial chromosome transgene with 128 CAG repeats) HD mouse brain tissues when compared with age-matched wild-type (WT) mice, suggesting a deficiency of 5-hmC reconstruction in HD brains during postnatal development. Genome-wide distribution analysis of 5-hmC further confirmed the diminishment of the 5-hmC signal in striatum and cortex in YAC1",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.654480+00:00"
+}

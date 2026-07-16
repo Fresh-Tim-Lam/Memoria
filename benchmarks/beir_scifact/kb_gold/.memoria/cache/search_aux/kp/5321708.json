@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5321708",
+  "source_fingerprint": "181a46d559ec3eb8d620692d39f36840",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5321708",
+    "integrins-promote-cytokinesis-through-the-rsk-signaling-axis."
+  ],
+  "key_phrases": [
+    "integrins",
+    "promote",
+    "cytokinesis",
+    "through",
+    "rsk",
+    "signaling",
+    "axis",
+    "final"
+  ],
+  "summary_1l": "Integrins promote cytokinesis through the RSK signaling axis.",
+  "query_hits": [],
+  "embed_text": "5321708 Integrins promote cytokinesis through the RSK signaling axis. science scifact Cytokinesis is the final stage in cell division. Although integrins can regulate cytokinesis, the mechanisms involved are not fully understood. In this study, we demonstrate that integrin-regulated ERK (extracellular signal-related kinase)… 5321708 integrins-promote-cytokinesis-through-the-rsk-signaling-axis. integrins promote cytokinesis through rsk signaling axis final Integrins promote cytokinesis through the RSK signaling axis. Integrins promote cytokinesis through the RSK signaling axis. Cytokinesis is the final stage in cell division. Although integrins can regulate cytokinesis, the mechanisms involved are not fully understood. In this study, we demonstrate that integrin-regulated ERK (extracellular signal-related kinase) and RSK (p90 ribosomal S6 kinase) signaling promotes successful cytokinesis. Inhibiting the activation of ERK and RSK in CHO cells by a mutation in the integrin β1 cytoplasmic tail or with pharmacological inhibitors results in the accumulation of cells with midbodies and the formation of binucleated cells. Activation of ERK and RSK signaling by the expression of constitutively active RAF1 suppresses the mutant phenotype in a RSK-dependent manner. Constitutively active RSK2 also restores cytoki",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.980980+00:00"
+}

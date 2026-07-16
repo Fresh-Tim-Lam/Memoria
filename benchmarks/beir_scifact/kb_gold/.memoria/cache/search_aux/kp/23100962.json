@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23100962",
+  "source_fingerprint": "1676dbf215a5d166c46c3de3c9a67fc2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23100962",
+    "nitric-oxide-synthase-generates-superoxide-and-nitric-oxide-in-arginine-depleted-cells-leading-to-peroxynitrite-mediated-cellular-injury."
+  ],
+  "key_phrases": [
+    "nitric",
+    "oxide",
+    "synthase",
+    "generates",
+    "superoxide",
+    "arginine",
+    "depleted",
+    "cells"
+  ],
+  "summary_1l": "Nitric oxide synthase generates superoxide and nitric oxide in arginine-depleted cells leading to peroxynitrite-mediated cellular injury.",
+  "query_hits": [],
+  "embed_text": "23100962 Nitric oxide synthase generates superoxide and nitric oxide in arginine-depleted cells leading to peroxynitrite-mediated cellular injury. science scifact Besides synthesizing nitric oxide (NO), purified neuronal NO synthase (nNOS) can produce superoxide (.O2-) at lower L-Arg concentrations. By using electron paramagnetic resonance spin-trapping techniques, we monitored NO and .O2- formation… 23100962 nitric-oxide-synthase-generates-superoxide-and-nitric-oxide-in-arginine-depleted-cells-leading-to-peroxynitrite-mediated-cellular-injury. nitric oxide synthase generates superoxide arginine depleted cells Nitric oxide synthase generates superoxide and nitric oxide in arginine-depleted cells leading to peroxynitrite-mediated cellular injury. Nitric oxide synthase generates superoxide and nitric oxide in arginine-depleted cells leading to peroxynitrite-mediated cellular injury. Besides synthesizing nitric oxide (NO), purified neuronal NO synthase (nNOS) can produce superoxide (.O2-) at lower L-Arg concentrations. By using electron paramagnetic resonance spin-trapping techniques, we monitored NO and .O2- formation in nNOS-transfected human kidney 293 cells. In control transfected cells, the Ca2+ ionophore A23187 triggered NO generation but no .O2- was seen. With cells in L-Arg-free medium, we observed .O2- formation that increased as the cytosolic L-Arg levels decreased, while NO generation declined. .O2- formation was virtually abolished by the specific NOS blocker, N-nitro-L-arginine methyl ester (L-NAME). Nitrotyrosine, a spe",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.846680+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "37762357",
+  "source_fingerprint": "e82b4e3d5b5cb1554e672b137e13b255",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "37762357",
+    "potent-immunosuppressive-activities-of-cytomegalovirus-encoded-interleukin-10."
+  ],
+  "key_phrases": [
+    "potent",
+    "immunosuppressive",
+    "activities",
+    "cytomegalovirus",
+    "encoded",
+    "interleukin",
+    "10",
+    "cmv"
+  ],
+  "summary_1l": "Potent immunosuppressive activities of cytomegalovirus-encoded interleukin-10.",
+  "query_hits": [],
+  "embed_text": "37762357 Potent immunosuppressive activities of cytomegalovirus-encoded interleukin-10. science scifact Cytomegalovirus (CMV) has highly evolved mechanisms for avoiding detection by the host immune system. Recently, in the genomes of human and primate CMV, a novel gene comprising segments of noncontiguous open reading frames was identified… 37762357 potent-immunosuppressive-activities-of-cytomegalovirus-encoded-interleukin-10. potent immunosuppressive activities cytomegalovirus encoded interleukin 10 cmv Potent immunosuppressive activities of cytomegalovirus-encoded interleukin-10. Potent immunosuppressive activities of cytomegalovirus-encoded interleukin-10. Cytomegalovirus (CMV) has highly evolved mechanisms for avoiding detection by the host immune system. Recently, in the genomes of human and primate CMV, a novel gene comprising segments of noncontiguous open reading frames was identified and found to have limited predicted homology to endogenous cellular interleukin-10 (IL-10). Here we investigate the biological activities of the CMV IL-10-like gene product and show it to possess potent immunosuppressive properties. Both purified bacterium-derived recombinant CMV IL-10 and CMV IL-10 expressed in supernatants of human cells were found to inhibit proliferation of mitogen-stimulated peripheral blood mononuclear cells (PBMCs), with specific activity comparable to th",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.959582+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19482914",
+  "source_fingerprint": "72477814ad3bf3b4fa8d7ffa9d5b79fd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19482914",
+    "kindlin-3-is-essential-for-integrin-activation-and-platelet-aggregation"
+  ],
+  "key_phrases": [
+    "kindlin",
+    "essential",
+    "integrin",
+    "activation",
+    "platelet",
+    "aggregation",
+    "mediated",
+    "adhesion"
+  ],
+  "summary_1l": "Integrin-mediated platelet adhesion and aggregation are essential for sealing injured blood vessels and preventing blood loss, a",
+  "query_hits": [],
+  "embed_text": "19482914 Kindlin-3 is essential for integrin activation and platelet aggregation science scifact Integrin-mediated platelet adhesion and aggregation are essential for sealing injured blood vessels and preventing blood loss, and excessive platelet aggregation can initiate arterial thrombosis, causing heart attacks and stroke. To ensure… 19482914 kindlin-3-is-essential-for-integrin-activation-and-platelet-aggregation kindlin essential integrin activation platelet aggregation mediated adhesion Integrin-mediated platelet adhesion and aggregation are essential for sealing injured blood vessels and preventing blood loss, a Kindlin-3 is essential for integrin activation and platelet aggregation Integrin-mediated platelet adhesion and aggregation are essential for sealing injured blood vessels and preventing blood loss, and excessive platelet aggregation can initiate arterial thrombosis, causing heart attacks and stroke. To ensure that platelets aggregate only at injury sites, integrins on circulating platelets exist in a low-affinity state and shift to a high-affinity state (in a process known as integrin activation or priming) after contacting a wounded vessel. The shift is mediated through binding of the cytoskeletal protein Talin to the β subunit cytoplasmic tail. Here we show that platelets lacking the adhesion plaque protein Kindlin-3 cannot activate integrins despite normal Talin expression. As a direct",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.618257+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13205096",
+  "source_fingerprint": "b70782301640ad06f28c49b2c386eb58",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13205096",
+    "use-of-gene-expression-profiling-to-identify-prognostic-subclasses-in-adult-acute-myeloid-leukemia."
+  ],
+  "key_phrases": [
+    "use",
+    "gene",
+    "expression",
+    "profiling",
+    "identify",
+    "prognostic",
+    "subclasses",
+    "adult"
+  ],
+  "summary_1l": "Use of gene-expression profiling to identify prognostic subclasses in adult acute myeloid leukemia.",
+  "query_hits": [],
+  "embed_text": "13205096 Use of gene-expression profiling to identify prognostic subclasses in adult acute myeloid leukemia. science scifact BACKGROUND In patients with acute myeloid leukemia (AML), the presence or absence of recurrent cytogenetic aberrations is used to identify the appropriate therapy. However, the current classification system does not fully reflect the… 13205096 use-of-gene-expression-profiling-to-identify-prognostic-subclasses-in-adult-acute-myeloid-leukemia. use gene expression profiling identify prognostic subclasses adult Use of gene-expression profiling to identify prognostic subclasses in adult acute myeloid leukemia. Use of gene-expression profiling to identify prognostic subclasses in adult acute myeloid leukemia. BACKGROUND In patients with acute myeloid leukemia (AML), the presence or absence of recurrent cytogenetic aberrations is used to identify the appropriate therapy. However, the current classification system does not fully reflect the molecular heterogeneity of the disease, and treatment stratification is difficult, especially for patients with intermediate-risk AML with a normal karyotype. METHODS We used complementary-DNA microarrays to determine the levels of gene expression in peripheral-blood samples or bone marrow samples from 116 adults with AML (including 45 with a normal karyotype). We used unsupervised hierarchical clustering analysis to identify molecular subgroups with distinct ge",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:09.766370+00:00"
+}

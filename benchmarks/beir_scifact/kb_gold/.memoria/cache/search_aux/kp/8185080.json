@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8185080",
+  "source_fingerprint": "0d84e07069ff2635c2b1b3d3691dcdfc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8185080",
+    "induction-of-pluripotent-stem-cells-by-defined-factors-is-greatly-improved-by-small-molecule-compounds"
+  ],
+  "key_phrases": [
+    "induction",
+    "pluripotent",
+    "stem",
+    "cells",
+    "by",
+    "defined",
+    "factors",
+    "greatly"
+  ],
+  "summary_1l": "Reprogramming of mouse and human somatic cells can be achieved by ectopic expression of transcrip",
+  "query_hits": [],
+  "embed_text": "8185080 Induction of pluripotent stem cells by defined factors is greatly improved by small-molecule compounds science scifact Reprogramming of mouse and human somatic cells can be achieved by ectopic expression of transcription factors, but with low efficiencies. We report that DNA methyltransferase and histone deacetylase (HDAC) inhibitors improve reprogramming… 8185080 induction-of-pluripotent-stem-cells-by-defined-factors-is-greatly-improved-by-small-molecule-compounds induction pluripotent stem cells by defined factors greatly Reprogramming of mouse and human somatic cells can be achieved by ectopic expression of transcrip Induction of pluripotent stem cells by defined factors is greatly improved by small-molecule compounds Reprogramming of mouse and human somatic cells can be achieved by ectopic expression of transcription factors, but with low efficiencies. We report that DNA methyltransferase and histone deacetylase (HDAC) inhibitors improve reprogramming efficiency. In particular, valproic acid (VPA), an HDAC inhibitor, improves reprogramming efficiency by more than 100-fold, using Oct4-GFP as a reporter. VPA also enables efficient induction of pluripotent stem cells without introduction of the oncogene c-Myc.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.065131+00:00"
+}

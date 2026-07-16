@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11886686",
+  "source_fingerprint": "9a204a721c388362ef58da093850cf58",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11886686",
+    "synaptic-glutamate-release-by-ventromedial-hypothalamic-neurons-is-part-of-the-neurocircuitry-that-prevents-hypoglycemia."
+  ],
+  "key_phrases": [
+    "synaptic",
+    "glutamate",
+    "release",
+    "by",
+    "ventromedial",
+    "hypothalamic",
+    "neurons",
+    "part"
+  ],
+  "summary_1l": "Synaptic glutamate release by ventromedial hypothalamic neurons is part of the neurocircuitry that prevents hypoglycemia.",
+  "query_hits": [],
+  "embed_text": "11886686 Synaptic glutamate release by ventromedial hypothalamic neurons is part of the neurocircuitry that prevents hypoglycemia. science scifact The importance of neuropeptides in the hypothalamus has been experimentally established. Due to difficulties in assessing function in vivo, the roles of the fast-acting neurotransmitters glutamate and GABA are largely unknown. Synaptic… 11886686 synaptic-glutamate-release-by-ventromedial-hypothalamic-neurons-is-part-of-the-neurocircuitry-that-prevents-hypoglycemia. synaptic glutamate release by ventromedial hypothalamic neurons part Synaptic glutamate release by ventromedial hypothalamic neurons is part of the neurocircuitry that prevents hypoglycemia. Synaptic glutamate release by ventromedial hypothalamic neurons is part of the neurocircuitry that prevents hypoglycemia. The importance of neuropeptides in the hypothalamus has been experimentally established. Due to difficulties in assessing function in vivo, the roles of the fast-acting neurotransmitters glutamate and GABA are largely unknown. Synaptic vesicular transporters (VGLUTs for glutamate and VGAT for GABA) are required for vesicular uptake and, consequently, synaptic release of neurotransmitters. Ventromedial hypothalamic (VMH) neurons are predominantly glutamatergic and express VGLUT2. To evaluate the role of glutamate release from VMH neurons, we generated mice lacking VGLUT2 selectively in SF1 neurons (a major subset of VMH neurons). These mice have hypoglycemia during fasti",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:07.319765+00:00"
+}

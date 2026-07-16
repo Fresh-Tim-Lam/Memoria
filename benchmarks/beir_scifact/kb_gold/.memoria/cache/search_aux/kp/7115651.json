@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7115651",
+  "source_fingerprint": "fd165498d73dabcbe90a97c009737441",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7115651",
+    "key-role-for-il-21-in-experimental-autoimmune-uveitis."
+  ],
+  "key_phrases": [
+    "key",
+    "role",
+    "il",
+    "21",
+    "experimental",
+    "autoimmune",
+    "uveitis",
+    "pleiotropic"
+  ],
+  "summary_1l": "Key role for IL-21 in experimental autoimmune uveitis.",
+  "query_hits": [],
+  "embed_text": "7115651 Key role for IL-21 in experimental autoimmune uveitis. science scifact IL-21 is a pleiotropic type 1 cytokine that shares the common cytokine receptor γ-chain, γ(c), with IL-2, IL-4, IL-7, IL-9, and IL-15. IL-21 is most homologous to IL-2. These cytokines are encoded by adjacent genes, but they are… 7115651 key-role-for-il-21-in-experimental-autoimmune-uveitis. key role il 21 experimental autoimmune uveitis pleiotropic Key role for IL-21 in experimental autoimmune uveitis. Key role for IL-21 in experimental autoimmune uveitis. IL-21 is a pleiotropic type 1 cytokine that shares the common cytokine receptor γ-chain, γ(c), with IL-2, IL-4, IL-7, IL-9, and IL-15. IL-21 is most homologous to IL-2. These cytokines are encoded by adjacent genes, but they are functionally distinct. Whereas IL-2 promotes development of regulatory T cells and confers protection from autoimmune disease, IL-21 promotes differentiation of Th17 cells and is implicated in several autoimmune diseases, including type 1 diabetes and systemic lupus erythematosus. However, the roles of IL-21 and IL-2 in CNS autoimmune diseases such as multiple sclerosis and uveitis have been controversial. Here, we generated Il21-mCherry/Il2-emGFP dual-reporter transgenic mice and showed that development of exp",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.505872+00:00"
+}

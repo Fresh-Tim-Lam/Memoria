@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8005007",
+  "source_fingerprint": "34be19ec98918922f525b9c077cb7c21",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8005007",
+    "prrsv-receptors-and-their-roles-in-virus-infection"
+  ],
+  "key_phrases": [
+    "prrsv",
+    "receptors",
+    "their",
+    "roles",
+    "virus",
+    "infection",
+    "porcine",
+    "reproductive"
+  ],
+  "summary_1l": "Porcine reproductive and respiratory syndrome virus (PRRSV) has a restricted cell tropism and prefers to invade well-differentiated cells of the mono",
+  "query_hits": [],
+  "embed_text": "8005007 PRRSV receptors and their roles in virus infection science scifact Porcine reproductive and respiratory syndrome virus (PRRSV) has a restricted cell tropism and prefers to invade well-differentiated cells of the monocyte/macrophage lineage, such as pulmonary alveolar macrophages and African green monkey… 8005007 prrsv-receptors-and-their-roles-in-virus-infection prrsv receptors their roles virus infection porcine reproductive Porcine reproductive and respiratory syndrome virus (PRRSV) has a restricted cell tropism and prefers to invade well-differentiated cells of the mono PRRSV receptors and their roles in virus infection Porcine reproductive and respiratory syndrome virus (PRRSV) has a restricted cell tropism and prefers to invade well-differentiated cells of the monocyte/macrophage lineage, such as pulmonary alveolar macrophages and African green monkey kidney cell line MA-104 and its derivatives, such as Marc-145, Vero and CL-2621. PRRSV infection of the host cells actually is a receptor-mediated endocytosis and replication process. The presence and absence of the cellular receptors decide whether the cell lines are permissive or non-permissive to PRRSV infection. Several PRRSV non-permissive cell lines, such as BHK-21, PK-15 and CHO-K1, have been shown to become sensitive to the virus infection upon expression of the recombinant receptor proteins. Up to",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.717739+00:00"
+}

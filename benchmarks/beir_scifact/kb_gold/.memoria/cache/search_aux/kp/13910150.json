@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13910150",
+  "source_fingerprint": "2f847c7b3499048d21a91fa67e6df7f2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13910150",
+    "the-germ-cell-determinant-blimp1-is-not-required-for-derivation-of-pluripotent-stem-cells"
+  ],
+  "key_phrases": [
+    "germ",
+    "cell",
+    "determinant",
+    "blimp1",
+    "not",
+    "required",
+    "derivation",
+    "pluripotent"
+  ],
+  "summary_1l": "Blimp1 (Prdm1), the key determinant of primordial germ cells (PGCs), plays a combinatorial role with Prdm14 du",
+  "query_hits": [],
+  "embed_text": "13910150 The Germ Cell Determinant Blimp1 Is Not Required for Derivation of Pluripotent Stem Cells science scifact Blimp1 (Prdm1), the key determinant of primordial germ cells (PGCs), plays a combinatorial role with Prdm14 during PGC specification from postimplantation epiblast cells. They together initiate epigenetic reprogramming in early germ cells… 13910150 the-germ-cell-determinant-blimp1-is-not-required-for-derivation-of-pluripotent-stem-cells germ cell determinant blimp1 not required derivation pluripotent Blimp1 (Prdm1), the key determinant of primordial germ cells (PGCs), plays a combinatorial role with Prdm14 du The Germ Cell Determinant Blimp1 Is Not Required for Derivation of Pluripotent Stem Cells Blimp1 (Prdm1), the key determinant of primordial germ cells (PGCs), plays a combinatorial role with Prdm14 during PGC specification from postimplantation epiblast cells. They together initiate epigenetic reprogramming in early germ cells toward an underlying pluripotent state, which is equivalent to embryonic stem cells (ESCs). Whereas Prdm14 alone can promote reprogramming and is important for the propagation of the pluripotent state, it is not known whether Blimp1 is similarly involved. By using a genetic approach, we demonstrate that Blimp1 is dispensable for the derivation and maintenance of ESCs and postimplantation epiblast stem cells (epiSCs). Notably, Blimp1 is also dispensable for reprogramm",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.495275+00:00"
+}

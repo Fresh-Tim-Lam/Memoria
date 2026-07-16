@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8477699",
+  "source_fingerprint": "b68a2236c0b0fe3e4c73d83f2a3674c5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8477699",
+    "metabolic-reprograming-in-macrophage-polarization"
+  ],
+  "key_phrases": [
+    "metabolic",
+    "reprograming",
+    "macrophage",
+    "polarization",
+    "studying",
+    "metabolism",
+    "immune",
+    "cells"
+  ],
+  "summary_1l": "Studying the metabolism of immune cells in recent years has emphasized the tight link existing between the metabolic state and the phenotype of these",
+  "query_hits": [],
+  "embed_text": "8477699 Metabolic Reprograming in Macrophage Polarization science scifact Studying the metabolism of immune cells in recent years has emphasized the tight link existing between the metabolic state and the phenotype of these cells. Macrophages in particular are a good example of this phenomenon. Whether the… 8477699 metabolic-reprograming-in-macrophage-polarization metabolic reprograming macrophage polarization studying metabolism immune cells Studying the metabolism of immune cells in recent years has emphasized the tight link existing between the metabolic state and the phenotype of these Metabolic Reprograming in Macrophage Polarization Studying the metabolism of immune cells in recent years has emphasized the tight link existing between the metabolic state and the phenotype of these cells. Macrophages in particular are a good example of this phenomenon. Whether the macrophage obtains its energy through glycolysis or through oxidative metabolism can give rise to different phenotypes. Classically activated or M1 macrophages are key players of the first line of defense against bacterial infections and are known to obtain energy through glycolysis. Alternatively activated or M2 macrophages on the other hand are involved in tissue repair and wound healing and use oxidative metabolism to fuel their longer-term functions. Metabolic intermediates, however, are not just a source o",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.767722+00:00"
+}

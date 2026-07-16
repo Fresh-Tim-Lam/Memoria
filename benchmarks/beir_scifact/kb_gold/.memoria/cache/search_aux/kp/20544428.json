@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20544428",
+  "source_fingerprint": "d843ca966c18d8fddfd8d2a237bd4915",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20544428",
+    "blockade-of-adrenoreceptors-inhibits-the-splenic-response-to-stroke."
+  ],
+  "key_phrases": [
+    "blockade",
+    "adrenoreceptors",
+    "inhibits",
+    "splenic",
+    "response",
+    "stroke",
+    "recent",
+    "studies"
+  ],
+  "summary_1l": "Blockade of adrenoreceptors inhibits the splenic response to stroke.",
+  "query_hits": [],
+  "embed_text": "20544428 Blockade of adrenoreceptors inhibits the splenic response to stroke. science scifact Recent studies have highlighted the involvement of the peripheral immune system in delayed cellular degeneration after stroke. In the permanent middle cerebral artery occlusion (MCAO) model of stroke, the spleen decreases in size. This… 20544428 blockade-of-adrenoreceptors-inhibits-the-splenic-response-to-stroke. blockade adrenoreceptors inhibits splenic response stroke recent studies Blockade of adrenoreceptors inhibits the splenic response to stroke. Blockade of adrenoreceptors inhibits the splenic response to stroke. Recent studies have highlighted the involvement of the peripheral immune system in delayed cellular degeneration after stroke. In the permanent middle cerebral artery occlusion (MCAO) model of stroke, the spleen decreases in size. This reduction occurs through the release of splenic immune cells. Systemic treatment with human umbilical cord blood cells (HUCBC) 24 h post-stroke blocks the reduction in spleen size while significantly reducing infarct volume. Splenectomy 2 weeks prior to MCAO also reduces infarct volume, further demonstrating the detrimental role of this organ in stroke-induced neurodegeneration. Activation of the sympathetic nervous system after MCAO results in elevated catecholamine levels both at the leve",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.479430+00:00"
+}

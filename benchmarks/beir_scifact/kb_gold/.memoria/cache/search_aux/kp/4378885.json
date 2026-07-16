@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4378885",
+  "source_fingerprint": "213ff18355de18fd2c84f2a09b8d8b6d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4378885",
+    "understanding-mechanisms-underlying-human-gene-expression-variation-with-rna-sequencing"
+  ],
+  "key_phrases": [
+    "understanding",
+    "mechanisms",
+    "underlying",
+    "human",
+    "gene",
+    "expression",
+    "variation",
+    "with"
+  ],
+  "summary_1l": "Understanding the genetic mechanisms underlying natural variation in gene expression is a central goal of both m",
+  "query_hits": [],
+  "embed_text": "4378885 Understanding mechanisms underlying human gene expression variation with RNA sequencing science scifact Understanding the genetic mechanisms underlying natural variation in gene expression is a central goal of both medical and evolutionary genetics, and studies of expression quantitative trait loci (eQTLs) have become an important tool for… 4378885 understanding-mechanisms-underlying-human-gene-expression-variation-with-rna-sequencing understanding mechanisms underlying human gene expression variation with Understanding the genetic mechanisms underlying natural variation in gene expression is a central goal of both m Understanding mechanisms underlying human gene expression variation with RNA sequencing Understanding the genetic mechanisms underlying natural variation in gene expression is a central goal of both medical and evolutionary genetics, and studies of expression quantitative trait loci (eQTLs) have become an important tool for achieving this goal. Although all eQTL studies so far have assayed messenger RNA levels using expression microarrays, recent advances in RNA sequencing enable the analysis of transcript variation at unprecedented resolution. We sequenced RNA from 69 lymphoblastoid cell lines derived from unrelated Nigerian individuals that have been extensively genotyped by the International HapMap Project. By pooling data from all individuals, we generated a map of the transcriptional",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.251089+00:00"
+}

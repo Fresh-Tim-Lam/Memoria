@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3360428",
+  "source_fingerprint": "e2d88afafcc5e711fec093ff1edbd657",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3360428",
+    "multipoint-kras-oncogene-mutations-potentially-indicate-mucinous-carcinoma-on-the-entire-spectrum-of-mucinous-ovarian-neoplasms"
+  ],
+  "key_phrases": [
+    "multipoint",
+    "kras",
+    "oncogene",
+    "mutations",
+    "potentially",
+    "indicate",
+    "mucinous",
+    "carcinoma"
+  ],
+  "summary_1l": "Kras mutation is a common phenomenon in many human neoplasms.",
+  "query_hits": [],
+  "embed_text": "3360428 Multipoint Kras oncogene mutations potentially indicate mucinous carcinoma on the entire spectrum of mucinous ovarian neoplasms science scifact Kras mutation is a common phenomenon in many human neoplasms. We aimed to assess the Kras mutational status along the histological continuum from normal ovaries to the development of benign, borderline and malignant ovarian mucinous… 3360428 multipoint-kras-oncogene-mutations-potentially-indicate-mucinous-carcinoma-on-the-entire-spectrum-of-mucinous-ovarian-neoplasms multipoint kras oncogene mutations potentially indicate mucinous carcinoma Kras mutation is a common phenomenon in many human neoplasms. Multipoint Kras oncogene mutations potentially indicate mucinous carcinoma on the entire spectrum of mucinous ovarian neoplasms Kras mutation is a common phenomenon in many human neoplasms. We aimed to assess the Kras mutational status along the histological continuum from normal ovaries to the development of benign, borderline and malignant ovarian mucinous neoplasms. We analyzed 41 cases of malignant, 10 cases of borderline, 7 cases of benign mucinous ovarian tumors and 7 cases of normal ovarian tissue. The prevalence of Kras mutations in the normal ovary was 0.00% (n=0/7), while the prevalence in benign, borderline and malignant mucinous neoplasms was 57.14% (n=4/7), 90.00% (n=9/10) and 75.61% (n=31/41), respectively. Multiple Kras mutations were detected in 6 cases of mucinous carcinom",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.550949+00:00"
+}

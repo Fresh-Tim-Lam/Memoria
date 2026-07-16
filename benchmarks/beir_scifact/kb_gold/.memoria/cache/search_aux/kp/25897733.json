@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25897733",
+  "source_fingerprint": "4077c28064781e4e43592c02cde73dfc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25897733",
+    "pandemic-h1n12009-influenza-and-hiv:-a-review-of-natural-history,-management-and-vaccine-immunogenicity."
+  ],
+  "key_phrases": [
+    "pandemic",
+    "h1n12009",
+    "influenza",
+    "hiv",
+    "review",
+    "natural",
+    "history",
+    "management"
+  ],
+  "summary_1l": "Pandemic H1N12009 influenza and HIV: a review of natural history, management and vaccine immunogenicity.",
+  "query_hits": [],
+  "embed_text": "25897733 Pandemic H1N12009 influenza and HIV: a review of natural history, management and vaccine immunogenicity. science scifact PURPOSE OF REVIEW The 2009 pandemic HIN1 influenza strain (H1N12009) produced more severe disease and increased risk for mortality. As an at-risk population for more severe influenza illness, particular concern regarding HIV patients… 25897733 pandemic-h1n12009-influenza-and-hiv:-a-review-of-natural-history,-management-and-vaccine-immunogenicity. pandemic h1n12009 influenza hiv review natural history management Pandemic H1N12009 influenza and HIV: a review of natural history, management and vaccine immunogenicity. Pandemic H1N12009 influenza and HIV: a review of natural history, management and vaccine immunogenicity. PURPOSE OF REVIEW The 2009 pandemic HIN1 influenza strain (H1N12009) produced more severe disease and increased risk for mortality. As an at-risk population for more severe influenza illness, particular concern regarding HIV patients triggered a focused effort to evaluate disease burden and vaccine efficacy in these populations. RECENT FINDINGS As with other immune-compromised individuals, most HIV-infected individuals recovered without major consequence. Although HIV infection was assumed to be a risk factor for more severe disease and death, the published literature does not indicate this to be so. Neuraminadase inhibitors were well tolerated by this population and there was no eviden",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.679394+00:00"
+}

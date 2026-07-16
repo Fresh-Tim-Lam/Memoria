@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16790253",
+  "source_fingerprint": "0d4bedd1c3b07deffa78a691d3b52917",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16790253",
+    "notch-signaling:-cell-fate-control-and-signal-integration-in-development."
+  ],
+  "key_phrases": [
+    "notch",
+    "signaling",
+    "cell",
+    "fate",
+    "control",
+    "signal",
+    "integration",
+    "development"
+  ],
+  "summary_1l": "Notch signaling: cell fate control and signal integration in development.",
+  "query_hits": [],
+  "embed_text": "16790253 Notch signaling: cell fate control and signal integration in development. science scifact Notch signaling defines an evolutionarily ancient cell interaction mechanism, which plays a fundamental role in metazoan development. Signals exchanged between neighboring cells through the Notch receptor can amplify and consolidate… 16790253 notch-signaling:-cell-fate-control-and-signal-integration-in-development. notch signaling cell fate control signal integration development Notch signaling: cell fate control and signal integration in development. Notch signaling: cell fate control and signal integration in development. Notch signaling defines an evolutionarily ancient cell interaction mechanism, which plays a fundamental role in metazoan development. Signals exchanged between neighboring cells through the Notch receptor can amplify and consolidate molecular differences, which eventually dictate cell fates. Thus, Notch signals control how cells respond to intrinsic or extrinsic developmental cues that are necessary to unfold specific developmental programs. Notch activity affects the implementation of differentiation, proliferation, and apoptotic programs, providing a general developmental tool to influence organ formation and morphogenesis.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.839815+00:00"
+}

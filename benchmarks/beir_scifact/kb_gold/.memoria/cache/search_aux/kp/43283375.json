@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "43283375",
+  "source_fingerprint": "510266849f1f3ae3dd16b5fe9660c3aa",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "43283375",
+    "spatial-release-from-masking-based-on-binaural-processing-for-up-to-six-maskers."
+  ],
+  "key_phrases": [
+    "spatial",
+    "release",
+    "from",
+    "masking",
+    "based",
+    "binaural",
+    "processing",
+    "up"
+  ],
+  "summary_1l": "Spatial release from masking based on binaural processing for up to six maskers.",
+  "query_hits": [],
+  "embed_text": "43283375 Spatial release from masking based on binaural processing for up to six maskers. science scifact Spatial Release from Masking (SRM) was measured for identification of a female target word spoken in the presence of male masker words. Target words from a single loudspeaker located at midline were presented when two, four, or six masker… 43283375 spatial-release-from-masking-based-on-binaural-processing-for-up-to-six-maskers. spatial release from masking based binaural processing up Spatial release from masking based on binaural processing for up to six maskers. Spatial release from masking based on binaural processing for up to six maskers. Spatial Release from Masking (SRM) was measured for identification of a female target word spoken in the presence of male masker words. Target words from a single loudspeaker located at midline were presented when two, four, or six masker words were presented either from the same source as the target or from spatially separated masker sources. All masker words were presented from loudspeakers located symmetrically around the centered target source in the front azimuth hemifield. Three masking conditions were employed: speech-in-speech masking (involving both informational and energetic masking), speech-in-noise masking (involving energetic masking), and filtered speech-in-filtered speech masking (involving inf",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.742225+00:00"
+}

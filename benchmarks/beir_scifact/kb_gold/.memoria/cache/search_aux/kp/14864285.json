@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14864285",
+  "source_fingerprint": "3450fa8953c8019e14621f9111a19ef9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14864285",
+    "yoko-honda-and-shuji-honda-1"
+  ],
+  "key_phrases": [
+    "yoko",
+    "honda",
+    "shuji",
+    "longevity",
+    "regulated",
+    "by",
+    "daf",
+    "gene"
+  ],
+  "summary_1l": "Longevity is regulated by the daf-2 gene network in Caenorhabditis elegans.",
+  "query_hits": [],
+  "embed_text": "14864285 YOKO HONDA AND SHUJI HONDA 1 science scifact Longevity is regulated by the daf-2 gene network in Caenorhabditis elegans. Mutations in the daf-2 gene, which encodes a member of the insulin receptor family, confer the life extension (Age) phenotype and the constitutive dauer (a… 14864285 yoko-honda-and-shuji-honda-1 yoko honda shuji longevity regulated by daf gene Longevity is regulated by the daf-2 gene network in Caenorhabditis elegans. YOKO HONDA AND SHUJI HONDA 1 Longevity is regulated by the daf-2 gene network in Caenorhabditis elegans. Mutations in the daf-2 gene, which encodes a member of the insulin receptor family, confer the life extension (Age) phenotype and the constitutive dauer (a growth-arrested larval form specialized for dispersal) formation phenotype. The Age phenotype is mutually potentiated by two life extension mutations in the daf-2 gene and the clk-1 gene, a homologue of yeast CAT5/COQ7 known to regulate ubiquinone biosynthesis. In this study, we demonstrated that the daf-2 mutation also conferred an oxidative stress resistance (Oxr) phenotype, which was also enhanced by the clk-1 mutation. Similar to the Age phenotype, the Oxr phenotype was regulated by the genetic pathway of insulin-like signaling f",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.805133+00:00"
+}

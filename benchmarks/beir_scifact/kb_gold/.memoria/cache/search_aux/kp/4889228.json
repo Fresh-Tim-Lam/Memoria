@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4889228",
+  "source_fingerprint": "077eea4a496a1d9db27a07f1df5e189d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4889228",
+    "loss-of-tdp43-inhibits-progression-of-triple-negative-breast-cancer-in-coordination-with-srsf3"
+  ],
+  "key_phrases": [
+    "loss",
+    "tdp43",
+    "inhibits",
+    "progression",
+    "triple",
+    "negative",
+    "breast",
+    "cancer"
+  ],
+  "summary_1l": "Aberrant alternative splicing has been highlighted as a potential hallmark of cancer.",
+  "query_hits": [],
+  "embed_text": "4889228 Loss of TDP43 inhibits progression of triple-negative breast cancer in coordination with SRSF3 science scifact Aberrant alternative splicing has been highlighted as a potential hallmark of cancer. Here, we identify TDP43 (TAR DNA-binding protein 43) as an important splicing regulator responsible for the unique splicing profile in triple-negative… 4889228 loss-of-tdp43-inhibits-progression-of-triple-negative-breast-cancer-in-coordination-with-srsf3 loss tdp43 inhibits progression triple negative breast cancer Aberrant alternative splicing has been highlighted as a potential hallmark of cancer. Loss of TDP43 inhibits progression of triple-negative breast cancer in coordination with SRSF3 Aberrant alternative splicing has been highlighted as a potential hallmark of cancer. Here, we identify TDP43 (TAR DNA-binding protein 43) as an important splicing regulator responsible for the unique splicing profile in triple-negative breast cancer (TNBC). Clinical data demonstrate that TDP43 is highly expressed in TNBC with poor prognosis. Knockdown of TDP43 inhibits tumor progression, including proliferation and metastasis, and overexpression of TDP43 promotes proliferation and malignancy of mammary epithelial cells. Deep sequencing analysis and functional experiments indicate that TDP43 alters most splicing events with splicing factor SRSF3 (serine/arginine-rich splicing factor 3), in the re",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.646085+00:00"
+}

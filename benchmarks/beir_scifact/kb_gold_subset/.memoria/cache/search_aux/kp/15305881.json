@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15305881",
+  "source_fingerprint": "43b23398e0d785ebf75bd5350f517052",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15305881",
+    "the-structure-of-ddrb-from-deinococcus:-a-new-fold-for-single-stranded-dna-binding-proteins"
+  ],
+  "key_phrases": [
+    "structure",
+    "ddrb",
+    "from",
+    "deinococcus",
+    "new",
+    "fold",
+    "single",
+    "stranded"
+  ],
+  "summary_1l": "Deinococcus spp.",
+  "query_hits": [],
+  "embed_text": "15305881 The structure of DdrB from Deinococcus: a new fold for single-stranded DNA binding proteins science scifact Deinococcus spp. are renowned for their amazing ability to recover rapidly from severe genomic fragmentation as a result of exposure to extreme levels of ionizing radiation or desiccation. Despite having been originally characterized over… 15305881 the-structure-of-ddrb-from-deinococcus:-a-new-fold-for-single-stranded-dna-binding-proteins structure ddrb from deinococcus new fold single stranded Deinococcus spp. The structure of DdrB from Deinococcus: a new fold for single-stranded DNA binding proteins Deinococcus spp. are renowned for their amazing ability to recover rapidly from severe genomic fragmentation as a result of exposure to extreme levels of ionizing radiation or desiccation. Despite having been originally characterized over 50 years ago, the mechanism underlying this remarkable repair process is still poorly understood. Here, we report the 2.8 A structure of DdrB, a single-stranded DNA (ssDNA) binding protein unique to Deinococcus spp. that is crucial for recovery following DNA damage. DdrB forms a pentameric ring capable of binding single-stranded but not double-stranded DNA. Unexpectedly, the crystal structure reveals that DdrB comprises a novel fold that is structurally and topolog",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:11.522622+00:00"
+}

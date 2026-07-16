@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9274291",
+  "source_fingerprint": "bdd900068d63c5d2bd0b8bdb4005528a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9274291",
+    "comparisons-of-patient-and-physician-expectations-for-cancer-survivorship-care."
+  ],
+  "key_phrases": [
+    "comparisons",
+    "patient",
+    "physician",
+    "expectations",
+    "cancer",
+    "survivorship",
+    "care",
+    "purpose"
+  ],
+  "summary_1l": "Comparisons of patient and physician expectations for cancer survivorship care.",
+  "query_hits": [],
+  "embed_text": "9274291 Comparisons of patient and physician expectations for cancer survivorship care. science scifact PURPOSE To compare expectations for cancer survivorship care between patients and their physicians and between primary care providers (PCPs) and oncologists. METHODS Survivors and their physicians were surveyed to evaluate for expectations… 9274291 comparisons-of-patient-and-physician-expectations-for-cancer-survivorship-care. comparisons patient physician expectations cancer survivorship care purpose Comparisons of patient and physician expectations for cancer survivorship care. Comparisons of patient and physician expectations for cancer survivorship care. PURPOSE To compare expectations for cancer survivorship care between patients and their physicians and between primary care providers (PCPs) and oncologists. METHODS Survivors and their physicians were surveyed to evaluate for expectations regarding physician participation in primary cancer follow-up, screening for other cancers, general preventive health, and management of comorbidities. RESULTS Of 992 eligible survivors and 607 physicians surveyed, 535 (54%) and 378 (62%) were assessable, respectively. Among physician respondents, 255 (67%) were PCPs and 123 (33%) were oncologists. Comparing patients with their oncologists, expectations were highly discrepant for screening for cancers other than the index one",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.587590+00:00"
+}

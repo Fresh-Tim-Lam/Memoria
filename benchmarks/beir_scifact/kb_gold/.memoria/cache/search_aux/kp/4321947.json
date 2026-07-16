@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4321947",
+  "source_fingerprint": "cfaa20a6a3df5c8cd22123443f3d0f12",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4321947",
+    "exon-duplication-and-divergence-in-the-human-preproglucagon-gene"
+  ],
+  "key_phrases": [
+    "exon",
+    "duplication",
+    "divergence",
+    "human",
+    "preproglucagon",
+    "gene",
+    "glucagon",
+    "29"
+  ],
+  "summary_1l": "Glucagon is a 29-amino acid pancreatic hormone which counteracts the blood glucose-lowering action of insulin by stimulating hepatic gl",
+  "query_hits": [],
+  "embed_text": "4321947 Exon duplication and divergence in the human preproglucagon gene science scifact Glucagon is a 29-amino acid pancreatic hormone which counteracts the blood glucose-lowering action of insulin by stimulating hepatic glycogenolysis and gluconeogenesis1. The structure of the hamster pancreatic glucagon precursor has… 4321947 exon-duplication-and-divergence-in-the-human-preproglucagon-gene exon duplication divergence human preproglucagon gene glucagon 29 Glucagon is a 29-amino acid pancreatic hormone which counteracts the blood glucose-lowering action of insulin by stimulating hepatic gl Exon duplication and divergence in the human preproglucagon gene Glucagon is a 29-amino acid pancreatic hormone which counteracts the blood glucose-lowering action of insulin by stimulating hepatic glycogenolysis and gluconeogenesis1. The structure of the hamster pancreatic glucagon precursor has recently been determined from the sequence of a cloned cDNA2. Hamster preproglucagon is a 180-amino acid protein which contains five functional regions; a signal or pre-peptide, an NH2-terminal peptide (also called glicentin-related pancreatic peptide, GRPP), glucagon, and two carboxy-terminal glucagon-like peptides (GLP-1 and GLP-2). The sequences of two non-allelic anglerfish pancreatic glucagon precursors3–5 have also been determined and their organization is similar but not identical to the ha",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.606183+00:00"
+}

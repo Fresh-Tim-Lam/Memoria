@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "kp_id": "175429#2",
+  "source_fingerprint": "6cb8f7aac0286c1b3ca0be1beffd9f0b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "曼徹斯特聯足球俱樂部",
+    "中国国家女子足球队",
+    "公司秘書",
+    "电子公司",
+    "中国国家铁路集团",
+    "传奇卧底",
+    "国家石油公司",
+    "山东省足球代表队",
+    "巴塞罗那足球俱乐部",
+    "法本公司",
+    "白俄羅斯足球超級聯賽",
+    "英格兰足球超级联赛"
+  ],
+  "aliases": [
+    "175429#2"
+  ],
+  "key_phrases": [
+    "曼聯",
+    "足球",
+    "俱樂部",
+    "歷史",
+    "曼联",
+    "传奇",
+    "开始",
+    "1878"
+  ],
+  "summary_1l": "曼联的传奇开始于1878年。",
+  "query_hits": [],
+  "embed_text": "175429#2 曼聯足球俱樂部歷史 曼聯足球俱樂部歷史 曼联的传奇开始于1878年。兰开郡和约克郡铁路公司（Lancashire and Yorkshire Railway Company）铁路客货车工場的工人请求他们的雇主许可和赞助他们建立一支足球队。请求被答应，于是紐頓希夫LYR成立了。他们的球场在北路（North Road）上。 曼徹斯特聯足球俱樂部 中国国家女子足球队 公司秘書 电子公司 中国国家铁路集团 传奇卧底 国家石油公司 山东省足球代表队 巴塞罗那足球俱乐部 法本公司 白俄羅斯足球超級聯賽 英格兰足球超级联赛 175429#2 曼聯 足球 俱樂部 歷史 曼联 传奇 开始 1878 曼联的传奇开始于1878年。 曼聯足球俱樂部歷史 曼联的传奇开始于1878年。兰开郡和约克郡铁路公司（Lancashire and Yorkshire Railway Company）铁路客货车工場的工人请求他们的雇主许可和赞助他们建立一支足球队。请求被答应，于是紐頓希夫LYR成立了。他们的球场在北路（North Road）上。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:19:55.476396+00:00"
+}

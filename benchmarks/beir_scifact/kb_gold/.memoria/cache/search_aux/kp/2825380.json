@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2825380",
+  "source_fingerprint": "96b3468f826da5f898b99d8f561e4188",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2825380",
+    "t-cell-receptor-ligation-induces-the-formation-of-dynamically-regulated-signaling-assemblies"
+  ],
+  "key_phrases": [
+    "cell",
+    "receptor",
+    "ligation",
+    "induces",
+    "formation",
+    "dynamically",
+    "regulated",
+    "signaling"
+  ],
+  "summary_1l": "Tcell antigen receptor (TCR) ligation initiates tyrosine kinase activation, signaling complex assembly, and",
+  "query_hits": [],
+  "embed_text": "2825380 T cell receptor ligation induces the formation of dynamically regulated signaling assemblies science scifact Tcell antigen receptor (TCR) ligation initiates tyrosine kinase activation, signaling complex assembly, and immune synapse formation. Here, we studied the kinetics and mechanics of signaling complex formation in live Jurkat leukemic T… 2825380 t-cell-receptor-ligation-induces-the-formation-of-dynamically-regulated-signaling-assemblies cell receptor ligation induces formation dynamically regulated signaling Tcell antigen receptor (TCR) ligation initiates tyrosine kinase activation, signaling complex assembly, and T cell receptor ligation induces the formation of dynamically regulated signaling assemblies Tcell antigen receptor (TCR) ligation initiates tyrosine kinase activation, signaling complex assembly, and immune synapse formation. Here, we studied the kinetics and mechanics of signaling complex formation in live Jurkat leukemic T cells using signaling proteins fluorescently tagged with variants of enhanced GFP (EGFP). Within seconds of contacting coverslips coated with stimulatory antibodies, T cells developed small, dynamically regulated clusters which were enriched in the TCR, phosphotyrosine, ZAP-70, LAT, Grb2, Gads, and SLP-76, excluded the lipid raft marker enhanced yellow fluorescent protein–GPI, and were competent to induce calcium elevations. LAT, Grb2, and Gads were transiently associ",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.770906+00:00"
+}

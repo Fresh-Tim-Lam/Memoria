@@ -58,6 +58,16 @@ class PyQt6Host:
 
 
 
+    def pick_import_files(self) -> list[str]:
+
+        from PyQt6.QtWidgets import QFileDialog
+
+        paths, _ = QFileDialog.getOpenFileNames(self._window, "选择导入文件", "", "文本文件 (*.txt);;Markdown (*.md);;所有文件 (*)")
+
+        return paths or []
+
+
+
     def minimize(self) -> None:
 
         shell_log_window(self._window, "host_minimize")

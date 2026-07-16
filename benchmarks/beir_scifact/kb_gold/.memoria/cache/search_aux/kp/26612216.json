@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26612216",
+  "source_fingerprint": "826f5c7294f2e16bf9b468d2de1e6690",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26612216",
+    "es-cell-pluripotency-and-germ-layer-formation-require-the-swi/snf-chromatin-remodeling-component-baf250a."
+  ],
+  "key_phrases": [
+    "es",
+    "cell",
+    "pluripotency",
+    "germ",
+    "layer",
+    "formation",
+    "require",
+    "swi"
+  ],
+  "summary_1l": "ES cell pluripotency and germ-layer formation require the SWI/SNF chromatin remodeling component BAF250a.",
+  "query_hits": [],
+  "embed_text": "26612216 ES cell pluripotency and germ-layer formation require the SWI/SNF chromatin remodeling component BAF250a. science scifact ATP-dependent chromatin remodeling complexes are a notable group of epigenetic modifiers that use the energy of ATP hydrolysis to change the structure of chromatin, thereby altering its accessibility to nuclear factors. BAF250a (ARID1a) is… 26612216 es-cell-pluripotency-and-germ-layer-formation-require-the-swi/snf-chromatin-remodeling-component-baf250a. es cell pluripotency germ layer formation require swi ES cell pluripotency and germ-layer formation require the SWI/SNF chromatin remodeling component BAF250a. ES cell pluripotency and germ-layer formation require the SWI/SNF chromatin remodeling component BAF250a. ATP-dependent chromatin remodeling complexes are a notable group of epigenetic modifiers that use the energy of ATP hydrolysis to change the structure of chromatin, thereby altering its accessibility to nuclear factors. BAF250a (ARID1a) is a unique and defining subunit of the BAF chromatin remodeling complex with the potential to facilitate chromosome alterations critical during development. Our studies show that ablation of BAF250a in early mouse embryos results in developmental arrest (about embryonic day 6.5) and absence of the mesodermal layer, indicating its critical role in early germ-layer formation. Moreover, BAF250a deficiency compromises ES cell pluripotency, severely inhibit",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.923815+00:00"
+}

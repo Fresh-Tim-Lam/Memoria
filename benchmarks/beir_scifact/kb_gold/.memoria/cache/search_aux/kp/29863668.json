@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29863668",
+  "source_fingerprint": "dc454af2ed83da9bf649fd5f70eeeee9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29863668",
+    "p446l-importin-beta-inhibits-nuclear-envelope-assembly-by-sequestering-nuclear-envelope-assembly-factors-to-the-microtubules."
+  ],
+  "key_phrases": [
+    "p446l",
+    "importin",
+    "beta",
+    "inhibits",
+    "nuclear",
+    "envelope",
+    "assembly",
+    "by"
+  ],
+  "summary_1l": "P446L-importin-beta inhibits nuclear envelope assembly by sequestering nuclear envelope assembly factors to the microtubules.",
+  "query_hits": [],
+  "embed_text": "29863668 P446L-importin-beta inhibits nuclear envelope assembly by sequestering nuclear envelope assembly factors to the microtubules. science scifact The P446L mutant Drosophila importin-beta (P446L-imp-beta) has been reported to prohibit--in dominant negative fashion--nuclear envelope (NE) assembly. Along elucidating the mode of action of P446L-imp-beta we studied in vitro NE assembly… 29863668 p446l-importin-beta-inhibits-nuclear-envelope-assembly-by-sequestering-nuclear-envelope-assembly-factors-to-the-microtubules. p446l importin beta inhibits nuclear envelope assembly by P446L-importin-beta inhibits nuclear envelope assembly by sequestering nuclear envelope assembly factors to the microtubules. P446L-importin-beta inhibits nuclear envelope assembly by sequestering nuclear envelope assembly factors to the microtubules. The P446L mutant Drosophila importin-beta (P446L-imp-beta) has been reported to prohibit--in dominant negative fashion--nuclear envelope (NE) assembly. Along elucidating the mode of action of P446L-imp-beta we studied in vitro NE assembly on Sepharose beads. While Drosophila embryo extracts support NE assembly over Sepharose beads coated with Ran, NE assembly does not take place in extracts supplied with exogenous P446L-imp-beta. A NE also forms over importin-beta-coated beads. Surprisingly, when immobilized to Sepharose beads P446L-imp-beta as efficiently recruits NE vesicles as normal importin-beta. The discrepancy in behavior of cytoplasmic and bead-bound P446L-i",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.265553+00:00"
+}

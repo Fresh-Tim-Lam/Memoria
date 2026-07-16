@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22038539",
+  "source_fingerprint": "1ea3b0cf561cd138929e665529d46078",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22038539",
+    "caloric-restriction-delays-age-related-methylation-drift"
+  ],
+  "key_phrases": [
+    "caloric",
+    "restriction",
+    "delays",
+    "age",
+    "related",
+    "methylation",
+    "drift",
+    "mammals"
+  ],
+  "summary_1l": "In mammals, caloric restriction consistently results in extended lifespan.",
+  "query_hits": [],
+  "embed_text": "22038539 Caloric restriction delays age-related methylation drift science scifact In mammals, caloric restriction consistently results in extended lifespan. Epigenetic information encoded by DNA methylation is tightly regulated, but shows a striking drift associated with age that includes both gains and losses of DNA… 22038539 caloric-restriction-delays-age-related-methylation-drift caloric restriction delays age related methylation drift mammals In mammals, caloric restriction consistently results in extended lifespan. Caloric restriction delays age-related methylation drift In mammals, caloric restriction consistently results in extended lifespan. Epigenetic information encoded by DNA methylation is tightly regulated, but shows a striking drift associated with age that includes both gains and losses of DNA methylation at various sites. Here, we report that epigenetic drift is conserved across species and the rate of drift correlates with lifespan when comparing mice, rhesus monkeys, and humans. Twenty-two to 30-year-old rhesus monkeys exposed to 30% caloric restriction since 7-14 years of age showed attenuation of age-related methylation drift compared to ad libitum-fed controls such that their blood methylation age appeared 7 years younger than their chronologic age. Even more pronounced effects were s",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.150985+00:00"
+}

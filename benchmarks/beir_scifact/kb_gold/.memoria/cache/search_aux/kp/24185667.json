@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24185667",
+  "source_fingerprint": "cb90af8b1b202edb2f0cc22ce8473bc8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24185667",
+    "dap-kinase-regulates-jnk-signaling-by-binding-and-activating-protein-kinase-d-under-oxidative-stress"
+  ],
+  "key_phrases": [
+    "dap",
+    "kinase",
+    "regulates",
+    "jnk",
+    "signaling",
+    "by",
+    "binding",
+    "activating"
+  ],
+  "summary_1l": "The stress-activated kinase JNK mediates key cellular responses to oxidative stress.",
+  "query_hits": [],
+  "embed_text": "24185667 DAP kinase regulates JNK signaling by binding and activating protein kinase D under oxidative stress science scifact The stress-activated kinase JNK mediates key cellular responses to oxidative stress. Here we show that DAP kinase (DAPk), a cell death promoting Ser/Thr protein kinase, plays a main role in oxidative stress-induced JNK signaling. We… 24185667 dap-kinase-regulates-jnk-signaling-by-binding-and-activating-protein-kinase-d-under-oxidative-stress dap kinase regulates jnk signaling by binding activating The stress-activated kinase JNK mediates key cellular responses to oxidative stress. DAP kinase regulates JNK signaling by binding and activating protein kinase D under oxidative stress The stress-activated kinase JNK mediates key cellular responses to oxidative stress. Here we show that DAP kinase (DAPk), a cell death promoting Ser/Thr protein kinase, plays a main role in oxidative stress-induced JNK signaling. We identify protein kinase D (PKD) as a novel substrate of DAPk and demonstrate that DAPk physically interacts with PKD in response to oxidative stress. We further show that DAPk activates PKD in cells and that induction of JNK phosphorylation by ectopically expressed DAPk can be attenuated by knocking down PKD expression or by inhibiting its catalytic activity. Moreover, knockdown of DAPk expression caused a marked reduction in JNK activation under oxidative stres",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.923569+00:00"
+}

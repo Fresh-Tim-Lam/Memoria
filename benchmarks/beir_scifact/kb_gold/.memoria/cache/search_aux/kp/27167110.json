@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27167110",
+  "source_fingerprint": "c5c1cbb13363eb79406ad033356e3f5d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27167110",
+    "androgen-regulation-of-micro-rnas-in-prostate-cancer."
+  ],
+  "key_phrases": [
+    "androgen",
+    "regulation",
+    "micro",
+    "rnas",
+    "prostate",
+    "cancer",
+    "background",
+    "androgens"
+  ],
+  "summary_1l": "Androgen regulation of micro-RNAs in prostate cancer.",
+  "query_hits": [],
+  "embed_text": "27167110 Androgen regulation of micro-RNAs in prostate cancer. science scifact BACKGROUND Androgens play a critical role in the growth of both androgen dependent and castration-resistant prostate cancer (CRPC). Only a few micro-RNAs (miRNAs) have been suggested to be androgen regulated. We aim to identify androgen… 27167110 androgen-regulation-of-micro-rnas-in-prostate-cancer. androgen regulation micro rnas prostate cancer background androgens Androgen regulation of micro-RNAs in prostate cancer. Androgen regulation of micro-RNAs in prostate cancer. BACKGROUND Androgens play a critical role in the growth of both androgen dependent and castration-resistant prostate cancer (CRPC). Only a few micro-RNAs (miRNAs) have been suggested to be androgen regulated. We aim to identify androgen regulated miRNAs. METHODS We utilized LNCaP derived model, we have established, and which overexpresses the androgen receptor (AR), the VCaP cell line, and 13 intact-castrated prostate cancer (PC) xenograft pairs, as well as clinical specimens of untreated (PC) and CRPC. The expression of miRNAs was analyzed by microarrays and quantitative RT-PCR (Q-RT-PCR). Transfection of pre-miR-141 and anti-miR-141 was also used. RESULTS Seventeen miRNAs were > 1.5-fold up- or downregulated upon dihydrotestosterone (",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.617867+00:00"
+}

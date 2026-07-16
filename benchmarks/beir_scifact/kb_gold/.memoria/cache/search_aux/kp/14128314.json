@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14128314",
+  "source_fingerprint": "4e77d2dbf63e16327b27b06e87a2f8af",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14128314",
+    "stem-cells-and-early-lineage-development"
+  ],
+  "key_phrases": [
+    "stem",
+    "cells",
+    "early",
+    "lineage",
+    "development",
+    "recent",
+    "derivation",
+    "pluripotent"
+  ],
+  "summary_1l": "The recent derivation of pluripotent stem cell lines from a number of different sources, including reprogrammed adult somatic cells, raises the issue of the de",
+  "query_hits": [],
+  "embed_text": "14128314 Stem Cells and Early Lineage Development science scifact The recent derivation of pluripotent stem cell lines from a number of different sources, including reprogrammed adult somatic cells, raises the issue of the developmental equivalence of these different pluripotent states. At least two… 14128314 stem-cells-and-early-lineage-development stem cells early lineage development recent derivation pluripotent The recent derivation of pluripotent stem cell lines from a number of different sources, including reprogrammed adult somatic cells, raises the issue of the de Stem Cells and Early Lineage Development The recent derivation of pluripotent stem cell lines from a number of different sources, including reprogrammed adult somatic cells, raises the issue of the developmental equivalence of these different pluripotent states. At least two different states representing the epiblast progenitors in the blastocyst and the pluripotent progenitors of the later gastrulating embryo have been recognized. Understanding the initial developmental status of the different pluripotent lines is critical for defining starting conditions for differentiation toward therapeutically relevant cell types.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.179858+00:00"
+}

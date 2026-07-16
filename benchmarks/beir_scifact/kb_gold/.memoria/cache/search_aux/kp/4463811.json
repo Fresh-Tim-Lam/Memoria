@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4463811",
+  "source_fingerprint": "83e6dcb94b410c822f4fbf8e1719ce65",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4463811",
+    "low-methionine-ingestion-by-rats-extends-life-span."
+  ],
+  "key_phrases": [
+    "low",
+    "methionine",
+    "ingestion",
+    "by",
+    "rats",
+    "extends",
+    "life",
+    "span"
+  ],
+  "summary_1l": "Low methionine ingestion by rats extends life span.",
+  "query_hits": [],
+  "embed_text": "4463811 Low methionine ingestion by rats extends life span. science scifact Dietary energy restriction has been a widely used means of experimentally extending mammalian life span. We report here that lifelong reduction in the concentration of a single dietary component, the essential amino acid L-methionine, from… 4463811 low-methionine-ingestion-by-rats-extends-life-span. low methionine ingestion by rats extends life span Low methionine ingestion by rats extends life span. Low methionine ingestion by rats extends life span. Dietary energy restriction has been a widely used means of experimentally extending mammalian life span. We report here that lifelong reduction in the concentration of a single dietary component, the essential amino acid L-methionine, from 0.86 to 0.17% of the diet results in a 30% longer life span of male Fischer 344 rats. Methionine restriction completely abolished growth, although food intake was actually greater on a body weight basis. Studies of energy consumption in early life indicated that the energy intake of 0.17% methionine-fed animals was near normal for animals of their size, although consumption per animal was below that of the much larger 0.86% methionine-fed rats. Increasing the energy intake of rats fed 0.17% methionine f",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.737946+00:00"
+}

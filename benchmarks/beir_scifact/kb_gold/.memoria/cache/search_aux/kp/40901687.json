@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "40901687",
+  "source_fingerprint": "9269912caf95bc180fe926b18ba91ca7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "40901687",
+    "phd3-dependent-hydroxylation-of-hclk2-promotes-the-dna-damage-response."
+  ],
+  "key_phrases": [
+    "phd3",
+    "dependent",
+    "hydroxylation",
+    "hclk2",
+    "promotes",
+    "dna",
+    "damage",
+    "response"
+  ],
+  "summary_1l": "PHD3-dependent hydroxylation of HCLK2 promotes the DNA damage response.",
+  "query_hits": [],
+  "embed_text": "40901687 PHD3-dependent hydroxylation of HCLK2 promotes the DNA damage response. science scifact The DNA damage response (DDR) is a complex regulatory network that is critical for maintaining genome integrity. Posttranslational modifications are widely used to ensure strict spatiotemporal control of signal flow, but how the DDR… 40901687 phd3-dependent-hydroxylation-of-hclk2-promotes-the-dna-damage-response. phd3 dependent hydroxylation hclk2 promotes dna damage response PHD3-dependent hydroxylation of HCLK2 promotes the DNA damage response. PHD3-dependent hydroxylation of HCLK2 promotes the DNA damage response. The DNA damage response (DDR) is a complex regulatory network that is critical for maintaining genome integrity. Posttranslational modifications are widely used to ensure strict spatiotemporal control of signal flow, but how the DDR responds to environmental cues, such as changes in ambient oxygen tension, remains poorly understood. We found that an essential component of the ATR/CHK1 signaling pathway, the human homolog of the Caenorhabditis elegans biological clock protein CLK-2 (HCLK2), associated with and was hydroxylated by prolyl hydroxylase domain protein 3 (PHD3). HCLK2 hydroxylation was necessary for its interaction with ATR and the subsequent activation of ATR/CHK1/p53. Inhibiting PHD3, either with the pan-hy",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.925761+00:00"
+}

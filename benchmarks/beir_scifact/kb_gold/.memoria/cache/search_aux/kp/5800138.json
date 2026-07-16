@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "5800138",
+  "source_fingerprint": "414c7a25a39406a431c659262e3db361",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5800138"
+  ],
+  "key_phrases": [
+    "bacteria",
+    "triggered",
+    "cd4",
+    "regulatory",
+    "cells",
+    "suppress",
+    "helicobacter",
+    "hepaticus"
+  ],
+  "summary_1l": "We have previously demonstrated that interleukin (IL)-10–deficient (IL-10 knockout [KO]) but not wild-type (W",
+  "query_hits": [],
+  "embed_text": "5800138 Bacteria-triggered CD4+ T Regulatory Cells Suppress Helicobacter hepaticus–induced Colitis science scifact We have previously demonstrated that interleukin (IL)-10–deficient (IL-10 knockout [KO]) but not wild-type (WT) mice develop colitis after infection with Helicobacter hepaticus . Here, we show that infected recombination activating gene… 5800138 bacteria triggered cd4 regulatory cells suppress helicobacter hepaticus We have previously demonstrated that interleukin (IL)-10–deficient (IL-10 knockout [KO]) but not wild-type (W Bacteria-triggered CD4+ T Regulatory Cells Suppress Helicobacter hepaticus–induced Colitis We have previously demonstrated that interleukin (IL)-10–deficient (IL-10 knockout [KO]) but not wild-type (WT) mice develop colitis after infection with Helicobacter hepaticus . Here, we show that infected recombination activating gene (RAG) KO mice develop intestinal inflammation after reconstitution with CD4+ T cells from IL-10 KO animals and that the cotransfer of CD4+ T cells from H. hepaticus –infected but not uninfected WT mice prevents this colitis. The disease-protective WT CD4+ cells are contained within the CD45RBlow fraction and unexpectedly were found in both the CD25+ and the CD25− subpopulations of these cells, their frequency being higher in the latter. The mechanism by which CD25+ an",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.124372+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "35651106",
+  "source_fingerprint": "fea680f88cd919e43579d0e458777556",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "35651106",
+    "critical-role-of-cd28-in-protective-immunity-against-salmonella-typhimurium."
+  ],
+  "key_phrases": [
+    "critical",
+    "role",
+    "cd28",
+    "protective",
+    "immunity",
+    "against",
+    "salmonella",
+    "typhimurium"
+  ],
+  "summary_1l": "Critical role of CD28 in protective immunity against Salmonella typhimurium.",
+  "query_hits": [],
+  "embed_text": "35651106 Critical role of CD28 in protective immunity against Salmonella typhimurium. science scifact Efficient T cell activation requires both TCR signals and costimulatory signals. CD28 is one of the molecules that provide costimulatory signals for T cells. We used mice deficient in CD28 expression (CD28-/- mice) to analyze the role of… 35651106 critical-role-of-cd28-in-protective-immunity-against-salmonella-typhimurium. critical role cd28 protective immunity against salmonella typhimurium Critical role of CD28 in protective immunity against Salmonella typhimurium. Critical role of CD28 in protective immunity against Salmonella typhimurium. Efficient T cell activation requires both TCR signals and costimulatory signals. CD28 is one of the molecules that provide costimulatory signals for T cells. We used mice deficient in CD28 expression (CD28-/- mice) to analyze the role of CD28 in the immune response against the intracellular bacterium Salmonella typhimurium, the causative agent of murine typhoid fever. CD28-/- mice were highly susceptible to infection with wild-type S. typhimurium and even failed to control infection with attenuated aroA- S. typhimurium. More detailed analysis revealed that CD28-/- animals did not mount a T-dependent Ab response and were highly impaired in the production of IFN-gamma. Thus, CD28 cosignaling is crucial for immunity",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.452708+00:00"
+}

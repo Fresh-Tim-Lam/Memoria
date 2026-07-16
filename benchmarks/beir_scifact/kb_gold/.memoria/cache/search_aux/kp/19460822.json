@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19460822",
+  "source_fingerprint": "07048f5ca85e8badf91a45518c72f0ff",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19460822",
+    "extending-healthy-life-span--from-yeast-to-humans."
+  ],
+  "key_phrases": [
+    "extending",
+    "healthy",
+    "life",
+    "span",
+    "--",
+    "from",
+    "yeast",
+    "humans"
+  ],
+  "summary_1l": "Extending healthy life span--from yeast to humans.",
+  "query_hits": [],
+  "embed_text": "19460822 Extending healthy life span--from yeast to humans. science scifact When the food intake of organisms such as yeast and rodents is reduced (dietary restriction), they live longer than organisms fed a normal diet. A similar effect is seen when the activity of nutrient-sensing pathways is reduced by… 19460822 extending-healthy-life-span--from-yeast-to-humans. extending healthy life span -- from yeast humans Extending healthy life span--from yeast to humans. Extending healthy life span--from yeast to humans. When the food intake of organisms such as yeast and rodents is reduced (dietary restriction), they live longer than organisms fed a normal diet. A similar effect is seen when the activity of nutrient-sensing pathways is reduced by mutations or chemical inhibitors. In rodents, both dietary restriction and decreased nutrient-sensing pathway activity can lower the incidence of age-related loss of function and disease, including tumors and neurodegeneration. Dietary restriction also increases life span and protects against diabetes, cancer, and cardiovascular disease in rhesus monkeys, and in humans it causes changes that protect against these age-related pathologies. Tumors and diabetes are also uncommon in humans with mutations in the growth",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.578769+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11335860",
+  "source_fingerprint": "1b7162aea6ceb142718162cad4063885",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11335860",
+    "trophoblast-differentiation-defect-in-human-embryonic-stem-cells-lacking-pig-a-and-gpi-anchored-cell-surface-proteins."
+  ],
+  "key_phrases": [
+    "trophoblast",
+    "differentiation",
+    "defect",
+    "human",
+    "embryonic",
+    "stem",
+    "cells",
+    "lacking"
+  ],
+  "summary_1l": "Trophoblast differentiation defect in human embryonic stem cells lacking PIG-A and GPI-anchored cell-surface proteins.",
+  "query_hits": [],
+  "embed_text": "11335860 Trophoblast differentiation defect in human embryonic stem cells lacking PIG-A and GPI-anchored cell-surface proteins. science scifact Pluripotent human embryonic stem (hES) cells can differentiate into various cell types derived from the three embryonic germ layers and extraembryonic tissues such as trophoblasts. The mechanisms governing lineage choices of hES cells are… 11335860 trophoblast-differentiation-defect-in-human-embryonic-stem-cells-lacking-pig-a-and-gpi-anchored-cell-surface-proteins. trophoblast differentiation defect human embryonic stem cells lacking Trophoblast differentiation defect in human embryonic stem cells lacking PIG-A and GPI-anchored cell-surface proteins. Trophoblast differentiation defect in human embryonic stem cells lacking PIG-A and GPI-anchored cell-surface proteins. Pluripotent human embryonic stem (hES) cells can differentiate into various cell types derived from the three embryonic germ layers and extraembryonic tissues such as trophoblasts. The mechanisms governing lineage choices of hES cells are largely unknown. Here, we report that we established two independent hES cell clones lacking a group of cell surface molecules, glycosyl-phosphatidyl-inositol-anchored proteins (GPI-APs). The GPI-AP deficiency in these two hES clones is due to the deficiency in the gene expression of PIG-A (phosphatidyl-inositol-glycan class A), which is required for the first step of GPI synthesis. GPI-AP-deficient hES cells were capable of forming embry",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:06.703948+00:00"
+}

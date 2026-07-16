@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23665162",
+  "source_fingerprint": "fdb5cfafe5e5bb1d0abfd397aa62bc34",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23665162",
+    "association-of-hypomethylation-of-line-1-repetitive-element-in-blood-leukocyte-dna-with-an-increased-risk-of-hepatocellular-carcinoma"
+  ],
+  "key_phrases": [
+    "association",
+    "hypomethylation",
+    "line",
+    "repetitive",
+    "element",
+    "blood",
+    "leukocyte",
+    "dna"
+  ],
+  "summary_1l": "Global DNA hypomethylation has been associated with increased risk",
+  "query_hits": [],
+  "embed_text": "23665162 Association of hypomethylation of LINE-1 repetitive element in blood leukocyte DNA with an increased risk of hepatocellular carcinoma science scifact Global DNA hypomethylation has been associated with increased risk for cancers of the colorectum, bladder, breast, head and neck, and testicular germ cells. The aim of this study was to examine whether global hypomethylation in blood… 23665162 association-of-hypomethylation-of-line-1-repetitive-element-in-blood-leukocyte-dna-with-an-increased-risk-of-hepatocellular-carcinoma association hypomethylation line repetitive element blood leukocyte dna Global DNA hypomethylation has been associated with increased risk Association of hypomethylation of LINE-1 repetitive element in blood leukocyte DNA with an increased risk of hepatocellular carcinoma Global DNA hypomethylation has been associated with increased risk for cancers of the colorectum, bladder, breast, head and neck, and testicular germ cells. The aim of this study was to examine whether global hypomethylation in blood leukocyte DNA is associated with the risk of hepatocellular carcinoma (HCC). A total of 315 HCC cases and 356 age-, sex- and HBsAg status-matched controls were included. Global methylation in blood leukocyte DNA was estimated by analyzing long interspersed element-1 (LINE-1) repeats using bisulfite-polymerase chain reaction (PCR) and pyrosequencing. We observed that the median methylation level in HCC cases (percentage of 5-meth",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.940867+00:00"
+}

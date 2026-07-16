@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27587267",
+  "source_fingerprint": "d7c489ff5690a39b8e5713babf962236",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27587267",
+    "autoradiography-of-chromosomal-dna-fibers-from-chinese-hamster-cells."
+  ],
+  "key_phrases": [
+    "autoradiography",
+    "chromosomal",
+    "dna",
+    "fibers",
+    "from",
+    "chinese",
+    "hamster",
+    "cells"
+  ],
+  "summary_1l": "Autoradiography of chromosomal DNA fibers from Chinese hamster cells.",
+  "query_hits": [],
+  "embed_text": "27587267 Autoradiography of chromosomal DNA fibers from Chinese hamster cells. science scifact Ignorance of the true length of the DNA molecules in the chromosomes of higher organisms has always been a major obstacle to understanding chromosome structure. Consequently, attempts have been made, usually with the aid of electron… 27587267 autoradiography-of-chromosomal-dna-fibers-from-chinese-hamster-cells. autoradiography chromosomal dna fibers from chinese hamster cells Autoradiography of chromosomal DNA fibers from Chinese hamster cells. Autoradiography of chromosomal DNA fibers from Chinese hamster cells. Ignorance of the true length of the DNA molecules in the chromosomes of higher organisms has always been a major obstacle to understanding chromosome structure. Consequently, attempts have been made, usually with the aid of electron microscopy, to estimate the size of DNA in higher organisms. Solari (1) has reported the longest such DNA measured before now-a DNA fiber from a sea urchin sperm at least 93 μ, long.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.102527+00:00"
+}

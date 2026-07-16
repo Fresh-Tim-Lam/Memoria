@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6368017",
+  "source_fingerprint": "51b10de0059ac724ba1188dd371d22fa",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6368017",
+    "loss-of-sex-discrimination-and-male-male-aggression-in-mice-deficient-for-trp2."
+  ],
+  "key_phrases": [
+    "loss",
+    "sex",
+    "discrimination",
+    "male",
+    "aggression",
+    "mice",
+    "deficient",
+    "trp2"
+  ],
+  "summary_1l": "Loss of sex discrimination and male-male aggression in mice deficient for TRP2.",
+  "query_hits": [],
+  "embed_text": "6368017 Loss of sex discrimination and male-male aggression in mice deficient for TRP2. science scifact The mouse vomeronasal organ (VNO) is thought to mediate social behaviors and neuroendocrine changes elicited by pheromonal cues. The molecular mechanisms underlying the sensory response to pheromones and the behavioral repertoire induced… 6368017 loss-of-sex-discrimination-and-male-male-aggression-in-mice-deficient-for-trp2. loss sex discrimination male aggression mice deficient trp2 Loss of sex discrimination and male-male aggression in mice deficient for TRP2. Loss of sex discrimination and male-male aggression in mice deficient for TRP2. The mouse vomeronasal organ (VNO) is thought to mediate social behaviors and neuroendocrine changes elicited by pheromonal cues. The molecular mechanisms underlying the sensory response to pheromones and the behavioral repertoire induced through the VNO are not fully characterized. Using the tools of mouse genetics and multielectrode recording, we demonstrate that the sensory activation of VNO neurons requires TRP2, a putative ion channel of the transient receptor potential family that is expressed exclusively in these neurons. Moreover, we show that male mice deficient in TRP2 expression fail to display male-male aggression, and they initiate sexual and courtship behaviors toward both males and females. Our st",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.645243+00:00"
+}

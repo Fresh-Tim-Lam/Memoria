@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16812091",
+  "source_fingerprint": "c7a81940a7b55b8b3e8c9007f3b06fe8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16812091",
+    "clinical-use-of-bone-densitometry:-scientific-review."
+  ],
+  "key_phrases": [
+    "clinical",
+    "use",
+    "bone",
+    "densitometry",
+    "scientific",
+    "review",
+    "context",
+    "osteoporosis"
+  ],
+  "summary_1l": "Clinical use of bone densitometry: scientific review.",
+  "query_hits": [],
+  "embed_text": "16812091 Clinical use of bone densitometry: scientific review. science scifact CONTEXT Osteoporosis causes substantial morbidity and costs $13.8 billion annually in the United States. Measurement of bone mass by densitometry is a primary part of diagnosing osteoporosis and deciding a preventive treatment course. Bone… 16812091 clinical-use-of-bone-densitometry:-scientific-review. clinical use bone densitometry scientific review context osteoporosis Clinical use of bone densitometry: scientific review. Clinical use of bone densitometry: scientific review. CONTEXT Osteoporosis causes substantial morbidity and costs $13.8 billion annually in the United States. Measurement of bone mass by densitometry is a primary part of diagnosing osteoporosis and deciding a preventive treatment course. Bone mineral densitometry has become more widely available and commonly used in practice. OBJECTIVE To review evidence about the value of various clinical applications of bone densitometry. DATA SOURCES A MEDLINE search was performed to update previous meta-analyses of the relationship between various measurements of bone density and risk of vertebral and hip fracture. We used data from the prospective Study of Osteoporotic Fractures to estimate risk of fracture from bone density and age in postmenopausal",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.878942+00:00"
+}

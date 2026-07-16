@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20109325",
+  "source_fingerprint": "e7ecf9020eacef81ae6c34718dcfb814",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20109325",
+    "global-strategy-for-the-diagnosis,-management,-and-prevention-of-chronic-obstructive-pulmonary-disease:-gold-executive-summary."
+  ],
+  "key_phrases": [
+    "global",
+    "strategy",
+    "diagnosis",
+    "management",
+    "prevention",
+    "chronic",
+    "obstructive",
+    "pulmonary"
+  ],
+  "summary_1l": "Global strategy for the diagnosis, management, and prevention of chronic obstructive pulmonary disease: GOLD executive summary.",
+  "query_hits": [],
+  "embed_text": "20109325 Global strategy for the diagnosis, management, and prevention of chronic obstructive pulmonary disease: GOLD executive summary. science scifact Chronic obstructive pulmonary disease (COPD) is a global health problem, and since 2001, the Global Initiative for Chronic Obstructive Lung Disease (GOLD) has published its strategy document for the diagnosis and management of COPD. This… 20109325 global-strategy-for-the-diagnosis,-management,-and-prevention-of-chronic-obstructive-pulmonary-disease:-gold-executive-summary. global strategy diagnosis management prevention chronic obstructive pulmonary Global strategy for the diagnosis, management, and prevention of chronic obstructive pulmonary disease: GOLD executive summary. Global strategy for the diagnosis, management, and prevention of chronic obstructive pulmonary disease: GOLD executive summary. Chronic obstructive pulmonary disease (COPD) is a global health problem, and since 2001, the Global Initiative for Chronic Obstructive Lung Disease (GOLD) has published its strategy document for the diagnosis and management of COPD. This executive summary presents the main contents of the second 5-year revision of the GOLD document that has implemented some of the vast knowledge about COPD accumulated over the last years. Today, GOLD recommends that spirometry is required for the clinical diagnosis of COPD to avoid misdiagnosis and to ensure proper evaluation of severity of airflow limitation. The document highlights that the assessment of the patient with COPD sh",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.638092+00:00"
+}

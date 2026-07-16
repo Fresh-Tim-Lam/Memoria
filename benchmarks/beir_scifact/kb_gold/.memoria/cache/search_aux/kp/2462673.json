@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2462673",
+  "source_fingerprint": "f1b744f3a0afa0de2c66e19b56c114b0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2462673",
+    "cd28-and-itk-signals-regulate-autoreactive-t-cell-trafficking"
+  ],
+  "key_phrases": [
+    "cd28",
+    "itk",
+    "signals",
+    "regulate",
+    "autoreactive",
+    "cell",
+    "trafficking",
+    "activation"
+  ],
+  "summary_1l": "Activation of self-reactive T cells and their trafficking to target tissues leads to autoimmune organ destruction.",
+  "query_hits": [],
+  "embed_text": "2462673 CD28 and ITK signals regulate autoreactive T cell trafficking science scifact Activation of self-reactive T cells and their trafficking to target tissues leads to autoimmune organ destruction. Mice lacking the co-inhibitory receptor cytotoxic T lymphocyte antigen-4 (CTLA-4) develop fatal autoimmunity characterized… 2462673 cd28-and-itk-signals-regulate-autoreactive-t-cell-trafficking cd28 itk signals regulate autoreactive cell trafficking activation Activation of self-reactive T cells and their trafficking to target tissues leads to autoimmune organ destruction. CD28 and ITK signals regulate autoreactive T cell trafficking Activation of self-reactive T cells and their trafficking to target tissues leads to autoimmune organ destruction. Mice lacking the co-inhibitory receptor cytotoxic T lymphocyte antigen-4 (CTLA-4) develop fatal autoimmunity characterized by lymphocytic infiltration into nonlymphoid tissues. Here, we demonstrate that the CD28 co-stimulatory pathway regulates the trafficking of self-reactive Ctla4(-/-) T cells to tissues. Concurrent ablation of the CD28-activated Tec family kinase ITK does not block spontaneous T cell activation but instead causes self-reactive Ctla4(-/-) T cells to accumulate in secondary lymphoid organs. Despite excessive spontaneous T cell activation and proliferation in lymphoid organs, Itk(-/-); Ctla4(-/-) mi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.888392+00:00"
+}

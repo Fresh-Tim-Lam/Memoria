@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6650933",
+  "source_fingerprint": "b8db9a53683b4f2083765628212e3634",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6650933",
+    "green-tea-polyphenol-causes-differential-oxidative-environments-in-tumor-versus-normal-epithelial-cells."
+  ],
+  "key_phrases": [
+    "green",
+    "tea",
+    "polyphenol",
+    "causes",
+    "differential",
+    "oxidative",
+    "environments",
+    "tumor"
+  ],
+  "summary_1l": "Green tea polyphenol causes differential oxidative environments in tumor versus normal epithelial cells.",
+  "query_hits": [],
+  "embed_text": "6650933 Green tea polyphenol causes differential oxidative environments in tumor versus normal epithelial cells. science scifact Green tea polyphenols (GTPPs) are considered beneficial to human health, especially as chemopreventive agents. Recently, cytotoxic reactive oxygen species (ROS) were identified in tumor and certain normal cell cultures incubated with high… 6650933 green-tea-polyphenol-causes-differential-oxidative-environments-in-tumor-versus-normal-epithelial-cells. green tea polyphenol causes differential oxidative environments tumor Green tea polyphenol causes differential oxidative environments in tumor versus normal epithelial cells. Green tea polyphenol causes differential oxidative environments in tumor versus normal epithelial cells. Green tea polyphenols (GTPPs) are considered beneficial to human health, especially as chemopreventive agents. Recently, cytotoxic reactive oxygen species (ROS) were identified in tumor and certain normal cell cultures incubated with high concentrations of the most abundant GTPP, (-)-epigallocatechin-3-gallate (EGCG). If EGCG also provokes the production of ROS in normal epithelial cells, it may preclude the topical use of EGCG at higher doses. The current study examined the oxidative status of normal epithelial, normal salivary gland, and oral carcinoma cells treated with EGCG, using ROS measurement and catalase and superoxide dismutase activity assays. The results demonstrated that hi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.366085+00:00"
+}

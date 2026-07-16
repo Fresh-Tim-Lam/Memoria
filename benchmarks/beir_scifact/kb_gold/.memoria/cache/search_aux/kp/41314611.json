@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "41314611",
+  "source_fingerprint": "13c10769b8b78bc105f602e4d6756985",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "41314611",
+    "uncoupling-of-leading--and-lagging-strand-dna-replication-during-lesion-bypass-in-vivo."
+  ],
+  "key_phrases": [
+    "uncoupling",
+    "leading",
+    "lagging",
+    "strand",
+    "dna",
+    "replication",
+    "during",
+    "lesion"
+  ],
+  "summary_1l": "Uncoupling of leading- and lagging-strand DNA replication during lesion bypass in vivo.",
+  "query_hits": [],
+  "embed_text": "41314611 Uncoupling of leading- and lagging-strand DNA replication during lesion bypass in vivo. science scifact Numerous agents attack DNA, forming lesions that impair normal replication. Specialized DNA polymerases transiently replace the replicative polymerase and copy past lesions, thus generating mutations, the major initiating cause of cancer.… 41314611 uncoupling-of-leading--and-lagging-strand-dna-replication-during-lesion-bypass-in-vivo. uncoupling leading lagging strand dna replication during lesion Uncoupling of leading- and lagging-strand DNA replication during lesion bypass in vivo. Uncoupling of leading- and lagging-strand DNA replication during lesion bypass in vivo. Numerous agents attack DNA, forming lesions that impair normal replication. Specialized DNA polymerases transiently replace the replicative polymerase and copy past lesions, thus generating mutations, the major initiating cause of cancer. We monitored, in Escherichia coli, the kinetics of replication of both strands of DNA molecules containing a single replication block in either the leading or lagging strand. Despite a block in the leading strand, lagging-strand synthesis proceeded further, implying transient uncoupling of concurrent strand synthesis. Replication through the lesion requires specialized DNA polymerases and is achieved with similar kinetics and efficiencies in both strands.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.304414+00:00"
+}

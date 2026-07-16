@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19966976",
+  "source_fingerprint": "84b81ac1db1d913681d78c6188b036bd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19966976",
+    "dynamic-regulation-of-heterochromatin-function-via-phosphorylation-of-hp1-family-proteins."
+  ],
+  "key_phrases": [
+    "dynamic",
+    "regulation",
+    "heterochromatin",
+    "function",
+    "via",
+    "phosphorylation",
+    "hp1",
+    "family"
+  ],
+  "summary_1l": "Dynamic regulation of heterochromatin function via phosphorylation of HP1-family proteins.",
+  "query_hits": [],
+  "embed_text": "19966976 Dynamic regulation of heterochromatin function via phosphorylation of HP1-family proteins. science scifact Heterochromatin is characterized by methylation of histone H3 at lysine 9, which is recognized by well-conserved HP1-family proteins. Heterochromatin participates in various chromosome functions, which include transcriptional gene… 19966976 dynamic-regulation-of-heterochromatin-function-via-phosphorylation-of-hp1-family-proteins. dynamic regulation heterochromatin function via phosphorylation hp1 family Dynamic regulation of heterochromatin function via phosphorylation of HP1-family proteins. Dynamic regulation of heterochromatin function via phosphorylation of HP1-family proteins. Heterochromatin is characterized by methylation of histone H3 at lysine 9, which is recognized by well-conserved HP1-family proteins. Heterochromatin participates in various chromosome functions, which include transcriptional gene silencing and sister-chromatid cohesion. These heterochromatic functions are carried out by various effector proteins that associate with HP1-family proteins; however, the regulation of this association with the effectors is not well understood. Recently, we showed that phosphorylation of the fission-yeast HP1 homolog Swi6 regulates the association of the transcriptional regulators differentially and changes the transcriptional activity of heterochromatin, without affecting",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.464669+00:00"
+}

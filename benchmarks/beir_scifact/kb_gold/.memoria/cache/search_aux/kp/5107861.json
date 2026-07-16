@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5107861",
+  "source_fingerprint": "4c6a431fc07eb1aca72cf6cac59ec03f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5107861",
+    "chronic-variable-stress-activates-hematopoietic-stem-cells"
+  ],
+  "key_phrases": [
+    "chronic",
+    "variable",
+    "stress",
+    "activates",
+    "hematopoietic",
+    "stem",
+    "cells",
+    "exposure"
+  ],
+  "summary_1l": "Exposure to psychosocial stress is a risk factor for many diseases, including atherosclerosis.",
+  "query_hits": [],
+  "embed_text": "5107861 Chronic variable stress activates hematopoietic stem cells science scifact Exposure to psychosocial stress is a risk factor for many diseases, including atherosclerosis. Although incompletely understood, interaction between the psyche and the immune system provides one potential mechanism linking stress and… 5107861 chronic-variable-stress-activates-hematopoietic-stem-cells chronic variable stress activates hematopoietic stem cells exposure Exposure to psychosocial stress is a risk factor for many diseases, including atherosclerosis. Chronic variable stress activates hematopoietic stem cells Exposure to psychosocial stress is a risk factor for many diseases, including atherosclerosis. Although incompletely understood, interaction between the psyche and the immune system provides one potential mechanism linking stress and disease inception and progression. Known cross-talk between the brain and immune system includes the hypothalamic-pituitary-adrenal axis, which centrally drives glucocorticoid production in the adrenal cortex, and the sympathetic-adrenal-medullary axis, which controls stress-induced catecholamine release in support of the fight-or-flight reflex. It remains unknown, however, whether chronic stress changes hematopoietic stem cell activity. Here we show that stress increases proliferation of these most pr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.123652+00:00"
+}

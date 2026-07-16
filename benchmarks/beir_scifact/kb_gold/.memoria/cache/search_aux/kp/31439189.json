@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "31439189",
+  "source_fingerprint": "f2d6b9f2dd6d1adb9e4ab55a3f45c1aa",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "31439189",
+    "stem-cell-characteristics-in-prostate-cancer-cell-lines."
+  ],
+  "key_phrases": [
+    "stem",
+    "cell",
+    "characteristics",
+    "prostate",
+    "cancer",
+    "lines",
+    "background",
+    "recent"
+  ],
+  "summary_1l": "Stem cell characteristics in prostate cancer cell lines.",
+  "query_hits": [],
+  "embed_text": "31439189 Stem cell characteristics in prostate cancer cell lines. science scifact BACKGROUND Recent studies indicate the presence of a small, stem-like cell population in several human cancers that is crucial for the tumour (re)population. OBJECTIVE Six established prostate cancer (PCa) cell lines-DU145, DuCaP, LAPC-4,… 31439189 stem-cell-characteristics-in-prostate-cancer-cell-lines. stem cell characteristics prostate cancer lines background recent Stem cell characteristics in prostate cancer cell lines. Stem cell characteristics in prostate cancer cell lines. BACKGROUND Recent studies indicate the presence of a small, stem-like cell population in several human cancers that is crucial for the tumour (re)population. OBJECTIVE Six established prostate cancer (PCa) cell lines-DU145, DuCaP, LAPC-4, 22Rv1, LNCaP, and PC-3-were examined for their stem cell properties in vitro. DESIGN, SETTINGS, AND PARTICIPANTS The colony-forming efficiency and self-renewal ability of morphologically distinguishable holoclones and paraclones were tested with low-density plating and serial passaging. Expression of the putative stem cell marker CD133 and breast cancer resistance protein (BCRP) was examined with flow cytometry, and immunohistochemical stainings were made for CD133, alpha2-integrin, nestin, BCRP, cy",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.596660+00:00"
+}

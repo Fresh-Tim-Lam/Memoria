@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "28207326",
+  "source_fingerprint": "0a764e8a4d07ec46353cb10b581f8b74",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "28207326",
+    "vegf-and-podocytes-in-diabetic-nephropathy."
+  ],
+  "key_phrases": [
+    "vegf",
+    "podocytes",
+    "diabetic",
+    "nephropathy",
+    "vascular",
+    "endothelial",
+    "growth",
+    "factor"
+  ],
+  "summary_1l": "VEGF and podocytes in diabetic nephropathy.",
+  "query_hits": [],
+  "embed_text": "28207326 VEGF and podocytes in diabetic nephropathy. science scifact Vascular endothelial growth factor-A (VEGF-A) is a protein secreted by podocytes that is necessary for survival of endothelial cells, podocytes, and mesangial cells. VEGF-A regulates slit-diaphragm signaling and podocyte shape via… 28207326 vegf-and-podocytes-in-diabetic-nephropathy. vegf podocytes diabetic nephropathy vascular endothelial growth factor VEGF and podocytes in diabetic nephropathy. VEGF and podocytes in diabetic nephropathy. Vascular endothelial growth factor-A (VEGF-A) is a protein secreted by podocytes that is necessary for survival of endothelial cells, podocytes, and mesangial cells. VEGF-A regulates slit-diaphragm signaling and podocyte shape via VEGF-receptor 2-nephrin-nck-actin interactions. Chronic hyperglycemia-induced excess podocyte VEGF-A and low endothelial nitric oxide drive the development and the progression of diabetic nephropathy. The abnormal cross-talk between VEGF-A and nitric oxide pathways is fueled by the diabetic milieu, resulting in increased oxidative stress. Recent findings on these pathogenic molecular mechanisms provide new potential targets for therapy for diabetic renal disease.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.693583+00:00"
+}

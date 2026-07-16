@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "2211868",
+  "source_fingerprint": "e0d6620dff95b3a3e2e82d51a0ac632d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2211868"
+  ],
+  "key_phrases": [
+    "epidemiological",
+    "expansion",
+    "structural",
+    "studies",
+    "clinical",
+    "challenges",
+    "new",
+    "lactamases"
+  ],
+  "summary_1l": "Epidemiological expansion, structural studies, and clinical challenges of new β-lactamases from gram-negative bacteria.",
+  "query_hits": [],
+  "embed_text": "2211868 Epidemiological expansion, structural studies, and clinical challenges of new β-lactamases from gram-negative bacteria. science scifact β-Lactamase evolution presents to the infectious disease community a major challenge in the treatment of infections caused by multidrug-resistant gram-negative bacteria. Because over 1,000 of these naturally occurring β-lactamases exist,… 2211868 epidemiological expansion structural studies clinical challenges new lactamases Epidemiological expansion, structural studies, and clinical challenges of new β-lactamases from gram-negative bacteria. Epidemiological expansion, structural studies, and clinical challenges of new β-lactamases from gram-negative bacteria. β-Lactamase evolution presents to the infectious disease community a major challenge in the treatment of infections caused by multidrug-resistant gram-negative bacteria. Because over 1,000 of these naturally occurring β-lactamases exist, attempts to correlate structure and function have become daunting. Although new enzymes in the extended-spectrum β-lactamase (ESBL) families are frequently identified, the older CTX-M-14 and CTX-M-15 enzymes have become the most prevalent ESBLs in global surveillance. Carbapenemases with either serine-based or zinc-facilitated hydrolysis mechanisms are posing some of the most critical problems. Most geographical regions now report KPC ser",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.256452+00:00"
+}

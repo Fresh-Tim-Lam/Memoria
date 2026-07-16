@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5867846",
+  "source_fingerprint": "d5057feb611e89d30c43f6bfbeea2a07",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5867846",
+    "analysis-of-the-interaction-of-primate-retroviruses-with-the-human-rna-interference-machinery."
+  ],
+  "key_phrases": [
+    "analysis",
+    "interaction",
+    "primate",
+    "retroviruses",
+    "with",
+    "human",
+    "rna",
+    "interference"
+  ],
+  "summary_1l": "Analysis of the interaction of primate retroviruses with the human RNA interference machinery.",
+  "query_hits": [],
+  "embed_text": "5867846 Analysis of the interaction of primate retroviruses with the human RNA interference machinery. science scifact The question of whether retroviruses, including human immunodeficiency virus type 1 (HIV-1), interact with the cellular RNA interference machinery has been controversial. Here, we present data showing that neither HIV-1 nor human T-cell… 5867846 analysis-of-the-interaction-of-primate-retroviruses-with-the-human-rna-interference-machinery. analysis interaction primate retroviruses with human rna interference Analysis of the interaction of primate retroviruses with the human RNA interference machinery. Analysis of the interaction of primate retroviruses with the human RNA interference machinery. The question of whether retroviruses, including human immunodeficiency virus type 1 (HIV-1), interact with the cellular RNA interference machinery has been controversial. Here, we present data showing that neither HIV-1 nor human T-cell leukemia virus type 1 (HTLV-1) expresses significant levels of either small interfering RNAs or microRNAs in persistently infected T cells. We also demonstrate that the retroviral nuclear transcription factors HIV-1 Tat and HTLV-1 Tax, as well as the Tas transactivator encoded by primate foamy virus, fail to inhibit RNA interference in human cells. Moreover, the stable expression of physiological levels of HIV-1 Tat did not globally inhibit microRNA production or",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.411586+00:00"
+}

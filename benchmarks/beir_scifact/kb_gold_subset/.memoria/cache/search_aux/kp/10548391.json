@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10548391",
+  "source_fingerprint": "50f40a24d7b377270d247c39eebcd79e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10548391",
+    "ultrarapid-drug-metabolism:-pcr-based-detection-of-cyp2d6-gene-duplication."
+  ],
+  "key_phrases": [
+    "ultrarapid",
+    "drug",
+    "metabolism",
+    "pcr",
+    "based",
+    "detection",
+    "cyp2d6",
+    "gene"
+  ],
+  "summary_1l": "Ultrarapid drug metabolism: PCR-based detection of CYP2D6 gene duplication.",
+  "query_hits": [],
+  "embed_text": "10548391 Ultrarapid drug metabolism: PCR-based detection of CYP2D6 gene duplication. science scifact The enzyme debrisoquine 4-hydroxylase (CYP2D6), which metabolizes many widely used drugs, is highly polymorphic. The activity of the enzyme ranges between subjects from ultrafast to a complete absence. Therefore, metabolic capacity varies,… 10548391 ultrarapid-drug-metabolism:-pcr-based-detection-of-cyp2d6-gene-duplication. ultrarapid drug metabolism pcr based detection cyp2d6 gene Ultrarapid drug metabolism: PCR-based detection of CYP2D6 gene duplication. Ultrarapid drug metabolism: PCR-based detection of CYP2D6 gene duplication. The enzyme debrisoquine 4-hydroxylase (CYP2D6), which metabolizes many widely used drugs, is highly polymorphic. The activity of the enzyme ranges between subjects from ultrafast to a complete absence. Therefore, metabolic capacity varies, producing intersubject differences in therapeutic efficacy and side effects at standard recommended doses. Up to 7% of Caucasians may demonstrate ultrarapid drug metabolism (UM) because of inherited alleles with multiplicate functional CYP2D6 genes, causing an increased amount of enzyme to be expressed. Identification of UM subjects is of potential clinical importance for adjustment of doses in drug therapy, as well as to avoid misidentification of noncompliance. In our study, we",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.680554+00:00"
+}

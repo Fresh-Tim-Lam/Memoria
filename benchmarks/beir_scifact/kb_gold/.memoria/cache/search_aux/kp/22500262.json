@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22500262",
+  "source_fingerprint": "ffa337940d106402af7951743a17ae8f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22500262",
+    "cryptochrome-mediates-circadian-regulation-of-camp-signaling-and-hepatic-gluconeogenesis"
+  ],
+  "key_phrases": [
+    "cryptochrome",
+    "mediates",
+    "circadian",
+    "regulation",
+    "camp",
+    "signaling",
+    "hepatic",
+    "gluconeogenesis"
+  ],
+  "summary_1l": "During fasting, mammals maintain normal glucose homeostasis by stimulating hepatic gluconeogenesis.",
+  "query_hits": [],
+  "embed_text": "22500262 Cryptochrome Mediates Circadian Regulation of cAMP Signaling and Hepatic Gluconeogenesis science scifact During fasting, mammals maintain normal glucose homeostasis by stimulating hepatic gluconeogenesis. Elevations in circulating glucagon and epinephrine, two hormones that activate hepatic gluconeogenesis, trigger the cAMP-mediated… 22500262 cryptochrome-mediates-circadian-regulation-of-camp-signaling-and-hepatic-gluconeogenesis cryptochrome mediates circadian regulation camp signaling hepatic gluconeogenesis During fasting, mammals maintain normal glucose homeostasis by stimulating hepatic gluconeogenesis. Cryptochrome Mediates Circadian Regulation of cAMP Signaling and Hepatic Gluconeogenesis During fasting, mammals maintain normal glucose homeostasis by stimulating hepatic gluconeogenesis. Elevations in circulating glucagon and epinephrine, two hormones that activate hepatic gluconeogenesis, trigger the cAMP-mediated phosphorylation of cAMP response element-binding protein (Creb) and dephosphorylation of the Creb-regulated transcription coactivator-2 (Crtc2)--two key transcriptional regulators of this process. Although the underlying mechanism is unclear, hepatic gluconeogenesis is also regulated by the circadian clock, which coordinates glucose metabolism with changes in the external environment. Circadian control of gene expression is achieved by two transcriptional activators, Clock and",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.888366+00:00"
+}

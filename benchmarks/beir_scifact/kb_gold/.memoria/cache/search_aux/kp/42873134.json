@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "42873134",
+  "source_fingerprint": "ac4fd040da0f683d648d02bd68fe2a2a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "42873134",
+    "mechanisms-of-pancreatic-beta-cell-death-in-type-1-and-type-2-diabetes:-many-differences,-few-similarities."
+  ],
+  "key_phrases": [
+    "mechanisms",
+    "pancreatic",
+    "beta",
+    "cell",
+    "death",
+    "type",
+    "diabetes",
+    "many"
+  ],
+  "summary_1l": "Mechanisms of pancreatic beta-cell death in type 1 and type 2 diabetes: many differences, few similarities.",
+  "query_hits": [],
+  "embed_text": "42873134 Mechanisms of pancreatic beta-cell death in type 1 and type 2 diabetes: many differences, few similarities. science scifact Type 1 and type 2 diabetes are characterized by progressive beta-cell failure. Apoptosis is probably the main form of beta-cell death in both forms of the disease. It has been suggested that the mechanisms leading to nutrient- and… 42873134 mechanisms-of-pancreatic-beta-cell-death-in-type-1-and-type-2-diabetes:-many-differences,-few-similarities. mechanisms pancreatic beta cell death type diabetes many Mechanisms of pancreatic beta-cell death in type 1 and type 2 diabetes: many differences, few similarities. Mechanisms of pancreatic beta-cell death in type 1 and type 2 diabetes: many differences, few similarities. Type 1 and type 2 diabetes are characterized by progressive beta-cell failure. Apoptosis is probably the main form of beta-cell death in both forms of the disease. It has been suggested that the mechanisms leading to nutrient- and cytokine-induced beta-cell death in type 2 and type 1 diabetes, respectively, share the activation of a final common pathway involving interleukin (IL)-1beta, nuclear factor (NF)-kappaB, and Fas. We review herein the similarities and differences between the mechanisms of beta-cell death in type 1 and type 2 diabetes. In the insulitis lesion in type 1 diabetes, invading immune cells produce cytokines, such as IL-1beta, tumor necrosis factor (TNF)-alpha, and",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.316967+00:00"
+}

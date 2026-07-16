@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10795340",
+  "source_fingerprint": "54d11826d671633827f81a69238cfa30",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10795340",
+    "functional-inhibition-of-osteoblastic-cells-in-an-in-vivo-mouse-model-of-myeloid-leukemia."
+  ],
+  "key_phrases": [
+    "functional",
+    "inhibition",
+    "osteoblastic",
+    "cells",
+    "vivo",
+    "mouse",
+    "model",
+    "myeloid"
+  ],
+  "summary_1l": "Functional inhibition of osteoblastic cells in an in vivo mouse model of myeloid leukemia.",
+  "query_hits": [],
+  "embed_text": "10795340 Functional inhibition of osteoblastic cells in an in vivo mouse model of myeloid leukemia. science scifact Pancytopenia is a major cause of morbidity in acute myeloid leukemia (AML), yet its cause is unclear. Normal osteoblastic cells have been shown to support hematopoiesis. To define the effects of leukemia on osteoblastic cells, we used an… 10795340 functional-inhibition-of-osteoblastic-cells-in-an-in-vivo-mouse-model-of-myeloid-leukemia. functional inhibition osteoblastic cells vivo mouse model myeloid Functional inhibition of osteoblastic cells in an in vivo mouse model of myeloid leukemia. Functional inhibition of osteoblastic cells in an in vivo mouse model of myeloid leukemia. Pancytopenia is a major cause of morbidity in acute myeloid leukemia (AML), yet its cause is unclear. Normal osteoblastic cells have been shown to support hematopoiesis. To define the effects of leukemia on osteoblastic cells, we used an immunocompetent murine model of AML. Leukemic mice had inhibition of osteoblastic cells, with decreased serum levels of the bone formation marker osteocalcin. Osteoprogenitor cells and endosteal-lining osteopontin(+) cells were reduced, and osteocalcin mRNA in CD45(-) marrow cells was diminished. This resulted in severe loss of mineralized bone. Osteoclasts were only transiently increased without significant increases in bone resorption, and their inhibition only par",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:05.513740+00:00"
+}

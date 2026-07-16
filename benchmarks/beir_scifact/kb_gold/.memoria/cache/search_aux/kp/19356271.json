@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19356271",
+  "source_fingerprint": "5a98351f8a5dc3afe126fe86407c168e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19356271",
+    "hprimpol1/ccdc111-is-a-human-dna-primase-polymerase-required-for-the-maintenance-of-genome-integrity."
+  ],
+  "key_phrases": [
+    "hprimpol1",
+    "ccdc111",
+    "human",
+    "dna",
+    "primase",
+    "polymerase",
+    "required",
+    "maintenance"
+  ],
+  "summary_1l": "hPrimpol1/CCDC111 is a human DNA primase-polymerase required for the maintenance of genome integrity.",
+  "query_hits": [],
+  "embed_text": "19356271 hPrimpol1/CCDC111 is a human DNA primase-polymerase required for the maintenance of genome integrity. science scifact Prim-pol is a recently identified DNA primase-polymerase belonging to the archaeao-eukaryotic primase (AEP) superfamily. Here, we characterize a previously unrecognized prim-pol in human cells, which we designate hPrimpol1 (human… 19356271 hprimpol1/ccdc111-is-a-human-dna-primase-polymerase-required-for-the-maintenance-of-genome-integrity. hprimpol1 ccdc111 human dna primase polymerase required maintenance hPrimpol1/CCDC111 is a human DNA primase-polymerase required for the maintenance of genome integrity. hPrimpol1/CCDC111 is a human DNA primase-polymerase required for the maintenance of genome integrity. Prim-pol is a recently identified DNA primase-polymerase belonging to the archaeao-eukaryotic primase (AEP) superfamily. Here, we characterize a previously unrecognized prim-pol in human cells, which we designate hPrimpol1 (human primase-polymerase 1). hPrimpol1 possesses primase and DNA polymerase activities in vitro, interacts directly with RPA1 and is recruited to sites of DNA damage and stalled replication forks in an RPA1-dependent manner. Cells depleted of hPrimpol1 display increased spontaneous DNA damage and defects in the restart of stalled replication forks. Both RPA1 binding and the primase activity of hPrimpol1 are required for its cellular function during DNA replication. Our",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.469291+00:00"
+}

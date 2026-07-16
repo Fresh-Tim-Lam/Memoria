@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17416520",
+  "source_fingerprint": "cdf624e3a5365feca9ad4b115836c358",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17416520",
+    "genome-wide-identification-of-genes-directly-regulated-by-the-pleiotropic-transcription-factor-spx-in-bacillus-subtilis"
+  ],
+  "key_phrases": [
+    "genome",
+    "wide",
+    "identification",
+    "genes",
+    "directly",
+    "regulated",
+    "by",
+    "pleiotropic"
+  ],
+  "summary_1l": "The transcriptional regulator Spx plays a key role in maintaining the redox home",
+  "query_hits": [],
+  "embed_text": "17416520 Genome-wide identification of genes directly regulated by the pleiotropic transcription factor Spx in Bacillus subtilis science scifact The transcriptional regulator Spx plays a key role in maintaining the redox homeostasis of Bacillus subtilis cells exposed to disulfide stress. Defects in Spx were previously shown to lead to differential expression of numerous genes but… 17416520 genome-wide-identification-of-genes-directly-regulated-by-the-pleiotropic-transcription-factor-spx-in-bacillus-subtilis genome wide identification genes directly regulated by pleiotropic The transcriptional regulator Spx plays a key role in maintaining the redox home Genome-wide identification of genes directly regulated by the pleiotropic transcription factor Spx in Bacillus subtilis The transcriptional regulator Spx plays a key role in maintaining the redox homeostasis of Bacillus subtilis cells exposed to disulfide stress. Defects in Spx were previously shown to lead to differential expression of numerous genes but direct and indirect regulatory effects could not be distinguished. Here we identified 283 discrete chromosomal sites potentially bound by the Spx-RNA polymerase (Spx-RNAP) complex using chromatin immunoprecipitation of Spx. Three quarters of these sites were located near Sigma(A)-dependent promoters, and upon diamide treatment, the fraction of the Spx-RNAP complex increased in parallel with the number and occupancy of DNA sites. Correlati",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.689034+00:00"
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "83239#3",
+  "source_fingerprint": "13944f7b88377632a3f3db3d3d5649ca",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "83239#3"
+  ],
+  "key_phrases": [
+    "战国时期",
+    "戰國",
+    "時期",
+    "諸侯",
+    "各自",
+    "為政",
+    "相互",
+    "混戰"
+  ],
+  "summary_1l": "戰國時期諸侯各自為政，相互混戰，諸侯國內外動盪，社會非常不穩定。",
+  "query_hits": [],
+  "embed_text": "83239#3 战国时期 战国时期 戰國時期諸侯各自為政，相互混戰，諸侯國內外動盪，社會非常不穩定。戰國初期東周境內尚有十幾個諸侯國，而以齊、晉、楚、秦、宋五國被推舉為霸主，史稱春秋五霸，春秋末年更有吳王夫差和越王勾踐一度稱霸。 83239#3 战国时期 戰國 時期 諸侯 各自 為政 相互 混戰 戰國時期諸侯各自為政，相互混戰，諸侯國內外動盪，社會非常不穩定。 战国时期 戰國時期諸侯各自為政，相互混戰，諸侯國內外動盪，社會非常不穩定。戰國初期東周境內尚有十幾個諸侯國，而以齊、晉、楚、秦、宋五國被推舉為霸主，史稱春秋五霸，春秋末年更有吳王夫差和越王勾踐一度稱霸。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:19:18.804973+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10576136",
+  "source_fingerprint": "012277d5b09bc52abb63201acd41558d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10576136",
+    "interleukin-33-prevents-apoptosis-and-improves-survival-after-experimental-myocardial-infarction-through-st2-signaling."
+  ],
+  "key_phrases": [
+    "interleukin",
+    "33",
+    "prevents",
+    "apoptosis",
+    "improves",
+    "survival",
+    "after",
+    "experimental"
+  ],
+  "summary_1l": "Interleukin-33 prevents apoptosis and improves survival after experimental myocardial infarction through ST2 signaling.",
+  "query_hits": [],
+  "embed_text": "10576136 Interleukin-33 prevents apoptosis and improves survival after experimental myocardial infarction through ST2 signaling. science scifact BACKGROUND ST2 is an interleukin (IL)-1 receptor family member with membrane-bound (ST2L) and soluble (sST2) isoforms, and sST2 is a biomarker for poor outcome in patients with myocardial infarction (MI). IL-33, the recently discovered… 10576136 interleukin-33-prevents-apoptosis-and-improves-survival-after-experimental-myocardial-infarction-through-st2-signaling. interleukin 33 prevents apoptosis improves survival after experimental Interleukin-33 prevents apoptosis and improves survival after experimental myocardial infarction through ST2 signaling. Interleukin-33 prevents apoptosis and improves survival after experimental myocardial infarction through ST2 signaling. BACKGROUND ST2 is an interleukin (IL)-1 receptor family member with membrane-bound (ST2L) and soluble (sST2) isoforms, and sST2 is a biomarker for poor outcome in patients with myocardial infarction (MI). IL-33, the recently discovered ligand for ST2, activates nuclear factor kappaB and thus may regulate apoptotic cell death. We tested the hypothesis that IL-33 is cardioprotective after MI through ST2 signaling. METHODS AND RESULTS IL-33 protected cultured cardiomyocytes from hypoxia-induced apoptosis, and this cardioprotection was partially inhibited by sST2. IL-33 induced expression of the antiapoptotic factors XIAP, cIAP1, and survivin. To define the cardioprotective r",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.720555+00:00"
+}

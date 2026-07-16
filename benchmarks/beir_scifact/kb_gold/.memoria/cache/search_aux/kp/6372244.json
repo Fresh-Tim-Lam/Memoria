@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6372244",
+  "source_fingerprint": "dc1d4e15b9644d7e583f7cc251d41f1f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6372244",
+    "antibiotic-induced-shifts-in-the-mouse-gut-microbiome-and-metabolome-increase-susceptibility-to-clostridium-difficile-infection"
+  ],
+  "key_phrases": [
+    "antibiotic",
+    "induced",
+    "shifts",
+    "mouse",
+    "gut",
+    "microbiome",
+    "metabolome",
+    "increase"
+  ],
+  "summary_1l": "Antibiotics can have significant and long-lasting effects on the gastroi",
+  "query_hits": [],
+  "embed_text": "6372244 Antibiotic-induced shifts in the mouse gut microbiome and metabolome increase susceptibility to Clostridium difficile infection science scifact Antibiotics can have significant and long-lasting effects on the gastrointestinal tract microbiota, reducing colonization resistance against pathogens including Clostridium difficile. Here we show that antibiotic treatment induces… 6372244 antibiotic-induced-shifts-in-the-mouse-gut-microbiome-and-metabolome-increase-susceptibility-to-clostridium-difficile-infection antibiotic induced shifts mouse gut microbiome metabolome increase Antibiotics can have significant and long-lasting effects on the gastroi Antibiotic-induced shifts in the mouse gut microbiome and metabolome increase susceptibility to Clostridium difficile infection Antibiotics can have significant and long-lasting effects on the gastrointestinal tract microbiota, reducing colonization resistance against pathogens including Clostridium difficile. Here we show that antibiotic treatment induces substantial changes in the gut microbial community and in the metabolome of mice susceptible to C. difficile infection. Levels of secondary bile acids, glucose, free fatty acids and dipeptides decrease, whereas those of primary bile acids and sugar alcohols increase, reflecting the modified metabolic activity of the altered gut microbiome. In vitro and ex vivo analyses demonstrate that C. difficile can exploit specific metabolites that b",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.656832+00:00"
+}

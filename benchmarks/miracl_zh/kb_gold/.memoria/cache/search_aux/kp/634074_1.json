@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "634074#1",
+  "source_fingerprint": "edf1feb5e1c18d5238d97e1eb9864175",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "634074#1"
+  ],
+  "key_phrases": [
+    "卵胎生",
+    "常見",
+    "動物",
+    "部分",
+    "孔雀",
+    "魚和",
+    "大肚",
+    "魚等"
+  ],
+  "summary_1l": "常見的卵胎生動物有部分的鯊、魟、孔雀魚和大肚魚等。",
+  "query_hits": [],
+  "embed_text": "634074#1 卵胎生 卵胎生 常見的卵胎生動物有部分的鯊、魟、孔雀魚和大肚魚等。 634074#1 卵胎生 常見 動物 部分 孔雀 魚和 大肚 魚等 常見的卵胎生動物有部分的鯊、魟、孔雀魚和大肚魚等。 卵胎生 常見的卵胎生動物有部分的鯊、魟、孔雀魚和大肚魚等。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:20:49.316807+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2890952",
+  "source_fingerprint": "a28beaaa9d998dace91cc593b8328747",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2890952",
+    "mechanistic-characterization-of-the-sulfur-relay-system-for-eukaryotic-2-thiouridine-biogenesis-at-trna-wobble-positions"
+  ],
+  "key_phrases": [
+    "mechanistic",
+    "characterization",
+    "sulfur",
+    "relay",
+    "system",
+    "eukaryotic",
+    "thiouridine",
+    "biogenesis"
+  ],
+  "summary_1l": "The wobble modification in tRNAs, 5-methoxycarbonylmethyl-2-thiouridine (mcm(5)",
+  "query_hits": [],
+  "embed_text": "2890952 Mechanistic characterization of the sulfur-relay system for eukaryotic 2-thiouridine biogenesis at tRNA wobble positions science scifact The wobble modification in tRNAs, 5-methoxycarbonylmethyl-2-thiouridine (mcm(5)s(2)U), is required for the proper decoding of NNR codons in eukaryotes. The 2-thio group confers conformational rigidity of mcm(5)s(2)U by largely fixing the… 2890952 mechanistic-characterization-of-the-sulfur-relay-system-for-eukaryotic-2-thiouridine-biogenesis-at-trna-wobble-positions mechanistic characterization sulfur relay system eukaryotic thiouridine biogenesis The wobble modification in tRNAs, 5-methoxycarbonylmethyl-2-thiouridine (mcm(5) Mechanistic characterization of the sulfur-relay system for eukaryotic 2-thiouridine biogenesis at tRNA wobble positions The wobble modification in tRNAs, 5-methoxycarbonylmethyl-2-thiouridine (mcm(5)s(2)U), is required for the proper decoding of NNR codons in eukaryotes. The 2-thio group confers conformational rigidity of mcm(5)s(2)U by largely fixing the C3'-endo ribose puckering, ensuring stable and accurate codon-anticodon pairing. We have identified five genes in Saccharomyces cerevisiae, YIL008w (URM1), YHR111w (UBA4), YOR251c (TUM1), YNL119w (NCS2) and YGL211w (NCS6), that are required for 2-thiolation of mcm(5)s(2)U. An in vitro sulfur transfer experiment revealed that Tum1p stimulated the cysteine desulfurase of Nfs1p, and accepted persulfide sulfurs from Nfs1p. URM1 is a ubiquiti",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.429425+00:00"
+}

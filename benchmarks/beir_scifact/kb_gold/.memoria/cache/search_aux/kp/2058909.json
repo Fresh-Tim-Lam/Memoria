@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2058909",
+  "source_fingerprint": "ca94b6d0aa28f85e7e2357cbf60d4570",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2058909",
+    "colorectal-cancer-survival-in-socioeconomic-groups-in-england:-variation-is-mainly-in-the-short-term-after-diagnosis."
+  ],
+  "key_phrases": [
+    "colorectal",
+    "cancer",
+    "survival",
+    "socioeconomic",
+    "groups",
+    "england",
+    "variation",
+    "mainly"
+  ],
+  "summary_1l": "Colorectal cancer survival in socioeconomic groups in England: variation is mainly in the short term after diagnosis.",
+  "query_hits": [],
+  "embed_text": "2058909 Colorectal cancer survival in socioeconomic groups in England: variation is mainly in the short term after diagnosis. science scifact UNLABELLED The objective of this study was to examine differences in cancer survival between socioeconomic groups in England, with particular attention to survival in the short term of follow-up. PATIENTS AND METHODS Individuals diagnosed… 2058909 colorectal-cancer-survival-in-socioeconomic-groups-in-england:-variation-is-mainly-in-the-short-term-after-diagnosis. colorectal cancer survival socioeconomic groups england variation mainly Colorectal cancer survival in socioeconomic groups in England: variation is mainly in the short term after diagnosis. Colorectal cancer survival in socioeconomic groups in England: variation is mainly in the short term after diagnosis. UNLABELLED The objective of this study was to examine differences in cancer survival between socioeconomic groups in England, with particular attention to survival in the short term of follow-up. PATIENTS AND METHODS Individuals diagnosed with colorectal cancer between 1996 and 2004 in England were identified from cancer registry records. Five-year cumulative relative survival and excess death rates were computed. RESULTS For colon cancer there was a very high excess death rate in the first month of follow-up, and the excess death rate was highest in the socioeconomically deprived groups. In subsequent periods, excess mortality rates were much lower and there was less socio",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.533663+00:00"
+}

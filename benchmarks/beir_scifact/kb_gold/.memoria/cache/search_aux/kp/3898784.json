@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "3898784",
+  "source_fingerprint": "58c5086565c2d0d6b4f40698b645161b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3898784"
+  ],
+  "key_phrases": [
+    "association",
+    "intracerebral",
+    "hemorrhage",
+    "among",
+    "patients",
+    "taking",
+    "non",
+    "vitamin"
+  ],
+  "summary_1l": "Importance Although non–vitamin K antagoni",
+  "query_hits": [],
+  "embed_text": "3898784 Association of Intracerebral Hemorrhage Among Patients Taking Non–Vitamin K Antagonist vs Vitamin K Antagonist Oral Anticoagulants With In-Hospital Mortality science scifact Importance Although non–vitamin K antagonist oral anticoagulants (NOACs) are increasingly used to prevent thromboembolic disease, there are limited data on NOAC-related intracerebral hemorrhage (ICH). Objective To assess the association… 3898784 association intracerebral hemorrhage among patients taking non vitamin Importance Although non–vitamin K antagoni Association of Intracerebral Hemorrhage Among Patients Taking Non–Vitamin K Antagonist vs Vitamin K Antagonist Oral Anticoagulants With In-Hospital Mortality Importance Although non–vitamin K antagonist oral anticoagulants (NOACs) are increasingly used to prevent thromboembolic disease, there are limited data on NOAC-related intracerebral hemorrhage (ICH). Objective To assess the association between preceding oral anticoagulant use (warfarin, NOACs, and no oral anticoagulants [OACs]) and in-hospital mortality among patients with ICH. Design, Setting, and Participants Retrospective cohort study of 141 311 patients with ICH admitted from October 2013 to December 2016 to 1662 Get With The Guidelines–Stroke hospitals. Exposures Anticoagulation therapy before ICH, defined as any use of OACs wit",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.189369+00:00"
+}

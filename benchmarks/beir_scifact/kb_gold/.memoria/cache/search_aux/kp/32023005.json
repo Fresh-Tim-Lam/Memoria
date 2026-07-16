@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "32023005",
+  "source_fingerprint": "090ffef6d816fd5691ddbb217fde01b7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "32023005",
+    "advances-in-techniques-of-testing-mycobacterial-drug-sensitivity,-and-the-use-of-sensitivity-tests-in-tuberculosis-control-programmes."
+  ],
+  "key_phrases": [
+    "advances",
+    "techniques",
+    "testing",
+    "mycobacterial",
+    "drug",
+    "sensitivity",
+    "use",
+    "tests"
+  ],
+  "summary_1l": "Advances in techniques of testing mycobacterial drug sensitivity, and the use of sensitivity tests in tuberculosis control programmes.",
+  "query_hits": [],
+  "embed_text": "32023005 Advances in techniques of testing mycobacterial drug sensitivity, and the use of sensitivity tests in tuberculosis control programmes. science scifact In a paper arising out of an informal international consultation of specialists in the bacteriology of tuberculosis held in 1961, an attempt was made to formulate criteria, and specify technical procedures, for reliable tests of… 32023005 advances-in-techniques-of-testing-mycobacterial-drug-sensitivity,-and-the-use-of-sensitivity-tests-in-tuberculosis-control-programmes. advances techniques testing mycobacterial drug sensitivity use tests Advances in techniques of testing mycobacterial drug sensitivity, and the use of sensitivity tests in tuberculosis control programmes. Advances in techniques of testing mycobacterial drug sensitivity, and the use of sensitivity tests in tuberculosis control programmes. In a paper arising out of an informal international consultation of specialists in the bacteriology of tuberculosis held in 1961, an attempt was made to formulate criteria, and specify technical procedures, for reliable tests of sensitivity (the absolute-concentration method, the resistance-ratio method and the proportion method) to the 3 main antituberculosis drugs (isoniazid, streptomycin and p-aminosalicylic acid). Seven years later, a further consultation was held to review the latest developments in the field and to suggest how sensitivity tests might be put to practical use in tuberculosis control programmes. The participants reached agreement on how",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.120011+00:00"
+}

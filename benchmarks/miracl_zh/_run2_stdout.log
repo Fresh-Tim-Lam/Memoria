@@ -1,0 +1,40 @@
+KB: D:\AAA_Jupyter\Memoria\benchmarks\miracl_zh\kb_gold
+Queries: 393, Qrels: 393
+
+=== lexical (modes=lexical, 393 queries, 0 pending) ===
+=== lexical DONE: ok=393 failed=0 skipped=0 timed_out=0 elapsed=0s ===
+
+--- lexical Summary (393 queries) ---
+  mrr=0.6453
+  recall@1=0.2634
+  precision@1=0.5216
+  noise@1=0.4784
+  ndcg@1=0.5216
+  recall@5=0.651
+  precision@5=0.3053
+  noise@5=0.6947
+  ndcg@5=0.5893
+  recall@10=0.7522
+  precision@10=0.1875
+  noise@10=0.8125
+  ndcg@10=0.6297
+
+=== embed (modes=both, 393 queries, 0 pending) ===
+=== embed DONE: ok=393 failed=0 skipped=0 timed_out=0 elapsed=0s ===
+
+--- embed Summary (393 queries) ---
+  mrr=0.855
+  recall@1=0.4505
+  precision@1=0.799
+  noise@1=0.201
+  ndcg@1=0.799
+  recall@5=0.8364
+  precision@5=0.4025
+  noise@5=0.5975
+  ndcg@5=0.8168
+  recall@10=0.9098
+  precision@10=0.2275
+  noise@10=0.7725
+  ndcg@10=0.8419
+
+=== rerank (modes=both, 393 queries, 333 pending) ===

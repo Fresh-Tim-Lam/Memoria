@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "38747567",
+  "source_fingerprint": "0c22f0b189eb8236b2da9c8805b1ad75",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "38747567",
+    "human-cytomegalovirus-encodes-an-mhc-class-i-like-molecule-(ul142)-that-functions-to-inhibit-nk-cell-lysis."
+  ],
+  "key_phrases": [
+    "human",
+    "cytomegalovirus",
+    "encodes",
+    "mhc",
+    "class",
+    "like",
+    "molecule",
+    "ul142"
+  ],
+  "summary_1l": "Human cytomegalovirus encodes an MHC class I-like molecule (UL142) that functions to inhibit NK cell lysis.",
+  "query_hits": [],
+  "embed_text": "38747567 Human cytomegalovirus encodes an MHC class I-like molecule (UL142) that functions to inhibit NK cell lysis. science scifact Clinical and low passage strains of human CMV (HCMV) encode an additional MHC class I-related molecule UL142, in addition to the previously described UL18. The UL142 open reading frame is encoded within the ULb' region which is missing… 38747567 human-cytomegalovirus-encodes-an-mhc-class-i-like-molecule-(ul142)-that-functions-to-inhibit-nk-cell-lysis. human cytomegalovirus encodes mhc class like molecule ul142 Human cytomegalovirus encodes an MHC class I-like molecule (UL142) that functions to inhibit NK cell lysis. Human cytomegalovirus encodes an MHC class I-like molecule (UL142) that functions to inhibit NK cell lysis. Clinical and low passage strains of human CMV (HCMV) encode an additional MHC class I-related molecule UL142, in addition to the previously described UL18. The UL142 open reading frame is encoded within the ULb' region which is missing from a number of common high passage laboratory strains. Cells expressing UL142 following transfection, and fibroblasts infected with a recombinant adenovirus-expressing UL142, were used to screen both polyclonal NK cells and NK cell clones, in a completely autologous system. Analysis of 100 NK cell clones derived from five donors, revealed 23 clones that were inhibited by fibroblasts expressing UL142 alone. Small-interfering RNA-mediated knockdown of",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.833814+00:00"
+}

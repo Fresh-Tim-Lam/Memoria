@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2359152",
+  "source_fingerprint": "a730caa50aa4c13c4aed12c7dd350410",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2359152",
+    "landscape-of-genetic-lesions-in-944-patients-with-myelodysplastic-syndromes"
+  ],
+  "key_phrases": [
+    "landscape",
+    "genetic",
+    "lesions",
+    "944",
+    "patients",
+    "with",
+    "myelodysplastic",
+    "syndromes"
+  ],
+  "summary_1l": "High-throughput DNA sequencing significantly contributed to diagnosis and prognostication in patients with myelodysplastic s",
+  "query_hits": [],
+  "embed_text": "2359152 Landscape of genetic lesions in 944 patients with myelodysplastic syndromes science scifact High-throughput DNA sequencing significantly contributed to diagnosis and prognostication in patients with myelodysplastic syndromes (MDS). We determined the biological and prognostic significance of genetic aberrations in MDS. In total,… 2359152 landscape-of-genetic-lesions-in-944-patients-with-myelodysplastic-syndromes landscape genetic lesions 944 patients with myelodysplastic syndromes High-throughput DNA sequencing significantly contributed to diagnosis and prognostication in patients with myelodysplastic s Landscape of genetic lesions in 944 patients with myelodysplastic syndromes High-throughput DNA sequencing significantly contributed to diagnosis and prognostication in patients with myelodysplastic syndromes (MDS). We determined the biological and prognostic significance of genetic aberrations in MDS. In total, 944 patients with various MDS subtypes were screened for known/putative mutations/deletions in 104 genes using targeted deep sequencing and array-based genomic hybridization. In total, 845/944 patients (89.5%) harbored at least one mutation (median, 3 per patient; range, 0-12). Forty-seven genes were significantly mutated with TET2, SF3B1, ASXL1, SRSF2, DNMT3A, and RUNX1 mutated in >10% of cases. Many mutations were associated with higher risk groups and/or blast elevation. Surviva",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.774249+00:00"
+}

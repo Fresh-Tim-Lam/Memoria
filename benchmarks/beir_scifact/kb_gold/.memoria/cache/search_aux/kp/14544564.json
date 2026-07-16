@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14544564",
+  "source_fingerprint": "25dcdc92031cd48864b4cbf85ac389a0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14544564",
+    "influence-of-steroid-hormone-signaling-on-life-span-control-by-caenorhabditis-elegans-insulin-like-signaling"
+  ],
+  "key_phrases": [
+    "influence",
+    "steroid",
+    "hormone",
+    "signaling",
+    "life",
+    "span",
+    "control",
+    "by"
+  ],
+  "summary_1l": "Sterol-sensing nuclear receptors and insulin-like growth factor signaling play evolutionari",
+  "query_hits": [],
+  "embed_text": "14544564 Influence of Steroid Hormone Signaling on Life Span Control by Caenorhabditis elegans Insulin-Like Signaling science scifact Sterol-sensing nuclear receptors and insulin-like growth factor signaling play evolutionarily conserved roles in the control of aging. In the nematode Caenorhabditis elegans, bile acid-like steroid hormones known as dafachronic acids (DAs)… 14544564 influence-of-steroid-hormone-signaling-on-life-span-control-by-caenorhabditis-elegans-insulin-like-signaling influence steroid hormone signaling life span control by Sterol-sensing nuclear receptors and insulin-like growth factor signaling play evolutionari Influence of Steroid Hormone Signaling on Life Span Control by Caenorhabditis elegans Insulin-Like Signaling Sterol-sensing nuclear receptors and insulin-like growth factor signaling play evolutionarily conserved roles in the control of aging. In the nematode Caenorhabditis elegans, bile acid-like steroid hormones known as dafachronic acids (DAs) influence longevity by binding to and regulating the activity of the conserved nuclear receptor DAF-12, and the insulin receptor (InsR) ortholog DAF-2 controls life span by inhibiting the FoxO transcription factor DAF-16. How the DA/DAF-12 pathway interacts with DAF-2/InsR signaling to control life span is poorly understood. Here we specifically investigated the roles of liganded and unliganded DAF-12 in life span control in the context of reduced",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.150522+00:00"
+}

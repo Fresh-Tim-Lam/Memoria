@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7116734",
+  "source_fingerprint": "1e435bcbd78b34c0b0a29fab2cc047bb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7116734",
+    "nicotinamide-phosphoribosyltransferase/visfatin-does-not-catalyze-nicotinamide-mononucleotide-formation-in-blood-plasma"
+  ],
+  "key_phrases": [
+    "nicotinamide",
+    "phosphoribosyltransferase",
+    "visfatin",
+    "does",
+    "not",
+    "catalyze",
+    "mononucleotide",
+    "formation"
+  ],
+  "summary_1l": "Nicotinamide (Nam) phosphoribosyltransferase (NAMPT) is the rate-limiting enzyme",
+  "query_hits": [],
+  "embed_text": "7116734 Nicotinamide Phosphoribosyltransferase/Visfatin Does Not Catalyze Nicotinamide Mononucleotide Formation in Blood Plasma science scifact Nicotinamide (Nam) phosphoribosyltransferase (NAMPT) is the rate-limiting enzyme in mammalian NAD synthesis, catalyzing nicotinamide mononucleotide (NMN) formation from Nam and 5-phosphoribosyl 1-pyrophosphate (PRPP). NAMPT has also been… 7116734 nicotinamide-phosphoribosyltransferase/visfatin-does-not-catalyze-nicotinamide-mononucleotide-formation-in-blood-plasma nicotinamide phosphoribosyltransferase visfatin does not catalyze mononucleotide formation Nicotinamide (Nam) phosphoribosyltransferase (NAMPT) is the rate-limiting enzyme Nicotinamide Phosphoribosyltransferase/Visfatin Does Not Catalyze Nicotinamide Mononucleotide Formation in Blood Plasma Nicotinamide (Nam) phosphoribosyltransferase (NAMPT) is the rate-limiting enzyme in mammalian NAD synthesis, catalyzing nicotinamide mononucleotide (NMN) formation from Nam and 5-phosphoribosyl 1-pyrophosphate (PRPP). NAMPT has also been described as an adipocytokine visfatin with a variety of actions, although physiological significance of this protein remains unclear. It has been proposed that possible actions of visfatin are mediated through the extracellular formation of NMN. However, we did not detect NMN in mouse blood plasma, even with a highly specific and sensitive liquid chromatography/tandem mass spectrometry. Furthermore, there is no or little ATP, the activat",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.519647+00:00"
+}

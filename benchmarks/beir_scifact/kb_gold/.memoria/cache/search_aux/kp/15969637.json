@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "15969637",
+  "source_fingerprint": "89d388cd2e5e24d12ea7ee722de6b9bc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15969637"
+  ],
+  "key_phrases": [
+    "supplementary",
+    "information",
+    "mesord",
+    "user",
+    "guide",
+    "other",
+    "unlabelled",
+    "tool"
+  ],
+  "summary_1l": "UNLABELLED MesoRD is a tool for stochastic simulation of chemical reactions and diffusion.",
+  "query_hits": [],
+  "embed_text": "15969637 Supplementary information: ‘MesoRD User’s Guide ’ and other science scifact UNLABELLED MesoRD is a tool for stochastic simulation of chemical reactions and diffusion. In particular, it is an implementation of the next subvolume method, which is an exact method to simulate the Markov process corresponding to the… 15969637 supplementary information mesord user guide other unlabelled tool UNLABELLED MesoRD is a tool for stochastic simulation of chemical reactions and diffusion. Supplementary information: ‘MesoRD User’s Guide ’ and other UNLABELLED MesoRD is a tool for stochastic simulation of chemical reactions and diffusion. In particular, it is an implementation of the next subvolume method, which is an exact method to simulate the Markov process corresponding to the reaction-diffusion master equation. AVAILABILITY MesoRD is free software, written in C++ and licensed under the GNU general public license (GPL). MesoRD runs on Linux, Mac OS X, NetBSD, Solaris and Windows XP. It can be downloaded from http://mesord.sourceforge.net. CONTACT johan.elf@icm.uu.se; johan.hattne@embl-hamburg.de SUPPLEMENTARY INFORMATION 'MesoRD User's Guide' and other documents are available at http://mesord.sourceforge.net.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.598007+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9486930",
+  "source_fingerprint": "1126adc23f74db677626ef5e2794d99d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9486930",
+    "stem-cell-related-\"self-renewal\"-signature-and-high-epidermal-growth-factor-receptor-expression-associated-with-resistance-to-concomitant-chemoradiotherapy-in-glioblastoma."
+  ],
+  "key_phrases": [
+    "stem",
+    "cell",
+    "related",
+    "self",
+    "renewal",
+    "signature",
+    "high",
+    "epidermal"
+  ],
+  "summary_1l": "Stem cell-related \"self-renewal\" signature and high epidermal growth factor receptor expression associated with resistance to concomitant chemoradiotherapy in glioblastoma.",
+  "query_hits": [],
+  "embed_text": "9486930 Stem cell-related \"self-renewal\" signature and high epidermal growth factor receptor expression associated with resistance to concomitant chemoradiotherapy in glioblastoma. science scifact PURPOSE Glioblastomas are notorious for resistance to therapy, which has been attributed to DNA-repair proficiency, a multitude of deregulated molecular pathways, and, more recently, to the particular biologic behavior of tumor stem-like… 9486930 stem-cell-related-\"self-renewal\"-signature-and-high-epidermal-growth-factor-receptor-expression-associated-with-resistance-to-concomitant-chemoradiotherapy-in-glioblastoma. stem cell related self renewal signature high epidermal Stem cell-related \"self-renewal\" signature and high epidermal growth factor receptor expression associated with resistance to concomitant chemoradiotherapy in glioblastoma. Stem cell-related \"self-renewal\" signature and high epidermal growth factor receptor expression associated with resistance to concomitant chemoradiotherapy in glioblastoma. PURPOSE Glioblastomas are notorious for resistance to therapy, which has been attributed to DNA-repair proficiency, a multitude of deregulated molecular pathways, and, more recently, to the particular biologic behavior of tumor stem-like cells. Here, we aimed to identify molecular profiles specific for treatment resistance to the current standard of care of concomitant chemoradiotherapy with the alkylating agent temozolomide. PATIENTS AND METHODS Gene expression profiles of 80 glioblastomas were interrogated for associations with resistance to therapy. Patients were treated within clinical trials testing the addition of",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.007866+00:00"
+}

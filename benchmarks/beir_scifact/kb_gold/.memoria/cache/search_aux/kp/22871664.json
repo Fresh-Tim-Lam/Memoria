@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22871664",
+  "source_fingerprint": "613156d73cc00a2ac12ffb4f5efe05d3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22871664",
+    "characterization-of-a-highly-variable-eutherian-microrna-gene."
+  ],
+  "key_phrases": [
+    "characterization",
+    "highly",
+    "variable",
+    "eutherian",
+    "microrna",
+    "gene",
+    "mouse",
+    "micrornas"
+  ],
+  "summary_1l": "Characterization of a highly variable eutherian microRNA gene.",
+  "query_hits": [],
+  "embed_text": "22871664 Characterization of a highly variable eutherian microRNA gene. science scifact Mouse microRNAs (miRNAs) miR-290-miR295 are encoded by a cluster of partially homologous pre-miRNA hairpins and are likely to be functionally important in embryonic stem (ES) cells and preimplantation embryos. We present evidence that a… 22871664 characterization-of-a-highly-variable-eutherian-microrna-gene. characterization highly variable eutherian microrna gene mouse micrornas Characterization of a highly variable eutherian microRNA gene. Characterization of a highly variable eutherian microRNA gene. Mouse microRNAs (miRNAs) miR-290-miR295 are encoded by a cluster of partially homologous pre-miRNA hairpins and are likely to be functionally important in embryonic stem (ES) cells and preimplantation embryos. We present evidence that a spliced, capped, and polyadenylated primary transcript spans this entire Early Embryonic microRNA Cluster (EEmiRC). Partial Drosha processing yields additional large nuclear RNA intermediates. A conserved promoter element containing a TATA-box directs EEmiRC transcription. Sequence analysis shows that the EEmiRC transcription unit is remarkably variable and can only be identified bioinformatically in placental (eutherian) mammals. Consistent with eutherian-specific function, EEmiRC is expressed",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.426828+00:00"
+}

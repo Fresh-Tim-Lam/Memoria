@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18321590",
+  "source_fingerprint": "893f019f0442ca2124842445c1b21e11",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18321590",
+    "resazurin-microtiter-assay-plate:-simple-and-inexpensive-method-for-detection-of-drug-resistance-in-mycobacterium-tuberculosis."
+  ],
+  "key_phrases": [
+    "resazurin",
+    "microtiter",
+    "assay",
+    "plate",
+    "simple",
+    "inexpensive",
+    "method",
+    "detection"
+  ],
+  "summary_1l": "Resazurin microtiter assay plate: simple and inexpensive method for detection of drug resistance in Mycobacterium tuberculosis.",
+  "query_hits": [],
+  "embed_text": "18321590 Resazurin microtiter assay plate: simple and inexpensive method for detection of drug resistance in Mycobacterium tuberculosis. science scifact A method for detecting multidrug-resistant Mycobacterium tuberculosis by using a reduction of resazurin is described. Eighty clinical isolates were evaluated against isoniazid and rifampin; results at 7 days were compared with those of the… 18321590 resazurin-microtiter-assay-plate:-simple-and-inexpensive-method-for-detection-of-drug-resistance-in-mycobacterium-tuberculosis. resazurin microtiter assay plate simple inexpensive method detection Resazurin microtiter assay plate: simple and inexpensive method for detection of drug resistance in Mycobacterium tuberculosis. Resazurin microtiter assay plate: simple and inexpensive method for detection of drug resistance in Mycobacterium tuberculosis. A method for detecting multidrug-resistant Mycobacterium tuberculosis by using a reduction of resazurin is described. Eighty clinical isolates were evaluated against isoniazid and rifampin; results at 7 days were compared with those of the proportion method. Specificity and sensitivity were excellent. The method is simple, inexpensive, and rapid and might be used with other antituberculosis drugs.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.076069+00:00"
+}

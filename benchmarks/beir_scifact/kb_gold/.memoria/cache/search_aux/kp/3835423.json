@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3835423",
+  "source_fingerprint": "beb126625652090ea2789ba0f2879f98",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3835423",
+    "cd4+-t-cell-help-guides-formation-of-cd103+-lung-resident-memory-cd8+-t-cells-during-influenza-viral-infection."
+  ],
+  "key_phrases": [
+    "cd4",
+    "cell",
+    "help",
+    "guides",
+    "formation",
+    "cd103",
+    "lung",
+    "resident"
+  ],
+  "summary_1l": "CD4+ T cell help guides formation of CD103+ lung-resident memory CD8+ T cells during influenza viral infection.",
+  "query_hits": [],
+  "embed_text": "3835423 CD4+ T cell help guides formation of CD103+ lung-resident memory CD8+ T cells during influenza viral infection. science scifact Tissue-resident memory T (Trm) cells provide enhanced protection against infection at mucosal sites. Here we found that CD4(+) T cells are important for the formation of functional lung-resident CD8(+) T cells after influenza virus… 3835423 cd4+-t-cell-help-guides-formation-of-cd103+-lung-resident-memory-cd8+-t-cells-during-influenza-viral-infection. cd4 cell help guides formation cd103 lung resident CD4+ T cell help guides formation of CD103+ lung-resident memory CD8+ T cells during influenza viral infection. CD4+ T cell help guides formation of CD103+ lung-resident memory CD8+ T cells during influenza viral infection. Tissue-resident memory T (Trm) cells provide enhanced protection against infection at mucosal sites. Here we found that CD4(+) T cells are important for the formation of functional lung-resident CD8(+) T cells after influenza virus infection. In the absence of CD4(+) T cells, CD8(+) T cells displayed reduced expression of CD103 (Itgae), were mislocalized away from airway epithelia, and demonstrated an impaired ability to recruit CD8(+) T cells to the lung airways upon heterosubtypic challenge. CD4(+) T cell-derived interferon-γ was necessary for generating lung-resident CD103(+) CD8(+) Trm cells. Furthermore, expression of the transcription factor T-bet was increased in \"unhelped",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.402333+00:00"
+}

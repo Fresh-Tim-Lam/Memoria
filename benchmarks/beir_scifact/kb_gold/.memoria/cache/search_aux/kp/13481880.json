@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13481880",
+  "source_fingerprint": "80d06a1cef9aaf9b84244544b75ac91f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13481880",
+    "yap/taz-dependent-reprogramming-of-colonic-epithelium-links-ecm-remodeling-to-tissue-regeneration"
+  ],
+  "key_phrases": [
+    "yap",
+    "taz",
+    "dependent",
+    "reprogramming",
+    "colonic",
+    "epithelium",
+    "links",
+    "ecm"
+  ],
+  "summary_1l": "Tissue regeneration requires dynamic cellular adaptation to the wound environment.",
+  "query_hits": [],
+  "embed_text": "13481880 YAP/TAZ-Dependent Reprogramming of Colonic Epithelium Links ECM Remodeling to Tissue Regeneration science scifact Tissue regeneration requires dynamic cellular adaptation to the wound environment. It is currently unclear how this is orchestrated at the cellular level and how cell fate is affected by severe tissue damage. Here we dissect cell fate… 13481880 yap/taz-dependent-reprogramming-of-colonic-epithelium-links-ecm-remodeling-to-tissue-regeneration yap taz dependent reprogramming colonic epithelium links ecm Tissue regeneration requires dynamic cellular adaptation to the wound environment. YAP/TAZ-Dependent Reprogramming of Colonic Epithelium Links ECM Remodeling to Tissue Regeneration Tissue regeneration requires dynamic cellular adaptation to the wound environment. It is currently unclear how this is orchestrated at the cellular level and how cell fate is affected by severe tissue damage. Here we dissect cell fate transitions during colonic regeneration in a mouse dextran sulfate sodium (DSS) colitis model, and we demonstrate that the epithelium is transiently reprogrammed into a primitive state. This is characterized by de novo expression of fetal markers as well as suppression of markers for adult stem and differentiated cells. The fate change is orchestrated by remodeling the extracellular matrix (ECM), increased FAK/Src signaling, and ultimately YAP/TAZ activation. In",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.379056+00:00"
+}

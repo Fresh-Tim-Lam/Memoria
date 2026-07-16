@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "84244109",
+  "source_fingerprint": "cee58c42be1ee2564967f4ff83472503",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "84244109",
+    "innate-immunity-to-a-facultative-intracellular-bacterial-pathogen."
+  ],
+  "key_phrases": [
+    "innate",
+    "immunity",
+    "facultative",
+    "intracellular",
+    "bacterial",
+    "pathogen",
+    "murine",
+    "response"
+  ],
+  "summary_1l": "Innate immunity to a facultative intracellular bacterial pathogen.",
+  "query_hits": [],
+  "embed_text": "84244109 Innate immunity to a facultative intracellular bacterial pathogen. science scifact The murine response to Listeria monocytogenes has long been considered a paradigm of T-cell-mediated immunity. There is, however, substantial evidence that T-cell-deficient mice are capable of surviving a L. monocytogenes challenge.… 84244109 innate-immunity-to-a-facultative-intracellular-bacterial-pathogen. innate immunity facultative intracellular bacterial pathogen murine response Innate immunity to a facultative intracellular bacterial pathogen. Innate immunity to a facultative intracellular bacterial pathogen. The murine response to Listeria monocytogenes has long been considered a paradigm of T-cell-mediated immunity. There is, however, substantial evidence that T-cell-deficient mice are capable of surviving a L. monocytogenes challenge. Recently, advances have been made in our understanding of the cell biology and pathogenesis of infection.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.590737+00:00"
+}

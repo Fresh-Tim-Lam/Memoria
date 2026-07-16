@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12549585",
+  "source_fingerprint": "544710d9f2ca6685ab2869a2844dba5d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12549585",
+    "aortic-and-large-artery-compliance-in-end-stage-renal-failure."
+  ],
+  "key_phrases": [
+    "aortic",
+    "large",
+    "artery",
+    "compliance",
+    "end",
+    "stage",
+    "renal",
+    "failure"
+  ],
+  "summary_1l": "Aortic and large artery compliance in end-stage renal failure.",
+  "query_hits": [],
+  "embed_text": "12549585 Aortic and large artery compliance in end-stage renal failure. science scifact Pulse wave velocity (PWV) was measured in the aorta, right leg and arm of 90 control subjects (CS) and 92 hemodialysis patients (HD) of the same age and mean arterial pressure (MAP). Blood chemistry, including blood lipids, and echographic… 12549585 aortic-and-large-artery-compliance-in-end-stage-renal-failure. aortic large artery compliance end stage renal failure Aortic and large artery compliance in end-stage renal failure. Aortic and large artery compliance in end-stage renal failure. Pulse wave velocity (PWV) was measured in the aorta, right leg and arm of 90 control subjects (CS) and 92 hemodialysis patients (HD) of the same age and mean arterial pressure (MAP). Blood chemistry, including blood lipids, and echographic dimensions of the aorta, were measured in all subjects. Presence of aortic calcification was evaluated by abdominal X-ray and echography. Whereas femoral and brachial PWV were only slightly increased in HD (P less than 0.05), the aortic PWV was significantly elevated (1113 +/- 319 cm/sec) in comparison with CS (965 +/- 216 cm/sec; P = 0.0016). Aortic diameters were larger in HD, both at the root of aorta (32.7 +/- 4 vs. 28.2 +/- 2.8 mm; P less than 0.0001) and aortic bifurcation (16.9 +/- 3.1",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:08.502606+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2130391",
+  "source_fingerprint": "28c4f13ab69ad5c830cf07c041c8b927",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2130391",
+    "cancer-associated-adipocytes-exhibit-an-activated-phenotype-and-contribute-to-breast-cancer-invasion."
+  ],
+  "key_phrases": [
+    "cancer",
+    "associated",
+    "adipocytes",
+    "exhibit",
+    "activated",
+    "phenotype",
+    "contribute",
+    "breast"
+  ],
+  "summary_1l": "Cancer-associated adipocytes exhibit an activated phenotype and contribute to breast cancer invasion.",
+  "query_hits": [],
+  "embed_text": "2130391 Cancer-associated adipocytes exhibit an activated phenotype and contribute to breast cancer invasion. science scifact Early local tumor invasion in breast cancer results in a likely encounter between cancer cells and mature adipocytes, but the role of these fat cells in tumor progression remains unclear. We show that murine and human tumor cells… 2130391 cancer-associated-adipocytes-exhibit-an-activated-phenotype-and-contribute-to-breast-cancer-invasion. cancer associated adipocytes exhibit activated phenotype contribute breast Cancer-associated adipocytes exhibit an activated phenotype and contribute to breast cancer invasion. Cancer-associated adipocytes exhibit an activated phenotype and contribute to breast cancer invasion. Early local tumor invasion in breast cancer results in a likely encounter between cancer cells and mature adipocytes, but the role of these fat cells in tumor progression remains unclear. We show that murine and human tumor cells cocultivated with mature adipocytes exhibit increased invasive capacities in vitro and in vivo, using an original two-dimensional coculture system. Likewise, adipocytes cultivated with cancer cells also exhibit an altered phenotype in terms of delipidation and decreased adipocyte markers associated with the occurrence of an activated state characterized by overexpression of proteases, including matrix metalloproteinase-11, and proinflammatory cytokines [interleuki",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.807592+00:00"
+}

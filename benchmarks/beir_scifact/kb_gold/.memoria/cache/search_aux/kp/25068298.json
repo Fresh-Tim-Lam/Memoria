@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25068298",
+  "source_fingerprint": "c1c773d2adbb89483a8a7c92ecac63bb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25068298",
+    "electron-microscopic-studies-of-macrophages-in-early-human-yolk-sacs."
+  ],
+  "key_phrases": [
+    "electron",
+    "microscopic",
+    "studies",
+    "macrophages",
+    "early",
+    "human",
+    "yolk",
+    "sacs"
+  ],
+  "summary_1l": "Electron microscopic studies of macrophages in early human yolk sacs.",
+  "query_hits": [],
+  "embed_text": "25068298 Electron microscopic studies of macrophages in early human yolk sacs. science scifact Distribution and fine structure of macrophages were studied in 10 human embryos in the 6th and 7th week of gestation, 5.5 to 12 mm in crown-rump length. The yolk sac macrophages were found in the extravascular mesenchymal tissues and… 25068298 electron-microscopic-studies-of-macrophages-in-early-human-yolk-sacs. electron microscopic studies macrophages early human yolk sacs Electron microscopic studies of macrophages in early human yolk sacs. Electron microscopic studies of macrophages in early human yolk sacs. Distribution and fine structure of macrophages were studied in 10 human embryos in the 6th and 7th week of gestation, 5.5 to 12 mm in crown-rump length. The yolk sac macrophages were found in the extravascular mesenchymal tissues and intravascular spaces long before the first appearance of bone marrow and lymphatic tissues in the embryos. In addition to the macrophages, the fibroblastic cells and the cells of erythropoietic series were also present in the extravascular space. The macrophages showed a variety of cellular structures suggesting transition from immature cell type with no heterophagolysosomes to mature cell type in phagocytosis. The mature macrophages avidly phagocytized the primitive erythroblasts and occasi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.946719+00:00"
+}

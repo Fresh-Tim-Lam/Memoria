@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8654183",
+  "source_fingerprint": "0389a1cb9d218a1f7472e86c12b633eb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8654183",
+    "bax-translocation-and-mitochondrial-fragmentation-induced-by-helicobacter-pylori."
+  ],
+  "key_phrases": [
+    "bax",
+    "translocation",
+    "mitochondrial",
+    "fragmentation",
+    "induced",
+    "by",
+    "helicobacter",
+    "pylori"
+  ],
+  "summary_1l": "Bax translocation and mitochondrial fragmentation induced by Helicobacter pylori.",
+  "query_hits": [],
+  "embed_text": "8654183 Bax translocation and mitochondrial fragmentation induced by Helicobacter pylori. science scifact BACKGROUND AND AIMS Previous in vitro and in vivo studies have revealed an association between Helicobacter pylori infection and apoptosis in gastric epithelial cells. Although involvement of the Bcl-2 family of proteins as well as… 8654183 bax-translocation-and-mitochondrial-fragmentation-induced-by-helicobacter-pylori. bax translocation mitochondrial fragmentation induced by helicobacter pylori Bax translocation and mitochondrial fragmentation induced by Helicobacter pylori. Bax translocation and mitochondrial fragmentation induced by Helicobacter pylori. BACKGROUND AND AIMS Previous in vitro and in vivo studies have revealed an association between Helicobacter pylori infection and apoptosis in gastric epithelial cells. Although involvement of the Bcl-2 family of proteins as well as cytochrome c release has been demonstrated in H pylori induced cell death, the exact role of the mitochondria during this type of programmed cell death has not been fully elucidated. Therefore, we sought to determine whether or not Bax translocation and mitochondrial fragmentation occur on exposure of gastric epithelial cells to H pylori, resulting in cell death. METHODS Experiments were performed with human gastric adenocarcinoma (AGS) cells, AGS cells transfected with the HPV-E6",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.359086+00:00"
+}

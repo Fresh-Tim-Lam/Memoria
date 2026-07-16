@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20868160",
+  "source_fingerprint": "c6db30cbc30f43db09af3c2cd858ca3b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20868160",
+    "trichome-birefringence-and-its-homolog-at5g01360-encode-plant-specific-duf231-proteins-required-for-cellulose-biosynthesis-in-arabidopsis."
+  ],
+  "key_phrases": [
+    "trichome",
+    "birefringence",
+    "its",
+    "homolog",
+    "at5g01360",
+    "encode",
+    "plant",
+    "specific"
+  ],
+  "summary_1l": "TRICHOME BIREFRINGENCE and its homolog AT5G01360 encode plant-specific DUF231 proteins required for cellulose biosynthesis in Arabidopsis.",
+  "query_hits": [],
+  "embed_text": "20868160 TRICHOME BIREFRINGENCE and its homolog AT5G01360 encode plant-specific DUF231 proteins required for cellulose biosynthesis in Arabidopsis. science scifact The Arabidopsis (Arabidopsis thaliana) trichome birefringence (tbr) mutant has severely reduced crystalline cellulose in trichomes, but the molecular nature of TBR was unknown. We determined TBR to belong to the plant-specific DUF231… 20868160 trichome-birefringence-and-its-homolog-at5g01360-encode-plant-specific-duf231-proteins-required-for-cellulose-biosynthesis-in-arabidopsis. trichome birefringence its homolog at5g01360 encode plant specific TRICHOME BIREFRINGENCE and its homolog AT5G01360 encode plant-specific DUF231 proteins required for cellulose biosynthesis in Arabidopsis. TRICHOME BIREFRINGENCE and its homolog AT5G01360 encode plant-specific DUF231 proteins required for cellulose biosynthesis in Arabidopsis. The Arabidopsis (Arabidopsis thaliana) trichome birefringence (tbr) mutant has severely reduced crystalline cellulose in trichomes, but the molecular nature of TBR was unknown. We determined TBR to belong to the plant-specific DUF231 domain gene family comprising 46 members of unknown function in Arabidopsis. The genes harbor another plant-specific domain, called the TBL domain, which contains a conserved GDSL motif known from some esterases/lipases. TBR and TBR-like3 (TBL3) are transcriptionally coordinated with primary and secondary CELLULOSE SYNTHASE (CESA) genes, respectively. The tbr and tbl3 mutants hold lower levels of crystalline cellulose and h",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.035084+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9226649",
+  "source_fingerprint": "2c1b98713c8c4a14cfdf453512aa3154",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9226649",
+    "inflammation-induced-tumorigenesis-in-the-colon-is-regulated-by-caspase-1-and-nlrc4."
+  ],
+  "key_phrases": [
+    "inflammation",
+    "induced",
+    "tumorigenesis",
+    "colon",
+    "regulated",
+    "by",
+    "caspase",
+    "nlrc4"
+  ],
+  "summary_1l": "Inflammation-induced tumorigenesis in the colon is regulated by caspase-1 and NLRC4.",
+  "query_hits": [],
+  "embed_text": "9226649 Inflammation-induced tumorigenesis in the colon is regulated by caspase-1 and NLRC4. science scifact Chronic inflammation is a known risk factor for tumorigenesis, yet the precise mechanism of this association is currently unknown. The inflammasome, a multiprotein complex formed by NOD-like receptor (NLR) family members, has recently been… 9226649 inflammation-induced-tumorigenesis-in-the-colon-is-regulated-by-caspase-1-and-nlrc4. inflammation induced tumorigenesis colon regulated by caspase nlrc4 Inflammation-induced tumorigenesis in the colon is regulated by caspase-1 and NLRC4. Inflammation-induced tumorigenesis in the colon is regulated by caspase-1 and NLRC4. Chronic inflammation is a known risk factor for tumorigenesis, yet the precise mechanism of this association is currently unknown. The inflammasome, a multiprotein complex formed by NOD-like receptor (NLR) family members, has recently been shown to orchestrate multiple innate and adaptive immune responses, yet its potential role in inflammation-induced cancer has been little studied. Using the azoxymethane and dextran sodium sulfate colitis-associated colorectal cancer model, we show that caspase-1-deficient (Casp1(-/-)) mice have enhanced tumor formation. Surprisingly, the role of caspase-1 in tumorigenesis was not through regulation of colonic inflammation, but rather through regulation of colonic epithe",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.480831+00:00"
+}

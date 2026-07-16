@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29877890",
+  "source_fingerprint": "7bbc0d55d819aa109a8c120658db09d7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29877890",
+    "histone-chaperones-and-nucleosome-assembly."
+  ],
+  "key_phrases": [
+    "histone",
+    "chaperones",
+    "nucleosome",
+    "assembly",
+    "recent",
+    "structures",
+    "core",
+    "particle"
+  ],
+  "summary_1l": "Histone chaperones and nucleosome assembly.",
+  "query_hits": [],
+  "embed_text": "29877890 Histone chaperones and nucleosome assembly. science scifact Recent structures of the nucleosome core particle reveal details of histone-histone and histone-DNA interactions. These structures have now set the stage for understanding chromatin assembly and dynamics during replication and… 29877890 histone-chaperones-and-nucleosome-assembly. histone chaperones nucleosome assembly recent structures core particle Histone chaperones and nucleosome assembly. Histone chaperones and nucleosome assembly. Recent structures of the nucleosome core particle reveal details of histone-histone and histone-DNA interactions. These structures have now set the stage for understanding chromatin assembly and dynamics during replication and transcription. Histone chaperones and chromatin remodeling complexes are important in both of these processes. The nucleosome and its protein core, the histone octamer, have twofold symmetry, which histone chaperones may use to bind core histones. Recent studies suggest that the nucleoplasmin pentamer may mediate histone storage, sperm chromatin decondensation and nucleosome assembly, by dimerizing to form a decamer. In this model, histone binding on the lateral surface of the chaperone involves stereospecific interactions",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.274094+00:00"
+}

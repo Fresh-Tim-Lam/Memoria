@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "69045262",
+  "source_fingerprint": "3053fc237dcd41259845f3e6e728442e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "69045262",
+    "children's-exercise-physiology"
+  ],
+  "key_phrases": [
+    "children",
+    "exercise",
+    "physiology",
+    "reorganized",
+    "newly",
+    "revised",
+    "second",
+    "edition"
+  ],
+  "summary_1l": "The reorganized and newly revised \"Children's Exercise Physiology, Second Edition, \" presents the most up-to-date research, methodology, and approaches related to childr",
+  "query_hits": [],
+  "embed_text": "69045262 Children's Exercise Physiology science scifact The reorganized and newly revised \"Children's Exercise Physiology, Second Edition, \" presents the most up-to-date research, methodology, and approaches related to children's physiologic responses to exercise. The book examines not only the… 69045262 children's-exercise-physiology children exercise physiology reorganized newly revised second edition The reorganized and newly revised \"Children's Exercise Physiology, Second Edition, \" presents the most up-to-date research, methodology, and approaches related to childr Children's Exercise Physiology The reorganized and newly revised \"Children's Exercise Physiology, Second Edition, \" presents the most up-to-date research, methodology, and approaches related to children's physiologic responses to exercise. The book examines not only the current major issues that separate children from adults, but also the underlying mechanisms of these differences. Readers will learn what makes children different from adults physiologically--such as size, biochemical differences, neuromuscular differences, and lack of sexual and hormonal maturation--and the reasons for these differences. Those involved with young athletes, disease management, and health promotion will gain valuable insight into the physiologic determinants of exercise performance. Children's exercise physi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.921693+00:00"
+}

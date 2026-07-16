@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "rl-intro-a",
+  "source_fingerprint": "aa3eb45c8ea05ab951b32755c97d1202",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "rl-intro-a"
+  ],
+  "key_phrases": [
+    "强化",
+    "学习",
+    "导论",
+    "同名",
+    "文件",
+    "场景",
+    "qianghuaxuexidaoluntongmingkuawenjianchangjing",
+    "强化学习导论 a 同名跨文件场景。"
+  ],
+  "summary_1l": "A 同名跨文件场景。",
+  "query_hits": [],
+  "embed_text": "rl-intro-a 强化学习导论 rl-intro-a 强化 学习 导论 同名 文件 场景 qianghuaxuexidaoluntongmingkuawenjianchangjing 强化学习导论 a 同名跨文件场景。 A 同名跨文件场景。 强化学习导论 A 同名跨文件场景。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T03:23:44.812858+00:00"
+}

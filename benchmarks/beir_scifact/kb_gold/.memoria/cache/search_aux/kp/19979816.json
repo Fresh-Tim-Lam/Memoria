@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19979816",
+  "source_fingerprint": "3276d72af2dfc4fc2928bcad32709e89",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19979816",
+    "myc/miz1-dependent-gene-repression-inversely-coordinates-the-circadian-clock-with-cell-cycle-and-proliferation"
+  ],
+  "key_phrases": [
+    "myc",
+    "miz1",
+    "dependent",
+    "gene",
+    "repression",
+    "inversely",
+    "coordinates",
+    "circadian"
+  ],
+  "summary_1l": "The circadian clock and the cell cycle are major cellular systems that organize global ph",
+  "query_hits": [],
+  "embed_text": "19979816 MYC/MIZ1-dependent gene repression inversely coordinates the circadian clock with cell cycle and proliferation science scifact The circadian clock and the cell cycle are major cellular systems that organize global physiology in temporal fashion. It seems conceivable that the potentially conflicting programs are coordinated. We show here that overexpression of MYC… 19979816 myc/miz1-dependent-gene-repression-inversely-coordinates-the-circadian-clock-with-cell-cycle-and-proliferation myc miz1 dependent gene repression inversely coordinates circadian The circadian clock and the cell cycle are major cellular systems that organize global ph MYC/MIZ1-dependent gene repression inversely coordinates the circadian clock with cell cycle and proliferation The circadian clock and the cell cycle are major cellular systems that organize global physiology in temporal fashion. It seems conceivable that the potentially conflicting programs are coordinated. We show here that overexpression of MYC in U2OS cells attenuates the clock and conversely promotes cell proliferation while downregulation of MYC strengthens the clock and reduces proliferation. Inhibition of the circadian clock is crucially dependent on the formation of repressive complexes of MYC with MIZ1 and subsequent downregulation of the core clock genes BMAL1 (ARNTL), CLOCK and NPAS2. We show furthermore that BMAL1 expression levels correlate inversely with MYC levels in 102 hu",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.495023+00:00"
+}

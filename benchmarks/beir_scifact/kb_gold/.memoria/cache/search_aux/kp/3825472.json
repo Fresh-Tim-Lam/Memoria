@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3825472",
+  "source_fingerprint": "6ef4c43a6e2f9648be9d07746d1d6f0e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3825472",
+    "cadherin-activity-is-required-for-activity-induced-spine-remodeling"
+  ],
+  "key_phrases": [
+    "cadherin",
+    "activity",
+    "required",
+    "induced",
+    "spine",
+    "remodeling",
+    "neural",
+    "induces"
+  ],
+  "summary_1l": "Neural activity induces the remodeling of pre- and postsynaptic membranes, which maintain their apposition through cell adhesion mol",
+  "query_hits": [],
+  "embed_text": "3825472 Cadherin activity is required for activity-induced spine remodeling science scifact Neural activity induces the remodeling of pre- and postsynaptic membranes, which maintain their apposition through cell adhesion molecules. Among them, N-cadherin is redistributed, undergoes activity-dependent conformational changes, and… 3825472 cadherin-activity-is-required-for-activity-induced-spine-remodeling cadherin activity required induced spine remodeling neural induces Neural activity induces the remodeling of pre- and postsynaptic membranes, which maintain their apposition through cell adhesion mol Cadherin activity is required for activity-induced spine remodeling Neural activity induces the remodeling of pre- and postsynaptic membranes, which maintain their apposition through cell adhesion molecules. Among them, N-cadherin is redistributed, undergoes activity-dependent conformational changes, and is required for synaptic plasticity. Here, we show that depolarization induces the enlargement of the width of spine head, and that cadherin activity is essential for this synaptic rearrangement. Dendritic spines visualized with green fluorescent protein in hippocampal neurons showed an expansion by the activation of AMPA receptor, so that the synaptic apposition zone may be expanded. N-cadherin-venus fusion protein laterally dispersed along the expanding spine head. Overexpression of domi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.316558+00:00"
+}

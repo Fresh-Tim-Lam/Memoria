@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "kp_id": "654730#10",
+  "source_fingerprint": "7d4ac6a93d07b81db03d7ce7d6fb2186",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "Λ演算"
+  ],
+  "aliases": [
+    "654730#10"
+  ],
+  "key_phrases": [
+    "依赖",
+    "类型",
+    "henk",
+    "barendregt",
+    "提出",
+    "lambda",
+    "立方",
+    "模型"
+  ],
+  "summary_1l": "Henk Barendregt 提出了 Lambda 立方模型，用于对不同的类型系统的表达能力加以区分。",
+  "query_hits": [],
+  "embed_text": "654730#10 依赖类型 依赖类型 Henk Barendregt 提出了 Lambda 立方模型，用于对不同的类型系统的表达能力加以区分。Lambda 立方的八个顶点分别对应各自的类型系统，简单类型lambda演算位于表达能力最低的顶点上，而构造演算（calculus of constructions）则位于表达能力最强的顶点上。 Λ演算 654730#10 依赖 类型 henk barendregt 提出 lambda 立方 模型 Henk Barendregt 提出了 Lambda 立方模型，用于对不同的类型系统的表达能力加以区分。 依赖类型 Henk Barendregt 提出了 Lambda 立方模型，用于对不同的类型系统的表达能力加以区分。Lambda 立方的八个顶点分别对应各自的类型系统，简单类型lambda演算位于表达能力最低的顶点上，而构造演算（calculus of constructions）则位于表达能力最强的顶点上。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:20:51.779582+00:00"
+}

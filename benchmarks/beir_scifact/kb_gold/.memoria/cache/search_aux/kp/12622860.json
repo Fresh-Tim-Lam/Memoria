@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12622860",
+  "source_fingerprint": "8b88f6b1e08988d1e70cf7da28064935",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12622860",
+    "selective-inhibition-of-ras-dependent-cell-growth-by-farnesylthiosalisylic-acid."
+  ],
+  "key_phrases": [
+    "selective",
+    "inhibition",
+    "ras",
+    "dependent",
+    "cell",
+    "growth",
+    "by",
+    "farnesylthiosalisylic"
+  ],
+  "summary_1l": "Selective inhibition of Ras-dependent cell growth by farnesylthiosalisylic acid.",
+  "query_hits": [],
+  "embed_text": "12622860 Selective inhibition of Ras-dependent cell growth by farnesylthiosalisylic acid. science scifact S-trans,trans-Farnesylthiosalicylic acid (FTS) is a novel farnesylated rigid carboxylic acid derivative. In cell-free systems, it acts as a potent competitive inhibitor (Ki = 2.6 microM) of the enzyme prenylated protein methyltransferase… 12622860 selective-inhibition-of-ras-dependent-cell-growth-by-farnesylthiosalisylic-acid. selective inhibition ras dependent cell growth by farnesylthiosalisylic Selective inhibition of Ras-dependent cell growth by farnesylthiosalisylic acid. Selective inhibition of Ras-dependent cell growth by farnesylthiosalisylic acid. S-trans,trans-Farnesylthiosalicylic acid (FTS) is a novel farnesylated rigid carboxylic acid derivative. In cell-free systems, it acts as a potent competitive inhibitor (Ki = 2.6 microM) of the enzyme prenylated protein methyltransferase (PPMTase), which methylates the carboxyl-terminal S-prenylcysteine in a large number of prenylated proteins including Ras. In such systems, FTS inhibits Ras methylation but not Ras farnesylation. Inhibition of the PPMTase by FTS in homogenates or membranes of a variety of tissues and cell lines is inferred from a block in the methylation of exogenously added substrates such as N-acetyl-S-trans,trans-farnesyl-L-cysteine and of endogenous substrates including small GTP-binding p",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:08.621792+00:00"
+}

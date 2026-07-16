@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25499612",
+  "source_fingerprint": "affee44df571f7e9c26b618ed47ce02c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25499612",
+    "infectiousness-of-malaria-endemic-human-populations-to-vectors."
+  ],
+  "key_phrases": [
+    "infectiousness",
+    "malaria",
+    "endemic",
+    "human",
+    "populations",
+    "vectors",
+    "despite",
+    "its"
+  ],
+  "summary_1l": "Infectiousness of malaria-endemic human populations to vectors.",
+  "query_hits": [],
+  "embed_text": "25499612 Infectiousness of malaria-endemic human populations to vectors. science scifact Despite its key role in determining the stability and intensity of malaria transmission, the infectiousness of human populations to mosquitoes has rarely been estimated. Field-based analyses of malaria transmission have frequently relied… 25499612 infectiousness-of-malaria-endemic-human-populations-to-vectors. infectiousness malaria endemic human populations vectors despite its Infectiousness of malaria-endemic human populations to vectors. Infectiousness of malaria-endemic human populations to vectors. Despite its key role in determining the stability and intensity of malaria transmission, the infectiousness of human populations to mosquitoes has rarely been estimated. Field-based analyses of malaria transmission have frequently relied on the prevalence of asexual parasites or gametocytes as proxies for infectiousness. We now summarize empirical data on human infectiousness from Africa and Papua New Guinea. Over a wide range of transmission intensities there is little relationship between the infectiousness of human populations to vector mosquitoes and mosquito-to-human transmission intensity. We compare these data with the predictions of a stochastic simulation model of Plasmodium falciparum epidemiology. This model predict",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.764673+00:00"
+}

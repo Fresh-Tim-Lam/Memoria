@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15907458",
+  "source_fingerprint": "878fbaa41cbe3d4b0a21e04fa5afe96e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15907458",
+    "assaying-proliferation-and-differentiation-capacity-of-stem-cells-using-disaggregated-adult-mouse-epidermis"
+  ],
+  "key_phrases": [
+    "assaying",
+    "proliferation",
+    "differentiation",
+    "capacity",
+    "stem",
+    "cells",
+    "using",
+    "disaggregated"
+  ],
+  "summary_1l": "In this protocol, we describe how to isolate keratinocytes from adult mouse epidermis, fract",
+  "query_hits": [],
+  "embed_text": "15907458 Assaying proliferation and differentiation capacity of stem cells using disaggregated adult mouse epidermis science scifact In this protocol, we describe how to isolate keratinocytes from adult mouse epidermis, fractionate them into different sub-populations on the basis of cell surface markers and examine their function in an in vivo skin reconstitution assay… 15907458 assaying-proliferation-and-differentiation-capacity-of-stem-cells-using-disaggregated-adult-mouse-epidermis assaying proliferation differentiation capacity stem cells using disaggregated In this protocol, we describe how to isolate keratinocytes from adult mouse epidermis, fract Assaying proliferation and differentiation capacity of stem cells using disaggregated adult mouse epidermis In this protocol, we describe how to isolate keratinocytes from adult mouse epidermis, fractionate them into different sub-populations on the basis of cell surface markers and examine their function in an in vivo skin reconstitution assay with disaggregated neonatal dermal cells. We also describe how the isolated keratinocytes can be subjected to clonal analysis in vitro and in vivo and how to enrich for hair follicle-inducing dermal papilla cells in the dermal preparation. Using these approaches, it is possible to compare the capacity of different populations of adult epidermal stem cells to proliferate and to generate progeny that differentiate along the different epidermal lineage",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.428019+00:00"
+}

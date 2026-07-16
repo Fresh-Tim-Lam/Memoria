@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15578265",
+  "source_fingerprint": "556acaac0a104204684fef7dd6284995",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15578265",
+    "a-model-for-the-role-of-gut-bacteria-in-the-development-of-autoimmunity-for-type-1-diabetes"
+  ],
+  "key_phrases": [
+    "model",
+    "role",
+    "gut",
+    "bacteria",
+    "development",
+    "autoimmunity",
+    "type",
+    "diabetes"
+  ],
+  "summary_1l": "Several lines of evidence suggest a role for the gut microbiome in type 1 diabetes.",
+  "query_hits": [],
+  "embed_text": "15578265 A model for the role of gut bacteria in the development of autoimmunity for type 1 diabetes science scifact Several lines of evidence suggest a role for the gut microbiome in type 1 diabetes. Treating diabetes-prone rodents with probiotics or antibiotics prevents the development of the disorder. Diabetes-prone rodents also have a distinctly… 15578265 a-model-for-the-role-of-gut-bacteria-in-the-development-of-autoimmunity-for-type-1-diabetes model role gut bacteria development autoimmunity type diabetes Several lines of evidence suggest a role for the gut microbiome in type 1 diabetes. A model for the role of gut bacteria in the development of autoimmunity for type 1 diabetes Several lines of evidence suggest a role for the gut microbiome in type 1 diabetes. Treating diabetes-prone rodents with probiotics or antibiotics prevents the development of the disorder. Diabetes-prone rodents also have a distinctly different gut microbiome compared with healthy rodents. Recent studies in children with a high genetic risk for type 1 diabetes demonstrate significant differences in the gut microbiome between children who develop autoimmunity for the disease and those who remain healthy. However, the differences in microbiome composition between autoimmune and healthy children are not consistent across all studies because of the strong environmental influences on microbiome compositi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.901968+00:00"
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "limit of pca",
+  "source_fingerprint": "91b4bd1007091e846b60b83edf3ce38a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "limit of pca"
+  ],
+  "key_phrases": [
+    "第三层",
+    "直接",
+    "pca",
+    "计算",
+    "瓶颈",
+    "条件",
+    "协方差",
+    "矩阵"
+  ],
+  "summary_1l": "第三层：直接做PCA的计算瓶颈 **【条件】** 协方差矩阵 ，大小是 需要对它做特征分解，得到特征向量和特征值 **【推导】** 当特征维度 很大时（如图像： ）： 有 亿个元素 特征分解复杂度 ，内存和时间都不可接受 **【结论】** 直接对 的协方差矩阵做特征分解，在 很大时**不可行**。",
+  "query_hits": [],
+  "embed_text": "limit of pca 直接做PCA的瓶颈 pca算法直接计算的瓶颈 limit of pca 第三层 直接 pca 计算 瓶颈 条件 协方差 矩阵 第三层：直接做PCA的计算瓶颈 **【条件】** 协方差矩阵 ，大小是 需要对它做特征分解，得到特征向量和特征值 **【推导】** 当特征维度 很大时（如图像： ）： 有 亿个元素 特征分解复杂度 ，内存和时间都不可接受 **【结论】** 直接对 的协方差矩阵做特征分解，在 很大时**不可行**。 第三层：直接做PCA的计算瓶颈 **【条件】** 协方差矩阵 ，大小是 需要对它做特征分解，得到特征向量和特征值 **【推导】** 当特征维度 很大时（如图像： ）： 有 亿个元素 特征分解复杂度 ，内存和时间都不可接受 **【结论】** 直接对 的协方差矩阵做特征分解，在 很大时**不可行**。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-15T05:19:07.319183+00:00"
+}

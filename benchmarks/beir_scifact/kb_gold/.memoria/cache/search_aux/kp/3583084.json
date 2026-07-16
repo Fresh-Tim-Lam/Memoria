@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3583084",
+  "source_fingerprint": "7b7f3a216a4bd66491f75c28549e368a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3583084",
+    "large-intergenic-non-coding-rna-ror-modulates-reprogramming-of-human-induced-pluripotent-stem-cells"
+  ],
+  "key_phrases": [
+    "large",
+    "intergenic",
+    "non",
+    "coding",
+    "rna",
+    "ror",
+    "modulates",
+    "reprogramming"
+  ],
+  "summary_1l": "The conversion of lineage-committed cells to induced pluripotent stem cells (iPSCs) by reprogramming",
+  "query_hits": [],
+  "embed_text": "3583084 Large intergenic non-coding RNA-RoR modulates reprogramming of human induced pluripotent stem cells science scifact The conversion of lineage-committed cells to induced pluripotent stem cells (iPSCs) by reprogramming is accompanied by a global remodeling of the epigenome, resulting in altered patterns of gene expression. Here we characterize the… 3583084 large-intergenic-non-coding-rna-ror-modulates-reprogramming-of-human-induced-pluripotent-stem-cells large intergenic non coding rna ror modulates reprogramming The conversion of lineage-committed cells to induced pluripotent stem cells (iPSCs) by reprogramming Large intergenic non-coding RNA-RoR modulates reprogramming of human induced pluripotent stem cells The conversion of lineage-committed cells to induced pluripotent stem cells (iPSCs) by reprogramming is accompanied by a global remodeling of the epigenome, resulting in altered patterns of gene expression. Here we characterize the transcriptional reorganization of large intergenic non-coding RNAs (lincRNAs) that occurs upon derivation of human iPSCs and identify numerous lincRNAs whose expression is linked to pluripotency. Among these, we defined ten lincRNAs whose expression was elevated in iPSCs compared with embryonic stem cells, suggesting that their activation may promote the emergence of iPSCs. Supporting this, our results indicate that these lincRNAs are direct targets of key pluripo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.694821+00:00"
+}

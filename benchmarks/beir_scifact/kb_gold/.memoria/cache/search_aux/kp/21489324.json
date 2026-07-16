@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21489324",
+  "source_fingerprint": "8868a978c6d8c83df6d410cab7bc8c41",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21489324",
+    "profile-of-the-navrongo-health-and-demographic-surveillance-system."
+  ],
+  "key_phrases": [
+    "profile",
+    "navrongo",
+    "health",
+    "demographic",
+    "surveillance",
+    "system",
+    "located",
+    "kassena"
+  ],
+  "summary_1l": "Profile of the Navrongo Health and Demographic Surveillance System.",
+  "query_hits": [],
+  "embed_text": "21489324 Profile of the Navrongo Health and Demographic Surveillance System. science scifact Located in the Kassena-Nankana districts of northern Ghana, the Navrongo health and demographic surveillance system (NHDSS) was established in 1992 by the Navrongo health research centre (NHRC). The NHRC is one of three research centres of… 21489324 profile-of-the-navrongo-health-and-demographic-surveillance-system. profile navrongo health demographic surveillance system located kassena Profile of the Navrongo Health and Demographic Surveillance System. Profile of the Navrongo Health and Demographic Surveillance System. Located in the Kassena-Nankana districts of northern Ghana, the Navrongo health and demographic surveillance system (NHDSS) was established in 1992 by the Navrongo health research centre (NHRC). The NHRC is one of three research centres of the Ghana health service. The activities and potential of the NHDSS for collaborative research are described. The NHDSS monitors health and demographic dynamics of the two Kassena-Nankana districts of northern Ghana and facilitates evaluation of the morbidity and mortality impact of health and social interventions. The total population currently under surveillance is 152 000 residing in 32 000 households. Events monitored routinely include pregnancies, births, morbidity, deaths, migratio",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.233363+00:00"
+}

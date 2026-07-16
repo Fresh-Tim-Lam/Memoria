@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10703001",
+  "source_fingerprint": "c95a02055cd21abcbfc75b9d0f29b714",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10703001",
+    "the-pathogenesis-of-bleomycin-induced-pulmonary-fibrosis-in-mice."
+  ],
+  "key_phrases": [
+    "pathogenesis",
+    "bleomycin",
+    "induced",
+    "pulmonary",
+    "fibrosis",
+    "mice",
+    "administration",
+    "0.5"
+  ],
+  "summary_1l": "The pathogenesis of bleomycin-induced pulmonary fibrosis in mice.",
+  "query_hits": [],
+  "embed_text": "10703001 The pathogenesis of bleomycin-induced pulmonary fibrosis in mice. science scifact Administration of 0.5 mg bleomycin to mice twice weekly for 4 weeks induced pulmonary fibrosis. The initial site of injury was the intima of pulmonary arteries and veins where endothelial cells became edematous and were separated from the… 10703001 the-pathogenesis-of-bleomycin-induced-pulmonary-fibrosis-in-mice. pathogenesis bleomycin induced pulmonary fibrosis mice administration 0.5 The pathogenesis of bleomycin-induced pulmonary fibrosis in mice. The pathogenesis of bleomycin-induced pulmonary fibrosis in mice. Administration of 0.5 mg bleomycin to mice twice weekly for 4 weeks induced pulmonary fibrosis. The initial site of injury was the intima of pulmonary arteries and veins where endothelial cells became edematous and were separated from the underlying basement membrane by large blebs. These lesions occurred after 2 weeks and were associated with infiltration of perivascular spaces by lymphocytes and plasma cells. Capillary endothelial blebbing and interstitial edema were observed after 4 weeks, when multifocal necrosis of type 1 alveolar epithelial cells was accompanied by fibrinous exudation into the alveoli. The process of repair was characterized by proliferation and metaplasia of type 2 epithelial cells, fibroblastic organ",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:05.383013+00:00"
+}

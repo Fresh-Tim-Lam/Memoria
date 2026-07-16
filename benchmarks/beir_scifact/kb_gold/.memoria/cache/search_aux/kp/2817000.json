@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "2817000",
+  "source_fingerprint": "b3d4b09512651514c0ef13413eb5fec4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2817000"
+  ],
+  "key_phrases": [
+    "histone",
+    "variant",
+    "h2a",
+    "marks",
+    "ends",
+    "both",
+    "active",
+    "inactive"
+  ],
+  "summary_1l": "Histone Variant H2A.",
+  "query_hits": [],
+  "embed_text": "2817000 Histone Variant H2A.Z Marks the 5′ Ends of Both Active and Inactive Genes in Euchromatin science scifact In S. cerevisiae, histone variant H2A.Z is deposited in euchromatin at the flanks of silent heterochromatin to prevent its ectopic spread. We show that H2A.Z nucleosomes are found at promoter regions of nearly all genes in euchromatin.… 2817000 histone variant h2a marks ends both active inactive Histone Variant H2A. Histone Variant H2A.Z Marks the 5′ Ends of Both Active and Inactive Genes in Euchromatin In S. cerevisiae, histone variant H2A.Z is deposited in euchromatin at the flanks of silent heterochromatin to prevent its ectopic spread. We show that H2A.Z nucleosomes are found at promoter regions of nearly all genes in euchromatin. They generally occur as two positioned nucleosomes that flank a nucleosome-free region (NFR) that contains the transcription start site. Astonishingly, enrichment at 5' ends is observed not only at actively transcribed genes but also at inactive loci. Mutagenesis of a typical promoter revealed a 22 bp segment of DNA sufficient to program formation of a NFR flanked by two H2A.Z nucleosomes. This segment contains a binding site of the Myb-related protein Reb1 and an adjace",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.635154+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4306711",
+  "source_fingerprint": "f3580b93d34d86098e7d11a89e44f710",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4306711",
+    "the-human-mitochondrial-dead-box-protein-ddx28-resides-in-rna-granules-and-functions-in-mitoribosome-assembly."
+  ],
+  "key_phrases": [
+    "human",
+    "mitochondrial",
+    "dead",
+    "box",
+    "protein",
+    "ddx28",
+    "resides",
+    "rna"
+  ],
+  "summary_1l": "The Human Mitochondrial DEAD-Box Protein DDX28 Resides in RNA Granules and Functions in Mitoribosome Assembly.",
+  "query_hits": [],
+  "embed_text": "4306711 The Human Mitochondrial DEAD-Box Protein DDX28 Resides in RNA Granules and Functions in Mitoribosome Assembly. science scifact Human mitochondrial ribosomes are specialized in the synthesis of 13 proteins, which are fundamental components of the oxidative phosphorylation system. The pathway of mitoribosome biogenesis, the compartmentalization of the process, and… 4306711 the-human-mitochondrial-dead-box-protein-ddx28-resides-in-rna-granules-and-functions-in-mitoribosome-assembly. human mitochondrial dead box protein ddx28 resides rna The Human Mitochondrial DEAD-Box Protein DDX28 Resides in RNA Granules and Functions in Mitoribosome Assembly. The Human Mitochondrial DEAD-Box Protein DDX28 Resides in RNA Granules and Functions in Mitoribosome Assembly. Human mitochondrial ribosomes are specialized in the synthesis of 13 proteins, which are fundamental components of the oxidative phosphorylation system. The pathway of mitoribosome biogenesis, the compartmentalization of the process, and factors involved remain largely unknown. Here, we have identified the DEAD-box protein DDX28 as an RNA granule component essential for the biogenesis of the mitoribosome large subunit (mt-LSU). DDX28 interacts with the 16S rRNA and the mt-LSU. RNAi-mediated DDX28 silencing in HEK293T cells does not affect mitochondrial mRNA stability or 16S rRNA processing or modification. However, it leads to reduced levels of 16S rRNA and mt-LSU proteins, impair",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.442795+00:00"
+}

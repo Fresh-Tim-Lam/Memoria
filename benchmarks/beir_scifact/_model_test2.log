@@ -1,0 +1,9 @@
+step1: import torch
+torch 2.10.0+cu130, cuda=True
+step2: import sentence_transformers
+imported
+step3: loading model
+loaded: SentenceTransformer
+step4: encoding
+encoded: 384 dims, first 5: [ 0.00672633  0.03464792  0.0516657   0.04579075 -0.03543963]
+DONE

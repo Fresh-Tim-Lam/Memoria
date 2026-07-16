@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10247314",
+  "source_fingerprint": "226d19fe42695d1df7eb7167cb593b5b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10247314",
+    "two-sequence-motifs-from-hif-1alpha-bind-to-the-dna-binding-site-of-p53."
+  ],
+  "key_phrases": [
+    "two",
+    "sequence",
+    "motifs",
+    "from",
+    "hif",
+    "1alpha",
+    "bind",
+    "dna"
+  ],
+  "summary_1l": "Two sequence motifs from HIF-1alpha bind to the DNA-binding site of p53.",
+  "query_hits": [],
+  "embed_text": "10247314 Two sequence motifs from HIF-1alpha bind to the DNA-binding site of p53. science scifact There is evidence that hypoxia-inducible factor-1alpha (HIF-1alpha) interacts with the tumor suppressor p53. To characterize the putative interaction, we mapped the binding of the core domain of p53 (p53c) to an array of immobilized… 10247314 two-sequence-motifs-from-hif-1alpha-bind-to-the-dna-binding-site-of-p53. two sequence motifs from hif 1alpha bind dna Two sequence motifs from HIF-1alpha bind to the DNA-binding site of p53. Two sequence motifs from HIF-1alpha bind to the DNA-binding site of p53. There is evidence that hypoxia-inducible factor-1alpha (HIF-1alpha) interacts with the tumor suppressor p53. To characterize the putative interaction, we mapped the binding of the core domain of p53 (p53c) to an array of immobilized HIF-1alpha-derived peptides and found two peptide-sequence motifs that bound to p53c with micromolar affinity in solution. One sequence was adjacent to and the other coincided with the two proline residues of the oxygen-dependent degradation domain (P402 and P564) that act as switches for the oxygen-dependent regulation of HIF-1alpha. The binding affinity was independent of the hydroxylation state of P564. We found from NMR spectroscopy that these sequence motifs bind to the DNA-binding si",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.394744+00:00"
+}

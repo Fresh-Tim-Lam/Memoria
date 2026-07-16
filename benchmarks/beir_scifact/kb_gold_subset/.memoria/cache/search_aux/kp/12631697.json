@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12631697",
+  "source_fingerprint": "859e0638bb1df1e2a72ab0ac95f71673",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12631697",
+    "activation-of-fast-skeletal-muscle-troponin-as-a-potential-therapeutic-approach-for-treating-neuromuscular-diseases"
+  ],
+  "key_phrases": [
+    "activation",
+    "fast",
+    "skeletal",
+    "muscle",
+    "troponin",
+    "as",
+    "potential",
+    "therapeutic"
+  ],
+  "summary_1l": "Limited neural input results in muscle weakness in neuromuscular disease because of",
+  "query_hits": [],
+  "embed_text": "12631697 Activation of fast skeletal muscle troponin as a potential therapeutic approach for treating neuromuscular diseases science scifact Limited neural input results in muscle weakness in neuromuscular disease because of a reduction in the density of muscle innervation, the rate of neuromuscular junction activation or the efficiency of synaptic transmission. We developed a… 12631697 activation-of-fast-skeletal-muscle-troponin-as-a-potential-therapeutic-approach-for-treating-neuromuscular-diseases activation fast skeletal muscle troponin as potential therapeutic Limited neural input results in muscle weakness in neuromuscular disease because of Activation of fast skeletal muscle troponin as a potential therapeutic approach for treating neuromuscular diseases Limited neural input results in muscle weakness in neuromuscular disease because of a reduction in the density of muscle innervation, the rate of neuromuscular junction activation or the efficiency of synaptic transmission. We developed a small-molecule fast-skeletal-troponin activator, CK-2017357, as a means to increase muscle strength by amplifying the response of muscle when neural input is otherwise diminished secondary to neuromuscular disease. Binding selectively to the fast-skeletal-troponin complex, CK-2017357 slows the rate of calcium release from troponin C and sensitizes muscle to calcium. As a consequence, the force-calcium relationship of muscle fibers shifts lef",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:09.228573+00:00"
+}

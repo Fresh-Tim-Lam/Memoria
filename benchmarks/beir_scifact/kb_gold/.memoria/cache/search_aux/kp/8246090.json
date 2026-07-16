@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8246090",
+  "source_fingerprint": "c427bc575fcb9b739ac542d887f6f6ed",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8246090",
+    "trp-channels-of-intracellular-membranes."
+  ],
+  "key_phrases": [
+    "trp",
+    "channels",
+    "intracellular",
+    "membranes",
+    "ion",
+    "classically",
+    "understood",
+    "regulate"
+  ],
+  "summary_1l": "TRP channels of intracellular membranes.",
+  "query_hits": [],
+  "embed_text": "8246090 TRP channels of intracellular membranes. science scifact Ion channels are classically understood to regulate the flux of ions across the plasma membrane in response to a variety of environmental and intracellular cues. Ion channels serve a number of functions in intracellular membranes as well.… 8246090 trp-channels-of-intracellular-membranes. trp channels intracellular membranes ion classically understood regulate TRP channels of intracellular membranes. TRP channels of intracellular membranes. Ion channels are classically understood to regulate the flux of ions across the plasma membrane in response to a variety of environmental and intracellular cues. Ion channels serve a number of functions in intracellular membranes as well. These channels may be temporarily localized to intracellular membranes as a function of their biosynthetic or secretory pathways, i.e., en route to their destination location. Intracellular membrane ion channels may also be located in the endocytic pathways, either being recycled back to the plasma membrane or targeted to the lysosome for degradation. Several channels do participate in intracellular signal transduction; the most well known example is the inositol 1,4,5-trisphosphate receptor (IP(3)R) in the endopla",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.146904+00:00"
+}

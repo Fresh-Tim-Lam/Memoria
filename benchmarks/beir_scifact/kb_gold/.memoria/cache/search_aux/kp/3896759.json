@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3896759",
+  "source_fingerprint": "550d51e4d6a913626ea9c9b27281d24c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3896759",
+    "vascular-heterogeneity-and-specialization-in-development-and-disease"
+  ],
+  "key_phrases": [
+    "vascular",
+    "heterogeneity",
+    "specialization",
+    "development",
+    "disease",
+    "blood",
+    "lymphatic",
+    "vessels"
+  ],
+  "summary_1l": "Blood and lymphatic vessels pervade almost all body tissues and have numerous essential roles in physiology and disease.",
+  "query_hits": [],
+  "embed_text": "3896759 Vascular heterogeneity and specialization in development and disease science scifact Blood and lymphatic vessels pervade almost all body tissues and have numerous essential roles in physiology and disease. The inner lining of these networks is formed by a single layer of endothelial cells, which is specialized according to… 3896759 vascular-heterogeneity-and-specialization-in-development-and-disease vascular heterogeneity specialization development disease blood lymphatic vessels Blood and lymphatic vessels pervade almost all body tissues and have numerous essential roles in physiology and disease. Vascular heterogeneity and specialization in development and disease Blood and lymphatic vessels pervade almost all body tissues and have numerous essential roles in physiology and disease. The inner lining of these networks is formed by a single layer of endothelial cells, which is specialized according to the needs of the tissue that it supplies. Whereas the general mechanisms of blood and lymphatic vessel development are being defined with increasing molecular precision, studies of the processes of endothelial specialization remain mostly descriptive. Recent insights from genetic animal models illuminate how endothelial cells interact with each other and with their tissue environment, providing paradigms for vessel type- and organ-specific endothelial differentiation. Delineating these",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.172062+00:00"
+}

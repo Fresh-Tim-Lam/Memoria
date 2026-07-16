@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "49208216",
+  "source_fingerprint": "1c3f9c176b1952e94c063fdeece586ae",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "49208216",
+    "staphylococcus-aureus-infection-dynamics"
+  ],
+  "key_phrases": [
+    "staphylococcus",
+    "aureus",
+    "infection",
+    "dynamics",
+    "human",
+    "commensal",
+    "that",
+    "can"
+  ],
+  "summary_1l": "Staphylococcus aureus is a human commensal that can also cause systemic infections.",
+  "query_hits": [],
+  "embed_text": "49208216 Staphylococcus aureus infection dynamics science scifact Staphylococcus aureus is a human commensal that can also cause systemic infections. This transition requires evasion of the immune response and the ability to exploit different niches within the host. However, the disease mechanisms and… 49208216 staphylococcus-aureus-infection-dynamics staphylococcus aureus infection dynamics human commensal that can Staphylococcus aureus is a human commensal that can also cause systemic infections. Staphylococcus aureus infection dynamics Staphylococcus aureus is a human commensal that can also cause systemic infections. This transition requires evasion of the immune response and the ability to exploit different niches within the host. However, the disease mechanisms and the dominant immune mediators against infection are poorly understood. Previously it has been shown that the infecting S. aureus population goes through a population bottleneck, from which very few bacteria escape to establish the abscesses that are characteristic of many infections. Here we examine the host factors underlying the population bottleneck and subsequent clonal expansion in S. aureus infection models, to identify underpinning principles of infection. The bottleneck is a common feature between models and",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.740313+00:00"
+}

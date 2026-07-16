@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10669582",
+  "source_fingerprint": "8e12d4cd5424f7ca326ba6ecccee9fc2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10669582",
+    "tissue-transglutaminase-is-an-integrin-binding-adhesion-coreceptor-for-fibronectin"
+  ],
+  "key_phrases": [
+    "tissue",
+    "transglutaminase",
+    "integrin",
+    "binding",
+    "adhesion",
+    "coreceptor",
+    "fibronectin",
+    "protein"
+  ],
+  "summary_1l": "The protein cross-linking enzyme tissue transglutaminase binds in vitro with high affinity to fibronectin via its 42-",
+  "query_hits": [],
+  "embed_text": "10669582 Tissue Transglutaminase Is an Integrin-Binding Adhesion Coreceptor for Fibronectin science scifact The protein cross-linking enzyme tissue transglutaminase binds in vitro with high affinity to fibronectin via its 42-kD gelatin-binding domain. Here we report that cell surface transglutaminase mediates adhesion and spreading of cells on… 10669582 tissue-transglutaminase-is-an-integrin-binding-adhesion-coreceptor-for-fibronectin tissue transglutaminase integrin binding adhesion coreceptor fibronectin protein The protein cross-linking enzyme tissue transglutaminase binds in vitro with high affinity to fibronectin via its 42- Tissue Transglutaminase Is an Integrin-Binding Adhesion Coreceptor for Fibronectin The protein cross-linking enzyme tissue transglutaminase binds in vitro with high affinity to fibronectin via its 42-kD gelatin-binding domain. Here we report that cell surface transglutaminase mediates adhesion and spreading of cells on the 42-kD fibronectin fragment, which lacks integrin-binding motifs. Overexpression of tissue transglutaminase increases its amount on the cell surface, enhances adhesion and spreading on fibronectin and its 42-kD fragment, enlarges focal adhesions, and amplifies adhesion-dependent phosphorylation of focal adhesion kinase. These effects are specific for tissue transglutaminase and are not shared by its functional homologue, a catalytic subunit of factor XIII. Adhesive functi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:05.250857+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15491404",
+  "source_fingerprint": "7c14ae7a96788a9f71719faf48d6fd1d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15491404",
+    "rapid-and-persistent-modulation-of-actin-dynamics-regulates-postsynaptic-reorganization-underlying-bidirectional-plasticity"
+  ],
+  "key_phrases": [
+    "rapid",
+    "persistent",
+    "modulation",
+    "actin",
+    "dynamics",
+    "regulates",
+    "postsynaptic",
+    "reorganization"
+  ],
+  "summary_1l": "The synapse is a highly organized cellular specialization whose structure an",
+  "query_hits": [],
+  "embed_text": "15491404 Rapid and persistent modulation of actin dynamics regulates postsynaptic reorganization underlying bidirectional plasticity science scifact The synapse is a highly organized cellular specialization whose structure and composition are reorganized, both positively and negatively, depending on the strength of input signals. The mechanisms orchestrating these changes are not well… 15491404 rapid-and-persistent-modulation-of-actin-dynamics-regulates-postsynaptic-reorganization-underlying-bidirectional-plasticity rapid persistent modulation actin dynamics regulates postsynaptic reorganization The synapse is a highly organized cellular specialization whose structure an Rapid and persistent modulation of actin dynamics regulates postsynaptic reorganization underlying bidirectional plasticity The synapse is a highly organized cellular specialization whose structure and composition are reorganized, both positively and negatively, depending on the strength of input signals. The mechanisms orchestrating these changes are not well understood. A plausible locus for the reorganization of synapse components and structure is actin, because it serves as both cytoskeleton and scaffold for synapses and exists in a dynamic equilibrium between F-actin and G-actin that is modulated bidirectionally by cellular signaling. Using a new FRET-based imaging technique to monitor F-actin/G-actin equilibrium, we show here that tetanic stimulation causes a rapid, persistent shift",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.718907+00:00"
+}

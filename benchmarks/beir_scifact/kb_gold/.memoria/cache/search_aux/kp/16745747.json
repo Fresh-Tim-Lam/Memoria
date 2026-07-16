@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16745747",
+  "source_fingerprint": "d6e7376f04026110327488f3a077a3aa",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16745747",
+    "genetic-interaction-between-mutations-in-c-myb-and-the-kix-domains-of-cbp-and-p300-affects-multiple-blood-cell-lineages-and-influences-both-gene-activation-and-repression"
+  ],
+  "key_phrases": [
+    "genetic",
+    "interaction",
+    "between",
+    "mutations",
+    "myb",
+    "kix",
+    "domains",
+    "cbp"
+  ],
+  "summary_1l": "Adult blood cell production o",
+  "query_hits": [],
+  "embed_text": "16745747 Genetic Interaction between Mutations in c-Myb and the KIX Domains of CBP and p300 Affects Multiple Blood Cell Lineages and Influences Both Gene Activation and Repression science scifact Adult blood cell production or definitive hematopoiesis requires the transcription factor c-Myb. The closely related KAT3 histone acetyltransferases CBP (CREBBP) and p300 (EP300) bind c-Myb through their KIX domains and mice homozygous for… 16745747 genetic-interaction-between-mutations-in-c-myb-and-the-kix-domains-of-cbp-and-p300-affects-multiple-blood-cell-lineages-and-influences-both-gene-activation-and-repression genetic interaction between mutations myb kix domains cbp Adult blood cell production o Genetic Interaction between Mutations in c-Myb and the KIX Domains of CBP and p300 Affects Multiple Blood Cell Lineages and Influences Both Gene Activation and Repression Adult blood cell production or definitive hematopoiesis requires the transcription factor c-Myb. The closely related KAT3 histone acetyltransferases CBP (CREBBP) and p300 (EP300) bind c-Myb through their KIX domains and mice homozygous for a p300 KIX domain mutation exhibit multiple blood defects. Perplexingly, mice homozygous for the same KIX domain mutation in CBP have normal blood. Here we test the hypothesis that the CBP KIX domain contributes subordinately to hematopoiesis via a genetic interaction with c-Myb. We assessed hematopoiesis in mice bearing compound mutations of c-Myb and/or the KIX domains of CBP and p300",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.779184+00:00"
+}

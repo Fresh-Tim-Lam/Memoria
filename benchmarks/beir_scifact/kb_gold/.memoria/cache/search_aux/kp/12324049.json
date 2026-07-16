@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12324049",
+  "source_fingerprint": "d66719c5d1ed5429d515bd131156629a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12324049",
+    "whole-genome-fingerprint-of-the-dna-methylome-during-human-b-cell-differentiation"
+  ],
+  "key_phrases": [
+    "whole",
+    "genome",
+    "fingerprint",
+    "dna",
+    "methylome",
+    "during",
+    "human",
+    "cell"
+  ],
+  "summary_1l": "We analyzed the DNA methylome of ten subpopulations spanning the entire B cell differentiation program by whole-genome",
+  "query_hits": [],
+  "embed_text": "12324049 Whole-genome fingerprint of the DNA methylome during human B cell differentiation science scifact We analyzed the DNA methylome of ten subpopulations spanning the entire B cell differentiation program by whole-genome bisulfite sequencing and high-density microarrays. We observed that non-CpG methylation disappeared upon B cell… 12324049 whole-genome-fingerprint-of-the-dna-methylome-during-human-b-cell-differentiation whole genome fingerprint dna methylome during human cell We analyzed the DNA methylome of ten subpopulations spanning the entire B cell differentiation program by whole-genome Whole-genome fingerprint of the DNA methylome during human B cell differentiation We analyzed the DNA methylome of ten subpopulations spanning the entire B cell differentiation program by whole-genome bisulfite sequencing and high-density microarrays. We observed that non-CpG methylation disappeared upon B cell commitment, whereas CpG methylation changed extensively during B cell maturation, showing an accumulative pattern and affecting around 30% of all measured CpG sites. Early differentiation stages mainly displayed enhancer demethylation, which was associated with upregulation of key B cell transcription factors and affected multiple genes involved in B cell biology. Late differentiation stages, in contrast, showed extensive demethylation of heterochromatin and methylation gain at Poly",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:08.153687+00:00"
+}

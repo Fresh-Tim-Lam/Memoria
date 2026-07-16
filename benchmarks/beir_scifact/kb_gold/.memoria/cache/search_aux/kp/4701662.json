@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4701662",
+  "source_fingerprint": "08e6d945fefee9e5d6379e488069669c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4701662",
+    "a-phospholipid-transfer-function-of-er-mitochondria-encounter-structure-revealed-in-vitro"
+  ],
+  "key_phrases": [
+    "phospholipid",
+    "transfer",
+    "function",
+    "er",
+    "mitochondria",
+    "encounter",
+    "structure",
+    "revealed"
+  ],
+  "summary_1l": "As phospholipids are synthesized mainly in the endoplasmic reticulum (ER) and mitochondrial inner membranes, h",
+  "query_hits": [],
+  "embed_text": "4701662 A phospholipid transfer function of ER-mitochondria encounter structure revealed in vitro science scifact As phospholipids are synthesized mainly in the endoplasmic reticulum (ER) and mitochondrial inner membranes, how cells properly distribute specific phospholipids to diverse cellular membranes is a crucial problem for maintenance of… 4701662 a-phospholipid-transfer-function-of-er-mitochondria-encounter-structure-revealed-in-vitro phospholipid transfer function er mitochondria encounter structure revealed As phospholipids are synthesized mainly in the endoplasmic reticulum (ER) and mitochondrial inner membranes, h A phospholipid transfer function of ER-mitochondria encounter structure revealed in vitro As phospholipids are synthesized mainly in the endoplasmic reticulum (ER) and mitochondrial inner membranes, how cells properly distribute specific phospholipids to diverse cellular membranes is a crucial problem for maintenance of organelle-specific phospholipid compositions. Although the ER-mitochondria encounter structure (ERMES) was proposed to facilitate phospholipid transfer between the ER and mitochondria, such a role of ERMES is still controversial and awaits experimental demonstration. Here we developed a novel in vitro assay system with isolated yeast membrane fractions to monitor phospholipid exchange between the ER and mitochondria. With this system, we found that phospholipid transport be",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.271270+00:00"
+}

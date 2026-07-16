@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "kp_id": "206639#1",
+  "source_fingerprint": "27df8a0d4c3b964f72bf8df641ae1f3e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "納斯達克100指數",
+    "股價指數"
+  ],
+  "aliases": [
+    "206639#1"
+  ],
+  "key_phrases": [
+    "燕麦",
+    "中所含",
+    "球蛋白",
+    "avenin",
+    "類似",
+    "小麦",
+    "成份",
+    "部份"
+  ],
+  "summary_1l": "燕麦中所含的燕麦球蛋白（Avenin，是類似小麦中的成份）會讓少部份人有乳糜瀉症狀。",
+  "query_hits": [],
+  "embed_text": "206639#1 燕麦 燕麦 燕麦中所含的燕麦球蛋白（Avenin，是類似小麦中的成份）會讓少部份人有乳糜瀉症狀。而燕麦在製造過程也常會混合到少量含有麸质的穀類，例如小麦及大麥。燕麥含有植酸攝取過量會影響鈣、鐵、鎂的吸收，為骨質疏鬆症、貧血患者應注意的產品，加工製品單位熱量遠高於米飯，糊化後升糖指數（GI值）亦會增加。 納斯達克100指數 股價指數 206639#1 燕麦 中所含 球蛋白 avenin 類似 小麦 成份 部份 燕麦中所含的燕麦球蛋白（Avenin，是類似小麦中的成份）會讓少部份人有乳糜瀉症狀。 燕麦 燕麦中所含的燕麦球蛋白（Avenin，是類似小麦中的成份）會讓少部份人有乳糜瀉症狀。而燕麦在製造過程也常會混合到少量含有麸质的穀類，例如小麦及大麥。燕麥含有植酸攝取過量會影響鈣、鐵、鎂的吸收，為骨質疏鬆症、貧血患者應注意的產品，加工製品單位熱量遠高於米飯，糊化後升糖指數（GI值）亦會增加。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:20:00.625538+00:00"
+}

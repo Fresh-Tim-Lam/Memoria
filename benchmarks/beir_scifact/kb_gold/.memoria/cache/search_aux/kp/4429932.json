@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4429932",
+  "source_fingerprint": "4d89a9c352f72435a5560672726e700b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4429932",
+    "lysyl-oxidase-is-essential-for-hypoxia-induced-metastasis"
+  ],
+  "key_phrases": [
+    "lysyl",
+    "oxidase",
+    "essential",
+    "hypoxia",
+    "induced",
+    "metastasis",
+    "multistep",
+    "process"
+  ],
+  "summary_1l": "Metastasis is a multistep process responsible for most cancer deaths, and it can be influenced by both the immediate microenvironment (cell–ce",
+  "query_hits": [],
+  "embed_text": "4429932 Lysyl oxidase is essential for hypoxia-induced metastasis science scifact Metastasis is a multistep process responsible for most cancer deaths, and it can be influenced by both the immediate microenvironment (cell–cell or cell–matrix interactions) and the extended tumour microenvironment (for example… 4429932 lysyl-oxidase-is-essential-for-hypoxia-induced-metastasis lysyl oxidase essential hypoxia induced metastasis multistep process Metastasis is a multistep process responsible for most cancer deaths, and it can be influenced by both the immediate microenvironment (cell–ce Lysyl oxidase is essential for hypoxia-induced metastasis Metastasis is a multistep process responsible for most cancer deaths, and it can be influenced by both the immediate microenvironment (cell–cell or cell–matrix interactions) and the extended tumour microenvironment (for example vascularization). Hypoxia (low oxygen) is clinically associated with metastasis and poor patient outcome, although the underlying processes remain unclear. Microarray studies have shown the expression of lysyl oxidase (LOX) to be elevated in hypoxic human tumour cells. Paradoxically, LOX expression is associated with both tumour suppression and tumour progression, and its role in tumorigenesis seems dependent on cellular location, cell type and transformation status. Here we show that LOX expression is regula",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.196309+00:00"
+}

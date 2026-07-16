@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14083283",
+  "source_fingerprint": "30bf42ef1ffb56ca9181c9ce2b1acbb8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14083283",
+    "riesz-pyramids-for-fast-phase-based-video-magnification"
+  ],
+  "key_phrases": [
+    "riesz",
+    "pyramids",
+    "fast",
+    "phase",
+    "based",
+    "video",
+    "magnification",
+    "we"
+  ],
+  "summary_1l": "We present a new compact image pyramid representation, the Riesz pyramid, that can be used for real-time phase-based motion magnification.",
+  "query_hits": [],
+  "embed_text": "14083283 Riesz pyramids for fast phase-based video magnification science scifact We present a new compact image pyramid representation, the Riesz pyramid, that can be used for real-time phase-based motion magnification. Our new representation is less overcomplete than even the smallest two orientation, octave-bandwidth… 14083283 riesz-pyramids-for-fast-phase-based-video-magnification riesz pyramids fast phase based video magnification we We present a new compact image pyramid representation, the Riesz pyramid, that can be used for real-time phase-based motion magnification. Riesz pyramids for fast phase-based video magnification We present a new compact image pyramid representation, the Riesz pyramid, that can be used for real-time phase-based motion magnification. Our new representation is less overcomplete than even the smallest two orientation, octave-bandwidth complex steerable pyramid, and can be implemented using compact, efficient linear filters in the spatial domain. Motion-magnified videos produced with this new representation are of comparable quality to those produced with the complex steerable pyramid. When used with phase-based video magnification, the Riesz pyramid phase-shifts image features along only their dominant orientation rather than every orientation like the complex steerable pyramid.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.030917+00:00"
+}

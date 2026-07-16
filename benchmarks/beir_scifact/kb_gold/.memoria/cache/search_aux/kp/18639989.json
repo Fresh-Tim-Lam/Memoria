@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18639989",
+  "source_fingerprint": "5513ad3b3d45761af8474c383ef8cae8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18639989",
+    "swi1timeless-prevents-repeat-instability-at-fission-yeast-telomeres"
+  ],
+  "key_phrases": [
+    "swi1timeless",
+    "prevents",
+    "repeat",
+    "instability",
+    "at",
+    "fission",
+    "yeast",
+    "telomeres"
+  ],
+  "summary_1l": "Genomic instability associated with DNA replication stress is linked to cancer and genetic pathologies in humans.",
+  "query_hits": [],
+  "embed_text": "18639989 Swi1Timeless Prevents Repeat Instability at Fission Yeast Telomeres science scifact Genomic instability associated with DNA replication stress is linked to cancer and genetic pathologies in humans. If not properly regulated, replication stress, such as fork stalling and collapse, can be induced at natural replication… 18639989 swi1timeless-prevents-repeat-instability-at-fission-yeast-telomeres swi1timeless prevents repeat instability at fission yeast telomeres Genomic instability associated with DNA replication stress is linked to cancer and genetic pathologies in humans. Swi1Timeless Prevents Repeat Instability at Fission Yeast Telomeres Genomic instability associated with DNA replication stress is linked to cancer and genetic pathologies in humans. If not properly regulated, replication stress, such as fork stalling and collapse, can be induced at natural replication impediments present throughout the genome. The fork protection complex (FPC) is thought to play a critical role in stabilizing stalled replication forks at several known replication barriers including eukaryotic rDNA genes and the fission yeast mating-type locus. However, little is known about the role of the FPC at other natural impediments including telomeres. Telomeres are considered to be difficult to replicate due to the presence of repetitive GT-rich sequences and telomere-binding prote",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.514498+00:00"
+}

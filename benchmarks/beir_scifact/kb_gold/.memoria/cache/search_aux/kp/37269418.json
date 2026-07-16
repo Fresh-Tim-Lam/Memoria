@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "37269418",
+  "source_fingerprint": "679881867756498957731309cd15edcb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "37269418",
+    "age--and-infection-intensity-dependent-cytokine-and-antibody-production-in-human-trichuriasis:-the-importance-of-ige."
+  ],
+  "key_phrases": [
+    "age",
+    "infection",
+    "intensity",
+    "dependent",
+    "cytokine",
+    "antibody",
+    "production",
+    "human"
+  ],
+  "summary_1l": "Age- and infection intensity-dependent cytokine and antibody production in human trichuriasis: the importance of IgE.",
+  "query_hits": [],
+  "embed_text": "37269418 Age- and infection intensity-dependent cytokine and antibody production in human trichuriasis: the importance of IgE. science scifact The cytokine and antibody response to Trichuris trichiura infection was determined for 96 persons living in an area where the parasite is highly endemic and infection exhibits a convex age intensity profile. In response to stimulation with… 37269418 age--and-infection-intensity-dependent-cytokine-and-antibody-production-in-human-trichuriasis:-the-importance-of-ige. age infection intensity dependent cytokine antibody production human Age- and infection intensity-dependent cytokine and antibody production in human trichuriasis: the importance of IgE. Age- and infection intensity-dependent cytokine and antibody production in human trichuriasis: the importance of IgE. The cytokine and antibody response to Trichuris trichiura infection was determined for 96 persons living in an area where the parasite is highly endemic and infection exhibits a convex age intensity profile. In response to stimulation with T. trichiura antigen, a small proportion of the study group produced interleukin (IL)-4 (7%), IL-9 (5%), and IL-13 (17%). A larger proportion produced IL-10 (97%), tumor necrosis factor (TNF)-alpha (93%), and interferon (IFN)-gamma (32%). The levels of TNF-alpha (P =.016) and IFN-gamma (P =.012) significantly increased with age, suggesting a switch to a more chronic infection phenotype. The predominant parasite-specific antibodies produce",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.318749+00:00"
+}

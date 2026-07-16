@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "43619625",
+  "source_fingerprint": "3b5953e4e4ed37a489c88e27599dfc20",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "43619625",
+    "inflammatory-t-cells-rapidly-induce-differentiation-of-human-bone-marrow-stromal-cells-into-mature-osteoblasts."
+  ],
+  "key_phrases": [
+    "inflammatory",
+    "cells",
+    "rapidly",
+    "induce",
+    "differentiation",
+    "human",
+    "bone",
+    "marrow"
+  ],
+  "summary_1l": "Inflammatory T cells rapidly induce differentiation of human bone marrow stromal cells into mature osteoblasts.",
+  "query_hits": [],
+  "embed_text": "43619625 Inflammatory T cells rapidly induce differentiation of human bone marrow stromal cells into mature osteoblasts. science scifact Activated T cells secrete multiple osteoclastogenic cytokines which play a major role in the bone destruction associated with rheumatoid arthritis. While the role of T cells in osteoclastogenesis has received much attention recently, the… 43619625 inflammatory-t-cells-rapidly-induce-differentiation-of-human-bone-marrow-stromal-cells-into-mature-osteoblasts. inflammatory cells rapidly induce differentiation human bone marrow Inflammatory T cells rapidly induce differentiation of human bone marrow stromal cells into mature osteoblasts. Inflammatory T cells rapidly induce differentiation of human bone marrow stromal cells into mature osteoblasts. Activated T cells secrete multiple osteoclastogenic cytokines which play a major role in the bone destruction associated with rheumatoid arthritis. While the role of T cells in osteoclastogenesis has received much attention recently, the effect of T cells on osteoblast formation and activity is poorly defined. In this study, we investigated the hypothesis that in chronic inflammation activated T cells contribute to enhanced bone turnover by promoting osteoblastic differentiation. We show that T cells produce soluble factors that induce alkaline phosphatase activity in bone marrow stromal cells and elevated expression of mRNA for Runx2 and osteocalcin. This data indicate that T ce",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.078982+00:00"
+}

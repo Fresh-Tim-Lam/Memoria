@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "7549811",
+  "source_fingerprint": "b4cdfe4cc8f43629a4cca3ed04b88706",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7549811"
+  ],
+  "key_phrases": [
+    "preferential",
+    "binding",
+    "kinesin",
+    "motor",
+    "gtp",
+    "tubulin",
+    "rich",
+    "microtubules"
+  ],
+  "summary_1l": "Polarized transport in neurons is fundamental for the formation of neuronal circuitry.",
+  "query_hits": [],
+  "embed_text": "7549811 Preferential binding of a kinesin-1 motor to GTP-tubulin–rich microtubules underlies polarized vesicle transport science scifact Polarized transport in neurons is fundamental for the formation of neuronal circuitry. A motor domain-containing truncated KIF5 (a kinesin-1) recognizes axonal microtubules, which are enriched in EB1 binding sites, and selectively… 7549811 preferential binding kinesin motor gtp tubulin rich microtubules Polarized transport in neurons is fundamental for the formation of neuronal circuitry. Preferential binding of a kinesin-1 motor to GTP-tubulin–rich microtubules underlies polarized vesicle transport Polarized transport in neurons is fundamental for the formation of neuronal circuitry. A motor domain-containing truncated KIF5 (a kinesin-1) recognizes axonal microtubules, which are enriched in EB1 binding sites, and selectively accumulates at the tips of axons. However, it remains unknown what cue KIF5 recognizes to result in this selective accumulation. We found that axonal microtubules were preferentially stained by the anti-GTP-tubulin antibody hMB11. Super-resolution microscopy combined with EM immunocytochemistry revealed that hMB11 was localized at KIF5 attachment sites. In addition, EB1, which binds preferentially to guanylyl-methylene-diphosphate (GMPCPP) microtubules",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.612343+00:00"
+}

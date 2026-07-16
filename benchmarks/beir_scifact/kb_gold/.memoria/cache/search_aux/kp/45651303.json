@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "45651303",
+  "source_fingerprint": "688896dd547c73486d900a6789fc6ead",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "45651303",
+    "interleukin-6-and-interleukin-8-levels-in-serum-and-synovial-fluid-of-patients-with-osteoarthritis."
+  ],
+  "key_phrases": [
+    "interleukin",
+    "levels",
+    "serum",
+    "synovial",
+    "fluid",
+    "patients",
+    "with",
+    "osteoarthritis"
+  ],
+  "summary_1l": "Interleukin-6 and interleukin-8 levels in serum and synovial fluid of patients with osteoarthritis.",
+  "query_hits": [],
+  "embed_text": "45651303 Interleukin-6 and interleukin-8 levels in serum and synovial fluid of patients with osteoarthritis. science scifact Concentrations of interleukin (IL)-6 and IL-8 in serum and synovial fluid obtained from patients with osteoarthritis (OA) of the knee were determined by the chemiluminescence-ELISA (CL-ELISA) method, the sensitivity of which is 100-1,000… 45651303 interleukin-6-and-interleukin-8-levels-in-serum-and-synovial-fluid-of-patients-with-osteoarthritis. interleukin levels serum synovial fluid patients with osteoarthritis Interleukin-6 and interleukin-8 levels in serum and synovial fluid of patients with osteoarthritis. Interleukin-6 and interleukin-8 levels in serum and synovial fluid of patients with osteoarthritis. Concentrations of interleukin (IL)-6 and IL-8 in serum and synovial fluid obtained from patients with osteoarthritis (OA) of the knee were determined by the chemiluminescence-ELISA (CL-ELISA) method, the sensitivity of which is 100-1,000 times greater than that of the conventional ELISA method. The results were compared with those obtained from patients with rheumatoid arthritis (RA) and from healthy subjects. The mean IL-6 and IL-8 levels in synovial fluid indicated higher concentrations in RA than in OA. The IL-6 and IL-8 levels in serum were significantly higher in RA and OA relative to controls. Among OA patients in whom remarkable improvement was noted in hydrarthrosis, the synovial flu",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.511556+00:00"
+}

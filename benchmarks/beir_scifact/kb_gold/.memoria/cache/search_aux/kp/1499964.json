@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "1499964",
+  "source_fingerprint": "36a886ab6dd65aca2937b83760bcf5b0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1499964"
+  ],
+  "key_phrases": [
+    "30",
+    "years",
+    "nf",
+    "blossoming",
+    "relevance",
+    "human",
+    "pathobiology",
+    "was"
+  ],
+  "summary_1l": "NF-κB was discovered 30 years ago as a rapidly inducible transcription factor.",
+  "query_hits": [],
+  "embed_text": "1499964 30 Years of NF-κB: A Blossoming of Relevance to Human Pathobiology science scifact NF-κB was discovered 30 years ago as a rapidly inducible transcription factor. Since that time, it has been found to have a broad role in gene induction in diverse cellular responses, particularly throughout the immune system. Here, we… 1499964 30 years nf blossoming relevance human pathobiology was NF-κB was discovered 30 years ago as a rapidly inducible transcription factor. 30 Years of NF-κB: A Blossoming of Relevance to Human Pathobiology NF-κB was discovered 30 years ago as a rapidly inducible transcription factor. Since that time, it has been found to have a broad role in gene induction in diverse cellular responses, particularly throughout the immune system. Here, we summarize elaborate regulatory pathways involving this transcription factor and use recent discoveries in human genetic diseases to place specific proteins within their relevant medical and biological contexts.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.985432+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25315295",
+  "source_fingerprint": "c1af4dcb3ede728cc60f8c37a5d58449",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25315295",
+    "inflammatory-cytokines-in-depression:-neurobiological-mechanisms-and-therapeutic-implications."
+  ],
+  "key_phrases": [
+    "inflammatory",
+    "cytokines",
+    "depression",
+    "neurobiological",
+    "mechanisms",
+    "therapeutic",
+    "implications",
+    "mounting"
+  ],
+  "summary_1l": "Inflammatory cytokines in depression: neurobiological mechanisms and therapeutic implications.",
+  "query_hits": [],
+  "embed_text": "25315295 Inflammatory cytokines in depression: neurobiological mechanisms and therapeutic implications. science scifact Mounting evidence indicates that inflammatory cytokines contribute to the development of depression in both medically ill and medically healthy individuals. Cytokines are important for development and normal brain function, and have the… 25315295 inflammatory-cytokines-in-depression:-neurobiological-mechanisms-and-therapeutic-implications. inflammatory cytokines depression neurobiological mechanisms therapeutic implications mounting Inflammatory cytokines in depression: neurobiological mechanisms and therapeutic implications. Inflammatory cytokines in depression: neurobiological mechanisms and therapeutic implications. Mounting evidence indicates that inflammatory cytokines contribute to the development of depression in both medically ill and medically healthy individuals. Cytokines are important for development and normal brain function, and have the ability to influence neurocircuitry and neurotransmitter systems to produce behavioral alterations. Acutely, inflammatory cytokine administration or activation of the innate immune system produces adaptive behavioral responses that promote conservation of energy to combat infection or recovery from injury. However, chronic exposure to elevated inflammatory cytokines and persistent alterations in neurotransmitter systems can lead to neuropsychiatric disorders and d",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.386270+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2356950",
+  "source_fingerprint": "a112f21a69fcadf965cbaa5e2728ac87",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2356950",
+    "epigenetic-regulation-of-mir-184-by-mbd1-governs-neural-stem-cell-proliferation-and-differentiation."
+  ],
+  "key_phrases": [
+    "epigenetic",
+    "regulation",
+    "mir",
+    "184",
+    "by",
+    "mbd1",
+    "governs",
+    "neural"
+  ],
+  "summary_1l": "Epigenetic regulation of miR-184 by MBD1 governs neural stem cell proliferation and differentiation.",
+  "query_hits": [],
+  "embed_text": "2356950 Epigenetic regulation of miR-184 by MBD1 governs neural stem cell proliferation and differentiation. science scifact Methyl-CpG binding protein 1 (MBD1) regulates gene expression via a DNA methylation-mediated epigenetic mechanism. We have previously demonstrated that MBD1 deficiency impairs adult neural stem/progenitor cell (aNSC) differentiation and… 2356950 epigenetic-regulation-of-mir-184-by-mbd1-governs-neural-stem-cell-proliferation-and-differentiation. epigenetic regulation mir 184 by mbd1 governs neural Epigenetic regulation of miR-184 by MBD1 governs neural stem cell proliferation and differentiation. Epigenetic regulation of miR-184 by MBD1 governs neural stem cell proliferation and differentiation. Methyl-CpG binding protein 1 (MBD1) regulates gene expression via a DNA methylation-mediated epigenetic mechanism. We have previously demonstrated that MBD1 deficiency impairs adult neural stem/progenitor cell (aNSC) differentiation and neurogenesis, but the underlying mechanism was unclear. Here, we show that MBD1 regulates the expression of several microRNAs in aNSCs and, specifically, that miR-184 is directly repressed by MBD1. High levels of miR-184 promoted proliferation but inhibited differentiation of aNSCs, whereas inhibition of miR-184 rescued the phenotypes associated with MBD1 deficiency. We further found that miR-184 regulates the expression of Numblike (Numbl), a known regulato",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:12.443153+00:00"
+}

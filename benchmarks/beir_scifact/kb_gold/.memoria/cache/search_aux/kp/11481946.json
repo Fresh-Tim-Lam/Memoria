@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11481946",
+  "source_fingerprint": "0aea858e0f8472a156fa3804b628a842",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11481946",
+    "obesity,-type-2-diabetes,-and-cancer:-the-insulin-and-igf-connection."
+  ],
+  "key_phrases": [
+    "obesity",
+    "type",
+    "diabetes",
+    "cancer",
+    "insulin",
+    "igf",
+    "connection",
+    "epidemiological"
+  ],
+  "summary_1l": "Obesity, type 2 diabetes, and cancer: the insulin and IGF connection.",
+  "query_hits": [],
+  "embed_text": "11481946 Obesity, type 2 diabetes, and cancer: the insulin and IGF connection. science scifact Epidemiological studies suggest a positive association between obesity and type 2 diabetes mellitus (T2D) with the risk of cancer and cancer-related mortality. Insulin resistance, hyperinsulinemia, increased levels of IGF, elevated levels… 11481946 obesity,-type-2-diabetes,-and-cancer:-the-insulin-and-igf-connection. obesity type diabetes cancer insulin igf connection epidemiological Obesity, type 2 diabetes, and cancer: the insulin and IGF connection. Obesity, type 2 diabetes, and cancer: the insulin and IGF connection. Epidemiological studies suggest a positive association between obesity and type 2 diabetes mellitus (T2D) with the risk of cancer and cancer-related mortality. Insulin resistance, hyperinsulinemia, increased levels of IGF, elevated levels of steroid and peptide hormones, and inflammatory markers appear to play a role in the connection between these different diseases. Medications, such as metformin and exogenous insulin, used to treat T2D may affect the risk of cancer and cancer-related mortality. Newer therapies targeting the insulin and IGF1 systems are being developed for use in cancer therapy.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:06.604700+00:00"
+}

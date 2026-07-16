@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14315749",
+  "source_fingerprint": "fee3ef852777309638cc2b6c02e2b09b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14315749",
+    "hclock-gene-expression-in-human-colorectal-carcinoma."
+  ],
+  "key_phrases": [
+    "hclock",
+    "gene",
+    "expression",
+    "human",
+    "colorectal",
+    "carcinoma",
+    "this",
+    "study"
+  ],
+  "summary_1l": "hClock gene expression in human colorectal carcinoma.",
+  "query_hits": [],
+  "embed_text": "14315749 hClock gene expression in human colorectal carcinoma. science scifact In this study, we aimed to investigate changes in the expression of human Clock (hClock), a gene at the core of the circadian gene family, in colorectal carcinomas (CRCs) and to discuss the possible effects. Previous studies have revealed… 14315749 hclock-gene-expression-in-human-colorectal-carcinoma. hclock gene expression human colorectal carcinoma this study hClock gene expression in human colorectal carcinoma. hClock gene expression in human colorectal carcinoma. In this study, we aimed to investigate changes in the expression of human Clock (hClock), a gene at the core of the circadian gene family, in colorectal carcinomas (CRCs) and to discuss the possible effects. Previous studies have revealed that the disruption of circadian rhythms is one of the endogenous factors that contribute to the initiation and development of CRCs. However, the underlying molecular changes to the circadian genes associated with CRCs have not been explored. Immunofluorescence and quantitative polymerase chain reaction (qPCR) analysis of the hCLOCK protein and gene expression were performed in 30 cases of CRC. The hCLOCK protein was expressed in all specimens obtained from 30 CRC patients. Higher levels of hCLOCK expr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.547410+00:00"
+}

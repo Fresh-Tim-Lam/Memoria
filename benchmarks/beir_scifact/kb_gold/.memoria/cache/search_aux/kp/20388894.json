@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20388894",
+  "source_fingerprint": "65a8b1c74af5b0746b14bd408d4e90e0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20388894",
+    "the-transcription-factor-c-maf-controls-the-production-of-interleukin-4-but-not-other-th2-cytokines."
+  ],
+  "key_phrases": [
+    "transcription",
+    "factor",
+    "maf",
+    "controls",
+    "production",
+    "interleukin",
+    "but",
+    "not"
+  ],
+  "summary_1l": "The transcription factor c-Maf controls the production of interleukin-4 but not other Th2 cytokines.",
+  "query_hits": [],
+  "embed_text": "20388894 The transcription factor c-Maf controls the production of interleukin-4 but not other Th2 cytokines. science scifact IL-4 promotes the differentiation of naive CD4+ T cells into IL-4-producing T helper 2 (Th2) cells. Previous work provided suggestive but not conclusive evidence that the transcription factor c-Maf directed the tissue-specific expression… 20388894 the-transcription-factor-c-maf-controls-the-production-of-interleukin-4-but-not-other-th2-cytokines. transcription factor maf controls production interleukin but not The transcription factor c-Maf controls the production of interleukin-4 but not other Th2 cytokines. The transcription factor c-Maf controls the production of interleukin-4 but not other Th2 cytokines. IL-4 promotes the differentiation of naive CD4+ T cells into IL-4-producing T helper 2 (Th2) cells. Previous work provided suggestive but not conclusive evidence that the transcription factor c-Maf directed the tissue-specific expression of IL-4. It was not known whether c-Maf controlled the transcription of other Th2 cytokine genes. To elucidate the role of c-Maf in vivo, we examined cytokine production in mice lacking c-Maf (c-maf(-/-)). CD4+ T cells and NK T cells from c-maf(-/-) mice were markedly deficient in IL-4 production. However, the mice produced normal levels of IL-13 and IgE, and, when differentiated in the presence of exogenous IL-4, c-maf(-/-) T cells produced approximately n",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.189613+00:00"
+}

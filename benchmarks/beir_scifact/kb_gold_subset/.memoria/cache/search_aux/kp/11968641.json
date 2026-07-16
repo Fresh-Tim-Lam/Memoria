@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11968641",
+  "source_fingerprint": "11336a7063ae48289a2362fd9406825d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11968641",
+    "enhancing-circadian-clock-function-in-cancer-cells-inhibits-tumor-growth"
+  ],
+  "key_phrases": [
+    "enhancing",
+    "circadian",
+    "clock",
+    "function",
+    "cancer",
+    "cells",
+    "inhibits",
+    "tumor"
+  ],
+  "summary_1l": "BACKGROUND Circadian clocks control cell cycle factors, and circadian disruption promotes cancer.",
+  "query_hits": [],
+  "embed_text": "11968641 Enhancing circadian clock function in cancer cells inhibits tumor growth science scifact BACKGROUND Circadian clocks control cell cycle factors, and circadian disruption promotes cancer. To address whether enhancing circadian rhythmicity in tumor cells affects cell cycle progression and reduces proliferation, we compared… 11968641 enhancing-circadian-clock-function-in-cancer-cells-inhibits-tumor-growth enhancing circadian clock function cancer cells inhibits tumor BACKGROUND Circadian clocks control cell cycle factors, and circadian disruption promotes cancer. Enhancing circadian clock function in cancer cells inhibits tumor growth BACKGROUND Circadian clocks control cell cycle factors, and circadian disruption promotes cancer. To address whether enhancing circadian rhythmicity in tumor cells affects cell cycle progression and reduces proliferation, we compared growth and cell cycle events of B16 melanoma cells and tumors with either a functional or dysfunctional clock. RESULTS We found that clock genes were suppressed in B16 cells and tumors, but treatments inducing circadian rhythmicity, such as dexamethasone, forskolin and heat shock, triggered rhythmic clock and cell cycle gene expression, which resulted in fewer cells in S phase and more in G1 phase. Accordingly, B16 proliferation in vitro and tumor growth in vivo was slowed down. Similar e",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:08.028552+00:00"
+}

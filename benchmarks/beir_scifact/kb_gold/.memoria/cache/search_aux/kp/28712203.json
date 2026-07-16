@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "28712203",
+  "source_fingerprint": "f46cd0ab3f0f7f09988ebc970dd44d1d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "28712203",
+    "neutrophil-elastase-mediated-lung-disease."
+  ],
+  "key_phrases": [
+    "neutrophil",
+    "elastase",
+    "mediated",
+    "lung",
+    "disease",
+    "elastases",
+    "both",
+    "macrophage"
+  ],
+  "summary_1l": "Neutrophil elastase-mediated lung disease.",
+  "query_hits": [],
+  "embed_text": "28712203 Neutrophil elastase-mediated lung disease. science scifact Elastases of both the neutrophil and macrophage have been implicated in lung disease initiation and progression. Although it is unlikely that these proteases evolved for the purpose of injuring lung tissue, the elastin-rich connective… 28712203 neutrophil-elastase-mediated-lung-disease. neutrophil elastase mediated lung disease elastases both macrophage Neutrophil elastase-mediated lung disease. Neutrophil elastase-mediated lung disease. Elastases of both the neutrophil and macrophage have been implicated in lung disease initiation and progression. Although it is unlikely that these proteases evolved for the purpose of injuring lung tissue, the elastin-rich connective tissue framework of the lungs appears to be particularly susceptible to the action of elastolytic proteases. Assuming that neutrophil elastase most likely plays a role in the migration of neutrophils toward a site of inflammation and degradation of proteins from invading organisms or other products of the inflammatory response, it is the role of inhibitors of this protease to protect normal tissues from its effects. In alpha-1 antitrypsin deficiency we find an experiment of nature that disrupts this protease-anti-pro",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.298088+00:00"
+}

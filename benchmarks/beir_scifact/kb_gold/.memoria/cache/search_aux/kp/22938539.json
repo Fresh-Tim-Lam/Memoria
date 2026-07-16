@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22938539",
+  "source_fingerprint": "04791853db72fcfb1baebe5f36410ee3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22938539",
+    "epstein-barr-virus-and-virus-human-protein-interaction-maps."
+  ],
+  "key_phrases": [
+    "epstein",
+    "barr",
+    "virus",
+    "human",
+    "protein",
+    "interaction",
+    "maps",
+    "comprehensive"
+  ],
+  "summary_1l": "Epstein-Barr virus and virus human protein interaction maps.",
+  "query_hits": [],
+  "embed_text": "22938539 Epstein-Barr virus and virus human protein interaction maps. science scifact A comprehensive mapping of interactions among Epstein-Barr virus (EBV) proteins and interactions of EBV proteins with human proteins should provide specific hypotheses and a broad perspective on EBV strategies for replication and… 22938539 epstein-barr-virus-and-virus-human-protein-interaction-maps. epstein barr virus human protein interaction maps comprehensive Epstein-Barr virus and virus human protein interaction maps. Epstein-Barr virus and virus human protein interaction maps. A comprehensive mapping of interactions among Epstein-Barr virus (EBV) proteins and interactions of EBV proteins with human proteins should provide specific hypotheses and a broad perspective on EBV strategies for replication and persistence. Interactions of EBV proteins with each other and with human proteins were assessed by using a stringent high-throughput yeast two-hybrid system. Overall, 43 interactions between EBV proteins and 173 interactions between EBV and human proteins were identified. EBV-EBV and EBV-human protein interaction, or \"interactome\" maps provided a framework for hypotheses of protein function. For example, LF2, an EBV protein of unknown function interacted with the EBV immediate early R transactivator (Rta",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.569416+00:00"
+}

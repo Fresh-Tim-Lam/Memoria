@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13398997",
+  "source_fingerprint": "379ddee18a4d38435bb4166337327c57",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13398997",
+    "high-ctla-4-expression-on-th17-cells-results-in-increased-sensitivity-to-ctla-4-coinhibition-and-resistance-to-belatacept."
+  ],
+  "key_phrases": [
+    "high",
+    "ctla",
+    "expression",
+    "th17",
+    "cells",
+    "results",
+    "increased",
+    "sensitivity"
+  ],
+  "summary_1l": "High CTLA-4 expression on Th17 cells results in increased sensitivity to CTLA-4 coinhibition and resistance to belatacept.",
+  "query_hits": [],
+  "embed_text": "13398997 High CTLA-4 expression on Th17 cells results in increased sensitivity to CTLA-4 coinhibition and resistance to belatacept. science scifact The CD28/cytotoxic T-lymphocyte antigen 4 (CTLA-4)blocker belatacept selectively inhibits alloreactive T cell responses but is associated with a high incidence of acute rejection following renal transplantation,which led us to investigate… 13398997 high-ctla-4-expression-on-th17-cells-results-in-increased-sensitivity-to-ctla-4-coinhibition-and-resistance-to-belatacept. high ctla expression th17 cells results increased sensitivity High CTLA-4 expression on Th17 cells results in increased sensitivity to CTLA-4 coinhibition and resistance to belatacept. High CTLA-4 expression on Th17 cells results in increased sensitivity to CTLA-4 coinhibition and resistance to belatacept. The CD28/cytotoxic T-lymphocyte antigen 4 (CTLA-4)blocker belatacept selectively inhibits alloreactive T cell responses but is associated with a high incidence of acute rejection following renal transplantation,which led us to investigate the etiology of belatacept–resistant graft rejection. T cells can differentiate into functionally distinct subsets of memory T cellsthat collectively enable protection against diverse classes of pathogens and can cross-react with allogeneicantigen and mediate graft rejection. T helper 17(Th17) cells are a pro-inflammatory CD4+ lineage that provides immunity to pathogens and are pathogenic in autoimmune disease. We found that T helper",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.180524+00:00"
+}

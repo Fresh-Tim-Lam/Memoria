@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11728637",
+  "source_fingerprint": "903dca114cec7b62bbc8282da1a08c64",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11728637",
+    "empirical-statistical-estimates-for-sequence-similarity-searches"
+  ],
+  "key_phrases": [
+    "empirical",
+    "statistical",
+    "estimates",
+    "sequence",
+    "similarity",
+    "searches",
+    "fasta",
+    "package"
+  ],
+  "summary_1l": "The FASTA package of sequence comparison programs has been modified to provide accurate statistical estimates for local sequence simila",
+  "query_hits": [],
+  "embed_text": "11728637 Empirical statistical estimates for sequence similarity searches science scifact The FASTA package of sequence comparison programs has been modified to provide accurate statistical estimates for local sequence similarity scores with gaps. These estimates are derived using the extreme value distribution from the mean… 11728637 empirical-statistical-estimates-for-sequence-similarity-searches empirical statistical estimates sequence similarity searches fasta package The FASTA package of sequence comparison programs has been modified to provide accurate statistical estimates for local sequence simila Empirical statistical estimates for sequence similarity searches The FASTA package of sequence comparison programs has been modified to provide accurate statistical estimates for local sequence similarity scores with gaps. These estimates are derived using the extreme value distribution from the mean and variance of the local similarity scores of unrelated sequences after the scores have been corrected for the expected effect of library sequence length. This approach allows accurate estimates to be calculated for both FASTA and Smith-Waterman similarity scores for protein/protein, DNA/DNA, and protein/translated-DNA comparisons. The accuracy of the statistical estimates is summarized for 54 protein families using FASTA and Smith-Waterman scores. Probability estimates calculated from the di",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:07.040860+00:00"
+}

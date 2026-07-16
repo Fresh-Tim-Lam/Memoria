@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19140422",
+  "source_fingerprint": "b4360d30a59e50319dd39080aa954433",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19140422",
+    "evaluation-of-human-papillomavirus-testing-in-primary-screening-for-cervical-abnormalities:-comparison-of-sensitivity,-specificity,-and-frequency-of-referral."
+  ],
+  "key_phrases": [
+    "evaluation",
+    "human",
+    "papillomavirus",
+    "testing",
+    "primary",
+    "screening",
+    "cervical",
+    "abnormalities"
+  ],
+  "summary_1l": "Evaluation of human papillomavirus testing in primary screening for cervical abnormalities: comparison of sensitivity, specificity, and frequency of referral.",
+  "query_hits": [],
+  "embed_text": "19140422 Evaluation of human papillomavirus testing in primary screening for cervical abnormalities: comparison of sensitivity, specificity, and frequency of referral. science scifact CONTEXT Human papillomavirus (HPV) DNA testing of women having Papanicolaou (Pap) smears showing atypical squamous cells of undetermined significance (ASCUS) has clinical usefulness. Whether HPV DNA testing alone is useful in primary… 19140422 evaluation-of-human-papillomavirus-testing-in-primary-screening-for-cervical-abnormalities:-comparison-of-sensitivity,-specificity,-and-frequency-of-referral. evaluation human papillomavirus testing primary screening cervical abnormalities Evaluation of human papillomavirus testing in primary screening for cervical abnormalities: comparison of sensitivity, specificity, and frequency of referral. Evaluation of human papillomavirus testing in primary screening for cervical abnormalities: comparison of sensitivity, specificity, and frequency of referral. CONTEXT Human papillomavirus (HPV) DNA testing of women having Papanicolaou (Pap) smears showing atypical squamous cells of undetermined significance (ASCUS) has clinical usefulness. Whether HPV DNA testing alone is useful in primary screening remains to be determined. OBJECTIVE To determine the accuracy of HPV DNA testing for detecting cervical intraepithelial neoplasia (CIN) grade 3 or cancer (the criterion standard). DESIGN, SETTING, AND PARTICIPANTS Between December 1997 and October 2000, 4075 women who attended Planned Parenthood clinics in Washington State were screened simultaneously using thin-layer Pap and HPV DNA testing by",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.208435+00:00"
+}

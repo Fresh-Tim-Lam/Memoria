@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1676568",
+  "source_fingerprint": "839571b305ee781fc3ff6d64b15ce5e9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1676568",
+    "clasps-link-focal-adhesion-associated-microtubule-capture-to-localized-exocytosis-and-adhesion-site-turnover"
+  ],
+  "key_phrases": [
+    "clasps",
+    "link",
+    "focal",
+    "adhesion",
+    "associated",
+    "microtubule",
+    "capture",
+    "localized"
+  ],
+  "summary_1l": "Turnover of integrin-based focal adhesions (FAs) with the extracellular matrix (ECM) is ess",
+  "query_hits": [],
+  "embed_text": "1676568 CLASPs link focal adhesion-associated microtubule capture to localized exocytosis and adhesion site turnover science scifact Turnover of integrin-based focal adhesions (FAs) with the extracellular matrix (ECM) is essential for coordinated cell movement. In collectively migrating human keratinocytes, FAs assemble near the leading edge, grow and mature as a result… 1676568 clasps-link-focal-adhesion-associated-microtubule-capture-to-localized-exocytosis-and-adhesion-site-turnover clasps link focal adhesion associated microtubule capture localized Turnover of integrin-based focal adhesions (FAs) with the extracellular matrix (ECM) is ess CLASPs link focal adhesion-associated microtubule capture to localized exocytosis and adhesion site turnover Turnover of integrin-based focal adhesions (FAs) with the extracellular matrix (ECM) is essential for coordinated cell movement. In collectively migrating human keratinocytes, FAs assemble near the leading edge, grow and mature as a result of contractile forces and disassemble underneath the advancing cell body. We report that clustering of microtubule-associated CLASP1 and CLASP2 proteins around FAs temporally correlates with FA turnover. CLASPs and LL5β (also known as PHLDB2), which recruits CLASPs to FAs, facilitate FA disassembly. CLASPs are further required for FA-associated ECM degradation, and matrix metalloprotease inhibition slows FA disassembly similarly to CLASP or PHLDB2",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.820520+00:00"
+}

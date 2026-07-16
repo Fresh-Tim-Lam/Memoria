@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1542437",
+  "source_fingerprint": "3c488ccd81b4205df80532f1f62b3893",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1542437",
+    "robustness-of-random-forest-based-gene-selection-methods"
+  ],
+  "key_phrases": [
+    "robustness",
+    "random",
+    "forest",
+    "based",
+    "gene",
+    "selection",
+    "methods",
+    "important"
+  ],
+  "summary_1l": "Gene selection is an important part of microarray data analysis because it provides information that can lead to a better mechanistic understan",
+  "query_hits": [],
+  "embed_text": "1542437 Robustness of Random Forest-based gene selection methods science scifact Gene selection is an important part of microarray data analysis because it provides information that can lead to a better mechanistic understanding of an investigated phenomenon. At the same time, gene selection is very difficult because… 1542437 robustness-of-random-forest-based-gene-selection-methods robustness random forest based gene selection methods important Gene selection is an important part of microarray data analysis because it provides information that can lead to a better mechanistic understan Robustness of Random Forest-based gene selection methods Gene selection is an important part of microarray data analysis because it provides information that can lead to a better mechanistic understanding of an investigated phenomenon. At the same time, gene selection is very difficult because of the noisy nature of microarray data. As a consequence, gene selection is often performed with machine learning methods. The Random Forest method is particularly well suited for this purpose. In this work, four state-of-the-art Random Forest-based feature selection methods were compared in a gene selection context. The analysis focused on the stability of selection because, although it is necessary for determining the significance of results, it is often ignored in similar studies. The comparison o",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.526562+00:00"
+}

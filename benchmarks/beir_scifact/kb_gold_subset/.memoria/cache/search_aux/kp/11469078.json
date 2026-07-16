@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11469078",
+  "source_fingerprint": "b7d9c6c3004506e560e843113ddaf0ab",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11469078",
+    "ecologic-versus-individual-level-sources-of-bias-in-ecologic-estimates-of-contextual-health-effects."
+  ],
+  "key_phrases": [
+    "ecologic",
+    "versus",
+    "individual",
+    "level",
+    "sources",
+    "bias",
+    "estimates",
+    "contextual"
+  ],
+  "summary_1l": "Ecologic versus individual-level sources of bias in ecologic estimates of contextual health effects.",
+  "query_hits": [],
+  "embed_text": "11469078 Ecologic versus individual-level sources of bias in ecologic estimates of contextual health effects. science scifact A number of authors have attempted to defend ecologic (aggregate) studies by claiming that the goal of those studies is estimation of ecologic (contextual or group-level) effects rather than individual-level effects. Critics of these… 11469078 ecologic-versus-individual-level-sources-of-bias-in-ecologic-estimates-of-contextual-health-effects. ecologic versus individual level sources bias estimates contextual Ecologic versus individual-level sources of bias in ecologic estimates of contextual health effects. Ecologic versus individual-level sources of bias in ecologic estimates of contextual health effects. A number of authors have attempted to defend ecologic (aggregate) studies by claiming that the goal of those studies is estimation of ecologic (contextual or group-level) effects rather than individual-level effects. Critics of these attempts point out that ecologic effect estimates are inevitably used as estimates of individual effects, despite disclaimers. A more subtle problem is that ecologic variation in the distribution of individual effects can bias ecologic estimates of contextual effects. The conditions leading to this bias are plausible and perhaps even common in studies of ecosocial factors and health outcomes because social context is not randomized across typical analysis units",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:06.951833+00:00"
+}

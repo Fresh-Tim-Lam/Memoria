@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "52072815",
+  "source_fingerprint": "a17b61fad4dd34f2a4d7b6f14410f7d6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "52072815"
+  ],
+  "key_phrases": [
+    "alcohol",
+    "use",
+    "burden",
+    "195",
+    "countries",
+    "territories",
+    "1990",
+    "2016"
+  ],
+  "summary_1l": "Summary Background Alcohol use is a leading risk factor for death",
+  "query_hits": [],
+  "embed_text": "52072815 Alcohol use and burden for 195 countries and territories, 1990–2016: a systematic analysis for the Global Burden of Disease Study 2016 science scifact Summary Background Alcohol use is a leading risk factor for death and disability, but its overall association with health remains complex given the possible protective effects of moderate alcohol consumption on some conditions. With our… 52072815 alcohol use burden 195 countries territories 1990 2016 Summary Background Alcohol use is a leading risk factor for death Alcohol use and burden for 195 countries and territories, 1990–2016: a systematic analysis for the Global Burden of Disease Study 2016 Summary Background Alcohol use is a leading risk factor for death and disability, but its overall association with health remains complex given the possible protective effects of moderate alcohol consumption on some conditions. With our comprehensive approach to health accounting within the Global Burden of Diseases, Injuries, and Risk Factors Study 2016, we generated improved estimates of alcohol use and alcohol-attributable deaths and disability-adjusted life-years (DALYs) for 195 locations from 1990 to 2016, for both sexes and for 5-year age groups between the ages of 15 years and 95 years and older. Methods Using 694 data sources of individual and popul",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.471459+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13123189",
+  "source_fingerprint": "33302efa33dcb559800ad74abcd0bda6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13123189",
+    "rsem:-accurate-transcript-quantification-from-rna-seq-data-with-or-without-a-reference-genome"
+  ],
+  "key_phrases": [
+    "rsem",
+    "accurate",
+    "transcript",
+    "quantification",
+    "from",
+    "rna",
+    "seq",
+    "data"
+  ],
+  "summary_1l": "BACKGROUND RNA-Seq is revolutionizing the way transcript abundances are measured.",
+  "query_hits": [],
+  "embed_text": "13123189 RSEM: accurate transcript quantification from RNA-Seq data with or without a reference genome science scifact BACKGROUND RNA-Seq is revolutionizing the way transcript abundances are measured. A key challenge in transcript quantification from RNA-Seq data is the handling of reads that map to multiple genes or isoforms. This issue is particularly… 13123189 rsem:-accurate-transcript-quantification-from-rna-seq-data-with-or-without-a-reference-genome rsem accurate transcript quantification from rna seq data BACKGROUND RNA-Seq is revolutionizing the way transcript abundances are measured. RSEM: accurate transcript quantification from RNA-Seq data with or without a reference genome BACKGROUND RNA-Seq is revolutionizing the way transcript abundances are measured. A key challenge in transcript quantification from RNA-Seq data is the handling of reads that map to multiple genes or isoforms. This issue is particularly important for quantification with de novo transcriptome assemblies in the absence of sequenced genomes, as it is difficult to determine which transcripts are isoforms of the same gene. A second significant issue is the design of RNA-Seq experiments, in terms of the number of reads, read length, and whether reads come from one or both ends of cDNA fragments. RESULTS We present RSEM, an user-friendly software package for quantifying gene and isoform abundances from s",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:09.701216+00:00"
+}

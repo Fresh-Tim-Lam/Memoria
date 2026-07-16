@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7227763",
+  "source_fingerprint": "668e0b35a88e2599598d3bc791d84e16",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7227763",
+    "experimental-and-clinical-studies-on-lactate-and-pyruvate-as-indicators-of-the-severity-of-acute-circulatory-failure-(shock)."
+  ],
+  "key_phrases": [
+    "experimental",
+    "clinical",
+    "studies",
+    "lactate",
+    "pyruvate",
+    "as",
+    "indicators",
+    "severity"
+  ],
+  "summary_1l": "Experimental and clinical studies on lactate and pyruvate as indicators of the severity of acute circulatory failure (shock).",
+  "query_hits": [],
+  "embed_text": "7227763 Experimental and clinical studies on lactate and pyruvate as indicators of the severity of acute circulatory failure (shock). science scifact The increase in lactate (L) and pyruvate (P) content of arterial blood during experimental and clinical shock states and the extent to which such increases serve as measures of oxygen deficit and irreversible injury were investigated on an… 7227763 experimental-and-clinical-studies-on-lactate-and-pyruvate-as-indicators-of-the-severity-of-acute-circulatory-failure-(shock). experimental clinical studies lactate pyruvate as indicators severity Experimental and clinical studies on lactate and pyruvate as indicators of the severity of acute circulatory failure (shock). Experimental and clinical studies on lactate and pyruvate as indicators of the severity of acute circulatory failure (shock). The increase in lactate (L) and pyruvate (P) content of arterial blood during experimental and clinical shock states and the extent to which such increases serve as measures of oxygen deficit and irreversible injury were investigated on an empirical basis. A standardized method for production of hemorrhagic shock in the Wistar rat was employed. During a 4-hour bleeding period, oxygen consumption of the rat was reduced to approximately 40% of control value, pH was reduced from 7.39 to 7.08, and a concurrent increase in L from 0.80 to 6.06 mm and in P from 0.07 to 0.18 mm were observed. Cumulative oxygen debt correlated with log L (r = 0.50; P < 0.0005) and both were",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.865248+00:00"
+}

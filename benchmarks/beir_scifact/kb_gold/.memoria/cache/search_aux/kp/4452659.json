@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4452659",
+  "source_fingerprint": "63341be942c048d93e994ece60332a10",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4452659",
+    "autophagy-mediates-degradation-of-nuclear-lamina"
+  ],
+  "key_phrases": [
+    "autophagy",
+    "mediates",
+    "degradation",
+    "nuclear",
+    "lamina",
+    "macroautophagy",
+    "hereafter",
+    "referred"
+  ],
+  "summary_1l": "Macroautophagy (hereafter referred to as autophagy) is a catabolic membrane trafficking process that degrades a variety of cellular constituents and is",
+  "query_hits": [],
+  "embed_text": "4452659 Autophagy mediates degradation of nuclear lamina science scifact Macroautophagy (hereafter referred to as autophagy) is a catabolic membrane trafficking process that degrades a variety of cellular constituents and is associated with human diseases. Although extensive studies have focused on autophagic… 4452659 autophagy-mediates-degradation-of-nuclear-lamina autophagy mediates degradation nuclear lamina macroautophagy hereafter referred Macroautophagy (hereafter referred to as autophagy) is a catabolic membrane trafficking process that degrades a variety of cellular constituents and is Autophagy mediates degradation of nuclear lamina Macroautophagy (hereafter referred to as autophagy) is a catabolic membrane trafficking process that degrades a variety of cellular constituents and is associated with human diseases. Although extensive studies have focused on autophagic turnover of cytoplasmic materials, little is known about the role of autophagy in degrading nuclear components. Here we report that the autophagy machinery mediates degradation of nuclear lamina components in mammals. The autophagy protein LC3/Atg8, which is involved in autophagy membrane trafficking and substrate delivery, is present in the nucleus and directly interacts with the nuclear lamina protein lamin B1, and binds to lamin-associated domains on chromatin. This LC3-lamin B1 interaction does not downr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.441837+00:00"
+}

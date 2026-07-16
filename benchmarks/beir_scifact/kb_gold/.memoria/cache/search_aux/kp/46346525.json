@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "46346525",
+  "source_fingerprint": "e71088421f11ec41eade72dc2c696177",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "46346525",
+    "isolation-of-superoxide-dismutase-mutants-in-escherichia-coli:-is-superoxide-dismutase-necessary-for-aerobic-life?"
+  ],
+  "key_phrases": [
+    "isolation",
+    "superoxide",
+    "dismutase",
+    "mutants",
+    "escherichia",
+    "coli",
+    "necessary",
+    "aerobic"
+  ],
+  "summary_1l": "Isolation of superoxide dismutase mutants in Escherichia coli: is superoxide dismutase necessary for aerobic life?",
+  "query_hits": [],
+  "embed_text": "46346525 Isolation of superoxide dismutase mutants in Escherichia coli: is superoxide dismutase necessary for aerobic life? science scifact Mu transposons carrying the chloramphenicol resistance marker have been inserted into the cloned Escherichia coli genes sodA and sodB coding for manganese superoxide dismutase (MnSOD) and iron superoxide dismutase (FeSOD) respectively,… 46346525 isolation-of-superoxide-dismutase-mutants-in-escherichia-coli:-is-superoxide-dismutase-necessary-for-aerobic-life? isolation superoxide dismutase mutants escherichia coli necessary aerobic Isolation of superoxide dismutase mutants in Escherichia coli: is superoxide dismutase necessary for aerobic life? Isolation of superoxide dismutase mutants in Escherichia coli: is superoxide dismutase necessary for aerobic life? Mu transposons carrying the chloramphenicol resistance marker have been inserted into the cloned Escherichia coli genes sodA and sodB coding for manganese superoxide dismutase (MnSOD) and iron superoxide dismutase (FeSOD) respectively, creating mutations and gene fusions. The mutated sodA or sodB genes were introduced into the bacterial chromosome by allelic exchange. The resulting mutants were shown to lack the corresponding SOD by activity measurements and immunoblot analysis. Aerobically, in rich medium, the absence of FeSOD or MnSOD had no major effect on growth or sensitivity to the superoxide generator, paraquat. In minimal medium aerobic growth was not affected, but the",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.789622+00:00"
+}

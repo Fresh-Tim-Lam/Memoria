@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "70633421",
+  "source_fingerprint": "bf845abecfa447e046f84b702021f07b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "70633421",
+    "excess-risk-of-lymphomas,-leukemia-and-myeloma-in-patients-with-rheumatoid-arthritis"
+  ],
+  "key_phrases": [
+    "excess",
+    "risk",
+    "lymphomas",
+    "leukemia",
+    "myeloma",
+    "patients",
+    "with",
+    "rheumatoid"
+  ],
+  "summary_1l": "The incidence of malignant neoplasms among 11 483 male and 34 618 female individuals with rheumatoid arthritis was",
+  "query_hits": [],
+  "embed_text": "70633421 Excess risk of lymphomas, leukemia and myeloma in patients with rheumatoid arthritis science scifact The incidence of malignant neoplasms among 11 483 male and 34 618 female individuals with rheumatoid arthritis was studied using two separate nationwide data registers covering the whole Finnish population: the Social Insurance… 70633421 excess-risk-of-lymphomas,-leukemia-and-myeloma-in-patients-with-rheumatoid-arthritis excess risk lymphomas leukemia myeloma patients with rheumatoid The incidence of malignant neoplasms among 11 483 male and 34 618 female individuals with rheumatoid arthritis was Excess risk of lymphomas, leukemia and myeloma in patients with rheumatoid arthritis The incidence of malignant neoplasms among 11 483 male and 34 618 female individuals with rheumatoid arthritis was studied using two separate nationwide data registers covering the whole Finnish population: the Social Insurance Institution9s Population Data Register, which includes information on medication for certain chronic diseases, and the Finnish Cancer Registry, with data on all cancer patients diagnosed in Finland. The follow-up comprised a total of 213 911 person years. The total incidence of all malignant neoplasms was higher in males and on the level expected in females. The expected number of cases of leukemia, lymphomas, Hodgkin9s disease and myeloma in both sexes was 59·6 as compared with the",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.387333+00:00"
+}

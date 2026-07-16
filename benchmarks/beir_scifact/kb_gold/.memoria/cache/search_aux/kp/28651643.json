@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "28651643",
+  "source_fingerprint": "df47b8c4a43495cc08ef0615863a965e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "28651643",
+    "pancreatic-tumor-cells-with-mutant-k-ras-suppress-erk-activity-by-mek-dependent-induction-of-map-kinase-phosphatase-2."
+  ],
+  "key_phrases": [
+    "pancreatic",
+    "tumor",
+    "cells",
+    "with",
+    "mutant",
+    "ras",
+    "suppress",
+    "erk"
+  ],
+  "summary_1l": "Pancreatic tumor cells with mutant K-ras suppress ERK activity by MEK-dependent induction of MAP kinase phosphatase-2.",
+  "query_hits": [],
+  "embed_text": "28651643 Pancreatic tumor cells with mutant K-ras suppress ERK activity by MEK-dependent induction of MAP kinase phosphatase-2. science scifact Activating mutations within the K-ras gene occur in a high percentage of human pancreatic carcinomas. We reported previously that the presence of oncogenic, activated K-ras in human pancreatic carcinoma cell lines did not result in… 28651643 pancreatic-tumor-cells-with-mutant-k-ras-suppress-erk-activity-by-mek-dependent-induction-of-map-kinase-phosphatase-2. pancreatic tumor cells with mutant ras suppress erk Pancreatic tumor cells with mutant K-ras suppress ERK activity by MEK-dependent induction of MAP kinase phosphatase-2. Pancreatic tumor cells with mutant K-ras suppress ERK activity by MEK-dependent induction of MAP kinase phosphatase-2. Activating mutations within the K-ras gene occur in a high percentage of human pancreatic carcinomas. We reported previously that the presence of oncogenic, activated K-ras in human pancreatic carcinoma cell lines did not result in constitutive activation of the extracellular signal-regulated kinases (ERK1 and ERK2). In the present study, we further characterized the ERK signaling pathway in pancreatic tumor cell lines in order to determine whether the ERK pathway is subject to a compensatory downregulation. We found that the attenuation of serum-induced ERK activation was not due to a delay in the kinetics of ERK phosphorylation. Treatment with the tyrosine phosphatase in",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.242512+00:00"
+}

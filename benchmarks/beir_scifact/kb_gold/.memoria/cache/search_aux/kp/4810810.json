@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4810810",
+  "source_fingerprint": "42f1d0b392001e7af83cbe265f8e3f0c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4810810",
+    "mortality-risk-attributable-to-high-and-low-ambient-temperature:-a-multicountry-observational-study"
+  ],
+  "key_phrases": [
+    "mortality",
+    "risk",
+    "attributable",
+    "high",
+    "low",
+    "ambient",
+    "temperature",
+    "multicountry"
+  ],
+  "summary_1l": "BACKGROUND Although studies have provided estimates of premature deaths attributable to either heat",
+  "query_hits": [],
+  "embed_text": "4810810 Mortality risk attributable to high and low ambient temperature: a multicountry observational study science scifact BACKGROUND Although studies have provided estimates of premature deaths attributable to either heat or cold in selected countries, none has so far offered a systematic assessment across the whole temperature range in populations exposed to… 4810810 mortality-risk-attributable-to-high-and-low-ambient-temperature:-a-multicountry-observational-study mortality risk attributable high low ambient temperature multicountry BACKGROUND Although studies have provided estimates of premature deaths attributable to either heat Mortality risk attributable to high and low ambient temperature: a multicountry observational study BACKGROUND Although studies have provided estimates of premature deaths attributable to either heat or cold in selected countries, none has so far offered a systematic assessment across the whole temperature range in populations exposed to different climates. We aimed to quantify the total mortality burden attributable to non-optimum ambient temperature, and the relative contributions from heat and cold and from moderate and extreme temperatures. METHODS We collected data for 384 locations in Australia, Brazil, Canada, China, Italy, Japan, South Korea, Spain, Sweden, Taiwan, Thailand, UK, and USA. We fitted a standard time-series Poisson model for each location, controlling for trends and da",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.451114+00:00"
+}

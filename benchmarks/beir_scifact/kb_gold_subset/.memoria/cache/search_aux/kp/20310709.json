@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20310709",
+  "source_fingerprint": "ad3c7822e0d0ef9d87047dfef8faf2f9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20310709",
+    "the-transcription-factor-t-bet-regulates-intestinal-inflammation-mediated-by-interleukin-7-receptor+-innate-lymphoid-cells"
+  ],
+  "key_phrases": [
+    "transcription",
+    "factor",
+    "bet",
+    "regulates",
+    "intestinal",
+    "inflammation",
+    "mediated",
+    "by"
+  ],
+  "summary_1l": "Mice lacking the transcription factor T-bet in the innate immune system devel",
+  "query_hits": [],
+  "embed_text": "20310709 The Transcription Factor T-bet Regulates Intestinal Inflammation Mediated by Interleukin-7 Receptor+ Innate Lymphoid Cells science scifact Mice lacking the transcription factor T-bet in the innate immune system develop microbiota-dependent colitis. Here, we show that interleukin-17A (IL-17A)-producing IL-7Rα(+) innate lymphoid cells (ILCs) were potent promoters of disease in… 20310709 the-transcription-factor-t-bet-regulates-intestinal-inflammation-mediated-by-interleukin-7-receptor+-innate-lymphoid-cells transcription factor bet regulates intestinal inflammation mediated by Mice lacking the transcription factor T-bet in the innate immune system devel The Transcription Factor T-bet Regulates Intestinal Inflammation Mediated by Interleukin-7 Receptor+ Innate Lymphoid Cells Mice lacking the transcription factor T-bet in the innate immune system develop microbiota-dependent colitis. Here, we show that interleukin-17A (IL-17A)-producing IL-7Rα(+) innate lymphoid cells (ILCs) were potent promoters of disease in Tbx21(-/-)Rag2(-/-) ulcerative colitis (TRUC) mice. TNF-α produced by CD103(-)CD11b(+) dendritic cells synergized with IL-23 to drive IL-17A production by ILCs, demonstrating a previously unrecognized layer of cellular crosstalk between dendritic cells and ILCs. We have identified Helicobacter typhlonius as a key disease trigger driving excess TNF-α production and promoting colitis in TRUC mice. Crucially, T-bet also suppressed the ex",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:12.256651+00:00"
+}

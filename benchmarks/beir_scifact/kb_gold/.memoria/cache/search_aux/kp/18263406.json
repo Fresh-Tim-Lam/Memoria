@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18263406",
+  "source_fingerprint": "3810da081d27299a0eec933e6a8a75c4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18263406",
+    "detection-of-alternative-lengthening-of-telomeres-by-telomere-quantitative-pcr"
+  ],
+  "key_phrases": [
+    "detection",
+    "alternative",
+    "lengthening",
+    "telomeres",
+    "by",
+    "telomere",
+    "quantitative",
+    "pcr"
+  ],
+  "summary_1l": "Alternative lengthening of telomeres (ALT) is one of the two known telomere length maintenance mechanisms that are essent",
+  "query_hits": [],
+  "embed_text": "18263406 Detection of alternative lengthening of telomeres by telomere quantitative PCR science scifact Alternative lengthening of telomeres (ALT) is one of the two known telomere length maintenance mechanisms that are essential for the unlimited proliferation potential of cancer cells. Existing methods for detecting ALT in tumors require… 18263406 detection-of-alternative-lengthening-of-telomeres-by-telomere-quantitative-pcr detection alternative lengthening telomeres by telomere quantitative pcr Alternative lengthening of telomeres (ALT) is one of the two known telomere length maintenance mechanisms that are essent Detection of alternative lengthening of telomeres by telomere quantitative PCR Alternative lengthening of telomeres (ALT) is one of the two known telomere length maintenance mechanisms that are essential for the unlimited proliferation potential of cancer cells. Existing methods for detecting ALT in tumors require substantial amounts of tumor material and are labor intensive, making it difficult to study prevalence and prognostic significance of ALT in large tumor cohorts. Here, we present a novel strategy utilizing telomere quantitative PCR to diagnose ALT. The protocol is more rapid than conventional methods and scrutinizes two distinct characteristics of ALT cells concurrently: long telomeres and the presence of C-circles (partially double-stranded circles of telomeric C-strand DNA). Re",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.007934+00:00"
+}

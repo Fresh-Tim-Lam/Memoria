@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "11043831",
+  "source_fingerprint": "59bd498345766a9cea6be30016cae354",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11043831"
+  ],
+  "key_phrases": [
+    "pharmacological",
+    "map",
+    "pi3",
+    "family",
+    "defines",
+    "role",
+    "p110",
+    "insulin"
+  ],
+  "summary_1l": "Phosphoinositide 3-kinases (PI3-Ks) are an important emerging class of drug targets, but the unique roles of PI3",
+  "query_hits": [],
+  "embed_text": "11043831 A Pharmacological Map of the PI3-K Family Defines a Role for p110α in Insulin Signaling science scifact Phosphoinositide 3-kinases (PI3-Ks) are an important emerging class of drug targets, but the unique roles of PI3-K isoforms remain poorly defined. We describe here an approach to pharmacologically interrogate the PI3-K family. A chemically… 11043831 pharmacological map pi3 family defines role p110 insulin Phosphoinositide 3-kinases (PI3-Ks) are an important emerging class of drug targets, but the unique roles of PI3 A Pharmacological Map of the PI3-K Family Defines a Role for p110α in Insulin Signaling Phosphoinositide 3-kinases (PI3-Ks) are an important emerging class of drug targets, but the unique roles of PI3-K isoforms remain poorly defined. We describe here an approach to pharmacologically interrogate the PI3-K family. A chemically diverse panel of PI3-K inhibitors was synthesized, and their target selectivity was biochemically enumerated, revealing cryptic homologies across targets and chemotypes. Crystal structures of three inhibitors bound to p110gamma identify a conformationally mobile region that is uniquely exploited by selective compounds. This chemical array was then used to define the PI3-K isoforms required for insulin signaling. We find that p110alpha is the primary insulin-responsive",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:05.919365+00:00"
+}

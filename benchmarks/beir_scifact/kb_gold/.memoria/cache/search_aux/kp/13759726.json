@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13759726",
+  "source_fingerprint": "d610fe9dd650e0688d621c54e6dc6b47",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13759726",
+    "dynamic-gene-regulatory-networks-of-human-myeloid-differentiation."
+  ],
+  "key_phrases": [
+    "dynamic",
+    "gene",
+    "regulatory",
+    "networks",
+    "human",
+    "myeloid",
+    "differentiation",
+    "reconstruction"
+  ],
+  "summary_1l": "Dynamic Gene Regulatory Networks of Human Myeloid Differentiation.",
+  "query_hits": [],
+  "embed_text": "13759726 Dynamic Gene Regulatory Networks of Human Myeloid Differentiation. science scifact The reconstruction of gene regulatory networks underlying cell differentiation from high-throughput gene expression and chromatin data remains a challenge. Here, we derive dynamic gene regulatory networks for human myeloid differentiation… 13759726 dynamic-gene-regulatory-networks-of-human-myeloid-differentiation. dynamic gene regulatory networks human myeloid differentiation reconstruction Dynamic Gene Regulatory Networks of Human Myeloid Differentiation. Dynamic Gene Regulatory Networks of Human Myeloid Differentiation. The reconstruction of gene regulatory networks underlying cell differentiation from high-throughput gene expression and chromatin data remains a challenge. Here, we derive dynamic gene regulatory networks for human myeloid differentiation using a 5-day time series of RNA-seq and ATAC-seq data. We profile HL-60 promyelocytes differentiating into macrophages, neutrophils, monocytes, and monocyte-derived macrophages. We find a rapid response in the expression of key transcription factors and lineage markers that only regulate a subset of their targets at a given time, which is followed by chromatin accessibility changes that occur later along with further gene expression changes. We observe differences between promyelocyte- an",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.844139+00:00"
+}

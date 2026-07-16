@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "34369306",
+  "source_fingerprint": "e81d3b98ce5f19a7784793e3a8cf93b5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "34369306",
+    "long-term-efficacy-of-nicotine-replacement-therapy-for-smoking-cessation-in-adolescents:-a-randomized-controlled-trial."
+  ],
+  "key_phrases": [
+    "long",
+    "term",
+    "efficacy",
+    "nicotine",
+    "replacement",
+    "therapy",
+    "smoking",
+    "cessation"
+  ],
+  "summary_1l": "Long-term efficacy of nicotine replacement therapy for smoking cessation in adolescents: a randomized controlled trial.",
+  "query_hits": [],
+  "embed_text": "34369306 Long-term efficacy of nicotine replacement therapy for smoking cessation in adolescents: a randomized controlled trial. science scifact BACKGROUND A double-blind RCT on the short-term efficacy of nicotine patches compared to placebo patches among Dutch adolescents was conducted. The findings demonstrated that nicotine patches are efficacious for smoking cessation at… 34369306 long-term-efficacy-of-nicotine-replacement-therapy-for-smoking-cessation-in-adolescents:-a-randomized-controlled-trial. long term efficacy nicotine replacement therapy smoking cessation Long-term efficacy of nicotine replacement therapy for smoking cessation in adolescents: a randomized controlled trial. Long-term efficacy of nicotine replacement therapy for smoking cessation in adolescents: a randomized controlled trial. BACKGROUND A double-blind RCT on the short-term efficacy of nicotine patches compared to placebo patches among Dutch adolescents was conducted. The findings demonstrated that nicotine patches are efficacious for smoking cessation at end-of-treatment; however, only in highly compliant participants. We tested whether the effects of NRT also held in 6- (T7) and 12-month (T8) follow-up assessments. METHODS Adolescents aged 12-18 years, who smoked at least seven cigarettes a day and who were motivated to quit smoking were recruited at school yards and randomly assigned to either a nicotine patch (n=182) or a placebo patch (n=180) condition according to a computer generated lis",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.390821+00:00"
+}

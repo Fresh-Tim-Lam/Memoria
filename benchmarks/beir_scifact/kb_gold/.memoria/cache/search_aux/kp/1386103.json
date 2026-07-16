@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1386103",
+  "source_fingerprint": "3b5e576747519403843d438aad52809f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1386103",
+    "an-essential-role-for-interferon-gamma-in-resistance-to-mycobacterium-tuberculosis-infection"
+  ],
+  "key_phrases": [
+    "essential",
+    "role",
+    "interferon",
+    "gamma",
+    "resistance",
+    "mycobacterium",
+    "tuberculosis",
+    "infection"
+  ],
+  "summary_1l": "Tuberculosis, a major health problem in developing countries, has reemerged in recent years in many industr",
+  "query_hits": [],
+  "embed_text": "1386103 An essential role for interferon gamma in resistance to Mycobacterium tuberculosis infection science scifact Tuberculosis, a major health problem in developing countries, has reemerged in recent years in many industrialized countries. The increased susceptibility of immunocompromised individuals to tuberculosis, and many experimental studies… 1386103 an-essential-role-for-interferon-gamma-in-resistance-to-mycobacterium-tuberculosis-infection essential role interferon gamma resistance mycobacterium tuberculosis infection Tuberculosis, a major health problem in developing countries, has reemerged in recent years in many industr An essential role for interferon gamma in resistance to Mycobacterium tuberculosis infection Tuberculosis, a major health problem in developing countries, has reemerged in recent years in many industrialized countries. The increased susceptibility of immunocompromised individuals to tuberculosis, and many experimental studies indicate that T cell-mediated immunity plays an important role in resistance. The lymphokine interferon gamma (IFN-gamma) is thought to be a principal mediator of macrophage activation and resistance to intracellular pathogens. Mice have been developed which fail to produce IFN-gamma (gko), because of a targeted disruption of the gene for IFN-gamma. Upon infection with Mycobacterium tuberculosis, although they develop granulomas, gko mice fail to produce reactive nitr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.205275+00:00"
+}

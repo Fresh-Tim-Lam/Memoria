@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20707861",
+  "source_fingerprint": "e9b5732317df2e4e37a251462004e2b5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20707861",
+    "comparative-protein-structure-modeling-using-modeller."
+  ],
+  "key_phrases": [
+    "comparative",
+    "protein",
+    "structure",
+    "modeling",
+    "using",
+    "modeller",
+    "predicts",
+    "three"
+  ],
+  "summary_1l": "Comparative Protein Structure Modeling Using MODELLER.",
+  "query_hits": [],
+  "embed_text": "20707861 Comparative Protein Structure Modeling Using MODELLER. science scifact Comparative protein structure modeling predicts the three-dimensional structure of a given protein sequence (target) based primarily on its alignment to one or more proteins of known structure (templates). The prediction process consists… 20707861 comparative-protein-structure-modeling-using-modeller. comparative protein structure modeling using modeller predicts three Comparative Protein Structure Modeling Using MODELLER. Comparative Protein Structure Modeling Using MODELLER. Comparative protein structure modeling predicts the three-dimensional structure of a given protein sequence (target) based primarily on its alignment to one or more proteins of known structure (templates). The prediction process consists of fold assignment, target-template alignment, model building, and model evaluation. This unit describes how to calculate comparative models using the program MODELLER and how to use the ModBase database of such models, and discusses all four steps of comparative modeling, frequently observed errors, and some applications. Modeling lactate dehydrogenase from Trichomonas vaginalis (TvLDH) is described as an example. The download and installation of the MODELLER software is also described. © 2016 by John",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.804646+00:00"
+}

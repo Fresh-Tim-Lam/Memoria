@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "31460499",
+  "source_fingerprint": "40cba8ee0b5ab6f49340d04082edbf8f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "31460499",
+    "resistance-to-antimicrobials-in-humans-and-animals."
+  ],
+  "key_phrases": [
+    "resistance",
+    "antimicrobials",
+    "humans",
+    "animals",
+    "overusing",
+    "antibiotics",
+    "not",
+    "only"
+  ],
+  "summary_1l": "Resistance to antimicrobials in humans and animals.",
+  "query_hits": [],
+  "embed_text": "31460499 Resistance to antimicrobials in humans and animals. science scifact Overusing antibiotics is not the only cause and reducing use is not the only solution   W arning signs of antimicrobial resistance, chinks in the antimicrobial armour, began to appear in the middle of the last century, and by the 1990s… 31460499 resistance-to-antimicrobials-in-humans-and-animals. resistance antimicrobials humans animals overusing antibiotics not only Resistance to antimicrobials in humans and animals. Resistance to antimicrobials in humans and animals. Overusing antibiotics is not the only cause and reducing use is not the only solution W arning signs of antimicrobial resistance, chinks in the antimicrobial armour, began to appear in the middle of the last century, and by the 1990s various reports had signalled the dangers of excessive or inappropriate use of antibiotics in clinical medicine and of the use of antibiotics in animal feed as growth promoters.1–3 Overuse of antimicrobials emerged as the main culprit, and reducing their use was seen as the answer. But it may not be that simple. The idea that reducing antibiotic use would redress the problem formed part of a positive response on the part of the United Kingdom government to the House of Lords report,1 including a public inform",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.603222+00:00"
+}

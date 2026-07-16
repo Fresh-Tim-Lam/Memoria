@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "28230867",
+  "source_fingerprint": "5a2be07b2788673cf6c184ca65f495a9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "28230867",
+    "detection-and-distribution-patterns-of-telomerase-activity-in-insects."
+  ],
+  "key_phrases": [
+    "detection",
+    "distribution",
+    "patterns",
+    "telomerase",
+    "activity",
+    "insects",
+    "telomeres",
+    "most"
+  ],
+  "summary_1l": "Detection and distribution patterns of telomerase activity in insects.",
+  "query_hits": [],
+  "embed_text": "28230867 Detection and distribution patterns of telomerase activity in insects. science scifact Telomeres of most insects consist of pentanucleotide (TTAGG)n repeats, although the repeats are absent in Diptera and some other insect species, where the telomere regions are perhaps maintained without telomerase. To understand various… 28230867 detection-and-distribution-patterns-of-telomerase-activity-in-insects. detection distribution patterns telomerase activity insects telomeres most Detection and distribution patterns of telomerase activity in insects. Detection and distribution patterns of telomerase activity in insects. Telomeres of most insects consist of pentanucleotide (TTAGG)n repeats, although the repeats are absent in Diptera and some other insect species, where the telomere regions are perhaps maintained without telomerase. To understand various and unusual telomere formation in insects, we have studied the characteristic features of a putative insect telomerase that has not been previously described. Using a modified telomeric repeat amplification protocol (TRAP), we first detected the telomerase activity in crickets, cockroaches and two Lepidopteran insects. The telomerase from crickets and cockroaches required dATP, dGTP and dTTP but not dCTP as a substrate and sequence analyses of the products of TRAP revealed that the (TTAG",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.704948+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5293024",
+  "source_fingerprint": "f20b0f08350bb3c5e161f46bc5f724cf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5293024",
+    "life-is-sweet:-candy-consumption-and-longevity."
+  ],
+  "key_phrases": [
+    "life",
+    "sweet",
+    "candy",
+    "consumption",
+    "longevity",
+    "our",
+    "attitude",
+    "towards"
+  ],
+  "summary_1l": "Life is sweet: candy consumption and longevity.",
+  "query_hits": [],
+  "embed_text": "5293024 Life is sweet: candy consumption and longevity. science scifact Our attitude towards candy—“if it tastes that good, it can't be healthy”—betrays society's puritanical stance towards pleasure. Candy has been blamed for various ills, including hyperactivity in children; however, clinical trials have not… 5293024 life-is-sweet:-candy-consumption-and-longevity. life sweet candy consumption longevity our attitude towards Life is sweet: candy consumption and longevity. Life is sweet: candy consumption and longevity. Our attitude towards candy—“if it tastes that good, it can't be healthy”—betrays society's puritanical stance towards pleasure. Candy has been blamed for various ills, including hyperactivity in children; however, clinical trials have not supported this.1 Candy—sugar confectionery and chocolate—is not a recent invention: the ancient Arabs, Chinese, and Egyptians candied fruits and nuts in honey, and the Aztecs made a chocolate drink from the bean of the cacao tree. Today, Americans gratify themselves with, on average, 5.4 kg of sugar candy and 6.5 kg of chocolate per person annually.2 Since candy has existed for centuries, we surmised that it cannot be totally unhealthy. We decided to investigate whether candy consumption was associated with",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.915563+00:00"
+}

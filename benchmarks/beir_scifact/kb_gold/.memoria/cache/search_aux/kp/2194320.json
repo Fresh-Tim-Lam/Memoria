@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2194320",
+  "source_fingerprint": "53496c47d4f0d71e3c46f29e15bbdf5f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2194320",
+    "enzymatically-active-lysosomal-proteases-are-associated-with-amyloid-deposits-in-alzheimer-brain."
+  ],
+  "key_phrases": [
+    "enzymatically",
+    "active",
+    "lysosomal",
+    "proteases",
+    "associated",
+    "with",
+    "amyloid",
+    "deposits"
+  ],
+  "summary_1l": "Enzymatically active lysosomal proteases are associated with amyloid deposits in Alzheimer brain.",
+  "query_hits": [],
+  "embed_text": "2194320 Enzymatically active lysosomal proteases are associated with amyloid deposits in Alzheimer brain. science scifact The formation of beta-amyloid in the brains of individuals with Alzheimer disease requires the proteolytic cleavage of a membrane-associated precursor protein. The proteases that may be involved in this process have not yet been… 2194320 enzymatically-active-lysosomal-proteases-are-associated-with-amyloid-deposits-in-alzheimer-brain. enzymatically active lysosomal proteases associated with amyloid deposits Enzymatically active lysosomal proteases are associated with amyloid deposits in Alzheimer brain. Enzymatically active lysosomal proteases are associated with amyloid deposits in Alzheimer brain. The formation of beta-amyloid in the brains of individuals with Alzheimer disease requires the proteolytic cleavage of a membrane-associated precursor protein. The proteases that may be involved in this process have not yet been identified. Cathepsins are normally intracellular proteolytic enzymes associated with lysosomes; however, when sections from Alzheimer brains were stained by antisera to cathepsin D and cathepsin B, high levels of immunoreactivity were also detected in senile plaques. Extracellular sites of cathepsin immunoreactivity were not seen in control brains from age-matched individuals without neurologic disease or from patients with Huntington disease or Parkinson disease. In",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.999250+00:00"
+}

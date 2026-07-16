@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25597580",
+  "source_fingerprint": "7729a618b72be698ed9104941a3e7d95",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25597580",
+    "quiescent-and-active-hippocampal-neural-stem-cells-with-distinct-morphologies-respond-selectively-to-physiological-and-pathological-stimuli-and-aging."
+  ],
+  "key_phrases": [
+    "quiescent",
+    "active",
+    "hippocampal",
+    "neural",
+    "stem",
+    "cells",
+    "with",
+    "distinct"
+  ],
+  "summary_1l": "Quiescent and active hippocampal neural stem cells with distinct morphologies respond selectively to physiological and pathological stimuli and aging.",
+  "query_hits": [],
+  "embed_text": "25597580 Quiescent and active hippocampal neural stem cells with distinct morphologies respond selectively to physiological and pathological stimuli and aging. science scifact New neurons are generated in the adult hippocampus throughout life by neural stem/progenitor cells (NSCs), and neurogenesis is a plastic process responsive to external stimuli. We show that canonical Notch signaling through RBP-J is… 25597580 quiescent-and-active-hippocampal-neural-stem-cells-with-distinct-morphologies-respond-selectively-to-physiological-and-pathological-stimuli-and-aging. quiescent active hippocampal neural stem cells with distinct Quiescent and active hippocampal neural stem cells with distinct morphologies respond selectively to physiological and pathological stimuli and aging. Quiescent and active hippocampal neural stem cells with distinct morphologies respond selectively to physiological and pathological stimuli and aging. New neurons are generated in the adult hippocampus throughout life by neural stem/progenitor cells (NSCs), and neurogenesis is a plastic process responsive to external stimuli. We show that canonical Notch signaling through RBP-J is required for hippocampal neurogenesis. Notch signaling distinguishes morphologically distinct Sox2(+) NSCs, and within these pools subpopulations can shuttle between mitotically active or quiescent. Radial and horizontal NSCs respond selectively to neurogenic stimuli. Physical exercise activates the quiescent radial population whereas epileptic seizures induce expansion of the horizontal NSC pool. Surprisingly, r",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.966850+00:00"
+}

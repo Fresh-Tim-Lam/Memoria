@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13949015",
+  "source_fingerprint": "58fdd28f28e955e52f70ae2182803fd8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13949015",
+    "line-1-retrotransposition-activity-in-human-genomes"
+  ],
+  "key_phrases": [
+    "line",
+    "retrotransposition",
+    "activity",
+    "human",
+    "genomes",
+    "highly",
+    "active",
+    "hot"
+  ],
+  "summary_1l": "Highly active (i.",
+  "query_hits": [],
+  "embed_text": "13949015 LINE-1 Retrotransposition Activity in Human Genomes science scifact Highly active (i.e., \"hot\") long interspersed element-1 (LINE-1 or L1) sequences comprise the bulk of retrotransposition activity in the human genome; however, the abundance of hot L1s in the human population remains largely unexplored.… 13949015 line-1-retrotransposition-activity-in-human-genomes line retrotransposition activity human genomes highly active hot Highly active (i. LINE-1 Retrotransposition Activity in Human Genomes Highly active (i.e., \"hot\") long interspersed element-1 (LINE-1 or L1) sequences comprise the bulk of retrotransposition activity in the human genome; however, the abundance of hot L1s in the human population remains largely unexplored. Here, we used a fosmid-based, paired-end DNA sequencing strategy to identify 68 full-length L1s that are differentially present among individuals but are absent from the human genome reference sequence. The majority of these L1s were highly active in a cultured cell retrotransposition assay. Genotyping 26 elements revealed that two L1s are only found in Africa and that two more are absent from the H952 subset of the Human Genome Diversity Panel. Therefore, these results suggest that hot L1s are more abunda",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.726229+00:00"
+}

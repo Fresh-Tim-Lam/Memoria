@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16964262",
+  "source_fingerprint": "770fd35a9a31a4a35ce2e1c9a49d2eb6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16964262",
+    "evidence-that-embryonic-neurons-regulate-the-onset-of-cortical-gliogenesis-via-cardiotrophin-1"
+  ],
+  "key_phrases": [
+    "evidence",
+    "that",
+    "embryonic",
+    "neurons",
+    "regulate",
+    "onset",
+    "cortical",
+    "gliogenesis"
+  ],
+  "summary_1l": "Precursor cells of the embryonic cortex sequentially generate neurons and then glial cells, but the mecha",
+  "query_hits": [],
+  "embed_text": "16964262 Evidence that Embryonic Neurons Regulate the Onset of Cortical Gliogenesis via Cardiotrophin-1 science scifact Precursor cells of the embryonic cortex sequentially generate neurons and then glial cells, but the mechanisms regulating this neurogenic-to-gliogenic transition are unclear. Using cortical precursor cultures, which temporally mimic this… 16964262 evidence-that-embryonic-neurons-regulate-the-onset-of-cortical-gliogenesis-via-cardiotrophin-1 evidence that embryonic neurons regulate onset cortical gliogenesis Precursor cells of the embryonic cortex sequentially generate neurons and then glial cells, but the mecha Evidence that Embryonic Neurons Regulate the Onset of Cortical Gliogenesis via Cardiotrophin-1 Precursor cells of the embryonic cortex sequentially generate neurons and then glial cells, but the mechanisms regulating this neurogenic-to-gliogenic transition are unclear. Using cortical precursor cultures, which temporally mimic this in vivo differentiation pattern, we demonstrate that cortical neurons synthesize and secrete the neurotrophic cytokine cardiotrophin-1, which activates the gp130-JAK-STAT pathway and is essential for the timed genesis of astrocytes in vitro. Our data indicate that a similar phenomenon also occurs in vivo. In utero electroporation of neurotrophic cytokines in the environment of embryonic cortical precursors causes premature gliogenesis, while acute perturbation of",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.099957+00:00"
+}

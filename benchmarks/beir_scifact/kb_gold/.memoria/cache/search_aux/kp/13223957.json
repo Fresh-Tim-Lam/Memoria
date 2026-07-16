@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13223957",
+  "source_fingerprint": "bf574150bccaab262a2e635586945a99",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13223957",
+    "pain-attacks-in-non-complicated-and-complicated-gallstone-disease-have-a-characteristic-pattern-and-are-accompanied-by-dyspepsia-in-most-patients:-the-results-of-a-prospective-study."
+  ],
+  "key_phrases": [
+    "pain",
+    "attacks",
+    "non",
+    "complicated",
+    "gallstone",
+    "disease",
+    "have",
+    "characteristic"
+  ],
+  "summary_1l": "Pain attacks in non-complicated and complicated gallstone disease have a characteristic pattern and are accompanied by dyspepsia in most patients: the results of a prospective study.",
+  "query_hits": [],
+  "embed_text": "13223957 Pain attacks in non-complicated and complicated gallstone disease have a characteristic pattern and are accompanied by dyspepsia in most patients: the results of a prospective study. science scifact OBJECTIVE The cardinal indication for surgical treatment of gallstones is pain attacks. However, following cholecystectomy, 20% of patients remain symptomatic. It is unclear to what extent post-cholecystectomy symptoms can be ascribed to… 13223957 pain-attacks-in-non-complicated-and-complicated-gallstone-disease-have-a-characteristic-pattern-and-are-accompanied-by-dyspepsia-in-most-patients:-the-results-of-a-prospective-study. pain attacks non complicated gallstone disease have characteristic Pain attacks in non-complicated and complicated gallstone disease have a characteristic pattern and are accompanied by dyspepsia in most patients: the results of a prospective study. Pain attacks in non-complicated and complicated gallstone disease have a characteristic pattern and are accompanied by dyspepsia in most patients: the results of a prospective study. OBJECTIVE The cardinal indication for surgical treatment of gallstones is pain attacks. However, following cholecystectomy, 20% of patients remain symptomatic. It is unclear to what extent post-cholecystectomy symptoms can be ascribed to persistence of preoperative symptoms or to new pathology. The pain and digestive pattern in gallstone patients has not been defined in a recent setting with ultrasonography as the diagnostic method. The aim of this study was to characterize a pain pattern that is typical for gallstone disease and to describe the extent of associated dyspepsia. MATERIAL AND METHODS A total of 2",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:09.813858+00:00"
+}

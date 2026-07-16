@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11335781",
+  "source_fingerprint": "6e9a5b7185e30b2d4269162b0adac580",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11335781",
+    "is-autoimmunity-the-achilles'-heel-of-cancer-immunotherapy?"
+  ],
+  "key_phrases": [
+    "autoimmunity",
+    "achilles",
+    "heel",
+    "cancer",
+    "immunotherapy",
+    "emergence",
+    "immuno",
+    "oncology"
+  ],
+  "summary_1l": "Is autoimmunity the Achilles' heel of cancer immunotherapy?",
+  "query_hits": [],
+  "embed_text": "11335781 Is autoimmunity the Achilles' heel of cancer immunotherapy? science scifact The emergence of immuno-oncology as the first broadly successful strategy for metastatic cancer will require clinicians to integrate this new pillar of medicine with chemotherapy, radiation, and targeted small-molecule compounds. Of equal… 11335781 is-autoimmunity-the-achilles'-heel-of-cancer-immunotherapy? autoimmunity achilles heel cancer immunotherapy emergence immuno oncology Is autoimmunity the Achilles' heel of cancer immunotherapy? Is autoimmunity the Achilles' heel of cancer immunotherapy? The emergence of immuno-oncology as the first broadly successful strategy for metastatic cancer will require clinicians to integrate this new pillar of medicine with chemotherapy, radiation, and targeted small-molecule compounds. Of equal importance is gaining an understanding of the limitations and toxicities of immunotherapy. Immunotherapy was initially perceived to be a relatively less toxic approach to cancer treatment than other available therapies—and surely it is, when compared to those. However, as the use of immunotherapy becomes more common, especially as first- and second-line treatments, immunotoxicity and autoimmunity are emerging as the Achilles' heel of immunotherapy. In this Perspective, we discuss evidence that th",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:06.692303+00:00"
+}

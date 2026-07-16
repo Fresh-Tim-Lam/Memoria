@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4366738",
+  "source_fingerprint": "7d8699d409e4008257551328265edf97",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4366738",
+    "haematopoietic-stem-cells-and-early-lymphoid-progenitors-occupy-distinct-bone-marrow-niches"
+  ],
+  "key_phrases": [
+    "haematopoietic",
+    "stem",
+    "cells",
+    "early",
+    "lymphoid",
+    "progenitors",
+    "occupy",
+    "distinct"
+  ],
+  "summary_1l": "Although haematopoietic stem cells (HSCs) are commonly assumed to reside within a specialized microenvironme",
+  "query_hits": [],
+  "embed_text": "4366738 Haematopoietic stem cells and early lymphoid progenitors occupy distinct bone marrow niches science scifact Although haematopoietic stem cells (HSCs) are commonly assumed to reside within a specialized microenvironment, or niche, most published experimental manipulations of the HSC niche have affected the function of diverse restricted… 4366738 haematopoietic-stem-cells-and-early-lymphoid-progenitors-occupy-distinct-bone-marrow-niches haematopoietic stem cells early lymphoid progenitors occupy distinct Although haematopoietic stem cells (HSCs) are commonly assumed to reside within a specialized microenvironme Haematopoietic stem cells and early lymphoid progenitors occupy distinct bone marrow niches Although haematopoietic stem cells (HSCs) are commonly assumed to reside within a specialized microenvironment, or niche, most published experimental manipulations of the HSC niche have affected the function of diverse restricted progenitors. This raises the fundamental question of whether HSCs and restricted progenitors reside within distinct, specialized niches or whether they share a common niche. Here we assess the physiological sources of the chemokine CXCL12 for HSC and restricted progenitor maintenance. Cxcl12(DsRed) knock-in mice (DsRed-Express2 recombined into the Cxcl12 locus) showed that Cxcl12 was primarily expressed by perivascular stromal cells and, at lower levels, by endothelial cell",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.175578+00:00"
+}

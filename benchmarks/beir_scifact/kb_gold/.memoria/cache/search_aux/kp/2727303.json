@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2727303",
+  "source_fingerprint": "296971c08ae07e05548e30972b4ad173",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2727303",
+    "microtubule-associated-histone-deacetylase-6-supports-the-calcium-store-sensor-stim1-in-mediating-malignant-cell-behaviors."
+  ],
+  "key_phrases": [
+    "microtubule",
+    "associated",
+    "histone",
+    "deacetylase",
+    "supports",
+    "calcium",
+    "store",
+    "sensor"
+  ],
+  "summary_1l": "Microtubule-associated histone deacetylase 6 supports the calcium store sensor STIM1 in mediating malignant cell behaviors.",
+  "query_hits": [],
+  "embed_text": "2727303 Microtubule-associated histone deacetylase 6 supports the calcium store sensor STIM1 in mediating malignant cell behaviors. science scifact Stromal-interaction molecule 1 (STIM1) is an endoplasmic reticulum Ca(2+) storage sensor that promotes cell growth, migration, and angiogenesis in breast and cervical cancers. Here, we report that the microtubule-associated histone… 2727303 microtubule-associated-histone-deacetylase-6-supports-the-calcium-store-sensor-stim1-in-mediating-malignant-cell-behaviors. microtubule associated histone deacetylase supports calcium store sensor Microtubule-associated histone deacetylase 6 supports the calcium store sensor STIM1 in mediating malignant cell behaviors. Microtubule-associated histone deacetylase 6 supports the calcium store sensor STIM1 in mediating malignant cell behaviors. Stromal-interaction molecule 1 (STIM1) is an endoplasmic reticulum Ca(2+) storage sensor that promotes cell growth, migration, and angiogenesis in breast and cervical cancers. Here, we report that the microtubule-associated histone deacetylase 6 (HDAC6) differentially regulates activation of STIM1-mediated store-operated Ca(2+) entry (SOCE) between cervical cancer cells and normal cervical epithelial cells. Confocal microscopy of living cells indicated that microtubule integrity was necessary for STIM1 trafficking to the plasma membrane and interaction with Orai1, an essential pore subunit of SOCE. Cancer cells overexpressed both STIM1 and Orai1 compared with normal c",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.747452+00:00"
+}

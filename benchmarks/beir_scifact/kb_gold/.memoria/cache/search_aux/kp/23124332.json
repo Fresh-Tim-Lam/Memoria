@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23124332",
+  "source_fingerprint": "c51dcfdd92ed26179f417b27bc0d11e7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23124332",
+    "prion-induced-amyloid-heart-disease-with-high-blood-infectivity-in-transgenic-mice."
+  ],
+  "key_phrases": [
+    "prion",
+    "induced",
+    "amyloid",
+    "heart",
+    "disease",
+    "with",
+    "high",
+    "blood"
+  ],
+  "summary_1l": "Prion-induced amyloid heart disease with high blood infectivity in transgenic mice.",
+  "query_hits": [],
+  "embed_text": "23124332 Prion-induced amyloid heart disease with high blood infectivity in transgenic mice. science scifact We investigated extraneural manifestations in scrapie-infected transgenic mice expressing prion protein lacking the glycophosphatydylinositol membrane anchor. In the brain, blood, and heart, both abnormal protease-resistant prion protein… 23124332 prion-induced-amyloid-heart-disease-with-high-blood-infectivity-in-transgenic-mice. prion induced amyloid heart disease with high blood Prion-induced amyloid heart disease with high blood infectivity in transgenic mice. Prion-induced amyloid heart disease with high blood infectivity in transgenic mice. We investigated extraneural manifestations in scrapie-infected transgenic mice expressing prion protein lacking the glycophosphatydylinositol membrane anchor. In the brain, blood, and heart, both abnormal protease-resistant prion protein (PrPres) and prion infectivity were readily detected by immunoblot and by inoculation into nontransgenic recipients. The titer of infectious scrapie in blood plasma exceeded 10(7) 50% infectious doses per milliliter. The hearts of these transgenic mice contained PrPres-positive amyloid deposits that led to myocardial stiffness and cardiac disease.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.887420+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13277118",
+  "source_fingerprint": "e1521088da31fd0fd4d7da275ec64734",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13277118",
+    "ancient-hybridization-and-an-irish-origin-for-the-modern-polar-bear-matriline"
+  ],
+  "key_phrases": [
+    "ancient",
+    "hybridization",
+    "irish",
+    "origin",
+    "modern",
+    "polar",
+    "bear",
+    "matriline"
+  ],
+  "summary_1l": "BACKGROUND Polar bears (Ursus maritimus) are among those species most susceptible to the rapidly changing arctic climate,",
+  "query_hits": [],
+  "embed_text": "13277118 Ancient Hybridization and an Irish Origin for the Modern Polar Bear Matriline science scifact BACKGROUND Polar bears (Ursus maritimus) are among those species most susceptible to the rapidly changing arctic climate, and their survival is of global concern. Despite this, little is known about polar bear species history. Future… 13277118 ancient-hybridization-and-an-irish-origin-for-the-modern-polar-bear-matriline ancient hybridization irish origin modern polar bear matriline BACKGROUND Polar bears (Ursus maritimus) are among those species most susceptible to the rapidly changing arctic climate, Ancient Hybridization and an Irish Origin for the Modern Polar Bear Matriline BACKGROUND Polar bears (Ursus maritimus) are among those species most susceptible to the rapidly changing arctic climate, and their survival is of global concern. Despite this, little is known about polar bear species history. Future conservation strategies would significantly benefit from an understanding of basic evolutionary information, such as the timing and conditions of their initial divergence from brown bears (U. arctos) or their response to previous environmental change. RESULTS We used a spatially explicit phylogeographic model to estimate the dynamics of 242 brown bear and polar bear matrilines sampled throughout the last 120,000 years and across their present and past geographic ranges. Our results s",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:10.642242+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9993008",
+  "source_fingerprint": "67856d7b71ff42a7829bd541ac426ef5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9993008",
+    "a-bivalent-chromatin-structure-marks-key-developmental-genes-in-embryonic-stem-cells"
+  ],
+  "key_phrases": [
+    "bivalent",
+    "chromatin",
+    "structure",
+    "marks",
+    "key",
+    "developmental",
+    "genes",
+    "embryonic"
+  ],
+  "summary_1l": "The most highly conserved noncoding elements (HCNEs) in mammalian genomes cluster within regions enriched for genes",
+  "query_hits": [],
+  "embed_text": "9993008 A Bivalent Chromatin Structure Marks Key Developmental Genes in Embryonic Stem Cells science scifact The most highly conserved noncoding elements (HCNEs) in mammalian genomes cluster within regions enriched for genes encoding developmentally important transcription factors (TFs). This suggests that HCNE-rich regions may contain key… 9993008 a-bivalent-chromatin-structure-marks-key-developmental-genes-in-embryonic-stem-cells bivalent chromatin structure marks key developmental genes embryonic The most highly conserved noncoding elements (HCNEs) in mammalian genomes cluster within regions enriched for genes A Bivalent Chromatin Structure Marks Key Developmental Genes in Embryonic Stem Cells The most highly conserved noncoding elements (HCNEs) in mammalian genomes cluster within regions enriched for genes encoding developmentally important transcription factors (TFs). This suggests that HCNE-rich regions may contain key regulatory controls involved in development. We explored this by examining histone methylation in mouse embryonic stem (ES) cells across 56 large HCNE-rich loci. We identified a specific modification pattern, termed \"bivalent domains,\" consisting of large regions of H3 lysine 27 methylation harboring smaller regions of H3 lysine 4 methylation. Bivalent domains tend to coincide with TF genes expressed at low levels. We propose that bivalent domains silence developmental genes in",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:06.263788+00:00"
+}

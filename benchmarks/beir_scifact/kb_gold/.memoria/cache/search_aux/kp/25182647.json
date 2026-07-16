@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25182647",
+  "source_fingerprint": "b5442219a577f9c9e289ff7976e8ef7d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25182647",
+    "maternal-and-perinatal-outcome-in-severe-pregnancy-related-liver-disease."
+  ],
+  "key_phrases": [
+    "maternal",
+    "perinatal",
+    "outcome",
+    "severe",
+    "pregnancy",
+    "related",
+    "liver",
+    "disease"
+  ],
+  "summary_1l": "Maternal and perinatal outcome in severe pregnancy-related liver disease.",
+  "query_hits": [],
+  "embed_text": "25182647 Maternal and perinatal outcome in severe pregnancy-related liver disease. science scifact Acute fatty liver of pregnancy (AFLP) and the syndrome of hemolysis, elevated liver enzyme levels, and low platelet count (HELLP) are rare but major disorders of the third trimester of pregnancy. Over a 10-year period, 46 women (median… 25182647 maternal-and-perinatal-outcome-in-severe-pregnancy-related-liver-disease. maternal perinatal outcome severe pregnancy related liver disease Maternal and perinatal outcome in severe pregnancy-related liver disease. Maternal and perinatal outcome in severe pregnancy-related liver disease. Acute fatty liver of pregnancy (AFLP) and the syndrome of hemolysis, elevated liver enzyme levels, and low platelet count (HELLP) are rare but major disorders of the third trimester of pregnancy. Over a 10-year period, 46 women (median age, 30 years; range, 17-41 years) developed hepatic dysfunction severe enough to require transfer to our Liver Failure Unit. Three quarters of the women were nulliparous, and 5 had twin pregnancies; the median gestational age was 35 weeks (range, 24-40 weeks). At admission, 32 patients (70%) were preeclamptic and 21 (46%) were encephalopathic and/or ventilated. Thirty-two patients (70%) had clinical features and laboratory values consistent with AFLP, and 7 (15%) had HELLP syndrome. O",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.138501+00:00"
+}

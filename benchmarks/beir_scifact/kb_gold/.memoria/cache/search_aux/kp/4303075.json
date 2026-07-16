@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4303075",
+  "source_fingerprint": "4676703db56aa45bd3cef0e73256c26a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4303075",
+    "direct-conversion-of-fibroblasts-to-functional-neurons-by-defined-factors"
+  ],
+  "key_phrases": [
+    "direct",
+    "conversion",
+    "fibroblasts",
+    "functional",
+    "neurons",
+    "by",
+    "defined",
+    "factors"
+  ],
+  "summary_1l": "Cellular differentiation and lineage commitment are considered to be robust and irreversible processes during development.",
+  "query_hits": [],
+  "embed_text": "4303075 Direct conversion of fibroblasts to functional neurons by defined factors science scifact Cellular differentiation and lineage commitment are considered to be robust and irreversible processes during development. Recent work has shown that mouse and human fibroblasts can be reprogrammed to a pluripotent state with a combination… 4303075 direct-conversion-of-fibroblasts-to-functional-neurons-by-defined-factors direct conversion fibroblasts functional neurons by defined factors Cellular differentiation and lineage commitment are considered to be robust and irreversible processes during development. Direct conversion of fibroblasts to functional neurons by defined factors Cellular differentiation and lineage commitment are considered to be robust and irreversible processes during development. Recent work has shown that mouse and human fibroblasts can be reprogrammed to a pluripotent state with a combination of four transcription factors. This raised the question of whether transcription factors could directly induce other defined somatic cell fates, and not only an undifferentiated state. We hypothesized that combinatorial expression of neural-lineage-specific transcription factors could directly convert fibroblasts into neurons. Starting from a pool of nineteen candidate genes, we identified a combination of only three factors, Ascl1, Brn2 (also called Pou3f2) and Myt1l, that suffice",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.385642+00:00"
+}

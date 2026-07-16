@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5764562",
+  "source_fingerprint": "7deb522b40be360ca8d4d0762b12814e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5764562",
+    "chemical-tools-for-biomolecular-imaging."
+  ],
+  "key_phrases": [
+    "chemical",
+    "tools",
+    "biomolecular",
+    "imaging",
+    "visualization",
+    "biologically",
+    "relevant",
+    "molecules"
+  ],
+  "summary_1l": "Chemical tools for biomolecular imaging.",
+  "query_hits": [],
+  "embed_text": "5764562 Chemical tools for biomolecular imaging. science scifact The visualization of biologically relevant molecules and activities inside living cells continues to transform cell biology into a truly quantitative science. However, despite the spectacular achievements in some areas of cell biology, the… 5764562 chemical-tools-for-biomolecular-imaging. chemical tools biomolecular imaging visualization biologically relevant molecules Chemical tools for biomolecular imaging. Chemical tools for biomolecular imaging. The visualization of biologically relevant molecules and activities inside living cells continues to transform cell biology into a truly quantitative science. However, despite the spectacular achievements in some areas of cell biology, the majority of cellular processes still operate invisibly, not illuminated by even our brightest laser beams. Further progress therefore will depend not only on improvements in instrumentation but also increasingly on the development of new fluorophores and fluorescent sensors to target these activities. In the following, we review some of the recent approaches to generating such sensors, the methods to attach them to selected biomolecules, and their applications to various biological problems.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.997876+00:00"
+}

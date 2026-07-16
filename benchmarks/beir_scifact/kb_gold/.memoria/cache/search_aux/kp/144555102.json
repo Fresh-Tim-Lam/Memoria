@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "144555102",
+  "source_fingerprint": "e18d52b6bc0328f6c0c754ca383366a3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "144555102",
+    "code-of-the-street:-decency,-violence,-and-the-moral-life-of-the-inner-city"
+  ],
+  "key_phrases": [
+    "code",
+    "street",
+    "decency",
+    "violence",
+    "moral",
+    "life",
+    "inner",
+    "city"
+  ],
+  "summary_1l": "Inner-city black America is often defined by random, senseless street violence.",
+  "query_hits": [],
+  "embed_text": "144555102 Code of the Street: Decency, Violence, and the Moral Life of the Inner City science scifact Inner-city black America is often defined by random, senseless street violence. In fact, although violence is a salient feature, its use is far from random; it is regulated through an informal but well-known code of the street. How you… 144555102 code-of-the-street:-decency,-violence,-and-the-moral-life-of-the-inner-city code street decency violence moral life inner city Inner-city black America is often defined by random, senseless street violence. Code of the Street: Decency, Violence, and the Moral Life of the Inner City Inner-city black America is often defined by random, senseless street violence. In fact, although violence is a salient feature, its use is far from random; it is regulated through an informal but well-known code of the street. How you dress, how you talk, whether you make eye-contact, your understanding of the pecking order - such crucial details can have life-or-death consequences and young people are particularly at risk. In this anatomy of the inner-city psyche, the author shows how the code is a response to the lack of well-paid jobs; to the stigma of race; to rampant drug use; to alienation and to lack of hope. The police exercise no control, and the individual's safety and sense of worth are defined by how m",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.897000+00:00"
+}

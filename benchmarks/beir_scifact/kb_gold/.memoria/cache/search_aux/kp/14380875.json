@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14380875",
+  "source_fingerprint": "3c0e218400a9fcda127fe7b4c6dca35f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14380875",
+    "the-glucocorticoid-receptor-inhibits"
+  ],
+  "key_phrases": [
+    "glucocorticoid",
+    "receptor",
+    "inhibits",
+    "glucocorticoids",
+    "repress",
+    "nfkappab",
+    "mediated",
+    "activation"
+  ],
+  "summary_1l": "Glucocorticoids repress NFkappaB-mediated activation of proinflammatory genes such as interleukin-8 (IL-8) and ICAM-1.",
+  "query_hits": [],
+  "embed_text": "14380875 The Glucocorticoid Receptor Inhibits science scifact Glucocorticoids repress NFkappaB-mediated activation of proinflammatory genes such as interleukin-8 (IL-8) and ICAM-1. Our experiments suggest that the glucocorticoid receptor (GR) confers this effect by associating through protein-protein… 14380875 the-glucocorticoid-receptor-inhibits glucocorticoid receptor inhibits glucocorticoids repress nfkappab mediated activation Glucocorticoids repress NFkappaB-mediated activation of proinflammatory genes such as interleukin-8 (IL-8) and ICAM-1. The Glucocorticoid Receptor Inhibits Glucocorticoids repress NFkappaB-mediated activation of proinflammatory genes such as interleukin-8 (IL-8) and ICAM-1. Our experiments suggest that the glucocorticoid receptor (GR) confers this effect by associating through protein-protein interactions with NFkappaB bound at each of these genes. That is, we show that the GR zinc binding region (ZBR), which includes the DNA binding and dimerization functions of the receptor, binds directly to the dimerization domain of the RelA subunit of NFkappaB in vitro and that the ZBR is sufficient to associate with RelA bound at NFkappaB response elements in vivo. Moreover, we demonstrate in vivo and in vitro that GR does not disrupt DNA binding by NFkappaB. In transient transfections, we found that the GR ligand b",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.746698+00:00"
+}

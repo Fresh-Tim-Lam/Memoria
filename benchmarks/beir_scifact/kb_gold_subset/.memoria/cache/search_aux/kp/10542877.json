@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10542877",
+  "source_fingerprint": "b648373904b2477050998c9e7af09f61",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10542877",
+    "azd9150,-a-next-generation-antisense-oligonucleotide-inhibitor-of-stat3-with-early-evidence-of-clinical-activity-in-lymphoma-and-lung-cancer"
+  ],
+  "key_phrases": [
+    "azd9150",
+    "next",
+    "generation",
+    "antisense",
+    "oligonucleotide",
+    "inhibitor",
+    "stat3",
+    "with"
+  ],
+  "summary_1l": "Next-generation sequencing technologies have greatly expand",
+  "query_hits": [],
+  "embed_text": "10542877 AZD9150, a next-generation antisense oligonucleotide inhibitor of STAT3 with early evidence of clinical activity in lymphoma and lung cancer science scifact Next-generation sequencing technologies have greatly expanded our understanding of cancer genetics. Antisense technology is an attractive platform with the potential to translate these advances into improved cancer therapeutics, because… 10542877 azd9150,-a-next-generation-antisense-oligonucleotide-inhibitor-of-stat3-with-early-evidence-of-clinical-activity-in-lymphoma-and-lung-cancer azd9150 next generation antisense oligonucleotide inhibitor stat3 with Next-generation sequencing technologies have greatly expand AZD9150, a next-generation antisense oligonucleotide inhibitor of STAT3 with early evidence of clinical activity in lymphoma and lung cancer Next-generation sequencing technologies have greatly expanded our understanding of cancer genetics. Antisense technology is an attractive platform with the potential to translate these advances into improved cancer therapeutics, because antisense oligonucleotide (ASO) inhibitors can be designed on the basis of gene sequence information alone. Recent human clinical data have demonstrated the potent activity of systemically administered ASOs targeted to genes expressed in the liver. We describe the preclinical activity and initial clinical evaluation of a class of ASOs containing constrained ethyl modifications for targeting the gene encoding the transc",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.669001+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1574014",
+  "source_fingerprint": "cf8e550a7f107e91c7ea55101afb3c9e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1574014",
+    "selective-elimination-of-high-constitutive-activity-or-chemokine-binding-in-the-human-herpesvirus-8-encoded-seven-transmembrane-oncogene-orf74."
+  ],
+  "key_phrases": [
+    "selective",
+    "elimination",
+    "high",
+    "constitutive",
+    "activity",
+    "chemokine",
+    "binding",
+    "human"
+  ],
+  "summary_1l": "Selective elimination of high constitutive activity or chemokine binding in the human herpesvirus 8 encoded seven transmembrane oncogene ORF74.",
+  "query_hits": [],
+  "embed_text": "1574014 Selective elimination of high constitutive activity or chemokine binding in the human herpesvirus 8 encoded seven transmembrane oncogene ORF74. science scifact Open reading frame 74 (ORF74) encoded by human herpesvirus 8 is a highly constitutively active seven transmembrane (7TM) receptor stimulated by angiogenic chemokines, e.g. growth-related oncogene-alpha, and inhibited by angiostatic… 1574014 selective-elimination-of-high-constitutive-activity-or-chemokine-binding-in-the-human-herpesvirus-8-encoded-seven-transmembrane-oncogene-orf74. selective elimination high constitutive activity chemokine binding human Selective elimination of high constitutive activity or chemokine binding in the human herpesvirus 8 encoded seven transmembrane oncogene ORF74. Selective elimination of high constitutive activity or chemokine binding in the human herpesvirus 8 encoded seven transmembrane oncogene ORF74. Open reading frame 74 (ORF74) encoded by human herpesvirus 8 is a highly constitutively active seven transmembrane (7TM) receptor stimulated by angiogenic chemokines, e.g. growth-related oncogene-alpha, and inhibited by angiostatic chemokines e.g. interferon-gamma-inducible protein. Transgenic mice expressing ORF74 under control of the CD2 promoter develop highly vascularized Kaposi's sarcoma-like tumors. Through targeted mutagenesis we here create three distinct phenotypes of ORF74: a receptor with normal, high constitutive signaling through the phospholipase C pathway but deprived of binding and action of chemokines obtained through deletion of 2",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.208183+00:00"
+}

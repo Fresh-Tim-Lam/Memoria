@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18662787",
+  "source_fingerprint": "837f81893cade1151862d00c8b752917",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18662787",
+    "nipbl,-encoding-a-homolog-of-fungal-scc2-type-sister-chromatid-cohesion-proteins-and-fly-nipped-b,-is-mutated-in-cornelia-de-lange-syndrome"
+  ],
+  "key_phrases": [
+    "nipbl",
+    "encoding",
+    "homolog",
+    "fungal",
+    "scc2",
+    "type",
+    "sister",
+    "chromatid"
+  ],
+  "summary_1l": "Cornelia de Lange syndrome (CdLS) is a multiple malformation",
+  "query_hits": [],
+  "embed_text": "18662787 NIPBL, encoding a homolog of fungal Scc2-type sister chromatid cohesion proteins and fly Nipped-B, is mutated in Cornelia de Lange syndrome science scifact Cornelia de Lange syndrome (CdLS) is a multiple malformation disorder characterized by dysmorphic facial features, mental retardation, growth delay and limb reduction defects. We indentified and characterized a new gene, NIPBL, that is… 18662787 nipbl,-encoding-a-homolog-of-fungal-scc2-type-sister-chromatid-cohesion-proteins-and-fly-nipped-b,-is-mutated-in-cornelia-de-lange-syndrome nipbl encoding homolog fungal scc2 type sister chromatid Cornelia de Lange syndrome (CdLS) is a multiple malformation NIPBL, encoding a homolog of fungal Scc2-type sister chromatid cohesion proteins and fly Nipped-B, is mutated in Cornelia de Lange syndrome Cornelia de Lange syndrome (CdLS) is a multiple malformation disorder characterized by dysmorphic facial features, mental retardation, growth delay and limb reduction defects. We indentified and characterized a new gene, NIPBL, that is mutated in individuals with CdLS and determined its structure and the structures of mouse, rat and zebrafish homologs. We named its protein product delangin. Vertebrate delangins have substantial homology to orthologs in flies, worms, plants and fungi, including Scc2-type sister chromatid cohesion proteins, and D. melanogaster Nipped-B. We propose that perturbed delangin function may inappropriately activate DLX genes, t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.540560+00:00"
+}

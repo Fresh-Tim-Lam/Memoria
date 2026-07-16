@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "10207180",
+  "source_fingerprint": "d908224ec397c877e4a232270cb63691",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10207180"
+  ],
+  "key_phrases": [
+    "site",
+    "amyloid",
+    "precursor",
+    "protein",
+    "cleaving",
+    "enzyme",
+    "bace1",
+    "inhibitor"
+  ],
+  "summary_1l": "INTRODUCTION The β-secretase enzyme, β-site",
+  "query_hits": [],
+  "embed_text": "10207180 β-site amyloid precursor protein-cleaving enzyme 1(BACE1) inhibitor treatment induces Aβ5-X peptides through alternative amyloid precursor protein cleavage science scifact INTRODUCTION The β-secretase enzyme, β-site amyloid precursor protein-cleaving enzyme 1 (BACE1), cleaves amyloid precursor protein (APP) in the first step in β-amyloid (Aβ) peptide production. Thus, BACE1 is a key target for candidate… 10207180 site amyloid precursor protein cleaving enzyme bace1 inhibitor INTRODUCTION The β-secretase enzyme, β-site β-site amyloid precursor protein-cleaving enzyme 1(BACE1) inhibitor treatment induces Aβ5-X peptides through alternative amyloid precursor protein cleavage INTRODUCTION The β-secretase enzyme, β-site amyloid precursor protein-cleaving enzyme 1 (BACE1), cleaves amyloid precursor protein (APP) in the first step in β-amyloid (Aβ) peptide production. Thus, BACE1 is a key target for candidate disease-modifying treatment of Alzheimer's disease. In a previous exploratory Aβ biomarker study, we found that BACE1 inhibitor treatment resulted in decreased levels of Aβ1-34 together with increased Aβ5-40, suggesting that these Aβ species may be novel pharmacodynamic biomarkers in clinical trials. We have now examined whether the same holds true in humans. METHODS In an investigator-blind, placebo-contr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T12:36:01.038546+00:00"
+}

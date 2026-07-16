@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21874312",
+  "source_fingerprint": "30bf43ba5eee2822de5ea9c2e497843e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21874312",
+    "risk-for-breast-cancer-development-determined-by-mammographic-parenchymal-pattern."
+  ],
+  "key_phrases": [
+    "risk",
+    "breast",
+    "cancer",
+    "development",
+    "determined",
+    "by",
+    "mammographic",
+    "parenchymal"
+  ],
+  "summary_1l": "Risk for breast cancer development determined by mammographic parenchymal pattern.",
+  "query_hits": [],
+  "embed_text": "21874312 Risk for breast cancer development determined by mammographic parenchymal pattern. science scifact A classification of risk for developing breast cancer has been devised based solely on the appearance of the breast parenchyma by mammography. Four groups of patients were isolated. The study encompassed a five-year period and was done by… 21874312 risk-for-breast-cancer-development-determined-by-mammographic-parenchymal-pattern. risk breast cancer development determined by mammographic parenchymal Risk for breast cancer development determined by mammographic parenchymal pattern. Risk for breast cancer development determined by mammographic parenchymal pattern. A classification of risk for developing breast cancer has been devised based solely on the appearance of the breast parenchyma by mammography. Four groups of patients were isolated. The study encompassed a five-year period and was done by reviewing the mammograms of all women over the age of 30 who had been examined at Hutzel Hospital, Detroit. The average time of followup would be approximately 2 1/2 years. Four groups had an incidence of developing breast cancer of 0.1, 0.4, 1.7, and 2.2. These parenchymal patterns are described and criteria for their identification are given.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.815750+00:00"
+}

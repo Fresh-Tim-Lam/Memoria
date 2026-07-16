@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12762485",
+  "source_fingerprint": "d19f5a817669653a441da382b9a5495f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12762485",
+    "p53-mutation-in-breast-cancer.-correlation-with-cell-kinetics-and-cell-of-origin."
+  ],
+  "key_phrases": [
+    "p53",
+    "mutation",
+    "breast",
+    "cancer",
+    "correlation",
+    "with",
+    "cell",
+    "kinetics"
+  ],
+  "summary_1l": "p53 mutation in breast cancer.",
+  "query_hits": [],
+  "embed_text": "12762485 p53 mutation in breast cancer. Correlation with cell kinetics and cell of origin. science scifact AIM Several studies have investigated the expression of the cytokeratins (CKs), vimentin, the epithelial growth factor receptor (EGFR), the oestrogen receptor (ER), and the progesterone receptor (PgR), in breast cancer, but no study has… 12762485 p53-mutation-in-breast-cancer.-correlation-with-cell-kinetics-and-cell-of-origin. p53 mutation breast cancer correlation with cell kinetics p53 mutation in breast cancer. p53 mutation in breast cancer. Correlation with cell kinetics and cell of origin. AIM Several studies have investigated the expression of the cytokeratins (CKs), vimentin, the epithelial growth factor receptor (EGFR), the oestrogen receptor (ER), and the progesterone receptor (PgR), in breast cancer, but no study has directly compared p53 mutations with these phenotypic and differentiation markers in the same case. The present study was designed to provide some of this information. METHODS The expression of the p53 and bcl-2 proteins was evaluated by immunohistochemistry in relation to phenotypic characteristics and cellular kinetic parameters (mitotic index and apoptotic index) in 37 cases of ductal carcinoma in situ (DCIS) and 27 cases of infiltrating ductal carcinoma (IDC) of the breast",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:08.905367+00:00"
+}

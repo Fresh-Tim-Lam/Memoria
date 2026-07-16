@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3353748",
+  "source_fingerprint": "f493856d7bd66219708f29fb1ac38b37",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3353748",
+    "metaplasia-and-transdifferentiation:-from-pure-biology-to-the-clinic"
+  ],
+  "key_phrases": [
+    "metaplasia",
+    "transdifferentiation",
+    "from",
+    "pure",
+    "biology",
+    "clinic",
+    "transformations",
+    "one"
+  ],
+  "summary_1l": "Transformations from one tissue type to another make up a well established set of phenomena that can be explained by the principles",
+  "query_hits": [],
+  "embed_text": "3353748 Metaplasia and transdifferentiation: from pure biology to the clinic science scifact Transformations from one tissue type to another make up a well established set of phenomena that can be explained by the principles of developmental biology. Although these phenomena might be rare in nature, we can now imagine the… 3353748 metaplasia-and-transdifferentiation:-from-pure-biology-to-the-clinic metaplasia transdifferentiation from pure biology clinic transformations one Transformations from one tissue type to another make up a well established set of phenomena that can be explained by the principles Metaplasia and transdifferentiation: from pure biology to the clinic Transformations from one tissue type to another make up a well established set of phenomena that can be explained by the principles of developmental biology. Although these phenomena might be rare in nature, we can now imagine the possibility of deliberately reprogramming cells from one tissue type to another by manipulating the expression of transcription factors. This approach could generate new therapies for many human diseases.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.493391+00:00"
+}

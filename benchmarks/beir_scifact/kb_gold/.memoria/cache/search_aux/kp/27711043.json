@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27711043",
+  "source_fingerprint": "65af81a2a1ed3ded011df3b5771b6fcd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27711043",
+    "musculoskeletal-pain-in-europe:-its-impact-and-a-comparison-of-population-and-medical-perceptions-of-treatment-in-eight-european-countries."
+  ],
+  "key_phrases": [
+    "musculoskeletal",
+    "pain",
+    "europe",
+    "its",
+    "impact",
+    "comparison",
+    "population",
+    "medical"
+  ],
+  "summary_1l": "Musculoskeletal pain in Europe: its impact and a comparison of population and medical perceptions of treatment in eight European countries.",
+  "query_hits": [],
+  "embed_text": "27711043 Musculoskeletal pain in Europe: its impact and a comparison of population and medical perceptions of treatment in eight European countries. science scifact OBJECTIVES To describe the impact of musculoskeletal pain (MP); to compare management of MP by the population and by primary care physicians; and to identify misconceptions about treatment. METHODS 5803 people with MP and 1483 primary care… 27711043 musculoskeletal-pain-in-europe:-its-impact-and-a-comparison-of-population-and-medical-perceptions-of-treatment-in-eight-european-countries. musculoskeletal pain europe its impact comparison population medical Musculoskeletal pain in Europe: its impact and a comparison of population and medical perceptions of treatment in eight European countries. Musculoskeletal pain in Europe: its impact and a comparison of population and medical perceptions of treatment in eight European countries. OBJECTIVES To describe the impact of musculoskeletal pain (MP); to compare management of MP by the population and by primary care physicians; and to identify misconceptions about treatment. METHODS 5803 people with MP and 1483 primary care physicians, randomly selected, in eight European countries were interviewed by telephone. A structured questionnaire was used to ask about usual management of MP and perceived benefits and risks of treatment. Current health status (SF-12) was also assessed. RESULTS From primary care physicians' perceptions, MP appears to be well managed. All presenting patients are offered some form of treatment, 90% or more doctors",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.240959+00:00"
+}

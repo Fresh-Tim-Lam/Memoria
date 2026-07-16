@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24282306",
+  "source_fingerprint": "12f87ae35cb754d563f1fbd737193a25",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24282306",
+    "macrophage-diversity-enhances-tumor-progression-and-metastasis"
+  ],
+  "key_phrases": [
+    "macrophage",
+    "diversity",
+    "enhances",
+    "tumor",
+    "progression",
+    "metastasis",
+    "there",
+    "persuasive"
+  ],
+  "summary_1l": "There is persuasive clinical and experimental evidence that macrophages promote cancer initiation and malignant progression.",
+  "query_hits": [],
+  "embed_text": "24282306 Macrophage Diversity Enhances Tumor Progression and Metastasis science scifact There is persuasive clinical and experimental evidence that macrophages promote cancer initiation and malignant progression. During tumor initiation, they create an inflammatory environment that is mutagenic and promotes growth. As tumors… 24282306 macrophage-diversity-enhances-tumor-progression-and-metastasis macrophage diversity enhances tumor progression metastasis there persuasive There is persuasive clinical and experimental evidence that macrophages promote cancer initiation and malignant progression. Macrophage Diversity Enhances Tumor Progression and Metastasis There is persuasive clinical and experimental evidence that macrophages promote cancer initiation and malignant progression. During tumor initiation, they create an inflammatory environment that is mutagenic and promotes growth. As tumors progress to malignancy, macrophages stimulate angiogenesis, enhance tumor cell migration and invasion, and suppress antitumor immunity. At metastatic sites, macrophages prepare the target tissue for arrival of tumor cells, and then a different subpopulation of macrophages promotes tumor cell extravasation, survival, and subsequent growth. Specialized subpopulations of macrophages may represent important new therapeutic targets.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.144246+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6490571",
+  "source_fingerprint": "cbc25f9c2cbe4599043137a763c14157",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6490571",
+    "prevalence,-severity,-and-unmet-need-for-treatment-of-mental-disorders-in-the-world-health-organization-world-mental-health-surveys."
+  ],
+  "key_phrases": [
+    "prevalence",
+    "severity",
+    "unmet",
+    "need",
+    "treatment",
+    "mental",
+    "disorders",
+    "world"
+  ],
+  "summary_1l": "Prevalence, severity, and unmet need for treatment of mental disorders in the World Health Organization World Mental Health Surveys.",
+  "query_hits": [],
+  "embed_text": "6490571 Prevalence, severity, and unmet need for treatment of mental disorders in the World Health Organization World Mental Health Surveys. science scifact CONTEXT Little is known about the extent or severity of untreated mental disorders, especially in less-developed countries. OBJECTIVE To estimate prevalence, severity, and treatment of Diagnostic and Statistical Manual of Mental Disorders,… 6490571 prevalence,-severity,-and-unmet-need-for-treatment-of-mental-disorders-in-the-world-health-organization-world-mental-health-surveys. prevalence severity unmet need treatment mental disorders world Prevalence, severity, and unmet need for treatment of mental disorders in the World Health Organization World Mental Health Surveys. Prevalence, severity, and unmet need for treatment of mental disorders in the World Health Organization World Mental Health Surveys. CONTEXT Little is known about the extent or severity of untreated mental disorders, especially in less-developed countries. OBJECTIVE To estimate prevalence, severity, and treatment of Diagnostic and Statistical Manual of Mental Disorders, Fourth Edition (DSM-IV) mental disorders in 14 countries (6 less developed, 8 developed) in the World Health Organization (WHO) World Mental Health (WMH) Survey Initiative. DESIGN, SETTING, AND PARTICIPANTS Face-to-face household surveys of 60 463 community adults conducted from 2001-2003 in 14 countries in the Americas, Europe, the Middle East, Africa, and Asia. MAIN OUTCOME MEASURES The DSM-IV disorders, severity, and tre",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.976601+00:00"
+}

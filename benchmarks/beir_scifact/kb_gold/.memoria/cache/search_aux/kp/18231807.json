@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18231807",
+  "source_fingerprint": "3a27702469d1afb5710203c594c332a0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18231807",
+    "4-1bb-costimulation-ameliorates-t-cell-exhaustion-induced-by-tonic-signaling-of-chimeric-antigen-receptors"
+  ],
+  "key_phrases": [
+    "1bb",
+    "costimulation",
+    "ameliorates",
+    "cell",
+    "exhaustion",
+    "induced",
+    "by",
+    "tonic"
+  ],
+  "summary_1l": "Chimeric antigen receptors (CARs) targeting CD19 have mediated dramatic antitumor responses i",
+  "query_hits": [],
+  "embed_text": "18231807 4-1BB Costimulation Ameliorates T Cell Exhaustion Induced by Tonic Signaling of Chimeric Antigen Receptors science scifact Chimeric antigen receptors (CARs) targeting CD19 have mediated dramatic antitumor responses in hematologic malignancies, but tumor regression has rarely occurred using CARs targeting other antigens. It remains unknown whether the… 18231807 4-1bb-costimulation-ameliorates-t-cell-exhaustion-induced-by-tonic-signaling-of-chimeric-antigen-receptors 1bb costimulation ameliorates cell exhaustion induced by tonic Chimeric antigen receptors (CARs) targeting CD19 have mediated dramatic antitumor responses i 4-1BB Costimulation Ameliorates T Cell Exhaustion Induced by Tonic Signaling of Chimeric Antigen Receptors Chimeric antigen receptors (CARs) targeting CD19 have mediated dramatic antitumor responses in hematologic malignancies, but tumor regression has rarely occurred using CARs targeting other antigens. It remains unknown whether the impressive effects of CD19 CARs relate to greater susceptibility of hematologic malignancies to CAR therapies, or superior functionality of the CD19 CAR itself. We show that tonic CAR CD3-ζ phosphorylation, triggered by antigen-independent clustering of CAR single-chain variable fragments, can induce early exhaustion of CAR T cells that limits antitumor efficacy. Such activation is present to varying degrees in all CARs studied, except the highly effective CD",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.948572+00:00"
+}

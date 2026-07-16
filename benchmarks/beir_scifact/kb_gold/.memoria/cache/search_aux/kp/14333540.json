@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14333540",
+  "source_fingerprint": "df0fd49281d7541402690196b08a83f2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14333540",
+    "neural-crest-cell-lineage-segregation-in-the-mouse-neural-tube."
+  ],
+  "key_phrases": [
+    "neural",
+    "crest",
+    "cell",
+    "lineage",
+    "segregation",
+    "mouse",
+    "tube",
+    "nc"
+  ],
+  "summary_1l": "Neural crest cell lineage segregation in the mouse neural tube.",
+  "query_hits": [],
+  "embed_text": "14333540 Neural crest cell lineage segregation in the mouse neural tube. science scifact Neural crest (NC) cells arise in the dorsal neural tube (NT) and migrate into the embryo to develop into many different cell types. A major unresolved question is when and how the fate of NC cells is decided. There is widespread evidence… 14333540 neural-crest-cell-lineage-segregation-in-the-mouse-neural-tube. neural crest cell lineage segregation mouse tube nc Neural crest cell lineage segregation in the mouse neural tube. Neural crest cell lineage segregation in the mouse neural tube. Neural crest (NC) cells arise in the dorsal neural tube (NT) and migrate into the embryo to develop into many different cell types. A major unresolved question is when and how the fate of NC cells is decided. There is widespread evidence for multipotential NC cells, whose fates are decided during or after migration. There is also some evidence that the NC is already divided into subpopulations of discrete precursors within the NT. We have investigated this question in the mouse embryo. We find that a subpopulation of cells on the most dorsomedial aspect of the NT express the receptor tyrosine kinase Kit (previously known as c-kit), emigrate exclusively into the developing dermis, and then express definitive markers of the mela",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.611591+00:00"
+}

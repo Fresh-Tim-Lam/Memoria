@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "kp_id": "7670969#0",
+  "source_fingerprint": "60a191f44c41baa6f243c432d2a3a796",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "只写语言",
+    "德语国家和地区列表",
+    "比利时人口",
+    "比利时皇家美术博物馆",
+    "福建语言",
+    "语言便利市镇"
+  ],
+  "aliases": [
+    "7670969#0"
+  ],
+  "key_phrases": [
+    "比利时",
+    "语言",
+    "比利时王国",
+    "三种",
+    "官方语言",
+    "荷蘭語",
+    "法语",
+    "德语"
+  ],
+  "summary_1l": "比利时王国有三种官方语言：荷蘭語、法语和德语，此外还有一些非官方的地方语言和方言。",
+  "query_hits": [],
+  "embed_text": "7670969#0 比利时语言 比利时语言 比利时王国有三种官方语言：荷蘭語、法语和德语，此外还有一些非官方的地方语言和方言。 只写语言 德语国家和地区列表 比利时人口 比利时皇家美术博物馆 福建语言 语言便利市镇 7670969#0 比利时 语言 比利时王国 三种 官方语言 荷蘭語 法语 德语 比利时王国有三种官方语言：荷蘭語、法语和德语，此外还有一些非官方的地方语言和方言。 比利时语言 比利时王国有三种官方语言：荷蘭語、法语和德语，此外还有一些非官方的地方语言和方言。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:23:27.463944+00:00"
+}

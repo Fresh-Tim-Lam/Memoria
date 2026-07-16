@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29134911",
+  "source_fingerprint": "3832c8bf41872ce7cff09476b3654735",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29134911",
+    "isolation-and-partial-characterization-of-an-unusual-human-immunodeficiency-retrovirus-from-two-persons-of-west-central-african-origin."
+  ],
+  "key_phrases": [
+    "isolation",
+    "partial",
+    "characterization",
+    "unusual",
+    "human",
+    "immunodeficiency",
+    "retrovirus",
+    "from"
+  ],
+  "summary_1l": "Isolation and partial characterization of an unusual human immunodeficiency retrovirus from two persons of west-central African origin.",
+  "query_hits": [],
+  "embed_text": "29134911 Isolation and partial characterization of an unusual human immunodeficiency retrovirus from two persons of west-central African origin. science scifact An unusual human retrovirus was isolated from two patients with persistent generalized lymphadenopathy who originate from West-Central Africa and are currently residing in Belgium. Although the virus shared a number of the same biological… 29134911 isolation-and-partial-characterization-of-an-unusual-human-immunodeficiency-retrovirus-from-two-persons-of-west-central-african-origin. isolation partial characterization unusual human immunodeficiency retrovirus from Isolation and partial characterization of an unusual human immunodeficiency retrovirus from two persons of west-central African origin. Isolation and partial characterization of an unusual human immunodeficiency retrovirus from two persons of west-central African origin. An unusual human retrovirus was isolated from two patients with persistent generalized lymphadenopathy who originate from West-Central Africa and are currently residing in Belgium. Although the virus shared a number of the same biological and morphological properties as human immunodeficiency retrovirus type 1 (HIV-1) and HIV-2, significant antigenic differences could be demonstrated. Several of the viral proteins also differed in molecular weight from the corresponding HIV-1 and HIV-2 proteins. Partial chemical cleavage of the most highly conserved viral proteins resulted in patterns which differed from those of HIV-1 and HIV-2. Furthermore, nucleic acid",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.633035+00:00"
+}

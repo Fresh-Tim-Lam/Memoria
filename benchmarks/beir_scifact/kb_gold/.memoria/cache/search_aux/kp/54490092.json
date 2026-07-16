@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "54490092",
+  "source_fingerprint": "3ddfef14fa7af2fc55dbd2c8f0a193a0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "54490092",
+    "impact-of-blood-pressure-variability-on-cardiovascular-events-in-elderly-patients-with-hypertension."
+  ],
+  "key_phrases": [
+    "impact",
+    "blood",
+    "pressure",
+    "variability",
+    "cardiovascular",
+    "events",
+    "elderly",
+    "patients"
+  ],
+  "summary_1l": "Impact of blood pressure variability on cardiovascular events in elderly patients with hypertension.",
+  "query_hits": [],
+  "embed_text": "54490092 Impact of blood pressure variability on cardiovascular events in elderly patients with hypertension. science scifact Blood pressure variability is one of the characteristic features of hypertension in the elderly. However, its clinical significance remains to be determined. We therefore examined the impact of blood pressure variability on the development… 54490092 impact-of-blood-pressure-variability-on-cardiovascular-events-in-elderly-patients-with-hypertension. impact blood pressure variability cardiovascular events elderly patients Impact of blood pressure variability on cardiovascular events in elderly patients with hypertension. Impact of blood pressure variability on cardiovascular events in elderly patients with hypertension. Blood pressure variability is one of the characteristic features of hypertension in the elderly. However, its clinical significance remains to be determined. We therefore examined the impact of blood pressure variability on the development of cardiovascular events in elderly hypertensive patients. A total of 106 consecutive hypertensive patients aged more than 60 years old (mean age, 73.9 +/- 8.1 years old; male, 54%), all of whom underwent 24-h ambulatory blood pressure monitoring, were followed up (median, 34 months; range, 3-60 months). During the follow-up period, 39 cardiovascular events were observed, including 14 cases of cerebral infarction and 7 cases of acute myocardial infarction",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.316662+00:00"
+}

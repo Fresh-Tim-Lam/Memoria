@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "919007",
+  "source_fingerprint": "6ec71209f71e542cd34f5864594b23e9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "919007",
+    "the-evolution-of-fox-genes-and-their-role-in-development-and-disease"
+  ],
+  "key_phrases": [
+    "evolution",
+    "fox",
+    "genes",
+    "their",
+    "role",
+    "development",
+    "disease",
+    "forkhead"
+  ],
+  "summary_1l": "The forkhead box (Fox) family of transcription factors, which originated in unicellular eukaryotes, has expanded over time through",
+  "query_hits": [],
+  "embed_text": "919007 The evolution of Fox genes and their role in development and disease science scifact The forkhead box (Fox) family of transcription factors, which originated in unicellular eukaryotes, has expanded over time through multiple duplication events, and sometimes through gene loss, to over 40 members in mammals. Fox genes have… 919007 the-evolution-of-fox-genes-and-their-role-in-development-and-disease evolution fox genes their role development disease forkhead The forkhead box (Fox) family of transcription factors, which originated in unicellular eukaryotes, has expanded over time through The evolution of Fox genes and their role in development and disease The forkhead box (Fox) family of transcription factors, which originated in unicellular eukaryotes, has expanded over time through multiple duplication events, and sometimes through gene loss, to over 40 members in mammals. Fox genes have evolved to acquire a specialized function in many key biological processes. Mutations in Fox genes have a profound effect on human disease, causing phenotypes as varied as cancer, glaucoma and language disorders. We summarize the salient features of the evolution of the Fox gene family and highlight the diverse contribution of various Fox subfamilies to developmental processes, from organogenesis to speech acquisition.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.371146+00:00"
+}

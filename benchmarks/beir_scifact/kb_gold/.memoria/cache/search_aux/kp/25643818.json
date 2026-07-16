@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25643818",
+  "source_fingerprint": "460cc47e570ee7bd4a8740160bb6857f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25643818",
+    "metformin-associated-lactic-acidosis:-a-rare-or-very-rare-clinical-entity?"
+  ],
+  "key_phrases": [
+    "metformin",
+    "associated",
+    "lactic",
+    "acidosis",
+    "rare",
+    "very",
+    "clinical",
+    "entity"
+  ],
+  "summary_1l": "Metformin-associated lactic acidosis: a rare or very rare clinical entity?",
+  "query_hits": [],
+  "embed_text": "25643818 Metformin-associated lactic acidosis: a rare or very rare clinical entity? science scifact AIMS Lactic acidosis is a well recognized complication of biguanide therapy which is potentially serious. Although the prevalence of metformin-associated lactic acidosis (MALA) is much lower than that associated with phenformin, it is… 25643818 metformin-associated-lactic-acidosis:-a-rare-or-very-rare-clinical-entity? metformin associated lactic acidosis rare very clinical entity Metformin-associated lactic acidosis: a rare or very rare clinical entity? Metformin-associated lactic acidosis: a rare or very rare clinical entity? AIMS Lactic acidosis is a well recognized complication of biguanide therapy which is potentially serious. Although the prevalence of metformin-associated lactic acidosis (MALA) is much lower than that associated with phenformin, it is still being reported sporadically which raises concerns for the practising clinicians. We review the currently available world-wide data of the prevalence of MALA, the risk factors for its development and the current practical guidelines on the use of metformin to minimize the risk of this potential hazard. METHODS An extensive literature search was conducted from both Medline and Ovid (1965-98) using the following keywords: 'Type 2 diabetes mellitus', 'oral hypoglycaemic drugs', 'bigu",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.074144+00:00"
+}

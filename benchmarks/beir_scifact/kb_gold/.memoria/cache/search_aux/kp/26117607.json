@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26117607",
+  "source_fingerprint": "743a320ad8a51062712d0677635dd4ce",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26117607",
+    "penaeus-monodon-dscam-(pmdscam)-has-a-highly-diverse-cytoplasmic-tail-and-is-the-first-membrane-bound-shrimp-dscam-to-be-reported."
+  ],
+  "key_phrases": [
+    "penaeus",
+    "monodon",
+    "dscam",
+    "pmdscam",
+    "has",
+    "highly",
+    "diverse",
+    "cytoplasmic"
+  ],
+  "summary_1l": "Penaeus monodon Dscam (PmDscam) has a highly diverse cytoplasmic tail and is the first membrane-bound shrimp Dscam to be reported.",
+  "query_hits": [],
+  "embed_text": "26117607 Penaeus monodon Dscam (PmDscam) has a highly diverse cytoplasmic tail and is the first membrane-bound shrimp Dscam to be reported. science scifact Down syndrome cell adhesion molecule (Dscam) seems likely to play a key role in the \"alternative adaptive immunity\" that has been reported in invertebrates. Dscam consists of a cytoplasmic tail that is involved in signal transduction and a… 26117607 penaeus-monodon-dscam-(pmdscam)-has-a-highly-diverse-cytoplasmic-tail-and-is-the-first-membrane-bound-shrimp-dscam-to-be-reported. penaeus monodon dscam pmdscam has highly diverse cytoplasmic Penaeus monodon Dscam (PmDscam) has a highly diverse cytoplasmic tail and is the first membrane-bound shrimp Dscam to be reported. Penaeus monodon Dscam (PmDscam) has a highly diverse cytoplasmic tail and is the first membrane-bound shrimp Dscam to be reported. Down syndrome cell adhesion molecule (Dscam) seems likely to play a key role in the \"alternative adaptive immunity\" that has been reported in invertebrates. Dscam consists of a cytoplasmic tail that is involved in signal transduction and a hypervariable extracellular region that might use a pathogen recognition mechanism similar to that used by the vertebrate antibodies. In our previous paper, we isolated a unique tail-less form of Dscam from Litopenaeus vannamei. In this study, we report the first membrane-bound form of shrimp Dscam: PmDscam was isolated from Penaeus monodon, and it occurred in both membrane-bound and tail-less forms. Phylogenetic analysis sho",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.404613+00:00"
+}

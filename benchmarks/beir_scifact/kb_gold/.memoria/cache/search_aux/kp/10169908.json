@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10169908",
+  "source_fingerprint": "b8b1266284bb17c2fb5e2596cbfaaecf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10169908",
+    "slc1a5-mediates-glutamine-transport-required-for-lung-cancer-cell-growth-and-survival."
+  ],
+  "key_phrases": [
+    "slc1a5",
+    "mediates",
+    "glutamine",
+    "transport",
+    "required",
+    "lung",
+    "cancer",
+    "cell"
+  ],
+  "summary_1l": "SLC1A5 mediates glutamine transport required for lung cancer cell growth and survival.",
+  "query_hits": [],
+  "embed_text": "10169908 SLC1A5 mediates glutamine transport required for lung cancer cell growth and survival. science scifact PURPOSE We have previously identified solute-linked carrier family A1 member 5 (SLC1A5) as an overexpressed protein in a shotgun proteomic analysis of stage I non-small cell lung cancer (NSCLC) when compared with matched controls. We… 10169908 slc1a5-mediates-glutamine-transport-required-for-lung-cancer-cell-growth-and-survival. slc1a5 mediates glutamine transport required lung cancer cell SLC1A5 mediates glutamine transport required for lung cancer cell growth and survival. SLC1A5 mediates glutamine transport required for lung cancer cell growth and survival. PURPOSE We have previously identified solute-linked carrier family A1 member 5 (SLC1A5) as an overexpressed protein in a shotgun proteomic analysis of stage I non-small cell lung cancer (NSCLC) when compared with matched controls. We hypothesized that overexpression of SLC1A5 occurs to meet the metabolic demand for lung cancer cell growth and survival. EXPERIMENTAL DESIGN To test our hypothesis, we first analyzed the protein expression of SLC1A5 in archival lung cancer tissues by immunohistochemistry and immunoblotting (N = 98) and in cell lines (N = 36). To examine SLC1A5 involvement in amino acid transportation, we conducted kinetic analysis of l-glutamine (Gln) uptake in lung cancer cell lines in the",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T12:35:16.566092+00:00"
+}

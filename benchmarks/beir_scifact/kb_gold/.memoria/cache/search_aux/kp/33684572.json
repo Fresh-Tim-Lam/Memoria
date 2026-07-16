@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "33684572",
+  "source_fingerprint": "8a4484ec7eec5f4cc0707e9364d12030",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "33684572",
+    "transmission-of-atherosclerosis-susceptibility-with-gut-microbial-transplantation."
+  ],
+  "key_phrases": [
+    "transmission",
+    "atherosclerosis",
+    "susceptibility",
+    "with",
+    "gut",
+    "microbial",
+    "transplantation",
+    "recent"
+  ],
+  "summary_1l": "Transmission of atherosclerosis susceptibility with gut microbial transplantation.",
+  "query_hits": [],
+  "embed_text": "33684572 Transmission of atherosclerosis susceptibility with gut microbial transplantation. science scifact Recent studies indicate both clinical and mechanistic links between atherosclerotic heart disease and intestinal microbial metabolism of certain dietary nutrients producing trimethylamine N-oxide (TMAO). Here we test the hypothesis that… 33684572 transmission-of-atherosclerosis-susceptibility-with-gut-microbial-transplantation. transmission atherosclerosis susceptibility with gut microbial transplantation recent Transmission of atherosclerosis susceptibility with gut microbial transplantation. Transmission of atherosclerosis susceptibility with gut microbial transplantation. Recent studies indicate both clinical and mechanistic links between atherosclerotic heart disease and intestinal microbial metabolism of certain dietary nutrients producing trimethylamine N-oxide (TMAO). Here we test the hypothesis that gut microbial transplantation can transmit choline diet-induced TMAO production and atherosclerosis susceptibility. First, a strong association was noted between atherosclerotic plaque and plasma TMAO levels in a mouse diversity panel (n = 22 strains, r = 0.38; p = 0.0001). An atherosclerosis-prone and high TMAO-producing strain, C57BL/6J, and an atherosclerosis-resistant and low TMAO-producing strain, NZW/LacJ, were selected as donors for cecal microbial transplantation into",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.633709+00:00"
+}

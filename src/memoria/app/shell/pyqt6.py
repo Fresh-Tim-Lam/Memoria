@@ -138,6 +138,10 @@ def run() -> None:
     page = QWebEnginePage(profile)
     view = QWebEngineView()
     view.setPage(page)
+    # 禁用 Qt 默认右键菜单（B08），让前端 contextmenu 事件自行处理
+    from PyQt6.QtCore import Qt
+
+    view.setContextMenuPolicy(Qt.ContextMenuPolicy.PreventContextMenu)
     from PyQt6.QtWidgets import QSizePolicy
 
     view.setSizePolicy(

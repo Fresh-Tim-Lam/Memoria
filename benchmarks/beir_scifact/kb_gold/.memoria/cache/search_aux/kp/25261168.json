@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25261168",
+  "source_fingerprint": "7047320aa7c99f053d67c116da6c4fc2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25261168",
+    "rapid-progression-of-familial-amyloidotic-polyneuropathy:-a-multinational-natural-history-study."
+  ],
+  "key_phrases": [
+    "rapid",
+    "progression",
+    "familial",
+    "amyloidotic",
+    "polyneuropathy",
+    "multinational",
+    "natural",
+    "history"
+  ],
+  "summary_1l": "Rapid progression of familial amyloidotic polyneuropathy: a multinational natural history study.",
+  "query_hits": [],
+  "embed_text": "25261168 Rapid progression of familial amyloidotic polyneuropathy: a multinational natural history study. science scifact OBJECTIVES To assess the association between severity of neuropathy and disease stage, and estimate the rate of neuropathy progression in a retrospective cross-sectional analysis of a multinational population of patients with familial… 25261168 rapid-progression-of-familial-amyloidotic-polyneuropathy:-a-multinational-natural-history-study. rapid progression familial amyloidotic polyneuropathy multinational natural history Rapid progression of familial amyloidotic polyneuropathy: a multinational natural history study. Rapid progression of familial amyloidotic polyneuropathy: a multinational natural history study. OBJECTIVES To assess the association between severity of neuropathy and disease stage, and estimate the rate of neuropathy progression in a retrospective cross-sectional analysis of a multinational population of patients with familial amyloidotic polyneuropathy (FAP). METHODS We characterize neuropathy severity and rate of progression in available patients with FAP in France, the United States, Portugal, and Italy. Neuropathy Impairment Scores (NIS), time from symptom onset to NIS measurement, polyneuropathy disability (PND) scores, FAP disease stage, and manual grip strength data were collected. We estimated neuropathy progression using Loess Fit and Gompertz Fit models. RESULTS For the 283 pa",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.245540+00:00"
+}

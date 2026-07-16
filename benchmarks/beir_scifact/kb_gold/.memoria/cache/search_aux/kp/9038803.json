@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9038803",
+  "source_fingerprint": "375e4605bceecf0caeca9f38ddbaf477",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9038803",
+    "centrosome-aberrations:-cause-or-consequence-of-cancer-progression?"
+  ],
+  "key_phrases": [
+    "centrosome",
+    "aberrations",
+    "cause",
+    "consequence",
+    "cancer",
+    "progression",
+    "many",
+    "human"
+  ],
+  "summary_1l": "Centrosome aberrations: cause or consequence of cancer progression?",
+  "query_hits": [],
+  "embed_text": "9038803 Centrosome aberrations: cause or consequence of cancer progression? science scifact Many human tumours show centrosome aberrations, indicating an underlying deregulation of centrosome structure, duplication or segregation. Centrosomes organize microtubule arrays throughout the cell cycle, thereby influencing both tissue… 9038803 centrosome-aberrations:-cause-or-consequence-of-cancer-progression? centrosome aberrations cause consequence cancer progression many human Centrosome aberrations: cause or consequence of cancer progression? Centrosome aberrations: cause or consequence of cancer progression? Many human tumours show centrosome aberrations, indicating an underlying deregulation of centrosome structure, duplication or segregation. Centrosomes organize microtubule arrays throughout the cell cycle, thereby influencing both tissue architecture and the accuracy of chromosome segregation. But what are the origins of centrosomal abnormalities in tumours, and what impact do they have on the generation of invasive, genetically unbalanced cells during cancer progression?",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.091481+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8604837",
+  "source_fingerprint": "3cd8b2ddcd97ec8040f105ff1fc430b2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8604837",
+    "exercise-and-the-immune-system:-regulation,-integration,-and-adaptation."
+  ],
+  "key_phrases": [
+    "exercise",
+    "immune",
+    "system",
+    "regulation",
+    "integration",
+    "adaptation",
+    "stress",
+    "induced"
+  ],
+  "summary_1l": "Exercise and the immune system: regulation, integration, and adaptation.",
+  "query_hits": [],
+  "embed_text": "8604837 Exercise and the immune system: regulation, integration, and adaptation. science scifact Stress-induced immunological reactions to exercise have stimulated much research into stress immunology and neuroimmunology. It is suggested that exercise can be employed as a model of temporary immunosuppression that occurs after severe… 8604837 exercise-and-the-immune-system:-regulation,-integration,-and-adaptation. exercise immune system regulation integration adaptation stress induced Exercise and the immune system: regulation, integration, and adaptation. Exercise and the immune system: regulation, integration, and adaptation. Stress-induced immunological reactions to exercise have stimulated much research into stress immunology and neuroimmunology. It is suggested that exercise can be employed as a model of temporary immunosuppression that occurs after severe physical stress. The exercise-stress model can be easily manipulated experimentally and allows for the study of interactions between the nervous, the endocrine, and the immune systems. This review focuses on mechanisms underlying exercise-induced immune changes such as neuroendocrinological factors including catecholamines, growth hormone, cortisol, beta-endorphin, and sex steroids. The contribution of a metabolic link between skeletal muscles and the lymphoid system is also reviewed.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.193080+00:00"
+}

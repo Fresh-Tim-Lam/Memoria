@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23863551",
+  "source_fingerprint": "495af8b1f2d83ecbe1634760b2b89bce",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23863551",
+    "feedback-upregulation-of-her3-(erbb3)-expression-and-activity-attenuates-antitumor-effect-of-pi3k-inhibitors."
+  ],
+  "key_phrases": [
+    "feedback",
+    "upregulation",
+    "her3",
+    "erbb3",
+    "expression",
+    "activity",
+    "attenuates",
+    "antitumor"
+  ],
+  "summary_1l": "Feedback upregulation of HER3 (ErbB3) expression and activity attenuates antitumor effect of PI3K inhibitors.",
+  "query_hits": [],
+  "embed_text": "23863551 Feedback upregulation of HER3 (ErbB3) expression and activity attenuates antitumor effect of PI3K inhibitors. science scifact We examined the effects of an inhibitor of PI3K, XL147, against human breast cancer cell lines with constitutive PI3K activation. Treatment with XL147 resulted in dose-dependent inhibition of cell growth and levels of pAKT and pS6, signal… 23863551 feedback-upregulation-of-her3-(erbb3)-expression-and-activity-attenuates-antitumor-effect-of-pi3k-inhibitors. feedback upregulation her3 erbb3 expression activity attenuates antitumor Feedback upregulation of HER3 (ErbB3) expression and activity attenuates antitumor effect of PI3K inhibitors. Feedback upregulation of HER3 (ErbB3) expression and activity attenuates antitumor effect of PI3K inhibitors. We examined the effects of an inhibitor of PI3K, XL147, against human breast cancer cell lines with constitutive PI3K activation. Treatment with XL147 resulted in dose-dependent inhibition of cell growth and levels of pAKT and pS6, signal transducers in the PI3K/AKT/TOR pathway. In HER2-overexpressing cells, inhibition of PI3K was followed by up-regulation of expression and phosphorylation of multiple receptor tyrosine kinases, including HER3. Knockdown of FoxO1 and FoxO3a transcription factors suppressed the induction of HER3, InsR, IGF1R, and FGFR2 mRNAs upon inhibition of PI3K. In HER2(+) cells, knockdown of HER3 with siRNA or cotreatment with the HER2 inhibitors trastuzumab or",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.265484+00:00"
+}

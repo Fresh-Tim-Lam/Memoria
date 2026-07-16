@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "44624045",
+  "source_fingerprint": "69136365cf7ffcacf664893a05d6bb4c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "44624045",
+    "risk-of-hospitalization-or-death-from-ischemic-heart-disease-among-british-vegetarians-and-nonvegetarians:-results-from-the-epic-oxford-cohort-study."
+  ],
+  "key_phrases": [
+    "risk",
+    "hospitalization",
+    "death",
+    "from",
+    "ischemic",
+    "heart",
+    "disease",
+    "among"
+  ],
+  "summary_1l": "Risk of hospitalization or death from ischemic heart disease among British vegetarians and nonvegetarians: results from the EPIC-Oxford cohort study.",
+  "query_hits": [],
+  "embed_text": "44624045 Risk of hospitalization or death from ischemic heart disease among British vegetarians and nonvegetarians: results from the EPIC-Oxford cohort study. science scifact BACKGROUND Few previous prospective studies have examined differences in incident ischemic heart disease (IHD) risk between vegetarians and nonvegetarians. OBJECTIVE The objective was to examine the association of a vegetarian diet with… 44624045 risk-of-hospitalization-or-death-from-ischemic-heart-disease-among-british-vegetarians-and-nonvegetarians:-results-from-the-epic-oxford-cohort-study. risk hospitalization death from ischemic heart disease among Risk of hospitalization or death from ischemic heart disease among British vegetarians and nonvegetarians: results from the EPIC-Oxford cohort study. Risk of hospitalization or death from ischemic heart disease among British vegetarians and nonvegetarians: results from the EPIC-Oxford cohort study. BACKGROUND Few previous prospective studies have examined differences in incident ischemic heart disease (IHD) risk between vegetarians and nonvegetarians. OBJECTIVE The objective was to examine the association of a vegetarian diet with risk of incident (nonfatal and fatal) IHD. DESIGN A total of 44,561 men and women living in England and Scotland who were enrolled in the European Prospective Investigation into Cancer and Nutrition (EPIC)-Oxford study, of whom 34% consumed a vegetarian diet at baseline, were part of the analysis. Incident cases of IHD were identified through linkage with hospital records and death certificates. Serum lipids a",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.658626+00:00"
+}

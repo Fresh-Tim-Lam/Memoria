@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11951999",
+  "source_fingerprint": "9900344f717c65289f5303ff02d868f3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11951999",
+    "the-ten-eleven-translocation-2-(tet2)-gene-in-hematopoiesis-and-hematopoietic-diseases"
+  ],
+  "key_phrases": [
+    "ten",
+    "eleven",
+    "translocation",
+    "tet2",
+    "gene",
+    "hematopoiesis",
+    "hematopoietic",
+    "diseases"
+  ],
+  "summary_1l": "Ten-Eleven Translocation-2 (TET2) inactivation through loss-of-function mutation, deletion and IDH1/2 (Isocitrate",
+  "query_hits": [],
+  "embed_text": "11951999 The Ten-Eleven Translocation-2 (TET2) gene in hematopoiesis and hematopoietic diseases science scifact Ten-Eleven Translocation-2 (TET2) inactivation through loss-of-function mutation, deletion and IDH1/2 (Isocitrate Dehydrogenase 1 and 2) gene mutation is a common event in myeloid and lymphoid malignancies. TET2 gene mutations similar to… 11951999 the-ten-eleven-translocation-2-(tet2)-gene-in-hematopoiesis-and-hematopoietic-diseases ten eleven translocation tet2 gene hematopoiesis hematopoietic diseases Ten-Eleven Translocation-2 (TET2) inactivation through loss-of-function mutation, deletion and IDH1/2 (Isocitrate The Ten-Eleven Translocation-2 (TET2) gene in hematopoiesis and hematopoietic diseases Ten-Eleven Translocation-2 (TET2) inactivation through loss-of-function mutation, deletion and IDH1/2 (Isocitrate Dehydrogenase 1 and 2) gene mutation is a common event in myeloid and lymphoid malignancies. TET2 gene mutations similar to those observed in myeloid and lymphoid malignancies also accumulate with age in otherwise healthy subjects with clonal hematopoiesis. TET2 is one of the three proteins of the TET (Ten-Eleven Translocation) family, which are evolutionarily conserved dioxygenases that catalyze the conversion of 5-methyl-cytosine (5-mC) to 5-hydroxymethyl-cytosine (5-hmC) and promote DNA demethylation. TET dioxygenases require 2-oxoglutarate, oxygen and Fe(II) for their activity, which is e",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:07.988040+00:00"
+}

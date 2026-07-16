@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18064113",
+  "source_fingerprint": "b4732d5b6df7f81aff4b9065c496eb2c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18064113",
+    "characterization-of-the-adipocyte-cellular-lineage-in-vivo"
+  ],
+  "key_phrases": [
+    "characterization",
+    "adipocyte",
+    "cellular",
+    "lineage",
+    "vivo",
+    "mature",
+    "adipocytes",
+    "generated"
+  ],
+  "summary_1l": "Mature adipocytes are generated through the proliferation and differentiation of precursor cells.",
+  "query_hits": [],
+  "embed_text": "18064113 Characterization of the adipocyte cellular lineage in vivo science scifact Mature adipocytes are generated through the proliferation and differentiation of precursor cells. Our previous studies identified adipocyte progenitors in white adipose tissue (WAT) as Lin(-):CD29(+):CD34(+):Sca-1(+):CD24(+) (CD24(+))… 18064113 characterization-of-the-adipocyte-cellular-lineage-in-vivo characterization adipocyte cellular lineage vivo mature adipocytes generated Mature adipocytes are generated through the proliferation and differentiation of precursor cells. Characterization of the adipocyte cellular lineage in vivo Mature adipocytes are generated through the proliferation and differentiation of precursor cells. Our previous studies identified adipocyte progenitors in white adipose tissue (WAT) as Lin(-):CD29(+):CD34(+):Sca-1(+):CD24(+) (CD24(+)) cells that are capable of generating functional WAT (ref. ). Here, we employ several Cre recombinase mouse models to identify the adipocyte cellular lineage in vivo. Although it has been proposed that white adipocytes are derived from endothelial and haematopoietic lineages, we find that neither of these lineages label white adipocytes. However, platelet-derived growth factor receptor α (PdgfRα)-Cre trace labels all white adipocytes. Analysis of WAT from PdgfRα-Cre reporter mice identifies CD24(+) and",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.740759+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1259280",
+  "source_fingerprint": "2ce443509946ca58061e571dc3c9da43",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1259280",
+    "mechanisms-that-specify-promoter-nucleosome-location-and-identity"
+  ],
+  "key_phrases": [
+    "mechanisms",
+    "that",
+    "specify",
+    "promoter",
+    "nucleosome",
+    "location",
+    "identity",
+    "chromatin"
+  ],
+  "summary_1l": "The chromatin architecture of eukaryotic gene promoters is generally characterized by a nucleosome-free region (NFR) flanked by at lea",
+  "query_hits": [],
+  "embed_text": "1259280 Mechanisms that Specify Promoter Nucleosome Location and Identity science scifact The chromatin architecture of eukaryotic gene promoters is generally characterized by a nucleosome-free region (NFR) flanked by at least one H2A.Z variant nucleosome. Computational predictions of nucleosome positions based on thermodynamic… 1259280 mechanisms-that-specify-promoter-nucleosome-location-and-identity mechanisms that specify promoter nucleosome location identity chromatin The chromatin architecture of eukaryotic gene promoters is generally characterized by a nucleosome-free region (NFR) flanked by at lea Mechanisms that Specify Promoter Nucleosome Location and Identity The chromatin architecture of eukaryotic gene promoters is generally characterized by a nucleosome-free region (NFR) flanked by at least one H2A.Z variant nucleosome. Computational predictions of nucleosome positions based on thermodynamic properties of DNA-histone interactions have met with limited success. Here we show that the action of the essential RSC remodeling complex in S. cerevisiae helps explain the discrepancy between theory and experiment. In RSC-depleted cells, NFRs shrink such that the average positions of flanking nucleosomes move toward predicted sites. Nucleosome positioning at distinct subsets of promoters additionally requires the essential Myb family proteins Abf1 and Reb1, whose binding sites are enrich",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:08.596999+00:00"
+}

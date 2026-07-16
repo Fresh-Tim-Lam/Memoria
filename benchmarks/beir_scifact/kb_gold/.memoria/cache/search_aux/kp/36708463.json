@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36708463",
+  "source_fingerprint": "52d1da0e5cb9a115096db011f416e8de",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36708463",
+    "sex-differences-in-sex-chromosome-gene-expression-in-mouse-brain."
+  ],
+  "key_phrases": [
+    "sex",
+    "differences",
+    "chromosome",
+    "gene",
+    "expression",
+    "mouse",
+    "brain",
+    "major"
+  ],
+  "summary_1l": "Sex differences in sex chromosome gene expression in mouse brain.",
+  "query_hits": [],
+  "embed_text": "36708463 Sex differences in sex chromosome gene expression in mouse brain. science scifact A major question is whether genes encoded on the sex chromosomes act directly in non-gonadal tissues to cause sex differences in development or function, or whether all sex differences in somatic tissues are induced by gonadal secretions.… 36708463 sex-differences-in-sex-chromosome-gene-expression-in-mouse-brain. sex differences chromosome gene expression mouse brain major Sex differences in sex chromosome gene expression in mouse brain. Sex differences in sex chromosome gene expression in mouse brain. A major question is whether genes encoded on the sex chromosomes act directly in non-gonadal tissues to cause sex differences in development or function, or whether all sex differences in somatic tissues are induced by gonadal secretions. As part of this question we asked whether mouse X-Y homologous gene pairs are expressed in brain in a sex-specific fashion. Using RT-PCR and northern blot analysis, we assessed mRNA expression in brain of eight Y-linked genes as well as their X-linked homologues, at three ages: 13.5 days post coitum, the day of birth (P1) and adult. Transcripts of six Y genes were expressed at one or more ages: Usp9y, Ube1y, Smcy, Eif2s3y, Uty and Dby. Their expression also occurred in XY female brain, and",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:43.649560+00:00"
+}

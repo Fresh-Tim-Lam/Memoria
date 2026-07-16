@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7944381",
+  "source_fingerprint": "7f8c7b12c35ee7e0f212607b12f2b0b5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7944381",
+    "vex1-controls-the-allelic-exclusion-required-for-antigenic-variation-in-trypanosomes."
+  ],
+  "key_phrases": [
+    "vex1",
+    "controls",
+    "allelic",
+    "exclusion",
+    "required",
+    "antigenic",
+    "variation",
+    "trypanosomes"
+  ],
+  "summary_1l": "VEX1 controls the allelic exclusion required for antigenic variation in trypanosomes.",
+  "query_hits": [],
+  "embed_text": "7944381 VEX1 controls the allelic exclusion required for antigenic variation in trypanosomes. science scifact Allelic exclusion underpins antigenic variation and immune evasion in African trypanosomes. These bloodstream parasites use RNA polymerase-I (pol-I) to transcribe just one telomeric variant surface glycoprotein (VSG) gene at a time,… 7944381 vex1-controls-the-allelic-exclusion-required-for-antigenic-variation-in-trypanosomes. vex1 controls allelic exclusion required antigenic variation trypanosomes VEX1 controls the allelic exclusion required for antigenic variation in trypanosomes. VEX1 controls the allelic exclusion required for antigenic variation in trypanosomes. Allelic exclusion underpins antigenic variation and immune evasion in African trypanosomes. These bloodstream parasites use RNA polymerase-I (pol-I) to transcribe just one telomeric variant surface glycoprotein (VSG) gene at a time, producing superabundant and switchable VSG coats. We identified trypanosome VSG exclusion-1 (VEX1) using a genetic screen for defects in telomere-exclusive expression. VEX1 was sequestered by the active VSG and silencing of other VSGs failed when VEX1 was either ectopically expressed or depleted, indicating positive and negative regulation, respectively. Positive regulation affected VSGs and nontelomeric pol-I-transcribed genes, whereas negative regulation primarily affected V",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.510717+00:00"
+}

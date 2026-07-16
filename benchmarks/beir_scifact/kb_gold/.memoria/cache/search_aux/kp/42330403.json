@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "42330403",
+  "source_fingerprint": "e01d97076e492f83505cf39825f9981b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "42330403",
+    "perceptual-limits-in-a-simulated-\"cocktail-party\"."
+  ],
+  "key_phrases": [
+    "perceptual",
+    "limits",
+    "simulated",
+    "cocktail",
+    "party",
+    "numerosity",
+    "judgments",
+    "simultaneous"
+  ],
+  "summary_1l": "Perceptual limits in a simulated \"Cocktail party\".",
+  "query_hits": [],
+  "embed_text": "42330403 Perceptual limits in a simulated \"Cocktail party\". science scifact Numerosity judgments of simultaneous talkers were examined. Listeners were required to report the number of talkers heard when this number varied (1 to 13). Spatial location of talkers (1 or 6 locations), duration of talker voices (0.8 s,… 42330403 perceptual-limits-in-a-simulated-\"cocktail-party\". perceptual limits simulated cocktail party numerosity judgments simultaneous Perceptual limits in a simulated \"Cocktail party\". Perceptual limits in a simulated \"Cocktail party\". Numerosity judgments of simultaneous talkers were examined. Listeners were required to report the number of talkers heard when this number varied (1 to 13). Spatial location of talkers (1 or 6 locations), duration of talker voices (0.8 s, 5.0 s, and 15.0 s), and gender arrangement of talkers also were manipulated in four experiments. In all experiments, the proportion of correct numerosity judgments monotonically decreased as talker numbers increased. Perceptual limits, defined as talker numbers with proportion correct scores of 0.5, varied between 3 to 5 talkers, on average, depending on listening conditions, and were significantly higher for spatially separated talkers, for the longer voices, and for the mixed gender voices (Experiments",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.938613+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13108582",
+  "source_fingerprint": "f32e4465640d9e3f431d1d7a155b9791",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13108582",
+    "il-18-induction-of-osteopontin-mediates-cardiac-fibrosis-and-diastolic-dysfunction-in-mice."
+  ],
+  "key_phrases": [
+    "il",
+    "18",
+    "induction",
+    "osteopontin",
+    "mediates",
+    "cardiac",
+    "fibrosis",
+    "diastolic"
+  ],
+  "summary_1l": "IL-18 induction of osteopontin mediates cardiac fibrosis and diastolic dysfunction in mice.",
+  "query_hits": [],
+  "embed_text": "13108582 IL-18 induction of osteopontin mediates cardiac fibrosis and diastolic dysfunction in mice. science scifact Osteopontin (OPN), a key component of the extracellular matrix, is associated with the fibrotic process during tissue remodeling. OPN and the cytokine interleukin (IL)-18 have been shown to be overexpressed in an array of human cardiac… 13108582 il-18-induction-of-osteopontin-mediates-cardiac-fibrosis-and-diastolic-dysfunction-in-mice. il 18 induction osteopontin mediates cardiac fibrosis diastolic IL-18 induction of osteopontin mediates cardiac fibrosis and diastolic dysfunction in mice. IL-18 induction of osteopontin mediates cardiac fibrosis and diastolic dysfunction in mice. Osteopontin (OPN), a key component of the extracellular matrix, is associated with the fibrotic process during tissue remodeling. OPN and the cytokine interleukin (IL)-18 have been shown to be overexpressed in an array of human cardiac pathologies. In the present study, we determined the role of IL-18 in the regulation of cardiac OPN expression and the subsequent interstitial fibrosis and diastolic dysfunction. We demonstrated parallel increases in IL-18, OPN expression, and interstitial fibrosis in murine models of left ventricular pressure and volume overload. Exogenous recombinant (r)IL-18 administered for 2 wk increased cardiac OPN expression, interstitial fibrosis, and diastolic dysfunction. St",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:10.360450+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25251625",
+  "source_fingerprint": "e032b166d7e887765bf9aa1e1895e438",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25251625",
+    "caspase-inhibitors-promote-alternative-cell-death-pathways."
+  ],
+  "key_phrases": [
+    "caspase",
+    "inhibitors",
+    "promote",
+    "alternative",
+    "cell",
+    "death",
+    "pathways",
+    "use"
+  ],
+  "summary_1l": "Caspase inhibitors promote alternative cell death pathways.",
+  "query_hits": [],
+  "embed_text": "25251625 Caspase inhibitors promote alternative cell death pathways. science scifact The use of caspase inhibitors has revealed the existence of alternative backup cell death programs for apoptosis. The broad-spectrum caspase inhibitor zVAD-fmk modulates the three major types of cell death. Addition of zVAD-fmk blocks… 25251625 caspase-inhibitors-promote-alternative-cell-death-pathways. caspase inhibitors promote alternative cell death pathways use Caspase inhibitors promote alternative cell death pathways. Caspase inhibitors promote alternative cell death pathways. The use of caspase inhibitors has revealed the existence of alternative backup cell death programs for apoptosis. The broad-spectrum caspase inhibitor zVAD-fmk modulates the three major types of cell death. Addition of zVAD-fmk blocks apoptotic cell death, sensitizes cells to necrotic cell death, and induces autophagic cell death. Several studies have shown a crucial role for the kinase RIP1 and the adenosine nucleotide translocator (ANT)-cyclophilin D (CypD) complex in necrotic cell death. The underlying mechanism of zVAD-fmk-mediated sensitization to necrotic cell death involves the inhibition of caspase-8-mediated proteolysis of RIP1 and disturbance of the ANT-CypD interaction. RIP1 is also involved in autophagic cell death. Ca",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.209496+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "33912748",
+  "source_fingerprint": "5d328fb05027cc669f552b3f089bd3b3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "33912748",
+    "pathologic-indicators-of-degradation-and-inflammation-in-human-osteoarthritic-cartilage-are-abrogated-by-exposure-to-n-3-fatty-acids."
+  ],
+  "key_phrases": [
+    "pathologic",
+    "indicators",
+    "degradation",
+    "inflammation",
+    "human",
+    "osteoarthritic",
+    "cartilage",
+    "abrogated"
+  ],
+  "summary_1l": "Pathologic indicators of degradation and inflammation in human osteoarthritic cartilage are abrogated by exposure to n-3 fatty acids.",
+  "query_hits": [],
+  "embed_text": "33912748 Pathologic indicators of degradation and inflammation in human osteoarthritic cartilage are abrogated by exposure to n-3 fatty acids. science scifact OBJECTIVE To determine if n-3 polyunsaturated fatty acid (PUFA) supplementation (versus treatment with n-6 polyunsaturated or other fatty acid supplements) affects the metabolism of osteoarthritic (OA) cartilage. METHODS The metabolic… 33912748 pathologic-indicators-of-degradation-and-inflammation-in-human-osteoarthritic-cartilage-are-abrogated-by-exposure-to-n-3-fatty-acids. pathologic indicators degradation inflammation human osteoarthritic cartilage abrogated Pathologic indicators of degradation and inflammation in human osteoarthritic cartilage are abrogated by exposure to n-3 fatty acids. Pathologic indicators of degradation and inflammation in human osteoarthritic cartilage are abrogated by exposure to n-3 fatty acids. OBJECTIVE To determine if n-3 polyunsaturated fatty acid (PUFA) supplementation (versus treatment with n-6 polyunsaturated or other fatty acid supplements) affects the metabolism of osteoarthritic (OA) cartilage. METHODS The metabolic profile of human OA cartilage was determined at the time of harvest and after 24-hour exposure to n-3 PUFAs or other classes of fatty acids, followed by explant culture for 4 days in the presence or absence of interleukin-1 (IL-1). Parameters measured were glycosaminoglycan release, aggrecanase and matrix metalloproteinase (MMP) activity, and the levels of expression of messenger RNA (mRNA) for mediators of inflammation, aggrec",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.815523+00:00"
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "11616424",
+  "source_fingerprint": "77ddf96997437e9385519e926895e630",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11616424"
+  ],
+  "key_phrases": [
+    "copyright",
+    "1996",
+    "american",
+    "society",
+    "microbiology",
+    "endotoxin",
+    "induced",
+    "enhancement"
+  ],
+  "summary_1l": "Hypoglycemia is among the most injurious metabolic disorders caused by endotoxemia.",
+  "query_hits": [],
+  "embed_text": "11616424 Copyright � 1996, American Society for Microbiology Endotoxin-Induced Enhancement of Glucose Influx into science scifact Hypoglycemia is among the most injurious metabolic disorders caused by endotoxemia. In experimental endotoxemia with lipopolysaccharide (LPS) in animals, a marked glucose consumption is observed in macrophage-rich organs. However, the… 11616424 copyright 1996 american society microbiology endotoxin induced enhancement Hypoglycemia is among the most injurious metabolic disorders caused by endotoxemia. Copyright � 1996, American Society for Microbiology Endotoxin-Induced Enhancement of Glucose Influx into Hypoglycemia is among the most injurious metabolic disorders caused by endotoxemia. In experimental endotoxemia with lipopolysaccharide (LPS) in animals, a marked glucose consumption is observed in macrophage-rich organs. However, the direct effect of LPS on the uptake of glucose by macrophages has not been fully understood, and the present study was undertaken to shed light on this point. The consumption and uptake of glucose, as measured with 2-deoxy-D-[3H]glucose, by murine peritoneal exudate macrophages in culture were accelerated two- to threefold by stimulation with 3 ng of LPS per ml. The rate of glucose uptake reached a plateau after 20 min of stimulation and remained at the max",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:07.244482+00:00"
+}

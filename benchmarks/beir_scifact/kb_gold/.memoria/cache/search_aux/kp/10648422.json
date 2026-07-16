@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "10648422",
+  "source_fingerprint": "799e5f1906a454bf927f302009793d11",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10648422"
+  ],
+  "key_phrases": [
+    "programmed",
+    "death",
+    "induced",
+    "interleukin",
+    "10",
+    "production",
+    "by",
+    "monocytes"
+  ],
+  "summary_1l": "Viral replication and microbial translocation from the gut to the blood during HIV",
+  "query_hits": [],
+  "embed_text": "10648422 Programmed death-1–induced interleukin-10 production by monocytes impairs CD4+ T cell activation during HIV infection science scifact Viral replication and microbial translocation from the gut to the blood during HIV infection lead to hyperimmune activation, which contributes to the decline in CD4+ T cell numbers during HIV infection. Programmed death-1 (PD-1) and… 10648422 programmed death induced interleukin 10 production by monocytes Viral replication and microbial translocation from the gut to the blood during HIV Programmed death-1–induced interleukin-10 production by monocytes impairs CD4+ T cell activation during HIV infection Viral replication and microbial translocation from the gut to the blood during HIV infection lead to hyperimmune activation, which contributes to the decline in CD4+ T cell numbers during HIV infection. Programmed death-1 (PD-1) and interleukin-10 (IL-10) are both upregulated during HIV infection. Blocking interactions between PD-1 and programmed death ligand-1 (PD-L1) and between IL-10 and IL-10 receptor (IL-10R) results in viral clearance and improves T cell function in animal models of chronic viral infections. Here we show that high amounts of microbial products and inflammatory cytokines in the plasma of HIV-infected subjects lead to upregulation of PD-1 expression on",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:05.199046+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25488034",
+  "source_fingerprint": "f20b66f558ce04829de301a75324ff93",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25488034",
+    "glutathione-and-glutathione-dependent-enzymes-represent-a-co-ordinately-regulated-defence-against-oxidative-stress."
+  ],
+  "key_phrases": [
+    "glutathione",
+    "dependent",
+    "enzymes",
+    "represent",
+    "co",
+    "ordinately",
+    "regulated",
+    "defence"
+  ],
+  "summary_1l": "Glutathione and glutathione-dependent enzymes represent a co-ordinately regulated defence against oxidative stress.",
+  "query_hits": [],
+  "embed_text": "25488034 Glutathione and glutathione-dependent enzymes represent a co-ordinately regulated defence against oxidative stress. science scifact Increases in the intracellular levels of reactive oxygen species (ROS), frequently referred to as oxidative stress, represents a potentially toxic insult which if not counteracted will lead to membrane dysfunction, DNA damage and… 25488034 glutathione-and-glutathione-dependent-enzymes-represent-a-co-ordinately-regulated-defence-against-oxidative-stress. glutathione dependent enzymes represent co ordinately regulated defence Glutathione and glutathione-dependent enzymes represent a co-ordinately regulated defence against oxidative stress. Glutathione and glutathione-dependent enzymes represent a co-ordinately regulated defence against oxidative stress. Increases in the intracellular levels of reactive oxygen species (ROS), frequently referred to as oxidative stress, represents a potentially toxic insult which if not counteracted will lead to membrane dysfunction, DNA damage and inactivation of proteins. Chronic oxidative stress has numerous pathological consequences including cancer, arthritis and neurodegenerative disease. Glutathione-associated metabolism is a major mechanism for cellular protection against agents which generate oxidative stress. It is becoming increasingly apparent that the glutathione tripeptide is central to a complex multifaceted detoxification system, where there is substantial inter-dependence betwe",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.740960+00:00"
+}

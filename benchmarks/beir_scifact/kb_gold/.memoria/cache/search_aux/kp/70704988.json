@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "70704988",
+  "source_fingerprint": "0105066e06b4a222a37df78e290173e3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "70704988",
+    "advanced-human-nutrition"
+  ],
+  "key_phrases": [
+    "advanced",
+    "human",
+    "nutrition",
+    "second",
+    "edition",
+    "provides",
+    "depth",
+    "overview"
+  ],
+  "summary_1l": "Advanced Human Nutrition, Second Edition provides an in-depth overview of the human body and details why nutrients are important from a biochemical, physiological, and molecul",
+  "query_hits": [],
+  "embed_text": "70704988 Advanced Human Nutrition science scifact Advanced Human Nutrition, Second Edition provides an in-depth overview of the human body and details why nutrients are important from a biochemical, physiological, and molecular perspective. Figures help illustrate the content and bring… 70704988 advanced-human-nutrition advanced human nutrition second edition provides depth overview Advanced Human Nutrition, Second Edition provides an in-depth overview of the human body and details why nutrients are important from a biochemical, physiological, and molecul Advanced Human Nutrition Advanced Human Nutrition, Second Edition provides an in-depth overview of the human body and details why nutrients are important from a biochemical, physiological, and molecular perspective. Figures help illustrate the content and bring the meaning to life to enhance the reader's understanding. Complex pathways, for example, are presented in a student-friendly fashion, as are diagrams that illustrate metabolism and the molecular functions of nutrients. Multiple elements within the text, such as \"Here's Where You Have Been\" and \"Here's Where You Are Going,\" help drive home key points from the chapter and provide real-world examples to bring the content to life. Topics covered include: * cell aging, damage and repair systems * human nutrition, digestion, and absorpti",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.398530+00:00"
+}

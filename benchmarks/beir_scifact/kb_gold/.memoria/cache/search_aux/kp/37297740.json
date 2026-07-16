@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "37297740",
+  "source_fingerprint": "76aa1af2ab94d0643e434d4aa5b2e1e5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "37297740",
+    "roads-to-polyploidy:-the-megakaryocyte-example."
+  ],
+  "key_phrases": [
+    "roads",
+    "polyploidy",
+    "megakaryocyte",
+    "example",
+    "recognized",
+    "by",
+    "multiple",
+    "copies"
+  ],
+  "summary_1l": "Roads to polyploidy: the megakaryocyte example.",
+  "query_hits": [],
+  "embed_text": "37297740 Roads to polyploidy: the megakaryocyte example. science scifact Polyploidy, recognized by multiple copies of the haploid chromosome number, has been described in plants, insects, and in mammalian cells such as, the platelet precursors, the megakaryocytes. Several of these cell types reach high ploidy… 37297740 roads-to-polyploidy:-the-megakaryocyte-example. roads polyploidy megakaryocyte example recognized by multiple copies Roads to polyploidy: the megakaryocyte example. Roads to polyploidy: the megakaryocyte example. Polyploidy, recognized by multiple copies of the haploid chromosome number, has been described in plants, insects, and in mammalian cells such as, the platelet precursors, the megakaryocytes. Several of these cell types reach high ploidy via a different cell cycle. Megakaryocytes undergo an endomitotic cell cycle, which consists of an S phase interrupted by a gap, during which the cells enter mitosis but skip anaphase B and cytokinesis. Here, we review the mechanisms that lead to this cell cycle and to polyploidy in megakaryocytes, while also comparing them to those described for other systems in which high ploidy is achieved. Overall, polyploidy is associated with an orchestrated change in expression of several genes, of which, some may be a",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.353303+00:00"
+}

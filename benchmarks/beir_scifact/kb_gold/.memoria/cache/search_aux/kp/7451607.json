@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7451607",
+  "source_fingerprint": "7afab81e539f9ed3978c32cf5cf579f6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7451607",
+    "monitoring-spatiotemporal-biogenesis-of-macromolecular-assemblies-by-pulse-chase-epitope-labeling."
+  ],
+  "key_phrases": [
+    "monitoring",
+    "spatiotemporal",
+    "biogenesis",
+    "macromolecular",
+    "assemblies",
+    "by",
+    "pulse",
+    "chase"
+  ],
+  "summary_1l": "Monitoring spatiotemporal biogenesis of macromolecular assemblies by pulse-chase epitope labeling.",
+  "query_hits": [],
+  "embed_text": "7451607 Monitoring spatiotemporal biogenesis of macromolecular assemblies by pulse-chase epitope labeling. science scifact Many cellular proteins perform their roles within macromolecular assemblies. Hence, an understanding of how these multiprotein complexes form is a fundamental question in cell biology. We developed a translation-controlled pulse-chase… 7451607 monitoring-spatiotemporal-biogenesis-of-macromolecular-assemblies-by-pulse-chase-epitope-labeling. monitoring spatiotemporal biogenesis macromolecular assemblies by pulse chase Monitoring spatiotemporal biogenesis of macromolecular assemblies by pulse-chase epitope labeling. Monitoring spatiotemporal biogenesis of macromolecular assemblies by pulse-chase epitope labeling. Many cellular proteins perform their roles within macromolecular assemblies. Hence, an understanding of how these multiprotein complexes form is a fundamental question in cell biology. We developed a translation-controlled pulse-chase system that allows time-resolved isolation of newly forming multiprotein complexes in chemical quantities suitable for biochemical and cell biological analysis. The \"pulse\" is triggered by an unnatural amino acid, which induces immediate translation of an amber stop codon repressed mRNA encoding the protein of interest with a built-in tag for detection and purification. The \"chase\" is elicited by stopping translation of this bait via a riboswitch in the respecti",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.339641+00:00"
+}

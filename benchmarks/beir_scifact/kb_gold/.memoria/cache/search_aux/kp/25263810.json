@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25263810",
+  "source_fingerprint": "cc70bc5aff9568ae1aaae2f12daf390c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25263810",
+    "the-brrf1-early-gene-of-epstein-barr-virus-encodes-a-transcription-factor-that-enhances-induction-of-lytic-infection-by-brlf1."
+  ],
+  "key_phrases": [
+    "brrf1",
+    "early",
+    "gene",
+    "epstein",
+    "barr",
+    "virus",
+    "encodes",
+    "transcription"
+  ],
+  "summary_1l": "The BRRF1 early gene of Epstein-Barr virus encodes a transcription factor that enhances induction of lytic infection by BRLF1.",
+  "query_hits": [],
+  "embed_text": "25263810 The BRRF1 early gene of Epstein-Barr virus encodes a transcription factor that enhances induction of lytic infection by BRLF1. science scifact The switch from the latent to the lytic form of Epstein-Barr virus (EBV) infection is mediated by expression of the viral immediate-early (IE) proteins, BZLF1 (Z) and BRLF1 (R). An EBV early protein, BRRF1 (Na), is encoded by the opposite… 25263810 the-brrf1-early-gene-of-epstein-barr-virus-encodes-a-transcription-factor-that-enhances-induction-of-lytic-infection-by-brlf1. brrf1 early gene epstein barr virus encodes transcription The BRRF1 early gene of Epstein-Barr virus encodes a transcription factor that enhances induction of lytic infection by BRLF1. The BRRF1 early gene of Epstein-Barr virus encodes a transcription factor that enhances induction of lytic infection by BRLF1. The switch from the latent to the lytic form of Epstein-Barr virus (EBV) infection is mediated by expression of the viral immediate-early (IE) proteins, BZLF1 (Z) and BRLF1 (R). An EBV early protein, BRRF1 (Na), is encoded by the opposite strand of the BRLF1 intron, but the function of this nuclear protein in the viral life cycle is unknown. Here we demonstrate that Na enhances the R-mediated induction of lytic EBV infection in 293 cells latently infected with a recombinant EBV (R-KO) defective for the expression of both R and Na. Na also enhances R-induced lytic infections in a gastric carcinoma line (AGS) carrying the R-KO virus, although it has no effect in a Bu",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.259427+00:00"
+}

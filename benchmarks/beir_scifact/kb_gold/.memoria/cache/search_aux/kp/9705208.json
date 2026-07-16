@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9705208",
+  "source_fingerprint": "b754622c1921d9e9c9e9d1f8793764ec",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9705208",
+    "immune-complex-relay-by-subcapsular-sinus-macrophages-and-non-cognate-b-cells-drives-antibody-affinity-maturation"
+  ],
+  "key_phrases": [
+    "immune",
+    "complex",
+    "relay",
+    "by",
+    "subcapsular",
+    "sinus",
+    "macrophages",
+    "non"
+  ],
+  "summary_1l": "Subcapsular sinus (SCS) macrophages capture antigens from lymph and present them intac",
+  "query_hits": [],
+  "embed_text": "9705208 Immune complex relay by subcapsular sinus macrophages and non-cognate B cells drives antibody affinity maturation science scifact Subcapsular sinus (SCS) macrophages capture antigens from lymph and present them intact for B cell encounter and follicular delivery. However, the properties of SCS macrophages are poorly defined. Here we show SCS macrophage development… 9705208 immune-complex-relay-by-subcapsular-sinus-macrophages-and-non-cognate-b-cells-drives-antibody-affinity-maturation immune complex relay by subcapsular sinus macrophages non Subcapsular sinus (SCS) macrophages capture antigens from lymph and present them intac Immune complex relay by subcapsular sinus macrophages and non-cognate B cells drives antibody affinity maturation Subcapsular sinus (SCS) macrophages capture antigens from lymph and present them intact for B cell encounter and follicular delivery. However, the properties of SCS macrophages are poorly defined. Here we show SCS macrophage development depended on lymphotoxin-alpha1beta2, and the cells had low lysosomal enzyme expression and retained opsonized antigens on their surface. Intravital imaging revealed immune complexes moving along macrophage processes into the follicle. Moreover, noncognate B cells relayed antigen opsonized by newly produced antibodies from the subcapsular region to the germinal center, and affinity maturation was impaired when this transport process was disrupted",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.619699+00:00"
+}

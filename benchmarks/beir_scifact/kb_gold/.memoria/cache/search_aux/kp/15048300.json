@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15048300",
+  "source_fingerprint": "28a47df01277946ba162dfab4461a8cd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15048300",
+    "a-comparison-of-cost-effectiveness-using-data-from-randomized-trials-or-actual-clinical-practice:-selective-cox-2-inhibitors-as-an-example"
+  ],
+  "key_phrases": [
+    "comparison",
+    "cost",
+    "effectiveness",
+    "using",
+    "data",
+    "from",
+    "randomized",
+    "trials"
+  ],
+  "summary_1l": "BACKGROUND Data on absolute risks of outcomes and patterns of",
+  "query_hits": [],
+  "embed_text": "15048300 A Comparison of Cost Effectiveness Using Data from Randomized Trials or Actual Clinical Practice: Selective Cox-2 Inhibitors as an Example science scifact BACKGROUND Data on absolute risks of outcomes and patterns of drug use in cost-effectiveness analyses are often based on randomised clinical trials (RCTs). The objective of this study was to evaluate the external validity of published… 15048300 a-comparison-of-cost-effectiveness-using-data-from-randomized-trials-or-actual-clinical-practice:-selective-cox-2-inhibitors-as-an-example comparison cost effectiveness using data from randomized trials BACKGROUND Data on absolute risks of outcomes and patterns of A Comparison of Cost Effectiveness Using Data from Randomized Trials or Actual Clinical Practice: Selective Cox-2 Inhibitors as an Example BACKGROUND Data on absolute risks of outcomes and patterns of drug use in cost-effectiveness analyses are often based on randomised clinical trials (RCTs). The objective of this study was to evaluate the external validity of published cost-effectiveness studies by comparing the data used in these studies (typically based on RCTs) to observational data from actual clinical practice. Selective Cox-2 inhibitors (coxibs) were used as an example. METHODS AND FINDINGS The UK General Practice Research Database (GPRD) was used to estimate the exposure characteristics and individual probabilities of upper gastrointestinal (GI) events during current exposure to n",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.026737+00:00"
+}

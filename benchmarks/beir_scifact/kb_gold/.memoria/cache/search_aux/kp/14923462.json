@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14923462",
+  "source_fingerprint": "d10fd4ccd9f596a872fbab676b0a1aa6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14923462",
+    "synergistic-mechanisms-of-dna-demethylation-during-transition-to-ground-state-pluripotency"
+  ],
+  "key_phrases": [
+    "synergistic",
+    "mechanisms",
+    "dna",
+    "demethylation",
+    "during",
+    "transition",
+    "ground",
+    "state"
+  ],
+  "summary_1l": "Pluripotent stem cells (PSCs) occupy a spectrum of reversible molecular states ranging from a naive ground-st",
+  "query_hits": [],
+  "embed_text": "14923462 Synergistic Mechanisms of DNA Demethylation during Transition to Ground-State Pluripotency science scifact Pluripotent stem cells (PSCs) occupy a spectrum of reversible molecular states ranging from a naive ground-state in 2i, to metastable embryonic stem cells (ESCs) in serum, to lineage-primed epiblast stem cells (EpiSCs). To investigate the… 14923462 synergistic-mechanisms-of-dna-demethylation-during-transition-to-ground-state-pluripotency synergistic mechanisms dna demethylation during transition ground state Pluripotent stem cells (PSCs) occupy a spectrum of reversible molecular states ranging from a naive ground-st Synergistic Mechanisms of DNA Demethylation during Transition to Ground-State Pluripotency Pluripotent stem cells (PSCs) occupy a spectrum of reversible molecular states ranging from a naive ground-state in 2i, to metastable embryonic stem cells (ESCs) in serum, to lineage-primed epiblast stem cells (EpiSCs). To investigate the role of DNA methylation (5mC) across distinct pluripotent states, we mapped genome-wide 5mC and 5-hydroxymethycytosine (5hmC) in multiple PSCs. Ground-state ESCs exhibit an altered distribution of 5mC and 5hmC at regulatory elements and dramatically lower absolute levels relative to ESCs in serum. By contrast, EpiSCs exhibit increased promoter 5mC coupled with reduced 5hmC, which contributes to their developmental restriction. Switch to 2i triggers rapid onset of bo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.883842+00:00"
+}

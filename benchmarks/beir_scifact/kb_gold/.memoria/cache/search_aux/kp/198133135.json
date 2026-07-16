@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "198133135",
+  "source_fingerprint": "e605f82044756d314683b36141f4e773",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "198133135",
+    "association-between-pre-diabetes,-type-2-diabetes-and-trabecular-bone-score:-the-vietnam-osteoporosis-study."
+  ],
+  "key_phrases": [
+    "association",
+    "between",
+    "pre",
+    "diabetes",
+    "type",
+    "trabecular",
+    "bone",
+    "score"
+  ],
+  "summary_1l": "Association between pre-diabetes, type 2 diabetes and trabecular bone score: The Vietnam Osteoporosis Study.",
+  "query_hits": [],
+  "embed_text": "198133135 Association between pre-diabetes, type 2 diabetes and trabecular bone score: The Vietnam Osteoporosis Study. science scifact AIMS Trabecular bone score (TBS) is a surrogate indicator of bone microarchitecture. The presenent study sought to examine the association between type 2 diabetes (T2D) and trabecular bone score (TBS) in adult Vietnamese men and women.… 198133135 association-between-pre-diabetes,-type-2-diabetes-and-trabecular-bone-score:-the-vietnam-osteoporosis-study. association between pre diabetes type trabecular bone score Association between pre-diabetes, type 2 diabetes and trabecular bone score: The Vietnam Osteoporosis Study. Association between pre-diabetes, type 2 diabetes and trabecular bone score: The Vietnam Osteoporosis Study. AIMS Trabecular bone score (TBS) is a surrogate indicator of bone microarchitecture. The presenent study sought to examine the association between type 2 diabetes (T2D) and trabecular bone score (TBS) in adult Vietnamese men and women. METHODS The study was part of the Vietnam Osteoporosis Study, in which 2702 women and 1398 men aged ≥30 yrs were recruited from the general community in Ho Chi Minh City. HbA1c levels were measured by the ADAMS™ A1c HA-8160 (Arkray, Kyoto, Japan), and classified into 3 groups: normal if HbA1c <5.7%; pre-diabetes (5.7 to 6.4%); and diabetes (>6.4%). TBS was evaluated by iNsight Software, version 2.1 (Medimaps, Merignac, France) on lumbar spine BMD scan",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.204948+00:00"
+}

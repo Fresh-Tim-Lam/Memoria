@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22696649",
+  "source_fingerprint": "c5f443c984951adc4a723c878d2da971",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22696649",
+    "reactive-oxygen-species-localization-programs-inflammation-to-clear-microbes-of-different-size"
+  ],
+  "key_phrases": [
+    "reactive",
+    "oxygen",
+    "species",
+    "localization",
+    "programs",
+    "inflammation",
+    "clear",
+    "microbes"
+  ],
+  "summary_1l": "How the number of immune cells recruited to sites of infection is determined and adjusted to differences",
+  "query_hits": [],
+  "embed_text": "22696649 Reactive Oxygen Species Localization Programs Inflammation to Clear Microbes of Different Size science scifact How the number of immune cells recruited to sites of infection is determined and adjusted to differences in the cellular stoichiometry between host and pathogen is unknown. Here, we have uncovered a role for reactive oxygen species (ROS)… 22696649 reactive-oxygen-species-localization-programs-inflammation-to-clear-microbes-of-different-size reactive oxygen species localization programs inflammation clear microbes How the number of immune cells recruited to sites of infection is determined and adjusted to differences Reactive Oxygen Species Localization Programs Inflammation to Clear Microbes of Different Size How the number of immune cells recruited to sites of infection is determined and adjusted to differences in the cellular stoichiometry between host and pathogen is unknown. Here, we have uncovered a role for reactive oxygen species (ROS) as sensors of microbe size. By sensing the differential localization of ROS generated in response to microbes of different size, neutrophils tuned their interleukin (IL)-1β expression via the selective oxidation of NF-κB, in order to implement distinct inflammatory programs. Small microbes triggered ROS intracellularly, suppressing IL-1β expression to limit neutrophil recruitment as each phagocyte eliminated numerous pathogens. In contrast, large microbes trigger",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.220877+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21250322",
+  "source_fingerprint": "9a87a8b5a5658ba0b3abf3a9f31b1e1b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21250322",
+    "polo-kinase-and-asp-are-needed-to-promote-the-mitotic-organizing-activity-of-centrosomes"
+  ],
+  "key_phrases": [
+    "polo",
+    "kinase",
+    "asp",
+    "needed",
+    "promote",
+    "mitotic",
+    "organizing",
+    "activity"
+  ],
+  "summary_1l": "Interfering with the activity of polo-like kinases can lead to the formation of monopolar spindles.",
+  "query_hits": [],
+  "embed_text": "21250322 Polo kinase and Asp are needed to promote the mitotic organizing activity of centrosomes science scifact Interfering with the activity of polo-like kinases can lead to the formation of monopolar spindles. Polo-like kinases also regulate mitotic entry, activation of the anaphase-promoting complex and the necessary preconditions for… 21250322 polo-kinase-and-asp-are-needed-to-promote-the-mitotic-organizing-activity-of-centrosomes polo kinase asp needed promote mitotic organizing activity Interfering with the activity of polo-like kinases can lead to the formation of monopolar spindles. Polo kinase and Asp are needed to promote the mitotic organizing activity of centrosomes Interfering with the activity of polo-like kinases can lead to the formation of monopolar spindles. Polo-like kinases also regulate mitotic entry, activation of the anaphase-promoting complex and the necessary preconditions for cytokinesis. Similarities between the phenotypes of the Drosophila mutants asp and polo point towards a common role in spindle pole function. The abnormal spindles of asp mutants are bipolar but have disorganized broad poles at which γ-tubulin has an abnormal distribution. Moreover, the synergism or of polo1 aspE3 double mutants indicates a possible involvement of these genes in a common process. Asp is a microtubule-associated protein of relative molecular mass 220,000 (Mr 220K",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.638450+00:00"
+}

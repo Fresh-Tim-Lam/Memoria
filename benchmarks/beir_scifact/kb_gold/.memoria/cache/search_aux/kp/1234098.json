@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1234098",
+  "source_fingerprint": "5d4b81a7c411d0ade8efa80618ef0e7a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1234098",
+    "dynamic-capsule-restructuring-by-the-main-pneumococcal-autolysin-lyta-in-response-to-the-epithelium"
+  ],
+  "key_phrases": [
+    "dynamic",
+    "capsule",
+    "restructuring",
+    "by",
+    "main",
+    "pneumococcal",
+    "autolysin",
+    "lyta"
+  ],
+  "summary_1l": "Bacterial pathogens produce complex carbohydrate capsules to protect against bactericidal immune mol",
+  "query_hits": [],
+  "embed_text": "1234098 Dynamic capsule restructuring by the main pneumococcal autolysin LytA in response to the epithelium science scifact Bacterial pathogens produce complex carbohydrate capsules to protect against bactericidal immune molecules. Paradoxically, the pneumococcal capsule sensitizes the bacterium to antimicrobial peptides found on epithelial surfaces. Here we… 1234098 dynamic-capsule-restructuring-by-the-main-pneumococcal-autolysin-lyta-in-response-to-the-epithelium dynamic capsule restructuring by main pneumococcal autolysin lyta Bacterial pathogens produce complex carbohydrate capsules to protect against bactericidal immune mol Dynamic capsule restructuring by the main pneumococcal autolysin LytA in response to the epithelium Bacterial pathogens produce complex carbohydrate capsules to protect against bactericidal immune molecules. Paradoxically, the pneumococcal capsule sensitizes the bacterium to antimicrobial peptides found on epithelial surfaces. Here we show that upon interaction with antimicrobial peptides, encapsulated pneumococci survive by removing capsule from the cell surface within minutes in a process dependent on the suicidal amidase autolysin LytA. In contrast to classical bacterial autolysis, during capsule shedding, LytA promotes bacterial survival and is dispersed circumferentially around the cell. However, both autolysis and capsule shedding depend on the cell wall hydrolytic activity of LytA.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:08.173112+00:00"
+}

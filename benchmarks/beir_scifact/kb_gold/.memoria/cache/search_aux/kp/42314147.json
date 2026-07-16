@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "42314147",
+  "source_fingerprint": "bc5b3064f73054f0295e74eeb812a1ca",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "42314147",
+    "the-sp1-like-protein-bteb3-inhibits-transcription-via-the-basic-transcription-element-box-by-interacting-with-msin3a-and-hdac-1-co-repressors-and-competing-with-sp1."
+  ],
+  "key_phrases": [
+    "sp1",
+    "like",
+    "protein",
+    "bteb3",
+    "inhibits",
+    "transcription",
+    "via",
+    "basic"
+  ],
+  "summary_1l": "The Sp1-like protein BTEB3 inhibits transcription via the basic transcription element box by interacting with mSin3A and HDAC-1 co-repressors and competing with Sp1.",
+  "query_hits": [],
+  "embed_text": "42314147 The Sp1-like protein BTEB3 inhibits transcription via the basic transcription element box by interacting with mSin3A and HDAC-1 co-repressors and competing with Sp1. science scifact Sp1-like proteins are characterized by three conserved C-terminal zinc finger motifs that bind GC-rich sequences found in promoters of numerous genes essential for mammalian cell homeostasis. These proteins behave as transcriptional… 42314147 the-sp1-like-protein-bteb3-inhibits-transcription-via-the-basic-transcription-element-box-by-interacting-with-msin3a-and-hdac-1-co-repressors-and-competing-with-sp1. sp1 like protein bteb3 inhibits transcription via basic The Sp1-like protein BTEB3 inhibits transcription via the basic transcription element box by interacting with mSin3A and HDAC-1 co-repressors and competing with Sp1. The Sp1-like protein BTEB3 inhibits transcription via the basic transcription element box by interacting with mSin3A and HDAC-1 co-repressors and competing with Sp1. Sp1-like proteins are characterized by three conserved C-terminal zinc finger motifs that bind GC-rich sequences found in promoters of numerous genes essential for mammalian cell homeostasis. These proteins behave as transcriptional activators or repressors. Although significant information has been reported on the molecular mechanisms by which Sp1-like activators function, relatively little is known about mechanisms for repressor proteins. Here we report the functional characterization of BTEB3, a ubiquitously expressed Sp1-like transcriptional repressor. GAL4 assays show that the N terminus of BTEB3 contains regions that can",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.925478+00:00"
+}

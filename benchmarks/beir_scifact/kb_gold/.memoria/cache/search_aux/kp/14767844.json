@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14767844",
+  "source_fingerprint": "ed01fbdebee0993c6ffb6e8590c1ed8a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14767844",
+    "golli-protein-negatively-regulates-store-depletion-induced-calcium-influx-in-t-cells."
+  ],
+  "key_phrases": [
+    "golli",
+    "protein",
+    "negatively",
+    "regulates",
+    "store",
+    "depletion",
+    "induced",
+    "calcium"
+  ],
+  "summary_1l": "Golli protein negatively regulates store depletion-induced calcium influx in T cells.",
+  "query_hits": [],
+  "embed_text": "14767844 Golli protein negatively regulates store depletion-induced calcium influx in T cells. science scifact Calcium influx is crucial for T cell activation and differentiation. The detailed regulation of this process remains unclear. We report here that golli protein, an alternatively spliced product of the myelin basic protein gene, plays a… 14767844 golli-protein-negatively-regulates-store-depletion-induced-calcium-influx-in-t-cells. golli protein negatively regulates store depletion induced calcium Golli protein negatively regulates store depletion-induced calcium influx in T cells. Golli protein negatively regulates store depletion-induced calcium influx in T cells. Calcium influx is crucial for T cell activation and differentiation. The detailed regulation of this process remains unclear. We report here that golli protein, an alternatively spliced product of the myelin basic protein gene, plays a critical role in regulating calcium influx in T cells. Golli-deficient T cells were hyperproliferative and showed enhanced calcium entry upon T cell receptor stimulation. We further found that golli regulates calcium influx in T cells through the inhibition of the store depletion-induced calcium influx. Mutation of the myristoylation site on golli disrupted its association with the plasma membrane and reversed its inhibitory action on Ca2+ influx, indicating that membrane a",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.612084+00:00"
+}

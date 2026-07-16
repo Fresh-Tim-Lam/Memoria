@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14782049",
+  "source_fingerprint": "7599951ab72440ee970aa61d5f9707e8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14782049",
+    "in-vivo-effect-of-chronic-hypoxia-on-the-neurochemical-profile-of-the-developing-rat-hippocampus."
+  ],
+  "key_phrases": [
+    "vivo",
+    "effect",
+    "chronic",
+    "hypoxia",
+    "neurochemical",
+    "profile",
+    "developing",
+    "rat"
+  ],
+  "summary_1l": "In vivo effect of chronic hypoxia on the neurochemical profile of the developing rat hippocampus.",
+  "query_hits": [],
+  "embed_text": "14782049 In vivo effect of chronic hypoxia on the neurochemical profile of the developing rat hippocampus. science scifact The cognitive deficits observed in children with cyanotic congenital heart disease suggest involvement of the developing hippocampus. Chronic postnatal hypoxia present during infancy in these children may play a role in these impairments.… 14782049 in-vivo-effect-of-chronic-hypoxia-on-the-neurochemical-profile-of-the-developing-rat-hippocampus. vivo effect chronic hypoxia neurochemical profile developing rat In vivo effect of chronic hypoxia on the neurochemical profile of the developing rat hippocampus. In vivo effect of chronic hypoxia on the neurochemical profile of the developing rat hippocampus. The cognitive deficits observed in children with cyanotic congenital heart disease suggest involvement of the developing hippocampus. Chronic postnatal hypoxia present during infancy in these children may play a role in these impairments. To understand the biochemical mechanisms of hippocampal injury in chronic hypoxia, a neurochemical profile consisting of 15 metabolite concentrations and 2 metabolite ratios in the hippocampus was evaluated in a rat model of chronic postnatal hypoxia using in vivo 1H NMR spectroscopy at 9.4 T. Chronic hypoxia was induced by continuously exposing rats (n = 23) to 10% O2 from postnatal day (P) 3 to P28. Fifteen metabolites were quantified from a volume of 9-11",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.636383+00:00"
+}

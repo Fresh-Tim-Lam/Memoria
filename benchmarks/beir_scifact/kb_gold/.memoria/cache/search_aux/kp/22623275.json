@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22623275",
+  "source_fingerprint": "957d25636ecda0dd103c9dd12b90a298",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22623275",
+    "a-single-rna-dependent-rna-polymerase-assembles-with-mutually-exclusive-nucleotidyl-transferase-subunits-to-direct-different-pathways-of-small-rna-biogenesis."
+  ],
+  "key_phrases": [
+    "single",
+    "rna",
+    "dependent",
+    "polymerase",
+    "assembles",
+    "with",
+    "mutually",
+    "exclusive"
+  ],
+  "summary_1l": "A single RNA-dependent RNA polymerase assembles with mutually exclusive nucleotidyl transferase subunits to direct different pathways of small RNA biogenesis.",
+  "query_hits": [],
+  "embed_text": "22623275 A single RNA-dependent RNA polymerase assembles with mutually exclusive nucleotidyl transferase subunits to direct different pathways of small RNA biogenesis. science scifact Members of the conserved family of eukaryotic RNA-dependent RNA polymerases (Rdrs) synthesize double-stranded RNA (dsRNA) intermediates in diverse pathways of small RNA (sRNA) biogenesis and RNA-mediated silencing. Rdr-dependent pathways… 22623275 a-single-rna-dependent-rna-polymerase-assembles-with-mutually-exclusive-nucleotidyl-transferase-subunits-to-direct-different-pathways-of-small-rna-biogenesis. single rna dependent polymerase assembles with mutually exclusive A single RNA-dependent RNA polymerase assembles with mutually exclusive nucleotidyl transferase subunits to direct different pathways of small RNA biogenesis. A single RNA-dependent RNA polymerase assembles with mutually exclusive nucleotidyl transferase subunits to direct different pathways of small RNA biogenesis. Members of the conserved family of eukaryotic RNA-dependent RNA polymerases (Rdrs) synthesize double-stranded RNA (dsRNA) intermediates in diverse pathways of small RNA (sRNA) biogenesis and RNA-mediated silencing. Rdr-dependent pathways of sRNA production are poorly characterized relative to Rdr-independent pathways, and the Rdr enzymes themselves are poorly characterized relative to their viral RNA-dependent RNA polymerase counterparts. We previously described a physical and functional coupling of the Tetrahymena thermophila Rdr, Rdr1, and a Dicer enzyme, Dcr2, in the production of approximately 24-nucleotide (nt) sRNA in vitro. He",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.111071+00:00"
+}

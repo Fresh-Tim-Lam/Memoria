@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27709445",
+  "source_fingerprint": "a008ea9e0c8bd04b71311175aec44580",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27709445",
+    "rfid-system-evaluation-against-radiated-transient-noise"
+  ],
+  "key_phrases": [
+    "rfid",
+    "system",
+    "evaluation",
+    "against",
+    "radiated",
+    "transient",
+    "noise",
+    "this"
+  ],
+  "summary_1l": "In this paper a radiofrequency identification system according to standard ISO/IEC 14443 type-B is evaluated in presence of transient noise.",
+  "query_hits": [],
+  "embed_text": "27709445 RFID system evaluation against radiated transient noise science scifact In this paper a radiofrequency identification system according to standard ISO/IEC 14443 type-B is evaluated in  presence of transient noise. This real time communication system working at 13.56 MHz is interfered in a controlled… 27709445 rfid-system-evaluation-against-radiated-transient-noise rfid system evaluation against radiated transient noise this In this paper a radiofrequency identification system according to standard ISO/IEC 14443 type-B is evaluated in presence of transient noise. RFID system evaluation against radiated transient noise In this paper a radiofrequency identification system according to standard ISO/IEC 14443 type-B is evaluated in presence of transient noise. This real time communication system working at 13.56 MHz is interfered in a controlled environment by different transient bursts varying their level, frequency and duration. The transient burst interference is applied in an AC main wire close to the system and the effect over the digital communication system is evaluated using two different methods. The first one is observing directly an RFID equipment in presence of transient signals, and the second one is capturing the interference in time domain an evaluating its effect by means of simulation. The RFID system is affected by these transient noi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.227359+00:00"
+}

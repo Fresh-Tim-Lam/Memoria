@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2212067",
+  "source_fingerprint": "a5cf35fabc405ace6fec91b18a14c1bd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2212067",
+    "robust-synchronization-of-coupled-circadian-and-cell-cycle-oscillators-in-single-mammalian-cells"
+  ],
+  "key_phrases": [
+    "robust",
+    "synchronization",
+    "coupled",
+    "circadian",
+    "cell",
+    "cycle",
+    "oscillators",
+    "single"
+  ],
+  "summary_1l": "Circadian cycles and cell cycles are two fundamental periodic processes with a period in the range of 1",
+  "query_hits": [],
+  "embed_text": "2212067 Robust synchronization of coupled circadian and cell cycle oscillators in single mammalian cells science scifact Circadian cycles and cell cycles are two fundamental periodic processes with a period in the range of 1 day. Consequently, coupling between such cycles can lead to synchronization. Here, we estimated the mutual interactions between the two… 2212067 robust-synchronization-of-coupled-circadian-and-cell-cycle-oscillators-in-single-mammalian-cells robust synchronization coupled circadian cell cycle oscillators single Circadian cycles and cell cycles are two fundamental periodic processes with a period in the range of 1 Robust synchronization of coupled circadian and cell cycle oscillators in single mammalian cells Circadian cycles and cell cycles are two fundamental periodic processes with a period in the range of 1 day. Consequently, coupling between such cycles can lead to synchronization. Here, we estimated the mutual interactions between the two oscillators by time-lapse imaging of single mammalian NIH3T3 fibroblasts during several days. The analysis of thousands of circadian cycles in dividing cells clearly indicated that both oscillators tick in a 1:1 mode-locked state, with cell divisions occurring tightly 5 h before the peak in circadian Rev-Erbα-YFP reporter expression. In principle, such synchrony may be caused by either unidirectional or bidirectional coupling. While gating of cell division by",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.267575+00:00"
+}

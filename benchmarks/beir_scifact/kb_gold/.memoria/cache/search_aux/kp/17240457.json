@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17240457",
+  "source_fingerprint": "10cf8c73d42f50e1574b834fbdcbd7c5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17240457",
+    "a-comprehensive-genomic-binding-map-of-gene-and-chromatin-regulatory-proteins-in-saccharomyces."
+  ],
+  "key_phrases": [
+    "comprehensive",
+    "genomic",
+    "binding",
+    "map",
+    "gene",
+    "chromatin",
+    "regulatory",
+    "proteins"
+  ],
+  "summary_1l": "A comprehensive genomic binding map of gene and chromatin regulatory proteins in Saccharomyces.",
+  "query_hits": [],
+  "embed_text": "17240457 A comprehensive genomic binding map of gene and chromatin regulatory proteins in Saccharomyces. science scifact Hundreds of different proteins regulate and implement transcription in Saccharomyces. Yet their interrelationships have not been investigated on a comprehensive scale. Here we determined the genome-wide binding locations of 200… 17240457 a-comprehensive-genomic-binding-map-of-gene-and-chromatin-regulatory-proteins-in-saccharomyces. comprehensive genomic binding map gene chromatin regulatory proteins A comprehensive genomic binding map of gene and chromatin regulatory proteins in Saccharomyces. A comprehensive genomic binding map of gene and chromatin regulatory proteins in Saccharomyces. Hundreds of different proteins regulate and implement transcription in Saccharomyces. Yet their interrelationships have not been investigated on a comprehensive scale. Here we determined the genome-wide binding locations of 200 transcription-related proteins, under normal and acute heat-shock conditions. This study distinguishes binding between distal versus proximal promoter regions as well as the 3' ends of genes for nearly all mRNA and tRNA genes. This study reveals (1) a greater diversity and specialization of regulation associated with the SAGA transcription pathway compared to the TFIID pathway, (2) new regulators enriched at tRNA genes, (3) a global co-occupancy network of >20,000 unique",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.527693+00:00"
+}

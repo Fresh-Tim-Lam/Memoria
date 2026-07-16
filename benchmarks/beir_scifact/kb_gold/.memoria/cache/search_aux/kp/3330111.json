@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3330111",
+  "source_fingerprint": "1bf71cbc094d1554c5c08474bff27ab3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3330111",
+    "neutrophils-in-the-activation-and-regulation-of-innate-and-adaptive-immunity"
+  ],
+  "key_phrases": [
+    "neutrophils",
+    "activation",
+    "regulation",
+    "innate",
+    "adaptive",
+    "immunity",
+    "have",
+    "long"
+  ],
+  "summary_1l": "Neutrophils have long been viewed as the final effector cells of an acute inflammatory response, with a primary role in the",
+  "query_hits": [],
+  "embed_text": "3330111 Neutrophils in the activation and regulation of innate and adaptive immunity science scifact Neutrophils have long been viewed as the final effector cells of an acute inflammatory response, with a primary role in the clearance of extracellular pathogens. However, more recent evidence has extended the functions of these cells. The… 3330111 neutrophils-in-the-activation-and-regulation-of-innate-and-adaptive-immunity neutrophils activation regulation innate adaptive immunity have long Neutrophils have long been viewed as the final effector cells of an acute inflammatory response, with a primary role in the Neutrophils in the activation and regulation of innate and adaptive immunity Neutrophils have long been viewed as the final effector cells of an acute inflammatory response, with a primary role in the clearance of extracellular pathogens. However, more recent evidence has extended the functions of these cells. The newly discovered repertoire of effector molecules in the neutrophil armamentarium includes a broad array of cytokines, extracellular traps and effector molecules of the humoral arm of the innate immune system. In addition, neutrophils are involved in the activation, regulation and effector functions of innate and adaptive immune cells. Accordingly, neutrophils have a crucial role in the pathogenesis of a broad range of diseases, including infections caused by intracellular pathog",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.308246+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "38401028",
+  "source_fingerprint": "caa7e57e76eca39deab4bf00bad607d0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "38401028",
+    "the-cause-of-hepatic-accumulation-of-fructose-1-phosphate-on-fructose-loading."
+  ],
+  "key_phrases": [
+    "cause",
+    "hepatic",
+    "accumulation",
+    "fructose",
+    "phosphate",
+    "loading",
+    "changes",
+    "metabolite"
+  ],
+  "summary_1l": "The cause of hepatic accumulation of fructose 1-phosphate on fructose loading.",
+  "query_hits": [],
+  "embed_text": "38401028 The cause of hepatic accumulation of fructose 1-phosphate on fructose loading. science scifact 1. The changes in the metabolite content in freeze-clamped livers of fed rats occurring on perfusion with 10mm-d-fructose have been examined. 2. The most striking effects of fructose were an accumulation of fructose 1-phosphate, as already… 38401028 the-cause-of-hepatic-accumulation-of-fructose-1-phosphate-on-fructose-loading. cause hepatic accumulation fructose phosphate loading changes metabolite The cause of hepatic accumulation of fructose 1-phosphate on fructose loading. The cause of hepatic accumulation of fructose 1-phosphate on fructose loading. 1. The changes in the metabolite content in freeze-clamped livers of fed rats occurring on perfusion with 10mm-d-fructose have been examined. 2. The most striking effects of fructose were an accumulation of fructose 1-phosphate, as already known, up to 8.7mumol/g of liver within 10min, a loss of total adenine nucleotides (up to 35% after 40min) with a decrease in the ATP content to 23% within 10min, a sevenfold rise in the concentration of IMP to 1.1mumol/g and an eightfold rise of alpha-glycerophosphate to 1.1mumol/g. 3. There was a transient decrease in P(i) from 4.2 to 1.7mumol/g. Within 40min the P(i) content recovered to the normal value, probably because of an uptake of P(i) from the perfusion medium. 4. T",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.473323+00:00"
+}

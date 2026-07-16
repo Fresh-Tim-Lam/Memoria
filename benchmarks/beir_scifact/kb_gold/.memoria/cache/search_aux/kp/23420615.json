@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23420615",
+  "source_fingerprint": "a82c7bc57d5b7db7d8934c72ef495d0f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23420615",
+    "clip-identifies-nova-regulated-rna-networks-in-the-brain."
+  ],
+  "key_phrases": [
+    "clip",
+    "identifies",
+    "nova",
+    "regulated",
+    "rna",
+    "networks",
+    "brain",
+    "proteins"
+  ],
+  "summary_1l": "CLIP identifies Nova-regulated RNA networks in the brain.",
+  "query_hits": [],
+  "embed_text": "23420615 CLIP identifies Nova-regulated RNA networks in the brain. science scifact Nova proteins are neuron-specific antigens targeted in paraneoplastic opsoclonus myoclonus ataxia (POMA), an autoimmune neurologic disease characterized by abnormal motor inhibition. Nova proteins regulate neuronal pre-messenger RNA… 23420615 clip-identifies-nova-regulated-rna-networks-in-the-brain. clip identifies nova regulated rna networks brain proteins CLIP identifies Nova-regulated RNA networks in the brain. CLIP identifies Nova-regulated RNA networks in the brain. Nova proteins are neuron-specific antigens targeted in paraneoplastic opsoclonus myoclonus ataxia (POMA), an autoimmune neurologic disease characterized by abnormal motor inhibition. Nova proteins regulate neuronal pre-messenger RNA splicing by directly binding to RNA. To identify Nova RNA targets, we developed a method to purify protein-RNA complexes from mouse brain with the use of ultraviolet cross-linking and immunoprecipitation (CLIP).Thirty-four transcripts were identified multiple times by Nova CLIP.Three-quarters of these encode proteins that function at the neuronal synapse, and one-third are involved in neuronal inhibition. Splicing targets confirmed in Nova-/- mice include c-Jun N-terminal kinase 2, neogenin, and gephyrin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.476591+00:00"
+}

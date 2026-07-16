@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11983390",
+  "source_fingerprint": "c938e2cc5f5bafe27eb388783fbb62ec",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11983390",
+    "distinct-functions-of-nucleotide-binding/hydrolysis-sites-in-the-four-aaa-modules-of-cytoplasmic-dynein."
+  ],
+  "key_phrases": [
+    "distinct",
+    "functions",
+    "nucleotide",
+    "binding",
+    "hydrolysis",
+    "sites",
+    "four",
+    "aaa"
+  ],
+  "summary_1l": "Distinct functions of nucleotide-binding/hydrolysis sites in the four AAA modules of cytoplasmic dynein.",
+  "query_hits": [],
+  "embed_text": "11983390 Distinct functions of nucleotide-binding/hydrolysis sites in the four AAA modules of cytoplasmic dynein. science scifact Cytoplasmic dynein is a microtubule-based motor protein that is responsible for most intracellular retrograde transports along microtubule filaments. The motor domain of dynein contains six tandemly linked AAA (ATPases associated with… 11983390 distinct-functions-of-nucleotide-binding/hydrolysis-sites-in-the-four-aaa-modules-of-cytoplasmic-dynein. distinct functions nucleotide binding hydrolysis sites four aaa Distinct functions of nucleotide-binding/hydrolysis sites in the four AAA modules of cytoplasmic dynein. Distinct functions of nucleotide-binding/hydrolysis sites in the four AAA modules of cytoplasmic dynein. Cytoplasmic dynein is a microtubule-based motor protein that is responsible for most intracellular retrograde transports along microtubule filaments. The motor domain of dynein contains six tandemly linked AAA (ATPases associated with diverse cellular activities) modules, with the first four containing predicted nucleotide-binding/hydrolysis sites (P1-P4). To dissect the functions of these multiple nucleotide-binding/hydrolysis sites, we expressed and purified Dictyostelium dynein motor domains in which mutations were introduced to block nucleotide binding at each of the four AAA modules, and then examined their detailed biochemical properties. The P1 mutant was trapped in a strong-bind",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:08.040718+00:00"
+}

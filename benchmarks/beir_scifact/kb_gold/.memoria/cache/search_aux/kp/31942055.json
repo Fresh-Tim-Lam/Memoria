@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "31942055",
+  "source_fingerprint": "2dc9a7b54a566a0b2366f4fcaba702cc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "31942055",
+    "body-size-and-outcomes-on-peritoneal-dialysis-in-the-united-states."
+  ],
+  "key_phrases": [
+    "body",
+    "size",
+    "outcomes",
+    "peritoneal",
+    "dialysis",
+    "united",
+    "states",
+    "background"
+  ],
+  "summary_1l": "Body size and outcomes on peritoneal dialysis in the United States.",
+  "query_hits": [],
+  "embed_text": "31942055 Body size and outcomes on peritoneal dialysis in the United States. science scifact BACKGROUND Being overweight is often cited as a relative contraindication to peritoneal dialysis. Our primary objective was to determine whether actual mortality rates support this opinion. METHODS Retrospective cohort study of United… 31942055 body-size-and-outcomes-on-peritoneal-dialysis-in-the-united-states. body size outcomes peritoneal dialysis united states background Body size and outcomes on peritoneal dialysis in the United States. Body size and outcomes on peritoneal dialysis in the United States. BACKGROUND Being overweight is often cited as a relative contraindication to peritoneal dialysis. Our primary objective was to determine whether actual mortality rates support this opinion. METHODS Retrospective cohort study of United States Medicare patients initiating dialysis between 1995 and 2000 (N = 418,021; 11% peritoneal dialysis). RESULTS Seven percent were underweight [body mass index (BMI) < 18.5 kg/m2], 27% were overweight (BMI 25.0 to 29.9 kg/m2), and 23% were obese (BMI> 29.9 kg/m2) at dialysis initiation. Compared to those with normal BMI, the adjusted odds of initiating peritoneal dialysis were 0.70 (P < 0.05) in underweight, 1.12 (P < 0.05) in overweight, and 0.87 (P < 0.05) in obese subjects. Among perito",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.029341+00:00"
+}

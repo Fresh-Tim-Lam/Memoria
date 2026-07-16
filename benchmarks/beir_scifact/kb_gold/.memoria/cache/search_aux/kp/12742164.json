@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12742164",
+  "source_fingerprint": "a7da3fda03c2c344c7e5c5e04a614523",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12742164",
+    "direct-isolation-of-human-central-nervous-system-stem-cells."
+  ],
+  "key_phrases": [
+    "direct",
+    "isolation",
+    "human",
+    "central",
+    "nervous",
+    "system",
+    "stem",
+    "cells"
+  ],
+  "summary_1l": "Direct isolation of human central nervous system stem cells.",
+  "query_hits": [],
+  "embed_text": "12742164 Direct isolation of human central nervous system stem cells. science scifact Stem cells, which are clonogenic cells with self-renewal and multilineage differentiation properties, have the potential to replace or repair damaged tissue. We have directly isolated clonogenic human central nervous system stem cells… 12742164 direct-isolation-of-human-central-nervous-system-stem-cells. direct isolation human central nervous system stem cells Direct isolation of human central nervous system stem cells. Direct isolation of human central nervous system stem cells. Stem cells, which are clonogenic cells with self-renewal and multilineage differentiation properties, have the potential to replace or repair damaged tissue. We have directly isolated clonogenic human central nervous system stem cells (hCNS-SC) from fresh human fetal brain tissue, using antibodies to cell surface markers and fluorescence-activated cell sorting. These hCNS-SC are phenotypically 5F3 (CD133)(+), 5E12(+), CD34(-), CD45(-), and CD24(-/lo). Single CD133(+) CD34(-) CD45(-) sorted cells initiated neurosphere cultures, and the progeny of clonogenic cells could differentiate into both neurons and glial cells. Single cells from neurosphere cultures initiated from CD133(+) CD34(-) CD45(-) cells were again replated as single",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:08.878552+00:00"
+}

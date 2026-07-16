@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "437924",
+  "source_fingerprint": "aa257b327049037f14499c09c36077ad",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "437924",
+    "pre-exposure-prophylaxis-to-prevent-hiv-infection:-current-status,-future-opportunities-and-challenges"
+  ],
+  "key_phrases": [
+    "pre",
+    "exposure",
+    "prophylaxis",
+    "prevent",
+    "hiv",
+    "infection",
+    "current",
+    "status"
+  ],
+  "summary_1l": "As the global incidence of HIV exceeds 2 million new infections annually, effective interventions",
+  "query_hits": [],
+  "embed_text": "437924 Pre-Exposure Prophylaxis to Prevent HIV Infection: Current Status, Future Opportunities and Challenges science scifact As the global incidence of HIV exceeds 2 million new infections annually, effective interventions to decrease HIV transmission are needed. Randomized, placebo-controlled studies have demonstrated that daily oral antiretroviral pre-exposure… 437924 pre-exposure-prophylaxis-to-prevent-hiv-infection:-current-status,-future-opportunities-and-challenges pre exposure prophylaxis prevent hiv infection current status As the global incidence of HIV exceeds 2 million new infections annually, effective interventions Pre-Exposure Prophylaxis to Prevent HIV Infection: Current Status, Future Opportunities and Challenges As the global incidence of HIV exceeds 2 million new infections annually, effective interventions to decrease HIV transmission are needed. Randomized, placebo-controlled studies have demonstrated that daily oral antiretroviral pre-exposure prophylaxis (PrEP) with a fixed-dose combination tablet containing tenofovir disoproxil fumarate and emtricitabine can significantly reduce HIV incidence among diverse at-risk populations. In these studies, the efficacy of PrEP was correlated with levels of adherence. Official guidelines recommend provision of PrEP to people at greatest risk of HIV acquisition, and demonstration projects suggest that high levels of uptake and adherence are possible outs",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.265337+00:00"
+}

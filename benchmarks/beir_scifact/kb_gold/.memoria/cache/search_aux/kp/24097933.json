@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24097933",
+  "source_fingerprint": "b84bd4d153f2753c151e2f5fef66b5ec",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24097933",
+    "failure-of-continuous-venovenous-hemofiltration-to-prevent-death-in-paraquat-poisoning."
+  ],
+  "key_phrases": [
+    "failure",
+    "continuous",
+    "venovenous",
+    "hemofiltration",
+    "prevent",
+    "death",
+    "paraquat",
+    "poisoning"
+  ],
+  "summary_1l": "Failure of continuous venovenous hemofiltration to prevent death in paraquat poisoning.",
+  "query_hits": [],
+  "embed_text": "24097933 Failure of continuous venovenous hemofiltration to prevent death in paraquat poisoning. science scifact Paraquat poisoning is characterized by multiorgan failure and pulmonary fibrosis with respiratory failure. Multiorgan failure with circulatory collapse is a major cause of early death within 3 days of paraquat ingestion. Recent studies… 24097933 failure-of-continuous-venovenous-hemofiltration-to-prevent-death-in-paraquat-poisoning. failure continuous venovenous hemofiltration prevent death paraquat poisoning Failure of continuous venovenous hemofiltration to prevent death in paraquat poisoning. Failure of continuous venovenous hemofiltration to prevent death in paraquat poisoning. Paraquat poisoning is characterized by multiorgan failure and pulmonary fibrosis with respiratory failure. Multiorgan failure with circulatory collapse is a major cause of early death within 3 days of paraquat ingestion. Recent studies suggested that continuous venovenous hemofiltration (CVVH) had a role in the treatment of multiorgan failure by promoting hemodynamic stability. We therefore evaluated the effect of prophylactic CVVH in 80 patients with paraquat poisoning (August 1996 to February 1999). The amount ingested was 2.1 +/- 1.0 mouthfuls (as 20% concentrate). All patients were treated with hemoperfusion (HP; duration, 6.4 +/- 3.0 hours) within 24 hours of ingestion and then randomly assigned to",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.780029+00:00"
+}

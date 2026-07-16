@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5783785",
+  "source_fingerprint": "cd234b42bc5c66344abb33d7625b16c5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5783785",
+    "dna-methylation-mediated-down-regulating-of-microrna-33b-and-its-role-in-gastric-cancer"
+  ],
+  "key_phrases": [
+    "dna",
+    "methylation",
+    "mediated",
+    "down",
+    "regulating",
+    "microrna",
+    "33b",
+    "its"
+  ],
+  "summary_1l": "The discovery of microRNAs (miRNAs) provides a new and powerful tool for studying the mechanism, diagnosis and t",
+  "query_hits": [],
+  "embed_text": "5783785 DNA Methylation mediated down-regulating of MicroRNA-33b and its role in gastric cancer science scifact The discovery of microRNAs (miRNAs) provides a new and powerful tool for studying the mechanism, diagnosis and treatment of human cancers. Currently, down-regulation of tumor suppressive miRNAs by CpG island hypermethylation is emerging as… 5783785 dna-methylation-mediated-down-regulating-of-microrna-33b-and-its-role-in-gastric-cancer dna methylation mediated down regulating microrna 33b its The discovery of microRNAs (miRNAs) provides a new and powerful tool for studying the mechanism, diagnosis and t DNA Methylation mediated down-regulating of MicroRNA-33b and its role in gastric cancer The discovery of microRNAs (miRNAs) provides a new and powerful tool for studying the mechanism, diagnosis and treatment of human cancers. Currently, down-regulation of tumor suppressive miRNAs by CpG island hypermethylation is emerging as a common hallmark of cancer. Here, we reported that the down-regulation of miR-33b was associated with pM stage of gastric cancer (GC) patients. Ectopic expression of miR-33b in HGC-27 and MGC-803 cells inhibited cell proliferation, migration and invasion, which might be due to miR-33b targeting oncogene c-Myc. Moreover, enhanced methylation level of the CpG island upstream of miR-33b in GC patients with down-regulated miR-33b was confirmed by methylation-specific PCR",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.089712+00:00"
+}

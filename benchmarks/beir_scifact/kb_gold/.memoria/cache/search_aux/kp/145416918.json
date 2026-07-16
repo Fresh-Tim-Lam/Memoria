@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "145416918",
+  "source_fingerprint": "4f364d92bc88a5826d7fffb464a10bd8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "145416918",
+    "the-effect-of-information-related-to-fat-content-and-taste-on-consumer-responses-to-a-reduced-fat-frankfurter-and-a-reduced-fat-chocolate-bar"
+  ],
+  "key_phrases": [
+    "effect",
+    "information",
+    "related",
+    "fat",
+    "content",
+    "taste",
+    "consumer",
+    "responses"
+  ],
+  "summary_1l": "The effects of product information on responses to frankfu",
+  "query_hits": [],
+  "embed_text": "145416918 The effect of information related to fat content and taste on consumer responses to a reduced-fat frankfurter and a reduced-fat chocolate bar science scifact The effects of product information on responses to frankfurter sausages and chocolate bars were studied by comparing sensory and hedonic ratings in two conditions: blind tasting and tasting with information present. Furthermore, the effect… 145416918 the-effect-of-information-related-to-fat-content-and-taste-on-consumer-responses-to-a-reduced-fat-frankfurter-and-a-reduced-fat-chocolate-bar effect information related fat content taste consumer responses The effects of product information on responses to frankfu The effect of information related to fat content and taste on consumer responses to a reduced-fat frankfurter and a reduced-fat chocolate bar The effects of product information on responses to frankfurter sausages and chocolate bars were studied by comparing sensory and hedonic ratings in two conditions: blind tasting and tasting with information present. Furthermore, the effect of information alone was investigated by having the subjects rate the expected sensory and hedonic intensities of the products on the basis of packages with different claims. Three groups of subjects were tested by giving them different information: The basic group (no added claims, n = 31), the reduced-fat group (products claimed to have reduced-fat, n=29) and the flavorful group (products claimed to have full mea",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.128210+00:00"
+}

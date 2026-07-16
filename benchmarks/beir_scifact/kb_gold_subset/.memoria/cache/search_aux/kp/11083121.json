@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11083121",
+  "source_fingerprint": "d1363b085c602e3a0b347dbd71251961",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11083121",
+    "formins:-intermediates-in-signal-transduction-cascades-that-affect-cytoskeletal-reorganization."
+  ],
+  "key_phrases": [
+    "formins",
+    "intermediates",
+    "signal",
+    "transduction",
+    "cascades",
+    "that",
+    "affect",
+    "cytoskeletal"
+  ],
+  "summary_1l": "Formins: intermediates in signal-transduction cascades that affect cytoskeletal reorganization.",
+  "query_hits": [],
+  "embed_text": "11083121 Formins: intermediates in signal-transduction cascades that affect cytoskeletal reorganization. science scifact The control of cell growth and polarity depends on a dynamic actin cytoskeleton that has the ability to reorganize in response to developmental and environmental stimuli. In animals and fungi, formins are just one of the four major classes… 11083121 formins:-intermediates-in-signal-transduction-cascades-that-affect-cytoskeletal-reorganization. formins intermediates signal transduction cascades that affect cytoskeletal Formins: intermediates in signal-transduction cascades that affect cytoskeletal reorganization. Formins: intermediates in signal-transduction cascades that affect cytoskeletal reorganization. The control of cell growth and polarity depends on a dynamic actin cytoskeleton that has the ability to reorganize in response to developmental and environmental stimuli. In animals and fungi, formins are just one of the four major classes of poly-L-proline-containing (PLP) proteins that form part of the signal-transduction cascade that leads to rearrangement of the actin cytoskeleton. Analysis of the Arabidopsis genome sequence indicates that, unlike animals and fungi, formins are the only class of conserved profilin-binding PLP proteins in plants. Moreover, plant formins show significant structural differences compared with their animal and fungal counterparts, raising the possibility that pla",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:06.315697+00:00"
+}

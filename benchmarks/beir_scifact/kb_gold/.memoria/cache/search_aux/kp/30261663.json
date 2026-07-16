@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "30261663",
+  "source_fingerprint": "79f04fa3faedcf89d972390da5c457de",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "30261663",
+    "a-nuclear-translation-like-factor-eif4aiii-is-recruited-to-the-mrna-during-splicing-and-functions-in-nonsense-mediated-decay."
+  ],
+  "key_phrases": [
+    "nuclear",
+    "translation",
+    "like",
+    "factor",
+    "eif4aiii",
+    "recruited",
+    "mrna",
+    "during"
+  ],
+  "summary_1l": "A nuclear translation-like factor eIF4AIII is recruited to the mRNA during splicing and functions in nonsense-mediated decay.",
+  "query_hits": [],
+  "embed_text": "30261663 A nuclear translation-like factor eIF4AIII is recruited to the mRNA during splicing and functions in nonsense-mediated decay. science scifact In eukaryotes, a surveillance mechanism known as nonsense-mediated decay (NMD) degrades the mRNA when a premature-termination codon (PTC) is present. NMD requires translation to read the frame of the mRNA and detect the PTC. During… 30261663 a-nuclear-translation-like-factor-eif4aiii-is-recruited-to-the-mrna-during-splicing-and-functions-in-nonsense-mediated-decay. nuclear translation like factor eif4aiii recruited mrna during A nuclear translation-like factor eIF4AIII is recruited to the mRNA during splicing and functions in nonsense-mediated decay. A nuclear translation-like factor eIF4AIII is recruited to the mRNA during splicing and functions in nonsense-mediated decay. In eukaryotes, a surveillance mechanism known as nonsense-mediated decay (NMD) degrades the mRNA when a premature-termination codon (PTC) is present. NMD requires translation to read the frame of the mRNA and detect the PTC. During pre-mRNA splicing, the exon-exon junction complex (EJC) is recruited to a region 20-24 nt upstream of the exon junction on the mature mRNA. The presence of a PTC upstream from the EJC elicits NMD. Eukaryotic initiation factor 4A (eIF4A) III is a nuclear protein that interacts physically or functionally with translation initiation factors eIF4G and eIF4B, respectively, and shares strikingly high identity with the initiation factors eIF4AI/",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.526522+00:00"
+}

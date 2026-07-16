@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9588931",
+  "source_fingerprint": "916e60e7249b2410c200fbc62dbade63",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9588931",
+    "quercetin-attenuates-vascular-calcification-by-inhibiting-oxidative-stress-and-mitochondrial-fission."
+  ],
+  "key_phrases": [
+    "quercetin",
+    "attenuates",
+    "vascular",
+    "calcification",
+    "by",
+    "inhibiting",
+    "oxidative",
+    "stress"
+  ],
+  "summary_1l": "Quercetin attenuates vascular calcification by inhibiting oxidative stress and mitochondrial fission.",
+  "query_hits": [],
+  "embed_text": "9588931 Quercetin attenuates vascular calcification by inhibiting oxidative stress and mitochondrial fission. science scifact Vascular calcification is a strong independent predictor of increased cardiovascular morbidity and mortality and has a high prevalence among patients with chronic kidney disease. The present study investigated the effects of quercetin on… 9588931 quercetin-attenuates-vascular-calcification-by-inhibiting-oxidative-stress-and-mitochondrial-fission. quercetin attenuates vascular calcification by inhibiting oxidative stress Quercetin attenuates vascular calcification by inhibiting oxidative stress and mitochondrial fission. Quercetin attenuates vascular calcification by inhibiting oxidative stress and mitochondrial fission. Vascular calcification is a strong independent predictor of increased cardiovascular morbidity and mortality and has a high prevalence among patients with chronic kidney disease. The present study investigated the effects of quercetin on vascular calcification caused by oxidative stress and abnormal mitochondrial dynamics both in vitro and in vivo. Calcifying vascular smooth muscle cells (VSMCs) treated with inorganic phosphate (Pi) exhibited mitochondrial dysfunction, as demonstrated by decreased mitochondrial potential and ATP production. Disruption of mitochondrial structural integrity was also observed in a rat model of adenine-induced aortic calcification. Increased production of reac",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.286619+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20945963",
+  "source_fingerprint": "7bcb60affbc4fbee937dc04f744184f4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20945963",
+    "clinical-epidemiology-of-heart-failure."
+  ],
+  "key_phrases": [
+    "clinical",
+    "epidemiology",
+    "heart",
+    "failure",
+    "aim",
+    "this",
+    "paper",
+    "review"
+  ],
+  "summary_1l": "Clinical epidemiology of heart failure.",
+  "query_hits": [],
+  "embed_text": "20945963 Clinical epidemiology of heart failure. science scifact The aim of this paper is to review the clinical epidemiology of heart failure. The last paper comprehensively addressing the epidemiology of heart failure in Heart appeared in 2000. Despite an increase in manuscripts describing… 20945963 clinical-epidemiology-of-heart-failure. clinical epidemiology heart failure aim this paper review Clinical epidemiology of heart failure. Clinical epidemiology of heart failure. The aim of this paper is to review the clinical epidemiology of heart failure. The last paper comprehensively addressing the epidemiology of heart failure in Heart appeared in 2000. Despite an increase in manuscripts describing epidemiological aspects of heart failure since the 1990s, additional information is still needed, as indicated by various editorials.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.161350+00:00"
+}

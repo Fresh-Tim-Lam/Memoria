@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1554348",
+  "source_fingerprint": "8f5345e6d5b89b5c69f2dc8285c791f1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1554348",
+    "effect-of-hyperosmolality-on-alkaline-phosphatase-and-stress-response-protein-27-of-mcf-7-breast-cancer-cells"
+  ],
+  "key_phrases": [
+    "effect",
+    "hyperosmolality",
+    "alkaline",
+    "phosphatase",
+    "stress",
+    "response",
+    "protein",
+    "27"
+  ],
+  "summary_1l": "MCF-7, a continuous cell line derived from a human breast carcinoma, exhibits very low alk",
+  "query_hits": [],
+  "embed_text": "1554348 Effect of hyperosmolality on alkaline phosphatase and stress-response protein 27 of MCF-7 breast cancer cells science scifact MCF-7, a continuous cell line derived from a human breast carcinoma, exhibits very low alkaline phosphatase (ALP) activity. The enzyme is heat-stable and is inhibited by L-phenylalanine and L-phenylalanylgly-cylglycine, but not by… 1554348 effect-of-hyperosmolality-on-alkaline-phosphatase-and-stress-response-protein-27-of-mcf-7-breast-cancer-cells effect hyperosmolality alkaline phosphatase stress response protein 27 MCF-7, a continuous cell line derived from a human breast carcinoma, exhibits very low alk Effect of hyperosmolality on alkaline phosphatase and stress-response protein 27 of MCF-7 breast cancer cells MCF-7, a continuous cell line derived from a human breast carcinoma, exhibits very low alkaline phosphatase (ALP) activity. The enzyme is heat-stable and is inhibited by L-phenylalanine and L-phenylalanylgly-cylglycine, but not by L-homoarginine, 1-bromotetramisole, or levamisole. These data indicate that MCF-7 produces term-placental ALP, the oncodevelopmental enzyme form inappropriately expressed by a variety of human tumors. In contrast to human cancer cells that produce this enzyme monophenotypically, ALP activity of MCF-7 cells is not significantly increased by glucocorticoids or sodium butyrate. By comparison, exposure to hyperosmolality causes a striking increase in enzyme a",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.809166+00:00"
+}

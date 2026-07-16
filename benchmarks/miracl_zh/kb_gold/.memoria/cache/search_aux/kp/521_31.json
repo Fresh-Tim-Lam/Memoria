@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "kp_id": "521#31",
+  "source_fingerprint": "affd4cfb9f6abb0cf7cdc7bb316ab8a4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "2021年新疆棉花争议事件",
+    "Java集合框架",
+    "中国十大名茶",
+    "納斯達克100指數",
+    "股價指數",
+    "語言教育"
+  ],
+  "aliases": [
+    "521#31"
+  ],
+  "key_phrases": [
+    "编程语言",
+    "根據",
+    "tiobe",
+    "指數",
+    "2021",
+    "10",
+    "十大",
+    "最受"
+  ],
+  "summary_1l": "根據TIOBE指數在2021年10月，十大最受歡迎的語言如下：Python、Java、C、C++、C#、Visual Basic .",
+  "query_hits": [],
+  "embed_text": "521#31 编程语言 编程语言 根據TIOBE指數在2021年10月，十大最受歡迎的語言如下：Python、Java、C、C++、C#、Visual Basic .NET、JavaScript、PHP、SQL及R.。 2021年新疆棉花争议事件 Java集合框架 中国十大名茶 納斯達克100指數 股價指數 語言教育 521#31 编程语言 根據 tiobe 指數 2021 10 十大 最受 根據TIOBE指數在2021年10月，十大最受歡迎的語言如下：Python、Java、C、C++、C#、Visual Basic . 编程语言 根據TIOBE指數在2021年10月，十大最受歡迎的語言如下：Python、Java、C、C++、C#、Visual Basic .NET、JavaScript、PHP、SQL及R.。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:17:55.720647+00:00"
+}

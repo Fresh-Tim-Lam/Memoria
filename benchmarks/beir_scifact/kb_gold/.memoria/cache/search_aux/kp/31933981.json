@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "31933981",
+  "source_fingerprint": "b2fb16698cf7868008084611c7d34220",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "31933981",
+    "serum-amyloid-a:-an-acute-phase-protein-involved-in-tumour-pathogenesis"
+  ],
+  "key_phrases": [
+    "serum",
+    "amyloid",
+    "acute",
+    "phase",
+    "protein",
+    "involved",
+    "tumour",
+    "pathogenesis"
+  ],
+  "summary_1l": "The synthesis of acute-phase protein serum amyloid A (SAA) is largely regulated by inflammation- associated cytokines and a high",
+  "query_hits": [],
+  "embed_text": "31933981 Serum amyloid A: An acute-phase protein involved in tumour pathogenesis science scifact The synthesis of acute-phase protein serum amyloid A (SAA) is largely regulated by inflammation- associated cytokines and a high concentration of circulating SAA may represent an ideal marker for acute and chronic inflammatory diseases.… 31933981 serum-amyloid-a:-an-acute-phase-protein-involved-in-tumour-pathogenesis serum amyloid acute phase protein involved tumour pathogenesis The synthesis of acute-phase protein serum amyloid A (SAA) is largely regulated by inflammation- associated cytokines and a high Serum amyloid A: An acute-phase protein involved in tumour pathogenesis The synthesis of acute-phase protein serum amyloid A (SAA) is largely regulated by inflammation- associated cytokines and a high concentration of circulating SAA may represent an ideal marker for acute and chronic inflammatory diseases. However, SAA is also synthesized in extrahepatic tissues, e.g. human carcinoma metastases and cancer cell lines. An increasing body of in vitro data supports the concept of involvement of SAA in carcinogenesis and neoplastic diseases. Accumulating evidence suggests that SAA might be included in a group of biomarkers to detect a pattern of physiological events that reflect the growth of malignancy and host response. This review is meant to provide a broad overview of the many ways that S",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.014202+00:00"
+}

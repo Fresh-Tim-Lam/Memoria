@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16999023",
+  "source_fingerprint": "99b948412f9c35e2def335a5030ec40b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16999023",
+    "cell-stem-cell-article-in-vivo-fate-analysis-reveals-the-multipotent-and-self-renewal-capacities-of-sox2-+-neural-stem-cells-in-the-adult-hippocampus"
+  ],
+  "key_phrases": [
+    "cell",
+    "stem",
+    "article",
+    "vivo",
+    "fate",
+    "analysis",
+    "reveals",
+    "multipotent"
+  ],
+  "summary_1l": "To characterize the properties of adult neural ste",
+  "query_hits": [],
+  "embed_text": "16999023 Cell Stem Cell Article In Vivo Fate Analysis Reveals the Multipotent and Self-Renewal Capacities of Sox2 + Neural Stem Cells in the Adult Hippocampus science scifact To characterize the properties of adult neural stem cells (NSCs), we generated and analyzed Sox2-GFP transgenic mice. Sox2-GFP cells in the subgranular zone (SGZ) express markers specific for progenitors, but they represent two… 16999023 cell-stem-cell-article-in-vivo-fate-analysis-reveals-the-multipotent-and-self-renewal-capacities-of-sox2-+-neural-stem-cells-in-the-adult-hippocampus cell stem article vivo fate analysis reveals multipotent To characterize the properties of adult neural ste Cell Stem Cell Article In Vivo Fate Analysis Reveals the Multipotent and Self-Renewal Capacities of Sox2 + Neural Stem Cells in the Adult Hippocampus To characterize the properties of adult neural stem cells (NSCs), we generated and analyzed Sox2-GFP transgenic mice. Sox2-GFP cells in the subgranular zone (SGZ) express markers specific for progenitors, but they represent two morphologically distinct populations that differ in proliferation levels. Lentivirus- and retrovirus-mediated fate-tracing studies showed that Sox2+ cells in the SGZ have potential to give rise to neurons and astrocytes, revealing their multipotency at the population as well as at a single-cell level. A subpopulation of Sox2+ cells gives rise to cells that retain Sox2, highlighting Sox2+ cells as a primary source for a",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:11.816118+00:00"
+}

@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "kp_id": "78474#0",
+  "source_fingerprint": "220f71da2e24dc788fbb86bf9adeccf5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "呼吸系統",
+    "行星定義",
+    "量子力學的數學表述"
+  ],
+  "aliases": [
+    "78474#0"
+  ],
+  "key_phrases": [
+    "演算",
+    "英語",
+    "lambda",
+    "calculus",
+    "一套",
+    "數學",
+    "邏輯",
+    "發展"
+  ],
+  "summary_1l": "λ演算（英語：lambda calculus，λ-calculus）是一套從數學邏輯中發展，以變數綁定和替換的規則，來研究函式如何抽象化定義、函式如何被應用以及遞迴的形式系統。",
+  "query_hits": [],
+  "embed_text": "78474#0 Λ演算 Λ演算 λ演算（英語：lambda calculus，λ-calculus）是一套從數學邏輯中發展，以變數綁定和替換的規則，來研究函式如何抽象化定義、函式如何被應用以及遞迴的形式系統。它由數學家阿隆佐·邱奇在20世紀30年代首次發表。lambda演算作為一種廣泛用途的計算模型，可以清晰地定義什麼是一個可計算函式，而任何可計算函式都能以這種形式表達和求值，它能模擬單一磁帶图灵机的計算過程；儘管如此，lambda演算強調的是變換規則的運用，而非實現它們的具體機器。 呼吸系統 行星定義 量子力學的數學表述 78474#0 演算 英語 lambda calculus 一套 數學 邏輯 發展 λ演算（英語：lambda calculus，λ-calculus）是一套從數學邏輯中發展，以變數綁定和替換的規則，來研究函式如何抽象化定義、函式如何被應用以及遞迴的形式系統。 Λ演算 λ演算（英語：lambda calculus，λ-calculus）是一套從數學邏輯中發展，以變數綁定和替換的規則，來研究函式如何抽象化定義、函式如何被應用以及遞迴的形式系統。它由數學家阿隆佐·邱奇在20世紀30年代首次發表。lambda演算作為一種廣泛用途的計算模型，可以清晰地定義什麼是一個可計算函式，而任何可計算函式都能以這種形式表達和求值，它能模擬單一磁帶图灵机的計算過程；儘管如此，lambda演算強調的是變換規則的運用，而非實現它們的具體機器。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:19:15.606131+00:00"
+}

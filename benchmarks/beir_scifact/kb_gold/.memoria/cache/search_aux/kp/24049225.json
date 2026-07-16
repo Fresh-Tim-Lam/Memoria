@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24049225",
+  "source_fingerprint": "59fdc9341e32cda6f8a1a0641d86602f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24049225",
+    "no-net-renal-extraction-of-homocysteine-in-fasting-humans."
+  ],
+  "key_phrases": [
+    "no",
+    "net",
+    "renal",
+    "extraction",
+    "homocysteine",
+    "fasting",
+    "humans",
+    "background"
+  ],
+  "summary_1l": "No net renal extraction of homocysteine in fasting humans.",
+  "query_hits": [],
+  "embed_text": "24049225 No net renal extraction of homocysteine in fasting humans. science scifact BACKGROUND The pathophysiological mechanism of hyperhomocysteinemia in chronic renal failure in humans is unknown. The loss of a putative renal homocysteine extraction in chronic renal failure has been hypothesized as significant… 24049225 no-net-renal-extraction-of-homocysteine-in-fasting-humans. no net renal extraction homocysteine fasting humans background No net renal extraction of homocysteine in fasting humans. No net renal extraction of homocysteine in fasting humans. BACKGROUND The pathophysiological mechanism of hyperhomocysteinemia in chronic renal failure in humans is unknown. The loss of a putative renal homocysteine extraction in chronic renal failure has been hypothesized as significant homocysteine uptake has been demonstrated in the normal rat kidney. We studied homocysteine extraction in the normal human kidney. METHODS We measured plasma total (free and protein-bound) and free homocysteine (tHcy and fHcy, respectively) in arterial and renal venous blood sampled from the aorta and right-side renal vein during cardiac catheterization in 20 fasting patients with normal renal function. Renal homocysteine extraction was calculated as the arteriovenous difference divided by the arterial lev",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.691704+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "43334921",
+  "source_fingerprint": "cde4386286cac75ba6673d3dd9f56504",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "43334921",
+    "association-of-aspirin-and-nsaid-use-with-risk-of-colorectal-cancer-according-to-genetic-variants."
+  ],
+  "key_phrases": [
+    "association",
+    "aspirin",
+    "nsaid",
+    "use",
+    "with",
+    "risk",
+    "colorectal",
+    "cancer"
+  ],
+  "summary_1l": "Association of aspirin and NSAID use with risk of colorectal cancer according to genetic variants.",
+  "query_hits": [],
+  "embed_text": "43334921 Association of aspirin and NSAID use with risk of colorectal cancer according to genetic variants. science scifact IMPORTANCE Use of aspirin and other nonsteroidal anti-inflammatory drugs (NSAIDs) is associated with lower risk of colorectal cancer. OBJECTIVE To identify common genetic markers that may confer differential benefit from aspirin or NSAID… 43334921 association-of-aspirin-and-nsaid-use-with-risk-of-colorectal-cancer-according-to-genetic-variants. association aspirin nsaid use with risk colorectal cancer Association of aspirin and NSAID use with risk of colorectal cancer according to genetic variants. Association of aspirin and NSAID use with risk of colorectal cancer according to genetic variants. IMPORTANCE Use of aspirin and other nonsteroidal anti-inflammatory drugs (NSAIDs) is associated with lower risk of colorectal cancer. OBJECTIVE To identify common genetic markers that may confer differential benefit from aspirin or NSAID chemoprevention, we tested gene × environment interactions between regular use of aspirin and/or NSAIDs and single-nucleotide polymorphisms (SNPs) in relation to risk of colorectal cancer. DESIGN, SETTING, AND PARTICIPANTS Case-control study using data from 5 case-control and 5 cohort studies initiated between 1976 and 2003 across the United States, Canada, Australia, and Germany and including colorectal cancer cases (n=8634) and matched controls (n=8553) asc",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.779852+00:00"
+}

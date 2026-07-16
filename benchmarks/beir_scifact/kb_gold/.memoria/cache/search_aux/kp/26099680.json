@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26099680",
+  "source_fingerprint": "682a51a3ab8c7f0627273669b04fc8f1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26099680",
+    "effects-of-aging-on-central-and-peripheral-mammalian-clocks."
+  ],
+  "key_phrases": [
+    "effects",
+    "aging",
+    "central",
+    "peripheral",
+    "mammalian",
+    "clocks",
+    "circadian",
+    "organization"
+  ],
+  "summary_1l": "Effects of aging on central and peripheral mammalian clocks.",
+  "query_hits": [],
+  "embed_text": "26099680 Effects of aging on central and peripheral mammalian clocks. science scifact Circadian organization changes with age, but we do not know the extent to which age-related changes are the result of alterations in the central pacemakers, the peripheral oscillators, or the coupling mechanisms that hold the system… 26099680 effects-of-aging-on-central-and-peripheral-mammalian-clocks. effects aging central peripheral mammalian clocks circadian organization Effects of aging on central and peripheral mammalian clocks. Effects of aging on central and peripheral mammalian clocks. Circadian organization changes with age, but we do not know the extent to which age-related changes are the result of alterations in the central pacemakers, the peripheral oscillators, or the coupling mechanisms that hold the system together. By using transgenic rats with a luciferase (luc) reporter, we assessed the effects of aging on the rhythm of expression of the Period 1 (Per1) gene in the suprachiasmatic nucleus (SCN) and in peripheral tissues. Young (2 months) and aged (24-26 months) Per1-luc transgenic rats, entrained to light-dark cycles, were killed, and tissues were removed and cultured. Per1-luc expression was measured from 10 tissues. In the SCN, the central mammalian pacemaker, Per1-luc expression was robustly rhyth",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.327166+00:00"
+}

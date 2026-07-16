@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "46837626",
+  "source_fingerprint": "75961e6b75d36c6859db98adf3c24217",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "46837626",
+    "prediction-of-creatinine-clearance-from-serum-creatinine."
+  ],
+  "key_phrases": [
+    "prediction",
+    "creatinine",
+    "clearance",
+    "from",
+    "serum",
+    "formula",
+    "has",
+    "been"
+  ],
+  "summary_1l": "Prediction of creatinine clearance from serum creatinine.",
+  "query_hits": [],
+  "embed_text": "46837626 Prediction of creatinine clearance from serum creatinine. science scifact A formula has been developed to predict creatinine clearance (Ccr) from serum creatinine (Scr) in adult males: (see article)(15% less in females). Derivation included the relationship found between age and 24-hour creatinine excretion/kg… 46837626 prediction-of-creatinine-clearance-from-serum-creatinine. prediction creatinine clearance from serum formula has been Prediction of creatinine clearance from serum creatinine. Prediction of creatinine clearance from serum creatinine. A formula has been developed to predict creatinine clearance (Ccr) from serum creatinine (Scr) in adult males: (see article)(15% less in females). Derivation included the relationship found between age and 24-hour creatinine excretion/kg in 249 patients aged 18-92. Values for Ccr were predicted by this formula and four other methods and the results compared with the means of two 24-hour Ccr's measured in 236 patients. The above formula gave a correlation coefficient between predicted and mean measured Ccr's of 0.83; on average, the difference predicted and mean measured values was no greater than that between paired clearances. Factors for age and body weight must be included for reasonable prediction.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.153703+00:00"
+}

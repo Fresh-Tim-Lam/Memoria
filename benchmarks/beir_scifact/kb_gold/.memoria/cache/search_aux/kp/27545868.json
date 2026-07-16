@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27545868",
+  "source_fingerprint": "1d0355e58c78ca15bc223b8fb7c03915",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27545868",
+    "histone-acetyltransferase-pcaf-regulates-inflammatory-molecules-in-the-development-of-renal-injury."
+  ],
+  "key_phrases": [
+    "histone",
+    "acetyltransferase",
+    "pcaf",
+    "regulates",
+    "inflammatory",
+    "molecules",
+    "development",
+    "renal"
+  ],
+  "summary_1l": "Histone acetyltransferase PCAF regulates inflammatory molecules in the development of renal injury.",
+  "query_hits": [],
+  "embed_text": "27545868 Histone acetyltransferase PCAF regulates inflammatory molecules in the development of renal injury. science scifact Kidney diseases, including chronic kidney disease (CKD) and acute kidney injury (AKI), are associated with inflammation. The mechanism that regulates inflammation in these renal injuries remains unclear. Here, we demonstrated that… 27545868 histone-acetyltransferase-pcaf-regulates-inflammatory-molecules-in-the-development-of-renal-injury. histone acetyltransferase pcaf regulates inflammatory molecules development renal Histone acetyltransferase PCAF regulates inflammatory molecules in the development of renal injury. Histone acetyltransferase PCAF regulates inflammatory molecules in the development of renal injury. Kidney diseases, including chronic kidney disease (CKD) and acute kidney injury (AKI), are associated with inflammation. The mechanism that regulates inflammation in these renal injuries remains unclear. Here, we demonstrated that p300/CBP-associated factor (PCAF), a histone acetyltransferase, was overexpressed in the kidneys of db/db mice and lipopolysaccharide (LPS)-injected mice. Moreover, elevated histone acetylation, such as H3K18ac, and up-regulation of some inflammatory genes, such as ICAM-1, VCAM-1, and MCP-1, were found upon these renal injuries. Furthermore, increased H3K18ac was recruited to the promoters of ICAM-1, VCAM-1, and MCP-1 in the kidneys of LPS-injected mice. In vitro s",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.021484+00:00"
+}

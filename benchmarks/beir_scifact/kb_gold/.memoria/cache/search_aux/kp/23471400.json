@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23471400",
+  "source_fingerprint": "4712ef614ecf8d3f39a0592959b2e0f3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23471400",
+    "circulating-micrornas-as-biomarkers-for-hepatocellular-carcinoma."
+  ],
+  "key_phrases": [
+    "circulating",
+    "micrornas",
+    "as",
+    "biomarkers",
+    "hepatocellular",
+    "carcinoma",
+    "goals",
+    "we"
+  ],
+  "summary_1l": "Circulating microRNAs as biomarkers for hepatocellular carcinoma.",
+  "query_hits": [],
+  "embed_text": "23471400 Circulating microRNAs as biomarkers for hepatocellular carcinoma. science scifact GOALS We investigated whether measurement of serum levels of the microRNAs (miRNAs) miR-16, miR-195, and miR-199a, alone or in combination with conventional serum markers, can help to differentiate hepatocellular carcinoma (HCC) from… 23471400 circulating-micrornas-as-biomarkers-for-hepatocellular-carcinoma. circulating micrornas as biomarkers hepatocellular carcinoma goals we Circulating microRNAs as biomarkers for hepatocellular carcinoma. Circulating microRNAs as biomarkers for hepatocellular carcinoma. GOALS We investigated whether measurement of serum levels of the microRNAs (miRNAs) miR-16, miR-195, and miR-199a, alone or in combination with conventional serum markers, can help to differentiate hepatocellular carcinoma (HCC) from chronic liver diseases (CLDs). BACKGROUND Recent reports suggest a link between aberrant expression of miRNA, and HCC. STUDY This retrospective analysis was conducted using sera from 105 HCC patients, 107 CLD patients, and 71 normal control subjects. The miRNAs were measured using real-time reverse transcription-polymerase chain reaction. The conventional HCC markers α-fetoprotein (AFP), lens culinaris agglutinin-reactive AFP (AFP-L3%), and des-γ-carboxyprothrombin (DCP) were measured with comme",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.566905+00:00"
+}

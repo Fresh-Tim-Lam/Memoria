@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7875158",
+  "source_fingerprint": "9e9c9e9ce774fc527e26fe75031ea3bf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7875158",
+    "glucose-deprivation-induced-cytotoxicity-and-alterations-in-mitogen-activated-protein-kinase-activation-are-mediated-by-oxidative-stress-in-multidrug-resistant-human-breast-carcinoma-cells."
+  ],
+  "key_phrases": [
+    "glucose",
+    "deprivation",
+    "induced",
+    "cytotoxicity",
+    "alterations",
+    "mitogen",
+    "activated",
+    "protein"
+  ],
+  "summary_1l": "Glucose deprivation-induced cytotoxicity and alterations in mitogen-activated protein kinase activation are mediated by oxidative stress in multidrug-resistant human breast carcinoma cells.",
+  "query_hits": [],
+  "embed_text": "7875158 Glucose deprivation-induced cytotoxicity and alterations in mitogen-activated protein kinase activation are mediated by oxidative stress in multidrug-resistant human breast carcinoma cells. science scifact We previously observed that glucose deprivation induces cell death in multidrug-resistant human breast carcinoma cells (MCF-7/ADR). As a follow up we wished to test the hypothesis that metabolic oxidative stress was the causative process… 7875158 glucose-deprivation-induced-cytotoxicity-and-alterations-in-mitogen-activated-protein-kinase-activation-are-mediated-by-oxidative-stress-in-multidrug-resistant-human-breast-carcinoma-cells. glucose deprivation induced cytotoxicity alterations mitogen activated protein Glucose deprivation-induced cytotoxicity and alterations in mitogen-activated protein kinase activation are mediated by oxidative stress in multidrug-resistant human breast carcinoma cells. Glucose deprivation-induced cytotoxicity and alterations in mitogen-activated protein kinase activation are mediated by oxidative stress in multidrug-resistant human breast carcinoma cells. We previously observed that glucose deprivation induces cell death in multidrug-resistant human breast carcinoma cells (MCF-7/ADR). As a follow up we wished to test the hypothesis that metabolic oxidative stress was the causative process or at least the link between causative processes behind the cytotoxicity. In the studies described here, we demonstrate that mitogen-activated protein kinase (MAPK) was activated within 3 min of being in glucose-free medium and remained activated for 3 h. Glucose deprivation for 2-4 h also caused oxidative stress as evidenced by a 3-fold greater steady state concentrati",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.388306+00:00"
+}

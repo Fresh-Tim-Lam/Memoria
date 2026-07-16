@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3437084",
+  "source_fingerprint": "7df1c09a18ace0b992a101750ba3e3e4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3437084",
+    "motion-magnification"
+  ],
+  "key_phrases": [
+    "motion",
+    "magnification",
+    "we",
+    "present",
+    "technique",
+    "that",
+    "acts",
+    "like"
+  ],
+  "summary_1l": "We present motion magnification, a technique that acts like a microscope for visual motion.",
+  "query_hits": [],
+  "embed_text": "3437084 Motion magnification science scifact We present motion magnification, a technique that acts like a microscope for visual motion. It can amplify subtle motions in a video sequence, allowing for visualization of deformations that would otherwise be invisible. To achieve motion… 3437084 motion-magnification motion magnification we present technique that acts like We present motion magnification, a technique that acts like a microscope for visual motion. Motion magnification We present motion magnification, a technique that acts like a microscope for visual motion. It can amplify subtle motions in a video sequence, allowing for visualization of deformations that would otherwise be invisible. To achieve motion magnification, we need to accurately measure visual motions, and group the pixels to be modified. After an initial image registration step, we measure motion by a robust analysis of feature point trajectories, and segment pixels based on similarity of position, color, and motion. A novel measure of motion similarity groups even very small motions according to correlation over time, which often relates to physical cause. An outlier mask marks observations not explained by our layered motion model, and those pixels are simply reproduced",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.402566+00:00"
+}

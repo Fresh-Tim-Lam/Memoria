@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29735200",
+  "source_fingerprint": "72a778ce42c8d787e5ef5dd9af498e3d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29735200",
+    "cardiovascular-and-renal-benefits-of-dry-bean-and-soybean-intake."
+  ],
+  "key_phrases": [
+    "cardiovascular",
+    "renal",
+    "benefits",
+    "dry",
+    "bean",
+    "soybean",
+    "intake",
+    "beans"
+  ],
+  "summary_1l": "Cardiovascular and renal benefits of dry bean and soybean intake.",
+  "query_hits": [],
+  "embed_text": "29735200 Cardiovascular and renal benefits of dry bean and soybean intake. science scifact Dry beans and soybeans are nutrient-dense, fiber-rich, and are high-quality sources of protein. Protective and therapeutic effects of both dry bean and soybean intake have been documented. Studies show that dry bean intake has the… 29735200 cardiovascular-and-renal-benefits-of-dry-bean-and-soybean-intake. cardiovascular renal benefits dry bean soybean intake beans Cardiovascular and renal benefits of dry bean and soybean intake. Cardiovascular and renal benefits of dry bean and soybean intake. Dry beans and soybeans are nutrient-dense, fiber-rich, and are high-quality sources of protein. Protective and therapeutic effects of both dry bean and soybean intake have been documented. Studies show that dry bean intake has the potential to decrease serum cholesterol concentrations, improve many aspects of the diabetic state, and provide metabolic benefits that aid in weight control. Soybeans are a unique source of the isoflavones genistein and diadzein, which have numerous biological functions. Soybeans and soyfoods potentially have multifaceted health-promoting effects, including cholesterol reduction, improved vascular health, preserved bone mineral density, and reduction of menopausal symptoms. Soy appears to have sal",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.151923+00:00"
+}

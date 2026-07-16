@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16280642",
+  "source_fingerprint": "55553e133f076a097b4c7f3b072bc885",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16280642",
+    "sequential-signals-toward-podosome-formation-in-nih-src-cells"
+  ],
+  "key_phrases": [
+    "sequential",
+    "signals",
+    "toward",
+    "podosome",
+    "formation",
+    "nih",
+    "src",
+    "cells"
+  ],
+  "summary_1l": "Podosomes (also termed invadopodia in cancer cells) are actin-rich adhesion structures with matrix degradation activity that develop in va",
+  "query_hits": [],
+  "embed_text": "16280642 Sequential signals toward podosome formation in NIH-src cells science scifact Podosomes (also termed invadopodia in cancer cells) are actin-rich adhesion structures with matrix degradation activity that develop in various cell types. Despite their significant physiological importance, the molecular mechanism of… 16280642 sequential-signals-toward-podosome-formation-in-nih-src-cells sequential signals toward podosome formation nih src cells Podosomes (also termed invadopodia in cancer cells) are actin-rich adhesion structures with matrix degradation activity that develop in va Sequential signals toward podosome formation in NIH-src cells Podosomes (also termed invadopodia in cancer cells) are actin-rich adhesion structures with matrix degradation activity that develop in various cell types. Despite their significant physiological importance, the molecular mechanism of podosome formation is largely unknown. In this study, we investigated the molecular mechanisms of podosome formation. The expression of various phosphoinositide-binding domains revealed that the podosomes in Src-transformed NIH3T3 (NIH-src) cells are enriched with PtdIns(3,4)P2, suggesting an important role of this phosphoinositide in podosome formation. Live-cell imaging analysis revealed that Src-expression stimulated podosome formation at focal adhesions of NIH3T3 cells after PtdIns(3,4)P2 accum",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:11.664577+00:00"
+}

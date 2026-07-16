@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "42404093",
+  "source_fingerprint": "d83815dbf651a67393cedf70e30e350a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "42404093",
+    "incidence-of-adverse-drug-events-and-potential-adverse-drug-events.-implications-for-prevention.-ade-prevention-study-group."
+  ],
+  "key_phrases": [
+    "incidence",
+    "adverse",
+    "drug",
+    "events",
+    "potential",
+    "implications",
+    "prevention",
+    "ade"
+  ],
+  "summary_1l": "Incidence of adverse drug events and potential adverse drug events.",
+  "query_hits": [],
+  "embed_text": "42404093 Incidence of adverse drug events and potential adverse drug events. Implications for prevention. ADE Prevention Study Group. science scifact OBJECTIVES To assess incidence and preventability of adverse drug events (ADEs) and potential ADEs. To analyze preventable events to develop prevention strategies. DESIGN Prospective cohort study. PARTICIPANTS All 4031 adult admissions to… 42404093 incidence-of-adverse-drug-events-and-potential-adverse-drug-events.-implications-for-prevention.-ade-prevention-study-group. incidence adverse drug events potential implications prevention ade Incidence of adverse drug events and potential adverse drug events. Incidence of adverse drug events and potential adverse drug events. Implications for prevention. ADE Prevention Study Group. OBJECTIVES To assess incidence and preventability of adverse drug events (ADEs) and potential ADEs. To analyze preventable events to develop prevention strategies. DESIGN Prospective cohort study. PARTICIPANTS All 4031 adult admissions to a stratified random sample of 11 medical and surgical units in two tertiary care hospitals over a 6-month period. Units included two medical and three surgical intensive care units and four medical and two surgical general care units. MAIN OUTCOME MEASURES Adverse drug events and potential ADEs. METHODS Incidents were detected by stimulated self-report by nurses and pharmacists and by daily review of all charts by nurse investigator",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.004289+00:00"
+}

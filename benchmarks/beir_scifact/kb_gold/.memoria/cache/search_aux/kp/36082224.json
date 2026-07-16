@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36082224",
+  "source_fingerprint": "82e23539ae2c8f058c7cec48628046d1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36082224",
+    "expansion-and-deletion-of-ctg-repeats-from-human-disease-genes-are-determined-by-the-direction-of-replication-in-e.-coli"
+  ],
+  "key_phrases": [
+    "expansion",
+    "deletion",
+    "ctg",
+    "repeats",
+    "from",
+    "human",
+    "disease",
+    "genes"
+  ],
+  "summary_1l": "Expansion and deletion of CTG repeats from human disease genes are determined by the direction of replication in E.",
+  "query_hits": [],
+  "embed_text": "36082224 Expansion and deletion of CTG repeats from human disease genes are determined by the direction of replication in E. coli science scifact Several human hereditary neurological and neurodegenerative disease genes are associated with the expansion of CTG repeats. Here we show that the frequency of genetic expansions or deletions in Escherichia coli depends on the direction of… 36082224 expansion-and-deletion-of-ctg-repeats-from-human-disease-genes-are-determined-by-the-direction-of-replication-in-e.-coli expansion deletion ctg repeats from human disease genes Expansion and deletion of CTG repeats from human disease genes are determined by the direction of replication in E. Expansion and deletion of CTG repeats from human disease genes are determined by the direction of replication in E. coli Several human hereditary neurological and neurodegenerative disease genes are associated with the expansion of CTG repeats. Here we show that the frequency of genetic expansions or deletions in Escherichia coli depends on the direction of replication. Large expansions occur predominantly when the CTGs are in the leading strand template rather than the lagging strand. However, deletions are more prominant when the CTGs are in the opposite orientation. Most deletions generated products of defined size classes. Strand slippage coupled with non–classical DMA structures may account for these observations and relate to expansion–deletion mechanisms in eukaryotic chromosomes fo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.836894+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23349986",
+  "source_fingerprint": "4ca10596b087671909b78023477fad39",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23349986",
+    "dexamethasone-and-risk-of-nausea-and-vomiting-and-postoperative-bleeding-after-tonsillectomy-in-children:-a-randomized-trial."
+  ],
+  "key_phrases": [
+    "dexamethasone",
+    "risk",
+    "nausea",
+    "vomiting",
+    "postoperative",
+    "bleeding",
+    "after",
+    "tonsillectomy"
+  ],
+  "summary_1l": "Dexamethasone and risk of nausea and vomiting and postoperative bleeding after tonsillectomy in children: a randomized trial.",
+  "query_hits": [],
+  "embed_text": "23349986 Dexamethasone and risk of nausea and vomiting and postoperative bleeding after tonsillectomy in children: a randomized trial. science scifact CONTEXT Dexamethasone is widely used to prevent postoperative nausea and vomiting (PONV) in pediatric tonsillectomy. OBJECTIVE To assess whether dexamethasone dose-dependently reduces the risk of PONV at 24 hours after tonsillectomy.… 23349986 dexamethasone-and-risk-of-nausea-and-vomiting-and-postoperative-bleeding-after-tonsillectomy-in-children:-a-randomized-trial. dexamethasone risk nausea vomiting postoperative bleeding after tonsillectomy Dexamethasone and risk of nausea and vomiting and postoperative bleeding after tonsillectomy in children: a randomized trial. Dexamethasone and risk of nausea and vomiting and postoperative bleeding after tonsillectomy in children: a randomized trial. CONTEXT Dexamethasone is widely used to prevent postoperative nausea and vomiting (PONV) in pediatric tonsillectomy. OBJECTIVE To assess whether dexamethasone dose-dependently reduces the risk of PONV at 24 hours after tonsillectomy. DESIGN, SETTING, AND PATIENTS Randomized placebo-controlled trial conducted among 215 children undergoing elective tonsillectomy at a major public teaching hospital in Switzerland from February 2005 to December 2007. INTERVENTIONS Children were randomly assigned to receive dexamethasone (0.05, 0.15, or 0.5 mg/kg) or placebo intravenously after induction of anesthesia. Acetaminophen-codeine and ibuprofen were given as postoperative analg",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:12.403503+00:00"
+}

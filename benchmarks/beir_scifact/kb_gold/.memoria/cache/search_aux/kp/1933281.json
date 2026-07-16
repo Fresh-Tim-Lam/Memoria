@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1933281",
+  "source_fingerprint": "331275fa06157eb2651a6da4d0a95e8e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1933281",
+    "cd169+-macrophages-present-lipid-antigens-to-mediate-early-activation-of-invariant-nkt-cells-in-lymph-nodes"
+  ],
+  "key_phrases": [
+    "cd169",
+    "macrophages",
+    "present",
+    "lipid",
+    "antigens",
+    "mediate",
+    "early",
+    "activation"
+  ],
+  "summary_1l": "Invariant natural killer T cells (iNKT cells) are involved in the host defense against micro",
+  "query_hits": [],
+  "embed_text": "1933281 CD169+ MACROPHAGES PRESENT LIPID ANTIGENS TO MEDIATE EARLY ACTIVATION OF INVARIANT NKT CELLS IN LYMPH NODES science scifact Invariant natural killer T cells (iNKT cells) are involved in the host defense against microbial infection. Although it is known that iNKT cells recognize glycolipids presented by CD1d, how and where they encounter antigen in vivo remains… 1933281 cd169+-macrophages-present-lipid-antigens-to-mediate-early-activation-of-invariant-nkt-cells-in-lymph-nodes cd169 macrophages present lipid antigens mediate early activation Invariant natural killer T cells (iNKT cells) are involved in the host defense against micro CD169+ MACROPHAGES PRESENT LIPID ANTIGENS TO MEDIATE EARLY ACTIVATION OF INVARIANT NKT CELLS IN LYMPH NODES Invariant natural killer T cells (iNKT cells) are involved in the host defense against microbial infection. Although it is known that iNKT cells recognize glycolipids presented by CD1d, how and where they encounter antigen in vivo remains unclear. Here we used multiphoton microscopy to visualize the dynamics and activation of iNKT cells in lymph nodes. After antigen administration, iNKT cells became confined in a CD1d-dependent manner in close proximity to subcapsular sinus CD169(+) macrophages. These macrophages retained, internalized and presented lipid antigen and were required for iNKT cell activation, cytokine production and population expansion. Thus, CD169(+) macrophages can a",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.448500+00:00"
+}

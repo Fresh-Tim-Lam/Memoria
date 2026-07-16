@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1605392",
+  "source_fingerprint": "6bdbff8834917c950e5088da26138db3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1605392",
+    "a-mutation-in-orai1-causes-immune-deficiency-by-abrogating-crac-channel-function"
+  ],
+  "key_phrases": [
+    "mutation",
+    "orai1",
+    "causes",
+    "immune",
+    "deficiency",
+    "by",
+    "abrogating",
+    "crac"
+  ],
+  "summary_1l": "Antigen stimulation of immune cells triggers Ca2+ entry through Ca2+ release-activated Ca2+ (CRAC) channels, promoting",
+  "query_hits": [],
+  "embed_text": "1605392 A mutation in Orai1 causes immune deficiency by abrogating CRAC channel function science scifact Antigen stimulation of immune cells triggers Ca2+ entry through Ca2+ release-activated Ca2+ (CRAC) channels, promoting the immune response to pathogens by activating the transcription factor NFAT. We have previously shown that cells from… 1605392 a-mutation-in-orai1-causes-immune-deficiency-by-abrogating-crac-channel-function mutation orai1 causes immune deficiency by abrogating crac Antigen stimulation of immune cells triggers Ca2+ entry through Ca2+ release-activated Ca2+ (CRAC) channels, promoting A mutation in Orai1 causes immune deficiency by abrogating CRAC channel function Antigen stimulation of immune cells triggers Ca2+ entry through Ca2+ release-activated Ca2+ (CRAC) channels, promoting the immune response to pathogens by activating the transcription factor NFAT. We have previously shown that cells from patients with one form of hereditary severe combined immune deficiency (SCID) syndrome are defective in store-operated Ca2+ entry and CRAC channel function. Here we identify the genetic defect in these patients, using a combination of two unbiased genome-wide approaches: a modified linkage analysis with single-nucleotide polymorphism arrays, and a Drosophila RNA interference screen designed to identify regulators of store-operated Ca2+ entry and NFAT nuclear import. Both appro",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.716084+00:00"
+}

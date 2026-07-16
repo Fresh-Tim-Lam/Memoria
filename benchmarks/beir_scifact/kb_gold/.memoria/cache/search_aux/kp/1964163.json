@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1964163",
+  "source_fingerprint": "97888f7abb667a4b97031643ba21c420",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1964163",
+    "brain-specific-phosphorylation-of-mecp2-regulates-activity-dependent-bdnf-transcription,-dendritic-growth,-and-spine-maturation"
+  ],
+  "key_phrases": [
+    "brain",
+    "specific",
+    "phosphorylation",
+    "mecp2",
+    "regulates",
+    "activity",
+    "dependent",
+    "bdnf"
+  ],
+  "summary_1l": "Mutations or duplications in MECP2 cause Rett and Rett-like syndromes, n",
+  "query_hits": [],
+  "embed_text": "1964163 Brain-Specific Phosphorylation of MeCP2 Regulates Activity-Dependent Bdnf Transcription, Dendritic Growth, and Spine Maturation science scifact Mutations or duplications in MECP2 cause Rett and Rett-like syndromes, neurodevelopmental disorders characterized by mental retardation, motor dysfunction, and autistic behaviors. MeCP2 is expressed in many mammalian tissues and functions… 1964163 brain-specific-phosphorylation-of-mecp2-regulates-activity-dependent-bdnf-transcription,-dendritic-growth,-and-spine-maturation brain specific phosphorylation mecp2 regulates activity dependent bdnf Mutations or duplications in MECP2 cause Rett and Rett-like syndromes, n Brain-Specific Phosphorylation of MeCP2 Regulates Activity-Dependent Bdnf Transcription, Dendritic Growth, and Spine Maturation Mutations or duplications in MECP2 cause Rett and Rett-like syndromes, neurodevelopmental disorders characterized by mental retardation, motor dysfunction, and autistic behaviors. MeCP2 is expressed in many mammalian tissues and functions as a global repressor of transcription; however, the molecular mechanisms by which MeCP2 dysfunction leads to the neural-specific phenotypes of RTT remain poorly understood. Here, we show that neuronal activity and subsequent calcium influx trigger the de novo phosphorylation of MeCP2 at serine 421 (S421) by a CaMKII-dependent mechanism. MeCP2 S421 phosphorylation is induced selectively in the brain in response to physiological s",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.912968+00:00"
+}

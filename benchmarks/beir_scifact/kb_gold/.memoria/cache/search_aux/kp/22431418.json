@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22431418",
+  "source_fingerprint": "5af008a03df76ce124fdfbfc58041857",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22431418",
+    "the-national-advisory-group-on-immunization-(nagi)-of-the-republic-of-south-africa."
+  ],
+  "key_phrases": [
+    "national",
+    "advisory",
+    "group",
+    "immunization",
+    "nagi",
+    "republic",
+    "south",
+    "africa"
+  ],
+  "summary_1l": "The National Advisory Group on Immunization (NAGI) of the Republic of South Africa.",
+  "query_hits": [],
+  "embed_text": "22431418 The National Advisory Group on Immunization (NAGI) of the Republic of South Africa. science scifact The National Immunization Technical Advisory Group (NITAG) in South Africa, known as the National Advisory Group on Immunization (NAGI), was established in 1993 to advise the National Department of Health (DoH) on issues related to… 22431418 the-national-advisory-group-on-immunization-(nagi)-of-the-republic-of-south-africa. national advisory group immunization nagi republic south africa The National Advisory Group on Immunization (NAGI) of the Republic of South Africa. The National Advisory Group on Immunization (NAGI) of the Republic of South Africa. The National Immunization Technical Advisory Group (NITAG) in South Africa, known as the National Advisory Group on Immunization (NAGI), was established in 1993 to advise the National Department of Health (DoH) on issues related to vaccination. Meetings are held as needed but at least twice a year. The scope includes vaccines and immunization and other relevant infectious disease issues. NAGI also makes recommendations on vaccine schedules and formulations. Agendas are set by DoH and the Chairman of NAGI. NAGI brings together experts from a range of different fields relevant to vaccines and vaccinations and has been an important resource for guiding the Expanded Program of Immunization (EPI) in South Africa",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.729418+00:00"
+}

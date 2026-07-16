@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "5260382",
+  "source_fingerprint": "e2029740a6511b8efa5e8872bcb8632d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5260382"
+  ],
+  "key_phrases": [
+    "antidepressant",
+    "decreases",
+    "csf",
+    "production",
+    "healthy",
+    "individuals",
+    "transgenic",
+    "ad"
+  ],
+  "summary_1l": "Serotonin signaling suppresses generation of amyloid-β (Aβ) in vitro and in animal models of Alzheimer’s",
+  "query_hits": [],
+  "embed_text": "5260382 An Antidepressant Decreases CSF Aβ Production in Healthy Individuals and in Transgenic AD Mice science scifact Serotonin signaling suppresses generation of amyloid-β (Aβ) in vitro and in animal models of Alzheimer’s disease (AD). We show that in an aged transgenic AD mouse model (APP/PS1 plaque-bearing mice), the antidepressant citalopram, a… 5260382 antidepressant decreases csf production healthy individuals transgenic ad Serotonin signaling suppresses generation of amyloid-β (Aβ) in vitro and in animal models of Alzheimer’s An Antidepressant Decreases CSF Aβ Production in Healthy Individuals and in Transgenic AD Mice Serotonin signaling suppresses generation of amyloid-β (Aβ) in vitro and in animal models of Alzheimer’s disease (AD). We show that in an aged transgenic AD mouse model (APP/PS1 plaque-bearing mice), the antidepressant citalopram, a selective serotonin reuptake inhibitor, decreased Aβ in brain interstitial fluid in a dose-dependent manner. Growth of individual amyloid plaques was assessed in plaque-bearing mice that were chronically administered citalopram. Citalopram arrested the growth of preexisting plaques and reduced the appearance of new plaques by 78%. In healthy human volunteers, citalopram’s effects on Aβ production and Aβ concentrations in cerebrospinal fluid (CSF) were measured prospec",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.654067+00:00"
+}

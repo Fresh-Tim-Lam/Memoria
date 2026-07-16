@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "35345807",
+  "source_fingerprint": "5f87612e75c98b2213f9678b9d46cd92",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "35345807",
+    "isonicotinamide-enhances-sir2-protein-mediated-silencing-and-longevity-in-yeast-by-raising-intracellular-nad+-concentration."
+  ],
+  "key_phrases": [
+    "isonicotinamide",
+    "enhances",
+    "sir2",
+    "protein",
+    "mediated",
+    "silencing",
+    "longevity",
+    "yeast"
+  ],
+  "summary_1l": "Isonicotinamide enhances Sir2 protein-mediated silencing and longevity in yeast by raising intracellular NAD+ concentration.",
+  "query_hits": [],
+  "embed_text": "35345807 Isonicotinamide enhances Sir2 protein-mediated silencing and longevity in yeast by raising intracellular NAD+ concentration. science scifact Sirtuins are an evolutionarily conserved family of NAD(+)-dependent protein deacetylases that function in the regulation of gene transcription, cellular metabolism, and aging. Their activity requires the maintenance of an adequate… 35345807 isonicotinamide-enhances-sir2-protein-mediated-silencing-and-longevity-in-yeast-by-raising-intracellular-nad+-concentration. isonicotinamide enhances sir2 protein mediated silencing longevity yeast Isonicotinamide enhances Sir2 protein-mediated silencing and longevity in yeast by raising intracellular NAD+ concentration. Isonicotinamide enhances Sir2 protein-mediated silencing and longevity in yeast by raising intracellular NAD+ concentration. Sirtuins are an evolutionarily conserved family of NAD(+)-dependent protein deacetylases that function in the regulation of gene transcription, cellular metabolism, and aging. Their activity requires the maintenance of an adequate intracellular NAD(+) concentration through the combined action of NAD(+) biosynthesis and salvage pathways. Nicotinamide (NAM) is a key NAD(+) precursor that is also a byproduct and feedback inhibitor of the deacetylation reaction. In Saccharomyces cerevisiae, the nicotinamidase Pnc1 converts NAM to nicotinic acid (NA), which is then used as a substrate by the NAD(+) salvage pathway enzyme NA phosphoribosyltransferase (Npt1). Isonicotinamid",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.202917+00:00"
+}

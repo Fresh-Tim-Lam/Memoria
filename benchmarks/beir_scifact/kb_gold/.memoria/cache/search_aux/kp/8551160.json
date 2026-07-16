@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8551160",
+  "source_fingerprint": "e6f75b25e8c4aaf89c82592871dbecf7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8551160",
+    "mitochondria:-dynamic-organelles-in-disease,-aging,-and-development"
+  ],
+  "key_phrases": [
+    "mitochondria",
+    "dynamic",
+    "organelles",
+    "disease",
+    "aging",
+    "development",
+    "primary",
+    "energy"
+  ],
+  "summary_1l": "Mitochondria are the primary energy-generating system in most eukaryotic cells.",
+  "query_hits": [],
+  "embed_text": "8551160 Mitochondria: Dynamic Organelles in Disease, Aging, and Development science scifact Mitochondria are the primary energy-generating system in most eukaryotic cells. Additionally, they participate in intermediary metabolism, calcium signaling, and apoptosis. Given these well-established functions, it might be expected that… 8551160 mitochondria:-dynamic-organelles-in-disease,-aging,-and-development mitochondria dynamic organelles disease aging development primary energy Mitochondria are the primary energy-generating system in most eukaryotic cells. Mitochondria: Dynamic Organelles in Disease, Aging, and Development Mitochondria are the primary energy-generating system in most eukaryotic cells. Additionally, they participate in intermediary metabolism, calcium signaling, and apoptosis. Given these well-established functions, it might be expected that mitochondrial dysfunction would give rise to a simple and predictable set of defects in all tissues. However, mitochondrial dysfunction has pleiotropic effects in multicellular organisms. Clearly, much about the basic biology of mitochondria remains to be understood. Here we discuss recent work that suggests that the dynamics (fusion and fission) of these organelles is important in development and disease.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.015899+00:00"
+}

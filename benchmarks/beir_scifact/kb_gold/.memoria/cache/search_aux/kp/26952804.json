@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26952804",
+  "source_fingerprint": "963ae46a5c316fd6cc51a00eefb210c2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26952804",
+    "the-role-of-autophagy-in-cancer-development-and-response-to-therapy"
+  ],
+  "key_phrases": [
+    "role",
+    "autophagy",
+    "cancer",
+    "development",
+    "response",
+    "therapy",
+    "process",
+    "which"
+  ],
+  "summary_1l": "Autophagy is a process in which subcellular membranes undergo dynamic morphological changes that lead to the degradation of cellular",
+  "query_hits": [],
+  "embed_text": "26952804 The role of autophagy in cancer development and response to therapy science scifact Autophagy is a process in which subcellular membranes undergo dynamic morphological changes that lead to the degradation of cellular proteins and cytoplasmic organelles. This process is an important cellular response to stress or… 26952804 the-role-of-autophagy-in-cancer-development-and-response-to-therapy role autophagy cancer development response therapy process which Autophagy is a process in which subcellular membranes undergo dynamic morphological changes that lead to the degradation of cellular The role of autophagy in cancer development and response to therapy Autophagy is a process in which subcellular membranes undergo dynamic morphological changes that lead to the degradation of cellular proteins and cytoplasmic organelles. This process is an important cellular response to stress or starvation. Many studies have shed light on the importance of autophagy in cancer, but it is still unclear whether autophagy suppresses tumorigenesis or provides cancer cells with a rescue mechanism under unfavourable conditions. What is the present state of our knowledge about the role of autophagy in cancer development, and in response to therapy? And how can the autophagic process be manipulated to improve anticancer therapeutics?",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.296888+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "40323454",
+  "source_fingerprint": "b6f2309c0148a51cae7f341279f15ef0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "40323454",
+    "chronic-lymphocytic-leukemia-with-t(14;19)(q32;q13)-is-characterized-by-atypical-morphologic-and-immunophenotypic-features-and-distinctive-genetic-features."
+  ],
+  "key_phrases": [
+    "chronic",
+    "lymphocytic",
+    "leukemia",
+    "with",
+    "14",
+    "19",
+    "q32",
+    "q13"
+  ],
+  "summary_1l": "Chronic lymphocytic leukemia with t(14;19)(q32;q13) is characterized by atypical morphologic and immunophenotypic features and distinctive genetic features.",
+  "query_hits": [],
+  "embed_text": "40323454 Chronic lymphocytic leukemia with t(14;19)(q32;q13) is characterized by atypical morphologic and immunophenotypic features and distinctive genetic features. science scifact The t(14;19)(q32;q13) involving the IGH@ and BCL3 loci is an infrequent cytogenetic abnormality detected in B-cell malignancies. We describe the clinicopathologic, cytogenetic, and molecular genetic characteristics of 14 cases of chronic… 40323454 chronic-lymphocytic-leukemia-with-t(14;19)(q32;q13)-is-characterized-by-atypical-morphologic-and-immunophenotypic-features-and-distinctive-genetic-features. chronic lymphocytic leukemia with 14 19 q32 q13 Chronic lymphocytic leukemia with t(14;19)(q32;q13) is characterized by atypical morphologic and immunophenotypic features and distinctive genetic features. Chronic lymphocytic leukemia with t(14;19)(q32;q13) is characterized by atypical morphologic and immunophenotypic features and distinctive genetic features. The t(14;19)(q32;q13) involving the IGH@ and BCL3 loci is an infrequent cytogenetic abnormality detected in B-cell malignancies. We describe the clinicopathologic, cytogenetic, and molecular genetic characteristics of 14 cases of chronic lymphocytic leukemia/small lymphocytic lymphoma (CLL/SLL) with t(14;19)(q32;q13). All patients (10 men and 4 women) had lymphocytosis; 10 had lymphadenopathy. Blood and bone marrow lymphocytes were predominantly small, but cytologically and immunophenotypically atypical. In all cases, t(14;19) was found in the neoplastic stem line; it was the sole abnormality in 4. Ten cases showed additional cytogenet",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.425593+00:00"
+}

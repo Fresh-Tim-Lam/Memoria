@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "34935825",
+  "source_fingerprint": "f42a4f8dcf2484f539431d591466ab39",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "34935825",
+    "a-new-era-in-ovulation-induction."
+  ],
+  "key_phrases": [
+    "new",
+    "era",
+    "ovulation",
+    "induction",
+    "objective",
+    "evaluate",
+    "efficacy",
+    "aromatase"
+  ],
+  "summary_1l": "A new era in ovulation induction.",
+  "query_hits": [],
+  "embed_text": "34935825 A new era in ovulation induction. science scifact OBJECTIVE To evaluate the efficacy of aromatase inhibitors in ovulation induction, superovulation, and IVF. DESIGN A literature search was conducted with the key words \"aromatase inhibitor,\" \"letrozole,\" \"anastrazole,\" \"ovulation… 34935825 a-new-era-in-ovulation-induction. new era ovulation induction objective evaluate efficacy aromatase A new era in ovulation induction. A new era in ovulation induction. OBJECTIVE To evaluate the efficacy of aromatase inhibitors in ovulation induction, superovulation, and IVF. DESIGN A literature search was conducted with the key words \"aromatase inhibitor,\" \"letrozole,\" \"anastrazole,\" \"ovulation induction,\" \"ovulation,\" and \"superovulation\" in MEDLINE, EMBASE, and the Cochrane Database of systematic reviews. RESULT(S) Ovulation induction with letrozole is associated with an ovulation rate of 70%-84% and a pregnancy rate of 20%-27% per cycle. In one study, ovulation and pregnancy rates with letrozole seemed to be higher than those of anastrazole. In superovulation, letrozole is associated with few developing follicles and thick endometrium. The use of letrozole for superovulation is associated with a pregnancy rate higher",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.823243+00:00"
+}

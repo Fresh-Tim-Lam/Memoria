@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "31761981",
+  "source_fingerprint": "e1f69dd6110880d08381a66c58e2f083",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "31761981",
+    "the-emergence-of-order-in-the-drosophila-pupal-retina."
+  ],
+  "key_phrases": [
+    "emergence",
+    "order",
+    "drosophila",
+    "pupal",
+    "retina",
+    "during",
+    "pupation",
+    "long"
+  ],
+  "summary_1l": "The emergence of order in the Drosophila pupal retina.",
+  "query_hits": [],
+  "embed_text": "31761981 The emergence of order in the Drosophila pupal retina. science scifact During pupation, long-range order is imposed on the autonomously developing ommatidia which compose the Drosophila eye. To accomplish this, eight additional cell types arise: the primary, secondary, and tertiary pigment cells, and the four… 31761981 the-emergence-of-order-in-the-drosophila-pupal-retina. emergence order drosophila pupal retina during pupation long The emergence of order in the Drosophila pupal retina. The emergence of order in the Drosophila pupal retina. During pupation, long-range order is imposed on the autonomously developing ommatidia which compose the Drosophila eye. To accomplish this, eight additional cell types arise: the primary, secondary, and tertiary pigment cells, and the four cells that form the bristle. These cells form an interweaving lattice between ommatidia. The lattice is refined when excess cells are removed to bring neighboring ommatidia into register. Recent evidence suggests that in larval development, local contacts direct cell fate. The same appears to be true during pupal development: the contacts a cell makes predict the cell type it will become. Cells which contact the anterior or posterior cone cells in an ommatidium invariably become primary pigment cells",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.874909+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "34603465",
+  "source_fingerprint": "18e5b4d93fd61d80c184a29f2848f6bd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "34603465",
+    "metabolic,-epigenetic,-and-transgenerational-effects-of-gut-bacterial-choline-consumption."
+  ],
+  "key_phrases": [
+    "metabolic",
+    "epigenetic",
+    "transgenerational",
+    "effects",
+    "gut",
+    "bacterial",
+    "choline",
+    "consumption"
+  ],
+  "summary_1l": "Metabolic, Epigenetic, and Transgenerational Effects of Gut Bacterial Choline Consumption.",
+  "query_hits": [],
+  "embed_text": "34603465 Metabolic, Epigenetic, and Transgenerational Effects of Gut Bacterial Choline Consumption. science scifact Choline is an essential nutrient and methyl donor required for epigenetic regulation. Here, we assessed the impact of gut microbial choline metabolism on bacterial fitness and host biology by engineering a microbial community that lacks a… 34603465 metabolic,-epigenetic,-and-transgenerational-effects-of-gut-bacterial-choline-consumption. metabolic epigenetic transgenerational effects gut bacterial choline consumption Metabolic, Epigenetic, and Transgenerational Effects of Gut Bacterial Choline Consumption. Metabolic, Epigenetic, and Transgenerational Effects of Gut Bacterial Choline Consumption. Choline is an essential nutrient and methyl donor required for epigenetic regulation. Here, we assessed the impact of gut microbial choline metabolism on bacterial fitness and host biology by engineering a microbial community that lacks a single choline-utilizing enzyme. Our results indicate that choline-utilizing bacteria compete with the host for this nutrient, significantly impacting plasma and hepatic levels of methyl-donor metabolites and recapitulating biochemical signatures of choline deficiency. Mice harboring high levels of choline-consuming bacteria showed increased susceptibility to metabolic disease in the context of a high-fat diet. Furthermore, bacterially induced reduction of methyl-do",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.604631+00:00"
+}

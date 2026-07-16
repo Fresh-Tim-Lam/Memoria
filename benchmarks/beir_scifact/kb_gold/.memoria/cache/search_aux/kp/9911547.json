@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9911547",
+  "source_fingerprint": "affeaa7f3dff964a126f135cedc85f5f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9911547",
+    "angiopoietin-like-protein-3-supports-the-activity-of-hematopoietic-stem-cells-in-the-bone-marrow-niche."
+  ],
+  "key_phrases": [
+    "angiopoietin",
+    "like",
+    "protein",
+    "supports",
+    "activity",
+    "hematopoietic",
+    "stem",
+    "cells"
+  ],
+  "summary_1l": "Angiopoietin-like protein 3 supports the activity of hematopoietic stem cells in the bone marrow niche.",
+  "query_hits": [],
+  "embed_text": "9911547 Angiopoietin-like protein 3 supports the activity of hematopoietic stem cells in the bone marrow niche. science scifact The physiologic roles of angiopoietin-like proteins (Angptls) in the hematopoietic system remain unknown. Here we show that hematopoietic stem cells (HSCs) in Angptl3-null mice are decreased in number and quiescence. HSCs transplanted into… 9911547 angiopoietin-like-protein-3-supports-the-activity-of-hematopoietic-stem-cells-in-the-bone-marrow-niche. angiopoietin like protein supports activity hematopoietic stem cells Angiopoietin-like protein 3 supports the activity of hematopoietic stem cells in the bone marrow niche. Angiopoietin-like protein 3 supports the activity of hematopoietic stem cells in the bone marrow niche. The physiologic roles of angiopoietin-like proteins (Angptls) in the hematopoietic system remain unknown. Here we show that hematopoietic stem cells (HSCs) in Angptl3-null mice are decreased in number and quiescence. HSCs transplanted into Angptl3-null recipient mice exhibited impaired repopulation. Bone marrow sinusoidal endothelial cells express high levels of Angptl3 and are adjacent to HSCs. Importantly, bone marrow stromal cells or endothelium deficient in Angptl3 have a significantly decreased ability to support the expansion of repopulating HSCs. Angptl3 represses the expression of the transcription factor Ikaros, whose unregulated overexpression diminishes the repopulation activi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:06.111525+00:00"
+}

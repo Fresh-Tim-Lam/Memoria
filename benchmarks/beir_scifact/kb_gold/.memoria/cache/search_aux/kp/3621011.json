@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3621011",
+  "source_fingerprint": "5d5f89ee6b647d2ddbfcfa091cb036b6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3621011",
+    "tenomodulin-promotes-human-adipocyte-differentiation-and-beneficial-visceral-adipose-tissue-expansion."
+  ],
+  "key_phrases": [
+    "tenomodulin",
+    "promotes",
+    "human",
+    "adipocyte",
+    "differentiation",
+    "beneficial",
+    "visceral",
+    "adipose"
+  ],
+  "summary_1l": "Tenomodulin promotes human adipocyte differentiation and beneficial visceral adipose tissue expansion.",
+  "query_hits": [],
+  "embed_text": "3621011 Tenomodulin promotes human adipocyte differentiation and beneficial visceral adipose tissue expansion. science scifact Proper regulation of energy storage in adipose tissue is crucial for maintaining insulin sensitivity and molecules contributing to this process have not been fully revealed. Here we show that type II transmembrane protein tenomodulin… 3621011 tenomodulin-promotes-human-adipocyte-differentiation-and-beneficial-visceral-adipose-tissue-expansion. tenomodulin promotes human adipocyte differentiation beneficial visceral adipose Tenomodulin promotes human adipocyte differentiation and beneficial visceral adipose tissue expansion. Tenomodulin promotes human adipocyte differentiation and beneficial visceral adipose tissue expansion. Proper regulation of energy storage in adipose tissue is crucial for maintaining insulin sensitivity and molecules contributing to this process have not been fully revealed. Here we show that type II transmembrane protein tenomodulin (TNMD) is upregulated in adipose tissue of insulin-resistant versus insulin-sensitive individuals, who were matched for body mass index (BMI). TNMD expression increases in human preadipocytes during differentiation, whereas silencing TNMD blocks adipogenesis. Upon high-fat diet feeding, transgenic mice overexpressing Tnmd develop increased epididymal white adipose tissue (eWAT) mass, and preadipocytes derived from Tnmd transgenic mice display greater prolifer",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:43.006743+00:00"
+}

@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "kp_id": "5637571#0",
+  "source_fingerprint": "0cb17f3f04dbd7c6ea41e8a0277df99e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "中华人民共和国",
+    "(中华人民共和国)",
+    "中华人民共和国体育",
+    "中华人民共和国第一届运动会",
+    "中华人民共和国－俄罗斯联邦关系",
+    "中国共产党最高人民法院机关委员会",
+    "最高人民法院办公厅",
+    "最高人民法院审判监督庭",
+    "最高人民法院执行局",
+    "最高人民法院政治部",
+    "最高人民法院机关服务中心",
+    "最高人民法院督察局"
+  ],
+  "aliases": [
+    "5637571#0"
+  ],
+  "key_phrases": [
+    "最高人民法院",
+    "图书馆",
+    "位于",
+    "北京市",
+    "中华人民共和国",
+    "内部",
+    "zuigaorenminfayuantushuguanzuigaorenminfayuantushuguanweiyubeijingshishizhonghuarenmingongheguozuigaorenminfayuandeneibutushuguan",
+    "最高人民法院图书馆 最高人民法院图书馆，位于北京市，是中华人民共和国最高人民法院的内部图书馆。"
+  ],
+  "summary_1l": "最高人民法院图书馆，位于北京市，是中华人民共和国最高人民法院的内部图书馆。",
+  "query_hits": [],
+  "embed_text": "5637571#0 最高人民法院图书馆 最高人民法院图书馆 最高人民法院图书馆，位于北京市，是中华人民共和国最高人民法院的内部图书馆。 中华人民共和国 (中华人民共和国) 中华人民共和国体育 中华人民共和国第一届运动会 中华人民共和国－俄罗斯联邦关系 中国共产党最高人民法院机关委员会 最高人民法院办公厅 最高人民法院审判监督庭 最高人民法院执行局 最高人民法院政治部 最高人民法院机关服务中心 最高人民法院督察局 5637571#0 最高人民法院 图书馆 位于 北京市 中华人民共和国 内部 zuigaorenminfayuantushuguanzuigaorenminfayuantushuguanweiyubeijingshishizhonghuarenmingongheguozuigaorenminfayuandeneibutushuguan 最高人民法院图书馆 最高人民法院图书馆，位于北京市，是中华人民共和国最高人民法院的内部图书馆。 最高人民法院图书馆，位于北京市，是中华人民共和国最高人民法院的内部图书馆。 最高人民法院图书馆 最高人民法院图书馆，位于北京市，是中华人民共和国最高人民法院的内部图书馆。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:22:38.970022+00:00"
+}

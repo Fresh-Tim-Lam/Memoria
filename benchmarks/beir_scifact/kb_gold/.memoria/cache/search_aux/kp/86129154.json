@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "86129154",
+  "source_fingerprint": "7f4395821686380e2156d376d17bcdee",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "86129154",
+    "induced-pluripotent-stem-cell-lines-derived-from-human-somatic-cells."
+  ],
+  "key_phrases": [
+    "induced",
+    "pluripotent",
+    "stem",
+    "cell",
+    "lines",
+    "derived",
+    "from",
+    "human"
+  ],
+  "summary_1l": "Induced pluripotent stem cell lines derived from human somatic cells.",
+  "query_hits": [],
+  "embed_text": "86129154 Induced pluripotent stem cell lines derived from human somatic cells. science scifact Somatic cell nuclear transfer allows trans-acting factors present in the mammalian oocyte to reprogram somatic cell nuclei to an undifferentiated state. We show that four factors (OCT4, SOX2, NANOG, and LIN28) are sufficient to reprogram… 86129154 induced-pluripotent-stem-cell-lines-derived-from-human-somatic-cells. induced pluripotent stem cell lines derived from human Induced pluripotent stem cell lines derived from human somatic cells. Induced pluripotent stem cell lines derived from human somatic cells. Somatic cell nuclear transfer allows trans-acting factors present in the mammalian oocyte to reprogram somatic cell nuclei to an undifferentiated state. We show that four factors (OCT4, SOX2, NANOG, and LIN28) are sufficient to reprogram human somatic cells to pluripotent stem cells that exhibit the essential characteristics of embryonic stem (ES) cells. These induced pluripotent human stem cells have normal karyotypes, express telomerase activity, express cell surface markers and genes that characterize human ES cells, and maintain the developmental potential to differentiate into advanced derivatives of all three primary germ layers. Such induced pluripotent human cell lines should be useful in the production of new di",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.215389+00:00"
+}

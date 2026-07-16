@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5003144",
+  "source_fingerprint": "e59ea3181fe80f3dad08eac0718a9dd2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5003144",
+    "self-reactive-b-cells-in-the-germinal-center-reaction."
+  ],
+  "key_phrases": [
+    "self",
+    "reactive",
+    "cells",
+    "germinal",
+    "center",
+    "reaction",
+    "maintenance",
+    "immunological"
+  ],
+  "summary_1l": "Self-Reactive B Cells in the Germinal Center Reaction.",
+  "query_hits": [],
+  "embed_text": "5003144 Self-Reactive B Cells in the Germinal Center Reaction. science scifact Maintenance of immunological self-tolerance requires lymphocytes carrying self-reactive antigen receptors to be selectively prevented from mounting destructive or inflammatory effector responses. Classically, self-tolerance is viewed in… 5003144 self-reactive-b-cells-in-the-germinal-center-reaction. self reactive cells germinal center reaction maintenance immunological Self-Reactive B Cells in the Germinal Center Reaction. Self-Reactive B Cells in the Germinal Center Reaction. Maintenance of immunological self-tolerance requires lymphocytes carrying self-reactive antigen receptors to be selectively prevented from mounting destructive or inflammatory effector responses. Classically, self-tolerance is viewed in terms of the removal, editing, or silencing of B and T cells that have formed self-reactive antigen receptors during their early development. However, B cells activated by foreign antigen can enter germinal centers (GCs), where they further modify their antigen receptor by somatic hypermutation (SHM) of their immunoglobulin genes. The inevitable emergence of activated, self-reactive GC B cells presents a unique challenge to the maintenance of self-tolerance that must be rapidly countered to avoid autoan",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.012234+00:00"
+}

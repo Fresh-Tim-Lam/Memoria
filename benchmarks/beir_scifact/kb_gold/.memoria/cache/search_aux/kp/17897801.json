@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17897801",
+  "source_fingerprint": "d27ad02b4e0f8eb933f2d840e883d638",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17897801",
+    "effects-of-abciximab-on-the-architecture-of-platelet-rich-clots-in-patients-with-acute-myocardial-infarction-undergoing-primary-coronary-intervention."
+  ],
+  "key_phrases": [
+    "effects",
+    "abciximab",
+    "architecture",
+    "platelet",
+    "rich",
+    "clots",
+    "patients",
+    "with"
+  ],
+  "summary_1l": "Effects of Abciximab on the architecture of platelet-rich clots in patients with acute myocardial infarction undergoing primary coronary intervention.",
+  "query_hits": [],
+  "embed_text": "17897801 Effects of Abciximab on the architecture of platelet-rich clots in patients with acute myocardial infarction undergoing primary coronary intervention. science scifact BACKGROUND Abciximab plus aspirin improves the TIMI 3 flow rate of the infarct-related artery in patients treated with either percutaneous coronary intervention or thrombolysis. The present study investigated whether the reperfusion… 17897801 effects-of-abciximab-on-the-architecture-of-platelet-rich-clots-in-patients-with-acute-myocardial-infarction-undergoing-primary-coronary-intervention. effects abciximab architecture platelet rich clots patients with Effects of Abciximab on the architecture of platelet-rich clots in patients with acute myocardial infarction undergoing primary coronary intervention. Effects of Abciximab on the architecture of platelet-rich clots in patients with acute myocardial infarction undergoing primary coronary intervention. BACKGROUND Abciximab plus aspirin improves the TIMI 3 flow rate of the infarct-related artery in patients treated with either percutaneous coronary intervention or thrombolysis. The present study investigated whether the reperfusion efficacy of abciximab relates to modifications of clot architecture in patients admitted for acute myocardial infarction (AMI). METHODS AND RESULTS A total of 23 AMI patients in the Abciximab before Direct angioplasty and stenting in Myocardial Infarction Regarding Acute and Long term follow-up (ADMIRAL) trial received, in a double-blind fashion, either abciximab (n=13) or placebo (n=10) before primary stenting.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.406565+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "44586415",
+  "source_fingerprint": "d19fe3c21da1b287155e7c5026e3dad5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "44586415",
+    "most-clinical-tests-cannot-accurately-diagnose-rotator-cuff-pathology:-a-systematic-review."
+  ],
+  "key_phrases": [
+    "most",
+    "clinical",
+    "tests",
+    "cannot",
+    "accurately",
+    "diagnose",
+    "rotator",
+    "cuff"
+  ],
+  "summary_1l": "Most clinical tests cannot accurately diagnose rotator cuff pathology: a systematic review.",
+  "query_hits": [],
+  "embed_text": "44586415 Most clinical tests cannot accurately diagnose rotator cuff pathology: a systematic review. science scifact QUESTION Do clinical tests accurately diagnose rotator cuff pathology? DESIGN A systematic review of investigations into the diagnostic accuracy of clinical tests for rotator cuff pathology. PARTICIPANTS People with shoulder pain who… 44586415 most-clinical-tests-cannot-accurately-diagnose-rotator-cuff-pathology:-a-systematic-review. most clinical tests cannot accurately diagnose rotator cuff Most clinical tests cannot accurately diagnose rotator cuff pathology: a systematic review. Most clinical tests cannot accurately diagnose rotator cuff pathology: a systematic review. QUESTION Do clinical tests accurately diagnose rotator cuff pathology? DESIGN A systematic review of investigations into the diagnostic accuracy of clinical tests for rotator cuff pathology. PARTICIPANTS People with shoulder pain who underwent clinical testing in order to diagnose rotator cuff pathology. OUTCOME MEASURES The diagnostic accuracy of clinical tests was determined using likelihood ratios. RESULTS Thirteen studies met the inclusion criteria. The 13 studies evaluated 14 clinical tests in 89 separate evaluations of diagnostic accuracy. Only one evaluation, palpation for supraspinatus ruptures, resulted in significant positive and negative likelihood ratios. Eight of the 89 evaluations resu",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.567094+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11117679",
+  "source_fingerprint": "8ff430e5a14168ab77b52655d87286c6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11117679",
+    "trans-ancestry-mutational-landscape-of-hepatocellular-carcinoma-genomes"
+  ],
+  "key_phrases": [
+    "trans",
+    "ancestry",
+    "mutational",
+    "landscape",
+    "hepatocellular",
+    "carcinoma",
+    "genomes",
+    "diverse"
+  ],
+  "summary_1l": "Diverse epidemiological factors are associated with hepatocellular carcinoma (HCC) prevalence in different populations.",
+  "query_hits": [],
+  "embed_text": "11117679 Trans-ancestry mutational landscape of hepatocellular carcinoma genomes science scifact Diverse epidemiological factors are associated with hepatocellular carcinoma (HCC) prevalence in different populations. However, the global landscape of the genetic changes in HCC genomes underpinning different epidemiological and… 11117679 trans-ancestry-mutational-landscape-of-hepatocellular-carcinoma-genomes trans ancestry mutational landscape hepatocellular carcinoma genomes diverse Diverse epidemiological factors are associated with hepatocellular carcinoma (HCC) prevalence in different populations. Trans-ancestry mutational landscape of hepatocellular carcinoma genomes Diverse epidemiological factors are associated with hepatocellular carcinoma (HCC) prevalence in different populations. However, the global landscape of the genetic changes in HCC genomes underpinning different epidemiological and ancestral backgrounds still remains uncharted. Here a collection of data from 503 liver cancer genomes from different populations uncovered 30 candidate driver genes and 11 core pathway modules. Furthermore, a collaboration of two large-scale cancer genome projects comparatively analyzed the trans-ancestry substitution signatures in 608 liver cancer cases and identified unique mutational signatures that predominantly contribute to Asian cases. This work elucidates previously unexplored ancest",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:06.360787+00:00"
+}

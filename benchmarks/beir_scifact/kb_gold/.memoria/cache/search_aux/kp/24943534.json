@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24943534",
+  "source_fingerprint": "384d5b8404bfe9a456de176828d18cc4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24943534",
+    "hepatitis-c-and-human-immunodeficiency-virus-infection."
+  ],
+  "key_phrases": [
+    "hepatitis",
+    "human",
+    "immunodeficiency",
+    "virus",
+    "infection",
+    "united",
+    "states",
+    "estimated"
+  ],
+  "summary_1l": "Hepatitis C and human immunodeficiency virus infection.",
+  "query_hits": [],
+  "embed_text": "24943534 Hepatitis C and human immunodeficiency virus infection. science scifact In the United States, an estimated 200,000 persons are infected with both hepatitis C virus (HCV) and human immunodeficiency virus (HIV). As the lives of HIV-infected persons have been prolonged by use of highly active antiretroviral… 24943534 hepatitis-c-and-human-immunodeficiency-virus-infection. hepatitis human immunodeficiency virus infection united states estimated Hepatitis C and human immunodeficiency virus infection. Hepatitis C and human immunodeficiency virus infection. In the United States, an estimated 200,000 persons are infected with both hepatitis C virus (HCV) and human immunodeficiency virus (HIV). As the lives of HIV-infected persons have been prolonged by use of highly active antiretroviral therapy, liver disease has emerged as an important, and in some settings, the leading cause of morbidity and mortality. Human immunodeficiency virus infection appears to adversely affect all stages of hepatitis C infection, leading to increased viral persistence and accelerated progression of HCV-related liver disease. In turn, hepatitis C may affect the management of HIV infection, increasing the incidence of liver toxicity caused by antiretroviral medications. The medical management of hepatitis C in HI",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.623273+00:00"
+}

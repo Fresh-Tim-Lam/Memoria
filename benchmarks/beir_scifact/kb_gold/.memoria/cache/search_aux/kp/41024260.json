@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "41024260",
+  "source_fingerprint": "f60df9caead054ddc42fdcd3d6782615",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "41024260",
+    "the-multi-zinc-finger-protein-znf217-contacts-dna-through-a-two-finger-domain."
+  ],
+  "key_phrases": [
+    "multi",
+    "zinc",
+    "finger",
+    "protein",
+    "znf217",
+    "contacts",
+    "dna",
+    "through"
+  ],
+  "summary_1l": "The multi-zinc finger protein ZNF217 contacts DNA through a two-finger domain.",
+  "query_hits": [],
+  "embed_text": "41024260 The multi-zinc finger protein ZNF217 contacts DNA through a two-finger domain. science scifact Classical C2H2 zinc finger proteins are among the most abundant transcription factors found in eukaryotes, and the mechanisms through which they recognize their target genes have been extensively investigated. In general, a tandem array of… 41024260 the-multi-zinc-finger-protein-znf217-contacts-dna-through-a-two-finger-domain. multi zinc finger protein znf217 contacts dna through The multi-zinc finger protein ZNF217 contacts DNA through a two-finger domain. The multi-zinc finger protein ZNF217 contacts DNA through a two-finger domain. Classical C2H2 zinc finger proteins are among the most abundant transcription factors found in eukaryotes, and the mechanisms through which they recognize their target genes have been extensively investigated. In general, a tandem array of three fingers separated by characteristic TGERP links is required for sequence-specific DNA recognition. Nevertheless, a significant number of zinc finger proteins do not contain a hallmark three-finger array of this type, raising the question of whether and how they contact DNA. We have examined the multi-finger protein ZNF217, which contains eight classical zinc fingers. ZNF217 is implicated as an oncogene and in repressing the E-cadherin gene. We show that two of its zinc f",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.062108+00:00"
+}

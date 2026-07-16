@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12428137",
+  "source_fingerprint": "d14ef3534325ce9b2150305591910caa",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12428137",
+    "mapping-of-a-gene-for-severe-pediatric-gastroesophageal-reflux-to-chromosome-13q14."
+  ],
+  "key_phrases": [
+    "mapping",
+    "gene",
+    "severe",
+    "pediatric",
+    "gastroesophageal",
+    "reflux",
+    "chromosome",
+    "13q14"
+  ],
+  "summary_1l": "Mapping of a gene for severe pediatric gastroesophageal reflux to chromosome 13q14.",
+  "query_hits": [],
+  "embed_text": "12428137 Mapping of a gene for severe pediatric gastroesophageal reflux to chromosome 13q14. science scifact CONTEXT Gastroesophageal reflux (GER) has not previously been widely regarded as a hereditary disease. A few reports have suggested, however, that a genetic component may contribute to the incidence of GER, especially in its severe or… 12428137 mapping-of-a-gene-for-severe-pediatric-gastroesophageal-reflux-to-chromosome-13q14. mapping gene severe pediatric gastroesophageal reflux chromosome 13q14 Mapping of a gene for severe pediatric gastroesophageal reflux to chromosome 13q14. Mapping of a gene for severe pediatric gastroesophageal reflux to chromosome 13q14. CONTEXT Gastroesophageal reflux (GER) has not previously been widely regarded as a hereditary disease. A few reports have suggested, however, that a genetic component may contribute to the incidence of GER, especially in its severe or chronic forms. OBJECTIVE To identify a genetic locus that cosegregates with a severe pediatric GER phenotype in families with multiple affected members. DESIGN A genome-wide scan of families affected by severe pediatric GER using polymorphic microsatellite markers spaced at an average of 8 centimorgans (cM), followed by haplotyping and by pairwise and multipoint linkage analyses. SETTING General US community, with research performed in a university tertiary care hospital. SUBJ",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:08.290956+00:00"
+}

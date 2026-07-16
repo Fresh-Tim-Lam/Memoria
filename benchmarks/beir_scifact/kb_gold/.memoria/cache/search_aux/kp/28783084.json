@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "28783084",
+  "source_fingerprint": "ad3a818e399c3c2e94d1d080b2dcd52a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "28783084",
+    "regeneration,-tissue-injury-and-the-immune-response."
+  ],
+  "key_phrases": [
+    "regeneration",
+    "tissue",
+    "injury",
+    "immune",
+    "response",
+    "involvement",
+    "system",
+    "has"
+  ],
+  "summary_1l": "Regeneration, tissue injury and the immune response.",
+  "query_hits": [],
+  "embed_text": "28783084 Regeneration, tissue injury and the immune response. science scifact The involvement of the immune system in the response to tissue injury has raised the possibility that it might influence tissue, organ or appendage regeneration following injury. One hypothesis that has been discussed is that inflammatory… 28783084 regeneration,-tissue-injury-and-the-immune-response. regeneration tissue injury immune response involvement system has Regeneration, tissue injury and the immune response. Regeneration, tissue injury and the immune response. The involvement of the immune system in the response to tissue injury has raised the possibility that it might influence tissue, organ or appendage regeneration following injury. One hypothesis that has been discussed is that inflammatory aspects may preclude the occurrence of regeneration, but there is also evidence for more positive roles of immune components. The vertebrate eye is an immunoprivileged site where inflammatory aspects are inhibited by several immunomodulatory mechanisms. In various newt species the ocular tissues such as the lens are regenerative and it has recently been shown that the response to local injury of the lens involves activation of antigen-presenting cells which traffic to the spleen and return to displace a",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.329334+00:00"
+}

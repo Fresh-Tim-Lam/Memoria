@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2236768",
+  "source_fingerprint": "eeca161e45b102503357913718ab0fb3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2236768",
+    "infection-induced-netosis-is-a-dynamic-process-involving-neutrophil-multitasking-in-vivo"
+  ],
+  "key_phrases": [
+    "infection",
+    "induced",
+    "netosis",
+    "dynamic",
+    "process",
+    "involving",
+    "neutrophil",
+    "multitasking"
+  ],
+  "summary_1l": "Neutrophil extracellular traps (NETs) are released as neutrophils die in vitro in a process requiring hours, le",
+  "query_hits": [],
+  "embed_text": "2236768 Infection-induced NETosis is a dynamic process involving neutrophil multitasking in vivo science scifact Neutrophil extracellular traps (NETs) are released as neutrophils die in vitro in a process requiring hours, leaving a temporal gap that invasive microbes may exploit. Neutrophils capable of migration and phagocytosis while undergoing… 2236768 infection-induced-netosis-is-a-dynamic-process-involving-neutrophil-multitasking-in-vivo infection induced netosis dynamic process involving neutrophil multitasking Neutrophil extracellular traps (NETs) are released as neutrophils die in vitro in a process requiring hours, le Infection-induced NETosis is a dynamic process involving neutrophil multitasking in vivo Neutrophil extracellular traps (NETs) are released as neutrophils die in vitro in a process requiring hours, leaving a temporal gap that invasive microbes may exploit. Neutrophils capable of migration and phagocytosis while undergoing NETosis have not been documented. During Gram-positive skin infections, we directly visualized live polymorphonuclear cells (PMNs) in vivo rapidly releasing NETs, which prevented systemic bacterial dissemination. NETosis occurred during crawling, thereby casting large areas of NETs. NET-releasing PMNs developed diffuse decondensed nuclei, ultimately becoming devoid of DNA. Cells with abnormal nuclei showed unusual crawling behavior highlighted by erratic pseudopods and hy",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.616663+00:00"
+}

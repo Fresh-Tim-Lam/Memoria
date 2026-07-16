@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25623469",
+  "source_fingerprint": "bc4132cbfbf2beb6b1e8e65c17804d05",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25623469",
+    "a-conserved-phosphatase-cascade-that-regulates-nuclear-membrane-biogenesis."
+  ],
+  "key_phrases": [
+    "conserved",
+    "phosphatase",
+    "cascade",
+    "that",
+    "regulates",
+    "nuclear",
+    "membrane",
+    "biogenesis"
+  ],
+  "summary_1l": "A conserved phosphatase cascade that regulates nuclear membrane biogenesis.",
+  "query_hits": [],
+  "embed_text": "25623469 A conserved phosphatase cascade that regulates nuclear membrane biogenesis. science scifact A newly emerging family of phosphatases that are members of the haloacid dehalogenase superfamily contains the catalytic motif DXDX(T/V). A member of this DXDX(T/V) phosphatase family known as Dullard was recently shown to be a potential… 25623469 a-conserved-phosphatase-cascade-that-regulates-nuclear-membrane-biogenesis. conserved phosphatase cascade that regulates nuclear membrane biogenesis A conserved phosphatase cascade that regulates nuclear membrane biogenesis. A conserved phosphatase cascade that regulates nuclear membrane biogenesis. A newly emerging family of phosphatases that are members of the haloacid dehalogenase superfamily contains the catalytic motif DXDX(T/V). A member of this DXDX(T/V) phosphatase family known as Dullard was recently shown to be a potential regulator of neural tube development in Xenopus [Satow R, Chan TC, Asashima M (2002) Biochem Biophys Res Commun 295:85-91]. Herein, we demonstrate that human Dullard and the yeast protein Nem1p perform similar functions in mammalian cells and yeast cells, respectively. In addition to similarity in primary sequence, Dullard and Nem1p possess similar domains and show similar substrate preferences, and both localize to the nuclear envelope. Additionally, we show that human Dullard can",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.023192+00:00"
+}

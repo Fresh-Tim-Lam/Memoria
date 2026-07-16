@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4312169",
+  "source_fingerprint": "e44ff1dc00bb7f3cc749d6d962b67a32",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4312169",
+    "driver-mutations-in-histone-h3.3-and-chromatin-remodelling-genes-in-paediatric-glioblastoma"
+  ],
+  "key_phrases": [
+    "driver",
+    "mutations",
+    "histone",
+    "h3.3",
+    "chromatin",
+    "remodelling",
+    "genes",
+    "paediatric"
+  ],
+  "summary_1l": "Driver mutations in histone H3.",
+  "query_hits": [],
+  "embed_text": "4312169 Driver mutations in histone H3.3 and chromatin remodelling genes in paediatric glioblastoma science scifact Glioblastoma multiforme (GBM) is a lethal brain tumour in adults and children. However, DNA copy number and gene expression signatures indicate differences between adult and paediatric cases. To explore the genetic events underlying this… 4312169 driver-mutations-in-histone-h3.3-and-chromatin-remodelling-genes-in-paediatric-glioblastoma driver mutations histone h3.3 chromatin remodelling genes paediatric Driver mutations in histone H3. Driver mutations in histone H3.3 and chromatin remodelling genes in paediatric glioblastoma Glioblastoma multiforme (GBM) is a lethal brain tumour in adults and children. However, DNA copy number and gene expression signatures indicate differences between adult and paediatric cases. To explore the genetic events underlying this distinction, we sequenced the exomes of 48 paediatric GBM samples. Somatic mutations in the H3.3-ATRX-DAXX chromatin remodelling pathway were identified in 44% of tumours (21/48). Recurrent mutations in H3F3A, which encodes the replication-independent histone 3 variant H3.3, were observed in 31% of tumours, and led to amino acid substitutions at two critical positions within the histone tail (K27M, G34R/G34V) involved in key regulatory post-translational modificatio",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.467391+00:00"
+}

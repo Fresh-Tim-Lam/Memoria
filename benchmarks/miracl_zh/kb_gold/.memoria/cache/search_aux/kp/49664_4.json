@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "kp_id": "49664#4",
+  "source_fingerprint": "e9b14aefe11dd6dae22a238af32203ac",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "台灣宗教",
+    "台灣生態",
+    "周深音樂作品列表",
+    "台灣地理",
+    "台灣夜市",
+    "台灣農業",
+    "台灣鐵路",
+    "台灣體育",
+    "日本流行音樂",
+    "華語流行音樂",
+    "量子力學的數學表述"
+  ],
+  "aliases": [
+    "49664#4"
+  ],
+  "key_phrases": [
+    "語言",
+    "教育",
+    "台灣",
+    "以華語",
+    "作為",
+    "國語",
+    "英語",
+    "自國"
+  ],
+  "summary_1l": "台灣以華語作為國語，英語自國小開始同體育、音樂、數學等，作為科目被學習。",
+  "query_hits": [],
+  "embed_text": "49664#4 語言教育 語言教育 台灣以華語作為國語，英語自國小開始同體育、音樂、數學等，作為科目被學習。 台灣宗教 台灣生態 周深音樂作品列表 台灣地理 台灣夜市 台灣農業 台灣鐵路 台灣體育 日本流行音樂 華語流行音樂 量子力學的數學表述 49664#4 語言 教育 台灣 以華語 作為 國語 英語 自國 台灣以華語作為國語，英語自國小開始同體育、音樂、數學等，作為科目被學習。 語言教育 台灣以華語作為國語，英語自國小開始同體育、音樂、數學等，作為科目被學習。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:19:05.896714+00:00"
+}

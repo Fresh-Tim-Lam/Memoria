@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1733337",
+  "source_fingerprint": "ccbfe61fbf7076c8a7f1849cb9656551",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1733337",
+    "age-related-changes-in-kynurenic-acid-production-in-rat-brain."
+  ],
+  "key_phrases": [
+    "age",
+    "related",
+    "changes",
+    "kynurenic",
+    "acid",
+    "production",
+    "rat",
+    "brain"
+  ],
+  "summary_1l": "Age-related changes in kynurenic acid production in rat brain.",
+  "query_hits": [],
+  "embed_text": "1733337 Age-related changes in kynurenic acid production in rat brain. science scifact Two separate in vitro assays were used to examine the biosynthesis of the broad spectrum excitatory amino acid receptor antagonist kynurenic acid (KYNA) during the life span of the adult rat. Assessment of KYNA's anabolic enzyme kynurenine… 1733337 age-related-changes-in-kynurenic-acid-production-in-rat-brain. age related changes kynurenic acid production rat brain Age-related changes in kynurenic acid production in rat brain. Age-related changes in kynurenic acid production in rat brain. Two separate in vitro assays were used to examine the biosynthesis of the broad spectrum excitatory amino acid receptor antagonist kynurenic acid (KYNA) during the life span of the adult rat. Assessment of KYNA's anabolic enzyme kynurenine aminotransferase revealed steady increases between 3 and 24 months of age in all five brain regions examined. No changes were observed in the liver. The changes were particularly pronounced in the cortex and in the striatum where enzyme activity increased three-fold during the period studied. KYNA production from its bioprecursor L-kynurenine was also investigated in tissue slices and was found to be significantly enhanced in the cortex and hippocampus of old animals. The effect of depolarizi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.604578+00:00"
+}

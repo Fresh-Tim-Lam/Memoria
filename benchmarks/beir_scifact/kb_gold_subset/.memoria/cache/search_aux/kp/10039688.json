@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10039688",
+  "source_fingerprint": "6dd5dd33983426c326e290ce30c8702a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10039688",
+    "extensive-diversity-of-ig-superfamily-proteins-in-the-immune-system-of-insects."
+  ],
+  "key_phrases": [
+    "extensive",
+    "diversity",
+    "ig",
+    "superfamily",
+    "proteins",
+    "immune",
+    "system",
+    "insects"
+  ],
+  "summary_1l": "Extensive diversity of Ig-superfamily proteins in the immune system of insects.",
+  "query_hits": [],
+  "embed_text": "10039688 Extensive diversity of Ig-superfamily proteins in the immune system of insects. science scifact The extensive somatic diversification of immune receptors is a hallmark of higher vertebrates. However, whether molecular diversity contributes to immune protection in invertebrates is unknown. We present evidence that Drosophila… 10039688 extensive-diversity-of-ig-superfamily-proteins-in-the-immune-system-of-insects. extensive diversity ig superfamily proteins immune system insects Extensive diversity of Ig-superfamily proteins in the immune system of insects. Extensive diversity of Ig-superfamily proteins in the immune system of insects. The extensive somatic diversification of immune receptors is a hallmark of higher vertebrates. However, whether molecular diversity contributes to immune protection in invertebrates is unknown. We present evidence that Drosophila immune-competent cells have the potential to express more than 18,000 isoforms of the immunoglobulin (Ig)-superfamily receptor Down syndrome cell adhesion molecule (Dscam). Secreted protein isoforms of Dscam were detected in the hemolymph, and hemocyte-specific loss of Dscam impaired the efficiency of phagocytic uptake of bacteria, possibly due to reduced bacterial binding. Importantly, the molecular diversity of Dscam transcripts generated through a mechanism of alternative splicing i",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.234946+00:00"
+}

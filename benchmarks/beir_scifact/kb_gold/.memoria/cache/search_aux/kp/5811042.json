@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5811042",
+  "source_fingerprint": "b1a4ca85b62bf1d415f2fe46bf045066",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5811042",
+    "the-nlrp12-sensor-negatively-regulates-autoinflammatory-disease-by-modulating-interleukin-4-production-in-t-cells."
+  ],
+  "key_phrases": [
+    "nlrp12",
+    "sensor",
+    "negatively",
+    "regulates",
+    "autoinflammatory",
+    "disease",
+    "by",
+    "modulating"
+  ],
+  "summary_1l": "The NLRP12 Sensor Negatively Regulates Autoinflammatory Disease by Modulating Interleukin-4 Production in T Cells.",
+  "query_hits": [],
+  "embed_text": "5811042 The NLRP12 Sensor Negatively Regulates Autoinflammatory Disease by Modulating Interleukin-4 Production in T Cells. science scifact Missense mutations in the nucleotide-binding oligomerization domain (NOD)-like receptor pyrin domain containing family of gene 12 (Nlrp12) are associated with periodic fever syndromes and atopic dermatitis in humans. Here, we have… 5811042 the-nlrp12-sensor-negatively-regulates-autoinflammatory-disease-by-modulating-interleukin-4-production-in-t-cells. nlrp12 sensor negatively regulates autoinflammatory disease by modulating The NLRP12 Sensor Negatively Regulates Autoinflammatory Disease by Modulating Interleukin-4 Production in T Cells. The NLRP12 Sensor Negatively Regulates Autoinflammatory Disease by Modulating Interleukin-4 Production in T Cells. Missense mutations in the nucleotide-binding oligomerization domain (NOD)-like receptor pyrin domain containing family of gene 12 (Nlrp12) are associated with periodic fever syndromes and atopic dermatitis in humans. Here, we have demonstrated a crucial role for NLRP12 in negatively regulating pathogenic T cell responses. Nlrp12(-/-) mice responded to antigen immunization with hyperinflammatory T cell responses. Furthermore, transfer of CD4(+)CD45RB(hi)Nlrp12(-/-) T cells into immunodeficient mice led to more severe colitis and atopic dermatitis. NLRP12 deficiency did not, however, cause exacerbated ascending paralysis during experimental autoimmune encephalomyelitis (EAE); in",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.161202+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20127522",
+  "source_fingerprint": "3893043b9551fe15308256b35238e02a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20127522",
+    "circulating-tumor-cells:-a-useful-predictor-of-treatment-efficacy-in-metastatic-breast-cancer."
+  ],
+  "key_phrases": [
+    "circulating",
+    "tumor",
+    "cells",
+    "useful",
+    "predictor",
+    "treatment",
+    "efficacy",
+    "metastatic"
+  ],
+  "summary_1l": "Circulating tumor cells: a useful predictor of treatment efficacy in metastatic breast cancer.",
+  "query_hits": [],
+  "embed_text": "20127522 Circulating tumor cells: a useful predictor of treatment efficacy in metastatic breast cancer. science scifact PURPOSE Five or more circulating tumor cells (CTCs) per 7.5 mL of blood predicts for poorer progression-free survival (PFS) in patients with metastatic breast cancer (MBC). We conducted a prospective study to demonstrate that CTC results… 20127522 circulating-tumor-cells:-a-useful-predictor-of-treatment-efficacy-in-metastatic-breast-cancer. circulating tumor cells useful predictor treatment efficacy metastatic Circulating tumor cells: a useful predictor of treatment efficacy in metastatic breast cancer. Circulating tumor cells: a useful predictor of treatment efficacy in metastatic breast cancer. PURPOSE Five or more circulating tumor cells (CTCs) per 7.5 mL of blood predicts for poorer progression-free survival (PFS) in patients with metastatic breast cancer (MBC). We conducted a prospective study to demonstrate that CTC results correlate strongly with radiographic disease progression at the time of and in advance of imaging. PATIENTS AND METHODS Serial CTC levels were obtained in patients starting a new treatment regimen for progressive, radiographically measurable MBC. Peripheral blood was collected for CTC enumeration at baseline and at 3- to 4-week intervals. Clinical outcomes were based on radiographic studies performed in 9- to 12-week intervals. RESULTS Sixty-eight patients were e",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.651271+00:00"
+}

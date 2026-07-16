@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13000926",
+  "source_fingerprint": "5c2b353b15a005e3e1e90ad3e3a111a2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13000926",
+    "the-role-of-free-radicals-in-cold-injuries."
+  ],
+  "key_phrases": [
+    "role",
+    "free",
+    "radicals",
+    "cold",
+    "injuries",
+    "injury",
+    "tissue",
+    "trauma"
+  ],
+  "summary_1l": "The role of free radicals in cold injuries.",
+  "query_hits": [],
+  "embed_text": "13000926 The role of free radicals in cold injuries. science scifact Cold injury is a tissue trauma produced by exposure to freezing temperatures and even brief exposure to a severely cold and windy environment. Rewarming of frozen tissue is associated with blood reperfusion and the simultaneous generation… 13000926 the-role-of-free-radicals-in-cold-injuries. role free radicals cold injuries injury tissue trauma The role of free radicals in cold injuries. The role of free radicals in cold injuries. Cold injury is a tissue trauma produced by exposure to freezing temperatures and even brief exposure to a severely cold and windy environment. Rewarming of frozen tissue is associated with blood reperfusion and the simultaneous generation of free oxygen radicals. In this review is discussed the current understanding of the mechanism of action of free oxygen radicals as related to cold injury during rewarming. Decreased energy stores during ischaemia lead to the accumulation of adenine nucleotides and liberation of free fatty acids due to the breakdown of lipid membranes. On rewarming, free fatty acids are metabolized via cyclo-oxygenase and adenine nucleotides are metabolized via the xanthine oxidase pathway. These may be the source of free oxyge",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:09.417479+00:00"
+}

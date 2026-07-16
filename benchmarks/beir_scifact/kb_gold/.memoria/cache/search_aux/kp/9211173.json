@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9211173",
+  "source_fingerprint": "17a77b3f7bdf46d08d75d0a4ac30887b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9211173",
+    "arid1a-mutations-in-endometriosis-associated-ovarian-carcinomas."
+  ],
+  "key_phrases": [
+    "arid1a",
+    "mutations",
+    "endometriosis",
+    "associated",
+    "ovarian",
+    "carcinomas",
+    "background",
+    "clear"
+  ],
+  "summary_1l": "ARID1A mutations in endometriosis-associated ovarian carcinomas.",
+  "query_hits": [],
+  "embed_text": "9211173 ARID1A mutations in endometriosis-associated ovarian carcinomas. science scifact BACKGROUND Ovarian clear-cell and endometrioid carcinomas may arise from endometriosis, but the molecular events involved in this transformation have not been described. METHODS We sequenced the whole transcriptomes of 18 ovarian… 9211173 arid1a-mutations-in-endometriosis-associated-ovarian-carcinomas. arid1a mutations endometriosis associated ovarian carcinomas background clear ARID1A mutations in endometriosis-associated ovarian carcinomas. ARID1A mutations in endometriosis-associated ovarian carcinomas. BACKGROUND Ovarian clear-cell and endometrioid carcinomas may arise from endometriosis, but the molecular events involved in this transformation have not been described. METHODS We sequenced the whole transcriptomes of 18 ovarian clear-cell carcinomas and 1 ovarian clear-cell carcinoma cell line and found somatic mutations in ARID1A (the AT-rich interactive domain 1A [SWI-like] gene) in 6 of the samples. ARID1A encodes BAF250a, a key component of the SWI–SNF chromatin remodeling complex. We sequenced ARID1A in an additional 210 ovarian carcinomas and a second ovarian clear-cell carcinoma cell line and measured BAF250a expression by means of immunohistochemical analysis in an additional 455 ovarian carcinomas. RESULTS ARID1A m",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.447145+00:00"
+}

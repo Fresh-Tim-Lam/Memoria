@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3446400",
+  "source_fingerprint": "ee499a44d44251bb1c3ed7af4d6d222b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3446400",
+    "can-genome-engineering-be-used-to-target-cancer-associated-enhancers?"
+  ],
+  "key_phrases": [
+    "can",
+    "genome",
+    "engineering",
+    "be",
+    "used",
+    "target",
+    "cancer",
+    "associated"
+  ],
+  "summary_1l": "Can genome engineering be used to target cancer-associated enhancers?",
+  "query_hits": [],
+  "embed_text": "3446400 Can genome engineering be used to target cancer-associated enhancers? science scifact Transcriptional misregulation is involved in the development of many diseases, especially neoplastic transformation. Distal regulatory elements, such as enhancers, play a major role in specifying cell-specific transcription patterns in… 3446400 can-genome-engineering-be-used-to-target-cancer-associated-enhancers? can genome engineering be used target cancer associated Can genome engineering be used to target cancer-associated enhancers? Can genome engineering be used to target cancer-associated enhancers? Transcriptional misregulation is involved in the development of many diseases, especially neoplastic transformation. Distal regulatory elements, such as enhancers, play a major role in specifying cell-specific transcription patterns in both normal and diseased tissues, suggesting that enhancers may be prime targets for therapeutic intervention. By focusing on modulating gene regulation mediated by cell type-specific enhancers, there is hope that normal epigenetic patterning in an affected tissue could be restored with fewer side effects than observed with treatments employing relatively nonspecific inhibitors such as epigenetic drugs. New methods employing genomic nucleases and site-specific epigenetic regulators targete",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.503499+00:00"
+}

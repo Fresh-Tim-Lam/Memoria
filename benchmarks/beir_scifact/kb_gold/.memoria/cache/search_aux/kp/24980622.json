@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24980622",
+  "source_fingerprint": "5802453068d699ac5592b8cded7acd95",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24980622",
+    "hypoxia-in-relation-to-vasculature-and-proliferation-in-liver-metastases-in-patients-with-colorectal-cancer."
+  ],
+  "key_phrases": [
+    "hypoxia",
+    "relation",
+    "vasculature",
+    "proliferation",
+    "liver",
+    "metastases",
+    "patients",
+    "with"
+  ],
+  "summary_1l": "Hypoxia in relation to vasculature and proliferation in liver metastases in patients with colorectal cancer.",
+  "query_hits": [],
+  "embed_text": "24980622 Hypoxia in relation to vasculature and proliferation in liver metastases in patients with colorectal cancer. science scifact PURPOSE To investigate hypoxia measured by pimonidazole binding, glucose transporter 1 (GLUT1) and carbonic anhydrase IX (CA-IX) expression, proliferation, and vascularity in liver metastases of colorectal cancer and to compare GLUT1 and… 24980622 hypoxia-in-relation-to-vasculature-and-proliferation-in-liver-metastases-in-patients-with-colorectal-cancer. hypoxia relation vasculature proliferation liver metastases patients with Hypoxia in relation to vasculature and proliferation in liver metastases in patients with colorectal cancer. Hypoxia in relation to vasculature and proliferation in liver metastases in patients with colorectal cancer. PURPOSE To investigate hypoxia measured by pimonidazole binding, glucose transporter 1 (GLUT1) and carbonic anhydrase IX (CA-IX) expression, proliferation, and vascularity in liver metastases of colorectal cancer and to compare GLUT1 and CA-IX expression in corresponding primary tumors. METHODS AND MATERIALS Twenty-five patients with liver metastases of colorectal cancer, planned for metastasectomy, were included. The hypoxia marker pimonidazole and proliferation marker iododeoxyuridine were administered before surgery. After immunofluorescent staining of the frozen metastases, pimonidazole binding, vascularity, and proliferation were analyzed quantitatively. Thirteen paraffin-embed",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.691930+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8512633",
+  "source_fingerprint": "1ede8208365ca4d27007af3376e88382",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8512633",
+    "the-lncrnas-pcgem1-and-prncr1-are-not-implicated-in-castration-resistant-prostate-cancer"
+  ],
+  "key_phrases": [
+    "lncrnas",
+    "pcgem1",
+    "prncr1",
+    "not",
+    "implicated",
+    "castration",
+    "resistant",
+    "prostate"
+  ],
+  "summary_1l": "Long noncoding RNAs (IncRNAs) are increasingly implicated in cancer biology, contributing to essential cancer c",
+  "query_hits": [],
+  "embed_text": "8512633 The lncRNAs PCGEM1 and PRNCR1 are not implicated in castration resistant prostate cancer science scifact Long noncoding RNAs (IncRNAs) are increasingly implicated in cancer biology, contributing to essential cancer cell functions such as proliferation, invasion, and metastasis. In prostate cancer, several lncRNAs have been nominated as… 8512633 the-lncrnas-pcgem1-and-prncr1-are-not-implicated-in-castration-resistant-prostate-cancer lncrnas pcgem1 prncr1 not implicated castration resistant prostate Long noncoding RNAs (IncRNAs) are increasingly implicated in cancer biology, contributing to essential cancer c The lncRNAs PCGEM1 and PRNCR1 are not implicated in castration resistant prostate cancer Long noncoding RNAs (IncRNAs) are increasingly implicated in cancer biology, contributing to essential cancer cell functions such as proliferation, invasion, and metastasis. In prostate cancer, several lncRNAs have been nominated as critical actors in disease pathogenesis. Among these, expression of PCGEM1 and PRNCR1 has been identified as a possible component in disease progression through the coordination of androgen receptor (AR) signaling (Yang et al., Nature 2013, see ref. [1]). However, concerns regarding the robustness of these findings have been suggested. Here, we sought to evaluate whether PCGEM1 and PRNCR1 are associated with prostate cancer. Through a comprehensive analysis of RNA-sequencin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.869028+00:00"
+}

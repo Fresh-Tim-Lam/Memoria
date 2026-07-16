@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "40971746",
+  "source_fingerprint": "fb2db3f49e4b9d632549ef7af38816d2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "40971746",
+    "a-bird's-eye-view-of-sex-chromosome-dosage-compensation."
+  ],
+  "key_phrases": [
+    "bird",
+    "eye",
+    "view",
+    "sex",
+    "chromosome",
+    "dosage",
+    "compensation",
+    "intensive"
+  ],
+  "summary_1l": "A bird's-eye view of sex chromosome dosage compensation.",
+  "query_hits": [],
+  "embed_text": "40971746 A bird's-eye view of sex chromosome dosage compensation. science scifact Intensive study of a few genetically tractable species with XX/XY sex chromosomes has produced generalizations about the process of sex chromosome dosage compensation that do not fare well when applied to ZZ/ZW sex chromosome systems, such… 40971746 a-bird's-eye-view-of-sex-chromosome-dosage-compensation. bird eye view sex chromosome dosage compensation intensive A bird's-eye view of sex chromosome dosage compensation. A bird's-eye view of sex chromosome dosage compensation. Intensive study of a few genetically tractable species with XX/XY sex chromosomes has produced generalizations about the process of sex chromosome dosage compensation that do not fare well when applied to ZZ/ZW sex chromosome systems, such as those in birds. The inherent sexual imbalance in dose of sex chromosome genes has led to the evolution of sex-chromosome-wide mechanisms for balancing gene dosage between the sexes and relative to autosomal genes. Recent advances in our knowledge of avian genomes have led to a reexamination of sex-specific dosage compensation (SSDC) in birds, which is less effective than in known XX/XY systems. Insights about the mechanisms of SSDC in birds also suggest similarities to and differences from those",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.014301+00:00"
+}

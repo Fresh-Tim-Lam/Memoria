@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "464511",
+  "source_fingerprint": "6929a07b841274eb22660a704b81d4dd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "464511",
+    "memory-and-modularity-in-cell-fate-decision-making"
+  ],
+  "key_phrases": [
+    "memory",
+    "modularity",
+    "cell",
+    "fate",
+    "decision",
+    "making",
+    "genetically",
+    "identical"
+  ],
+  "summary_1l": "Genetically identical cells sharing an environment can display markedly different phenotypes.",
+  "query_hits": [],
+  "embed_text": "464511 Memory and Modularity in Cell-Fate Decision Making science scifact Genetically identical cells sharing an environment can display markedly different phenotypes. It is often unclear how much of this variation derives from chance, external signals, or attempts by individual cells to exert autonomous… 464511 memory-and-modularity-in-cell-fate-decision-making memory modularity cell fate decision making genetically identical Genetically identical cells sharing an environment can display markedly different phenotypes. Memory and Modularity in Cell-Fate Decision Making Genetically identical cells sharing an environment can display markedly different phenotypes. It is often unclear how much of this variation derives from chance, external signals, or attempts by individual cells to exert autonomous phenotypic programs. By observing thousands of cells for hundreds of consecutive generations under constant conditions, we dissect the stochastic decision between a solitary, motile state and a chained, sessile state in Bacillus subtilis. We show that the motile state is 'memoryless', exhibiting no autonomous control over the time spent in the state. In contrast, the time spent as connected chains of cells is tightly controlled, enforcing coordination among related cells in the multicellular state. We show that",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.865279+00:00"
+}

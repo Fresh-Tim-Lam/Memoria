@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21891856",
+  "source_fingerprint": "7fec7a2d9d183d0bb78e2a8ff4b4cf9a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21891856",
+    "development-of-a-syngeneic-mouse-model-for-events-related-to-ovarian-cancer."
+  ],
+  "key_phrases": [
+    "development",
+    "syngeneic",
+    "mouse",
+    "model",
+    "events",
+    "related",
+    "ovarian",
+    "cancer"
+  ],
+  "summary_1l": "Development of a syngeneic mouse model for events related to ovarian cancer.",
+  "query_hits": [],
+  "embed_text": "21891856 Development of a syngeneic mouse model for events related to ovarian cancer. science scifact Mouse ovarian surface epithelial cells (MOSEC) were obtained from virgin, mature mice by mild trypsinization and were repeatedly passaged in vitro. Early passage cells (<20 passages) exhibited a cobblestone morphology and contact… 21891856 development-of-a-syngeneic-mouse-model-for-events-related-to-ovarian-cancer. development syngeneic mouse model events related ovarian cancer Development of a syngeneic mouse model for events related to ovarian cancer. Development of a syngeneic mouse model for events related to ovarian cancer. Mouse ovarian surface epithelial cells (MOSEC) were obtained from virgin, mature mice by mild trypsinization and were repeatedly passaged in vitro. Early passage cells (<20 passages) exhibited a cobblestone morphology and contact inhibition of growth. After approximately 20 passages in vitro, cobblestone morphology and contact inhibition of growth was lost. Tumor forming potential was determined by s.c. and i.p. injection of early and late passage cells into athymic and syngeneic C57BL6 mice. Subcutaneous tumors formed in approximately 4 months and were present only at the injection site. Intraperitoneal injection of late passage MOSEC into athymic and syngeneic mice resulted in growth of tumor implants throughout",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.871321+00:00"
+}

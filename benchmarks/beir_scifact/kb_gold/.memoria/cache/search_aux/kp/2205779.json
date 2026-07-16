@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2205779",
+  "source_fingerprint": "7a7e6e7bc0509c411ba8a246d2aecbb9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2205779",
+    "gastric-juice-mir-129-as-a-potential-biomarker-for-screening-gastric-cancer"
+  ],
+  "key_phrases": [
+    "gastric",
+    "juice",
+    "mir",
+    "129",
+    "as",
+    "potential",
+    "biomarker",
+    "screening"
+  ],
+  "summary_1l": "MicroRNAs (miRNAs) play crucial roles during the occurrence and development of gastric cancer.",
+  "query_hits": [],
+  "embed_text": "2205779 Gastric juice miR-129 as a potential biomarker for screening gastric cancer science scifact MicroRNAs (miRNAs) play crucial roles during the occurrence and development of gastric cancer. Conventional serological tests for screening gastric cancer have limits on sensitivity and specificity. Several miRNAs in peripheral blood have… 2205779 gastric-juice-mir-129-as-a-potential-biomarker-for-screening-gastric-cancer gastric juice mir 129 as potential biomarker screening MicroRNAs (miRNAs) play crucial roles during the occurrence and development of gastric cancer. Gastric juice miR-129 as a potential biomarker for screening gastric cancer MicroRNAs (miRNAs) play crucial roles during the occurrence and development of gastric cancer. Conventional serological tests for screening gastric cancer have limits on sensitivity and specificity. Several miRNAs in peripheral blood have been used as biomarkers of gastric cancer. However, most of these miRNAs are shared by several types of cancer. Thanks to the tissue specificity of gastric juice, here we examined the feasibility of using gastric juice miR-129-1/2, which are aberrantly expressed in gastric cancer, to screen gastric cancer. Total of 141 gastric juices samples from gastric cancer, gastric ulcer, atrophic gastritis, and minimal gastritis patients or subjects with normal mucosa were collected by gastr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.191942+00:00"
+}

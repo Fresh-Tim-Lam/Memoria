@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5798227",
+  "source_fingerprint": "d8f7cd7ac07968a6a6f2600317f5c1ff",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5798227",
+    "socs1/jab-is-a-negative-regulator-of-lps-induced-macrophage-activation."
+  ],
+  "key_phrases": [
+    "socs1",
+    "jab",
+    "negative",
+    "regulator",
+    "lps",
+    "induced",
+    "macrophage",
+    "activation"
+  ],
+  "summary_1l": "SOCS1/JAB is a negative regulator of LPS-induced macrophage activation.",
+  "query_hits": [],
+  "embed_text": "5798227 SOCS1/JAB is a negative regulator of LPS-induced macrophage activation. science scifact Bacterial lipopolysaccharide (LPS) triggers innate immune responses through Toll-like receptor (TLR) 4. We show here that the suppressor of cytokine-signaling-1 (SOCS1/JAB) is rapidly induced by LPS and negatively regulates LPS signaling.… 5798227 socs1/jab-is-a-negative-regulator-of-lps-induced-macrophage-activation. socs1 jab negative regulator lps induced macrophage activation SOCS1/JAB is a negative regulator of LPS-induced macrophage activation. SOCS1/JAB is a negative regulator of LPS-induced macrophage activation. Bacterial lipopolysaccharide (LPS) triggers innate immune responses through Toll-like receptor (TLR) 4. We show here that the suppressor of cytokine-signaling-1 (SOCS1/JAB) is rapidly induced by LPS and negatively regulates LPS signaling. SOCS1(+/-) mice or SOCS1(-/-) mice with interferon-gamma (IFNgamma)-deficient background were more sensitive to LPS-induced lethal effects than were wild-type littermates. LPS-induced NO(2)(-) synthesis and TNFalpha production were augmented in SOCS1(-/-) macrophages. Furthermore, LPS tolerance, a protection mechanism against endotoxin shock, was also strikingly reduced in SOCS1(-/-) cells. LPS-induced I-kappaB and p38 phosphorylation was upregulated in SOCS1(-/-) macrophages, and for",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.111345+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2608447",
+  "source_fingerprint": "244f22549842cbedf707cb859b498cef",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2608447",
+    "somatic-coding-mutations-in-human-induced-pluripotent-stem-cells"
+  ],
+  "key_phrases": [
+    "somatic",
+    "coding",
+    "mutations",
+    "human",
+    "induced",
+    "pluripotent",
+    "stem",
+    "cells"
+  ],
+  "summary_1l": "Defined transcription factors can induce epigenetic reprogramming of adult mammalian cells into induced pluripotent stem cells.",
+  "query_hits": [],
+  "embed_text": "2608447 Somatic coding mutations in human induced pluripotent stem cells science scifact Defined transcription factors can induce epigenetic reprogramming of adult mammalian cells into induced pluripotent stem cells. Although DNA factors are integrated during some reprogramming methods, it is unknown whether the genome remains… 2608447 somatic-coding-mutations-in-human-induced-pluripotent-stem-cells somatic coding mutations human induced pluripotent stem cells Defined transcription factors can induce epigenetic reprogramming of adult mammalian cells into induced pluripotent stem cells. Somatic coding mutations in human induced pluripotent stem cells Defined transcription factors can induce epigenetic reprogramming of adult mammalian cells into induced pluripotent stem cells. Although DNA factors are integrated during some reprogramming methods, it is unknown whether the genome remains unchanged at the single nucleotide level. Here we show that 22 human induced pluripotent stem (hiPS) cell lines reprogrammed using five different methods each contained an average of five protein-coding point mutations in the regions sampled (an estimated six protein-coding point mutations per exome). The majority of these mutations were non-synonymous, nonsense or splice variants, and were enriched in genes mutated or having causative effects in cancers. At least half of these reprogrammin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.304255+00:00"
+}

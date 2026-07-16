@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "11771811",
+  "source_fingerprint": "088c3fd3adb7243c31a38f164e01fce9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11771811"
+  ],
+  "key_phrases": [
+    "fgf",
+    "regulates",
+    "tgf",
+    "signaling",
+    "endothelial",
+    "mesenchymal",
+    "transition",
+    "via"
+  ],
+  "summary_1l": "FGF regulates TGF-β signaling and endothelial-to-mesenchymal transition via control of let-7 miRNA expression.",
+  "query_hits": [],
+  "embed_text": "11771811 FGF regulates TGF-β signaling and endothelial-to-mesenchymal transition via control of let-7 miRNA expression. science scifact Maintenance of normal endothelial function is critical to various aspects of blood vessel function, but its regulation is poorly understood. In this study, we show that disruption of baseline fibroblast growth factor (FGF) signaling to the… 11771811 fgf regulates tgf signaling endothelial mesenchymal transition via FGF regulates TGF-β signaling and endothelial-to-mesenchymal transition via control of let-7 miRNA expression. FGF regulates TGF-β signaling and endothelial-to-mesenchymal transition via control of let-7 miRNA expression. Maintenance of normal endothelial function is critical to various aspects of blood vessel function, but its regulation is poorly understood. In this study, we show that disruption of baseline fibroblast growth factor (FGF) signaling to the endothelium leads to a dramatic reduction in let-7 miRNA levels that, in turn, increases expression of transforming growth factor (TGF)-β ligands and receptors and activation of TGF-β signaling, leading to endothelial-to-mesenchymal transition (Endo-MT). We also find that Endo-MT is an important driver of neointima formation in a murine transplant arteriopathy model and in rejection of human transplant lesions. The decline in endothelial FGF sig",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:07.098747+00:00"
+}

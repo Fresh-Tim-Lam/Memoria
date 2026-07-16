@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "42465769",
+  "source_fingerprint": "215423055f7f4903043b24838bcd8daa",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "42465769",
+    "human-bone-marrow-adipocytes-block-granulopoiesis-through-neuropilin-1-induced-granulocyte-colony-stimulating-factor-inhibition."
+  ],
+  "key_phrases": [
+    "human",
+    "bone",
+    "marrow",
+    "adipocytes",
+    "block",
+    "granulopoiesis",
+    "through",
+    "neuropilin"
+  ],
+  "summary_1l": "Human bone marrow adipocytes block granulopoiesis through neuropilin-1-induced granulocyte colony-stimulating factor inhibition.",
+  "query_hits": [],
+  "embed_text": "42465769 Human bone marrow adipocytes block granulopoiesis through neuropilin-1-induced granulocyte colony-stimulating factor inhibition. science scifact Adipocytes are part of hematopoietic microenvironment, even though up to now in humans, their role in hematopoiesis is still questioned. We have previously shown that accumulation of fat cells in femoral bone marrow (BM) coincides with… 42465769 human-bone-marrow-adipocytes-block-granulopoiesis-through-neuropilin-1-induced-granulocyte-colony-stimulating-factor-inhibition. human bone marrow adipocytes block granulopoiesis through neuropilin Human bone marrow adipocytes block granulopoiesis through neuropilin-1-induced granulocyte colony-stimulating factor inhibition. Human bone marrow adipocytes block granulopoiesis through neuropilin-1-induced granulocyte colony-stimulating factor inhibition. Adipocytes are part of hematopoietic microenvironment, even though up to now in humans, their role in hematopoiesis is still questioned. We have previously shown that accumulation of fat cells in femoral bone marrow (BM) coincides with increased expression of neuropilin-1 (NP-1), while it is weakly expressed in hematopoietic iliac crest BM. Starting from this observation, we postulated that adipocytes might exert a negative effect on hematopoiesis mediated through NP-1. To test this hypothesis, we set up BM adipocytes differentiated into fibroblast-like fat cells (FLFC), which share the major characteristics of primitive unilocular fat cells, as an experimental m",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.055473+00:00"
+}

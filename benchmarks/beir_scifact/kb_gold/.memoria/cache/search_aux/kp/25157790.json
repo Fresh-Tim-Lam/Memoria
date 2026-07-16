@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "25157790",
+  "source_fingerprint": "3f0584670c1c5d20a23758b74888015e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25157790"
+  ],
+  "key_phrases": [
+    "population",
+    "based",
+    "case",
+    "control",
+    "study",
+    "green",
+    "tea",
+    "consumption"
+  ],
+  "summary_1l": "This study investigated the association between green tea consumption and leukemia.",
+  "query_hits": [],
+  "embed_text": "25157790 A population-based, case–control study of green tea consumption and leukemia risk in southwestern Taiwan science scifact This study investigated the association between green tea consumption and leukemia. A total of 252 cases (90.3% response) and 637 controls (53.4% response) were enrolled. Controls were matched for cases on age and gender. Information was… 25157790 population based case control study green tea consumption This study investigated the association between green tea consumption and leukemia. A population-based, case–control study of green tea consumption and leukemia risk in southwestern Taiwan This study investigated the association between green tea consumption and leukemia. A total of 252 cases (90.3% response) and 637 controls (53.4% response) were enrolled. Controls were matched for cases on age and gender. Information was collected on participants’ living habits, including tea consumption. Green tea was used as a standard to estimate the total amount of individual catechin consumption. We stratified individual consumption of catechins into four levels. Conditional logistic regression models were fit to subjects aged 0–15 and 16–29 years to evaluate separate associations between leukemia and catechin consumption. A significant inverse association between green tea consump",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.102317+00:00"
+}

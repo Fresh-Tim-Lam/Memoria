@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "86211914",
+  "source_fingerprint": "3693a88aedf6848b47daf6827e12a3ad",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "86211914",
+    "the-rat-brain-in-stereotaxic-coordinates"
+  ],
+  "key_phrases": [
+    "rat",
+    "brain",
+    "stereotaxic",
+    "coordinates",
+    "preceding",
+    "editions",
+    "made",
+    "second"
+  ],
+  "summary_1l": "The preceding editions made \"The Rat Brain in Stereotaxic Coordinates\" the second most cited book in science.",
+  "query_hits": [],
+  "embed_text": "86211914 The Rat Brain in Stereotaxic Coordinates science scifact The preceding editions made \"The Rat Brain in Stereotaxic Coordinates\" the second most cited book in science. This Fifth Edition is the result of years of research providing the user with the drawings of the completely new set of coronal… 86211914 the-rat-brain-in-stereotaxic-coordinates rat brain stereotaxic coordinates preceding editions made second The preceding editions made \"The Rat Brain in Stereotaxic Coordinates\" the second most cited book in science. The Rat Brain in Stereotaxic Coordinates The preceding editions made \"The Rat Brain in Stereotaxic Coordinates\" the second most cited book in science. This Fifth Edition is the result of years of research providing the user with the drawings of the completely new set of coronal sections, now from one rat, and with significantly improved resolution by adding a third additional section level as compared to earlier editions. Numerous new nuclei and structures also have been identified. The drawings are presented in two color, providing a much better contrast for use, and the accompanying CD-ROM contains all of the drawings from the atlas as well as the corresponding color micrographs (which are not included in the book). Affordable, comprehensive, compact, and convenient, the Fifth Edition co",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.240650+00:00"
+}

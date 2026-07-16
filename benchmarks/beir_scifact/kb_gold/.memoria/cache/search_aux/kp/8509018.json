@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8509018",
+  "source_fingerprint": "a01c98188d412546b5d6c37ca70571af",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8509018",
+    "diastolic-heart-failure--abnormalities-in-active-relaxation-and-passive-stiffness-of-the-left-ventricle."
+  ],
+  "key_phrases": [
+    "diastolic",
+    "heart",
+    "failure",
+    "--",
+    "abnormalities",
+    "active",
+    "relaxation",
+    "passive"
+  ],
+  "summary_1l": "Diastolic heart failure--abnormalities in active relaxation and passive stiffness of the left ventricle.",
+  "query_hits": [],
+  "embed_text": "8509018 Diastolic heart failure--abnormalities in active relaxation and passive stiffness of the left ventricle. science scifact BACKGROUND Patients with signs and symptoms of heart failure and a normal left ventricular ejection fraction are said to have diastolic heart failure. It has traditionally been thought that the pathophysiological cause of heart failure in… 8509018 diastolic-heart-failure--abnormalities-in-active-relaxation-and-passive-stiffness-of-the-left-ventricle. diastolic heart failure -- abnormalities active relaxation passive Diastolic heart failure--abnormalities in active relaxation and passive stiffness of the left ventricle. Diastolic heart failure--abnormalities in active relaxation and passive stiffness of the left ventricle. BACKGROUND Patients with signs and symptoms of heart failure and a normal left ventricular ejection fraction are said to have diastolic heart failure. It has traditionally been thought that the pathophysiological cause of heart failure in these patients is an abnormality in the diastolic properties of the left ventricle; however, this hypothesis remains largely unproven. METHODS We prospectively identified 47 patients who met the diagnostic criteria for definite diastolic heart failure; all the patients had signs and symptoms of heart failure, a normal ejection fraction, and an increased left ventricular end-diastolic pressure. Ten patients who had no evidence of cardiovascular disease",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.856478+00:00"
+}

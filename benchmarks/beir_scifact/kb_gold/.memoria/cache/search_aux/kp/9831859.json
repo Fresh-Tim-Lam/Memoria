@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9831859",
+  "source_fingerprint": "d0d97066a89644c03cb840f64c6a3d0f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9831859",
+    "pancreatic-stellate-cells:-partners-in-crime-with-pancreatic-cancer-cells."
+  ],
+  "key_phrases": [
+    "pancreatic",
+    "stellate",
+    "cells",
+    "partners",
+    "crime",
+    "with",
+    "cancer",
+    "psc"
+  ],
+  "summary_1l": "Pancreatic stellate cells: partners in crime with pancreatic cancer cells.",
+  "query_hits": [],
+  "embed_text": "9831859 Pancreatic stellate cells: partners in crime with pancreatic cancer cells. science scifact Pancreatic stellate cells (PSC) produce the stromal reaction in pancreatic cancer, but their role in cancer progression is not fully elucidated. We examined the influence of PSCs on pancreatic cancer growth using (a) an orthotopic model of… 9831859 pancreatic-stellate-cells:-partners-in-crime-with-pancreatic-cancer-cells. pancreatic stellate cells partners crime with cancer psc Pancreatic stellate cells: partners in crime with pancreatic cancer cells. Pancreatic stellate cells: partners in crime with pancreatic cancer cells. Pancreatic stellate cells (PSC) produce the stromal reaction in pancreatic cancer, but their role in cancer progression is not fully elucidated. We examined the influence of PSCs on pancreatic cancer growth using (a) an orthotopic model of pancreatic cancer and (b) cultured human PSCs (hPSC) and human pancreatic cancer cell lines MiaPaCa-2 and Panc-1. Athymic mice received an intrapancreatic injection of saline, hPSCs, MiaPaCa-2 cells, or hPSCs + MiaPaCa-2. After 7 weeks, tumor size, metastases, and tumor histology were assessed. In vitro studies assessed the effect of cancer cell secretions on PSC migration and the effect of hPSC secretions on cancer cell proliferation, apoptosis, and migration. Possible mediators",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.953215+00:00"
+}

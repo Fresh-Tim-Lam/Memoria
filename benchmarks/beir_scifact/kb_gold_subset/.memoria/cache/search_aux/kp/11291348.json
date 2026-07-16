@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11291348",
+  "source_fingerprint": "fdb6cb2c48d6bc08bb1d1d77d6add91f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11291348",
+    "gsk-3-mediated-phosphorylation-enhances-maf-transforming-activity."
+  ],
+  "key_phrases": [
+    "gsk",
+    "mediated",
+    "phosphorylation",
+    "enhances",
+    "maf",
+    "transforming",
+    "activity",
+    "oncoproteins"
+  ],
+  "summary_1l": "GSK-3-mediated phosphorylation enhances Maf-transforming activity.",
+  "query_hits": [],
+  "embed_text": "11291348 GSK-3-mediated phosphorylation enhances Maf-transforming activity. science scifact The Maf oncoproteins are b-Zip transcription factors of the AP-1 superfamily. They are involved in developmental, metabolic, and tumorigenic processes. Maf proteins are overexpressed in about 50% of human multiple myelomas. Here, we show… 11291348 gsk-3-mediated-phosphorylation-enhances-maf-transforming-activity. gsk mediated phosphorylation enhances maf transforming activity oncoproteins GSK-3-mediated phosphorylation enhances Maf-transforming activity. GSK-3-mediated phosphorylation enhances Maf-transforming activity. The Maf oncoproteins are b-Zip transcription factors of the AP-1 superfamily. They are involved in developmental, metabolic, and tumorigenic processes. Maf proteins are overexpressed in about 50% of human multiple myelomas. Here, we show that Maf-transforming activity is controlled by GSK-3-dependent phosphorylation and that phosphorylation by GSK-3 can increase the oncogenic activity of a protein. Using microarray analysis, we identify a gene-expression subprogram regulated by GSK-3-mediated Maf phosphorylation involved in extracellular matrix remodeling and relevant to cancer progression. We also demonstrate that GSK-3 triggers MafA sequential phosphorylation on residues S61, T57, T53, and S49, inducing its ubiquitination",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:06.665417+00:00"
+}

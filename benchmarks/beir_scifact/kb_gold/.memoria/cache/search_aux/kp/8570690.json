@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8570690",
+  "source_fingerprint": "9bffe58fd478ebd4f19e3552d8ac5be8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8570690",
+    "topiramate-for-smoking-cessation:-a-randomized,-placebo-controlled-pilot-study."
+  ],
+  "key_phrases": [
+    "topiramate",
+    "smoking",
+    "cessation",
+    "randomized",
+    "placebo",
+    "controlled",
+    "pilot",
+    "study"
+  ],
+  "summary_1l": "Topiramate for smoking cessation: a randomized, placebo-controlled pilot study.",
+  "query_hits": [],
+  "embed_text": "8570690 Topiramate for smoking cessation: a randomized, placebo-controlled pilot study. science scifact INTRODUCTION Topiramate (TOP) blocks glutamate receptors and facilitates GABA (γ-aminobutyric acid) neurotransmission, effects that may facilitate smoking cessation. We compared the effects of behavioral counseling combined with (a) TOP,… 8570690 topiramate-for-smoking-cessation:-a-randomized,-placebo-controlled-pilot-study. topiramate smoking cessation randomized placebo controlled pilot study Topiramate for smoking cessation: a randomized, placebo-controlled pilot study. Topiramate for smoking cessation: a randomized, placebo-controlled pilot study. INTRODUCTION Topiramate (TOP) blocks glutamate receptors and facilitates GABA (γ-aminobutyric acid) neurotransmission, effects that may facilitate smoking cessation. We compared the effects of behavioral counseling combined with (a) TOP, (b) TOP/nicotine patch (TOP/NIC), or (c) placebo (PLC) for smoking cessation. METHODS We conducted a 10-week randomized trial in which subjects and research personnel were blinded to TOP versus PLC but not to the TOP/NIC patch condition. In groups receiving TOP, the medication dosage was titrated gradually up to 200 mg/day. The smoking quit date (QD) was scheduled after 2 weeks of medication treatment. NIC (21 mg) was started on the QD in subjects randomized to the TOP/NIC cond",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.088877+00:00"
+}

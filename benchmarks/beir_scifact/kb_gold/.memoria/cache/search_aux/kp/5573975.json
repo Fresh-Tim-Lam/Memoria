@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "5573975",
+  "source_fingerprint": "81de24b5882c54122da1d489f18b4b11",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5573975"
+  ],
+  "key_phrases": [
+    "activin",
+    "like",
+    "kinase",
+    "activity",
+    "important",
+    "kidney",
+    "regeneration",
+    "reversal"
+  ],
+  "summary_1l": "Molecules associated with the transforming growth factor β (TGF-β) superfamily, such as bone morphogenic pr",
+  "query_hits": [],
+  "embed_text": "5573975 Activin–like kinase–3 activity is important for kidney regeneration and reversal of fibrosis science scifact Molecules associated with the transforming growth factor β (TGF-β) superfamily, such as bone morphogenic proteins (BMPs) and TGF-β, are key regulators of inflammation, apoptosis and cellular transitions. Here we show that the BMP receptor… 5573975 activin like kinase activity important kidney regeneration reversal Molecules associated with the transforming growth factor β (TGF-β) superfamily, such as bone morphogenic pr Activin–like kinase–3 activity is important for kidney regeneration and reversal of fibrosis Molecules associated with the transforming growth factor β (TGF-β) superfamily, such as bone morphogenic proteins (BMPs) and TGF-β, are key regulators of inflammation, apoptosis and cellular transitions. Here we show that the BMP receptor activin-like kinase 3 (Alk3) is elevated early in diseased kidneys after injury. We also found that its deletion in the tubular epithelium leads to enhanced TGF-β1-Smad family member 3 (Smad3) signaling, epithelial damage and fibrosis, suggesting a protective role for Alk3-mediated signaling in the kidney. A structure-function analysis of the BMP-Alk3-BMP receptor, type 2 (BMPR2) ligand-receptor complex, along with synthetic organic chemistry, led us to construct",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.656556+00:00"
+}

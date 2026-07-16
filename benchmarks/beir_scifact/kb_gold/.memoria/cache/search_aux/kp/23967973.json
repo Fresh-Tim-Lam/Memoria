@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23967973",
+  "source_fingerprint": "6a161b9c5d686dafddbcfe7d52c24109",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23967973",
+    "general-and-abdominal-adiposity-and-risk-of-death-in-europe."
+  ],
+  "key_phrases": [
+    "general",
+    "abdominal",
+    "adiposity",
+    "risk",
+    "death",
+    "europe",
+    "background",
+    "previous"
+  ],
+  "summary_1l": "General and abdominal adiposity and risk of death in Europe.",
+  "query_hits": [],
+  "embed_text": "23967973 General and abdominal adiposity and risk of death in Europe. science scifact BACKGROUND Previous studies have relied predominantly on the body-mass index (BMI, the weight in kilograms divided by the square of the height in meters) to assess the association of adiposity with the risk of death, but few have examined… 23967973 general-and-abdominal-adiposity-and-risk-of-death-in-europe. general abdominal adiposity risk death europe background previous General and abdominal adiposity and risk of death in Europe. General and abdominal adiposity and risk of death in Europe. BACKGROUND Previous studies have relied predominantly on the body-mass index (BMI, the weight in kilograms divided by the square of the height in meters) to assess the association of adiposity with the risk of death, but few have examined whether the distribution of body fat contributes to the prediction of death. METHODS We examined the association of BMI, waist circumference, and waist-to-hip ratio with the risk of death among 359,387 participants from nine countries in the European Prospective Investigation into Cancer and Nutrition (EPIC). We used a Cox regression analysis, with age as the time variable, and stratified the models according to study center and age at recruitment, with further adjustment for educational level,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.544925+00:00"
+}

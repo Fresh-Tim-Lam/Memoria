@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22241778",
+  "source_fingerprint": "7b0837c3bd64c1b362ddc725608aa74d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22241778",
+    "integrin-beta1-mediated-matrix-assembly-and-signaling-are-critical-for-the-normal-development-and-function-of-the-kidney-glomerulus."
+  ],
+  "key_phrases": [
+    "integrin",
+    "beta1",
+    "mediated",
+    "matrix",
+    "assembly",
+    "signaling",
+    "critical",
+    "normal"
+  ],
+  "summary_1l": "Integrin beta1-mediated matrix assembly and signaling are critical for the normal development and function of the kidney glomerulus.",
+  "query_hits": [],
+  "embed_text": "22241778 Integrin beta1-mediated matrix assembly and signaling are critical for the normal development and function of the kidney glomerulus. science scifact The human kidneys filter 180 l of blood every day via about 2.5 million glomeruli. The three layers of the glomerular filtration apparatus consist of fenestrated endothelium, specialized extracellular matrix known as the glomerular… 22241778 integrin-beta1-mediated-matrix-assembly-and-signaling-are-critical-for-the-normal-development-and-function-of-the-kidney-glomerulus. integrin beta1 mediated matrix assembly signaling critical normal Integrin beta1-mediated matrix assembly and signaling are critical for the normal development and function of the kidney glomerulus. Integrin beta1-mediated matrix assembly and signaling are critical for the normal development and function of the kidney glomerulus. The human kidneys filter 180 l of blood every day via about 2.5 million glomeruli. The three layers of the glomerular filtration apparatus consist of fenestrated endothelium, specialized extracellular matrix known as the glomerular basement membrane (GBM) and the podocyte foot processes with their modified adherens junctions known as the slit diaphragm (SD). In this study we explored the contribution of podocyte beta1 integrin signaling for normal glomerular function. Mice with podocyte specific deletion of integrin beta1 (podocin-Cre beta1-fl/fl mice) are born normal but cannot complete postnatal renal development. They exhibit detectable proteinuria on day",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.488786+00:00"
+}

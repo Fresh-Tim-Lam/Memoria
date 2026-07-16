@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17231273",
+  "source_fingerprint": "3e6eabfffbc53e5915c7c38827657f4c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17231273",
+    "ionic-mechanism-of-ouabain-induced-concurrent-apoptosis-and-necrosis-in-individual-cultured-cortical-neurons"
+  ],
+  "key_phrases": [
+    "ionic",
+    "mechanism",
+    "ouabain",
+    "induced",
+    "concurrent",
+    "apoptosis",
+    "necrosis",
+    "individual"
+  ],
+  "summary_1l": "Energy deficiency and dysfunction of the Na+, K+-ATPase are common consequences of many pat",
+  "query_hits": [],
+  "embed_text": "17231273 Ionic mechanism of ouabain-induced concurrent apoptosis and necrosis in individual cultured cortical neurons science scifact Energy deficiency and dysfunction of the Na+, K+-ATPase are common consequences of many pathological insults. The nature and mechanism of cell injury induced by impaired Na+, K+-ATPase, however, are not well defined. We used cultured… 17231273 ionic-mechanism-of-ouabain-induced-concurrent-apoptosis-and-necrosis-in-individual-cultured-cortical-neurons ionic mechanism ouabain induced concurrent apoptosis necrosis individual Energy deficiency and dysfunction of the Na+, K+-ATPase are common consequences of many pat Ionic mechanism of ouabain-induced concurrent apoptosis and necrosis in individual cultured cortical neurons Energy deficiency and dysfunction of the Na+, K+-ATPase are common consequences of many pathological insults. The nature and mechanism of cell injury induced by impaired Na+, K+-ATPase, however, are not well defined. We used cultured cortical neurons to examine the hypothesis that blocking the Na+, K+-ATPase induces apoptosis by depleting cellular K+ and, concurrently, induces necrotic injury in the same cells by increasing intracellular Ca2+ and Na+. The Na+, K+-ATPase inhibitor ouabain induced concentration-dependent neuronal death. Ouabain triggered transient neuronal cell swelling followed by cell shrinkage, accompanied by intracellular Ca2+ and Na+ increase, K+ decrease, cytoch",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.503830+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "70115",
+  "source_fingerprint": "4da8fb45899bae7eb39585472ae4cfab",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "70115",
+    "bayesian-measures-of-model-complexity-and-fit"
+  ],
+  "key_phrases": [
+    "bayesian",
+    "measures",
+    "model",
+    "complexity",
+    "fit",
+    "summary",
+    "we",
+    "consider"
+  ],
+  "summary_1l": "Summary.",
+  "query_hits": [],
+  "embed_text": "70115 Bayesian measures of model complexity and fit science scifact Summary. We consider the problem of comparing complex hierarchical models in which the number of parameters is not clearly defined. Using an information theoretic argument we derive a measure pD for the effective number of parameters in a… 70115 bayesian-measures-of-model-complexity-and-fit bayesian measures model complexity fit summary we consider Summary. Bayesian measures of model complexity and fit Summary. We consider the problem of comparing complex hierarchical models in which the number of parameters is not clearly defined. Using an information theoretic argument we derive a measure pD for the effective number of parameters in a model as the difference between the posterior mean of the deviance and the deviance at the posterior means of the parameters of interest. In general pD approximately corresponds to the trace of the product of Fisher's information and the posterior covariance, which in normal models is the trace of the ‘hat’ matrix projecting observations onto fitted values. Its properties in exponential families are explored. The posterior mean deviance is suggested as a Bayesian measure of fit or adequacy, and the contributio",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.197851+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "40710501",
+  "source_fingerprint": "1a738363aad3c9845e9c69c0e70c40d4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "40710501",
+    "different-response-of-human-glioma-tumor-initiating-cells-to-epidermal-growth-factor-receptor-kinase-inhibitors."
+  ],
+  "key_phrases": [
+    "different",
+    "response",
+    "human",
+    "glioma",
+    "tumor",
+    "initiating",
+    "cells",
+    "epidermal"
+  ],
+  "summary_1l": "Different response of human glioma tumor-initiating cells to epidermal growth factor receptor kinase inhibitors.",
+  "query_hits": [],
+  "embed_text": "40710501 Different response of human glioma tumor-initiating cells to epidermal growth factor receptor kinase inhibitors. science scifact Because a subpopulation of cancer stem cells (tumor-initiating cells, TICs) is believed to be responsible for the development, progression, and recurrence of many tumors, we evaluated the in vitro sensitivity of human glioma TICs to… 40710501 different-response-of-human-glioma-tumor-initiating-cells-to-epidermal-growth-factor-receptor-kinase-inhibitors. different response human glioma tumor initiating cells epidermal Different response of human glioma tumor-initiating cells to epidermal growth factor receptor kinase inhibitors. Different response of human glioma tumor-initiating cells to epidermal growth factor receptor kinase inhibitors. Because a subpopulation of cancer stem cells (tumor-initiating cells, TICs) is believed to be responsible for the development, progression, and recurrence of many tumors, we evaluated the in vitro sensitivity of human glioma TICs to epidermal growth factor receptor (EGFR) kinase inhibitors (erlotinib and gefitinib) and possible molecular determinants for their effects. Cells isolated from seven glioblastomas (GBM 1-7) and grown using neural stem cell permissive conditions were characterized for in vivo tumorigenicity, expression of tumor stem cell markers (CD133, nestin), and multilineage differentiation properties, confirming that these cultures are enriched in TICs. TIC cultur",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.758660+00:00"
+}

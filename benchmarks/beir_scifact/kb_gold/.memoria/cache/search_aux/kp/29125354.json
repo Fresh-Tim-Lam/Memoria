@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29125354",
+  "source_fingerprint": "125b02f6ab421ccd4d17a8aa65dc9714",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29125354",
+    "transcriptional-repression-of-gata3-is-essential-for-early-b-cell-commitment"
+  ],
+  "key_phrases": [
+    "transcriptional",
+    "repression",
+    "gata3",
+    "essential",
+    "early",
+    "cell",
+    "commitment",
+    "mechanisms"
+  ],
+  "summary_1l": "The mechanisms underlying the silencing of alternative fate potentials in very early B cell precursors remain unclear.",
+  "query_hits": [],
+  "embed_text": "29125354 Transcriptional Repression of Gata3 Is Essential for Early B Cell Commitment science scifact The mechanisms underlying the silencing of alternative fate potentials in very early B cell precursors remain unclear. Using gain- and loss-of-function approaches together with a synthetic Zinc-finger polypeptide (6ZFP) engineered to… 29125354 transcriptional-repression-of-gata3-is-essential-for-early-b-cell-commitment transcriptional repression gata3 essential early cell commitment mechanisms The mechanisms underlying the silencing of alternative fate potentials in very early B cell precursors remain unclear. Transcriptional Repression of Gata3 Is Essential for Early B Cell Commitment The mechanisms underlying the silencing of alternative fate potentials in very early B cell precursors remain unclear. Using gain- and loss-of-function approaches together with a synthetic Zinc-finger polypeptide (6ZFP) engineered to prevent transcription factor binding to a defined cis element, we show that the transcription factor EBF1 promotes B cell lineage commitment by directly repressing expression of the T-cell-lineage-requisite Gata3 gene. Ebf1-deficient lymphoid progenitors exhibited increased T cell lineage potential and elevated Gata3 transcript expression, whereas enforced EBF1 expression inhibited T cell differentiation and caused rapid loss of Gata3 mRNA. Notably, 6ZFP-mediated perturbation of EBF1",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.622384+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5503194",
+  "source_fingerprint": "bb06f23f884ab7675887b28f2868b2d5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5503194",
+    "alphae-catenin-controls-cerebral-cortical-size-by-regulating-the-hedgehog-signaling-pathway."
+  ],
+  "key_phrases": [
+    "alphae",
+    "catenin",
+    "controls",
+    "cerebral",
+    "cortical",
+    "size",
+    "by",
+    "regulating"
+  ],
+  "summary_1l": "alphaE-catenin controls cerebral cortical size by regulating the hedgehog signaling pathway.",
+  "query_hits": [],
+  "embed_text": "5503194 alphaE-catenin controls cerebral cortical size by regulating the hedgehog signaling pathway. science scifact During development, cells monitor and adjust their rates of accumulation to produce organs of predetermined size. We show here that central nervous system-specific deletion of the essential adherens junction gene, alphaE-catenin, causes… 5503194 alphae-catenin-controls-cerebral-cortical-size-by-regulating-the-hedgehog-signaling-pathway. alphae catenin controls cerebral cortical size by regulating alphaE-catenin controls cerebral cortical size by regulating the hedgehog signaling pathway. alphaE-catenin controls cerebral cortical size by regulating the hedgehog signaling pathway. During development, cells monitor and adjust their rates of accumulation to produce organs of predetermined size. We show here that central nervous system-specific deletion of the essential adherens junction gene, alphaE-catenin, causes abnormal activation of the hedgehog pathway, resulting in shortening of the cell cycle, decreased apoptosis, and cortical hyperplasia. We propose that alphaE-catenin connects cell-density-dependent adherens junctions with the developmental hedgehog pathway and that this connection may provide a negative feedback loop controlling the size of developing cerebral cortex.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.478354+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3468459",
+  "source_fingerprint": "85afe2f4d5255af773fea744e45613ab",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3468459",
+    "metabolism-strikes-back:-metabolic-flux-regulates-cell-signaling."
+  ],
+  "key_phrases": [
+    "metabolism",
+    "strikes",
+    "back",
+    "metabolic",
+    "flux",
+    "regulates",
+    "cell",
+    "signaling"
+  ],
+  "summary_1l": "Metabolism strikes back: metabolic flux regulates cell signaling.",
+  "query_hits": [],
+  "embed_text": "3468459 Metabolism strikes back: metabolic flux regulates cell signaling. science scifact Mammalian cells depend on growth factor signaling to take up nutrients; however, coordination of glucose and glutamine uptake has been a mystery. In this issue of Genes & Development, Wellen and colleagues (pp. 2784-2799) show that glucose… 3468459 metabolism-strikes-back:-metabolic-flux-regulates-cell-signaling. metabolism strikes back metabolic flux regulates cell signaling Metabolism strikes back: metabolic flux regulates cell signaling. Metabolism strikes back: metabolic flux regulates cell signaling. Mammalian cells depend on growth factor signaling to take up nutrients; however, coordination of glucose and glutamine uptake has been a mystery. In this issue of Genes & Development, Wellen and colleagues (pp. 2784-2799) show that glucose flux through the hexosamine biosynthesis pathway regulates growth factor receptor glycosylation and enables glutamine consumption. This mechanism ensures that cells do not engage in anabolic metabolism when nutrients are limiting, and highlights how substrate availability for protein modifications can modulate cell signaling.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.670164+00:00"
+}

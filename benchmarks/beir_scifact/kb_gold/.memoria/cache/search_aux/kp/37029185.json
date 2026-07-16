@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "37029185",
+  "source_fingerprint": "a48f72583d63eec113e1b43b1f68d29f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "37029185",
+    "quality-of-life-in-patients-with-advanced-heart-failure."
+  ],
+  "key_phrases": [
+    "quality",
+    "life",
+    "patients",
+    "with",
+    "advanced",
+    "heart",
+    "failure",
+    "although"
+  ],
+  "summary_1l": "Quality of life in patients with advanced heart failure.",
+  "query_hits": [],
+  "embed_text": "37029185 Quality of life in patients with advanced heart failure. science scifact Although evaluation of the treatment of congestive heart failure is usually based on objective clinical outcomes, patient self-assessment is increasingly recognized as an important component of evaluation. A study was designed to measure… 37029185 quality-of-life-in-patients-with-advanced-heart-failure. quality life patients with advanced heart failure although Quality of life in patients with advanced heart failure. Quality of life in patients with advanced heart failure. Although evaluation of the treatment of congestive heart failure is usually based on objective clinical outcomes, patient self-assessment is increasingly recognized as an important component of evaluation. A study was designed to measure the quality of life of 134 patients with symptoms of advanced heart failure who were being evaluated for possible heart transplantation. The patients' quality of life was assessed using a mix of subjective and objective measures, including functional status, physical symptoms, emotional state, and psychosocial adaptation. There was no significant relationship between patients' cardiac ejection fraction and any quality-of-life measures; however, the results of a 6-minute walking test, New York Heart A",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.065335+00:00"
+}

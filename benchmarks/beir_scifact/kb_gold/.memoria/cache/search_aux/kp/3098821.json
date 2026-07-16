@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3098821",
+  "source_fingerprint": "b199fdf29bf3cad05001719fc45dd3e4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3098821",
+    "mira-seq-for-dna-methylation-analysis-of-cpg-islands"
+  ],
+  "key_phrases": [
+    "mira",
+    "seq",
+    "dna",
+    "methylation",
+    "analysis",
+    "cpg",
+    "islands",
+    "aim"
+  ],
+  "summary_1l": "AIM To develop a reliable method for whole genome analysis of DNA methylation.",
+  "query_hits": [],
+  "embed_text": "3098821 MIRA-seq for DNA methylation analysis of CpG islands science scifact AIM To develop a reliable method for whole genome analysis of DNA methylation. MATERIALS & METHODS Genome-scale analysis of DNA methylation includes affinity-based approaches such as enrichment using methyl-CpG-binding proteins. One of… 3098821 mira-seq-for-dna-methylation-analysis-of-cpg-islands mira seq dna methylation analysis cpg islands aim AIM To develop a reliable method for whole genome analysis of DNA methylation. MIRA-seq for DNA methylation analysis of CpG islands AIM To develop a reliable method for whole genome analysis of DNA methylation. MATERIALS & METHODS Genome-scale analysis of DNA methylation includes affinity-based approaches such as enrichment using methyl-CpG-binding proteins. One of these methods, the methylated-CpG island recovery assay (MIRA), is based on the high affinity of the MBD2b-MBD3L1 complex for CpG-methylated DNA. Here we provide a detailed description of MIRA and combine it with next generation sequencing platforms (MIRA-seq). RESULTS We assessed the performance of MIRA-seq and compared the data with whole genome bisulfite sequencing. CONCLUSION MIRA-seq is a reliable, genome-scale DNA methylation analysis platform for scoring DNA methylation differences at CpG-rich genom",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.227367+00:00"
+}

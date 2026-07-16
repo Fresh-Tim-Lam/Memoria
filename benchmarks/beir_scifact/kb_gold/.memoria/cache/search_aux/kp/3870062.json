@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3870062",
+  "source_fingerprint": "6666cbdb2875a19fea81e8d463327196",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3870062",
+    "6-sulphated-chondroitins-have-a-positive-influence-on-axonal-regeneration"
+  ],
+  "key_phrases": [
+    "sulphated",
+    "chondroitins",
+    "have",
+    "positive",
+    "influence",
+    "axonal",
+    "regeneration",
+    "chondroitin"
+  ],
+  "summary_1l": "Chondroitin sulphate proteoglycans (CSPGs) upregulated in the glial scar inhibit axon regeneration via their sulphated glycosa",
+  "query_hits": [],
+  "embed_text": "3870062 6-Sulphated Chondroitins Have a Positive Influence on Axonal Regeneration science scifact Chondroitin sulphate proteoglycans (CSPGs) upregulated in the glial scar inhibit axon regeneration via their sulphated glycosaminoglycans (GAGs). Chondroitin 6-sulphotransferase-1 (C6ST-1) is upregulated after injury leading to an increase… 3870062 6-sulphated-chondroitins-have-a-positive-influence-on-axonal-regeneration sulphated chondroitins have positive influence axonal regeneration chondroitin Chondroitin sulphate proteoglycans (CSPGs) upregulated in the glial scar inhibit axon regeneration via their sulphated glycosa 6-Sulphated Chondroitins Have a Positive Influence on Axonal Regeneration Chondroitin sulphate proteoglycans (CSPGs) upregulated in the glial scar inhibit axon regeneration via their sulphated glycosaminoglycans (GAGs). Chondroitin 6-sulphotransferase-1 (C6ST-1) is upregulated after injury leading to an increase in 6-sulphated GAG. In this study, we ask if this increase in 6-sulphated GAG is responsible for the increased inhibition within the glial scar, or whether it represents a partial reversion to the permissive embryonic state dominated by 6-sulphated glycosaminoglycans (GAGs). Using C6ST-1 knockout mice (KO), we studied post-injury changes in chondroitin sulphotransferase (CSST) expression and the effect of chondroitin 6-sulphates on both central and peripheral axon regeneration. Aft",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.756840+00:00"
+}

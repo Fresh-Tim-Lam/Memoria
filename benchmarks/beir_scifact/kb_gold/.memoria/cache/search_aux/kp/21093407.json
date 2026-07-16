@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21093407",
+  "source_fingerprint": "6116b73de09d3b63b3385b7c22356ce8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21093407",
+    "identification-of-short-lived-long-non-coding-rnas-as-surrogate-indicators-for-chemical-stress-response."
+  ],
+  "key_phrases": [
+    "identification",
+    "short",
+    "lived",
+    "long",
+    "non",
+    "coding",
+    "rnas",
+    "as"
+  ],
+  "summary_1l": "Identification of short-lived long non-coding RNAs as surrogate indicators for chemical stress response.",
+  "query_hits": [],
+  "embed_text": "21093407 Identification of short-lived long non-coding RNAs as surrogate indicators for chemical stress response. science scifact Abiotic and biotic stressors in human cells are often a result of sudden and/or frequent changes in environmental factors. The molecular response to stress involves elaborate modulation of gene expression and is of homeostatic, ecological,… 21093407 identification-of-short-lived-long-non-coding-rnas-as-surrogate-indicators-for-chemical-stress-response. identification short lived long non coding rnas as Identification of short-lived long non-coding RNAs as surrogate indicators for chemical stress response. Identification of short-lived long non-coding RNAs as surrogate indicators for chemical stress response. Abiotic and biotic stressors in human cells are often a result of sudden and/or frequent changes in environmental factors. The molecular response to stress involves elaborate modulation of gene expression and is of homeostatic, ecological, and evolutionary importance. Although attention has primarily focused on signaling pathways and protein networks, long non-coding RNAs (ncRNAs) are increasingly involved in the molecular mechanisms associated with responses to cellular stresses. We identified six novel short-lived long ncRNAs (MIR22HG, GABPB-AS1, LINC00152, IDI2-AS1, SNHG15, and FLJ33630) that responded to chemical stressors (cisplatin, cycloheximide, and mercury (II) oxide) in HeLa T",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.391971+00:00"
+}

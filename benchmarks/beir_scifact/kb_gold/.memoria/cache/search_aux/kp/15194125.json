@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15194125",
+  "source_fingerprint": "b0887f2399dd3c455c5acf2df8bc1e3a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15194125",
+    "reproducibility-and-automatic-measurement-of-qt-dispersion."
+  ],
+  "key_phrases": [
+    "reproducibility",
+    "automatic",
+    "measurement",
+    "qt",
+    "dispersion",
+    "this",
+    "study",
+    "investigated"
+  ],
+  "summary_1l": "Reproducibility and automatic measurement of QT dispersion.",
+  "query_hits": [],
+  "embed_text": "15194125 Reproducibility and automatic measurement of QT dispersion. science scifact This study investigated interobserver (two observers) and intrasubject (two measurements) reproducibility of QT dispersion from abnormal electrocardiograms in patients with previous myocardial infarction, and compared a user-interactive… 15194125 reproducibility-and-automatic-measurement-of-qt-dispersion. reproducibility automatic measurement qt dispersion this study investigated Reproducibility and automatic measurement of QT dispersion. Reproducibility and automatic measurement of QT dispersion. This study investigated interobserver (two observers) and intrasubject (two measurements) reproducibility of QT dispersion from abnormal electrocardiograms in patients with previous myocardial infarction, and compared a user-interactive with an automatic measurement system. Standard 12-lead electrocardiograms, recorded at 25 mm.s-1, were randomly chosen from 70 patients following myocardial infarction. These were scanned into a personal computer, and specially designed software skeletonized and joined each image. The images were then available for user-interactive (mouse and computer screen), or automatic measurements using a specially designed algorithm. For all methods reproducibility of the RR interval was excellent (mean absol",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.179125+00:00"
+}

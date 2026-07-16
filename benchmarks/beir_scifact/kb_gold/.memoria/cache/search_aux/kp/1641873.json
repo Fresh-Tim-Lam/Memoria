@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1641873",
+  "source_fingerprint": "6556bbc38910b09e50e4efe510e4afae",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1641873",
+    "meiosis-in-drosophila:-seeing-is-believing."
+  ],
+  "key_phrases": [
+    "meiosis",
+    "drosophila",
+    "seeing",
+    "believing",
+    "recently",
+    "many",
+    "exciting",
+    "advances"
+  ],
+  "summary_1l": "Meiosis in Drosophila: seeing is believing.",
+  "query_hits": [],
+  "embed_text": "1641873 Meiosis in Drosophila: seeing is believing. science scifact Recently many exciting advances have been achieved in our understanding of Drosophila meiosis due to combined cytological and genetic approaches. New techniques have permitted the characterization of chromosome position and spindle… 1641873 meiosis-in-drosophila:-seeing-is-believing. meiosis drosophila seeing believing recently many exciting advances Meiosis in Drosophila: seeing is believing. Meiosis in Drosophila: seeing is believing. Recently many exciting advances have been achieved in our understanding of Drosophila meiosis due to combined cytological and genetic approaches. New techniques have permitted the characterization of chromosome position and spindle formation in female meiosis I. The proteins encoded by the nod and ncd genes, two genes known to be needed for the proper partitioning of chromosomes lacking exchange events, have been identified and found to be kinesin-like motors. The effects of mutations in these genes on the spindle and chromosomes, together with the localization of the proteins, have yielded a model for the mechanism of female meiosis I. In male meiosis I, the chromosomal regions responsible for homolog pairing have been resolved to the level of s",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.244633+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7451018",
+  "source_fingerprint": "c1fa4817c323b9b67f771f7d2d7b71bd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7451018",
+    "viral-carcinogenesis."
+  ],
+  "key_phrases": [
+    "viral",
+    "carcinogenesis",
+    "cancer",
+    "has",
+    "been",
+    "recognized",
+    "thousands",
+    "years"
+  ],
+  "summary_1l": "Viral Carcinogenesis.",
+  "query_hits": [],
+  "embed_text": "7451018 Viral Carcinogenesis. science scifact Cancer has been recognized for thousands of years. Egyptians believed that cancer occurred at the will of the gods. Hippocrates believed human disease resulted from an imbalance of the four humors: blood, phlegm, yellow bile, and black… 7451018 viral-carcinogenesis. viral carcinogenesis cancer has been recognized thousands years Viral Carcinogenesis. Viral Carcinogenesis. Cancer has been recognized for thousands of years. Egyptians believed that cancer occurred at the will of the gods. Hippocrates believed human disease resulted from an imbalance of the four humors: blood, phlegm, yellow bile, and black bile with cancer being caused by excess black bile. The lymph theory of cancer replaced the humoral theory and the blastema theory replaced the lymph theory. Rudolph Virchow was the first to recognize that cancer cells like all cells came from other cells and believed chronic irritation caused cancer. At the same time there was a belief that trauma caused cancer, though it never evolved after many experiments inducing trauma. The birth of virology occurred in 1892 when Dimitri Ivanofsky demonstrated that diseased tobacco plants remained",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.329079+00:00"
+}

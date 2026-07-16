@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3315558",
+  "source_fingerprint": "a0e5258bf854f73739668f48ba5f4462",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3315558",
+    "genetic-analysis-of-human-obesity-in-an-italian-sample."
+  ],
+  "key_phrases": [
+    "genetic",
+    "analysis",
+    "human",
+    "obesity",
+    "italian",
+    "sample",
+    "factors",
+    "has"
+  ],
+  "summary_1l": "Genetic analysis of human obesity in an Italian sample.",
+  "query_hits": [],
+  "embed_text": "3315558 Genetic analysis of human obesity in an Italian sample. science scifact An analysis of the genetic factors in obesity has been carried out on a sample of nuclear families from Aosta (N. Italy). The families consisted of the parents and sibs of all elementary school children considered to be obese during a… 3315558 genetic-analysis-of-human-obesity-in-an-italian-sample. genetic analysis human obesity italian sample factors has Genetic analysis of human obesity in an Italian sample. Genetic analysis of human obesity in an Italian sample. An analysis of the genetic factors in obesity has been carried out on a sample of nuclear families from Aosta (N. Italy). The families consisted of the parents and sibs of all elementary school children considered to be obese during a preliminary screening and a similar sample of non-obese children and their nuclear families. The numbers of such families were 67 and 112, respectively. Several tests were applied in order to examine the genetic contribution to obesity, and in particular to investigate the presence of a dominant major gene. Our conclusions are that genetic factors are certainly present. Several analyses suggest the presence of a dominant major gene with weak effect.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:12.983292+00:00"
+}

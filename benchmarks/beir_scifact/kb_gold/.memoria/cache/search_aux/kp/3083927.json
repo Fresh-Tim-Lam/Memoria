@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3083927",
+  "source_fingerprint": "902f36a0e7e68a9a1b7bc927b120503d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3083927",
+    "chronic-stress,-glucocorticoid-receptor-resistance,-inflammation,-and-disease-risk."
+  ],
+  "key_phrases": [
+    "chronic",
+    "stress",
+    "glucocorticoid",
+    "receptor",
+    "resistance",
+    "inflammation",
+    "disease",
+    "risk"
+  ],
+  "summary_1l": "Chronic stress, glucocorticoid receptor resistance, inflammation, and disease risk.",
+  "query_hits": [],
+  "embed_text": "3083927 Chronic stress, glucocorticoid receptor resistance, inflammation, and disease risk. science scifact We propose a model wherein chronic stress results in glucocorticoid receptor resistance (GCR) that, in turn, results in failure to down-regulate inflammatory response. Here we test the model in two viral-challenge studies. In study 1, we… 3083927 chronic-stress,-glucocorticoid-receptor-resistance,-inflammation,-and-disease-risk. chronic stress glucocorticoid receptor resistance inflammation disease risk Chronic stress, glucocorticoid receptor resistance, inflammation, and disease risk. Chronic stress, glucocorticoid receptor resistance, inflammation, and disease risk. We propose a model wherein chronic stress results in glucocorticoid receptor resistance (GCR) that, in turn, results in failure to down-regulate inflammatory response. Here we test the model in two viral-challenge studies. In study 1, we assessed stressful life events, GCR, and control variables including baseline antibody to the challenge virus, age, body mass index (BMI), season, race, sex, education, and virus type in 276 healthy adult volunteers. The volunteers were subsequently quarantined, exposed to one of two rhinoviruses, and followed for 5 d with nasal washes for viral isolation and assessment of signs/symptoms of a common cold. In study 2, we assessed the same control variables and GCR in 79 subj",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.029127+00:00"
+}

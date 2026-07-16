@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "37182501",
+  "source_fingerprint": "31a602332c20923ebaef547caf6c7567",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "37182501",
+    "b-cell-self-tolerance-in-humans."
+  ],
+  "key_phrases": [
+    "cell",
+    "self",
+    "tolerance",
+    "humans",
+    "two",
+    "mechanisms",
+    "account",
+    "generation"
+  ],
+  "summary_1l": "B-cell self-tolerance in humans.",
+  "query_hits": [],
+  "embed_text": "37182501 B-cell self-tolerance in humans. science scifact Two mechanisms account for generation of the human antibody repertoire; V(D)J recombination during the early stages of B-cell development in the bone marrow and somatic mutation of immunoglobulin genes in mature B cells responding to… 37182501 b-cell-self-tolerance-in-humans. cell self tolerance humans two mechanisms account generation B-cell self-tolerance in humans. B-cell self-tolerance in humans. Two mechanisms account for generation of the human antibody repertoire; V(D)J recombination during the early stages of B-cell development in the bone marrow and somatic mutation of immunoglobulin genes in mature B cells responding to antigen in the periphery. V(D)J recombination produces diversity by random joining of gene segments and somatic mutation by introducing random point mutations. Both are required to attain the degree of antigen receptor diversification that is necessary for immune protection: defects in either mechanism are associated with increased susceptibility to infection. However, the downside of producing enormous random diversity in the antibody repertoire is the generation of autoantibodies. To prevent autoimmunity B cells expressing au",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.203464+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25062868",
+  "source_fingerprint": "26409a92bf1ce60def79bf5331bb450d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25062868",
+    "the-transcriptional-responses-of-mycobacterium-tuberculosis-to-inhibitors-of-metabolism:-novel-insights-into-drug-mechanisms-of-action."
+  ],
+  "key_phrases": [
+    "transcriptional",
+    "responses",
+    "mycobacterium",
+    "tuberculosis",
+    "inhibitors",
+    "metabolism",
+    "novel",
+    "insights"
+  ],
+  "summary_1l": "The transcriptional responses of Mycobacterium tuberculosis to inhibitors of metabolism: novel insights into drug mechanisms of action.",
+  "query_hits": [],
+  "embed_text": "25062868 The transcriptional responses of Mycobacterium tuberculosis to inhibitors of metabolism: novel insights into drug mechanisms of action. science scifact The differential transcriptional response of Mycobacterium tuberculosis to drugs and growth-inhibitory conditions was monitored to generate a data set of 430 microarray profiles. Unbiased grouping of these profiles independently clustered… 25062868 the-transcriptional-responses-of-mycobacterium-tuberculosis-to-inhibitors-of-metabolism:-novel-insights-into-drug-mechanisms-of-action. transcriptional responses mycobacterium tuberculosis inhibitors metabolism novel insights The transcriptional responses of Mycobacterium tuberculosis to inhibitors of metabolism: novel insights into drug mechanisms of action. The transcriptional responses of Mycobacterium tuberculosis to inhibitors of metabolism: novel insights into drug mechanisms of action. The differential transcriptional response of Mycobacterium tuberculosis to drugs and growth-inhibitory conditions was monitored to generate a data set of 430 microarray profiles. Unbiased grouping of these profiles independently clustered agents of known mechanism of action accurately and was successful at predicting the mechanism of action of several unknown agents. These predictions were validated biochemically for two agents of previously uncategorized mechanism, pyridoacridones and phenothiazines. Analysis of this data set further revealed 150 underlying clusters of coordinately regulated genes offering the first glimpse at the full metabolic potential",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.935618+00:00"
+}

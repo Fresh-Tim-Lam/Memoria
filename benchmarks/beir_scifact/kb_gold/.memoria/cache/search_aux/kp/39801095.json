@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "39801095",
+  "source_fingerprint": "355ef1323e4bc071262ff4f812291e62",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "39801095",
+    "dna-methylation-in-embryonic-stem-cells."
+  ],
+  "key_phrases": [
+    "dna",
+    "methylation",
+    "embryonic",
+    "stem",
+    "cells",
+    "escs",
+    "pluripotent",
+    "self"
+  ],
+  "summary_1l": "DNA methylation in embryonic stem cells.",
+  "query_hits": [],
+  "embed_text": "39801095 DNA methylation in embryonic stem cells. science scifact Embryonic stem cells (ESCs) are pluripotent, self-renewing cells. These cells can be used in applications such as cell therapy, drug development, disease modeling, and the study of cellular differentiation. Investigating the interplay of… 39801095 dna-methylation-in-embryonic-stem-cells. dna methylation embryonic stem cells escs pluripotent self DNA methylation in embryonic stem cells. DNA methylation in embryonic stem cells. Embryonic stem cells (ESCs) are pluripotent, self-renewing cells. These cells can be used in applications such as cell therapy, drug development, disease modeling, and the study of cellular differentiation. Investigating the interplay of epigenetics, genetics, and gene expression in control of pluripotence and differentiation could give important insights on how these cells function. One of the best known epigenetic factors is DNA methylation, which is a major mechanism for regulation of gene expression. This phenomenon is mostly seen in imprinted genes and X-chromosome inactivation where DNA methylation of promoter regions leads to repression of gene expression. Differential DNA methylation of pluripotence-associated genes such as Nanog and Oct4/Po",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.944602+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25536577",
+  "source_fingerprint": "138512ce81821c1ce240c259714393a3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25536577",
+    "circos:-an-information-aesthetic-for-comparative-genomics."
+  ],
+  "key_phrases": [
+    "circos",
+    "information",
+    "aesthetic",
+    "comparative",
+    "genomics",
+    "we",
+    "created",
+    "visualization"
+  ],
+  "summary_1l": "Circos: an information aesthetic for comparative genomics.",
+  "query_hits": [],
+  "embed_text": "25536577 Circos: an information aesthetic for comparative genomics. science scifact We created a visualization tool called Circos to facilitate the identification and analysis of similarities and differences arising from comparisons of genomes. Our tool is effective in displaying variation in genome structure and,… 25536577 circos:-an-information-aesthetic-for-comparative-genomics. circos information aesthetic comparative genomics we created visualization Circos: an information aesthetic for comparative genomics. Circos: an information aesthetic for comparative genomics. We created a visualization tool called Circos to facilitate the identification and analysis of similarities and differences arising from comparisons of genomes. Our tool is effective in displaying variation in genome structure and, generally, any other kind of positional relationships between genomic intervals. Such data are routinely produced by sequence alignments, hybridization arrays, genome mapping, and genotyping studies. Circos uses a circular ideogram layout to facilitate the display of relationships between pairs of positions by the use of ribbons, which encode the position, size, and orientation of related genomic elements. Circos is capable of displaying data as scatter, line, and histogram plots, heat maps, tiles, conne",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.868813+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14965508",
+  "source_fingerprint": "b4bdf6a6bde759b388dfe162e13db9b5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14965508",
+    "endothelial-cell-membranes-contain-podocalyxin--the-major-sialoprotein-of-visceral-glomerular-epithelial-cells"
+  ],
+  "key_phrases": [
+    "endothelial",
+    "cell",
+    "membranes",
+    "contain",
+    "podocalyxin",
+    "--",
+    "major",
+    "sialoprotein"
+  ],
+  "summary_1l": "Podocalyxin is the major sialoprotein in the glycocalyx of glomerular podocytes.",
+  "query_hits": [],
+  "embed_text": "14965508 Endothelial cell membranes contain podocalyxin--the major sialoprotein of visceral glomerular epithelial cells science scifact Podocalyxin is the major sialoprotein in the glycocalyx of glomerular podocytes. Here we report on its extraglomerular localization, using a monospecific antibody which was obtained by affinity purification of IgG on nitrocellulose… 14965508 endothelial-cell-membranes-contain-podocalyxin--the-major-sialoprotein-of-visceral-glomerular-epithelial-cells endothelial cell membranes contain podocalyxin -- major sialoprotein Podocalyxin is the major sialoprotein in the glycocalyx of glomerular podocytes. Endothelial cell membranes contain podocalyxin--the major sialoprotein of visceral glomerular epithelial cells Podocalyxin is the major sialoprotein in the glycocalyx of glomerular podocytes. Here we report on its extraglomerular localization, using a monospecific antibody which was obtained by affinity purification of IgG on nitrocellulose transfers of glomerular podocalyxin. By indirect immunofluorescence, podocalyxin was found in the blood vessels of several organs (lung, heart, kidney, small intestine, brain, pancreas, aorta, the periportal blood vessels in liver, and the central arteries of follicles of the spleen, but not in the endothelia that line the sinusoids of the latter organs). By immunoelectron microscopy--using immunogold conjugates in diffusion (\"pre-embedding\") and surfac",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.951603+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2319305",
+  "source_fingerprint": "cf5d6982a725b99a0ac79ff881db01a5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2319305",
+    "n348i-in-hiv-1-reverse-transcriptase-can-counteract-the-nevirapine-mediated-bias-toward-rnase-h-cleavage-during-plus-strand-initiation."
+  ],
+  "key_phrases": [
+    "n348i",
+    "hiv",
+    "reverse",
+    "transcriptase",
+    "can",
+    "counteract",
+    "nevirapine",
+    "mediated"
+  ],
+  "summary_1l": "N348I in HIV-1 reverse transcriptase can counteract the nevirapine-mediated bias toward RNase H cleavage during plus-strand initiation.",
+  "query_hits": [],
+  "embed_text": "2319305 N348I in HIV-1 reverse transcriptase can counteract the nevirapine-mediated bias toward RNase H cleavage during plus-strand initiation. science scifact Drug resistance-associated mutations in HIV-1 reverse transcriptase (RT) can affect the balance between polymerase and ribonuclease H (RNase H) activities of the enzyme. We have recently demonstrated that the N348I mutation in the… 2319305 n348i-in-hiv-1-reverse-transcriptase-can-counteract-the-nevirapine-mediated-bias-toward-rnase-h-cleavage-during-plus-strand-initiation. n348i hiv reverse transcriptase can counteract nevirapine mediated N348I in HIV-1 reverse transcriptase can counteract the nevirapine-mediated bias toward RNase H cleavage during plus-strand initiation. N348I in HIV-1 reverse transcriptase can counteract the nevirapine-mediated bias toward RNase H cleavage during plus-strand initiation. Drug resistance-associated mutations in HIV-1 reverse transcriptase (RT) can affect the balance between polymerase and ribonuclease H (RNase H) activities of the enzyme. We have recently demonstrated that the N348I mutation in the connection domain causes selective dissociation from RNase H-competent complexes, whereas the functional integrity of the polymerase-competent complex remains largely unaffected. N348I has been associated with resistance to the non-nucleoside RT inhibitor (NNRTI), nevirapine; however, a possible mechanism that links changes in RNase H activity to changes in NNRTI susceptibility remains to be established. To address this problem,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.005477+00:00"
+}

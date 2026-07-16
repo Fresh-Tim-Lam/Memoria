@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "kp_id": "administrative-penalty",
+  "source_fingerprint": "e88809001f22ee2628200440c72c890c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "administrative-penalty"
+  ],
+  "key_phrases": [
+    "行政处罚",
+    "xingzhengchufa"
+  ],
+  "summary_1l": "行政处罚",
+  "query_hits": [],
+  "embed_text": "administrative-penalty 行政处罚 行政法 行政处罚 设定 种类 程序 administrative-penalty 行政处罚 xingzhengchufa 行政处罚 行政处罚",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-16T05:57:15.433054+00:00"
+}

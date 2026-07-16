@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25301182",
+  "source_fingerprint": "6447e8b524e77d0a1e3e700c57e12f98",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25301182",
+    "left-ventricular-function-and-exercise-capacity."
+  ],
+  "key_phrases": [
+    "left",
+    "ventricular",
+    "function",
+    "exercise",
+    "capacity",
+    "context",
+    "limited",
+    "information"
+  ],
+  "summary_1l": "Left ventricular function and exercise capacity.",
+  "query_hits": [],
+  "embed_text": "25301182 Left ventricular function and exercise capacity. science scifact CONTEXT Limited information exists regarding the role of left ventricular function in predicting exercise capacity and impact on age- and sex-related differences. OBJECTIVES To determine the impact of measures of cardiac function assessed… 25301182 left-ventricular-function-and-exercise-capacity. left ventricular function exercise capacity context limited information Left ventricular function and exercise capacity. Left ventricular function and exercise capacity. CONTEXT Limited information exists regarding the role of left ventricular function in predicting exercise capacity and impact on age- and sex-related differences. OBJECTIVES To determine the impact of measures of cardiac function assessed by echocardiography on exercise capacity and to determine if these associations are modified by sex or advancing age. DESIGN Cross-sectional study of patients undergoing exercise echocardiography with routine measurements of left ventricular systolic and diastolic function by 2-dimensional and Doppler techniques. Analyses were conducted to determine the strongest correlates of exercise capacity and the age and sex interactions of these variables with exercise capacity. SETTING Large tertiary referral center",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.359142+00:00"
+}

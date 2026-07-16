@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13882658",
+  "source_fingerprint": "e06227cebfa55fcfd4222300b6c5eb24",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13882658",
+    "human-contribution-to-the-european-heatwave-of-2003"
+  ],
+  "key_phrases": [
+    "human",
+    "contribution",
+    "european",
+    "heatwave",
+    "2003",
+    "summer",
+    "was",
+    "probably"
+  ],
+  "summary_1l": "The summer of 2003 was probably the hottest in Europe since at latest ad 1500, and unusually large numbers of heat-related deaths were reported in F",
+  "query_hits": [],
+  "embed_text": "13882658 Human contribution to the European heatwave of 2003 science scifact The summer of 2003 was probably the hottest in Europe since at latest ad 1500, and unusually large numbers of heat-related deaths were reported in France, Germany and Italy. It is an ill-posed question whether the 2003 heatwave was caused,… 13882658 human-contribution-to-the-european-heatwave-of-2003 human contribution european heatwave 2003 summer was probably The summer of 2003 was probably the hottest in Europe since at latest ad 1500, and unusually large numbers of heat-related deaths were reported in F Human contribution to the European heatwave of 2003 The summer of 2003 was probably the hottest in Europe since at latest ad 1500, and unusually large numbers of heat-related deaths were reported in France, Germany and Italy. It is an ill-posed question whether the 2003 heatwave was caused, in a simple deterministic sense, by a modification of the external influences on climate—for example, increasing concentrations of greenhouse gases in the atmosphere—because almost any such weather event might have occurred by chance in an unmodified climate. However, it is possible to estimate by how much human activities may have increased the risk of the occurrence of such a heatwave. Here we use this conceptual framework to estimate the contribution of human-induced increases in atmospheric concentr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.296091+00:00"
+}

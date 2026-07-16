@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6454371",
+  "source_fingerprint": "cd9d5d1d2d38993d6dab03fae7b942f7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6454371",
+    "macropinocytosis:-an-endocytic-pathway-for-internalising-large-gulps."
+  ],
+  "key_phrases": [
+    "macropinocytosis",
+    "endocytic",
+    "pathway",
+    "internalising",
+    "large",
+    "gulps",
+    "regulated",
+    "form"
+  ],
+  "summary_1l": "Macropinocytosis: an endocytic pathway for internalising large gulps.",
+  "query_hits": [],
+  "embed_text": "6454371 Macropinocytosis: an endocytic pathway for internalising large gulps. science scifact Macropinocytosis is a regulated form of endocytosis that mediates the non-selective uptake of solute molecules, nutrients and antigens. It is an actin-dependent process initiated from surface membrane ruffles that give rise to large… 6454371 macropinocytosis:-an-endocytic-pathway-for-internalising-large-gulps. macropinocytosis endocytic pathway internalising large gulps regulated form Macropinocytosis: an endocytic pathway for internalising large gulps. Macropinocytosis: an endocytic pathway for internalising large gulps. Macropinocytosis is a regulated form of endocytosis that mediates the non-selective uptake of solute molecules, nutrients and antigens. It is an actin-dependent process initiated from surface membrane ruffles that give rise to large endocytic vacuoles called macropinosomes. Macropinocytosis is important in a range of physiological processes; it is highly active in macrophages and dendritic cells where it is a major pathway for the capture of antigens, it is relevant to cell migration and tumour metastasis and it represents a portal of cell entry exploited by a range of pathogens. The molecular basis for the formation and maturation of macropinosomes has only recently begun to be defined. Here, we review the general chara",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.913434+00:00"
+}

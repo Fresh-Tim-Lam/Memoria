@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15327601",
+  "source_fingerprint": "cd7bf6b84d22c240ba9d9fd6db7f9e31",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15327601",
+    "a-nano-positioning-system-for-macromolecular-structural-analysis"
+  ],
+  "key_phrases": [
+    "nano",
+    "positioning",
+    "system",
+    "macromolecular",
+    "structural",
+    "analysis",
+    "very",
+    "often"
+  ],
+  "summary_1l": "Very often, the positions of flexible domains within macromolecules as well as within macromolecular complexes cannot be determined by",
+  "query_hits": [],
+  "embed_text": "15327601 A nano-positioning system for macromolecular structural analysis science scifact Very often, the positions of flexible domains within macromolecules as well as within macromolecular complexes cannot be determined by standard structural biology methods. To overcome this problem, we developed a method that uses… 15327601 a-nano-positioning-system-for-macromolecular-structural-analysis nano positioning system macromolecular structural analysis very often Very often, the positions of flexible domains within macromolecules as well as within macromolecular complexes cannot be determined by A nano-positioning system for macromolecular structural analysis Very often, the positions of flexible domains within macromolecules as well as within macromolecular complexes cannot be determined by standard structural biology methods. To overcome this problem, we developed a method that uses probabilistic data analysis to combine single-molecule measurements with X-ray crystallography data. The method determines not only the most likely position of a fluorescent dye molecule attached to the domain but also the complete three-dimensional probability distribution depicting the experimental uncertainty. With this approach, single-pair fluorescence resonance energy transfer measurements can now be used as a quantitative tool for investigating the position and dynamics of flexible domains wit",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.343171+00:00"
+}

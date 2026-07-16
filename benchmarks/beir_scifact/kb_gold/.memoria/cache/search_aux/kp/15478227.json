@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15478227",
+  "source_fingerprint": "f4b34850a6bf1687be2cc57ddbc3a7e6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15478227",
+    "whole-genome-sequencing-of-oryza-brachyantha-reveals-mechanisms-underlying-oryza-genome-evolution"
+  ],
+  "key_phrases": [
+    "whole",
+    "genome",
+    "sequencing",
+    "oryza",
+    "brachyantha",
+    "reveals",
+    "mechanisms",
+    "underlying"
+  ],
+  "summary_1l": "The wild species of the genus Oryza contain a largely untapped reservoir of agronomically important ge",
+  "query_hits": [],
+  "embed_text": "15478227 Whole-genome sequencing of Oryza brachyantha reveals mechanisms underlying Oryza genome evolution science scifact The wild species of the genus Oryza contain a largely untapped reservoir of agronomically important genes for rice improvement. Here we report the 261-Mb de novo assembled genome sequence of Oryza brachyantha. Low activity of long-terminal… 15478227 whole-genome-sequencing-of-oryza-brachyantha-reveals-mechanisms-underlying-oryza-genome-evolution whole genome sequencing oryza brachyantha reveals mechanisms underlying The wild species of the genus Oryza contain a largely untapped reservoir of agronomically important ge Whole-genome sequencing of Oryza brachyantha reveals mechanisms underlying Oryza genome evolution The wild species of the genus Oryza contain a largely untapped reservoir of agronomically important genes for rice improvement. Here we report the 261-Mb de novo assembled genome sequence of Oryza brachyantha. Low activity of long-terminal repeat retrotransposons and massive internal deletions of ancient long-terminal repeat elements lead to the compact genome of Oryza brachyantha. We model 32,038 protein-coding genes in the Oryza brachyantha genome, of which only 70% are located in collinear positions in comparison with the rice genome. Analysing breakpoints of non-collinear genes suggests that double-strand break repair through non-homologous end joining has an important role in gene movemen",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.664695+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26495128",
+  "source_fingerprint": "7cccd13dc5eb95f02918489a604449c1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26495128",
+    "ribosomal-protein-s9-is-a-novel-b23/npm-binding-protein-required-for-normal-cell-proliferation."
+  ],
+  "key_phrases": [
+    "ribosomal",
+    "protein",
+    "s9",
+    "novel",
+    "b23",
+    "npm",
+    "binding",
+    "required"
+  ],
+  "summary_1l": "Ribosomal protein S9 is a novel B23/NPM-binding protein required for normal cell proliferation.",
+  "query_hits": [],
+  "embed_text": "26495128 Ribosomal protein S9 is a novel B23/NPM-binding protein required for normal cell proliferation. science scifact B23 (NPM/nucleophosmin) is a multifunctional nucleolar protein and a member of the nucleoplasmin superfamily of acidic histone chaperones. B23 is essential for normal embryonic development and plays an important role in genomic stability,… 26495128 ribosomal-protein-s9-is-a-novel-b23/npm-binding-protein-required-for-normal-cell-proliferation. ribosomal protein s9 novel b23 npm binding required Ribosomal protein S9 is a novel B23/NPM-binding protein required for normal cell proliferation. Ribosomal protein S9 is a novel B23/NPM-binding protein required for normal cell proliferation. B23 (NPM/nucleophosmin) is a multifunctional nucleolar protein and a member of the nucleoplasmin superfamily of acidic histone chaperones. B23 is essential for normal embryonic development and plays an important role in genomic stability, ribosome biogenesis, and anti-apoptotic signaling. Altered protein expression or genomic mutation of B23 is encountered in many different forms of cancer. Although described as multifunctional, a genuine molecular function of B23 is not fully understood. Here we show that B23 is associated with a protein complex consisting of ribosomal proteins and ribosome-associated RNA helicases. A novel, RNA-independent interaction between ribosomal protein S9 (RPS9) and B2",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.817709+00:00"
+}

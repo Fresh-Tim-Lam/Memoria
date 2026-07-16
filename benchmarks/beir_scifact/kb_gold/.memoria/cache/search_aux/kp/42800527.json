@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "42800527",
+  "source_fingerprint": "232b2145dffa190c69af3e2b992613e6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "42800527",
+    "addition-of-a-gastrointestinal-microbiome-modulator-to-metformin-improves-metformin-tolerance-and-fasting-glucose-levels."
+  ],
+  "key_phrases": [
+    "addition",
+    "gastrointestinal",
+    "microbiome",
+    "modulator",
+    "metformin",
+    "improves",
+    "tolerance",
+    "fasting"
+  ],
+  "summary_1l": "Addition of a Gastrointestinal Microbiome Modulator to Metformin Improves Metformin Tolerance and Fasting Glucose Levels.",
+  "query_hits": [],
+  "embed_text": "42800527 Addition of a Gastrointestinal Microbiome Modulator to Metformin Improves Metformin Tolerance and Fasting Glucose Levels. science scifact BACKGROUND Adverse effects of metformin are primarily related to gastrointestinal (GI) intolerance that could limit titration to an efficacious dose or cause discontinuation of the medication. Because some metformin side effects may be… 42800527 addition-of-a-gastrointestinal-microbiome-modulator-to-metformin-improves-metformin-tolerance-and-fasting-glucose-levels. addition gastrointestinal microbiome modulator metformin improves tolerance fasting Addition of a Gastrointestinal Microbiome Modulator to Metformin Improves Metformin Tolerance and Fasting Glucose Levels. Addition of a Gastrointestinal Microbiome Modulator to Metformin Improves Metformin Tolerance and Fasting Glucose Levels. BACKGROUND Adverse effects of metformin are primarily related to gastrointestinal (GI) intolerance that could limit titration to an efficacious dose or cause discontinuation of the medication. Because some metformin side effects may be attributable to shifts in the GI microbiome, we tested whether a GI microbiome modulator (GIMM) used in combination with metformin would ameliorate the GI symptoms. METHODS A 2-period crossover study design was used with 2 treatment sequences, either placebo in period 1 followed by GIMM in period 2 or vice versa. Study periods lasted for 2 weeks, with a 2-week washout period between. During the first week, type 2 diabetes patients (T2D) w",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.263089+00:00"
+}

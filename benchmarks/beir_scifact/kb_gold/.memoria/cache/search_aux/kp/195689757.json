@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "195689757",
+  "source_fingerprint": "3d7ea69d9a817a8870062b343cda7131",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "195689757",
+    "targeting-metabolic-remodeling-in-glioblastoma-multiforme."
+  ],
+  "key_phrases": [
+    "targeting",
+    "metabolic",
+    "remodeling",
+    "glioblastoma",
+    "multiforme",
+    "key",
+    "aberrant",
+    "biological"
+  ],
+  "summary_1l": "Targeting metabolic remodeling in glioblastoma multiforme.",
+  "query_hits": [],
+  "embed_text": "195689757 Targeting metabolic remodeling in glioblastoma multiforme. science scifact A key aberrant biological difference between tumor cells and normal differentiated cells is altered metabolism, whereby cancer cells acquire a number of stable genetic and epigenetic alterations to retain proliferation, survive under… 195689757 targeting-metabolic-remodeling-in-glioblastoma-multiforme. targeting metabolic remodeling glioblastoma multiforme key aberrant biological Targeting metabolic remodeling in glioblastoma multiforme. Targeting metabolic remodeling in glioblastoma multiforme. A key aberrant biological difference between tumor cells and normal differentiated cells is altered metabolism, whereby cancer cells acquire a number of stable genetic and epigenetic alterations to retain proliferation, survive under unfavorable microenvironments and invade into surrounding tissues. A classic biochemical adaptation is the metabolic shift to aerobic glycolysis rather than mitochondrial oxidative phosphorylation, regardless of oxygen availability, a phenomenon termed the \"Warburg Effect\". Aerobic glycolysis, characterized by high glucose uptake, low oxygen consumption and elevated production of lactate, is associated with a survival advantage as well as the generation of substrates such as fatty acids, amino acids an",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.852915+00:00"
+}

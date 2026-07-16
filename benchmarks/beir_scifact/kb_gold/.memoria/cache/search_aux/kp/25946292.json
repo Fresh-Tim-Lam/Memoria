@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25946292",
+  "source_fingerprint": "928d47bb0dfd555950b1dfe0145ce642",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25946292",
+    "ligand-binding-determines-whether-cd46-is-internalized-by-clathrin-coated-pits-or-macropinocytosis."
+  ],
+  "key_phrases": [
+    "ligand",
+    "binding",
+    "determines",
+    "whether",
+    "cd46",
+    "internalized",
+    "by",
+    "clathrin"
+  ],
+  "summary_1l": "Ligand binding determines whether CD46 is internalized by clathrin-coated pits or macropinocytosis.",
+  "query_hits": [],
+  "embed_text": "25946292 Ligand binding determines whether CD46 is internalized by clathrin-coated pits or macropinocytosis. science scifact CD46 is a ubiquitous human cell surface receptor for the complement components C3b and C4b and for various pathogens, including the measles virus and human herpes virus 6. Ligand binding to CD46 affects (i) protection of autologous cells… 25946292 ligand-binding-determines-whether-cd46-is-internalized-by-clathrin-coated-pits-or-macropinocytosis. ligand binding determines whether cd46 internalized by clathrin Ligand binding determines whether CD46 is internalized by clathrin-coated pits or macropinocytosis. Ligand binding determines whether CD46 is internalized by clathrin-coated pits or macropinocytosis. CD46 is a ubiquitous human cell surface receptor for the complement components C3b and C4b and for various pathogens, including the measles virus and human herpes virus 6. Ligand binding to CD46 affects (i) protection of autologous cells from complement attack by breakdown of complement components, (ii) intracellular signals that affect the regulation of immune cell function, (iii) antigen presentation, and (iv) down-regulation of cell surface CD46. Recent evidence indicates that CD46 signaling can link innate and acquired immune function. The molecular mechanisms for these processes and the importance of intracellular trafficking of the receptor have not yet been elucidated. We demonstrate",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.799085+00:00"
+}

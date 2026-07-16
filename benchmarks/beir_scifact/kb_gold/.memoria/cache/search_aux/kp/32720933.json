@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "32720933",
+  "source_fingerprint": "374ef906f5fdb6658d5b721010ad3c82",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "32720933",
+    "human-papillomavirus-genotype-31-does-not-express-detectable-microrna-levels-during-latent-or-productive-virus-replication."
+  ],
+  "key_phrases": [
+    "human",
+    "papillomavirus",
+    "genotype",
+    "31",
+    "does",
+    "not",
+    "express",
+    "detectable"
+  ],
+  "summary_1l": "Human papillomavirus genotype 31 does not express detectable microRNA levels during latent or productive virus replication.",
+  "query_hits": [],
+  "embed_text": "32720933 Human papillomavirus genotype 31 does not express detectable microRNA levels during latent or productive virus replication. science scifact It has recently become clear that several pathogenic DNA viruses express virally encoded microRNAs in infected cells. In particular, numerous microRNAs have been identified in a range of human and animal herpesviruses, and individual… 32720933 human-papillomavirus-genotype-31-does-not-express-detectable-microrna-levels-during-latent-or-productive-virus-replication. human papillomavirus genotype 31 does not express detectable Human papillomavirus genotype 31 does not express detectable microRNA levels during latent or productive virus replication. Human papillomavirus genotype 31 does not express detectable microRNA levels during latent or productive virus replication. It has recently become clear that several pathogenic DNA viruses express virally encoded microRNAs in infected cells. In particular, numerous microRNAs have been identified in a range of human and animal herpesviruses, and individual microRNAs have also been identified in members of the polyoma- and adenovirus families. Although their functions remain largely unknown, it seems likely that these viral microRNAs play an important role in viral replication in vivo. Here we present an analysis of the microRNAs expressed in human cells during the latent and productive phases of the human papillomavirus genotype 31 (HPV31) replication cycle. Although over 500 cellular micro",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.800627+00:00"
+}

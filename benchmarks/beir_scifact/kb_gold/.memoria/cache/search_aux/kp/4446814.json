@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "4446814",
+  "source_fingerprint": "eb17ee405d8154d57dcabaefe9c76e75",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4446814"
+  ],
+  "key_phrases": [
+    "cryo",
+    "em",
+    "structures",
+    "tau",
+    "filaments",
+    "from",
+    "alzheimer",
+    "disease"
+  ],
+  "summary_1l": "Alzheimer's disease is the most common neurodegenerative disease, and there are no mechanism-based therapies.",
+  "query_hits": [],
+  "embed_text": "4446814 Cryo-EM structures of Tau filaments from Alzheimer’s disease brain science scifact Alzheimer's disease is the most common neurodegenerative disease, and there are no mechanism-based therapies. The disease is defined by the presence of abundant neurofibrillary lesions and neuritic plaques in the cerebral cortex.… 4446814 cryo em structures tau filaments from alzheimer disease Alzheimer's disease is the most common neurodegenerative disease, and there are no mechanism-based therapies. Cryo-EM structures of Tau filaments from Alzheimer’s disease brain Alzheimer's disease is the most common neurodegenerative disease, and there are no mechanism-based therapies. The disease is defined by the presence of abundant neurofibrillary lesions and neuritic plaques in the cerebral cortex. Neurofibrillary lesions comprise paired helical and straight tau filaments, whereas tau filaments with different morphologies characterize other neurodegenerative diseases. No high-resolution structures of tau filaments are available. Here we present cryo-electron microscopy (cryo-EM) maps at 3.4-3.5 Å resolution and corresponding atomic models of paired helical and straight filaments from the brain of an individual with Alzheimer's disease. Filament cores are made of two identical protofilaments c",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.366566+00:00"
+}

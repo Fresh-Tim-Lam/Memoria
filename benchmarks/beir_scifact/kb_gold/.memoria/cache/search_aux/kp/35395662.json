@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "35395662",
+  "source_fingerprint": "7afc96636af63596cc0bd8c7728dc695",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "35395662",
+    "similar-activation-of-signal-transduction-pathways-by-the-herpesvirus-encoded-chemokine-receptors-us28-and-orf74."
+  ],
+  "key_phrases": [
+    "similar",
+    "activation",
+    "signal",
+    "transduction",
+    "pathways",
+    "by",
+    "herpesvirus",
+    "encoded"
+  ],
+  "summary_1l": "Similar activation of signal transduction pathways by the herpesvirus-encoded chemokine receptors US28 and ORF74.",
+  "query_hits": [],
+  "embed_text": "35395662 Similar activation of signal transduction pathways by the herpesvirus-encoded chemokine receptors US28 and ORF74. science scifact The virally encoded chemokine receptors US28 from human cytomegalovirus and ORF74 from human herpesvirus 8 are both constitutively active. We show that both receptors constitutively activate the transcription factors nuclear factor of… 35395662 similar-activation-of-signal-transduction-pathways-by-the-herpesvirus-encoded-chemokine-receptors-us28-and-orf74. similar activation signal transduction pathways by herpesvirus encoded Similar activation of signal transduction pathways by the herpesvirus-encoded chemokine receptors US28 and ORF74. Similar activation of signal transduction pathways by the herpesvirus-encoded chemokine receptors US28 and ORF74. The virally encoded chemokine receptors US28 from human cytomegalovirus and ORF74 from human herpesvirus 8 are both constitutively active. We show that both receptors constitutively activate the transcription factors nuclear factor of activated T cells (NFAT) and cAMP response element binding protein (CREB) and that both pathways are modulated by their respective endogenous receptor ligands. By addition of specific pathway modulators against the G protein subunit Galphai, phospholipase C, protein kinase C, calcineurin, p38 MAP kinase, and MEK1, we find that the constitutive and ligand-dependent inductions are mediated by multiple yet similar pathways in both receptors. The NFAT",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.213455+00:00"
+}

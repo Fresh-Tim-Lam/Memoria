@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18750453",
+  "source_fingerprint": "e7497dcb6731b6b3006a93927cef3ddf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18750453",
+    "assessment-of-volume-depletion-in-children-with-malaria"
+  ],
+  "key_phrases": [
+    "assessment",
+    "volume",
+    "depletion",
+    "children",
+    "with",
+    "malaria",
+    "background",
+    "degree"
+  ],
+  "summary_1l": "Background The degree of volume depletion in severe malaria is currently unknown, although knowledge of fluid compartment volumes can guide ther",
+  "query_hits": [],
+  "embed_text": "18750453 Assessment of Volume Depletion in Children with Malaria science scifact Background The degree of volume depletion in severe malaria is currently unknown, although knowledge of fluid compartment volumes can guide therapy. To assist management of severely ill children, and to test the hypothesis that volume… 18750453 assessment-of-volume-depletion-in-children-with-malaria assessment volume depletion children with malaria background degree Background The degree of volume depletion in severe malaria is currently unknown, although knowledge of fluid compartment volumes can guide ther Assessment of Volume Depletion in Children with Malaria Background The degree of volume depletion in severe malaria is currently unknown, although knowledge of fluid compartment volumes can guide therapy. To assist management of severely ill children, and to test the hypothesis that volume changes in fluid compartments reflect disease severity, we measured body compartment volumes in Gabonese children with malaria. Methods and Findings Total body water volume (TBW) and extracellular water volume (ECW) were estimated in children with severe or moderate malaria and in convalescence by tracer dilution with heavy water and bromide, respectively. Intracellular water volume (ICW) was derived from these parameters. Bioelectrical impedance analysis estimates of TBW and ECW were calibrated against",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:12.064662+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21380348",
+  "source_fingerprint": "141857fb2d440c54e6ee3024ef04ab2e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21380348",
+    "intracellular-transport-of-fat-soluble-vitamins-a-and-e."
+  ],
+  "key_phrases": [
+    "intracellular",
+    "transport",
+    "fat",
+    "soluble",
+    "vitamins",
+    "compounds",
+    "that",
+    "essential"
+  ],
+  "summary_1l": "Intracellular transport of fat-soluble vitamins A and E.",
+  "query_hits": [],
+  "embed_text": "21380348 Intracellular transport of fat-soluble vitamins A and E. science scifact Vitamins are compounds that are essential for the normal growth, reproduction and functioning of the human body. Of the 13 known vitamins, vitamins A, D, E and K are lipophilic compounds and are therefore called fat-soluble vitamins.… 21380348 intracellular-transport-of-fat-soluble-vitamins-a-and-e. intracellular transport fat soluble vitamins compounds that essential Intracellular transport of fat-soluble vitamins A and E. Intracellular transport of fat-soluble vitamins A and E. Vitamins are compounds that are essential for the normal growth, reproduction and functioning of the human body. Of the 13 known vitamins, vitamins A, D, E and K are lipophilic compounds and are therefore called fat-soluble vitamins. Because of their lipophilicity, fat-soluble vitamins are solubilized and transported by intracellular carrier proteins to exert their actions and to be metabolized properly. Vitamin A and its derivatives, collectively called retinoids, are solubilized by intracellular retinoid-binding proteins such as cellular retinol-binding protein (CRBP), cellular retinoic acid-binding protein (CRABP) and cellular retinal-binding protein (CRALBP). These proteins act as chaperones that regulate the metabolism, signalin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.956367+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25878014",
+  "source_fingerprint": "49eeb667235da13d053d21a73872b012",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25878014",
+    "hygiene-hypothesis-in-inflammatory-bowel-disease:-a-critical-review-of-the-literature."
+  ],
+  "key_phrases": [
+    "hygiene",
+    "hypothesis",
+    "inflammatory",
+    "bowel",
+    "disease",
+    "critical",
+    "review",
+    "literature"
+  ],
+  "summary_1l": "Hygiene hypothesis in inflammatory bowel disease: a critical review of the literature.",
+  "query_hits": [],
+  "embed_text": "25878014 Hygiene hypothesis in inflammatory bowel disease: a critical review of the literature. science scifact The hygiene hypothesis is thought to be a significant contributor to the growing incidence of inflammatory bowel disease (IBD) around the world, although the evidence for specific factors that underlie the hygiene hypothesis in IBD is… 25878014 hygiene-hypothesis-in-inflammatory-bowel-disease:-a-critical-review-of-the-literature. hygiene hypothesis inflammatory bowel disease critical review literature Hygiene hypothesis in inflammatory bowel disease: a critical review of the literature. Hygiene hypothesis in inflammatory bowel disease: a critical review of the literature. The hygiene hypothesis is thought to be a significant contributor to the growing incidence of inflammatory bowel disease (IBD) around the world, although the evidence for specific factors that underlie the hygiene hypothesis in IBD is unclear. We aimed to systematically review the literature to determine which hygiene-related factors are associated with the development of IBD. Publications identified from a broad based MEDLINE and Current Contents search between 1966 and 2007 on key terms relevant to the 'hygiene hypothesis' and IBD including H pylori exposure, helminths, cold chain hypothesis, measles infection and vaccination, antibiotic use, breastfeeding, family size, sibship, urban upbringing, day c",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.642502+00:00"
+}

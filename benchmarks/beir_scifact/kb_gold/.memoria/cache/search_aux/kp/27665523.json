@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27665523",
+  "source_fingerprint": "1b999f56d6cd6e6e1c88562366a33132",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27665523",
+    "oxidative-stress-in-renal-dysfunction:-mechanisms,-clinical-sequelae-and-therapeutic-options"
+  ],
+  "key_phrases": [
+    "oxidative",
+    "stress",
+    "renal",
+    "dysfunction",
+    "mechanisms",
+    "clinical",
+    "sequelae",
+    "therapeutic"
+  ],
+  "summary_1l": "Oxidative stress has been increasingly linked to the high incidence of cardiovascular events in patients wi",
+  "query_hits": [],
+  "embed_text": "27665523 Oxidative stress in renal dysfunction: mechanisms, clinical sequelae and therapeutic options science scifact Oxidative stress has been increasingly linked to the high incidence of cardiovascular events in patients with chronic kidney disease (CKD), especially as traditional cardiovascular risk factors seem to not be able to account for the huge… 27665523 oxidative-stress-in-renal-dysfunction:-mechanisms,-clinical-sequelae-and-therapeutic-options oxidative stress renal dysfunction mechanisms clinical sequelae therapeutic Oxidative stress has been increasingly linked to the high incidence of cardiovascular events in patients wi Oxidative stress in renal dysfunction: mechanisms, clinical sequelae and therapeutic options Oxidative stress has been increasingly linked to the high incidence of cardiovascular events in patients with chronic kidney disease (CKD), especially as traditional cardiovascular risk factors seem to not be able to account for the huge cardiovascular morbidity and mortality in this population group. Oxidative stress is increased in patients with renal impairment as a result of increased oxidant activity and reduced antioxidant capacity, and this is increased in a graded manner with increasing renal dysfunction. Inflammation, which is also present in CKD, further amplifies the oxidant generation process. The two clinical sequelae of oxidative stress are endothelial dysfunction and left ventricular",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.194587+00:00"
+}

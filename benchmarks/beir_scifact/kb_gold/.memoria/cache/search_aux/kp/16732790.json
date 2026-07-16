@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16732790",
+  "source_fingerprint": "0278f6e5e346bd3adba5938f3c73e9a2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16732790",
+    "a-teratocarcinoma-like-human-embryonic-stem-cell-(hesc)-line-and-four-hesc-lines-reveal-potentially-oncogenic-genomic-changes"
+  ],
+  "key_phrases": [
+    "teratocarcinoma",
+    "like",
+    "human",
+    "embryonic",
+    "stem",
+    "cell",
+    "hesc",
+    "line"
+  ],
+  "summary_1l": "The first Swiss human embryonic stem cell (hESC) line, CH-ES1, has shown f",
+  "query_hits": [],
+  "embed_text": "16732790 A Teratocarcinoma-Like Human Embryonic Stem Cell (hESC) Line and Four hESC Lines Reveal Potentially Oncogenic Genomic Changes science scifact The first Swiss human embryonic stem cell (hESC) line, CH-ES1, has shown features of a malignant cell line. It originated from the only single blastomere that survived cryopreservation of an embryo, and it more closely resembles… 16732790 a-teratocarcinoma-like-human-embryonic-stem-cell-(hesc)-line-and-four-hesc-lines-reveal-potentially-oncogenic-genomic-changes teratocarcinoma like human embryonic stem cell hesc line The first Swiss human embryonic stem cell (hESC) line, CH-ES1, has shown f A Teratocarcinoma-Like Human Embryonic Stem Cell (hESC) Line and Four hESC Lines Reveal Potentially Oncogenic Genomic Changes The first Swiss human embryonic stem cell (hESC) line, CH-ES1, has shown features of a malignant cell line. It originated from the only single blastomere that survived cryopreservation of an embryo, and it more closely resembles teratocarcinoma lines than other hESC lines with respect to its abnormal karyotype and its formation of invasive tumors when injected into SCID mice. The aim of this study was to characterize the molecular basis of the oncogenicity of CH-ES1 cells, we looked for abnormal chromosomal copy number (by array Comparative Genomic Hybridization, aCGH) and single nucleotide polymorphisms (SNPs). To see how unique these changes were, we compared thes",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.709038+00:00"
+}

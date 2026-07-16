@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13011249",
+  "source_fingerprint": "ec68db59b3bacfe7997f9890873c9fd5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13011249",
+    "hallmarks-of-cancer:-the-next-generation"
+  ],
+  "key_phrases": [
+    "hallmarks",
+    "cancer",
+    "next",
+    "generation",
+    "comprise",
+    "six",
+    "biological",
+    "capabilities"
+  ],
+  "summary_1l": "The hallmarks of cancer comprise six biological capabilities acquired during the multistep development of human tumors.",
+  "query_hits": [],
+  "embed_text": "13011249 Hallmarks of Cancer: The Next Generation science scifact The hallmarks of cancer comprise six biological capabilities acquired during the multistep development of human tumors. The hallmarks constitute an organizing principle for rationalizing the complexities of neoplastic disease. They include… 13011249 hallmarks-of-cancer:-the-next-generation hallmarks cancer next generation comprise six biological capabilities The hallmarks of cancer comprise six biological capabilities acquired during the multistep development of human tumors. Hallmarks of Cancer: The Next Generation The hallmarks of cancer comprise six biological capabilities acquired during the multistep development of human tumors. The hallmarks constitute an organizing principle for rationalizing the complexities of neoplastic disease. They include sustaining proliferative signaling, evading growth suppressors, resisting cell death, enabling replicative immortality, inducing angiogenesis, and activating invasion and metastasis. Underlying these hallmarks are genome instability, which generates the genetic diversity that expedites their acquisition, and inflammation, which fosters multiple hallmark functions. Conceptual progress in the last decade has added two emerging hallmarks of potential generality to this list-reprogramming of energy metabolism and evad",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:09.460966+00:00"
+}

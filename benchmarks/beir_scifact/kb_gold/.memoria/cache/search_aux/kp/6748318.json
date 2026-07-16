@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6748318",
+  "source_fingerprint": "edfbaf63147384d69ba3160f2b96dc80",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6748318",
+    "cost-effectiveness-of-human-papillomavirus-vaccination-and-screening-in-spain."
+  ],
+  "key_phrases": [
+    "cost",
+    "effectiveness",
+    "human",
+    "papillomavirus",
+    "vaccination",
+    "screening",
+    "spain",
+    "background"
+  ],
+  "summary_1l": "Cost-effectiveness of human papillomavirus vaccination and screening in Spain.",
+  "query_hits": [],
+  "embed_text": "6748318 Cost-effectiveness of human papillomavirus vaccination and screening in Spain. science scifact BACKGROUND In Spain, prophylactic vaccination against human papillomavirus (HPV) types 16 and 18 is being offered free-of-charge to one birth cohort of girls aged 11-14. Screening is opportunistic (annual/biannual) contributing to social… 6748318 cost-effectiveness-of-human-papillomavirus-vaccination-and-screening-in-spain. cost effectiveness human papillomavirus vaccination screening spain background Cost-effectiveness of human papillomavirus vaccination and screening in Spain. Cost-effectiveness of human papillomavirus vaccination and screening in Spain. BACKGROUND In Spain, prophylactic vaccination against human papillomavirus (HPV) types 16 and 18 is being offered free-of-charge to one birth cohort of girls aged 11-14. Screening is opportunistic (annual/biannual) contributing to social and geographical disparities. METHODS A multi-HPV-type microsimulation model was calibrated to epidemiologic data from Spain utilising likelihood-based methods to assess the health and economic impact of adding HPV vaccination to cervical cancer screening. Strategies included (1) screening alone of women over age 25, varying frequency (every 1-5 years) and test (cytology, HPV DNA testing); (2) HPV vaccination of 11-year-old girls combined with screening. Outcomes included lifeti",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.569342+00:00"
+}

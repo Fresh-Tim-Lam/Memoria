@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3973445",
+  "source_fingerprint": "1d9ba8a4fe5a3215335ca148fb596038",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3973445",
+    "phosphorylation-of-janus-kinase-1-(jak1)-by-amp-activated-protein-kinase-(ampk)-links-energy-sensing-to-anti-inflammatory-signaling"
+  ],
+  "key_phrases": [
+    "phosphorylation",
+    "janus",
+    "kinase",
+    "jak1",
+    "by",
+    "amp",
+    "activated",
+    "protein"
+  ],
+  "summary_1l": "Adenosine 5′-monophosphate–activated protein kinase (AMPK) is a pivo",
+  "query_hits": [],
+  "embed_text": "3973445 Phosphorylation of Janus kinase 1 (JAK1) by AMP-activated protein kinase (AMPK) links energy sensing to anti-inflammatory signaling science scifact Adenosine 5′-monophosphate–activated protein kinase (AMPK) is a pivotal regulator of metabolism at cellular and organismal levels. AMPK also suppresses inflammation. We found that pharmacological activation of AMPK rapidly inhibited the… 3973445 phosphorylation-of-janus-kinase-1-(jak1)-by-amp-activated-protein-kinase-(ampk)-links-energy-sensing-to-anti-inflammatory-signaling phosphorylation janus kinase jak1 by amp activated protein Adenosine 5′-monophosphate–activated protein kinase (AMPK) is a pivo Phosphorylation of Janus kinase 1 (JAK1) by AMP-activated protein kinase (AMPK) links energy sensing to anti-inflammatory signaling Adenosine 5′-monophosphate–activated protein kinase (AMPK) is a pivotal regulator of metabolism at cellular and organismal levels. AMPK also suppresses inflammation. We found that pharmacological activation of AMPK rapidly inhibited the Janus kinase (JAK)–signal transducer and activator of transcription (STAT) pathway in various cells. In vitro kinase assays revealed that AMPK directly phosphorylated two residues (Ser515 and Ser518) within the Src homology 2 domain of JAK1. Activation of AMPK enhanced the interaction between JAK1 and 14-3-3 proteins in cultured vascular endothelial cells and fibroblasts, an effect that required the presence of Ser515 and Ser51",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.899320+00:00"
+}

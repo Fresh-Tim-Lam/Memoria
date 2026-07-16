@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "34054472",
+  "source_fingerprint": "0982cfc0a714e60b450f1432b7146899",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "34054472",
+    "association-between-serum-corin-levels-and-risk-of-acute-myocardial-infarction."
+  ],
+  "key_phrases": [
+    "association",
+    "between",
+    "serum",
+    "corin",
+    "levels",
+    "risk",
+    "acute",
+    "myocardial"
+  ],
+  "summary_1l": "Association between serum corin levels and risk of acute myocardial infarction.",
+  "query_hits": [],
+  "embed_text": "34054472 Association between serum corin levels and risk of acute myocardial infarction. science scifact BACKGROUND Accumulating evidence has indicated that corin plays critical roles in regulating salt-water balance, blood pressure and cardiac function by activating natriuretic peptides. The present case-control study was designed to… 34054472 association-between-serum-corin-levels-and-risk-of-acute-myocardial-infarction. association between serum corin levels risk acute myocardial Association between serum corin levels and risk of acute myocardial infarction. Association between serum corin levels and risk of acute myocardial infarction. BACKGROUND Accumulating evidence has indicated that corin plays critical roles in regulating salt-water balance, blood pressure and cardiac function by activating natriuretic peptides. The present case-control study was designed to evaluate the association of serum soluble corin with acute myocardial infarction (AMI). METHODS We enrolled 856 consecutive AMI patients and 856 control subjects and explored the possible relation between serum corin levels and AMI risk using logistic regression model. RESULTS Patients with AMI had higher BMI, were less physically active, and were more likely to have histories of hypertension, diabetes, hyperlipidemia and smoking compared with the controls. Serum levels of corin were",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.018007+00:00"
+}

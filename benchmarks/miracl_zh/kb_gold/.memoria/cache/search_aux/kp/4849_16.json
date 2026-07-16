@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "4849#16",
+  "source_fingerprint": "7d6b7ba6be7b57cb8608658c5a997b70",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4849#16"
+  ],
+  "key_phrases": [
+    "细菌",
+    "具有",
+    "许多",
+    "不同",
+    "代谢",
+    "方式",
+    "一些",
+    "需要"
+  ],
+  "summary_1l": "细菌具有许多不同的代谢方式。",
+  "query_hits": [],
+  "embed_text": "4849#16 细菌 细菌 细菌具有许多不同的代谢方式。一些细菌只需要二氧化碳作为它们的碳源，被称作自养或自營生物。那些通过光合作用从光中获取能量的，称为光合自养生物。那些依靠氧化化合物中获取能量的，称为化能自养生物。依靠有机物形式的碳作为碳源，称为异养或異營生物。 4849#16 细菌 具有 许多 不同 代谢 方式 一些 需要 细菌具有许多不同的代谢方式。 细菌 细菌具有许多不同的代谢方式。一些细菌只需要二氧化碳作为它们的碳源，被称作自养或自營生物。那些通过光合作用从光中获取能量的，称为光合自养生物。那些依靠氧化化合物中获取能量的，称为化能自养生物。依靠有机物形式的碳作为碳源，称为异养或異營生物。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:18:15.695330+00:00"
+}

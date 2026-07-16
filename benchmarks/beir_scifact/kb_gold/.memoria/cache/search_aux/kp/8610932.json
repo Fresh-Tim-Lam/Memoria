@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8610932",
+  "source_fingerprint": "cefb6b27f414cfa11c6ca3181e67dda6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8610932",
+    "positive-feedback-between-pu.1-and-the-cell-cycle-controls-myeloid-differentiation."
+  ],
+  "key_phrases": [
+    "positive",
+    "feedback",
+    "between",
+    "pu.1",
+    "cell",
+    "cycle",
+    "controls",
+    "myeloid"
+  ],
+  "summary_1l": "Positive feedback between PU.",
+  "query_hits": [],
+  "embed_text": "8610932 Positive feedback between PU.1 and the cell cycle controls myeloid differentiation. science scifact Regulatory gene circuits with positive-feedback loops control stem cell differentiation, but several mechanisms can contribute to positive feedback. Here, we dissect feedback mechanisms through which the transcription factor PU.1 controls… 8610932 positive-feedback-between-pu.1-and-the-cell-cycle-controls-myeloid-differentiation. positive feedback between pu.1 cell cycle controls myeloid Positive feedback between PU. Positive feedback between PU.1 and the cell cycle controls myeloid differentiation. Regulatory gene circuits with positive-feedback loops control stem cell differentiation, but several mechanisms can contribute to positive feedback. Here, we dissect feedback mechanisms through which the transcription factor PU.1 controls lymphoid and myeloid differentiation. Quantitative live-cell imaging revealed that developing B cells decrease PU.1 levels by reducing PU.1 transcription, whereas developing macrophages increase PU.1 levels by lengthening their cell cycles, which causes stable PU.1 accumulation. Exogenous PU.1 expression in progenitors increases endogenous PU.1 levels by inducing cell cycle lengthening, implying positive feedback between a regulatory factor and the cell cycle. Mathematical",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.203647+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1744097",
+  "source_fingerprint": "0ac29477bc67fb9dc24db919c48a3ff5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1744097",
+    "the-polycomb-group-protein-suz12-is-required-for-embryonic-stem-cell-differentiation."
+  ],
+  "key_phrases": [
+    "polycomb",
+    "group",
+    "protein",
+    "suz12",
+    "required",
+    "embryonic",
+    "stem",
+    "cell"
+  ],
+  "summary_1l": "The polycomb group protein Suz12 is required for embryonic stem cell differentiation.",
+  "query_hits": [],
+  "embed_text": "1744097 The polycomb group protein Suz12 is required for embryonic stem cell differentiation. science scifact Polycomb group (PcG) proteins form multiprotein complexes, called Polycomb repressive complexes (PRCs). PRC2 contains the PcG proteins EZH2, SUZ12, and EED and represses transcription through methylation of lysine (K) 27 of histone H3… 1744097 the-polycomb-group-protein-suz12-is-required-for-embryonic-stem-cell-differentiation. polycomb group protein suz12 required embryonic stem cell The polycomb group protein Suz12 is required for embryonic stem cell differentiation. The polycomb group protein Suz12 is required for embryonic stem cell differentiation. Polycomb group (PcG) proteins form multiprotein complexes, called Polycomb repressive complexes (PRCs). PRC2 contains the PcG proteins EZH2, SUZ12, and EED and represses transcription through methylation of lysine (K) 27 of histone H3 (H3). Suz12 is essential for PRC2 activity and its inactivation results in early lethality of mouse embryos. Here, we demonstrate that Suz12(-/-) mouse embryonic stem (ES) cells can be established and expanded in tissue culture. The Suz12(-/-) ES cells are characterized by global loss of H3K27 trimethylation (H3K27me3) and higher expression levels of differentiation-specific genes. Moreover, Suz12(-/-) ES cells are impaired in proper differentiation, resulting in a lack of r",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.748558+00:00"
+}

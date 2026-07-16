@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9784254",
+  "source_fingerprint": "638e0c4ee9045bc850265dda1c574fd2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9784254",
+    "lxr-dependent-gene-expression-is-important-for-macrophage-survival-and-the-innate-immune-response"
+  ],
+  "key_phrases": [
+    "lxr",
+    "dependent",
+    "gene",
+    "expression",
+    "important",
+    "macrophage",
+    "survival",
+    "innate"
+  ],
+  "summary_1l": "The liver X receptors (LXRs) are nuclear receptors with established roles in the regulation of lipid m",
+  "query_hits": [],
+  "embed_text": "9784254 LXR-Dependent Gene Expression Is Important for Macrophage Survival and the Innate Immune Response science scifact The liver X receptors (LXRs) are nuclear receptors with established roles in the regulation of lipid metabolism. We now show that LXR signaling not only regulates macrophage cholesterol metabolism but also impacts antimicrobial responses.… 9784254 lxr-dependent-gene-expression-is-important-for-macrophage-survival-and-the-innate-immune-response lxr dependent gene expression important macrophage survival innate The liver X receptors (LXRs) are nuclear receptors with established roles in the regulation of lipid m LXR-Dependent Gene Expression Is Important for Macrophage Survival and the Innate Immune Response The liver X receptors (LXRs) are nuclear receptors with established roles in the regulation of lipid metabolism. We now show that LXR signaling not only regulates macrophage cholesterol metabolism but also impacts antimicrobial responses. Mice lacking LXRs are highly susceptible to infection with the intracellular bacteria Listeria monocytogenes (LM). Bone marrow transplant studies point to altered macrophage function as the major determinant of susceptibility. LXR-null macrophages undergo accelerated apoptosis when challenged with LM and exhibit defective bacterial clearance in vivo. These defects result, at least in part, from loss of regulation of the antiapoptotic factor SPalpha, a direct",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.808327+00:00"
+}

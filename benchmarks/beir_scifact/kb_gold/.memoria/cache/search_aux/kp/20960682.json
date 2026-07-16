@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20960682",
+  "source_fingerprint": "df1289626f9afba929d70d15ff10016a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20960682",
+    "toll-like-receptor-7-agonist-gs-9620-induces-prolonged-inhibition-of-hbv-via-a-type-i-interferon-dependent-mechanism."
+  ],
+  "key_phrases": [
+    "toll",
+    "like",
+    "receptor",
+    "agonist",
+    "gs",
+    "9620",
+    "induces",
+    "prolonged"
+  ],
+  "summary_1l": "Toll-like receptor 7 agonist GS-9620 induces prolonged inhibition of HBV via a type I interferon-dependent mechanism.",
+  "query_hits": [],
+  "embed_text": "20960682 Toll-like receptor 7 agonist GS-9620 induces prolonged inhibition of HBV via a type I interferon-dependent mechanism. science scifact BACKGROUND & AIMS GS-9620, an oral agonist of toll-like receptor 7 (TLR7), is in clinical development for the treatment of chronic hepatitis B (CHB). GS-9620 was previously shown to induce prolonged suppression of serum viral DNA and… 20960682 toll-like-receptor-7-agonist-gs-9620-induces-prolonged-inhibition-of-hbv-via-a-type-i-interferon-dependent-mechanism. toll like receptor agonist gs 9620 induces prolonged Toll-like receptor 7 agonist GS-9620 induces prolonged inhibition of HBV via a type I interferon-dependent mechanism. Toll-like receptor 7 agonist GS-9620 induces prolonged inhibition of HBV via a type I interferon-dependent mechanism. BACKGROUND & AIMS GS-9620, an oral agonist of toll-like receptor 7 (TLR7), is in clinical development for the treatment of chronic hepatitis B (CHB). GS-9620 was previously shown to induce prolonged suppression of serum viral DNA and antigens in the woodchuck and chimpanzee models of CHB. Herein, we investigated the molecular mechanisms that contribute to the antiviral response to GS-9620 using in vitro models of hepatitis B virus (HBV) infection. METHODS Cryopreserved primary human hepatocytes (PHH) and differentiated HepaRG (dHepaRG) cells were infected with HBV and treated with GS-9620, conditioned media from human peripheral blood mononuclear cells treated with GS-9620",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.191863+00:00"
+}

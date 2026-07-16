@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4688340",
+  "source_fingerprint": "97d20ae97b08d4d59ab19f6449e1b661",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4688340",
+    "efficacy-of-beta1-integrin-and-egfr-targeting-in-sphere-forming-human-head-and-neck-cancer-cells"
+  ],
+  "key_phrases": [
+    "efficacy",
+    "beta1",
+    "integrin",
+    "egfr",
+    "targeting",
+    "sphere",
+    "forming",
+    "human"
+  ],
+  "summary_1l": "BACKGROUND Resistance to radiotherapy continues to be a limiting factor in the treatment of cancer incl",
+  "query_hits": [],
+  "embed_text": "4688340 Efficacy of Beta1 Integrin and EGFR Targeting in Sphere-Forming Human Head and Neck Cancer Cells science scifact BACKGROUND Resistance to radiotherapy continues to be a limiting factor in the treatment of cancer including head and neck squamous cell carcinoma (HNSCC). Simultaneous targeting of β1 integrin and EGFR was shown to have a higher… 4688340 efficacy-of-beta1-integrin-and-egfr-targeting-in-sphere-forming-human-head-and-neck-cancer-cells efficacy beta1 integrin egfr targeting sphere forming human BACKGROUND Resistance to radiotherapy continues to be a limiting factor in the treatment of cancer incl Efficacy of Beta1 Integrin and EGFR Targeting in Sphere-Forming Human Head and Neck Cancer Cells BACKGROUND Resistance to radiotherapy continues to be a limiting factor in the treatment of cancer including head and neck squamous cell carcinoma (HNSCC). Simultaneous targeting of β1 integrin and EGFR was shown to have a higher radiosensitizing potential than mono-targeting in the majority of tested HNSCC cancer models. As tumor-initiating cells (TIC) are thought to play a key role for therapy resistance and recurrence and can be enriched in sphere forming conditions, this study investigated the efficacy of β1 integrin/EGFR targeting without and in combination with X-ray irradiation on the behavior of sphere-forming cells (SFC). METHODS HNSCC cell lines (UTSCC15, UTSCC5, Cal33, SAS) were inje",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.197194+00:00"
+}

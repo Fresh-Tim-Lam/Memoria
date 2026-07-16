@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23727313",
+  "source_fingerprint": "ebf35ad84ef2da61fce4c61e9fd53af0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23727313",
+    "cd34+-hematopoietic-stem-progenitor-cell-microrna-expression-and-function:-a-circuit-diagram-of-differentiation-control."
+  ],
+  "key_phrases": [
+    "cd34",
+    "hematopoietic",
+    "stem",
+    "progenitor",
+    "cell",
+    "microrna",
+    "expression",
+    "function"
+  ],
+  "summary_1l": "CD34+ hematopoietic stem-progenitor cell microRNA expression and function: a circuit diagram of differentiation control.",
+  "query_hits": [],
+  "embed_text": "23727313 CD34+ hematopoietic stem-progenitor cell microRNA expression and function: a circuit diagram of differentiation control. science scifact MicroRNAs (miRNAs) are a recently identified class of epigenetic elements consisting of small noncoding RNAs that bind to the 3' untranslated region of mRNAs and down-regulate their translation to protein. miRNAs play critical roles in… 23727313 cd34+-hematopoietic-stem-progenitor-cell-microrna-expression-and-function:-a-circuit-diagram-of-differentiation-control. cd34 hematopoietic stem progenitor cell microrna expression function CD34+ hematopoietic stem-progenitor cell microRNA expression and function: a circuit diagram of differentiation control. CD34+ hematopoietic stem-progenitor cell microRNA expression and function: a circuit diagram of differentiation control. MicroRNAs (miRNAs) are a recently identified class of epigenetic elements consisting of small noncoding RNAs that bind to the 3' untranslated region of mRNAs and down-regulate their translation to protein. miRNAs play critical roles in many different cellular processes including metabolism, apoptosis, differentiation, and development. We found 33 miRNAs expressed in CD34+ hematopoietic stem-progenitor cells (HSPCs) from normal human bone marrow and mobilized human peripheral blood stem cell harvests. We then combined these data with human HSPC mRNA expression data and with miRNA-mRNA target predictions, into a previously undescribed miRNA:mRNA interaction database called",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.034305+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17223891",
+  "source_fingerprint": "4f148b2dd86434a0ae6128ada69548c7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17223891",
+    "the-nod-like-receptor-nlrp12-attenuates-colon-inflammation-and-tumorigenesis."
+  ],
+  "key_phrases": [
+    "nod",
+    "like",
+    "receptor",
+    "nlrp12",
+    "attenuates",
+    "colon",
+    "inflammation",
+    "tumorigenesis"
+  ],
+  "summary_1l": "The NOD-like receptor NLRP12 attenuates colon inflammation and tumorigenesis.",
+  "query_hits": [],
+  "embed_text": "17223891 The NOD-like receptor NLRP12 attenuates colon inflammation and tumorigenesis. science scifact NLRP12 is a member of the intracellular Nod-like receptor (NLR) family that has been suggested to downregulate the production of inflammatory cytokines, but its physiological role in regulating inflammation has not been characterized. We… 17223891 the-nod-like-receptor-nlrp12-attenuates-colon-inflammation-and-tumorigenesis. nod like receptor nlrp12 attenuates colon inflammation tumorigenesis The NOD-like receptor NLRP12 attenuates colon inflammation and tumorigenesis. The NOD-like receptor NLRP12 attenuates colon inflammation and tumorigenesis. NLRP12 is a member of the intracellular Nod-like receptor (NLR) family that has been suggested to downregulate the production of inflammatory cytokines, but its physiological role in regulating inflammation has not been characterized. We analyzed mice deficient in Nlrp12 to study its role in inflammatory diseases such as colitis and colorectal tumorigenesis. We show that Nlrp12-deficient mice are highly susceptible to colon inflammation and tumorigenesis, which is associated with increased production of inflammatory cytokines, chemokines, and tumorigenic factors. Enhanced colon inflammation and colorectal tumor development in Nlrp12-deficient mice are due to a failure to dampen NF-κB and ERK activation in macroph",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.491693+00:00"
+}

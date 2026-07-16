@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3912660",
+  "source_fingerprint": "9de0dd578a721eee0475a2e12e10f24e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3912660",
+    "aberrant-pro-atrial-natriuretic-peptide/corin/natriuretic-peptide-receptor-signaling-is-present-in-maternal-vascular-endothelium-in-preeclampsia."
+  ],
+  "key_phrases": [
+    "aberrant",
+    "pro",
+    "atrial",
+    "natriuretic",
+    "peptide",
+    "corin",
+    "receptor",
+    "signaling"
+  ],
+  "summary_1l": "Aberrant pro-atrial natriuretic peptide/corin/natriuretic peptide receptor signaling is present in maternal vascular endothelium in preeclampsia.",
+  "query_hits": [],
+  "embed_text": "3912660 Aberrant pro-atrial natriuretic peptide/corin/natriuretic peptide receptor signaling is present in maternal vascular endothelium in preeclampsia. science scifact OBJECTIVE Corin is a serine protease that converts pro-atrial natriuretic peptide (pro-ANP) to atrial natriuretic peptide (ANP), a cardiac hormone that regulates salt-water balance and blood pressure. ANP is degraded by natriuretic peptide… 3912660 aberrant-pro-atrial-natriuretic-peptide/corin/natriuretic-peptide-receptor-signaling-is-present-in-maternal-vascular-endothelium-in-preeclampsia. aberrant pro atrial natriuretic peptide corin receptor signaling Aberrant pro-atrial natriuretic peptide/corin/natriuretic peptide receptor signaling is present in maternal vascular endothelium in preeclampsia. Aberrant pro-atrial natriuretic peptide/corin/natriuretic peptide receptor signaling is present in maternal vascular endothelium in preeclampsia. OBJECTIVE Corin is a serine protease that converts pro-atrial natriuretic peptide (pro-ANP) to atrial natriuretic peptide (ANP), a cardiac hormone that regulates salt-water balance and blood pressure. ANP is degraded by natriuretic peptide receptor (NPR). This study was to determine if aberrant pro-ANP/corin/NPR signaling is present in maternal vascular system in preeclampsia. STUDY DESIGN Maternal venous blood was obtained from 197 pregnant women (84 normotensive, 16 complicated with chronic hypertension (CHT), 11 mild and 86 severe preeclampsia). Plasma corin and pro-ANP concentrations were measured by enzyme-linked immunosorbent assay. Materna",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.265233+00:00"
+}

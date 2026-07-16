@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14390137",
+  "source_fingerprint": "7fd03b4913ef473541a049898a9961c4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14390137",
+    "management-of-hepatitis-c-disease-among-va-patients-with-schizophrenia-and-substance-use-disorders."
+  ],
+  "key_phrases": [
+    "management",
+    "hepatitis",
+    "disease",
+    "among",
+    "va",
+    "patients",
+    "with",
+    "schizophrenia"
+  ],
+  "summary_1l": "Management of hepatitis C disease among VA patients with schizophrenia and substance use disorders.",
+  "query_hits": [],
+  "embed_text": "14390137 Management of hepatitis C disease among VA patients with schizophrenia and substance use disorders. science scifact OBJECTIVE Rates of hepatitis C (HCV) infection, testing, and treatment were compared among patients with schizophrenia, a substance use disorder, or co-occurring schizophrenia or schizoaffective disorder and a substance use disorder and a… 14390137 management-of-hepatitis-c-disease-among-va-patients-with-schizophrenia-and-substance-use-disorders. management hepatitis disease among va patients with schizophrenia Management of hepatitis C disease among VA patients with schizophrenia and substance use disorders. Management of hepatitis C disease among VA patients with schizophrenia and substance use disorders. OBJECTIVE Rates of hepatitis C (HCV) infection, testing, and treatment were compared among patients with schizophrenia, a substance use disorder, or co-occurring schizophrenia or schizoaffective disorder and a substance use disorder and a control group. METHODS Information about 293,445 patients of the Northwest Veterans Healthcare Administration was obtained. RESULTS The substance use disorder group constituted 13.6 percent of the sample; the schizophrenia group, 1.6 percent; and the co-occurring-disorders group, 1.4 percent. Respectively, these groups were approximately four, two, and six times as likely as the control group to receive HCV testing and about seven, two, and eight times as l",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.772610+00:00"
+}

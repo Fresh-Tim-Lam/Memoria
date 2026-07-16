@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "34328964",
+  "source_fingerprint": "5c435f2580cc9a39efd52a6c2fef699b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "34328964",
+    "intimal-smooth-muscle-cell-proliferation-after-balloon-catheter-injury.-the-role-of-basic-fibroblast-growth-factor."
+  ],
+  "key_phrases": [
+    "intimal",
+    "smooth",
+    "muscle",
+    "cell",
+    "proliferation",
+    "after",
+    "balloon",
+    "catheter"
+  ],
+  "summary_1l": "Intimal smooth muscle cell proliferation after balloon catheter injury.",
+  "query_hits": [],
+  "embed_text": "34328964 Intimal smooth muscle cell proliferation after balloon catheter injury. The role of basic fibroblast growth factor. science scifact The localization and synthesis of basic fibroblast growth factor (bFGF) in the rat carotid artery were investigated at times of chronic smooth muscle cell proliferation. Immunocytochemical staining showed the presence of bFGF in the… 34328964 intimal-smooth-muscle-cell-proliferation-after-balloon-catheter-injury.-the-role-of-basic-fibroblast-growth-factor. intimal smooth muscle cell proliferation after balloon catheter Intimal smooth muscle cell proliferation after balloon catheter injury. Intimal smooth muscle cell proliferation after balloon catheter injury. The role of basic fibroblast growth factor. The localization and synthesis of basic fibroblast growth factor (bFGF) in the rat carotid artery were investigated at times of chronic smooth muscle cell proliferation. Immunocytochemical staining showed the presence of bFGF in the uninjured arterial wall, and after balloon injury, this cellular staining was decreased. Western and northern blot analyses likewise showed that the amount of bFGF protein and mRNA decreased after injury. A neutralizing antibody to bFGF was administered 4 and 5 days after injury and was found to have no effect on intimal smooth muscle cell proliferation. These data suggest that an increase in the expression of bFGF is not necessary for chronic smo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.356093+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5433667",
+  "source_fingerprint": "cf385aac7729602db182dd51fc755b2d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5433667",
+    "clinical-human-papillomavirus-detection-forecasts-cervical-cancer-risk-in-women-over-18-years-of-follow-up."
+  ],
+  "key_phrases": [
+    "clinical",
+    "human",
+    "papillomavirus",
+    "detection",
+    "forecasts",
+    "cervical",
+    "cancer",
+    "risk"
+  ],
+  "summary_1l": "Clinical human papillomavirus detection forecasts cervical cancer risk in women over 18 years of follow-up.",
+  "query_hits": [],
+  "embed_text": "5433667 Clinical human papillomavirus detection forecasts cervical cancer risk in women over 18 years of follow-up. science scifact PURPOSE To describe the long-term (≥ 10 years) benefits of clinical human papillomavirus (HPV) DNA testing for cervical precancer and cancer risk prediction. METHODS Cervicovaginal lavages collected from 19,512 women attending a health… 5433667 clinical-human-papillomavirus-detection-forecasts-cervical-cancer-risk-in-women-over-18-years-of-follow-up. clinical human papillomavirus detection forecasts cervical cancer risk Clinical human papillomavirus detection forecasts cervical cancer risk in women over 18 years of follow-up. Clinical human papillomavirus detection forecasts cervical cancer risk in women over 18 years of follow-up. PURPOSE To describe the long-term (≥ 10 years) benefits of clinical human papillomavirus (HPV) DNA testing for cervical precancer and cancer risk prediction. METHODS Cervicovaginal lavages collected from 19,512 women attending a health maintenance program were retrospectively tested for HPV using a clinical test. HPV positives were tested for HPV16 and HPV18 individually using a research test. A Papanicolaou (Pap) result classified as atypical squamous cells of undetermined significance (ASC-US) or more severe was considered abnormal. Women underwent follow-up prospectively with routine annual Pap testing up to 18 years. Cumulative incidence rates (CIRs) of ≥ grade 3 cervical intraep",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.253594+00:00"
+}

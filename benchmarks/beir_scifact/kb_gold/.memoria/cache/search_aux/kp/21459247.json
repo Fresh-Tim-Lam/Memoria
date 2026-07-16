@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21459247",
+  "source_fingerprint": "58761b059e9c8ddcca29f7164bdf0dc3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21459247",
+    "aerobic-capacity-in-black-adolescent-girls."
+  ],
+  "key_phrases": [
+    "aerobic",
+    "capacity",
+    "black",
+    "adolescent",
+    "girls",
+    "our",
+    "purpose",
+    "was"
+  ],
+  "summary_1l": "Aerobic capacity in black adolescent girls.",
+  "query_hits": [],
+  "embed_text": "21459247 Aerobic capacity in black adolescent girls. science scifact Our purpose was to determine the aerobic capacities (VO2max) of a group of black female adolescents (age = 11.4-15.8 years) randomly chosen from a single urban school. Of 91 girls selected, 64 performed an incremental treadmill running… 21459247 aerobic-capacity-in-black-adolescent-girls. aerobic capacity black adolescent girls our purpose was Aerobic capacity in black adolescent girls. Aerobic capacity in black adolescent girls. Our purpose was to determine the aerobic capacities (VO2max) of a group of black female adolescents (age = 11.4-15.8 years) randomly chosen from a single urban school. Of 91 girls selected, 64 performed an incremental treadmill running test to volitional exhaustion and achieved VO2max as determined from expired gas measures. Other measures included height (m), weight (kg), and calf and triceps skinfolds (for % fat estimates). Girls were also asked whether they had achieved menarche. VO2max averaged 37.3 +/- 6.2 ml.kg-1 x min-1 and was significantly correlated (r[62]) with height (-.32, p < .01), body mass index (-.63, p < .001), and % fat (-.65, p < .001) but not with age (-.16, p > .10). Postmenarchal girls were significantly taller and older th",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.150002+00:00"
+}

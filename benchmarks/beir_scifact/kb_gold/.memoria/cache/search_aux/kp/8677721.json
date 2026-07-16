@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "8677721",
+  "source_fingerprint": "c9dffc7911b9b7c49d4d4690bb403cbd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8677721"
+  ],
+  "key_phrases": [
+    "ndrg1",
+    "promotes",
+    "growth",
+    "hepatocellular",
+    "carcinoma",
+    "cells",
+    "by",
+    "directly"
+  ],
+  "summary_1l": "The N-myc downstream regulated gene 1 (NDRG1) is significantly as",
+  "query_hits": [],
+  "embed_text": "8677721 NDRG1 promotes growth of hepatocellular carcinoma cells by directly interacting with GSK-3β and Nur77 to prevent β-catenin degradation science scifact The N-myc downstream regulated gene 1 (NDRG1) is significantly associated with advanced tumor stages and poor survival of hepatocellular carcinoma (HCC), thereby implicating it as a potential target for HCC treatment. We aim to further… 8677721 ndrg1 promotes growth hepatocellular carcinoma cells by directly The N-myc downstream regulated gene 1 (NDRG1) is significantly as NDRG1 promotes growth of hepatocellular carcinoma cells by directly interacting with GSK-3β and Nur77 to prevent β-catenin degradation The N-myc downstream regulated gene 1 (NDRG1) is significantly associated with advanced tumor stages and poor survival of hepatocellular carcinoma (HCC), thereby implicating it as a potential target for HCC treatment. We aim to further understand its biological roles in hepatocarcinogenesis, as a means to exploit it for therapeutic purposes. By screening using the ProtoArray® Human Protein Microarrays, we identified glycogen synthase kinase 3β (GSK-3β) and the orphan nuclear receptor (Nur77) as potential interaction partners of NDRG1. These interactions were confirmed in HCC cell lines in vitro by co-immunoprecipitation; and co-localizations of NDRG1 with G",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.465985+00:00"
+}

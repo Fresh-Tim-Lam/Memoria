@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24148722",
+  "source_fingerprint": "3829c11ed21165748e6452f98482baf3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24148722",
+    "a-diffusion-tensor-magnetic-resonance-imaging-study-of-corpus-callosum-from-adult-patients-with-migraine-complicated-with-depressive/anxious-disorder."
+  ],
+  "key_phrases": [
+    "diffusion",
+    "tensor",
+    "magnetic",
+    "resonance",
+    "imaging",
+    "study",
+    "corpus",
+    "callosum"
+  ],
+  "summary_1l": "A diffusion tensor magnetic resonance imaging study of corpus callosum from adult patients with migraine complicated with depressive/anxious disorder.",
+  "query_hits": [],
+  "embed_text": "24148722 A diffusion tensor magnetic resonance imaging study of corpus callosum from adult patients with migraine complicated with depressive/anxious disorder. science scifact OBJECTIVE The aim of this study was to investigate the possible microstructural abnormalities of the corpus callosum (CC) in adult patients with migraine without aura complicated with depressive/anxious disorder. BACKGROUND Emotional… 24148722 a-diffusion-tensor-magnetic-resonance-imaging-study-of-corpus-callosum-from-adult-patients-with-migraine-complicated-with-depressive/anxious-disorder. diffusion tensor magnetic resonance imaging study corpus callosum A diffusion tensor magnetic resonance imaging study of corpus callosum from adult patients with migraine complicated with depressive/anxious disorder. A diffusion tensor magnetic resonance imaging study of corpus callosum from adult patients with migraine complicated with depressive/anxious disorder. OBJECTIVE The aim of this study was to investigate the possible microstructural abnormalities of the corpus callosum (CC) in adult patients with migraine without aura complicated with depressive/anxious disorder. BACKGROUND Emotional disorders, especially depression and anxiety, are with relatively higher incidence in migraine population. However, the mechanism of migraine complicated with depressive/anxious disorder remains unclear. METHODS Diffusion tensor magnetic resonance imaging was carried out in 12 adult patients with simple migraine (without aura and without depressive/anxious disorder) (S-M group), 12 adult patients with complicate",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.829713+00:00"
+}

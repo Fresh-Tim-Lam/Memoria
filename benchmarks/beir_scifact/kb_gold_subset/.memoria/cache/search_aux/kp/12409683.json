@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12409683",
+  "source_fingerprint": "a7f11a413ec9e2c6fa4015eac6af5a48",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12409683",
+    "reduction-of-transmission-from-malaria-patients-by-artemisinin-combination-therapies:-a-pooled-analysis-of-six-randomized-trials"
+  ],
+  "key_phrases": [
+    "reduction",
+    "transmission",
+    "from",
+    "malaria",
+    "patients",
+    "by",
+    "artemisinin",
+    "combination"
+  ],
+  "summary_1l": "BACKGROUND Artemisinin combination therapies (ACT), which are increasin",
+  "query_hits": [],
+  "embed_text": "12409683 Reduction of transmission from malaria patients by artemisinin combination therapies: a pooled analysis of six randomized trials science scifact BACKGROUND Artemisinin combination therapies (ACT), which are increasingly being introduced for treatment of Plasmodium falciparum malaria, are more effective against sexual stage parasites (gametocytes) than previous first-line… 12409683 reduction-of-transmission-from-malaria-patients-by-artemisinin-combination-therapies:-a-pooled-analysis-of-six-randomized-trials reduction transmission from malaria patients by artemisinin combination BACKGROUND Artemisinin combination therapies (ACT), which are increasin Reduction of transmission from malaria patients by artemisinin combination therapies: a pooled analysis of six randomized trials BACKGROUND Artemisinin combination therapies (ACT), which are increasingly being introduced for treatment of Plasmodium falciparum malaria, are more effective against sexual stage parasites (gametocytes) than previous first-line antimalarials and therefore have the potential to reduce parasite transmission. The size of this effect is estimated in symptomatic P. falciparum infections. METHODS Data on 3,174 patients were pooled from six antimalarial trials conducted in The Gambia and Kenya. Multivariable regression was used to investigate the role of ACT versus non-artemisinin antimalarial treatment, treatment failure, presence of pre-treatment gametocytes and subm",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:08.800954+00:00"
+}

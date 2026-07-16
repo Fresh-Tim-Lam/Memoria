@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21868715",
+  "source_fingerprint": "a44a86c1aeb97e153883051565868cb4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21868715",
+    "a-subset-of-26s-proteasomes-is-activated-at-critically-low-atp-concentrations-and-contributes-to-myocardial-injury-during-cold-ischemia."
+  ],
+  "key_phrases": [
+    "subset",
+    "26s",
+    "proteasomes",
+    "activated",
+    "at",
+    "critically",
+    "low",
+    "atp"
+  ],
+  "summary_1l": "A subset of 26S proteasomes is activated at critically low ATP concentrations and contributes to myocardial injury during cold ischemia.",
+  "query_hits": [],
+  "embed_text": "21868715 A subset of 26S proteasomes is activated at critically low ATP concentrations and contributes to myocardial injury during cold ischemia. science scifact Molecular mechanisms leading to myocardial injury during warm or cold ischemia are insufficiently understood. Although proteasomes are thought to contribute to myocardial ischemia-reperfusion injury, their roles during the ischemic period… 21868715 a-subset-of-26s-proteasomes-is-activated-at-critically-low-atp-concentrations-and-contributes-to-myocardial-injury-during-cold-ischemia. subset 26s proteasomes activated at critically low atp A subset of 26S proteasomes is activated at critically low ATP concentrations and contributes to myocardial injury during cold ischemia. A subset of 26S proteasomes is activated at critically low ATP concentrations and contributes to myocardial injury during cold ischemia. Molecular mechanisms leading to myocardial injury during warm or cold ischemia are insufficiently understood. Although proteasomes are thought to contribute to myocardial ischemia-reperfusion injury, their roles during the ischemic period remain elusive. Because donor hearts are commonly exposed to prolonged global cold ischemia prior to cardiac transplantation, we evaluated the role and regulation of the proteasome during cold ischemic storage of rat hearts in context of the myocardial ATP content. When measured at the actual tissue ATP concentration, cardiac proteasome peptidase activity increased by 225% as ATP declined during cold ischemic storage of",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.796375+00:00"
+}

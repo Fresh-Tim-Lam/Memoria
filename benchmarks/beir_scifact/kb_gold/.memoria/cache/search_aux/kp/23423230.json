@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23423230",
+  "source_fingerprint": "ed5e521e42848753e0363ec71761a1cc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23423230",
+    "the-virb-type-iv-secretion-system-of-bartonella-henselae-mediates-invasion,-proinflammatory-activation-and-antiapoptotic-protection-of-endothelial-cells."
+  ],
+  "key_phrases": [
+    "virb",
+    "type",
+    "iv",
+    "secretion",
+    "system",
+    "bartonella",
+    "henselae",
+    "mediates"
+  ],
+  "summary_1l": "The VirB type IV secretion system of Bartonella henselae mediates invasion, proinflammatory activation and antiapoptotic protection of endothelial cells.",
+  "query_hits": [],
+  "embed_text": "23423230 The VirB type IV secretion system of Bartonella henselae mediates invasion, proinflammatory activation and antiapoptotic protection of endothelial cells. science scifact Bartonella henselae is an arthropod-borne zoonotic pathogen causing intraerythrocytic bacteraemia in the feline reservoir host and a broad range of clinical manifestations in incidentally infected humans. Remarkably, B. henselae can… 23423230 the-virb-type-iv-secretion-system-of-bartonella-henselae-mediates-invasion,-proinflammatory-activation-and-antiapoptotic-protection-of-endothelial-cells. virb type iv secretion system bartonella henselae mediates The VirB type IV secretion system of Bartonella henselae mediates invasion, proinflammatory activation and antiapoptotic protection of endothelial cells. The VirB type IV secretion system of Bartonella henselae mediates invasion, proinflammatory activation and antiapoptotic protection of endothelial cells. Bartonella henselae is an arthropod-borne zoonotic pathogen causing intraerythrocytic bacteraemia in the feline reservoir host and a broad range of clinical manifestations in incidentally infected humans. Remarkably, B. henselae can specifically colonize the human vascular endothelium, resulting in inflammation and the formation of vasoproliferative lesions known as bacillary angiomatosis and bacillary peliosis. Cultured human endothelial cells provide an in vitro system to study this intimate interaction of B. henselae with the vascular endothelium. However, little is known about the bacterial virulence factors required for this pathogen",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.506072+00:00"
+}

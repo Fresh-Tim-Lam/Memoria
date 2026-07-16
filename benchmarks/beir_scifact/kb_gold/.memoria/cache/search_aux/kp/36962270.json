@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36962270",
+  "source_fingerprint": "b000ae1711eacc33219c743a1fd48ad6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36962270",
+    "rapid-purification-of-homodimer-and-heterodimer-hiv-1-reverse-transcriptase-by-metal-chelate-affinity-chromatography."
+  ],
+  "key_phrases": [
+    "rapid",
+    "purification",
+    "homodimer",
+    "heterodimer",
+    "hiv",
+    "reverse",
+    "transcriptase",
+    "by"
+  ],
+  "summary_1l": "Rapid purification of homodimer and heterodimer HIV-1 reverse transcriptase by metal chelate affinity chromatography.",
+  "query_hits": [],
+  "embed_text": "36962270 Rapid purification of homodimer and heterodimer HIV-1 reverse transcriptase by metal chelate affinity chromatography. science scifact We have modified an Escherichia coli vector expressing 66-kDa HIV-1 reverse transcriptase (p66) so that it simultaneously expresses this and the pol-coded protease. The twin expression cassette yields high quantities of both reverse… 36962270 rapid-purification-of-homodimer-and-heterodimer-hiv-1-reverse-transcriptase-by-metal-chelate-affinity-chromatography. rapid purification homodimer heterodimer hiv reverse transcriptase by Rapid purification of homodimer and heterodimer HIV-1 reverse transcriptase by metal chelate affinity chromatography. Rapid purification of homodimer and heterodimer HIV-1 reverse transcriptase by metal chelate affinity chromatography. We have modified an Escherichia coli vector expressing 66-kDa HIV-1 reverse transcriptase (p66) so that it simultaneously expresses this and the pol-coded protease. The twin expression cassette yields high quantities of both reverse transcriptase and protease; however, under these conditions, 50% of the over-expressed p66 reverse transcriptase is processed, resulting in accumulation of large quantities of p66/p51 enzyme. Furthermore, addition of a poly(histidine) affinity label at the amino terminus of the reverse-transcriptase-coding sequence (His-p66) permits a simple, rapid purification of milligram quantities of either p66 or p66/p51 enzyme from a crude lysate by metal",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:43.981683+00:00"
+}

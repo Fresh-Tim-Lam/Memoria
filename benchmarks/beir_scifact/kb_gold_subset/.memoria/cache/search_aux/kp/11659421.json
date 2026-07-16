@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11659421",
+  "source_fingerprint": "b748de15a53aa4f200cc1111e397674d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11659421",
+    "human-ipsc-based-modeling-of-late-onset-disease-via-progerin-induced-aging."
+  ],
+  "key_phrases": [
+    "human",
+    "ipsc",
+    "based",
+    "modeling",
+    "late",
+    "onset",
+    "disease",
+    "via"
+  ],
+  "summary_1l": "Human iPSC-based modeling of late-onset disease via progerin-induced aging.",
+  "query_hits": [],
+  "embed_text": "11659421 Human iPSC-based modeling of late-onset disease via progerin-induced aging. science scifact Reprogramming somatic cells to induced pluripotent stem cells (iPSCs) resets their identity back to an embryonic age and, thus, presents a significant hurdle for modeling late-onset disorders. In this study, we describe a strategy for… 11659421 human-ipsc-based-modeling-of-late-onset-disease-via-progerin-induced-aging. human ipsc based modeling late onset disease via Human iPSC-based modeling of late-onset disease via progerin-induced aging. Human iPSC-based modeling of late-onset disease via progerin-induced aging. Reprogramming somatic cells to induced pluripotent stem cells (iPSCs) resets their identity back to an embryonic age and, thus, presents a significant hurdle for modeling late-onset disorders. In this study, we describe a strategy for inducing aging-related features in human iPSC-derived lineages and apply it to the modeling of Parkinson's disease (PD). Our approach involves expression of progerin, a truncated form of lamin A associated with premature aging. We found that expression of progerin in iPSC-derived fibroblasts and neurons induces multiple aging-related markers and characteristics, including dopamine-specific phenotypes such as neuromelanin accumulation. Induced aging in PD iPSC-derived dopamine neurons",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:07.303026+00:00"
+}

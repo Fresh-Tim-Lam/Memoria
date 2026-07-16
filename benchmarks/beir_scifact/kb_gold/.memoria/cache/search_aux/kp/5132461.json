@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5132461",
+  "source_fingerprint": "738d42c065e5f6634b96d3f65f2e4814",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5132461",
+    "extended-connectivity-fingerprints."
+  ],
+  "key_phrases": [
+    "extended",
+    "connectivity",
+    "fingerprints",
+    "ecfps",
+    "novel",
+    "class",
+    "topological",
+    "molecular"
+  ],
+  "summary_1l": "Extended-connectivity fingerprints.",
+  "query_hits": [],
+  "embed_text": "5132461 Extended-connectivity fingerprints. science scifact Extended-connectivity fingerprints (ECFPs) are a novel class of topological fingerprints for molecular characterization. Historically, topological fingerprints were developed for substructure and similarity searching. ECFPs were developed… 5132461 extended-connectivity-fingerprints. extended connectivity fingerprints ecfps novel class topological molecular Extended-connectivity fingerprints. Extended-connectivity fingerprints. Extended-connectivity fingerprints (ECFPs) are a novel class of topological fingerprints for molecular characterization. Historically, topological fingerprints were developed for substructure and similarity searching. ECFPs were developed specifically for structure-activity modeling. ECFPs are circular fingerprints with a number of useful qualities: they can be very rapidly calculated; they are not predefined and can represent an essentially infinite number of different molecular features (including stereochemical information); their features represent the presence of particular substructures, allowing easier interpretation of analysis results; and the ECFP algorithm can be tailored to generate different types of circular fingerprints, optimized for diff",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.211870+00:00"
+}

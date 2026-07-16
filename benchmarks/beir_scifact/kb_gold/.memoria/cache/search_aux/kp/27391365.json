@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27391365",
+  "source_fingerprint": "401dc901d040c9fee8c695d1f872f433",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27391365",
+    "validity-of-the-world-health-organization-adult-adhd-self-report-scale-(asrs)-screener-in-a-representative-sample-of-health-plan-members."
+  ],
+  "key_phrases": [
+    "validity",
+    "world",
+    "health",
+    "organization",
+    "adult",
+    "adhd",
+    "self",
+    "report"
+  ],
+  "summary_1l": "Validity of the World Health Organization Adult ADHD Self-Report Scale (ASRS) Screener in a representative sample of health plan members.",
+  "query_hits": [],
+  "embed_text": "27391365 Validity of the World Health Organization Adult ADHD Self-Report Scale (ASRS) Screener in a representative sample of health plan members. science scifact The validity of the six-question World Health Organization Adult ADHD Self-Report Scale (ASRS) Screener was assessed in a sample of subscribers to a large health plan in the US. A convenience subsample of 668 subscribers was administered… 27391365 validity-of-the-world-health-organization-adult-adhd-self-report-scale-(asrs)-screener-in-a-representative-sample-of-health-plan-members. validity world health organization adult adhd self report Validity of the World Health Organization Adult ADHD Self-Report Scale (ASRS) Screener in a representative sample of health plan members. Validity of the World Health Organization Adult ADHD Self-Report Scale (ASRS) Screener in a representative sample of health plan members. The validity of the six-question World Health Organization Adult ADHD Self-Report Scale (ASRS) Screener was assessed in a sample of subscribers to a large health plan in the US. A convenience subsample of 668 subscribers was administered the ASRS Screener twice to assess test-retest reliability and then a third time in conjunction with a clinical interviewer for DSM-IV adult ADHD. The data were weighted to adjust for discrepancies between the sample and the population on socio-demographics and past medical claims. Internal consistency reliability of the continuous ASRS Screener was in the range 0.63-0.72 and test-retest reliability (Pearson correlations)",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.814226+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16461149",
+  "source_fingerprint": "ceb85f25a77313337d6c3db7e3864010",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16461149",
+    "phenix:-a-comprehensive-python-based-system-for-macromolecular-structure-solution"
+  ],
+  "key_phrases": [
+    "phenix",
+    "comprehensive",
+    "python",
+    "based",
+    "system",
+    "macromolecular",
+    "structure",
+    "solution"
+  ],
+  "summary_1l": "Macromolecular X-ray crystallography is routinely applied to understand biological processes at a molecular level.",
+  "query_hits": [],
+  "embed_text": "16461149 PHENIX: a comprehensive Python-based system for macromolecular structure solution science scifact Macromolecular X-ray crystallography is routinely applied to understand biological processes at a molecular level. However, significant time and effort are still required to solve and complete many of these structures because of the need… 16461149 phenix:-a-comprehensive-python-based-system-for-macromolecular-structure-solution phenix comprehensive python based system macromolecular structure solution Macromolecular X-ray crystallography is routinely applied to understand biological processes at a molecular level. PHENIX: a comprehensive Python-based system for macromolecular structure solution Macromolecular X-ray crystallography is routinely applied to understand biological processes at a molecular level. However, significant time and effort are still required to solve and complete many of these structures because of the need for manual interpretation of complex numerical data using many software packages and the repeated use of interactive three-dimensional graphics. PHENIX has been developed to provide a comprehensive system for macromolecular crystallographic structure solution with an emphasis on the automation of all procedures. This has relied on the development of algorithms that minimize or eliminate subjective input, the development of algorithms that automate procedures that are traditio",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.303971+00:00"
+}

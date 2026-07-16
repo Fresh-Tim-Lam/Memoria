@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9420732",
+  "source_fingerprint": "e5a698e68189327940865573e4d07475",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9420732",
+    "dscam-and-dscam:-complex-genes-in-simple-animals,-complex-animals-yet-simple-genes."
+  ],
+  "key_phrases": [
+    "dscam",
+    "complex",
+    "genes",
+    "simple",
+    "animals",
+    "yet",
+    "cadherins",
+    "immunoglobulin"
+  ],
+  "summary_1l": "Dscam and DSCAM: complex genes in simple animals, complex animals yet simple genes.",
+  "query_hits": [],
+  "embed_text": "9420732 Dscam and DSCAM: complex genes in simple animals, complex animals yet simple genes. science scifact Cadherins and the immunoglobulin (Ig) proteins give rise to a multitude of surface receptors, which function as diverse cell adhesion molecules (CAMs) or signal-transducing receptors. These functions are often interdependent, and rely on a… 9420732 dscam-and-dscam:-complex-genes-in-simple-animals,-complex-animals-yet-simple-genes. dscam complex genes simple animals yet cadherins immunoglobulin Dscam and DSCAM: complex genes in simple animals, complex animals yet simple genes. Dscam and DSCAM: complex genes in simple animals, complex animals yet simple genes. Cadherins and the immunoglobulin (Ig) proteins give rise to a multitude of surface receptors, which function as diverse cell adhesion molecules (CAMs) or signal-transducing receptors. These functions are often interdependent, and rely on a high degree of specificity in homophilic binding as well as heterophilic interactions. The Drosophila receptor Dscam is an exceptional example of homophilic binding specificity involved in a number of important biological processes, such as neural wiring and innate immunity. Combinatorial use of alternatively spliced Ig-domains enables the generation of an estimated 18,000 isoform-specific homophilic receptor pairs. Although isoform diversity of Dscam is unique to arthrop",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.879547+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20428155",
+  "source_fingerprint": "0d9163340c7afc92cee3f904fc4a2d15",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20428155",
+    "marine-organisms-as-a-source-of-new-anticancer-agents."
+  ],
+  "key_phrases": [
+    "marine",
+    "organisms",
+    "as",
+    "source",
+    "new",
+    "anticancer",
+    "agents",
+    "various"
+  ],
+  "summary_1l": "Marine organisms as a source of new anticancer agents.",
+  "query_hits": [],
+  "embed_text": "20428155 Marine organisms as a source of new anticancer agents. science scifact Various active anticancer agents are derived from plants and terrestrial microorganisms. The isolation of C-nucleosides from the Caribbean sponge, Cryptotheca crypta, four decades ago, provided the basis for the synthesis of cytarabine,… 20428155 marine-organisms-as-a-source-of-new-anticancer-agents. marine organisms as source new anticancer agents various Marine organisms as a source of new anticancer agents. Marine organisms as a source of new anticancer agents. Various active anticancer agents are derived from plants and terrestrial microorganisms. The isolation of C-nucleosides from the Caribbean sponge, Cryptotheca crypta, four decades ago, provided the basis for the synthesis of cytarabine, the first marine-derived anticancer agent to be developed for clinical use. Cytarabine is currently used in the routine treatment of patients with leukaemia and lymphoma. Gemcitabine, one of its fluorinated derivatives, has also been approved for use in patients with pancreatic, breast, bladder, and non-small-cell lung cancer. Over the past decade, several new experimental anticancer agents derived from marine sources have entered preclinical and clinical trials. This field has expanded significantly as",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.290966+00:00"
+}

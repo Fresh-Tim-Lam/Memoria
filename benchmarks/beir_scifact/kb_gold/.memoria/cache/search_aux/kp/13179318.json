@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13179318",
+  "source_fingerprint": "abbb90e9d348eac6bbceb39c002ff44b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13179318",
+    "survival-analysis:-time-dependent-effects-and-time-varying-risk-factors."
+  ],
+  "key_phrases": [
+    "survival",
+    "analysis",
+    "time",
+    "dependent",
+    "effects",
+    "varying",
+    "risk",
+    "factors"
+  ],
+  "summary_1l": "Survival analysis: time-dependent effects and time-varying risk factors.",
+  "query_hits": [],
+  "embed_text": "13179318 Survival analysis: time-dependent effects and time-varying risk factors. science scifact In traditional Kaplan-Meier or Cox regression analysis, usually a risk factor measured at baseline is related to mortality thereafter. During follow-up, however, things may change: either the effect of a fixed baseline risk factor may vary… 13179318 survival-analysis:-time-dependent-effects-and-time-varying-risk-factors. survival analysis time dependent effects varying risk factors Survival analysis: time-dependent effects and time-varying risk factors. Survival analysis: time-dependent effects and time-varying risk factors. In traditional Kaplan-Meier or Cox regression analysis, usually a risk factor measured at baseline is related to mortality thereafter. During follow-up, however, things may change: either the effect of a fixed baseline risk factor may vary over time, resulting in a weakening or strengthening of associations over time, or the risk factor itself may vary over time. In this paper, short-term versus long-term effects (so-called time-dependent effects) of a fixed baseline risk factor are addressed. An example is presented showing that underweight is a strong risk factor for mortality in dialysis patients, especially in the short run. In contrast, overweight is a risk factor for mortality, which is stronger in the long run",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:09.740899+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4632921",
+  "source_fingerprint": "e3aa80835c7dd8523d0e0763aa984ea8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4632921",
+    "large-scale-profiling-reveals-the-influence-of-genetic-variation-on-gene-expression-in-human-induced-pluripotent-stem-cells."
+  ],
+  "key_phrases": [
+    "large",
+    "scale",
+    "profiling",
+    "reveals",
+    "influence",
+    "genetic",
+    "variation",
+    "gene"
+  ],
+  "summary_1l": "Large-Scale Profiling Reveals the Influence of Genetic Variation on Gene Expression in Human Induced Pluripotent Stem Cells.",
+  "query_hits": [],
+  "embed_text": "4632921 Large-Scale Profiling Reveals the Influence of Genetic Variation on Gene Expression in Human Induced Pluripotent Stem Cells. science scifact In this study, we used whole-genome sequencing and gene expression profiling of 215 human induced pluripotent stem cell (iPSC) lines from different donors to identify genetic variants associated with RNA expression for 5,746 genes. We were… 4632921 large-scale-profiling-reveals-the-influence-of-genetic-variation-on-gene-expression-in-human-induced-pluripotent-stem-cells. large scale profiling reveals influence genetic variation gene Large-Scale Profiling Reveals the Influence of Genetic Variation on Gene Expression in Human Induced Pluripotent Stem Cells. Large-Scale Profiling Reveals the Influence of Genetic Variation on Gene Expression in Human Induced Pluripotent Stem Cells. In this study, we used whole-genome sequencing and gene expression profiling of 215 human induced pluripotent stem cell (iPSC) lines from different donors to identify genetic variants associated with RNA expression for 5,746 genes. We were able to predict causal variants for these expression quantitative trait loci (eQTLs) that disrupt transcription factor binding and validated a subset of them experimentally. We also identified copy-number variant (CNV) eQTLs, including some that appear to affect gene expression by altering the copy number of intergenic regulatory regions. In addition, we were able to identify effects on gene expression of rare genic CNVs and regula",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.767054+00:00"
+}

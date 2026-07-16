@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24896957",
+  "source_fingerprint": "41e630d593407393a539098000dd8a43",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24896957",
+    "rate-and-molecular-spectrum-of-spontaneous-mutations-in-the-bacterium-escherichia-coli-as-determined-by-whole-genome-sequencing."
+  ],
+  "key_phrases": [
+    "rate",
+    "molecular",
+    "spectrum",
+    "spontaneous",
+    "mutations",
+    "bacterium",
+    "escherichia",
+    "coli"
+  ],
+  "summary_1l": "Rate and molecular spectrum of spontaneous mutations in the bacterium Escherichia coli as determined by whole-genome sequencing.",
+  "query_hits": [],
+  "embed_text": "24896957 Rate and molecular spectrum of spontaneous mutations in the bacterium Escherichia coli as determined by whole-genome sequencing. science scifact Knowledge of the rate and nature of spontaneous mutation is fundamental to understanding evolutionary and molecular processes. In this report, we analyze spontaneous mutations accumulated over thousands of generations by wild-type… 24896957 rate-and-molecular-spectrum-of-spontaneous-mutations-in-the-bacterium-escherichia-coli-as-determined-by-whole-genome-sequencing. rate molecular spectrum spontaneous mutations bacterium escherichia coli Rate and molecular spectrum of spontaneous mutations in the bacterium Escherichia coli as determined by whole-genome sequencing. Rate and molecular spectrum of spontaneous mutations in the bacterium Escherichia coli as determined by whole-genome sequencing. Knowledge of the rate and nature of spontaneous mutation is fundamental to understanding evolutionary and molecular processes. In this report, we analyze spontaneous mutations accumulated over thousands of generations by wild-type Escherichia coli and a derivative defective in mismatch repair (MMR), the primary pathway for correcting replication errors. The major conclusions are (i) the mutation rate of a wild-type E. coli strain is ~1 × 10(-3) per genome per generation; (ii) mutations in the wild-type strain have the expected mutational bias for G:C > A:T mutations, but the bias changes to A:T > G:C mutations in the absence of MMR; (iii) during replication, A:T",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.493870+00:00"
+}

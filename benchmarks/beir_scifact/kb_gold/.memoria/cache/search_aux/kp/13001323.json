@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13001323",
+  "source_fingerprint": "df48df9228aa04633cf035451368dfa9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13001323",
+    "sirt1-deacetylase-in-sf1-neurons-protects-against-metabolic-imbalance."
+  ],
+  "key_phrases": [
+    "sirt1",
+    "deacetylase",
+    "sf1",
+    "neurons",
+    "protects",
+    "against",
+    "metabolic",
+    "imbalance"
+  ],
+  "summary_1l": "SIRT1 deacetylase in SF1 neurons protects against metabolic imbalance.",
+  "query_hits": [],
+  "embed_text": "13001323 SIRT1 deacetylase in SF1 neurons protects against metabolic imbalance. science scifact Chronic feeding on high-calorie diets causes obesity and type 2 diabetes mellitus (T2DM), illnesses that affect hundreds of millions. Thus, understanding the pathways protecting against diet-induced metabolic imbalance is of paramount… 13001323 sirt1-deacetylase-in-sf1-neurons-protects-against-metabolic-imbalance. sirt1 deacetylase sf1 neurons protects against metabolic imbalance SIRT1 deacetylase in SF1 neurons protects against metabolic imbalance. SIRT1 deacetylase in SF1 neurons protects against metabolic imbalance. Chronic feeding on high-calorie diets causes obesity and type 2 diabetes mellitus (T2DM), illnesses that affect hundreds of millions. Thus, understanding the pathways protecting against diet-induced metabolic imbalance is of paramount medical importance. Here, we show that mice lacking SIRT1 in steroidogenic factor 1 (SF1) neurons are hypersensitive to dietary obesity owing to maladaptive energy expenditure. Also, mutant mice have increased susceptibility to developing dietary T2DM due to insulin resistance in skeletal muscle. Mechanistically, these aberrations arise, in part, from impaired metabolic actions of the neuropeptide orexin-A and the hormone leptin. Conversely, mice overexpressing SIRT1 in SF1 neurons are mor",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:09.426617+00:00"
+}

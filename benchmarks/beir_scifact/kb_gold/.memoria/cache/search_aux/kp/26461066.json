@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26461066",
+  "source_fingerprint": "6c822e60230891d9f2ecb0aacbc1cc99",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26461066",
+    "[pharmacokinetics-and-biotransformation-of-the-antimycotic-drug-ciclopiroxolamine-in-animals-and-man-after-topical-and-systemic-administration]."
+  ],
+  "key_phrases": [
+    "pharmacokinetics",
+    "biotransformation",
+    "antimycotic",
+    "drug",
+    "ciclopiroxolamine",
+    "animals",
+    "man",
+    "after"
+  ],
+  "summary_1l": "[Pharmacokinetics and biotransformation of the antimycotic drug ciclopiroxolamine in animals and man after topical and systemic administration].",
+  "query_hits": [],
+  "embed_text": "26461066 [Pharmacokinetics and biotransformation of the antimycotic drug ciclopiroxolamine in animals and man after topical and systemic administration]. science scifact 1. Following the dermal application of the carbon-14 labelled broad spectrum antimycotic 6-cyclohexyl-1-hydroxy-4-methyl-2(1H)-pyridone, 2-aminoethanol salt (ciclopiroxolamine, Hoe 296, Batrafen) in the form of a 1% aqueous cream to… 26461066 [pharmacokinetics-and-biotransformation-of-the-antimycotic-drug-ciclopiroxolamine-in-animals-and-man-after-topical-and-systemic-administration]. pharmacokinetics biotransformation antimycotic drug ciclopiroxolamine animals man after [Pharmacokinetics and biotransformation of the antimycotic drug ciclopiroxolamine in animals and man after topical and systemic administration]. [Pharmacokinetics and biotransformation of the antimycotic drug ciclopiroxolamine in animals and man after topical and systemic administration]. 1. Following the dermal application of the carbon-14 labelled broad spectrum antimycotic 6-cyclohexyl-1-hydroxy-4-methyl-2(1H)-pyridone, 2-aminoethanol salt (ciclopiroxolamine, Hoe 296, Batrafen) in the form of a 1% aqueous cream to healthy human dorsal skin (penetration time: 6 h; occlusive dressing for 5 h), percutaneous absorption accounted on average for 1.3% of the dose applied. Excretion occurred via the kidney, with biological half-lives of 1.7 h. As can be seen from penetration studies of cadaverous skin, the horny layer contained the highest concentrations, with values of 2300-4500 microgram/cm3. The levels determined in the corium were s",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.743322+00:00"
+}

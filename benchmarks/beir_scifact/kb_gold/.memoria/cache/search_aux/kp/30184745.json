@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "30184745",
+  "source_fingerprint": "f55c2980c703a74dcbbc2307243b0ccf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "30184745",
+    "steroid-receptor-interactions-with-heat-shock-protein-and-immunophilin-chaperones."
+  ],
+  "key_phrases": [
+    "steroid",
+    "receptor",
+    "interactions",
+    "with",
+    "heat",
+    "shock",
+    "protein",
+    "immunophilin"
+  ],
+  "summary_1l": "Steroid receptor interactions with heat shock protein and immunophilin chaperones.",
+  "query_hits": [],
+  "embed_text": "30184745 Steroid receptor interactions with heat shock protein and immunophilin chaperones. science scifact We have provided a historical perspective on a body of steroid receptor research dealing with the structure and physiological significance of the untransformed 9S receptor that has often confused both novice and expert investigators. The… 30184745 steroid-receptor-interactions-with-heat-shock-protein-and-immunophilin-chaperones. steroid receptor interactions with heat shock protein immunophilin Steroid receptor interactions with heat shock protein and immunophilin chaperones. Steroid receptor interactions with heat shock protein and immunophilin chaperones. We have provided a historical perspective on a body of steroid receptor research dealing with the structure and physiological significance of the untransformed 9S receptor that has often confused both novice and expert investigators. The frequent controversies and equivocations of earlier studies were due to the fact that the native, hormone-free state of these receptors is a large multiprotein complex that resisted description for many years because of its unstable and dynamic nature. The untransformed 9S state of the steroid and dioxin receptors has provided a unique system for studying the function of the ubiquitous, abundant, and conserved heat shock protein, hsp90. The hormonal control of receptor assoc",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.455540+00:00"
+}

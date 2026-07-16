@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4422723",
+  "source_fingerprint": "212fb87eb6722a2e1fdaebfc64d77fe9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4422723",
+    "crowding-induces-live-cell-extrusion-to-maintain-homeostatic-cell-numbers-in-epithelia"
+  ],
+  "key_phrases": [
+    "crowding",
+    "induces",
+    "live",
+    "cell",
+    "extrusion",
+    "maintain",
+    "homeostatic",
+    "numbers"
+  ],
+  "summary_1l": "For an epithelium to provide a protective barrier, it must maintain homeostatic cell numbers by matching the numb",
+  "query_hits": [],
+  "embed_text": "4422723 Crowding induces live cell extrusion to maintain homeostatic cell numbers in epithelia science scifact For an epithelium to provide a protective barrier, it must maintain homeostatic cell numbers by matching the number of dividing cells with the number of dying cells. Although compensatory cell division can be triggered by dying cells, it… 4422723 crowding-induces-live-cell-extrusion-to-maintain-homeostatic-cell-numbers-in-epithelia crowding induces live cell extrusion maintain homeostatic numbers For an epithelium to provide a protective barrier, it must maintain homeostatic cell numbers by matching the numb Crowding induces live cell extrusion to maintain homeostatic cell numbers in epithelia For an epithelium to provide a protective barrier, it must maintain homeostatic cell numbers by matching the number of dividing cells with the number of dying cells. Although compensatory cell division can be triggered by dying cells, it is unknown how cell death might relieve overcrowding due to proliferation. When we trigger apoptosis in epithelia, dying cells are extruded to preserve a functional barrier. Extrusion occurs by cells destined to die signalling to surrounding epithelial cells to contract an actomyosin ring that squeezes the dying cell out. However, it is not clear what drives cell death during normal homeostasis. Here we show in human, canine and zebrafish cells that overcrowding due to p",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.004177+00:00"
+}

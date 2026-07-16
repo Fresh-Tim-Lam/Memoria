@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "46485368",
+  "source_fingerprint": "f038f6ee0cacd96f291a3685e8ca7fd3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "46485368",
+    "prolonged-effect-of-calcium-supplementation-on-risk-of-colorectal-adenomas-in-a-randomized-trial."
+  ],
+  "key_phrases": [
+    "prolonged",
+    "effect",
+    "calcium",
+    "supplementation",
+    "risk",
+    "colorectal",
+    "adenomas",
+    "randomized"
+  ],
+  "summary_1l": "Prolonged effect of calcium supplementation on risk of colorectal adenomas in a randomized trial.",
+  "query_hits": [],
+  "embed_text": "46485368 Prolonged effect of calcium supplementation on risk of colorectal adenomas in a randomized trial. science scifact BACKGROUND Calcium supplementation has been shown to decrease the risk of recurrence of colorectal adenomas in randomized trials. However, the duration of this protective effect after cessation of active supplementation is not known.… 46485368 prolonged-effect-of-calcium-supplementation-on-risk-of-colorectal-adenomas-in-a-randomized-trial. prolonged effect calcium supplementation risk colorectal adenomas randomized Prolonged effect of calcium supplementation on risk of colorectal adenomas in a randomized trial. Prolonged effect of calcium supplementation on risk of colorectal adenomas in a randomized trial. BACKGROUND Calcium supplementation has been shown to decrease the risk of recurrence of colorectal adenomas in randomized trials. However, the duration of this protective effect after cessation of active supplementation is not known. METHODS In the Calcium Polyp Prevention Study, 930 subjects with a previous colorectal adenoma were randomly assigned from November 1988 through April 1992 to receive placebo or 1200 mg of elemental calcium daily for 4 years. The Calcium Follow-up Study was an observational phase of the trial that tracked adenoma occurrence for an average of 7 years after the end of randomized treatment and gathered information regarding the use of medications, vitamins, and suppl",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.926612+00:00"
+}

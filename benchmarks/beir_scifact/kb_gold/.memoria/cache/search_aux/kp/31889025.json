@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "31889025",
+  "source_fingerprint": "caacda9cb1a7dd5585aa9dfe67cc4067",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "31889025",
+    "the-progression-from-hypertension-to-congestive-heart-failure."
+  ],
+  "key_phrases": [
+    "progression",
+    "from",
+    "hypertension",
+    "congestive",
+    "heart",
+    "failure",
+    "objectives",
+    "study"
+  ],
+  "summary_1l": "The progression from hypertension to congestive heart failure.",
+  "query_hits": [],
+  "embed_text": "31889025 The progression from hypertension to congestive heart failure. science scifact OBJECTIVES - To study the relative and population-attributable risks of hypertension for the development of congestive heart failure (CHF), to assess the time course of progression from hypertension to CHF, and to identify risk factors… 31889025 the-progression-from-hypertension-to-congestive-heart-failure. progression from hypertension congestive heart failure objectives study The progression from hypertension to congestive heart failure. The progression from hypertension to congestive heart failure. OBJECTIVES - To study the relative and population-attributable risks of hypertension for the development of congestive heart failure (CHF), to assess the time course of progression from hypertension to CHF, and to identify risk factors that contribute to the development of overt heart failure in hypertensive subjects. DESIGN - Inception cohort study. SETTING - General community. PARTICIPANTS - Original Framingham Heart Study and Framingham Offspring Study participants aged 40 to 89 years and free of CHF. To reflect more contemporary experience, the starting point of this study was January 1, 1970. EXPOSURE MEASURES - Hypertension (blood pressure of at least 140 mm Hg systolic or 90 mm Hg diastolic or current use of medications",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.958577+00:00"
+}

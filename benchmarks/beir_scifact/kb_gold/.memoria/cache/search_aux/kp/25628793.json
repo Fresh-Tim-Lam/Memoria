@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25628793",
+  "source_fingerprint": "fe83a4c036ebd7586e2d6e7ead6237ff",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25628793",
+    "increased-expression-of-cyp1a1-and-cyp1b1-in-ovarian/peritoneal-endometriotic-lesions."
+  ],
+  "key_phrases": [
+    "increased",
+    "expression",
+    "cyp1a1",
+    "cyp1b1",
+    "ovarian",
+    "peritoneal",
+    "endometriotic",
+    "lesions"
+  ],
+  "summary_1l": "Increased expression of CYP1A1 and CYP1B1 in ovarian/peritoneal endometriotic lesions.",
+  "query_hits": [],
+  "embed_text": "25628793 Increased expression of CYP1A1 and CYP1B1 in ovarian/peritoneal endometriotic lesions. science scifact Endometriosis is an estrogen-dependent disease affecting up to 10% of all premenopausal women. There is evidence that different endometriosis sites show distinct local estrogen concentration, which, in turn, might be due to a unique local… 25628793 increased-expression-of-cyp1a1-and-cyp1b1-in-ovarian/peritoneal-endometriotic-lesions. increased expression cyp1a1 cyp1b1 ovarian peritoneal endometriotic lesions Increased expression of CYP1A1 and CYP1B1 in ovarian/peritoneal endometriotic lesions. Increased expression of CYP1A1 and CYP1B1 in ovarian/peritoneal endometriotic lesions. Endometriosis is an estrogen-dependent disease affecting up to 10% of all premenopausal women. There is evidence that different endometriosis sites show distinct local estrogen concentration, which, in turn, might be due to a unique local estrogen metabolism. We aimed to investigate whether there was a site-specific regulation of selected enzymes responsible for the oxidative metabolism of estrogens in biopsy samples and endometrial and endometriotic stromal cells. Cytochrome P450 (CYP) 1A1 and CYP1B1 mRNA and protein expressions in deep-infiltrating (rectal, retossigmoidal, and uterossacral) lesions, superficial (ovarian and peritoneal) lesions, and eutopic and healthy (control) endometrium were evaluat",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.036831+00:00"
+}

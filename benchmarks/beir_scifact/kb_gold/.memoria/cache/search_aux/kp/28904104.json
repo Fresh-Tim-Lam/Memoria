@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "28904104",
+  "source_fingerprint": "c80fea82098014422311782806b659e9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "28904104",
+    "repriming-of-dna-synthesis-at-stalled-replication-forks-by-human-primpol"
+  ],
+  "key_phrases": [
+    "repriming",
+    "dna",
+    "synthesis",
+    "at",
+    "stalled",
+    "replication",
+    "forks",
+    "by"
+  ],
+  "summary_1l": "DNA replication forks that collapse during the process of genomic duplication lead to double-strand breaks and constitute a thr",
+  "query_hits": [],
+  "embed_text": "28904104 Repriming of DNA synthesis at stalled replication forks by human PrimPol science scifact DNA replication forks that collapse during the process of genomic duplication lead to double-strand breaks and constitute a threat to genomic stability. The risk of fork collapse is higher in the presence of replication inhibitors or after… 28904104 repriming-of-dna-synthesis-at-stalled-replication-forks-by-human-primpol repriming dna synthesis at stalled replication forks by DNA replication forks that collapse during the process of genomic duplication lead to double-strand breaks and constitute a thr Repriming of DNA synthesis at stalled replication forks by human PrimPol DNA replication forks that collapse during the process of genomic duplication lead to double-strand breaks and constitute a threat to genomic stability. The risk of fork collapse is higher in the presence of replication inhibitors or after UV irradiation, which introduces specific modifications in the structure of DNA. In these cases, fork progression may be facilitated by error-prone translesion synthesis (TLS) DNA polymerases. Alternatively, the replisome may skip the damaged DNA, leaving an unreplicated gap to be repaired after replication. This mechanism strictly requires a priming event downstream of the lesion. Here we show that PrimPol, a new human primase and TLS polymerase, uses its primase activity to mediat",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.416859+00:00"
+}

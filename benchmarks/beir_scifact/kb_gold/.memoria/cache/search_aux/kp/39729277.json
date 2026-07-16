@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "39729277",
+  "source_fingerprint": "59b4350ee92a8b2421ee4190470f12ac",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "39729277",
+    "sequence-features-surrounding-the-translation-initiation-sites-assigned-on-the-genome-sequence-of-synechocystis-sp.-strain-pcc6803-by-amino-terminal-protein-sequencing."
+  ],
+  "key_phrases": [
+    "sequence",
+    "features",
+    "surrounding",
+    "translation",
+    "initiation",
+    "sites",
+    "assigned",
+    "genome"
+  ],
+  "summary_1l": "Sequence features surrounding the translation initiation sites assigned on the genome sequence of Synechocystis sp.",
+  "query_hits": [],
+  "embed_text": "39729277 Sequence features surrounding the translation initiation sites assigned on the genome sequence of Synechocystis sp. strain PCC6803 by amino-terminal protein sequencing. science scifact To characterize the sequence features surrounding the translation initiation sites on the genome of Synechocystis sp. strain 6803, the total proteins extracted from the cell were resolved by two-dimensional electrophoresis, and the… 39729277 sequence-features-surrounding-the-translation-initiation-sites-assigned-on-the-genome-sequence-of-synechocystis-sp.-strain-pcc6803-by-amino-terminal-protein-sequencing. sequence features surrounding translation initiation sites assigned genome Sequence features surrounding the translation initiation sites assigned on the genome sequence of Synechocystis sp. Sequence features surrounding the translation initiation sites assigned on the genome sequence of Synechocystis sp. strain PCC6803 by amino-terminal protein sequencing. To characterize the sequence features surrounding the translation initiation sites on the genome of Synechocystis sp. strain 6803, the total proteins extracted from the cell were resolved by two-dimensional electrophoresis, and the amino-terminal sequences of the relatively abundant protein spots were determined. By comparison of the determined amino-terminal sequences with the nucleotide sequence of the entire genome, the translation initiation sites of a total of 72 proteins were successfully assigned on the genome. The sequence features emerged from the nucleotide sequences at and surrounding the translation initiation s",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.885651+00:00"
+}

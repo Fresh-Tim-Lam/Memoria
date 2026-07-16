@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7766808",
+  "source_fingerprint": "336f24454f521b97c28650abe14cfb6f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7766808",
+    "estimating-the-sample-mean-and-standard-deviation-from-the-sample-size,-median,-range-and/or-interquartile-range"
+  ],
+  "key_phrases": [
+    "estimating",
+    "sample",
+    "mean",
+    "standard",
+    "deviation",
+    "from",
+    "size",
+    "median"
+  ],
+  "summary_1l": "In systematic reviews and meta-analysis, researchers often pool the results of the samp",
+  "query_hits": [],
+  "embed_text": "7766808 Estimating the sample mean and standard deviation from the sample size, median, range and/or interquartile range science scifact In systematic reviews and meta-analysis, researchers often pool the results of the sample mean and standard deviation from a set of similar clinical trials. A number of the trials, however, reported the study using the median, the minimum… 7766808 estimating-the-sample-mean-and-standard-deviation-from-the-sample-size,-median,-range-and/or-interquartile-range estimating sample mean standard deviation from size median In systematic reviews and meta-analysis, researchers often pool the results of the samp Estimating the sample mean and standard deviation from the sample size, median, range and/or interquartile range In systematic reviews and meta-analysis, researchers often pool the results of the sample mean and standard deviation from a set of similar clinical trials. A number of the trials, however, reported the study using the median, the minimum and maximum values, and/or the first and third quartiles. Hence, in order to combine results, one may have to estimate the sample mean and standard deviation for such trials. In this paper, we propose to improve the existing literature in several directions. First, we show that the sample standard deviation estimation in Hozo et al. (2005) has some serious limitations and is always less satisfactory in practice. Inspired by this, we propose a n",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.178866+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4335423",
+  "source_fingerprint": "d63779a5d8ba0f18b0154af06c9bb43b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4335423",
+    "continuous-single-cell-imaging-of-blood-generation-from-haemogenic-endothelium"
+  ],
+  "key_phrases": [
+    "continuous",
+    "single",
+    "cell",
+    "imaging",
+    "blood",
+    "generation",
+    "from",
+    "haemogenic"
+  ],
+  "summary_1l": "Despite decades of research, the identity of the cells generating the first haematopoietic cells in mammalian embryos is",
+  "query_hits": [],
+  "embed_text": "4335423 Continuous single-cell imaging of blood generation from haemogenic endothelium science scifact Despite decades of research, the identity of the cells generating the first haematopoietic cells in mammalian embryos is unknown. Indeed, whether blood cells arise from mesodermal cells, mesenchymal progenitors, bipotent… 4335423 continuous-single-cell-imaging-of-blood-generation-from-haemogenic-endothelium continuous single cell imaging blood generation from haemogenic Despite decades of research, the identity of the cells generating the first haematopoietic cells in mammalian embryos is Continuous single-cell imaging of blood generation from haemogenic endothelium Despite decades of research, the identity of the cells generating the first haematopoietic cells in mammalian embryos is unknown. Indeed, whether blood cells arise from mesodermal cells, mesenchymal progenitors, bipotent endothelial–haematopoietic precursors or haemogenic endothelial cells remains controversial. Proximity of endothelial and blood cells at sites of embryonic haematopoiesis, as well as their similar gene expression, led to the hypothesis of the endothelium generating blood. However, owing to lacking technology it has been impossible to observe blood cell emergence continuously at the single-cell level, and the postulated existence of haemogenic endothelial cells remains disputed. Here, using new i",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.793450+00:00"
+}

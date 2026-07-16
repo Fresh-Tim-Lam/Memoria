@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6268106",
+  "source_fingerprint": "124fad57b66cc9f0e0347fa1953ede04",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6268106",
+    "the-ubiquitin-ligase-drosophila-mind-bomb-promotes-notch-signaling-by-regulating-the-localization-and-activity-of-serrate-and-delta."
+  ],
+  "key_phrases": [
+    "ubiquitin",
+    "ligase",
+    "drosophila",
+    "mind",
+    "bomb",
+    "promotes",
+    "notch",
+    "signaling"
+  ],
+  "summary_1l": "The ubiquitin ligase Drosophila Mind bomb promotes Notch signaling by regulating the localization and activity of Serrate and Delta.",
+  "query_hits": [],
+  "embed_text": "6268106 The ubiquitin ligase Drosophila Mind bomb promotes Notch signaling by regulating the localization and activity of Serrate and Delta. science scifact The receptor Notch and its ligands of the Delta/Serrate/LAG2 (DSL) family are the central components in the Notch pathway, a fundamental cell signaling system that regulates pattern formation during animal development. Delta is directly… 6268106 the-ubiquitin-ligase-drosophila-mind-bomb-promotes-notch-signaling-by-regulating-the-localization-and-activity-of-serrate-and-delta. ubiquitin ligase drosophila mind bomb promotes notch signaling The ubiquitin ligase Drosophila Mind bomb promotes Notch signaling by regulating the localization and activity of Serrate and Delta. The ubiquitin ligase Drosophila Mind bomb promotes Notch signaling by regulating the localization and activity of Serrate and Delta. The receptor Notch and its ligands of the Delta/Serrate/LAG2 (DSL) family are the central components in the Notch pathway, a fundamental cell signaling system that regulates pattern formation during animal development. Delta is directly ubiquitinated by Drosophila and Xenopus Neuralized, and by zebrafish Mind bomb, two unrelated RING-type E3 ubiquitin ligases with common abilities to promote Delta endocytosis and signaling activity. Although orthologs of both Neuralized and Mind bomb are found in most metazoan organisms, their relative contributions to Notch signaling in any single organism have not yet been assessed. We show here that a Drosophila ortholog o",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.404081+00:00"
+}

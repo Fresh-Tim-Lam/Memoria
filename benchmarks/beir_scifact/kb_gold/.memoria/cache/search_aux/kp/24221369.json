@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24221369",
+  "source_fingerprint": "218303249f262f0e617318833957ab9c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24221369",
+    "a-conserved-histidine-in-the-rna-sensor-rig-i-controls-immune-tolerance-to-n1-2'o-methylated-self-rna."
+  ],
+  "key_phrases": [
+    "conserved",
+    "histidine",
+    "rna",
+    "sensor",
+    "rig",
+    "controls",
+    "immune",
+    "tolerance"
+  ],
+  "summary_1l": "A Conserved Histidine in the RNA Sensor RIG-I Controls Immune Tolerance to N1-2'O-Methylated Self RNA.",
+  "query_hits": [],
+  "embed_text": "24221369 A Conserved Histidine in the RNA Sensor RIG-I Controls Immune Tolerance to N1-2'O-Methylated Self RNA. science scifact The cytosolic helicase retinoic acid-inducible gene-I (RIG-I) initiates immune responses to most RNA viruses by detecting viral 5'-triphosphorylated RNA (pppRNA). Although endogenous mRNA is also 5'-triphosphorylated, backbone… 24221369 a-conserved-histidine-in-the-rna-sensor-rig-i-controls-immune-tolerance-to-n1-2'o-methylated-self-rna. conserved histidine rna sensor rig controls immune tolerance A Conserved Histidine in the RNA Sensor RIG-I Controls Immune Tolerance to N1-2'O-Methylated Self RNA. A Conserved Histidine in the RNA Sensor RIG-I Controls Immune Tolerance to N1-2'O-Methylated Self RNA. The cytosolic helicase retinoic acid-inducible gene-I (RIG-I) initiates immune responses to most RNA viruses by detecting viral 5'-triphosphorylated RNA (pppRNA). Although endogenous mRNA is also 5'-triphosphorylated, backbone modifications and the 5'-ppp-linked methylguanosine ((m7)G) cap prevent immunorecognition. Here we show that the methylation status of endogenous capped mRNA at the 5'-terminal nucleotide (N1) was crucial to prevent RIG-I activation. Moreover, we identified a single conserved amino acid (H830) in the RIG-I RNA binding pocket as the mediator of steric exclusion of N1-2'O-methylated RNA. H830A alteration (RIG-I(H830A)) restored binding of N1-2'O-methylated pppRNA. Con",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.983150+00:00"
+}

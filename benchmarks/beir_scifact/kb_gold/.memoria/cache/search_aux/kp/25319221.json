@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25319221",
+  "source_fingerprint": "0127219a1c50447bc7a43046240ac1cb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25319221",
+    "sputum-inflammation-predicts-exacerbations-after-cessation-of-inhaled-corticosteroids-in-copd."
+  ],
+  "key_phrases": [
+    "sputum",
+    "inflammation",
+    "predicts",
+    "exacerbations",
+    "after",
+    "cessation",
+    "inhaled",
+    "corticosteroids"
+  ],
+  "summary_1l": "Sputum inflammation predicts exacerbations after cessation of inhaled corticosteroids in COPD.",
+  "query_hits": [],
+  "embed_text": "25319221 Sputum inflammation predicts exacerbations after cessation of inhaled corticosteroids in COPD. science scifact INTRODUCTION The GOLD guidelines advocate not to institute inhaled corticosteroids (ICS) in patients with mild-to-moderate COPD. However, many patients do use ICS and in some patients, withdrawal is associated with deteriorating lung… 25319221 sputum-inflammation-predicts-exacerbations-after-cessation-of-inhaled-corticosteroids-in-copd. sputum inflammation predicts exacerbations after cessation inhaled corticosteroids Sputum inflammation predicts exacerbations after cessation of inhaled corticosteroids in COPD. Sputum inflammation predicts exacerbations after cessation of inhaled corticosteroids in COPD. INTRODUCTION The GOLD guidelines advocate not to institute inhaled corticosteroids (ICS) in patients with mild-to-moderate COPD. However, many patients do use ICS and in some patients, withdrawal is associated with deteriorating lung function and increased exacerbation rates. Unfortunately, physicians do not know in which patients they can stop ICS treatment safely. AIM To identify predictors of COPD exacerbations after ICS withdrawal. METHODS During ICS treatment, post-bronchodilator spirometry, body plethysmography, and health status assessment were performed in 68 COPD patients using ICS. Additionally, sputum cell differentials, supernatant leukotriene B(4), eosinophilic cationic protein, and",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.399279+00:00"
+}

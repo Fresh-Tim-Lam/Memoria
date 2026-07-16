@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5436081",
+  "source_fingerprint": "ea815529cb4c000f9190d3a0f2ebf0f4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5436081",
+    "mg53-nucleates-assembly-of-cell-membrane-repair-machinery"
+  ],
+  "key_phrases": [
+    "mg53",
+    "nucleates",
+    "assembly",
+    "cell",
+    "membrane",
+    "repair",
+    "machinery",
+    "dynamic"
+  ],
+  "summary_1l": "Dynamic membrane repair and remodelling is an elemental process that maintains cell integrity and mediates efficient cellular function.",
+  "query_hits": [],
+  "embed_text": "5436081 MG53 nucleates assembly of cell membrane repair machinery science scifact Dynamic membrane repair and remodelling is an elemental process that maintains cell integrity and mediates efficient cellular function. Here we report that MG53, a muscle-specific tripartite motif family protein (TRIM72), is a component of… 5436081 mg53-nucleates-assembly-of-cell-membrane-repair-machinery mg53 nucleates assembly cell membrane repair machinery dynamic Dynamic membrane repair and remodelling is an elemental process that maintains cell integrity and mediates efficient cellular function. MG53 nucleates assembly of cell membrane repair machinery Dynamic membrane repair and remodelling is an elemental process that maintains cell integrity and mediates efficient cellular function. Here we report that MG53, a muscle-specific tripartite motif family protein (TRIM72), is a component of the sarcolemmal membrane-repair machinery. MG53 interacts with phosphatidylserine to associate with intracellular vesicles that traffic to and fuse with sarcolemmal membranes. Mice null for MG53 show progressive myopathy and reduced exercise capability, associated with defective membrane-repair capacity. Injury of the sarcolemmal membrane leads to entry of the extracellular oxidative environment and MG53 oligomerization, resulting in recruitment of MG53-containing vesicles to the injury site. Afte",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.265220+00:00"
+}

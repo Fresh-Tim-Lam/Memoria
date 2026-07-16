@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4911006",
+  "source_fingerprint": "4dfcf8ae2b1d0dce30a5d0615cb72ed4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4911006",
+    "consensus-guidelines-for-the-detection-of-immunogenic-cell-death."
+  ],
+  "key_phrases": [
+    "consensus",
+    "guidelines",
+    "detection",
+    "immunogenic",
+    "cell",
+    "death",
+    "apoptotic",
+    "cells"
+  ],
+  "summary_1l": "Consensus guidelines for the detection of immunogenic cell death.",
+  "query_hits": [],
+  "embed_text": "4911006 Consensus guidelines for the detection of immunogenic cell death. science scifact Apoptotic cells have long been considered as intrinsically tolerogenic or unable to elicit immune responses specific for dead cell-associated antigens. However, multiple stimuli can trigger a functionally peculiar type of apoptotic demise… 4911006 consensus-guidelines-for-the-detection-of-immunogenic-cell-death. consensus guidelines detection immunogenic cell death apoptotic cells Consensus guidelines for the detection of immunogenic cell death. Consensus guidelines for the detection of immunogenic cell death. Apoptotic cells have long been considered as intrinsically tolerogenic or unable to elicit immune responses specific for dead cell-associated antigens. However, multiple stimuli can trigger a functionally peculiar type of apoptotic demise that does not go unnoticed by the adaptive arm of the immune system, which we named \"immunogenic cell death\" (ICD). ICD is preceded or accompanied by the emission of a series of immunostimulatory damage-associated molecular patterns (DAMPs) in a precise spatiotemporal configuration. Several anticancer agents that have been successfully employed in the clinic for decades, including various chemotherapeutics and radiotherapy, can elicit ICD. Moreover, defects in the components that underlie t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.715460+00:00"
+}

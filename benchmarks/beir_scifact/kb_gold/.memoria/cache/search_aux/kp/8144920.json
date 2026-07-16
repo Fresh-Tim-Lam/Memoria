@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8144920",
+  "source_fingerprint": "6915f693d57a5a2ee42363e936074f6b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8144920",
+    "lentivirally-transduced-dendritic-cells-as-a-tool-for-cancer-immunotherapy."
+  ],
+  "key_phrases": [
+    "lentivirally",
+    "transduced",
+    "dendritic",
+    "cells",
+    "as",
+    "tool",
+    "cancer",
+    "immunotherapy"
+  ],
+  "summary_1l": "Lentivirally transduced dendritic cells as a tool for cancer immunotherapy.",
+  "query_hits": [],
+  "embed_text": "8144920 Lentivirally transduced dendritic cells as a tool for cancer immunotherapy. science scifact BACKGROUND Dendritic cells (DC) are the professional antigen-presenting cells of the immune system, fully equipped to prime naive T cells and thus essential components for cancer immunotherapy. METHODS We tested the influence of several… 8144920 lentivirally-transduced-dendritic-cells-as-a-tool-for-cancer-immunotherapy. lentivirally transduced dendritic cells as tool cancer immunotherapy Lentivirally transduced dendritic cells as a tool for cancer immunotherapy. Lentivirally transduced dendritic cells as a tool for cancer immunotherapy. BACKGROUND Dendritic cells (DC) are the professional antigen-presenting cells of the immune system, fully equipped to prime naive T cells and thus essential components for cancer immunotherapy. METHODS We tested the influence of several elements (cPPT, trip, WPRE, SIN) on the transduction efficiency of human DC. Human and murine DC were transduced with tNGFR-encoding lentiviruses to assess the effect of transduction on phenotype and function. Human DC were transduced with lentiviruses encoding huIi80MAGE-A3 and murine DC with huIi80tOVA to test antigen presentation. RESULTS A self-inactivating (SIN) lentiviral vector containing the trip element was most efficient in transducing human DC. The transduction of DC with",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.999625+00:00"
+}

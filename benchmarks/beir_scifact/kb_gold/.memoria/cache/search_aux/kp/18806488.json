@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18806488",
+  "source_fingerprint": "76c373390ef8e4bdc7931053be9c7060",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18806488",
+    "hoxa9-transforms-primary-bone-marrow-cells-through-specific-collaboration-with-meis1a-but-not-pbx1b."
+  ],
+  "key_phrases": [
+    "hoxa9",
+    "transforms",
+    "primary",
+    "bone",
+    "marrow",
+    "cells",
+    "through",
+    "specific"
+  ],
+  "summary_1l": "Hoxa9 transforms primary bone marrow cells through specific collaboration with Meis1a but not Pbx1b.",
+  "query_hits": [],
+  "embed_text": "18806488 Hoxa9 transforms primary bone marrow cells through specific collaboration with Meis1a but not Pbx1b. science scifact Hoxa9, Meis1 and Pbx1 encode homeodomaincontaining proteins implicated in leukemic transformation in both mice and humans. Hoxa9, Meis1 and Pbx1 proteins have been shown to physically interact with each other, as Hoxa9 cooperatively binds… 18806488 hoxa9-transforms-primary-bone-marrow-cells-through-specific-collaboration-with-meis1a-but-not-pbx1b. hoxa9 transforms primary bone marrow cells through specific Hoxa9 transforms primary bone marrow cells through specific collaboration with Meis1a but not Pbx1b. Hoxa9 transforms primary bone marrow cells through specific collaboration with Meis1a but not Pbx1b. Hoxa9, Meis1 and Pbx1 encode homeodomaincontaining proteins implicated in leukemic transformation in both mice and humans. Hoxa9, Meis1 and Pbx1 proteins have been shown to physically interact with each other, as Hoxa9 cooperatively binds consensus DNA sequences with Meis1 and with Pbx1, while Meis1 and Pbx1 form heterodimers in both the presence and absence of DNA. In this study, we sought to determine if Hoxa9 could transform hemopoietic cells in collaboration with either Pbx1 or Meis1. Primary bone marrow cells, retrovirally engineered to overexpress Hoxa9 and Meis1a simultaneously, induced growth factor-dependent oligoclonal acute myeloid leukemia in <3 months when transplanted into syn",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.711546+00:00"
+}

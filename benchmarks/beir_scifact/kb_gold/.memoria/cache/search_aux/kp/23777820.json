@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23777820",
+  "source_fingerprint": "d45275c59476e572113619a7dc561de6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23777820",
+    "a-murine-model-of-human-myeloma-bone-disease."
+  ],
+  "key_phrases": [
+    "murine",
+    "model",
+    "human",
+    "myeloma",
+    "bone",
+    "disease",
+    "causes",
+    "devastating"
+  ],
+  "summary_1l": "A murine model of human myeloma bone disease.",
+  "query_hits": [],
+  "embed_text": "23777820 A murine model of human myeloma bone disease. science scifact Myeloma causes a devastating and unique form of osteolytic bone disease. Although osteoclast activation is responsible for bone destruction, the precise mechanisms by which myeloma cells increase osteoclast activity have not been defined.… 23777820 a-murine-model-of-human-myeloma-bone-disease. murine model human myeloma bone disease causes devastating A murine model of human myeloma bone disease. A murine model of human myeloma bone disease. Myeloma causes a devastating and unique form of osteolytic bone disease. Although osteoclast activation is responsible for bone destruction, the precise mechanisms by which myeloma cells increase osteoclast activity have not been defined. An animal model of human myeloma bone disease would help in clarification of these mechanisms. Multiple myeloma occurs spontaneously in aging C57 BL/KaLwRij mice and has all of the features of the disease in humans, including the characteristic bone lesions. The disease can be induced in normal C57 BL/KaLwRij mice by inoculation of fresh marrow-derived cells from mice with myeloma, but this model is difficult to study because of variability in the number of myeloma cells in marrow-derived preparations. To deve",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.101792+00:00"
+}

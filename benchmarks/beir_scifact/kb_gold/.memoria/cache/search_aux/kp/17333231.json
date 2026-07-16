@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17333231",
+  "source_fingerprint": "d535923483ec71ec48a3f19a8bcaec7f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17333231",
+    "the-sheddase-adam10-is-a-potent-modulator-of-prion-disease"
+  ],
+  "key_phrases": [
+    "sheddase",
+    "adam10",
+    "potent",
+    "modulator",
+    "prion",
+    "disease",
+    "protein",
+    "prp"
+  ],
+  "summary_1l": "The prion protein (PrP(C)) is highly expressed in the nervous system and critically involved in prion diseases where it misfolds into pathoge",
+  "query_hits": [],
+  "embed_text": "17333231 The sheddase ADAM10 is a potent modulator of prion disease science scifact The prion protein (PrP(C)) is highly expressed in the nervous system and critically involved in prion diseases where it misfolds into pathogenic PrP(Sc). Moreover, it has been suggested as a receptor mediating neurotoxicity in common… 17333231 the-sheddase-adam10-is-a-potent-modulator-of-prion-disease sheddase adam10 potent modulator prion disease protein prp The prion protein (PrP(C)) is highly expressed in the nervous system and critically involved in prion diseases where it misfolds into pathoge The sheddase ADAM10 is a potent modulator of prion disease The prion protein (PrP(C)) is highly expressed in the nervous system and critically involved in prion diseases where it misfolds into pathogenic PrP(Sc). Moreover, it has been suggested as a receptor mediating neurotoxicity in common neurodegenerative proteinopathies such as Alzheimer's disease. PrP(C) is shed at the plasma membrane by the metalloprotease ADAM10, yet the impact of this on prion disease remains enigmatic. Employing conditional knockout mice, we show that depletion of ADAM10 in forebrain neurons leads to posttranslational increase of PrP(C) levels. Upon prion infection of these mice, clinical, biochemical, and morphological data reveal that lack of ADAM10 significantly reduces incubation times and increases PrP(Sc) f",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.593919+00:00"
+}

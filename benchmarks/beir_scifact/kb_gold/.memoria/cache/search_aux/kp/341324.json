@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "341324",
+  "source_fingerprint": "0ac72760f49481f8505445ee578491e7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "341324",
+    "efficacy-of-the-6-month-thrice-weekly-regimen-in-the-treatment-of-new-sputum-smear-positive-pulmonary-tuberculosis-under-clinical-trial-conditions."
+  ],
+  "key_phrases": [
+    "efficacy",
+    "month",
+    "thrice",
+    "weekly",
+    "regimen",
+    "treatment",
+    "new",
+    "sputum"
+  ],
+  "summary_1l": "Efficacy of the 6-month thrice-weekly regimen in the treatment of new sputum smear-positive pulmonary tuberculosis under clinical trial conditions.",
+  "query_hits": [],
+  "embed_text": "341324 Efficacy of the 6-month thrice-weekly regimen in the treatment of new sputum smear-positive pulmonary tuberculosis under clinical trial conditions. science scifact BACKGROUND Under the Revised National Tuberculosis Control Programme of India, patients with new smear-positive pulmonary tuberculosis are treated with a thrice-weekly regimen of antitubercular drugs (2H(3)R(3)Z(3)E(3)/4H(3)R(3) [H… 341324 efficacy-of-the-6-month-thrice-weekly-regimen-in-the-treatment-of-new-sputum-smear-positive-pulmonary-tuberculosis-under-clinical-trial-conditions. efficacy month thrice weekly regimen treatment new sputum Efficacy of the 6-month thrice-weekly regimen in the treatment of new sputum smear-positive pulmonary tuberculosis under clinical trial conditions. Efficacy of the 6-month thrice-weekly regimen in the treatment of new sputum smear-positive pulmonary tuberculosis under clinical trial conditions. BACKGROUND Under the Revised National Tuberculosis Control Programme of India, patients with new smear-positive pulmonary tuberculosis are treated with a thrice-weekly regimen of antitubercular drugs (2H(3)R(3)Z(3)E(3)/4H(3)R(3) [H isoniazid, R rifampicin, Z pyrazinamide and E ethambutol]) for 6 months. We conducted a retrospective analysis of the efficacy andtolerability of this regimen under clinical trial conditions in HIV-negative patients with newly diagnosed smear-positive pulmonary tuberculosis. METHODS We retrospectively analysed the data on patients assigned to the control regimen (2H (3)R(3)Z(3)E(3)/4H(3)R(3)) in two clinical trials d",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.159848+00:00"
+}

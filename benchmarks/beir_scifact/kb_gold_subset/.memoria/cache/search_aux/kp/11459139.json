@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11459139",
+  "source_fingerprint": "5e7e65a38910d6a122b2d4537b359e56",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11459139",
+    "angiopoietin-2-is-increased-in-sepsis-and-inversely-associated-with-nitric-oxide-dependent-microvascular-reactivity"
+  ],
+  "key_phrases": [
+    "angiopoietin",
+    "increased",
+    "sepsis",
+    "inversely",
+    "associated",
+    "with",
+    "nitric",
+    "oxide"
+  ],
+  "summary_1l": "INTRODUCTION Angiopoietin-2 (ang-2), an angiogenic peptide released by endothelial c",
+  "query_hits": [],
+  "embed_text": "11459139 Angiopoietin-2 is increased in sepsis and inversely associated with nitric oxide-dependent microvascular reactivity science scifact INTRODUCTION Angiopoietin-2 (ang-2), an angiogenic peptide released by endothelial cell Weibel-Palade bodies (WPBs), increases endothelial activation and vascular permeability. Ang-2 is raised in severe sepsis but the mechanisms underlying… 11459139 angiopoietin-2-is-increased-in-sepsis-and-inversely-associated-with-nitric-oxide-dependent-microvascular-reactivity angiopoietin increased sepsis inversely associated with nitric oxide INTRODUCTION Angiopoietin-2 (ang-2), an angiogenic peptide released by endothelial c Angiopoietin-2 is increased in sepsis and inversely associated with nitric oxide-dependent microvascular reactivity INTRODUCTION Angiopoietin-2 (ang-2), an angiogenic peptide released by endothelial cell Weibel-Palade bodies (WPBs), increases endothelial activation and vascular permeability. Ang-2 is raised in severe sepsis but the mechanisms underlying this are not known. Nitric oxide (NO) inhibits WPB exocytosis, and bioavailability of endothelial NO is decreased in sepsis. We hypothesized that endothelial NO bioavailability would be inversely correlated with ang-2 concentrations in sepsis. METHODS Plasma ang-2, vascular endothelial growth factor (VEGF) and endothelial-active cytokines were assessed in 83 patients with early sepsis and 41 hospital controls, and related to reactive hypera",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:06.939215+00:00"
+}

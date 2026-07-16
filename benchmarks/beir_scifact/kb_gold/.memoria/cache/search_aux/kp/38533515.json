@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "38533515",
+  "source_fingerprint": "6e70d4de56410cf7222cc381d29a8763",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "38533515",
+    "amp-activated/snf1-protein-kinases:-conserved-guardians-of-cellular-energy"
+  ],
+  "key_phrases": [
+    "amp",
+    "activated",
+    "snf1",
+    "protein",
+    "kinases",
+    "conserved",
+    "guardians",
+    "cellular"
+  ],
+  "summary_1l": "The SNF1/AMP-activated protein kinase (AMPK) family maintains the balance between ATP production and consumption in all eukar",
+  "query_hits": [],
+  "embed_text": "38533515 AMP-activated/SNF1 protein kinases: conserved guardians of cellular energy science scifact The SNF1/AMP-activated protein kinase (AMPK) family maintains the balance between ATP production and consumption in all eukaryotic cells. The kinases are heterotrimers that comprise a catalytic subunit and regulatory subunits that sense… 38533515 amp-activated/snf1-protein-kinases:-conserved-guardians-of-cellular-energy amp activated snf1 protein kinases conserved guardians cellular The SNF1/AMP-activated protein kinase (AMPK) family maintains the balance between ATP production and consumption in all eukar AMP-activated/SNF1 protein kinases: conserved guardians of cellular energy The SNF1/AMP-activated protein kinase (AMPK) family maintains the balance between ATP production and consumption in all eukaryotic cells. The kinases are heterotrimers that comprise a catalytic subunit and regulatory subunits that sense cellular energy levels. When energy status is compromised, the system activates catabolic pathways and switches off protein, carbohydrate and lipid biosynthesis, as well as cell growth and proliferation. Surprisingly, recent results indicate that the AMPK system is also important in functions that go beyond the regulation of energy homeostasis, such as the maintenance of cell polarity in epithelial cells.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.614973+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20851402",
+  "source_fingerprint": "9e6362eeda7541677cfb8a306c3d7489",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20851402",
+    "dietary-flavonoids:-bioavailability,-metabolic-effects,-and-safety."
+  ],
+  "key_phrases": [
+    "dietary",
+    "flavonoids",
+    "bioavailability",
+    "metabolic",
+    "effects",
+    "safety",
+    "comprise",
+    "most"
+  ],
+  "summary_1l": "Dietary flavonoids: bioavailability, metabolic effects, and safety.",
+  "query_hits": [],
+  "embed_text": "20851402 Dietary flavonoids: bioavailability, metabolic effects, and safety. science scifact Flavonoids comprise the most common group of plant polyphenols and provide much of the flavor and color to fruits and vegetables. More than 5000 different flavonoids have been described. The six major subclasses of flavonoids include the… 20851402 dietary-flavonoids:-bioavailability,-metabolic-effects,-and-safety. dietary flavonoids bioavailability metabolic effects safety comprise most Dietary flavonoids: bioavailability, metabolic effects, and safety. Dietary flavonoids: bioavailability, metabolic effects, and safety. Flavonoids comprise the most common group of plant polyphenols and provide much of the flavor and color to fruits and vegetables. More than 5000 different flavonoids have been described. The six major subclasses of flavonoids include the flavones (e.g., apigenin, luteolin), flavonols (e.g., quercetin, myricetin), flavanones (e.g., naringenin, hesperidin), catechins or flavanols (e.g., epicatechin, gallocatechin), anthocyanidins (e.g., cyanidin, pelargonidin), and isoflavones (e.g., genistein, daidzein). Most of the flavonoids present in plants are attached to sugars (glycosides), although occasionally they are found as aglycones. Interest in the possible health benefits of flavonoids has increased owing to their potent ant",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.012901+00:00"
+}

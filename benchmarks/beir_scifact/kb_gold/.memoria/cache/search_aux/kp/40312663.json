@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "40312663",
+  "source_fingerprint": "7e54dfe33e68543df160dd62967e64c8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "40312663",
+    "inflammasome-activation-by-adenylate-cyclase-toxin-directs-th17-responses-and-protection-against-bordetella-pertussis."
+  ],
+  "key_phrases": [
+    "inflammasome",
+    "activation",
+    "by",
+    "adenylate",
+    "cyclase",
+    "toxin",
+    "directs",
+    "th17"
+  ],
+  "summary_1l": "Inflammasome activation by adenylate cyclase toxin directs Th17 responses and protection against Bordetella pertussis.",
+  "query_hits": [],
+  "embed_text": "40312663 Inflammasome activation by adenylate cyclase toxin directs Th17 responses and protection against Bordetella pertussis. science scifact Inflammasome-mediated IL-1beta production is central to the innate immune defects that give rise to certain autoinflammatory diseases and may also be associated with the generation of IL-17-producing CD4(+) T (Th17) cells that mediate… 40312663 inflammasome-activation-by-adenylate-cyclase-toxin-directs-th17-responses-and-protection-against-bordetella-pertussis. inflammasome activation by adenylate cyclase toxin directs th17 Inflammasome activation by adenylate cyclase toxin directs Th17 responses and protection against Bordetella pertussis. Inflammasome activation by adenylate cyclase toxin directs Th17 responses and protection against Bordetella pertussis. Inflammasome-mediated IL-1beta production is central to the innate immune defects that give rise to certain autoinflammatory diseases and may also be associated with the generation of IL-17-producing CD4(+) T (Th17) cells that mediate autoimmunity. However, the role of the inflammasome in driving adaptive immunity to infection has not been addressed. In this article, we demonstrate that inflammasome-mediated IL-1beta plays a critical role in promoting Ag-specific Th17 cells and in generating protective immunity against Bordetella pertussis infection. Using a murine respiratory challenge model, we demonstrated that the course of B. pertussis infection was significantly exac",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.402970+00:00"
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "policy-grad",
+  "source_fingerprint": "1650dfccc621743791d04947d023a42f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "policy-grad"
+  ],
+  "key_phrases": [
+    "策略",
+    "梯度",
+    "名称",
+    "变体",
+    "短名",
+    "vs",
+    "后缀",
+    "celvetidumingchengbiantiduanmingdaihouzhui"
+  ],
+  "summary_1l": "名称变体：短名 vs 带后缀。",
+  "query_hits": [],
+  "embed_text": "policy-grad 策略梯度 policy-grad 策略 梯度 名称 变体 短名 vs 后缀 celvetidumingchengbiantiduanmingdaihouzhui 名称变体：短名 vs 带后缀。 策略梯度 名称变体：短名 vs 带后缀。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T03:23:44.747346+00:00"
+}

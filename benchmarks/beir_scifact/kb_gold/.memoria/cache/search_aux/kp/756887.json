@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "756887",
+  "source_fingerprint": "6a2efdf1dbc243568c9b4723f457cf1d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "756887"
+  ],
+  "key_phrases": [
+    "comparison",
+    "cancer",
+    "screening",
+    "practices",
+    "survivors",
+    "general",
+    "population",
+    "korean"
+  ],
+  "summary_1l": "This study aimed to descri",
+  "query_hits": [],
+  "embed_text": "756887 A comparison of cancer screening practices in cancer survivors and in the general population: the Korean national health and nutrition examination survey (KNHANES) 2001–2007 science scifact This study aimed to describe cancer screening rates for second primary cancer among cancer survivors in Korea, and to compare these rates with those of two control groups: individuals without a history of cancer but with other chronic… 756887 comparison cancer screening practices survivors general population korean This study aimed to descri A comparison of cancer screening practices in cancer survivors and in the general population: the Korean national health and nutrition examination survey (KNHANES) 2001–2007 This study aimed to describe cancer screening rates for second primary cancer among cancer survivors in Korea, and to compare these rates with those of two control groups: individuals without a history of cancer but with other chronic diseases, and individuals without a history of cancer and without other chronic diseases. The study is a cross-sectional analysis of 15,556 adults ≥30 years old who participated in the 2001, 2005, and 2007 Korean National Health and Nutrition Examination Surveys (KNHANES). The prevalence of breast, cervical, gastric, and colorectal cancer screening examinations according to national guide",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.692286+00:00"
+}

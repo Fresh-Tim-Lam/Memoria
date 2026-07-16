@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "32556431",
+  "source_fingerprint": "7b5e6706ebfbedae881f56eeaca22438",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "32556431",
+    "virus-encoded-micrornas."
+  ],
+  "key_phrases": [
+    "virus",
+    "encoded",
+    "micrornas",
+    "mirnas",
+    "subject",
+    "enormous",
+    "interest",
+    "they"
+  ],
+  "summary_1l": "Virus-encoded microRNAs.",
+  "query_hits": [],
+  "embed_text": "32556431 Virus-encoded microRNAs. science scifact MicroRNAs (miRNAs) are the subject of enormous interest. They are small non-coding RNAs that play a regulatory role in numerous and diverse cellular processes such as immune function, apoptosis and tumorigenesis. Several virus families… 32556431 virus-encoded-micrornas. virus encoded micrornas mirnas subject enormous interest they Virus-encoded microRNAs. Virus-encoded microRNAs. MicroRNAs (miRNAs) are the subject of enormous interest. They are small non-coding RNAs that play a regulatory role in numerous and diverse cellular processes such as immune function, apoptosis and tumorigenesis. Several virus families have been shown to encode miRNAs, and an appreciation for their roles in the viral infectious cycle continues to grow. Despite the identification of numerous (>225) viral miRNAs, an in depth functional understanding of most virus-encoded miRNAs is lacking. Here we focus on a few viral miRNAs with well-defined functions. We use these examples to extrapolate general themes of viral miRNA activities including autoregulation of viral gene expression, avoidance of host defenses, and a likely important role in maintaining latent and persis",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.663468+00:00"
+}

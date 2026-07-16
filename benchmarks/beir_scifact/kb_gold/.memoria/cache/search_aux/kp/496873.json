@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "496873",
+  "source_fingerprint": "be35bc4da4d1bb50aaae609ad1c580d6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "496873",
+    "critical-review-cutaneous-vasculitis-update:-diagnostic-criteria,"
+  ],
+  "key_phrases": [
+    "critical",
+    "review",
+    "cutaneous",
+    "vasculitis",
+    "update",
+    "diagnostic",
+    "criteria",
+    "inflammation"
+  ],
+  "summary_1l": "Vasculitis, inflammation of the vessel wall, can result in mural destruction with hemorrhage, aneurysm formation, and infarction, or i",
+  "query_hits": [],
+  "embed_text": "496873 CRITICAL REVIEW Cutaneous Vasculitis Update: Diagnostic Criteria, science scifact Vasculitis, inflammation of the vessel wall, can result in mural destruction with hemorrhage, aneurysm formation, and infarction, or intimal-medial hyperplasia and subsequent stenosis leading to tissue ischemia. The skin, in part due to… 496873 critical-review-cutaneous-vasculitis-update:-diagnostic-criteria, critical review cutaneous vasculitis update diagnostic criteria inflammation Vasculitis, inflammation of the vessel wall, can result in mural destruction with hemorrhage, aneurysm formation, and infarction, or i CRITICAL REVIEW Cutaneous Vasculitis Update: Diagnostic Criteria, Vasculitis, inflammation of the vessel wall, can result in mural destruction with hemorrhage, aneurysm formation, and infarction, or intimal-medial hyperplasia and subsequent stenosis leading to tissue ischemia. The skin, in part due to its large vascular bed, exposure to cold temperatures, and frequent presence of stasis, is involved in many distinct as well as un-named vasculitic syndromes that vary from localized and self-limited to generalized and life-threatening with multi-organ disease. To exclude mimics of vasculitis, diagnosis of cutaneous vasculitis requires biopsy confirmation where its acute signs (fibrinoid necrosis), chronic signs (endarteritis obliterans), or past signs (acellular scar of healed arteritis) mus",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.920111+00:00"
+}

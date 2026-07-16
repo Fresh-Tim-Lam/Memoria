@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "30303335",
+  "source_fingerprint": "2514a961d2fe07a74a1e92b01a83b4ec",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "30303335",
+    "control-of-nfat-isoform-activation-and-nfat-dependent-gene-expression-through-two-coincident-and-spatially-segregated-intracellular-ca2+-signals"
+  ],
+  "key_phrases": [
+    "control",
+    "nfat",
+    "isoform",
+    "activation",
+    "dependent",
+    "gene",
+    "expression",
+    "through"
+  ],
+  "summary_1l": "Excitation-transcription coupling, linking stimulation",
+  "query_hits": [],
+  "embed_text": "30303335 Control of NFAT Isoform Activation and NFAT-Dependent Gene Expression through Two Coincident and Spatially Segregated Intracellular Ca2+ Signals science scifact Excitation-transcription coupling, linking stimulation at the cell surface to changes in nuclear gene expression, is conserved throughout eukaryotes. How closely related coexpressed transcription factors are differentially activated… 30303335 control-of-nfat-isoform-activation-and-nfat-dependent-gene-expression-through-two-coincident-and-spatially-segregated-intracellular-ca2+-signals control nfat isoform activation dependent gene expression through Excitation-transcription coupling, linking stimulation Control of NFAT Isoform Activation and NFAT-Dependent Gene Expression through Two Coincident and Spatially Segregated Intracellular Ca2+ Signals Excitation-transcription coupling, linking stimulation at the cell surface to changes in nuclear gene expression, is conserved throughout eukaryotes. How closely related coexpressed transcription factors are differentially activated remains unclear. Here, we show that two Ca2+-dependent transcription factor isoforms, NFAT1 and NFAT4, require distinct sub-cellular InsP3 and Ca2+ signals for physiologically sustained activation. NFAT1 is stimulated by sub-plasmalemmal Ca2+ microdomains, whereas NFAT4 additionally requires Ca2+ mobilization from the inner nuclear envelope by nuclear InsP3 receptors. NFAT1 is rephosphorylated (deactivated) more slowly",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:12.842934+00:00"
+}

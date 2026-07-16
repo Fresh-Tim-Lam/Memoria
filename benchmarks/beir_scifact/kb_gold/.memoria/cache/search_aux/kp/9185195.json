@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9185195",
+  "source_fingerprint": "8c9207fcded7c49b7efead2e9f47d7df",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9185195",
+    "arno-regulates-vegf-dependent-tissue-responses-by-stabilizing-endothelial-vegfr-2-surface-expression."
+  ],
+  "key_phrases": [
+    "arno",
+    "regulates",
+    "vegf",
+    "dependent",
+    "tissue",
+    "responses",
+    "by",
+    "stabilizing"
+  ],
+  "summary_1l": "ARNO regulates VEGF-dependent tissue responses by stabilizing endothelial VEGFR-2 surface expression.",
+  "query_hits": [],
+  "embed_text": "9185195 ARNO regulates VEGF-dependent tissue responses by stabilizing endothelial VEGFR-2 surface expression. science scifact AIMS The vascular endothelial growth factor (VEGF) stimulates angiogenesis by induction of vessel permeability, proliferation, and migration of endothelial cells, an important process in ischaemic diseases. ADP-ribosylation factor (ARF)… 9185195 arno-regulates-vegf-dependent-tissue-responses-by-stabilizing-endothelial-vegfr-2-surface-expression. arno regulates vegf dependent tissue responses by stabilizing ARNO regulates VEGF-dependent tissue responses by stabilizing endothelial VEGFR-2 surface expression. ARNO regulates VEGF-dependent tissue responses by stabilizing endothelial VEGFR-2 surface expression. AIMS The vascular endothelial growth factor (VEGF) stimulates angiogenesis by induction of vessel permeability, proliferation, and migration of endothelial cells, an important process in ischaemic diseases. ADP-ribosylation factor (ARF) nucleotide-binding site opener (ARNO) (cytohesin-2) is a guanine exchange factor important for cellular signalling through ARF GTPases. However, a role for ARNO in VEGF-dependent endothelial processes has so far not been documented. Therefore, we investigated whether ARNO has a role in VEGF-dependent activation of endothelial cells and thus vessel permeability. METHODS AND RESULTS ARNO expression was observed in endothelial cells in vitro by RT-PCR, western",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.362116+00:00"
+}

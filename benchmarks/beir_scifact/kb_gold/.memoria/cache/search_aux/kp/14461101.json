@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14461101",
+  "source_fingerprint": "bccc5b0f2b4f648a2a2201c80500e889",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14461101",
+    "tyrosine-phosphorylated-caveolin-1-blocks-bacterial-uptake-by-inducing-vav2-rhoa-mediated-cytoskeletal-rearrangements"
+  ],
+  "key_phrases": [
+    "tyrosine",
+    "phosphorylated",
+    "caveolin",
+    "blocks",
+    "bacterial",
+    "uptake",
+    "by",
+    "inducing"
+  ],
+  "summary_1l": "Certain bacterial adhesins appear to promote a pathogen's extracellular lifestyle",
+  "query_hits": [],
+  "embed_text": "14461101 Tyrosine-Phosphorylated Caveolin-1 Blocks Bacterial Uptake by Inducing Vav2-RhoA-Mediated Cytoskeletal Rearrangements science scifact Certain bacterial adhesins appear to promote a pathogen's extracellular lifestyle rather than its entry into host cells. However, little is known about the stimuli elicited upon such pathogen host-cell interactions. Here, we report that… 14461101 tyrosine-phosphorylated-caveolin-1-blocks-bacterial-uptake-by-inducing-vav2-rhoa-mediated-cytoskeletal-rearrangements tyrosine phosphorylated caveolin blocks bacterial uptake by inducing Certain bacterial adhesins appear to promote a pathogen's extracellular lifestyle Tyrosine-Phosphorylated Caveolin-1 Blocks Bacterial Uptake by Inducing Vav2-RhoA-Mediated Cytoskeletal Rearrangements Certain bacterial adhesins appear to promote a pathogen's extracellular lifestyle rather than its entry into host cells. However, little is known about the stimuli elicited upon such pathogen host-cell interactions. Here, we report that type IV pili (Tfp)-producing Neisseria gonorrhoeae (P(+)GC) induces an immediate recruitment of caveolin-1 (Cav1) in the host cell, which subsequently prevents bacterial internalization by triggering cytoskeletal rearrangements via downstream phosphotyrosine signaling. A broad and unbiased analysis of potential interaction partners for tyrosine-phosphorylated Cav1 revealed a direct interaction with the Rho-family guanine nucleotide exchange",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.916614+00:00"
+}

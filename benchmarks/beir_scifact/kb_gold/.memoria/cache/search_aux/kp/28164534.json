@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "28164534",
+  "source_fingerprint": "fa24bb89c2c23ae1c313d262a075b411",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "28164534"
+  ],
+  "key_phrases": [
+    "enhancement",
+    "proteasome",
+    "function",
+    "by",
+    "pa28",
+    "overexpression",
+    "protects",
+    "against"
+  ],
+  "summary_1l": "Enhancement of proteasome function by PA28α overexpression protects against oxidative stress.",
+  "query_hits": [],
+  "embed_text": "28164534 Enhancement of proteasome function by PA28α overexpression protects against oxidative stress. science scifact The principal function of the proteasome is targeted degradation of intracellular proteins. Proteasome dysfunction has been observed in experimental cardiomyopathies and implicated in human congestive heart failure. Measures to enhance… 28164534 enhancement proteasome function by pa28 overexpression protects against Enhancement of proteasome function by PA28α overexpression protects against oxidative stress. Enhancement of proteasome function by PA28α overexpression protects against oxidative stress. The principal function of the proteasome is targeted degradation of intracellular proteins. Proteasome dysfunction has been observed in experimental cardiomyopathies and implicated in human congestive heart failure. Measures to enhance proteasome proteolytic function are currently lacking but would be beneficial in testing the pathogenic role of proteasome dysfunction and could have significant therapeutic potential. The association of proteasome activator 28 (PA28) with the 20S proteasome may play a role in antigen processing. It is unclear, however, whether the PA28 plays any important role outside of antigen presentation, although up-regulation of PA28 has been observed in certain types of card",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.624014+00:00"
+}

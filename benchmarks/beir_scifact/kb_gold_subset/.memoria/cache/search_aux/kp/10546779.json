@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10546779",
+  "source_fingerprint": "126795b9cf139c28864b1cff9008b25b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10546779",
+    "evidence-of-a-pluripotent-human-embryonic-stem-cell-line-derived-from-a-cloned-blastocyst."
+  ],
+  "key_phrases": [
+    "evidence",
+    "pluripotent",
+    "human",
+    "embryonic",
+    "stem",
+    "cell",
+    "line",
+    "derived"
+  ],
+  "summary_1l": "Evidence of a pluripotent human embryonic stem cell line derived from a cloned blastocyst.",
+  "query_hits": [],
+  "embed_text": "10546779 Evidence of a pluripotent human embryonic stem cell line derived from a cloned blastocyst. science scifact Somatic cell nuclear transfer (SCNT) technology has recently been used to generate animals with a common genetic composition. In this study, we report the derivation of a pluripotent embryonic stem (ES) cell line (SCNT-hES-1) from a cloned… 10546779 evidence-of-a-pluripotent-human-embryonic-stem-cell-line-derived-from-a-cloned-blastocyst. evidence pluripotent human embryonic stem cell line derived Evidence of a pluripotent human embryonic stem cell line derived from a cloned blastocyst. Evidence of a pluripotent human embryonic stem cell line derived from a cloned blastocyst. Somatic cell nuclear transfer (SCNT) technology has recently been used to generate animals with a common genetic composition. In this study, we report the derivation of a pluripotent embryonic stem (ES) cell line (SCNT-hES-1) from a cloned human blastocyst. The SCNT-hES-1 cells displayed typical ES cell morphology and cell surface markers and were capable of differentiating into embryoid bodies in vitro and of forming teratomas in vivo containing cell derivatives from all three embryonic germ layers in severe combined immunodeficient mice. After continuous proliferation for more than 70 passages, SCNT-hES-1 cells maintained normal karyotypes and were genetically identical to the somatic nuclear donor",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.676027+00:00"
+}

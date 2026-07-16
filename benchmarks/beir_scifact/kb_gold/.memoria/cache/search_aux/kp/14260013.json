@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14260013",
+  "source_fingerprint": "2a3e1b43b85a3669199c5e413726a84a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14260013",
+    "prevention-of-rectal-shiv-transmission-in-macaques-by-daily-or-intermittent-prophylaxis-with-emtricitabine-and-tenofovir"
+  ],
+  "key_phrases": [
+    "prevention",
+    "rectal",
+    "shiv",
+    "transmission",
+    "macaques",
+    "by",
+    "daily",
+    "intermittent"
+  ],
+  "summary_1l": "BACKGROUND In the absence of an effective vaccine, HIV continues to spread glob",
+  "query_hits": [],
+  "embed_text": "14260013 Prevention of Rectal SHIV Transmission in Macaques by Daily or Intermittent Prophylaxis with Emtricitabine and Tenofovir science scifact BACKGROUND In the absence of an effective vaccine, HIV continues to spread globally, emphasizing the need for novel strategies to limit its transmission. Pre-exposure prophylaxis (PrEP) with antiretroviral drugs could prove to be an… 14260013 prevention-of-rectal-shiv-transmission-in-macaques-by-daily-or-intermittent-prophylaxis-with-emtricitabine-and-tenofovir prevention rectal shiv transmission macaques by daily intermittent BACKGROUND In the absence of an effective vaccine, HIV continues to spread glob Prevention of Rectal SHIV Transmission in Macaques by Daily or Intermittent Prophylaxis with Emtricitabine and Tenofovir BACKGROUND In the absence of an effective vaccine, HIV continues to spread globally, emphasizing the need for novel strategies to limit its transmission. Pre-exposure prophylaxis (PrEP) with antiretroviral drugs could prove to be an effective intervention strategy if highly efficacious and cost-effective PrEP modalities are identified. We evaluated daily and intermittent PrEP regimens of increasing antiviral activity in a macaque model that closely resembles human transmission. METHODS AND FINDINGS We used a repeat-exposure macaque model with 14 weekly rectal virus challenges. Three drug treatments were given once daily, each to a different group of six rhesus macaques.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.434021+00:00"
+}

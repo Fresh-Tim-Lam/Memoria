@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19408393",
+  "source_fingerprint": "ba02b66eed1573c1c2b4ec337aec30ae",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19408393",
+    "value-of-whole-brain-re-irradiation-for-brain-metastases--single-centre-experience."
+  ],
+  "key_phrases": [
+    "value",
+    "whole",
+    "brain",
+    "re",
+    "irradiation",
+    "metastases",
+    "--",
+    "single"
+  ],
+  "summary_1l": "Value of whole brain re-irradiation for brain metastases--single centre experience.",
+  "query_hits": [],
+  "embed_text": "19408393 Value of whole brain re-irradiation for brain metastases--single centre experience. science scifact AIMS There is controversy in published studies regarding the role of repeat whole brain radiation (WBRT) for previously irradiated brain metastases. The aim of our retrospective study was to document the practice at Princess Margaret… 19408393 value-of-whole-brain-re-irradiation-for-brain-metastases--single-centre-experience. value whole brain re irradiation metastases -- single Value of whole brain re-irradiation for brain metastases--single centre experience. Value of whole brain re-irradiation for brain metastases--single centre experience. AIMS There is controversy in published studies regarding the role of repeat whole brain radiation (WBRT) for previously irradiated brain metastases. The aim of our retrospective study was to document the practice at Princess Margaret Hospital with respect to the re-irradiation of patients with progressive or recurrent brain metastatic disease after initial WBRT. MATERIALS AND METHODS A comprehensive computerised database was used to identify patients treated for brain metastases with more than one course of WBRT between 1997 and 2003. Seventy-two patients were treated with WBRT for brain metastases and retreated with WBRT at a later date. The records of these patients were reviewed. RESULTS The median age w",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.517932+00:00"
+}

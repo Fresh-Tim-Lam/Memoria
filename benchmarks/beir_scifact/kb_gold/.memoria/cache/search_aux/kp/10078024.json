@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10078024",
+  "source_fingerprint": "3bedc26cd81d94db60e52e8403249804",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10078024",
+    "leptin-receptor-expressing-mesenchymal-stromal-cells-represent-the-main-source-of-bone-formed-by-adult-bone-marrow."
+  ],
+  "key_phrases": [
+    "leptin",
+    "receptor",
+    "expressing",
+    "mesenchymal",
+    "stromal",
+    "cells",
+    "represent",
+    "main"
+  ],
+  "summary_1l": "Leptin-receptor-expressing mesenchymal stromal cells represent the main source of bone formed by adult bone marrow.",
+  "query_hits": [],
+  "embed_text": "10078024 Leptin-receptor-expressing mesenchymal stromal cells represent the main source of bone formed by adult bone marrow. science scifact Studies of the identity and physiological function of mesenchymal stromal cells (MSCs) have been hampered by a lack of markers that permit both prospective identification and fate mapping in vivo. We found that Leptin Receptor (LepR) is a… 10078024 leptin-receptor-expressing-mesenchymal-stromal-cells-represent-the-main-source-of-bone-formed-by-adult-bone-marrow. leptin receptor expressing mesenchymal stromal cells represent main Leptin-receptor-expressing mesenchymal stromal cells represent the main source of bone formed by adult bone marrow. Leptin-receptor-expressing mesenchymal stromal cells represent the main source of bone formed by adult bone marrow. Studies of the identity and physiological function of mesenchymal stromal cells (MSCs) have been hampered by a lack of markers that permit both prospective identification and fate mapping in vivo. We found that Leptin Receptor (LepR) is a marker that highly enriches bone marrow MSCs. Approximately 0.3% of bone marrow cells were LepR(+) , 10% of which were CFU-Fs, accounting for 94% of bone marrow CFU-Fs. LepR(+) cells formed bone, cartilage, and adipocytes in culture and upon transplantation in vivo. LepR(+) cells were Scf-GFP(+), Cxcl12-DsRed(high), and Nestin-GFP(low), markers which also highly enriched CFU-Fs, but negative for Nestin-CreER and NG2-CreER, markers which were",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T12:33:56.238255+00:00"
+}

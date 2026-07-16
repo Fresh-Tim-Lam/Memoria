@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1754001",
+  "source_fingerprint": "a22eb739105cb99f6c8f37b84e5c918d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1754001",
+    "yeast-sirtuins-and-the-regulation-of-aging."
+  ],
+  "key_phrases": [
+    "yeast",
+    "sirtuins",
+    "regulation",
+    "aging",
+    "phylogenetically",
+    "conserved",
+    "family",
+    "nad"
+  ],
+  "summary_1l": "Yeast sirtuins and the regulation of aging.",
+  "query_hits": [],
+  "embed_text": "1754001 Yeast sirtuins and the regulation of aging. science scifact The sirtuins are a phylogenetically conserved family of NAD(+) -dependent protein deacetylases that consume one molecule of NAD(+) for every deacetylated lysine side chain. Their requirement for NAD(+) potentially makes them prone to… 1754001 yeast-sirtuins-and-the-regulation-of-aging. yeast sirtuins regulation aging phylogenetically conserved family nad Yeast sirtuins and the regulation of aging. Yeast sirtuins and the regulation of aging. The sirtuins are a phylogenetically conserved family of NAD(+) -dependent protein deacetylases that consume one molecule of NAD(+) for every deacetylated lysine side chain. Their requirement for NAD(+) potentially makes them prone to regulation by fluctuations in NAD(+) or biosynthesis intermediates, thus linking them to cellular metabolism. The Sir2 protein from Saccharomyces cerevisiae is the founding sirtuin family member and has been well characterized as a histone deacetylase that functions in transcriptional silencing of heterochromatin domains and as a pro-longevity factor for replicative life span (RLS), defined as the number of times a mother cell divides (buds) before senescing. Deleting SIR2 shortens RLS, while increased gene dosage ca",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.906825+00:00"
+}

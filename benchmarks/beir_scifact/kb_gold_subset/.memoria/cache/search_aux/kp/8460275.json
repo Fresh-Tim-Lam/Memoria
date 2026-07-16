@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8460275",
+  "source_fingerprint": "2e02448eb63f47d47e0749e46d77577d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8460275",
+    "the-utilization-of-extracellular-proteins-as-nutrients-is-suppressed-by-mtorc1"
+  ],
+  "key_phrases": [
+    "utilization",
+    "extracellular",
+    "proteins",
+    "as",
+    "nutrients",
+    "suppressed",
+    "by",
+    "mtorc1"
+  ],
+  "summary_1l": "Despite being surrounded by diverse nutrients, mammalian cells preferentially metabolize glucose and free amino acids.",
+  "query_hits": [],
+  "embed_text": "8460275 The Utilization of Extracellular Proteins as Nutrients Is Suppressed by mTORC1 science scifact Despite being surrounded by diverse nutrients, mammalian cells preferentially metabolize glucose and free amino acids. Recently, Ras-induced macropinocytosis of extracellular proteins was shown to reduce a transformed cell's dependence on… 8460275 the-utilization-of-extracellular-proteins-as-nutrients-is-suppressed-by-mtorc1 utilization extracellular proteins as nutrients suppressed by mtorc1 Despite being surrounded by diverse nutrients, mammalian cells preferentially metabolize glucose and free amino acids. The Utilization of Extracellular Proteins as Nutrients Is Suppressed by mTORC1 Despite being surrounded by diverse nutrients, mammalian cells preferentially metabolize glucose and free amino acids. Recently, Ras-induced macropinocytosis of extracellular proteins was shown to reduce a transformed cell's dependence on extracellular glutamine. Here, we demonstrate that protein macropinocytosis can also serve as an essential amino acid source. Lysosomal degradation of extracellular proteins can sustain cell survival and induce activation of mTORC1 but fails to elicit significant cell accumulation. Unlike its growth-promoting activity under amino-acid-replete conditions, we discovered that mTORC1 activation suppresses proliferation when cells rely on extracellular proteins as an amino acid sour",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:13.957562+00:00"
+}

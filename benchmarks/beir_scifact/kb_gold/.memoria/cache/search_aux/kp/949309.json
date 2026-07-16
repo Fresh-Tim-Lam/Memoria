@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "949309",
+  "source_fingerprint": "f267791aa3d40c1833013a7ab6578737",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "949309",
+    "electroporation-of-cas9-protein/sgrna-into-early-pronuclear-zygotes-generates-non-mosaic-mutants-in-the-mouse."
+  ],
+  "key_phrases": [
+    "electroporation",
+    "cas9",
+    "protein",
+    "sgrna",
+    "into",
+    "early",
+    "pronuclear",
+    "zygotes"
+  ],
+  "summary_1l": "Electroporation of Cas9 protein/sgRNA into early pronuclear zygotes generates non-mosaic mutants in the mouse.",
+  "query_hits": [],
+  "embed_text": "949309 Electroporation of Cas9 protein/sgRNA into early pronuclear zygotes generates non-mosaic mutants in the mouse. science scifact The CRISPR/Cas9 system is a powerful tool for elucidating the roles of genes in a wide variety of organisms including mice. To obtain genetically modified embryos or mice by this method, Cas9 mRNA and sgRNA are usually introduced into… 949309 electroporation-of-cas9-protein/sgrna-into-early-pronuclear-zygotes-generates-non-mosaic-mutants-in-the-mouse. electroporation cas9 protein sgrna into early pronuclear zygotes Electroporation of Cas9 protein/sgRNA into early pronuclear zygotes generates non-mosaic mutants in the mouse. Electroporation of Cas9 protein/sgRNA into early pronuclear zygotes generates non-mosaic mutants in the mouse. The CRISPR/Cas9 system is a powerful tool for elucidating the roles of genes in a wide variety of organisms including mice. To obtain genetically modified embryos or mice by this method, Cas9 mRNA and sgRNA are usually introduced into zygotes by microinjection or electroporation. However, most mutants generated with this method are genetically mosaic, composed of several types of cells carrying different mutations, which complicates phenotype analysis in founder embryos or mice. To simplify the analysis and to elucidate the roles of genes involved in developmental processes, a method for producing non-mosaic mutants is needed. Here, we established a method for generating non-mosai",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.019948+00:00"
+}

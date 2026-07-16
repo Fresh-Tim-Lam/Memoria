@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "35684881",
+  "source_fingerprint": "182901c768cf52c039d8ed07f36e49ce",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "35684881",
+    "`gain-of-function'-phenotype-of-tumor-derived-mutant-p53-requires-the-oligomerization/nonsequence-specific-nucleic-acid-binding-domain"
+  ],
+  "key_phrases": [
+    "gain",
+    "function",
+    "phenotype",
+    "tumor",
+    "derived",
+    "mutant",
+    "p53",
+    "requires"
+  ],
+  "summary_1l": "Tumor-derived p53 mutants can transcriptionally activate a number",
+  "query_hits": [],
+  "embed_text": "35684881 `Gain of function' phenotype of tumor-derived mutant p53 requires the oligomerization/nonsequence-specific nucleic acid-binding domain science scifact Tumor-derived p53 mutants can transcriptionally activate a number of promoters of genes involved in cellular proliferation. For this transactivation, mutant p53 does not use the wild-type p53 DNA-binding site, suggesting a mechanism of… 35684881 `gain-of-function'-phenotype-of-tumor-derived-mutant-p53-requires-the-oligomerization/nonsequence-specific-nucleic-acid-binding-domain gain function phenotype tumor derived mutant p53 requires Tumor-derived p53 mutants can transcriptionally activate a number `Gain of function' phenotype of tumor-derived mutant p53 requires the oligomerization/nonsequence-specific nucleic acid-binding domain Tumor-derived p53 mutants can transcriptionally activate a number of promoters of genes involved in cellular proliferation. For this transactivation, mutant p53 does not use the wild-type p53 DNA-binding site, suggesting a mechanism of transactivation that is independent of direct DNA binding. Here we describe our analysis of the domain requirements for mutant p53 to transactivate promoters of the human epidermal growth factor receptor (EGFR), human multiple drug resistance 1 (MDR-1) and human proliferating cell nuclear antigen (PCNA) genes. We also report the identification of a structural domain required for the `gain of function' property of mutant p53-2",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.499817+00:00"
+}

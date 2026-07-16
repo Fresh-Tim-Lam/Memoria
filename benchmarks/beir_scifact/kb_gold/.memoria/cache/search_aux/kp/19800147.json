@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19800147",
+  "source_fingerprint": "f16054e3dcae3a0ada82fee0feba976a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19800147",
+    "mvp-mediated-exosomal-sorting-of-mir-193a-promotes-colon-cancer-progression"
+  ],
+  "key_phrases": [
+    "mvp",
+    "mediated",
+    "exosomal",
+    "sorting",
+    "mir",
+    "193a",
+    "promotes",
+    "colon"
+  ],
+  "summary_1l": "Exosomes are emerging mediators of intercellular communication; whether the release of exosomes has an effect on the exosome",
+  "query_hits": [],
+  "embed_text": "19800147 MVP-mediated exosomal sorting of miR-193a promotes colon cancer progression science scifact Exosomes are emerging mediators of intercellular communication; whether the release of exosomes has an effect on the exosome donor cells in addition to the recipient cells has not been investigated to any extent. Here, we examine different… 19800147 mvp-mediated-exosomal-sorting-of-mir-193a-promotes-colon-cancer-progression mvp mediated exosomal sorting mir 193a promotes colon Exosomes are emerging mediators of intercellular communication; whether the release of exosomes has an effect on the exosome MVP-mediated exosomal sorting of miR-193a promotes colon cancer progression Exosomes are emerging mediators of intercellular communication; whether the release of exosomes has an effect on the exosome donor cells in addition to the recipient cells has not been investigated to any extent. Here, we examine different exosomal miRNA expression profiles in primary mouse colon tumour, liver metastasis of colon cancer and naive colon tissues. In more advanced disease, higher levels of tumour suppressor miRNAs are encapsulated in the exosomes. miR-193a interacts with major vault protein (MVP). Knockout of MVP leads to miR-193a accumulation in the exosomal donor cells instead of exosomes, inhibiting tumour progression. Furthermore, miR-193a causes cell cycle G1 arrest and cell proliferation repress",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.178945+00:00"
+}

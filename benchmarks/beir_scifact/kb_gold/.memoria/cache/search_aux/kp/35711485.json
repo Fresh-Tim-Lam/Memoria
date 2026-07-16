@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "35711485",
+  "source_fingerprint": "6818cdf1f8573da9fcfdc1979248bf8f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "35711485",
+    "banana-contains-a-diverse-array-of-endogenous-badnaviruses."
+  ],
+  "key_phrases": [
+    "banana",
+    "contains",
+    "diverse",
+    "array",
+    "endogenous",
+    "badnaviruses",
+    "streak",
+    "disease"
+  ],
+  "summary_1l": "Banana contains a diverse array of endogenous badnaviruses.",
+  "query_hits": [],
+  "embed_text": "35711485 Banana contains a diverse array of endogenous badnaviruses. science scifact Banana streak disease is caused by several distinct badnavirus species, one of which is Banana streak Obino l'Ewai virus. Banana streak Obino l'Ewai virus has severely hindered international banana (Musa spp.) breeding programmes, as new… 35711485 banana-contains-a-diverse-array-of-endogenous-badnaviruses. banana contains diverse array endogenous badnaviruses streak disease Banana contains a diverse array of endogenous badnaviruses. Banana contains a diverse array of endogenous badnaviruses. Banana streak disease is caused by several distinct badnavirus species, one of which is Banana streak Obino l'Ewai virus. Banana streak Obino l'Ewai virus has severely hindered international banana (Musa spp.) breeding programmes, as new hybrids are frequently infected with this virus, curtailing any further exploitation. This infection is thought to arise from viral DNA integrated in the nuclear genome of Musa balbisiana (B genome), one of the wild species contributing to many of the banana cultivars currently grown. In order to determine whether the DNA of other badnavirus species is integrated in the Musa genome, PCR-amplified DNA fragments from Musa acuminata, M. balbisiana and Musa schizocarpa, as well as cultivars 'Obino l'E",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.511919+00:00"
+}

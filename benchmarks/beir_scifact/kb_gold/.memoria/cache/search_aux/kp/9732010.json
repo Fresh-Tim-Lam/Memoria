@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9732010",
+  "source_fingerprint": "5d54743bd8dc11ffffee0b94b417bf8e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9732010",
+    "roles-of-histone-acetylation-and-chromatin-remodeling-factor-in-a-meiotic-recombination-hotspot."
+  ],
+  "key_phrases": [
+    "roles",
+    "histone",
+    "acetylation",
+    "chromatin",
+    "remodeling",
+    "factor",
+    "meiotic",
+    "recombination"
+  ],
+  "summary_1l": "Roles of histone acetylation and chromatin remodeling factor in a meiotic recombination hotspot.",
+  "query_hits": [],
+  "embed_text": "9732010 Roles of histone acetylation and chromatin remodeling factor in a meiotic recombination hotspot. science scifact Histone acetyltransferases (HATs) and ATP-dependent chromatin remodeling factors (ADCRs) are involved in selective gene regulation via modulation of local chromatin configuration. Activation of the recombination hotspot ade6-M26 of… 9732010 roles-of-histone-acetylation-and-chromatin-remodeling-factor-in-a-meiotic-recombination-hotspot. roles histone acetylation chromatin remodeling factor meiotic recombination Roles of histone acetylation and chromatin remodeling factor in a meiotic recombination hotspot. Roles of histone acetylation and chromatin remodeling factor in a meiotic recombination hotspot. Histone acetyltransferases (HATs) and ATP-dependent chromatin remodeling factors (ADCRs) are involved in selective gene regulation via modulation of local chromatin configuration. Activation of the recombination hotspot ade6-M26 of Schizosaccharomyces pombe is mediated by a cAMP responsive element (CRE)-like sequence, M26, and a heterodimeric ATF/CREB transcription factor, Atf1.Pcr1. Chromatin remodeling occurs meiotically around M26. We examined the roles of HATs and ADCRs in chromatin remodeling around M26. Histones H3 and H4 around M26 were hyperacetylated in an M26- and Atf1-dependent manner early in meiosis. SpGcn5, the S. pombe homolog of Gcn5p, was required for the majority of histone H3",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.653186+00:00"
+}

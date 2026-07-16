@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27373088",
+  "source_fingerprint": "da9a1c23fbe29f2e815cf19d3aa2be68",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27373088",
+    "substrate-requirements-for-ermc'-methyltransferase-activity."
+  ],
+  "key_phrases": [
+    "substrate",
+    "requirements",
+    "ermc",
+    "methyltransferase",
+    "activity",
+    "that",
+    "confers",
+    "resistance"
+  ],
+  "summary_1l": "Substrate requirements for ErmC' methyltransferase activity.",
+  "query_hits": [],
+  "embed_text": "27373088 Substrate requirements for ErmC' methyltransferase activity. science scifact ErmC' is a methyltransferase that confers resistance to the macrolide-lincosamide-streptogramin B group of antibiotics by catalyzing the methylation of 23S rRNA at a specific adenine residue (A-2085 in Bacillus subtilis; A-2058 in… 27373088 substrate-requirements-for-ermc'-methyltransferase-activity. substrate requirements ermc methyltransferase activity that confers resistance Substrate requirements for ErmC' methyltransferase activity. Substrate requirements for ErmC' methyltransferase activity. ErmC' is a methyltransferase that confers resistance to the macrolide-lincosamide-streptogramin B group of antibiotics by catalyzing the methylation of 23S rRNA at a specific adenine residue (A-2085 in Bacillus subtilis; A-2058 in Escherichia coli). The gene for ErmC' was cloned and expressed to a high level in E. coli, and the protein was purified to virtual homogeneity. Studies of substrate requirements of ErmC' have shown that a 262-nucleotide RNA fragment within domain V of B. subtilis 23S rRNA can be utilized efficiently as a substrate for methylation at A-2085. Kinetic studies of the monomethylation reaction showed that the apparent Km of this 262-nucleotide RNA oligonucleotide was 26-fold greater than the value determined",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.802550+00:00"
+}

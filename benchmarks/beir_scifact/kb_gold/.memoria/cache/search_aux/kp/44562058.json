@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "44562058",
+  "source_fingerprint": "e303f64239d82baa6710c641acaa99e5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "44562058",
+    "immune-activation-and-hiv-persistence:-implications-for-curative-approaches-to-hiv-infection."
+  ],
+  "key_phrases": [
+    "immune",
+    "activation",
+    "hiv",
+    "persistence",
+    "implications",
+    "curative",
+    "approaches",
+    "infection"
+  ],
+  "summary_1l": "Immune activation and HIV persistence: implications for curative approaches to HIV infection.",
+  "query_hits": [],
+  "embed_text": "44562058 Immune activation and HIV persistence: implications for curative approaches to HIV infection. science scifact Despite complete or near-complete suppression of human immunodeficiency virus (HIV) replication with combination antiretroviral therapy, both HIV and chronic inflammation/immune dysfunction persist indefinitely. Untangling the association… 44562058 immune-activation-and-hiv-persistence:-implications-for-curative-approaches-to-hiv-infection. immune activation hiv persistence implications curative approaches infection Immune activation and HIV persistence: implications for curative approaches to HIV infection. Immune activation and HIV persistence: implications for curative approaches to HIV infection. Despite complete or near-complete suppression of human immunodeficiency virus (HIV) replication with combination antiretroviral therapy, both HIV and chronic inflammation/immune dysfunction persist indefinitely. Untangling the association between the virus and the host immune environment during therapy might lead to novel interventions aimed at either curing the infection or preventing the development of inflammation-associated end-organ disease. Chronic inflammation and immune dysfunction might lead to HIV persistence by causing virus production, generating new target cells, enabling infecting of activated and resting target cells, altering the migration patterns of susceptible target cells, incr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.475273+00:00"
+}

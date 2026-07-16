@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7583725",
+  "source_fingerprint": "ff5e9447d78590a9af253a03dc788300",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7583725",
+    "trpm7-is-required-for-breast-tumor-cell-metastasis."
+  ],
+  "key_phrases": [
+    "trpm7",
+    "required",
+    "breast",
+    "tumor",
+    "cell",
+    "metastasis",
+    "encodes",
+    "ca2"
+  ],
+  "summary_1l": "TRPM7 is required for breast tumor cell metastasis.",
+  "query_hits": [],
+  "embed_text": "7583725 TRPM7 is required for breast tumor cell metastasis. science scifact TRPM7 encodes a Ca2+-permeable nonselective cation channel with kinase activity. TRPM7 has been implicated in control of cell adhesion and migration, but whether TRPM7 activity contributes to cancer progression has not been established.… 7583725 trpm7-is-required-for-breast-tumor-cell-metastasis. trpm7 required breast tumor cell metastasis encodes ca2 TRPM7 is required for breast tumor cell metastasis. TRPM7 is required for breast tumor cell metastasis. TRPM7 encodes a Ca2+-permeable nonselective cation channel with kinase activity. TRPM7 has been implicated in control of cell adhesion and migration, but whether TRPM7 activity contributes to cancer progression has not been established. Here we report that high levels of TRPM7 expression independently predict poor outcome in breast cancer patients and that it is functionally required for metastasis formation in a mouse xenograft model of human breast cancer. Mechanistic investigation revealed that TRPM7 regulated myosin II-based cellular tension, thereby modifying focal adhesion number, cell-cell adhesion and polarized cell movement. Our findings therefore suggest that TRPM7 is part of a mechanosensory complex adopted by cancer cells to d",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.741378+00:00"
+}

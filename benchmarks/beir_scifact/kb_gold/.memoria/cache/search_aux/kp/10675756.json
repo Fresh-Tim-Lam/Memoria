@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10675756",
+  "source_fingerprint": "c5677813113d4209dc101a5d38cac168",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10675756",
+    "related-iga1-and-igg-producing-cells-in-blood-and-diseased-mucosa-in-ulcerative-colitis."
+  ],
+  "key_phrases": [
+    "related",
+    "iga1",
+    "igg",
+    "producing",
+    "cells",
+    "blood",
+    "diseased",
+    "mucosa"
+  ],
+  "summary_1l": "Related IgA1 and IgG producing cells in blood and diseased mucosa in ulcerative colitis.",
+  "query_hits": [],
+  "embed_text": "10675756 Related IgA1 and IgG producing cells in blood and diseased mucosa in ulcerative colitis. science scifact BACKGROUND Ulcerative colitis (UC) is a chronic inflammatory bowel disease in which the colonic mucosa is infiltrated with plasma cells producing IgG autoantibodies. It is not known whether this represents a local mucosal response which… 10675756 related-iga1-and-igg-producing-cells-in-blood-and-diseased-mucosa-in-ulcerative-colitis. related iga1 igg producing cells blood diseased mucosa Related IgA1 and IgG producing cells in blood and diseased mucosa in ulcerative colitis. Related IgA1 and IgG producing cells in blood and diseased mucosa in ulcerative colitis. BACKGROUND Ulcerative colitis (UC) is a chronic inflammatory bowel disease in which the colonic mucosa is infiltrated with plasma cells producing IgG autoantibodies. It is not known whether this represents a local mucosal response which has switched to IgG or a peripheral response which may have been initiated by peripheral antigen which homed to the colonic mucosa. The clonal distribution of IgG secreting cells and isotype switched variants in UC is not known. AIMS To investigate the clonal distribution of mucosal IgG in UC and to search for related IgG and IgA secreting cells in normal and diseased mucosa and blood in UC. To investigate characteristics which may discriminate between the mucosal and p",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:05.284216+00:00"
+}

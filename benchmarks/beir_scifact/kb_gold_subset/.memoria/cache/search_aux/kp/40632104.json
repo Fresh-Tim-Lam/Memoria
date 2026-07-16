@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "40632104",
+  "source_fingerprint": "11e276b1a4a020c3908313bc95e9b730",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "40632104",
+    "dual-role-of-the-il-12/ifn-gamma-axis-in-the-development-of-autoimmune-myocarditis:-induction-by-il-12-and-protection-by-ifn-gamma."
+  ],
+  "key_phrases": [
+    "dual",
+    "role",
+    "il",
+    "12",
+    "ifn",
+    "gamma",
+    "axis",
+    "development"
+  ],
+  "summary_1l": "Dual role of the IL-12/IFN-gamma axis in the development of autoimmune myocarditis: induction by IL-12 and protection by IFN-gamma.",
+  "query_hits": [],
+  "embed_text": "40632104 Dual role of the IL-12/IFN-gamma axis in the development of autoimmune myocarditis: induction by IL-12 and protection by IFN-gamma. science scifact IL-12 and IFN-gamma positively regulate each other and type 1 inflammatory responses, which are believed to cause tissue damage in autoimmune diseases. We investigated the role of the IL-12/IFN-gamma (Th1) axis in the development of… 40632104 dual-role-of-the-il-12/ifn-gamma-axis-in-the-development-of-autoimmune-myocarditis:-induction-by-il-12-and-protection-by-ifn-gamma. dual role il 12 ifn gamma axis development Dual role of the IL-12/IFN-gamma axis in the development of autoimmune myocarditis: induction by IL-12 and protection by IFN-gamma. Dual role of the IL-12/IFN-gamma axis in the development of autoimmune myocarditis: induction by IL-12 and protection by IFN-gamma. IL-12 and IFN-gamma positively regulate each other and type 1 inflammatory responses, which are believed to cause tissue damage in autoimmune diseases. We investigated the role of the IL-12/IFN-gamma (Th1) axis in the development of autoimmune myocarditis. IL-12p40-deficient mice on a susceptible background resisted myocarditis. In the absence of IL-12, autospecific CD4(+) T cells proliferated poorly and showed increased Th2 cytokine responses. However, IFN-gamma-deficient mice developed fatal autoimmune disease, and blockade of IL-4R signaling did not confer susceptibility to myocarditis in IL-12p40-deficient mice, demonstrating that IL-12 triggers autoimmuni",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:13.242454+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "39059143",
+  "source_fingerprint": "c9a554a606a2c12633d24b04fe5d32ce",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "39059143",
+    "hospital-mortality,-length-of-stay,-and-preventable-complications-among-critically-ill-patients-before-and-after-tele-icu-reengineering-of-critical-care-processes."
+  ],
+  "key_phrases": [
+    "hospital",
+    "mortality",
+    "length",
+    "stay",
+    "preventable",
+    "complications",
+    "among",
+    "critically"
+  ],
+  "summary_1l": "Hospital mortality, length of stay, and preventable complications among critically ill patients before and after tele-ICU reengineering of critical care processes.",
+  "query_hits": [],
+  "embed_text": "39059143 Hospital mortality, length of stay, and preventable complications among critically ill patients before and after tele-ICU reengineering of critical care processes. science scifact CONTEXT The association of an adult tele-intensive care unit (ICU) intervention with hospital mortality, length of stay, best practice adherence, and preventable complications for an academic medical center has not been reported. OBJECTIVE… 39059143 hospital-mortality,-length-of-stay,-and-preventable-complications-among-critically-ill-patients-before-and-after-tele-icu-reengineering-of-critical-care-processes. hospital mortality length stay preventable complications among critically Hospital mortality, length of stay, and preventable complications among critically ill patients before and after tele-ICU reengineering of critical care processes. Hospital mortality, length of stay, and preventable complications among critically ill patients before and after tele-ICU reengineering of critical care processes. CONTEXT The association of an adult tele-intensive care unit (ICU) intervention with hospital mortality, length of stay, best practice adherence, and preventable complications for an academic medical center has not been reported. OBJECTIVE To quantify the association of a tele-ICU intervention with hospital mortality, length of stay, and complications that are preventable by adherence to best practices. DESIGN, SETTING, AND PATIENTS Prospective stepped-wedge clinical practice study of 6290 adults admitted to any of 7 ICUs (3 medical, 3 surgical, and 1 mixed cardiovascular) on 2 campuses of an 834-bed academic medical center that",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.237170+00:00"
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "4320424",
+  "source_fingerprint": "e30fe2f05edef0ea60aa402cc8fa852a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4320424"
+  ],
+  "key_phrases": [
+    "small",
+    "molecule",
+    "inhibition",
+    "kras",
+    "pde",
+    "interaction",
+    "impairs",
+    "oncogenic"
+  ],
+  "summary_1l": "The KRAS oncogene product is considered a major target in anticancer drug discovery.",
+  "query_hits": [],
+  "embed_text": "4320424 Small molecule inhibition of the KRAS–PDEδ interaction impairs oncogenic KRAS signalling science scifact The KRAS oncogene product is considered a major target in anticancer drug discovery. However, direct interference with KRAS signalling has not yet led to clinically useful drugs. Correct localization and signalling by farnesylated KRAS is… 4320424 small molecule inhibition kras pde interaction impairs oncogenic The KRAS oncogene product is considered a major target in anticancer drug discovery. Small molecule inhibition of the KRAS–PDEδ interaction impairs oncogenic KRAS signalling The KRAS oncogene product is considered a major target in anticancer drug discovery. However, direct interference with KRAS signalling has not yet led to clinically useful drugs. Correct localization and signalling by farnesylated KRAS is regulated by the prenyl-binding protein PDEδ, which sustains the spatial organization of KRAS by facilitating its diffusion in the cytoplasm. Here we report that interfering with binding of mammalian PDEδ to KRAS by means of small molecules provides a novel opportunity to suppress oncogenic RAS signalling by altering its localization to endomembranes. Biochemical screening and subsequent structure-based hit optimization yielded inhibitors of the KRAS–PDEδ interaction",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.581518+00:00"
+}

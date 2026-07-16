@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2274272",
+  "source_fingerprint": "1dfd0a0359a61d7a7f62fa5f22b7994d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2274272",
+    "human-irgm-induces-autophagy-to-eliminate-intracellular-mycobacteria."
+  ],
+  "key_phrases": [
+    "human",
+    "irgm",
+    "induces",
+    "autophagy",
+    "eliminate",
+    "intracellular",
+    "mycobacteria",
+    "immunity"
+  ],
+  "summary_1l": "Human IRGM induces autophagy to eliminate intracellular mycobacteria.",
+  "query_hits": [],
+  "embed_text": "2274272 Human IRGM induces autophagy to eliminate intracellular mycobacteria. science scifact Immunity-related p47 guanosine triphosphatases (IRG) play a role in defense against intracellular pathogens. We found that the murine Irgm1 (LRG-47) guanosine triphosphatase induced autophagy and generated large autolysosomal organelles as… 2274272 human-irgm-induces-autophagy-to-eliminate-intracellular-mycobacteria. human irgm induces autophagy eliminate intracellular mycobacteria immunity Human IRGM induces autophagy to eliminate intracellular mycobacteria. Human IRGM induces autophagy to eliminate intracellular mycobacteria. Immunity-related p47 guanosine triphosphatases (IRG) play a role in defense against intracellular pathogens. We found that the murine Irgm1 (LRG-47) guanosine triphosphatase induced autophagy and generated large autolysosomal organelles as a mechanism for the elimination of intracellular Mycobacterium tuberculosis. We also identified a function for a human IRG protein in the control of intracellular pathogens and report that the human Irgm1 ortholog, IRGM, plays a role in autophagy and in the reduction of intracellular bacillary load.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.310619+00:00"
+}

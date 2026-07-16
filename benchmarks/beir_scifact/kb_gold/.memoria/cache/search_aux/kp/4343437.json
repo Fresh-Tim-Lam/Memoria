@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4343437",
+  "source_fingerprint": "a10d5f2c6c4c6a38b33312eb13a53a1c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4343437",
+    "role-of-inscuteable-in-orienting-asymmetric-cell-divisions-in-drosophila"
+  ],
+  "key_phrases": [
+    "role",
+    "inscuteable",
+    "orienting",
+    "asymmetric",
+    "cell",
+    "divisions",
+    "drosophila",
+    "neuroblasts"
+  ],
+  "summary_1l": "Drosophila neuroblasts and epithelial cells in the procephalic neurogenic region divide perpendicular to the surface, and segre",
+  "query_hits": [],
+  "embed_text": "4343437 Role of inscuteable in orienting asymmetric cell divisions in Drosophila science scifact Drosophila neuroblasts and epithelial cells in the procephalic neurogenic region divide perpendicular to the surface, and segregate the proteins Numb and Prospero into the basal daughter cell. We demonstrate here that orientation of the… 4343437 role-of-inscuteable-in-orienting-asymmetric-cell-divisions-in-drosophila role inscuteable orienting asymmetric cell divisions drosophila neuroblasts Drosophila neuroblasts and epithelial cells in the procephalic neurogenic region divide perpendicular to the surface, and segre Role of inscuteable in orienting asymmetric cell divisions in Drosophila Drosophila neuroblasts and epithelial cells in the procephalic neurogenic region divide perpendicular to the surface, and segregate the proteins Numb and Prospero into the basal daughter cell. We demonstrate here that orientation of the mitotic spindle and correct localization of Numb and Prospero in these cells require the inscuteable gene. Moreover, ectopic expression of inscuteable in other epithelial cells leads to spindle reorientation. The Inscuteable protein localizes to the apical cell cortex before mitosis, suggesting that Inscuteable functions in establishing polarity for asymmetric cell division.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.912600+00:00"
+}

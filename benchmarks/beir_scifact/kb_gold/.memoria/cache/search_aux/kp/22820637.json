@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22820637",
+  "source_fingerprint": "692957b69979ea1f781d940a3fab6a32",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22820637",
+    "the-oxytocinase-subfamily-of-m1-aminopeptidases."
+  ],
+  "key_phrases": [
+    "oxytocinase",
+    "subfamily",
+    "m1",
+    "aminopeptidases",
+    "placental",
+    "leucine",
+    "aminopeptidase",
+    "lap"
+  ],
+  "summary_1l": "The oxytocinase subfamily of M1 aminopeptidases.",
+  "query_hits": [],
+  "embed_text": "22820637 The oxytocinase subfamily of M1 aminopeptidases. science scifact The placental leucine aminopeptidase (P-LAP), adipocyte-derived leucine aminopeptidase (A-LAP) and leukocyte-derived aminopeptidase (L-RAP) belong to one distinct group of the M1 family of amimopeptidases, which we term the \"Oxytocinase… 22820637 the-oxytocinase-subfamily-of-m1-aminopeptidases. oxytocinase subfamily m1 aminopeptidases placental leucine aminopeptidase lap The oxytocinase subfamily of M1 aminopeptidases. The oxytocinase subfamily of M1 aminopeptidases. The placental leucine aminopeptidase (P-LAP), adipocyte-derived leucine aminopeptidase (A-LAP) and leukocyte-derived aminopeptidase (L-RAP) belong to one distinct group of the M1 family of amimopeptidases, which we term the \"Oxytocinase subfamily\". They share HEXXH(X)18E Zn-binding and GAMEN motifs essential for the enzymatic activities. Intracellular localization is the characteristic feature of the subfamily members. While P-LAP is translocated from intracellular vesicles to plasma membrane in a stimulus-dependent manner, both A-LAP and L-RAP are retained in the endoplasmic reticulum. They contain sequences necessary for the specific localization in the cell. It is getting evident that the subfamily members play important roles in the main",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.376302+00:00"
+}

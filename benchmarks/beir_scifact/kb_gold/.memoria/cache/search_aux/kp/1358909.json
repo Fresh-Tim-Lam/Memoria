@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1358909",
+  "source_fingerprint": "1d5652e81bb92120addf4cf0d0bffe7c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1358909",
+    "peripheral-arterial-disease-in-the-elderly:-the-rotterdam-study."
+  ],
+  "key_phrases": [
+    "peripheral",
+    "arterial",
+    "disease",
+    "elderly",
+    "rotterdam",
+    "study",
+    "assess",
+    "age"
+  ],
+  "summary_1l": "Peripheral arterial disease in the elderly: The Rotterdam Study.",
+  "query_hits": [],
+  "embed_text": "1358909 Peripheral arterial disease in the elderly: The Rotterdam Study. science scifact To assess the age- and sex-specific prevalence of peripheral arterial disease (PAD) and intermittent claudication (IC) in an elderly population, we performed a population-based study in 7715 subjects (40% men, 60% women) aged 55 years and… 1358909 peripheral-arterial-disease-in-the-elderly:-the-rotterdam-study. peripheral arterial disease elderly rotterdam study assess age Peripheral arterial disease in the elderly: The Rotterdam Study. Peripheral arterial disease in the elderly: The Rotterdam Study. To assess the age- and sex-specific prevalence of peripheral arterial disease (PAD) and intermittent claudication (IC) in an elderly population, we performed a population-based study in 7715 subjects (40% men, 60% women) aged 55 years and over. The presence of PAD and IC was determined by measuring the ankle-arm systolic blood pressure index (AAI) and by means of the World Health Organization/Rose questionnaire, respectively. PAD was considered present when the AAI was <0.90 in either leg. The prevalence of PAD was 19.1% (95% confidence interval, 18.1% to 20.0%): 16.9% in men and 20.5% in women. Symptoms of IC were reported by 1.6% (95% confidence interval, 1.3% to 1.9%) of the study population (2.2% in men, 1.2% in women). O",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.586924+00:00"
+}

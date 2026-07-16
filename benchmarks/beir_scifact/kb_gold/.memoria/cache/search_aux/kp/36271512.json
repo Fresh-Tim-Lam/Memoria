@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36271512",
+  "source_fingerprint": "5b20ef36538ad33632e9c25685f2cbe2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36271512",
+    "t-cell-activation."
+  ],
+  "key_phrases": [
+    "cell",
+    "activation",
+    "introduction",
+    "cellular",
+    "molecular",
+    "requirements",
+    "antigen",
+    "receptor"
+  ],
+  "summary_1l": "T-cell activation.",
+  "query_hits": [],
+  "embed_text": "36271512 T-cell activation. science scifact INTRODUCTION • • CELLULAR AND MOLECULAR REQUIREMENTS FOR T-CELL ACTIVATION . The T-Cell Antigen Receptor Complex . . . .. . . . ..... . . . . . . . . . . . . . . . . ...... . . . T-Cell Activation by Antibodies and Leetins . . . . . . . .… 36271512 t-cell-activation. cell activation introduction cellular molecular requirements antigen receptor T-cell activation. T-cell activation. INTRODUCTION • • CELLULAR AND MOLECULAR REQUIREMENTS FOR T-CELL ACTIVATION . The T-Cell Antigen Receptor Complex . . . .. . . . ..... . . . . . . . . . . . . . . . . ...... . . . T-Cell Activation by Antibodies and Leetins . . . . . . . . . . .. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . Other Cell Surface Structures (Accessory Molecules) Involved in Antigen Recognition and Activation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . Minimal Requirements/or T-Cell Activation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:43.092649+00:00"
+}

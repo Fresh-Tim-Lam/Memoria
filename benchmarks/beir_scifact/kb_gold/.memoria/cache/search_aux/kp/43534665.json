@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "43534665",
+  "source_fingerprint": "d6872a35369cc99e6241dfdc3b7a9a29",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "43534665",
+    "recombinant-human-il-10-prevents-the-onset-of-diabetes-in-the-nonobese-diabetic-mouse."
+  ],
+  "key_phrases": [
+    "recombinant",
+    "human",
+    "il",
+    "10",
+    "prevents",
+    "onset",
+    "diabetes",
+    "nonobese"
+  ],
+  "summary_1l": "Recombinant human IL-10 prevents the onset of diabetes in the nonobese diabetic mouse.",
+  "query_hits": [],
+  "embed_text": "43534665 Recombinant human IL-10 prevents the onset of diabetes in the nonobese diabetic mouse. science scifact The role of IL-10 in the pathogenesis of autoimmune diabetes mellitus was assessed in the nonobese diabetic (NOD) mouse. In these studies the effect of IL-10 was determined on three parameters of diabetes: The development of hyperglycemia,… 43534665 recombinant-human-il-10-prevents-the-onset-of-diabetes-in-the-nonobese-diabetic-mouse. recombinant human il 10 prevents onset diabetes nonobese Recombinant human IL-10 prevents the onset of diabetes in the nonobese diabetic mouse. Recombinant human IL-10 prevents the onset of diabetes in the nonobese diabetic mouse. The role of IL-10 in the pathogenesis of autoimmune diabetes mellitus was assessed in the nonobese diabetic (NOD) mouse. In these studies the effect of IL-10 was determined on three parameters of diabetes: The development of hyperglycemia, the development of insulitis, and the production of insulin by beta cells. Initial experiments investigated the effect of anticytokine antibodies on the development of disease. These results indicated that monoclonal anti-IFN-gamma antibody greatly reduced the incidence of hyperglycemia in female NOD mice, while anti-IL-4, IL-5, and IL-10 were ineffective. In subsequent studies, daily subcutaneous administration of IL-10, a known potent inhibitor of IFN-gamma productio",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.000045+00:00"
+}

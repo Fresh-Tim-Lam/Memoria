@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2824347",
+  "source_fingerprint": "366ddb5b89cc7b36d3e72e27cd0a30c5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2824347",
+    "hiv-1-regulation-of-latency-in-the-monocyte-macrophage-lineage-and-in-cd4+-t-lymphocytes."
+  ],
+  "key_phrases": [
+    "hiv",
+    "regulation",
+    "latency",
+    "monocyte",
+    "macrophage",
+    "lineage",
+    "cd4",
+    "lymphocytes"
+  ],
+  "summary_1l": "HIV-1 regulation of latency in the monocyte-macrophage lineage and in CD4+ T lymphocytes.",
+  "query_hits": [],
+  "embed_text": "2824347 HIV-1 regulation of latency in the monocyte-macrophage lineage and in CD4+ T lymphocytes. science scifact The introduction in 1996 of the HAART raised hopes for the eradication of HIV-1. Unfortunately, the discovery of latent HIV-1 reservoirs in CD4+ T cells and in the monocyte-macrophage lineage proved the optimism to be premature. The… 2824347 hiv-1-regulation-of-latency-in-the-monocyte-macrophage-lineage-and-in-cd4+-t-lymphocytes. hiv regulation latency monocyte macrophage lineage cd4 lymphocytes HIV-1 regulation of latency in the monocyte-macrophage lineage and in CD4+ T lymphocytes. HIV-1 regulation of latency in the monocyte-macrophage lineage and in CD4+ T lymphocytes. The introduction in 1996 of the HAART raised hopes for the eradication of HIV-1. Unfortunately, the discovery of latent HIV-1 reservoirs in CD4+ T cells and in the monocyte-macrophage lineage proved the optimism to be premature. The long-lived HIV-1 reservoirs constitute a major obstacle to the eradication of HIV-1. In this review, we focus on the establishment and maintenance of HIV-1 latency in the two major targets for HIV-1: the CD4+ T cells and the monocyte-macrophage lineage. Understanding the cell-type molecular mechanisms of establishment, maintenance, and reactivation of HIV-1 latency in these reservoirs is crucial for efficient therapeutic intervention. A complete viral eradication, the holy",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.727688+00:00"
+}

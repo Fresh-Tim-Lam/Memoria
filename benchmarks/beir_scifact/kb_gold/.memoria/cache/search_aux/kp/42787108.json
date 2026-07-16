@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "42787108",
+  "source_fingerprint": "d23eef91942bae9ef28759e28544f4bd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "42787108",
+    "nodal/activin-signaling-predicts-human-pluripotent-stem-cell-lines-prone-to-differentiate-toward-the-hematopoietic-lineage."
+  ],
+  "key_phrases": [
+    "nodal",
+    "activin",
+    "signaling",
+    "predicts",
+    "human",
+    "pluripotent",
+    "stem",
+    "cell"
+  ],
+  "summary_1l": "Nodal/Activin signaling predicts human pluripotent stem cell lines prone to differentiate toward the hematopoietic lineage.",
+  "query_hits": [],
+  "embed_text": "42787108 Nodal/Activin signaling predicts human pluripotent stem cell lines prone to differentiate toward the hematopoietic lineage. science scifact Lineage-specific differentiation potential varies among different human pluripotent stem cell (hPSC) lines, becoming therefore highly desirable to prospectively know which hPSC lines exhibit the highest differentiation potential for a… 42787108 nodal/activin-signaling-predicts-human-pluripotent-stem-cell-lines-prone-to-differentiate-toward-the-hematopoietic-lineage. nodal activin signaling predicts human pluripotent stem cell Nodal/Activin signaling predicts human pluripotent stem cell lines prone to differentiate toward the hematopoietic lineage. Nodal/Activin signaling predicts human pluripotent stem cell lines prone to differentiate toward the hematopoietic lineage. Lineage-specific differentiation potential varies among different human pluripotent stem cell (hPSC) lines, becoming therefore highly desirable to prospectively know which hPSC lines exhibit the highest differentiation potential for a certain lineage. We have compared the hematopoietic potential of 14 human embryonic stem cell (hESC)/induced pluripotent stem cell (iPSC) lines. The emergence of hemogenic progenitors, primitive and mature blood cells, and colony-forming unit (CFU) potential was analyzed at different time points. Significant differences in the propensity to differentiate toward blood were observed among hPSCs: some hPSCs exhibited good blood differentiat",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.250005+00:00"
+}

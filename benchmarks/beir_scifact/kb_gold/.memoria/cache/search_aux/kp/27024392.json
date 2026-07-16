@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27024392",
+  "source_fingerprint": "3b950754f08db9a274ba861bcfd3c981",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27024392",
+    "cannabinoids-in-clinical-practice"
+  ],
+  "key_phrases": [
+    "cannabinoids",
+    "clinical",
+    "practice",
+    "cannabis",
+    "has",
+    "potential",
+    "use",
+    "often"
+  ],
+  "summary_1l": "Cannabis has a potential for clinical use often obscured by unreliable and purely anecdotal reports.",
+  "query_hits": [],
+  "embed_text": "27024392 Cannabinoids in Clinical Practice science scifact Cannabis has a potential for clinical use often obscured by unreliable and purely anecdotal reports. The most important natural cannabinoid is the psychoactive tetrahydrocannabinol (Δ9-THC); others include cannabidiol (CBD) and… 27024392 cannabinoids-in-clinical-practice cannabinoids clinical practice cannabis has potential use often Cannabis has a potential for clinical use often obscured by unreliable and purely anecdotal reports. Cannabinoids in Clinical Practice Cannabis has a potential for clinical use often obscured by unreliable and purely anecdotal reports. The most important natural cannabinoid is the psychoactive tetrahydrocannabinol (Δ9-THC); others include cannabidiol (CBD) and cannabigerol (CBG). Not all the observed effects can be ascribed to THC, and the other constituents may also modulate its action; for example CBD reduces anxiety induced by THC. A standardised extract of the herb may be therefore be more beneficial in practice and clinical trial protocols have been drawn up to assess this. The mechanism of action is still not fully understood, although cannabinoid receptors have been cloned and natural ligands identified. Cannabis is frequently used by patients with multiple sclerosis (MS) for muscl",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.373557+00:00"
+}

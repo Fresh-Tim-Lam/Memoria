@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5389523",
+  "source_fingerprint": "22afc887e1cf3f81417c279df340527e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5389523",
+    "rad52-facilitates-mitotic-dna-synthesis-following-replication-stress."
+  ],
+  "key_phrases": [
+    "rad52",
+    "facilitates",
+    "mitotic",
+    "dna",
+    "synthesis",
+    "following",
+    "replication",
+    "stress"
+  ],
+  "summary_1l": "RAD52 Facilitates Mitotic DNA Synthesis Following Replication Stress.",
+  "query_hits": [],
+  "embed_text": "5389523 RAD52 Facilitates Mitotic DNA Synthesis Following Replication Stress. science scifact Homologous recombination (HR) is necessary to counteract DNA replication stress. Common fragile site (CFS) loci are particularly sensitive to replication stress and undergo pathological rearrangements in tumors. At these loci, replication… 5389523 rad52-facilitates-mitotic-dna-synthesis-following-replication-stress. rad52 facilitates mitotic dna synthesis following replication stress RAD52 Facilitates Mitotic DNA Synthesis Following Replication Stress. RAD52 Facilitates Mitotic DNA Synthesis Following Replication Stress. Homologous recombination (HR) is necessary to counteract DNA replication stress. Common fragile site (CFS) loci are particularly sensitive to replication stress and undergo pathological rearrangements in tumors. At these loci, replication stress frequently activates DNA repair synthesis in mitosis. This mitotic DNA synthesis, termed MiDAS, requires the MUS81-EME1 endonuclease and a non-catalytic subunit of the Pol-delta complex, POLD3. Here, we examine the contribution of HR factors in promoting MiDAS in human cells. We report that RAD51 and BRCA2 are dispensable for MiDAS but are required to counteract replication stress at CFS loci during S-phase. In contrast, MiDAS is RAD52 dependent, and RAD52 is required for the tim",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.127466+00:00"
+}

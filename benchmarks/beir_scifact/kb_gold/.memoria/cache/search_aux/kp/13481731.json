@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13481731",
+  "source_fingerprint": "da16197aba505c19ee3da5b665b1daed",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13481731",
+    "gender,-age,-and-heart-failure-with-preserved-left-ventricular-systolic-function."
+  ],
+  "key_phrases": [
+    "gender",
+    "age",
+    "heart",
+    "failure",
+    "with",
+    "preserved",
+    "left",
+    "ventricular"
+  ],
+  "summary_1l": "Gender, age, and heart failure with preserved left ventricular systolic function.",
+  "query_hits": [],
+  "embed_text": "13481731 Gender, age, and heart failure with preserved left ventricular systolic function. science scifact OBJECTIVES This study was designed to determine if women are more likely than men to have heart failure (HF) with preserved systolic function after adjustment for potential confounders, including age. BACKGROUND Although prior evidence… 13481731 gender,-age,-and-heart-failure-with-preserved-left-ventricular-systolic-function. gender age heart failure with preserved left ventricular Gender, age, and heart failure with preserved left ventricular systolic function. Gender, age, and heart failure with preserved left ventricular systolic function. OBJECTIVES This study was designed to determine if women are more likely than men to have heart failure (HF) with preserved systolic function after adjustment for potential confounders, including age. BACKGROUND Although prior evidence suggests an independent association between female gender and preserved left ventricular systolic function (LVSF) in patients with HF, existing studies are limited by referral biases, small sample sizes, or the inability to adjust for a wide range of potential confounding variables. METHODS This is a cross-sectional study using data from retrospective medical chart abstraction of a national sample of Medicare beneficiaries hospitalized with the principal discharge diagnosis of",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.368534+00:00"
+}

@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "kp_id": "95400#6",
+  "source_fingerprint": "55f1e67b2aefca9ad3820913760f8edf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "(林俊杰单曲)",
+    "2004年中国超级联赛杯",
+    "马来西亚－新加坡边界"
+  ],
+  "aliases": [
+    "95400#6"
+  ],
+  "key_phrases": [
+    "林俊杰",
+    "2004",
+    "受邀",
+    "潔儀",
+    "合作",
+    "演唱",
+    "新加坡",
+    "國慶慶典"
+  ],
+  "summary_1l": "2004年受邀與陳潔儀合作演唱新加坡國慶慶典主題曲《家》。",
+  "query_hits": [],
+  "embed_text": "95400#6 林俊杰 林俊杰 2004年受邀與陳潔儀合作演唱新加坡國慶慶典主題曲《家》。 (林俊杰单曲) 2004年中国超级联赛杯 马来西亚－新加坡边界 95400#6 林俊杰 2004 受邀 潔儀 合作 演唱 新加坡 國慶慶典 2004年受邀與陳潔儀合作演唱新加坡國慶慶典主題曲《家》。 林俊杰 2004年受邀與陳潔儀合作演唱新加坡國慶慶典主題曲《家》。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:19:26.044031+00:00"
+}

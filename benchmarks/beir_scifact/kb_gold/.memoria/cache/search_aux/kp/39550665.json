@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "39550665",
+  "source_fingerprint": "f3cf799a64af2e054f637607349f59c1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "39550665",
+    "tolerance-rather-than-immunity-protects-from-helicobacter-pylori-induced-gastric-preneoplasia."
+  ],
+  "key_phrases": [
+    "tolerance",
+    "rather",
+    "than",
+    "immunity",
+    "protects",
+    "from",
+    "helicobacter",
+    "pylori"
+  ],
+  "summary_1l": "Tolerance rather than immunity protects from Helicobacter pylori-induced gastric preneoplasia.",
+  "query_hits": [],
+  "embed_text": "39550665 Tolerance rather than immunity protects from Helicobacter pylori-induced gastric preneoplasia. science scifact BACKGROUND & AIMS Chronic infection with the bacterial pathogen Helicobacter pylori causes gastric disorders, ranging from chronic gastritis to gastric adenocarcinoma. Only a subset of infected persons will develop overt disease; most… 39550665 tolerance-rather-than-immunity-protects-from-helicobacter-pylori-induced-gastric-preneoplasia. tolerance rather than immunity protects from helicobacter pylori Tolerance rather than immunity protects from Helicobacter pylori-induced gastric preneoplasia. Tolerance rather than immunity protects from Helicobacter pylori-induced gastric preneoplasia. BACKGROUND & AIMS Chronic infection with the bacterial pathogen Helicobacter pylori causes gastric disorders, ranging from chronic gastritis to gastric adenocarcinoma. Only a subset of infected persons will develop overt disease; most remains asymptomatic despite lifelong colonization. This study aims to elucidate the differential susceptibility to H pylori that is found both across and within populations. METHODS We have established a C57BL/6 mouse model of H pylori infection with a strain that is capable of delivering the virulence factor cytotoxin-associated gene A (CagA) into host cells through the activity of a Cag-pathogenicity island-encoded type IV secretion system. RESULTS Mice infected",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.744015+00:00"
+}

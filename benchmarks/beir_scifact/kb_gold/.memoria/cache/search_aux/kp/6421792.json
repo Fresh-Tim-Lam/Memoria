@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6421792",
+  "source_fingerprint": "54da4ed59bfafc43586aa3fb4fd8d53e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6421792",
+    "activating-mutations-in-the-nt5c2-nucleotidase-gene-drive-chemotherapy-resistance-in-relapsed-all"
+  ],
+  "key_phrases": [
+    "activating",
+    "mutations",
+    "nt5c2",
+    "nucleotidase",
+    "gene",
+    "drive",
+    "chemotherapy",
+    "resistance"
+  ],
+  "summary_1l": "Acute lymphoblastic leukemia (ALL) is an aggressive hematological tumor resulting from the malignant t",
+  "query_hits": [],
+  "embed_text": "6421792 Activating mutations in the NT5C2 nucleotidase gene drive chemotherapy resistance in relapsed ALL science scifact Acute lymphoblastic leukemia (ALL) is an aggressive hematological tumor resulting from the malignant transformation of lymphoid progenitors. Despite intensive chemotherapy, 20% of pediatric patients and over 50% of adult patients with ALL… 6421792 activating-mutations-in-the-nt5c2-nucleotidase-gene-drive-chemotherapy-resistance-in-relapsed-all activating mutations nt5c2 nucleotidase gene drive chemotherapy resistance Acute lymphoblastic leukemia (ALL) is an aggressive hematological tumor resulting from the malignant t Activating mutations in the NT5C2 nucleotidase gene drive chemotherapy resistance in relapsed ALL Acute lymphoblastic leukemia (ALL) is an aggressive hematological tumor resulting from the malignant transformation of lymphoid progenitors. Despite intensive chemotherapy, 20% of pediatric patients and over 50% of adult patients with ALL do not achieve a complete remission or relapse after intensified chemotherapy, making disease relapse and resistance to therapy the most substantial challenge in the treatment of this disease. Using whole-exome sequencing, we identify mutations in the cytosolic 5'-nucleotidase II gene (NT5C2), which encodes a 5'-nucleotidase enzyme that is responsible for the inactivation of nucleoside-analog chemotherapy drugs, in 20/103 (19%) relapse T cell ALLs and 1/35 (3",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.829851+00:00"
+}

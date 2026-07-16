@@ -364,11 +364,11 @@ V1 要求：2D 与 3D **交互语义一致**（悬停/点击/高亮）；布局�
 
 ### 4.6 桌面窗口壳（Shell）`[⏳]`
 
-**现状（M0–M4）**：`pywebview`（Windows 上为 WinForms + WebView2）+ 可选无边框自绘顶栏（`MEMORIA_FRAMELESS`）。业务 UI 仍为静态 HTML/CSS/JS；Python 经 `M0API` 桥接。
+**现状（M0–M4）**：默认发布壳已为 **PyQt6 + QWebEngine**（`Package/Memoria.exe`）；开发态可选 `pywebview`（`MEMORIA_SHELL=pywebview`）。Win32 hidden chrome（DWM 最大化/边沿缩放/任务栏图标）`[🔄]` 持续打磨。
 
-**痛点**：纯 `frameless` 去掉系统装饰后，与 Windows 窗口生态（任务栏二次点击最小化、DWM 最大化/还原动画、Snap 布局等）集成弱；手搓 Win32 补丁成本高且难与 VS Code / Electron 同级体验对齐。
+**痛点（原 pywebview frameless）**：纯 `frameless` 去掉系统装饰后，与 Windows 窗口生态集成弱；手搓 Win32 补丁成本高。
 
-**未来方向（M5）**：**换壳为 PyQt6 + Win32「隐藏 chrome」**，而非继续堆 pywebview frameless 补丁。
+**M5 目标（收尾）**：任务栏/DWM/Snap 验收；API 桥 parity；弃用 pywebview 为默认发布路径（保留 dev 回退）。
 
 | 层级 | 策略 |
 |------|------|
@@ -403,16 +403,17 @@ V1 要求：2D 与 3D **交互语义一致**（悬停/点击/高亮）；布局�
 
 ### 5.2 V2+（后续）
 
-1. **智能拼接**：搜索目标知识点 → 自动组装前置链路 → 生成新文件 → 可导出  
-2. **完整 IDE 编辑**：预览/源码切换；防格式混乱的安全编辑辅助  
-3. **知识点智能拆分/拼接**（维护层面）
+1. **智能拼接**（R14）：搜索/选路径 → 组装前置链路 → 生成新文件 → 可导出  
+2. **富文本 Markdown 编辑**（R15）：标题/待办/加粗斜体/公式/图片 + 荧光笔 + undo/redo；可切换源码视图；KP/link 仍走 sidecar  
+3. **知识点智能拆分/拼接**（维护层面）  
+4. **遗忘曲线复习**（R06）、**全库静态 HTML 导出**（R12）——见 §16
 
 ### 5.3 基础设施（与功能 MVP 并行）`[⏳]`
 
 | 阶段 | 内容 | 说明 |
 |------|------|------|
 | **M5** | **PyQt6 + Win32 桌面壳** | 见 §4.6；M4 Lexical 闭环稳定后启动；不阻塞 V1 知识库功能交付 |
-| M5+ | 打包 / 安装器 | PyInstaller 或等价；替换现有 `app_m0.py` 启动路径 |
+| M5+ | 打包 / 安装器 | PyInstaller → `Package/`；R01 收尾：安装器、更新策略 |
 
 ## 6. 数据模型与存储（Q8 讨论）
 
@@ -958,35 +959,45 @@ search(query, scope: file|kb, limit, modes?: lexical | semantic | both)
 
 **做不到 / 质量差**： paraphrase（「连续动作 RL」→ DDPG）、语义近重复（attention vs 注意力机制）。
 
-### 11.4 Embedding 层（V1 Should，可选）`[✅]`
+### 11.4 Embedding 层（V1 Should，可选）`[✅]` → v1.5 演进见 [`search-kernel-v1.5.md`](search-kernel-v1.5.md)
 
 | 项 | 决策 |
 |----|------|
 | V1 是否必须 | **否**——Lexical 不够用时再开，不阻塞 M4 闭环 |
 | 架构 | **Must 预留** EmbeddingProvider 接口；实现可 M4 末或 V1.1 |
-| 模型 | 本地小模型（如 multilingual-MiniLM 级）；具体型号 M4 Benchmark |
-| 存储 | `.memoria/cache/embeddings/`；**可删可重建** |
-| 加载 | **lazy**：首次 semantic 搜索或设置里开启后才加载；后台预热可选 |
-| 用途 | 语义 search、近重复合并、虚链 paraphrase 定向、S4 range 提议 |
+| 模型（v1） | 本地 **Embed-Recall**（如 multilingual-MiniLM 级）；具体型号 Benchmark |
+| **v1.5 多模型** | **Must 预留 ModelRouter**；召回/精排/翻译/LLM-aux **分模型**；禁止单模型包打天下 |
+| 跨语言 | **MT-Bridge** 高精度翻译 → 中间语言（默认 en）→ 与多语 embed 并联 |
+| 存储 | `.memoria/cache/embeddings/` + `search_aux/`；**可删可重建** |
+| 加载 | **lazy**：按模型角色分别加载；查询热路径不加载 LLM |
+| 用途 | 语义 search、精排、aux 生成、跨语言桥接、近重复 merge、虚链 paraphrase |
 
-**合并排序**：Lexical top-50 → Embedding rerank top-10；或双路召回 merge（modes=both）。
+**合并排序（v1）**：Lexical top-50 → Embedding rerank top-10；或双路 merge（modes=both）。  
+**v1.5**：RRF 多通道 + 可选 cross-encoder 精排 + 反馈 LTR（见 v1.5 文档 §6）。
 
-### 11.5 生成类能力（tag / description / id）
+### 11.5 生成类能力（tag / description / id / 隐式 aux）`[⏳ v1.5]`
 
-| 能力 | V1 做法 |
-|------|---------|
-| tag 提议 | jieba + 库内词表 + 共现；**非 LLM** |
-| description 提议 | range 首句 / 首段截取（规则）；**非 LLM** |
-| id 提议 | name .slug 化 + 冲突检测 |
-| LLM 生成 | **V1 Won't**；V1.1+ 可选本地小 LLM |
+| 能力 | V1 做法 | v1.5 扩展 |
+|------|---------|-----------|
+| tag 提议 | jieba + 库内词表 + 共现；**非 LLM** | + aux `auto_tags`；**全系统候选/已选 UI**（同 tag） |
+| description 提议 | range 首句 / 首段截取（规则） | + LLM-Summary 异步；候选可编辑后采纳 |
+| alias / key_phrase | — | aux 持久化 + **候选/忽略**；与 tag 同机制 |
+| id 提议 | name .slug 化 + 冲突检测 | 不变 |
+| 跨语言 bridge | — | MT-Bridge 写 aux；用户可关/改 |
+| LLM 生成 | **V1 Won't** | V1.1+ 小参 LLM **仅离线 aux**；不进查询热路径 |
+
+**铁律**：生成物先进 **proposals**（候选），用户确认才写 sidecar；隐式进 `search_aux/`。详见 [`search-kernel-v1.5.md`](search-kernel-v1.5.md) §3。
 
 ### 11.6 索引与性能
 
 | 索引 | 存哪 | 重建 |
 |------|------|------|
-| Lexical 倒排 | `.memoria/cache/lexical/` | md + sidecar 变更后增量/全量 |
+| Lexical 倒排 | `.memoria/cache/lexical/` | md + sidecar + **search_aux** 变更后增量/全量 |
 | Embedding | `.memoria/cache/embeddings/` | 同上，可选延迟 |
-| 运行时 | 合并进 `index.json` 或独立读 cache | index.json 可删；cache 可删 |
+| **search_aux** | `.memoria/cache/search_aux/` | fingerprint 变更；**可删可重建** |
+| **search_feedback** | `.memoria/search_feedback/` | 用户可清除 |
+| **proposals** | `.memoria/proposals/`（或 sidecar 内联） | 用户决策状态 |
+| 运行时 | 合并进 cache 或独立读 | 均可删 |
 
 **冷启动**：打开 KB → 重建/加载 lexical（快）→ UI 可用 → embedding 后台（若开启）。
 
@@ -1009,6 +1020,8 @@ search(query, scope: file|kb, limit, modes?: lexical | semantic | both)
 | 离线 | `[✅]` | 全部本地；无联网 |
 
 **检索与维护产品决策（2026-07-07）**：见 [`search-and-maintenance-decisions.md`](search-and-maintenance-decisions.md)（KP 命中字段、无结果降级 B、tag 候选/已选、links⊂edges、引导维护板块、正文定位选项、merge 夹具）。
+
+**SearchKernel v1.5（2026-07-10）**：显式/隐式双层描述、**全系统统一建议机制**、**多模型分工**与跨语言桥接 — 见 [`search-kernel-v1.5.md`](search-kernel-v1.5.md)。
 
 ---
 
@@ -1149,7 +1162,7 @@ filePointer: A→3, B→1, C→2
 | Q10 | 导航栈？ | `[✅]` cursor+filePointer；换文件=截断分支；§12 |
 | Q11 | html 是否进 V1？ | `[⏳]` 还是先只做 md |
 | Q12 | range / link 定位？ | `[✅]` snippet+用户辅助；§10 |
-| Q13 | 桌面壳选型？ | `[⏳]` 现 pywebview；**M5 计划迁 PyQt6 + Win32 hidden chrome**（§4.6）；Electron/Tauri 暂不采纳 |
+| Q13 | 桌面壳选型？ | `[🔄]` **PyQt6 + Win32 hidden chrome 已为主路径**（§4.6）；pywebview 仅 dev 回退；Electron/Tauri 不采纳 |
 
 ---
 
@@ -1164,9 +1177,62 @@ filePointer: A→3, B→1, C→2
 | **M2** `[部分]` | 图谱引擎 + 2D/3D | 独立 2D/3D 布局；Canvas + Three.js；节点群页签；**压测** `scripts/graph_layout_benchmark.py` + `test_graph_stress.py`；**Worker 布局**（≥60 节点）+ **3D 八叉树拾取**（≥40 节点）；**待办**：布局模式、M4 智能群命名 |
 | **M3** | 配置 + 手动维护 | 无 AI 也能建库、改 id、绑跳转 |
 | **M4** | Lexical 检索内核 | SearchKernel + 虚链定向 + suggest；Embedding 接口 stub |
-| **M5** `[⏳]` | **PyQt6 + Win32 桌面壳** | QWebEngine 复用 m0 前端；hidden chrome；任务栏/DWM 行为；见 §4.6 |
+| **M5** `[🔄]` | **PyQt6 + Win32 桌面壳（收尾）** | 发布包已可用；hidden chrome / 打包 / 图标；见 §4.6、§16 R01 |
 
 每个 MVP 可独立重做，不背负上一阶段的错误选型。
+
+---
+
+## 16. 产品待办路线图（扩展）
+
+> 2026-07-10 自 `dicussion.md` 整理；讨论摘要见该文件「后续扩展路线图」。ID **R01–R17** 用于 issue/PR 引用。
+
+### 16.1 与版本带关系
+
+| 版本带 | 含义 | 代表条目 |
+|--------|------|----------|
+| **M4** | V1 检索闭环 | R09 Lexical 强化（SearchKernel v1）→ **v1.5 规格** [`search-kernel-v1.5.md`](search-kernel-v1.5.md) |
+| **M5** | 壳与发布 | R01 PyQt6 收尾 |
+| **V1 Should** | 首版体验 | R02 根目录标记、R08 图片图表、R10 新手引导、R13 语言 |
+| **V1.1 / M4+** | 智能增强 | **SearchKernel v1.5**（aux+多模型+proposals）、R04 LLM、R11、R16、R17 v2 |
+| **V2+** | 学习与编辑 | R06 遗忘曲线、R12 全库静态 HTML、R14 沿路拼接、R15 富文本 md 编辑 |
+| **探索** | 需规格化 | R05 公式 AST、R07 图谱推理（边属性专章） |
+| **最低优先级** | 不阻塞主线 | R03 HTML 导入（渲染 vs 转 md 未定） |
+
+### 16.2 待办索引
+
+| ID | 条目 | 阶段 | 状态 | 要点 |
+|----|------|------|------|------|
+| R01 | PyQt6 + Win32 桌面壳 | M5 | `[🔄]` | QWebEngine 复用 m0；hidden chrome；Package 发布 |
+| R02 | KB 根目录安全标记 | V1 | `[⏳]` | 子目录打开时提示并引导至含 `.memoria/manifest` 的根 |
+| R03 | HTML 导入 | 最低 | `[⬇️]` | 直接渲染 vs 转 md 未定；解析难、兼容性低 |
+| R04 | 智能链接推荐（本地 LLM） | M4+ | `[💡]` | 提议层；用户确认写 sidecar |
+| R05 | 公式语义检索（LaTeX AST） | V1.1+ | `[💡]` | 公式规范化索引；仍返回 kp_id |
+| R06 | 遗忘曲线复习 | V2+ | `[💡]` | 进度存 `.memoria/` |
+| R07 | 图谱推理 · 新边提议 | 探索 | `[⏳]` | 需边属性专章；建议边用户确认，不自动写 |
+| R08 | 图片 / 图表 | V1 | `[⏳]` | 资源路径 + Mermaid 等 |
+| R09 | Lexical 强化 / query 推荐 | M4 | `[⏳]` | v1 过渡；→ v1.5 见 search-kernel-v1.5.md |
+| R10 | 新手引导 | V1 | `[⏳]` | 空状态 + 示例 KB |
+| R11 | 约定格式 KB 导入包 | V1.1 | `[⏳]` | AI/脚本产出 bundle + 向导 |
+| R12 | 全库静态 HTML 导出 | V2+ | `[💡]` | 只读子集；分享归档 |
+| R13 | UI 语言切换 | V1 | `[⏳]` | §4.5 设置；不翻译用户正文 |
+| R14 | 知识点沿路拼接导出 | V2 | `[⏳]` | §5.2 智能拼接 |
+| R15 | 富文本 Markdown 编辑 | V2 | `[⏳]` | 公式/荧光笔/undo；§5.2 |
+| R16 | 检索反馈 · 库内模型 | M4+ | `[✅]` | 显式+隐式反馈；v1.5 §7 |
+| R17 | SearchKernel v2 · 双向生长 | M4+ | `[💡]` | v1.5 之后；dicussion §17 |
+| R18 | SearchKernel v1.5 · aux+多模型+统一建议 | M4+ | `[⏳]` | **主规格** search-kernel-v1.5.md |
+
+**去重**：「换壳到 Windows 窗口架构」= R01，不另列。
+
+### 16.3 建议执行顺序
+
+1. M4 + R09  
+2. M5 收尾（R01）+ R02 + R10  
+3. **R18 SearchKernel v1.5**（aux、proposals、多模型、R16 反馈）  
+4. R17 v2 双向生长；边属性专章 + R07  
+5. V2：R14、R15、R06  
+6. 导入/媒体：R11、R08  
+7. 最低优先级 R03；探索：R05、R12  
 
 ---
 

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11705328",
+  "source_fingerprint": "56ed9c93f955d1b5e794308c1806a470",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11705328",
+    "randomized-trial-of-folic-acid-supplementation-and-serum-homocysteine-levels."
+  ],
+  "key_phrases": [
+    "randomized",
+    "trial",
+    "folic",
+    "acid",
+    "supplementation",
+    "serum",
+    "homocysteine",
+    "levels"
+  ],
+  "summary_1l": "Randomized trial of folic acid supplementation and serum homocysteine levels.",
+  "query_hits": [],
+  "embed_text": "11705328 Randomized trial of folic acid supplementation and serum homocysteine levels. science scifact BACKGROUND Lowering serum homocysteine levels with folic acid is expected to reduce mortality from ischemic heart disease. Homocysteine reduction is known to be maximal at a folic acid dosage of 1 mg/d, but the effect of lower doses… 11705328 randomized-trial-of-folic-acid-supplementation-and-serum-homocysteine-levels. randomized trial folic acid supplementation serum homocysteine levels Randomized trial of folic acid supplementation and serum homocysteine levels. Randomized trial of folic acid supplementation and serum homocysteine levels. BACKGROUND Lowering serum homocysteine levels with folic acid is expected to reduce mortality from ischemic heart disease. Homocysteine reduction is known to be maximal at a folic acid dosage of 1 mg/d, but the effect of lower doses (relevant to food fortification) is unclear. METHODS We randomized 151 patients with ischemic heart disease to 1 of 5 dosages of folic acid (0.2, 0.4, 0.6, 0.8, and 1.0 mg/d) or placebo. Fasting blood samples for serum homocysteine and serum folate analysis were taken initially, after 3 months of supplementation, and 3 months after folic acid use was discontinued. RESULTS Median serum homocysteine level decreased with increasing folic acid dosage, to a maximum at 0.8 mg of folic acid",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:06.957739+00:00"
+}

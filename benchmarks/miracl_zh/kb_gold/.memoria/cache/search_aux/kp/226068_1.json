@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "kp_id": "226068#1",
+  "source_fingerprint": "d8f912a1f0faca2f43d10ae027403139",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "上海江南造船厂",
+    "天津金融业",
+    "上海历史",
+    "上海工业大学",
+    "上海迪士尼樂園",
+    "天津租界",
+    "天津经济",
+    "天津英租界",
+    "武汉文化",
+    "江海关大楼"
+  ],
+  "aliases": [
+    "226068#1"
+  ],
+  "key_phrases": [
+    "海关",
+    "上海",
+    "武汉",
+    "江汉关",
+    "天津",
+    "广州",
+    "并称",
+    "清代"
+  ],
+  "summary_1l": "上海的江海关与武汉的江汉关、天津的津海关、广州的粤海关并称清代四大海关。",
+  "query_hits": [],
+  "embed_text": "226068#1 江海关 江海关 上海的江海关与武汉的江汉关、天津的津海关、广州的粤海关并称清代四大海关。 上海江南造船厂 天津金融业 上海历史 上海工业大学 上海迪士尼樂園 天津租界 天津经济 天津英租界 武汉文化 江海关大楼 226068#1 海关 上海 武汉 江汉关 天津 广州 并称 清代 上海的江海关与武汉的江汉关、天津的津海关、广州的粤海关并称清代四大海关。 江海关 上海的江海关与武汉的江汉关、天津的津海关、广州的粤海关并称清代四大海关。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:20:04.970032+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11360430",
+  "source_fingerprint": "a6aa8278bde64cda5d8f32349765d1f8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11360430",
+    "stem-cell-self-renewal-specified-by-jak-stat-activation-in-response-to-a-support-cell-cue."
+  ],
+  "key_phrases": [
+    "stem",
+    "cell",
+    "self",
+    "renewal",
+    "specified",
+    "by",
+    "jak",
+    "stat"
+  ],
+  "summary_1l": "Stem cell self-renewal specified by JAK-STAT activation in response to a support cell cue.",
+  "query_hits": [],
+  "embed_text": "11360430 Stem cell self-renewal specified by JAK-STAT activation in response to a support cell cue. science scifact Stem cells generate many differentiated, short-lived cell types, such as blood, skin, and sperm, throughout adult life. Stem cells maintain a long-term capacity to divide, producing daughter cells that either self-renew or initiate… 11360430 stem-cell-self-renewal-specified-by-jak-stat-activation-in-response-to-a-support-cell-cue. stem cell self renewal specified by jak stat Stem cell self-renewal specified by JAK-STAT activation in response to a support cell cue. Stem cell self-renewal specified by JAK-STAT activation in response to a support cell cue. Stem cells generate many differentiated, short-lived cell types, such as blood, skin, and sperm, throughout adult life. Stem cells maintain a long-term capacity to divide, producing daughter cells that either self-renew or initiate differentiation. Although the surrounding microenvironment or \"niche\" influences stem cell fate decisions, few signals that emanate from the niche to specify stem cell self-renewal have been identified. Here we demonstrate that the apical hub cells in the Drosophila testis act as a cellular niche that supports stem cell self-renewal. Hub cells express the ligand Unpaired (Upd), which activates the Janus kinase-signal transducer and activator of transcription (JAK-STAT) pat",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:06.763222+00:00"
+}

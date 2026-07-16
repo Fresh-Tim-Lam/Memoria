@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "kp_id": "administrative-reconsideration",
+  "source_fingerprint": "79c823f9cbeadd2094c7bb9b46bbf3c8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "administrative-reconsideration"
+  ],
+  "key_phrases": [
+    "行政复议",
+    "xingzhengfuyi"
+  ],
+  "summary_1l": "行政复议",
+  "query_hits": [],
+  "embed_text": "administrative-reconsideration 行政复议 administrative-reconsideration 行政复议 xingzhengfuyi 行政复议 行政复议",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-15T12:51:06.245279+00:00"
+}

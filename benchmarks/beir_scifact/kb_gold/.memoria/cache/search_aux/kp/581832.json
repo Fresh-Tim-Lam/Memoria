@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "581832",
+  "source_fingerprint": "6aa8f2d0fcc65d45a227b63a79eb909f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "581832"
+  ],
+  "key_phrases": [
+    "global",
+    "regional",
+    "national",
+    "disability",
+    "adjusted",
+    "life",
+    "years",
+    "dalys"
+  ],
+  "summary_1l": "Global, regional, and national disability-adjusted life-years (DALYs) for 315 diseases and injuries and healthy life expectancy (HALE), 1990–2015: a systematic analysis for the Global Burden of Diseas",
+  "query_hits": [],
+  "embed_text": "581832 Global, regional, and national disability-adjusted life-years (DALYs) for 315 diseases and injuries and healthy life expectancy (HALE), 1990–2015: a systematic analysis for the Global Burden of Disease Study 2015 science scifact BACKGROUND Healthy life expectancy (HALE) and disability-adjusted life-years (DALYs) provide summary measures of health across geographies and time that can inform assessments of epidemiological patterns and health system performance, help… 581832 global regional national disability adjusted life years dalys Global, regional, and national disability-adjusted life-years (DALYs) for 315 diseases and injuries and healthy life expectancy (HALE), 1990–2015: a systematic analysis for the Global Burden of Diseas Global, regional, and national disability-adjusted life-years (DALYs) for 315 diseases and injuries and healthy life expectancy (HALE), 1990–2015: a systematic analysis for the Global Burden of Disease Study 2015 BACKGROUND Healthy life expectancy (HALE) and disability-adjusted life-years (DALYs) provide summary measures of health across geographies and time that can inform assessments of epidemiological patterns and health system performance, help to prioritise investments in research and development, and monitor progress toward the Sustainable Development Goals (SDGs). We aimed to provide updated HALE and DALYs for geographies worldwide and evaluate how disease burden changes with development. METHODS We used results from the Global Burden of Diseases, Injuries, and Risk Factors Study 20",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.178812+00:00"
+}

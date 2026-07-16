@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6669242",
+  "source_fingerprint": "f9991093bcd2dc89d4fadc78de8c979e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6669242",
+    "protein-acetylation-affects-acetate-metabolism,-motility-and-acid-stress-response-in-escherichia-coli"
+  ],
+  "key_phrases": [
+    "protein",
+    "acetylation",
+    "affects",
+    "acetate",
+    "metabolism",
+    "motility",
+    "acid",
+    "stress"
+  ],
+  "summary_1l": "Although protein acetylation is widely observed, it has been associated with few specific regulato",
+  "query_hits": [],
+  "embed_text": "6669242 Protein acetylation affects acetate metabolism, motility and acid stress response in Escherichia coli science scifact Although protein acetylation is widely observed, it has been associated with few specific regulatory functions making it poorly understood. To interrogate its functionality, we analyzed the acetylome in Escherichia coli knockout mutants of… 6669242 protein-acetylation-affects-acetate-metabolism,-motility-and-acid-stress-response-in-escherichia-coli protein acetylation affects acetate metabolism motility acid stress Although protein acetylation is widely observed, it has been associated with few specific regulato Protein acetylation affects acetate metabolism, motility and acid stress response in Escherichia coli Although protein acetylation is widely observed, it has been associated with few specific regulatory functions making it poorly understood. To interrogate its functionality, we analyzed the acetylome in Escherichia coli knockout mutants of cobB, the only known sirtuin-like deacetylase, and patZ, the best-known protein acetyltransferase. For four growth conditions, more than 2,000 unique acetylated peptides, belonging to 809 proteins, were identified and differentially quantified. Nearly 65% of these proteins are related to metabolism. The global activity of CobB contributes to the deacetylation of a large number of substrates and has a major impact on physiology. Apart from the regulation",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.389512+00:00"
+}

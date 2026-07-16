@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "76415938",
+  "source_fingerprint": "975009066e11b89d6be58b2a78d8b52c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "76415938",
+    "baseline-cytology,-human-papillomavirus-testing,-and-risk-for-cervical-neoplasia:-a-10-year-cohort-analysis"
+  ],
+  "key_phrases": [
+    "baseline",
+    "cytology",
+    "human",
+    "papillomavirus",
+    "testing",
+    "risk",
+    "cervical",
+    "neoplasia"
+  ],
+  "summary_1l": "As more is learned about the development of cervical cancer, the value of annual Pap smear s",
+  "query_hits": [],
+  "embed_text": "76415938 Baseline cytology, human papillomavirus testing, and risk for cervical neoplasia: A 10-year cohort analysis science scifact As more is learned about the development of cervical cancer, the value of annual Pap smear screening for all women is being questioned. This study was conducted to investigate whether women at higher risk for the development of cervical… 76415938 baseline-cytology,-human-papillomavirus-testing,-and-risk-for-cervical-neoplasia:-a-10-year-cohort-analysis baseline cytology human papillomavirus testing risk cervical neoplasia As more is learned about the development of cervical cancer, the value of annual Pap smear s Baseline cytology, human papillomavirus testing, and risk for cervical neoplasia: A 10-year cohort analysis As more is learned about the development of cervical cancer, the value of annual Pap smear screening for all women is being questioned. This study was conducted to investigate whether women at higher risk for the development of cervical cancer could be identified by testing for the presence of human papillomavirus (HPV) in the cervical smear. These women could be followed annually, and the interval between screening Pap smears for women at lower risk could be increased. Study participants were women enrolled in the Kaiser Permanente healthcare plan in Portland, Oregon, who underwent annual Pap smear screening between April 1989, and November 1990. More than 20,000 women (20,810 of 23",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.877674+00:00"
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "14171859",
+  "source_fingerprint": "b0fd3afa4202da9e3e5b2282bd59d9a7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14171859"
+  ],
+  "key_phrases": [
+    "regulation",
+    "adrenergic",
+    "receptor",
+    "signaling",
+    "by",
+    "nitrosylation",
+    "protein",
+    "coupled"
+  ],
+  "summary_1l": "beta-adrenergic receptors (beta-ARs), prototypic G-protein-coupled receptors (GPCRs), play a cri",
+  "query_hits": [],
+  "embed_text": "14171859 Regulation of β-Adrenergic Receptor Signaling by S-Nitrosylation of G-Protein-Coupled Receptor Kinase 2 science scifact beta-adrenergic receptors (beta-ARs), prototypic G-protein-coupled receptors (GPCRs), play a critical role in regulating numerous physiological processes. The GPCR kinases (GRKs) curtail G-protein signaling and target receptors for… 14171859 regulation adrenergic receptor signaling by nitrosylation protein coupled beta-adrenergic receptors (beta-ARs), prototypic G-protein-coupled receptors (GPCRs), play a cri Regulation of β-Adrenergic Receptor Signaling by S-Nitrosylation of G-Protein-Coupled Receptor Kinase 2 beta-adrenergic receptors (beta-ARs), prototypic G-protein-coupled receptors (GPCRs), play a critical role in regulating numerous physiological processes. The GPCR kinases (GRKs) curtail G-protein signaling and target receptors for internalization. Nitric oxide (NO) and/or S-nitrosothiols (SNOs) can prevent the loss of beta-AR signaling in vivo, but the molecular details are unknown. Here we show in mice that SNOs increase beta-AR expression and prevent agonist-stimulated receptor downregulation; and in cells, SNOs decrease GRK2-mediated beta-AR phosphorylation and subsequent recruitment of beta-arrestin to the receptor, resulting in the attenuation of receptor desensitization and intern",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.236618+00:00"
+}

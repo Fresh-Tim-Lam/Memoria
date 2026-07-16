@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23440856",
+  "source_fingerprint": "43b690361d60814471f4c943dac24f7a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23440856",
+    "screening-for-inhibition-of-vibrio-cholerae-vipa-vipb-interaction-identifies-small-molecule-compounds-active-against-type-vi-secretion."
+  ],
+  "key_phrases": [
+    "screening",
+    "inhibition",
+    "vibrio",
+    "cholerae",
+    "vipa",
+    "vipb",
+    "interaction",
+    "identifies"
+  ],
+  "summary_1l": "Screening for inhibition of Vibrio cholerae VipA-VipB interaction identifies small-molecule compounds active against type VI secretion.",
+  "query_hits": [],
+  "embed_text": "23440856 Screening for inhibition of Vibrio cholerae VipA-VipB interaction identifies small-molecule compounds active against type VI secretion. science scifact The type VI secretion system (T6SS) is the most prevalent bacterial secretion system and an important virulence mechanism utilized by Gram-negative bacteria, either to target eukaryotic cells or to combat other microbes. The components… 23440856 screening-for-inhibition-of-vibrio-cholerae-vipa-vipb-interaction-identifies-small-molecule-compounds-active-against-type-vi-secretion. screening inhibition vibrio cholerae vipa vipb interaction identifies Screening for inhibition of Vibrio cholerae VipA-VipB interaction identifies small-molecule compounds active against type VI secretion. Screening for inhibition of Vibrio cholerae VipA-VipB interaction identifies small-molecule compounds active against type VI secretion. The type VI secretion system (T6SS) is the most prevalent bacterial secretion system and an important virulence mechanism utilized by Gram-negative bacteria, either to target eukaryotic cells or to combat other microbes. The components show much variability, but some appear essential for the function, and two homologues, denoted VipA and VipB in Vibrio cholerae, have been identified in all T6SSs described so far. Secretion is dependent on binding of an α-helical region of VipA to VipB, and in the absence of this binding, both components are degraded within minutes and secretion is ceased. The aim of the study was to investigate if this interaction could be",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.531207+00:00"
+}

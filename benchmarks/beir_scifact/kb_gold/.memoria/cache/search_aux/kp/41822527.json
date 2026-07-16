@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "41822527",
+  "source_fingerprint": "b4be798ec646d28d6a6f0498e31c8baf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "41822527",
+    "inflammation-and-its-role-in-neuroprotection,-axonal-regeneration-and-functional-recovery-after-spinal-cord-injury."
+  ],
+  "key_phrases": [
+    "inflammation",
+    "its",
+    "role",
+    "neuroprotection",
+    "axonal",
+    "regeneration",
+    "functional",
+    "recovery"
+  ],
+  "summary_1l": "Inflammation and its role in neuroprotection, axonal regeneration and functional recovery after spinal cord injury.",
+  "query_hits": [],
+  "embed_text": "41822527 Inflammation and its role in neuroprotection, axonal regeneration and functional recovery after spinal cord injury. science scifact Trauma to the central nervous system (CNS) triggers intraparenchymal inflammation and activation of systemic immunity with the capacity to exacerbate neuropathology and stimulate mechanisms of tissue repair. Despite our incomplete… 41822527 inflammation-and-its-role-in-neuroprotection,-axonal-regeneration-and-functional-recovery-after-spinal-cord-injury. inflammation its role neuroprotection axonal regeneration functional recovery Inflammation and its role in neuroprotection, axonal regeneration and functional recovery after spinal cord injury. Inflammation and its role in neuroprotection, axonal regeneration and functional recovery after spinal cord injury. Trauma to the central nervous system (CNS) triggers intraparenchymal inflammation and activation of systemic immunity with the capacity to exacerbate neuropathology and stimulate mechanisms of tissue repair. Despite our incomplete understanding of the mechanisms that control these divergent functions, immune-based therapies are becoming a therapeutic focus. This review will address the complexities and controversies of post-traumatic neuroinflammation, particularly in spinal cord. In addition, current therapies designed to target neuroinflammatory cascades will be discussed.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.621113+00:00"
+}

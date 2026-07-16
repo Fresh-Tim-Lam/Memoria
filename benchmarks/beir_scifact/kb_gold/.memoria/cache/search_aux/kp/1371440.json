@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1371440",
+  "source_fingerprint": "63d8d3f47ea04d5960c98573920e1440",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1371440",
+    "aurora-b-phosphorylates-spatially-distinct-targets-to-differentially-regulate-the-kinetochore-microtubule-interface."
+  ],
+  "key_phrases": [
+    "aurora",
+    "phosphorylates",
+    "spatially",
+    "distinct",
+    "targets",
+    "differentially",
+    "regulate",
+    "kinetochore"
+  ],
+  "summary_1l": "Aurora B phosphorylates spatially distinct targets to differentially regulate the kinetochore-microtubule interface.",
+  "query_hits": [],
+  "embed_text": "1371440 Aurora B phosphorylates spatially distinct targets to differentially regulate the kinetochore-microtubule interface. science scifact Accurate chromosome segregation requires carefully regulated interactions between kinetochores and microtubules, but how plasticity is achieved to correct diverse attachment defects remains unclear. Here we demonstrate that Aurora B kinase… 1371440 aurora-b-phosphorylates-spatially-distinct-targets-to-differentially-regulate-the-kinetochore-microtubule-interface. aurora phosphorylates spatially distinct targets differentially regulate kinetochore Aurora B phosphorylates spatially distinct targets to differentially regulate the kinetochore-microtubule interface. Aurora B phosphorylates spatially distinct targets to differentially regulate the kinetochore-microtubule interface. Accurate chromosome segregation requires carefully regulated interactions between kinetochores and microtubules, but how plasticity is achieved to correct diverse attachment defects remains unclear. Here we demonstrate that Aurora B kinase phosphorylates three spatially distinct targets within the conserved outer kinetochore KNL1/Mis12 complex/Ndc80 complex (KMN) network, the key player in kinetochore-microtubule attachments. The combinatorial phosphorylation of the KMN network generates graded levels of microtubule-binding activity, with full phosphorylation severely compromising microtubule binding. Altering the phosphorylation state of each protein causes corresponding ch",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.759317+00:00"
+}

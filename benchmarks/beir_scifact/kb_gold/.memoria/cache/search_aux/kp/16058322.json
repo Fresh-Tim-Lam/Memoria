@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "16058322",
+  "source_fingerprint": "2b296c08e749961eaf73ba942b63cb87",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16058322"
+  ],
+  "key_phrases": [
+    "mda5",
+    "ptpn2",
+    "two",
+    "candidate",
+    "genes",
+    "type",
+    "diabetes",
+    "modify"
+  ],
+  "summary_1l": "beta-Cell destruction in type 1 diabetes (T1D) is at least in pa",
+  "query_hits": [],
+  "embed_text": "16058322 MDA5 and PTPN2, two candidate genes for type 1 diabetes, modify pancreatic β-cell responses to the viral by-product double-stranded RNA science scifact beta-Cell destruction in type 1 diabetes (T1D) is at least in part consequence of a 'dialog' between beta-cells and immune system. This dialog may be affected by the individual's genetic background. We presently evaluated whether… 16058322 mda5 ptpn2 two candidate genes type diabetes modify beta-Cell destruction in type 1 diabetes (T1D) is at least in pa MDA5 and PTPN2, two candidate genes for type 1 diabetes, modify pancreatic β-cell responses to the viral by-product double-stranded RNA beta-Cell destruction in type 1 diabetes (T1D) is at least in part consequence of a 'dialog' between beta-cells and immune system. This dialog may be affected by the individual's genetic background. We presently evaluated whether modulation of MDA5 and PTPN2, two candidate genes for T1D, affects beta-cell responses to double-stranded RNA (dsRNA), a by-product of viral replication. These genes were selected following comparison between known candidate genes for T1D and genes expressed in pancreatic beta-cells, as identified in previous array analysis. INS-1E cells and primary fluorescence-activated cell sorting-purified rat beta-cells were transfected with",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.764677+00:00"
+}

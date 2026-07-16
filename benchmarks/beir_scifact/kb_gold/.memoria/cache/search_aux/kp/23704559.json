@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23704559",
+  "source_fingerprint": "42b600e746012743cfc5122b35743423",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23704559",
+    "frequency-of-intracranial-aneurysms-determined-by-magnetic-resonance-angiography-in-children-(mean-age-16)-having-operative-or-endovascular-treatment-of-coarctation-of-the-aorta-(mean-age-3)."
+  ],
+  "key_phrases": [
+    "frequency",
+    "intracranial",
+    "aneurysms",
+    "determined",
+    "by",
+    "magnetic",
+    "resonance",
+    "angiography"
+  ],
+  "summary_1l": "Frequency of Intracranial Aneurysms Determined by Magnetic Resonance Angiography in Children (Mean Age 16) Having Operative or Endovascular Treatment of Coarctation of the Aorta (Mean Age 3).",
+  "query_hits": [],
+  "embed_text": "23704559 Frequency of Intracranial Aneurysms Determined by Magnetic Resonance Angiography in Children (Mean Age 16) Having Operative or Endovascular Treatment of Coarctation of the Aorta (Mean Age 3). science scifact Coarctation of the aorta (CofA) has been associated with an increased risk of intracranial aneurysm (IA). This magnetic resonance angiography (MRA) study investigates the prevalence of IAs in 80 children treated in early life for CofA. MRA… 23704559 frequency-of-intracranial-aneurysms-determined-by-magnetic-resonance-angiography-in-children-(mean-age-16)-having-operative-or-endovascular-treatment-of-coarctation-of-the-aorta-(mean-age-3). frequency intracranial aneurysms determined by magnetic resonance angiography Frequency of Intracranial Aneurysms Determined by Magnetic Resonance Angiography in Children (Mean Age 16) Having Operative or Endovascular Treatment of Coarctation of the Aorta (Mean Age 3). Frequency of Intracranial Aneurysms Determined by Magnetic Resonance Angiography in Children (Mean Age 16) Having Operative or Endovascular Treatment of Coarctation of the Aorta (Mean Age 3). Coarctation of the aorta (CofA) has been associated with an increased risk of intracranial aneurysm (IA). This magnetic resonance angiography (MRA) study investigates the prevalence of IAs in 80 children treated in early life for CofA. MRA was performed at mean age of 15.7 ± 7.1 years, and surgical or endovascular treatment for CofA occurred at a mean age of 2.6 ± 4.4 years. No IA was found. In contrast with earlier findings in adult patients with late treatment for CofA, this first systematic study of very early treated patients for CofA failed to confirm the association between CofA and IAs. Our res",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.011515+00:00"
+}

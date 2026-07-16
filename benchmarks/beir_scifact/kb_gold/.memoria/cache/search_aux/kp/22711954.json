@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22711954",
+  "source_fingerprint": "acb186e72bee7f05ed837d395e52dafd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22711954",
+    "bias-in-meta-analysis-detected-by-a-simple,-graphical-test."
+  ],
+  "key_phrases": [
+    "bias",
+    "meta",
+    "analysis",
+    "detected",
+    "by",
+    "simple",
+    "graphical",
+    "test"
+  ],
+  "summary_1l": "Bias in meta-analysis detected by a simple, graphical test.",
+  "query_hits": [],
+  "embed_text": "22711954 Bias in meta-analysis detected by a simple, graphical test. science scifact OBJECTIVE Funnel plots (plots of effect estimates against sample size) may be useful to detect bias in meta-analyses that were later contradicted by large trials. We examined whether a simple test of asymmetry of funnel plots predicts… 22711954 bias-in-meta-analysis-detected-by-a-simple,-graphical-test. bias meta analysis detected by simple graphical test Bias in meta-analysis detected by a simple, graphical test. Bias in meta-analysis detected by a simple, graphical test. OBJECTIVE Funnel plots (plots of effect estimates against sample size) may be useful to detect bias in meta-analyses that were later contradicted by large trials. We examined whether a simple test of asymmetry of funnel plots predicts discordance of results when meta-analyses are compared to large trials, and we assessed the prevalence of bias in published meta-analyses. DESIGN Medline search to identify pairs consisting of a meta-analysis and a single large trial (concordance of results was assumed if effects were in the same direction and the meta-analytic estimate was within 30% of the trial); analysis of funnel plots from 37 meta-analyses identified from a hand search of four leading general medicine journals 1993-6 and 38 met",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.266620+00:00"
+}

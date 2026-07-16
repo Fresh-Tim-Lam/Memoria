@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1360607",
+  "source_fingerprint": "0b41b9255a3dd9c47e2f17b1a58e04ce",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1360607",
+    "antioxidants-attenuate-the-plasma-cytokine-response-to-exercise-in-humans."
+  ],
+  "key_phrases": [
+    "antioxidants",
+    "attenuate",
+    "plasma",
+    "cytokine",
+    "response",
+    "exercise",
+    "humans",
+    "increases"
+  ],
+  "summary_1l": "Antioxidants attenuate the plasma cytokine response to exercise in humans.",
+  "query_hits": [],
+  "embed_text": "1360607 Antioxidants attenuate the plasma cytokine response to exercise in humans. science scifact Exercise increases plasma TNF-alpha, IL-1beta, and IL-6, yet the stimuli and sources of TNF-alpha and IL-1beta remain largely unknown. We tested the role of oxidative stress and the potential contribution of monocytes in this cytokine… 1360607 antioxidants-attenuate-the-plasma-cytokine-response-to-exercise-in-humans. antioxidants attenuate plasma cytokine response exercise humans increases Antioxidants attenuate the plasma cytokine response to exercise in humans. Antioxidants attenuate the plasma cytokine response to exercise in humans. Exercise increases plasma TNF-alpha, IL-1beta, and IL-6, yet the stimuli and sources of TNF-alpha and IL-1beta remain largely unknown. We tested the role of oxidative stress and the potential contribution of monocytes in this cytokine (especially IL-1beta) response in previously untrained individuals. Six healthy nonathletes performed two 45-min bicycle exercise sessions at 70% of Vo(2 max) before and after a combination of antioxidants (vitamins E, A, and C for 60 days; allopurinol for 15 days; and N-acetylcysteine for 3 days). Blood was drawn at baseline, end-exercise, and 30 and 120 min postexercise. Plasma cytokines were determined by ELISA and monocyte intracellular cytokine level by flow cytometry. Before anti",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.608299+00:00"
+}

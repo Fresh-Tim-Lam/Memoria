@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9875570",
+  "source_fingerprint": "9d38a860757dccc313ec3634c89aaa9b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9875570",
+    "dna-replication-fidelity"
+  ],
+  "key_phrases": [
+    "dna",
+    "replication",
+    "fidelity",
+    "key",
+    "determinant",
+    "genome",
+    "stability",
+    "central"
+  ],
+  "summary_1l": "DNA replication fidelity is a key determinant of genome stability and is central to the evolution of species and to the origins of human diseases.",
+  "query_hits": [],
+  "embed_text": "9875570 DNA replication fidelity science scifact DNA replication fidelity is a key determinant of genome stability and is central to the evolution of species and to the origins of human diseases. Here we review our current understanding of replication fidelity, with emphasis on… 9875570 dna-replication-fidelity dna replication fidelity key determinant genome stability central DNA replication fidelity is a key determinant of genome stability and is central to the evolution of species and to the origins of human diseases. DNA replication fidelity DNA replication fidelity is a key determinant of genome stability and is central to the evolution of species and to the origins of human diseases. Here we review our current understanding of replication fidelity, with emphasis on structural and biochemical studies of DNA polymerases that provide new insights into the importance of hydrogen bonding, base pair geometry, and substrate-induced conformational changes to fidelity. These studies also reveal polymerase interactions with the DNA minor groove at and upstream of the active site that influence nucleotide selectivity, the efficiency of exonucleolytic proofreading, and the rate of forming errors via strand misalignments. We highlight common features that are relevant to the fidelity of any DNA synthesis reaction",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:06.000603+00:00"
+}

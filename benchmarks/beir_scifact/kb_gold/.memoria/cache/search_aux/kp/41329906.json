@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "41329906",
+  "source_fingerprint": "07c4b5f2457a952a7b52e798df460e1b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "41329906",
+    "[detection-of-crispr-and-its-relationship-to-drug-resistance-in-shigella]."
+  ],
+  "key_phrases": [
+    "detection",
+    "crispr",
+    "its",
+    "relationship",
+    "drug",
+    "resistance",
+    "shigella",
+    "objective"
+  ],
+  "summary_1l": "[Detection of CRISPR and its relationship to drug resistance in Shigella].",
+  "query_hits": [],
+  "embed_text": "41329906 [Detection of CRISPR and its relationship to drug resistance in Shigella]. science scifact OBJECTIVE To detect clustered regularly interspaced short palindromic repeats (CRISPR) in Shigella, and to analyze its relationship to drug resistance. METHODS Four pairs of primers were used for the detection of convincing CRISPR… 41329906 [detection-of-crispr-and-its-relationship-to-drug-resistance-in-shigella]. detection crispr its relationship drug resistance shigella objective [Detection of CRISPR and its relationship to drug resistance in Shigella]. [Detection of CRISPR and its relationship to drug resistance in Shigella]. OBJECTIVE To detect clustered regularly interspaced short palindromic repeats (CRISPR) in Shigella, and to analyze its relationship to drug resistance. METHODS Four pairs of primers were used for the detection of convincing CRISPR structures CRISPR-S2 and CRISPR-S4, questionable CRISPR structures CRISPR-S1 and CRISPR-S3 in 60 Shigella strains. All primers were designed using sequences in CRISPR database. CRISPR Finder was used to analyze CRISPR and susceptibilities of Shigella strains were tested by agar diffusion method. Furthermore, we analyzed the relationship between drug resistance and CRISPR-S4. RESULTS The positive rate of convincing CRISPR structures was 95%. The four CRISPR loci formed 12 spectral patterns",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.341199+00:00"
+}

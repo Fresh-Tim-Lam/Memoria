@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14119470",
+  "source_fingerprint": "6d0e3039e0f90ec7d0d3a5de9352085f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14119470",
+    "the-ran-gtpase-regulates-mitotic-spindle-assembly"
+  ],
+  "key_phrases": [
+    "ran",
+    "gtpase",
+    "regulates",
+    "mitotic",
+    "spindle",
+    "assembly",
+    "abundant",
+    "nuclear"
+  ],
+  "summary_1l": "Ran is an abundant nuclear GTPase with a clear role in nuclear transport during interphase but with roles in mitotic regulation that are less well und",
+  "query_hits": [],
+  "embed_text": "14119470 The Ran GTPase regulates mitotic spindle assembly science scifact Ran is an abundant nuclear GTPase with a clear role in nuclear transport during interphase but with roles in mitotic regulation that are less well understood. The nucleotide-binding state of Ran is regulated by a GTPase activating protein,… 14119470 the-ran-gtpase-regulates-mitotic-spindle-assembly ran gtpase regulates mitotic spindle assembly abundant nuclear Ran is an abundant nuclear GTPase with a clear role in nuclear transport during interphase but with roles in mitotic regulation that are less well und The Ran GTPase regulates mitotic spindle assembly Ran is an abundant nuclear GTPase with a clear role in nuclear transport during interphase but with roles in mitotic regulation that are less well understood. The nucleotide-binding state of Ran is regulated by a GTPase activating protein, RanGAP1, and by a guanine nucleotide exchange factor, RCC1. Ran also interacts with a guanine nucleotide dissociation inhibitor, RanBP1. RanBP1 has a high affinity for GTP-bound Ran, and it acts as a cofactor for RanGAP1, increasing the rate of GAP-mediated GTP hydrolysis on Ran approximately tenfold. RanBP1 levels oscillate during the cell cycle [4], and increased concentrations of RanBP1 prolong mitosis in mammalian cells and in Xenopus egg extracts (our unpublished observations). We investigated how in",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.143244+00:00"
+}

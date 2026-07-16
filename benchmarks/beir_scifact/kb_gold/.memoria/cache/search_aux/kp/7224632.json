@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7224632",
+  "source_fingerprint": "f4d63fbbb5648383d398c7a24444d63b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7224632",
+    "a-longitudinal-diffusion-tensor-imaging-study-assessing-white-matter-fiber-tracts-after-sports-related-concussion."
+  ],
+  "key_phrases": [
+    "longitudinal",
+    "diffusion",
+    "tensor",
+    "imaging",
+    "study",
+    "assessing",
+    "white",
+    "matter"
+  ],
+  "summary_1l": "A longitudinal diffusion tensor imaging study assessing white matter fiber tracts after sports-related concussion.",
+  "query_hits": [],
+  "embed_text": "7224632 A longitudinal diffusion tensor imaging study assessing white matter fiber tracts after sports-related concussion. science scifact The extent of structural injury in sports-related concussion (SRC) is central to the course of recovery, long-term effects, and the decision to return to play. In the present longitudinal study, we used diffusion tensor imaging (DTI) to… 7224632 a-longitudinal-diffusion-tensor-imaging-study-assessing-white-matter-fiber-tracts-after-sports-related-concussion. longitudinal diffusion tensor imaging study assessing white matter A longitudinal diffusion tensor imaging study assessing white matter fiber tracts after sports-related concussion. A longitudinal diffusion tensor imaging study assessing white matter fiber tracts after sports-related concussion. The extent of structural injury in sports-related concussion (SRC) is central to the course of recovery, long-term effects, and the decision to return to play. In the present longitudinal study, we used diffusion tensor imaging (DTI) to assess white matter (WM) fiber tract integrity within 2 days, 2 weeks, and 2 months of concussive injury. Participants were right-handed male varsity contact-sport athletes (20.2±1.0 years of age) with a medically diagnosed SRC (no loss of consciousness). They were compared to right-handed male varsity non-contact-sport athletes serving as controls (19.9±1.7 years). We found significantly increased radial diffusivity (RD) in concussed athletes",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.828313+00:00"
+}

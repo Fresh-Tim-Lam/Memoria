@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19541444",
+  "source_fingerprint": "e78e5134fb712edc44b0e2f77df75d6f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19541444",
+    "meg3-imprinted-gene-contribution-in-tumorigenesis."
+  ],
+  "key_phrases": [
+    "meg3",
+    "imprinted",
+    "gene",
+    "contribution",
+    "tumorigenesis",
+    "maternally",
+    "expressed",
+    "representing"
+  ],
+  "summary_1l": "MEG3 imprinted gene contribution in tumorigenesis.",
+  "query_hits": [],
+  "embed_text": "19541444 MEG3 imprinted gene contribution in tumorigenesis. science scifact Maternally expressed gene 3 (MEG3) is a maternally expressed imprinted gene representing a large noncoding RNA in which microRNAs (miRNAs) and small nucleolar RNAs are also hosted. It is capable of interacting with cyclic AMP, p53, murine… 19541444 meg3-imprinted-gene-contribution-in-tumorigenesis. meg3 imprinted gene contribution tumorigenesis maternally expressed representing MEG3 imprinted gene contribution in tumorigenesis. MEG3 imprinted gene contribution in tumorigenesis. Maternally expressed gene 3 (MEG3) is a maternally expressed imprinted gene representing a large noncoding RNA in which microRNAs (miRNAs) and small nucleolar RNAs are also hosted. It is capable of interacting with cyclic AMP, p53, murine double minute 2 (MDM2) and growth differentiation factor 15 (GDF15) playing a role in cell proliferation control. MEG3 expression is under epigenetic control, and aberrant CpG methylation has been observed in several types of cancer. Moreover, gene copy number loss has been reported as additional mechanism associated with tumorigenesis. MEG3 deletion seems to upregulate the paternally expressed genes and on the other hand downregulate the expression of downstream maternally expressed genes and tumor suppr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.767542+00:00"
+}

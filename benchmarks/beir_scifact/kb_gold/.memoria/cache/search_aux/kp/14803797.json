@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14803797",
+  "source_fingerprint": "e55c253cff8d80e373fab2d14e2f59ce",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14803797",
+    "intestinal-microbiota-metabolism-of-l-carnitine,-a-nutrient-in-red-meat,-promotes-atherosclerosis"
+  ],
+  "key_phrases": [
+    "intestinal",
+    "microbiota",
+    "metabolism",
+    "carnitine",
+    "nutrient",
+    "red",
+    "meat",
+    "promotes"
+  ],
+  "summary_1l": "Intestinal microbiota metabolism of choline and phosphatidylcholine produces trimethylamine (TMA), whi",
+  "query_hits": [],
+  "embed_text": "14803797 Intestinal microbiota metabolism of L-carnitine, a nutrient in red meat, promotes atherosclerosis science scifact Intestinal microbiota metabolism of choline and phosphatidylcholine produces trimethylamine (TMA), which is further metabolized to a proatherogenic species, trimethylamine-N-oxide (TMAO). We demonstrate here that metabolism by intestinal… 14803797 intestinal-microbiota-metabolism-of-l-carnitine,-a-nutrient-in-red-meat,-promotes-atherosclerosis intestinal microbiota metabolism carnitine nutrient red meat promotes Intestinal microbiota metabolism of choline and phosphatidylcholine produces trimethylamine (TMA), whi Intestinal microbiota metabolism of L-carnitine, a nutrient in red meat, promotes atherosclerosis Intestinal microbiota metabolism of choline and phosphatidylcholine produces trimethylamine (TMA), which is further metabolized to a proatherogenic species, trimethylamine-N-oxide (TMAO). We demonstrate here that metabolism by intestinal microbiota of dietary L-carnitine, a trimethylamine abundant in red meat, also produces TMAO and accelerates atherosclerosis in mice. Omnivorous human subjects produced more TMAO than did vegans or vegetarians following ingestion of L-carnitine through a microbiota-dependent mechanism. The presence of specific bacterial taxa in human feces was associated with both plasma TMAO concentration and dietary status. Plasma L-carnitine levels in subjects undergoing ca",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.659051+00:00"
+}

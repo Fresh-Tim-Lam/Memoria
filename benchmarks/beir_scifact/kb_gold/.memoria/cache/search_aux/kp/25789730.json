@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25789730",
+  "source_fingerprint": "4257c609dab9b3a68029eee1acba9686",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25789730",
+    "diffusion-tensor-imaging-detects-and-differentiates-axon-and-myelin-degeneration-in-mouse-optic-nerve-after-retinal-ischemia."
+  ],
+  "key_phrases": [
+    "diffusion",
+    "tensor",
+    "imaging",
+    "detects",
+    "differentiates",
+    "axon",
+    "myelin",
+    "degeneration"
+  ],
+  "summary_1l": "Diffusion tensor imaging detects and differentiates axon and myelin degeneration in mouse optic nerve after retinal ischemia.",
+  "query_hits": [],
+  "embed_text": "25789730 Diffusion tensor imaging detects and differentiates axon and myelin degeneration in mouse optic nerve after retinal ischemia. science scifact Both axon and myelin degeneration have significant impact on the long-term disability of patients with white matter disorder. However, the clinical manifestations of the neurological dysfunction caused by white matter disorders are not… 25789730 diffusion-tensor-imaging-detects-and-differentiates-axon-and-myelin-degeneration-in-mouse-optic-nerve-after-retinal-ischemia. diffusion tensor imaging detects differentiates axon myelin degeneration Diffusion tensor imaging detects and differentiates axon and myelin degeneration in mouse optic nerve after retinal ischemia. Diffusion tensor imaging detects and differentiates axon and myelin degeneration in mouse optic nerve after retinal ischemia. Both axon and myelin degeneration have significant impact on the long-term disability of patients with white matter disorder. However, the clinical manifestations of the neurological dysfunction caused by white matter disorders are not sufficient to determine the origin of neurological deficits. A noninvasive biological marker capable of detecting and differentiating axon and myelin degeneration would be a significant addition to currently available tools. Directional diffusivities derived from diffusion tensor imaging (DTI) have been previously proposed by this group as potential biological markers to detect and differentiate axon and myelin degeneration. To furthe",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.415958+00:00"
+}

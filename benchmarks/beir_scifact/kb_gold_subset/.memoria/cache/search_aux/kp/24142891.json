@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24142891",
+  "source_fingerprint": "73591382f0b739e00197d693da844bac",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24142891",
+    "tmem27:-a-cleaved-and-shed-plasma-membrane-protein-that-stimulates-pancreatic-beta-cell-proliferation."
+  ],
+  "key_phrases": [
+    "tmem27",
+    "cleaved",
+    "shed",
+    "plasma",
+    "membrane",
+    "protein",
+    "that",
+    "stimulates"
+  ],
+  "summary_1l": "Tmem27: a cleaved and shed plasma membrane protein that stimulates pancreatic beta cell proliferation.",
+  "query_hits": [],
+  "embed_text": "24142891 Tmem27: a cleaved and shed plasma membrane protein that stimulates pancreatic beta cell proliferation. science scifact The signals and molecular mechanisms that regulate the replication of terminally differentiated beta cells are unknown. Here, we report the identification and characterization of transmembrane protein 27 (Tmem27, collectrin) in pancreatic… 24142891 tmem27:-a-cleaved-and-shed-plasma-membrane-protein-that-stimulates-pancreatic-beta-cell-proliferation. tmem27 cleaved shed plasma membrane protein that stimulates Tmem27: a cleaved and shed plasma membrane protein that stimulates pancreatic beta cell proliferation. Tmem27: a cleaved and shed plasma membrane protein that stimulates pancreatic beta cell proliferation. The signals and molecular mechanisms that regulate the replication of terminally differentiated beta cells are unknown. Here, we report the identification and characterization of transmembrane protein 27 (Tmem27, collectrin) in pancreatic beta cells. Expression of Tmem27 is reduced in Tcf1(-/-) mice and is increased in islets of mouse models with hypertrophy of the endocrine pancreas. Tmem27 forms dimers and its extracellular domain is glycosylated, cleaved and shed from the plasma membrane of beta cells. This cleavage process is beta cell specific and does not occur in other cell types. Overexpression of full-length Tmem27, but not the truncated or soluble protein, leads to increased thy",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:12.492438+00:00"
+}

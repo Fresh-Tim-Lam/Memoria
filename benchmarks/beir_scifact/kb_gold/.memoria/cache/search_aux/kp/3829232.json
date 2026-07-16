@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3829232",
+  "source_fingerprint": "30a11d2b8389ebb0ea4ff97c572b57cf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3829232",
+    "structural-studies-of-a-four-mbt-repeat-protein-mbtd1"
+  ],
+  "key_phrases": [
+    "structural",
+    "studies",
+    "four",
+    "mbt",
+    "repeat",
+    "protein",
+    "mbtd1",
+    "background"
+  ],
+  "summary_1l": "BACKGROUND The Polycomb group (PcG) of proteins is a family of important developmental regulators.",
+  "query_hits": [],
+  "embed_text": "3829232 Structural Studies of a Four-MBT Repeat Protein MBTD1 science scifact BACKGROUND The Polycomb group (PcG) of proteins is a family of important developmental regulators. The respective members function as large protein complexes involved in establishment and maintenance of transcriptional repression of… 3829232 structural-studies-of-a-four-mbt-repeat-protein-mbtd1 structural studies four mbt repeat protein mbtd1 background BACKGROUND The Polycomb group (PcG) of proteins is a family of important developmental regulators. Structural Studies of a Four-MBT Repeat Protein MBTD1 BACKGROUND The Polycomb group (PcG) of proteins is a family of important developmental regulators. The respective members function as large protein complexes involved in establishment and maintenance of transcriptional repression of developmental control genes. MBTD1, Malignant Brain Tumor domain-containing protein 1, is one such PcG protein. MBTD1 contains four MBT repeats. METHODOLOGY/PRINCIPAL FINDINGS We have determined the crystal structure of MBTD1 (residues 130-566aa covering the 4 MBT repeats) at 2.5 A resolution by X-ray crystallography. The crystal structure of MBTD1 reveals its similarity to another four-MBT-repeat protein L3MBTL2, which binds lower methylated lysine histones. Fluorescence polarization experiments confirmed t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.359812+00:00"
+}

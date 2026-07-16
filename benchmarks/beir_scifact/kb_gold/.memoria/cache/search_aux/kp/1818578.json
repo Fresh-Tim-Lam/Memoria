@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1818578",
+  "source_fingerprint": "2d565345574bca8c66b33e45f078212a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1818578",
+    "systems-metabolic-engineering-of-escherichia-coli-for-l-threonine-production"
+  ],
+  "key_phrases": [
+    "systems",
+    "metabolic",
+    "engineering",
+    "escherichia",
+    "coli",
+    "threonine",
+    "production",
+    "amino"
+  ],
+  "summary_1l": "Amino-acid producers have traditionally been developed by repeated random mutagenesis owing to the difficulty in rationally",
+  "query_hits": [],
+  "embed_text": "1818578 Systems metabolic engineering of Escherichia coli for L-threonine production science scifact Amino-acid producers have traditionally been developed by repeated random mutagenesis owing to the difficulty in rationally engineering the complex and highly regulated metabolic network. Here, we report the development of the genetically… 1818578 systems-metabolic-engineering-of-escherichia-coli-for-l-threonine-production systems metabolic engineering escherichia coli threonine production amino Amino-acid producers have traditionally been developed by repeated random mutagenesis owing to the difficulty in rationally Systems metabolic engineering of Escherichia coli for L-threonine production Amino-acid producers have traditionally been developed by repeated random mutagenesis owing to the difficulty in rationally engineering the complex and highly regulated metabolic network. Here, we report the development of the genetically defined L-threonine overproducing Escherichia coli strain by systems metabolic engineering. Feedback inhibitions of aspartokinase I and III (encoded by thrA and lysC, respectively) and transcriptional attenuation regulations (located in thrL) were removed. Pathways for Thr degradation were removed by deleting tdh and mutating ilvA. The metA and lysA genes were deleted to make more precursors available for Thr biosynthesis. Further target genes to be engineered were identified by",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.869278+00:00"
+}

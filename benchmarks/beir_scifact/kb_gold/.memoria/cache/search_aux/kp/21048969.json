@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21048969",
+  "source_fingerprint": "ef1e372745b86b36584b3c50c1387ef9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21048969",
+    "evaluation-of-the-association-between-the-first-observation-and-the-longitudinal-change-in-c-reactive-protein,-and-all-cause-mortality."
+  ],
+  "key_phrases": [
+    "evaluation",
+    "association",
+    "between",
+    "first",
+    "observation",
+    "longitudinal",
+    "change",
+    "reactive"
+  ],
+  "summary_1l": "Evaluation of the association between the first observation and the longitudinal change in C-reactive protein, and all-cause mortality.",
+  "query_hits": [],
+  "embed_text": "21048969 Evaluation of the association between the first observation and the longitudinal change in C-reactive protein, and all-cause mortality. science scifact OBJECTIVE To evaluate the association between vascular inflammation as measured by subacute C-reactive protein (CRP; 1-10 mg/l) and all-cause mortality and the association between change in CRP status (normal <or=3 mg/l and elevated >3… 21048969 evaluation-of-the-association-between-the-first-observation-and-the-longitudinal-change-in-c-reactive-protein,-and-all-cause-mortality. evaluation association between first observation longitudinal change reactive Evaluation of the association between the first observation and the longitudinal change in C-reactive protein, and all-cause mortality. Evaluation of the association between the first observation and the longitudinal change in C-reactive protein, and all-cause mortality. OBJECTIVE To evaluate the association between vascular inflammation as measured by subacute C-reactive protein (CRP; 1-10 mg/l) and all-cause mortality and the association between change in CRP status (normal <or=3 mg/l and elevated >3 mg/l) and all-cause mortality. METHODS Probabilistic record linkage was used to match hospital episode data, laboratory reports and mortality statistics in a large urban population. Survival was evaluated using Cox proportional hazards regression models. RESULTS 22 962 patients had their first CRP measurement in the subacute range (1-10 mg/l). Analysis grouped by each additional unit increase in CRP across the subacute range",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.325622+00:00"
+}

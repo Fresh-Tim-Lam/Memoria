@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "33634749",
+  "source_fingerprint": "adaebdd704c850c6cce0b23f30c0bed7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "33634749",
+    "induction-of-circadian-gene-expression-in-human-subcutaneous-adipose-derived-stem-cells."
+  ],
+  "key_phrases": [
+    "induction",
+    "circadian",
+    "gene",
+    "expression",
+    "human",
+    "subcutaneous",
+    "adipose",
+    "derived"
+  ],
+  "summary_1l": "Induction of circadian gene expression in human subcutaneous adipose-derived stem cells.",
+  "query_hits": [],
+  "embed_text": "33634749 Induction of circadian gene expression in human subcutaneous adipose-derived stem cells. science scifact OBJECTIVE Genes encoding the circadian transcriptional apparatus exhibit robust oscillatory expression in murine adipose tissues. This study tests the hypothesis that human subcutaneous adipose-derived stem cells (ASCs) provide an in vitro… 33634749 induction-of-circadian-gene-expression-in-human-subcutaneous-adipose-derived-stem-cells. induction circadian gene expression human subcutaneous adipose derived Induction of circadian gene expression in human subcutaneous adipose-derived stem cells. Induction of circadian gene expression in human subcutaneous adipose-derived stem cells. OBJECTIVE Genes encoding the circadian transcriptional apparatus exhibit robust oscillatory expression in murine adipose tissues. This study tests the hypothesis that human subcutaneous adipose-derived stem cells (ASCs) provide an in vitro model in which to monitor the activity of the core circadian transcriptional apparatus. RESEARCH METHODS AND PROCEDURES Primary cultures of undifferentiated or adipocyte-differentiated ASCs were treated with dexamethasone, rosiglitazone, or 30% fetal bovine serum. The response of undifferentiated ASCs to dexamethasone was further evaluated in the presence of lithium chloride. Lithium inhibits glycogen synthase kinase 3, a key component of the circadian apparatus. Tot",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.565344+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3230557",
+  "source_fingerprint": "1da354a1de114c080baf6268f1f23ad3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3230557",
+    "the-hallmarks-of-aging"
+  ],
+  "key_phrases": [
+    "hallmarks",
+    "aging",
+    "characterized",
+    "by",
+    "progressive",
+    "loss",
+    "physiological",
+    "integrity"
+  ],
+  "summary_1l": "Aging is characterized by a progressive loss of physiological integrity, leading to impaired function and increased vulnerability to death.",
+  "query_hits": [],
+  "embed_text": "3230557 The Hallmarks of Aging science scifact Aging is characterized by a progressive loss of physiological integrity, leading to impaired function and increased vulnerability to death. This deterioration is the primary risk factor for major human pathologies, including cancer,… 3230557 the-hallmarks-of-aging hallmarks aging characterized by progressive loss physiological integrity Aging is characterized by a progressive loss of physiological integrity, leading to impaired function and increased vulnerability to death. The Hallmarks of Aging Aging is characterized by a progressive loss of physiological integrity, leading to impaired function and increased vulnerability to death. This deterioration is the primary risk factor for major human pathologies, including cancer, diabetes, cardiovascular disorders, and neurodegenerative diseases. Aging research has experienced an unprecedented advance over recent years, particularly with the discovery that the rate of aging is controlled, at least to some extent, by genetic pathways and biochemical processes conserved in evolution. This Review enumerates nine tentative hallmarks that represent common denominators of aging in different organisms, with special emphasis on mammalian aging. These hallmarks are: genomic instability, telomere attrition, epigenetic alter",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.379449+00:00"
+}

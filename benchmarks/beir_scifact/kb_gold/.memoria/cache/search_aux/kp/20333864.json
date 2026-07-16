@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20333864",
+  "source_fingerprint": "57af220ea0dbb25342bdafcbdacea855",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20333864",
+    "regulation-of-in-situ-to-invasive-breast-carcinoma-transition."
+  ],
+  "key_phrases": [
+    "regulation",
+    "situ",
+    "invasive",
+    "breast",
+    "carcinoma",
+    "transition",
+    "ductal",
+    "dcis"
+  ],
+  "summary_1l": "Regulation of in situ to invasive breast carcinoma transition.",
+  "query_hits": [],
+  "embed_text": "20333864 Regulation of in situ to invasive breast carcinoma transition. science scifact The transition of ductal carcinoma in situ (DCIS) to invasive carcinoma is a poorly understood key event in breast tumor progression. Here, we analyzed the role of myoepithelial cells and fibroblasts in the progression of in situ… 20333864 regulation-of-in-situ-to-invasive-breast-carcinoma-transition. regulation situ invasive breast carcinoma transition ductal dcis Regulation of in situ to invasive breast carcinoma transition. Regulation of in situ to invasive breast carcinoma transition. The transition of ductal carcinoma in situ (DCIS) to invasive carcinoma is a poorly understood key event in breast tumor progression. Here, we analyzed the role of myoepithelial cells and fibroblasts in the progression of in situ carcinomas using a model of human DCIS and primary breast tumors. Progression to invasion was promoted by fibroblasts and inhibited by normal myoepithelial cells. Molecular profiles of isolated luminal epithelial and myoepithelial cells identified an intricate interaction network involving TGFbeta, Hedgehog, cell adhesion, and p63 required for myoepithelial cell differentiation, the elimination of which resulted in loss of myoepithelial cells and progression to invasion.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.062543+00:00"
+}

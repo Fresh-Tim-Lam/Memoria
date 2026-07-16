@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7997337",
+  "source_fingerprint": "0219d13b0aaadcc02cea0147de2d6183",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7997337",
+    "synaptic-determinants-of-rett-syndrome"
+  ],
+  "key_phrases": [
+    "synaptic",
+    "determinants",
+    "rett",
+    "syndrome",
+    "there",
+    "mounting",
+    "evidence",
+    "showing"
+  ],
+  "summary_1l": "There is mounting evidence showing that the structural and molecular organization of synaptic connections is affected both in human patients and in animal models",
+  "query_hits": [],
+  "embed_text": "7997337 Synaptic Determinants of Rett Syndrome science scifact There is mounting evidence showing that the structural and molecular organization of synaptic connections is affected both in human patients and in animal models of neurological and psychiatric diseases. As a consequence of these… 7997337 synaptic-determinants-of-rett-syndrome synaptic determinants rett syndrome there mounting evidence showing There is mounting evidence showing that the structural and molecular organization of synaptic connections is affected both in human patients and in animal models Synaptic Determinants of Rett Syndrome There is mounting evidence showing that the structural and molecular organization of synaptic connections is affected both in human patients and in animal models of neurological and psychiatric diseases. As a consequence of these experimental observations, it has been introduced the concept of synapsopathies, a notion describing brain disorders of synaptic function and plasticity. A close correlation between neurological diseases and synaptic abnormalities is especially relevant for those syndromes including also mental retardation in their symptomatology, such as Rett syndrome (RS). RS (MIM312750) is an X-linked dominant neurological disorder that is caused in the majority of cases by mutations in methyl-CpG-binding protein 2 (MeCP2). This review wil",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.682404+00:00"
+}

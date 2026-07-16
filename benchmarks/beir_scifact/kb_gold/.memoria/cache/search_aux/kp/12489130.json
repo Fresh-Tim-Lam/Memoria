@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12489130",
+  "source_fingerprint": "550bb8f86ef5f7b9931adfa7ec331117",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12489130",
+    "growth-and-invasion-of-human-melanomas-in-human-skin-grafted-to-immunodeficient-mice."
+  ],
+  "key_phrases": [
+    "growth",
+    "invasion",
+    "human",
+    "melanomas",
+    "skin",
+    "grafted",
+    "immunodeficient",
+    "mice"
+  ],
+  "summary_1l": "Growth and invasion of human melanomas in human skin grafted to immunodeficient mice.",
+  "query_hits": [],
+  "embed_text": "12489130 Growth and invasion of human melanomas in human skin grafted to immunodeficient mice. science scifact An orthotopic model of human melanoma was developed in which malignant cells were injected into human skin grafted to nude and SCID mice. Melanoma cells proliferated and invaded the human skin grafts with characteristic patterns. Three of… 12489130 growth-and-invasion-of-human-melanomas-in-human-skin-grafted-to-immunodeficient-mice. growth invasion human melanomas skin grafted immunodeficient mice Growth and invasion of human melanomas in human skin grafted to immunodeficient mice. Growth and invasion of human melanomas in human skin grafted to immunodeficient mice. An orthotopic model of human melanoma was developed in which malignant cells were injected into human skin grafted to nude and SCID mice. Melanoma cells proliferated and invaded the human skin grafts with characteristic patterns. Three of six melanomas grew as multiple nodules and infiltered the grafts without major architectural changes in the dermis, whereas the others invaded the dermis along collagen fibers with prominent endothelial vessels. By contrast, melanoma cells inoculated into mouse skin grew as diffusely expanding nodules that did not invade the murine dermis. In human skin grafts, human melanoma cells were angiogenic for human blood vessels, and murine vessels were only found at the periphe",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:08.452370+00:00"
+}

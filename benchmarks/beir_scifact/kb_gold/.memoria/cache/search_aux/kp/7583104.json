@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7583104",
+  "source_fingerprint": "1949a8e192a93dcfb4bd480c8322b5c6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7583104",
+    "ideal-in-meshes-for-prolapse,-urinary-incontinence,-and-hernia-repair."
+  ],
+  "key_phrases": [
+    "ideal",
+    "meshes",
+    "prolapse",
+    "urinary",
+    "incontinence",
+    "hernia",
+    "repair",
+    "purpose"
+  ],
+  "summary_1l": "IDEAL in meshes for prolapse, urinary incontinence, and hernia repair.",
+  "query_hits": [],
+  "embed_text": "7583104 IDEAL in meshes for prolapse, urinary incontinence, and hernia repair. science scifact PURPOSE Mesh surgeries are counted among the most frequently applied surgical procedures. Despite global spread of mesh applying surgeries, there is no current systematic analysis of incidence and possible prevention of adverse events… 7583104 ideal-in-meshes-for-prolapse,-urinary-incontinence,-and-hernia-repair. ideal meshes prolapse urinary incontinence hernia repair purpose IDEAL in meshes for prolapse, urinary incontinence, and hernia repair. IDEAL in meshes for prolapse, urinary incontinence, and hernia repair. PURPOSE Mesh surgeries are counted among the most frequently applied surgical procedures. Despite global spread of mesh applying surgeries, there is no current systematic analysis of incidence and possible prevention of adverse events after mesh implantation. MATERIALS AND METHODS Based on the recommendations of IDEAL an in vitro test system for biocompatibility of surgical meshes has been generated (Innovation). Coating strategies for biocompatibility optimization have been developed (Development). The native and modified alloplastic materials have been tested in an animal model over 2 years (Exploration and Assessment and Long-term study). RESULTS In 3 meshes, implanted in sheep and explanted at 4 different time point",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.720165+00:00"
+}

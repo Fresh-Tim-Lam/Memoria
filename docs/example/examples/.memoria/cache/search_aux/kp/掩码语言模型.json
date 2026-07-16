@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "kp_id": "掩码语言模型",
+  "source_fingerprint": "ba9081ed0ef4a9c6602a32d004f1d5b2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "bert",
+    "bErt",
+    "BeRt",
+    "beRT"
+  ],
+  "aliases": [],
+  "key_phrases": [
+    "掩码",
+    "语言",
+    "模型",
+    "masked",
+    "language",
+    "model",
+    "mlm",
+    "bert"
+  ],
+  "summary_1l": "掩码语言模型（Masked Language Model, MLM）是 BERT 的核心预训练任务。",
+  "query_hits": [],
+  "embed_text": "掩码语言模型 掩码语言模型 bert bErt BeRt beRT 掩码 语言 模型 masked language model mlm bert 掩码语言模型（Masked Language Model, MLM）是 BERT 的核心预训练任务。 掩码语言模型 掩码语言模型（Masked Language Model, MLM）是 BERT 的核心预训练任务。它随机遮蔽输入中 的 token，让模型根据上下文预测被遮蔽的词。 MLM 的训练过程： 1. 随机选择 的输入 token 2. 对选中的 token： - 替换为 [MASK] - 替换为随机词 - 保持不变 3. 只对被遮蔽的位置计算交叉熵损失 这种设计的精妙之处： **双向性**：不像 GPT 只能看前文，MLM 可以同时利用左右上下文 **随机替换**： 的随机替换让模型学到更多的词汇关系 **保持不变**： 的保持不变缓解了预训练和微调之间的差异 的遮蔽率是经过实验验证的平衡点——太高则上下文信息不足，太低则训练信号太少。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T03:38:45.688125+00:00"
+}

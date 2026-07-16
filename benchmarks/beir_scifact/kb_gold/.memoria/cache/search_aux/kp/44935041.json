@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "44935041",
+  "source_fingerprint": "ab16a1685f397b1979e9436f2a2c11bb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "44935041",
+    "the-precursor-form-of-il-1alpha-is-an-intracrine-proinflammatory-activator-of-transcription."
+  ],
+  "key_phrases": [
+    "precursor",
+    "form",
+    "il",
+    "1alpha",
+    "intracrine",
+    "proinflammatory",
+    "activator",
+    "transcription"
+  ],
+  "summary_1l": "The precursor form of IL-1alpha is an intracrine proinflammatory activator of transcription.",
+  "query_hits": [],
+  "embed_text": "44935041 The precursor form of IL-1alpha is an intracrine proinflammatory activator of transcription. science scifact Although most cytokines are studied for biological effects after engagement of their specific cell surface membrane receptors, increasing evidence suggests that some function in the nucleus. In the present study, the precursor form of… 44935041 the-precursor-form-of-il-1alpha-is-an-intracrine-proinflammatory-activator-of-transcription. precursor form il 1alpha intracrine proinflammatory activator transcription The precursor form of IL-1alpha is an intracrine proinflammatory activator of transcription. The precursor form of IL-1alpha is an intracrine proinflammatory activator of transcription. Although most cytokines are studied for biological effects after engagement of their specific cell surface membrane receptors, increasing evidence suggests that some function in the nucleus. In the present study, the precursor form of IL-1alpha was overexpressed in various cells and assessed for activity in the presence of saturating concentrations of IL-1 receptor antagonist to prevent receptor signaling. Initially diffusely present in the cytoplasm of resting cells, IL-1alpha translocated to the to nucleus after activation by endotoxin, a Toll-like receptor ligand. The IL-1alpha precursor, but not the C-terminal mature form, activated the transcriptional machinery in the GAL4 system by 90-fold; a",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.021501+00:00"
+}

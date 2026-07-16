@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "31313782",
+  "source_fingerprint": "0d156494f4ab1b08432140ad7cf0bbb7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "31313782",
+    "expression-profiles-of-toll-like-receptors-in-non-small-cell-lung-cancer-and-idiopathic-pulmonary-fibrosis."
+  ],
+  "key_phrases": [
+    "expression",
+    "profiles",
+    "toll",
+    "like",
+    "receptors",
+    "non",
+    "small",
+    "cell"
+  ],
+  "summary_1l": "Expression profiles of Toll-like receptors in non-small cell lung cancer and idiopathic pulmonary fibrosis.",
+  "query_hits": [],
+  "embed_text": "31313782 Expression profiles of Toll-like receptors in non-small cell lung cancer and idiopathic pulmonary fibrosis. science scifact Patients with idiopathic pulmonary fibrosis (IPF) have a higher incidence             of lung cancer. The role of Toll-like receptors (TLRs), a key component of the             innate immunity, in interstitial lung diseases (ILDs) and lung… 31313782 expression-profiles-of-toll-like-receptors-in-non-small-cell-lung-cancer-and-idiopathic-pulmonary-fibrosis. expression profiles toll like receptors non small cell Expression profiles of Toll-like receptors in non-small cell lung cancer and idiopathic pulmonary fibrosis. Expression profiles of Toll-like receptors in non-small cell lung cancer and idiopathic pulmonary fibrosis. Patients with idiopathic pulmonary fibrosis (IPF) have a higher incidence of lung cancer. The role of Toll-like receptors (TLRs), a key component of the innate immunity, in interstitial lung diseases (ILDs) and lung cancer pathogenesis is not clarified. TLR2, TLR3, TLR4, TLR7, TLR8 and TLR9 mRNA expression was quantitatively measured by real-time reverse transcriptase polymerase chain reaction (RT-PCR) in bronchoalveolar lavage fluid (BALF) of 16 IPF patients, 16 non-small cell lung cancer (NSCLC) patients and 9 control subjects. TLR2, TLR3, TLR4 and TLR9 protein expression was assessed on BALF T-lymphocytes using flow cytometry. TLR3 mRNA expression was significantly higher in NSCLC",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.486511+00:00"
+}

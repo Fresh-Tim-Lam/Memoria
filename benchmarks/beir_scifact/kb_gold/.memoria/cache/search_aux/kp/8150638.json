@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8150638",
+  "source_fingerprint": "5a4d6267e6ff9713a26d2a3eee85346a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8150638",
+    "butyrate-greatly-enhances-derivation-of-human-induced-pluripotent-stem-cells-by-promoting-epigenetic-remodeling-and-the-expression-of-pluripotency-associated-genes."
+  ],
+  "key_phrases": [
+    "butyrate",
+    "greatly",
+    "enhances",
+    "derivation",
+    "human",
+    "induced",
+    "pluripotent",
+    "stem"
+  ],
+  "summary_1l": "Butyrate greatly enhances derivation of human induced pluripotent stem cells by promoting epigenetic remodeling and the expression of pluripotency-associated genes.",
+  "query_hits": [],
+  "embed_text": "8150638 Butyrate greatly enhances derivation of human induced pluripotent stem cells by promoting epigenetic remodeling and the expression of pluripotency-associated genes. science scifact We report here that butyrate, a naturally occurring fatty acid commonly used as a nutritional supplement and differentiation agent, greatly enhances the efficiency of induced pluripotent stem (iPS) cell derivation from human adult or fetal… 8150638 butyrate-greatly-enhances-derivation-of-human-induced-pluripotent-stem-cells-by-promoting-epigenetic-remodeling-and-the-expression-of-pluripotency-associated-genes. butyrate greatly enhances derivation human induced pluripotent stem Butyrate greatly enhances derivation of human induced pluripotent stem cells by promoting epigenetic remodeling and the expression of pluripotency-associated genes. Butyrate greatly enhances derivation of human induced pluripotent stem cells by promoting epigenetic remodeling and the expression of pluripotency-associated genes. We report here that butyrate, a naturally occurring fatty acid commonly used as a nutritional supplement and differentiation agent, greatly enhances the efficiency of induced pluripotent stem (iPS) cell derivation from human adult or fetal fibroblasts. After transient butyrate treatment, the iPS cell derivation efficiency is enhanced by 15- to 51-fold using either retroviral or piggyBac transposon vectors expressing 4 to 5 reprogramming genes. Butyrate stimulation is more remarkable (>100- to 200-fold) on reprogramming in the absence of either KLF4 or MYC transgene. Butyrate treatment did not negatively affect properties of iPS",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.046383+00:00"
+}

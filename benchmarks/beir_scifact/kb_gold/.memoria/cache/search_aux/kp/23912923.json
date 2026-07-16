@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23912923",
+  "source_fingerprint": "578417b7f4f63350e0abc6deffc9fefd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23912923",
+    "disruption-of-the-immune-checkpoint-vista-gene-imparts-a-proinflammatory-phenotype-with-predisposition-to-the-development-of-autoimmunity."
+  ],
+  "key_phrases": [
+    "disruption",
+    "immune",
+    "checkpoint",
+    "vista",
+    "gene",
+    "imparts",
+    "proinflammatory",
+    "phenotype"
+  ],
+  "summary_1l": "Disruption of the immune-checkpoint VISTA gene imparts a proinflammatory phenotype with predisposition to the development of autoimmunity.",
+  "query_hits": [],
+  "embed_text": "23912923 Disruption of the immune-checkpoint VISTA gene imparts a proinflammatory phenotype with predisposition to the development of autoimmunity. science scifact V domain-containing Ig suppressor of T-cell activation (VISTA) is a negative checkpoint regulator that suppresses T cell-mediated immune responses. Previous studies using a VISTA-neutralizing monoclonal antibody show that VISTA blockade… 23912923 disruption-of-the-immune-checkpoint-vista-gene-imparts-a-proinflammatory-phenotype-with-predisposition-to-the-development-of-autoimmunity. disruption immune checkpoint vista gene imparts proinflammatory phenotype Disruption of the immune-checkpoint VISTA gene imparts a proinflammatory phenotype with predisposition to the development of autoimmunity. Disruption of the immune-checkpoint VISTA gene imparts a proinflammatory phenotype with predisposition to the development of autoimmunity. V domain-containing Ig suppressor of T-cell activation (VISTA) is a negative checkpoint regulator that suppresses T cell-mediated immune responses. Previous studies using a VISTA-neutralizing monoclonal antibody show that VISTA blockade enhances T-cell activation. The current study describes a comprehensive characterization of mice in which the gene for VISTA has been deleted. Despite the apparent normal hematopoietic development in young mice, VISTA genetic deficiency leads to a gradual accumulation of spontaneously activated T cells, accompanied by the production of a spectrum of inflammatory cytokines and chemokines. Enhanced T-cell responsiveness wa",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.414203+00:00"
+}

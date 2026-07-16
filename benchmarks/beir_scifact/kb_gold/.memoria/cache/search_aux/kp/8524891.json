@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8524891",
+  "source_fingerprint": "a1dc0e224c23f516b35096b01cf9a97e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8524891",
+    "white-matter-hyperintensities-are-a-core-feature-of-alzheimer's-disease:-evidence-from-the-dominantly-inherited-alzheimer-network."
+  ],
+  "key_phrases": [
+    "white",
+    "matter",
+    "hyperintensities",
+    "core",
+    "feature",
+    "alzheimer",
+    "disease",
+    "evidence"
+  ],
+  "summary_1l": "White matter hyperintensities are a core feature of Alzheimer's disease: Evidence from the dominantly inherited Alzheimer network.",
+  "query_hits": [],
+  "embed_text": "8524891 White matter hyperintensities are a core feature of Alzheimer's disease: Evidence from the dominantly inherited Alzheimer network. science scifact OBJECTIVE White matter hyperintensities (WMHs) are areas of increased signal on T2-weighted magnetic resonance imaging (MRI) scans that most commonly reflect small vessel cerebrovascular disease. Increased WMH volume is associated with… 8524891 white-matter-hyperintensities-are-a-core-feature-of-alzheimer's-disease:-evidence-from-the-dominantly-inherited-alzheimer-network. white matter hyperintensities core feature alzheimer disease evidence White matter hyperintensities are a core feature of Alzheimer's disease: Evidence from the dominantly inherited Alzheimer network. White matter hyperintensities are a core feature of Alzheimer's disease: Evidence from the dominantly inherited Alzheimer network. OBJECTIVE White matter hyperintensities (WMHs) are areas of increased signal on T2-weighted magnetic resonance imaging (MRI) scans that most commonly reflect small vessel cerebrovascular disease. Increased WMH volume is associated with risk and progression of Alzheimer's disease (AD). These observations are typically interpreted as evidence that vascular abnormalities play an additive, independent role contributing to symptom presentation, but not core features of AD. We examined the severity and distribution of WMH in presymptomatic PSEN1, PSEN2, and APP mutation carriers to determine the extent to which WMH manifest in individuals genetically determined to de",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.905123+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3698758",
+  "source_fingerprint": "6960f6f4447b9827080cf934e6cf5efe",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3698758",
+    "hepatitis-c-virus-and-blood-transfusion:-past-and-present-risks."
+  ],
+  "key_phrases": [
+    "hepatitis",
+    "virus",
+    "blood",
+    "transfusion",
+    "past",
+    "present",
+    "risks",
+    "risk"
+  ],
+  "summary_1l": "Hepatitis C virus and blood transfusion: past and present risks.",
+  "query_hits": [],
+  "embed_text": "3698758 Hepatitis C virus and blood transfusion: past and present risks. science scifact The risk of HCV transmission by blood and blood products has been greatly reduced since the early 1980's. Selection of non-remunerated donors, donor selection to prevent HIV transmission, initial surrogate testing in some regions, and… 3698758 hepatitis-c-virus-and-blood-transfusion:-past-and-present-risks. hepatitis virus blood transfusion past present risks risk Hepatitis C virus and blood transfusion: past and present risks. Hepatitis C virus and blood transfusion: past and present risks. The risk of HCV transmission by blood and blood products has been greatly reduced since the early 1980's. Selection of non-remunerated donors, donor selection to prevent HIV transmission, initial surrogate testing in some regions, and introduction of anti-HCV testing have all contributed to this. ALT surrogate testing has become obsolete since the introduction of anti-HCV testing. The residual risk of HCV transmission due to donations in the anti-HCV window period at present is about 1 in 100 000 transfusions of cellular products, and transmission of HCV by plasma products treated with modern inactivation methods such as solvent-detergent treatment, has not been reported. Hemovigilance programmes, which are presently being in",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.004872+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21866916",
+  "source_fingerprint": "f7ae4b4681391f8e11f43eeb490175a4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21866916",
+    "role-of-pacap-and-vip-in-astroglial-functions."
+  ],
+  "key_phrases": [
+    "role",
+    "pacap",
+    "vip",
+    "astroglial",
+    "functions",
+    "astrocytes",
+    "represent",
+    "at"
+  ],
+  "summary_1l": "Role of PACAP and VIP in astroglial functions.",
+  "query_hits": [],
+  "embed_text": "21866916 Role of PACAP and VIP in astroglial functions. science scifact Astrocytes represent at least 50% of the volume of the human brain. Besides their roles in various supportive functions, astrocytes are involved in the regulation of stem cell proliferation, synaptic plasticity and neuroprotection.… 21866916 role-of-pacap-and-vip-in-astroglial-functions. role pacap vip astroglial functions astrocytes represent at Role of PACAP and VIP in astroglial functions. Role of PACAP and VIP in astroglial functions. Astrocytes represent at least 50% of the volume of the human brain. Besides their roles in various supportive functions, astrocytes are involved in the regulation of stem cell proliferation, synaptic plasticity and neuroprotection. Astrocytes also influence neuronal physiology by responding to neurotransmitters and neuropeptides and by releasing regulatory factors termed gliotransmitters. In particular, astrocytes express the PACAP-specific receptor PAC1-R and the PACAP/VIP mutual receptors VPAC1-R and VPAC2-R during development and/or in the adult. There is now clear evidence that PACAP and VIP modulate a number of astrocyte activities such as proliferation, plasticity, glycogen production, and biosynthesis of neurotrophic factors and gliotra",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.784259+00:00"
+}

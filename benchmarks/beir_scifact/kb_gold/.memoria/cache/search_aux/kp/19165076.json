@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19165076",
+  "source_fingerprint": "c79d5f84fcad5ef8ad671472378d0655",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19165076",
+    "replication-protein-a:-a-heterotrimeric,-single-stranded-dna-binding-protein-required-for-eukaryotic-dna-metabolism."
+  ],
+  "key_phrases": [
+    "replication",
+    "protein",
+    "heterotrimeric",
+    "single",
+    "stranded",
+    "dna",
+    "binding",
+    "required"
+  ],
+  "summary_1l": "Replication protein A: a heterotrimeric, single-stranded DNA-binding protein required for eukaryotic DNA metabolism.",
+  "query_hits": [],
+  "embed_text": "19165076 Replication protein A: a heterotrimeric, single-stranded DNA-binding protein required for eukaryotic DNA metabolism. science scifact Replication protein A [RPA; also known as replication factor A (RFA) and human single-stranded DNA-binding protein] is a single-stranded DNA-binding protein that is required for multiple processes in eukaryotic DNA metabolism, including… 19165076 replication-protein-a:-a-heterotrimeric,-single-stranded-dna-binding-protein-required-for-eukaryotic-dna-metabolism. replication protein heterotrimeric single stranded dna binding required Replication protein A: a heterotrimeric, single-stranded DNA-binding protein required for eukaryotic DNA metabolism. Replication protein A: a heterotrimeric, single-stranded DNA-binding protein required for eukaryotic DNA metabolism. Replication protein A [RPA; also known as replication factor A (RFA) and human single-stranded DNA-binding protein] is a single-stranded DNA-binding protein that is required for multiple processes in eukaryotic DNA metabolism, including DNA replication, DNA repair, and recombination. RPA homologues have been identified in all eukaryotic organisms examined and are all abundant heterotrimeric proteins composed of subunits of approximately 70, 30, and 14 kDa. Members of this family bind nonspecifically to single-stranded DNA and interact with and/or modify the activities of multiple proteins. In cells, RPA is phosphorylated by DNA-dependent protein kinase when RPA is bound to s",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.238221+00:00"
+}

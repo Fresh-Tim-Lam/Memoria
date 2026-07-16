@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17741440",
+  "source_fingerprint": "067d6f98a18e8d5f284d41dc86485fbe",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17741440",
+    "netting-neutrophils-in-autoimmune-small-vessel-vasculitis"
+  ],
+  "key_phrases": [
+    "netting",
+    "neutrophils",
+    "autoimmune",
+    "small",
+    "vessel",
+    "vasculitis",
+    "svv",
+    "chronic"
+  ],
+  "summary_1l": "Small-vessel vasculitis (SVV) is a chronic autoinflammatory condition linked to antineutrophil cytoplasm autoantibodies (ANCAs).",
+  "query_hits": [],
+  "embed_text": "17741440 Netting neutrophils in autoimmune small-vessel vasculitis science scifact Small-vessel vasculitis (SVV) is a chronic autoinflammatory condition linked to antineutrophil cytoplasm autoantibodies (ANCAs). Here we show that chromatin fibers, so-called neutrophil extracellular traps (NETs), are released by… 17741440 netting-neutrophils-in-autoimmune-small-vessel-vasculitis netting neutrophils autoimmune small vessel vasculitis svv chronic Small-vessel vasculitis (SVV) is a chronic autoinflammatory condition linked to antineutrophil cytoplasm autoantibodies (ANCAs). Netting neutrophils in autoimmune small-vessel vasculitis Small-vessel vasculitis (SVV) is a chronic autoinflammatory condition linked to antineutrophil cytoplasm autoantibodies (ANCAs). Here we show that chromatin fibers, so-called neutrophil extracellular traps (NETs), are released by ANCA-stimulated neutrophils and contain the targeted autoantigens proteinase-3 (PR3) and myeloperoxidase (MPO). Deposition of NETs in inflamed kidneys and circulating MPO-DNA complexes suggest that NET formation triggers vasculitis and promotes the autoimmune response against neutrophil components in individuals with SVV.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.232046+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27054878",
+  "source_fingerprint": "ef182de18a3f72d56e1bbe8e820d8721",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27054878",
+    "preoperative-c-reactive-protein-predicts-long-term-mortality-and-hospital-length-of-stay-after-primary,-nonemergent-coronary-artery-bypass-grafting."
+  ],
+  "key_phrases": [
+    "preoperative",
+    "reactive",
+    "protein",
+    "predicts",
+    "long",
+    "term",
+    "mortality",
+    "hospital"
+  ],
+  "summary_1l": "Preoperative C-reactive protein predicts long-term mortality and hospital length of stay after primary, nonemergent coronary artery bypass grafting.",
+  "query_hits": [],
+  "embed_text": "27054878 Preoperative C-reactive protein predicts long-term mortality and hospital length of stay after primary, nonemergent coronary artery bypass grafting. science scifact BACKGROUND Preoperative C-reactive protein (CRP) levels more than 10 mg/l have been shown to be associated with increased morbidity and mortality after cardiac surgery. We examine the value of preoperative CRP levels less than 10 mg/l for… 27054878 preoperative-c-reactive-protein-predicts-long-term-mortality-and-hospital-length-of-stay-after-primary,-nonemergent-coronary-artery-bypass-grafting. preoperative reactive protein predicts long term mortality hospital Preoperative C-reactive protein predicts long-term mortality and hospital length of stay after primary, nonemergent coronary artery bypass grafting. Preoperative C-reactive protein predicts long-term mortality and hospital length of stay after primary, nonemergent coronary artery bypass grafting. BACKGROUND Preoperative C-reactive protein (CRP) levels more than 10 mg/l have been shown to be associated with increased morbidity and mortality after cardiac surgery. We examine the value of preoperative CRP levels less than 10 mg/l for predicting long-term, all-cause mortality and hospital length of stay in surgical patients undergoing primary, nonemergent coronary artery bypass graft-only surgery. METHODS We examined the association between preoperative CRP levels stratified into four categories (< 1, 1-3, 3-10, and > 10 mg/l), and 7-yr all-cause mortality and hospital length of stay in 914 prospectively enrolled primary, nonemergent coron",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.395604+00:00"
+}

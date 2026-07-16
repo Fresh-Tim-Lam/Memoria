@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3878434",
+  "source_fingerprint": "f8acbd80700366645228df2ded3d3db9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3878434",
+    "predictive-performance-of-the-quick-sequential-organ-failure-assessment-score-as-a-screening-tool-for-sepsis,-mortality,-and-intensive-care-unit-admission-in-patients-with-febrile-neutropenia"
+  ],
+  "key_phrases": [
+    "predictive",
+    "performance",
+    "quick",
+    "sequential",
+    "organ",
+    "failure",
+    "assessment",
+    "score"
+  ],
+  "summary_1l": "In Sepsi",
+  "query_hits": [],
+  "embed_text": "3878434 Predictive performance of the quick Sequential Organ Failure Assessment score as a screening tool for sepsis, mortality, and intensive care unit admission in patients with febrile neutropenia science scifact In Sepsis-3, the quick Sequential Organ Failure Assessment (qSOFA) score was developed as criteria to use for recognizing patients who may have poor outcomes. This study was performed to evaluate the predictive performance of the qSOFA… 3878434 predictive-performance-of-the-quick-sequential-organ-failure-assessment-score-as-a-screening-tool-for-sepsis,-mortality,-and-intensive-care-unit-admission-in-patients-with-febrile-neutropenia predictive performance quick sequential organ failure assessment score In Sepsi Predictive performance of the quick Sequential Organ Failure Assessment score as a screening tool for sepsis, mortality, and intensive care unit admission in patients with febrile neutropenia In Sepsis-3, the quick Sequential Organ Failure Assessment (qSOFA) score was developed as criteria to use for recognizing patients who may have poor outcomes. This study was performed to evaluate the predictive performance of the qSOFA score as a screening tool for sepsis, mortality, and intensive care unit (ICU) admission in patients with febrile neutropenia (FN). We also tried to compare its performance with that of the systemic inflammatory response syndrome (SIRS) criteria and Multinational Association of Supportive Care in Cancer (MASCC) score for FN. We used a prospectively collected adult FN da",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.873679+00:00"
+}

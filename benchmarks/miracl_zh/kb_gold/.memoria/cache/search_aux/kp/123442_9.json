@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "kp_id": "123442#9",
+  "source_fingerprint": "e58b9de94487ea7767e068edcacf32ac",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "葡萄糖"
+  ],
+  "aliases": [
+    "123442#9"
+  ],
+  "key_phrases": [
+    "呼吸作用",
+    "葡萄糖",
+    "生物体",
+    "基本",
+    "能量",
+    "来源",
+    "有氧",
+    "分解"
+  ],
+  "summary_1l": "葡萄糖是生物体内基本的能量来源，葡萄糖的有氧分解是呼吸作用的典型，因此下面用葡萄糖作为例子讲解。",
+  "query_hits": [],
+  "embed_text": "123442#9 呼吸作用 呼吸作用 葡萄糖是生物体内基本的能量来源，葡萄糖的有氧分解是呼吸作用的典型，因此下面用葡萄糖作为例子讲解。 葡萄糖 123442#9 呼吸作用 葡萄糖 生物体 基本 能量 来源 有氧 分解 葡萄糖是生物体内基本的能量来源，葡萄糖的有氧分解是呼吸作用的典型，因此下面用葡萄糖作为例子讲解。 呼吸作用 葡萄糖是生物体内基本的能量来源，葡萄糖的有氧分解是呼吸作用的典型，因此下面用葡萄糖作为例子讲解。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:19:40.646892+00:00"
+}

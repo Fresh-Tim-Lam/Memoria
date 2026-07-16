@@ -1,0 +1,11 @@
+schema_version: 1
+file: corpus/doc-placebo.md
+knowledge_points:
+  - id: doc-placebo
+    name: Placebo Effects in Randomized Trials
+    tags: [scifact, science, clinical-trials]
+    description: Placebo-controlled trials measure outcomes against inactive treatment.
+    range:
+      start: { line_hint: 1, snippet: "# Placebo Effects in Randomized Trials" }
+      end: { line_hint: 3, snippet: to isolate drug efficacy. }
+links: []

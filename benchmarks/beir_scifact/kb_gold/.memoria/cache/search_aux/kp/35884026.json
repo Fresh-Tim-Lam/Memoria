@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "35884026",
+  "source_fingerprint": "5d9a7e098b88efcef63fadeed8d94e4c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "35884026",
+    "tyrosine-phosphorylation-and-regulation-of-the-ampa-receptor-by-src-family-tyrosine-kinases."
+  ],
+  "key_phrases": [
+    "tyrosine",
+    "phosphorylation",
+    "regulation",
+    "ampa",
+    "receptor",
+    "by",
+    "src",
+    "family"
+  ],
+  "summary_1l": "Tyrosine phosphorylation and regulation of the AMPA receptor by SRC family tyrosine kinases.",
+  "query_hits": [],
+  "embed_text": "35884026 Tyrosine phosphorylation and regulation of the AMPA receptor by SRC family tyrosine kinases. science scifact Phosphorylation of AMPA receptors is a major mechanism for the regulation of receptor function and underlies several forms of synaptic plasticity in the CNS. Although serine and threonine phosphorylation of AMPA receptors has been well… 35884026 tyrosine-phosphorylation-and-regulation-of-the-ampa-receptor-by-src-family-tyrosine-kinases. tyrosine phosphorylation regulation ampa receptor by src family Tyrosine phosphorylation and regulation of the AMPA receptor by SRC family tyrosine kinases. Tyrosine phosphorylation and regulation of the AMPA receptor by SRC family tyrosine kinases. Phosphorylation of AMPA receptors is a major mechanism for the regulation of receptor function and underlies several forms of synaptic plasticity in the CNS. Although serine and threonine phosphorylation of AMPA receptors has been well studied, the potential role of tyrosine phosphorylation of AMPA receptors has not been investigated. Here, we show that the GluR2 subunit of AMPA receptors is tyrosine phosphorylated in vitro and in vivo by Src family tyrosine kinases on tyrosine 876 near its C terminus. In addition, GluR agonist treatment of cultured cortical neurons increased phosphorylation of tyrosine 876. The association with GluR2-interacting molecules GRIP1/2 was decreased by tyrosine phosphor",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.717629+00:00"
+}

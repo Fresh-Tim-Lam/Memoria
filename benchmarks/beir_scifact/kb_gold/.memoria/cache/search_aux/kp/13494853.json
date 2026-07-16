@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13494853",
+  "source_fingerprint": "41d412f354796a102fdca8aa48c1342d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13494853",
+    "mfold-web-server-for-nucleic-acid-folding-and-hybridization-prediction"
+  ],
+  "key_phrases": [
+    "mfold",
+    "web",
+    "server",
+    "nucleic",
+    "acid",
+    "folding",
+    "hybridization",
+    "prediction"
+  ],
+  "summary_1l": "The abbreviated name, 'mfold web server', describes a number of closely related software applications available on the World Wide",
+  "query_hits": [],
+  "embed_text": "13494853 Mfold web server for nucleic acid folding and hybridization prediction science scifact The abbreviated name, 'mfold web server', describes a number of closely related software applications available on the World Wide Web (WWW) for the prediction of the secondary structure of single stranded nucleic acids. The objective of… 13494853 mfold-web-server-for-nucleic-acid-folding-and-hybridization-prediction mfold web server nucleic acid folding hybridization prediction The abbreviated name, 'mfold web server', describes a number of closely related software applications available on the World Wide Mfold web server for nucleic acid folding and hybridization prediction The abbreviated name, 'mfold web server', describes a number of closely related software applications available on the World Wide Web (WWW) for the prediction of the secondary structure of single stranded nucleic acids. The objective of this web server is to provide easy access to RNA and DNA folding and hybridization software to the scientific community at large. By making use of universally available web GUIs (Graphical User Interfaces), the server circumvents the problem of portability of this software. Detailed output, in the form of structure plots with or without reliability information, single strand frequency plots and 'energy dot plots', are available for the folding of single sequences. A variety of 'bulk' ser",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.412040+00:00"
+}

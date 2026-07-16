@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "1471041",
+  "source_fingerprint": "d1d8812fb7bcd92107da2b9993b950c4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1471041"
+  ],
+  "key_phrases": [
+    "high",
+    "abundance",
+    "plasma",
+    "cells",
+    "secreting",
+    "transglutaminase",
+    "specific",
+    "iga"
+  ],
+  "summary_1l": "Celiac disease is an immune-mediated dis",
+  "query_hits": [],
+  "embed_text": "1471041 High abundance of plasma cells secreting transglutaminase 2–specific IgA autoantibodies with limited somatic hypermutation in celiac disease intestinal lesions science scifact Celiac disease is an immune-mediated disorder in which mucosal autoantibodies to the enzyme transglutaminase 2 (TG2) are generated in response to the exogenous antigen gluten in individuals who express human leukocyte antigen HLA-DQ2 or… 1471041 high abundance plasma cells secreting transglutaminase specific iga Celiac disease is an immune-mediated dis High abundance of plasma cells secreting transglutaminase 2–specific IgA autoantibodies with limited somatic hypermutation in celiac disease intestinal lesions Celiac disease is an immune-mediated disorder in which mucosal autoantibodies to the enzyme transglutaminase 2 (TG2) are generated in response to the exogenous antigen gluten in individuals who express human leukocyte antigen HLA-DQ2 or HLA-DQ8 (ref. 3). We assessed in a comprehensive and nonbiased manner the IgA anti-TG2 response by expression cloning of the antibody repertoire of ex vivo–isolated intestinal antibody-secreting cells (ASCs). We found that TG2-specific plasma cells are markedly expanded within the duodenal mucosa in individuals with active celiac disease. TG2-specific antibodies were of high affinity yet showed littl",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:11.445089+00:00"
+}

@@ -99,8 +99,78 @@ def _normalize_tag_candidates(
         cand: dict = {"tag": tag, "source": source}
         if score is not None:
             cand["score"] = score
+        if isinstance(item, dict) and item.get("status"):
+            cand["status"] = str(item.get("status"))
         out.append(cand)
     return out
+
+
+def _normalize_alias_candidates(
+    raw: list | None,
+    *,
+    exclude: set[str] | None = None,
+) -> list[dict]:
+    exclude = exclude or set()
+    out: list[dict] = []
+    seen: set[str] = set()
+    for item in raw or []:
+        alias = ""
+        source = "user"
+        if isinstance(item, str):
+            alias = item.strip()
+        elif isinstance(item, dict):
+            alias = str(item.get("alias") or "").strip()
+            src = str(item.get("source") or "user").strip().lower()
+            source = src if src in ("system", "user", "feedback") else "user"
+        else:
+            continue
+        if not alias:
+            continue
+        key = alias.lower()
+        if key in exclude or key in seen:
+            continue
+        seen.add(key)
+        row: dict = {"alias": alias, "source": source}
+        if isinstance(item, dict) and item.get("status"):
+            row["status"] = str(item.get("status"))
+        out.append(row)
+    return out
+
+
+def _normalize_description_candidates(raw: list | None) -> list[dict]:
+    out: list[dict] = []
+    seen: set[str] = set()
+    for item in raw or []:
+        text = ""
+        source = "user"
+        if isinstance(item, str):
+            text = item.strip()
+        elif isinstance(item, dict):
+            text = str(item.get("text") or "").strip()
+            src = str(item.get("source") or "user").strip().lower()
+            source = src if src in ("system", "user", "feedback") else "user"
+        else:
+            continue
+        if not text or text in seen:
+            continue
+        seen.add(text)
+        row: dict = {"text": text, "source": source}
+        if isinstance(item, dict) and item.get("status"):
+            row["status"] = str(item.get("status"))
+        out.append(row)
+    return out
+
+
+def _normalize_targets_list(raw: object) -> list[str]:
+    """将 targets 字段归一化为字符串列表（用于边匹配）。"""
+    if raw is None:
+        return []
+    if isinstance(raw, str):
+        s = raw.strip()
+        return [s] if s else []
+    if isinstance(raw, list):
+        return [str(t).strip() for t in raw if isinstance(t, str) and str(t).strip()]
+    return []
 
 
 @dataclass
@@ -132,9 +202,29 @@ class DocumentService:
             raise RuntimeError("未打开知识库")
         rel_norm = rel_path.replace("\\", "/")
         full = os.path.join(self.kb_path, rel_norm)
+        self._sort_kps_by_start_line(sidecar)
         save_sidecar_for_md(full, self.kb_path, sidecar)
         touch_manifest_entry(self.kb_path, rel_norm)
         self._rebuild_lexical_index()
+
+    @staticmethod
+    def _sort_kps_by_start_line(sidecar: dict) -> None:
+        """按 range.start.line_hint 升序排序 knowledge_points，便于维护。"""
+        kps = sidecar.get("knowledge_points")
+        if not isinstance(kps, list) or len(kps) <= 1:
+            return
+        def sort_key(kp: dict) -> tuple[int, str]:
+            if not isinstance(kp, dict):
+                return (1 << 30, "")
+            rng = kp.get("range") or {}
+            start = rng.get("start") or {}
+            hint = start.get("line_hint")
+            try:
+                line = int(hint) if hint is not None else 0
+            except (TypeError, ValueError):
+                line = 0
+            return (line, str(kp.get("id") or ""))
+        sidecar["knowledge_points"] = sorted(kps, key=sort_key)
 
     def close_kb(self) -> None:
         kb = self.kb_path
@@ -315,9 +405,13 @@ class DocumentService:
         sidecar["file"] = rel_path.replace("\\", "/")
         validation = validate_sidecar(sidecar, sidecar["file"], lines)
         if not validation["ok"]:
+            err_msgs = [
+                e.get("message", str(e)) if isinstance(e, dict) else str(e)
+                for e in validation["errors"]
+            ]
             return {
                 "status": "error",
-                "message": "配置校验失败: " + "; ".join(validation["errors"]),
+                "message": "配置校验失败: " + "; ".join(err_msgs),
                 "validation": validation,
             }
 
@@ -400,6 +494,7 @@ class DocumentService:
         rel_path: str,
         kp_id: str,
         limit: int = 8,
+        temp_kp: dict | None = None,
     ) -> dict:
         kp_id = (kp_id or "").strip()
         if not self.kb_path or not kp_id:
@@ -409,7 +504,9 @@ class DocumentService:
             return doc
         kp = next((k for k in doc.get("knowledge_points") or [] if k.get("id") == kp_id), None)
         if not kp:
-            return {"status": "error", "message": f"知识点不存在：{kp_id}"}
+            if not temp_kp:
+                return {"status": "error", "message": f"知识点不存在：{kp_id}"}
+            kp = self._build_temp_kp(kp_id, temp_kp)
         from memoria.services.suggest_metadata import suggest_tags
 
         return suggest_tags(
@@ -421,7 +518,7 @@ class DocumentService:
             limit=int(limit) if limit else 8,
         )
 
-    def suggest_description_api(self, rel_path: str, kp_id: str) -> dict:
+    def suggest_description_api(self, rel_path: str, kp_id: str, temp_kp: dict | None = None) -> dict:
         kp_id = (kp_id or "").strip()
         if not self.kb_path or not kp_id:
             raise RuntimeError("未打开知识库")
@@ -430,7 +527,9 @@ class DocumentService:
             return doc
         kp = next((k for k in doc.get("knowledge_points") or [] if k.get("id") == kp_id), None)
         if not kp:
-            return {"status": "error", "message": f"知识点不存在：{kp_id}"}
+            if not temp_kp:
+                return {"status": "error", "message": f"知识点不存在：{kp_id}"}
+            kp = self._build_temp_kp(kp_id, temp_kp)
         from memoria.services.suggest_metadata import suggest_description
 
         return suggest_description(
@@ -440,6 +539,23 @@ class DocumentService:
             lines=doc.get("lines") or [],
             kp=kp,
         )
+
+    @staticmethod
+    def _build_temp_kp(kp_id: str, temp_kp: dict) -> dict:
+        """从前端临时信息构造 kp 对象（用于创建模式未保存时的建议）。"""
+        start_line = int(temp_kp.get("start_line") or 1)
+        end_line = int(temp_kp.get("end_line") or start_line)
+        return {
+            "id": kp_id,
+            "name": str(temp_kp.get("name") or ""),
+            "range": {
+                "start": {"line_hint": start_line},
+                "end": {"line_hint": end_line},
+            },
+            "tags": [],
+            "aliases": [],
+            "description": "",
+        }
 
     def _rebuild_lexical_index(self) -> None:
         if not self.kb_path:
@@ -506,9 +622,13 @@ class DocumentService:
         sidecar["file"] = rel_path.replace("\\", "/")
         validation = validate_sidecar(sidecar, sidecar["file"], lines)
         if not validation["ok"]:
+            err_msgs = [
+                e.get("message", str(e)) if isinstance(e, dict) else str(e)
+                for e in validation["errors"]
+            ]
             return {
                 "status": "error",
-                "message": "配置校验失败: " + "; ".join(validation["errors"]),
+                "message": "配置校验失败: " + "; ".join(err_msgs),
                 "validation": validation,
             }
 
@@ -524,8 +644,11 @@ class DocumentService:
         tags: list[str] | None = None,
         description: str | None = None,
         tag_candidates: list | None = None,
+        alias_candidates: list | None = None,
+        aliases: list[str] | None = None,
+        description_candidates: list | None = None,
     ) -> dict:
-        """更新侧车知识点元数据（名称、标签、描述、tag 候选）。"""
+        """更新侧车知识点元数据（名称、标签、描述、各类候选）。"""
         kp_id = (kp_id or "").strip()
         if not kp_id:
             return {"status": "error", "message": "知识点 id 不能为空"}
@@ -534,6 +657,9 @@ class DocumentService:
             and tags is None
             and description is None
             and tag_candidates is None
+            and alias_candidates is None
+            and aliases is None
+            and description_candidates is None
         ):
             return {"status": "error", "message": "无更新字段"}
 
@@ -580,19 +706,87 @@ class DocumentService:
                 exclude=selected_lower,
             )
 
+        if aliases is not None:
+            cleaned_aliases: list[str] = []
+            seen_a: set[str] = set()
+            for alias in aliases:
+                a = str(alias).strip()
+                if a and a.lower() not in seen_a:
+                    seen_a.add(a.lower())
+                    cleaned_aliases.append(a)
+            entry["aliases"] = cleaned_aliases
+
+        if alias_candidates is not None:
+            alias_exclude = {
+                str(a).strip().lower()
+                for a in (entry.get("aliases") or [])
+                if str(a).strip()
+            }
+            name_lower = str(entry.get("name") or "").strip().lower()
+            if name_lower:
+                alias_exclude.add(name_lower)
+            entry["alias_candidates"] = _normalize_alias_candidates(
+                alias_candidates,
+                exclude=alias_exclude,
+            )
+
+        if description_candidates is not None:
+            entry["description_candidates"] = _normalize_description_candidates(
+                description_candidates
+            )
+
         sidecar["schema_version"] = SIDECAR_SCHEMA_VERSION
         sidecar["file"] = rel_path.replace("\\", "/")
         validation = validate_sidecar(sidecar, sidecar["file"], lines)
         if not validation["ok"]:
+            err_msgs = [
+                e.get("message", str(e)) if isinstance(e, dict) else str(e)
+                for e in validation["errors"]
+            ]
             return {
                 "status": "error",
-                "message": "配置校验失败: " + "; ".join(validation["errors"]),
+                "message": "配置校验失败: " + "; ".join(err_msgs),
                 "validation": validation,
             }
 
         self._write_sidecar(rel_path.replace("\\", "/"), sidecar)
         self._cache.pop(rel_path, None)
+
+        if self.kb_path:
+            from memoria.services.search_aux import mark_aux_promoted
+
+            promoted_tags = [
+                t for t in (entry.get("tags") or [])
+                if isinstance(t, str) and t.strip()
+            ]
+            promoted_aliases = [
+                a for a in (entry.get("aliases") or [])
+                if isinstance(a, str) and a.strip()
+            ]
+            if promoted_tags or promoted_aliases:
+                try:
+                    mark_aux_promoted(
+                        self.kb_path,
+                        kp_id,
+                        auto_tags=promoted_tags if tags is not None else None,
+                        aliases=promoted_aliases if aliases is not None else None,
+                    )
+                except OSError:
+                    pass
+
         return self.load_document(rel_path)
+
+    def sync_implicit_proposals_api(self, rel_path: str, kp_id: str, temp_kp: dict | None = None) -> dict:
+        if not self.kb_path:
+            return {"status": "error", "message": "未打开知识库", "available": False}
+        from memoria.services.proposals import sync_kp_implicit_proposals
+
+        return sync_kp_implicit_proposals(
+            kb_path=self.kb_path,
+            rel_path=rel_path,
+            kp_id=kp_id,
+            temp_kp=temp_kp,
+        )
 
     def delete_kp(self, rel_path: str, kp_id: str) -> dict:
         """从侧车删除知识点；解除 links 上对该 KP 的 source_id 引用。"""
@@ -621,9 +815,13 @@ class DocumentService:
         sidecar["file"] = rel_path.replace("\\", "/")
         validation = validate_sidecar(sidecar, sidecar["file"], lines)
         if not validation["ok"]:
+            err_msgs = [
+                e.get("message", str(e)) if isinstance(e, dict) else str(e)
+                for e in validation["errors"]
+            ]
             return {
                 "status": "error",
-                "message": "配置校验失败: " + "; ".join(validation["errors"]),
+                "message": "配置校验失败: " + "; ".join(err_msgs),
                 "validation": validation,
             }
 
@@ -983,9 +1181,13 @@ class DocumentService:
         sidecar["file"] = rel_path.replace("\\", "/")
         validation = validate_sidecar(sidecar, sidecar["file"], lines)
         if not validation["ok"]:
+            err_msgs = [
+                e.get("message", str(e)) if isinstance(e, dict) else str(e)
+                for e in validation["errors"]
+            ]
             return {
                 "status": "error",
-                "message": "配置校验失败: " + "; ".join(validation["errors"]),
+                "message": "配置校验失败: " + "; ".join(err_msgs),
                 "validation": validation,
             }
 
@@ -1541,3 +1743,245 @@ class DocumentService:
             source_id=source_id,
             kb_path=self.kb_path,
         )
+
+    # ── U12: 纯边 & no_build 管理 ──────────────────────────────────
+
+    def create_edge(
+        self,
+        rel_path: str,
+        source_id: str,
+        target_id: str,
+        edge_type: str,
+        *,
+        relevance: float | None = None,
+    ) -> dict:
+        """在 sidecar edges[] 中创建纯边。"""
+        from memoria.graph.edge_types import normalize_edge_type, default_relevance
+
+        source_id = (source_id or "").strip()
+        target_id = (target_id or "").strip()
+        et = normalize_edge_type(edge_type)
+        if not source_id or not target_id or not et:
+            return {"status": "error", "message": "source_id、target_id、edge_type 均不能为空"}
+        if source_id == target_id:
+            return {"status": "error", "message": "source_id 与 target_id 不能相同"}
+
+        # 验证 source_id 存在于该文件 KP
+        body, _fm, lines = self._read_body(rel_path)
+        full = os.path.join(self.kb_path, rel_path)
+        sidecar = load_sidecar_for_md(full, self.kb_path) or {
+            "schema_version": SIDECAR_SCHEMA_VERSION,
+            "file": rel_path.replace("\\", "/"),
+            "knowledge_points": [],
+        }
+        kps = sidecar.get("knowledge_points") or []
+        if not any(k.get("id") == source_id for k in kps):
+            return {"status": "error", "message": f"source_id 不存在：{source_id}"}
+
+        # 验证 target_id 可解析
+        from memoria.graph.edge_derivation import build_target_kp_resolver
+        resolve = build_target_kp_resolver(self.kb_path)
+        if not resolve(target_id):
+            return {"status": "error", "message": f"target_id 无法解析：{target_id}"}
+
+        edges = sidecar.setdefault("edges", [])
+        # 检查是否已存在相同边
+        for e in edges:
+            if not isinstance(e, dict):
+                continue
+            if (
+                e.get("type") == et
+                and (e.get("source_id") or "").strip() == source_id
+                and target_id in _normalize_targets_list(e.get("targets"))
+                and not e.get("no_build")
+            ):
+                return {"status": "error", "message": "该边已存在"}
+
+        rel_val = (
+            max(0.0, min(1.0, float(relevance)))
+            if relevance is not None
+            else default_relevance(et)
+        )
+        edges.append({
+            "type": et,
+            "source_id": source_id,
+            "targets": [target_id],
+            "relevance": rel_val,
+        })
+
+        sidecar["schema_version"] = SIDECAR_SCHEMA_VERSION
+        sidecar["file"] = rel_path.replace("\\", "/")
+        validation = validate_sidecar(sidecar, sidecar["file"], lines)
+        if not validation["ok"]:
+            err_msgs = [
+                e.get("message", str(e)) if isinstance(e, dict) else str(e)
+                for e in validation["errors"]
+            ]
+            return {
+                "status": "error",
+                "message": "配置校验失败: " + "; ".join(err_msgs),
+                "validation": validation,
+            }
+
+        self._write_sidecar(rel_path.replace("\\", "/"), sidecar)
+        self._cache.pop(rel_path, None)
+        return {"status": "ok", "edge": {
+            "type": et,
+            "source_id": source_id,
+            "targets": [target_id],
+            "relevance": rel_val,
+        }}
+
+    def delete_edge(
+        self,
+        rel_path: str,
+        source_id: str,
+        target_id: str,
+        edge_type: str,
+    ) -> dict:
+        """删除/切换一条边。
+        - 纯 sidecar edges[] 边：直接移除
+        - 自动推导的 contain 边：添加 no_build=True 标记
+        """
+        from memoria.graph.edge_types import normalize_edge_type, EDGE_CONTAIN
+
+        source_id = (source_id or "").strip()
+        target_id = (target_id or "").strip()
+        et = normalize_edge_type(edge_type)
+        if not source_id or not target_id or not et:
+            return {"status": "error", "message": "source_id、target_id、edge_type 均不能为空"}
+
+        body, _fm, lines = self._read_body(rel_path)
+        full = os.path.join(self.kb_path, rel_path)
+        sidecar = load_sidecar_for_md(full, self.kb_path) or {
+            "schema_version": SIDECAR_SCHEMA_VERSION,
+            "file": rel_path.replace("\\", "/"),
+            "knowledge_points": [],
+        }
+        edges = sidecar.setdefault("edges", [])
+
+        # 尝试从 edges[] 中找到并删除纯边
+        found_pure = False
+        new_edges = []
+        for e in edges:
+            if not isinstance(e, dict):
+                new_edges.append(e)
+                continue
+            if (
+                e.get("type") == et
+                and (e.get("source_id") or "").strip() == source_id
+                and target_id in _normalize_targets_list(e.get("targets"))
+                and not e.get("no_build")
+            ):
+                found_pure = True
+                continue  # 跳过即删除
+            new_edges.append(e)
+        sidecar["edges"] = new_edges
+
+        # 如果没找到纯边，且是 contain 类型，则添加 no_build 标记
+        if not found_pure and et == EDGE_CONTAIN:
+            sidecar["edges"].append({
+                "type": EDGE_CONTAIN,
+                "source_id": source_id,
+                "targets": [target_id],
+                "no_build": True,
+            })
+
+        sidecar["schema_version"] = SIDECAR_SCHEMA_VERSION
+        sidecar["file"] = rel_path.replace("\\", "/")
+        validation = validate_sidecar(sidecar, sidecar["file"], lines)
+        if not validation["ok"]:
+            err_msgs = [
+                e.get("message", str(e)) if isinstance(e, dict) else str(e)
+                for e in validation["errors"]
+            ]
+            return {
+                "status": "error",
+                "message": "配置校验失败: " + "; ".join(err_msgs),
+                "validation": validation,
+            }
+
+        self._write_sidecar(rel_path.replace("\\", "/"), sidecar)
+        self._cache.pop(rel_path, None)
+        return {
+            "status": "ok",
+            "deleted_pure": found_pure,
+            "no_build_added": not found_pure and et == EDGE_CONTAIN,
+        }
+
+    def set_contain_no_build(
+        self,
+        rel_path: str,
+        parent_id: str,
+        child_id: str,
+        *,
+        no_build: bool = True,
+    ) -> dict:
+        """标记/取消标记 contain 边的 no_build。"""
+        from memoria.graph.edge_types import EDGE_CONTAIN
+
+        parent_id = (parent_id or "").strip()
+        child_id = (child_id or "").strip()
+        if not parent_id or not child_id:
+            return {"status": "error", "message": "parent_id 和 child_id 不能为空"}
+
+        body, _fm, lines = self._read_body(rel_path)
+        full = os.path.join(self.kb_path, rel_path)
+        sidecar = load_sidecar_for_md(full, self.kb_path) or {
+            "schema_version": SIDECAR_SCHEMA_VERSION,
+            "file": rel_path.replace("\\", "/"),
+            "knowledge_points": [],
+        }
+        edges = sidecar.setdefault("edges", [])
+
+        if no_build:
+            # 添加 no_build 条目（幂等：如果已存在则不重复添加）
+            exists = False
+            for e in edges:
+                if not isinstance(e, dict):
+                    continue
+                if (
+                    e.get("type") == EDGE_CONTAIN
+                    and (e.get("source_id") or "").strip() == parent_id
+                    and child_id in _normalize_targets_list(e.get("targets"))
+                    and e.get("no_build")
+                ):
+                    exists = True
+                    break
+            if not exists:
+                edges.append({
+                    "type": EDGE_CONTAIN,
+                    "source_id": parent_id,
+                    "targets": [child_id],
+                    "no_build": True,
+                })
+        else:
+            # 移除 no_build 条目
+            sidecar["edges"] = [
+                e for e in edges
+                if not (
+                    isinstance(e, dict)
+                    and e.get("type") == EDGE_CONTAIN
+                    and (e.get("source_id") or "").strip() == parent_id
+                    and child_id in _normalize_targets_list(e.get("targets"))
+                    and e.get("no_build")
+                )
+            ]
+
+        sidecar["schema_version"] = SIDECAR_SCHEMA_VERSION
+        sidecar["file"] = rel_path.replace("\\", "/")
+        validation = validate_sidecar(sidecar, sidecar["file"], lines)
+        if not validation["ok"]:
+            err_msgs = [
+                e.get("message", str(e)) if isinstance(e, dict) else str(e)
+                for e in validation["errors"]
+            ]
+            return {
+                "status": "error",
+                "message": "配置校验失败: " + "; ".join(err_msgs),
+                "validation": validation,
+            }
+
+        self._write_sidecar(rel_path.replace("\\", "/"), sidecar)
+        self._cache.pop(rel_path, None)
+        return {"status": "ok", "no_build": no_build}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27078065",
+  "source_fingerprint": "5c9b94e491167d9be30f4e048ee22bef",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27078065",
+    "identification-of-genes-associated-with-the-astrocyte-specific-gene-gfap-during-astrocyte-differentiation."
+  ],
+  "key_phrases": [
+    "identification",
+    "genes",
+    "associated",
+    "with",
+    "astrocyte",
+    "specific",
+    "gene",
+    "gfap"
+  ],
+  "summary_1l": "Identification of genes associated with the astrocyte-specific gene Gfap during astrocyte differentiation.",
+  "query_hits": [],
+  "embed_text": "27078065 Identification of genes associated with the astrocyte-specific gene Gfap during astrocyte differentiation. science scifact Chromosomes and genes are non-randomly arranged within the mammalian cell nucleus, and gene clustering is of great significance in transcriptional regulation. However, the relevance of gene clustering and their expression during the… 27078065 identification-of-genes-associated-with-the-astrocyte-specific-gene-gfap-during-astrocyte-differentiation. identification genes associated with astrocyte specific gene gfap Identification of genes associated with the astrocyte-specific gene Gfap during astrocyte differentiation. Identification of genes associated with the astrocyte-specific gene Gfap during astrocyte differentiation. Chromosomes and genes are non-randomly arranged within the mammalian cell nucleus, and gene clustering is of great significance in transcriptional regulation. However, the relevance of gene clustering and their expression during the differentiation of neural precursor cells (NPCs) into astrocytes remains unclear. We performed a genome-wide enhanced circular chromosomal conformation capture (e4C) to screen for genes associated with the astrocyte-specific gene glial fibrillary acidic protein (Gfap) during astrocyte differentiation. We identified 18 genes that were specifically associated with Gfap and expressed in NPC-derived astrocytes. Our results provide additional evidence for the f",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.452642+00:00"
+}

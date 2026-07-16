@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24922825",
+  "source_fingerprint": "feac25f317e43431a6e5553260648d2d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24922825",
+    "a-chikungunya-fever-vaccine-utilizing-an-insect-specific-virus-platform"
+  ],
+  "key_phrases": [
+    "chikungunya",
+    "fever",
+    "vaccine",
+    "utilizing",
+    "insect",
+    "specific",
+    "virus",
+    "platform"
+  ],
+  "summary_1l": "Traditionally, vaccine development involves tradeoffs between immunogenicity and safety.",
+  "query_hits": [],
+  "embed_text": "24922825 A chikungunya fever vaccine utilizing an insect-specific virus platform science scifact Traditionally, vaccine development involves tradeoffs between immunogenicity and safety. Live-attenuated vaccines typically offer rapid and durable immunity but have reduced safety when compared to inactivated vaccines. In contrast, the… 24922825 a-chikungunya-fever-vaccine-utilizing-an-insect-specific-virus-platform chikungunya fever vaccine utilizing insect specific virus platform Traditionally, vaccine development involves tradeoffs between immunogenicity and safety. A chikungunya fever vaccine utilizing an insect-specific virus platform Traditionally, vaccine development involves tradeoffs between immunogenicity and safety. Live-attenuated vaccines typically offer rapid and durable immunity but have reduced safety when compared to inactivated vaccines. In contrast, the inability of inactivated vaccines to replicate enhances safety at the expense of immunogenicity, often necessitating multiple doses and boosters. To overcome these tradeoffs, we developed the insect-specific alphavirus, Eilat virus (EILV), as a vaccine platform. To address the chikungunya fever (CHIKF) pandemic, we used an EILV cDNA clone to design a chimeric virus containing the chikungunya virus (CHIKV) structural proteins. The recombinant EILV/CHIKV was structurally identical at 10 Å",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.577721+00:00"
+}

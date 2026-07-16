@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21033230",
+  "source_fingerprint": "5887737679676918b0e2d82ace7eb2d8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21033230",
+    "molecular-profiling-and-predictive-value-of-circulating-tumor-cells-in-patients-with-metastatic-breast-cancer:-an-option-for-monitoring-response-to-breast-cancer-related-therapies"
+  ],
+  "key_phrases": [
+    "molecular",
+    "profiling",
+    "predictive",
+    "value",
+    "circulating",
+    "tumor",
+    "cells",
+    "patients"
+  ],
+  "summary_1l": "Purpose We analyzed",
+  "query_hits": [],
+  "embed_text": "21033230 Molecular profiling and predictive value of circulating tumor cells in patients with metastatic breast cancer: an option for monitoring response to breast cancer related therapies science scifact Purpose We analyzed circulating tumor cells (CTC) in blood of metastatic breast cancer patients (n = 42) and determined the ability of this method to predict therapy response. Methods CTC from blood were analyzed before and during therapy… 21033230 molecular-profiling-and-predictive-value-of-circulating-tumor-cells-in-patients-with-metastatic-breast-cancer:-an-option-for-monitoring-response-to-breast-cancer-related-therapies molecular profiling predictive value circulating tumor cells patients Purpose We analyzed Molecular profiling and predictive value of circulating tumor cells in patients with metastatic breast cancer: an option for monitoring response to breast cancer related therapies Purpose We analyzed circulating tumor cells (CTC) in blood of metastatic breast cancer patients (n = 42) and determined the ability of this method to predict therapy response. Methods CTC from blood were analyzed before and during therapy for EpCAM, MUC1 and HER2 transcripts with the AdnaTest BreastCancer. The estrogen (ER) and progesterone (PR) receptor expression was assessed by RT-PCR. Results The overall detection rate for CTC was 52% (thereof 86% EpCAM; 86% MUC1; 32% HER2; 35% ER; 12% PR). CTC were ER, PR and HER2 negative in 45% (ER), 78% (PR) and 60% (HER-2) of patients with steroid receptor-positive tumor",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.302710+00:00"
+}

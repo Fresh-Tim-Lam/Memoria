@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "28243325",
+  "source_fingerprint": "9b0d709e15ed098d6b903619d2d83165",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "28243325",
+    "conversion-of-the-lac-repressor-into-an-allosterically-regulated-transcriptional-activator-for-mammalian-cells."
+  ],
+  "key_phrases": [
+    "conversion",
+    "lac",
+    "repressor",
+    "into",
+    "allosterically",
+    "regulated",
+    "transcriptional",
+    "activator"
+  ],
+  "summary_1l": "Conversion of the lac repressor into an allosterically regulated transcriptional activator for mammalian cells.",
+  "query_hits": [],
+  "embed_text": "28243325 Conversion of the lac repressor into an allosterically regulated transcriptional activator for mammalian cells. science scifact A novel mammalian regulatory system was created by using the Escherichia coli lac repressor. The lac repressor was converted into a mammalian transcriptional activator by modifying the lac repressor coding region to include a nuclear… 28243325 conversion-of-the-lac-repressor-into-an-allosterically-regulated-transcriptional-activator-for-mammalian-cells. conversion lac repressor into allosterically regulated transcriptional activator Conversion of the lac repressor into an allosterically regulated transcriptional activator for mammalian cells. Conversion of the lac repressor into an allosterically regulated transcriptional activator for mammalian cells. A novel mammalian regulatory system was created by using the Escherichia coli lac repressor. The lac repressor was converted into a mammalian transcriptional activator by modifying the lac repressor coding region to include a nuclear localization signal from the simian virus 40 (SV40) large tumor antigen and the transcription activation domain from the herpes simplex virus type 1 virion protein 16. The lac activator protein (LAP) fusions were potent activators of several promoters containing lac operator sequences positioned either upstream or downstream of the transcription unit. A single lac operator allowed for transactivation, whereas multiple operators acted synergistically",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.716154+00:00"
+}

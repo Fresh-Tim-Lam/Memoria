@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13889962",
+  "source_fingerprint": "66b4ba5a8a0a6de4f683b1893ef9cc5f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13889962",
+    "a-model-of-multiple-myeloma:-culture-of-5t33-murine-myeloma-cells-and-evaluation-of-tumorigenicity-in-the-c57bl/kalwrij-mouse."
+  ],
+  "key_phrases": [
+    "model",
+    "multiple",
+    "myeloma",
+    "culture",
+    "5t33",
+    "murine",
+    "cells",
+    "evaluation"
+  ],
+  "summary_1l": "A model of multiple myeloma: culture of 5T33 murine myeloma cells and evaluation of tumorigenicity in the C57BL/KaLwRij mouse.",
+  "query_hits": [],
+  "embed_text": "13889962 A model of multiple myeloma: culture of 5T33 murine myeloma cells and evaluation of tumorigenicity in the C57BL/KaLwRij mouse. science scifact The 5T33 multiple myeloma is one of a series of transplantable murine myelomas arising spontaneously in C57BL/KaLwRij mice. This study describes the establishment and characterisation of the 5T33 murine myeloma in vitro as a cultured cell… 13889962 a-model-of-multiple-myeloma:-culture-of-5t33-murine-myeloma-cells-and-evaluation-of-tumorigenicity-in-the-c57bl/kalwrij-mouse. model multiple myeloma culture 5t33 murine cells evaluation A model of multiple myeloma: culture of 5T33 murine myeloma cells and evaluation of tumorigenicity in the C57BL/KaLwRij mouse. A model of multiple myeloma: culture of 5T33 murine myeloma cells and evaluation of tumorigenicity in the C57BL/KaLwRij mouse. The 5T33 multiple myeloma is one of a series of transplantable murine myelomas arising spontaneously in C57BL/KaLwRij mice. This study describes the establishment and characterisation of the 5T33 murine myeloma in vitro as a cultured cell line in terms of its morphology, growth rate, expression of paraprotein (IgG2b) and tumorigenicity in syngeneic animals. The 5T33 cell line has been in continuous culture for over 10 months and has achieved more than passage 34. In culture, 5T33 myeloma grows as single cells or in small clusters of loosely adherent cells on an adherent stromal cell layer. Maximum doubling time is approximately 25 h, and over 90% of the cells expre",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.344930+00:00"
+}

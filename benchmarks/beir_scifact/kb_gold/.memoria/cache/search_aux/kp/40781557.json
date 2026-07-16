@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "40781557",
+  "source_fingerprint": "c27235b447d4f2d528e5150c73f7569e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "40781557",
+    "low-grade-serous-ovarian-cancer:-a-unique-disease."
+  ],
+  "key_phrases": [
+    "low",
+    "grade",
+    "serous",
+    "ovarian",
+    "cancer",
+    "unique",
+    "disease",
+    "carcinomas"
+  ],
+  "summary_1l": "Low-grade serous ovarian cancer: a unique disease.",
+  "query_hits": [],
+  "embed_text": "40781557 Low-grade serous ovarian cancer: a unique disease. science scifact Low-grade serous carcinomas represent approximately 10% of all serous ovarian carcinomas. A growing body of research has demonstrated several important differences between the clinical and molecular characteristics of these tumors and… 40781557 low-grade-serous-ovarian-cancer:-a-unique-disease. low grade serous ovarian cancer unique disease carcinomas Low-grade serous ovarian cancer: a unique disease. Low-grade serous ovarian cancer: a unique disease. Low-grade serous carcinomas represent approximately 10% of all serous ovarian carcinomas. A growing body of research has demonstrated several important differences between the clinical and molecular characteristics of these tumors and those of high-grade serous ovarian carcinomas. Patients with low-grade serous ovarian tumors are diagnosed at a younger age, have a longer overall survival, and have lower response rates to conventional chemotherapy. In addition, low-grade serous ovarian carcinomas have pathologic and molecular characteristics distinct from high-grade serous carcinomas, yet similar to serous tumors of low malignant potential. This suggests a common pathogenesis and a continuum of disease from serous tumors of low malignant po",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.828617+00:00"
+}

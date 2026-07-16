@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "41599676",
+  "source_fingerprint": "233120587370126777ca65f925754a5a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "41599676",
+    "mutation-spectrum-in-the-nephrin-gene-(nphs1)-in-congenital-nephrotic-syndrome."
+  ],
+  "key_phrases": [
+    "mutation",
+    "spectrum",
+    "nephrin",
+    "gene",
+    "nphs1",
+    "congenital",
+    "nephrotic",
+    "syndrome"
+  ],
+  "summary_1l": "Mutation spectrum in the nephrin gene (NPHS1) in congenital nephrotic syndrome.",
+  "query_hits": [],
+  "embed_text": "41599676 Mutation spectrum in the nephrin gene (NPHS1) in congenital nephrotic syndrome. science scifact Congenital nephrotic syndrome, Finnish type (CNF or NPHS1), is an autosomal recessive disease characterized by massive proteinuria and development of nephrotic syndrome shortly after birth. The disease is most common in Finland, but many… 41599676 mutation-spectrum-in-the-nephrin-gene-(nphs1)-in-congenital-nephrotic-syndrome. mutation spectrum nephrin gene nphs1 congenital nephrotic syndrome Mutation spectrum in the nephrin gene (NPHS1) in congenital nephrotic syndrome. Mutation spectrum in the nephrin gene (NPHS1) in congenital nephrotic syndrome. Congenital nephrotic syndrome, Finnish type (CNF or NPHS1), is an autosomal recessive disease characterized by massive proteinuria and development of nephrotic syndrome shortly after birth. The disease is most common in Finland, but many patients have been identified in other populations. The disease is caused by mutations in the gene for nephrin which is a key component of the glomerual ultrafilter, the podocyte slit diaphragm. A total of 30 mutations have been reported in the nephrin gene in patients with congenital nephrotic syndrome worldwide. In the Finnish population, two main mutations have been found. These two nonsense mutations account for over 94% of all mutations in Finland. Most mutations found in",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.465198+00:00"
+}

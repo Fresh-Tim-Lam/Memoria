@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4380287",
+  "source_fingerprint": "7be82484c85e82610888b09b1ce0aae2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4380287",
+    "response-to-self-antigen-imprints-regulatory-memory-in-tissues"
+  ],
+  "key_phrases": [
+    "response",
+    "self",
+    "antigen",
+    "imprints",
+    "regulatory",
+    "memory",
+    "tissues",
+    "immune"
+  ],
+  "summary_1l": "Immune homeostasis in tissues is achieved through a delicate balance between pathogenic T-cell responses directed at tissue-specific anti",
+  "query_hits": [],
+  "embed_text": "4380287 Response to self antigen imprints regulatory memory in tissues science scifact Immune homeostasis in tissues is achieved through a delicate balance between pathogenic T-cell responses directed at tissue-specific antigens and the ability of the tissue to inhibit these responses. The mechanisms by which tissues and the… 4380287 response-to-self-antigen-imprints-regulatory-memory-in-tissues response self antigen imprints regulatory memory tissues immune Immune homeostasis in tissues is achieved through a delicate balance between pathogenic T-cell responses directed at tissue-specific anti Response to self antigen imprints regulatory memory in tissues Immune homeostasis in tissues is achieved through a delicate balance between pathogenic T-cell responses directed at tissue-specific antigens and the ability of the tissue to inhibit these responses. The mechanisms by which tissues and the immune system communicate to establish and maintain immune homeostasis are currently unknown. Clinical evidence suggests that chronic or repeated exposure to self antigen within tissues leads to an attenuation of pathological autoimmune responses, possibly as a means to mitigate inflammatory damage and preserve function. Many human organ-specific autoimmune diseases are characterized by the initial presentation of the disease being the most severe, with subsequent flares being of lesser sever",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.290857+00:00"
+}

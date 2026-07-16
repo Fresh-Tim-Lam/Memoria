@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "60515890",
+  "source_fingerprint": "07987a63283951b80d6d4b60b20caaf0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "60515890",
+    "the-mouse-brain-in-stereotaxic-coordinates"
+  ],
+  "key_phrases": [
+    "mouse",
+    "brain",
+    "stereotaxic",
+    "coordinates",
+    "most",
+    "widely",
+    "used",
+    "cited"
+  ],
+  "summary_1l": "\" The Mouse Brain in Stereotaxic Coordinates\" is the most widely used and cited atlas of the mouse brain in print.",
+  "query_hits": [],
+  "embed_text": "60515890 The Mouse Brain in Stereotaxic Coordinates science scifact \" The Mouse Brain in Stereotaxic Coordinates\" is the most widely used and cited atlas of the mouse brain in print. It provides researchers and students with both accurate stereotaxic coordinates for laboratory use, and detailed… 60515890 the-mouse-brain-in-stereotaxic-coordinates mouse brain stereotaxic coordinates most widely used cited \" The Mouse Brain in Stereotaxic Coordinates\" is the most widely used and cited atlas of the mouse brain in print. The Mouse Brain in Stereotaxic Coordinates \" The Mouse Brain in Stereotaxic Coordinates\" is the most widely used and cited atlas of the mouse brain in print. It provides researchers and students with both accurate stereotaxic coordinates for laboratory use, and detailed delineations and indexing of structures for reference. The accompanying DVD provides drawings of brains structures that can be used as templates for making figures for publication. The 3rd edition is both a major revision and an expansion of previous editions. Delineations and photographs in the horizontal plane of section now complement the coronal and sagittal series, and all the tissue sections are now shown in high resolution digital color photography. The photographs of the sections and the intermediate sections are al",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.786677+00:00"
+}

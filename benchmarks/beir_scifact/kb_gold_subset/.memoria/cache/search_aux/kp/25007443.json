@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "25007443",
+  "source_fingerprint": "4ac1cad769889a9eb942fd2073bd0a8f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25007443"
+  ],
+  "key_phrases": [
+    "topographic",
+    "mapping",
+    "vmh",
+    "arcuate",
+    "nucleus",
+    "microcircuits",
+    "their",
+    "reorganization"
+  ],
+  "summary_1l": "In the hypothalamic arcuate nucleus (ARC), pro-opiomelanocortin (POMC) neurons inhibit feeding and neurop",
+  "query_hits": [],
+  "embed_text": "25007443 Topographic mapping of VMH → arcuate nucleus microcircuits and their reorganization by fasting science scifact In the hypothalamic arcuate nucleus (ARC), pro-opiomelanocortin (POMC) neurons inhibit feeding and neuropeptide-Y (NPY) neurons stimulate feeding. We tested whether neurons in the ventromedial hypothalamic nucleus (VMH), a known satiety… 25007443 topographic mapping vmh arcuate nucleus microcircuits their reorganization In the hypothalamic arcuate nucleus (ARC), pro-opiomelanocortin (POMC) neurons inhibit feeding and neurop Topographic mapping of VMH → arcuate nucleus microcircuits and their reorganization by fasting In the hypothalamic arcuate nucleus (ARC), pro-opiomelanocortin (POMC) neurons inhibit feeding and neuropeptide-Y (NPY) neurons stimulate feeding. We tested whether neurons in the ventromedial hypothalamic nucleus (VMH), a known satiety center, activate anorexigenic neuronal pathways in the ARC by projecting either excitatory synaptic inputs to POMC neurons and/or inhibitory inputs to NPY neurons. Using laser scanning photostimulation in brain slices from transgenic mice, we found that POMC and NPY neurons, which are interspersed in the ARC, are nevertheless regulated by anatomically distinct synaptic inputs. POMC neurons received strong excitatory input from the medial VMH (mVMH), whereas NPY ne",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:12.591819+00:00"
+}

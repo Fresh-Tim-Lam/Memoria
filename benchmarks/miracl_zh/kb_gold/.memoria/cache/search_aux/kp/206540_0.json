@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "kp_id": "206540#0",
+  "source_fingerprint": "0e387bac7ee4d8f50d4c1bf015e8a29c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "潍坊市",
+    "美国人口",
+    "印度人口",
+    "印度人口政策",
+    "印度行政區歷年人口列表",
+    "山东省足球代表队",
+    "无神论人口",
+    "比利时人口",
+    "湖南人口"
+  ],
+  "aliases": [
+    "206540#0"
+  ],
+  "key_phrases": [
+    "潍城区",
+    "山东省",
+    "潍坊市",
+    "下辖",
+    "一个",
+    "市辖区",
+    "面积",
+    "290"
+  ],
+  "summary_1l": "潍城区是山东省潍坊市下辖的一个市辖区。",
+  "query_hits": [],
+  "embed_text": "206540#0 潍城区 潍城区 潍城区是山东省潍坊市下辖的一个市辖区。面积290平方千米，人口37万。邮政编码261021。 潍坊市 美国人口 印度人口 印度人口政策 印度行政區歷年人口列表 山东省足球代表队 无神论人口 比利时人口 湖南人口 206540#0 潍城区 山东省 潍坊市 下辖 一个 市辖区 面积 290 潍城区是山东省潍坊市下辖的一个市辖区。 潍城区 潍城区是山东省潍坊市下辖的一个市辖区。面积290平方千米，人口37万。邮政编码261021。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:19:59.986670+00:00"
+}

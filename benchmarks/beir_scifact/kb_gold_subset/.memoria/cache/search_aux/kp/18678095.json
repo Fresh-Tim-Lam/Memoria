@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18678095",
+  "source_fingerprint": "677f723a0d25cb889419473a86647a0f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18678095",
+    "vesicular-glycolysis-provides-on-board-energy-for-fast-axonal-transport"
+  ],
+  "key_phrases": [
+    "vesicular",
+    "glycolysis",
+    "provides",
+    "board",
+    "energy",
+    "fast",
+    "axonal",
+    "transport"
+  ],
+  "summary_1l": "Fast axonal transport (FAT) requires consistent energy over long distances to fuel the molecular motors that transport vesicles.",
+  "query_hits": [],
+  "embed_text": "18678095 Vesicular Glycolysis Provides On-Board Energy for Fast Axonal Transport science scifact Fast axonal transport (FAT) requires consistent energy over long distances to fuel the molecular motors that transport vesicles. We demonstrate that glycolysis provides ATP for the FAT of vesicles. Although inhibiting ATP production from… 18678095 vesicular-glycolysis-provides-on-board-energy-for-fast-axonal-transport vesicular glycolysis provides board energy fast axonal transport Fast axonal transport (FAT) requires consistent energy over long distances to fuel the molecular motors that transport vesicles. Vesicular Glycolysis Provides On-Board Energy for Fast Axonal Transport Fast axonal transport (FAT) requires consistent energy over long distances to fuel the molecular motors that transport vesicles. We demonstrate that glycolysis provides ATP for the FAT of vesicles. Although inhibiting ATP production from mitochondria did not affect vesicles motility, pharmacological or genetic inhibition of the glycolytic enzyme GAPDH reduced transport in cultured neurons and in Drosophila larvae. GAPDH localizes on vesicles via a huntingtin-dependent mechanism and is transported on fast-moving vesicles within axons. Purified motile vesicles showed GAPDH enzymatic activity and produced ATP. Finally, we show that vesicular GAPDH is necessary and sufficient to provide on-board energy for fast vesicular t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:12.052114+00:00"
+}

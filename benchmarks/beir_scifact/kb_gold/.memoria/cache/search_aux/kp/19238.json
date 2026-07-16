@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19238",
+  "source_fingerprint": "45f00c33e586d0d4eefa94db9176fdf4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19238",
+    "the-human-myelin-basic-protein-gene-is-included-within-a-179-kilobase-transcription-unit:-expression-in-the-immune-and-central-nervous-systems."
+  ],
+  "key_phrases": [
+    "human",
+    "myelin",
+    "basic",
+    "protein",
+    "gene",
+    "included",
+    "within",
+    "179"
+  ],
+  "summary_1l": "The human myelin basic protein gene is included within a 179-kilobase transcription unit: expression in the immune and central nervous systems.",
+  "query_hits": [],
+  "embed_text": "19238 The human myelin basic protein gene is included within a 179-kilobase transcription unit: expression in the immune and central nervous systems. science scifact Two human Golli (for gene expressed in the oligodendrocyte lineage)-MBP (for myelin basic protein) cDNAs have been isolated from a human oligodendroglioma cell line. Analysis of these cDNAs has enabled us to determine the entire structure… 19238 the-human-myelin-basic-protein-gene-is-included-within-a-179-kilobase-transcription-unit:-expression-in-the-immune-and-central-nervous-systems. human myelin basic protein gene included within 179 The human myelin basic protein gene is included within a 179-kilobase transcription unit: expression in the immune and central nervous systems. The human myelin basic protein gene is included within a 179-kilobase transcription unit: expression in the immune and central nervous systems. Two human Golli (for gene expressed in the oligodendrocyte lineage)-MBP (for myelin basic protein) cDNAs have been isolated from a human oligodendroglioma cell line. Analysis of these cDNAs has enabled us to determine the entire structure of the human Golli-MBP gene. The Golli-MBP gene, which encompasses the MBP transcription unit, is approximately 179 kb in length and consists of 10 exons, seven of which constitute the MBP gene. The human Golli-MBP gene contains two transcription start sites, each of which gives rise to a family of alternatively spliced transcripts. At least two Golli-MBP transcripts, containing the first three exons of the gene a",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.335581+00:00"
+}

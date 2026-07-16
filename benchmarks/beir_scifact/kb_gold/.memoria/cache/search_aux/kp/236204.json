@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "236204",
+  "source_fingerprint": "f7b1ad90964237907f2f437922232e5b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "236204",
+    "distinct-rna-dependent-rna-polymerases-are-required-for-rnai-triggered-by-double-stranded-rna-versus-truncated-transgenes-in-paramecium-tetraurelia"
+  ],
+  "key_phrases": [
+    "distinct",
+    "rna",
+    "dependent",
+    "polymerases",
+    "required",
+    "rnai",
+    "triggered",
+    "by"
+  ],
+  "summary_1l": "In many eukaryotes, RNA-dependent RNA polymerases (R",
+  "query_hits": [],
+  "embed_text": "236204 Distinct RNA-dependent RNA polymerases are required for RNAi triggered by double-stranded RNA versus truncated transgenes in Paramecium tetraurelia science scifact In many eukaryotes, RNA-dependent RNA polymerases (RdRPs) play key roles in the RNAi pathway. They have been implicated in the recognition and processing of aberrant transcripts triggering the process, and in amplification of the silencing… 236204 distinct-rna-dependent-rna-polymerases-are-required-for-rnai-triggered-by-double-stranded-rna-versus-truncated-transgenes-in-paramecium-tetraurelia distinct rna dependent polymerases required rnai triggered by In many eukaryotes, RNA-dependent RNA polymerases (R Distinct RNA-dependent RNA polymerases are required for RNAi triggered by double-stranded RNA versus truncated transgenes in Paramecium tetraurelia In many eukaryotes, RNA-dependent RNA polymerases (RdRPs) play key roles in the RNAi pathway. They have been implicated in the recognition and processing of aberrant transcripts triggering the process, and in amplification of the silencing response. We have tested the functions of RdRP genes from the ciliate Paramecium tetraurelia in experimentally induced and endogenous mechanisms of gene silencing. In this organism, RNAi can be triggered either by high-copy, truncated transgenes or by directly feeding cells with double-stranded RNA (dsRNA). Surprisingly, dsRNA-induced silencing depends on the putatively functional RDR1 and RDR2 genes, which a",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.858456+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16098747",
+  "source_fingerprint": "a955253e61f9c983e864be4a1f878862",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16098747",
+    "breast-cancer-risk-factors-in-relation-to-breast-density-(united-states)"
+  ],
+  "key_phrases": [
+    "breast",
+    "cancer",
+    "risk",
+    "factors",
+    "relation",
+    "density",
+    "united",
+    "states"
+  ],
+  "summary_1l": "Evaluate known breast cancer risk factors in relation to breast density.",
+  "query_hits": [],
+  "embed_text": "16098747 Breast cancer risk factors in relation to breast density (United States) science scifact Evaluate known breast cancer risk factors in relation to breast density. We examined factors in relation to breast density in 144,018 New Hampshire (NH) women with at least one mammogram recorded in a statewide mammography registry.… 16098747 breast-cancer-risk-factors-in-relation-to-breast-density-(united-states) breast cancer risk factors relation density united states Evaluate known breast cancer risk factors in relation to breast density. Breast cancer risk factors in relation to breast density (United States) Evaluate known breast cancer risk factors in relation to breast density. We examined factors in relation to breast density in 144,018 New Hampshire (NH) women with at least one mammogram recorded in a statewide mammography registry. Mammographic breast density was measured by radiologists using the BI-RADS classification; risk factors of interest were obtained from patient intake forms and questionnaires. Initial analyses showed a strong inverse influence of age and body mass index (BMI) on breast density. In addition, women with late age at menarche, late age at first birth, premenopausal women, and those currently using hormone therapy (HT) tended to have higher breast density, while those with greater parity tended",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.825910+00:00"
+}

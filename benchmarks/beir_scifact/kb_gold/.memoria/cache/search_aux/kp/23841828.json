@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23841828",
+  "source_fingerprint": "2b7700dc130c7ef4162d06b69290960e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23841828",
+    "the-danish-prescription-registries."
+  ],
+  "key_phrases": [
+    "danish",
+    "prescription",
+    "registries",
+    "extensive",
+    "computerisation",
+    "pharmacies",
+    "has",
+    "permitted"
+  ],
+  "summary_1l": "The Danish prescription registries.",
+  "query_hits": [],
+  "embed_text": "23841828 The Danish prescription registries. science scifact The extensive computerisation of Danish pharmacies has permitted the establishment of two large prescription registries: The Odense University Pharmacoepidemiological Database (OPED) and the Pharmacoepidemiological Prescription Database of… 23841828 the-danish-prescription-registries. danish prescription registries extensive computerisation pharmacies has permitted The Danish prescription registries. The Danish prescription registries. The extensive computerisation of Danish pharmacies has permitted the establishment of two large prescription registries: The Odense University Pharmacoepidemiological Database (OPED) and the Pharmacoepidemiological Prescription Database of North Jutland (PDNJ). The Danish prescription registries content, coverage, completeness and the quality of the data are discussed in this article. Furthermore, conditions for access to the data are presented. The two prescription registries cover a background population of approximately one million or 18% of the Danish population. The populations covered by the registries are stable and representative of the Danish population in general. The registries cover all reimbursed medicine at the level of the individual user.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.218536+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25787749",
+  "source_fingerprint": "b690567b1c48546307a31e55177d8690",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25787749",
+    "g-quadruplexes-significantly-stimulate-pif1-helicase-catalyzed-duplex-dna-unwinding."
+  ],
+  "key_phrases": [
+    "quadruplexes",
+    "significantly",
+    "stimulate",
+    "pif1",
+    "helicase",
+    "catalyzed",
+    "duplex",
+    "dna"
+  ],
+  "summary_1l": "G-quadruplexes significantly stimulate Pif1 helicase-catalyzed duplex DNA unwinding.",
+  "query_hits": [],
+  "embed_text": "25787749 G-quadruplexes significantly stimulate Pif1 helicase-catalyzed duplex DNA unwinding. science scifact The evolutionarily conserved G-quadruplexes (G4s) are faithfully inherited and serve a variety of cellular functions such as telomere maintenance, gene regulation, DNA replication initiation, and epigenetic regulation. Different from the… 25787749 g-quadruplexes-significantly-stimulate-pif1-helicase-catalyzed-duplex-dna-unwinding. quadruplexes significantly stimulate pif1 helicase catalyzed duplex dna G-quadruplexes significantly stimulate Pif1 helicase-catalyzed duplex DNA unwinding. G-quadruplexes significantly stimulate Pif1 helicase-catalyzed duplex DNA unwinding. The evolutionarily conserved G-quadruplexes (G4s) are faithfully inherited and serve a variety of cellular functions such as telomere maintenance, gene regulation, DNA replication initiation, and epigenetic regulation. Different from the Watson-Crick base-pairing found in duplex DNA, G4s are formed via Hoogsteen base pairing and are very stable and compact DNA structures. Failure of untangling them in the cell impedes DNA-based transactions and leads to genome instability. Cells have evolved highly specific helicases to resolve G4 structures. We used a recombinant nuclear form of Saccharomyces cerevisiae Pif1 to characterize Pif1-mediated DNA unwinding with a substrate mimicking an ongoing lagging strand s",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.402578+00:00"
+}

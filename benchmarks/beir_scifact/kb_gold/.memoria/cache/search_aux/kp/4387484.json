@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4387484",
+  "source_fingerprint": "274557e74498fcc3df526f3aee912837",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4387484",
+    "g-protein-coupled-receptor-of-kaposi's-sarcoma-associated-herpesvirus-is-a-viral-oncogene-and-angiogenesis-activator."
+  ],
+  "key_phrases": [
+    "protein",
+    "coupled",
+    "receptor",
+    "kaposi",
+    "sarcoma",
+    "associated",
+    "herpesvirus",
+    "viral"
+  ],
+  "summary_1l": "G-protein-coupled receptor of Kaposi's sarcoma-associated herpesvirus is a viral oncogene and angiogenesis activator.",
+  "query_hits": [],
+  "embed_text": "4387484 G-protein-coupled receptor of Kaposi's sarcoma-associated herpesvirus is a viral oncogene and angiogenesis activator. science scifact The Kaposi's sarcoma-associated herpesvirus (KSHV/HHV8) is a gamma-2 herpesvirus that is implicated in the pathogenesis of Kaposi's sarcoma and of primary effusion B-cell lymphomas (PELs). KSHV infects malignant and progenitor cells of… 4387484 g-protein-coupled-receptor-of-kaposi's-sarcoma-associated-herpesvirus-is-a-viral-oncogene-and-angiogenesis-activator. protein coupled receptor kaposi sarcoma associated herpesvirus viral G-protein-coupled receptor of Kaposi's sarcoma-associated herpesvirus is a viral oncogene and angiogenesis activator. G-protein-coupled receptor of Kaposi's sarcoma-associated herpesvirus is a viral oncogene and angiogenesis activator. The Kaposi's sarcoma-associated herpesvirus (KSHV/HHV8) is a gamma-2 herpesvirus that is implicated in the pathogenesis of Kaposi's sarcoma and of primary effusion B-cell lymphomas (PELs). KSHV infects malignant and progenitor cells of Kaposi's sarcoma and PEL, it encodes putative oncogenes and genes that may cause Kaposi's sarcoma pathogenesis by stimulating angiogenesis. The G-protein-coupled receptor encoded by an open reading frame (ORF 74) of KSHV is expressed in Kaposi's sarcoma lesions and in PEL and stimulates signalling pathways linked to cell proliferation in a constitutive (agonist-independent) way. Here we show that signalling by this KSHV G-protein-coupled rece",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.351787+00:00"
+}

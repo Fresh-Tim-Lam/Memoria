@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18038250",
+  "source_fingerprint": "b9fd7ec9e562af5f7ce736f1cd580d3a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18038250",
+    "control-of-cns-cell-fate-decisions-by-shp-2-and-its-dysregulation-in-noonan-syndrome"
+  ],
+  "key_phrases": [
+    "control",
+    "cns",
+    "cell",
+    "fate",
+    "decisions",
+    "by",
+    "shp",
+    "its"
+  ],
+  "summary_1l": "Within the developing mammalian CNS, growth factors direct multipotent precursors to generate neurons versus glia,",
+  "query_hits": [],
+  "embed_text": "18038250 Control of CNS Cell-Fate Decisions by SHP-2 and Its Dysregulation in Noonan Syndrome science scifact Within the developing mammalian CNS, growth factors direct multipotent precursors to generate neurons versus glia, a process that if perturbed might lead to neural dysfunction. In this regard, genetic mutations resulting in constitutive… 18038250 control-of-cns-cell-fate-decisions-by-shp-2-and-its-dysregulation-in-noonan-syndrome control cns cell fate decisions by shp its Within the developing mammalian CNS, growth factors direct multipotent precursors to generate neurons versus glia, Control of CNS Cell-Fate Decisions by SHP-2 and Its Dysregulation in Noonan Syndrome Within the developing mammalian CNS, growth factors direct multipotent precursors to generate neurons versus glia, a process that if perturbed might lead to neural dysfunction. In this regard, genetic mutations resulting in constitutive activation of the protein tyrosine phosphatase SHP-2 cause Noonan Syndrome (NS), which is associated with learning disabilities and mental retardation. Here, we demonstrate that genetic knockdown of SHP-2 in cultured cortical precursors or in the embryonic cortex inhibited basal neurogenesis and caused enhanced and precocious astrocyte formation. Conversely, expression of an NS SHP-2 mutant promoted neurogenesis and inhibited astrogenesis. Neural cell-fate decisions were si",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.671989+00:00"
+}

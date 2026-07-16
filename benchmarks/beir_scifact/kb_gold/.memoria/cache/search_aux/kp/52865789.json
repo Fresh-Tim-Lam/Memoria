@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "52865789",
+  "source_fingerprint": "f18883fab0e6691db8aa364d6696a648",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "52865789",
+    "deficiency-of-interleukin-15-confers-resistance-to-obesity-by-diminishing-inflammation-and-enhancing-the-thermogenic-function-of-adipose-tissues"
+  ],
+  "key_phrases": [
+    "deficiency",
+    "interleukin",
+    "15",
+    "confers",
+    "resistance",
+    "obesity",
+    "by",
+    "diminishing"
+  ],
+  "summary_1l": "OBJECTIVE IL-15 is an inflammatory cytokine secreted by",
+  "query_hits": [],
+  "embed_text": "52865789 Deficiency of Interleukin-15 Confers Resistance to Obesity by Diminishing Inflammation and Enhancing the Thermogenic Function of Adipose Tissues science scifact OBJECTIVE IL-15 is an inflammatory cytokine secreted by many cell types. IL-15 is also produced during physical exercise by skeletal muscle and has been reported to reduce weight gain in mice. Contrarily, our findings on IL-15 knockout… 52865789 deficiency-of-interleukin-15-confers-resistance-to-obesity-by-diminishing-inflammation-and-enhancing-the-thermogenic-function-of-adipose-tissues deficiency interleukin 15 confers resistance obesity by diminishing OBJECTIVE IL-15 is an inflammatory cytokine secreted by Deficiency of Interleukin-15 Confers Resistance to Obesity by Diminishing Inflammation and Enhancing the Thermogenic Function of Adipose Tissues OBJECTIVE IL-15 is an inflammatory cytokine secreted by many cell types. IL-15 is also produced during physical exercise by skeletal muscle and has been reported to reduce weight gain in mice. Contrarily, our findings on IL-15 knockout (KO) mice indicate that IL-15 promotes obesity. The aim of this study is to investigate the mechanisms underlying the pro-obesity role of IL-15 in adipose tissues. METHODS Control and IL-15 KO mice were maintained on high fat diet (HFD) or normal control diet. After 16 weeks, body weight, adipose tissue and skeletal mass, serum lipid levels and gene/protein expression in the adipose tissues were evaluated. The effec",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.816096+00:00"
+}

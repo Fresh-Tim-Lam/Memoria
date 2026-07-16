@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "39539647",
+  "source_fingerprint": "72d143787a306452082793d39fe50f5a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "39539647",
+    "a-direct-role-for-ifn-gamma-in-regulation-of-th1-cell-development."
+  ],
+  "key_phrases": [
+    "direct",
+    "role",
+    "ifn",
+    "gamma",
+    "regulation",
+    "th1",
+    "cell",
+    "development"
+  ],
+  "summary_1l": "A direct role for IFN-gamma in regulation of Th1 cell development.",
+  "query_hits": [],
+  "embed_text": "39539647 A direct role for IFN-gamma in regulation of Th1 cell development. science scifact IL-12 has been identified as a major cytokine influencing the differentiation of CD4 cells to a Th1 phenotype, whereas a role for IFN-gamma is controversial. We investigated the interrelationship between IL-12 and IFN-gamma in promoting… 39539647 a-direct-role-for-ifn-gamma-in-regulation-of-th1-cell-development. direct role ifn gamma regulation th1 cell development A direct role for IFN-gamma in regulation of Th1 cell development. A direct role for IFN-gamma in regulation of Th1 cell development. IL-12 has been identified as a major cytokine influencing the differentiation of CD4 cells to a Th1 phenotype, whereas a role for IFN-gamma is controversial. We investigated the interrelationship between IL-12 and IFN-gamma in promoting Th1 responses using naive CD4 cells reactive with pigeon cytochrome c from TCR transgenics and memory CD4 cells derived by in vivo priming with KLH. Without exogenous rIL-12 or rIFN-gamma, primary and memory effectors induced by Ag or anti-CD3 and anti-CD28 secreted variable levels of IL-2 and IFN-gamma. The level of IFN-gamma secreted by effectors correlated with endogenous IFN-gamma produced in primary cultures, and anti-IFN-gamma largely inhibited the development of effectors producing IF",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.717950+00:00"
+}

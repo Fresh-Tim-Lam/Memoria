@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14726759",
+  "source_fingerprint": "5fb82740d7dda18e0034e2ce6f70fe0a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14726759",
+    "adult-cervicocerebral-artery-dissection:-a-single-center-study-of-301-finnish-patients."
+  ],
+  "key_phrases": [
+    "adult",
+    "cervicocerebral",
+    "artery",
+    "dissection",
+    "single",
+    "center",
+    "study",
+    "301"
+  ],
+  "summary_1l": "Adult cervicocerebral artery dissection: a single-center study of 301 Finnish patients.",
+  "query_hits": [],
+  "embed_text": "14726759 Adult cervicocerebral artery dissection: a single-center study of 301 Finnish patients. science scifact BACKGROUND AND PURPOSE There are only few small studies assessing potential risk factors, comorbidity, and prognostic factors in adult spontaneous cervicocerebral artery dissection (CAD). METHODS We conducted a retrospective,… 14726759 adult-cervicocerebral-artery-dissection:-a-single-center-study-of-301-finnish-patients. adult cervicocerebral artery dissection single center study 301 Adult cervicocerebral artery dissection: a single-center study of 301 Finnish patients. Adult cervicocerebral artery dissection: a single-center study of 301 Finnish patients. BACKGROUND AND PURPOSE There are only few small studies assessing potential risk factors, comorbidity, and prognostic factors in adult spontaneous cervicocerebral artery dissection (CAD). METHODS We conducted a retrospective, hospital-based analysis on the prognostic factors and association of CAD with vascular risk factors in 301 consecutive Finnish patients, diagnosed from 1994 to 2007. RESULTS Two thirds of the patients were men (68%). Women were younger than men. Migraine (36% of all patients), especially with visual aura (63% of all migraineurs), and smoking were more common in patients with CAD compared with the general Finnish population. At 3 months, 247 (83%) patients reached a favorable outcom",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.567652+00:00"
+}

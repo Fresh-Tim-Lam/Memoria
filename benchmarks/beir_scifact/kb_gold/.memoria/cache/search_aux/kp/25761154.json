@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25761154",
+  "source_fingerprint": "fcc36b7d0a3d12532cee9cc3b36b836d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25761154",
+    "exercise-induced-asthma:-a-practical-guide-to-definitions,-diagnosis,-prevalence,-and-treatment."
+  ],
+  "key_phrases": [
+    "exercise",
+    "induced",
+    "asthma",
+    "practical",
+    "guide",
+    "definitions",
+    "diagnosis",
+    "prevalence"
+  ],
+  "summary_1l": "Exercise-induced asthma: a practical guide to definitions, diagnosis, prevalence, and treatment.",
+  "query_hits": [],
+  "embed_text": "25761154 Exercise-induced asthma: a practical guide to definitions, diagnosis, prevalence, and treatment. science scifact Exercise-induced asthma is defined as an intermittent narrowing of the airways, demonstrated by a decrease in some measure of flow, that the patient experiences as wheezing, chest tightness, coughing, and difficulty breathing that is… 25761154 exercise-induced-asthma:-a-practical-guide-to-definitions,-diagnosis,-prevalence,-and-treatment. exercise induced asthma practical guide definitions diagnosis prevalence Exercise-induced asthma: a practical guide to definitions, diagnosis, prevalence, and treatment. Exercise-induced asthma: a practical guide to definitions, diagnosis, prevalence, and treatment. Exercise-induced asthma is defined as an intermittent narrowing of the airways, demonstrated by a decrease in some measure of flow, that the patient experiences as wheezing, chest tightness, coughing, and difficulty breathing that is triggered by exercise. Exercise will trigger asthma in most individuals who have chronic asthma, as well as in some who do not otherwise have asthma. Definitive diagnosis requires demonstration of a drop in flow rate, typically > or = 13-15% for forced expiratory volume in one second (FEV1) and > or = 15-20% for peak expiratory flow rate (PEFR), after exercise, associated with symptoms. Prevalence data indicate that this disorder is very common in those who partici",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.364815+00:00"
+}

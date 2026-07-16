@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22190276",
+  "source_fingerprint": "b134147c69215ab87183efb114d62331",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22190276",
+    "how-nascent-phagosomes-mature-to-become-phagolysosomes."
+  ],
+  "key_phrases": [
+    "how",
+    "nascent",
+    "phagosomes",
+    "mature",
+    "become",
+    "phagolysosomes",
+    "phagocytosis",
+    "mediates"
+  ],
+  "summary_1l": "How nascent phagosomes mature to become phagolysosomes.",
+  "query_hits": [],
+  "embed_text": "22190276 How nascent phagosomes mature to become phagolysosomes. science scifact Phagocytosis mediates the clearance of apoptotic bodies and also the elimination of microbial pathogens. The nascent phagocytic vacuole formed upon particle engulfment lacks microbicidal and degradative activity. These capabilities are… 22190276 how-nascent-phagosomes-mature-to-become-phagolysosomes. how nascent phagosomes mature become phagolysosomes phagocytosis mediates How nascent phagosomes mature to become phagolysosomes. How nascent phagosomes mature to become phagolysosomes. Phagocytosis mediates the clearance of apoptotic bodies and also the elimination of microbial pathogens. The nascent phagocytic vacuole formed upon particle engulfment lacks microbicidal and degradative activity. These capabilities are acquired as the phagosome undergoes maturation; a progressive remodeling of its membrane and contents that culminates in the formation of phagolysosomes. Maturation entails orderly sequential fusion of the phagosomal vacuole with specialized endocytic and secretory compartments. Concomitantly, the phagosomal membrane undergoes both inward and outward vesiculation and tubulation followed by fission, thereby recycling components and maintaining its overall size. Here, we summarize what is known about the",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.404095+00:00"
+}

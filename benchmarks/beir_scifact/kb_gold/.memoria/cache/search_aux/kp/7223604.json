@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7223604",
+  "source_fingerprint": "0891f5727a3faa75ac89e76a36f5aa2f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7223604",
+    "aluminum-fluoride-stimulates-surface-protrusions-in-cells-overexpressing-the-arf6-gtpase"
+  ],
+  "key_phrases": [
+    "aluminum",
+    "fluoride",
+    "stimulates",
+    "surface",
+    "protrusions",
+    "cells",
+    "overexpressing",
+    "arf6"
+  ],
+  "summary_1l": "To study the effector function of the ADP- ribosylation factor (ARF) 6 GTP-binding protein, we transfected HeLa",
+  "query_hits": [],
+  "embed_text": "7223604 Aluminum fluoride stimulates surface protrusions in cells overexpressing the ARF6 GTPase science scifact To study the effector function of the ADP- ribosylation factor (ARF) 6 GTP-binding protein, we transfected HeLa cells with wild-type, epitope-tagged ARF6. Previously shown to indirectly activate the ARF1 GTPase, aluminum fluoride (AIF)… 7223604 aluminum-fluoride-stimulates-surface-protrusions-in-cells-overexpressing-the-arf6-gtpase aluminum fluoride stimulates surface protrusions cells overexpressing arf6 To study the effector function of the ADP- ribosylation factor (ARF) 6 GTP-binding protein, we transfected HeLa Aluminum fluoride stimulates surface protrusions in cells overexpressing the ARF6 GTPase To study the effector function of the ADP- ribosylation factor (ARF) 6 GTP-binding protein, we transfected HeLa cells with wild-type, epitope-tagged ARF6. Previously shown to indirectly activate the ARF1 GTPase, aluminum fluoride (AIF) treatment of ARF6-transfected cells resulted in a redistribution of both ARF6 and actin to discrete sites on the plasma membrane, which became increasingly protrusive over time. The effects of AIF were reversible, specific to cells transfected with wild-type ARF6, and resembled the cellular protrusions observed in cells expressing the GTPase defective mutant of ARF6. Importantly, the protrusions observed in cells transfected with ARF6 were distinct from the enhanced stre",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.813915+00:00"
+}

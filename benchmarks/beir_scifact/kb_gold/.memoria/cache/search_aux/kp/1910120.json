@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1910120",
+  "source_fingerprint": "959b31265acca964d1805f3a64d7088f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1910120",
+    "lpcat3-dependent-production-of-arachidonoyl-phospholipids-is-a-key-determinant-of-triglyceride-secretion"
+  ],
+  "key_phrases": [
+    "lpcat3",
+    "dependent",
+    "production",
+    "arachidonoyl",
+    "phospholipids",
+    "key",
+    "determinant",
+    "triglyceride"
+  ],
+  "summary_1l": "The role of specific phospholipids (PLs) in lipid transport has been difficult to assess due to",
+  "query_hits": [],
+  "embed_text": "1910120 Lpcat3-dependent production of arachidonoyl phospholipids is a key determinant of triglyceride secretion science scifact The role of specific phospholipids (PLs) in lipid transport has been difficult to assess due to an inability to selectively manipulate membrane composition in vivo. Here we show that the phospholipid remodeling enzyme… 1910120 lpcat3-dependent-production-of-arachidonoyl-phospholipids-is-a-key-determinant-of-triglyceride-secretion lpcat3 dependent production arachidonoyl phospholipids key determinant triglyceride The role of specific phospholipids (PLs) in lipid transport has been difficult to assess due to Lpcat3-dependent production of arachidonoyl phospholipids is a key determinant of triglyceride secretion The role of specific phospholipids (PLs) in lipid transport has been difficult to assess due to an inability to selectively manipulate membrane composition in vivo. Here we show that the phospholipid remodeling enzyme lysophosphatidylcholine acyltransferase 3 (Lpcat3) is a critical determinant of triglyceride (TG) secretion due to its unique ability to catalyze the incorporation of arachidonate into membranes. Mice lacking Lpcat3 in the intestine fail to thrive during weaning and exhibit enterocyte lipid accumulation and reduced plasma TGs. Mice lacking Lpcat3 in the liver show reduced plasma TGs, hepatosteatosis, and secrete lipid-poor very low-density lipoprotein (VLDL) lacking arachi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.158101+00:00"
+}

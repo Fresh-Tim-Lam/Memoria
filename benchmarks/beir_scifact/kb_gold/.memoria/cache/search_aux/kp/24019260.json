@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24019260",
+  "source_fingerprint": "4a5716496cbd44615df0440ddb78ae9c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24019260",
+    "varenicline,-an-alpha4beta2-nicotinic-acetylcholine-receptor-partial-agonist,-selectively-decreases-ethanol-consumption-and-seeking."
+  ],
+  "key_phrases": [
+    "varenicline",
+    "alpha4beta2",
+    "nicotinic",
+    "acetylcholine",
+    "receptor",
+    "partial",
+    "agonist",
+    "selectively"
+  ],
+  "summary_1l": "Varenicline, an alpha4beta2 nicotinic acetylcholine receptor partial agonist, selectively decreases ethanol consumption and seeking.",
+  "query_hits": [],
+  "embed_text": "24019260 Varenicline, an alpha4beta2 nicotinic acetylcholine receptor partial agonist, selectively decreases ethanol consumption and seeking. science scifact Alcohol dependence is a disease that impacts millions of individuals worldwide. There has been some progress with pharmacotherapy for alcohol-dependent individuals; however, there remains a critical need for the development of novel and… 24019260 varenicline,-an-alpha4beta2-nicotinic-acetylcholine-receptor-partial-agonist,-selectively-decreases-ethanol-consumption-and-seeking. varenicline alpha4beta2 nicotinic acetylcholine receptor partial agonist selectively Varenicline, an alpha4beta2 nicotinic acetylcholine receptor partial agonist, selectively decreases ethanol consumption and seeking. Varenicline, an alpha4beta2 nicotinic acetylcholine receptor partial agonist, selectively decreases ethanol consumption and seeking. Alcohol dependence is a disease that impacts millions of individuals worldwide. There has been some progress with pharmacotherapy for alcohol-dependent individuals; however, there remains a critical need for the development of novel and additional therapeutic approaches. Alcohol and nicotine are commonly abused together, and there is evidence that neuronal nicotinic acetylcholine receptors (nAChRs) play a role in both alcohol and nicotine dependence. Varenicline, a partial agonist at the alpha4beta2 nAChRs, reduces nicotine intake and was recently approved as a smoking cessation aid. We have investigated the role of varenicline in the modulation of ethanol co",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.633090+00:00"
+}

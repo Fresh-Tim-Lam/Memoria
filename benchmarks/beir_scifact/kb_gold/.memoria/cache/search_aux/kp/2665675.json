@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2665675",
+  "source_fingerprint": "75d7a3276eae739a158080c2c2e4e66b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2665675",
+    "american-society-of-clinical-oncology-policy-statement:-the-role-of-the-oncologist-in-cancer-prevention-and-risk-assessment."
+  ],
+  "key_phrases": [
+    "american",
+    "society",
+    "clinical",
+    "oncology",
+    "policy",
+    "statement",
+    "role",
+    "oncologist"
+  ],
+  "summary_1l": "American Society of Clinical Oncology policy statement: the role of the oncologist in cancer prevention and risk assessment.",
+  "query_hits": [],
+  "embed_text": "2665675 American Society of Clinical Oncology policy statement: the role of the oncologist in cancer prevention and risk assessment. science scifact Oncologists have a critical opportunity to utilize risk assessment and cancer prevention strategies to interrupt the initiation or progression of cancer in cancer survivors and individuals at high risk of developing cancer. Expanding… 2665675 american-society-of-clinical-oncology-policy-statement:-the-role-of-the-oncologist-in-cancer-prevention-and-risk-assessment. american society clinical oncology policy statement role oncologist American Society of Clinical Oncology policy statement: the role of the oncologist in cancer prevention and risk assessment. American Society of Clinical Oncology policy statement: the role of the oncologist in cancer prevention and risk assessment. Oncologists have a critical opportunity to utilize risk assessment and cancer prevention strategies to interrupt the initiation or progression of cancer in cancer survivors and individuals at high risk of developing cancer. Expanding knowledge about the natural history and prognosis of cancers positions oncologists to advise patients regarding the risk of second malignancies and treatment-related cancers. In addition, as recognized experts in the full spectrum of cancer care, oncologists are afforded opportunities for involvement in community-based cancer prevention activities. Although oncologists are currently providing many cancer prevention and risk assessment se",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.978025+00:00"
+}

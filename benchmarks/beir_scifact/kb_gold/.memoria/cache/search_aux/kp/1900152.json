@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1900152",
+  "source_fingerprint": "6c65ddd34921274943619a55d9cea7ab",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1900152",
+    "beyond-melanoma:-inhibiting-the-pd-1/pd-l1-pathway-in-solid-tumors."
+  ],
+  "key_phrases": [
+    "beyond",
+    "melanoma",
+    "inhibiting",
+    "pd",
+    "l1",
+    "pathway",
+    "solid",
+    "tumors"
+  ],
+  "summary_1l": "Beyond melanoma: inhibiting the PD-1/PD-L1 pathway in solid tumors.",
+  "query_hits": [],
+  "embed_text": "1900152 Beyond melanoma: inhibiting the PD-1/PD-L1 pathway in solid tumors. science scifact Immune checkpoint inhibitors have been identified as breakthrough treatment in melanoma given its dramatic response to PD-1/PD-L1 blockade. This is likely to extend to many other cancers as hundreds of clinical trials are being conducted… 1900152 beyond-melanoma:-inhibiting-the-pd-1/pd-l1-pathway-in-solid-tumors. beyond melanoma inhibiting pd l1 pathway solid tumors Beyond melanoma: inhibiting the PD-1/PD-L1 pathway in solid tumors. Beyond melanoma: inhibiting the PD-1/PD-L1 pathway in solid tumors. Immune checkpoint inhibitors have been identified as breakthrough treatment in melanoma given its dramatic response to PD-1/PD-L1 blockade. This is likely to extend to many other cancers as hundreds of clinical trials are being conducted or proposed using this exciting modality of therapy in a variety of malignancies. While immune checkpoint inhibitors have been extensively studied in melanoma and more recently in lung cancer, little is known regarding immune checkpoint blockade in other cancers. This review will focus on the tumor immune microenvironment, the expression of PD-1/PD-L1 and the effect of immune modulation using PD-1 or PD-L1 inhibitors in patients with head and neck, prostate, urothelial, renal, breast, gast",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.031942+00:00"
+}

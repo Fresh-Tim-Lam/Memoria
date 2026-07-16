@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18379855",
+  "source_fingerprint": "730d6e75fad5f31bda94c68749ee5959",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18379855",
+    "the-natural-statistics-of-audiovisual-speech"
+  ],
+  "key_phrases": [
+    "natural",
+    "statistics",
+    "audiovisual",
+    "speech",
+    "humans",
+    "like",
+    "other",
+    "animals"
+  ],
+  "summary_1l": "Humans, like other animals, are exposed to a continuous stream of signals, which are dynamic, multimodal, extended, and time varying in nature.",
+  "query_hits": [],
+  "embed_text": "18379855 The Natural Statistics of Audiovisual Speech science scifact Humans, like other animals, are exposed to a continuous stream of signals, which are dynamic, multimodal, extended, and time varying in nature. This complex input space must be transduced and sampled by our sensory systems and transmitted… 18379855 the-natural-statistics-of-audiovisual-speech natural statistics audiovisual speech humans like other animals Humans, like other animals, are exposed to a continuous stream of signals, which are dynamic, multimodal, extended, and time varying in nature. The Natural Statistics of Audiovisual Speech Humans, like other animals, are exposed to a continuous stream of signals, which are dynamic, multimodal, extended, and time varying in nature. This complex input space must be transduced and sampled by our sensory systems and transmitted to the brain where it can guide the selection of appropriate actions. To simplify this process, it's been suggested that the brain exploits statistical regularities in the stimulus space. Tests of this idea have largely been confined to unimodal signals and natural scenes. One important class of multisensory signals for which a quantitative input space characterization is unavailable is human speech. We do not understand what signals our brain has to actively piece together from an audiovisual speech stream to",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.215840+00:00"
+}

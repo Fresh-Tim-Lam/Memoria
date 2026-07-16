@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "42662816",
+  "source_fingerprint": "f28f924ee65e45ea9dd33bf641b6a55a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "42662816",
+    "endogenous-mirna-sponge-lincrna-ror-regulates-oct4,-nanog,-and-sox2-in-human-embryonic-stem-cell-self-renewal."
+  ],
+  "key_phrases": [
+    "endogenous",
+    "mirna",
+    "sponge",
+    "lincrna",
+    "ror",
+    "regulates",
+    "oct4",
+    "nanog"
+  ],
+  "summary_1l": "Endogenous miRNA sponge lincRNA-RoR regulates Oct4, Nanog, and Sox2 in human embryonic stem cell self-renewal.",
+  "query_hits": [],
+  "embed_text": "42662816 Endogenous miRNA sponge lincRNA-RoR regulates Oct4, Nanog, and Sox2 in human embryonic stem cell self-renewal. science scifact The embryonic stem cell (ESC) transcriptional and epigenetic networks are controlled by a multilayer regulatory circuitry, including core transcription factors (TFs), posttranscriptional modifier microRNAs (miRNAs), and some other… 42662816 endogenous-mirna-sponge-lincrna-ror-regulates-oct4,-nanog,-and-sox2-in-human-embryonic-stem-cell-self-renewal. endogenous mirna sponge lincrna ror regulates oct4 nanog Endogenous miRNA sponge lincRNA-RoR regulates Oct4, Nanog, and Sox2 in human embryonic stem cell self-renewal. Endogenous miRNA sponge lincRNA-RoR regulates Oct4, Nanog, and Sox2 in human embryonic stem cell self-renewal. The embryonic stem cell (ESC) transcriptional and epigenetic networks are controlled by a multilayer regulatory circuitry, including core transcription factors (TFs), posttranscriptional modifier microRNAs (miRNAs), and some other regulators. However, the role of large intergenic noncoding RNAs (lincRNAs) in this regulatory circuitry and their underlying mechanism remains undefined. Here, we demonstrate that a lincRNA, linc-RoR, may function as a key competing endogenous RNA to link the network of miRNAs and core TFs, e.g., Oct4, Sox2, and Nanog. We show that linc-RoR shares miRNA-response elements with these core TFs and that linc-RoR prevents these core TFs from miRNA-mediated s",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.147383+00:00"
+}

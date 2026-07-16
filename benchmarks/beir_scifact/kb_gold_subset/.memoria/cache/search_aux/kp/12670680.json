@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12670680",
+  "source_fingerprint": "4db71e9bf2cf705a9489ca8d77f6f5a6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12670680",
+    "basophils-and-the-t-helper-2-environment-can-promote-the-development-of-lupus-nephritis"
+  ],
+  "key_phrases": [
+    "basophils",
+    "helper",
+    "environment",
+    "can",
+    "promote",
+    "development",
+    "lupus",
+    "nephritis"
+  ],
+  "summary_1l": "In systemic lupus erythematosus (SLE), self-reactive antibodies can target the kidney (lupus nephritis), leading",
+  "query_hits": [],
+  "embed_text": "12670680 BASOPHILS AND THE T HELPER 2 ENVIRONMENT CAN PROMOTE THE DEVELOPMENT OF LUPUS NEPHRITIS science scifact In systemic lupus erythematosus (SLE), self-reactive antibodies can target the kidney (lupus nephritis), leading to functional failure and possible mortality. We report that activation of basophils by autoreactive IgE causes their homing… 12670680 basophils-and-the-t-helper-2-environment-can-promote-the-development-of-lupus-nephritis basophils helper environment can promote development lupus nephritis In systemic lupus erythematosus (SLE), self-reactive antibodies can target the kidney (lupus nephritis), leading BASOPHILS AND THE T HELPER 2 ENVIRONMENT CAN PROMOTE THE DEVELOPMENT OF LUPUS NEPHRITIS In systemic lupus erythematosus (SLE), self-reactive antibodies can target the kidney (lupus nephritis), leading to functional failure and possible mortality. We report that activation of basophils by autoreactive IgE causes their homing to lymph nodes, promoting T helper type 2 (T(H)2) cell differentiation and enhancing the production of self-reactive antibodies that cause lupus-like nephritis in mice lacking the Src family protein tyrosine kinase Lyn (Lyn(-/-) mice). Individuals with SLE also have elevated serum IgE, self-reactive IgEs and activated basophils that express CD62 ligand (CD62L) and the major histocompatibility complex (MHC) class II molecule human leukocyte antigen-DR (HLA-DR), parameter",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:09.388248+00:00"
+}

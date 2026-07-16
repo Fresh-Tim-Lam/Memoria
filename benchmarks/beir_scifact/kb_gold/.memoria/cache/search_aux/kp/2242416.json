@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2242416",
+  "source_fingerprint": "2d0a9c0ede0fa1da1d037a81ecdf6cb4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2242416",
+    "swim-training-suppresses-tumor-growth-in-mice."
+  ],
+  "key_phrases": [
+    "swim",
+    "training",
+    "suppresses",
+    "tumor",
+    "growth",
+    "mice",
+    "present",
+    "study"
+  ],
+  "summary_1l": "Swim training suppresses tumor growth in mice.",
+  "query_hits": [],
+  "embed_text": "2242416 Swim training suppresses tumor growth in mice. science scifact The present study was designed to determine the effects of physical training on the development of cancer induced by the injection of Ehrlich tumor cells in mice. Male Swiss mice were subjected to a swim training protocol (5 days/wk for 6… 2242416 swim-training-suppresses-tumor-growth-in-mice. swim training suppresses tumor growth mice present study Swim training suppresses tumor growth in mice. Swim training suppresses tumor growth in mice. The present study was designed to determine the effects of physical training on the development of cancer induced by the injection of Ehrlich tumor cells in mice. Male Swiss mice were subjected to a swim training protocol (5 days/wk for 6 wk, 1 h at 50% of maximal capacity-trained groups) or remained sedentary in their cages (sedentary groups). The inoculation of Ehrlich tumor cells was performed at the end of the fourth week, and animals were killed after 6 wk of training. Heart and solid tumor weights were recorded, and tumor volumes were calculated. Portions of the tumors were used for the evaluation of macrophages and neutrophil accumulation or fixed in neutral 10% buffered formalin for histological analysis. The tumor volume and weight we",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.712829+00:00"
+}

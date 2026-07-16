@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "39661951",
+  "source_fingerprint": "08b6e8be595a3a7fc39004dbc195d875",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "39661951",
+    "familial-barrett's-esophagus-associated-with-adenocarcinoma."
+  ],
+  "key_phrases": [
+    "familial",
+    "barrett",
+    "esophagus",
+    "associated",
+    "with",
+    "adenocarcinoma",
+    "family",
+    "six"
+  ],
+  "summary_1l": "Familial Barrett's esophagus associated with adenocarcinoma.",
+  "query_hits": [],
+  "embed_text": "39661951 Familial Barrett's esophagus associated with adenocarcinoma. science scifact A family with six cases of Barrett's esophagus over three generations is described. The Barrett's esophagus affected only males, and there were three associated adenocarcinomas. The mechanism of inheritance is compatible with an autosomal… 39661951 familial-barrett's-esophagus-associated-with-adenocarcinoma. familial barrett esophagus associated with adenocarcinoma family six Familial Barrett's esophagus associated with adenocarcinoma. Familial Barrett's esophagus associated with adenocarcinoma. A family with six cases of Barrett's esophagus over three generations is described. The Barrett's esophagus affected only males, and there were three associated adenocarcinomas. The mechanism of inheritance is compatible with an autosomal dominant pattern with nearly complete penetrance. Other case reports in the literature are compared with this familial case of Barrett's esophagus with associated adenocarcinomas.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.845872+00:00"
+}

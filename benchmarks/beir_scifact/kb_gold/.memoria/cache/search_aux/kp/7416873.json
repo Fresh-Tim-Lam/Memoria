@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7416873",
+  "source_fingerprint": "722abe4b69b91abbe93c827e04b67ce6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7416873",
+    "nuclear-repositioning-of-the-vsg-promoter-during-developmental-silencing-in-trypanosoma-brucei"
+  ],
+  "key_phrases": [
+    "nuclear",
+    "repositioning",
+    "vsg",
+    "promoter",
+    "during",
+    "developmental",
+    "silencing",
+    "trypanosoma"
+  ],
+  "summary_1l": "Interphase nuclear repositioning of chromosomes has been implicated in the epigenetic regulation of RNA p",
+  "query_hits": [],
+  "embed_text": "7416873 Nuclear repositioning of the VSG promoter during developmental silencing in Trypanosoma brucei science scifact Interphase nuclear repositioning of chromosomes has been implicated in the epigenetic regulation of RNA polymerase (pol) II transcription. However, little is known about the nuclear position–dependent regulation of RNA pol I–transcribed… 7416873 nuclear-repositioning-of-the-vsg-promoter-during-developmental-silencing-in-trypanosoma-brucei nuclear repositioning vsg promoter during developmental silencing trypanosoma Interphase nuclear repositioning of chromosomes has been implicated in the epigenetic regulation of RNA p Nuclear repositioning of the VSG promoter during developmental silencing in Trypanosoma brucei Interphase nuclear repositioning of chromosomes has been implicated in the epigenetic regulation of RNA polymerase (pol) II transcription. However, little is known about the nuclear position–dependent regulation of RNA pol I–transcribed loci. Trypanosoma brucei is an excellent model system to address this question because its two main surface protein genes, procyclin and variant surface glycoprotein (VSG), are transcribed by pol I and undergo distinct transcriptional activation or downregulation events during developmental differentiation. Although the monoallelically expressed VSG locus is exclusively localized to an extranucleolar body in the bloodstream form, in this study, we report that nonm",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.240755+00:00"
+}

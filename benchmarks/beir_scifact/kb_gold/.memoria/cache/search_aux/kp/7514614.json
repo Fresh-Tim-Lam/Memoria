@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7514614",
+  "source_fingerprint": "d666d797982a92300ff468093bcb3994",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7514614",
+    "understanding-the-odd-science-of-aging"
+  ],
+  "key_phrases": [
+    "understanding",
+    "odd",
+    "science",
+    "aging",
+    "evolutionary",
+    "considerations",
+    "suggest",
+    "caused"
+  ],
+  "summary_1l": "Evolutionary considerations suggest aging is caused not by active gene programming but by evolved limitations in somatic maintenance, resulting in a build-up of",
+  "query_hits": [],
+  "embed_text": "7514614 Understanding the Odd Science of Aging science scifact Evolutionary considerations suggest aging is caused not by active gene programming but by evolved limitations in somatic maintenance, resulting in a build-up of damage. Ecological factors such as hazard rates and food availability… 7514614 understanding-the-odd-science-of-aging understanding odd science aging evolutionary considerations suggest caused Evolutionary considerations suggest aging is caused not by active gene programming but by evolved limitations in somatic maintenance, resulting in a build-up of Understanding the Odd Science of Aging Evolutionary considerations suggest aging is caused not by active gene programming but by evolved limitations in somatic maintenance, resulting in a build-up of damage. Ecological factors such as hazard rates and food availability influence the trade-offs between investing in growth, reproduction, and somatic survival, explaining why species evolved different life spans and why aging rate can sometimes be altered, for example, by dietary restriction. To understand the cell and molecular basis of aging is to unravel the multiplicity of mechanisms causing damage to accumulate and the complex array of systems working to keep damage at bay.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.545056+00:00"
+}

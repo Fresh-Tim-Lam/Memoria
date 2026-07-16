@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10365749",
+  "source_fingerprint": "1ed0609965f9f15310aa4ea62b659c09",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10365749",
+    "neighbourhood-risk-factors-for-tuberculosis-in-hong-kong."
+  ],
+  "key_phrases": [
+    "neighbourhood",
+    "risk",
+    "factors",
+    "tuberculosis",
+    "hong",
+    "kong",
+    "background",
+    "tb"
+  ],
+  "summary_1l": "Neighbourhood risk factors for tuberculosis in Hong Kong.",
+  "query_hits": [],
+  "embed_text": "10365749 Neighbourhood risk factors for tuberculosis in Hong Kong. science scifact BACKGROUND Tuberculosis (TB) has been reported to be associated with poverty, especially in developing countries. Hong Kong is one of the few industrialised areas with a high incidence of TB where previous reports on the effect of poverty… 10365749 neighbourhood-risk-factors-for-tuberculosis-in-hong-kong. neighbourhood risk factors tuberculosis hong kong background tb Neighbourhood risk factors for tuberculosis in Hong Kong. Neighbourhood risk factors for tuberculosis in Hong Kong. BACKGROUND Tuberculosis (TB) has been reported to be associated with poverty, especially in developing countries. Hong Kong is one of the few industrialised areas with a high incidence of TB where previous reports on the effect of poverty at neighbourhood level have been conflicting. OBJECTIVE To examine the spatial distribution of TB and its association with neighbourhood risk factors. METHOD A total of 17 294 TB cases notified from 2005 to 2007 were mapped down to the District Council Constituency Area (DCCA) level, and were indirectly standardised by age and sex using 2006 census population data. The standardised TB ratio was correlated with neighbourhood risk factors classified by family, ethnicity, economic and environmental do",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.487922+00:00"
+}

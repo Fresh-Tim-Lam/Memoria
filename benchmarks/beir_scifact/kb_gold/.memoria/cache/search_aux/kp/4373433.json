@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4373433",
+  "source_fingerprint": "d6d3f31bbfd0513dd9a4537ca4f936eb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4373433",
+    "broad-neutralization-coverage-of-hiv-by-multiple-highly-potent-antibodies"
+  ],
+  "key_phrases": [
+    "broad",
+    "neutralization",
+    "coverage",
+    "hiv",
+    "by",
+    "multiple",
+    "highly",
+    "potent"
+  ],
+  "summary_1l": "Broadly neutralizing antibodies against highly variable viral pathogens are much sought after to treat or protect against glob",
+  "query_hits": [],
+  "embed_text": "4373433 Broad neutralization coverage of HIV by multiple highly potent antibodies science scifact Broadly neutralizing antibodies against highly variable viral pathogens are much sought after to treat or protect against global circulating viruses. Here we probed the neutralizing antibody repertoires of four human immunodeficiency virus… 4373433 broad-neutralization-coverage-of-hiv-by-multiple-highly-potent-antibodies broad neutralization coverage hiv by multiple highly potent Broadly neutralizing antibodies against highly variable viral pathogens are much sought after to treat or protect against glob Broad neutralization coverage of HIV by multiple highly potent antibodies Broadly neutralizing antibodies against highly variable viral pathogens are much sought after to treat or protect against global circulating viruses. Here we probed the neutralizing antibody repertoires of four human immunodeficiency virus (HIV)-infected donors with remarkably broad and potent neutralizing responses and rescued 17 new monoclonal antibodies that neutralize broadly across clades. Many of the new monoclonal antibodies are almost tenfold more potent than the recently described PG9, PG16 and VRC01 broadly neutralizing monoclonal antibodies and 100-fold more potent than the original prototype HIV broadly neutralizing monoclonal antibodies. The monoclonal antibodies largely recapitulate the neutralization b",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.214375+00:00"
+}

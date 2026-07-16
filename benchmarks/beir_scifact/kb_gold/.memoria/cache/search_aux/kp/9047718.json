@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9047718",
+  "source_fingerprint": "d34fbaed85a1a1f73862963c49970883",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9047718",
+    "autonomic-neuropathy,-qt-interval-lengthening,-and-unexpected-deaths-in-male-diabetic-patients"
+  ],
+  "key_phrases": [
+    "autonomic",
+    "neuropathy",
+    "qt",
+    "interval",
+    "lengthening",
+    "unexpected",
+    "deaths",
+    "male"
+  ],
+  "summary_1l": "QT intervals were measured over RR intervals ranging from 500 ms to 1000 ms in 13 normal male subjects, 1",
+  "query_hits": [],
+  "embed_text": "9047718 Autonomic neuropathy, QT interval lengthening, and unexpected deaths in male diabetic patients science scifact QT intervals were measured over RR intervals ranging from 500 ms to 1000 ms in 13 normal male subjects, 13 male diabetic subjects without and 13 with autonomic neuropathy. There was a close linear relationship between QT and RR in all… 9047718 autonomic-neuropathy,-qt-interval-lengthening,-and-unexpected-deaths-in-male-diabetic-patients autonomic neuropathy qt interval lengthening unexpected deaths male QT intervals were measured over RR intervals ranging from 500 ms to 1000 ms in 13 normal male subjects, 1 Autonomic neuropathy, QT interval lengthening, and unexpected deaths in male diabetic patients QT intervals were measured over RR intervals ranging from 500 ms to 1000 ms in 13 normal male subjects, 13 male diabetic subjects without and 13 with autonomic neuropathy. There was a close linear relationship between QT and RR in all subjects. The slope of the regression line was significantly greater in the autonomic neuropathy group than the normal group. Thirty-two male diabetic subjects with varying degrees of autonomic dysfunction had repeat QT measurements 3 (range 2–6) years later. QT and QTC lengthened significantly at the second visit, unrelated to age or time between recordings, but which corresponded with changes in autonomic function. Of 71 male diabetic subjects under 60 years follo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.103695+00:00"
+}

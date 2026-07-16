@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15966318",
+  "source_fingerprint": "621e36c3cbebe0d68c96cae7d0599e21",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15966318",
+    "improved-tools-for-biological-sequence-comparison."
+  ],
+  "key_phrases": [
+    "improved",
+    "tools",
+    "biological",
+    "sequence",
+    "comparison",
+    "we",
+    "have",
+    "developed"
+  ],
+  "summary_1l": "Improved tools for biological sequence comparison.",
+  "query_hits": [],
+  "embed_text": "15966318 Improved tools for biological sequence comparison. science scifact We have developed three computer programs for comparisons of protein and DNA sequences. They can be used to search sequence data bases, evaluate similarity scores, and identify periodic structures based on local sequence similarity. The… 15966318 improved-tools-for-biological-sequence-comparison. improved tools biological sequence comparison we have developed Improved tools for biological sequence comparison. Improved tools for biological sequence comparison. We have developed three computer programs for comparisons of protein and DNA sequences. They can be used to search sequence data bases, evaluate similarity scores, and identify periodic structures based on local sequence similarity. The FASTA program is a more sensitive derivative of the FASTP program, which can be used to search protein or DNA sequence data bases and can compare a protein sequence to a DNA sequence data base by translating the DNA data base as it is searched. FASTA includes an additional step in the calculation of the initial pairwise similarity score that allows multiple regions of similarity to be joined to increase the score of related sequences. The RDF2 program can be used to evaluate the significance of similarity s",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.576295+00:00"
+}

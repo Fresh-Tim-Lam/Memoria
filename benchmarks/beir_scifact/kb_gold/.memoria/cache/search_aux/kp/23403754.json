@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23403754",
+  "source_fingerprint": "2e1c21611308a07be709c9e665ae80a6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23403754",
+    "bioenergetic-aspects-of-apoptosis,-necrosis-and-mitoptosis"
+  ],
+  "key_phrases": [
+    "bioenergetic",
+    "aspects",
+    "apoptosis",
+    "necrosis",
+    "mitoptosis",
+    "this",
+    "review",
+    "summarize"
+  ],
+  "summary_1l": "In this review I summarize interrelations between bioenergetic processes and such programmed death phenomena as cell suicide (apoptosis and n",
+  "query_hits": [],
+  "embed_text": "23403754 Bioenergetic aspects of apoptosis, necrosis and mitoptosis science scifact In this review I summarize interrelations between bioenergetic processes and such programmed death phenomena as cell suicide (apoptosis and necrosis) and mitochondrial suicide (mitoptosis). The following conclusions are made. (I) ATP and… 23403754 bioenergetic-aspects-of-apoptosis,-necrosis-and-mitoptosis bioenergetic aspects apoptosis necrosis mitoptosis this review summarize In this review I summarize interrelations between bioenergetic processes and such programmed death phenomena as cell suicide (apoptosis and n Bioenergetic aspects of apoptosis, necrosis and mitoptosis In this review I summarize interrelations between bioenergetic processes and such programmed death phenomena as cell suicide (apoptosis and necrosis) and mitochondrial suicide (mitoptosis). The following conclusions are made. (I) ATP and rather often mitochondrial hyperpolarization (i.e. an increase in membrane potential, ΔΨ) are required for certain steps of apoptosis and necrosis. (II) Apoptosis, even if it is accompanied by ΔΨ and [ATP] increases at its early stage, finally results in a ΔΨ collapse and ATP decrease. (III) Moderate (about three-fold) lowering of [ATP] for short and long periods of time induces apoptosis and necrosis, respectively. In some types of apoptosis and necrosis, the cell death is mediated by a ΔΨ-depende",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.454953+00:00"
+}

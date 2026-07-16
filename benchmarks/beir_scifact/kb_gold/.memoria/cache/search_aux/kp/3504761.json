@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3504761",
+  "source_fingerprint": "89a94544e59dd723d7d9fe921380d1c7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3504761",
+    "tak1-mediated-autophagy-and-fatty-acid-oxidation-prevent-hepatosteatosis-and-tumorigenesis."
+  ],
+  "key_phrases": [
+    "tak1",
+    "mediated",
+    "autophagy",
+    "fatty",
+    "acid",
+    "oxidation",
+    "prevent",
+    "hepatosteatosis"
+  ],
+  "summary_1l": "TAK1-mediated autophagy and fatty acid oxidation prevent hepatosteatosis and tumorigenesis.",
+  "query_hits": [],
+  "embed_text": "3504761 TAK1-mediated autophagy and fatty acid oxidation prevent hepatosteatosis and tumorigenesis. science scifact The MAP kinase kinase kinase TGFβ-activated kinase 1 (TAK1) is activated by TLRs, IL-1, TNF, and TGFβ and in turn activates IKK-NF-κB and JNK, which regulate cell survival, growth, tumorigenesis, and metabolism. TAK1 signaling also… 3504761 tak1-mediated-autophagy-and-fatty-acid-oxidation-prevent-hepatosteatosis-and-tumorigenesis. tak1 mediated autophagy fatty acid oxidation prevent hepatosteatosis TAK1-mediated autophagy and fatty acid oxidation prevent hepatosteatosis and tumorigenesis. TAK1-mediated autophagy and fatty acid oxidation prevent hepatosteatosis and tumorigenesis. The MAP kinase kinase kinase TGFβ-activated kinase 1 (TAK1) is activated by TLRs, IL-1, TNF, and TGFβ and in turn activates IKK-NF-κB and JNK, which regulate cell survival, growth, tumorigenesis, and metabolism. TAK1 signaling also upregulates AMPK activity and autophagy. Here, we investigated TAK1-dependent regulation of autophagy, lipid metabolism, and tumorigenesis in the liver. Fasted mice with hepatocyte-specific deletion of Tak1 exhibited severe hepatosteatosis with increased mTORC1 activity and suppression of autophagy compared with their WT counterparts. TAK1-deficient hepatocytes exhibited suppressed AMPK activity and autophagy in response to starvation or metformin treatment; however, ecto",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.902629+00:00"
+}

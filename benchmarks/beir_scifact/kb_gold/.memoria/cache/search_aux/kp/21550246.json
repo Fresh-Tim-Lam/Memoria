@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21550246",
+  "source_fingerprint": "b0dca6a94abe672b41afc0c4d6039ac2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21550246",
+    "detection-of-prions-in-blood"
+  ],
+  "key_phrases": [
+    "detection",
+    "prions",
+    "blood",
+    "prion",
+    "diseases",
+    "caused",
+    "by",
+    "unconventional"
+  ],
+  "summary_1l": "Prion diseases are caused by an unconventional infectious agent termed prion, composed mainly of the misfolded prion protein (PrPSc).",
+  "query_hits": [],
+  "embed_text": "21550246 Detection of prions in blood science scifact Prion diseases are caused by an unconventional infectious agent termed prion, composed mainly of the misfolded prion protein (PrPSc). The development of highly sensitive assays for biochemical detection of PrPSc in blood is a top priority… 21550246 detection-of-prions-in-blood detection prions blood prion diseases caused by unconventional Prion diseases are caused by an unconventional infectious agent termed prion, composed mainly of the misfolded prion protein (PrPSc). Detection of prions in blood Prion diseases are caused by an unconventional infectious agent termed prion, composed mainly of the misfolded prion protein (PrPSc). The development of highly sensitive assays for biochemical detection of PrPSc in blood is a top priority for minimizing the spread of the disease. Here we show that the protein misfolding cyclic amplification (PMCA) technology can be automated and optimized for high-efficiency amplification of PrPSc. We show that 140 PMCA cycles leads to a 6,600-fold increase in sensitivity over standard detection methods. Two successive rounds of PMCA cycles resulted in a 10 million–fold increase in sensitivity and a capability to detect as little as 8,000 equivalent molecules of PrPSc. Notably, serial PMCA enables detection of PrPSc in blood sa",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.322995+00:00"
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "贝尔曼方程",
+  "source_fingerprint": "433d047d80a8342c4df48499eea4735f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "机器学习"
+  ],
+  "aliases": [],
+  "key_phrases": [
+    "贝尔曼",
+    "方程",
+    "描述",
+    "价值",
+    "函数",
+    "递归",
+    "关系",
+    "强化"
+  ],
+  "summary_1l": "贝尔曼方程描述了价值函数的递归关系，是强化学习算法的理论基石。",
+  "query_hits": [],
+  "embed_text": "贝尔曼方程 贝尔曼方程 机器学习 贝尔曼 方程 描述 价值 函数 递归 关系 强化 贝尔曼方程描述了价值函数的递归关系，是强化学习算法的理论基石。 贝尔曼方程 贝尔曼方程描述了价值函数的递归关系，是强化学习算法的理论基石。 **状态价值函数** ：从状态 出发、遵循策略 的期望回报： 贝尔曼期望方程将价值函数分解为即时奖励和下一状态的价值： **最优价值函数** 是所有策略中最大的价值函数： 贝尔曼最优方程： 类似地，**动作价值函数** ： 贝尔曼方程之所以重要，是因为： 1. 它提供了价值函数的计算方法 2. 它是动态规划和时序差分方法的理论基础 3. 它揭示了价值的递归结构，使得迭代求解成为可能 的方式倒萨倒萨倒萨倒萨倒萨倒萨打算乱码去8u*（YHEO（LDWUIGDKUSB 和 都建立在贝尔曼方程的理论框架之上。Q-Learning 直接学习 函数，策略梯度则通过梯度优化策略参数。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T03:38:46.549963+00:00"
+}

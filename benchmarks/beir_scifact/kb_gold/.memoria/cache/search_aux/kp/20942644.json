@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "20942644",
+  "source_fingerprint": "8cd2a15ec9bfeae320e0dc27db963c5e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20942644"
+  ],
+  "key_phrases": [
+    "unmarked",
+    "gene",
+    "deletion",
+    "host",
+    "vector",
+    "system",
+    "hyperthermophilic",
+    "crenarchaeon"
+  ],
+  "summary_1l": "Sulfolobus islandicus is being used as a model for studying archaeal biology, geo-biology and",
+  "query_hits": [],
+  "embed_text": "20942644 Unmarked gene deletion and host–vector system for the hyperthermophilic crenarchaeon Sulfolobus islandicus science scifact Sulfolobus islandicus is being used as a model for studying archaeal biology, geo-biology and evolution. However, no genetic system is available for this organism. To produce an S. islandicus mutant suitable for genetic analyses, we… 20942644 unmarked gene deletion host vector system hyperthermophilic crenarchaeon Sulfolobus islandicus is being used as a model for studying archaeal biology, geo-biology and Unmarked gene deletion and host–vector system for the hyperthermophilic crenarchaeon Sulfolobus islandicus Sulfolobus islandicus is being used as a model for studying archaeal biology, geo-biology and evolution. However, no genetic system is available for this organism. To produce an S. islandicus mutant suitable for genetic analyses, we screened for colonies with a spontaneous pyrEF mutation. One mutant was obtained containing only 233 bp of the original pyrE sequence in the mutant allele and it was used as a host to delete the β-glycosidase (lacS) gene. Two unmarked gene deletion methods were employed, namely plasmid integration and segregation, and marker replacement and looping out, and unmarked lacS mutants were obtained by each method. A new alternative recombination mechanism, i.e.,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.141780+00:00"
+}

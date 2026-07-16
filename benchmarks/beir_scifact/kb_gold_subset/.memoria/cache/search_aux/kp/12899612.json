@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12899612",
+  "source_fingerprint": "6b5145debd7c363b693a008602c7058a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12899612",
+    "microvesicles-derived-from-human-umbilical-cord-mesenchymal-stem-cells-stimulated-by-hypoxia-promote-angiogenesis-both-in-vitro-and-in-vivo."
+  ],
+  "key_phrases": [
+    "microvesicles",
+    "derived",
+    "from",
+    "human",
+    "umbilical",
+    "cord",
+    "mesenchymal",
+    "stem"
+  ],
+  "summary_1l": "Microvesicles derived from human umbilical cord mesenchymal stem cells stimulated by hypoxia promote angiogenesis both in vitro and in vivo.",
+  "query_hits": [],
+  "embed_text": "12899612 Microvesicles derived from human umbilical cord mesenchymal stem cells stimulated by hypoxia promote angiogenesis both in vitro and in vivo. science scifact Although mesenchymal stem cells (MSCs) have been increasingly trialed to treat a variety of diseases, the underlying mechanisms remain still elusive. In this study, human umbilical cord (UC)-derived MSCs were stimulated by hypoxia, and the… 12899612 microvesicles-derived-from-human-umbilical-cord-mesenchymal-stem-cells-stimulated-by-hypoxia-promote-angiogenesis-both-in-vitro-and-in-vivo. microvesicles derived from human umbilical cord mesenchymal stem Microvesicles derived from human umbilical cord mesenchymal stem cells stimulated by hypoxia promote angiogenesis both in vitro and in vivo. Microvesicles derived from human umbilical cord mesenchymal stem cells stimulated by hypoxia promote angiogenesis both in vitro and in vivo. Although mesenchymal stem cells (MSCs) have been increasingly trialed to treat a variety of diseases, the underlying mechanisms remain still elusive. In this study, human umbilical cord (UC)-derived MSCs were stimulated by hypoxia, and the membrane microvesicles (MVs) in the supernatants were collected by ultracentrifugation, observed under an electron microscope, and the origin was identified with the flow cytometric technique. The results showed that upon hypoxic stimulus, MSCs released a large quantity of MVs of ~100 nm in diameter. The MVs were phenotypically similar to the parent MSCs, except that the majority of them were negative for the recept",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:09.895788+00:00"
+}

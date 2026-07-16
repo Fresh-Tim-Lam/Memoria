@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2613813",
+  "source_fingerprint": "2986531980c79f986cde196fcb9e5472",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2613813",
+    "regulation-of-heterochromatic-silencing-and-histone-h3-lysine-9-methylation-by-rnai."
+  ],
+  "key_phrases": [
+    "regulation",
+    "heterochromatic",
+    "silencing",
+    "histone",
+    "h3",
+    "lysine",
+    "methylation",
+    "by"
+  ],
+  "summary_1l": "Regulation of heterochromatic silencing and histone H3 lysine-9 methylation by RNAi.",
+  "query_hits": [],
+  "embed_text": "2613813 Regulation of heterochromatic silencing and histone H3 lysine-9 methylation by RNAi. science scifact Eukaryotic heterochromatin is characterized by a high density of repeats and transposons, as well as by modified histones, and influences both gene expression and chromosome segregation. In the fission yeast Schizosaccharomyces pombe, we… 2613813 regulation-of-heterochromatic-silencing-and-histone-h3-lysine-9-methylation-by-rnai. regulation heterochromatic silencing histone h3 lysine methylation by Regulation of heterochromatic silencing and histone H3 lysine-9 methylation by RNAi. Regulation of heterochromatic silencing and histone H3 lysine-9 methylation by RNAi. Eukaryotic heterochromatin is characterized by a high density of repeats and transposons, as well as by modified histones, and influences both gene expression and chromosome segregation. In the fission yeast Schizosaccharomyces pombe, we deleted the argonaute, dicer, and RNA-dependent RNA polymerase gene homologs, which encode part of the machinery responsible for RNA interference (RNAi). Deletion results in the aberrant accumulation of complementary transcripts from centromeric heterochromatic repeats. This is accompanied by transcriptional de-repression of transgenes integrated at the centromere, loss of histone H3 lysine-9 methylation, and impairment of centromere function. We propose that double-strand",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.491955+00:00"
+}

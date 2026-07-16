@@ -184,9 +184,11 @@
       if (this._controls) this._controls.dispose();
       this._clearGraph();
       this.renderer?.dispose();
-      if (this.renderer?.domElement?.parentNode === this.container) {
-        this.container.removeChild(this.renderer.domElement);
-      }
+      try {
+        if (this.renderer?.domElement?.parentNode === this.container) {
+          this.container.removeChild(this.renderer.domElement);
+        }
+      } catch (_) {}
     }
 
     _initScene() {
@@ -221,8 +223,7 @@
         this._controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
         this._controls.enableDamping = true;
         this._controls.dampingFactor = 0.08;
-        this._controls.minDistance = 20;
-        this._controls.maxDistance = 1200;
+        this._applyZoomSettings();
       }
 
       this._edgeGroup = new THREE.Group();
@@ -466,12 +467,27 @@
       const labelKeys = ["labelMode", "labelMaxLen", "nodeRadius"];
       const labelDirty = labelKeys.some((k) => partial && partial[k] !== undefined);
       Object.assign(this.opts, partial || {});
+      this._applyZoomSettings();
       if (opts.relayout) this.resetSimulation();
       else if (labelDirty && this.layout.nodes.length) {
         this._rebuildGraph();
         this._applyHighlight();
         if (this.active) this._render();
       } else if (this.active) this._render();
+    }
+
+    _applyZoomSettings() {
+      if (!this._controls) return;
+      this._controls.minDistance = this.opts.zoomMinDistance3d ?? 5;
+      this._controls.maxDistance = this.opts.zoomMaxDistance3d ?? 3000;
+      this._controls.zoomSpeed = this.opts.zoomSensitivity3d ?? 1.0;
+      if (this.camera) {
+        const dist = this.camera.position.length();
+        const clamped = Math.max(this._controls.minDistance, Math.min(this._controls.maxDistance, dist));
+        if (dist !== clamped) {
+          this.camera.position.normalize().multiplyScalar(clamped);
+        }
+      }
     }
 
     reflow() {

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "15617300",
+  "source_fingerprint": "afe9af221a56f54ba8e16c6eaa12bfcc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15617300"
+  ],
+  "key_phrases": [
+    "ncbi",
+    "geo",
+    "archive",
+    "functional",
+    "genomics",
+    "data",
+    "sets",
+    "update"
+  ],
+  "summary_1l": "The Gene Expression Omnibus (GEO, http://www.",
+  "query_hits": [],
+  "embed_text": "15617300 NCBI GEO: archive for functional genomics data sets—update science scifact The Gene Expression Omnibus (GEO, http://www.ncbi.nlm.nih.gov/geo/) is an international public repository for high-throughput microarray and next-generation sequence functional genomic data sets submitted by the research community. The… 15617300 ncbi geo archive functional genomics data sets update The Gene Expression Omnibus (GEO, http://www. NCBI GEO: archive for functional genomics data sets—update The Gene Expression Omnibus (GEO, http://www.ncbi.nlm.nih.gov/geo/) is an international public repository for high-throughput microarray and next-generation sequence functional genomic data sets submitted by the research community. The resource supports archiving of raw data, processed data and metadata which are indexed, cross-linked and searchable. All data are freely available for download in a variety of formats. GEO also provides several web-based tools and strategies to assist users to query, analyse and visualize data. This article reports current status and recent database developments, including the release of GEO2R, an R-based web application that helps users analyse GEO data.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.970808+00:00"
+}

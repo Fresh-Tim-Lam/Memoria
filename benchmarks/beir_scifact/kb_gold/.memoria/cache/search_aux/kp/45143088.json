@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "45143088",
+  "source_fingerprint": "b31f0b87fc7611f20700e15f597d7f2e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "45143088",
+    "long-non-coding-rnas-with-low-expression-levels-in-cells-are-enriched-in-secreted-exosomes."
+  ],
+  "key_phrases": [
+    "long",
+    "non",
+    "coding",
+    "rnas",
+    "with",
+    "low",
+    "expression",
+    "levels"
+  ],
+  "summary_1l": "Long non-coding RNAs with low expression levels in cells are enriched in secreted exosomes.",
+  "query_hits": [],
+  "embed_text": "45143088 Long non-coding RNAs with low expression levels in cells are enriched in secreted exosomes. science scifact Long non-coding RNAs (lncRNAs) are involved in regulating chromatin modifications, gene transcription, mRNA translation, and protein function. We recently reported a high variation in the basal expression levels of a panel of lncRNAs in… 45143088 long-non-coding-rnas-with-low-expression-levels-in-cells-are-enriched-in-secreted-exosomes. long non coding rnas with low expression levels Long non-coding RNAs with low expression levels in cells are enriched in secreted exosomes. Long non-coding RNAs with low expression levels in cells are enriched in secreted exosomes. Long non-coding RNAs (lncRNAs) are involved in regulating chromatin modifications, gene transcription, mRNA translation, and protein function. We recently reported a high variation in the basal expression levels of a panel of lncRNAs in HeLa and MCF-7 cells and their differential response to DNA damage induction. Here, we hypothesized that lncRNA molecules with different cellular expression may have a differential abundance in secreted exosomes, and their exosome levels would reflect cellular response to DNA damage. MALAT1, HOTAIR, lincRNA-p21, GAS5, TUG1, CCND1-ncRNA in exosomes secreted from cultured cells were characterized. A different expression pattern of lncRNAs in exosomes was seen compared",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.144940+00:00"
+}

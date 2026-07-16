@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "40365566",
+  "source_fingerprint": "121b41afa155de3af13e7a3a130b00f6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "40365566",
+    "conventional-and-monocyte-derived-cd11b(+)-dendritic-cells-initiate-and-maintain-t-helper-2-cell-mediated-immunity-to-house-dust-mite-allergen."
+  ],
+  "key_phrases": [
+    "conventional",
+    "monocyte",
+    "derived",
+    "cd11b",
+    "dendritic",
+    "cells",
+    "initiate",
+    "maintain"
+  ],
+  "summary_1l": "Conventional and monocyte-derived CD11b(+) dendritic cells initiate and maintain T helper 2 cell-mediated immunity to house dust mite allergen.",
+  "query_hits": [],
+  "embed_text": "40365566 Conventional and monocyte-derived CD11b(+) dendritic cells initiate and maintain T helper 2 cell-mediated immunity to house dust mite allergen. science scifact Dendritic cells (DCs) are crucial for mounting allergic airway inflammation, but it is unclear which subset of DCs performs this task. By using CD64 and MAR-1 staining, we reliably separated CD11b(+) monocyte-derived DCs (moDCs) from… 40365566 conventional-and-monocyte-derived-cd11b(+)-dendritic-cells-initiate-and-maintain-t-helper-2-cell-mediated-immunity-to-house-dust-mite-allergen. conventional monocyte derived cd11b dendritic cells initiate maintain Conventional and monocyte-derived CD11b(+) dendritic cells initiate and maintain T helper 2 cell-mediated immunity to house dust mite allergen. Conventional and monocyte-derived CD11b(+) dendritic cells initiate and maintain T helper 2 cell-mediated immunity to house dust mite allergen. Dendritic cells (DCs) are crucial for mounting allergic airway inflammation, but it is unclear which subset of DCs performs this task. By using CD64 and MAR-1 staining, we reliably separated CD11b(+) monocyte-derived DCs (moDCs) from conventional DCs (cDCs) and studied antigen uptake, migration, and presentation assays of lung and lymph node (LN) DCs in response to inhaled house dust mite (HDM). Mainly CD11b(+) cDCs but not CD103(+) cDCs induced T helper 2 (Th2) cell immunity in HDM-specific T cells in vitro and asthma in vivo. Studies in Flt3l(-/-) mice, lacking all cDCs, revealed that moDCs were also sufficient to induce Th2 cell-mediated immunit",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.475319+00:00"
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "4459491",
+  "source_fingerprint": "eaeb9dbcd6e034ad375345ee17fcd791",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4459491"
+  ],
+  "key_phrases": [
+    "three",
+    "dimensional",
+    "human",
+    "neural",
+    "cell",
+    "culture",
+    "model",
+    "alzheimer"
+  ],
+  "summary_1l": "Alzheimer’s disease is the most common form of dementia, characterized by two pathological hallmarks: amyloid-β plaques and n",
+  "query_hits": [],
+  "embed_text": "4459491 A three-dimensional human neural cell culture model of Alzheimer’s disease science scifact Alzheimer’s disease is the most common form of dementia, characterized by two pathological hallmarks: amyloid-β plaques and neurofibrillary tangles. The amyloid hypothesis of Alzheimer’s disease posits that the excessive accumulation of… 4459491 three dimensional human neural cell culture model alzheimer Alzheimer’s disease is the most common form of dementia, characterized by two pathological hallmarks: amyloid-β plaques and n A three-dimensional human neural cell culture model of Alzheimer’s disease Alzheimer’s disease is the most common form of dementia, characterized by two pathological hallmarks: amyloid-β plaques and neurofibrillary tangles. The amyloid hypothesis of Alzheimer’s disease posits that the excessive accumulation of amyloid-β peptide leads to neurofibrillary tangles composed of aggregated hyperphosphorylated tau. However, to date, no single disease model has serially linked these two pathological events using human neuronal cells. Mouse models with familial Alzheimer’s disease (FAD) mutations exhibit amyloid-β-induced synaptic and memory deficits but they do not fully recapitulate other key pathological events of Alzheimer’s disease, including distinct neurofibrillary tangle pathology. Human neu",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.582233+00:00"
+}

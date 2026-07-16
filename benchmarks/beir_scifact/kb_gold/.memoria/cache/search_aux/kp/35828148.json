@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "35828148",
+  "source_fingerprint": "7e66b826bb59144f18dca8f73d11fe93",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "35828148",
+    "kinetic-evidence-for-rapid-oxidation-of-(-)-epicatechin-by-human-myeloperoxidase."
+  ],
+  "key_phrases": [
+    "kinetic",
+    "evidence",
+    "rapid",
+    "oxidation",
+    "epicatechin",
+    "by",
+    "human",
+    "myeloperoxidase"
+  ],
+  "summary_1l": "Kinetic evidence for rapid oxidation of (-)-epicatechin by human myeloperoxidase.",
+  "query_hits": [],
+  "embed_text": "35828148 Kinetic evidence for rapid oxidation of (-)-epicatechin by human myeloperoxidase. science scifact Apocynin has been reported to require dimerization by myeloperoxidase (MPO) to inhibit leukocyte NADPH oxidase. (-)-Epicatechin, a dietary flavan-3-ol, has been identified as a 'prodrug' of apocynin-like metabolites that inhibit… 35828148 kinetic-evidence-for-rapid-oxidation-of-(-)-epicatechin-by-human-myeloperoxidase. kinetic evidence rapid oxidation epicatechin by human myeloperoxidase Kinetic evidence for rapid oxidation of (-)-epicatechin by human myeloperoxidase. Kinetic evidence for rapid oxidation of (-)-epicatechin by human myeloperoxidase. Apocynin has been reported to require dimerization by myeloperoxidase (MPO) to inhibit leukocyte NADPH oxidase. (-)-Epicatechin, a dietary flavan-3-ol, has been identified as a 'prodrug' of apocynin-like metabolites that inhibit endothelial NADPH oxidase activity and elevate the cellular level of nitric oxide. Since (-)-epicatechin has tentatively been identified as substrate of MPO, we studied the one-electron oxidation of (-)-epicatechin by MPO. By using multi-mixing stopped-flow technique, we demonstrate that (-)-epicatechin is one of the most efficient electron donors for heme peroxidases investigated so far. Second order rate constants for the (-)-epicatechin-mediated conversion of MPO-compound I to comp",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.683550+00:00"
+}

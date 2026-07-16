@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19736671",
+  "source_fingerprint": "922e16ac68d987ff0c605561255dc16f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19736671",
+    "evolution-of-metastasis-revealed-by-mutational-landscapes-of-chemically-induced-skin-cancers"
+  ],
+  "key_phrases": [
+    "evolution",
+    "metastasis",
+    "revealed",
+    "by",
+    "mutational",
+    "landscapes",
+    "chemically",
+    "induced"
+  ],
+  "summary_1l": "Human tumors show a high level of genetic heterogeneity, but the processes that influence the timing and ro",
+  "query_hits": [],
+  "embed_text": "19736671 Evolution of metastasis revealed by mutational landscapes of chemically induced skin cancers science scifact Human tumors show a high level of genetic heterogeneity, but the processes that influence the timing and route of metastatic dissemination of the subclones are unknown. Here we have used whole-exome sequencing of 103 matched benign,… 19736671 evolution-of-metastasis-revealed-by-mutational-landscapes-of-chemically-induced-skin-cancers evolution metastasis revealed by mutational landscapes chemically induced Human tumors show a high level of genetic heterogeneity, but the processes that influence the timing and ro Evolution of metastasis revealed by mutational landscapes of chemically induced skin cancers Human tumors show a high level of genetic heterogeneity, but the processes that influence the timing and route of metastatic dissemination of the subclones are unknown. Here we have used whole-exome sequencing of 103 matched benign, malignant and metastatic skin tumors from genetically heterogeneous mice to demonstrate that most metastases disseminate synchronously from the primary tumor, supporting parallel rather than linear evolution as the predominant model of metastasis. Shared mutations between primary carcinomas and their matched metastases have the distinct A-to-T signature of the initiating carcinogen dimethylbenzanthracene, but non-shared mutations are primarily G-to-T, a signature associ",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.093224+00:00"
+}

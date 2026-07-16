@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "9769310",
+  "source_fingerprint": "51d8d696d8454b9ab05c17005df8c44f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9769310"
+  ],
+  "key_phrases": [
+    "igf2",
+    "parentally",
+    "imprinted",
+    "during",
+    "human",
+    "embryogenesis",
+    "beckwith",
+    "wiedemann"
+  ],
+  "summary_1l": "The phenomenon of parental imprinting involves the preferential expression of one parental allele of a su",
+  "query_hits": [],
+  "embed_text": "9769310 IGF2 is parentally imprinted during human embryogenesis and in the Beckwith–Wiedemann syndrome science scifact The phenomenon of parental imprinting involves the preferential expression of one parental allele of a subset of chromosomal genes and has so far only been documented in the mouse. We show here, by exploiting sequence polymorphisms in exon… 9769310 igf2 parentally imprinted during human embryogenesis beckwith wiedemann The phenomenon of parental imprinting involves the preferential expression of one parental allele of a su IGF2 is parentally imprinted during human embryogenesis and in the Beckwith–Wiedemann syndrome The phenomenon of parental imprinting involves the preferential expression of one parental allele of a subset of chromosomal genes and has so far only been documented in the mouse. We show here, by exploiting sequence polymorphisms in exon nine of the human insulin–like growth factor 2 (IGF2) gene, that only the paternally–inherited allele is active in embryonic and extra–embryonic cells from first trimester pregnancies. In addition, only the paternal allele is expressed in tissues from a patient who suffered from Beckwith–Wiedemann syndrome. Thus the parental imprinting of IGF2 appears to be evolutionarily conserved from mouse to man and has implications for the generation of the Beckwith–Wiedem",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.784569+00:00"
+}

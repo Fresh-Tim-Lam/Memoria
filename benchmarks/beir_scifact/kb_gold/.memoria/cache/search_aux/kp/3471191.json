@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3471191",
+  "source_fingerprint": "3a962b757addf7d7a3536ce4f41a4c02",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3471191",
+    "association-of-pembrolizumab-with-tumor-response-and-survival-among-patients-with-advanced-melanoma."
+  ],
+  "key_phrases": [
+    "association",
+    "pembrolizumab",
+    "with",
+    "tumor",
+    "response",
+    "survival",
+    "among",
+    "patients"
+  ],
+  "summary_1l": "Association of Pembrolizumab With Tumor Response and Survival Among Patients With Advanced Melanoma.",
+  "query_hits": [],
+  "embed_text": "3471191 Association of Pembrolizumab With Tumor Response and Survival Among Patients With Advanced Melanoma. science scifact IMPORTANCE The programmed death 1 (PD-1) pathway limits immune responses to melanoma and can be blocked with the humanized anti-PD-1 monoclonal antibody pembrolizumab. OBJECTIVE To characterize the association of pembrolizumab with tumor… 3471191 association-of-pembrolizumab-with-tumor-response-and-survival-among-patients-with-advanced-melanoma. association pembrolizumab with tumor response survival among patients Association of Pembrolizumab With Tumor Response and Survival Among Patients With Advanced Melanoma. Association of Pembrolizumab With Tumor Response and Survival Among Patients With Advanced Melanoma. IMPORTANCE The programmed death 1 (PD-1) pathway limits immune responses to melanoma and can be blocked with the humanized anti-PD-1 monoclonal antibody pembrolizumab. OBJECTIVE To characterize the association of pembrolizumab with tumor response and overall survival among patients with advanced melanoma. DESIGN, SETTINGS, AND PARTICIPANTS Open-label, multicohort, phase 1b clinical trials (enrollment, December 2011-September 2013). Median duration of follow-up was 21 months. The study was performed in academic medical centers in Australia, Canada, France, and the United States. Eligible patients were aged 18 years and older and had advanced or metastatic melanoma. Data were pooled from 655",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.684294+00:00"
+}

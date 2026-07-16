@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4323425",
+  "source_fingerprint": "e67f8a37112b20987d1e69d539db1c3f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4323425",
+    "bh1-and-bh2-domains-of-bcl-2-are-required-for-inhibition-of-apoptosis-and-heterodimerization-with-bax"
+  ],
+  "key_phrases": [
+    "bh1",
+    "bh2",
+    "domains",
+    "bcl",
+    "required",
+    "inhibition",
+    "apoptosis",
+    "heterodimerization"
+  ],
+  "summary_1l": "BCL-2 was isolated from the t(14;18) chromosomal breakpoint in follicular B-cell lymphoma1–3.",
+  "query_hits": [],
+  "embed_text": "4323425 BH1 and BH2 domains of Bcl-2 are required for inhibition of apoptosis and heterodimerization with Bax science scifact BCL-2 was isolated from the t(14;18) chromosomal breakpoint in follicular B-cell lymphoma1–3. Bcl-2 has the unique oncogenic role of extending cell survival by inhibiting a variety of apoptotic deaths4–13. An emerging family of Bcl-2… 4323425 bh1-and-bh2-domains-of-bcl-2-are-required-for-inhibition-of-apoptosis-and-heterodimerization-with-bax bh1 bh2 domains bcl required inhibition apoptosis heterodimerization BCL-2 was isolated from the t(14;18) chromosomal breakpoint in follicular B-cell lymphoma1–3. BH1 and BH2 domains of Bcl-2 are required for inhibition of apoptosis and heterodimerization with Bax BCL-2 was isolated from the t(14;18) chromosomal breakpoint in follicular B-cell lymphoma1–3. Bcl-2 has the unique oncogenic role of extending cell survival by inhibiting a variety of apoptotic deaths4–13. An emerging family of Bcl-2 -related proteins share two highly conserved regions14–20 referred to here as Bcl-2 homology 1 and 2 (BH1 and BH2) domains (Fig. 1). This includes Bax which heterodimerizes with Bcl-2 and when overexpressed counteracts Bcl-214. We report here that site-specific mutagenesis of Bcl-2 establishes the two domains as novel dimerization motifs. Substitu-tion of Gly 145 in BHl domain or Trp 188 in BH2 domain completely abrogated Bcl-2's death-repressor activity in in",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.668246+00:00"
+}

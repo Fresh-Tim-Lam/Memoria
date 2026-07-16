@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24918110",
+  "source_fingerprint": "2f5888c763c0e0c0bd8f06cab4abec2e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24918110",
+    "exercise-capacity-and-body-mass-as-predictors-of-mortality-among-male-veterans-with-type-2-diabetes."
+  ],
+  "key_phrases": [
+    "exercise",
+    "capacity",
+    "body",
+    "mass",
+    "as",
+    "predictors",
+    "mortality",
+    "among"
+  ],
+  "summary_1l": "Exercise capacity and body mass as predictors of mortality among male veterans with type 2 diabetes.",
+  "query_hits": [],
+  "embed_text": "24918110 Exercise capacity and body mass as predictors of mortality among male veterans with type 2 diabetes. science scifact OBJECTIVE To demonstrate the relation of exercise capacity and BMI to mortality in a population of male veterans with type 2 diabetes. RESEARCH DESIGN AND METHODS After excluding two underweight patients (BMI <18.5 kg/m2), the study… 24918110 exercise-capacity-and-body-mass-as-predictors-of-mortality-among-male-veterans-with-type-2-diabetes. exercise capacity body mass as predictors mortality among Exercise capacity and body mass as predictors of mortality among male veterans with type 2 diabetes. Exercise capacity and body mass as predictors of mortality among male veterans with type 2 diabetes. OBJECTIVE To demonstrate the relation of exercise capacity and BMI to mortality in a population of male veterans with type 2 diabetes. RESEARCH DESIGN AND METHODS After excluding two underweight patients (BMI <18.5 kg/m2), the study population comprised 831 consecutive patients with type 2 diabetes (mean age 61 +/- 9 years) referred for exercise testing for clinical reasons between 1995 and 2006. Exercise capacity was determined from a maximal exercise test and measured in metabolic equivalents (METs). Patients were classified both according to BMI category (18.5-24.9, 25.0-29.9, and > or =30 kg/m2) and by exercise capacity (<5.0 or > or =5.0 maximal METs). The association among exercise ca",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.542965+00:00"
+}

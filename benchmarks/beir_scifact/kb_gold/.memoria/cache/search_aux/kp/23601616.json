@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23601616",
+  "source_fingerprint": "3c1993e30293193c60822b55518d5cb4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23601616",
+    "liraglutide-improves-hippocampal-synaptic-plasticity-associated-with-increased-expression-of-mash1-in-ob/ob-mice"
+  ],
+  "key_phrases": [
+    "liraglutide",
+    "improves",
+    "hippocampal",
+    "synaptic",
+    "plasticity",
+    "associated",
+    "with",
+    "increased"
+  ],
+  "summary_1l": "Objective:Consumption of high-fat diet exerts adverse effects on learning and memory fo",
+  "query_hits": [],
+  "embed_text": "23601616 Liraglutide improves hippocampal synaptic plasticity associated with increased expression of Mash1 in ob/ob mice science scifact Objective:Consumption of high-fat diet exerts adverse effects on learning and memory formation, which is linked to impaired hippocampal function. Activation of glucagon-like peptide-1 (GLP-1) signalling ameliorates detrimental effects of… 23601616 liraglutide-improves-hippocampal-synaptic-plasticity-associated-with-increased-expression-of-mash1-in-ob/ob-mice liraglutide improves hippocampal synaptic plasticity associated with increased Objective:Consumption of high-fat diet exerts adverse effects on learning and memory fo Liraglutide improves hippocampal synaptic plasticity associated with increased expression of Mash1 in ob/ob mice Objective:Consumption of high-fat diet exerts adverse effects on learning and memory formation, which is linked to impaired hippocampal function. Activation of glucagon-like peptide-1 (GLP-1) signalling ameliorates detrimental effects of obesity-diabetes on cognitive function; however, mechanisms underlying these beneficial actions remain unclear. This study examined effects of daily subcutaneous treatment with GLP-1 mimetic, Liraglutide, on synaptic plasticity, hippocampal gene expression and metabolic control in adult obese diabetic (ob/ob) mice. Results:Long-term potentiation (LTP) induced by area CA1 was completely abolished in ob/ob mice compared with lean controls. Deleter",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.811684+00:00"
+}

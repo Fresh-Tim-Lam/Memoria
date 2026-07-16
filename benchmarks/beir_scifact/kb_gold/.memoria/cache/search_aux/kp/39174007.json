@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "39174007",
+  "source_fingerprint": "d375b99713f4825be8ee323d2f659f72",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "39174007",
+    "the-pecking-order-of-free-radicals-and-antioxidants:-lipid-peroxidation,-alpha-tocopherol,-and-ascorbate."
+  ],
+  "key_phrases": [
+    "pecking",
+    "order",
+    "free",
+    "radicals",
+    "antioxidants",
+    "lipid",
+    "peroxidation",
+    "alpha"
+  ],
+  "summary_1l": "The pecking order of free radicals and antioxidants: lipid peroxidation, alpha-tocopherol, and ascorbate.",
+  "query_hits": [],
+  "embed_text": "39174007 The pecking order of free radicals and antioxidants: lipid peroxidation, alpha-tocopherol, and ascorbate. science scifact Free radicals vary widely in their thermodynamic properties, ranging from very oxidizing to very reducing. These thermodynamic properties can be used to predict a pecking order, or hierarchy, for free radical reactions. Using one-electron… 39174007 the-pecking-order-of-free-radicals-and-antioxidants:-lipid-peroxidation,-alpha-tocopherol,-and-ascorbate. pecking order free radicals antioxidants lipid peroxidation alpha The pecking order of free radicals and antioxidants: lipid peroxidation, alpha-tocopherol, and ascorbate. The pecking order of free radicals and antioxidants: lipid peroxidation, alpha-tocopherol, and ascorbate. Free radicals vary widely in their thermodynamic properties, ranging from very oxidizing to very reducing. These thermodynamic properties can be used to predict a pecking order, or hierarchy, for free radical reactions. Using one-electron reduction potentials, the predicted pecking order is in agreement with experimentally observed free radical electron (hydrogen atom) transfer reactions. These potentials are also in agreement with experimental data that suggest that vitamin E, the primary lipid soluble small molecule antioxidant, and vitamin C, the terminal water soluble small molecule antioxidant, cooperate to protect lipids and lipid structures against peroxidation. Although vitamin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.299162+00:00"
+}

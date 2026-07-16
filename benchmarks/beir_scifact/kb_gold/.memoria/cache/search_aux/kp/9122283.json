@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9122283",
+  "source_fingerprint": "61adef7c6ef9f57ecadcf3cf7fb40081",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9122283",
+    "relative-roles-of-direct-regeneration-versus-paracrine-effects-of-human-cardiosphere-derived-cells-transplanted-into-infarcted-mice."
+  ],
+  "key_phrases": [
+    "relative",
+    "roles",
+    "direct",
+    "regeneration",
+    "versus",
+    "paracrine",
+    "effects",
+    "human"
+  ],
+  "summary_1l": "Relative roles of direct regeneration versus paracrine effects of human cardiosphere-derived cells transplanted into infarcted mice.",
+  "query_hits": [],
+  "embed_text": "9122283 Relative roles of direct regeneration versus paracrine effects of human cardiosphere-derived cells transplanted into infarcted mice. science scifact RATIONALE Multiple biological mechanisms contribute to the efficacy of cardiac cell therapy. Most prominent among these are direct heart muscle and blood vessel regeneration from transplanted cells, as opposed to paracrine enhancement of… 9122283 relative-roles-of-direct-regeneration-versus-paracrine-effects-of-human-cardiosphere-derived-cells-transplanted-into-infarcted-mice. relative roles direct regeneration versus paracrine effects human Relative roles of direct regeneration versus paracrine effects of human cardiosphere-derived cells transplanted into infarcted mice. Relative roles of direct regeneration versus paracrine effects of human cardiosphere-derived cells transplanted into infarcted mice. RATIONALE Multiple biological mechanisms contribute to the efficacy of cardiac cell therapy. Most prominent among these are direct heart muscle and blood vessel regeneration from transplanted cells, as opposed to paracrine enhancement of tissue preservation and/or recruitment of endogenous repair. OBJECTIVE Human cardiac progenitor cells, cultured as cardiospheres (CSps) or as CSp-derived cells (CDCs), have been shown to be capable of direct cardiac regeneration in vivo. Here we characterized paracrine effects in CDC transplantation and investigated their relative importance versus direct differentiation of surviving transplanted cells. METHODS AND RESULTS In",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.219026+00:00"
+}

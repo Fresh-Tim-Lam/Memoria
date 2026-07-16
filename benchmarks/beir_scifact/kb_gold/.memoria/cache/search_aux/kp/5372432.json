@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5372432",
+  "source_fingerprint": "b7d89df412440c862d318250eec8df1c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5372432",
+    "geographical-access-to-healthcare-in-northern-england-and-post-mortem-diagnosis-of-cancer."
+  ],
+  "key_phrases": [
+    "geographical",
+    "access",
+    "healthcare",
+    "northern",
+    "england",
+    "post",
+    "mortem",
+    "diagnosis"
+  ],
+  "summary_1l": "Geographical access to healthcare in Northern England and post-mortem diagnosis of cancer.",
+  "query_hits": [],
+  "embed_text": "5372432 Geographical access to healthcare in Northern England and post-mortem diagnosis of cancer. science scifact BACKGROUND There is some previous evidence that diagnosis of cancer at death, recorded as registry death certificate only records, is associated with problems of access to care. METHODS Records from the Northern and Yorkshire Cancer… 5372432 geographical-access-to-healthcare-in-northern-england-and-post-mortem-diagnosis-of-cancer. geographical access healthcare northern england post mortem diagnosis Geographical access to healthcare in Northern England and post-mortem diagnosis of cancer. Geographical access to healthcare in Northern England and post-mortem diagnosis of cancer. BACKGROUND There is some previous evidence that diagnosis of cancer at death, recorded as registry death certificate only records, is associated with problems of access to care. METHODS Records from the Northern and Yorkshire Cancer Registry for patients registered with breast, colorectal, lung, ovarian or prostate cancer between 1994 and 2002 were supplemented with measures of travel time to general practitioner and hospital services, and social deprivation. Logistic regression was used to identify predictors of records where diagnosis was at death. RESULTS There was no association between the odds diagnosis at death and access to primary care. For all sites except breast, the highest odds of being",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.029283+00:00"
+}

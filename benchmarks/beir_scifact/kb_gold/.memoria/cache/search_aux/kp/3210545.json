@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3210545",
+  "source_fingerprint": "316fee001d9d504fe1d23b846d258f66",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3210545",
+    "kras-gene-amplification-and-overexpression-but-not-mutation-associates-with-aggressive-and-metastatic-endometrial-cancer"
+  ],
+  "key_phrases": [
+    "kras",
+    "gene",
+    "amplification",
+    "overexpression",
+    "but",
+    "not",
+    "mutation",
+    "associates"
+  ],
+  "summary_1l": "BACKGROUND Three quarter of endometrial carcinomas are treated at early stage.",
+  "query_hits": [],
+  "embed_text": "3210545 KRAS gene amplification and overexpression but not mutation associates with aggressive and metastatic endometrial cancer science scifact BACKGROUND Three quarter of endometrial carcinomas are treated at early stage. Still, 15 to 20% of these patients experience recurrence, with little effect from systemic therapies. Homo sapiens v-Ki-ras2 Kirsten rat sarcoma viral oncogenes… 3210545 kras-gene-amplification-and-overexpression-but-not-mutation-associates-with-aggressive-and-metastatic-endometrial-cancer kras gene amplification overexpression but not mutation associates BACKGROUND Three quarter of endometrial carcinomas are treated at early stage. KRAS gene amplification and overexpression but not mutation associates with aggressive and metastatic endometrial cancer BACKGROUND Three quarter of endometrial carcinomas are treated at early stage. Still, 15 to 20% of these patients experience recurrence, with little effect from systemic therapies. Homo sapiens v-Ki-ras2 Kirsten rat sarcoma viral oncogenes homologue (KRAS) mutations have been reported to have an important role in tumorigenesis for human cancers, but there is limited knowledge regarding clinical relevance of KRAS status in endometrial carcinomas. METHODS We have performed a comprehensive and integrated characterisation of genome-wide expression related to KRAS mutations and copy-number alterations in primary- and metastatic endometrial carcinoma lesions in relation to cli",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.214674+00:00"
+}

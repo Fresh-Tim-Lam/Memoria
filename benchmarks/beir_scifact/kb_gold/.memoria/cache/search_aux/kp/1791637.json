@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1791637",
+  "source_fingerprint": "3d4cfbfe072eb076c975e25bee091422",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1791637",
+    "genomewide-analysis-of-prc1-and-prc2-occupancy-identifies-two-classes-of-bivalent-domains"
+  ],
+  "key_phrases": [
+    "genomewide",
+    "analysis",
+    "prc1",
+    "prc2",
+    "occupancy",
+    "identifies",
+    "two",
+    "classes"
+  ],
+  "summary_1l": "In embryonic stem (ES) cells, bivalent chromatin domains with overlapping repressive (H3 lysine 27 tri-methyla",
+  "query_hits": [],
+  "embed_text": "1791637 Genomewide Analysis of PRC1 and PRC2 Occupancy Identifies Two Classes of Bivalent Domains science scifact In embryonic stem (ES) cells, bivalent chromatin domains with overlapping repressive (H3 lysine 27 tri-methylation) and activating (H3 lysine 4 tri-methylation) histone modifications mark the promoters of more than 2,000 genes. To gain… 1791637 genomewide-analysis-of-prc1-and-prc2-occupancy-identifies-two-classes-of-bivalent-domains genomewide analysis prc1 prc2 occupancy identifies two classes In embryonic stem (ES) cells, bivalent chromatin domains with overlapping repressive (H3 lysine 27 tri-methyla Genomewide Analysis of PRC1 and PRC2 Occupancy Identifies Two Classes of Bivalent Domains In embryonic stem (ES) cells, bivalent chromatin domains with overlapping repressive (H3 lysine 27 tri-methylation) and activating (H3 lysine 4 tri-methylation) histone modifications mark the promoters of more than 2,000 genes. To gain insight into the structure and function of bivalent domains, we mapped key histone modifications and subunits of Polycomb-repressive complexes 1 and 2 (PRC1 and PRC2) genomewide in human and mouse ES cells by chromatin immunoprecipitation, followed by ultra high-throughput sequencing. We find that bivalent domains can be segregated into two classes -- the first occupied by both PRC2 and PRC1 (PRC1-positive) and the second specifically bound by PRC2 (PRC2-only). PRC1-pos",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.441780+00:00"
+}

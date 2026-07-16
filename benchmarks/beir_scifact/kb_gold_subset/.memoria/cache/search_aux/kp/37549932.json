@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "37549932",
+  "source_fingerprint": "772f9c26fc46fd199f823df057d4e52b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "37549932",
+    "antiapoptotic-bcl-2-is-required-for-maintenance-of-a-model-leukemia."
+  ],
+  "key_phrases": [
+    "antiapoptotic",
+    "bcl",
+    "required",
+    "maintenance",
+    "model",
+    "leukemia",
+    "resistance",
+    "apoptosis"
+  ],
+  "summary_1l": "Antiapoptotic BCL-2 is required for maintenance of a model leukemia.",
+  "query_hits": [],
+  "embed_text": "37549932 Antiapoptotic BCL-2 is required for maintenance of a model leukemia. science scifact Resistance to apoptosis, often achieved by the overexpression of antiapoptotic proteins, is common and perhaps required in the genesis of cancer. However, it remains uncertain whether apoptotic defects are essential for tumor maintenance.… 37549932 antiapoptotic-bcl-2-is-required-for-maintenance-of-a-model-leukemia. antiapoptotic bcl required maintenance model leukemia resistance apoptosis Antiapoptotic BCL-2 is required for maintenance of a model leukemia. Antiapoptotic BCL-2 is required for maintenance of a model leukemia. Resistance to apoptosis, often achieved by the overexpression of antiapoptotic proteins, is common and perhaps required in the genesis of cancer. However, it remains uncertain whether apoptotic defects are essential for tumor maintenance. To test this, we generated mice expressing a conditional BCL-2 gene and constitutive c-myc that develop lymphoblastic leukemia. Eliminating BCL-2 yielded rapid loss of leukemic cells and significantly prolonged survival, formally validating BCL-2 as a rational target for cancer therapy. Loss of this single molecule resulted in cell death, despite or perhaps attributable to the presence of other oncogenic events. This suggests a generalizable model in which aberrations inherent to cancer",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:13.127365+00:00"
+}

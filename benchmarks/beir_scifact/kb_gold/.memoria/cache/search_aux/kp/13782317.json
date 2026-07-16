@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13782317",
+  "source_fingerprint": "5f020534951d2c5f1cd811e3fd5b32f7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13782317",
+    "trends-in-the-use-of-complementary-health-approaches-among-adults:-united-states,-2002-2012."
+  ],
+  "key_phrases": [
+    "trends",
+    "use",
+    "complementary",
+    "health",
+    "approaches",
+    "among",
+    "adults",
+    "united"
+  ],
+  "summary_1l": "Trends in the use of complementary health approaches among adults: United States, 2002-2012.",
+  "query_hits": [],
+  "embed_text": "13782317 Trends in the use of complementary health approaches among adults: United States, 2002-2012. science scifact OBJECTIVE This report presents national estimates of the use of complementary health approaches among adults in the United States across three time points. Trends in the use of selected complementary health approaches are compared for… 13782317 trends-in-the-use-of-complementary-health-approaches-among-adults:-united-states,-2002-2012. trends use complementary health approaches among adults united Trends in the use of complementary health approaches among adults: United States, 2002-2012. Trends in the use of complementary health approaches among adults: United States, 2002-2012. OBJECTIVE This report presents national estimates of the use of complementary health approaches among adults in the United States across three time points. Trends in the use of selected complementary health approaches are compared for 2002, 2007, and 2012, and differences by selected demographic characteristics are also examined. METHODS Combined data from 88,962 adults aged 18 and over collected as part of the 2002, 2007, and 2012 National Health Interview Survey were analyzed for this report. Sample data were weighted to produce national estimates that are representative of the civilian noninstitutionalized U.S. adult population. Differences between percentages were evaluated using two-sided sign",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.011560+00:00"
+}

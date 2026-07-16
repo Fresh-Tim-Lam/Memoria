@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "30468386",
+  "source_fingerprint": "c0f8c589fcaefef1d98bda79cdb5fc5b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "30468386",
+    "adult-c-kit(+)-progenitor-cells-are-necessary-for-maintenance-and-regeneration-of-olfactory-neurons."
+  ],
+  "key_phrases": [
+    "adult",
+    "kit",
+    "progenitor",
+    "cells",
+    "necessary",
+    "maintenance",
+    "regeneration",
+    "olfactory"
+  ],
+  "summary_1l": "Adult c-Kit(+) progenitor cells are necessary for maintenance and regeneration of olfactory neurons.",
+  "query_hits": [],
+  "embed_text": "30468386 Adult c-Kit(+) progenitor cells are necessary for maintenance and regeneration of olfactory neurons. science scifact The olfactory epithelium houses chemosensory neurons, which transmit odor information from the nose to the brain. In adult mammals, the olfactory epithelium is a uniquely robust neuroproliferative zone, with the ability to replenish its… 30468386 adult-c-kit(+)-progenitor-cells-are-necessary-for-maintenance-and-regeneration-of-olfactory-neurons. adult kit progenitor cells necessary maintenance regeneration olfactory Adult c-Kit(+) progenitor cells are necessary for maintenance and regeneration of olfactory neurons. Adult c-Kit(+) progenitor cells are necessary for maintenance and regeneration of olfactory neurons. The olfactory epithelium houses chemosensory neurons, which transmit odor information from the nose to the brain. In adult mammals, the olfactory epithelium is a uniquely robust neuroproliferative zone, with the ability to replenish its neuronal and non-neuronal populations due to the presence of germinal basal cells. The stem and progenitor cells of these germinal layers, and their regulatory mechanisms, remain incompletely defined. Here we show that progenitor cells expressing c-Kit, a receptor tyrosine kinase marking stem cells in a variety of embryonic tissues, are required for maintenance of the adult neuroepithelium. Mouse genetic fate-mapping analyses show that embryonically, a c-Kit",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.683033+00:00"
+}

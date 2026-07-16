@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "30369606",
+  "source_fingerprint": "48d128767d19b05601ff8c323babeffd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "30369606",
+    "a-novel-immortalized-human-endometrial-stromal-cell-line-with-normal-progestational-response."
+  ],
+  "key_phrases": [
+    "novel",
+    "immortalized",
+    "human",
+    "endometrial",
+    "stromal",
+    "cell",
+    "line",
+    "with"
+  ],
+  "summary_1l": "A novel immortalized human endometrial stromal cell line with normal progestational response.",
+  "query_hits": [],
+  "embed_text": "30369606 A novel immortalized human endometrial stromal cell line with normal progestational response. science scifact Obtaining primary human endometrial stromal cells (HESCs) for in vitro studies is limited by the scarcity of adequate human material and the inability to passage these cells in culture for long periods. Immortalization of these cells would… 30369606 a-novel-immortalized-human-endometrial-stromal-cell-line-with-normal-progestational-response. novel immortalized human endometrial stromal cell line with A novel immortalized human endometrial stromal cell line with normal progestational response. A novel immortalized human endometrial stromal cell line with normal progestational response. Obtaining primary human endometrial stromal cells (HESCs) for in vitro studies is limited by the scarcity of adequate human material and the inability to passage these cells in culture for long periods. Immortalization of these cells would greatly facilitate studies; however, the process of immortalization often results in abnormal karyotypes and aberrant functional characteristics. To meet this need, we have introduced telomerase into cultured HESCs to prevent the normal shortening of telomeres observed in adult somatic cells during mitosis. We have now developed and analyzed a newly immortalized HESC line that contains no clonal chromosomal structural or numerical abnormalities. In addition, whe",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.621093+00:00"
+}

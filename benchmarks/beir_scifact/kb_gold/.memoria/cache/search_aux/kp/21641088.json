@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21641088",
+  "source_fingerprint": "2a85e25ce6de2ac4dccf751c61945931",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21641088",
+    "central-obesity-and-hyperinsulinaemia-in-women-are-associated-with-polymorphism-in-the-5'-flanking-region-of-the-human-insulin-gene."
+  ],
+  "key_phrases": [
+    "central",
+    "obesity",
+    "hyperinsulinaemia",
+    "women",
+    "associated",
+    "with",
+    "polymorphism",
+    "flanking"
+  ],
+  "summary_1l": "Central obesity and hyperinsulinaemia in women are associated with polymorphism in the 5' flanking region of the human insulin gene.",
+  "query_hits": [],
+  "embed_text": "21641088 Central obesity and hyperinsulinaemia in women are associated with polymorphism in the 5' flanking region of the human insulin gene. science scifact Obesity is a multifactorial disease with a marked genetic component. The situation is further complicated by the heterogeneity of obesity demonstrated by the topographical distribution of body fat, e.g. upper body (central) and lower body… 21641088 central-obesity-and-hyperinsulinaemia-in-women-are-associated-with-polymorphism-in-the-5'-flanking-region-of-the-human-insulin-gene. central obesity hyperinsulinaemia women associated with polymorphism flanking Central obesity and hyperinsulinaemia in women are associated with polymorphism in the 5' flanking region of the human insulin gene. Central obesity and hyperinsulinaemia in women are associated with polymorphism in the 5' flanking region of the human insulin gene. Obesity is a multifactorial disease with a marked genetic component. The situation is further complicated by the heterogeneity of obesity demonstrated by the topographical distribution of body fat, e.g. upper body (central) and lower body (gluteal) obesity. Furthermore, the distribution of fat shows a stronger heritable tendency compared with total body fat. Central obesity is characterized by hyperinsulinaemia and insulin resistance, a feature in common with non-insulin dependent diabetes mellitus, hypertension and atherosclerosis. In order to study the molecular genetics of central obesity we have examined 56 severely obese (mean body mass index 40), unrela",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.584009+00:00"
+}

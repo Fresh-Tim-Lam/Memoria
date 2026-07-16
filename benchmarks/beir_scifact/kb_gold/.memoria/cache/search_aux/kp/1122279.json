@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1122279",
+  "source_fingerprint": "990468081ac50dd01a7d0dceb08306fc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1122279",
+    "endothelium-mediated-relaxation-of-porcine-collateral-dependent-arterioles-is-improved-by-exercise-training."
+  ],
+  "key_phrases": [
+    "endothelium",
+    "mediated",
+    "relaxation",
+    "porcine",
+    "collateral",
+    "dependent",
+    "arterioles",
+    "improved"
+  ],
+  "summary_1l": "Endothelium-mediated relaxation of porcine collateral-dependent arterioles is improved by exercise training.",
+  "query_hits": [],
+  "embed_text": "1122279 Endothelium-mediated relaxation of porcine collateral-dependent arterioles is improved by exercise training. science scifact BACKGROUND Endothelium-dependent modulation of coronary tone is impaired in the collateral-dependent coronary microcirculation. We used a porcine model of chronic coronary occlusion and collateral development to evaluate the hypothesis… 1122279 endothelium-mediated-relaxation-of-porcine-collateral-dependent-arterioles-is-improved-by-exercise-training. endothelium mediated relaxation porcine collateral dependent arterioles improved Endothelium-mediated relaxation of porcine collateral-dependent arterioles is improved by exercise training. Endothelium-mediated relaxation of porcine collateral-dependent arterioles is improved by exercise training. BACKGROUND Endothelium-dependent modulation of coronary tone is impaired in the collateral-dependent coronary microcirculation. We used a porcine model of chronic coronary occlusion and collateral development to evaluate the hypothesis that exercise training enhances endothelium-mediated relaxation and increases endothelial nitric oxide synthase (ecNOS) mRNA levels of collateral-dependent microvasculature. METHODS AND RESULTS Adult female miniature swine were subjected to chronic, progressive ameroid occlusion of the proximal left circumflex coronary artery (LCx); after 2 months, animals were randomly exposed to 16-week exercise-training (EX group; treadmill running) or sedentary (S",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:06.103767+00:00"
+}

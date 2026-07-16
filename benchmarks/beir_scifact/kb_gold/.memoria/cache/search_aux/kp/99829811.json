@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "99829811",
+  "source_fingerprint": "8e5426e713eb499b337744ca21672771",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "99829811",
+    "development-of-a-specific-monoclonal-antibody-assay-and-a-rapid-testing-strip-for-the-detection-of-apramycin-residues-in-food-samples"
+  ],
+  "key_phrases": [
+    "development",
+    "specific",
+    "monoclonal",
+    "antibody",
+    "assay",
+    "rapid",
+    "testing",
+    "strip"
+  ],
+  "summary_1l": "ABSTRACTA specific monoclonal antibody (MAb) against apramycin (AP",
+  "query_hits": [],
+  "embed_text": "99829811 Development of a specific monoclonal antibody assay and a rapid testing strip for the detection of apramycin residues in food samples science scifact ABSTRACTA specific monoclonal antibody (MAb) against apramycin (AP) was produced and used to develop an indirect competitive enzyme-linked immunosorbent assay (idcELISA) and a rapid testing strip for the detection of AP residues in foods.… 99829811 development-of-a-specific-monoclonal-antibody-assay-and-a-rapid-testing-strip-for-the-detection-of-apramycin-residues-in-food-samples development specific monoclonal antibody assay rapid testing strip ABSTRACTA specific monoclonal antibody (MAb) against apramycin (AP Development of a specific monoclonal antibody assay and a rapid testing strip for the detection of apramycin residues in food samples ABSTRACTA specific monoclonal antibody (MAb) against apramycin (AP) was produced and used to develop an indirect competitive enzyme-linked immunosorbent assay (idcELISA) and a rapid testing strip for the detection of AP residues in foods. MAb exhibited negligible cross-reactivity with other aminoglycosides. Under optimized conditions in 0.01 M PBS, the half maximum inhibitory concentration (IC50) of MAb was 0.41 ng/ml with a limit of detection (LOD) of 0.15 ng/ml. The ELISA results were obtained within 90 min. The mean recoveries from all the spiked food samples were within the range of 79.02–105.49%, with coefficients of variation in the range of 2.21–11.4%",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:06.239654+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "30639847",
+  "source_fingerprint": "05037948b44494ae1a60e304c22e86cc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "30639847",
+    "aortic-stiffness,-blood-pressure-progression,-and-incident-hypertension."
+  ],
+  "key_phrases": [
+    "aortic",
+    "stiffness",
+    "blood",
+    "pressure",
+    "progression",
+    "incident",
+    "hypertension",
+    "context"
+  ],
+  "summary_1l": "Aortic stiffness, blood pressure progression, and incident hypertension.",
+  "query_hits": [],
+  "embed_text": "30639847 Aortic stiffness, blood pressure progression, and incident hypertension. science scifact CONTEXT Vascular stiffness increases with advancing age and is a major risk factor for age-related morbidity and mortality. Vascular stiffness and blood pressure pulsatility are related; however, temporal relationships between vascular… 30639847 aortic-stiffness,-blood-pressure-progression,-and-incident-hypertension. aortic stiffness blood pressure progression incident hypertension context Aortic stiffness, blood pressure progression, and incident hypertension. Aortic stiffness, blood pressure progression, and incident hypertension. CONTEXT Vascular stiffness increases with advancing age and is a major risk factor for age-related morbidity and mortality. Vascular stiffness and blood pressure pulsatility are related; however, temporal relationships between vascular stiffening and blood pressure elevation have not been fully delineated. OBJECTIVE To examine temporal relationships among vascular stiffness, central hemodynamics, microvascular function, and blood pressure progression. DESIGN, SETTING, AND PARTICIPANTS Longitudinal community-based cohort study conducted in Framingham, Massachusetts. The present investigation is based on the 2 latest examination cycles (cycle 7: 1998-2001; cycle 8: 2005-2008 [last visit: January 25, 2008]) of the Framin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.844091+00:00"
+}

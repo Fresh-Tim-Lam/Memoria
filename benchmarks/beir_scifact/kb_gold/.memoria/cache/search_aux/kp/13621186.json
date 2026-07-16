@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13621186",
+  "source_fingerprint": "2d14e1becb7ae068d0c98864304ce737",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13621186",
+    "vertebrate-rod-photoreceptors-express-both-bk-and-ik-calcium-activated-potassium-channels,-but-only-bk-channels-are-involved-in-receptor-potential-regulation."
+  ],
+  "key_phrases": [
+    "vertebrate",
+    "rod",
+    "photoreceptors",
+    "express",
+    "both",
+    "bk",
+    "ik",
+    "calcium"
+  ],
+  "summary_1l": "Vertebrate rod photoreceptors express both BK and IK calcium-activated potassium channels, but only BK channels are involved in receptor potential regulation.",
+  "query_hits": [],
+  "embed_text": "13621186 Vertebrate rod photoreceptors express both BK and IK calcium-activated potassium channels, but only BK channels are involved in receptor potential regulation. science scifact In salamander rods, Ca(2+)-activated K(+) current (I(KCa)) provides an effective \"clamp\" of the dark membrane potential to its normal resting level. By a combination of electrophysiological, pharmacological, and immunohistochemical… 13621186 vertebrate-rod-photoreceptors-express-both-bk-and-ik-calcium-activated-potassium-channels,-but-only-bk-channels-are-involved-in-receptor-potential-regulation. vertebrate rod photoreceptors express both bk ik calcium Vertebrate rod photoreceptors express both BK and IK calcium-activated potassium channels, but only BK channels are involved in receptor potential regulation. Vertebrate rod photoreceptors express both BK and IK calcium-activated potassium channels, but only BK channels are involved in receptor potential regulation. In salamander rods, Ca(2+)-activated K(+) current (I(KCa)) provides an effective \"clamp\" of the dark membrane potential to its normal resting level. By a combination of electrophysiological, pharmacological, and immunohistochemical approaches, we show that salamander rods functionally express large-conductance Ca(2+)- and voltage-dependent potassium (BK) channel and intermediate-conductance Ca(2+)-dependent potassium (IK) channel, but not small-conductance Ca(2+)-dependent potassium channel (SK) subtypes. Application of 100 nM iberiotoxin and 100 nM clotrimazole reduced net I(KCa) to 36% and 63%, respectively, whereas the current was",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.661740+00:00"
+}

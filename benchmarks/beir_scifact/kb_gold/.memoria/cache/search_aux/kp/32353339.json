@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "32353339",
+  "source_fingerprint": "7afd4a1707e079e9b7b2ecc280a66519",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "32353339",
+    "chimeric-live,-attenuated-vaccine-against-japanese-encephalitis-(chimerivax-je):-phase-2-clinical-trials-for-safety-and-immunogenicity,-effect-of-vaccine-dose-and-schedule,-and-memory-response-to-challenge-with-inactivated-japanese-encephalitis-antigen."
+  ],
+  "key_phrases": [
+    "chimeric",
+    "live",
+    "attenuated",
+    "vaccine",
+    "against",
+    "japanese",
+    "encephalitis",
+    "chimerivax"
+  ],
+  "summary_1l": "Chimeric live, attenuated vaccine against Japanese encephalitis (ChimeriVax-JE): phase 2 clinical trials for safety and immunogenicity, effect of vaccine dose and schedule, and memory response to chal",
+  "query_hits": [],
+  "embed_text": "32353339 Chimeric live, attenuated vaccine against Japanese encephalitis (ChimeriVax-JE): phase 2 clinical trials for safety and immunogenicity, effect of vaccine dose and schedule, and memory response to challenge with inactivated Japanese encephalitis antigen. science scifact ChimeriVax-JE is a live, attenuated vaccine against Japanese encephalitis, using yellow fever (YF) 17D vaccine as a vector. In a double-blind phase 2 trial, 99 adults received vaccine, placebo, or YF 17D vaccine (YF-VAX). ChimeriVax-JE was… 32353339 chimeric-live,-attenuated-vaccine-against-japanese-encephalitis-(chimerivax-je):-phase-2-clinical-trials-for-safety-and-immunogenicity,-effect-of-vaccine-dose-and-schedule,-and-memory-response-to-challenge-with-inactivated-japanese-encephalitis-antigen. chimeric live attenuated vaccine against japanese encephalitis chimerivax Chimeric live, attenuated vaccine against Japanese encephalitis (ChimeriVax-JE): phase 2 clinical trials for safety and immunogenicity, effect of vaccine dose and schedule, and memory response to chal Chimeric live, attenuated vaccine against Japanese encephalitis (ChimeriVax-JE): phase 2 clinical trials for safety and immunogenicity, effect of vaccine dose and schedule, and memory response to challenge with inactivated Japanese encephalitis antigen. ChimeriVax-JE is a live, attenuated vaccine against Japanese encephalitis, using yellow fever (YF) 17D vaccine as a vector. In a double-blind phase 2 trial, 99 adults received vaccine, placebo, or YF 17D vaccine (YF-VAX). ChimeriVax-JE was well tolerated, with no differences in adverse events between treatment groups. Viremias resulting from administration of ChimeriVax-JE and YF-VAX were of short duration and low titer; 82 (94%) of 87 subjects administered graded doses (1.8-5.8 log(10)) of ChimeriVax-JE developed neutralizing antibodies. A",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.443366+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "188911",
+  "source_fingerprint": "b50623f3a08b9798f36f3d2e90a6fee1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "188911",
+    "generation-of-large-numbers-of-dendritic-cells-from-mouse-bone-marrow-cultures-supplemented-with-granulocyte/macrophage-colony-stimulating-factor"
+  ],
+  "key_phrases": [
+    "generation",
+    "large",
+    "numbers",
+    "dendritic",
+    "cells",
+    "from",
+    "mouse",
+    "bone"
+  ],
+  "summary_1l": "Antigen-presenting, major histocompatibility complex (",
+  "query_hits": [],
+  "embed_text": "188911 Generation of large numbers of dendritic cells from mouse bone marrow cultures supplemented with granulocyte/macrophage colony-stimulating factor science scifact Antigen-presenting, major histocompatibility complex (MHC) class II-rich dendritic cells are known to arise from bone marrow. However, marrow lacks mature dendritic cells, and substantial numbers of proliferating less-mature cells have yet… 188911 generation-of-large-numbers-of-dendritic-cells-from-mouse-bone-marrow-cultures-supplemented-with-granulocyte/macrophage-colony-stimulating-factor generation large numbers dendritic cells from mouse bone Antigen-presenting, major histocompatibility complex ( Generation of large numbers of dendritic cells from mouse bone marrow cultures supplemented with granulocyte/macrophage colony-stimulating factor Antigen-presenting, major histocompatibility complex (MHC) class II-rich dendritic cells are known to arise from bone marrow. However, marrow lacks mature dendritic cells, and substantial numbers of proliferating less-mature cells have yet to be identified. The methodology for inducing dendritic cell growth that was recently described for mouse blood now has been modified to MHC class II-negative precursors in marrow. A key step is to remove the majority of nonadherent, newly formed granulocytes by gentle washes during the first 2-4 d of culture. This leaves behind proliferating clusters that are loosely attached to a more firmly adherent \"stroma",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.846789+00:00"
+}

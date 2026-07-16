@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "1855679",
+  "source_fingerprint": "e7041f63979d76f2ff3f0d7402e1c28b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1855679"
+  ],
+  "key_phrases": [
+    "crucial",
+    "role",
+    "interleukin",
+    "il",
+    "induction",
+    "17",
+    "producing",
+    "cells"
+  ],
+  "summary_1l": "It was recently demonstrated that interleukin (IL)-23–driven IL-17–producing",
+  "query_hits": [],
+  "embed_text": "1855679 A crucial role for interleukin (IL)-1 in the induction of IL-17–producing T cells that mediate autoimmune encephalomyelitis science scifact It was recently demonstrated that interleukin (IL)-23–driven IL-17–producing (ThIL-17) T cells mediate inflammatory pathology in certain autoimmune diseases. We show that the induction of antigen-specific ThIL-17 cells, but not T helper… 1855679 crucial role interleukin il induction 17 producing cells It was recently demonstrated that interleukin (IL)-23–driven IL-17–producing A crucial role for interleukin (IL)-1 in the induction of IL-17–producing T cells that mediate autoimmune encephalomyelitis It was recently demonstrated that interleukin (IL)-23–driven IL-17–producing (ThIL-17) T cells mediate inflammatory pathology in certain autoimmune diseases. We show that the induction of antigen-specific ThIL-17 cells, but not T helper (Th)1 or Th2 cells, by immunization with antigens and adjuvants is abrogated in IL-1 receptor type I–deficient (IL-1RI−/−) mice. Furthermore, the incidence of experimental autoimmune encephalomyelitis (EAE) was significantly lower in IL-1RI−/− compared with wild-type mice, and this correlated with a failure to induce autoantigen-specific ThIL-17 cells, whereas induction of Th1 and Th2 responses was not substantially different. However,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.418437+00:00"
+}

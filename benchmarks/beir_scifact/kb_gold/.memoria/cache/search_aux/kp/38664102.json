@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "38664102",
+  "source_fingerprint": "4b1a94bec62e953e21d6b6ed53a58a41",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "38664102",
+    "what-do-medical-schools-teach-about-women's-health-and-gender-differences?"
+  ],
+  "key_phrases": [
+    "what",
+    "do",
+    "medical",
+    "schools",
+    "teach",
+    "about",
+    "women",
+    "health"
+  ],
+  "summary_1l": "What do medical schools teach about women's health and gender differences?",
+  "query_hits": [],
+  "embed_text": "38664102 What do medical schools teach about women's health and gender differences? science scifact PURPOSE To examine the curricula of U.S. medical schools to assess the inclusion of women's health and gender-specific information and identify institutional characteristics associated with this content. METHOD Using data from the… 38664102 what-do-medical-schools-teach-about-women's-health-and-gender-differences? what do medical schools teach about women health What do medical schools teach about women's health and gender differences? What do medical schools teach about women's health and gender differences? PURPOSE To examine the curricula of U.S. medical schools to assess the inclusion of women's health and gender-specific information and identify institutional characteristics associated with this content. METHOD Using data from the Association of American Medical Colleges' Curriculum Management and Information Tool (CurrMIT), in November 2003 to February 2004 the authors performed a curriculum search of schools that entered course/clerkships in CurrMIT to identify interdisciplinary women's health or gender-specific courses/clerkships. A subset of schools that entered comprehensive information in CurrMIT was searched for a specified list of women's health topics and or gender-specific content on any topic. Statistical",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.718050+00:00"
+}

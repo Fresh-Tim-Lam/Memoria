@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "kp_id": "beneficial-administrative-act",
+  "source_fingerprint": "3ff93a0526d1704b7fa562ba82d6ca7a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "行政行为",
+    "抽象行政行为",
+    "行政机关",
+    "合理行政",
+    "行政强制",
+    "行政法规",
+    "行政公开",
+    "行政征收",
+    "行政征用",
+    "行政效能",
+    "行政确认",
+    "行政许可法"
+  ],
+  "aliases": [
+    "beneficial-administrative-act"
+  ],
+  "key_phrases": [
+    "授益",
+    "行政",
+    "行为",
+    "shouyixingzhengxingwei",
+    "授益行政行为"
+  ],
+  "summary_1l": "授益行政行为",
+  "query_hits": [],
+  "embed_text": "beneficial-administrative-act 授益行政行为 行政法 授益行政行为 行政给付 行政许可 行政行为 抽象行政行为 行政机关 合理行政 行政强制 行政法规 行政公开 行政征收 行政征用 行政效能 行政确认 行政许可法 beneficial-administrative-act 授益 行政 行为 shouyixingzhengxingwei 授益行政行为 授益行政行为 授益行政行为",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-16T05:57:16.181380+00:00"
+}

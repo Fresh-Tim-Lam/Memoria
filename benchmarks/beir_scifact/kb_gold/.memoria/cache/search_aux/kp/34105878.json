@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "34105878",
+  "source_fingerprint": "5fe7c141b0dbd596f9c1d3fa87f0a5c4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "34105878",
+    "claspin,-a-chk1-regulatory-protein,-monitors-dna-replication-on-chromatin-independently-of-rpa,-atr,-and-rad17."
+  ],
+  "key_phrases": [
+    "claspin",
+    "chk1",
+    "regulatory",
+    "protein",
+    "monitors",
+    "dna",
+    "replication",
+    "chromatin"
+  ],
+  "summary_1l": "Claspin, a Chk1-regulatory protein, monitors DNA replication on chromatin independently of RPA, ATR, and Rad17.",
+  "query_hits": [],
+  "embed_text": "34105878 Claspin, a Chk1-regulatory protein, monitors DNA replication on chromatin independently of RPA, ATR, and Rad17. science scifact Claspin is required for the ATR-dependent activation of Chk1 in Xenopus egg extracts containing incompletely replicated DNA. We show here that Claspin associates with chromatin in a regulated manner during S phase. Binding of Claspin to… 34105878 claspin,-a-chk1-regulatory-protein,-monitors-dna-replication-on-chromatin-independently-of-rpa,-atr,-and-rad17. claspin chk1 regulatory protein monitors dna replication chromatin Claspin, a Chk1-regulatory protein, monitors DNA replication on chromatin independently of RPA, ATR, and Rad17. Claspin, a Chk1-regulatory protein, monitors DNA replication on chromatin independently of RPA, ATR, and Rad17. Claspin is required for the ATR-dependent activation of Chk1 in Xenopus egg extracts containing incompletely replicated DNA. We show here that Claspin associates with chromatin in a regulated manner during S phase. Binding of Claspin to chromatin depends on the pre-replication complex (pre-RC) and Cdc45 but not on replication protein A (RPA). These dependencies suggest that binding of Claspin occurs around the time of initial DNA unwinding at replication origins. By contrast, both ATR and Rad17 require RPA for association with DNA. Claspin, ATR, and Rad17 all bind to chromatin independently. These findings suggest that Claspin plays a role in monitoring DNA replication during S p",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.117572+00:00"
+}

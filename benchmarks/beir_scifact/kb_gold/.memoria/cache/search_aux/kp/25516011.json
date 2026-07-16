@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25516011",
+  "source_fingerprint": "1b53450a44a5451be044fa22e591cf76",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25516011",
+    "purification-and-characterization-of-mouse-hematopoietic-stem-cells."
+  ],
+  "key_phrases": [
+    "purification",
+    "characterization",
+    "mouse",
+    "hematopoietic",
+    "stem",
+    "cells",
+    "bone",
+    "marrow"
+  ],
+  "summary_1l": "Purification and characterization of mouse hematopoietic stem cells.",
+  "query_hits": [],
+  "embed_text": "25516011 Purification and characterization of mouse hematopoietic stem cells. science scifact Mouse bone marrow hematopoietic stem cells were isolated with the use of a variety of phenotypic markers. These cells can proliferate and differentiate with approximately unit efficiency into myelomonocytic cells, B cells, or T cells.… 25516011 purification-and-characterization-of-mouse-hematopoietic-stem-cells. purification characterization mouse hematopoietic stem cells bone marrow Purification and characterization of mouse hematopoietic stem cells. Purification and characterization of mouse hematopoietic stem cells. Mouse bone marrow hematopoietic stem cells were isolated with the use of a variety of phenotypic markers. These cells can proliferate and differentiate with approximately unit efficiency into myelomonocytic cells, B cells, or T cells. Thirty of these cells are sufficient to save 50 percent of lethally irradiated mice, and to reconstitute all blood cell types in the survivors.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.835319+00:00"
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "12100854",
+  "source_fingerprint": "6e26d0b88cda37b9864ada3c4899f0dd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12100854"
+  ],
+  "key_phrases": [
+    "proteomic",
+    "genomic",
+    "approaches",
+    "reveal",
+    "critical",
+    "functions",
+    "h3k9",
+    "methylation"
+  ],
+  "summary_1l": "Reprogramming of somatic cells into induced pluripotent s",
+  "query_hits": [],
+  "embed_text": "12100854 Proteomic and genomic approaches reveal critical functions of H3K9 methylation and Heterochromatin Protein-1γ in reprogramming to pluripotency science scifact Reprogramming of somatic cells into induced pluripotent stem cells (iPSCs) involves a marked reorganization of chromatin. To identify post-translational histone modifications that change in global abundance during this process, we have… 12100854 proteomic genomic approaches reveal critical functions h3k9 methylation Reprogramming of somatic cells into induced pluripotent s Proteomic and genomic approaches reveal critical functions of H3K9 methylation and Heterochromatin Protein-1γ in reprogramming to pluripotency Reprogramming of somatic cells into induced pluripotent stem cells (iPSCs) involves a marked reorganization of chromatin. To identify post-translational histone modifications that change in global abundance during this process, we have applied a quantitative mass-spectrometry-based approach. We found that iPSCs, compared with both the starting fibroblasts and a late reprogramming intermediate (pre-iPSCs), are enriched for histone modifications associated with active chromatin, and depleted for marks of transcriptional elongation and a subset of repressive modifications including H3K9me2/me3. Dissecting the contribution of H3K9 methylation to reprogr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:07.748936+00:00"
+}

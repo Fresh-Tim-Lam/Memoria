@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "kp_id": "5891136#0",
+  "source_fingerprint": "f08ac45c671ea479e9a473702652bef7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "葡萄牙",
+    "首都",
+    "多首都國家",
+    "葡萄牙國家圖書館"
+  ],
+  "aliases": [
+    "5891136#0"
+  ],
+  "key_phrases": [
+    "里斯本",
+    "歧义",
+    "通常",
+    "葡萄牙",
+    "首都",
+    "lisibenxiaoqiyilisibentongchangzhiputaoyadeshoudu",
+    "里斯本 (消歧义) 里斯本（）通常指葡萄牙的首都。"
+  ],
+  "summary_1l": "里斯本（）通常指葡萄牙的首都。",
+  "query_hits": [],
+  "embed_text": "5891136#0 里斯本 (消歧义) 里斯本 (消歧义) 里斯本（）通常指葡萄牙的首都。 葡萄牙 首都 多首都國家 葡萄牙國家圖書館 5891136#0 里斯本 歧义 通常 葡萄牙 首都 lisibenxiaoqiyilisibentongchangzhiputaoyadeshoudu 里斯本 (消歧义) 里斯本（）通常指葡萄牙的首都。 里斯本（）通常指葡萄牙的首都。 里斯本 (消歧义) 里斯本（）通常指葡萄牙的首都。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:22:47.377525+00:00"
+}

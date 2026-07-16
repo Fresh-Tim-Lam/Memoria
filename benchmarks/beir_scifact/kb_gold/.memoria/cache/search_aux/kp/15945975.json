@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15945975",
+  "source_fingerprint": "475c722ba0b506f3c06b33e6be9a4197",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15945975",
+    "transcriptional-signature-and-memory-retention-of-human-induced-pluripotent-stem-cells"
+  ],
+  "key_phrases": [
+    "transcriptional",
+    "signature",
+    "memory",
+    "retention",
+    "human",
+    "induced",
+    "pluripotent",
+    "stem"
+  ],
+  "summary_1l": "Genetic reprogramming of somatic cells to a pluripotent state (induced pluripotent stem cells or iPSCs) by over-e",
+  "query_hits": [],
+  "embed_text": "15945975 Transcriptional Signature and Memory Retention of Human-Induced Pluripotent Stem Cells science scifact Genetic reprogramming of somatic cells to a pluripotent state (induced pluripotent stem cells or iPSCs) by over-expression of specific genes has been accomplished using mouse and human cells. However, it is still unclear how similar human… 15945975 transcriptional-signature-and-memory-retention-of-human-induced-pluripotent-stem-cells transcriptional signature memory retention human induced pluripotent stem Genetic reprogramming of somatic cells to a pluripotent state (induced pluripotent stem cells or iPSCs) by over-e Transcriptional Signature and Memory Retention of Human-Induced Pluripotent Stem Cells Genetic reprogramming of somatic cells to a pluripotent state (induced pluripotent stem cells or iPSCs) by over-expression of specific genes has been accomplished using mouse and human cells. However, it is still unclear how similar human iPSCs are to human Embryonic Stem Cells (hESCs). Here, we describe the transcriptional profile of human iPSCs generated without viral vectors or genomic insertions, revealing that these cells are in general similar to hESCs but with significant differences. For the generation of human iPSCs without viral vectors or genomic insertions, pluripotent factors Oct4 and Nanog were cloned in episomal vectors and transfected into human fetal neural progenitor cells. The transien",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.484958+00:00"
+}

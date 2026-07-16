@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "kp_id": "query-key-value",
+  "source_fingerprint": "fc57a404ee79f2ec25fcce6e9e140c64",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [],
+  "key_phrases": [
+    "query",
+    "key",
+    "value",
+    "注意力",
+    "计算",
+    "核心",
+    "框架",
+    "qkv"
+  ],
+  "summary_1l": "注意力计算的核心框架是 Query-Key-Value（QKV）模型，它将注意力过程类比为信息检索系统： **Query（查询）**：当前需要被处理的位置生成的查询向量，表示\"我在找什么\" **Key（键）**：每个位置生成的键向量，表示\"我有什么特征\" **Value（值）**：每个位置生成的值向量，表示\"我的实际内容\" 计算过程分为三步： 相似度计算 相似度计算",
+  "query_hits": [],
+  "embed_text": "query-key-value Query-Key-Value query key value 注意力 计算 核心 框架 qkv 注意力计算的核心框架是 Query-Key-Value（QKV）模型，它将注意力过程类比为信息检索系统： **Query（查询）**：当前需要被处理的位置生成的查询向量，表示\"我在找什么\" **Key（键）**：每个位置生成的键向量，表示\"我有什么特征\" **Value（值）**：每个位置生成的值向量，表示\"我的实际内容\" 计算过程分为三步： 相似度计算 相似度计算 Query-Key-Value 注意力计算的核心框架是 Query-Key-Value（QKV）模型，它将注意力过程类比为信息检索系统： **Query（查询）**：当前需要被处理的位置生成的查询向量，表示\"我在找什么\" **Key（键）**：每个位置生成的键向量，表示\"我有什么特征\" **Value（值）**：每个位置生成的值向量，表示\"我的实际内容\" 计算过程分为三步： 相似度计算 相似度计算是注意力机制的第一步。Query 与所有 Key 的点积，得到相关性得分： 点积相似度计算简单高效，但它的输出范围不受限。这也正是后续需要 Softmax 归一化的原因——将无界的得分转化为概率分布。 除了点积相似度，还有其他常见的相似度计算方式： **加性注意力**（Additive Attention）： **双线性注意力**（Bilinear Attention）： **缩放点积**（Scaled Dot-Product）： 其中缩放点积是 Transformer 使用的形式，在效果和效率之间取得了最佳平衡。 权重归一化 权重归一化通过 Softmax 将点积得分转化为概率分布： 归一化的作用是把无界的点积得分映射到 区间，使得所有位置的权重之和为 1。这样，加权后的输出可以解释为\"以注意力权重聚合的信息\"。 Softmax 归一化有以下关键性质： **单调性**：得分越高，权重越大，保持原始排序 **可微性**：梯度流畅，适合反向传播训练 **概率解释**：输出可以解释为\"模型关注位置 的概率\" 加权求和 加权求和是注意力计算的最后一步，将归一化后的注意力权重与对应的 Value 向量进行加权聚合： 加权求和的核心思想是：模型根据学到的注意力权重，从各个位置提取信息。权重 越大的位置，对输出的贡献越大。 这种机制的优雅之处在于： **端到端可微**：整个计算链可微，适合梯度",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T03:38:45.392861+00:00"
+}

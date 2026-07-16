@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "2566674",
+  "source_fingerprint": "6cf27809bab7b34b4a8eeb9d8682c056",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2566674"
+  ],
+  "key_phrases": [
+    "ribose",
+    "methylation",
+    "provides",
+    "molecular",
+    "signature",
+    "distinction",
+    "self",
+    "non"
+  ],
+  "summary_1l": "The 5′ cap structures of higher eukaryote mRNAs have ribose 2′-O-m",
+  "query_hits": [],
+  "embed_text": "2566674 Ribose 2′-O-methylation provides a molecular signature for the distinction of self and non-self mRNA dependent on the RNA sensor Mda5 science scifact The 5′ cap structures of higher eukaryote mRNAs have ribose 2′-O-methylation. Likewise, many viruses that replicate in the cytoplasm of eukaryotes have evolved 2′-O-methyltransferases to autonomously modify their mRNAs. However, a defined… 2566674 ribose methylation provides molecular signature distinction self non The 5′ cap structures of higher eukaryote mRNAs have ribose 2′-O-m Ribose 2′-O-methylation provides a molecular signature for the distinction of self and non-self mRNA dependent on the RNA sensor Mda5 The 5′ cap structures of higher eukaryote mRNAs have ribose 2′-O-methylation. Likewise, many viruses that replicate in the cytoplasm of eukaryotes have evolved 2′-O-methyltransferases to autonomously modify their mRNAs. However, a defined biological role for 2′-O-methylation of mRNA remains elusive. Here we show that 2′-O-methylation of viral mRNA was critically involved in subverting the induction of type I interferon. We demonstrate that human and mouse coronavirus mutants lacking 2′-O-methyltransferase activity induced higher expression of type I interferon and were highly sensitive to type I interferon. Notably, the induction of type I interferon by viru",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.141066+00:00"
+}

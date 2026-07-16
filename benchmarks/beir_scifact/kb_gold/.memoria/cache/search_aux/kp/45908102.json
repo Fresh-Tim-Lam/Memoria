@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "45908102",
+  "source_fingerprint": "bdaeea489d31d646965055c400c69f44",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "45908102",
+    "cluster-sampling-to-assess-immunization-coverage:-a-review-of-experience-with-a-simplified-sampling-method."
+  ],
+  "key_phrases": [
+    "cluster",
+    "sampling",
+    "assess",
+    "immunization",
+    "coverage",
+    "review",
+    "experience",
+    "with"
+  ],
+  "summary_1l": "Cluster sampling to assess immunization coverage: a review of experience with a simplified sampling method.",
+  "query_hits": [],
+  "embed_text": "45908102 Cluster sampling to assess immunization coverage: a review of experience with a simplified sampling method. science scifact The Expanded Program on Immunization (EPI) is using a simplified cluster sampling method, based on the random selection of 210 children in 30 clusters of 7 children each, to estimate immunization coverage levels. This article analyzes the… 45908102 cluster-sampling-to-assess-immunization-coverage:-a-review-of-experience-with-a-simplified-sampling-method. cluster sampling assess immunization coverage review experience with Cluster sampling to assess immunization coverage: a review of experience with a simplified sampling method. Cluster sampling to assess immunization coverage: a review of experience with a simplified sampling method. The Expanded Program on Immunization (EPI) is using a simplified cluster sampling method, based on the random selection of 210 children in 30 clusters of 7 children each, to estimate immunization coverage levels. This article analyzes the results of this method in actual and computer simulated surveys. Results from 60 actual surveys conducted in 25 countries were available for analysis, for a total of 446 sample estimations of immunization coverage. 83% of the sample results had 95% confidence limits within + or - 10%, and none of the surveys had 95% confidence limits exceeding + or - 13%. In addition, 12 hypothetical population strata with immunization coverage rates ranging from 10",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.607584+00:00"
+}

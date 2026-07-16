@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13764090",
+  "source_fingerprint": "3398e9de24a3cd1fa597f33b6dd72a6b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13764090",
+    "large-intestine-targeted-nanoparticle-releasing-oral-vaccine-to-control-genitorectal-viral-infection"
+  ],
+  "key_phrases": [
+    "large",
+    "intestine",
+    "targeted",
+    "nanoparticle",
+    "releasing",
+    "oral",
+    "vaccine",
+    "control"
+  ],
+  "summary_1l": "Both rectal and vaginal mucosal surfaces serve as transmission routes for pathogenic microorganisms",
+  "query_hits": [],
+  "embed_text": "13764090 Large intestine-targeted nanoparticle-releasing oral vaccine to control genitorectal viral infection science scifact Both rectal and vaginal mucosal surfaces serve as transmission routes for pathogenic microorganisms. Vaccination through large intestinal mucosa, previously proven protective for both of these mucosal sites in animal studies, can be… 13764090 large-intestine-targeted-nanoparticle-releasing-oral-vaccine-to-control-genitorectal-viral-infection large intestine targeted nanoparticle releasing oral vaccine control Both rectal and vaginal mucosal surfaces serve as transmission routes for pathogenic microorganisms Large intestine-targeted nanoparticle-releasing oral vaccine to control genitorectal viral infection Both rectal and vaginal mucosal surfaces serve as transmission routes for pathogenic microorganisms. Vaccination through large intestinal mucosa, previously proven protective for both of these mucosal sites in animal studies, can be achieved successfully by direct intracolorectal (i.c.r.) administration, but this route is clinically impractical. Oral vaccine delivery seems preferable but runs the risk of the vaccine's destruction in the upper gastrointestinal tract. Therefore, we designed a large intestine-targeted oral delivery with pH-dependent microparticles containing vaccine nanoparticles, which induced colorectal immunity in mice comparably to colorectal vaccination and protected agai",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.875245+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10010651",
+  "source_fingerprint": "a90a61b8964bb6554ed082bbab231f81",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10010651",
+    "nutrition-and-physical-activity-guidelines-for-cancer-survivors."
+  ],
+  "key_phrases": [
+    "nutrition",
+    "physical",
+    "activity",
+    "guidelines",
+    "cancer",
+    "survivors",
+    "often",
+    "highly"
+  ],
+  "summary_1l": "Nutrition and physical activity guidelines for cancer survivors.",
+  "query_hits": [],
+  "embed_text": "10010651 Nutrition and physical activity guidelines for cancer survivors. science scifact Cancer survivors are often highly motivated to seek information about food choices, physical activity, and dietary supplements to improve their treatment outcomes, quality of life, and overall survival. To address these concerns, the… 10010651 nutrition-and-physical-activity-guidelines-for-cancer-survivors. nutrition physical activity guidelines cancer survivors often highly Nutrition and physical activity guidelines for cancer survivors. Nutrition and physical activity guidelines for cancer survivors. Cancer survivors are often highly motivated to seek information about food choices, physical activity, and dietary supplements to improve their treatment outcomes, quality of life, and overall survival. To address these concerns, the American Cancer Society (ACS) convened a group of experts in nutrition, physical activity, and cancer survivorship to evaluate the scientific evidence and best clinical practices related to optimal nutrition and physical activity after the diagnosis of cancer. This report summarizes their findings and is intended to present health care providers with the best possible information with which to help cancer survivors and their families make informed choices related to nutrition and physical activit",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.195543+00:00"
+}

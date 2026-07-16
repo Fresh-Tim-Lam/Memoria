@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5284188",
+  "source_fingerprint": "054418ab6e97041434b323d0bd603993",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5284188",
+    "alarming-levels-of-drug-resistant-tuberculosis-in-belarus:-results-of-a-survey-in-minsk"
+  ],
+  "key_phrases": [
+    "alarming",
+    "levels",
+    "drug",
+    "resistant",
+    "tuberculosis",
+    "belarus",
+    "results",
+    "survey"
+  ],
+  "summary_1l": "Resistance to anti-tuberculosis (TB) medicines is a major public health threat in most countries of the former S",
+  "query_hits": [],
+  "embed_text": "5284188 Alarming levels of drug-resistant tuberculosis in Belarus: results of a survey in Minsk science scifact Resistance to anti-tuberculosis (TB) medicines is a major public health threat in most countries of the former Soviet Union. As no representative and quality-assured information on the magnitude of this problem existed in Belarus, a survey… 5284188 alarming-levels-of-drug-resistant-tuberculosis-in-belarus:-results-of-a-survey-in-minsk alarming levels drug resistant tuberculosis belarus results survey Resistance to anti-tuberculosis (TB) medicines is a major public health threat in most countries of the former S Alarming levels of drug-resistant tuberculosis in Belarus: results of a survey in Minsk Resistance to anti-tuberculosis (TB) medicines is a major public health threat in most countries of the former Soviet Union. As no representative and quality-assured information on the magnitude of this problem existed in Belarus, a survey was conducted in the capital city of Minsk. Between November 2009 and December 2010, 156 consecutively diagnosed new and 68 previously treated culture-positive TB patients residing in Minsk were enrolled in the survey. Mycobacterium tuberculosis isolates were obtained from each patient and tested for susceptibility to first- and second-line anti-TB drugs. Multidrug-resistant (MDR)-TB was found in 35.3% (95% CI 27.7-42.8) of new patients and 76.5% (95% CI 66.1-86.8) of",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.789505+00:00"
+}

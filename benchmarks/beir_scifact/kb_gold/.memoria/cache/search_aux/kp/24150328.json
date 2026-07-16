@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24150328",
+  "source_fingerprint": "fa79877ff61749670aee7760b4a0093d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24150328",
+    "peroxisome-proliferator-activated-receptor-gamma-agonists-for-the-prevention-of-adverse-events-following-percutaneous-coronary-revascularization--results-of-the-ppar-study."
+  ],
+  "key_phrases": [
+    "peroxisome",
+    "proliferator",
+    "activated",
+    "receptor",
+    "gamma",
+    "agonists",
+    "prevention",
+    "adverse"
+  ],
+  "summary_1l": "Peroxisome proliferator-activated receptor gamma agonists for the Prevention of Adverse events following percutaneous coronary Revascularization--results of the PPAR study.",
+  "query_hits": [],
+  "embed_text": "24150328 Peroxisome proliferator-activated receptor gamma agonists for the Prevention of Adverse events following percutaneous coronary Revascularization--results of the PPAR study. science scifact BACKGROUND Patients with metabolic syndrome are at increased risk for cardiovascular complications. We sought to determine whether peroxisome proliferator-activated receptor gamma agonists had any beneficial effect on patients with… 24150328 peroxisome-proliferator-activated-receptor-gamma-agonists-for-the-prevention-of-adverse-events-following-percutaneous-coronary-revascularization--results-of-the-ppar-study. peroxisome proliferator activated receptor gamma agonists prevention adverse Peroxisome proliferator-activated receptor gamma agonists for the Prevention of Adverse events following percutaneous coronary Revascularization--results of the PPAR study. Peroxisome proliferator-activated receptor gamma agonists for the Prevention of Adverse events following percutaneous coronary Revascularization--results of the PPAR study. BACKGROUND Patients with metabolic syndrome are at increased risk for cardiovascular complications. We sought to determine whether peroxisome proliferator-activated receptor gamma agonists had any beneficial effect on patients with metabolic syndrome undergoing percutaneous coronary intervention (PCI). METHODS A total of 200 patients with metabolic syndrome undergoing PCI were randomized to rosiglitazone or placebo and followed for 1 year. Carotid intima-medial thickness (CIMT), inflammatory markers, lipid levels, brain natriuretic peptide, and clinical events were measured at baseline, 6 months, and 12 months. RESULTS",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.844075+00:00"
+}

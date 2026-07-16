@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2452989",
+  "source_fingerprint": "7ba37b11b180628b16b46524e941caf8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2452989",
+    "a-global-role-for-klf1-in-erythropoiesis-revealed-by-chip-seq-in-primary-erythroid-cells."
+  ],
+  "key_phrases": [
+    "global",
+    "role",
+    "klf1",
+    "erythropoiesis",
+    "revealed",
+    "by",
+    "chip",
+    "seq"
+  ],
+  "summary_1l": "A global role for KLF1 in erythropoiesis revealed by ChIP-seq in primary erythroid cells.",
+  "query_hits": [],
+  "embed_text": "2452989 A global role for KLF1 in erythropoiesis revealed by ChIP-seq in primary erythroid cells. science scifact KLF1 regulates a diverse suite of genes to direct erythroid cell differentiation from bipotent progenitors. To determine the local cis-regulatory contexts and transcription factor networks in which KLF1 operates, we performed KLF1 ChIP-seq… 2452989 a-global-role-for-klf1-in-erythropoiesis-revealed-by-chip-seq-in-primary-erythroid-cells. global role klf1 erythropoiesis revealed by chip seq A global role for KLF1 in erythropoiesis revealed by ChIP-seq in primary erythroid cells. A global role for KLF1 in erythropoiesis revealed by ChIP-seq in primary erythroid cells. KLF1 regulates a diverse suite of genes to direct erythroid cell differentiation from bipotent progenitors. To determine the local cis-regulatory contexts and transcription factor networks in which KLF1 operates, we performed KLF1 ChIP-seq in the mouse. We found at least 945 sites in the genome of E14.5 fetal liver erythroid cells which are occupied by endogenous KLF1. Many of these recovered sites reside in erythroid gene promoters such as Hbb-b1, but the majority are distant to any known gene. Our data suggests KLF1 directly regulates most aspects of terminal erythroid differentiation including production of alpha- and beta-globin protein chains, heme biosynthesis, coordination of proliferation and",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.641856+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "32450297",
+  "source_fingerprint": "ed353128b6b8a6becb005ac1732968bc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "32450297",
+    "evidence-for-energy-dependent-accumulation-of-paraquat-into-rat-lung"
+  ],
+  "key_phrases": [
+    "evidence",
+    "energy",
+    "dependent",
+    "accumulation",
+    "paraquat",
+    "into",
+    "rat",
+    "lung"
+  ],
+  "summary_1l": "THE herbicide paraquat (N,N′-dimethyl 4,4′-bipyridilium) can produce widespread oedema and fibrosis in the human lung after acciden",
+  "query_hits": [],
+  "embed_text": "32450297 Evidence for energy-dependent accumulation of paraquat into rat lung science scifact THE herbicide paraquat (N,N′-dimethyl 4,4′-bipyridilium) can produce widespread oedema and fibrosis in the human lung after accidental ingestion1–3. In those cases where death occurs after several weeks, there are no apparent pulmonary… 32450297 evidence-for-energy-dependent-accumulation-of-paraquat-into-rat-lung evidence energy dependent accumulation paraquat into rat lung THE herbicide paraquat (N,N′-dimethyl 4,4′-bipyridilium) can produce widespread oedema and fibrosis in the human lung after acciden Evidence for energy-dependent accumulation of paraquat into rat lung THE herbicide paraquat (N,N′-dimethyl 4,4′-bipyridilium) can produce widespread oedema and fibrosis in the human lung after accidental ingestion1–3. In those cases where death occurs after several weeks, there are no apparent pulmonary changes during the first few days following ingestion. Animal experiments in a variety of species have shown the lung to be the major target organ4–6. After administration of paraquat to animals, the lung has a high initial concentration and retains paraquat7–9. This retention appears to be related to the development of lung damage7 (L. L. Smith and M. S. Rose, unpublished work). The mechanism of retention of paraquat by the lung is at present not understood.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.564700+00:00"
+}

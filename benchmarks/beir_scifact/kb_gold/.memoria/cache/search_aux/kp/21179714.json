@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21179714",
+  "source_fingerprint": "804bcb0f5acfe00e26cdff81e60002eb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21179714",
+    "iap-regulation-of-metastasis."
+  ],
+  "key_phrases": [
+    "iap",
+    "regulation",
+    "metastasis",
+    "inhibitor",
+    "apoptosis",
+    "proteins",
+    "contribute",
+    "tumor"
+  ],
+  "summary_1l": "IAP regulation of metastasis.",
+  "query_hits": [],
+  "embed_text": "21179714 IAP regulation of metastasis. science scifact Inhibitor-of-Apoptosis (IAP) proteins contribute to tumor progression, but the requirements of this pathway are not understood. Here, we show that intermolecular cooperation between XIAP and survivin stimulates tumor cell invasion and… 21179714 iap-regulation-of-metastasis. iap regulation metastasis inhibitor apoptosis proteins contribute tumor IAP regulation of metastasis. IAP regulation of metastasis. Inhibitor-of-Apoptosis (IAP) proteins contribute to tumor progression, but the requirements of this pathway are not understood. Here, we show that intermolecular cooperation between XIAP and survivin stimulates tumor cell invasion and promotes metastasis. This pathway is independent of IAP inhibition of cell death. Instead, a survivin-XIAP complex activates NF-kappaB, which in turn leads to increased fibronectin gene expression, signaling by beta1 integrins, and activation of cell motility kinases FAK and Src. Therefore, IAPs are direct metastasis genes, and their antagonists could provide antimetastatic therapies in patients with cancer.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.468719+00:00"
+}

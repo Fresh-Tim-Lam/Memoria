@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9988425",
+  "source_fingerprint": "89acf5abc8b502a8c7d3c2c925d81100",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9988425",
+    "niche-independent-symmetrical-self-renewal-of-a-mammalian-tissue-stem-cell"
+  ],
+  "key_phrases": [
+    "niche",
+    "independent",
+    "symmetrical",
+    "self",
+    "renewal",
+    "mammalian",
+    "tissue",
+    "stem"
+  ],
+  "summary_1l": "Pluripotent mouse embryonic stem (ES) cells multiply in simple monoculture by symmetrical divisions.",
+  "query_hits": [],
+  "embed_text": "9988425 Niche-Independent Symmetrical Self-Renewal of a Mammalian Tissue Stem Cell science scifact Pluripotent mouse embryonic stem (ES) cells multiply in simple monoculture by symmetrical divisions. In vivo, however, stem cells are generally thought to depend on specialised cellular microenvironments and to undergo predominantly… 9988425 niche-independent-symmetrical-self-renewal-of-a-mammalian-tissue-stem-cell niche independent symmetrical self renewal mammalian tissue stem Pluripotent mouse embryonic stem (ES) cells multiply in simple monoculture by symmetrical divisions. Niche-Independent Symmetrical Self-Renewal of a Mammalian Tissue Stem Cell Pluripotent mouse embryonic stem (ES) cells multiply in simple monoculture by symmetrical divisions. In vivo, however, stem cells are generally thought to depend on specialised cellular microenvironments and to undergo predominantly asymmetric divisions. Ex vivo expansion of pure populations of tissue stem cells has proven elusive. Neural progenitor cells are propagated in combination with differentiating progeny in floating clusters called neurospheres. The proportion of stem cells in neurospheres is low, however, and they cannot be directly observed or interrogated. Here we demonstrate that the complex neurosphere environment is dispensable for stem cell maintenance, and that the combination of fibroblast growth f",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:06.253560+00:00"
+}

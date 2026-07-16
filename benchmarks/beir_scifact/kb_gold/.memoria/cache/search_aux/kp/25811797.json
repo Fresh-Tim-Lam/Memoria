@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25811797",
+  "source_fingerprint": "385b84953d657cad66f1b93523f4d89b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25811797",
+    "recurrent-outbreaks-of-salmonella-enteritidis-infections-in-a-texas-restaurant:-phage-type-4-arrives-in-the-united-states."
+  ],
+  "key_phrases": [
+    "recurrent",
+    "outbreaks",
+    "salmonella",
+    "enteritidis",
+    "infections",
+    "texas",
+    "restaurant",
+    "phage"
+  ],
+  "summary_1l": "Recurrent outbreaks of Salmonella Enteritidis infections in a Texas restaurant: phage type 4 arrives in the United States.",
+  "query_hits": [],
+  "embed_text": "25811797 Recurrent outbreaks of Salmonella Enteritidis infections in a Texas restaurant: phage type 4 arrives in the United States. science scifact In recent years infection caused by Salmonella serotype Enteritidis (SE) phage type 4 has spread through Europe but has been uncommon in the USA. The first recognized outbreak of this strain in the USA occurred in a Chinese restaurant in… 25811797 recurrent-outbreaks-of-salmonella-enteritidis-infections-in-a-texas-restaurant:-phage-type-4-arrives-in-the-united-states. recurrent outbreaks salmonella enteritidis infections texas restaurant phage Recurrent outbreaks of Salmonella Enteritidis infections in a Texas restaurant: phage type 4 arrives in the United States. Recurrent outbreaks of Salmonella Enteritidis infections in a Texas restaurant: phage type 4 arrives in the United States. In recent years infection caused by Salmonella serotype Enteritidis (SE) phage type 4 has spread through Europe but has been uncommon in the USA. The first recognized outbreak of this strain in the USA occurred in a Chinese restaurant in EI Paso, Texas, in April 1993; no source was identified. In September 1993, a second outbreak caused by SE phage type 4 was associated with the same restaurant. To determine the cause of the second outbreak, we compared food exposures of the 19 patients with that of two control groups. Egg rolls were the only item significantly associated with illness in both analyses (first control group: odds ratio [OR] 8.2, 95% confidence interval [",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.450699+00:00"
+}

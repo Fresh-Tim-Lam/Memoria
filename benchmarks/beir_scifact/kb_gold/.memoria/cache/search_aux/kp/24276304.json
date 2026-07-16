@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24276304",
+  "source_fingerprint": "acb8229168c012854b293837f9ccf92c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24276304",
+    "the-epidemiology-of-major-depressive-disorder:-results-from-the-national-comorbidity-survey-replication-(ncs-r)."
+  ],
+  "key_phrases": [
+    "epidemiology",
+    "major",
+    "depressive",
+    "disorder",
+    "results",
+    "from",
+    "national",
+    "comorbidity"
+  ],
+  "summary_1l": "The epidemiology of major depressive disorder: results from the National Comorbidity Survey Replication (NCS-R).",
+  "query_hits": [],
+  "embed_text": "24276304 The epidemiology of major depressive disorder: results from the National Comorbidity Survey Replication (NCS-R). science scifact CONTEXT Uncertainties exist about prevalence and correlates of major depressive disorder (MDD). OBJECTIVE To present nationally representative data on prevalence and correlates of MDD by Diagnostic and Statistical Manual of Mental… 24276304 the-epidemiology-of-major-depressive-disorder:-results-from-the-national-comorbidity-survey-replication-(ncs-r). epidemiology major depressive disorder results from national comorbidity The epidemiology of major depressive disorder: results from the National Comorbidity Survey Replication (NCS-R). The epidemiology of major depressive disorder: results from the National Comorbidity Survey Replication (NCS-R). CONTEXT Uncertainties exist about prevalence and correlates of major depressive disorder (MDD). OBJECTIVE To present nationally representative data on prevalence and correlates of MDD by Diagnostic and Statistical Manual of Mental Disorders, Fourth Edition (DSM-IV) criteria, and on study patterns and correlates of treatment and treatment adequacy from the recently completed National Comorbidity Survey Replication (NCS-R). DESIGN Face-to-face household survey conducted from February 2001 to December 2002. SETTING The 48 contiguous United States. PARTICIPANTS Household residents ages 18 years or older (N = 9090) who responded to the NCS-R survey. MAIN OUTCOME MEASURES Prevalence a",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.112090+00:00"
+}

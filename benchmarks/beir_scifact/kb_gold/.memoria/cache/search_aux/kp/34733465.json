@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "34733465",
+  "source_fingerprint": "09c51a719a0c1942a1acbd003c867be6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "34733465",
+    "association-of-cystic-fibrosis-with-abnormalities-in-fatty-acid-metabolism."
+  ],
+  "key_phrases": [
+    "association",
+    "cystic",
+    "fibrosis",
+    "with",
+    "abnormalities",
+    "fatty",
+    "acid",
+    "metabolism"
+  ],
+  "summary_1l": "Association of cystic fibrosis with abnormalities in fatty acid metabolism.",
+  "query_hits": [],
+  "embed_text": "34733465 Association of cystic fibrosis with abnormalities in fatty acid metabolism. science scifact BACKGROUND Patients with cystic fibrosis have altered levels of plasma fatty acids. We previously demonstrated that arachidonic acid levels are increased and docosahexaenoic acid levels are decreased in affected tissues from cystic… 34733465 association-of-cystic-fibrosis-with-abnormalities-in-fatty-acid-metabolism. association cystic fibrosis with abnormalities fatty acid metabolism Association of cystic fibrosis with abnormalities in fatty acid metabolism. Association of cystic fibrosis with abnormalities in fatty acid metabolism. BACKGROUND Patients with cystic fibrosis have altered levels of plasma fatty acids. We previously demonstrated that arachidonic acid levels are increased and docosahexaenoic acid levels are decreased in affected tissues from cystic fibrosis-knockout mice. In this study we determined whether humans with mutations in the cystic fibrosis transmembrane conductance regulator (CFTR) gene have a similar fatty acid defect in tissues expressing CFTR. METHODS Fatty acids from nasal- and rectal-biopsy specimens, nasal epithelial scrapings, and plasma were analyzed from 38 subjects with cystic fibrosis and compared with results in 13 obligate heterozygotes, 24 healthy controls, 11 subjects with inflammatory bowel disease, 9 su",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.699357+00:00"
+}

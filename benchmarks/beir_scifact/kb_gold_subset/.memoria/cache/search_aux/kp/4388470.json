@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4388470",
+  "source_fingerprint": "67c5778dd18cbf6582b7fe1a2cf1ea49",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4388470",
+    "somatic-sex-identity-is-cell-autonomous-in-the-chicken"
+  ],
+  "key_phrases": [
+    "somatic",
+    "sex",
+    "identity",
+    "cell",
+    "autonomous",
+    "chicken",
+    "mammalian",
+    "model"
+  ],
+  "summary_1l": "In the mammalian model of sex determination, embryos are considered to be sexually indifferent until the transient action of a sex-determining ge",
+  "query_hits": [],
+  "embed_text": "4388470 Somatic sex identity is cell-autonomous in the chicken science scifact In the mammalian model of sex determination, embryos are considered to be sexually indifferent until the transient action of a sex-determining gene initiates gonadal differentiation. Although this model is thought to apply to all… 4388470 somatic-sex-identity-is-cell-autonomous-in-the-chicken somatic sex identity cell autonomous chicken mammalian model In the mammalian model of sex determination, embryos are considered to be sexually indifferent until the transient action of a sex-determining ge Somatic sex identity is cell-autonomous in the chicken In the mammalian model of sex determination, embryos are considered to be sexually indifferent until the transient action of a sex-determining gene initiates gonadal differentiation. Although this model is thought to apply to all vertebrates, this has yet to be established. Here we have examined three lateral gynandromorph chickens (a rare, naturally occurring phenomenon in which one side of the animal appears male and the other female) to investigate the sex-determining mechanism in birds. These studies demonstrated that gynandromorph birds are genuine male:female chimaeras, and indicated that male and female avian somatic cells may have an inherent sex identity. To test this hypothesis, we transplanted presumptive mesoderm between em",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:13.310390+00:00"
+}

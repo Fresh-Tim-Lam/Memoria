@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4353857",
+  "source_fingerprint": "972c7e5c02a8c0776ac83b80d3deca6e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4353857",
+    "congenital-leptin-deficiency-is-associated-with-severe-early-onset-obesity-in-humans."
+  ],
+  "key_phrases": [
+    "congenital",
+    "leptin",
+    "deficiency",
+    "associated",
+    "with",
+    "severe",
+    "early",
+    "onset"
+  ],
+  "summary_1l": "Congenital leptin deficiency is associated with severe early-onset obesity in humans.",
+  "query_hits": [],
+  "embed_text": "4353857 Congenital leptin deficiency is associated with severe early-onset obesity in humans. science scifact The extreme obesity of the obese (ob/ob) mouse is attributable to mutations in the gene encoding leptin, an adipocyte-specific secreted protein which has profound effects on appetite and energy expenditure. We know of no equivalent… 4353857 congenital-leptin-deficiency-is-associated-with-severe-early-onset-obesity-in-humans. congenital leptin deficiency associated with severe early onset Congenital leptin deficiency is associated with severe early-onset obesity in humans. Congenital leptin deficiency is associated with severe early-onset obesity in humans. The extreme obesity of the obese (ob/ob) mouse is attributable to mutations in the gene encoding leptin, an adipocyte-specific secreted protein which has profound effects on appetite and energy expenditure. We know of no equivalent evidence regarding leptin's role in the control of fat mass in humans. We have examined two severely obese children who are members of the same highly consanguineous pedigree. Their serum leptin levels were very low despite their markedly elevated fat mass and, in both, a homozygous frame-shift mutation involving the deletion of a single guanine nucleotide in codon 133 of the gene for leptin was found. The severe obesity found in these congenitally leptin-deficient subjects pro",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.009268+00:00"
+}

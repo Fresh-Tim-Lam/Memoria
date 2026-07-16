@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13350374",
+  "source_fingerprint": "2ed0a632dee9dea31240f7925403a668",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13350374",
+    "early-aging-and-age-related-pathologies-in-mice-deficient-in-bmal1,-the-core-componentof-the-circadian-clock."
+  ],
+  "key_phrases": [
+    "early",
+    "aging",
+    "age",
+    "related",
+    "pathologies",
+    "mice",
+    "deficient",
+    "bmal1"
+  ],
+  "summary_1l": "Early aging and age-related pathologies in mice deficient in BMAL1, the core componentof the circadian clock.",
+  "query_hits": [],
+  "embed_text": "13350374 Early aging and age-related pathologies in mice deficient in BMAL1, the core componentof the circadian clock. science scifact Mice deficient in the circadian transcription factor BMAL1 (brain and muscle ARNT-like protein) have impaired circadian behavior and demonstrate loss of rhythmicity in the expression of target genes. Here we report that Bmal1(-/-) mice… 13350374 early-aging-and-age-related-pathologies-in-mice-deficient-in-bmal1,-the-core-componentof-the-circadian-clock. early aging age related pathologies mice deficient bmal1 Early aging and age-related pathologies in mice deficient in BMAL1, the core componentof the circadian clock. Early aging and age-related pathologies in mice deficient in BMAL1, the core componentof the circadian clock. Mice deficient in the circadian transcription factor BMAL1 (brain and muscle ARNT-like protein) have impaired circadian behavior and demonstrate loss of rhythmicity in the expression of target genes. Here we report that Bmal1(-/-) mice have reduced lifespans and display various symptoms of premature aging including sarcopenia, cataracts, less subcutaneous fat, organ shrinkage, and others. The early aging phenotype correlates with increased levels of reactive oxygen species in some tissues of the Bmal1(-/- )animals. These findings, together with data on CLOCK/BMAL1-dependent control of stress responses, may provide a mechanistic explanation for the early onset of age-related patholo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:10.813255+00:00"
+}

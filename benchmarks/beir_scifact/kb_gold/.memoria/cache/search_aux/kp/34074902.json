@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "34074902",
+  "source_fingerprint": "eb5b01c458bca2dc2da9bd50f200b9df",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "34074902"
+  ],
+  "key_phrases": [
+    "serosurvey",
+    "feline",
+    "leukemia",
+    "virus",
+    "lentiviruses",
+    "captive",
+    "small",
+    "neotropic"
+  ],
+  "summary_1l": "Abstract Feline leukemia virus (FeLV), Gammaretrovirus, and feline immunodeficiency v",
+  "query_hits": [],
+  "embed_text": "34074902 SEROSURVEY FOR FELINE LEUKEMIA VIRUS AND LENTIVIRUSES IN CAPTIVE SMALL NEOTROPIC FELIDS IN SÃO PAULO STATE, BRAZIL science scifact Abstract Feline leukemia virus (FeLV), Gammaretrovirus, and feline immunodeficiency virus, a Lentivirus, are members of the family Retroviridae, and may establish persistent infections in the domestic cat (Felis catus). Cytoproliferative… 34074902 serosurvey feline leukemia virus lentiviruses captive small neotropic Abstract Feline leukemia virus (FeLV), Gammaretrovirus, and feline immunodeficiency v SEROSURVEY FOR FELINE LEUKEMIA VIRUS AND LENTIVIRUSES IN CAPTIVE SMALL NEOTROPIC FELIDS IN SÃO PAULO STATE, BRAZIL Abstract Feline leukemia virus (FeLV), Gammaretrovirus, and feline immunodeficiency virus, a Lentivirus, are members of the family Retroviridae, and may establish persistent infections in the domestic cat (Felis catus). Cytoproliferative and cytosuppressive disorders may result from infection with these viruses. Morbidity and mortality rates are high in domestic cats worldwide. Infection of endangered neotropic small felids with these viruses could be devastating. To investigate the prevalence of FeLV and feline lentiviruses in neotropic small felids kept in captivity in São Paulo state, Brazil, serum samples from 104 animals belonging to the species Leopardus pardalis, Leopar",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.069271+00:00"
+}

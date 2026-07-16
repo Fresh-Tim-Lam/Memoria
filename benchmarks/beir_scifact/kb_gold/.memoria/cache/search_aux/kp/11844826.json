@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11844826",
+  "source_fingerprint": "a36070880c5449345c43eb20b9cee84c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11844826",
+    "commd-proteins,-a-novel-family-of-structural-and-functional-homologs-of-murr1."
+  ],
+  "key_phrases": [
+    "commd",
+    "proteins",
+    "novel",
+    "family",
+    "structural",
+    "functional",
+    "homologs",
+    "murr1"
+  ],
+  "summary_1l": "COMMD proteins, a novel family of structural and functional homologs of MURR1.",
+  "query_hits": [],
+  "embed_text": "11844826 COMMD proteins, a novel family of structural and functional homologs of MURR1. science scifact MURR1 is a multifunctional protein that inhibits nuclear factor kappaB (NF-kappaB), a transcription factor with pleiotropic functions affecting innate and adaptive immunity, apoptosis, cell cycle regulation, and oncogenesis. Here we report… 11844826 commd-proteins,-a-novel-family-of-structural-and-functional-homologs-of-murr1. commd proteins novel family structural functional homologs murr1 COMMD proteins, a novel family of structural and functional homologs of MURR1. COMMD proteins, a novel family of structural and functional homologs of MURR1. MURR1 is a multifunctional protein that inhibits nuclear factor kappaB (NF-kappaB), a transcription factor with pleiotropic functions affecting innate and adaptive immunity, apoptosis, cell cycle regulation, and oncogenesis. Here we report the discovery of a new family of proteins with homology to MURR1. These proteins form multimeric complexes and were identified in a biochemical screen for MURR1-associated factors. The family is defined by the presence of a conserved and unique motif termed the COMM (copper metabolism gene MURR1) domain, which functions as an interface for protein-protein interactions. Like MURR1, several of these factors also associate with and inhibit NF-kappaB. The proteins designated as CO",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:07.214640+00:00"
+}

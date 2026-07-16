@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "39164524",
+  "source_fingerprint": "7ab975a5d8434be4c3e11302181835f5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "39164524",
+    "fibrosis-and-adipogenesis-originate-from-a-common-mesenchymal-progenitor-in-skeletal-muscle."
+  ],
+  "key_phrases": [
+    "fibrosis",
+    "adipogenesis",
+    "originate",
+    "from",
+    "common",
+    "mesenchymal",
+    "progenitor",
+    "skeletal"
+  ],
+  "summary_1l": "Fibrosis and adipogenesis originate from a common mesenchymal progenitor in skeletal muscle.",
+  "query_hits": [],
+  "embed_text": "39164524 Fibrosis and adipogenesis originate from a common mesenchymal progenitor in skeletal muscle. science scifact Accumulation of adipocytes and collagen type-I-producing cells (fibrosis) is observed in muscular dystrophies. The origin of these cells had been largely unknown, but recently we identified mesenchymal progenitors positive for… 39164524 fibrosis-and-adipogenesis-originate-from-a-common-mesenchymal-progenitor-in-skeletal-muscle. fibrosis adipogenesis originate from common mesenchymal progenitor skeletal Fibrosis and adipogenesis originate from a common mesenchymal progenitor in skeletal muscle. Fibrosis and adipogenesis originate from a common mesenchymal progenitor in skeletal muscle. Accumulation of adipocytes and collagen type-I-producing cells (fibrosis) is observed in muscular dystrophies. The origin of these cells had been largely unknown, but recently we identified mesenchymal progenitors positive for platelet-derived growth factor receptor alpha (PDGFRα) as the origin of adipocytes in skeletal muscle. However, the origin of muscle fibrosis remains largely unknown. In this study, clonal analyses show that PDGFRα(+) cells also differentiate into collagen type-I-producing cells. In fact, PDGFRα(+) cells accumulated in fibrotic areas of the diaphragm in the mdx mouse, a model of Duchenne muscular dystrophy. Furthermore, mRNA of fibrosis markers was expressed exclusively in th",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.285035+00:00"
+}

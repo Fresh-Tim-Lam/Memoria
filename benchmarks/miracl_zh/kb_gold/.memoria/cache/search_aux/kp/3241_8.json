@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "kp_id": "3241#8",
+  "source_fingerprint": "87bea88ed399b4d9b8fca7fcfdb21985",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "美国",
+    "纽约",
+    "美国流行音乐",
+    "欧洲体育杂志联盟",
+    "美国人口",
+    "美国媒体",
+    "美国法律",
+    "美国独立日",
+    "2000年美国人口普查",
+    "共和国广场",
+    "南美洲国家联盟",
+    "已解散的NBA球队列表"
+  ],
+  "aliases": [
+    "3241#8"
+  ],
+  "key_phrases": [
+    "nba",
+    "1946",
+    "11",
+    "包括",
+    "著名",
+    "纽约",
+    "麦迪逊",
+    "花园"
+  ],
+  "summary_1l": "1946年6月11日，包括著名的纽约麦迪逊花园广场在内的11家球館老板們聯合成立了（BAA）。",
+  "query_hits": [],
+  "embed_text": "3241#8 NBA NBA 1946年6月11日，包括著名的纽约麦迪逊花园广场在内的11家球館老板們聯合成立了（BAA）。美国冰球联盟（AHL）的主席莫里斯·波杜夫担任了NBA（BAA）的第一任主席。 美国 纽约 美国流行音乐 欧洲体育杂志联盟 美国人口 美国媒体 美国法律 美国独立日 2000年美国人口普查 共和国广场 南美洲国家联盟 已解散的NBA球队列表 3241#8 nba 1946 11 包括 著名 纽约 麦迪逊 花园 1946年6月11日，包括著名的纽约麦迪逊花园广场在内的11家球館老板們聯合成立了（BAA）。 NBA 1946年6月11日，包括著名的纽约麦迪逊花园广场在内的11家球館老板們聯合成立了（BAA）。美国冰球联盟（AHL）的主席莫里斯·波杜夫担任了NBA（BAA）的第一任主席。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:18:10.859527+00:00"
+}

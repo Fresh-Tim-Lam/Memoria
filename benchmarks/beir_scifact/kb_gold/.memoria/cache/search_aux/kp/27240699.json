@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27240699",
+  "source_fingerprint": "33e50499912c3864a1c09945ffe43d46",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27240699",
+    "an-adenovirus-mutant-that-replicates-selectively-in-p53-deficient-human-tumor-cells."
+  ],
+  "key_phrases": [
+    "adenovirus",
+    "mutant",
+    "that",
+    "replicates",
+    "selectively",
+    "p53",
+    "deficient",
+    "human"
+  ],
+  "summary_1l": "An adenovirus mutant that replicates selectively in p53-deficient human tumor cells.",
+  "query_hits": [],
+  "embed_text": "27240699 An adenovirus mutant that replicates selectively in p53-deficient human tumor cells. science scifact The human adenovirus E1B gene encodes a 55-kilodalton protein that inactivates the cellular tumor suppressor protein p53. Here it is shown that a mutant adenovirus that does not express this viral protein can replicate in and lyse… 27240699 an-adenovirus-mutant-that-replicates-selectively-in-p53-deficient-human-tumor-cells. adenovirus mutant that replicates selectively p53 deficient human An adenovirus mutant that replicates selectively in p53-deficient human tumor cells. An adenovirus mutant that replicates selectively in p53-deficient human tumor cells. The human adenovirus E1B gene encodes a 55-kilodalton protein that inactivates the cellular tumor suppressor protein p53. Here it is shown that a mutant adenovirus that does not express this viral protein can replicate in and lyse p53-deficient human tumor cells but not cells with functional p53. Ectopic expression of the 55-kilodalton EIB protein in the latter cells rendered them sensitive to infection with the mutant virus. Injection of the mutant virus into p53-deficient human cervical carcinomas grown in nude mice caused a significant reduction in tumor size and caused complete regression of 60 percent of the tumors. These data raise the possibility that mutant adenoviruses can be used to treat certain",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.670999+00:00"
+}

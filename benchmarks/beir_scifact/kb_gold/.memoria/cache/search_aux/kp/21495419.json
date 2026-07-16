@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21495419",
+  "source_fingerprint": "cbd03a5b87bba3d513330ed69c2b97b6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21495419",
+    "the-impact-of-copd-on-lung-health-worldwide:-epidemiology-and-incidence."
+  ],
+  "key_phrases": [
+    "impact",
+    "copd",
+    "lung",
+    "health",
+    "worldwide",
+    "epidemiology",
+    "incidence",
+    "information"
+  ],
+  "summary_1l": "The impact of COPD on lung health worldwide: epidemiology and incidence.",
+  "query_hits": [],
+  "embed_text": "21495419 The impact of COPD on lung health worldwide: epidemiology and incidence. science scifact Information on the prevalence of COPD was obtained from vital statistics, health interview surveys, hospital charge records, national publications, and the World Health Organization (WHO). These data indicate that COPD is a common disease… 21495419 the-impact-of-copd-on-lung-health-worldwide:-epidemiology-and-incidence. impact copd lung health worldwide epidemiology incidence information The impact of COPD on lung health worldwide: epidemiology and incidence. The impact of COPD on lung health worldwide: epidemiology and incidence. Information on the prevalence of COPD was obtained from vital statistics, health interview surveys, hospital charge records, national publications, and the World Health Organization (WHO). These data indicate that COPD is a common disease with implications for global health. In the United States, morbidity caused by COPD is 4%, making COPD the fourth leading cause of death, exceeded only by heart attacks, cancer, and stroke. Internationally, there is substantial variation in death rates possibly reflecting smoking behavior, type and processing of tobacco, pollution, climate, respiratory management, and genetic factors. The Global Obstructive Lung Disease Initiative, initiated by the National Heart, Lung, and Blood Ins",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.241899+00:00"
+}

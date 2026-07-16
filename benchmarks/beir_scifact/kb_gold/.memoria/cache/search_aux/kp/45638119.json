@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "45638119",
+  "source_fingerprint": "99a305f6a65c7331b11eb1a888590c57",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "45638119",
+    "aldh1-is-a-marker-of-normal-and-malignant-human-mammary-stem-cells-and-a-predictor-of-poor-clinical-outcome."
+  ],
+  "key_phrases": [
+    "aldh1",
+    "marker",
+    "normal",
+    "malignant",
+    "human",
+    "mammary",
+    "stem",
+    "cells"
+  ],
+  "summary_1l": "ALDH1 is a marker of normal and malignant human mammary stem cells and a predictor of poor clinical outcome.",
+  "query_hits": [],
+  "embed_text": "45638119 ALDH1 is a marker of normal and malignant human mammary stem cells and a predictor of poor clinical outcome. science scifact Application of stem cell biology to breast cancer research has been limited by the lack of simple methods for identification and isolation of normal and malignant stem cells. Utilizing in vitro and in vivo experimental systems, we show… 45638119 aldh1-is-a-marker-of-normal-and-malignant-human-mammary-stem-cells-and-a-predictor-of-poor-clinical-outcome. aldh1 marker normal malignant human mammary stem cells ALDH1 is a marker of normal and malignant human mammary stem cells and a predictor of poor clinical outcome. ALDH1 is a marker of normal and malignant human mammary stem cells and a predictor of poor clinical outcome. Application of stem cell biology to breast cancer research has been limited by the lack of simple methods for identification and isolation of normal and malignant stem cells. Utilizing in vitro and in vivo experimental systems, we show that normal and cancer human mammary epithelial cells with increased aldehyde dehydrogenase activity (ALDH) have stem/progenitor properties. These cells contain the subpopulation of normal breast epithelium with the broadest lineage differentiation potential and greatest growth capacity in a xenotransplant model. In breast carcinomas, high ALDH activity identifies the tumorigenic cell fraction, capable of self-renewal and of generating tumors that rec",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.498943+00:00"
+}

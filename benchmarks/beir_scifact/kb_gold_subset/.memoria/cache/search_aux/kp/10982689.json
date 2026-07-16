@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10982689",
+  "source_fingerprint": "ea6043693c6bb23644b40abbf9c0c93c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10982689",
+    "nanotoxicology:-an-emerging-discipline-evolving-from-studies-of-ultrafine-particles"
+  ],
+  "key_phrases": [
+    "nanotoxicology",
+    "emerging",
+    "discipline",
+    "evolving",
+    "from",
+    "studies",
+    "ultrafine",
+    "particles"
+  ],
+  "summary_1l": "Although humans have been exposed to airborne nanosized particles (NSPs; < 100 nm) throughout their evolutionary sta",
+  "query_hits": [],
+  "embed_text": "10982689 Nanotoxicology: An Emerging Discipline Evolving from Studies of Ultrafine Particles science scifact Although humans have been exposed to airborne nanosized particles (NSPs; < 100 nm) throughout their evolutionary stages, such exposure has increased dramatically over the last century due to anthropogenic sources. The rapidly developing… 10982689 nanotoxicology:-an-emerging-discipline-evolving-from-studies-of-ultrafine-particles nanotoxicology emerging discipline evolving from studies ultrafine particles Although humans have been exposed to airborne nanosized particles (NSPs; < 100 nm) throughout their evolutionary sta Nanotoxicology: An Emerging Discipline Evolving from Studies of Ultrafine Particles Although humans have been exposed to airborne nanosized particles (NSPs; < 100 nm) throughout their evolutionary stages, such exposure has increased dramatically over the last century due to anthropogenic sources. The rapidly developing field of nanotechnology is likely to become yet another source through inhalation, ingestion, skin uptake, and injection of engineered nanomaterials. Information about safety and potential hazards is urgently needed. Results of older biokinetic studies with NSPs and newer epidemiologic and toxicologic studies with airborne ultrafine particles can be viewed as the basis for the expanding field of nanotoxicology, which can be defined as safety evaluation of engineered nanostru",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:06.129931+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8665891",
+  "source_fingerprint": "b0aeb752bfb3969c02da64cf9b605bcd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8665891",
+    "dengue-is-still-an-imported-disease-in-china:-a-case-study-in-guangzhou."
+  ],
+  "key_phrases": [
+    "dengue",
+    "still",
+    "imported",
+    "disease",
+    "china",
+    "case",
+    "study",
+    "guangzhou"
+  ],
+  "summary_1l": "Dengue is still an imported disease in China: a case study in Guangzhou.",
+  "query_hits": [],
+  "embed_text": "8665891 Dengue is still an imported disease in China: a case study in Guangzhou. science scifact Dengue virus and its four serotypes (DENV 1-4) infect approximately 390 million people worldwide each year, with most cases in tropical and subtropical regions. Because of repeated introduction of DENV from epidemic regions and suitable… 8665891 dengue-is-still-an-imported-disease-in-china:-a-case-study-in-guangzhou. dengue still imported disease china case study guangzhou Dengue is still an imported disease in China: a case study in Guangzhou. Dengue is still an imported disease in China: a case study in Guangzhou. Dengue virus and its four serotypes (DENV 1-4) infect approximately 390 million people worldwide each year, with most cases in tropical and subtropical regions. Because of repeated introduction of DENV from epidemic regions and suitable weather conditions, many regions have shifted from hypo-endemicity to hyper-endemicity over recent decades. Since the first dengue outbreak in 1978, it is crucial to understand the current situation in China over nearly 40 years. The purpose of the study was to examine whether dengue in China was endemic or not, which is essential for relevant dengue control and prevention strategy implementation in China. The study, combining epidemiological characteristics of dengue from the disease",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.396606+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11109043",
+  "source_fingerprint": "09588bf6fed6a93e35b30b8756807e7f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11109043",
+    "cost-effectiveness-of-aromatase-inhibitor-co-treatment-for-controlled-ovarian-stimulation."
+  ],
+  "key_phrases": [
+    "cost",
+    "effectiveness",
+    "aromatase",
+    "inhibitor",
+    "co",
+    "treatment",
+    "controlled",
+    "ovarian"
+  ],
+  "summary_1l": "Cost-effectiveness of aromatase inhibitor co-treatment for controlled ovarian stimulation.",
+  "query_hits": [],
+  "embed_text": "11109043 Cost-effectiveness of aromatase inhibitor co-treatment for controlled ovarian stimulation. science scifact BACKGROUND To compare the clinical results and the cost-effectiveness of using the aromatase inhibitor, letrozole, in conjunction with FSH and FSH alone for controlled ovarian stimulation (COS) in patients undergoing intrauterine… 11109043 cost-effectiveness-of-aromatase-inhibitor-co-treatment-for-controlled-ovarian-stimulation. cost effectiveness aromatase inhibitor co treatment controlled ovarian Cost-effectiveness of aromatase inhibitor co-treatment for controlled ovarian stimulation. Cost-effectiveness of aromatase inhibitor co-treatment for controlled ovarian stimulation. BACKGROUND To compare the clinical results and the cost-effectiveness of using the aromatase inhibitor, letrozole, in conjunction with FSH and FSH alone for controlled ovarian stimulation (COS) in patients undergoing intrauterine insemination (IUI) for a variety of indications. METHODS Four hundred and thirty-two consecutive patients who underwent 872 IUI cycles were included. The study population was composed of two groups. Group I included 308 patients who underwent 589 IUI cycles with letrozole and FSH for the following indications: anovulation (143 cycles), male factor infertility (147 cycles), unexplained infertility (250 cycles), endometriosis (18 cycles) and combined indications (31 cycles). G",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:05.977138+00:00"
+}

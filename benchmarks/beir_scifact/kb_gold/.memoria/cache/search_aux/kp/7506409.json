@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7506409",
+  "source_fingerprint": "c0daad77fd93a71ad259b865717fe18c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7506409",
+    "senescent-growth-arrest-in-mesenchymal-stem-cells-is-bypassed-by-wip1-mediated-downregulation-of-intrinsic-stress-signaling-pathways."
+  ],
+  "key_phrases": [
+    "senescent",
+    "growth",
+    "arrest",
+    "mesenchymal",
+    "stem",
+    "cells",
+    "bypassed",
+    "by"
+  ],
+  "summary_1l": "Senescent growth arrest in mesenchymal stem cells is bypassed by Wip1-mediated downregulation of intrinsic stress signaling pathways.",
+  "query_hits": [],
+  "embed_text": "7506409 Senescent growth arrest in mesenchymal stem cells is bypassed by Wip1-mediated downregulation of intrinsic stress signaling pathways. science scifact Human mesenchymal stem cells (hMSCs) have been widely studied as a source of primary adult stem cells for cell therapy because of their multidifferentiation potential; however, the growth arrest (also known as \"premature senescence\") often… 7506409 senescent-growth-arrest-in-mesenchymal-stem-cells-is-bypassed-by-wip1-mediated-downregulation-of-intrinsic-stress-signaling-pathways. senescent growth arrest mesenchymal stem cells bypassed by Senescent growth arrest in mesenchymal stem cells is bypassed by Wip1-mediated downregulation of intrinsic stress signaling pathways. Senescent growth arrest in mesenchymal stem cells is bypassed by Wip1-mediated downregulation of intrinsic stress signaling pathways. Human mesenchymal stem cells (hMSCs) have been widely studied as a source of primary adult stem cells for cell therapy because of their multidifferentiation potential; however, the growth arrest (also known as \"premature senescence\") often found in hMSCs cultured in vitro has been a major obstacle to the in-depth characterization of these cells. In addition, the inability to maintain constant cell growth hampers the development of additional genetic modifications aimed at achieving desired levels of differentiation to specific tissues; however, the molecular mechanisms that govern this phenomenon remain unclear, with the exception of a few studies demonstrat",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.508606+00:00"
+}

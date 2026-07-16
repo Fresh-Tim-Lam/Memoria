@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4462419",
+  "source_fingerprint": "326f2998bf3183a9d163e67a9fed0416",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4462419",
+    "derivation-of-novel-human-ground-state-naive-pluripotent-stem-cells"
+  ],
+  "key_phrases": [
+    "derivation",
+    "novel",
+    "human",
+    "ground",
+    "state",
+    "naive",
+    "pluripotent",
+    "stem"
+  ],
+  "summary_1l": "Mouse embryonic stem (ES) cells are isolated from the inner cell mass of blastocysts, and can be preserved in vitro in a naive inner",
+  "query_hits": [],
+  "embed_text": "4462419 Derivation of novel human ground state naive pluripotent stem cells science scifact Mouse embryonic stem (ES) cells are isolated from the inner cell mass of blastocysts, and can be preserved in vitro in a naive inner-cell-mass-like configuration by providing exogenous stimulation with leukaemia inhibitory factor (LIF) and… 4462419 derivation-of-novel-human-ground-state-naive-pluripotent-stem-cells derivation novel human ground state naive pluripotent stem Mouse embryonic stem (ES) cells are isolated from the inner cell mass of blastocysts, and can be preserved in vitro in a naive inner Derivation of novel human ground state naive pluripotent stem cells Mouse embryonic stem (ES) cells are isolated from the inner cell mass of blastocysts, and can be preserved in vitro in a naive inner-cell-mass-like configuration by providing exogenous stimulation with leukaemia inhibitory factor (LIF) and small molecule inhibition of ERK1/ERK2 and GSK3β signalling (termed 2i/LIF conditions). Hallmarks of naive pluripotency include driving Oct4 (also known as Pou5f1) transcription by its distal enhancer, retaining a pre-inactivation X chromosome state, and global reduction in DNA methylation and in H3K27me3 repressive chromatin mark deposition on developmental regulatory gene promoters. Upon withdrawal of 2i/LIF, naive mouse ES cells can drift towards a primed pluripotent state resembling",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.674341+00:00"
+}

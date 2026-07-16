@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "33533307",
+  "source_fingerprint": "e5f59a17531e0d11c6efb3056679e1d8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "33533307",
+    "sex-based-differences-in-the-effect-of-digoxin-for-the-treatment-of-heart-failure."
+  ],
+  "key_phrases": [
+    "sex",
+    "based",
+    "differences",
+    "effect",
+    "digoxin",
+    "treatment",
+    "heart",
+    "failure"
+  ],
+  "summary_1l": "Sex-based differences in the effect of digoxin for the treatment of heart failure.",
+  "query_hits": [],
+  "embed_text": "33533307 Sex-based differences in the effect of digoxin for the treatment of heart failure. science scifact BACKGROUND The Digitalis Investigation Group trial reported that treatment with digoxin did not decrease overall mortality among patients with heart failure and depressed left ventricular systolic function, although it did reduce… 33533307 sex-based-differences-in-the-effect-of-digoxin-for-the-treatment-of-heart-failure. sex based differences effect digoxin treatment heart failure Sex-based differences in the effect of digoxin for the treatment of heart failure. Sex-based differences in the effect of digoxin for the treatment of heart failure. BACKGROUND The Digitalis Investigation Group trial reported that treatment with digoxin did not decrease overall mortality among patients with heart failure and depressed left ventricular systolic function, although it did reduce hospitalizations slightly. Even though the epidemiologic features, causes, and prognosis of heart failure vary between men and women, sex-based differences in the effect of digoxin were not evaluated. METHODS We conducted a post hoc subgroup analysis to assess whether there were sex-based differences in the effect of digoxin therapy among the 6800 patients in the Digitalis Investigation Group study. The presence of an interaction between sex and digoxin therapy with respect to the p",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.460883+00:00"
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "17755060",
+  "source_fingerprint": "1ba8203d5aac968b5e4ee478bea4bef8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17755060"
+  ],
+  "key_phrases": [
+    "control",
+    "nutrient",
+    "stress",
+    "induced",
+    "metabolic",
+    "reprogramming",
+    "by",
+    "pkc"
+  ],
+  "summary_1l": "Tumor cells have high-energetic and anabolic needs and are known to adapt their metabolism to be able to survive and",
+  "query_hits": [],
+  "embed_text": "17755060 Control of Nutrient Stress-Induced Metabolic Reprogramming by PKCζ in Tumorigenesis science scifact Tumor cells have high-energetic and anabolic needs and are known to adapt their metabolism to be able to survive and keep proliferating under conditions of nutrient stress. We show that PKCζ deficiency promotes the plasticity necessary for… 17755060 control nutrient stress induced metabolic reprogramming by pkc Tumor cells have high-energetic and anabolic needs and are known to adapt their metabolism to be able to survive and Control of Nutrient Stress-Induced Metabolic Reprogramming by PKCζ in Tumorigenesis Tumor cells have high-energetic and anabolic needs and are known to adapt their metabolism to be able to survive and keep proliferating under conditions of nutrient stress. We show that PKCζ deficiency promotes the plasticity necessary for cancer cells to reprogram their metabolism to utilize glutamine through the serine biosynthetic pathway in the absence of glucose. PKCζ represses the expression of two key enzymes of the pathway, PHGDH and PSAT1, and phosphorylates PHGDH at key residues to inhibit its enzymatic activity. Interestingly, the loss of PKCζ in mice results in enhanced intestinal tumorigenesis and increased levels of these two metabolic enzymes, whereas patients with low levels of PKCζ have a p",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:11.922759+00:00"
+}

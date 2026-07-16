@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "1907601",
+  "source_fingerprint": "794e9ab2c1d4f53895b99e9aa1402072",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1907601"
+  ],
+  "key_phrases": [
+    "increased",
+    "adipocyte",
+    "o2",
+    "consumption",
+    "triggers",
+    "hif",
+    "causing",
+    "inflammation"
+  ],
+  "summary_1l": "Adipose tissue hypoxia and inflammation have been causally implicated in obesity-induced insu",
+  "query_hits": [],
+  "embed_text": "1907601 Increased Adipocyte O2 Consumption Triggers HIF-1α, Causing Inflammation and Insulin Resistance in Obesity science scifact Adipose tissue hypoxia and inflammation have been causally implicated in obesity-induced insulin resistance. Here, we report that, early in the course of high-fat diet (HFD) feeding and obesity, adipocyte respiration becomes uncoupled,… 1907601 increased adipocyte o2 consumption triggers hif causing inflammation Adipose tissue hypoxia and inflammation have been causally implicated in obesity-induced insu Increased Adipocyte O2 Consumption Triggers HIF-1α, Causing Inflammation and Insulin Resistance in Obesity Adipose tissue hypoxia and inflammation have been causally implicated in obesity-induced insulin resistance. Here, we report that, early in the course of high-fat diet (HFD) feeding and obesity, adipocyte respiration becomes uncoupled, leading to increased oxygen consumption and a state of relative adipocyte hypoxia. These events are sufficient to trigger HIF-1α induction, setting off the chronic adipose tissue inflammatory response characteristic of obesity. At the molecular level, these events involve saturated fatty acid stimulation of the adenine nucleotide translocase 2 (ANT2), an inner mitochondrial membrane protein, which leads to the uncoupled respiratory state. Genetic or pha",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.130159+00:00"
+}

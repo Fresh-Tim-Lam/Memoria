@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "84784389",
+  "source_fingerprint": "d1af5e1ae57f5b1dfd5664bb940df179",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "84784389",
+    "cutadapt-removes-adapter-sequences-from-high-throughput-sequencing-reads"
+  ],
+  "key_phrases": [
+    "cutadapt",
+    "removes",
+    "adapter",
+    "sequences",
+    "from",
+    "high",
+    "throughput",
+    "sequencing"
+  ],
+  "summary_1l": "When small RNA is sequenced on current sequencing machines, the resulting reads are usually longer than the RNA and therefore c",
+  "query_hits": [],
+  "embed_text": "84784389 Cutadapt removes adapter sequences from high-throughput sequencing reads science scifact When small RNA is sequenced on current sequencing machines, the resulting reads are usually longer than the RNA and therefore contain parts of the 3' adapter. That adapter must be found and removed error-tolerantly from each read before… 84784389 cutadapt-removes-adapter-sequences-from-high-throughput-sequencing-reads cutadapt removes adapter sequences from high throughput sequencing When small RNA is sequenced on current sequencing machines, the resulting reads are usually longer than the RNA and therefore c Cutadapt removes adapter sequences from high-throughput sequencing reads When small RNA is sequenced on current sequencing machines, the resulting reads are usually longer than the RNA and therefore contain parts of the 3' adapter. That adapter must be found and removed error-tolerantly from each read before read mapping. Previous solutions are either hard to use or do not offer required features, in particular support for color space data. As an easy to use alternative, we developed the command-line tool cutadapt, which supports 454, Illumina and SOLiD (color space) data, offers two adapter trimming algorithms, and has other useful features. Cutadapt, including its MIT-licensed source code, is available for download at http://code.google.com/p/cutadapt/",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.777782+00:00"
+}

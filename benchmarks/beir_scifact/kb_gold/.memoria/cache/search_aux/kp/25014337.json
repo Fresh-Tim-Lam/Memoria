@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25014337",
+  "source_fingerprint": "523649d3e85d0879be52a720b00f6e09",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25014337",
+    "the-human-immunodeficiency-virus-type-1-nonnucleoside-reverse-transcriptase-inhibitor-resistance-mutation-i132m-confers-hypersensitivity-to-nucleoside-analogs."
+  ],
+  "key_phrases": [
+    "human",
+    "immunodeficiency",
+    "virus",
+    "type",
+    "nonnucleoside",
+    "reverse",
+    "transcriptase",
+    "inhibitor"
+  ],
+  "summary_1l": "The human immunodeficiency virus type 1 nonnucleoside reverse transcriptase inhibitor resistance mutation I132M confers hypersensitivity to nucleoside analogs.",
+  "query_hits": [],
+  "embed_text": "25014337 The human immunodeficiency virus type 1 nonnucleoside reverse transcriptase inhibitor resistance mutation I132M confers hypersensitivity to nucleoside analogs. science scifact We previously identified a rare mutation in human immunodeficiency virus type 1 (HIV-1) reverse transcriptase (RT), I132M, which confers high-level resistance to the nonnucleoside RT inhibitors (NNRTIs) nevirapine and delavirdine. In this… 25014337 the-human-immunodeficiency-virus-type-1-nonnucleoside-reverse-transcriptase-inhibitor-resistance-mutation-i132m-confers-hypersensitivity-to-nucleoside-analogs. human immunodeficiency virus type nonnucleoside reverse transcriptase inhibitor The human immunodeficiency virus type 1 nonnucleoside reverse transcriptase inhibitor resistance mutation I132M confers hypersensitivity to nucleoside analogs. The human immunodeficiency virus type 1 nonnucleoside reverse transcriptase inhibitor resistance mutation I132M confers hypersensitivity to nucleoside analogs. We previously identified a rare mutation in human immunodeficiency virus type 1 (HIV-1) reverse transcriptase (RT), I132M, which confers high-level resistance to the nonnucleoside RT inhibitors (NNRTIs) nevirapine and delavirdine. In this study, we have further characterized the role of this mutation in viral replication capacity and in resistance to other RT inhibitors. Surprisingly, our data show that I132M confers marked hypersusceptibility to the nucleoside analogs lamivudine (3TC) and tenofovir at both the virus and enzyme levels. Subunit-selective mutagenesis studies revealed that the mutation in the p51 subunit of RT was resp",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.797593+00:00"
+}

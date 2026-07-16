@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22420524",
+  "source_fingerprint": "6c8f83203dfc40c5c6d51b76c68b83cc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22420524",
+    "statin-use-and-risk-of-gallstone-disease-followed-by-cholecystectomy."
+  ],
+  "key_phrases": [
+    "statin",
+    "use",
+    "risk",
+    "gallstone",
+    "disease",
+    "followed",
+    "by",
+    "cholecystectomy"
+  ],
+  "summary_1l": "Statin use and risk of gallstone disease followed by cholecystectomy.",
+  "query_hits": [],
+  "embed_text": "22420524 Statin use and risk of gallstone disease followed by cholecystectomy. science scifact CONTEXT Gallstone disease is a leading cause of morbidity in western countries and carries a high economic burden. Statins decrease hepatic cholesterol biosynthesis and may therefore lower the risk of cholesterol gallstones by reducing the… 22420524 statin-use-and-risk-of-gallstone-disease-followed-by-cholecystectomy. statin use risk gallstone disease followed by cholecystectomy Statin use and risk of gallstone disease followed by cholecystectomy. Statin use and risk of gallstone disease followed by cholecystectomy. CONTEXT Gallstone disease is a leading cause of morbidity in western countries and carries a high economic burden. Statins decrease hepatic cholesterol biosynthesis and may therefore lower the risk of cholesterol gallstones by reducing the cholesterol concentration in the bile. Data on this association in humans are scarce. OBJECTIVE To study the association between the use of statins, fibrates, or other lipid-lowering agents and the risk of incident gallstone disease followed by cholecystectomy. DESIGN, SETTING, AND PARTICIPANTS Case-control analysis using the UK-based General Practice Research Database. Incident patients between 1994 and 2008 and 4 controls per each patient were identified and matched on age, sex, gene",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.699729+00:00"
+}

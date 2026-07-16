@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17447653",
+  "source_fingerprint": "eeb8f01903c149f68f26d8ca3e04d380",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17447653",
+    "blast+:-architecture-and-applications"
+  ],
+  "key_phrases": [
+    "blast",
+    "architecture",
+    "applications",
+    "background",
+    "sequence",
+    "similarity",
+    "searching",
+    "very"
+  ],
+  "summary_1l": "BACKGROUND Sequence similarity searching is a very important bioinformatics task.",
+  "query_hits": [],
+  "embed_text": "17447653 BLAST+: architecture and applications science scifact BACKGROUND Sequence similarity searching is a very important bioinformatics task. While Basic Local Alignment Search Tool (BLAST) outperforms exact methods through its use of heuristics, the speed of the current BLAST software is… 17447653 blast+:-architecture-and-applications blast architecture applications background sequence similarity searching very BACKGROUND Sequence similarity searching is a very important bioinformatics task. BLAST+: architecture and applications BACKGROUND Sequence similarity searching is a very important bioinformatics task. While Basic Local Alignment Search Tool (BLAST) outperforms exact methods through its use of heuristics, the speed of the current BLAST software is suboptimal for very long queries or database sequences. There are also some shortcomings in the user-interface of the current command-line applications. RESULTS We describe features and improvements of rewritten BLAST software and introduce new command-line applications. Long query sequences are broken into chunks for processing, in some cases leading to dramatically shorter run times. For long database sequences, it is possible to retrieve only the relevant parts of the sequence, reducing CPU time and memory usage for searche",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.769743+00:00"
+}

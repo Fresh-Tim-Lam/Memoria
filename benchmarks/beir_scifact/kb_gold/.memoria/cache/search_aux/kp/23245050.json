@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23245050",
+  "source_fingerprint": "365bbc0f3db7e7f674aa3782ff4ffc9a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23245050",
+    "dietary-status-of-trained-female-cyclists."
+  ],
+  "key_phrases": [
+    "dietary",
+    "status",
+    "trained",
+    "female",
+    "cyclists",
+    "was",
+    "evaluated",
+    "eight"
+  ],
+  "summary_1l": "Dietary status of trained female cyclists.",
+  "query_hits": [],
+  "embed_text": "23245050 Dietary status of trained female cyclists. science scifact Dietary status was evaluated in eight highly trained female cyclists. Each cyclist kept a 3-day weighed food record. Diets were analyzed for nutrient content using a computerized software package. Blood was also obtained and evaluated for… 23245050 dietary-status-of-trained-female-cyclists. dietary status trained female cyclists was evaluated eight Dietary status of trained female cyclists. Dietary status of trained female cyclists. Dietary status was evaluated in eight highly trained female cyclists. Each cyclist kept a 3-day weighed food record. Diets were analyzed for nutrient content using a computerized software package. Blood was also obtained and evaluated for hemoglobin, hematocrit, and albumin. For an athletic group, the cyclists' diets were found to be low in energy (85% RDA) and carbohydrate (4.4 gm/kg body weight per day). Mean daily dietary intakes were well below the RDAs for folacin (76% RDA), magnesium (81%), iron (59%), and zinc (48%). In addition, more than one-third of the cyclists failed to consume 67% of the RDA for the following micronutrients: pyridoxine, folacin, cobalamin, vitamin E, magnesium, iron, and zinc. Hemoglobin (135 gm/L), hematocrit (0.39),",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.094918+00:00"
+}

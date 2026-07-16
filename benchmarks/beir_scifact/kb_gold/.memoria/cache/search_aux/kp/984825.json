@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "984825",
+  "source_fingerprint": "0e60af8d3db218e151cad1955cd812da",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "984825",
+    "pseudouridine-profiling-reveals-regulated-mrna-pseudouridylation-in-yeast-and-human-cells"
+  ],
+  "key_phrases": [
+    "pseudouridine",
+    "profiling",
+    "reveals",
+    "regulated",
+    "mrna",
+    "pseudouridylation",
+    "yeast",
+    "human"
+  ],
+  "summary_1l": "Post-transcriptional modification of RNA nucleosides occurs in all living organisms.",
+  "query_hits": [],
+  "embed_text": "984825 Pseudouridine profiling reveals regulated mRNA pseudouridylation in yeast and human cells science scifact Post-transcriptional modification of RNA nucleosides occurs in all living organisms. Pseudouridine, the most abundant modified nucleoside in non-coding RNAs, enhances the function of transfer RNA and ribosomal RNA by stabilizing the RNA… 984825 pseudouridine-profiling-reveals-regulated-mrna-pseudouridylation-in-yeast-and-human-cells pseudouridine profiling reveals regulated mrna pseudouridylation yeast human Post-transcriptional modification of RNA nucleosides occurs in all living organisms. Pseudouridine profiling reveals regulated mRNA pseudouridylation in yeast and human cells Post-transcriptional modification of RNA nucleosides occurs in all living organisms. Pseudouridine, the most abundant modified nucleoside in non-coding RNAs, enhances the function of transfer RNA and ribosomal RNA by stabilizing the RNA structure. Messenger RNAs were not known to contain pseudouridine, but artificial pseudouridylation dramatically affects mRNA function--it changes the genetic code by facilitating non-canonical base pairing in the ribosome decoding centre. However, without evidence of naturally occurring mRNA pseudouridylation, its physiological relevance was unclear. Here we present a comprehensive analysis of pseudouridylation in Saccharomyces cerevisiae and human RNAs using Pseudo-s",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.978956+00:00"
+}

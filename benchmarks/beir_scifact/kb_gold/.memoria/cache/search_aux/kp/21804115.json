@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21804115",
+  "source_fingerprint": "f27177e75dab2f54d3f3de9de676fbbc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21804115",
+    "bone-morphogenetic-protein-signaling-in-nephron-progenitor-cells"
+  ],
+  "key_phrases": [
+    "bone",
+    "morphogenetic",
+    "protein",
+    "signaling",
+    "nephron",
+    "progenitor",
+    "cells",
+    "bmp"
+  ],
+  "summary_1l": "Bone morphogenetic protein (BMP) signaling plays an essential role in many aspects of kidney development, and is a major determinant of",
+  "query_hits": [],
+  "embed_text": "21804115 Bone morphogenetic protein signaling in nephron progenitor cells science scifact Bone morphogenetic protein (BMP) signaling plays an essential role in many aspects of kidney development, and is a major determinant of outcome in kidney injury. BMP treatment is also an essential component of protocols for differentiation… 21804115 bone-morphogenetic-protein-signaling-in-nephron-progenitor-cells bone morphogenetic protein signaling nephron progenitor cells bmp Bone morphogenetic protein (BMP) signaling plays an essential role in many aspects of kidney development, and is a major determinant of Bone morphogenetic protein signaling in nephron progenitor cells Bone morphogenetic protein (BMP) signaling plays an essential role in many aspects of kidney development, and is a major determinant of outcome in kidney injury. BMP treatment is also an essential component of protocols for differentiation of nephron progenitors from pluripotent stem cells. This review discusses the role of BMP signaling to nephron progenitor cells in each of these contexts.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.743624+00:00"
+}

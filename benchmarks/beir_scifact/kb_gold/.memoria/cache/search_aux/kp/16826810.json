@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16826810",
+  "source_fingerprint": "804ea66ef2806ac4242063fd9b7d3827",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16826810",
+    "vascular-calcifying-progenitor-cells-possess-bidirectional-differentiation-potentials"
+  ],
+  "key_phrases": [
+    "vascular",
+    "calcifying",
+    "progenitor",
+    "cells",
+    "possess",
+    "bidirectional",
+    "differentiation",
+    "potentials"
+  ],
+  "summary_1l": "Vascular calcification is an advanced feature of atherosclerosis for which no effective therapy is available.",
+  "query_hits": [],
+  "embed_text": "16826810 Vascular Calcifying Progenitor Cells Possess Bidirectional Differentiation Potentials science scifact Vascular calcification is an advanced feature of atherosclerosis for which no effective therapy is available. To investigate the modulation or reversal of calcification, we identified calcifying progenitor cells and investigated their… 16826810 vascular-calcifying-progenitor-cells-possess-bidirectional-differentiation-potentials vascular calcifying progenitor cells possess bidirectional differentiation potentials Vascular calcification is an advanced feature of atherosclerosis for which no effective therapy is available. Vascular Calcifying Progenitor Cells Possess Bidirectional Differentiation Potentials Vascular calcification is an advanced feature of atherosclerosis for which no effective therapy is available. To investigate the modulation or reversal of calcification, we identified calcifying progenitor cells and investigated their calcifying/decalcifying potentials. Cells from the aortas of mice were sorted into four groups using Sca-1 and PDGFRα markers. Sca-1(+) (Sca-1(+)/PDGFRα(+) and Sca-1(+)/PDGFRα(-)) progenitor cells exhibited greater osteoblastic differentiation potentials than Sca-1(-) (Sca-1(-)/PDGFRα(+) and Sca-1(-)/PDGFRα(-)) progenitor cells. Among Sca-1(+) progenitor populations, Sca-1(+)/PDGFRα(-) cells possessed bidirectional differentiation potentials towards both osteoblastic and ost",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.908752+00:00"
+}

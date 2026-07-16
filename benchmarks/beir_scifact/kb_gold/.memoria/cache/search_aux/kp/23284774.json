@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23284774",
+  "source_fingerprint": "fa0b624553d64de7d94e41ae9e28ea84",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23284774",
+    "a-review-of-psychosocial-needs-of-breast-cancer-patients-and-their-relatives."
+  ],
+  "key_phrases": [
+    "review",
+    "psychosocial",
+    "needs",
+    "breast",
+    "cancer",
+    "patients",
+    "their",
+    "relatives"
+  ],
+  "summary_1l": "A review of psychosocial needs of breast-cancer patients and their relatives.",
+  "query_hits": [],
+  "embed_text": "23284774 A review of psychosocial needs of breast-cancer patients and their relatives. science scifact AIM To identify the psychosocial needs of breast-cancer patients and their relatives along with factors affecting these needs and to develop a tentative model to guide further research and need assessments in clinical practice. BACKGROUND… 23284774 a-review-of-psychosocial-needs-of-breast-cancer-patients-and-their-relatives. review psychosocial needs breast cancer patients their relatives A review of psychosocial needs of breast-cancer patients and their relatives. A review of psychosocial needs of breast-cancer patients and their relatives. AIM To identify the psychosocial needs of breast-cancer patients and their relatives along with factors affecting these needs and to develop a tentative model to guide further research and need assessments in clinical practice. BACKGROUND Women experiencing breast cancer must deal with the diagnosis of a life-threatening illness. Treatment and the recovery process can be demanding for patients and their relatives. Need assessment may help clinicians focus on providing appropriate help. DESIGN Literature review. METHOD Undertaken using electronic databases and specific research terms; 20 articles were identified and analysed. RESULTS The needs identified by patients involve (1) treatment-related physical and socia",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.192121+00:00"
+}

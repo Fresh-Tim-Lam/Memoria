@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "17695748",
+  "source_fingerprint": "f61ed28eb65ffc14255f48c88a8fae59",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17695748"
+  ],
+  "key_phrases": [
+    "transglutaminase",
+    "tgase",
+    "ca",
+    "dependent",
+    "enzyme",
+    "that",
+    "catalyzes",
+    "both"
+  ],
+  "summary_1l": "Transglutaminase 2 (TGase 2) is a Ca+2-dependent enzyme that catalyzes both intracellular and extracellular cross-linking reactions by transamidation of specific glutamine residues.",
+  "query_hits": [],
+  "embed_text": "17695748 in science scifact Transglutaminase 2 (TGase 2) is a Ca+2-dependent enzyme that catalyzes both intracellular and extracellular cross-linking reactions by transamidation of specific glutamine residues. TGase 2 is known to be involved in the membrane-mediated… 17695748 transglutaminase tgase ca dependent enzyme that catalyzes both Transglutaminase 2 (TGase 2) is a Ca+2-dependent enzyme that catalyzes both intracellular and extracellular cross-linking reactions by transamidation of specific glutamine residues. in Transglutaminase 2 (TGase 2) is a Ca+2-dependent enzyme that catalyzes both intracellular and extracellular cross-linking reactions by transamidation of specific glutamine residues. TGase 2 is known to be involved in the membrane-mediated events required for glucose-stimulated insulin release from the pancreatic beta cells. Here we show that targeted disruption of TGase 2 impairs glucose-stimulated insulin secretion. TGase 2-/- mice show glucose intolerance after intraperitoneal glucose loading. TGase 2-/- mice manifest a tendency to develop hypoglycemia after administration of exogenous insulin as a consequence of enhanced insulin receptor substrate 2 (IRS-2) phosphorylation. We suggest that the increased peripheral sensitivity to insulin partially compensates for the defective secreti",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.157323+00:00"
+}

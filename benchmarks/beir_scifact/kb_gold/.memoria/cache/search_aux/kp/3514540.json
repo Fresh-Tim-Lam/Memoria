@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3514540",
+  "source_fingerprint": "14ca37a3d321a2b913948c85528815be",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3514540",
+    "prospective-study-of-body-fat-distribution-and-the-risk-of-endometrial-cancer."
+  ],
+  "key_phrases": [
+    "prospective",
+    "study",
+    "body",
+    "fat",
+    "distribution",
+    "risk",
+    "endometrial",
+    "cancer"
+  ],
+  "summary_1l": "Prospective study of body fat distribution and the risk of endometrial cancer.",
+  "query_hits": [],
+  "embed_text": "3514540 Prospective study of body fat distribution and the risk of endometrial cancer. science scifact BACKGROUND Epidemiologic studies have found that overall obesity is positively related to endometrial cancer (EC) risk. However, data assessing the association between body fat distribution and risk of EC are still limited. METHODS We… 3514540 prospective-study-of-body-fat-distribution-and-the-risk-of-endometrial-cancer. prospective study body fat distribution risk endometrial cancer Prospective study of body fat distribution and the risk of endometrial cancer. Prospective study of body fat distribution and the risk of endometrial cancer. BACKGROUND Epidemiologic studies have found that overall obesity is positively related to endometrial cancer (EC) risk. However, data assessing the association between body fat distribution and risk of EC are still limited. METHODS We followed 51,948 women who first reported waist circumference (WC) and hip circumference in 1986 in the Nurses' Health Study. Waist-to-hip ratio (WHR) was calculated. RESULTS During 24 years of follow-up, 449 incident invasive EC cases were diagnosed. In a multivariate analysis without adjusting for body mass index (BMI), the relative risks (RRs) for EC comparing extreme categories were 2.44 (95% confidence interval [CI] 1.72-3.45) for WC and 1.69 (95% CI=1.20-2.40) for WHR. However",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.012536+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27907205",
+  "source_fingerprint": "1e321473784bfb5edba45d0112703ec8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27907205",
+    "characteristics-of-a-monoclonal-antibody-(rm124)-against-acute-myelocytic-leukemia-cells."
+  ],
+  "key_phrases": [
+    "characteristics",
+    "monoclonal",
+    "antibody",
+    "rm124",
+    "against",
+    "acute",
+    "myelocytic",
+    "leukemia"
+  ],
+  "summary_1l": "Characteristics of a monoclonal antibody (RM124) against acute myelocytic leukemia cells.",
+  "query_hits": [],
+  "embed_text": "27907205 Characteristics of a monoclonal antibody (RM124) against acute myelocytic leukemia cells. science scifact A monoclonal antibody was raised against cells from an experimental rat myelocytic leukemia (BNML). The major characteristics of the rat leukemia model resemble those of human acute myelocytic leukemia. The monoclonal antibody (MCA) RM124… 27907205 characteristics-of-a-monoclonal-antibody-(rm124)-against-acute-myelocytic-leukemia-cells. characteristics monoclonal antibody rm124 against acute myelocytic leukemia Characteristics of a monoclonal antibody (RM124) against acute myelocytic leukemia cells. Characteristics of a monoclonal antibody (RM124) against acute myelocytic leukemia cells. A monoclonal antibody was raised against cells from an experimental rat myelocytic leukemia (BNML). The major characteristics of the rat leukemia model resemble those of human acute myelocytic leukemia. The monoclonal antibody (MCA) RM124 was characterized with respect to its labeling pattern of BNML leukemia cells, normal rat bone marrow cells, and the hemopoietic stem cell (HSC), by flow cytometric methods and complement-dependent cytotoxicity assays. Flow cytometry revealed a much higher labeling of the leukemic cells by the MCA-RM124 compared with normal bone marrow cells, including CFU-S and CFU-C. Only a subpopulation of the normal granulocytes showed cross reactivity, however, at a lower labeli",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.446597+00:00"
+}

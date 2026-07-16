@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "kp_id": "4205822#0",
+  "source_fingerprint": "171ade7b5e4a2c0143f7248b50fc50e9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "里斯本",
+    "多首都國家",
+    "葡萄牙",
+    "首都",
+    "巴西國家男子籃球隊"
+  ],
+  "aliases": [
+    "4205822#0"
+  ],
+  "key_phrases": [
+    "葡萄牙",
+    "國家",
+    "圖書館",
+    "法定",
+    "送存",
+    "該國",
+    "首都",
+    "里斯本"
+  ],
+  "summary_1l": "葡萄牙國家圖書館（）是葡萄牙的法定送存國家圖書館，位於該國首都里斯本。",
+  "query_hits": [],
+  "embed_text": "4205822#0 葡萄牙國家圖書館 葡萄牙國家圖書館 葡萄牙國家圖書館（）是葡萄牙的法定送存國家圖書館，位於該國首都里斯本。1796年創立時稱為“Real Biblioteca Pública da Corte”，位於希亞多區。1830年代左右改現名，1969年搬到現址。 里斯本 多首都國家 葡萄牙 首都 巴西國家男子籃球隊 4205822#0 葡萄牙 國家 圖書館 法定 送存 該國 首都 里斯本 葡萄牙國家圖書館（）是葡萄牙的法定送存國家圖書館，位於該國首都里斯本。 葡萄牙國家圖書館 葡萄牙國家圖書館（）是葡萄牙的法定送存國家圖書館，位於該國首都里斯本。1796年創立時稱為“Real Biblioteca Pública da Corte”，位於希亞多區。1830年代左右改現名，1969年搬到現址。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:22:11.246528+00:00"
+}

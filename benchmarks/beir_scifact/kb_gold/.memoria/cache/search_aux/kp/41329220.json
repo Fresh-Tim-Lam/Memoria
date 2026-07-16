@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "41329220",
+  "source_fingerprint": "c3e4bf22a727451902ad6936ece049cc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "41329220",
+    "determination-of-the-time-course-of-capacitation-in-mouse-spermatozoa-using-a-chlortetracycline-fluorescence-assay."
+  ],
+  "key_phrases": [
+    "determination",
+    "time",
+    "course",
+    "capacitation",
+    "mouse",
+    "spermatozoa",
+    "using",
+    "chlortetracycline"
+  ],
+  "summary_1l": "Determination of the time course of capacitation in mouse spermatozoa using a chlortetracycline fluorescence assay.",
+  "query_hits": [],
+  "embed_text": "41329220 Determination of the time course of capacitation in mouse spermatozoa using a chlortetracycline fluorescence assay. science scifact The heads of mouse spermatozoa obtained 5 min after release from the excised caudae epididymides showed a characteristic fluorescence pattern in the presence of the fluorophore chlortetracycline (CTC). There was uniform fluorescence over… 41329220 determination-of-the-time-course-of-capacitation-in-mouse-spermatozoa-using-a-chlortetracycline-fluorescence-assay. determination time course capacitation mouse spermatozoa using chlortetracycline Determination of the time course of capacitation in mouse spermatozoa using a chlortetracycline fluorescence assay. Determination of the time course of capacitation in mouse spermatozoa using a chlortetracycline fluorescence assay. The heads of mouse spermatozoa obtained 5 min after release from the excised caudae epididymides showed a characteristic fluorescence pattern in the presence of the fluorophore chlortetracycline (CTC). There was uniform fluorescence over the entire head with about half the sperm population showing a brighter line of fluorescence across the equatorial segment; this fluorescence pattern was designated \"F\". After 90-min incubation in culture medium (CM) containing 2% (w/v) bovine serum albumin, most of the sperm heads showed a dark band of nonfluorescence over the equatorial and postequatorial segment, while the anterior portion of the head showed bright fluorescence. This fluor",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.329625+00:00"
+}

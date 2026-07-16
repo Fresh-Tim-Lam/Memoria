@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "739734",
+  "source_fingerprint": "546c8772b46743a1925af2559500fab4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "739734",
+    "stages-of-the-pathologic-process-in-alzheimer-disease:-age-categories-from-1-to-100-years."
+  ],
+  "key_phrases": [
+    "stages",
+    "pathologic",
+    "process",
+    "alzheimer",
+    "disease",
+    "age",
+    "categories",
+    "from"
+  ],
+  "summary_1l": "Stages of the pathologic process in Alzheimer disease: age categories from 1 to 100 years.",
+  "query_hits": [],
+  "embed_text": "739734 Stages of the pathologic process in Alzheimer disease: age categories from 1 to 100 years. science scifact Two thousand three hundred and thirty two nonselected brains from 1- to 100-year-old individuals were examined using immunocytochemistry (AT8) and Gallyas silver staining for abnormal tau; immunocytochemistry (4G8) and Campbell-Switzer… 739734 stages-of-the-pathologic-process-in-alzheimer-disease:-age-categories-from-1-to-100-years. stages pathologic process alzheimer disease age categories from Stages of the pathologic process in Alzheimer disease: age categories from 1 to 100 years. Stages of the pathologic process in Alzheimer disease: age categories from 1 to 100 years. Two thousand three hundred and thirty two nonselected brains from 1- to 100-year-old individuals were examined using immunocytochemistry (AT8) and Gallyas silver staining for abnormal tau; immunocytochemistry (4G8) and Campbell-Switzer staining were used for the detection ofβ-amyloid. A total of 342 cases was negative in the Gallyas stain but when restaged for AT8 only 10 were immunonegative. Fifty-eight cases had subcortical tau predominantly in the locus coeruleus, but there was no abnormal cortical tau (subcortical Stages a-c). Cortical involvement (abnormal tau in neurites) was identified first in the transentorhinal region (Stage 1a, 38 cases). Transentorhinal pyramidal cells displayed pretangle",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.203906+00:00"
+}

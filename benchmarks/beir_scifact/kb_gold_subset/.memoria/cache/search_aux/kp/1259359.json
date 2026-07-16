@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1259359",
+  "source_fingerprint": "eeff22e294f4a30621ef2a7325306b82",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1259359",
+    "hiv-seropositivity-and-tuberculosis-in-a-large-general-hospital-in-malawi."
+  ],
+  "key_phrases": [
+    "hiv",
+    "seropositivity",
+    "tuberculosis",
+    "large",
+    "general",
+    "hospital",
+    "malawi",
+    "incidence"
+  ],
+  "summary_1l": "HIV seropositivity and tuberculosis in a large general hospital in Malawi.",
+  "query_hits": [],
+  "embed_text": "1259359 HIV seropositivity and tuberculosis in a large general hospital in Malawi. science scifact The incidence of the acquired immunodeficiency syndrome (AIDS) in Malawi is one of the highest in Central Africa. Since tuberculosis is an important initial manifestations of the disease, consecutive patients admitted to the tuberculosis… 1259359 hiv-seropositivity-and-tuberculosis-in-a-large-general-hospital-in-malawi. hiv seropositivity tuberculosis large general hospital malawi incidence HIV seropositivity and tuberculosis in a large general hospital in Malawi. HIV seropositivity and tuberculosis in a large general hospital in Malawi. The incidence of the acquired immunodeficiency syndrome (AIDS) in Malawi is one of the highest in Central Africa. Since tuberculosis is an important initial manifestations of the disease, consecutive patients admitted to the tuberculosis (TB) wards of Zomba General Hospital, Malawi, were asked for permission to undergo a human immunodeficiency virus (HIV)-antibodies test. In addition, two other studies were done: from September 1986 all medical in-patients, clinically suspected for immune deficiency and from April 1988 all blood donors were tested for HIV seropositivity. Seventy-five percent of the TB patients volunteered; 32 out of 125 (26%) were seropositive. In the high-risk age groups (20-40 years) this percenta",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:09.188496+00:00"
+}

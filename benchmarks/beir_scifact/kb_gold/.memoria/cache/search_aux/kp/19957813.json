@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19957813",
+  "source_fingerprint": "026c0240cea29d513a87be6f515500ed",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19957813",
+    "a-genome-wide-crispr-death-screen-identifies-genes-essential-for-oxidative-phosphorylation."
+  ],
+  "key_phrases": [
+    "genome",
+    "wide",
+    "crispr",
+    "death",
+    "screen",
+    "identifies",
+    "genes",
+    "essential"
+  ],
+  "summary_1l": "A Genome-wide CRISPR Death Screen Identifies Genes Essential for Oxidative Phosphorylation.",
+  "query_hits": [],
+  "embed_text": "19957813 A Genome-wide CRISPR Death Screen Identifies Genes Essential for Oxidative Phosphorylation. science scifact Oxidative phosphorylation (OXPHOS) is the major pathway for ATP production in humans. Deficiencies in OXPHOS can arise from mutations in either mitochondrial or nuclear genomes and comprise the largest collection of inborn errors of… 19957813 a-genome-wide-crispr-death-screen-identifies-genes-essential-for-oxidative-phosphorylation. genome wide crispr death screen identifies genes essential A Genome-wide CRISPR Death Screen Identifies Genes Essential for Oxidative Phosphorylation. A Genome-wide CRISPR Death Screen Identifies Genes Essential for Oxidative Phosphorylation. Oxidative phosphorylation (OXPHOS) is the major pathway for ATP production in humans. Deficiencies in OXPHOS can arise from mutations in either mitochondrial or nuclear genomes and comprise the largest collection of inborn errors of metabolism. At present we lack a complete catalog of human genes and pathways essential for OXPHOS. Here we introduce a genome-wide CRISPR \"death screen\" that actively selects dying cells to reveal human genes required for OXPHOS, inspired by the classic observation that human cells deficient in OXPHOS survive in glucose but die in galactose. We report 191 high-confidence hits essential for OXPHOS, including 72 underlying known OXPHOS diseases. Our screen reveals a funct",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.420739+00:00"
+}

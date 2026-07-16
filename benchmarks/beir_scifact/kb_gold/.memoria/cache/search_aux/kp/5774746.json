@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5774746",
+  "source_fingerprint": "fec41727bb405eca1f0b0377fa594e2f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5774746",
+    "a-link-between-inflammation-and-metastasis:-serum-amyloid-a1-and-a3-induce-metastasis,-and-are-targets-of-metastasis-inducing-s100a4"
+  ],
+  "key_phrases": [
+    "link",
+    "between",
+    "inflammation",
+    "metastasis",
+    "serum",
+    "amyloid",
+    "a1",
+    "a3"
+  ],
+  "summary_1l": "S100A4 is implicated in metastasis and chronic inflammation, but it",
+  "query_hits": [],
+  "embed_text": "5774746 A link between inflammation and metastasis: serum amyloid A1 and A3 induce metastasis, and are targets of metastasis-inducing S100A4 science scifact S100A4 is implicated in metastasis and chronic inflammation, but its function remains uncertain. Here we establish an S100A4-dependent link between inflammation and metastatic tumor progression. We found that the acute-phase response… 5774746 a-link-between-inflammation-and-metastasis:-serum-amyloid-a1-and-a3-induce-metastasis,-and-are-targets-of-metastasis-inducing-s100a4 link between inflammation metastasis serum amyloid a1 a3 S100A4 is implicated in metastasis and chronic inflammation, but it A link between inflammation and metastasis: serum amyloid A1 and A3 induce metastasis, and are targets of metastasis-inducing S100A4 S100A4 is implicated in metastasis and chronic inflammation, but its function remains uncertain. Here we establish an S100A4-dependent link between inflammation and metastatic tumor progression. We found that the acute-phase response proteins serum amyloid A (SAA) 1 and SAA3 are transcriptional targets of S100A4 via Toll-like receptor 4 (TLR4)/nuclear factor-κB signaling. SAA proteins stimulated the transcription of RANTES (regulated upon activation normal T-cell expressed and presumably secreted), G-CSF (granulocyte-colony-stimulating factor) and MMP2 (matrix metalloproteinase 2), MMP3, MMP9 and MMP13. We have also shown for the first time that SAA stimulate",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.025688+00:00"
+}

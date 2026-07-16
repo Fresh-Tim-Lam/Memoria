@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20183360",
+  "source_fingerprint": "0091b110000f9e0848ebe04a9b7b3f16",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20183360",
+    "gata3-transcription-factor-abrogates-smad4-transcription-factor-mediated-fascin-overexpression,-invadopodium-formation,-and-breast-cancer-cell-invasion."
+  ],
+  "key_phrases": [
+    "gata3",
+    "transcription",
+    "factor",
+    "abrogates",
+    "smad4",
+    "mediated",
+    "fascin",
+    "overexpression"
+  ],
+  "summary_1l": "GATA3 transcription factor abrogates Smad4 transcription factor-mediated fascin overexpression, invadopodium formation, and breast cancer cell invasion.",
+  "query_hits": [],
+  "embed_text": "20183360 GATA3 transcription factor abrogates Smad4 transcription factor-mediated fascin overexpression, invadopodium formation, and breast cancer cell invasion. science scifact Transforming growth factor β (TGFβ) is a potent and context-dependent regulator of tumor progression. TGFβ promotes the lung metastasis of basal-like (but not the luminal-like) breast cancer. Here, we demonstrated that fascin, a… 20183360 gata3-transcription-factor-abrogates-smad4-transcription-factor-mediated-fascin-overexpression,-invadopodium-formation,-and-breast-cancer-cell-invasion. gata3 transcription factor abrogates smad4 mediated fascin overexpression GATA3 transcription factor abrogates Smad4 transcription factor-mediated fascin overexpression, invadopodium formation, and breast cancer cell invasion. GATA3 transcription factor abrogates Smad4 transcription factor-mediated fascin overexpression, invadopodium formation, and breast cancer cell invasion. Transforming growth factor β (TGFβ) is a potent and context-dependent regulator of tumor progression. TGFβ promotes the lung metastasis of basal-like (but not the luminal-like) breast cancer. Here, we demonstrated that fascin, a pro-metastasis actin bundling protein, was a direct target of the canonical TGFβ-Smad4 signaling pathway in basal-like breast cancer cells. TGFβ and Smad4 induced fascin overexpression by directly binding to a Smad binding element on the fascin promoter. We identified GATA3, a transcription factor crucial for mammary gland morphogenesis and luminal differentiation, as a negative regulator of TGFβ- and Smad4-induced",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.761860+00:00"
+}

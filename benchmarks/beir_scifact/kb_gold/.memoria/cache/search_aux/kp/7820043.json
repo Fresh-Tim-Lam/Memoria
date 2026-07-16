@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7820043",
+  "source_fingerprint": "d5b8201a98897995f7ea2f5e1f0d8aa9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7820043",
+    "key-role-of-ubc5-and-lysine-63-polyubiquitination-in-viral-activation-of-irf3."
+  ],
+  "key_phrases": [
+    "key",
+    "role",
+    "ubc5",
+    "lysine",
+    "63",
+    "polyubiquitination",
+    "viral",
+    "activation"
+  ],
+  "summary_1l": "Key role of Ubc5 and lysine-63 polyubiquitination in viral activation of IRF3.",
+  "query_hits": [],
+  "embed_text": "7820043 Key role of Ubc5 and lysine-63 polyubiquitination in viral activation of IRF3. science scifact The mitochondrial antiviral signaling protein (MAVS; also known as IPS-1, VISA, and CARDIF) is essential for innate immune response against RNA viruses. MAVS transduces signals from the cytosolic RIG-I-like receptors, which bind to viral… 7820043 key-role-of-ubc5-and-lysine-63-polyubiquitination-in-viral-activation-of-irf3. key role ubc5 lysine 63 polyubiquitination viral activation Key role of Ubc5 and lysine-63 polyubiquitination in viral activation of IRF3. Key role of Ubc5 and lysine-63 polyubiquitination in viral activation of IRF3. The mitochondrial antiviral signaling protein (MAVS; also known as IPS-1, VISA, and CARDIF) is essential for innate immune response against RNA viruses. MAVS transduces signals from the cytosolic RIG-I-like receptors, which bind to viral RNAs. But how MAVS activates downstream transcription factors such as IRF3 to induce type-I interferons is not well understood. We have established a cell-free system in which mitochondria derived from virus-infected cells activate IRF3 in the cytosol. Fractionation of the cytosol led to the identification of Ubc5 as a ubiquitin-conjugating enzyme (E2) required for IRF3 activation. Using an inducible RNAi strategy, we demonstrate that catalytically active Ubc5 is required for IR",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.246207+00:00"
+}

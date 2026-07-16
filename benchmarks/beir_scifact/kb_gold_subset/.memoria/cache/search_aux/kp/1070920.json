@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1070920",
+  "source_fingerprint": "a270dc19b30dacedb0daa99209009791",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1070920",
+    "a-neural-basis-for-melanocortin-4-receptor-regulated-appetite"
+  ],
+  "key_phrases": [
+    "neural",
+    "basis",
+    "melanocortin",
+    "receptor",
+    "regulated",
+    "appetite",
+    "pro",
+    "opiomelanocortin"
+  ],
+  "summary_1l": "Pro-opiomelanocortin (POMC)- and agouti-related peptide (AgRP)-expressing neurons of the arcuate nucleus of the hypothalamus (ARC) are opp",
+  "query_hits": [],
+  "embed_text": "1070920 A neural basis for melanocortin-4 receptor regulated appetite science scifact Pro-opiomelanocortin (POMC)- and agouti-related peptide (AgRP)-expressing neurons of the arcuate nucleus of the hypothalamus (ARC) are oppositely regulated by caloric depletion and coordinately stimulate and inhibit homeostatic satiety,… 1070920 a-neural-basis-for-melanocortin-4-receptor-regulated-appetite neural basis melanocortin receptor regulated appetite pro opiomelanocortin Pro-opiomelanocortin (POMC)- and agouti-related peptide (AgRP)-expressing neurons of the arcuate nucleus of the hypothalamus (ARC) are opp A neural basis for melanocortin-4 receptor regulated appetite Pro-opiomelanocortin (POMC)- and agouti-related peptide (AgRP)-expressing neurons of the arcuate nucleus of the hypothalamus (ARC) are oppositely regulated by caloric depletion and coordinately stimulate and inhibit homeostatic satiety, respectively. This bimodality is principally underscored by the antagonistic actions of these ligands at downstream melanocortin-4 receptors (MC4R) in the paraventricular nucleus of the hypothalamus (PVH). Although this population is critical to energy balance, the underlying neural circuitry remains unknown. Using mice expressing Cre recombinase in MC4R neurons, we demonstrate bidirectional control of feeding following real-time activation and inhibition of PVH(MC4R) neurons and further identify",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.931281+00:00"
+}

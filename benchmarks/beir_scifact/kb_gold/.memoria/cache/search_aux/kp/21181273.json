@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21181273",
+  "source_fingerprint": "c4a7f81db30d5cc84f2f4c36412cae6f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21181273",
+    "15-hydroxyprostaglandin-dehydrogenase-is-down-regulated-in-colorectal-cancer."
+  ],
+  "key_phrases": [
+    "15",
+    "hydroxyprostaglandin",
+    "dehydrogenase",
+    "down",
+    "regulated",
+    "colorectal",
+    "cancer",
+    "prostaglandin"
+  ],
+  "summary_1l": "15-Hydroxyprostaglandin dehydrogenase is down-regulated in colorectal cancer.",
+  "query_hits": [],
+  "embed_text": "21181273 15-Hydroxyprostaglandin dehydrogenase is down-regulated in colorectal cancer. science scifact Prostaglandin E2 (PGE2) can stimulate tumor progression by modulating several proneoplastic pathways, including proliferation, angiogenesis, cell migration, invasion, and apoptosis. Although steady-state tissue levels of PGE2 stem from… 21181273 15-hydroxyprostaglandin-dehydrogenase-is-down-regulated-in-colorectal-cancer. 15 hydroxyprostaglandin dehydrogenase down regulated colorectal cancer prostaglandin 15-Hydroxyprostaglandin dehydrogenase is down-regulated in colorectal cancer. 15-Hydroxyprostaglandin dehydrogenase is down-regulated in colorectal cancer. Prostaglandin E2 (PGE2) can stimulate tumor progression by modulating several proneoplastic pathways, including proliferation, angiogenesis, cell migration, invasion, and apoptosis. Although steady-state tissue levels of PGE2 stem from relative rates of biosynthesis and breakdown, most reports examining PGE2 have focused solely on the cyclooxygenase-dependent formation of this bioactive lipid. Enzymatic degradation of PGE2 involves the NAD+-dependent 15-hydroxyprostaglandin dehydrogenase (15-PGDH). The present study examined a range of normal tissues in the human and mouse and found high levels of 15-PGDH in the large intestine. By contrast, the expression of 15-PGDH is decreased in several colorectal carcinoma c",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.478418+00:00"
+}

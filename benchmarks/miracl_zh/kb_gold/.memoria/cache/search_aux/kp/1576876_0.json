@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "kp_id": "1576876#0",
+  "source_fingerprint": "e53e4c56f37f9b69d7274f557353195c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "你美麗的旗幟",
+    "高貴的家園",
+    "西班牙",
+    "中国驻西班牙大使列表",
+    "中華民國駐西班牙大使列表",
+    "西班牙帝國",
+    "西班牙第一共和國",
+    "西班牙第二共和国"
+  ],
+  "aliases": [
+    "1576876#0"
+  ],
+  "key_phrases": [
+    "高貴",
+    "家園",
+    "美麗",
+    "旗幟",
+    "西班牙",
+    "noble",
+    "patria",
+    "tu"
+  ],
+  "summary_1l": "高貴的家園，你美麗的旗幟 （西班牙語: Noble patria, tu hermosa bandera） 為哥斯大黎加國歌。",
+  "query_hits": [],
+  "embed_text": "1576876#0 高貴的家園，你美麗的旗幟 高貴的家園，你美麗的旗幟 高貴的家園，你美麗的旗幟 （西班牙語: Noble patria, tu hermosa bandera） 為哥斯大黎加國歌。採用於1853年，由曼努埃爾·瑪莉亞·古鐵雷斯作曲，歌詞則為José María Zeledón 在1900年所作。 你美麗的旗幟 高貴的家園 西班牙 中国驻西班牙大使列表 中華民國駐西班牙大使列表 西班牙帝國 西班牙第一共和國 西班牙第二共和国 1576876#0 高貴 家園 美麗 旗幟 西班牙 noble patria tu 高貴的家園，你美麗的旗幟 （西班牙語: Noble patria, tu hermosa bandera） 為哥斯大黎加國歌。 高貴的家園，你美麗的旗幟 高貴的家園，你美麗的旗幟 （西班牙語: Noble patria, tu hermosa bandera） 為哥斯大黎加國歌。採用於1853年，由曼努埃爾·瑪莉亞·古鐵雷斯作曲，歌詞則為José María Zeledón 在1900年所作。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:21:33.510832+00:00"
+}

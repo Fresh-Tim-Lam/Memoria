@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12561083",
+  "source_fingerprint": "a481b2e87cd86ff7e389456ade687a6e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12561083",
+    "angina-with-\"normal\"-coronary-arteries:-sex-differences-in-outcomes."
+  ],
+  "key_phrases": [
+    "angina",
+    "with",
+    "normal",
+    "coronary",
+    "arteries",
+    "sex",
+    "differences",
+    "outcomes"
+  ],
+  "summary_1l": "Angina with \"normal\" coronary arteries: sex differences in outcomes.",
+  "query_hits": [],
+  "embed_text": "12561083 Angina with \"normal\" coronary arteries: sex differences in outcomes. science scifact BACKGROUND Several studies have demonstrated that women with nonobstructive coronary disease have a high rate of subsequent investigations, rehospitalizations for recurrent chest pain, and repeat coronary angiography. The sex specificity… 12561083 angina-with-\"normal\"-coronary-arteries:-sex-differences-in-outcomes. angina with normal coronary arteries sex differences outcomes Angina with \"normal\" coronary arteries: sex differences in outcomes. Angina with \"normal\" coronary arteries: sex differences in outcomes. BACKGROUND Several studies have demonstrated that women with nonobstructive coronary disease have a high rate of subsequent investigations, rehospitalizations for recurrent chest pain, and repeat coronary angiography. The sex specificity of this finding is unclear. We therefore undertook an evaluation of sex differences in rehospitalization for acute coronary syndrome (ACS) or chest pain in patients with \"angiographically normal\" coronaries. METHODS A retrospective cohort study using prospectively collected angiographic and clinical data on all patients in British Columbia, Canada, presenting for their first cardiac catheterization with suspected ischemic heart disease but angiographically normal coronaries. RESULTS Among",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:09.104262+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15721252",
+  "source_fingerprint": "ad4f432f26524c85327500def569c665",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15721252",
+    "pd-0332991,-a-selective-cyclin-d-kinase-4/6-inhibitor,-preferentially-inhibits-proliferation-of-luminal-estrogen-receptor-positive-human-breast-cancer-cell-lines-in-vitro"
+  ],
+  "key_phrases": [
+    "pd",
+    "0332991",
+    "selective",
+    "cyclin",
+    "kinase",
+    "inhibitor",
+    "preferentially",
+    "inhibits"
+  ],
+  "summary_1l": "INTRODUCTION Alterations in c",
+  "query_hits": [],
+  "embed_text": "15721252 PD 0332991, a selective cyclin D kinase 4/6 inhibitor, preferentially inhibits proliferation of luminal estrogen receptor-positive human breast cancer cell lines in vitro science scifact INTRODUCTION Alterations in cell cycle regulators have been implicated in human malignancies including breast cancer. PD 0332991 is an orally active, highly selective inhibitor of the cyclin D kinases (CDK)4 and CDK6 with ability to block… 15721252 pd-0332991,-a-selective-cyclin-d-kinase-4/6-inhibitor,-preferentially-inhibits-proliferation-of-luminal-estrogen-receptor-positive-human-breast-cancer-cell-lines-in-vitro pd 0332991 selective cyclin kinase inhibitor preferentially inhibits INTRODUCTION Alterations in c PD 0332991, a selective cyclin D kinase 4/6 inhibitor, preferentially inhibits proliferation of luminal estrogen receptor-positive human breast cancer cell lines in vitro INTRODUCTION Alterations in cell cycle regulators have been implicated in human malignancies including breast cancer. PD 0332991 is an orally active, highly selective inhibitor of the cyclin D kinases (CDK)4 and CDK6 with ability to block retinoblastoma (Rb) phosphorylation in the low nanomolar range. To identify predictors of response, we determined the in vitro sensitivity to PD 0332991 across a panel of molecularly characterized human breast cancer cell lines. METHODS Forty-seven human breast cancer and immortalized cell lines representing the known molecular subgroups of breast cancer were treated with PD 0332991 to d",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.173765+00:00"
+}

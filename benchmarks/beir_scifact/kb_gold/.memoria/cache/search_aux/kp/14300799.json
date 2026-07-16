@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14300799",
+  "source_fingerprint": "614df6b637379b2a236fbb4790ca3731",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14300799",
+    "cineradiography-of-monkey-lip-smacking-reveals-putative-precursors-of-speech-dynamics"
+  ],
+  "key_phrases": [
+    "cineradiography",
+    "monkey",
+    "lip",
+    "smacking",
+    "reveals",
+    "putative",
+    "precursors",
+    "speech"
+  ],
+  "summary_1l": "A key feature of speech is its stereotypical 5 Hz rhythm.",
+  "query_hits": [],
+  "embed_text": "14300799 Cineradiography of Monkey Lip-Smacking Reveals Putative Precursors of Speech Dynamics science scifact A key feature of speech is its stereotypical 5 Hz rhythm. One theory posits that this rhythm evolved through the modification of rhythmic facial movements in ancestral primates. If the hypothesis has any validity, then a comparative… 14300799 cineradiography-of-monkey-lip-smacking-reveals-putative-precursors-of-speech-dynamics cineradiography monkey lip smacking reveals putative precursors speech A key feature of speech is its stereotypical 5 Hz rhythm. Cineradiography of Monkey Lip-Smacking Reveals Putative Precursors of Speech Dynamics A key feature of speech is its stereotypical 5 Hz rhythm. One theory posits that this rhythm evolved through the modification of rhythmic facial movements in ancestral primates. If the hypothesis has any validity, then a comparative approach may shed some light. We tested this idea by using cineradiography (X-ray movies) to characterize and quantify the internal dynamics of the macaque monkey vocal tract during lip-smacking (a rhythmic facial expression) versus chewing. Previous human studies showed that speech movements are faster than chewing movements, and the functional coordination between vocal tract structures is different between the two behaviors. If rhythmic speech evolved through a rhythmic anc",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.511739+00:00"
+}

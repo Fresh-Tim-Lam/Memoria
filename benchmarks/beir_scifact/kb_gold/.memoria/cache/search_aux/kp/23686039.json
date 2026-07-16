@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23686039",
+  "source_fingerprint": "9f1202fa36d94aa171f4ef3b6b3909e3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23686039",
+    "building-in-biosafety-for-synthetic-biology."
+  ],
+  "key_phrases": [
+    "building",
+    "biosafety",
+    "synthetic",
+    "biology",
+    "as",
+    "field",
+    "develops",
+    "real"
+  ],
+  "summary_1l": "Building-in biosafety for synthetic biology.",
+  "query_hits": [],
+  "embed_text": "23686039 Building-in biosafety for synthetic biology. science scifact As the field of synthetic biology develops, real-world applications are moving from the realms of ideas and laboratory-confined research towards implementation. A pressing concern, particularly with microbial systems, is that… 23686039 building-in-biosafety-for-synthetic-biology. building biosafety synthetic biology as field develops real Building-in biosafety for synthetic biology. Building-in biosafety for synthetic biology. As the field of synthetic biology develops, real-world applications are moving from the realms of ideas and laboratory-confined research towards implementation. A pressing concern, particularly with microbial systems, is that self-replicating re-engineered cells may produce undesired consequences if they escape or overwhelm their intended environment. To address this biosafety issue, multiple mechanisms for constraining microbial replication and horizontal gene transfer have been proposed. These include the use of host-construct dependencies such as toxin-antitoxin pairs, conditional plasmid replication or the requirement for a specific metabolite to be present for cellular function. While refactoring of the existing genetic code or tailoring of",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.965623+00:00"
+}

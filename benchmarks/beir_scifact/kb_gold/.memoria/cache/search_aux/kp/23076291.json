@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23076291",
+  "source_fingerprint": "499e1215269ad7d57f8a9c24671a0434",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23076291",
+    "pituitary-adenylate-cyclase-activating-polypeptide-(pacap(1-38))-enhances-n-methyl-d-aspartate-receptor-function-and-brain-derived-neurotrophic-factor-expression-via-rack1."
+  ],
+  "key_phrases": [
+    "pituitary",
+    "adenylate",
+    "cyclase",
+    "activating",
+    "polypeptide",
+    "pacap",
+    "38",
+    "enhances"
+  ],
+  "summary_1l": "Pituitary adenylate cyclase-activating polypeptide (PACAP(1-38)) enhances N-methyl-D-aspartate receptor function and brain-derived neurotrophic factor expression via RACK1.",
+  "query_hits": [],
+  "embed_text": "23076291 Pituitary adenylate cyclase-activating polypeptide (PACAP(1-38)) enhances N-methyl-D-aspartate receptor function and brain-derived neurotrophic factor expression via RACK1. science scifact We recently identified a novel mechanism for modulation of the phosphorylation state and function of the N-methyl-d-aspartate (NMDA) receptor via the scaffolding protein RACK1. We found that RACK1 binds both the NR2B subunit of the NMDA… 23076291 pituitary-adenylate-cyclase-activating-polypeptide-(pacap(1-38))-enhances-n-methyl-d-aspartate-receptor-function-and-brain-derived-neurotrophic-factor-expression-via-rack1. pituitary adenylate cyclase activating polypeptide pacap 38 enhances Pituitary adenylate cyclase-activating polypeptide (PACAP(1-38)) enhances N-methyl-D-aspartate receptor function and brain-derived neurotrophic factor expression via RACK1. Pituitary adenylate cyclase-activating polypeptide (PACAP(1-38)) enhances N-methyl-D-aspartate receptor function and brain-derived neurotrophic factor expression via RACK1. We recently identified a novel mechanism for modulation of the phosphorylation state and function of the N-methyl-d-aspartate (NMDA) receptor via the scaffolding protein RACK1. We found that RACK1 binds both the NR2B subunit of the NMDA receptor and the nonreceptor protein-tyrosine kinase, Fyn. RACK1 inhibits Fyn phosphorylation of NR2B and decreases NMDA receptor-mediated currents in CA1 hippocampal slices (Yaka, R., Thornton, C., Vagts, A. J., Phamluong, K., Bonci, A., and Ron, D. (2002) Proc. Natl. Acad. Sci. U. S. A. 99, 5710-5715). Here, we identified the signaling cascade by which RACK1 is released from the NMDA r",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.809333+00:00"
+}

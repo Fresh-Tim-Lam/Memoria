@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "40087494",
+  "source_fingerprint": "a01430ab44003b959283c9a1a6c4926b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "40087494",
+    "monoallelic-expression-and-methylation-of-imprinted-genes-in-human-and-mouse-embryonic-germ-cell-lineages."
+  ],
+  "key_phrases": [
+    "monoallelic",
+    "expression",
+    "methylation",
+    "imprinted",
+    "genes",
+    "human",
+    "mouse",
+    "embryonic"
+  ],
+  "summary_1l": "Monoallelic expression and methylation of imprinted genes in human and mouse embryonic germ cell lineages.",
+  "query_hits": [],
+  "embed_text": "40087494 Monoallelic expression and methylation of imprinted genes in human and mouse embryonic germ cell lineages. science scifact Imprinting is an epigenetic modification leading to monoallelic expression of some genes, and disrupted imprinting is believed to be a barrier to human stem cell transplantation, based on studies that suggest that epigenetic marks are… 40087494 monoallelic-expression-and-methylation-of-imprinted-genes-in-human-and-mouse-embryonic-germ-cell-lineages. monoallelic expression methylation imprinted genes human mouse embryonic Monoallelic expression and methylation of imprinted genes in human and mouse embryonic germ cell lineages. Monoallelic expression and methylation of imprinted genes in human and mouse embryonic germ cell lineages. Imprinting is an epigenetic modification leading to monoallelic expression of some genes, and disrupted imprinting is believed to be a barrier to human stem cell transplantation, based on studies that suggest that epigenetic marks are unstable in mouse embryonic germ (EG) and embryonic stem (ES) cells. However, stem cell imprinting has not previously been examined directly in humans. We found that three imprinted genes, TSSC5, H19, and SNRPN, show monoallelic expression in in vitro differentiated human EG-derived cells, and a fourth gene, IGF2, shows partially relaxed imprinting at a ratio from 4:1 to 5:1, comparable to that found in normal somatic cells. In addition, we found normal",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.207169+00:00"
+}

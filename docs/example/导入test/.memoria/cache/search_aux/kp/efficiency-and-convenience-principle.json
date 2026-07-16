@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "kp_id": "efficiency-and-convenience-principle",
+  "source_fingerprint": "1a8c72c3e903c2337763741a9df7fac6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "主体",
+    "行政行为",
+    "行政机关",
+    "合理行政",
+    "行政强制",
+    "行政法规",
+    "行政给付",
+    "实施主体",
+    "抽象行政行为",
+    "授益行政行为",
+    "行政公开",
+    "行政征收"
+  ],
+  "aliases": [
+    "efficiency-and-convenience-principle"
+  ],
+  "key_phrases": [
+    "行政",
+    "主体",
+    "xingzhengzhuti",
+    "行政主体"
+  ],
+  "summary_1l": "行政主体",
+  "query_hits": [],
+  "embed_text": "efficiency-and-convenience-principle 高效便民原则 行政法 高效 便民 主体 行政行为 行政机关 合理行政 行政强制 行政法规 行政给付 实施主体 抽象行政行为 授益行政行为 行政公开 行政征收 efficiency-and-convenience-principle 行政 主体 xingzhengzhuti 行政主体 行政主体 行政主体",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-16T05:57:15.853551+00:00"
+}

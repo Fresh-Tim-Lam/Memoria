@@ -157,26 +157,38 @@ window.MemoriaLinkContextMenu = (function () {
     const sel = (text || "").trim();
     if (!sel) return;
 
-    buildMenu(
-      [
-        {
-          label: `<span class="m0-ctx-head">${esc(sel.slice(0, 40))}${sel.length > 40 ? "…" : ""}</span>`,
-          disabled: true,
-          action: () => {},
-        },
-        { divider: true },
-        {
-          label: "创建链接…",
-          action: () => ctx.onCreateLink?.({ text: sel }),
-        },
-        {
-          label: "设为知识点…",
-          action: () => ctx.onCreateKp?.({ text: sel, lines: ctx.lines }),
-        },
-      ],
-      e.clientX,
-      e.clientY
-    );
+    const items = [
+      {
+        label: `<span class="m0-ctx-head">${esc(sel.slice(0, 40))}${sel.length > 40 ? "…" : ""}</span>`,
+        disabled: true,
+        action: () => {},
+      },
+      { divider: true },
+      {
+        label: "复制",
+        hint: "复制选中文本",
+        action: () => copyText(sel, ctx.onStatus),
+      },
+      { divider: true },
+      {
+        label: "创建链接…",
+        action: () => ctx.onCreateLink?.({ text: sel }),
+      },
+      {
+        label: "设为知识点…",
+        action: () => ctx.onCreateKp?.({ text: sel, lines: ctx.lines }),
+      },
+    ];
+
+    if (ctx.markdown) {
+      items.push({
+        label: "复制 Markdown",
+        hint: "复制选中片段对应的源码",
+        action: () => copyText(ctx.markdown, ctx.onStatus),
+      });
+    }
+
+    buildMenu(items, e.clientX, e.clientY);
   }
 
   document.addEventListener("click", hide);

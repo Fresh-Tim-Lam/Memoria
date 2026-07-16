@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19427410",
+  "source_fingerprint": "7dc36b12d338977852c626f53470cf86",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19427410",
+    "il-33,-a-recently-identified-interleukin-1-gene-family-member,-is-expressed-in-human-adipocytes."
+  ],
+  "key_phrases": [
+    "il",
+    "33",
+    "recently",
+    "identified",
+    "interleukin",
+    "gene",
+    "family",
+    "member"
+  ],
+  "summary_1l": "IL-33, a recently identified interleukin-1 gene family member, is expressed in human adipocytes.",
+  "query_hits": [],
+  "embed_text": "19427410 IL-33, a recently identified interleukin-1 gene family member, is expressed in human adipocytes. science scifact Inflammation occurs in adipose tissue in obesity. We have examined whether IL-33, a recently identified IL-1 gene family member, and its associated receptors are expressed in human adipocytes. IL-33, IL-1RL1 and IL-1RAP gene expression was… 19427410 il-33,-a-recently-identified-interleukin-1-gene-family-member,-is-expressed-in-human-adipocytes. il 33 recently identified interleukin gene family member IL-33, a recently identified interleukin-1 gene family member, is expressed in human adipocytes. IL-33, a recently identified interleukin-1 gene family member, is expressed in human adipocytes. Inflammation occurs in adipose tissue in obesity. We have examined whether IL-33, a recently identified IL-1 gene family member, and its associated receptors are expressed in human adipocytes. IL-33, IL-1RL1 and IL-1RAP gene expression was observed in human visceral white fat, in preadipocytes and in adipocytes (SGBS cells). Treatment with TNFalpha for 24h induced a 6-fold increase in IL-33 mRNA level in preadipocytes and adipocytes. Time-course studies with adipocytes showed that the increase in IL-33 mRNA with TNFalpha was maximal (>55-fold) at 12h. This response was markedly different to IL-1beta (peak mRNA increase at 2h; 5.4-fold) and 1L-18 (peak mRNA increase at 6h; >1500-fold). Exposure",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.545620+00:00"
+}

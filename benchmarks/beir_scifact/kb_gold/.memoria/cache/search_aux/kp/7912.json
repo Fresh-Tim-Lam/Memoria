@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7912",
+  "source_fingerprint": "0cc39ef7c4d808b87857c1166d5e8fb3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7912",
+    "bc1-rna,-the-transcript-from-a-master-gene-for-id-element-amplification,-is-able-to-prime-its-own-reverse-transcription."
+  ],
+  "key_phrases": [
+    "bc1",
+    "rna",
+    "transcript",
+    "from",
+    "master",
+    "gene",
+    "id",
+    "element"
+  ],
+  "summary_1l": "BC1 RNA, the transcript from a master gene for ID element amplification, is able to prime its own reverse transcription.",
+  "query_hits": [],
+  "embed_text": "7912 BC1 RNA, the transcript from a master gene for ID element amplification, is able to prime its own reverse transcription. science scifact ID elements are short interspersed elements (SINEs) found in high copy number in many rodent genomes. BC1 RNA, an ID-related transcript, is derived from the single copy BC1 RNA gene. The BC1 RNA gene has been shown to be a master gene for… 7912 bc1-rna,-the-transcript-from-a-master-gene-for-id-element-amplification,-is-able-to-prime-its-own-reverse-transcription. bc1 rna transcript from master gene id element BC1 RNA, the transcript from a master gene for ID element amplification, is able to prime its own reverse transcription. BC1 RNA, the transcript from a master gene for ID element amplification, is able to prime its own reverse transcription. ID elements are short interspersed elements (SINEs) found in high copy number in many rodent genomes. BC1 RNA, an ID-related transcript, is derived from the single copy BC1 RNA gene. The BC1 RNA gene has been shown to be a master gene for ID element amplification in rodent genomes. ID elements are dispersed through a process termed retroposition. The retroposition process involves a number of potential regulatory steps. These regulatory steps may include transcription in the appropriate tissue, transcript stability, priming of the RNA transcript for reverse transcription and integration. This study focuses on priming of the RNA transcript for reverse transcription. BC1 R",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.445190+00:00"
+}

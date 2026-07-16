@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6212802",
+  "source_fingerprint": "7aa16bd1f60dea084bea8e60ec2d84c7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6212802",
+    "simvastatin-reduces-cd40-expression-in-an-experimental-model-of-early-arterialization-of-saphenous-vein-graft."
+  ],
+  "key_phrases": [
+    "simvastatin",
+    "reduces",
+    "cd40",
+    "expression",
+    "experimental",
+    "model",
+    "early",
+    "arterialization"
+  ],
+  "summary_1l": "Simvastatin reduces CD40 expression in an experimental model of early arterialization of saphenous vein graft.",
+  "query_hits": [],
+  "embed_text": "6212802 Simvastatin reduces CD40 expression in an experimental model of early arterialization of saphenous vein graft. science scifact BACKGROUND Saphenous vein graft (VG) failure occurs more frequently compared with arterial grafts, and graft thrombosis represents the main cause of early occlusion. Because CD40-CD40L pathway CD40 represents a culprit link between local… 6212802 simvastatin-reduces-cd40-expression-in-an-experimental-model-of-early-arterialization-of-saphenous-vein-graft. simvastatin reduces cd40 expression experimental model early arterialization Simvastatin reduces CD40 expression in an experimental model of early arterialization of saphenous vein graft. Simvastatin reduces CD40 expression in an experimental model of early arterialization of saphenous vein graft. BACKGROUND Saphenous vein graft (VG) failure occurs more frequently compared with arterial grafts, and graft thrombosis represents the main cause of early occlusion. Because CD40-CD40L pathway CD40 represents a culprit link between local inflammation and coagulation cascade, we investigate the role of CD40 and its soluble ligand (sCD40L) in the immediate in vitro response of VG to arterial pressures, and the potential effects of Simvastatin (Merck Sharp&Dohme, White-house Station, NJ) supplementation. METHODS Samples of saphenous vein and of internal mammary artery (IMA) were obtained from sixteen patients without history of statin therapy. Segments underwent pulsatile pressure di",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.301828+00:00"
+}

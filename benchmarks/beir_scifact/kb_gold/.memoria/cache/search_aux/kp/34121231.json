@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "34121231",
+  "source_fingerprint": "c65358125449796d5a39f65a1adc319e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "34121231",
+    "cold-related-respiratory-symptoms-in-the-general-population."
+  ],
+  "key_phrases": [
+    "cold",
+    "related",
+    "respiratory",
+    "symptoms",
+    "general",
+    "population",
+    "introduction",
+    "common"
+  ],
+  "summary_1l": "Cold-related respiratory symptoms in the general population.",
+  "query_hits": [],
+  "embed_text": "34121231 Cold-related respiratory symptoms in the general population. science scifact INTRODUCTION Cold-related respiratory symptoms are common among northern populations, especially among people suffering from respiratory diseases. However, the prevalence of such symptoms in the general population and the threshold… 34121231 cold-related-respiratory-symptoms-in-the-general-population. cold related respiratory symptoms general population introduction common Cold-related respiratory symptoms in the general population. Cold-related respiratory symptoms in the general population. INTRODUCTION Cold-related respiratory symptoms are common among northern populations, especially among people suffering from respiratory diseases. However, the prevalence of such symptoms in the general population and the threshold temperatures at which the symptoms start to emerge are poorly known. OBJECTIVES The present study determined the prevalence and threshold temperatures of self-reported respiratory symptoms related to cold, separately for healthy people and those with respiratory disease. MATERIALS AND METHODS Six thousand five hundred ninety-one men and women aged 25 years-74 years from the national FINRISK study were queried about cold-related respiratory symptoms. The results were expressed as age-adjusted prevalence",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.130639+00:00"
+}

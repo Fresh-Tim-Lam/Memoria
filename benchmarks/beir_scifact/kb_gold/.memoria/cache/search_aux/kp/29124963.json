@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29124963",
+  "source_fingerprint": "b862e2eb49ce66a7eeb9cb6afa517f9a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29124963",
+    "eml4-alk-translocation-predicts-better-outcome-in-lung-adenocarcinoma-patients-with-wild-type-egfr."
+  ],
+  "key_phrases": [
+    "eml4",
+    "alk",
+    "translocation",
+    "predicts",
+    "better",
+    "outcome",
+    "lung",
+    "adenocarcinoma"
+  ],
+  "summary_1l": "EML4-ALK translocation predicts better outcome in lung adenocarcinoma patients with wild-type EGFR.",
+  "query_hits": [],
+  "embed_text": "29124963 EML4-ALK translocation predicts better outcome in lung adenocarcinoma patients with wild-type EGFR. science scifact INTRODUCTION The echinoderm microtubule-associated protein like 4-anaplastic lymphoma kinase (EML4-ALK) fusion represents a novel target in a subset of non-small cell lung cancer, especially adenocarcinoma. EML4-ALK fusion is mutually… 29124963 eml4-alk-translocation-predicts-better-outcome-in-lung-adenocarcinoma-patients-with-wild-type-egfr. eml4 alk translocation predicts better outcome lung adenocarcinoma EML4-ALK translocation predicts better outcome in lung adenocarcinoma patients with wild-type EGFR. EML4-ALK translocation predicts better outcome in lung adenocarcinoma patients with wild-type EGFR. INTRODUCTION The echinoderm microtubule-associated protein like 4-anaplastic lymphoma kinase (EML4-ALK) fusion represents a novel target in a subset of non-small cell lung cancer, especially adenocarcinoma. EML4-ALK fusion is mutually exclusive with epidermal growth factor receptor (EGFR) mutations. To understand the impact of EML4-ALK on the prognosis of non-small cell lung cancer, we examined EML4-ALK fusion in lung adenocarcinoma from patients with wild-type EGFR and analyzed their clinical treatment outcomes. METHODS Lung adenocarcinoma patients with malignant pleural effusions having wild-type EGFR and measurable target lesions were enrolled for EML4-ALK analysis by reverse transcriptio",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.612335+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5511240",
+  "source_fingerprint": "3e29d417112b4cfbee1f46caa417cd78",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5511240",
+    "liver-resident-macrophage-necroptosis-orchestrates-type-1-microbicidal-inflammation-and-type-2-mediated-tissue-repair-during-bacterial-infection."
+  ],
+  "key_phrases": [
+    "liver",
+    "resident",
+    "macrophage",
+    "necroptosis",
+    "orchestrates",
+    "type",
+    "microbicidal",
+    "inflammation"
+  ],
+  "summary_1l": "Liver-resident macrophage necroptosis orchestrates type 1 microbicidal inflammation and type-2-mediated tissue repair during bacterial infection.",
+  "query_hits": [],
+  "embed_text": "5511240 Liver-resident macrophage necroptosis orchestrates type 1 microbicidal inflammation and type-2-mediated tissue repair during bacterial infection. science scifact Kupffer cells, the phagocytes of fetal origin that line the liver sinusoids, are key contributors of host defense against enteroinvasive bacteria. Here, we found that infection by Listeria monocytogenes induced the early necroptotic death… 5511240 liver-resident-macrophage-necroptosis-orchestrates-type-1-microbicidal-inflammation-and-type-2-mediated-tissue-repair-during-bacterial-infection. liver resident macrophage necroptosis orchestrates type microbicidal inflammation Liver-resident macrophage necroptosis orchestrates type 1 microbicidal inflammation and type-2-mediated tissue repair during bacterial infection. Liver-resident macrophage necroptosis orchestrates type 1 microbicidal inflammation and type-2-mediated tissue repair during bacterial infection. Kupffer cells, the phagocytes of fetal origin that line the liver sinusoids, are key contributors of host defense against enteroinvasive bacteria. Here, we found that infection by Listeria monocytogenes induced the early necroptotic death of Kupffer cells, which was followed by monocyte recruitment and an anti-bacterial type 1 inflammatory response. Kupffer cell death also triggered a type 2 response that involved the hepatocyte-derived alarmin interleukin-33 (IL-33) and basophil-derived interleukin-4 (IL-4). This led to the alternative activation of the monocyte-derived macrophages recruited to the liver, which thereby replaced ablated Kupffer c",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.515328+00:00"
+}

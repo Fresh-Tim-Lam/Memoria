@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "28542402",
+  "source_fingerprint": "c50b495fe25065da0fa223438b6cabc7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "28542402",
+    "p19-embryonal-carcinoma-cells."
+  ],
+  "key_phrases": [
+    "p19",
+    "embryonal",
+    "carcinoma",
+    "cells",
+    "line",
+    "pluripotent",
+    "able",
+    "grow"
+  ],
+  "summary_1l": "P19 embryonal carcinoma cells.",
+  "query_hits": [],
+  "embed_text": "28542402 P19 embryonal carcinoma cells. science scifact P19 cells are a line of pluripotent embryonal carcinoma able to grow continuously in serum-supplemented media. The differentiation of these cells can be controlled by nontoxic drugs. Retinoic acid effectively induces the development of… 28542402 p19-embryonal-carcinoma-cells. p19 embryonal carcinoma cells line pluripotent able grow P19 embryonal carcinoma cells. P19 embryonal carcinoma cells. P19 cells are a line of pluripotent embryonal carcinoma able to grow continuously in serum-supplemented media. The differentiation of these cells can be controlled by nontoxic drugs. Retinoic acid effectively induces the development of neurons, astroglia and microglia--cell types normally derived from the neuroectoderm. Aggregates of P19 cells exposed to dimethyl sulfoxide differentiate into endodermal and mesodermal derivatives including cardiac and skeletal muscle. P19 cells can be effectively transfected with DNA encoding recombinant genes and stable lines expressing these genes can be readily isolated. These manipulations make P19 cells suitable material for investigating the molecular mechanisms governing developmental decision made by differentiating pl",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.120785+00:00"
+}

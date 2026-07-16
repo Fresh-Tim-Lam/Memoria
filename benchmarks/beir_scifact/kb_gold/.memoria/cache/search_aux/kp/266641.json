@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "266641",
+  "source_fingerprint": "f8ea35b04680934122e8d41bd7452ea2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "266641",
+    "cd127-expression-inversely-correlates-with-foxp3-and-suppressive-function-of-human-cd4+-t-reg-cells"
+  ],
+  "key_phrases": [
+    "cd127",
+    "expression",
+    "inversely",
+    "correlates",
+    "with",
+    "foxp3",
+    "suppressive",
+    "function"
+  ],
+  "summary_1l": "Regulatory T (T reg) cells are critical regulators of immune tolerance.",
+  "query_hits": [],
+  "embed_text": "266641 CD127 expression inversely correlates with FoxP3 and suppressive function of human CD4+ T reg cells science scifact Regulatory T (T reg) cells are critical regulators of immune tolerance. Most T reg cells are defined based on expression of CD4, CD25, and the transcription factor, FoxP3. However, these markers have proven problematic for uniquely… 266641 cd127-expression-inversely-correlates-with-foxp3-and-suppressive-function-of-human-cd4+-t-reg-cells cd127 expression inversely correlates with foxp3 suppressive function Regulatory T (T reg) cells are critical regulators of immune tolerance. CD127 expression inversely correlates with FoxP3 and suppressive function of human CD4+ T reg cells Regulatory T (T reg) cells are critical regulators of immune tolerance. Most T reg cells are defined based on expression of CD4, CD25, and the transcription factor, FoxP3. However, these markers have proven problematic for uniquely defining this specialized T cell subset in humans. We found that the IL-7 receptor (CD127) is down-regulated on a subset of CD4+ T cells in peripheral blood. We demonstrate that the majority of these cells are FoxP3+, including those that express low levels or no CD25. A combination of CD4, CD25, and CD127 resulted in a highly purified population of T reg cells accounting for significantly more cells that previously identified based on other cell surface markers.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.002539+00:00"
+}

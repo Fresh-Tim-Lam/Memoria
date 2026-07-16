@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19854744",
+  "source_fingerprint": "53573838ccf2cfe8c5069ed3c9909a9e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19854744",
+    "a-search-for-the-presence-of-the-enteroviral-capsid-protein-vp1-in-pancreases-of-patients-with-type-1-(insulin-dependent)-diabetes-and-pancreases-and-hearts-of-infants-who-died-of-coxsackieviral-myocarditis"
+  ],
+  "key_phrases": [
+    "search",
+    "presence",
+    "enteroviral",
+    "capsid",
+    "protein",
+    "vp1",
+    "pancreases",
+    "patients"
+  ],
+  "summary_1l": "A search for the presence of the enteroviral capsid protein VP1 in pancreases of patients with Type 1 (insulin-dependent) diabetes and pancreases and hearts of infants who died of coxsackieviral myoca",
+  "query_hits": [],
+  "embed_text": "19854744 A search for the presence of the enteroviral capsid protein VP1 in pancreases of patients with Type 1 (insulin-dependent) diabetes and pancreases and hearts of infants who died of coxsackieviral myocarditis science scifact Using an antiserum raised to a recombinant coxsackie virus B3 capsid protein, VP1, an immunocytochemical technique was developed which was capable of detecting the presence of all coxsackie B viruses in formalin fixed paraffin embedded… 19854744 a-search-for-the-presence-of-the-enteroviral-capsid-protein-vp1-in-pancreases-of-patients-with-type-1-(insulin-dependent)-diabetes-and-pancreases-and-hearts-of-infants-who-died-of-coxsackieviral-myocarditis search presence enteroviral capsid protein vp1 pancreases patients A search for the presence of the enteroviral capsid protein VP1 in pancreases of patients with Type 1 (insulin-dependent) diabetes and pancreases and hearts of infants who died of coxsackieviral myoca A search for the presence of the enteroviral capsid protein VP1 in pancreases of patients with Type 1 (insulin-dependent) diabetes and pancreases and hearts of infants who died of coxsackieviral myocarditis Using an antiserum raised to a recombinant coxsackie virus B3 capsid protein, VP1, an immunocytochemical technique was developed which was capable of detecting the presence of all coxsackie B viruses in formalin fixed paraffin embedded infected tissue culture cells. This technique was tested on autopsy heart and pancreas from 21 patients who were thought to have died of acute coxsackievirus B myocarditis. Cardiac myocytes were positive for the VP1 protein in 12 of 20 cases where the heart was available for study. Insulitis was present in the pancreas in seven of these cases and in all s",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.318134+00:00"
+}

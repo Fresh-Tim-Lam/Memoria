@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12705056",
+  "source_fingerprint": "87fa07f7b0207dea41dbad60f32fe3b1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12705056",
+    "cytokines-and-anti-cytokine-biologicals-in-autoimmunity:-present-and-future."
+  ],
+  "key_phrases": [
+    "cytokines",
+    "anti",
+    "cytokine",
+    "biologicals",
+    "autoimmunity",
+    "present",
+    "future",
+    "increasing"
+  ],
+  "summary_1l": "Cytokines and anti-cytokine biologicals in autoimmunity: present and future.",
+  "query_hits": [],
+  "embed_text": "12705056 Cytokines and anti-cytokine biologicals in autoimmunity: present and future. science scifact The increasing understanding of the role of cytokines in autoimmunity, and the observation that tumour necrosis factor alpha (TNFalpha) is central to the inflammatory and destructive process common to several human autoimmune diseases, has… 12705056 cytokines-and-anti-cytokine-biologicals-in-autoimmunity:-present-and-future. cytokines anti cytokine biologicals autoimmunity present future increasing Cytokines and anti-cytokine biologicals in autoimmunity: present and future. Cytokines and anti-cytokine biologicals in autoimmunity: present and future. The increasing understanding of the role of cytokines in autoimmunity, and the observation that tumour necrosis factor alpha (TNFalpha) is central to the inflammatory and destructive process common to several human autoimmune diseases, has led to a new generation of therapeutics, the TNFalpha blocking agents. In this article, we review the current knowledge of the role of cytokines in autoimmunity as unravelled by studies both in the laboratory and the clinic. In addition, we discuss future prospects of the anti-TNFalpha therapy that may involve combination therapy with other anti-cytokine or anti-T cell biologicals, or the use of small chemicals targeting molecules involved in TNFalpha production such as NF-kappa",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:09.440771+00:00"
+}

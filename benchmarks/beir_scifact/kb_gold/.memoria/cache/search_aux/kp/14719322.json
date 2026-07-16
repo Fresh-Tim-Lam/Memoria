@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14719322",
+  "source_fingerprint": "1c0f9249b77273adab685f8c892e9387",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14719322",
+    "decoding-of-cytoplasmic-ca2+-oscillations-through-the-spatial-signature-drives-gene-expression"
+  ],
+  "key_phrases": [
+    "decoding",
+    "cytoplasmic",
+    "ca2",
+    "oscillations",
+    "through",
+    "spatial",
+    "signature",
+    "drives"
+  ],
+  "summary_1l": "Cytoplasmic Ca(2+) oscillations are a universal signaling mode that activates numerous cellular responses",
+  "query_hits": [],
+  "embed_text": "14719322 Decoding of Cytoplasmic Ca2+ Oscillations through the Spatial Signature Drives Gene Expression science scifact Cytoplasmic Ca(2+) oscillations are a universal signaling mode that activates numerous cellular responses [1, 2]. Oscillations are considered the physiological mechanism of Ca(2+) signaling because they occur at low levels of stimulus… 14719322 decoding-of-cytoplasmic-ca2+-oscillations-through-the-spatial-signature-drives-gene-expression decoding cytoplasmic ca2 oscillations through spatial signature drives Cytoplasmic Ca(2+) oscillations are a universal signaling mode that activates numerous cellular responses Decoding of Cytoplasmic Ca2+ Oscillations through the Spatial Signature Drives Gene Expression Cytoplasmic Ca(2+) oscillations are a universal signaling mode that activates numerous cellular responses [1, 2]. Oscillations are considered the physiological mechanism of Ca(2+) signaling because they occur at low levels of stimulus intensity [3]. Ca(2+) oscillations are proposed to convey information in their amplitude and frequency, leading to activation of specific downstream targets [4-6]. Here, we report that the spatial Ca(2+) gradient within the oscillation is key. Ca(2+) oscillations in mast cells evoked over a range of agonist concentrations in the presence of external Ca(2+) were indistinguishable from those in the absence of Ca(2+) when plasmalemmal Ca(2+) extrusion was suppressed. N",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.540501+00:00"
+}

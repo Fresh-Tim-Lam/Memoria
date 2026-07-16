@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6176498",
+  "source_fingerprint": "7606e1be40ffaf2d5306f0060969b2e8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6176498",
+    "biomarkers-of-endothelial-dysfunction-and-risk-of-type-2-diabetes-mellitus."
+  ],
+  "key_phrases": [
+    "biomarkers",
+    "endothelial",
+    "dysfunction",
+    "risk",
+    "type",
+    "diabetes",
+    "mellitus",
+    "context"
+  ],
+  "summary_1l": "Biomarkers of endothelial dysfunction and risk of type 2 diabetes mellitus.",
+  "query_hits": [],
+  "embed_text": "6176498 Biomarkers of endothelial dysfunction and risk of type 2 diabetes mellitus. science scifact CONTEXT Endothelial dysfunction occurs in diagnosed type 2 diabetes mellitus but may also precede development of diabetes. OBJECTIVE To determine whether elevated plasma levels of biomarkers reflecting endothelial dysfunction (E-selectin;… 6176498 biomarkers-of-endothelial-dysfunction-and-risk-of-type-2-diabetes-mellitus. biomarkers endothelial dysfunction risk type diabetes mellitus context Biomarkers of endothelial dysfunction and risk of type 2 diabetes mellitus. Biomarkers of endothelial dysfunction and risk of type 2 diabetes mellitus. CONTEXT Endothelial dysfunction occurs in diagnosed type 2 diabetes mellitus but may also precede development of diabetes. OBJECTIVE To determine whether elevated plasma levels of biomarkers reflecting endothelial dysfunction (E-selectin; intercellular adhesion molecule 1 [ICAM-1]; and vascular cell adhesion molecule 1 [VCAM-1]) predict development of type 2 diabetes in initially nondiabetic women. DESIGN AND SETTING Prospective, nested case-control study within the Nurses' Health Study, an ongoing US study initiated in 1976. PARTICIPANTS Of 121 700 women initially enrolled, 32 826 provided blood samples in 1989-1990; of those free of diabetes, cardiovascular disease, or cancer at baseline, 737 developed incident d",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.207479+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6535392",
+  "source_fingerprint": "9496d7ecd56c8bf124b0db6829840737",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6535392",
+    "sirna-specificity-searching-incorporating-mismatch-tolerance-data."
+  ],
+  "key_phrases": [
+    "sirna",
+    "specificity",
+    "searching",
+    "incorporating",
+    "mismatch",
+    "tolerance",
+    "data",
+    "unlabelled"
+  ],
+  "summary_1l": "siRNA specificity searching incorporating mismatch tolerance data.",
+  "query_hits": [],
+  "embed_text": "6535392 siRNA specificity searching incorporating mismatch tolerance data. science scifact UNLABELLED Artificially synthesized short interfering RNAs (siRNAs) are widely used in functional genomics to knock down specific target genes. One ongoing challenge is to guarantee that the siRNA does not elicit off-target effects.… 6535392 sirna-specificity-searching-incorporating-mismatch-tolerance-data. sirna specificity searching incorporating mismatch tolerance data unlabelled siRNA specificity searching incorporating mismatch tolerance data. siRNA specificity searching incorporating mismatch tolerance data. UNLABELLED Artificially synthesized short interfering RNAs (siRNAs) are widely used in functional genomics to knock down specific target genes. One ongoing challenge is to guarantee that the siRNA does not elicit off-target effects. Initial reports suggested that siRNAs were highly sequence-specific; however, subsequent data indicates that this is not necessarily the case. It is still uncertain what level of similarity and other rules are required for an off-target effect to be observed, and scoring schemes have not been developed to look beyond simple measures such as the number of mismatches or the number of consecutive matching bases present. We created design rules for predicting the likelihood of a non-specific effect",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.131054+00:00"
+}

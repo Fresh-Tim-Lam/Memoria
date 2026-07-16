@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "42865134",
+  "source_fingerprint": "b315a49da081d14e7388674c885d1c55",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "42865134",
+    "essential-role-for-the-sant-domain-in-the-functioning-of-multiple-chromatin-remodeling-enzymes."
+  ],
+  "key_phrases": [
+    "essential",
+    "role",
+    "sant",
+    "domain",
+    "functioning",
+    "multiple",
+    "chromatin",
+    "remodeling"
+  ],
+  "summary_1l": "Essential role for the SANT domain in the functioning of multiple chromatin remodeling enzymes.",
+  "query_hits": [],
+  "embed_text": "42865134 Essential role for the SANT domain in the functioning of multiple chromatin remodeling enzymes. science scifact The SANT domain is a novel motif found in a number of eukaryotic transcriptional regulatory proteins that was identified based on its homology to the DNA binding domain of c-myb. Here we show that the SANT domain is essential for the in… 42865134 essential-role-for-the-sant-domain-in-the-functioning-of-multiple-chromatin-remodeling-enzymes. essential role sant domain functioning multiple chromatin remodeling Essential role for the SANT domain in the functioning of multiple chromatin remodeling enzymes. Essential role for the SANT domain in the functioning of multiple chromatin remodeling enzymes. The SANT domain is a novel motif found in a number of eukaryotic transcriptional regulatory proteins that was identified based on its homology to the DNA binding domain of c-myb. Here we show that the SANT domain is essential for the in vivo functions of yeast Swi3p, Ada2p, and Rsc8p, subunits of three distinct chromatin remodeling complexes. We also find that the Ada2p SANT domain is essential for histone acetyltransferase activity of native, Gcn5p-containing HAT complexes. Furthermore, kinetic analyses indicate that an intact SANT domain is required for an Ada2p-dependent enhancement of histone tail binding and enzymatic catalysis by Gcn5p. Our results are consistent with a general role for SA",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.300498+00:00"
+}

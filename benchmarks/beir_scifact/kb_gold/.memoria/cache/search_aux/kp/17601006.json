@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17601006",
+  "source_fingerprint": "73a1ee7d95ba09e4093c90c372d1df6e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17601006",
+    "centrosome-dependent-asymmetric-inheritance-of-the-midbody-ring-in-drosophila-germline-stem-cell-division"
+  ],
+  "key_phrases": [
+    "centrosome",
+    "dependent",
+    "asymmetric",
+    "inheritance",
+    "midbody",
+    "ring",
+    "drosophila",
+    "germline"
+  ],
+  "summary_1l": "Many stem cells, including Drosophila germline stem cells (GSCs), divide asymmetrically, produ",
+  "query_hits": [],
+  "embed_text": "17601006 Centrosome-dependent asymmetric inheritance of the midbody ring in Drosophila germline stem cell division science scifact Many stem cells, including Drosophila germline stem cells (GSCs), divide asymmetrically, producing one stem cell and one differentiating daughter. Cytokinesis is often asymmetric, in that only one daughter cell inherits the midbody ring… 17601006 centrosome-dependent-asymmetric-inheritance-of-the-midbody-ring-in-drosophila-germline-stem-cell-division centrosome dependent asymmetric inheritance midbody ring drosophila germline Many stem cells, including Drosophila germline stem cells (GSCs), divide asymmetrically, produ Centrosome-dependent asymmetric inheritance of the midbody ring in Drosophila germline stem cell division Many stem cells, including Drosophila germline stem cells (GSCs), divide asymmetrically, producing one stem cell and one differentiating daughter. Cytokinesis is often asymmetric, in that only one daughter cell inherits the midbody ring (MR) upon completion of abscission even in apparently symmetrically dividing cells. However, whether the asymmetry in cytokinesis correlates with cell fate or has functional relevance has been poorly explored. Here we show that the MR is asymmetrically segregated during GSC divisions in a centrosome age-dependent manner: male GSCs, which inherit the mother centrosome, exclude the MR, whereas female GSCs, which we here show inherit the daughter centrosom",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.995616+00:00"
+}

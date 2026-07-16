@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "17438862",
+  "source_fingerprint": "06fdd011e9cc1065c579ae5c47c74f7f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17438862"
+  ],
+  "key_phrases": [
+    "local",
+    "neuroinflammation",
+    "progression",
+    "alzheimer",
+    "disease",
+    "postmortem",
+    "immunohistochemical",
+    "studies"
+  ],
+  "summary_1l": "Postmortem immunohistochemical studies have revealed a state of chronic inflammation limited to lesioned areas of brain in Alzheimer’",
+  "query_hits": [],
+  "embed_text": "17438862 Local neuroinflammation and the progression of Alzheimer’s disease science scifact Postmortem immunohistochemical studies have revealed a state of chronic inflammation limited to lesioned areas of brain in Alzheimer’s disease. Some key actors in this inflammation are activated microglia (brain macrophages), proteins of… 17438862 local neuroinflammation progression alzheimer disease postmortem immunohistochemical studies Postmortem immunohistochemical studies have revealed a state of chronic inflammation limited to lesioned areas of brain in Alzheimer’ Local neuroinflammation and the progression of Alzheimer’s disease Postmortem immunohistochemical studies have revealed a state of chronic inflammation limited to lesioned areas of brain in Alzheimer’s disease. Some key actors in this inflammation are activated microglia (brain macrophages), proteins of the classical complement cascade, the pentraxins, cytokines, and chemokines. The inflammation does not involve the adaptive immune system or peripheral organs, but is rather due to the phylogenetically much older innate immune system, which appears to operate in most tissues of the body. Chronic inflammation can damage host tissue and the brain may be particularly vulnerable because of the postmitotic nature of neurons. Many of the inflammatory mediators have been shown to be locally produc",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.737445+00:00"
+}

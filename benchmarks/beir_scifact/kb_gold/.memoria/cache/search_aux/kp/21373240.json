@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21373240",
+  "source_fingerprint": "aeff66a7417b06e1b7fc2d88ef9c2af4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21373240",
+    "functional-specialization-of-piwi-proteins-in-paramecium-tetraurelia-from-post-transcriptional-gene-silencing-to-genome-remodelling"
+  ],
+  "key_phrases": [
+    "functional",
+    "specialization",
+    "piwi",
+    "proteins",
+    "paramecium",
+    "tetraurelia",
+    "from",
+    "post"
+  ],
+  "summary_1l": "Proteins of the Argonaute family are small RNA carriers that guide r",
+  "query_hits": [],
+  "embed_text": "21373240 Functional specialization of Piwi proteins in Paramecium tetraurelia from post-transcriptional gene silencing to genome remodelling science scifact Proteins of the Argonaute family are small RNA carriers that guide regulatory complexes to their targets. The family comprises two major subclades. Members of the Ago subclade, which are present in most eukaryotic phyla, bind different… 21373240 functional-specialization-of-piwi-proteins-in-paramecium-tetraurelia-from-post-transcriptional-gene-silencing-to-genome-remodelling functional specialization piwi proteins paramecium tetraurelia from post Proteins of the Argonaute family are small RNA carriers that guide r Functional specialization of Piwi proteins in Paramecium tetraurelia from post-transcriptional gene silencing to genome remodelling Proteins of the Argonaute family are small RNA carriers that guide regulatory complexes to their targets. The family comprises two major subclades. Members of the Ago subclade, which are present in most eukaryotic phyla, bind different classes of small RNAs and regulate gene expression at both transcriptional and post-transcriptional levels. Piwi subclade members appear to have been lost in plants and fungi and were mostly studied in metazoa, where they bind piRNAs and have essential roles in sexual reproduction. Their presence in ciliates, unicellular organisms harbouring both germline micronuclei and somatic macronuclei, offers an interesting perspective on",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.907054+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14386505",
+  "source_fingerprint": "6f3bfdf3a503144659cbf49656c0d579",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14386505",
+    "regulation-of-myeloid-cell-function-through-the-cd200-receptor."
+  ],
+  "key_phrases": [
+    "regulation",
+    "myeloid",
+    "cell",
+    "function",
+    "through",
+    "cd200",
+    "receptor",
+    "cells"
+  ],
+  "summary_1l": "Regulation of myeloid cell function through the CD200 receptor.",
+  "query_hits": [],
+  "embed_text": "14386505 Regulation of myeloid cell function through the CD200 receptor. science scifact Myeloid cells play pivotal roles in chronic inflammatory diseases through their broad proinflammatory, destructive, and remodeling capacities. CD200 is widely expressed on a variety of cell types, while the recently identified CD200R is… 14386505 regulation-of-myeloid-cell-function-through-the-cd200-receptor. regulation myeloid cell function through cd200 receptor cells Regulation of myeloid cell function through the CD200 receptor. Regulation of myeloid cell function through the CD200 receptor. Myeloid cells play pivotal roles in chronic inflammatory diseases through their broad proinflammatory, destructive, and remodeling capacities. CD200 is widely expressed on a variety of cell types, while the recently identified CD200R is expressed on myeloid cells and T cells. CD200 deletion in vivo results in myeloid cell dysregulation and enhanced susceptibility to autoimmune inflammation, suggesting that the CD200-CD200R interaction is involved in immune suppression. We demonstrate in this study that CD200R agonists suppress mouse and human myeloid cell function in vitro, and also define a dose relationship between receptor expression and cellular inhibition. IFN-gamma- and IL-17-stimulated cytokine secretion from mouse peri",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.758860+00:00"
+}

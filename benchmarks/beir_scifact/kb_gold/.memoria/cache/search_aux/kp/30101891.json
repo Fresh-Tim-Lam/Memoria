@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "30101891",
+  "source_fingerprint": "334a91f0c145acdfee9cf1bd81bd8a98",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "30101891",
+    "intravenous-valproate-is-well-tolerated-in-unstable-patients-with-status-epilepticus."
+  ],
+  "key_phrases": [
+    "intravenous",
+    "valproate",
+    "well",
+    "tolerated",
+    "unstable",
+    "patients",
+    "with",
+    "status"
+  ],
+  "summary_1l": "Intravenous valproate is well tolerated in unstable patients with status epilepticus.",
+  "query_hits": [],
+  "embed_text": "30101891 Intravenous valproate is well tolerated in unstable patients with status epilepticus. science scifact The authors reviewed hospital records of 13 patients with status epilepticus and hypotension who received IV valproate therapy. Most patients were elderly (74.4 +/- 12.5 [SD] years) and received a loading dose of valproate of 25.1 +/- 5.0… 30101891 intravenous-valproate-is-well-tolerated-in-unstable-patients-with-status-epilepticus. intravenous valproate well tolerated unstable patients with status Intravenous valproate is well tolerated in unstable patients with status epilepticus. Intravenous valproate is well tolerated in unstable patients with status epilepticus. The authors reviewed hospital records of 13 patients with status epilepticus and hypotension who received IV valproate therapy. Most patients were elderly (74.4 +/- 12.5 [SD] years) and received a loading dose of valproate of 25.1 +/- 5.0 mg/kg (range 14.7 to 32.7), at a rate of 36.6 +/- 25.1 mg/min (range 6.3 to 100). There were no significant changes in blood pressure, pulse, or use of vasopressors. The data suggest that valproate loading is well tolerated, even in patients with cardiovascular instability.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.410823+00:00"
+}

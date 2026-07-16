@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20368353",
+  "source_fingerprint": "8f7273140757e5239460f65a8691a01e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20368353",
+    "a-two-step-mechanism-for-epigenetic-specification-of-centromere-identity-and-function"
+  ],
+  "key_phrases": [
+    "two",
+    "step",
+    "mechanism",
+    "epigenetic",
+    "specification",
+    "centromere",
+    "identity",
+    "function"
+  ],
+  "summary_1l": "The basic determinant of chromosome inheritance, the centromere, is specified in many eukaryotes by an epigenetic",
+  "query_hits": [],
+  "embed_text": "20368353 A two-step mechanism for epigenetic specification of centromere identity and function science scifact The basic determinant of chromosome inheritance, the centromere, is specified in many eukaryotes by an epigenetic mark. Using gene targeting in human cells and fission yeast, chromatin containing the centromere-specific histone H3 variant… 20368353 a-two-step-mechanism-for-epigenetic-specification-of-centromere-identity-and-function two step mechanism epigenetic specification centromere identity function The basic determinant of chromosome inheritance, the centromere, is specified in many eukaryotes by an epigenetic A two-step mechanism for epigenetic specification of centromere identity and function The basic determinant of chromosome inheritance, the centromere, is specified in many eukaryotes by an epigenetic mark. Using gene targeting in human cells and fission yeast, chromatin containing the centromere-specific histone H3 variant CENP-A is demonstrated to be the epigenetic mark that acts through a two-step mechanism to identify, maintain and propagate centromere function indefinitely. Initially, centromere position is replicated and maintained by chromatin assembled with the centromere-targeting domain (CATD) of CENP-A substituted into H3. Subsequently, nucleation of kinetochore assembly onto CATD-containing chromatin is shown to require either the amino- or carboxy-terminal tail of CENP-A for re",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.129253+00:00"
+}

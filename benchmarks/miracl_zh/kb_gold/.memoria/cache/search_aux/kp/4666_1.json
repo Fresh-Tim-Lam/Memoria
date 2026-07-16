@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "4666#1",
+  "source_fingerprint": "467cf346c4f5a8b95e4aaa749d8eef1c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4666#1"
+  ],
+  "key_phrases": [
+    "光绪",
+    "同治",
+    "十三年",
+    "十二月",
+    "五日",
+    "1875",
+    "12",
+    "穆宗"
+  ],
+  "summary_1l": "同治十三年十二月五日（1875年1月12日），清穆宗驾崩。",
+  "query_hits": [],
+  "embed_text": "4666#1 光绪 光绪 同治十三年十二月五日（1875年1月12日），清穆宗驾崩。此时距翌年正月初一日还有二十四天（同治十三年十二月是小尽，只有二十九天），群臣拟定光绪、承熙、绍德、延道四个备选年号，并附满语。十二月九日（1875年1月16日），两宫皇太后硃笔落点“光绪”。 4666#1 光绪 同治 十三年 十二月 五日 1875 12 穆宗 同治十三年十二月五日（1875年1月12日），清穆宗驾崩。 光绪 同治十三年十二月五日（1875年1月12日），清穆宗驾崩。此时距翌年正月初一日还有二十四天（同治十三年十二月是小尽，只有二十九天），群臣拟定光绪、承熙、绍德、延道四个备选年号，并附满语。十二月九日（1875年1月16日），两宫皇太后硃笔落点“光绪”。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:18:15.001144+00:00"
+}

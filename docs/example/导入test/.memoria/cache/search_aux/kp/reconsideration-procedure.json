@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "kp_id": "reconsideration-procedure",
+  "source_fingerprint": "6fd1fe10532ece2b6a9d3948a64e9bf4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "reconsideration-procedure"
+  ],
+  "key_phrases": [
+    "行政复议",
+    "xingzhengfuyi"
+  ],
+  "summary_1l": "行政复议",
+  "query_hits": [],
+  "embed_text": "reconsideration-procedure 行政复议程序 行政法 行政复议 普通程序 简易程序 特别程序 申请 受理 审理 决定 reconsideration-procedure 行政复议 xingzhengfuyi 行政复议 行政复议",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-16T05:57:15.621235+00:00"
+}

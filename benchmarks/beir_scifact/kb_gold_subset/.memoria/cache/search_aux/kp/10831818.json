@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10831818",
+  "source_fingerprint": "4096ea2da4fb5a1590a014b341bd4dd8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10831818",
+    "central-role-of-th2/tc2-lymphocytes-in-pattern-ii-multiple-sclerosis-lesions"
+  ],
+  "key_phrases": [
+    "central",
+    "role",
+    "th2",
+    "tc2",
+    "lymphocytes",
+    "pattern",
+    "ii",
+    "multiple"
+  ],
+  "summary_1l": "OBJECTIVE Multiple sclerosis (MS) is a disease of the central nervous system with marked heterogeneity in several aspects i",
+  "query_hits": [],
+  "embed_text": "10831818 Central role of Th2/Tc2 lymphocytes in pattern II multiple sclerosis lesions science scifact OBJECTIVE Multiple sclerosis (MS) is a disease of the central nervous system with marked heterogeneity in several aspects including pathological processes. Based on infiltrating immune cells, deposition of humoral factors and loss of… 10831818 central-role-of-th2/tc2-lymphocytes-in-pattern-ii-multiple-sclerosis-lesions central role th2 tc2 lymphocytes pattern ii multiple OBJECTIVE Multiple sclerosis (MS) is a disease of the central nervous system with marked heterogeneity in several aspects i Central role of Th2/Tc2 lymphocytes in pattern II multiple sclerosis lesions OBJECTIVE Multiple sclerosis (MS) is a disease of the central nervous system with marked heterogeneity in several aspects including pathological processes. Based on infiltrating immune cells, deposition of humoral factors and loss of oligodendrocytes and/or myelin proteins, four lesion patterns have been described. Pattern II is characterized by antibody and complement deposition in addition to T-cell infiltration. MS is considered a T-cell-mediated disease, but until now the study of pathogenic T cells has encountered major challenges, most importantly the limited access of brain-infiltrating T cells. Our objective was to identify, isolate, and characterize brain-infiltrating clonally expanded T cells in pattern",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:06.011278+00:00"
+}

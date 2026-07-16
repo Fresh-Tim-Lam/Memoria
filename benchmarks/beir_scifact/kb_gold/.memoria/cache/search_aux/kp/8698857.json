@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "8698857",
+  "source_fingerprint": "461d2a804ef31e6773c35f3c328bc240",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8698857"
+  ],
+  "key_phrases": [
+    "p38",
+    "mk2",
+    "driven",
+    "exchange",
+    "between",
+    "tristetraprolin",
+    "hur",
+    "regulates"
+  ],
+  "summary_1l": "TNF expression of macrophages is under stringent translational control that depends on the p",
+  "query_hits": [],
+  "embed_text": "8698857 The p38/MK2-Driven Exchange between Tristetraprolin and HuR Regulates AU–Rich Element–Dependent Translation science scifact TNF expression of macrophages is under stringent translational control that depends on the p38 MAPK/MK2 pathway and the AU-rich element (ARE) in the TNF mRNA. Here, we elucidate the molecular mechanism of phosphorylation-regulated… 8698857 p38 mk2 driven exchange between tristetraprolin hur regulates TNF expression of macrophages is under stringent translational control that depends on the p The p38/MK2-Driven Exchange between Tristetraprolin and HuR Regulates AU–Rich Element–Dependent Translation TNF expression of macrophages is under stringent translational control that depends on the p38 MAPK/MK2 pathway and the AU-rich element (ARE) in the TNF mRNA. Here, we elucidate the molecular mechanism of phosphorylation-regulated translation of TNF. We demonstrate that translation of the TNF-precursor at the ER requires expression of the ARE-binding and -stabilizing factor human antigen R (HuR) together with either activity of the p38 MAPK/MK2 pathway or the absence of the ARE-binding and -destabilizing factor tristetraprolin (TTP). We show that phosphorylation of TTP by MK2 decreases its affinity to the ARE, inhibits its ability to replace HuR, and permits HuR-mediated initiation o",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.512748+00:00"
+}

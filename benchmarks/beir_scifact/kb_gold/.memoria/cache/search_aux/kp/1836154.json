@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1836154",
+  "source_fingerprint": "1106c7decb2ac242b17f5c10a9c818a6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1836154",
+    "comprehensive-genomic-characterization-defines-human-glioblastoma-genes-and-core-pathways"
+  ],
+  "key_phrases": [
+    "comprehensive",
+    "genomic",
+    "characterization",
+    "defines",
+    "human",
+    "glioblastoma",
+    "genes",
+    "core"
+  ],
+  "summary_1l": "Human cancer cells typically harbour multiple chromosomal aberrations, nucleotide substitutions and epigenetic",
+  "query_hits": [],
+  "embed_text": "1836154 Comprehensive genomic characterization defines human glioblastoma genes and core pathways science scifact Human cancer cells typically harbour multiple chromosomal aberrations, nucleotide substitutions and epigenetic modifications that drive malignant transformation. The Cancer Genome Atlas ( TCGA) pilot project aims to assess the value of… 1836154 comprehensive-genomic-characterization-defines-human-glioblastoma-genes-and-core-pathways comprehensive genomic characterization defines human glioblastoma genes core Human cancer cells typically harbour multiple chromosomal aberrations, nucleotide substitutions and epigenetic Comprehensive genomic characterization defines human glioblastoma genes and core pathways Human cancer cells typically harbour multiple chromosomal aberrations, nucleotide substitutions and epigenetic modifications that drive malignant transformation. The Cancer Genome Atlas ( TCGA) pilot project aims to assess the value of large- scale multi- dimensional analysis of these molecular characteristics in human cancer and to provide the data rapidly to the research community. Here we report the interim integrative analysis of DNA copy number, gene expression and DNA methylation aberrations in 206 glioblastomas - the most common type of primary adult brain cancer - and nucleotide sequence aberrations in 91 of the 206 glioblastomas. This analysis provides new insights into the roles of ERBB2, NF",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.170828+00:00"
+}

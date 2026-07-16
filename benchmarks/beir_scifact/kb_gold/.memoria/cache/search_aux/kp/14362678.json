@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "14362678",
+  "source_fingerprint": "ab494e95d9088bc20e1d56bfbc3d32bb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14362678"
+  ],
+  "key_phrases": [
+    "camkii",
+    "induces",
+    "permeability",
+    "transition",
+    "through",
+    "drp1",
+    "phosphorylation",
+    "during"
+  ],
+  "summary_1l": "Mitochondrial permeability transition pore (mPTP) is involved in cardiac dysfunction during chronic",
+  "query_hits": [],
+  "embed_text": "14362678 CaMKII induces permeability transition through Drp1 phosphorylation during chronic β-AR stimulation science scifact Mitochondrial permeability transition pore (mPTP) is involved in cardiac dysfunction during chronic β-adrenergic receptor (β-AR) stimulation. The mechanism by which chronic β-AR stimulation leads to mPTP openings is elusive. Here, we show… 14362678 camkii induces permeability transition through drp1 phosphorylation during Mitochondrial permeability transition pore (mPTP) is involved in cardiac dysfunction during chronic CaMKII induces permeability transition through Drp1 phosphorylation during chronic β-AR stimulation Mitochondrial permeability transition pore (mPTP) is involved in cardiac dysfunction during chronic β-adrenergic receptor (β-AR) stimulation. The mechanism by which chronic β-AR stimulation leads to mPTP openings is elusive. Here, we show that chronic administration of isoproterenol (ISO) persistently increases the frequency of mPTP openings followed by mitochondrial damage and cardiac dysfunction. Mechanistically, this effect is mediated by phosphorylation of mitochondrial fission protein, dynamin-related protein 1 (Drp1), by Ca2+/calmodulin-dependent kinase II (CaMKII) at a serine 616 (S616) site. Mutating this phosphorylation site or inhibiting Drp1 activity blocks CaMKII- or ISO-induced",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.689425+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "35768199",
+  "source_fingerprint": "f612baf34767f7d630d58f5e2a40eda5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "35768199",
+    "methanosphaera-stadtmaniae-gen.-nov.,-sp.-nov.:-a-species-that-forms-methane-by-reducing-methanol-with-hydrogen"
+  ],
+  "key_phrases": [
+    "methanosphaera",
+    "stadtmaniae",
+    "gen",
+    "nov",
+    "sp",
+    "species",
+    "that",
+    "forms"
+  ],
+  "summary_1l": "Methanosphaera stadtmaniae gen.",
+  "query_hits": [],
+  "embed_text": "35768199 Methanosphaera stadtmaniae gen. nov., sp. nov.: a species that forms methane by reducing methanol with hydrogen science scifact Methanosphaera stadtmaniae is a non-motile, Gram-positive spherical-shaped organism that obtains energy for growth by using hydrogen to reduce methanol to methane. It does not produce methane from hydrogen and carbon dioxide, formate,… 35768199 methanosphaera-stadtmaniae-gen.-nov.,-sp.-nov.:-a-species-that-forms-methane-by-reducing-methanol-with-hydrogen methanosphaera stadtmaniae gen nov sp species that forms Methanosphaera stadtmaniae gen. Methanosphaera stadtmaniae gen. nov., sp. nov.: a species that forms methane by reducing methanol with hydrogen Methanosphaera stadtmaniae is a non-motile, Gram-positive spherical-shaped organism that obtains energy for growth by using hydrogen to reduce methanol to methane. It does not produce methane from hydrogen and carbon dioxide, formate, acetate or methylamines and cannot grow with hydrogen and carbon monoxide, nitrate, fumarate, sulfate or choline. Its pH optimum is 6.5 to 6.9 and its temperature optimum is 36° to 40° C. It is not inhibited by bile salts, inhibitors of the synthesis of folic acid coenzymes, cephalothin or clindamycin but is inhibited by metronidazole, bacitracin, monensin, lasalocid, or bromoethanesulfonate. It requires acetate, carbon dioxide, isoleucine, ammonium",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.616444+00:00"
+}

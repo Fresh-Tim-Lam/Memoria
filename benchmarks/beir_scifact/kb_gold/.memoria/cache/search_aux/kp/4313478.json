@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4313478",
+  "source_fingerprint": "9838988b4b50e83f315b8521e5a16d10",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4313478",
+    "translational-control-of-intron-splicing-in-eukaryotes"
+  ],
+  "key_phrases": [
+    "translational",
+    "control",
+    "intron",
+    "splicing",
+    "eukaryotes",
+    "most",
+    "eukaryotic",
+    "genes"
+  ],
+  "summary_1l": "Most eukaryotic genes are interrupted by non-coding introns that must be accurately removed from pre-messenger RNAs to produce translatable mRNAs",
+  "query_hits": [],
+  "embed_text": "4313478 Translational control of intron splicing in eukaryotes science scifact Most eukaryotic genes are interrupted by non-coding introns that must be accurately removed from pre-messenger RNAs to produce translatable mRNAs. Splicing is guided locally by short conserved sequences, but genes typically contain many… 4313478 translational-control-of-intron-splicing-in-eukaryotes translational control intron splicing eukaryotes most eukaryotic genes Most eukaryotic genes are interrupted by non-coding introns that must be accurately removed from pre-messenger RNAs to produce translatable mRNAs Translational control of intron splicing in eukaryotes Most eukaryotic genes are interrupted by non-coding introns that must be accurately removed from pre-messenger RNAs to produce translatable mRNAs. Splicing is guided locally by short conserved sequences, but genes typically contain many potential splice sites, and the mechanisms specifying the correct sites remain poorly understood. In most organisms, short introns recognized by the intron definition mechanism cannot be efficiently predicted solely on the basis of sequence motifs. In multicellular eukaryotes, long introns are recognized through exon definition and most genes produce multiple mRNA variants through alternative splicing. The nonsense-mediated mRNA decay (NMD) pathway may further shape the observed sets of variants by sele",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.501269+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4393153",
+  "source_fingerprint": "4d59d6bd060c17fa3c4bcb20eb994858",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4393153",
+    "molecular-basis-of-rna-dependent-rna-polymerase-ii-activity"
+  ],
+  "key_phrases": [
+    "molecular",
+    "basis",
+    "rna",
+    "dependent",
+    "polymerase",
+    "ii",
+    "activity",
+    "pol"
+  ],
+  "summary_1l": "RNA polymerase (Pol) II catalyses DNA-dependent RNA synthesis during gene transcription.",
+  "query_hits": [],
+  "embed_text": "4393153 Molecular basis of RNA-dependent RNA polymerase II activity science scifact RNA polymerase (Pol) II catalyses DNA-dependent RNA synthesis during gene transcription. There is, however, evidence that Pol II also possesses RNA-dependent RNA polymerase (RdRP) activity. Pol II can use a homopolymeric RNA template, can… 4393153 molecular-basis-of-rna-dependent-rna-polymerase-ii-activity molecular basis rna dependent polymerase ii activity pol RNA polymerase (Pol) II catalyses DNA-dependent RNA synthesis during gene transcription. Molecular basis of RNA-dependent RNA polymerase II activity RNA polymerase (Pol) II catalyses DNA-dependent RNA synthesis during gene transcription. There is, however, evidence that Pol II also possesses RNA-dependent RNA polymerase (RdRP) activity. Pol II can use a homopolymeric RNA template, can extend RNA by several nucleotides in the absence of DNA, and has been implicated in the replication of the RNA genomes of hepatitis delta virus (HDV) and plant viroids. Here we show the intrinsic RdRP activity of Pol II with only pure polymerase, an RNA template–product scaffold and nucleoside triphosphates (NTPs). Crystallography reveals the template–product duplex in the site occupied by the DNA–RNA hybrid during transcription. RdRP activity resides at the active site used during transcription,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.512589+00:00"
+}

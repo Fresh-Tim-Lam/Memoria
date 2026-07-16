@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6751418",
+  "source_fingerprint": "cb7019838d5c7230c12c5759a80fd55c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6751418",
+    "dosimetry-and-risk-estimates-of-radioiodine-therapy-for-large,-multinodular-goiters."
+  ],
+  "key_phrases": [
+    "dosimetry",
+    "risk",
+    "estimates",
+    "radioiodine",
+    "therapy",
+    "large",
+    "multinodular",
+    "goiters"
+  ],
+  "summary_1l": "Dosimetry and risk estimates of radioiodine therapy for large, multinodular goiters.",
+  "query_hits": [],
+  "embed_text": "6751418 Dosimetry and risk estimates of radioiodine therapy for large, multinodular goiters. science scifact UNLABELLED In patients with a large, multinodular goiter (> 100 g), radiation absorbed doses in the thyroid, surrounding tissues and remainder of the body were estimated after therapeutic administration of 131I(3.7 MBq or 100 microCi/g of… 6751418 dosimetry-and-risk-estimates-of-radioiodine-therapy-for-large,-multinodular-goiters. dosimetry risk estimates radioiodine therapy large multinodular goiters Dosimetry and risk estimates of radioiodine therapy for large, multinodular goiters. Dosimetry and risk estimates of radioiodine therapy for large, multinodular goiters. UNLABELLED In patients with a large, multinodular goiter (> 100 g), radiation absorbed doses in the thyroid, surrounding tissues and remainder of the body were estimated after therapeutic administration of 131I(3.7 MBq or 100 microCi/g of thyroid tissue retained at 24 hr). METHODS Thermoluminescent dosimeter (TLD) measurements were performed on 23 patients (12 euthyroid and 1I hyperthyroid; thyroid weight 222 +/- 72 g; 2.1 +/- 0.9 GBq 131I) on the skin over the thyroid, over the submandibular gland and over the parotid gland. Thyroid radioactivity measurements were done daily in 6 euthyroid and 6 hyperthyroid patients (thyroid weight 204 +/- 69 g; 1.9 +/- 0.9 GBq 131I). An iodine biokinetic model and the M",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.585404+00:00"
+}

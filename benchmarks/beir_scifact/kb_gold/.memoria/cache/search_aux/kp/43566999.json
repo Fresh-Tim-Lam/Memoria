@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "43566999",
+  "source_fingerprint": "9692c003a4794362a6e36f41a7028fb6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "43566999",
+    "exercise-blood-flow-patterns-within-and-among-rat-muscles-after-training."
+  ],
+  "key_phrases": [
+    "exercise",
+    "blood",
+    "flow",
+    "patterns",
+    "within",
+    "among",
+    "rat",
+    "muscles"
+  ],
+  "summary_1l": "Exercise blood flow patterns within and among rat muscles after training.",
+  "query_hits": [],
+  "embed_text": "43566999 Exercise blood flow patterns within and among rat muscles after training. science scifact This study was designed to determine the influence of a long-term, moderate-intensity treadmill training program on the distribution of blood flow within and among muscles of rats during exercise. One group (T) of male Sprague-Dawley rats… 43566999 exercise-blood-flow-patterns-within-and-among-rat-muscles-after-training. exercise blood flow patterns within among rat muscles Exercise blood flow patterns within and among rat muscles after training. Exercise blood flow patterns within and among rat muscles after training. This study was designed to determine the influence of a long-term, moderate-intensity treadmill training program on the distribution of blood flow within and among muscles of rats during exercise. One group (T) of male Sprague-Dawley rats trained for 1 h/day for 13-17 wk at 30 m/min on a motor-driven treadmill. A second group (UT) of rats was conditioned for 10 min/day for 4 wk at the same speed. Muscle succinate dehydrogenase activities were higher in T than UT rats indicating a significant training effect. Blood flows (BFs) in 32 hindlimb muscles or muscle parts and other selected organs were measured in the two groups with radiolabeled microspheres during preexercise and while the rats ran for 30 s, 5 min, or 15 m",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.042194+00:00"
+}

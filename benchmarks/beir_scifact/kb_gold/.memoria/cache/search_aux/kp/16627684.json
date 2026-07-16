@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16627684",
+  "source_fingerprint": "29b40e74680dc7b5ea90a281c65531ff",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16627684",
+    "hmga2-promotes-neural-stem-cell-self-renewal-in-young-but-not-old-mice-by-reducing-p16ink4a-and-p19arf-expression"
+  ],
+  "key_phrases": [
+    "hmga2",
+    "promotes",
+    "neural",
+    "stem",
+    "cell",
+    "self",
+    "renewal",
+    "young"
+  ],
+  "summary_1l": "Stem cells persist throughout life in diverse tissues by undergoing self-renewing divi",
+  "query_hits": [],
+  "embed_text": "16627684 Hmga2 Promotes Neural Stem Cell Self-Renewal in Young but Not Old Mice by Reducing p16Ink4a and p19Arf Expression science scifact Stem cells persist throughout life in diverse tissues by undergoing self-renewing divisions. Self-renewal capacity declines with age, partly because of increasing expression of the tumor suppressor p16(Ink4a). We discovered that the Hmga2… 16627684 hmga2-promotes-neural-stem-cell-self-renewal-in-young-but-not-old-mice-by-reducing-p16ink4a-and-p19arf-expression hmga2 promotes neural stem cell self renewal young Stem cells persist throughout life in diverse tissues by undergoing self-renewing divi Hmga2 Promotes Neural Stem Cell Self-Renewal in Young but Not Old Mice by Reducing p16Ink4a and p19Arf Expression Stem cells persist throughout life in diverse tissues by undergoing self-renewing divisions. Self-renewal capacity declines with age, partly because of increasing expression of the tumor suppressor p16(Ink4a). We discovered that the Hmga2 transcriptional regulator is highly expressed in fetal neural stem cells but that expression declines with age. This decrease is partly caused by the increasing expression of let-7b microRNA, which is known to target HMGA2. Hmga2-deficient mice show reduced stem cell numbers and self-renewal throughout the central and peripheral nervous systems of fetal and young-adult mice but not old-adult mice. Furthermore, p16(Ink4a) and p19(Arf) expressio",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.542903+00:00"
+}

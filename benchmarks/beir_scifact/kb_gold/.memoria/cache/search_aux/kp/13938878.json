@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13938878",
+  "source_fingerprint": "805bd4d1a6733c333c4a9ce990057489",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13938878",
+    "clinical-algorithms-for-malaria-diagnosis-lack-utility-among-people-of-different-age-groups."
+  ],
+  "key_phrases": [
+    "clinical",
+    "algorithms",
+    "malaria",
+    "diagnosis",
+    "lack",
+    "utility",
+    "among",
+    "people"
+  ],
+  "summary_1l": "Clinical algorithms for malaria diagnosis lack utility among people of different age groups.",
+  "query_hits": [],
+  "embed_text": "13938878 Clinical algorithms for malaria diagnosis lack utility among people of different age groups. science scifact We conducted a study to determine whether clinical algorithms would be useful in malaria diagnosis among people living in an area of moderate malaria transmission within Kilifi District in Kenya. A total of 1602 people of all age groups… 13938878 clinical-algorithms-for-malaria-diagnosis-lack-utility-among-people-of-different-age-groups. clinical algorithms malaria diagnosis lack utility among people Clinical algorithms for malaria diagnosis lack utility among people of different age groups. Clinical algorithms for malaria diagnosis lack utility among people of different age groups. We conducted a study to determine whether clinical algorithms would be useful in malaria diagnosis among people living in an area of moderate malaria transmission within Kilifi District in Kenya. A total of 1602 people of all age groups participated. We took smears and recorded clinical signs and symptoms (prompted or spontaneous) of all those presenting to the study clinic with a history of fever. A malaria case was defined as a person presenting to the clinic with a history of fever and concurrent parasitaemia. A set of clinical signs and symptoms (algorithms) with the highest sensitivity and specificity for diagnosing a malaria case was selected for the age groups </=5 years, 6-14 years and >/=1",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.679342+00:00"
+}

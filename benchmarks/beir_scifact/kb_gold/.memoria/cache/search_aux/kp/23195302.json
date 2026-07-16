@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23195302",
+  "source_fingerprint": "276b03d56372a62b42942b4695ef577c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23195302",
+    "histone-methyltransferase-activity-associated-with-a-human-multiprotein-complex-containing-the-enhancer-of-zeste-protein."
+  ],
+  "key_phrases": [
+    "histone",
+    "methyltransferase",
+    "activity",
+    "associated",
+    "with",
+    "human",
+    "multiprotein",
+    "complex"
+  ],
+  "summary_1l": "Histone methyltransferase activity associated with a human multiprotein complex containing the Enhancer of Zeste protein.",
+  "query_hits": [],
+  "embed_text": "23195302 Histone methyltransferase activity associated with a human multiprotein complex containing the Enhancer of Zeste protein. science scifact Enhancer of Zeste [E(z)] is a Polycomb-group transcriptional repressor and one of the founding members of the family of SET domain-containing proteins. Several SET-domain proteins possess intrinsic histone methyltransferase (HMT) activity.… 23195302 histone-methyltransferase-activity-associated-with-a-human-multiprotein-complex-containing-the-enhancer-of-zeste-protein. histone methyltransferase activity associated with human multiprotein complex Histone methyltransferase activity associated with a human multiprotein complex containing the Enhancer of Zeste protein. Histone methyltransferase activity associated with a human multiprotein complex containing the Enhancer of Zeste protein. Enhancer of Zeste [E(z)] is a Polycomb-group transcriptional repressor and one of the founding members of the family of SET domain-containing proteins. Several SET-domain proteins possess intrinsic histone methyltransferase (HMT) activity. However, recombinant E(z) protein was found to be inactive in a HMT assay. Here we report the isolation of a multiprotein E(z) complex that contains extra sex combs, suppressor of zeste-12 [Su(z)12], and the histone binding proteins RbAp46/RbAp48. This complex, which we termed Polycomb repressive complex (PRC) 2, possesses HMT activity with specificity for Lys 9 (K9) and Lys 27 (K27) of histone H3. The HMT activity of PRC2 is dependen",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.016556+00:00"
+}

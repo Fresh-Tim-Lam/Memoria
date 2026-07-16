@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3716075",
+  "source_fingerprint": "40ef6b13166f87594caceba4da28a98d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3716075",
+    "the-global-burden-of-dengue:-an-analysis-from-the-global-burden-of-disease-study-2013."
+  ],
+  "key_phrases": [
+    "global",
+    "burden",
+    "dengue",
+    "analysis",
+    "from",
+    "disease",
+    "study",
+    "2013"
+  ],
+  "summary_1l": "The global burden of dengue: an analysis from the Global Burden of Disease Study 2013.",
+  "query_hits": [],
+  "embed_text": "3716075 The global burden of dengue: an analysis from the Global Burden of Disease Study 2013. science scifact BACKGROUND Dengue is the most common arbovirus infection globally, but its burden is poorly quantified. We estimated dengue mortality, incidence, and burden for the Global Burden of Disease Study 2013. METHODS We modelled mortality from… 3716075 the-global-burden-of-dengue:-an-analysis-from-the-global-burden-of-disease-study-2013. global burden dengue analysis from disease study 2013 The global burden of dengue: an analysis from the Global Burden of Disease Study 2013. The global burden of dengue: an analysis from the Global Burden of Disease Study 2013. BACKGROUND Dengue is the most common arbovirus infection globally, but its burden is poorly quantified. We estimated dengue mortality, incidence, and burden for the Global Burden of Disease Study 2013. METHODS We modelled mortality from vital registration, verbal autopsy, and surveillance data using the Cause of Death Ensemble Modelling tool. We modelled incidence from officially reported cases, and adjusted our raw estimates for under-reporting based on published estimates of expansion factors. In total, we had 1780 country-years of mortality data from 130 countries, 1636 country-years of dengue case reports from 76 countries, and expansion factor estimates for 14 countries. FINDINGS We estimated an ave",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.180729+00:00"
+}

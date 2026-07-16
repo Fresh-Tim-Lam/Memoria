@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19511011",
+  "source_fingerprint": "9ffca9dcfc8e937ac8b3bcc6f51b1786",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19511011",
+    "reconstitution-of-the-immune-system-after-hematopoietic-stem-cell-transplantation-in-humans"
+  ],
+  "key_phrases": [
+    "reconstitution",
+    "immune",
+    "system",
+    "after",
+    "hematopoietic",
+    "stem",
+    "cell",
+    "transplantation"
+  ],
+  "summary_1l": "Hematopoietic stem cell transplantation is associated with a severe immune deficiency.",
+  "query_hits": [],
+  "embed_text": "19511011 Reconstitution of the immune system after hematopoietic stem cell transplantation in humans science scifact Hematopoietic stem cell transplantation is associated with a severe immune deficiency. As a result, the patient is at high risk of infections. Innate immunity, including epithelial barriers, monocytes, granulocytes, and NK cells recovers… 19511011 reconstitution-of-the-immune-system-after-hematopoietic-stem-cell-transplantation-in-humans reconstitution immune system after hematopoietic stem cell transplantation Hematopoietic stem cell transplantation is associated with a severe immune deficiency. Reconstitution of the immune system after hematopoietic stem cell transplantation in humans Hematopoietic stem cell transplantation is associated with a severe immune deficiency. As a result, the patient is at high risk of infections. Innate immunity, including epithelial barriers, monocytes, granulocytes, and NK cells recovers within weeks after transplantation. By contrast, adaptive immunity recovers much slower. B- and T-cell counts normalize during the first months after transplantation, but in particular, T-cell immunity may remain impaired for years. During the last decade, much of the underlying mechanisms have been identified. These insights may provide new therapies to accelerate recovery.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.690956+00:00"
+}

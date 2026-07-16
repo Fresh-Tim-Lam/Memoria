@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9315213",
+  "source_fingerprint": "7d9352ed8b8e3df8caa133c4087feb7c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9315213",
+    "fibroblast-growth-factor-21-prevents-atherosclerosis-by-suppression-of-hepatic-sterol-regulatory-element-binding-protein-2-and-induction-of-adiponectin-in-mice"
+  ],
+  "key_phrases": [
+    "fibroblast",
+    "growth",
+    "factor",
+    "21",
+    "prevents",
+    "atherosclerosis",
+    "by",
+    "suppression"
+  ],
+  "summary_1l": "BACKGROUND Fibroblast growth factor 21 (",
+  "query_hits": [],
+  "embed_text": "9315213 Fibroblast Growth Factor 21 Prevents Atherosclerosis by Suppression of Hepatic Sterol Regulatory Element-Binding Protein-2 and Induction of Adiponectin in Mice science scifact BACKGROUND Fibroblast growth factor 21 (FGF21) is a metabolic hormone with pleiotropic effects on glucose and lipid metabolism and insulin sensitivity. It acts as a key downstream target of both peroxisome proliferator-activated receptor α… 9315213 fibroblast-growth-factor-21-prevents-atherosclerosis-by-suppression-of-hepatic-sterol-regulatory-element-binding-protein-2-and-induction-of-adiponectin-in-mice fibroblast growth factor 21 prevents atherosclerosis by suppression BACKGROUND Fibroblast growth factor 21 ( Fibroblast Growth Factor 21 Prevents Atherosclerosis by Suppression of Hepatic Sterol Regulatory Element-Binding Protein-2 and Induction of Adiponectin in Mice BACKGROUND Fibroblast growth factor 21 (FGF21) is a metabolic hormone with pleiotropic effects on glucose and lipid metabolism and insulin sensitivity. It acts as a key downstream target of both peroxisome proliferator-activated receptor α and γ, the agonists of which have been used for lipid lowering and insulin sensitization, respectively. However, the role of FGF21 in the cardiovascular system remains elusive. METHODS AND RESULTS The roles of FGF21 in atherosclerosis were investigated by evaluating the impact of FGF21 deficiency and replenishment with recombinant FGF21 in apolipoprotein E(-/-) mice. FGF21 deficiency causes a mark",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.753731+00:00"
+}

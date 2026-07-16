@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "35777860",
+  "source_fingerprint": "0cd2062378e4d1bcdb8905e5b0608176",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "35777860",
+    "generation-of-induced-pluripotent-stem-cells-from-asian-patients-with-chronic-neurodegenerative-diseases."
+  ],
+  "key_phrases": [
+    "generation",
+    "induced",
+    "pluripotent",
+    "stem",
+    "cells",
+    "from",
+    "asian",
+    "patients"
+  ],
+  "summary_1l": "Generation of induced pluripotent stem cells from Asian patients with chronic neurodegenerative diseases.",
+  "query_hits": [],
+  "embed_text": "35777860 Generation of induced pluripotent stem cells from Asian patients with chronic neurodegenerative diseases. science scifact Induced pluripotent stem (iPS) cells derived from disease patients are an invaluable resource for biomedical research and may provide a source for replacement therapies. In this study, we have generated iPS cells from Asian patients with… 35777860 generation-of-induced-pluripotent-stem-cells-from-asian-patients-with-chronic-neurodegenerative-diseases. generation induced pluripotent stem cells from asian patients Generation of induced pluripotent stem cells from Asian patients with chronic neurodegenerative diseases. Generation of induced pluripotent stem cells from Asian patients with chronic neurodegenerative diseases. Induced pluripotent stem (iPS) cells derived from disease patients are an invaluable resource for biomedical research and may provide a source for replacement therapies. In this study, we have generated iPS cells from Asian patients with chronic degenerative diseases of the nervous system, including spinal muscular atrophy (SMA), Parkinson disease (PD) and amyotrophic lateral sclerosis (ALS) by transduction with four factors (KLF4, SOX2, OCT4 and c-MYC). All of the iPS cells showed pluripotency similar to that of human embryonic stem cells (hESCs) and were able to differentiate into various somatic cell types in vitro and in vivo. Furthermore, the iPS cells also can be committed to dif",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.628518+00:00"
+}

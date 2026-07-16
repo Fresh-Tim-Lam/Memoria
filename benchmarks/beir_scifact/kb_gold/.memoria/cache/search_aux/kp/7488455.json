@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7488455",
+  "source_fingerprint": "f4de55ea0b81a7826dad65e08be0fd30",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7488455",
+    "genomic-nucleosome-organization-reconstituted-with-pure-proteins"
+  ],
+  "key_phrases": [
+    "genomic",
+    "nucleosome",
+    "organization",
+    "reconstituted",
+    "with",
+    "pure",
+    "proteins",
+    "chromatin"
+  ],
+  "summary_1l": "Chromatin remodelers regulate genes by organizing nucleosomes around promoters, but their individual contributions are obfuscated by th",
+  "query_hits": [],
+  "embed_text": "7488455 Genomic Nucleosome Organization Reconstituted with Pure Proteins science scifact Chromatin remodelers regulate genes by organizing nucleosomes around promoters, but their individual contributions are obfuscated by the complex in vivo milieu of factor redundancy and indirect effects. Genome-wide reconstitution of… 7488455 genomic-nucleosome-organization-reconstituted-with-pure-proteins genomic nucleosome organization reconstituted with pure proteins chromatin Chromatin remodelers regulate genes by organizing nucleosomes around promoters, but their individual contributions are obfuscated by th Genomic Nucleosome Organization Reconstituted with Pure Proteins Chromatin remodelers regulate genes by organizing nucleosomes around promoters, but their individual contributions are obfuscated by the complex in vivo milieu of factor redundancy and indirect effects. Genome-wide reconstitution of promoter nucleosome organization with purified proteins resolves this problem and is therefore a critical goal. Here, we reconstitute four stages of nucleosome architecture using purified components: yeast genomic DNA, histones, sequence-specific Abf1/Reb1, and remodelers RSC, ISW2, INO80, and ISW1a. We identify direct, specific, and sufficient contributions that in vivo observations validate. First, RSC clears promoters by translating poly(dA:dT) into directional nucleosome removal. Second, parti",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.459646+00:00"
+}

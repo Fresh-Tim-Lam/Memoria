@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29214508",
+  "source_fingerprint": "6875e9dc1c7124ad9a65e7aaf0058cd6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29214508",
+    "klebsiella-aerogenes-urease-gene-cluster:-sequence-of-ured-and-demonstration-that-four-accessory-genes-(ured,-uree,-uref,-and-ureg)-are-involved-in-nickel-metallocenter-biosynthesis."
+  ],
+  "key_phrases": [
+    "klebsiella",
+    "aerogenes",
+    "urease",
+    "gene",
+    "cluster",
+    "sequence",
+    "ured",
+    "demonstration"
+  ],
+  "summary_1l": "Klebsiella aerogenes urease gene cluster: sequence of ureD and demonstration that four accessory genes (ureD, ureE, ureF, and ureG) are involved in nickel metallocenter biosynthesis.",
+  "query_hits": [],
+  "embed_text": "29214508 Klebsiella aerogenes urease gene cluster: sequence of ureD and demonstration that four accessory genes (ureD, ureE, ureF, and ureG) are involved in nickel metallocenter biosynthesis. science scifact The region located immediately upstream from the Klebsiella aerogenes urease structural genes was sequenced and shown to possess an open reading frame capable of encoding a 29.8-kDa peptide. Deletions were generated in this gene, denoted… 29214508 klebsiella-aerogenes-urease-gene-cluster:-sequence-of-ured-and-demonstration-that-four-accessory-genes-(ured,-uree,-uref,-and-ureg)-are-involved-in-nickel-metallocenter-biosynthesis. klebsiella aerogenes urease gene cluster sequence ured demonstration Klebsiella aerogenes urease gene cluster: sequence of ureD and demonstration that four accessory genes (ureD, ureE, ureF, and ureG) are involved in nickel metallocenter biosynthesis. Klebsiella aerogenes urease gene cluster: sequence of ureD and demonstration that four accessory genes (ureD, ureE, ureF, and ureG) are involved in nickel metallocenter biosynthesis. The region located immediately upstream from the Klebsiella aerogenes urease structural genes was sequenced and shown to possess an open reading frame capable of encoding a 29.8-kDa peptide. Deletions were generated in this gene, denoted ureD, and in each of the genes (ureE, ureF, and ureG) located immediately downstream of the three structural genes. Transformation of the mutated plasmids into Escherichia coli resulted in high levels of urease expression, but the enzyme was inactive (deletions in ureD, ureF, or ureG) or only partially active (deletions in ureE). Ureases were purified from the recombinant cell",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.701315+00:00"
+}

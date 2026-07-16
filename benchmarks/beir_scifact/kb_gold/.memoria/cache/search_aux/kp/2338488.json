@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2338488",
+  "source_fingerprint": "62b40f3909b925e80d3a54e96eb64550",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2338488",
+    "the-world-health-organization-adult-adhd-self-report-scale-(asrs):-a-short-screening-scale-for-use-in-the-general-population."
+  ],
+  "key_phrases": [
+    "world",
+    "health",
+    "organization",
+    "adult",
+    "adhd",
+    "self",
+    "report",
+    "scale"
+  ],
+  "summary_1l": "The World Health Organization Adult ADHD Self-Report Scale (ASRS): a short screening scale for use in the general population.",
+  "query_hits": [],
+  "embed_text": "2338488 The World Health Organization Adult ADHD Self-Report Scale (ASRS): a short screening scale for use in the general population. science scifact BACKGROUND A self-report screening scale of adult attention-deficit/hyperactivity disorder (ADHD), the World Health Organization (WHO) Adult ADHD Self-Report Scale (ASRS) was developed in conjunction with revision of the WHO Composite… 2338488 the-world-health-organization-adult-adhd-self-report-scale-(asrs):-a-short-screening-scale-for-use-in-the-general-population. world health organization adult adhd self report scale The World Health Organization Adult ADHD Self-Report Scale (ASRS): a short screening scale for use in the general population. The World Health Organization Adult ADHD Self-Report Scale (ASRS): a short screening scale for use in the general population. BACKGROUND A self-report screening scale of adult attention-deficit/hyperactivity disorder (ADHD), the World Health Organization (WHO) Adult ADHD Self-Report Scale (ASRS) was developed in conjunction with revision of the WHO Composite International Diagnostic Interview (CIDI). The current report presents data on concordance of the ASRS and of a short-form ASRS screener with blind clinical diagnoses in a community sample. METHOD The ASRS includes 18 questions about frequency of recent DSM-IV Criterion A symptoms of adult ADHD. The ASRS screener consists of six out of these 18 questions that were selected based on stepwise logistic regression to optimize concordance w",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.389719+00:00"
+}

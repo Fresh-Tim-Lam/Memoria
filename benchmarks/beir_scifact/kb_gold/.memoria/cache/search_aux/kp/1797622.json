@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1797622",
+  "source_fingerprint": "3e379a01f9ff0940853034008917e826",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1797622",
+    "control-of-apoptosis-by-asymmetric-cell-division"
+  ],
+  "key_phrases": [
+    "control",
+    "apoptosis",
+    "by",
+    "asymmetric",
+    "cell",
+    "division",
+    "programmed",
+    "death"
+  ],
+  "summary_1l": "Asymmetric cell division and apoptosis (programmed cell death) are two fundamental processes that are important for the development and function of mul",
+  "query_hits": [],
+  "embed_text": "1797622 Control of Apoptosis by Asymmetric Cell Division science scifact Asymmetric cell division and apoptosis (programmed cell death) are two fundamental processes that are important for the development and function of multicellular organisms. We have found that the processes of asymmetric cell division and… 1797622 control-of-apoptosis-by-asymmetric-cell-division control apoptosis by asymmetric cell division programmed death Asymmetric cell division and apoptosis (programmed cell death) are two fundamental processes that are important for the development and function of mul Control of Apoptosis by Asymmetric Cell Division Asymmetric cell division and apoptosis (programmed cell death) are two fundamental processes that are important for the development and function of multicellular organisms. We have found that the processes of asymmetric cell division and apoptosis can be functionally linked. Specifically, we show that asymmetric cell division in the nematode Caenorhabditis elegans is mediated by a pathway involving three genes, dnj-11 MIDA1, ces-2 HLF, and ces-1 Snail, that directly control the enzymatic machinery responsible for apoptosis. Interestingly, the MIDA1-like protein GlsA of the alga Volvox carteri, as well as the Snail-related proteins Snail, Escargot, and Worniu of Drosophila melanogaster, have previously been implicated in asymmetric cell divis",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.595182+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "35495268",
+  "source_fingerprint": "ead188ef2dff74b9bdebf5ea8c98e3c2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "35495268",
+    "cardiovascular-effects-of-intensive-lifestyle-intervention-in-type-2-diabetes."
+  ],
+  "key_phrases": [
+    "cardiovascular",
+    "effects",
+    "intensive",
+    "lifestyle",
+    "intervention",
+    "type",
+    "diabetes",
+    "background"
+  ],
+  "summary_1l": "Cardiovascular effects of intensive lifestyle intervention in type 2 diabetes.",
+  "query_hits": [],
+  "embed_text": "35495268 Cardiovascular effects of intensive lifestyle intervention in type 2 diabetes. science scifact BACKGROUND Weight loss is recommended for overweight or obese patients with type 2 diabetes on the basis of short-term studies, but long-term effects on cardiovascular disease remain unknown. We examined whether an intensive lifestyle… 35495268 cardiovascular-effects-of-intensive-lifestyle-intervention-in-type-2-diabetes. cardiovascular effects intensive lifestyle intervention type diabetes background Cardiovascular effects of intensive lifestyle intervention in type 2 diabetes. Cardiovascular effects of intensive lifestyle intervention in type 2 diabetes. BACKGROUND Weight loss is recommended for overweight or obese patients with type 2 diabetes on the basis of short-term studies, but long-term effects on cardiovascular disease remain unknown. We examined whether an intensive lifestyle intervention for weight loss would decrease cardiovascular morbidity and mortality among such patients. METHODS In 16 study centers in the United States, we randomly assigned 5145 overweight or obese patients with type 2 diabetes to participate in an intensive lifestyle intervention that promoted weight loss through decreased caloric intake and increased physical activity (intervention group) or to receive diabetes support and education (control group). The primary outcome was a co",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.303200+00:00"
+}

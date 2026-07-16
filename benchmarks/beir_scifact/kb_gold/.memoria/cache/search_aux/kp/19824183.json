@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19824183",
+  "source_fingerprint": "05cc866fb0dddd94c31e461616b5c48e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19824183",
+    "the-changing-epidemiology-of-malaria-in-ifakara-town,-southern-tanzania."
+  ],
+  "key_phrases": [
+    "changing",
+    "epidemiology",
+    "malaria",
+    "ifakara",
+    "town",
+    "southern",
+    "tanzania",
+    "between"
+  ],
+  "summary_1l": "The changing epidemiology of malaria in Ifakara Town, southern Tanzania.",
+  "query_hits": [],
+  "embed_text": "19824183 The changing epidemiology of malaria in Ifakara Town, southern Tanzania. science scifact Between 1995 and 2000 there were marked changes in the epidemiology of malaria in Ifakara, southern Tanzania. We documented these changes using parasitological and clinical data from a series of community- and hospital-based studies… 19824183 the-changing-epidemiology-of-malaria-in-ifakara-town,-southern-tanzania. changing epidemiology malaria ifakara town southern tanzania between The changing epidemiology of malaria in Ifakara Town, southern Tanzania. The changing epidemiology of malaria in Ifakara Town, southern Tanzania. Between 1995 and 2000 there were marked changes in the epidemiology of malaria in Ifakara, southern Tanzania. We documented these changes using parasitological and clinical data from a series of community- and hospital-based studies involving children up to the age of 5 years. There was a right shift and lowering in the age-specific parasite prevalence in the community-based cohort studies. The incidence of clinical malaria in placebo-receiving infants in additional study cohorts dropped from 0.8 in 1995 to 0.43 episodes per infant per year in 2000, an incidence rate ratio of 0.53 (95% confidence interval: 0.404, 0.70, P<0.0001). At the same time, there was an increase in the total number of malaria admissions and a m",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.240063+00:00"
+}

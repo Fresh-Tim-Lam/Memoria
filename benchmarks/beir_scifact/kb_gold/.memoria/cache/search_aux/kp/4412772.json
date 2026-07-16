@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4412772",
+  "source_fingerprint": "983793961c7262eba7e3cbd4925fef45",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4412772",
+    "cdk1-is-sufficient-to-drive-the-mammalian-cell-cycle"
+  ],
+  "key_phrases": [
+    "cdk1",
+    "sufficient",
+    "drive",
+    "mammalian",
+    "cell",
+    "cycle",
+    "unicellular",
+    "organisms"
+  ],
+  "summary_1l": "Unicellular organisms such as yeasts require a single cyclin-dependent kinase, Cdk1, to drive cell division.",
+  "query_hits": [],
+  "embed_text": "4412772 Cdk1 is sufficient to drive the mammalian cell cycle science scifact Unicellular organisms such as yeasts require a single cyclin-dependent kinase, Cdk1, to drive cell division. In contrast, mammalian cells are thought to require the sequential activation of at least four different cyclin-dependent kinases,… 4412772 cdk1-is-sufficient-to-drive-the-mammalian-cell-cycle cdk1 sufficient drive mammalian cell cycle unicellular organisms Unicellular organisms such as yeasts require a single cyclin-dependent kinase, Cdk1, to drive cell division. Cdk1 is sufficient to drive the mammalian cell cycle Unicellular organisms such as yeasts require a single cyclin-dependent kinase, Cdk1, to drive cell division. In contrast, mammalian cells are thought to require the sequential activation of at least four different cyclin-dependent kinases, Cdk2, Cdk3, Cdk4 and Cdk6, to drive cells through interphase, as well as Cdk1 to proceed through mitosis. This model has been challenged by recent genetic evidence that mice survive in the absence of individual interphase Cdks. Moreover, most mouse cell types proliferate in the absence of two or even three interphase Cdks. Similar results have been obtained on ablation of some of the activating subunits of Cdks, such as the D-type and E-type cyclins. Here we show that mouse embryos lacking all interpha",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.795769+00:00"
+}

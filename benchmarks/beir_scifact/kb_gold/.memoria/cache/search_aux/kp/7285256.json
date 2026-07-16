@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7285256",
+  "source_fingerprint": "987d7b14a10450200e1e1dc4622ebbd0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7285256",
+    "copd:-epidemiology,-prevalence,-morbidity-and-mortality,-and-disease-heterogeneity."
+  ],
+  "key_phrases": [
+    "copd",
+    "epidemiology",
+    "prevalence",
+    "morbidity",
+    "mortality",
+    "disease",
+    "heterogeneity",
+    "continues"
+  ],
+  "summary_1l": "COPD: epidemiology, prevalence, morbidity and mortality, and disease heterogeneity.",
+  "query_hits": [],
+  "embed_text": "7285256 COPD: epidemiology, prevalence, morbidity and mortality, and disease heterogeneity. science scifact COPD continues to cause a heavy health and economic burden both in the United States and around the world. Some of the risk factors for COPD are well-known and include smoking, occupational exposures, air pollution, airway… 7285256 copd:-epidemiology,-prevalence,-morbidity-and-mortality,-and-disease-heterogeneity. copd epidemiology prevalence morbidity mortality disease heterogeneity continues COPD: epidemiology, prevalence, morbidity and mortality, and disease heterogeneity. COPD: epidemiology, prevalence, morbidity and mortality, and disease heterogeneity. COPD continues to cause a heavy health and economic burden both in the United States and around the world. Some of the risk factors for COPD are well-known and include smoking, occupational exposures, air pollution, airway hyperresponsiveness, asthma, and certain genetic variations, although many questions, such as why < 20% of smokers develop significant airway obstruction, remain. Precise definitions of COPD vary and are frequently dependent on an accurate diagnosis of the problem by a physician. These differences in the definition of COPD can have large effects on the estimates of COPD in the population. Furthermore, evidence that COPD represents several different disease processes with potentially diffe",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.995309+00:00"
+}

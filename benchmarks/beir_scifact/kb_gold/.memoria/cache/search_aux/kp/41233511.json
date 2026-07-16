@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "41233511",
+  "source_fingerprint": "8a92dd2d746ff7a85c57123f338e4ac2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "41233511",
+    "bruce-treadmill-test-in-children:-normal-values-in-a-clinic-population."
+  ],
+  "key_phrases": [
+    "bruce",
+    "treadmill",
+    "test",
+    "children",
+    "normal",
+    "values",
+    "clinic",
+    "population"
+  ],
+  "summary_1l": "Bruce treadmill test in children: normal values in a clinic population.",
+  "query_hits": [],
+  "embed_text": "41233511 Bruce treadmill test in children: normal values in a clinic population. science scifact The Bruce treadmill protocol is suitable for children as young as age 4 years. Maximal endurance time may be used as the sole criterion of exercise capacity, and normal values were established with 327 children having an innocent heart… 41233511 bruce-treadmill-test-in-children:-normal-values-in-a-clinic-population. bruce treadmill test children normal values clinic population Bruce treadmill test in children: normal values in a clinic population. Bruce treadmill test in children: normal values in a clinic population. The Bruce treadmill protocol is suitable for children as young as age 4 years. Maximal endurance time may be used as the sole criterion of exercise capacity, and normal values were established with 327 children having an innocent heart murmur. Mean endurance time in boys increased from 10.4 minutes at age 4 to 5 years, to 14.1 minutes at age 13 to 15 years. Mean endurance time in girls increased from 9.5 minutes at age 4 to 5 years to 12.3 minutes at age 10 to 12 years. Mean maximal heart rate ranged from 193 to 206 beats/min. Age differences in mean maximal and submaximal heart rates were small. There were negative correlations between endurance time and the ratio of weight to height. There were negative correlations",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.201095+00:00"
+}

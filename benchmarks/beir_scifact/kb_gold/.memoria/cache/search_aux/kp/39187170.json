@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "39187170",
+  "source_fingerprint": "9371c5743b9bd7e60530afc03d7ab195",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "39187170",
+    "mitochondrial-respiration-in-subcutaneous-and-visceral-adipose-tissue-from-patients-with-morbid-obesity."
+  ],
+  "key_phrases": [
+    "mitochondrial",
+    "respiration",
+    "subcutaneous",
+    "visceral",
+    "adipose",
+    "tissue",
+    "from",
+    "patients"
+  ],
+  "summary_1l": "Mitochondrial respiration in subcutaneous and visceral adipose tissue from patients with morbid obesity.",
+  "query_hits": [],
+  "embed_text": "39187170 Mitochondrial respiration in subcutaneous and visceral adipose tissue from patients with morbid obesity. science scifact Adipose tissue exerts important endocrine and metabolic functions in health and disease. Yet the bioenergetics of this tissue is not characterized in humans and possible regional differences are not elucidated. Using high resolution… 39187170 mitochondrial-respiration-in-subcutaneous-and-visceral-adipose-tissue-from-patients-with-morbid-obesity. mitochondrial respiration subcutaneous visceral adipose tissue from patients Mitochondrial respiration in subcutaneous and visceral adipose tissue from patients with morbid obesity. Mitochondrial respiration in subcutaneous and visceral adipose tissue from patients with morbid obesity. Adipose tissue exerts important endocrine and metabolic functions in health and disease. Yet the bioenergetics of this tissue is not characterized in humans and possible regional differences are not elucidated. Using high resolution respirometry, mitochondrial respiration was quantified in human abdominal subcutaneous and intra-abdominal visceral (omentum majus) adipose tissue from biopsies obtained in 20 obese patients undergoing bariatric surgery. Mitochondrial DNA (mtDNA) and genomic DNA (gDNA) were determined by the PCR technique for estimation of mitochondrial density. Adipose tissue samples were permeabilized and respirometric measurements were performed in duplicate at 37 degrees",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.312759+00:00"
+}

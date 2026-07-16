@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7454794",
+  "source_fingerprint": "03f4963667dc38315ea68b623ac8bf10",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7454794",
+    "statins-in-the-primary-prevention-of-cardiovascular-disease"
+  ],
+  "key_phrases": [
+    "statins",
+    "primary",
+    "prevention",
+    "cardiovascular",
+    "disease",
+    "widely",
+    "used",
+    "evidence"
+  ],
+  "summary_1l": "Statins are widely used in the evidence-based lowering of cardiovascular disease (CVD) risk.",
+  "query_hits": [],
+  "embed_text": "7454794 Statins in the primary prevention of cardiovascular disease science scifact Statins are widely used in the evidence-based lowering of cardiovascular disease (CVD) risk. The use of these drugs for secondary prevention of CVD is well founded, but their expanding use in primary prevention—in individuals without… 7454794 statins-in-the-primary-prevention-of-cardiovascular-disease statins primary prevention cardiovascular disease widely used evidence Statins are widely used in the evidence-based lowering of cardiovascular disease (CVD) risk. Statins in the primary prevention of cardiovascular disease Statins are widely used in the evidence-based lowering of cardiovascular disease (CVD) risk. The use of these drugs for secondary prevention of CVD is well founded, but their expanding use in primary prevention—in individuals without documented CVD—has raised some concerns. Firstly, evidence suggests that, in primary prevention, statins substantially decrease CVD morbidity, but only moderately reduce CVD mortality. Secondly, long-term statin use might cause adverse effects, such as incident diabetes mellitus. Thirdly, the cost-effectiveness of such a strategy is unclear, and has to be balanced against the risk of 'overmedicating' the general population. Data clearly support the use of statins for primary prevention in high-risk in",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.350741+00:00"
+}

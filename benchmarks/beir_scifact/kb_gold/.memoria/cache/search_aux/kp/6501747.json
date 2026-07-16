@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6501747",
+  "source_fingerprint": "4a8003c8dfb30c42299719b187b729cd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6501747",
+    "pqbp1-is-a-proximal-sensor-of-the-cgas-dependent-innate-response-to-hiv-1"
+  ],
+  "key_phrases": [
+    "pqbp1",
+    "proximal",
+    "sensor",
+    "cgas",
+    "dependent",
+    "innate",
+    "response",
+    "hiv"
+  ],
+  "summary_1l": "Dendritic cells (DCs) play a critical role in the immune response to viral infection through the facilitation of cell-intrinsi",
+  "query_hits": [],
+  "embed_text": "6501747 PQBP1 Is a Proximal Sensor of the cGAS-Dependent Innate Response to HIV-1 science scifact Dendritic cells (DCs) play a critical role in the immune response to viral infection through the facilitation of cell-intrinsic antiviral activity and the activation of adaptive immunity. HIV-1 infection of DCs triggers an IRF3-dependent… 6501747 pqbp1-is-a-proximal-sensor-of-the-cgas-dependent-innate-response-to-hiv-1 pqbp1 proximal sensor cgas dependent innate response hiv Dendritic cells (DCs) play a critical role in the immune response to viral infection through the facilitation of cell-intrinsi PQBP1 Is a Proximal Sensor of the cGAS-Dependent Innate Response to HIV-1 Dendritic cells (DCs) play a critical role in the immune response to viral infection through the facilitation of cell-intrinsic antiviral activity and the activation of adaptive immunity. HIV-1 infection of DCs triggers an IRF3-dependent innate immune response, which requires the activity of cyclic GAMP synthase (cGAS). We report the results of a targeted RNAi screen utilizing primary human monocyte-derived DCs (MDDCs) to identify immune regulators that directly interface with HIV-1-encoded features to initiate this innate response. Polyglutamine binding protein 1 (PQBP1) emerged as a strong candidate through this analysis. We found that PQBP1 directly binds to reverse-transcribed HIV-1 DNA and interacts with cGAS to",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.040161+00:00"
+}

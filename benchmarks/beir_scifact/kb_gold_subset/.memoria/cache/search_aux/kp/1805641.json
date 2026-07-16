@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1805641",
+  "source_fingerprint": "e7b57324e5372f185488f80021196a5c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1805641",
+    "modelling-the-impact-of-artemisinin-combination-therapy-and-long-acting-treatments-on-malaria-transmission-intensity"
+  ],
+  "key_phrases": [
+    "modelling",
+    "impact",
+    "artemisinin",
+    "combination",
+    "therapy",
+    "long",
+    "acting",
+    "treatments"
+  ],
+  "summary_1l": "BACKGROUND Artemisinin derivatives used in recently introduced combination therapie",
+  "query_hits": [],
+  "embed_text": "1805641 Modelling the Impact of Artemisinin Combination Therapy and Long-Acting Treatments on Malaria Transmission Intensity science scifact BACKGROUND Artemisinin derivatives used in recently introduced combination therapies (ACTs) for Plasmodium falciparum malaria significantly lower patient infectiousness and have the potential to reduce population-level transmission of the… 1805641 modelling-the-impact-of-artemisinin-combination-therapy-and-long-acting-treatments-on-malaria-transmission-intensity modelling impact artemisinin combination therapy long acting treatments BACKGROUND Artemisinin derivatives used in recently introduced combination therapie Modelling the Impact of Artemisinin Combination Therapy and Long-Acting Treatments on Malaria Transmission Intensity BACKGROUND Artemisinin derivatives used in recently introduced combination therapies (ACTs) for Plasmodium falciparum malaria significantly lower patient infectiousness and have the potential to reduce population-level transmission of the parasite. With the increased interest in malaria elimination, understanding the impact on transmission of ACT and other antimalarial drugs with different pharmacodynamics becomes a key issue. This study estimates the reduction in transmission that may be achieved by introducing different types of treatment for symptomatic P. falciparum malaria in endemic areas. METHODS AND FINDINGS We developed a mathematical model to predict the potential",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:11.974680+00:00"
+}

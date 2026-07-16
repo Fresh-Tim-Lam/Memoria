@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9787715",
+  "source_fingerprint": "57c93962d9470c64cd8de7ff9f85a706",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9787715",
+    "alterations-on-peripheral-b-cell-subsets-following-an-acute-uncomplicated-clinical-malaria-infection-in-children"
+  ],
+  "key_phrases": [
+    "alterations",
+    "peripheral",
+    "cell",
+    "subsets",
+    "following",
+    "acute",
+    "uncomplicated",
+    "clinical"
+  ],
+  "summary_1l": "BACKGROUND The effects of Plasmodium falciparum on B-cell homeostasis have not been wel",
+  "query_hits": [],
+  "embed_text": "9787715 Alterations on peripheral B cell subsets following an acute uncomplicated clinical malaria infection in children science scifact BACKGROUND The effects of Plasmodium falciparum on B-cell homeostasis have not been well characterized. This study investigated whether an episode of acute malaria in young children results in changes in the peripheral B cell phenotype.… 9787715 alterations-on-peripheral-b-cell-subsets-following-an-acute-uncomplicated-clinical-malaria-infection-in-children alterations peripheral cell subsets following acute uncomplicated clinical BACKGROUND The effects of Plasmodium falciparum on B-cell homeostasis have not been wel Alterations on peripheral B cell subsets following an acute uncomplicated clinical malaria infection in children BACKGROUND The effects of Plasmodium falciparum on B-cell homeostasis have not been well characterized. This study investigated whether an episode of acute malaria in young children results in changes in the peripheral B cell phenotype. METHODS Using flow-cytofluorimetric analysis, the B cell phenotypes found in the peripheral blood of children aged 2-5 years were characterized during an episode of acute uncomplicated clinical malaria and four weeks post-recovery and in healthy age-matched controls. RESULTS There was a significant decrease in CD19+ B lymphocytes during acute malaria. Characterization of the CD19+ B cell subsets in the peripheral blood based on expression of IgD",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.821095+00:00"
+}

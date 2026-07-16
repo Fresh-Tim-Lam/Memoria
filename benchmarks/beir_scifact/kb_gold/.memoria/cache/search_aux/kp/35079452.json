@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "35079452",
+  "source_fingerprint": "4751a4170f97668bed85a664834123b9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "35079452",
+    "mycobacterium-tuberculosis-phagosome-maturation-arrest:-selective-targeting-of-pi3p-dependent-membrane-trafficking."
+  ],
+  "key_phrases": [
+    "mycobacterium",
+    "tuberculosis",
+    "phagosome",
+    "maturation",
+    "arrest",
+    "selective",
+    "targeting",
+    "pi3p"
+  ],
+  "summary_1l": "Mycobacterium tuberculosis phagosome maturation arrest: selective targeting of PI3P-dependent membrane trafficking.",
+  "query_hits": [],
+  "embed_text": "35079452 Mycobacterium tuberculosis phagosome maturation arrest: selective targeting of PI3P-dependent membrane trafficking. science scifact The ability of Mycobacterium tuberculosis to enter host macrophages, and reside in a phagosome, which does not mature into a phagolysosome, is central to the spread of tuberculosis and the associated pandemic involving billions of people… 35079452 mycobacterium-tuberculosis-phagosome-maturation-arrest:-selective-targeting-of-pi3p-dependent-membrane-trafficking. mycobacterium tuberculosis phagosome maturation arrest selective targeting pi3p Mycobacterium tuberculosis phagosome maturation arrest: selective targeting of PI3P-dependent membrane trafficking. Mycobacterium tuberculosis phagosome maturation arrest: selective targeting of PI3P-dependent membrane trafficking. The ability of Mycobacterium tuberculosis to enter host macrophages, and reside in a phagosome, which does not mature into a phagolysosome, is central to the spread of tuberculosis and the associated pandemic involving billions of people worldwide. Tuberculosis can be viewed as a disease with a significant intracellular trafficking and organellar biogenesis component. Current understanding of the block in M. tuberculosis phagosome maturation also sheds light on fundamental aspects of phagolysosome biogenesis. The maturation block involves interference with the recruitment and function of rabs, rab effectors (phosphatidylinositol 3-kinases and tethering molecules such as EEA1)",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.945377+00:00"
+}

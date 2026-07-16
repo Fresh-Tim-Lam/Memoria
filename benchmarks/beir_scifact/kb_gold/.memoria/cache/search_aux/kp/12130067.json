@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12130067",
+  "source_fingerprint": "3634fa0a075464b490f5fcbab7cb550f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12130067",
+    "osteoclasts-promote-the-formation-of-hematopoietic-stem-cell-niches-in-the-bone-marrow"
+  ],
+  "key_phrases": [
+    "osteoclasts",
+    "promote",
+    "formation",
+    "hematopoietic",
+    "stem",
+    "cell",
+    "niches",
+    "bone"
+  ],
+  "summary_1l": "Formation of the hematopoietic stem cell (HSC) niche in bone marrow (BM) is tightly associated with endochondral",
+  "query_hits": [],
+  "embed_text": "12130067 Osteoclasts promote the formation of hematopoietic stem cell niches in the bone marrow science scifact Formation of the hematopoietic stem cell (HSC) niche in bone marrow (BM) is tightly associated with endochondral ossification, but little is known about the mechanisms involved. We used the oc/oc mouse, a mouse model with impaired… 12130067 osteoclasts-promote-the-formation-of-hematopoietic-stem-cell-niches-in-the-bone-marrow osteoclasts promote formation hematopoietic stem cell niches bone Formation of the hematopoietic stem cell (HSC) niche in bone marrow (BM) is tightly associated with endochondral Osteoclasts promote the formation of hematopoietic stem cell niches in the bone marrow Formation of the hematopoietic stem cell (HSC) niche in bone marrow (BM) is tightly associated with endochondral ossification, but little is known about the mechanisms involved. We used the oc/oc mouse, a mouse model with impaired endochondral ossification caused by a loss of osteoclast (OCL) activity, to investigate the role of osteoblasts (OBLs) and OCLs in the HSC niche formation. The absence of OCL activity resulted in a defective HSC niche associated with an increased proportion of mesenchymal progenitors but reduced osteoblastic differentiation, leading to impaired HSC homing to the BM. Restoration of OCL activity reversed the defect in HSC niche formation. Our data demonstrate that OBLs are requir",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:07.786765+00:00"
+}

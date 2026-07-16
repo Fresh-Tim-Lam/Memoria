@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4389252",
+  "source_fingerprint": "5c742b1c584bce6ba4134bcb089e4a8f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4389252",
+    "centrosome-polarization-delivers-secretory-granules-to-the-immunological-synapse"
+  ],
+  "key_phrases": [
+    "centrosome",
+    "polarization",
+    "delivers",
+    "secretory",
+    "granules",
+    "immunological",
+    "synapse",
+    "cytotoxic"
+  ],
+  "summary_1l": "Cytotoxic T lymphocytes (CTLs) destroy virally infected and tumorigenic cells by releasing the contents of specialized",
+  "query_hits": [],
+  "embed_text": "4389252 Centrosome polarization delivers secretory granules to the immunological synapse science scifact Cytotoxic T lymphocytes (CTLs) destroy virally infected and tumorigenic cells by releasing the contents of specialized secretory lysosomes—termed ‘lytic granules’—at the immunological synapse formed between the CTL and the target. On… 4389252 centrosome-polarization-delivers-secretory-granules-to-the-immunological-synapse centrosome polarization delivers secretory granules immunological synapse cytotoxic Cytotoxic T lymphocytes (CTLs) destroy virally infected and tumorigenic cells by releasing the contents of specialized Centrosome polarization delivers secretory granules to the immunological synapse Cytotoxic T lymphocytes (CTLs) destroy virally infected and tumorigenic cells by releasing the contents of specialized secretory lysosomes—termed ‘lytic granules’—at the immunological synapse formed between the CTL and the target. On contact with the target cell, the microtubule organizing centre of the CTL polarizes towards the target and granules move along microtubules in a minus-end direction towards the polarized microtubule organizing centre. However, the final steps of secretion have remained unclear. Here we show that CTLs do not require actin or plus-end microtubule motors for secretion, but instead the centrosome moves to and contacts the plasma membrane at the central supramolecular activation clust",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.441048+00:00"
+}

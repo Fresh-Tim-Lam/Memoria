@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21373821",
+  "source_fingerprint": "df5a90bb2b1b2ab9bcb51e72ecc72ce4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21373821",
+    "a-parasomnia-overlap-disorder-involving-sleepwalking,-sleep-terrors,-and-rem-sleep-behavior-disorder-in-33-polysomnographically-confirmed-cases."
+  ],
+  "key_phrases": [
+    "parasomnia",
+    "overlap",
+    "disorder",
+    "involving",
+    "sleepwalking",
+    "sleep",
+    "terrors",
+    "rem"
+  ],
+  "summary_1l": "A parasomnia overlap disorder involving sleepwalking, sleep terrors, and REM sleep behavior disorder in 33 polysomnographically confirmed cases.",
+  "query_hits": [],
+  "embed_text": "21373821 A parasomnia overlap disorder involving sleepwalking, sleep terrors, and REM sleep behavior disorder in 33 polysomnographically confirmed cases. science scifact A series of 33 patients with combined (injurious) sleepwalking, sleep terrors, and rapid eye movement (REM) sleep behavior disorder (viz. \"parasomnia overlap disorder\") was gathered over an 8-year period. Patients underwent clinical and… 21373821 a-parasomnia-overlap-disorder-involving-sleepwalking,-sleep-terrors,-and-rem-sleep-behavior-disorder-in-33-polysomnographically-confirmed-cases. parasomnia overlap disorder involving sleepwalking sleep terrors rem A parasomnia overlap disorder involving sleepwalking, sleep terrors, and REM sleep behavior disorder in 33 polysomnographically confirmed cases. A parasomnia overlap disorder involving sleepwalking, sleep terrors, and REM sleep behavior disorder in 33 polysomnographically confirmed cases. A series of 33 patients with combined (injurious) sleepwalking, sleep terrors, and rapid eye movement (REM) sleep behavior disorder (viz. \"parasomnia overlap disorder\") was gathered over an 8-year period. Patients underwent clinical and polysomnographic evaluations. Mean age was 34 +/- 14 (SD) years; mean age of parasomnia onset was 15 +/- 16 years (range 1-66); 70% (n = 23) were males. An idiopathic subgroup (n = 22) had a significantly earlier mean age of parasomnia onset (9 +/- 7 years) than a symptomatic subgroup (n = 11) (27 +/- 23 years, p = 0.002), whose parasomnia began with either of the following: neurologic disorders, n = 6 [congenital",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.920667+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15593561",
+  "source_fingerprint": "b723a02dc5573349f818b9198a532ae3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15593561",
+    "a-viral-microrna-cluster-strongly-potentiates-the-transforming-properties-of-a-human-herpesvirus"
+  ],
+  "key_phrases": [
+    "viral",
+    "microrna",
+    "cluster",
+    "strongly",
+    "potentiates",
+    "transforming",
+    "properties",
+    "human"
+  ],
+  "summary_1l": "Epstein-Barr virus (EBV), an oncogenic human herpesvirus, induces cell proliferation after infection of",
+  "query_hits": [],
+  "embed_text": "15593561 A Viral microRNA Cluster Strongly Potentiates the Transforming Properties of a Human Herpesvirus science scifact Epstein-Barr virus (EBV), an oncogenic human herpesvirus, induces cell proliferation after infection of resting B lymphocytes, its reservoir in vivo. The viral latent proteins are necessary for permanent B cell growth, but it is unknown… 15593561 a-viral-microrna-cluster-strongly-potentiates-the-transforming-properties-of-a-human-herpesvirus viral microrna cluster strongly potentiates transforming properties human Epstein-Barr virus (EBV), an oncogenic human herpesvirus, induces cell proliferation after infection of A Viral microRNA Cluster Strongly Potentiates the Transforming Properties of a Human Herpesvirus Epstein-Barr virus (EBV), an oncogenic human herpesvirus, induces cell proliferation after infection of resting B lymphocytes, its reservoir in vivo. The viral latent proteins are necessary for permanent B cell growth, but it is unknown whether they are sufficient. EBV was recently found to encode microRNAs (miRNAs) that are expressed in infected B cells and in some EBV-associated lymphomas. EBV miRNAs are grouped into two clusters located either adjacent to the BHRF1 gene or in introns contained within the viral BART transcripts. To understand the role of the BHRF1 miRNA cluster, we have constructed a virus mutant that lacks all its three members (Δ123) and a revertant virus. Here we show that",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.934874+00:00"
+}

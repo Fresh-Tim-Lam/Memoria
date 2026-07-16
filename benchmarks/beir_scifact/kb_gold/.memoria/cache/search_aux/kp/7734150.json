@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7734150",
+  "source_fingerprint": "3f4b1e004b3c30674d3d1f565e92c508",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7734150",
+    "diaphragm-atrophy-and-contractile-dysfunction-in-a-murine-model-of-pulmonary-hypertension"
+  ],
+  "key_phrases": [
+    "diaphragm",
+    "atrophy",
+    "contractile",
+    "dysfunction",
+    "murine",
+    "model",
+    "pulmonary",
+    "hypertension"
+  ],
+  "summary_1l": "Pulmonary hypertension (PH) causes loss of body weight and inspiratory (diaphragm) muscle dysfunction.",
+  "query_hits": [],
+  "embed_text": "7734150 Diaphragm Atrophy and Contractile Dysfunction in a Murine Model of Pulmonary Hypertension science scifact Pulmonary hypertension (PH) causes loss of body weight and inspiratory (diaphragm) muscle dysfunction. A model of PH induced by drug (monocrotaline, MCT) has been extensively used in mice to examine the etiology of PH. However, it is… 7734150 diaphragm-atrophy-and-contractile-dysfunction-in-a-murine-model-of-pulmonary-hypertension diaphragm atrophy contractile dysfunction murine model pulmonary hypertension Pulmonary hypertension (PH) causes loss of body weight and inspiratory (diaphragm) muscle dysfunction. Diaphragm Atrophy and Contractile Dysfunction in a Murine Model of Pulmonary Hypertension Pulmonary hypertension (PH) causes loss of body weight and inspiratory (diaphragm) muscle dysfunction. A model of PH induced by drug (monocrotaline, MCT) has been extensively used in mice to examine the etiology of PH. However, it is unclear if PH induced by MCT in mice reproduces the loss of body weight and diaphragm muscle dysfunction seen in patients. This is a pre-requisite for widespread use of mice to examine mechanisms of cachexia and diaphragm abnormalities in PH. Thus, we measured body and soleus muscle weight, food intake, and diaphragm contractile properties in mice after 6-8 weeks of saline (control) or MCT (600 mg/kg) injections. Body weight progressively decreased in PH mice, while food",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.098141+00:00"
+}

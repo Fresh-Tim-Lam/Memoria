@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8690595",
+  "source_fingerprint": "5b1a250523030b1fbdc5919c806be2cf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8690595",
+    "a-tutorial-on-statistical-methods-for-population-association-studies"
+  ],
+  "key_phrases": [
+    "tutorial",
+    "statistical",
+    "methods",
+    "population",
+    "association",
+    "studies",
+    "although",
+    "genetic"
+  ],
+  "summary_1l": "Although genetic association studies have been with us for many years, even for the simplest analyses there is little consensus on",
+  "query_hits": [],
+  "embed_text": "8690595 A tutorial on statistical methods for population association studies science scifact Although genetic association studies have been with us for many years, even for the simplest analyses there is little consensus on the most appropriate statistical procedures. Here I give an overview of statistical approaches to population… 8690595 a-tutorial-on-statistical-methods-for-population-association-studies tutorial statistical methods population association studies although genetic Although genetic association studies have been with us for many years, even for the simplest analyses there is little consensus on A tutorial on statistical methods for population association studies Although genetic association studies have been with us for many years, even for the simplest analyses there is little consensus on the most appropriate statistical procedures. Here I give an overview of statistical approaches to population association studies, including preliminary analyses (Hardy–Weinberg equilibrium testing, inference of phase and missing data, and SNP tagging), and single-SNP and multipoint tests for association. My goal is to outline the key methods with a brief discussion of problems (population structure and multiple testing), avenues for solutions and some ongoing developments.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.474592+00:00"
+}

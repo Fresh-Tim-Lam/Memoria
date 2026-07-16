@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7860396",
+  "source_fingerprint": "f61219d08a388a8aebf32c2a81a73751",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7860396",
+    "functional-coupling-of-rnap-ii-transcription-to-spliceosome-assembly."
+  ],
+  "key_phrases": [
+    "functional",
+    "coupling",
+    "rnap",
+    "ii",
+    "transcription",
+    "spliceosome",
+    "assembly",
+    "pathway"
+  ],
+  "summary_1l": "Functional coupling of RNAP II transcription to spliceosome assembly.",
+  "query_hits": [],
+  "embed_text": "7860396 Functional coupling of RNAP II transcription to spliceosome assembly. science scifact The pathway of gene expression in higher eukaryotes involves a highly complex network of physical and functional interactions among the different machines involved in each step of the pathway. Here we established an efficient in vitro… 7860396 functional-coupling-of-rnap-ii-transcription-to-spliceosome-assembly. functional coupling rnap ii transcription spliceosome assembly pathway Functional coupling of RNAP II transcription to spliceosome assembly. Functional coupling of RNAP II transcription to spliceosome assembly. The pathway of gene expression in higher eukaryotes involves a highly complex network of physical and functional interactions among the different machines involved in each step of the pathway. Here we established an efficient in vitro system to determine how RNA polymerase II (RNAP II) transcription is functionally coupled to pre-mRNA splicing. Strikingly, our data show that nascent pre-messenger RNA (pre-mRNA) synthesized by RNAP II is immediately and quantitatively directed into the spliceosome assembly pathway. In contrast, nascent pre-mRNA synthesized by T7 RNA polymerase is quantitatively assembled into the nonspecific H complex, which consists of heterogeneous nuclear ribonucleoprotein (hnRNP) proteins and is inhib",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.351171+00:00"
+}

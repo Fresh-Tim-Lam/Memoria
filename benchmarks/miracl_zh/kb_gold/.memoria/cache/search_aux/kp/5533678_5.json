@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "kp_id": "5533678#5",
+  "source_fingerprint": "715a0e5f24a6e39b2f4ad6a33dd1a1d6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "印度文化",
+    "日本文化",
+    "日本流行文化",
+    "武汉文化",
+    "福建语言",
+    "马来西亚文化"
+  ],
+  "aliases": [
+    "5533678#5"
+  ],
+  "key_phrases": [
+    "福建",
+    "文化",
+    "闽语",
+    "通常",
+    "分为",
+    "六片",
+    "晉安",
+    "方言"
+  ],
+  "summary_1l": "闽语通常分为六片：晉安方言、闽南方言、建州方言、沙陽方言、興化方言、邵将方言。",
+  "query_hits": [],
+  "embed_text": "5533678#5 福建文化 福建文化 闽语通常分为六片：晉安方言、闽南方言、建州方言、沙陽方言、興化方言、邵将方言。 印度文化 日本文化 日本流行文化 武汉文化 福建语言 马来西亚文化 5533678#5 福建 文化 闽语 通常 分为 六片 晉安 方言 闽语通常分为六片：晉安方言、闽南方言、建州方言、沙陽方言、興化方言、邵将方言。 福建文化 闽语通常分为六片：晉安方言、闽南方言、建州方言、沙陽方言、興化方言、邵将方言。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:22:33.326963+00:00"
+}

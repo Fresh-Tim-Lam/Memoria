@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6559701",
+  "source_fingerprint": "f67745e58368380391a0d16b9c90af1a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6559701",
+    "regulation-of-the-latent-lytic-switch-in-epstein-barr-virus."
+  ],
+  "key_phrases": [
+    "regulation",
+    "latent",
+    "lytic",
+    "switch",
+    "epstein",
+    "barr",
+    "virus",
+    "ebv"
+  ],
+  "summary_1l": "Regulation of the latent-lytic switch in Epstein-Barr virus.",
+  "query_hits": [],
+  "embed_text": "6559701 Regulation of the latent-lytic switch in Epstein-Barr virus. science scifact Epstein-Barr virus (EBV) infection contributes to the development of several different types of human malignancy, including Burkitt lymphoma, Hodgkin lymphoma, and nasopharyngeal carcinoma. As a herpesvirus, EBV can establish latent or… 6559701 regulation-of-the-latent-lytic-switch-in-epstein-barr-virus. regulation latent lytic switch epstein barr virus ebv Regulation of the latent-lytic switch in Epstein-Barr virus. Regulation of the latent-lytic switch in Epstein-Barr virus. Epstein-Barr virus (EBV) infection contributes to the development of several different types of human malignancy, including Burkitt lymphoma, Hodgkin lymphoma, and nasopharyngeal carcinoma. As a herpesvirus, EBV can establish latent or lytic infection in cells. EBV-positive tumors are composed almost exclusively of cells with latent EBV infection. Strategies for inducing the lytic form of EBV infection in tumor cells are being investigated as a potential therapy for EBV-positive tumors. In this article, we review how cellular and viral proteins regulate the latent-lytic EBV switch in infected B cells and epithelial cells, and discuss how harnessing lytic viral reactivation might be used therapeutically.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.222030+00:00"
+}

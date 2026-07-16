@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "kp_id": "4438873#2",
+  "source_fingerprint": "a68e6a4b07d001dedbf8062c243672cf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "戈特弗里德·莱布尼茨",
+    "西班牙帝國"
+  ],
+  "aliases": [
+    "4438873#2"
+  ],
+  "key_phrases": [
+    "比尼",
+    "他們",
+    "信仰",
+    "大多",
+    "阿列",
+    "維派",
+    "少数",
+    "遜尼派"
+  ],
+  "summary_1l": "他們信仰遜大多阿列維派和少数遜尼派伊斯蘭教，根據土耳其歷史家Faruk Sümer的說法，拜克塔什教團首位穆里德哈吉·拜克塔什就是契比尼人。",
+  "query_hits": [],
+  "embed_text": "4438873#2 契比尼 契比尼 他們信仰遜大多阿列維派和少数遜尼派伊斯蘭教，根據土耳其歷史家Faruk Sümer的說法，拜克塔什教團首位穆里德哈吉·拜克塔什就是契比尼人。他們在15世紀征服特拉布宗帝國發揮重要作用。 戈特弗里德·莱布尼茨 西班牙帝國 4438873#2 比尼 他們 信仰 大多 阿列 維派 少数 遜尼派 他們信仰遜大多阿列維派和少数遜尼派伊斯蘭教，根據土耳其歷史家Faruk Sümer的說法，拜克塔什教團首位穆里德哈吉·拜克塔什就是契比尼人。 契比尼 他們信仰遜大多阿列維派和少数遜尼派伊斯蘭教，根據土耳其歷史家Faruk Sümer的說法，拜克塔什教團首位穆里德哈吉·拜克塔什就是契比尼人。他們在15世紀征服特拉布宗帝國發揮重要作用。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:22:14.819688+00:00"
+}

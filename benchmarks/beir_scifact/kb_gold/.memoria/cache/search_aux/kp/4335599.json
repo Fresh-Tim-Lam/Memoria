@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4335599",
+  "source_fingerprint": "149901d5697775660a0c96fe495e76b7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4335599",
+    "formation-of-germ-line-chimaeras-from-embryo-derived-teratocarcinoma-cell-lines"
+  ],
+  "key_phrases": [
+    "formation",
+    "germ",
+    "line",
+    "chimaeras",
+    "from",
+    "embryo",
+    "derived",
+    "teratocarcinoma"
+  ],
+  "summary_1l": "The recent availability in culture of embryo-derived pluripotential cells which exhibit both a normal karyotype and a hi",
+  "query_hits": [],
+  "embed_text": "4335599 Formation of germ-line chimaeras from embryo-derived teratocarcinoma cell lines science scifact The recent availability in culture of embryo-derived pluripotential cells which exhibit both a normal karyotype and a high differentiative ability1–3 has encouraged us to assess the potential of these cells to form functional germ cells… 4335599 formation-of-germ-line-chimaeras-from-embryo-derived-teratocarcinoma-cell-lines formation germ line chimaeras from embryo derived teratocarcinoma The recent availability in culture of embryo-derived pluripotential cells which exhibit both a normal karyotype and a hi Formation of germ-line chimaeras from embryo-derived teratocarcinoma cell lines The recent availability in culture of embryo-derived pluripotential cells which exhibit both a normal karyotype and a high differentiative ability1–3 has encouraged us to assess the potential of these cells to form functional germ cells following their incorporation into chimaeric mice. We report here the results of blastocyst injection studies using three independently isolated XY embryo-derived cell lines (EK.CP1, EK.CC1.1 and EKCC1.2) which produce a very high proportion (>50%) of live-born animals that are overtly chimaeric. Seven chimaeric male mice, derived from these three lines, have, so far, proved to be functional germ-line chimaeras.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.802708+00:00"
+}

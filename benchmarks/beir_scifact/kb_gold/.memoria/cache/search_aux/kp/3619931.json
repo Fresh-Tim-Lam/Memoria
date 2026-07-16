@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3619931",
+  "source_fingerprint": "829b6f4714309d67c915ff141d461189",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3619931",
+    "thyroid-hormone-inhibits-lung-fibrosis-in-mice-by-improving-epithelial-mitochondrial-function"
+  ],
+  "key_phrases": [
+    "thyroid",
+    "hormone",
+    "inhibits",
+    "lung",
+    "fibrosis",
+    "mice",
+    "by",
+    "improving"
+  ],
+  "summary_1l": "Thyroid hormone (TH) is critical for the maintenance of cellular homeostasis during stress responses, but",
+  "query_hits": [],
+  "embed_text": "3619931 Thyroid hormone inhibits lung fibrosis in mice by improving epithelial mitochondrial function science scifact Thyroid hormone (TH) is critical for the maintenance of cellular homeostasis during stress responses, but its role in lung fibrosis is unknown. Here we found that the activity and expression of iodothyronine deiodinase 2 (DIO2), an enzyme… 3619931 thyroid-hormone-inhibits-lung-fibrosis-in-mice-by-improving-epithelial-mitochondrial-function thyroid hormone inhibits lung fibrosis mice by improving Thyroid hormone (TH) is critical for the maintenance of cellular homeostasis during stress responses, but Thyroid hormone inhibits lung fibrosis in mice by improving epithelial mitochondrial function Thyroid hormone (TH) is critical for the maintenance of cellular homeostasis during stress responses, but its role in lung fibrosis is unknown. Here we found that the activity and expression of iodothyronine deiodinase 2 (DIO2), an enzyme that activates TH, were higher in lungs from patients with idiopathic pulmonary fibrosis than in control individuals and were correlated with disease severity. We also found that Dio2-knockout mice exhibited enhanced bleomycin-induced lung fibrosis. Aerosolized TH delivery increased survival and resolved fibrosis in two models of pulmonary fibrosis in mice (intratracheal bleomycin and inducible TGF-β1). Sobetirome, a TH mimetic, also blunted bleomycin-induced lun",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.976028+00:00"
+}

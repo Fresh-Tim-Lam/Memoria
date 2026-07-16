@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19489351",
+  "source_fingerprint": "05f5ad4b2b437d0a6ba093108812080f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19489351",
+    "adult-neurogenesis-is-sustained-by-symmetric-self-renewal-and-differentiation."
+  ],
+  "key_phrases": [
+    "adult",
+    "neurogenesis",
+    "sustained",
+    "by",
+    "symmetric",
+    "self",
+    "renewal",
+    "differentiation"
+  ],
+  "summary_1l": "Adult Neurogenesis Is Sustained by Symmetric Self-Renewal and Differentiation.",
+  "query_hits": [],
+  "embed_text": "19489351 Adult Neurogenesis Is Sustained by Symmetric Self-Renewal and Differentiation. science scifact Somatic stem cells have been identified in multiple adult tissues. Whether self-renewal occurs symmetrically or asymmetrically is key to understanding long-term stem cell maintenance and generation of progeny for cell replacement. In the… 19489351 adult-neurogenesis-is-sustained-by-symmetric-self-renewal-and-differentiation. adult neurogenesis sustained by symmetric self renewal differentiation Adult Neurogenesis Is Sustained by Symmetric Self-Renewal and Differentiation. Adult Neurogenesis Is Sustained by Symmetric Self-Renewal and Differentiation. Somatic stem cells have been identified in multiple adult tissues. Whether self-renewal occurs symmetrically or asymmetrically is key to understanding long-term stem cell maintenance and generation of progeny for cell replacement. In the adult mouse brain, neural stem cells (NSCs) (B1 cells) are retained in the walls of the lateral ventricles (ventricular-subventricular zone [V-SVZ]). The mechanism of B1 cell retention into adulthood for lifelong neurogenesis is unknown. Using multiple clonal labeling techniques, we show that the vast majority of B1 cells divide symmetrically. Whereas 20%-30% symmetrically self-renew and can remain in the niche for several months before generating neurons, 70%-80% undergo consum",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.661937+00:00"
+}

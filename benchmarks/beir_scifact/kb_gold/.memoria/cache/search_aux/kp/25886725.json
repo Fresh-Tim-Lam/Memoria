@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25886725",
+  "source_fingerprint": "c20bae921e8e3aefe8336cd8a1582753",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25886725",
+    "are-dual-eligibles-admitted-to-poorer-quality-skilled-nursing-facilities?"
+  ],
+  "key_phrases": [
+    "dual",
+    "eligibles",
+    "admitted",
+    "poorer",
+    "quality",
+    "skilled",
+    "nursing",
+    "facilities"
+  ],
+  "summary_1l": "Are dual eligibles admitted to poorer quality skilled nursing facilities?",
+  "query_hits": [],
+  "embed_text": "25886725 Are dual eligibles admitted to poorer quality skilled nursing facilities? science scifact BACKGROUND Dual eligibles, persons who qualify for both Medicare and Medicaid coverage, often receive poorer quality care relative to other Medicare beneficiaries. OBJECTIVES To determine whether dual eligibles are discharged to lower… 25886725 are-dual-eligibles-admitted-to-poorer-quality-skilled-nursing-facilities? dual eligibles admitted poorer quality skilled nursing facilities Are dual eligibles admitted to poorer quality skilled nursing facilities? Are dual eligibles admitted to poorer quality skilled nursing facilities? BACKGROUND Dual eligibles, persons who qualify for both Medicare and Medicaid coverage, often receive poorer quality care relative to other Medicare beneficiaries. OBJECTIVES To determine whether dual eligibles are discharged to lower quality post-acute skilled nursing facilities (SNFs) compared with Medicare-only beneficiaries. RESEARCH DESIGN Following the random utility maximization model, we specified a discharge function using a conditional logit model and tested how this discharge rule varied by dual-eligibility status. SUBJECTS A total of 692,875 Medicare fee-for-service patients (22% duals) who were discharged for Medicare paid SNF care between July 2004 and June 2005. MEASURES Medicare enrollment and the Med",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.652591+00:00"
+}

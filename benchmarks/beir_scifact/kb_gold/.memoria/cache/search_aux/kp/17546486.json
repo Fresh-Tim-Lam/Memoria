@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17546486",
+  "source_fingerprint": "6a8267e5f442c05080ef88366374fb11",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17546486",
+    "angiotensin-ii-evokes-angiogenic-signals-within-skeletal-muscle-through-co-ordinated-effects-on-skeletal-myocytes-and-endothelial-cells"
+  ],
+  "key_phrases": [
+    "angiotensin",
+    "ii",
+    "evokes",
+    "angiogenic",
+    "signals",
+    "within",
+    "skeletal",
+    "muscle"
+  ],
+  "summary_1l": "Skeletal muscle overload induces the expression of angiogenic fa",
+  "query_hits": [],
+  "embed_text": "17546486 Angiotensin II Evokes Angiogenic Signals within Skeletal Muscle through Co-ordinated Effects on Skeletal Myocytes and Endothelial Cells science scifact Skeletal muscle overload induces the expression of angiogenic factors such as vascular endothelial growth factor (VEGF) and matrix metalloproteinase (MMP)-2, leading to new capillary growth. We found that the overload-induced increase in… 17546486 angiotensin-ii-evokes-angiogenic-signals-within-skeletal-muscle-through-co-ordinated-effects-on-skeletal-myocytes-and-endothelial-cells angiotensin ii evokes angiogenic signals within skeletal muscle Skeletal muscle overload induces the expression of angiogenic fa Angiotensin II Evokes Angiogenic Signals within Skeletal Muscle through Co-ordinated Effects on Skeletal Myocytes and Endothelial Cells Skeletal muscle overload induces the expression of angiogenic factors such as vascular endothelial growth factor (VEGF) and matrix metalloproteinase (MMP)-2, leading to new capillary growth. We found that the overload-induced increase in angiogenesis, as well as increases in VEGF, MMP-2 and MT1-MMP transcripts were abrogated in muscle VEGF KO mice, highlighting the critical role of myocyte-derived VEGF in controlling this process. The upstream mediators that contribute to overload-induced expression of VEGF have yet to be ascertained. We found that muscle overload increased angiotensinogen expression, a precursor of angiotensin (Ang) II, and that Ang II si",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.929018+00:00"
+}

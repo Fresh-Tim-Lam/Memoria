@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "33036897",
+  "source_fingerprint": "898a13f0d680985b0231da0f58b5011e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "33036897",
+    "production-of-tyrosol-by-candida-albicans-biofilms-and-its-role-in-quorum-sensing-and-biofilm-development."
+  ],
+  "key_phrases": [
+    "production",
+    "tyrosol",
+    "by",
+    "candida",
+    "albicans",
+    "biofilms",
+    "its",
+    "role"
+  ],
+  "summary_1l": "Production of tyrosol by Candida albicans biofilms and its role in quorum sensing and biofilm development.",
+  "query_hits": [],
+  "embed_text": "33036897 Production of tyrosol by Candida albicans biofilms and its role in quorum sensing and biofilm development. science scifact Tyrosol and farnesol are quorum-sensing molecules produced by Candida albicans which accelerate and block, respectively, the morphological transition from yeasts to hyphae. In this study, we have investigated the secretion of tyrosol by C.… 33036897 production-of-tyrosol-by-candida-albicans-biofilms-and-its-role-in-quorum-sensing-and-biofilm-development. production tyrosol by candida albicans biofilms its role Production of tyrosol by Candida albicans biofilms and its role in quorum sensing and biofilm development. Production of tyrosol by Candida albicans biofilms and its role in quorum sensing and biofilm development. Tyrosol and farnesol are quorum-sensing molecules produced by Candida albicans which accelerate and block, respectively, the morphological transition from yeasts to hyphae. In this study, we have investigated the secretion of tyrosol by C. albicans and explored its likely role in biofilm development. Both planktonic (suspended) cells and biofilms of four C. albicans strains, including three mutants with defined defects in the Efg 1 and Cph 1 morphogenetic signaling pathways, synthesized extracellular tyrosol during growth at 37 degrees C. There was a correlation between tyrosol production and biomass for both cell types. However, biofilm cells secreted at least 50% more tyrosol than d",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.155904+00:00"
+}

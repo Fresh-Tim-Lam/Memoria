@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "23342845",
+  "source_fingerprint": "595db3848ba787ce884dde84c5106d7b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23342845"
+  ],
+  "key_phrases": [
+    "plasmid",
+    "encoded",
+    "proinsulin",
+    "preserves",
+    "peptide",
+    "while",
+    "specifically",
+    "reducing"
+  ],
+  "summary_1l": "Plasmid-encoded proinsulin preserves C-peptide while specifically reducing proinsulin-specific CD8⁺ T cells in type 1 diabetes.",
+  "query_hits": [],
+  "embed_text": "23342845 Plasmid-encoded proinsulin preserves C-peptide while specifically reducing proinsulin-specific CD8⁺ T cells in type 1 diabetes. science scifact In type 1 diabetes (T1D), there is an intense inflammatory response that destroys the β cells in the pancreatic islets of Langerhans, the site where insulin is produced and released. A therapy for T1D that targets the specific autoimmune… 23342845 plasmid encoded proinsulin preserves peptide while specifically reducing Plasmid-encoded proinsulin preserves C-peptide while specifically reducing proinsulin-specific CD8⁺ T cells in type 1 diabetes. Plasmid-encoded proinsulin preserves C-peptide while specifically reducing proinsulin-specific CD8⁺ T cells in type 1 diabetes. In type 1 diabetes (T1D), there is an intense inflammatory response that destroys the β cells in the pancreatic islets of Langerhans, the site where insulin is produced and released. A therapy for T1D that targets the specific autoimmune response in this disease while leaving the remainder of the immune system intact, has long been sought. Proinsulin is a major target of the adaptive immune response in T1D. We hypothesized that an engineered DNA plasmid encoding proinsulin (BHT-3021) would preserve β cell function in T1D patients through reduction of insulin-specific CD8⁺ T cells. We studied 80 subjects over 18 years of age who were diagnosed with T1D within the p",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.308415+00:00"
+}

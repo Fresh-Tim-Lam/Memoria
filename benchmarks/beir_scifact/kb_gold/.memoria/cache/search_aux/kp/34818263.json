@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "34818263",
+  "source_fingerprint": "74f436d48017ce5467417f95c217a6d9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "34818263",
+    "current-health-and-environmental-status-of-the-maasai-people-in-sub-saharan-africa"
+  ],
+  "key_phrases": [
+    "current",
+    "health",
+    "environmental",
+    "status",
+    "maasai",
+    "people",
+    "sub",
+    "saharan"
+  ],
+  "summary_1l": "As time passes, the AIDS pandemic continues to spike, affecting an estimated 38.",
+  "query_hits": [],
+  "embed_text": "34818263 Current Health and Environmental Status of the Maasai People in Sub-Saharan Africa science scifact As time passes, the AIDS pandemic continues to spike, affecting an estimated 38.6 million people worldwide. In response, a satellite health clinic is being d esigned by two Cal Poly students to serve the Maasai people living in the Kajiado… 34818263 current-health-and-environmental-status-of-the-maasai-people-in-sub-saharan-africa current health environmental status maasai people sub saharan As time passes, the AIDS pandemic continues to spike, affecting an estimated 38. Current Health and Environmental Status of the Maasai People in Sub-Saharan Africa As time passes, the AIDS pandemic continues to spike, affecting an estimated 38.6 million people worldwide. In response, a satellite health clinic is being d esigned by two Cal Poly students to serve the Maasai people living in the Kajiado district in Southern Kenya. The Maasai have traditionally lived as pastoralists, surviving off of their cattle with which they share their water, increasing the risk for contamination. However, as the population of Kenya increases, the land the Maasai have traditionally used for grazing is shrink­ ing. For this reason, some have turned to farming to maintain their liveli­ hood. These factors have contributed to the desertification and deforestation of their region. As the",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.760758+00:00"
+}

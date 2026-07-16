@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15972906",
+  "source_fingerprint": "e3e94445eae42e0bee71730239d9a5ae",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15972906",
+    "functional-anatomy-of-t-cell-activation-and-synapse-formation."
+  ],
+  "key_phrases": [
+    "functional",
+    "anatomy",
+    "cell",
+    "activation",
+    "synapse",
+    "formation",
+    "function",
+    "require"
+  ],
+  "summary_1l": "Functional anatomy of T cell activation and synapse formation.",
+  "query_hits": [],
+  "embed_text": "15972906 Functional anatomy of T cell activation and synapse formation. science scifact T cell activation and function require a structured engagement of antigen-presenting cells. These cell contacts are characterized by two distinct dynamics in vivo: transient contacts resulting from promigratory junctions called… 15972906 functional-anatomy-of-t-cell-activation-and-synapse-formation. functional anatomy cell activation synapse formation function require Functional anatomy of T cell activation and synapse formation. Functional anatomy of T cell activation and synapse formation. T cell activation and function require a structured engagement of antigen-presenting cells. These cell contacts are characterized by two distinct dynamics in vivo: transient contacts resulting from promigratory junctions called immunological kinapses or prolonged contacts from stable junctions called immunological synapses. Kinapses operate in the steady state to allow referencing to self-peptide-MHC (pMHC) and searching for pathogen-derived pMHC. Synapses are induced by T cell receptor (TCR) interactions with agonist pMHC under specific conditions and correlate with robust immune responses that generate effector and memory T cells. High-resolution imaging has revealed that the synapse is highly coordinated, integrating cell ad",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.608098+00:00"
+}

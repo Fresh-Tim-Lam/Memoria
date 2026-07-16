@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7925817",
+  "source_fingerprint": "c489692a73b3f56e626c83b9f60d61cc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7925817",
+    "dynein-pulls-microtubules-without-rotating-its-stalk."
+  ],
+  "key_phrases": [
+    "dynein",
+    "pulls",
+    "microtubules",
+    "without",
+    "rotating",
+    "its",
+    "stalk",
+    "microtubule"
+  ],
+  "summary_1l": "Dynein pulls microtubules without rotating its stalk.",
+  "query_hits": [],
+  "embed_text": "7925817 Dynein pulls microtubules without rotating its stalk. science scifact Dynein is a microtubule motor that powers motility of cilia and flagella. There is evidence that the relative sliding of the doublet microtubules is due to a conformational change in the motor domain that moves a microtubule bound to the… 7925817 dynein-pulls-microtubules-without-rotating-its-stalk. dynein pulls microtubules without rotating its stalk microtubule Dynein pulls microtubules without rotating its stalk. Dynein pulls microtubules without rotating its stalk. Dynein is a microtubule motor that powers motility of cilia and flagella. There is evidence that the relative sliding of the doublet microtubules is due to a conformational change in the motor domain that moves a microtubule bound to the end of an extension known as the stalk. A predominant model for the movement involves a rotation of the head domain, with its stalk, toward the microtubule plus end. However, stalks bound to microtubules have been difficult to observe. Here, we present the clearest views so far of stalks in action, by observing sea urchin, outer arm dynein molecules bound to microtubules, with a new method, \"cryo-positive stain\" electron microscopy. The dynein molecules in the complex were shown to be active in in vitro",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.477523+00:00"
+}

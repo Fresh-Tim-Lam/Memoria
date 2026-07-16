@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18734652",
+  "source_fingerprint": "ab564cfc4272e79d21264a3452013725",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18734652",
+    "endometrial-carcinoma-risk-among-women-diagnosed-with-endometrial-hyperplasia:-the-34-year-experience-in-a-large-health-plan"
+  ],
+  "key_phrases": [
+    "endometrial",
+    "carcinoma",
+    "risk",
+    "among",
+    "women",
+    "diagnosed",
+    "with",
+    "hyperplasia"
+  ],
+  "summary_1l": "Classifying endometrial hyperplasia (EH) according to the severity of gland",
+  "query_hits": [],
+  "embed_text": "18734652 Endometrial carcinoma risk among women diagnosed with endometrial hyperplasia: the 34-year experience in a large health plan science scifact Classifying endometrial hyperplasia (EH) according to the severity of glandular crowding (simple hyperplasia (SH) vs complex hyperplasia (CH)) and nuclear atypia (simple atypical hyperplasia (SAH) vs complex atypical hyperplasia (CAH))… 18734652 endometrial-carcinoma-risk-among-women-diagnosed-with-endometrial-hyperplasia:-the-34-year-experience-in-a-large-health-plan endometrial carcinoma risk among women diagnosed with hyperplasia Classifying endometrial hyperplasia (EH) according to the severity of gland Endometrial carcinoma risk among women diagnosed with endometrial hyperplasia: the 34-year experience in a large health plan Classifying endometrial hyperplasia (EH) according to the severity of glandular crowding (simple hyperplasia (SH) vs complex hyperplasia (CH)) and nuclear atypia (simple atypical hyperplasia (SAH) vs complex atypical hyperplasia (CAH)) should predict subsequent endometrial carcinoma risk, but data on progression are lacking. Our nested case–control study of EH progression included 138 cases, who were diagnosed with EH and then with carcinoma (1970–2003) at least 1 year (median, 6.5 years) later, and 241 controls, who were individually matched on age, date, and follow-up duration and counter-matched on EH classification. After centralised pathology panel and medical r",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.666276+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24494539",
+  "source_fingerprint": "c63bd60e9d685ef7483b4758b1e45728",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24494539",
+    "[acupuncture-combined-with-auricular-point-sticking-therapy-for-post-stroke-depression:a-randomized-controlled-trial]."
+  ],
+  "key_phrases": [
+    "acupuncture",
+    "combined",
+    "with",
+    "auricular",
+    "point",
+    "sticking",
+    "therapy",
+    "post"
+  ],
+  "summary_1l": "[Acupuncture combined with auricular point sticking therapy for post stroke depression:a randomized controlled trial].",
+  "query_hits": [],
+  "embed_text": "24494539 [Acupuncture combined with auricular point sticking therapy for post stroke depression:a randomized controlled trial]. science scifact OBJECTIVE To observe the clinical effects of acupuncture combined with auricular point sticking based on the western medication for post stroke depression (PSD). METHODS Sixty patients with PSD were randomly assigned into an acupuncture… 24494539 [acupuncture-combined-with-auricular-point-sticking-therapy-for-post-stroke-depression:a-randomized-controlled-trial]. acupuncture combined with auricular point sticking therapy post [Acupuncture combined with auricular point sticking therapy for post stroke depression:a randomized controlled trial]. [Acupuncture combined with auricular point sticking therapy for post stroke depression:a randomized controlled trial]. OBJECTIVE To observe the clinical effects of acupuncture combined with auricular point sticking based on the western medication for post stroke depression (PSD). METHODS Sixty patients with PSD were randomly assigned into an acupuncture plus auricular application group (a combination group) and a medication group, 30 cases in each one. 20 mg paroxetine hydrochloride was prescribed orally in the medication group, once a day for continuous 8 weeks. Based on the above treatment, 30-minute acupuncture was used in the combination group for 8 weeks at Baihui (GV 20), Sishencong (EX-HN 1), Shenting (GV 24), Yintang (GV 29), Shenmen (HT 7), Neiguan (PC 6), Taichong (LR 3), Hegu (L",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.519709+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14482051",
+  "source_fingerprint": "b13f8dace402e3c478a775a1ca0a193a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14482051",
+    "phase-ii-study-of-panobinostat-in-combination-with-bevacizumab-for-recurrent-glioblastoma-and-anaplastic-glioma."
+  ],
+  "key_phrases": [
+    "phase",
+    "ii",
+    "study",
+    "panobinostat",
+    "combination",
+    "with",
+    "bevacizumab",
+    "recurrent"
+  ],
+  "summary_1l": "Phase II study of panobinostat in combination with bevacizumab for recurrent glioblastoma and anaplastic glioma.",
+  "query_hits": [],
+  "embed_text": "14482051 Phase II study of panobinostat in combination with bevacizumab for recurrent glioblastoma and anaplastic glioma. science scifact BACKGROUND Panobinostat is a histone deacetylase inhibitor with antineoplastic and antiangiogenic effects in glioma that may work synergistically with bevacizumab. We conducted a multicenter phase II trial of panobinostat combined with… 14482051 phase-ii-study-of-panobinostat-in-combination-with-bevacizumab-for-recurrent-glioblastoma-and-anaplastic-glioma. phase ii study panobinostat combination with bevacizumab recurrent Phase II study of panobinostat in combination with bevacizumab for recurrent glioblastoma and anaplastic glioma. Phase II study of panobinostat in combination with bevacizumab for recurrent glioblastoma and anaplastic glioma. BACKGROUND Panobinostat is a histone deacetylase inhibitor with antineoplastic and antiangiogenic effects in glioma that may work synergistically with bevacizumab. We conducted a multicenter phase II trial of panobinostat combined with bevacizumab in patients with recurrent high-grade glioma (HGG). METHODS Patients with recurrent HGG were treated with oral panobinostat 30 mg 3 times per week, every other week, in combination with bevacizumab 10 mg/kg every other week. The primary endpoint was a 6-month progression-fee survival (PFS6) rate for participants with recurrent glioblastoma (GBM). Patients with recurrent anaplastic glioma (AG) were evaluated as an exploratory arm of the",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.009629+00:00"
+}

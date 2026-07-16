@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15727984",
+  "source_fingerprint": "ef51b98449a5d5dcbc55940c6aa8a57f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15727984",
+    "identification-of-secreted-proteins-that-mediate-cell-cell-interactions-in-an-in-vitro-model-of-the-lung-cancer-microenvironment."
+  ],
+  "key_phrases": [
+    "identification",
+    "secreted",
+    "proteins",
+    "that",
+    "mediate",
+    "cell",
+    "interactions",
+    "vitro"
+  ],
+  "summary_1l": "Identification of secreted proteins that mediate cell-cell interactions in an in vitro model of the lung cancer microenvironment.",
+  "query_hits": [],
+  "embed_text": "15727984 Identification of secreted proteins that mediate cell-cell interactions in an in vitro model of the lung cancer microenvironment. science scifact Non-small cell lung cancer (NSCLC) cells with somatic mutations in K-ras recruit to the tumor a variety of cell types (hereafter collectively termed \"stromal cells\") that can promote or inhibit tumorigenesis by mechanisms that have not… 15727984 identification-of-secreted-proteins-that-mediate-cell-cell-interactions-in-an-in-vitro-model-of-the-lung-cancer-microenvironment. identification secreted proteins that mediate cell interactions vitro Identification of secreted proteins that mediate cell-cell interactions in an in vitro model of the lung cancer microenvironment. Identification of secreted proteins that mediate cell-cell interactions in an in vitro model of the lung cancer microenvironment. Non-small cell lung cancer (NSCLC) cells with somatic mutations in K-ras recruit to the tumor a variety of cell types (hereafter collectively termed \"stromal cells\") that can promote or inhibit tumorigenesis by mechanisms that have not been fully elucidated. Here, we postulated that stromal cells in the tumor microenvironment alter the tumor cell secretome, including those proteins required for tumor growth and dissemination, and we developed an in vitro model to test this hypothesis. Coculturing a murine K-ras mutant lung adenocarcinoma cell line (LKR-13) with a murine lung stromal cell (macrophage, endothelial cell, or fibroblast) enhanced stromal cell migrati",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.184780+00:00"
+}

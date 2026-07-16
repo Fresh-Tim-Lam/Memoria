@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24443043",
+  "source_fingerprint": "67256ff571203bacd16c87de8a22020c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24443043",
+    "cardiopulmonary-exercise-testing-variables-reflect-the-degree-of-diastolic-dysfunction-in-patients-with-heart-failure-normal-ejection-fraction."
+  ],
+  "key_phrases": [
+    "cardiopulmonary",
+    "exercise",
+    "testing",
+    "variables",
+    "reflect",
+    "degree",
+    "diastolic",
+    "dysfunction"
+  ],
+  "summary_1l": "Cardiopulmonary exercise testing variables reflect the degree of diastolic dysfunction in patients with heart failure-normal ejection fraction.",
+  "query_hits": [],
+  "embed_text": "24443043 Cardiopulmonary exercise testing variables reflect the degree of diastolic dysfunction in patients with heart failure-normal ejection fraction. science scifact PURPOSE Previous investigations have reported a relationship between variables obtained from echocardiography with tissue Doppler imaging (TDI) and cardiopulmonary exercise testing (CPX) in systolic heart failure (HF) cohorts. The purpose… 24443043 cardiopulmonary-exercise-testing-variables-reflect-the-degree-of-diastolic-dysfunction-in-patients-with-heart-failure-normal-ejection-fraction. cardiopulmonary exercise testing variables reflect degree diastolic dysfunction Cardiopulmonary exercise testing variables reflect the degree of diastolic dysfunction in patients with heart failure-normal ejection fraction. Cardiopulmonary exercise testing variables reflect the degree of diastolic dysfunction in patients with heart failure-normal ejection fraction. PURPOSE Previous investigations have reported a relationship between variables obtained from echocardiography with tissue Doppler imaging (TDI) and cardiopulmonary exercise testing (CPX) in systolic heart failure (HF) cohorts. The purpose of the present investigation was to perform a comparative analysis between echocardiography with TDI and CPX in patients with HF and normal ejection fraction (NEF). METHODS Patients with HF-NEF (N = 32) underwent echocardiography with TDI and CPX to determine the following variables: (1) the ratio between mitral early velocity (E) and mitral annular velocity (E'), (2) ejection fraction, (3) left ventricular (LV) m",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.482843+00:00"
+}

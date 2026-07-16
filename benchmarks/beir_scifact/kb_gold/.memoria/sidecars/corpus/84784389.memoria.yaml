@@ -1,0 +1,21 @@
+schema_version: 1
+file: corpus/84784389.md
+knowledge_points:
+- id: '84784389'
+  name: Cutadapt removes adapter sequences from high-throughput sequencing reads
+  tags:
+  - science
+  - scifact
+  description: When small RNA is sequenced on current sequencing machines, the resulting
+    reads are usually longer than the RNA and therefore contain parts of the 3' adapter.
+    That adapter must be found and removed error-tolerantly from each read before…
+  range:
+    start:
+      line_hint: 1
+      snippet: '# Cutadapt removes adapter sequences from high-throughput sequencing
+        reads'
+    end:
+      line_hint: 3
+      snippet: Cutadapt, including its MIT-licensed source code, is available for
+        download at http://code.google.com/p/cutadapt/
+links: []

@@ -13,14 +13,13 @@ from memoria.graph.edge_derivation import (
     kp_ranges_from_resolved,
     line_in_any_kp,
     minimal_kps_for_line,
-    sources_for_link_instance,
 )
 from memoria.graph.edge_types import EDGE_EXTEND, EDGE_REFERENCE, is_wikilink_edge_type_fragment, normalize_link_edge_type
 from memoria.graph.link_audit import audit_kb_graph_links
 from memoria.services.kp_resolver import resolve_knowledge_points
+from memoria.services.link_instances import migrate_link_instances
 from memoria.services.link_md import strip_known_wikilink_edge_hints
 from memoria.services.link_resolver import scan_wikilinks
-from memoria.services.link_text_search import scan_link_text_matches
 from memoria.storage.constants import MEMORIA_DIR, SIDECAR_SCHEMA_VERSION
 from memoria.storage.markdown import compose_markdown, strip_frontmatter
 from memoria.storage.scanner import collect_md_files
@@ -88,75 +87,6 @@ def _apply_wikilink_edge_hint(entry: dict, wl: dict) -> bool:
     entry["edge_type"] = EDGE_REFERENCE
     return True
 
-
-def _sync_configured_link_instances(
-    body: str,
-    lines: list[str],
-    sidecar: dict,
-    ranges,
-) -> dict:
-    """为已配置 links[] 补全 KP 范围内的 instances（含父层与子层空隙区）。"""
-    links = sidecar.get("links") or []
-    instances_added = 0
-    skipped_outside_kp = 0
-    changed = False
-
-    for link in links:
-        if not isinstance(link, dict):
-            continue
-        anchor = str(link.get("anchor_text") or "").strip()
-        if not anchor:
-            continue
-        idx = next(
-            (i for i, ln in enumerate(links) if ln is link),
-            None,
-        )
-        if idx is None:
-            continue
-        entry = dict(link)
-        entry_changed = False
-
-        matches = scan_link_text_matches(
-            body,
-            anchor,
-            lines,
-            link_entry=entry,
-            sidecar_links=links,
-        )
-        for m in matches:
-            if m.get("is_substring") or m.get("blocked") or m.get("excluded"):
-                continue
-            line = int(m["line"])
-            if not line_in_any_kp(line, ranges):
-                skipped_outside_kp += 1
-                continue
-            if not (m.get("wrapped") or entry.get("targets")):
-                continue
-            if _add_instance(entry, line):
-                instances_added += 1
-                entry_changed = True
-
-        sources_seen = {
-            sid
-            for inst in entry.get("instances") or []
-            if isinstance(inst, dict) and inst.get("line") is not None
-            for sid in sources_for_link_instance(int(inst["line"]), ranges, entry)
-        }
-        if len(sources_seen) == 1:
-            only = next(iter(sources_seen))
-            if entry.get("source_id") != only:
-                entry["source_id"] = only
-                entry_changed = True
-
-        if entry_changed:
-            links[idx] = entry
-            changed = True
-
-    return {
-        "changed": changed,
-        "instances_added": instances_added,
-        "skipped_outside_kp": skipped_outside_kp,
-    }
 
 
 def sync_file_sidecar_links(
@@ -249,16 +179,30 @@ def sync_file_sidecar_links(
 
         links[idx] = entry
 
-    cfg = _sync_configured_link_instances(
-        body,
-        body.splitlines(),
-        sidecar,
-        ranges,
-    )
-    if cfg["changed"]:
-        changed = True
-    instances_added += cfg["instances_added"]
-    skipped_outside_kp += cfg["skipped_outside_kp"]
+    # 对已配置 links[] 使用与 load_document 一致的 migrate_link_instances
+    # 逻辑校正 instances，避免构建逻辑与加载逻辑不一致导致莫名连边。
+    lines = body.splitlines()
+    for i, link in enumerate(links):
+        if not isinstance(link, dict):
+            continue
+        migrated = migrate_link_instances(body, link, lines)
+        if migrated is not link and migrated != link:
+            # 统计 instances 行数差异，仅用于报告
+            old_lines = {
+                int(inst.get("line") or 0)
+                for inst in (link.get("instances") or [])
+                if isinstance(inst, dict)
+            }
+            new_lines = {
+                int(inst.get("line") or 0)
+                for inst in (migrated.get("instances") or [])
+                if isinstance(inst, dict)
+            }
+            added = len(new_lines - old_lines)
+            if added > 0:
+                instances_added += added
+            links[i] = migrated
+            changed = True
 
     return {
         "file": rel_path,

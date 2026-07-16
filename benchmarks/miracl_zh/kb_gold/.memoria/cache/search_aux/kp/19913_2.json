@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "kp_id": "19913#2",
+  "source_fingerprint": "cc133b7bcb36089be7237830abaf01b2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "联合国主要机构",
+    "坦克",
+    "世界主要宗教"
+  ],
+  "aliases": [
+    "19913#2"
+  ],
+  "key_phrases": [
+    "坦克炮",
+    "主要",
+    "分为",
+    "滑膛式",
+    "线膛式",
+    "两类",
+    "坦克",
+    "上多装"
+  ],
+  "summary_1l": "坦克炮主要分为滑膛式和线膛式两类。",
+  "query_hits": [],
+  "embed_text": "19913#2 坦克炮 坦克炮 坦克炮主要分为滑膛式和线膛式两类。在坦克上多装在可以360度回转的装甲炮塔内以获得最大的攻擊效能，並配備裝甲防护，与观瞄火控设备、自动装弹机和炮塔回转机构组成坦克的武器系统。 联合国主要机构 坦克 世界主要宗教 19913#2 坦克炮 主要 分为 滑膛式 线膛式 两类 坦克 上多装 坦克炮主要分为滑膛式和线膛式两类。 坦克炮 坦克炮主要分为滑膛式和线膛式两类。在坦克上多装在可以360度回转的装甲炮塔内以获得最大的攻擊效能，並配備裝甲防护，与观瞄火控设备、自动装弹机和炮塔回转机构组成坦克的武器系统。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:18:36.579996+00:00"
+}

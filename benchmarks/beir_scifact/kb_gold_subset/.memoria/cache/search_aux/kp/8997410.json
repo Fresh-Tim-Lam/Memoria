@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8997410",
+  "source_fingerprint": "407cf4b132727b21e6637b94f3a83339",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8997410",
+    "arp2/3-complex-inhibition-radically-alters-lamellipodial-actin-architecture,-suspended-cell-shape,-and-the-cell-spreading-process"
+  ],
+  "key_phrases": [
+    "arp2",
+    "complex",
+    "inhibition",
+    "radically",
+    "alters",
+    "lamellipodial",
+    "actin",
+    "architecture"
+  ],
+  "summary_1l": "Recent studies have investigated the dendritic actin cytoskeleton of t",
+  "query_hits": [],
+  "embed_text": "8997410 Arp2/3 complex inhibition radically alters lamellipodial actin architecture, suspended cell shape, and the cell spreading process science scifact Recent studies have investigated the dendritic actin cytoskeleton of the cell edge's lamellipodial (LP) region by experimentally decreasing the activity of the actin filament nucleator and branch former, the Arp2/3 complex. Here we extend… 8997410 arp2/3-complex-inhibition-radically-alters-lamellipodial-actin-architecture,-suspended-cell-shape,-and-the-cell-spreading-process arp2 complex inhibition radically alters lamellipodial actin architecture Recent studies have investigated the dendritic actin cytoskeleton of t Arp2/3 complex inhibition radically alters lamellipodial actin architecture, suspended cell shape, and the cell spreading process Recent studies have investigated the dendritic actin cytoskeleton of the cell edge's lamellipodial (LP) region by experimentally decreasing the activity of the actin filament nucleator and branch former, the Arp2/3 complex. Here we extend these studies via pharmacological inhibition of the Arp2/3 complex in sea urchin coelomocytes, cells that possess an unusually broad LP region and display correspondingly exaggerated centripetal flow. Using light and electron microscopy, we demonstrate that Arp2/3 complex inhibition via the drug CK666 dramatically altered LP actin architecture, slowed centripetal flow, drove a lamellipodial-to-filopodial shape change in suspend",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:14.021891+00:00"
+}

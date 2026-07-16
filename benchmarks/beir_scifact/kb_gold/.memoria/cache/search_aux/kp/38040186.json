@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "38040186",
+  "source_fingerprint": "95422bed63c4f6dd55f88318624887c7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "38040186",
+    "familial-amyloidosis:-a-study-of-52-north-american-born-patients-examined-during-a-30-year-period."
+  ],
+  "key_phrases": [
+    "familial",
+    "amyloidosis",
+    "study",
+    "52",
+    "north",
+    "american",
+    "born",
+    "patients"
+  ],
+  "summary_1l": "Familial amyloidosis: a study of 52 North American-born patients examined during a 30-year period.",
+  "query_hits": [],
+  "embed_text": "38040186 Familial amyloidosis: a study of 52 North American-born patients examined during a 30-year period. science scifact Between 1961 and 1990, 52 patients with biopsy-proven familial amyloidosis born in North America were examined at the Mayo Clinic. At the time of diagnosis of familial amyloidosis, 83% of these patients had peripheral neuropathy, 33% had… 38040186 familial-amyloidosis:-a-study-of-52-north-american-born-patients-examined-during-a-30-year-period. familial amyloidosis study 52 north american born patients Familial amyloidosis: a study of 52 North American-born patients examined during a 30-year period. Familial amyloidosis: a study of 52 North American-born patients examined during a 30-year period. Between 1961 and 1990, 52 patients with biopsy-proven familial amyloidosis born in North America were examined at the Mayo Clinic. At the time of diagnosis of familial amyloidosis, 83% of these patients had peripheral neuropathy, 33% had autonomic neuropathy, and 27% had cardiomyopathy. Renal disease was noted in fewer than 10%, and liver involvement was rare. The median age at diagnosis was 64 years. The sensitivity of various diagnostic biopsies was similar to that for primary amyloidosis: deposits of amyloid were found in 77 and 78% of the subcutaneous fat aspirates or rectal biopsy specimens, respectively, and in 41% of specimens of bone marrow. The median duration of survival of 5.8 year",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.145267+00:00"
+}

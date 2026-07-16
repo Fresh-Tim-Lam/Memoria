@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24341590",
+  "source_fingerprint": "9bb86b3e3b55f15eb359e8ba16a928bb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24341590",
+    "association-between-cyp2d6-polymorphisms-and-outcomes-among-women-with-early-stage-breast-cancer-treated-with-tamoxifen."
+  ],
+  "key_phrases": [
+    "association",
+    "between",
+    "cyp2d6",
+    "polymorphisms",
+    "outcomes",
+    "among",
+    "women",
+    "with"
+  ],
+  "summary_1l": "Association between CYP2D6 polymorphisms and outcomes among women with early stage breast cancer treated with tamoxifen.",
+  "query_hits": [],
+  "embed_text": "24341590 Association between CYP2D6 polymorphisms and outcomes among women with early stage breast cancer treated with tamoxifen. science scifact CONTEXT The growth inhibitory effect of tamoxifen, which is used for the treatment of hormone receptor-positive breast cancer, is mediated by its metabolites, 4-hydroxytamoxifen and endoxifen. The formation of active metabolites is… 24341590 association-between-cyp2d6-polymorphisms-and-outcomes-among-women-with-early-stage-breast-cancer-treated-with-tamoxifen. association between cyp2d6 polymorphisms outcomes among women with Association between CYP2D6 polymorphisms and outcomes among women with early stage breast cancer treated with tamoxifen. Association between CYP2D6 polymorphisms and outcomes among women with early stage breast cancer treated with tamoxifen. CONTEXT The growth inhibitory effect of tamoxifen, which is used for the treatment of hormone receptor-positive breast cancer, is mediated by its metabolites, 4-hydroxytamoxifen and endoxifen. The formation of active metabolites is catalyzed by the polymorphic cytochrome P450 2D6 (CYP2D6) enzyme. OBJECTIVE To determine whether CYP2D6 variation is associated with clinical outcomes in women receiving adjuvant tamoxifen. DESIGN, SETTING, AND PATIENTS Retrospective analysis of German and US cohorts of patients treated with adjuvant tamoxifen for early stage breast cancer. The 1325 patients had diagnoses between 1986 and 2005 of stage I through III breast cancer and were main",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.272546+00:00"
+}

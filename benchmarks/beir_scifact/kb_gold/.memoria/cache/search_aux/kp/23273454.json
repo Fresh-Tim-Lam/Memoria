@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23273454",
+  "source_fingerprint": "65ea63ee6a1dc987cc229c1031e08956",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23273454",
+    "the-physiological-regulation-of-toll-like-receptor-expression-and-function-in-humans."
+  ],
+  "key_phrases": [
+    "physiological",
+    "regulation",
+    "toll",
+    "like",
+    "receptor",
+    "expression",
+    "function",
+    "humans"
+  ],
+  "summary_1l": "The physiological regulation of toll-like receptor expression and function in humans.",
+  "query_hits": [],
+  "embed_text": "23273454 The physiological regulation of toll-like receptor expression and function in humans. science scifact Eleven mammalian toll-like receptors (TLRs 1-11) have been identified to date and are known to play a crucial role in the regulation of immune responses; however, the factors that regulate TLR expression and function in vivo are poorly… 23273454 the-physiological-regulation-of-toll-like-receptor-expression-and-function-in-humans. physiological regulation toll like receptor expression function humans The physiological regulation of toll-like receptor expression and function in humans. The physiological regulation of toll-like receptor expression and function in humans. Eleven mammalian toll-like receptors (TLRs 1-11) have been identified to date and are known to play a crucial role in the regulation of immune responses; however, the factors that regulate TLR expression and function in vivo are poorly understood. Therefore, in the present study, we investigated the physiological regulation of TLR expression and function in humans. To examine the influence of diurnal rhythmicity on TLR expression and function, peripheral venous blood samples were collected from healthy volunteers (n = 8) at time points coinciding with the peak and nadir in the endogenous circulating cortisol concentration. While no diurnal rhythmicity in the expression of TLRs 1, 2, 4 or 9 was observed, t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.165396+00:00"
+}

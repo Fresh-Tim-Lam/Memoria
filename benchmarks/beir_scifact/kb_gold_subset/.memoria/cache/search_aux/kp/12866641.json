@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12866641",
+  "source_fingerprint": "41a7bfafdb9f33abb7b8717d4838a09d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12866641",
+    "enzymatic-targeting-of-the-stroma-ablates-physical-barriers-to-treatment-of-pancreatic-ductal-adenocarcinoma."
+  ],
+  "key_phrases": [
+    "enzymatic",
+    "targeting",
+    "stroma",
+    "ablates",
+    "physical",
+    "barriers",
+    "treatment",
+    "pancreatic"
+  ],
+  "summary_1l": "Enzymatic targeting of the stroma ablates physical barriers to treatment of pancreatic ductal adenocarcinoma.",
+  "query_hits": [],
+  "embed_text": "12866641 Enzymatic targeting of the stroma ablates physical barriers to treatment of pancreatic ductal adenocarcinoma. science scifact Pancreatic ductal adenocarcinomas (PDAs) are characterized by a robust fibroinflammatory response. We show here that this desmoplastic reaction generates inordinately high interstitial fluid pressures (IFPs), exceeding those previously… 12866641 enzymatic-targeting-of-the-stroma-ablates-physical-barriers-to-treatment-of-pancreatic-ductal-adenocarcinoma. enzymatic targeting stroma ablates physical barriers treatment pancreatic Enzymatic targeting of the stroma ablates physical barriers to treatment of pancreatic ductal adenocarcinoma. Enzymatic targeting of the stroma ablates physical barriers to treatment of pancreatic ductal adenocarcinoma. Pancreatic ductal adenocarcinomas (PDAs) are characterized by a robust fibroinflammatory response. We show here that this desmoplastic reaction generates inordinately high interstitial fluid pressures (IFPs), exceeding those previously measured or theorized for solid tumors, and induces vascular collapse, while presenting substantial barriers to perfusion, diffusion, and convection of small molecule therapeutics. We identify hyaluronan, or hyaluronic acid (HA), as the primary matrix determinant of these barriers and show that systemic administration of an enzymatic agent can ablate stromal HA from autochthonous murine PDA, normalize IFP, and re-expand the microvasculature. In combi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:09.759180+00:00"
+}

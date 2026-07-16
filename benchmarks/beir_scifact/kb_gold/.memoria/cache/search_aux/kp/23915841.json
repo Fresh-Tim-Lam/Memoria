@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23915841",
+  "source_fingerprint": "3bde1a7c343ae9660a3da7e7d1932fd4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23915841",
+    "neutralizing-antibody-responses-in-acute-human-immunodeficiency-virus-type-1-subtype-c-infection."
+  ],
+  "key_phrases": [
+    "neutralizing",
+    "antibody",
+    "responses",
+    "acute",
+    "human",
+    "immunodeficiency",
+    "virus",
+    "type"
+  ],
+  "summary_1l": "Neutralizing antibody responses in acute human immunodeficiency virus type 1 subtype C infection.",
+  "query_hits": [],
+  "embed_text": "23915841 Neutralizing antibody responses in acute human immunodeficiency virus type 1 subtype C infection. science scifact The study of the evolution and specificities of neutralizing antibodies during the course of human immunodeficiency virus type 1 (HIV-1) infection may be important in the discovery of possible targets for vaccine design. In this study, we… 23915841 neutralizing-antibody-responses-in-acute-human-immunodeficiency-virus-type-1-subtype-c-infection. neutralizing antibody responses acute human immunodeficiency virus type Neutralizing antibody responses in acute human immunodeficiency virus type 1 subtype C infection. Neutralizing antibody responses in acute human immunodeficiency virus type 1 subtype C infection. The study of the evolution and specificities of neutralizing antibodies during the course of human immunodeficiency virus type 1 (HIV-1) infection may be important in the discovery of possible targets for vaccine design. In this study, we assessed the autologous and heterologous neutralization responses of 14 HIV-1 subtype C-infected individuals, using envelope clones obtained within the first 2 months postinfection. Our data show that potent but relatively strain-specific neutralizing antibodies develop within 3 to 12 months of HIV-1 infection. The magnitude of this response was associated with shorter V1-to-V5 envelope lengths and fewer glycosylation sites, particularly in the V1-V2 region.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.459645+00:00"
+}

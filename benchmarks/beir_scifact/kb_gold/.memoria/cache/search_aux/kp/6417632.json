@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6417632",
+  "source_fingerprint": "a1df48c884b6a836014cc7f88726556d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6417632",
+    "neutrophilic-infiltration-within-the-airway-smooth-muscle-in-patients-with-copd."
+  ],
+  "key_phrases": [
+    "neutrophilic",
+    "infiltration",
+    "within",
+    "airway",
+    "smooth",
+    "muscle",
+    "patients",
+    "with"
+  ],
+  "summary_1l": "Neutrophilic infiltration within the airway smooth muscle in patients with COPD.",
+  "query_hits": [],
+  "embed_text": "6417632 Neutrophilic infiltration within the airway smooth muscle in patients with COPD. science scifact BACKGROUND COPD is an inflammatory disorder characterised by chronic airflow limitation, but the extent to which airway inflammation is related to functional abnormalities is still uncertain. The interaction between inflammatory cells and… 6417632 neutrophilic-infiltration-within-the-airway-smooth-muscle-in-patients-with-copd. neutrophilic infiltration within airway smooth muscle patients with Neutrophilic infiltration within the airway smooth muscle in patients with COPD. Neutrophilic infiltration within the airway smooth muscle in patients with COPD. BACKGROUND COPD is an inflammatory disorder characterised by chronic airflow limitation, but the extent to which airway inflammation is related to functional abnormalities is still uncertain. The interaction between inflammatory cells and airway smooth muscle may have a crucial role. METHODS To investigate the microlocalisation of inflammatory cells within the airway smooth muscle in COPD, surgical specimens obtained from 26 subjects undergoing thoracotomy (eight smokers with COPD, 10 smokers with normal lung function, and eight non-smoking controls) were examined. Immunohistochemical analysis was used to quantify the number of neutrophils, macrophages, mast cells, CD4+ and CD8+ cells localised within the smoo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.792763+00:00"
+}

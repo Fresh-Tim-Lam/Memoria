@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "43226130",
+  "source_fingerprint": "06b00d51bca5ad1719f8e616a36fff5b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "43226130",
+    "female-gender-and-reproductive-factors-affecting-risk,-relapses-and-progression-in-multiple-sclerosis"
+  ],
+  "key_phrases": [
+    "female",
+    "gender",
+    "reproductive",
+    "factors",
+    "affecting",
+    "risk",
+    "relapses",
+    "progression"
+  ],
+  "summary_1l": "Multiple sclerosis (MS), a chronic inflammatory demyelina-ting and degenerative disease of the cen",
+  "query_hits": [],
+  "embed_text": "43226130 Female Gender and Reproductive Factors Affecting Risk, Relapses and Progression in Multiple Sclerosis science scifact Multiple sclerosis (MS), a chronic inflammatory demyelina-ting and degenerative disease of the central nervous system, is a frequent cause of neurological disability in young adults. Female predominance has increased over the last decades.… 43226130 female-gender-and-reproductive-factors-affecting-risk,-relapses-and-progression-in-multiple-sclerosis female gender reproductive factors affecting risk relapses progression Multiple sclerosis (MS), a chronic inflammatory demyelina-ting and degenerative disease of the cen Female Gender and Reproductive Factors Affecting Risk, Relapses and Progression in Multiple Sclerosis Multiple sclerosis (MS), a chronic inflammatory demyelina-ting and degenerative disease of the central nervous system, is a frequent cause of neurological disability in young adults. Female predominance has increased over the last decades. Although female gender carries a higher risk of developing relapsing remitting MS, being female and at child-bearing age also appears to provide some protection against cognitive decline and against progressive onset MS, an adverse predictive factor when considering long-term disability in MS. The risk of MS in women has been associated with an earlier age at menarche. In most studies, parity did not impact MS risk. However, the recently published associ",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.657182+00:00"
+}

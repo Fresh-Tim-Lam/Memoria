@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23851261",
+  "source_fingerprint": "674a3995eaa73cef9a4fa7926974727d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23851261",
+    "uncertainty-in-integrative-structural-modeling."
+  ],
+  "key_phrases": [
+    "uncertainty",
+    "integrative",
+    "structural",
+    "modeling",
+    "uses",
+    "multiple",
+    "types",
+    "input"
+  ],
+  "summary_1l": "Uncertainty in integrative structural modeling.",
+  "query_hits": [],
+  "embed_text": "23851261 Uncertainty in integrative structural modeling. science scifact Integrative structural modeling uses multiple types of input information and proceeds in four stages: (i) gathering information, (ii) designing model representation and converting information into a scoring function, (iii) sampling… 23851261 uncertainty-in-integrative-structural-modeling. uncertainty integrative structural modeling uses multiple types input Uncertainty in integrative structural modeling. Uncertainty in integrative structural modeling. Integrative structural modeling uses multiple types of input information and proceeds in four stages: (i) gathering information, (ii) designing model representation and converting information into a scoring function, (iii) sampling good-scoring models, and (iv) analyzing models and information. In the first stage, uncertainty originates from data that are sparse, noisy, ambiguous, or derived from heterogeneous samples. In the second stage, uncertainty can originate from a representation that is too coarse for the available information or a scoring function that does not accurately capture the information. In the third stage, the major source of uncertainty is insufficient sampling. In the fourth stage, clustering, cross-validation, and other",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.239225+00:00"
+}

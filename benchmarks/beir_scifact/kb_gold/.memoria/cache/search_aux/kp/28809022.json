@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "28809022",
+  "source_fingerprint": "891b9c4e472588fd913dd8a46d69cb4b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "28809022",
+    "the-ino80-atp-dependent-chromatin-remodeling-complex-is-a-nucleosome-spacing-factor."
+  ],
+  "key_phrases": [
+    "ino80",
+    "atp",
+    "dependent",
+    "chromatin",
+    "remodeling",
+    "complex",
+    "nucleosome",
+    "spacing"
+  ],
+  "summary_1l": "The INO80 ATP-dependent chromatin remodeling complex is a nucleosome spacing factor.",
+  "query_hits": [],
+  "embed_text": "28809022 The INO80 ATP-dependent chromatin remodeling complex is a nucleosome spacing factor. science scifact The mobilization of nucleosomes by the ATP-dependent remodeler INO80 is quite different from another remodeler (SWI/SNF) that is also involved in gene activation. Unlike that recently shown for SWI/SNF, INO80 is unable to disassemble… 28809022 the-ino80-atp-dependent-chromatin-remodeling-complex-is-a-nucleosome-spacing-factor. ino80 atp dependent chromatin remodeling complex nucleosome spacing The INO80 ATP-dependent chromatin remodeling complex is a nucleosome spacing factor. The INO80 ATP-dependent chromatin remodeling complex is a nucleosome spacing factor. The mobilization of nucleosomes by the ATP-dependent remodeler INO80 is quite different from another remodeler (SWI/SNF) that is also involved in gene activation. Unlike that recently shown for SWI/SNF, INO80 is unable to disassemble nucleosomes when remodeling short nucleosomal arrays. Instead, INO80 more closely resembles, although with notable exceptions, the nucleosome spacing activity of ISW2 and ISW1a, which are generally involved in transcription repression. INO80 required a minimum of 33 to 43 bp of extranucleosomal DNA for mobilizing nucleosomes, with 70 bp being optimal. INO80 prefers to move mononucleosomes to the center of DNA, like ISW2 and ISW1a, but does so with higher precision. Unlike ISW2",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.349965+00:00"
+}

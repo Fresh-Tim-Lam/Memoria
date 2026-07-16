@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "33135135",
+  "source_fingerprint": "8b34d6f581cbaacdfe1cc5c428d90ae0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "33135135",
+    "the-impact-of-homelessness-on-children."
+  ],
+  "key_phrases": [
+    "impact",
+    "homelessness",
+    "children",
+    "this",
+    "article",
+    "reviews",
+    "critiques",
+    "community"
+  ],
+  "summary_1l": "The impact of homelessness on children.",
+  "query_hits": [],
+  "embed_text": "33135135 The impact of homelessness on children. science scifact This article reviews and critiques community-based research on the effects of homelessness on children. Homeless children confront serious threats to their ability to succeed and their future well-being. Of particular concern are health… 33135135 the-impact-of-homelessness-on-children. impact homelessness children this article reviews critiques community The impact of homelessness on children. The impact of homelessness on children. This article reviews and critiques community-based research on the effects of homelessness on children. Homeless children confront serious threats to their ability to succeed and their future well-being. Of particular concern are health problems, hunger, poor nutrition, developmental delays, anxiety, depression, behavioral problems, and educational underachievement. Factors that may mediate the observed outcomes include inadequate shelter conditions, instability in residences and shelters, inadequate services, and barriers to accessing services that are available. Public policy initiatives are needed to meet the needs of homeless children.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.236375+00:00"
+}

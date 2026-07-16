@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20287253",
+  "source_fingerprint": "d39941529335be8cc60040dede400334",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20287253",
+    "pathophysiology-of-obstructive-nephropathy-in-the-newborn."
+  ],
+  "key_phrases": [
+    "pathophysiology",
+    "obstructive",
+    "nephropathy",
+    "newborn",
+    "congenital",
+    "consequence",
+    "abnormal",
+    "urinary"
+  ],
+  "summary_1l": "Pathophysiology of obstructive nephropathy in the newborn.",
+  "query_hits": [],
+  "embed_text": "20287253 Pathophysiology of obstructive nephropathy in the newborn. science scifact Congenital obstructive nephropathy is a consequence abnormal urinary tract development resulting in renal growth failure and injury manifested by progressive tubular atrophy and interstitial fibrosis. We have studied the renal cellular and… 20287253 pathophysiology-of-obstructive-nephropathy-in-the-newborn. pathophysiology obstructive nephropathy newborn congenital consequence abnormal urinary Pathophysiology of obstructive nephropathy in the newborn. Pathophysiology of obstructive nephropathy in the newborn. Congenital obstructive nephropathy is a consequence abnormal urinary tract development resulting in renal growth failure and injury manifested by progressive tubular atrophy and interstitial fibrosis. We have studied the renal cellular and physiological response to unilateral ureteral obstruction (UUO) in the neonatal rodent (guinea pig, rat, and mouse). Whereas in the adult, UUO stimulates renal cellular proliferation, UUO in the neonate reduces nephrogenesis, glomerular maturation, and tubular cellular proliferation. This is accompanied by a proportionately greater compensatory growth of the intact opposite kidney in the neonate. Impaired renal growth and tubular atrophy are likely owing at least in part to stimulation of renal t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.934660+00:00"
+}

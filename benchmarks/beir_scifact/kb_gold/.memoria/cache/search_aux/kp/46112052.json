@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "46112052",
+  "source_fingerprint": "1d80a2f6878abc559a495da5dc62518f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "46112052",
+    "recombinant-human-tumor-necrosis-factor-administered-as-a-24-hour-intravenous-infusion.-a-phase-i-and-pharmacologic-study."
+  ],
+  "key_phrases": [
+    "recombinant",
+    "human",
+    "tumor",
+    "necrosis",
+    "factor",
+    "administered",
+    "as",
+    "24"
+  ],
+  "summary_1l": "Recombinant human tumor necrosis factor administered as a 24-hour intravenous infusion.",
+  "query_hits": [],
+  "embed_text": "46112052 Recombinant human tumor necrosis factor administered as a 24-hour intravenous infusion. A phase I and pharmacologic study. science scifact Recombinant human tumor necrosis factor (rH-TNF) is a cytokine with direct antitumor properties. In a phase I trial we continuously infused rH-TNF for 24 hours. We gave a total of 115 courses of therapy to 50 patients. Doses ranged from… 46112052 recombinant-human-tumor-necrosis-factor-administered-as-a-24-hour-intravenous-infusion.-a-phase-i-and-pharmacologic-study. recombinant human tumor necrosis factor administered as 24 Recombinant human tumor necrosis factor administered as a 24-hour intravenous infusion. Recombinant human tumor necrosis factor administered as a 24-hour intravenous infusion. A phase I and pharmacologic study. Recombinant human tumor necrosis factor (rH-TNF) is a cytokine with direct antitumor properties. In a phase I trial we continuously infused rH-TNF for 24 hours. We gave a total of 115 courses of therapy to 50 patients. Doses ranged from 4.5 to 645 micrograms of rH-TNF/m2. Systemic toxicity, including fever, chills, fatigue, and hypotension, increased with the dose of rH-TNF administered. Doses greater than 454 micrograms/m2 frequently caused severe lethargy and fatigue, which precluded hospital discharge of the patient at the completion of therapy. The dose-limiting toxicity was hypotension, and five patients treated at the two highest dose levels required dopamine tre",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.628979+00:00"
+}

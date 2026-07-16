@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "24872571",
+  "source_fingerprint": "2a4b8f4b9e5326be683d4b5b37097d94",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24872571"
+  ],
+  "key_phrases": [
+    "homeostasis",
+    "model",
+    "assessment",
+    "insulin",
+    "resistance",
+    "cell",
+    "function",
+    "from"
+  ],
+  "summary_1l": "The steady-state basal plasma glucose and insulin concentrations are",
+  "query_hits": [],
+  "embed_text": "24872571 Homeostasis model assessment: insulin resistance and β-cell function from fasting plasma glucose and insulin concentrations in man science scifact The steady-state basal plasma glucose and insulin concentrations are determined by their interaction in a feedback loop. A computer-solved model has been used to predict the homeostatic concentrations which arise from varying degrees of… 24872571 homeostasis model assessment insulin resistance cell function from The steady-state basal plasma glucose and insulin concentrations are Homeostasis model assessment: insulin resistance and β-cell function from fasting plasma glucose and insulin concentrations in man The steady-state basal plasma glucose and insulin concentrations are determined by their interaction in a feedback loop. A computer-solved model has been used to predict the homeostatic concentrations which arise from varying degrees of β-cell deficiency and insulin resistance. Comparison of a patient's fasting values with the model's predictions allows a quantitative assessment of the contributions of insulin resistance and deficient β-cell function to the fasting hyperglycaemia (homeostasis model assessment, HOMA). The accuracy and precision of the estimate have been determined by comparison with independent measures of insulin resistance and β-cell function",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.432466+00:00"
+}

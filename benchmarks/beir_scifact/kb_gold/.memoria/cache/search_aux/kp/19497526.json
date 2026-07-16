@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19497526",
+  "source_fingerprint": "f8c779892cb9df88c47e419459b1962b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19497526",
+    "a-common-missense-variant-in-nudt15-confers-susceptibility-to-thiopurine-induced-leukopenia"
+  ],
+  "key_phrases": [
+    "common",
+    "missense",
+    "variant",
+    "nudt15",
+    "confers",
+    "susceptibility",
+    "thiopurine",
+    "induced"
+  ],
+  "summary_1l": "Thiopurine therapy, commonly used in autoimmune conditions, can be complicated by life-threatening leukopeni",
+  "query_hits": [],
+  "embed_text": "19497526 A common missense variant in NUDT15 confers susceptibility to thiopurine-induced leukopenia science scifact Thiopurine therapy, commonly used in autoimmune conditions, can be complicated by life-threatening leukopenia. This leukopenia is associated with genetic variation in TPMT (encoding thiopurine S-methyltransferase). Despite a lower… 19497526 a-common-missense-variant-in-nudt15-confers-susceptibility-to-thiopurine-induced-leukopenia common missense variant nudt15 confers susceptibility thiopurine induced Thiopurine therapy, commonly used in autoimmune conditions, can be complicated by life-threatening leukopeni A common missense variant in NUDT15 confers susceptibility to thiopurine-induced leukopenia Thiopurine therapy, commonly used in autoimmune conditions, can be complicated by life-threatening leukopenia. This leukopenia is associated with genetic variation in TPMT (encoding thiopurine S-methyltransferase). Despite a lower frequency of TPMT mutations in Asians, the incidence of thiopurine-induced leukopenia is higher in Asians than in individuals of European descent. Here we performed an Immunochip-based 2-stage association study in 978 Korean subjects with Crohn's disease treated with thiopurines. We identified a nonsynonymous SNP in NUDT15 (encoding p. Arg139Cys) that was strongly associated with thiopurine-induced early leukopenia (odds ratio (OR) = 35.6; Pcombined = 4.88 × 10−94). In Kor",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.673195+00:00"
+}

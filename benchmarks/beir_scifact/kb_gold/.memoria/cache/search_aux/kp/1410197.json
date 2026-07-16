@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1410197",
+  "source_fingerprint": "5cb42f96033dc6cf7c3a4a560b4d7bde",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1410197",
+    "an-excitatory-loop-with-astrocytes-contributes-to-drive-neurons-to-seizure-threshold"
+  ],
+  "key_phrases": [
+    "excitatory",
+    "loop",
+    "with",
+    "astrocytes",
+    "contributes",
+    "drive",
+    "neurons",
+    "seizure"
+  ],
+  "summary_1l": "Seizures in focal epilepsies are sustained by a highly synchronous neuronal discharge that arises at restricted bra",
+  "query_hits": [],
+  "embed_text": "1410197 An Excitatory Loop with Astrocytes Contributes to Drive Neurons to Seizure Threshold science scifact Seizures in focal epilepsies are sustained by a highly synchronous neuronal discharge that arises at restricted brain sites and subsequently spreads to large portions of the brain. Despite intense experimental research in this field, the… 1410197 an-excitatory-loop-with-astrocytes-contributes-to-drive-neurons-to-seizure-threshold excitatory loop with astrocytes contributes drive neurons seizure Seizures in focal epilepsies are sustained by a highly synchronous neuronal discharge that arises at restricted bra An Excitatory Loop with Astrocytes Contributes to Drive Neurons to Seizure Threshold Seizures in focal epilepsies are sustained by a highly synchronous neuronal discharge that arises at restricted brain sites and subsequently spreads to large portions of the brain. Despite intense experimental research in this field, the earlier cellular events that initiate and sustain a focal seizure are still not well defined. Their identification is central to understand the pathophysiology of focal epilepsies and to develop new pharmacological therapies for drug-resistant forms of epilepsy. The prominent involvement of astrocytes in ictogenesis was recently proposed. We test here whether a cooperation between astrocytes and neurons is a prerequisite to support ictal (seizure-like) and interictal epile",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.085566+00:00"
+}

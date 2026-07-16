@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19343151",
+  "source_fingerprint": "0b6b053d2b862950ddcb672f60de1cc4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19343151",
+    "p16ink4a-is-a-robust-in-vivo-biomarker-of-cellular-aging-in-human-skin."
+  ],
+  "key_phrases": [
+    "p16ink4a",
+    "robust",
+    "vivo",
+    "biomarker",
+    "cellular",
+    "aging",
+    "human",
+    "skin"
+  ],
+  "summary_1l": "p16INK4A is a robust in vivo biomarker of cellular aging in human skin.",
+  "query_hits": [],
+  "embed_text": "19343151 p16INK4A is a robust in vivo biomarker of cellular aging in human skin. science scifact The cell-cycle regulating gene, p16INK4A, encoding an inhibitor of cyclin-dependent kinases 4 and 6, is considered to play an important role in cellular aging and in premature senescence. Although there is an age-dependent increase of… 19343151 p16ink4a-is-a-robust-in-vivo-biomarker-of-cellular-aging-in-human-skin. p16ink4a robust vivo biomarker cellular aging human skin p16INK4A is a robust in vivo biomarker of cellular aging in human skin. p16INK4A is a robust in vivo biomarker of cellular aging in human skin. The cell-cycle regulating gene, p16INK4A, encoding an inhibitor of cyclin-dependent kinases 4 and 6, is considered to play an important role in cellular aging and in premature senescence. Although there is an age-dependent increase of p16INK4A expression in human fibroblast senescence in vitro, no data are available regarding the age dependency of p16INK4A in vivo. To determine whether p16INK4A expression in human skin correlates with donor age, p16INK4A expression was analyzed by immunohistochemistry as well as the expression of the p16INK4A repressor BMI1. Samples from the age groups 0-20, 21-70, and 71-95 years were selected from a bank of healthy human skin. We show that the number of p16INK4A positive cells is sig",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.460096+00:00"
+}

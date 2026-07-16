@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5597586",
+  "source_fingerprint": "dfb702d018371f613b8f620b3e37873e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5597586",
+    "stem-cell-transplantation-in-patients-with-autonomic-neuropathy-due-to-primary-(al)-amyloidosis."
+  ],
+  "key_phrases": [
+    "stem",
+    "cell",
+    "transplantation",
+    "patients",
+    "with",
+    "autonomic",
+    "neuropathy",
+    "due"
+  ],
+  "summary_1l": "Stem cell transplantation in patients with autonomic neuropathy due to primary (AL) amyloidosis.",
+  "query_hits": [],
+  "embed_text": "5597586 Stem cell transplantation in patients with autonomic neuropathy due to primary (AL) amyloidosis. science scifact OBJECTIVES Patients with AL amyloidosis can benefit from high-dose chemotherapy and autologous stem cell transplantation (ASCT). Transplantation can be challenging due to fluid shifts, sepsis, and cardiac dysrhythmias. Amyloidosis may… 5597586 stem-cell-transplantation-in-patients-with-autonomic-neuropathy-due-to-primary-(al)-amyloidosis. stem cell transplantation patients with autonomic neuropathy due Stem cell transplantation in patients with autonomic neuropathy due to primary (AL) amyloidosis. Stem cell transplantation in patients with autonomic neuropathy due to primary (AL) amyloidosis. OBJECTIVES Patients with AL amyloidosis can benefit from high-dose chemotherapy and autologous stem cell transplantation (ASCT). Transplantation can be challenging due to fluid shifts, sepsis, and cardiac dysrhythmias. Amyloidosis may present with autonomic neuropathy (AN) that renders peritransplant care problematic. The purpose of this study was to determine the outcome of patients with AN during and after ASCT. METHODS We performed a case-control study of patients with AL amyloidosis with associated AN and compared them to a large matched cohort without AN who also underwent ASCT. RESULTS We identified 13 patients with AN who underwent ASCT and a matched control group of 95 patients without",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.713152+00:00"
+}

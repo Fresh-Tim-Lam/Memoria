@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9272598",
+  "source_fingerprint": "929b6bc06cf6744366dac1a90897aa54",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9272598",
+    "structure-based-drug-design-identifies-polythiophenes-as-antiprion-compounds"
+  ],
+  "key_phrases": [
+    "structure",
+    "based",
+    "drug",
+    "design",
+    "identifies",
+    "polythiophenes",
+    "as",
+    "antiprion"
+  ],
+  "summary_1l": "Prions cause transmissible spongiform encephalopathies for which no treatment exists.",
+  "query_hits": [],
+  "embed_text": "9272598 Structure-based drug design identifies polythiophenes as antiprion compounds science scifact Prions cause transmissible spongiform encephalopathies for which no treatment exists. Prions consist of PrPSc, a misfolded and aggregated form of the cellular prion protein (PrPC). We explore the antiprion properties of luminescent… 9272598 structure-based-drug-design-identifies-polythiophenes-as-antiprion-compounds structure based drug design identifies polythiophenes as antiprion Prions cause transmissible spongiform encephalopathies for which no treatment exists. Structure-based drug design identifies polythiophenes as antiprion compounds Prions cause transmissible spongiform encephalopathies for which no treatment exists. Prions consist of PrPSc, a misfolded and aggregated form of the cellular prion protein (PrPC). We explore the antiprion properties of luminescent conjugated polythiophenes (LCPs) that bind and stabilize ordered protein aggregates. By administering a library of structurally diverse LCPs to the brains of prion-infected mice via osmotic minipumps, we found that antiprion activity required a minimum of five thiophene rings bearing regularly spaced carboxyl side groups. Solid-state nuclear magnetic resonance analyses and molecular dynamics simulations revealed that anionic side chains interacted with complementary, regularly spaced ca",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.575395+00:00"
+}

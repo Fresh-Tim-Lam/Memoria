@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13223806",
+  "source_fingerprint": "b4fafc17df3d5c40558e6e979afedb12",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13223806",
+    "relative-expression-results-in-real-time"
+  ],
+  "key_phrases": [
+    "relative",
+    "expression",
+    "results",
+    "real",
+    "time",
+    "reverse",
+    "transcription",
+    "followed"
+  ],
+  "summary_1l": "Real-time reverse transcription followed by polymerase chain reaction (RT-PCR) is the most suitable method for the detection and quantification of mRNA.",
+  "query_hits": [],
+  "embed_text": "13223806 relative expression results in real-time science scifact Real-time reverse transcription followed by polymerase chain reaction (RT-PCR) is the most suitable method for the detection and quantification of mRNA. It offers high sensitivity, good reproducibility and a wide quantification range.… 13223806 relative-expression-results-in-real-time relative expression results real time reverse transcription followed Real-time reverse transcription followed by polymerase chain reaction (RT-PCR) is the most suitable method for the detection and quantification of mRNA. relative expression results in real-time Real-time reverse transcription followed by polymerase chain reaction (RT-PCR) is the most suitable method for the detection and quantification of mRNA. It offers high sensitivity, good reproducibility and a wide quantification range. Today, relative expression is increasingly used, where the expression of a target gene is standardised by a non-regulated reference gene. Several mathematical algorithms have been developed to compute an expression ratio, based on real-time PCR efficiency and the crossing point deviation of an unknown sample versus a control. But all published equations and available models for the calculation of relative expression ratio allow only for the determination of a single transcription difference between one control and one",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:10.495359+00:00"
+}

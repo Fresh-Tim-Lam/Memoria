@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7621534",
+  "source_fingerprint": "b279ad11b53d138022ae128454b32067",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7621534",
+    "chemokine-receptor-trio:-cxcr3,-cxcr4-and-cxcr7-crosstalk-via-cxcl11-and-cxcl12."
+  ],
+  "key_phrases": [
+    "chemokine",
+    "receptor",
+    "trio",
+    "cxcr3",
+    "cxcr4",
+    "cxcr7",
+    "crosstalk",
+    "via"
+  ],
+  "summary_1l": "Chemokine receptor trio: CXCR3, CXCR4 and CXCR7 crosstalk via CXCL11 and CXCL12.",
+  "query_hits": [],
+  "embed_text": "7621534 Chemokine receptor trio: CXCR3, CXCR4 and CXCR7 crosstalk via CXCL11 and CXCL12. science scifact Although chemokines are well established to function in immunity and endothelial cell activation and proliferation, a rapidly growing literature suggests that CXC Chemokine receptors CXCR3, CXCR4 and CXCR7 are critical in the development… 7621534 chemokine-receptor-trio:-cxcr3,-cxcr4-and-cxcr7-crosstalk-via-cxcl11-and-cxcl12. chemokine receptor trio cxcr3 cxcr4 cxcr7 crosstalk via Chemokine receptor trio: CXCR3, CXCR4 and CXCR7 crosstalk via CXCL11 and CXCL12. Chemokine receptor trio: CXCR3, CXCR4 and CXCR7 crosstalk via CXCL11 and CXCL12. Although chemokines are well established to function in immunity and endothelial cell activation and proliferation, a rapidly growing literature suggests that CXC Chemokine receptors CXCR3, CXCR4 and CXCR7 are critical in the development and progression of solid tumors. The effect of these chemokine receptors in tumorigenesis is mediated via interactions with shared ligands I-TAC (CXCL11) and SDF-1 (CXCL12). Over the last decade, CXCR4 has been extensively reported to be overexpressed in most human solid tumors and has earned considerable attention toward elucidating its role in cancer metastasis. To enrich the existing armamentarium of anti-cancerous agents, many inhibitors of CXCL12-CXCR4 axis have emerged a",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.799631+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27567994",
+  "source_fingerprint": "2a37d8fa42db5b0ed3c084da3b45b4fa",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27567994",
+    "cd169-positive-macrophages-dominate-antitumor-immunity-by-crosspresenting-dead-cell-associated-antigens."
+  ],
+  "key_phrases": [
+    "cd169",
+    "positive",
+    "macrophages",
+    "dominate",
+    "antitumor",
+    "immunity",
+    "by",
+    "crosspresenting"
+  ],
+  "summary_1l": "CD169-positive macrophages dominate antitumor immunity by crosspresenting dead cell-associated antigens.",
+  "query_hits": [],
+  "embed_text": "27567994 CD169-positive macrophages dominate antitumor immunity by crosspresenting dead cell-associated antigens. science scifact The generation of tumor-directed cytotoxic T lymphocytes is considered crucial for the induction of antitumor immunity. To activate these CD8(+) T cells, antigen-presenting cells (APCs) must initially acquire tumor cell-associated… 27567994 cd169-positive-macrophages-dominate-antitumor-immunity-by-crosspresenting-dead-cell-associated-antigens. cd169 positive macrophages dominate antitumor immunity by crosspresenting CD169-positive macrophages dominate antitumor immunity by crosspresenting dead cell-associated antigens. CD169-positive macrophages dominate antitumor immunity by crosspresenting dead cell-associated antigens. The generation of tumor-directed cytotoxic T lymphocytes is considered crucial for the induction of antitumor immunity. To activate these CD8(+) T cells, antigen-presenting cells (APCs) must initially acquire tumor cell-associated antigens. The major source of tumor antigens is dead tumor cells, but little is known about how APCs in draining lymph nodes acquire and crosspresent these antigens. Here we show that CD169(+) macrophages phagocytose dead tumor cells transported via lymphatic flow and subsequently crosspresent tumor antigens to CD8(+) T cells. Subcutaneous immunization with irradiated tumor cells protects mice from syngenic tumor. However, tumor antigen-specific CD8(+) T cell",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.062558+00:00"
+}

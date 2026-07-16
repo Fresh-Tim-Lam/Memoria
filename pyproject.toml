@@ -17,6 +17,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0"]
+benchmark = ["certifi>=2024.0"]
 desktop = ["PyQt6-WebEngine>=6.6"]
 semantic = ["sentence-transformers>=3.0"]
 search = ["pypinyin>=0.50"]

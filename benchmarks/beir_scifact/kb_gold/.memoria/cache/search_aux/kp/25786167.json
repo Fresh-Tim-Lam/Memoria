@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25786167",
+  "source_fingerprint": "8ac31b565ae0196fdbe50f1f04f160f8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25786167",
+    "effect-of-sample-quality-on-the-sensitivity-of-endoscopic-biopsy-for-detecting-gastric-and-duodenal-lesions-in-dogs-and-cats."
+  ],
+  "key_phrases": [
+    "effect",
+    "sample",
+    "quality",
+    "sensitivity",
+    "endoscopic",
+    "biopsy",
+    "detecting",
+    "gastric"
+  ],
+  "summary_1l": "Effect of sample quality on the sensitivity of endoscopic biopsy for detecting gastric and duodenal lesions in dogs and cats.",
+  "query_hits": [],
+  "embed_text": "25786167 Effect of sample quality on the sensitivity of endoscopic biopsy for detecting gastric and duodenal lesions in dogs and cats. science scifact BACKGROUND The quality of histopathology slides of endoscopic biopsies from different laboratories varies, but the effect of biopsy quality on outcome is unknown. HYPOTHESIS The ability to demonstrate a histologic lesion in the stomach or… 25786167 effect-of-sample-quality-on-the-sensitivity-of-endoscopic-biopsy-for-detecting-gastric-and-duodenal-lesions-in-dogs-and-cats. effect sample quality sensitivity endoscopic biopsy detecting gastric Effect of sample quality on the sensitivity of endoscopic biopsy for detecting gastric and duodenal lesions in dogs and cats. Effect of sample quality on the sensitivity of endoscopic biopsy for detecting gastric and duodenal lesions in dogs and cats. BACKGROUND The quality of histopathology slides of endoscopic biopsies from different laboratories varies, but the effect of biopsy quality on outcome is unknown. HYPOTHESIS The ability to demonstrate a histologic lesion in the stomach or duodenum of a dog or cat is affected by the quality of endoscopic biopsy samples submitted. More endoscopic samples are needed to find a lesion in poor-quality tissue specimens. ANIMALS Tissues from 99 dogs and 51 cats were examined as clinical cases at 8 veterinary institutions or practices in 5 countries. METHODS Histopathology slides from sequential cases that underwent endoscopic biopsy were submitted by participating instituti",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.390870+00:00"
+}

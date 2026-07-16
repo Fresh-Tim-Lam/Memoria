@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7111021",
+  "source_fingerprint": "1cb30a43db5cf92faae0235e3d639e58",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7111021",
+    "integration-of-antiretroviral-therapy-with-tuberculosis-treatment."
+  ],
+  "key_phrases": [
+    "integration",
+    "antiretroviral",
+    "therapy",
+    "with",
+    "tuberculosis",
+    "treatment",
+    "background",
+    "we"
+  ],
+  "summary_1l": "Integration of antiretroviral therapy with tuberculosis treatment.",
+  "query_hits": [],
+  "embed_text": "7111021 Integration of antiretroviral therapy with tuberculosis treatment. science scifact BACKGROUND We previously reported that integrating antiretroviral therapy (ART) with tuberculosis treatment reduces mortality. However, the timing for the initiation of ART during tuberculosis treatment remains unresolved. METHODS We… 7111021 integration-of-antiretroviral-therapy-with-tuberculosis-treatment. integration antiretroviral therapy with tuberculosis treatment background we Integration of antiretroviral therapy with tuberculosis treatment. Integration of antiretroviral therapy with tuberculosis treatment. BACKGROUND We previously reported that integrating antiretroviral therapy (ART) with tuberculosis treatment reduces mortality. However, the timing for the initiation of ART during tuberculosis treatment remains unresolved. METHODS We conducted a three-group, open-label, randomized, controlled trial in South Africa involving 642 ambulatory patients, all with tuberculosis (confirmed by a positive sputum smear for acid-fast bacilli), human immunodeficiency virus infection, and a CD4+ T-cell count of less than 500 per cubic millimeter. Findings in the earlier-ART group (ART initiated within 4 weeks after the start of tuberculosis treatment, 214 patients) and later-ART group (ART initiated during the first 4 weeks of the continu",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.470809+00:00"
+}

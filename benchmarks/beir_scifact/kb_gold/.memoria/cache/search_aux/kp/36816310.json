@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36816310",
+  "source_fingerprint": "8722233ef485b7754d2224785018b9b4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36816310",
+    "a-screen-for-endocytic-motifs"
+  ],
+  "key_phrases": [
+    "screen",
+    "endocytic",
+    "motifs",
+    "sorting",
+    "signals",
+    "cargo",
+    "selection",
+    "into"
+  ],
+  "summary_1l": "Sorting signals for cargo selection into coated vesicles are usually in the form of short linear motifs.",
+  "query_hits": [],
+  "embed_text": "36816310 A Screen for Endocytic Motifs science scifact Sorting signals for cargo selection into coated vesicles are usually in the form of short linear motifs. Three motifs for clathrin-mediated endocytosis have been identified: YXXPhi, [D/E]XXXL[L/I] and FXNPXY. To search for new endocytic… 36816310 a-screen-for-endocytic-motifs screen endocytic motifs sorting signals cargo selection into Sorting signals for cargo selection into coated vesicles are usually in the form of short linear motifs. A Screen for Endocytic Motifs Sorting signals for cargo selection into coated vesicles are usually in the form of short linear motifs. Three motifs for clathrin-mediated endocytosis have been identified: YXXPhi, [D/E]XXXL[L/I] and FXNPXY. To search for new endocytic motifs, we made a library of CD8 chimeras with random sequences in their cytoplasmic tails, and used a novel fluorescence-activated cell sorting (FACS)-based assay to select for endocytosed constructs. Out of the five tails that were most efficiently internalized, only one was found to contain a conventional motif. Two contain dileucine-like sequences that appear to be variations on the [D/E]XXXL[L/I] motif. Another contains a novel internalization signal, YXXXPhiN, which is able to function in cells expressing a mutant mu2 tha",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:43.730726+00:00"
+}

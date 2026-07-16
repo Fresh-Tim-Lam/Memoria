@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8305686",
+  "source_fingerprint": "4fc95f54a9bff571e8391e16652f50bd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8305686",
+    "interaction-of-streptavidin-based-peptide-mhc-oligomers-(tetramers)-with-cell-surface-tcrs."
+  ],
+  "key_phrases": [
+    "interaction",
+    "streptavidin",
+    "based",
+    "peptide",
+    "mhc",
+    "oligomers",
+    "tetramers",
+    "with"
+  ],
+  "summary_1l": "Interaction of streptavidin-based peptide-MHC oligomers (tetramers) with cell-surface TCRs.",
+  "query_hits": [],
+  "embed_text": "8305686 Interaction of streptavidin-based peptide-MHC oligomers (tetramers) with cell-surface TCRs. science scifact The binding of oligomeric peptide-MHC (pMHC) complexes to cell surface TCR can be considered to approximate TCR-pMHC interactions at cell-cell interfaces. In this study, we analyzed the equilibrium binding of streptavidin-based pMHC… 8305686 interaction-of-streptavidin-based-peptide-mhc-oligomers-(tetramers)-with-cell-surface-tcrs. interaction streptavidin based peptide mhc oligomers tetramers with Interaction of streptavidin-based peptide-MHC oligomers (tetramers) with cell-surface TCRs. Interaction of streptavidin-based peptide-MHC oligomers (tetramers) with cell-surface TCRs. The binding of oligomeric peptide-MHC (pMHC) complexes to cell surface TCR can be considered to approximate TCR-pMHC interactions at cell-cell interfaces. In this study, we analyzed the equilibrium binding of streptavidin-based pMHC oligomers (tetramers) and their dissociation kinetics from CD8(pos) T cells from 2C-TCR transgenic mice and from T cell hybridomas that expressed the 2C TCR or a high-affinity mutant (m33) of this TCR. Our results show that the tetramers did not come close to saturating cell-surface TCR (binding only 10-30% of cell-surface receptors), as is generally assumed in deriving affinity values (K(D)), in part because of dissociative losses from tetramer-stained cells. Guided by",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.308954+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9460704",
+  "source_fingerprint": "aa01f5a6f8254f1df7a472e2318fe16a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9460704",
+    "molecular-pathways:-induction-of-polyploidy-as-a-novel-differentiation-therapy-for-leukemia."
+  ],
+  "key_phrases": [
+    "molecular",
+    "pathways",
+    "induction",
+    "polyploidy",
+    "as",
+    "novel",
+    "differentiation",
+    "therapy"
+  ],
+  "summary_1l": "Molecular pathways: induction of polyploidy as a novel differentiation therapy for leukemia.",
+  "query_hits": [],
+  "embed_text": "9460704 Molecular pathways: induction of polyploidy as a novel differentiation therapy for leukemia. science scifact Differentiation therapy has emerged as a powerful way to target specific hematologic malignancies. One of the best examples is the use of all-trans retinoic acid (ATRA) in acute promyelocytic leukemia (APL), which has significantly… 9460704 molecular-pathways:-induction-of-polyploidy-as-a-novel-differentiation-therapy-for-leukemia. molecular pathways induction polyploidy as novel differentiation therapy Molecular pathways: induction of polyploidy as a novel differentiation therapy for leukemia. Molecular pathways: induction of polyploidy as a novel differentiation therapy for leukemia. Differentiation therapy has emerged as a powerful way to target specific hematologic malignancies. One of the best examples is the use of all-trans retinoic acid (ATRA) in acute promyelocytic leukemia (APL), which has significantly improved the outcome for patients with this specific form of acute myeloid leukemia (AML). In considering how differentiation therapy could be used in other forms of AML, we predicted that compounds that induce terminal differentiation of megakaryocytes would be effective therapies for the megakaryocytic form of AML, named acute megakaryocytic leukemia (AMKL). We also speculated that such agents would reduce the burden of abnormal hematopoietic cells in primary myelofibr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.948421+00:00"
+}

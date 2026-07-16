@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "13492264",
+  "source_fingerprint": "9208b9cc73a1a90f6f0d242f1770c3f7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13492264"
+  ],
+  "key_phrases": [
+    "summary",
+    "glomerular",
+    "basement",
+    "membrane",
+    "gbm",
+    "podocalyxin",
+    "essential",
+    "podocyte"
+  ],
+  "summary_1l": "Glomerular basement membrane (GBM) and podocalyxin are essential for podocyte morphology.",
+  "query_hits": [],
+  "embed_text": "13492264 Summary science scifact Glomerular basement membrane (GBM) and podocalyxin are essential for podocyte morphology. We provide evidence of functional interconnections between basement membrane components (collagen IV and laminin), the expression of podocalyxin and… 13492264 summary glomerular basement membrane gbm podocalyxin essential podocyte Glomerular basement membrane (GBM) and podocalyxin are essential for podocyte morphology. Summary Glomerular basement membrane (GBM) and podocalyxin are essential for podocyte morphology. We provide evidence of functional interconnections between basement membrane components (collagen IV and laminin), the expression of podocalyxin and the morphology of human glomerular epithelial cells (podocytes). We demonstrated that GBM and laminin, but not collagen IV, up-regulated the expression of podocalyxin. Scanning electron microscopy revealed that laminin induced a modified morphology of podocytes with process formation, which was more extensive in the presence of GBM. Under high magnification, podocytes appeared ruffled. Using transmission electron microscopy we observed that raised areas occurred in the basal cell surface. Furthermore, the presence of anti-podocalyxin antibody incr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.402897+00:00"
+}

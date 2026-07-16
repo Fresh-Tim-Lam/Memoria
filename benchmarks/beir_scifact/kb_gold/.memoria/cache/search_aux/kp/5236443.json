@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "5236443",
+  "source_fingerprint": "891c66b1f65c8767a4131f1e5831e1b0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5236443"
+  ],
+  "key_phrases": [
+    "epithelial",
+    "mesenchymal",
+    "transitions",
+    "tumour",
+    "progression",
+    "without",
+    "which",
+    "polarized"
+  ],
+  "summary_1l": "Without epithelial–mesenchymal transitions, in which polarized epithelial cells are converted into motile cells, multicellular organisms would",
+  "query_hits": [],
+  "embed_text": "5236443 Epithelial–mesenchymal transitions in tumour progression science scifact Without epithelial–mesenchymal transitions, in which polarized epithelial cells are converted into motile cells, multicellular organisms would be incapable of getting past the blastula stage of embryonic development. However, this… 5236443 epithelial mesenchymal transitions tumour progression without which polarized Without epithelial–mesenchymal transitions, in which polarized epithelial cells are converted into motile cells, multicellular organisms would Epithelial–mesenchymal transitions in tumour progression Without epithelial–mesenchymal transitions, in which polarized epithelial cells are converted into motile cells, multicellular organisms would be incapable of getting past the blastula stage of embryonic development. However, this important developmental programme has a more sinister role in tumour progression. Epithelial–mesenchymal transition provides a new basis for understanding the progression of carcinoma towards dedifferentiated and more malignant states.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.575317+00:00"
+}

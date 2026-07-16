@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "3952288",
+  "source_fingerprint": "32423cc501700cbcc5cc007a182d9f1a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3952288"
+  ],
+  "key_phrases": [
+    "rank",
+    "signals",
+    "from",
+    "cd4",
+    "inducer",
+    "cells",
+    "regulate",
+    "development"
+  ],
+  "summary_1l": "Aire-expressing medullary thymic epithelial cells (mTECs) play a key role in preve",
+  "query_hits": [],
+  "embed_text": "3952288 RANK signals from CD4+3− inducer cells regulate development of Aire-expressing epithelial cells in the thymic medulla science scifact Aire-expressing medullary thymic epithelial cells (mTECs) play a key role in preventing autoimmunity by expressing tissue-restricted antigens to help purge the emerging T cell receptor repertoire of self-reactive specificities. Here we… 3952288 rank signals from cd4 inducer cells regulate development Aire-expressing medullary thymic epithelial cells (mTECs) play a key role in preve RANK signals from CD4+3− inducer cells regulate development of Aire-expressing epithelial cells in the thymic medulla Aire-expressing medullary thymic epithelial cells (mTECs) play a key role in preventing autoimmunity by expressing tissue-restricted antigens to help purge the emerging T cell receptor repertoire of self-reactive specificities. Here we demonstrate a novel role for a CD4+3− inducer cell population, previously linked to development of organized secondary lymphoid structures and maintenance of T cell memory in the functional regulation of Aire-mediated promiscuous gene expression in the thymus. CD4+3− cells are closely associated with mTECs in adult thymus, and in fetal thymus their appearance is temporally linked with the appearance of Aire+ mTECs. We show that RANKL signals",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.689515+00:00"
+}

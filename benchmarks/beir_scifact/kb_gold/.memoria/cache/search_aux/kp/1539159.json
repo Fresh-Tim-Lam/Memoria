@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1539159",
+  "source_fingerprint": "31d51cb65c631411836b9455c180931f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1539159",
+    "lifeact:-a-versatile-marker-to-visualize-f-actin"
+  ],
+  "key_phrases": [
+    "lifeact",
+    "versatile",
+    "marker",
+    "visualize",
+    "actin",
+    "live",
+    "imaging",
+    "cytoskeleton"
+  ],
+  "summary_1l": "Live imaging of the actin cytoskeleton is crucial for the study of many fundamental biological processes, but current approaches to visualize actin hav",
+  "query_hits": [],
+  "embed_text": "1539159 Lifeact: a versatile marker to visualize F-actin science scifact Live imaging of the actin cytoskeleton is crucial for the study of many fundamental biological processes, but current approaches to visualize actin have several limitations. Here we describe Lifeact, a 17-amino-acid peptide, which stained… 1539159 lifeact:-a-versatile-marker-to-visualize-f-actin lifeact versatile marker visualize actin live imaging cytoskeleton Live imaging of the actin cytoskeleton is crucial for the study of many fundamental biological processes, but current approaches to visualize actin hav Lifeact: a versatile marker to visualize F-actin Live imaging of the actin cytoskeleton is crucial for the study of many fundamental biological processes, but current approaches to visualize actin have several limitations. Here we describe Lifeact, a 17-amino-acid peptide, which stained filamentous actin (F-actin) structures in eukaryotic cells and tissues. Lifeact did not interfere with actin dynamics in vitro and in vivo and in its chemically modified peptide form allowed visualization of actin dynamics in nontransfectable cells.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.460540+00:00"
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "17997584",
+  "source_fingerprint": "7d0a81f0d02e2ae1b7b452ebf69dfcd7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17997584"
+  ],
+  "key_phrases": [
+    "integrin",
+    "mediated",
+    "tgf",
+    "activation",
+    "by",
+    "effector",
+    "regulatory",
+    "cells"
+  ],
+  "summary_1l": "Regulatory T (Treg) cells play a pivotal role in suppressing self-ha",
+  "query_hits": [],
+  "embed_text": "17997584 Integrin αvβ8-Mediated TGF-β Activation by Effector Regulatory T Cells Is Essential for Suppression of T-Cell-Mediated Inflammation science scifact Regulatory T (Treg) cells play a pivotal role in suppressing self-harmful T cell responses, but how Treg cells mediate suppression to maintain immune homeostasis and limit responses during inflammation is unclear. Here we show that… 17997584 integrin mediated tgf activation by effector regulatory cells Regulatory T (Treg) cells play a pivotal role in suppressing self-ha Integrin αvβ8-Mediated TGF-β Activation by Effector Regulatory T Cells Is Essential for Suppression of T-Cell-Mediated Inflammation Regulatory T (Treg) cells play a pivotal role in suppressing self-harmful T cell responses, but how Treg cells mediate suppression to maintain immune homeostasis and limit responses during inflammation is unclear. Here we show that effector Treg cells express high amounts of the integrin αvβ8, which enables them to activate latent transforming growth factor-β (TGF-β). Treg-cell-specific deletion of integrin αvβ8 did not result in a spontaneous inflammatory phenotype, suggesting that this pathway is not important in Treg-cell-mediated maintenance of immune homeostasis. However, Treg cells lacking expression of integrin αvβ8 were unable to suppress pathogenic T",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:11.959020+00:00"
+}

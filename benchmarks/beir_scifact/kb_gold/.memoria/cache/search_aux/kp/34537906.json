@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "34537906",
+  "source_fingerprint": "1131ff8bc8e0b4b18325590312bc3888",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "34537906",
+    "the-molecular-requirements-for-cytokinesis."
+  ],
+  "key_phrases": [
+    "molecular",
+    "requirements",
+    "cytokinesis",
+    "after",
+    "anaphase",
+    "onset",
+    "animal",
+    "cells"
+  ],
+  "summary_1l": "The molecular requirements for cytokinesis.",
+  "query_hits": [],
+  "embed_text": "34537906 The molecular requirements for cytokinesis. science scifact After anaphase onset, animal cells build an actomyosin contractile ring that constricts the plasma membrane to generate two daughter cells connected by a cytoplasmic bridge. The bridge is ultimately severed to complete cytokinesis. Myriad… 34537906 the-molecular-requirements-for-cytokinesis. molecular requirements cytokinesis after anaphase onset animal cells The molecular requirements for cytokinesis. The molecular requirements for cytokinesis. After anaphase onset, animal cells build an actomyosin contractile ring that constricts the plasma membrane to generate two daughter cells connected by a cytoplasmic bridge. The bridge is ultimately severed to complete cytokinesis. Myriad techniques have been used to identify proteins that participate in cytokinesis in vertebrates, insects, and nematodes. A conserved core of about 20 proteins are individually involved with cytokinesis in most animal cells. These components are found in the contractile ring, on the central spindle, within the RhoA pathway, and on vesicles that expand the membrane and sever the bridge. Cytokinesis involves additional proteins, but they, or their requirement in cytokinesis, are not conserved among animal cells.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.556832+00:00"
+}

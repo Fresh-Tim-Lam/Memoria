@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12130690",
+  "source_fingerprint": "11e830d8a37ae0c55a79bb7ec826ccef",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12130690",
+    "involvement-of-transient-receptor-potential-vanilloid-1-receptors-in-protease-activated-receptor-2-induced-joint-inflammation-and-nociception."
+  ],
+  "key_phrases": [
+    "involvement",
+    "transient",
+    "receptor",
+    "potential",
+    "vanilloid",
+    "receptors",
+    "protease",
+    "activated"
+  ],
+  "summary_1l": "Involvement of transient receptor potential vanilloid 1 receptors in protease-activated receptor-2-induced joint inflammation and nociception.",
+  "query_hits": [],
+  "embed_text": "12130690 Involvement of transient receptor potential vanilloid 1 receptors in protease-activated receptor-2-induced joint inflammation and nociception. science scifact Protease-activated receptor-2 (PAR-2) is a G-protein-coupled receptor activated through proteolytic cleavage. It is localized on epithelial, endothelial and inflammatory cells, as well as on transient receptor potential vanilloid 1 (TRPV1)… 12130690 involvement-of-transient-receptor-potential-vanilloid-1-receptors-in-protease-activated-receptor-2-induced-joint-inflammation-and-nociception. involvement transient receptor potential vanilloid receptors protease activated Involvement of transient receptor potential vanilloid 1 receptors in protease-activated receptor-2-induced joint inflammation and nociception. Involvement of transient receptor potential vanilloid 1 receptors in protease-activated receptor-2-induced joint inflammation and nociception. Protease-activated receptor-2 (PAR-2) is a G-protein-coupled receptor activated through proteolytic cleavage. It is localized on epithelial, endothelial and inflammatory cells, as well as on transient receptor potential vanilloid 1 (TRPV1) receptor-expressing neurones. It plays an important role in inflammatory/nociceptive processes. Since there are few reports concerning PAR-2 function in joints, the effects of intraarticular PAR-2 activation on joint pain and inflammation were studied. Secondary hyperalgesia/allodynia, spontaneous weight distribution, swelling and inflammatory cytokine production were measured and the involvement of TRPV1 ion chan",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:07.813948+00:00"
+}

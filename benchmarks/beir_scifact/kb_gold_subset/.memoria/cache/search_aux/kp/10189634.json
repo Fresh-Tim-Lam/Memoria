@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10189634",
+  "source_fingerprint": "a926ce64e2465d6f12690822670bd45f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10189634",
+    "eic1-links-mis18-with-the-ccan/mis6/ctf19-complex-to-promote-cenp-a-assembly"
+  ],
+  "key_phrases": [
+    "eic1",
+    "links",
+    "mis18",
+    "with",
+    "ccan",
+    "mis6",
+    "ctf19",
+    "complex"
+  ],
+  "summary_1l": "CENP-A chromatin forms the foundation for kinetochore assembly.",
+  "query_hits": [],
+  "embed_text": "10189634 Eic1 links Mis18 with the CCAN/Mis6/Ctf19 complex to promote CENP-A assembly science scifact CENP-A chromatin forms the foundation for kinetochore assembly. Replication-independent incorporation of CENP-A at centromeres depends on its chaperone HJURP(Scm3), and Mis18 in vertebrates and fission yeast. The recruitment of Mis18 and… 10189634 eic1-links-mis18-with-the-ccan/mis6/ctf19-complex-to-promote-cenp-a-assembly eic1 links mis18 with ccan mis6 ctf19 complex CENP-A chromatin forms the foundation for kinetochore assembly. Eic1 links Mis18 with the CCAN/Mis6/Ctf19 complex to promote CENP-A assembly CENP-A chromatin forms the foundation for kinetochore assembly. Replication-independent incorporation of CENP-A at centromeres depends on its chaperone HJURP(Scm3), and Mis18 in vertebrates and fission yeast. The recruitment of Mis18 and HJURP(Scm3) to centromeres is cell cycle regulated. Vertebrate Mis18 associates with Mis18BP1(KNL2), which is critical for the recruitment of Mis18 and HJURP(Scm3). We identify two novel fission yeast Mis18-interacting proteins (Eic1 and Eic2), components of the Mis18 complex. Eic1 is essential to maintain Cnp1(CENP-A) at centromeres and is crucial for kinetochore integrity; Eic2 is dispensable. Eic1 also associates with Fta7(CENP-Q/Okp1), Cnl2(Nkp2) and Mal2(CENP-O/Mcm21), compon",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.333303+00:00"
+}

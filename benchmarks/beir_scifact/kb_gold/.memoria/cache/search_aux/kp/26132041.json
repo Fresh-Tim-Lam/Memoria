@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26132041",
+  "source_fingerprint": "02bf0afc7a5366e4de0699a0a55b35d0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26132041",
+    "vanishing-cerebellar-infarcts-in-a-migraine-patient."
+  ],
+  "key_phrases": [
+    "vanishing",
+    "cerebellar",
+    "infarcts",
+    "migraine",
+    "patient",
+    "recent",
+    "population",
+    "based"
+  ],
+  "summary_1l": "Vanishing cerebellar infarcts in a migraine patient.",
+  "query_hits": [],
+  "embed_text": "26132041 Vanishing cerebellar infarcts in a migraine patient. science scifact Recent population-based studies have suggested that migraine is a risk factor for the development of infarct-like lesions in the territory of the posterior circulation. These lesions are thought to be true vascular infarcts based on their… 26132041 vanishing-cerebellar-infarcts-in-a-migraine-patient. vanishing cerebellar infarcts migraine patient recent population based Vanishing cerebellar infarcts in a migraine patient. Vanishing cerebellar infarcts in a migraine patient. Recent population-based studies have suggested that migraine is a risk factor for the development of infarct-like lesions in the territory of the posterior circulation. These lesions are thought to be true vascular infarcts based on their size, location and magnetic resonance imaging (MRI) characteristics. However, as there are no postmortem studies identifying the pathology of these MRI findings, their true aetiology is unknown. A case patient with migraine is presented, who developed what appeared to be cerebellar infarcts on MRI, but these lesions vanished on repeat imaging 16 days later, questioning their aetiology as vascular ischaemic based infarcts.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.450944+00:00"
+}

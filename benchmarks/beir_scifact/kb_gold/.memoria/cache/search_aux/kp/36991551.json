@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36991551",
+  "source_fingerprint": "bba83366aa6a600d4a8e28731e9d9045",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36991551",
+    "polyphenols-of-cocoa:-inhibition-of-mammalian-15-lipoxygenase"
+  ],
+  "key_phrases": [
+    "polyphenols",
+    "cocoa",
+    "inhibition",
+    "mammalian",
+    "15",
+    "lipoxygenase",
+    "abstract",
+    "some"
+  ],
+  "summary_1l": "Abstract Some cocoas and chocolates are rich in ()epicatechin and its related oligomers, the procyanidins.",
+  "query_hits": [],
+  "embed_text": "36991551 Polyphenols of Cocoa: Inhibition of Mammalian 15-Lipoxygenase science scifact Abstract Some cocoas and chocolates are rich in ()epicatechin and its related oligomers, the procyanidins. Fractions of these compounds, isolated from the seeds of Theobroma cacao, caused dosedependent inhibition of isolated rabbit… 36991551 polyphenols-of-cocoa:-inhibition-of-mammalian-15-lipoxygenase polyphenols cocoa inhibition mammalian 15 lipoxygenase abstract some Abstract Some cocoas and chocolates are rich in ()epicatechin and its related oligomers, the procyanidins. Polyphenols of Cocoa: Inhibition of Mammalian 15-Lipoxygenase Abstract Some cocoas and chocolates are rich in ()epicatechin and its related oligomers, the procyanidins. Fractions of these compounds, isolated from the seeds of Theobroma cacao, caused dosedependent inhibition of isolated rabbit 15-lipoxygenase-1 with the larger oligomers being more active; the decamer fraction revealed an IC 50 of 0.8 M. Among the monomeric flavanols, epigallocatechin gallate (IC 50 = 4 M) and epicatechin gallate (5 M) were more potent than ()epicatechin (IC50 = 60 M). ()Epicatechin and procyanidin nonamer also inhibited the formation of 15-hydroxyeicosatetraenoic acid from arachidonic acid in rabbit smooth muscle cells transfected with human 15-lipoxygenase-1. In contrast, inhibition of the lipoxygenase pat",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.035694+00:00"
+}

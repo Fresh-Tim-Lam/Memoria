@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13907427",
+  "source_fingerprint": "102265cc725d28d1a07b48f0bcb27bf1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13907427",
+    "dna-repair-factor-aplf-is-a-histone-chaperone."
+  ],
+  "key_phrases": [
+    "dna",
+    "repair",
+    "factor",
+    "aplf",
+    "histone",
+    "chaperone",
+    "poly",
+    "adp"
+  ],
+  "summary_1l": "DNA repair factor APLF is a histone chaperone.",
+  "query_hits": [],
+  "embed_text": "13907427 DNA repair factor APLF is a histone chaperone. science scifact Poly(ADP-ribosyl)ation plays a major role in DNA repair, where it regulates chromatin relaxation as one of the critical events in the repair process. However, the molecular mechanism by which poly(ADP-ribose) modulates chromatin remains… 13907427 dna-repair-factor-aplf-is-a-histone-chaperone. dna repair factor aplf histone chaperone poly adp DNA repair factor APLF is a histone chaperone. DNA repair factor APLF is a histone chaperone. Poly(ADP-ribosyl)ation plays a major role in DNA repair, where it regulates chromatin relaxation as one of the critical events in the repair process. However, the molecular mechanism by which poly(ADP-ribose) modulates chromatin remains poorly understood. Here we identify the poly(ADP-ribose)-regulated protein APLF as a DNA-damage-specific histone chaperone. APLF preferentially binds to the histone H3/H4 tetramer via its C-terminal acidic motif, which is homologous to the motif conserved in the histone chaperones of the NAP1L family (NAP1L motif). We further demonstrate that APLF exhibits histone chaperone activities in a manner that is dependent on its acidic domain and that the NAP1L motif is critical for the repair capacity of APLF in vivo.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.470724+00:00"
+}

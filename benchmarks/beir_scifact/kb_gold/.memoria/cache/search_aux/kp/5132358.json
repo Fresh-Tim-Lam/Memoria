@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5132358",
+  "source_fingerprint": "da7f4f038511992379cea2f57b022303",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5132358",
+    "chimeric-antigen-receptor-modified-t-cells-for-acute-lymphoid-leukemia."
+  ],
+  "key_phrases": [
+    "chimeric",
+    "antigen",
+    "receptor",
+    "modified",
+    "cells",
+    "acute",
+    "lymphoid",
+    "leukemia"
+  ],
+  "summary_1l": "Chimeric antigen receptor-modified T cells for acute lymphoid leukemia.",
+  "query_hits": [],
+  "embed_text": "5132358 Chimeric antigen receptor-modified T cells for acute lymphoid leukemia. science scifact Chimeric antigen receptor-modified T cells with specificity for CD19 have shown promise in the treatment of chronic lymphocytic leukemia (CLL). It remains to be established whether chimeric antigen receptor T cells have clinical activity… 5132358 chimeric-antigen-receptor-modified-t-cells-for-acute-lymphoid-leukemia. chimeric antigen receptor modified cells acute lymphoid leukemia Chimeric antigen receptor-modified T cells for acute lymphoid leukemia. Chimeric antigen receptor-modified T cells for acute lymphoid leukemia. Chimeric antigen receptor-modified T cells with specificity for CD19 have shown promise in the treatment of chronic lymphocytic leukemia (CLL). It remains to be established whether chimeric antigen receptor T cells have clinical activity in acute lymphoblastic leukemia (ALL). Two children with relapsed and refractory pre-B-cell ALL received infusions of T cells transduced with anti-CD19 antibody and a T-cell signaling molecule (CTL019 chimeric antigen receptor T cells), at a dose of 1.4×10(6) to 1.2×10(7) CTL019 cells per kilogram of body weight. In both patients, CTL019 T cells expanded to a level that was more than 1000 times as high as the initial engraftment level, and the cells were identified in bone marrow. In a",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.202779+00:00"
+}

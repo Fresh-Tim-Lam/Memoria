@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "33796570",
+  "source_fingerprint": "bcbc156805f812b8096dee6099403919",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "33796570",
+    "ablation-of-nf1-function-in-neurons-induces-abnormal-development-of-cerebral-cortex-and-reactive-gliosis-in-the-brain."
+  ],
+  "key_phrases": [
+    "ablation",
+    "nf1",
+    "function",
+    "neurons",
+    "induces",
+    "abnormal",
+    "development",
+    "cerebral"
+  ],
+  "summary_1l": "Ablation of NF1 function in neurons induces abnormal development of cerebral cortex and reactive gliosis in the brain.",
+  "query_hits": [],
+  "embed_text": "33796570 Ablation of NF1 function in neurons induces abnormal development of cerebral cortex and reactive gliosis in the brain. science scifact Neurofibromatosis type 1 (NF1) is a prevalent genetic disorder that affects growth properties of neural-crest-derived cell populations. In addition, approximately one-half of NF1 patients exhibit learning disabilities. To characterize NF1… 33796570 ablation-of-nf1-function-in-neurons-induces-abnormal-development-of-cerebral-cortex-and-reactive-gliosis-in-the-brain. ablation nf1 function neurons induces abnormal development cerebral Ablation of NF1 function in neurons induces abnormal development of cerebral cortex and reactive gliosis in the brain. Ablation of NF1 function in neurons induces abnormal development of cerebral cortex and reactive gliosis in the brain. Neurofibromatosis type 1 (NF1) is a prevalent genetic disorder that affects growth properties of neural-crest-derived cell populations. In addition, approximately one-half of NF1 patients exhibit learning disabilities. To characterize NF1 function both in vitro and in vivo, we circumvent the embryonic lethality of NF1 null mouse embryos by generating a conditional mutation in the NF1 gene using Cre/loxP technology. Introduction of a Synapsin I promoter driven Cre transgenic mouse strain into the conditional NF1 background has ablated NF1 function in most differentiated neuronal populations. These mice have abnormal development of the cerebral cortex, which suggests that NF",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.725007+00:00"
+}

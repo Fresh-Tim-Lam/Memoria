@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11041152",
+  "source_fingerprint": "a4c7339b009359f888c678dff9f1e808",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11041152",
+    "microtubule-sliding-activity-of-a-kinesin-8-promotes-spindle-assembly-and-spindle-length-control"
+  ],
+  "key_phrases": [
+    "microtubule",
+    "sliding",
+    "activity",
+    "kinesin",
+    "promotes",
+    "spindle",
+    "assembly",
+    "length"
+  ],
+  "summary_1l": "Molecular motors play critical roles in the formation of mitotic spindles, either through controlling t",
+  "query_hits": [],
+  "embed_text": "11041152 Microtubule sliding activity of a kinesin-8 promotes spindle assembly and spindle length control science scifact Molecular motors play critical roles in the formation of mitotic spindles, either through controlling the stability of individual microtubules, or by crosslinking and sliding microtubule arrays. Kinesin-8 motors are best known for their… 11041152 microtubule-sliding-activity-of-a-kinesin-8-promotes-spindle-assembly-and-spindle-length-control microtubule sliding activity kinesin promotes spindle assembly length Molecular motors play critical roles in the formation of mitotic spindles, either through controlling t Microtubule sliding activity of a kinesin-8 promotes spindle assembly and spindle length control Molecular motors play critical roles in the formation of mitotic spindles, either through controlling the stability of individual microtubules, or by crosslinking and sliding microtubule arrays. Kinesin-8 motors are best known for their regulatory roles in controlling microtubule dynamics. They contain microtubule-destabilizing activities, and restrict spindle length in a wide variety of cell types and organisms. Here, we report an antiparallel microtubule-sliding activity of the budding yeast kinesin-8, Kip3. The in vivo importance of this sliding activity was established through the identification of complementary Kip3 mutants that separate the sliding activity and microtubule-destabilizing a",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:05.909171+00:00"
+}

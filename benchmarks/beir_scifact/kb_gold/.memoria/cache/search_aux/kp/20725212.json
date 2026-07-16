@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20725212",
+  "source_fingerprint": "50484a27ac796c2bfd4864e5412e1328",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20725212",
+    "chaperoning-5s-rna-assembly."
+  ],
+  "key_phrases": [
+    "chaperoning",
+    "5s",
+    "rna",
+    "assembly",
+    "eukaryotes",
+    "three",
+    "four",
+    "ribosomal"
+  ],
+  "summary_1l": "Chaperoning 5S RNA assembly.",
+  "query_hits": [],
+  "embed_text": "20725212 Chaperoning 5S RNA assembly. science scifact In eukaryotes, three of the four ribosomal RNAs (rRNAs)—the 5.8S, 18S, and 25S/28S rRNAs—are processed from a single pre-rRNA transcript and assembled into ribosomes. The fourth rRNA, the 5S rRNA, is transcribed by RNA polymerase III and… 20725212 chaperoning-5s-rna-assembly. chaperoning 5s rna assembly eukaryotes three four ribosomal Chaperoning 5S RNA assembly. Chaperoning 5S RNA assembly. In eukaryotes, three of the four ribosomal RNAs (rRNAs)—the 5.8S, 18S, and 25S/28S rRNAs—are processed from a single pre-rRNA transcript and assembled into ribosomes. The fourth rRNA, the 5S rRNA, is transcribed by RNA polymerase III and is assembled into the 5S ribonucleoprotein particle (RNP), containing ribosomal proteins Rpl5/uL18 and Rpl11/uL5, prior to its incorporation into preribosomes. In mammals, the 5S RNP is also a central regulator of the homeostasis of the tumor suppressor p53. The nucleolar localization of the 5S RNP and its assembly into preribosomes are performed by a specialized complex composed of Rpf2 and Rrs1 in yeast or Bxdc1 and hRrs1 in humans. Here we report the structural and functional characterization of the Rpf2-Rrs1 complex alone,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.826547+00:00"
+}

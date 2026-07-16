@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12922760",
+  "source_fingerprint": "ac7782e9cecfd084642abd9caa9d26f2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12922760",
+    "the-essential-schizosaccharomyces-pombe-pfh1-dna-helicase-promotes-fork-movement-past-g-quadruplex-motifs-to-prevent-dna-damage"
+  ],
+  "key_phrases": [
+    "essential",
+    "schizosaccharomyces",
+    "pombe",
+    "pfh1",
+    "dna",
+    "helicase",
+    "promotes",
+    "fork"
+  ],
+  "summary_1l": "BACKGROUND G-quadruplexes (G4s) are stable non-canonical DNA secondary s",
+  "query_hits": [],
+  "embed_text": "12922760 The essential Schizosaccharomyces pombe Pfh1 DNA helicase promotes fork movement past G-quadruplex motifs to prevent DNA damage science scifact BACKGROUND G-quadruplexes (G4s) are stable non-canonical DNA secondary structures consisting of stacked arrays of four guanines, each held together by Hoogsteen hydrogen bonds. Sequences with the ability to form these structures in vitro,… 12922760 the-essential-schizosaccharomyces-pombe-pfh1-dna-helicase-promotes-fork-movement-past-g-quadruplex-motifs-to-prevent-dna-damage essential schizosaccharomyces pombe pfh1 dna helicase promotes fork BACKGROUND G-quadruplexes (G4s) are stable non-canonical DNA secondary s The essential Schizosaccharomyces pombe Pfh1 DNA helicase promotes fork movement past G-quadruplex motifs to prevent DNA damage BACKGROUND G-quadruplexes (G4s) are stable non-canonical DNA secondary structures consisting of stacked arrays of four guanines, each held together by Hoogsteen hydrogen bonds. Sequences with the ability to form these structures in vitro, G4 motifs, are found throughout bacterial and eukaryotic genomes. The budding yeast Pif1 DNA helicase, as well as several bacterial Pif1 family helicases, unwind G4 structures robustly in vitro and suppress G4-induced DNA damage in S. cerevisiae in vivo. RESULTS We determined the genomic distribution and evolutionary conservation of G4 motifs in four fission yeast species and investigated the relationship between G4 motifs and Pf",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:09.954664+00:00"
+}

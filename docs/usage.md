@@ -1,186 +1,123 @@
+### 使用方法
 
-## Memoria 样例知识库设计提示词
-
-```markdown
-# 任务
-
-为 Memoria M1 设计一套**全新样例知识库**，主题：**[主题，例如：贝叶斯网络与概率图模型]**。
-
-目标不是写百科全书，而是做一个**能展示 Memoria 能力**、且**侧车校验通过**的小型精品库。
+1. **整理内容**：将上述提示词 + 你的知识文件发给 agent，agent 输出 Memoria 平面导入格式文件
+2. **导入 Memoria**：在 Memoria UI 中点击「导入」按钮，选择 agent 输出的 `.txt` 文件，系统自动完成导入
+3. **多文件整理**：一次提供多份知识文件时，agent 会自动识别跨文件关联并标注 `[[kp-id]]` 链接
+4. **分步确认**：文件较多时，可要求 agent 先输出知识点总览表，确认 KP 划分合理后再输出完整文件
+5. **冲突处理**：若导入时发现 KP id 与已有知识库冲突，Memoria 会弹出详细冲突报告（可复制给 agent 修正 id 后重新导入）
 
 ---
 
-# 背景：Memoria 数据模型（必须遵守）
+## 平面导入文件格式规范
 
-## 1. 最小单元是「知识点（KP）」，不是文件
+> Memoria 导入引擎接受的文件格式。agent 输出的整理结果必须严格遵循此格式，否则导入会失败。
 
-- 每个 KP 有**全局唯一 id**（slug，如 `bayes-rule`、`d-separation`）
-- 一个 `.md` 文件可含多个 KP，每个 KP 在侧车里有独立 **range**（起点行/终点行 + snippet）
-- 文件本身没有 id，用文件名标识（如 `bayes-network.md`）
+### 基本结构
 
-## 2. 两层配置
+一个平面导入文件（`.txt`）包含**一个或多个文档段**，每个段由 `---` 分隔：
 
-**Markdown frontmatter**（用户可读、辅助搜索）：
-```yaml
+```
 ---
-description: 一句话说明本文件主题
+description: 第一份文档的描述
 concepts:
-  - id: bayes-rule
-    name: 贝叶斯公式
+  - id: kp-id-1
+    name: 知识点名称1
     weight: 1.0
-    tags: [probability, inference]
-  - name: 条件独立          # 无 id = 纯 tag
-    weight: 0.5
----
-```
-
-**侧车 `.memoria/sidecars/<mirror>.memoria.yaml`**（机器维护）：
-```yaml
-schema_version: 1
-file: bayes-network.md
-knowledge_points:
-  - id: bayes-rule
-    name: 贝叶斯公式
-    range:
-      start: { snippet: "## 贝叶斯公式", line_hint: 12 }
-      end:   { snippet: "后验正比于先验乘以似然。", line_hint: 18 }
-links:
-  - anchor_text: 马尔可夫毯
-    targets: [markov-blanket]
-    edge_type: reference
-    instances: [{ line: 25, wrapped: true }]
-    source_id: bayes-rule
-```
-
-规则要点：
-- range 的 **start/end snippet 必须能在正文对应行里子串匹配**；终点行必须是**非空行**
-- 链接用 `[[显示文字]]` 或 `[[kp-id]]`；sidecar `links[].anchor_text` 与正文匹配文本一致
-- `edge_type`: `reference`（引用）或 `extend`（扩展/下游）
-- 虚链：`targets: []` 用于演示「待绑定」
-
-## 3. 知识库目录结构
-
-```
-my-kb/
-  topic-a.md
-  topic-b.md
-  subdir/topic-c.md          # 侧车镜像：.memoria/sidecars/subdir/topic-c.memoria.yaml
-  .memoria/
-    sidecars/*.memoria.yaml
-    manifest.yaml            # 构建后生成，设计阶段可省略
-```
-
+    tags: [标签1, 标签2]
+  - id: kp-id-2
+    name: 知识点名称2
+    weight: 0.8
+    tags: [标签a]
 ---
 
-# 设计目标（必须覆盖的演示场景）
+## 知识点名称1
 
-请在设计说明里逐项标注如何覆盖：
+正文内容，可包含 [[其他kp-id]] 链接。
 
-| 能力 | 要求 |
+## 知识点名称2
+
+正文内容。
+
+---
+description: 第二份文档的描述
+concepts:
+  - id: kp-id-3
+    name: 知识点名称3
+    weight: 1.0
+    tags: [标签x]
+---
+
+## 知识点名称3
+
+另一份文档的正文。
+```
+
+### 格式要点
+
+| 要素 | 规则 |
 |------|------|
-| 多文件多 KP | ≥4 个 md，≥12 个 KP，至少 1 个文件含 ≥3 个 KP |
-| 跨文件链接 | ≥5 条跨文件 `[[...]]`，形成可导航的小图谱 |
-| 多目标链接 | 至少 1 处 `[[A]]` 绑定 2+ 个 target KP |
-| 多跳路径 | 设计 A→B→C 三跳阅读路径（用于导航栈演示） |
-| 同义/口语 | 至少 1 个 KP 名称与正文用词不完全一致（测搜索） |
-| 数学/公式 | 至少 2 处 `$...$` 或 `$$...$$`（测预览与 range） |
-| 虚链 | 至少 1 个 frontmatter concept 有 id 但尚未绑定 KP |
-| 子目录 | 至少 1 个 md 放在子文件夹 |
-| 搜索友好 | 为 KP 配置 tags；正文含可检索关键词与 alias 变体 |
-| 边界样例 | 1 个「Nothing 占位」式短文件 + 1 个「hub 概览」式索引页 |
+| **段分隔符** | 独占一行的 `---`，前后不能有缩进或空格 |
+| **frontmatter** | 每段开头的 YAML 块，夹在两个 `---` 之间 |
+| **description** | 文件的一句话描述（必填） |
+| **concepts** | 知识点声明列表（至少 1 个） |
+| **concepts[].id** | 全局唯一英文 slug（必填，不能与知识库中已有 KP id 重复） |
+| **concepts[].name** | 中文知识点名称（必填，必须与正文中的 `##`/`###` 标题完全一致） |
+| **concepts[].weight** | 重要度 0~1（可选，默认 1.0） |
+| **concepts[].tags** | 标签列表（可选） |
+| **正文** | frontmatter 第二个 `---` 之后的内容，标准 Markdown |
+| **标题层级** | `##` = 一级 KP，`###` = 二级 KP（嵌套在 `##` 下） |
+| **链接** | `[[kp-id]]` 或 `[[kp-id\|显示文本]]`，指向其他 KP |
 
----
+### 一段 = 一个 .md 文件
 
-# 主题内知识结构（围绕 [主题]）
+导入引擎将每个 `---` 段生成一个独立的 `.md` 文件：
+- 文件名 = 段内第一个 KP 的 `id` + `.md`（如 `bayes-rule.md`）
+- 同时自动生成对应的 sidecar `.memoria.yaml`（含 KP range、links）
+- 自动调用 `build_knowledge_base()` 生成图谱
 
-先输出**概念地图**（再写正文）：
+### 多文件导入
 
-1. **Hub 页**（1 个）：定义领域边界、学习路径、指向各子主题的链接  
-2. **核心机制**（2–3 个文件）：每个文件 2–4 个 KP，讲清定义→公式/算法→直觉  
-3. **应用/案例**（1 个文件）：把前面 KP 串起来  
-4. **对照/易混**（1 个文件或一节）：专门写「A vs B」「常见误解」  
+Memoria 支持同时选择多个 `.txt` 文件导入（适用于 agent 分批输出的场景）。所有文件会被合并处理：
+- 先统一预扫描所有段的 KP id
+- 检测冲突（段间重复 + 与已有库重复）
+- 无冲突则一次性全部导入
 
-KP 划分原则：
-- 一级标题 `##` 通常对应 1 个 KP（除非太短可合并）
-- 每个 KP range 覆盖**完整语义段**（含必要公式块），不要截在空行上
-- id 用英文 slug；name 用中文（或中英并存于 name）
+### 冲突报告格式
 
----
+如果存在 KP id 冲突，Memoria 弹出对话框并生成如下格式的报告（可复制给 agent 修正）：
 
-# 链接与图谱设计
+```
+[导入冲突报告]
+共扫描 3 个文件、15 个 KP 声明，发现 2 个冲突：
 
-1. 画一张简图（mermaid 或 bullet 列表）说明 KP 之间 reference / extend 边  
-2. Hub 页至少链出 3 个下游 KP  
-3. 叶子 KP 至少 1 条回链或 extend 到相关 KP  
-4. 预留 1–2 个「待确认链接」（虚链或 pending 友好表述）
+冲突 1：
+  KP id: mdp
+  导入来源: batch2.txt 段2 (第67行)
+  已有位置: mdp.md → 马尔可夫决策过程
 
----
+冲突 2：
+  KP id: bayes-rule
+  导入来源: batch3.txt 段1 (第3行)
+  已有位置: probability.md → 贝叶斯公式
 
-# 输出格式（按顺序交付）
-
-## A. 设计摘要（200 字内）
-- 主题、受众、与现有 examples（RL/NLP）的差异
-
-## B. 文件清单表
-| 文件 | 用途 | KP 数量 | 主要链接出去 |
-
-## C. KP 登记表
-| id | name | 文件 | 起点标题 | 终点锚点句（snippet 预览） |
-
-## D. 链接登记表
-| anchor_text | source KP | targets | edge_type | 所在行意图 |
-
-## E. 正文草稿
-- 每个 md 文件完整内容（含 frontmatter）
-- 行号可在侧车阶段再填；但 **snippet 必须来自真实句子**
-
-## F. 侧车 YAML
-- 每个文件一份 `.memoria.yaml`
-- 确保 `validate_sidecar` 无 error（range 可解析、无重复 id）
-
-## G. 自测清单
-- [ ] 每个 KP 的 end 行非空且 snippet 在正文中可找到  
-- [ ] 无「文件行号 vs 正文行号」混淆（frontmatter 不计入正文行号）  
-- [ ] 搜索词设计：精确名、模糊拼写、口语 alias 各至少 1 例  
-- [ ] 打开 Memoria 后：图谱连通、导航栈可回退、搜索能命中 top3  
-
----
-
-# 约束与风格
-
-- 语言：中文为主，术语保留英文缩写（MDP、BERT 风格）
-- 单文件建议 40–120 行正文；整库控制在「10 分钟能读完一遍」
-- 不要复制现有 `examples/mdp.md` 结构；必须围绕 **[主题]** 原创
-- 避免无意义占位正文；幽默测试文件可 1 个，但不超过总文件数 20%
-- snippet 长度 ≤80 字符，选**稳定不会改写的句子**（不要选空行、单独 `$$`）
-
----
-
-# 可选：若主题定为「贝叶斯网络」时的 KP 种子（可删改）
-
-- `probability-review` / 概率论回顾  
-- `bayes-rule` / 贝叶斯公式  
-- `conditional-independence` / 条件独立  
-- `dag-model` / 有向图模型  
-- `d-separation` / d-分离  
-- `variable-elimination` / 变量消元  
-- `belief-propagation` / 信念传播  
-- `bayes-net-hub` / 概率图模型概览（hub）
-
----
-
-# 开始
-
-请先输出 **A + B + C**（设计摘要、文件清单、KP 登记），等我确认后再写 **E + F** 全文与侧车。
+建议操作：
+- 若需保留两者，请将导入文件中的 id 改为不同值
+- 若需覆盖已有，请在导入界面选择"覆盖"
+- 若需跳过，请在导入界面选择"跳过"
 ```
 
+用户对每个冲突可选择：
+- **跳过**：该 KP 所在的整段不导入
+- **覆盖**：用导入内容替换已有 KP
+- **重命名**：给冲突 id 加前缀（如 `imported-mdp`），保留两份
+
 ---
 
-## 使用建议
+### Memoria UI 导入操作步骤
 
-1. **先定主题**：把 `[主题]` 换成一个你有把握、且和现有 RL/NLP 样例不重复的领域。  
-2. **分两轮生成**：先审 KP 划分和链接表，再写正文，可避免 range snippet 对不上。  
-3. **入库位置**：成品可放在 `examples/` 或单独 `examples-<主题>/`，侧车进 `.memoria/sidecars/`。  
-4. **验收**：对照 `tests/unit/examples/test_m0_examples.py`——每个 md 有侧车、`validate_kb` 零 error、KP range 全部 `ok`。
-
-如果你已经定了主题（例如「编译原理」「CRISPR」「SQL 索引」），告诉我主题名，我可以按这份提示词直接帮你产出 **A+B+C** 或整套 md + sidecar 草稿。
+1. 打开 Memoria，先「打开」一个知识库目录（或新建空目录作为知识库根）
+2. 点击工具栏「导入」按钮
+3. 在文件选择器中选择一个或多个 `.txt` 平面导入文件
+4. 如果无冲突：直接导入完成，显示结果摘要（文件数、KP 数、边数）
+5. 如果有冲突：弹出冲突对话框 → 查看报告 → 逐条选择处理方式 → 确认导入
+6. 导入完成后，文件树和图谱自动刷新

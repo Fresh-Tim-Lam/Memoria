@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10704438",
+  "source_fingerprint": "c0051771328b390440fdc25143354330",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10704438",
+    "the-dna-damage-response-during-mitosis."
+  ],
+  "key_phrases": [
+    "dna",
+    "damage",
+    "response",
+    "during",
+    "mitosis",
+    "cells",
+    "equipped",
+    "with"
+  ],
+  "summary_1l": "The DNA damage response during mitosis.",
+  "query_hits": [],
+  "embed_text": "10704438 The DNA damage response during mitosis. science scifact Cells are equipped with a cell-intrinsic signaling network called the DNA damage response (DDR). This signaling network recognizes DNA lesions and initiates various downstream pathways to coordinate a cell cycle arrest with the repair of… 10704438 the-dna-damage-response-during-mitosis. dna damage response during mitosis cells equipped with The DNA damage response during mitosis. The DNA damage response during mitosis. Cells are equipped with a cell-intrinsic signaling network called the DNA damage response (DDR). This signaling network recognizes DNA lesions and initiates various downstream pathways to coordinate a cell cycle arrest with the repair of the damaged DNA. Alternatively, the DDR can mediate clearance of affected cells that are beyond repair through apoptosis or senescence. The DDR can be activated in response to DNA damage throughout the cell cycle, although the extent of DDR signaling is different in each cell cycle phase. Especially in response to DNA double strand breaks, only a very marginal response was observed during mitosis. Early on it was recognized that cells which are irradiated during mitosis continued division without repairing broken chr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.925240+00:00"
+}

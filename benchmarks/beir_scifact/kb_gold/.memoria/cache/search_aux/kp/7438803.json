@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7438803",
+  "source_fingerprint": "2d1397ec22e47560b2caaed7346e5883",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7438803",
+    "archaea-in-biogeochemical-cycles."
+  ],
+  "key_phrases": [
+    "archaea",
+    "biogeochemical",
+    "cycles",
+    "constitute",
+    "considerable",
+    "fraction",
+    "microbial",
+    "biomass"
+  ],
+  "summary_1l": "Archaea in biogeochemical cycles.",
+  "query_hits": [],
+  "embed_text": "7438803 Archaea in biogeochemical cycles. science scifact Archaea constitute a considerable fraction of the microbial biomass on Earth. Like Bacteria they have evolved a variety of energy metabolisms using organic and/or inorganic electron donors and acceptors, and many of them are able to fix… 7438803 archaea-in-biogeochemical-cycles. archaea biogeochemical cycles constitute considerable fraction microbial biomass Archaea in biogeochemical cycles. Archaea in biogeochemical cycles. Archaea constitute a considerable fraction of the microbial biomass on Earth. Like Bacteria they have evolved a variety of energy metabolisms using organic and/or inorganic electron donors and acceptors, and many of them are able to fix carbon from inorganic sources. Archaea thus play crucial roles in the Earth's global geochemical cycles and influence greenhouse gas emissions. Methanogenesis and anaerobic methane oxidation are important steps in the carbon cycle; both are performed exclusively by anaerobic archaea. Oxidation of ammonia to nitrite is performed by Thaumarchaeota. They represent the only archaeal group that resides in large numbers in the global aerobic terrestrial and marine environments on Earth. Sulfur-dependent archaea are confined mostl",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.303204+00:00"
+}

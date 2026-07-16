@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "46565968",
+  "source_fingerprint": "4beacb168f01998a6b00c73b3dc5e168",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "46565968",
+    "quantitative-characterization-of-metastatic-disease-in-the-spine.-part-i.-semiautomated-segmentation-using-atlas-based-deformable-registration-and-the-level-set-method."
+  ],
+  "key_phrases": [
+    "quantitative",
+    "characterization",
+    "metastatic",
+    "disease",
+    "spine",
+    "part",
+    "semiautomated",
+    "segmentation"
+  ],
+  "summary_1l": "Quantitative characterization of metastatic disease in the spine.",
+  "query_hits": [],
+  "embed_text": "46565968 Quantitative characterization of metastatic disease in the spine. Part I. Semiautomated segmentation using atlas-based deformable registration and the level set method. science scifact Quantitative assessment of metastatic disease in bone is often considered immeasurable and, as such, patients with skeletal metastases are often excluded from clinical trials. In order to effectively quantify the impact of metastatic tumor… 46565968 quantitative-characterization-of-metastatic-disease-in-the-spine.-part-i.-semiautomated-segmentation-using-atlas-based-deformable-registration-and-the-level-set-method. quantitative characterization metastatic disease spine part semiautomated segmentation Quantitative characterization of metastatic disease in the spine. Quantitative characterization of metastatic disease in the spine. Part I. Semiautomated segmentation using atlas-based deformable registration and the level set method. Quantitative assessment of metastatic disease in bone is often considered immeasurable and, as such, patients with skeletal metastases are often excluded from clinical trials. In order to effectively quantify the impact of metastatic tumor involvement in the spine, accurate segmentation of the vertebra is required. Manual segmentation can be accurate but involves extensive and time-consuming user interaction. Potential solutions to automating segmentation of metastatically involved vertebrae are demons deformable image registration and level set methods. The purpose of this study was to develop a semiautomated method to acc",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.979662+00:00"
+}

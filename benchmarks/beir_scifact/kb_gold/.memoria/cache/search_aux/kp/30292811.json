@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "30292811",
+  "source_fingerprint": "44fb14ab1dd1a89e756a476910b4e297",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "30292811",
+    "swaddling:-a-systematic-review."
+  ],
+  "key_phrases": [
+    "swaddling",
+    "systematic",
+    "review",
+    "was",
+    "almost",
+    "universal",
+    "child",
+    "care"
+  ],
+  "summary_1l": "Swaddling: a systematic review.",
+  "query_hits": [],
+  "embed_text": "30292811 Swaddling: a systematic review. science scifact Swaddling was an almost universal child-care practice before the 18th century. It is still tradition in certain parts of the Middle East and is gaining popularity in the United Kingdom, the United States, and The Netherlands to curb… 30292811 swaddling:-a-systematic-review. swaddling systematic review was almost universal child care Swaddling: a systematic review. Swaddling: a systematic review. Swaddling was an almost universal child-care practice before the 18th century. It is still tradition in certain parts of the Middle East and is gaining popularity in the United Kingdom, the United States, and The Netherlands to curb excessive crying. We have systematically reviewed all articles on swaddling to evaluate its possible benefits and disadvantages. In general, swaddled infants arouse less and sleep longer. Preterm infants have shown improved neuromuscular development, less physiologic distress, better motor organization, and more self-regulatory ability when they are swaddled. When compared with massage, excessively crying infants cried less when swaddled, and swaddling can soothe pain in infants. It is supportive in cases of neonatal abstinence s",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.539171+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14471161",
+  "source_fingerprint": "8ac2cc3c2ad78ce1dfcb618c6c9361b2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14471161",
+    "cancer-inhibition-through-circadian-reprogramming-of-tumor-transcriptome-with-meal-timing."
+  ],
+  "key_phrases": [
+    "cancer",
+    "inhibition",
+    "through",
+    "circadian",
+    "reprogramming",
+    "tumor",
+    "transcriptome",
+    "with"
+  ],
+  "summary_1l": "Cancer inhibition through circadian reprogramming of tumor transcriptome with meal timing.",
+  "query_hits": [],
+  "embed_text": "14471161 Cancer inhibition through circadian reprogramming of tumor transcriptome with meal timing. science scifact Circadian disruption accelerates cancer progression, whereas circadian reinforcement could halt it. Mice with P03 pancreatic adenocarcinoma (n = 77) were synchronized and fed ad libitum (AL) or with meal timing (MT) from Zeitgeber time… 14471161 cancer-inhibition-through-circadian-reprogramming-of-tumor-transcriptome-with-meal-timing. cancer inhibition through circadian reprogramming tumor transcriptome with Cancer inhibition through circadian reprogramming of tumor transcriptome with meal timing. Cancer inhibition through circadian reprogramming of tumor transcriptome with meal timing. Circadian disruption accelerates cancer progression, whereas circadian reinforcement could halt it. Mice with P03 pancreatic adenocarcinoma (n = 77) were synchronized and fed ad libitum (AL) or with meal timing (MT) from Zeitgeber time (ZT) 2 to ZT6 with normal or fat diet. Tumor gene expression profiling was determined with DNA microarrays at endogenous circadian time (CT) 4 and CT16. Circadian mRNA expression patterns were determined for clock genes Rev-erbalpha, Per2, and Bmal1, cellular stress genes Hspa8 and Cirbp, and cyclin A2 gene Ccna2 in liver and tumor. The 24-hour patterns in telemetered rest-activity and body temperature and plasma corticosterone and insulin-like growth factor-I (IGF-I)",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.940786+00:00"
+}

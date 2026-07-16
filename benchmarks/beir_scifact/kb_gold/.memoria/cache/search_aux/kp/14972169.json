@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14972169",
+  "source_fingerprint": "a647f2f1d7486ceddccdb99c8d36131b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14972169",
+    "teratogen-induced-oxidative-stress-targets-glyceraldehyde-3-phosphate-dehydrogenase-in-the-organogenesis-stage-mouse-embryo"
+  ],
+  "key_phrases": [
+    "teratogen",
+    "induced",
+    "oxidative",
+    "stress",
+    "targets",
+    "glyceraldehyde",
+    "phosphate",
+    "dehydrogenase"
+  ],
+  "summary_1l": "Exposure during the organogenesis stage of the mouse embryo to the model ter",
+  "query_hits": [],
+  "embed_text": "14972169 Teratogen-Induced Oxidative Stress Targets Glyceraldehyde-3-Phosphate Dehydrogenase in the Organogenesis Stage Mouse Embryo science scifact Exposure during the organogenesis stage of the mouse embryo to the model teratogen, hydroxyurea (HU), induces curly tail and limb malformations. Oxidative stress contributes to the developmental toxicity of HU. Reactive oxygen species… 14972169 teratogen-induced-oxidative-stress-targets-glyceraldehyde-3-phosphate-dehydrogenase-in-the-organogenesis-stage-mouse-embryo teratogen induced oxidative stress targets glyceraldehyde phosphate dehydrogenase Exposure during the organogenesis stage of the mouse embryo to the model ter Teratogen-Induced Oxidative Stress Targets Glyceraldehyde-3-Phosphate Dehydrogenase in the Organogenesis Stage Mouse Embryo Exposure during the organogenesis stage of the mouse embryo to the model teratogen, hydroxyurea (HU), induces curly tail and limb malformations. Oxidative stress contributes to the developmental toxicity of HU. Reactive oxygen species (ROS) interact with polyunsaturated bilipid membranes to form α,β-unsaturated reactive aldehydes; 4-hydroxy-2-nonenal (4-HNE), one of the most cytotoxic of these aldehydes, covalently adducts with proteins, lipids, and nucleic acids. The goal of the current study is to determine if HU exposure of CD1 mice on gestation day 9 generates region-specific 4-HNE-protein adducts in the embryo and to identify the proteins targeted. The formation",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.965725+00:00"
+}

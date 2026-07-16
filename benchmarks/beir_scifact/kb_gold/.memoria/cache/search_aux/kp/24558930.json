@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24558930",
+  "source_fingerprint": "fbd9d59d2f3abc1cd4a8d3f7906e1b60",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24558930",
+    "a-kinetochore-independent-mechanism-drives-anaphase-chromosome-separation-during-acentrosomal-meiosis"
+  ],
+  "key_phrases": [
+    "kinetochore",
+    "independent",
+    "mechanism",
+    "drives",
+    "anaphase",
+    "chromosome",
+    "separation",
+    "during"
+  ],
+  "summary_1l": "Although assembly of acentrosomal meiotic spindles has been extensively studied, little is known a",
+  "query_hits": [],
+  "embed_text": "24558930 A kinetochore-independent mechanism drives anaphase chromosome separation during acentrosomal meiosis science scifact Although assembly of acentrosomal meiotic spindles has been extensively studied, little is known about the segregation of chromosomes on these spindles. Here, we show in Caenorhabditis elegans oocytes that the kinetochore protein, KNL-1,… 24558930 a-kinetochore-independent-mechanism-drives-anaphase-chromosome-separation-during-acentrosomal-meiosis kinetochore independent mechanism drives anaphase chromosome separation during Although assembly of acentrosomal meiotic spindles has been extensively studied, little is known a A kinetochore-independent mechanism drives anaphase chromosome separation during acentrosomal meiosis Although assembly of acentrosomal meiotic spindles has been extensively studied, little is known about the segregation of chromosomes on these spindles. Here, we show in Caenorhabditis elegans oocytes that the kinetochore protein, KNL-1, directs assembly of meiotic kinetochores that orient chromosomes. However, in contrast to mitosis, chromosome separation during meiotic anaphase is kinetochore-independent. Before anaphase, meiotic kinetochores and spindle poles disassemble along with the microtubules on the poleward side of chromosomes. During anaphase, microtubules then form between the separating chromosomes. Functional analysis implicated a set of proteins that localize to a ring-shape",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.767715+00:00"
+}

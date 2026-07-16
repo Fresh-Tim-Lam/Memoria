@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4391121",
+  "source_fingerprint": "9509fc30edea5971a697c67cfb68be71",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4391121",
+    "defective-tryptophan-catabolism-underlies-inflammation-in-mouse-chronic-granulomatous-disease"
+  ],
+  "key_phrases": [
+    "defective",
+    "tryptophan",
+    "catabolism",
+    "underlies",
+    "inflammation",
+    "mouse",
+    "chronic",
+    "granulomatous"
+  ],
+  "summary_1l": "Half a century ago, chronic granulomatous disease (CGD) was first described as a disease fatally affecting",
+  "query_hits": [],
+  "embed_text": "4391121 Defective tryptophan catabolism underlies inflammation in mouse chronic granulomatous disease science scifact Half a century ago, chronic granulomatous disease (CGD) was first described as a disease fatally affecting the ability of children to survive infections. Various milestone discoveries have since been made, from an insufficient ability of… 4391121 defective-tryptophan-catabolism-underlies-inflammation-in-mouse-chronic-granulomatous-disease defective tryptophan catabolism underlies inflammation mouse chronic granulomatous Half a century ago, chronic granulomatous disease (CGD) was first described as a disease fatally affecting Defective tryptophan catabolism underlies inflammation in mouse chronic granulomatous disease Half a century ago, chronic granulomatous disease (CGD) was first described as a disease fatally affecting the ability of children to survive infections. Various milestone discoveries have since been made, from an insufficient ability of patients’ leucocytes to kill microbes to the underlying genetic abnormalities. In this inherited disorder, phagocytes lack NADPH oxidase activity and do not generate reactive oxygen species, most notably superoxide anion, causing recurrent bacterial and fungal infections. Patients with CGD also suffer from chronic inflammatory conditions, most prominently granuloma formation in hollow viscera. The precise mechanisms of the increased microbial pathogenicity have be",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.465430+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "39859981",
+  "source_fingerprint": "5d1d42036a7cee44f07024d920dc264c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "39859981",
+    "symmetric-signalling-within-asymmetric-dimers-of-the-staphylococcus-aureus-receptor-histidine-kinase-agrc."
+  ],
+  "key_phrases": [
+    "symmetric",
+    "signalling",
+    "within",
+    "asymmetric",
+    "dimers",
+    "staphylococcus",
+    "aureus",
+    "receptor"
+  ],
+  "summary_1l": "Symmetric signalling within asymmetric dimers of the Staphylococcus aureus receptor histidine kinase AgrC.",
+  "query_hits": [],
+  "embed_text": "39859981 Symmetric signalling within asymmetric dimers of the Staphylococcus aureus receptor histidine kinase AgrC. science scifact Virulence in Staphylococcus aureus is largely under control of the accessory gene regulator (agr) quorum-sensing system. The AgrC receptor histidine kinase detects its autoinducing peptide (AIP) ligand and generates an intracellular signal… 39859981 symmetric-signalling-within-asymmetric-dimers-of-the-staphylococcus-aureus-receptor-histidine-kinase-agrc. symmetric signalling within asymmetric dimers staphylococcus aureus receptor Symmetric signalling within asymmetric dimers of the Staphylococcus aureus receptor histidine kinase AgrC. Symmetric signalling within asymmetric dimers of the Staphylococcus aureus receptor histidine kinase AgrC. Virulence in Staphylococcus aureus is largely under control of the accessory gene regulator (agr) quorum-sensing system. The AgrC receptor histidine kinase detects its autoinducing peptide (AIP) ligand and generates an intracellular signal resulting in secretion of virulence factors. Although agr is a well-studied quorum-sensing system, little is known about the mechanism of AgrC activation. By co-immunoprecipitation analysis and intermolecular complementation of receptor mutants, we showed that AgrC forms ligand-independent dimers that undergo trans-autophosphorylation upon interaction with AIP. Remarkably, addition of specific AIPs to AgrC mutant dimers with only one functional sens",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.029274+00:00"
+}

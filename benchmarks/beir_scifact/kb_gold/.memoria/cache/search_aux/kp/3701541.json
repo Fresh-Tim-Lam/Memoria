@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3701541",
+  "source_fingerprint": "742ec170515cf58d22293d8b1c0f7a97",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3701541",
+    "p62/sqstm1-by-binding-to-vitamin-d-receptor-inhibits-hepatic-stellate-cell-activity,-fibrosis,-and-liver-cancer."
+  ],
+  "key_phrases": [
+    "p62",
+    "sqstm1",
+    "by",
+    "binding",
+    "vitamin",
+    "receptor",
+    "inhibits",
+    "hepatic"
+  ],
+  "summary_1l": "p62/SQSTM1 by Binding to Vitamin D Receptor Inhibits Hepatic Stellate Cell Activity, Fibrosis, and Liver Cancer.",
+  "query_hits": [],
+  "embed_text": "3701541 p62/SQSTM1 by Binding to Vitamin D Receptor Inhibits Hepatic Stellate Cell Activity, Fibrosis, and Liver Cancer. science scifact Hepatic stellate cells (HSCs) play critical roles in liver fibrosis and hepatocellular carcinoma (HCC). Vitamin D receptor (VDR) activation in HSCs inhibits liver inflammation and fibrosis. We found that p62/SQSTM1, a protein upregulated… 3701541 p62/sqstm1-by-binding-to-vitamin-d-receptor-inhibits-hepatic-stellate-cell-activity,-fibrosis,-and-liver-cancer. p62 sqstm1 by binding vitamin receptor inhibits hepatic p62/SQSTM1 by Binding to Vitamin D Receptor Inhibits Hepatic Stellate Cell Activity, Fibrosis, and Liver Cancer. p62/SQSTM1 by Binding to Vitamin D Receptor Inhibits Hepatic Stellate Cell Activity, Fibrosis, and Liver Cancer. Hepatic stellate cells (HSCs) play critical roles in liver fibrosis and hepatocellular carcinoma (HCC). Vitamin D receptor (VDR) activation in HSCs inhibits liver inflammation and fibrosis. We found that p62/SQSTM1, a protein upregulated in liver parenchymal cells but downregulated in HCC-associated HSCs, negatively controls HSC activation. Total body or HSC-specific p62 ablation potentiates HSCs and enhances inflammation, fibrosis, and HCC progression. p62 directly interacts with VDR and RXR promoting their heterodimerization, which is critical for VDR:RXR target gene recruitment. Loss of p62 in HSCs impairs the repression of fibrosis and inflammation by VDR agonists. This demo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.049781+00:00"
+}

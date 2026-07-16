@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "4828631",
+  "source_fingerprint": "3adbb1ddf073b91c596b3af91a9b982a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4828631"
+  ],
+  "key_phrases": [
+    "body",
+    "mass",
+    "index",
+    "risk",
+    "22",
+    "specific",
+    "cancers",
+    "population"
+  ],
+  "summary_1l": "BACKGROUND High body-mass index (BMI) predisposes to several site-specific cancers, but a lar",
+  "query_hits": [],
+  "embed_text": "4828631 Body-mass index and risk of 22 specific cancers: a population-based cohort study of 5·24 million UK adults science scifact BACKGROUND High body-mass index (BMI) predisposes to several site-specific cancers, but a large-scale systematic and detailed characterisation of patterns of risk across all common cancers adjusted for potential confounders has not… 4828631 body mass index risk 22 specific cancers population BACKGROUND High body-mass index (BMI) predisposes to several site-specific cancers, but a lar Body-mass index and risk of 22 specific cancers: a population-based cohort study of 5·24 million UK adults BACKGROUND High body-mass index (BMI) predisposes to several site-specific cancers, but a large-scale systematic and detailed characterisation of patterns of risk across all common cancers adjusted for potential confounders has not previously been undertaken. We aimed to investigate the links between BMI and the most common site-specific cancers. METHODS With primary care data from individuals in the Clinical Practice Research Datalink with BMI data, we fitted Cox models to investigate associations between BMI and 22 of the most common cancers, adjusting for potential confounders. We fitted linear then non-linear (spline) models; investigated effect modification by sex, menopausal sta",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.514957+00:00"
+}

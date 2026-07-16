@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "31387717",
+  "source_fingerprint": "6b98c613013d0357265467b1067bb608",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "31387717",
+    "crystal-structure-and-association-behaviour-of-the-glur2-amino-terminal-domain."
+  ],
+  "key_phrases": [
+    "crystal",
+    "structure",
+    "association",
+    "behaviour",
+    "glur2",
+    "amino",
+    "terminal",
+    "domain"
+  ],
+  "summary_1l": "Crystal structure and association behaviour of the GluR2 amino-terminal domain.",
+  "query_hits": [],
+  "embed_text": "31387717 Crystal structure and association behaviour of the GluR2 amino-terminal domain. science scifact Fast excitatory neurotransmission is mediated largely by ionotropic glutamate receptors (iGluRs), tetrameric, ligand-gated ion channel proteins comprised of three subfamilies, AMPA, kainate and NMDA receptors, with each subfamily sharing a… 31387717 crystal-structure-and-association-behaviour-of-the-glur2-amino-terminal-domain. crystal structure association behaviour glur2 amino terminal domain Crystal structure and association behaviour of the GluR2 amino-terminal domain. Crystal structure and association behaviour of the GluR2 amino-terminal domain. Fast excitatory neurotransmission is mediated largely by ionotropic glutamate receptors (iGluRs), tetrameric, ligand-gated ion channel proteins comprised of three subfamilies, AMPA, kainate and NMDA receptors, with each subfamily sharing a common, modular-domain architecture. For all receptor subfamilies, active channels are exclusively formed by assemblages of subunits within the same subfamily, a molecular process principally encoded by the amino-terminal domain (ATD). However, the molecular basis by which the ATD guides subfamily-specific receptor assembly is not known. Here we show that AMPA receptor GluR1- and GluR2-ATDs form tightly associated dimers and, by the analysis of crystal structures of the GluR2",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.561445+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8979167",
+  "source_fingerprint": "560a364305007fce7f91223a2e13f4e7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8979167",
+    "primate-cytomegaloviruses-encode-and-express-an-il-10-like-protein."
+  ],
+  "key_phrases": [
+    "primate",
+    "cytomegaloviruses",
+    "encode",
+    "express",
+    "il",
+    "10",
+    "like",
+    "protein"
+  ],
+  "summary_1l": "Primate cytomegaloviruses encode and express an IL-10-like protein.",
+  "query_hits": [],
+  "embed_text": "8979167 Primate cytomegaloviruses encode and express an IL-10-like protein. science scifact An open reading frame (ORF) with homology to interleukin-10 (IL-10) has been identified in rhesus cytomegalovirus (RhCMV). The IL-10-like protein is generated from a multispliced, polyadenylated early gene transcript encompassing part of… 8979167 primate-cytomegaloviruses-encode-and-express-an-il-10-like-protein. primate cytomegaloviruses encode express il 10 like protein Primate cytomegaloviruses encode and express an IL-10-like protein. Primate cytomegaloviruses encode and express an IL-10-like protein. An open reading frame (ORF) with homology to interleukin-10 (IL-10) has been identified in rhesus cytomegalovirus (RhCMV). The IL-10-like protein is generated from a multispliced, polyadenylated early gene transcript encompassing part of the corresponding UL111A ORF of human CMV (HCMV). Immunological analyses confirm expression of the IL-10-like protein both in tissue culture and in RhCMV-infected rhesus macaques. Conserved ORFs were subsequently identified in human, baboon, and African green monkey CMV, and a fully processed transcript has been mapped in fibroblasts infected with the Towne strain of HCMV. The conservation of this previously unrecognized ORF suggests that the protein may play an essential role in primate C",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.001701+00:00"
+}

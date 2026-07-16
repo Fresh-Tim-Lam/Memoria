@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23868856",
+  "source_fingerprint": "8f89023a7b1cc6eea9493a6ac6a2ad13",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23868856",
+    "downregulation-of-superoxide-dismutase-activity-and-gene-expression-in-cultured-rat-brain-astrocytes-after-incubation-with-vitamin-c"
+  ],
+  "key_phrases": [
+    "downregulation",
+    "superoxide",
+    "dismutase",
+    "activity",
+    "gene",
+    "expression",
+    "cultured",
+    "rat"
+  ],
+  "summary_1l": "Reactive oxygen species have been linked with neuropathological cha",
+  "query_hits": [],
+  "embed_text": "23868856 Downregulation of Superoxide Dismutase Activity and Gene Expression in Cultured Rat Brain Astrocytes after Incubation with Vitamin C science scifact Reactive oxygen species have been linked with neuropathological changes in the central nervous system. Epidemiological studies supported the beneficial effect of supplementation of antioxidants. Superoxide dismutase (SOD) is an endogenous… 23868856 downregulation-of-superoxide-dismutase-activity-and-gene-expression-in-cultured-rat-brain-astrocytes-after-incubation-with-vitamin-c downregulation superoxide dismutase activity gene expression cultured rat Reactive oxygen species have been linked with neuropathological cha Downregulation of Superoxide Dismutase Activity and Gene Expression in Cultured Rat Brain Astrocytes after Incubation with Vitamin C Reactive oxygen species have been linked with neuropathological changes in the central nervous system. Epidemiological studies supported the beneficial effect of supplementation of antioxidants. Superoxide dismutase (SOD) is an endogenous enzyme which can scavenge reactive oxygen species. This study investigated the effect of supplementation with ascorbic acid (vitamin C) on the changes of SOD in cultured neurological cells. Rat brain astrocytes (RBA-1 cells) were incubated with vitamin C and divided into four groups: a control group (without vitamin C) and three treatment groups with vitamin C at 40, 80, and 160 µmol/l. After short-term (2 days) and long-ter",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.306540+00:00"
+}

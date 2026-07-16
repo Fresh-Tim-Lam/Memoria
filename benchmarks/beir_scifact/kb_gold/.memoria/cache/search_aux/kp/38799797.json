@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "38799797",
+  "source_fingerprint": "f01d779c3a555f2f229b05645c0d6f09",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "38799797",
+    "interventions-by-pharmacists-in-out-patient-pharmaceutical-care."
+  ],
+  "key_phrases": [
+    "interventions",
+    "by",
+    "pharmacists",
+    "out",
+    "patient",
+    "pharmaceutical",
+    "care",
+    "have"
+  ],
+  "summary_1l": "Interventions by pharmacists in out-patient pharmaceutical care.",
+  "query_hits": [],
+  "embed_text": "38799797 Interventions by pharmacists in out-patient pharmaceutical care. science scifact Interventions by the pharmacists have always been considered as a valuable input by the health care community in the patient care process by reducing the medication errors, rationalizing the therapy and reducing the cost of therapy. The… 38799797 interventions-by-pharmacists-in-out-patient-pharmaceutical-care. interventions by pharmacists out patient pharmaceutical care have Interventions by pharmacists in out-patient pharmaceutical care. Interventions by pharmacists in out-patient pharmaceutical care. Interventions by the pharmacists have always been considered as a valuable input by the health care community in the patient care process by reducing the medication errors, rationalizing the therapy and reducing the cost of therapy. The primary objective of this study was to determine the number and types of medication errors intervened by the dispensing pharmacists at OPD pharmacy in the Khoula Hospital during 2009 retrospectively. The interventions filed by the pharmacists and assistant pharmacists in OPD pharmacy were collected. Then they were categorized and analyzed after a detailed review. The results show that 72.3% of the interventions were minor of which 40.5% were about change medication order. Comparatively more nu",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.925354+00:00"
+}

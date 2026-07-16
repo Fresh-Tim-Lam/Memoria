@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19974105",
+  "source_fingerprint": "47c111fff36370439a06e3d96e1832b7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19974105",
+    "control-over-dna-replication-in-time-and-space."
+  ],
+  "key_phrases": [
+    "control",
+    "over",
+    "dna",
+    "replication",
+    "time",
+    "space",
+    "precisely",
+    "regulated"
+  ],
+  "summary_1l": "Control over DNA replication in time and space.",
+  "query_hits": [],
+  "embed_text": "19974105 Control over DNA replication in time and space. science scifact DNA replication is precisely regulated in time and space, thereby safeguarding genomic integrity. In eukaryotes, replication initiates from multiple sites along the genome, termed origins of replication, and propagates bidirectionally.… 19974105 control-over-dna-replication-in-time-and-space. control over dna replication time space precisely regulated Control over DNA replication in time and space. Control over DNA replication in time and space. DNA replication is precisely regulated in time and space, thereby safeguarding genomic integrity. In eukaryotes, replication initiates from multiple sites along the genome, termed origins of replication, and propagates bidirectionally. Dynamic origin bound complexes dictate where and when replication should initiate. During late mitosis and G1 phase, putative origins are recognized and become \"licensed\" through the assembly of pre-replicative complexes (pre-RCs) that include the MCM2-7 helicases. Subsequently, at the G1/S phase transition, a fraction of pre-RCs are activated giving rise to the establishment of replication forks. Origin location is influenced by chromatin and nuclear organization and origin selection exhibits stochastic featur",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.484997+00:00"
+}

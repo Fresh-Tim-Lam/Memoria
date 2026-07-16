@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36345185",
+  "source_fingerprint": "c02048194b2bd3fc2abf0c29570db857",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36345185",
+    "rho,-rac-and-cdc42-regulate-actin-organization-and-cell-adhesion-in-macrophages."
+  ],
+  "key_phrases": [
+    "rho",
+    "rac",
+    "cdc42",
+    "regulate",
+    "actin",
+    "organization",
+    "cell",
+    "adhesion"
+  ],
+  "summary_1l": "Rho, Rac and Cdc42 regulate actin organization and cell adhesion in macrophages.",
+  "query_hits": [],
+  "embed_text": "36345185 Rho, Rac and Cdc42 regulate actin organization and cell adhesion in macrophages. science scifact Rho family proteins are known to regulate actin organization in fibroblasts, but their functions in cells of haematopoietic origin have not been studied in detail. Bac1.2F5 cells are a colony-stimulating factor-1 (CSF-1)-dependent murine… 36345185 rho,-rac-and-cdc42-regulate-actin-organization-and-cell-adhesion-in-macrophages. rho rac cdc42 regulate actin organization cell adhesion Rho, Rac and Cdc42 regulate actin organization and cell adhesion in macrophages. Rho, Rac and Cdc42 regulate actin organization and cell adhesion in macrophages. Rho family proteins are known to regulate actin organization in fibroblasts, but their functions in cells of haematopoietic origin have not been studied in detail. Bac1.2F5 cells are a colony-stimulating factor-1 (CSF-1)-dependent murine macrophage cell line; CSF-1 stimulates their proliferation and motility, and acts as a chemoattractant. CSF-1 rapidly induced actin reorganization in Bac1 cells: it stimulated the formation of filopodia, lamellipodia and membrane ruffles at the plasma membrane, as well as the appearance of fine actin cables within the cell interior. Microinjection of constitutively activated (V12)Rac1 stimulated lamellipodium formation and membrane ruffling. The dominant inhibitory Rac mutant,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:43.132956+00:00"
+}

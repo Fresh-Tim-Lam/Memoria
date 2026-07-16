@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12428814",
+  "source_fingerprint": "8c4b50cd3713e0530e9f10a379d1b06e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12428814",
+    "haemolysin-coregulated-protein-is-an-exported-receptor-and-chaperone-of-type-vi-secretion-substrates."
+  ],
+  "key_phrases": [
+    "haemolysin",
+    "coregulated",
+    "protein",
+    "exported",
+    "receptor",
+    "chaperone",
+    "type",
+    "vi"
+  ],
+  "summary_1l": "Haemolysin coregulated protein is an exported receptor and chaperone of type VI secretion substrates.",
+  "query_hits": [],
+  "embed_text": "12428814 Haemolysin coregulated protein is an exported receptor and chaperone of type VI secretion substrates. science scifact Secretion systems require high-fidelity mechanisms to discriminate substrates among the vast cytoplasmic pool of proteins. Factors mediating substrate recognition by the type VI secretion system (T6SS) of Gram-negative bacteria, a… 12428814 haemolysin-coregulated-protein-is-an-exported-receptor-and-chaperone-of-type-vi-secretion-substrates. haemolysin coregulated protein exported receptor chaperone type vi Haemolysin coregulated protein is an exported receptor and chaperone of type VI secretion substrates. Haemolysin coregulated protein is an exported receptor and chaperone of type VI secretion substrates. Secretion systems require high-fidelity mechanisms to discriminate substrates among the vast cytoplasmic pool of proteins. Factors mediating substrate recognition by the type VI secretion system (T6SS) of Gram-negative bacteria, a widespread pathway that translocates effector proteins into target bacterial cells, have not been defined. We report that haemolysin coregulated protein (Hcp), a ring-shaped hexamer secreted by all characterized T6SSs, binds specifically to cognate effector molecules. Electron microscopy analysis of an Hcp-effector complex from Pseudomonas aeruginosa revealed the effector bound to the inner surface of Hcp. Further studies demonstrated that interaction with the Hc",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:08.313168+00:00"
+}

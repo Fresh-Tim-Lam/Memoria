@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3441524",
+  "source_fingerprint": "84cc57dafa2a78d9c618a176e78b74ce",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3441524",
+    "human-trpml1-channel-structures-in-open-and-closed-conformations"
+  ],
+  "key_phrases": [
+    "human",
+    "trpml1",
+    "channel",
+    "structures",
+    "open",
+    "closed",
+    "conformations",
+    "transient"
+  ],
+  "summary_1l": "Transient receptor potential mucolipin 1 (TRPML1) is a Ca2+-releasing cation channel that mediates the calcium signalling and homeostas",
+  "query_hits": [],
+  "embed_text": "3441524 Human TRPML1 channel structures in open and closed conformations science scifact Transient receptor potential mucolipin 1 (TRPML1) is a Ca2+-releasing cation channel that mediates the calcium signalling and homeostasis of lysosomes. Mutations in TRPML1 lead to mucolipidosis type IV, a severe lysosomal storage disorder.… 3441524 human-trpml1-channel-structures-in-open-and-closed-conformations human trpml1 channel structures open closed conformations transient Transient receptor potential mucolipin 1 (TRPML1) is a Ca2+-releasing cation channel that mediates the calcium signalling and homeostas Human TRPML1 channel structures in open and closed conformations Transient receptor potential mucolipin 1 (TRPML1) is a Ca2+-releasing cation channel that mediates the calcium signalling and homeostasis of lysosomes. Mutations in TRPML1 lead to mucolipidosis type IV, a severe lysosomal storage disorder. Here we report two electron cryo-microscopy structures of full-length human TRPML1: a 3.72-Å apo structure at pH 7.0 in the closed state, and a 3.49-Å agonist-bound structure at pH 6.0 in an open state. Several aromatic and hydrophobic residues in pore helix 1, helices S5 and S6, and helix S6 of a neighbouring subunit, form a hydrophobic cavity to house the agonist, suggesting a distinct agonist-binding site from that found in TRPV1, a TRP channel from a different subfamily. The opening of",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.433457+00:00"
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "26071782",
+  "source_fingerprint": "90eb50b39e91dc26b7375722eaf52a62",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26071782"
+  ],
+  "key_phrases": [
+    "latent",
+    "membrane",
+    "protein",
+    "epstein",
+    "barr",
+    "virus",
+    "coordinately",
+    "regulates"
+  ],
+  "summary_1l": "Latent membrane protein 1 (LMP1), an oncoprotein encoded by Epstein–Barr virus (EBV), is",
+  "query_hits": [],
+  "embed_text": "26071782 Latent membrane protein 1 of Epstein–Barr virus coordinately regulates proliferation with control of apoptosis science scifact Latent membrane protein 1 (LMP1), an oncoprotein encoded by Epstein–Barr virus (EBV), is an integral membrane protein, which acts like a constitutively active receptor. LMP1 is critical for some facet of EBV's induction and maintenance of… 26071782 latent membrane protein epstein barr virus coordinately regulates Latent membrane protein 1 (LMP1), an oncoprotein encoded by Epstein–Barr virus (EBV), is Latent membrane protein 1 of Epstein–Barr virus coordinately regulates proliferation with control of apoptosis Latent membrane protein 1 (LMP1), an oncoprotein encoded by Epstein–Barr virus (EBV), is an integral membrane protein, which acts like a constitutively active receptor. LMP1 is critical for some facet of EBV's induction and maintenance of proliferation of infected B cells. It, in part, mimics signaling by the CD40 receptor and has been implicated in regulating proliferation, survival, or both properties of EBV-infected cells. We established a conditional LMP1 allele in the context of the intact EBV genome to define the immediate-early cellular target genes regulated by LMP1 in order to assess its contributions to infected human B cells. The functional analysis of this conditional",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.270812+00:00"
+}

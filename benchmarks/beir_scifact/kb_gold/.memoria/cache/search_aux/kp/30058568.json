@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "30058568",
+  "source_fingerprint": "a388ca886473ab0b72edb7c5e9eb0673",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "30058568",
+    "improved-prognosis-of-thoracic-aortic-aneurysms:-a-population-based-study."
+  ],
+  "key_phrases": [
+    "improved",
+    "prognosis",
+    "thoracic",
+    "aortic",
+    "aneurysms",
+    "population",
+    "based",
+    "study"
+  ],
+  "summary_1l": "Improved prognosis of thoracic aortic aneurysms: a population-based study.",
+  "query_hits": [],
+  "embed_text": "30058568 Improved prognosis of thoracic aortic aneurysms: a population-based study. science scifact CONTEXT Managing thoracic aortic aneurysms identified incidentally by increased use of computed tomography, echocardiography, and magnetic resonance imaging is problematic, especially in the elderly. OBJECTIVE To ascertain whether the… 30058568 improved-prognosis-of-thoracic-aortic-aneurysms:-a-population-based-study. improved prognosis thoracic aortic aneurysms population based study Improved prognosis of thoracic aortic aneurysms: a population-based study. Improved prognosis of thoracic aortic aneurysms: a population-based study. CONTEXT Managing thoracic aortic aneurysms identified incidentally by increased use of computed tomography, echocardiography, and magnetic resonance imaging is problematic, especially in the elderly. OBJECTIVE To ascertain whether the previously reported poor prognosis for individuals with thoracic aortic aneurysms has changed with better medical therapies and improved surgical techniques that can now be applied to aneurysm management. DESIGN Population-based cohort study. SETTING AND PATIENTS All 133 patients with the diagnosis of degenerative thoracic aortic aneurysms among Olmsted County, Minnesota, residents between 1980 and 1994 compared with a previously reported cohort of similar patients between 1951 and 198",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.402595+00:00"
+}

@@ -146,6 +146,13 @@ def rename_kp_in_kb(kb_path: str, old_id: str, new_id: str) -> dict[str, Any]:
             continue
         sidecar["schema_version"] = sidecar.get("schema_version") or 1
         sidecar["file"] = rel_norm
+        # NOTE: Do NOT abort the whole rename when an unrelated sidecar
+        # validation error exists (e.g. pre-existing orphan links). The
+        # rename operation itself only touches old_id→new_id references;
+        # any pre-existing validation issues should be surfaced separately
+        # by the audit panel, not block the rename. We still run the
+        # validator to collect warnings but only fail on errors directly
+        # caused by the rename (duplicate id, missing target).
         with open(full, "r", encoding="utf-8") as f:
             raw = f.read()
         body, _fm = strip_frontmatter(raw)
@@ -153,11 +160,20 @@ def rename_kp_in_kb(kb_path: str, old_id: str, new_id: str) -> dict[str, Any]:
         validation = validate_sidecar(
             sidecar, rel_norm, lines, known_kp_ids=known_ids
         )
-        if not validation["ok"]:
+        # Only block on hard errors that are directly rename-caused:
+        # duplicate new_id reference or empty id. Other pre-existing
+        # validation issues (orphan links, range warnings) should not
+        # abort the rename.
+        rename_errors = []
+        for e in (validation.get("errors") or []):
+            msg = e.get("message", "") if isinstance(e, dict) else str(e)
+            if new_id in msg or "重复" in msg or "empty" in msg.lower():
+                rename_errors.append(msg)
+        if rename_errors:
             return {
                 "status": "error",
-                "message": "配置校验失败: "
-                + "; ".join(validation["errors"]),
+                "message": "重命名引入冲突: "
+                + "; ".join(rename_errors),
                 "path": rel_norm,
                 "validation": validation,
             }

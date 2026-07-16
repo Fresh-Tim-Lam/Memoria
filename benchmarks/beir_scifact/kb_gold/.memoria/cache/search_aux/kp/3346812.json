@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3346812",
+  "source_fingerprint": "4c07860ed6b02decf0e935629166744e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3346812",
+    "functions-of-dna-methylation:-islands,-start-sites,-gene-bodies-and-beyond"
+  ],
+  "key_phrases": [
+    "functions",
+    "dna",
+    "methylation",
+    "islands",
+    "start",
+    "sites",
+    "gene",
+    "bodies"
+  ],
+  "summary_1l": "DNA methylation is frequently described as a 'silencing' epigenetic mark, and indeed this function of 5-methylcytosine was or",
+  "query_hits": [],
+  "embed_text": "3346812 Functions of DNA methylation: islands, start sites, gene bodies and beyond science scifact DNA methylation is frequently described as a 'silencing' epigenetic mark, and indeed this function of 5-methylcytosine was originally proposed in the 1970s. Now, thanks to improved genome-scale mapping of methylation, we can evaluate DNA… 3346812 functions-of-dna-methylation:-islands,-start-sites,-gene-bodies-and-beyond functions dna methylation islands start sites gene bodies DNA methylation is frequently described as a 'silencing' epigenetic mark, and indeed this function of 5-methylcytosine was or Functions of DNA methylation: islands, start sites, gene bodies and beyond DNA methylation is frequently described as a 'silencing' epigenetic mark, and indeed this function of 5-methylcytosine was originally proposed in the 1970s. Now, thanks to improved genome-scale mapping of methylation, we can evaluate DNA methylation in different genomic contexts: transcriptional start sites with or without CpG islands, in gene bodies, at regulatory elements and at repeat sequences. The emerging picture is that the function of DNA methylation seems to vary with context, and the relationship between DNA methylation and transcription is more nuanced than we realized at first. Improving our understanding of the functions of DNA methylation is necessary for interpreting changes in this mark that are obse",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.415167+00:00"
+}

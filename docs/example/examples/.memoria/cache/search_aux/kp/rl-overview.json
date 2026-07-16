@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "kp_id": "rl-overview",
+  "source_fingerprint": "9a09759ca29d9483d85d728fdccaa49b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "机器学习"
+  ],
+  "aliases": [
+    "rl-overview"
+  ],
+  "key_phrases": [
+    "rl",
+    "概览",
+    "子目录",
+    "示例",
+    "文件",
+    "位于",
+    "knowledge",
+    "用于"
+  ],
+  "summary_1l": "（子目录示例） 本文件位于 `knowledge/` 子目录，用于验证树形文件浏览器与嵌套侧车路径。",
+  "query_hits": [],
+  "embed_text": "rl-overview RL 概览 机器学习 rl-overview rl 概览 子目录 示例 文件 位于 knowledge 用于 （子目录示例） 本文件位于 `knowledge/` 子目录，用于验证树形文件浏览器与嵌套侧车路径。 RL 概览（子目录示例） 本文件位于 `knowledge/` 子目录，用于验证树形文件浏览器与嵌套侧车路径。 强化学习建立在 的 MDP 框架之上；从 可进一步跳到 Q-Learning 与策略梯度。 学习路径 1. 先理解 MDP 五元组与贝尔曼方程 2. 再读 value-based 与 policy-based 方法 详见同目录外的 `mdp.md`、`q-learning.md`。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T03:38:47.521873+00:00"
+}

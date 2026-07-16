@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "55128127",
+  "source_fingerprint": "f4f1bf90013ec93c36fd22f28e5e41ce",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "55128127",
+    "a-cross-cultural-study-of-wine-consumers-with-respect-to-health-benefits-of-wine"
+  ],
+  "key_phrases": [
+    "cross",
+    "cultural",
+    "study",
+    "wine",
+    "consumers",
+    "with",
+    "respect",
+    "health"
+  ],
+  "summary_1l": "The objective of the present study was to examine consumer preference and consumption behaviour with respect to the hea",
+  "query_hits": [],
+  "embed_text": "55128127 A cross-cultural study of wine consumers with respect to health benefits of wine science scifact The objective of the present study was to examine consumer preference and consumption behaviour with respect to the health benefits of wine for two contextually and culturally diverse consumer groups, namely Koreans and Australians.… 55128127 a-cross-cultural-study-of-wine-consumers-with-respect-to-health-benefits-of-wine cross cultural study wine consumers with respect health The objective of the present study was to examine consumer preference and consumption behaviour with respect to the hea A cross-cultural study of wine consumers with respect to health benefits of wine The objective of the present study was to examine consumer preference and consumption behaviour with respect to the health benefits of wine for two contextually and culturally diverse consumer groups, namely Koreans and Australians. Participants were required to be wine consumers over the age of 18. Responses were collected by means of an online questionnaire. The results indicated that perceived health benefits of red wine were higher in the Australian sample than the Korean sample. Similarly, Australian consumers had more health related wine knowledge than Korean consumers. Red wine was the preferred wine style for both Korean and Australian consumers; however, the proportion of preference for red wine was s",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.528895+00:00"
+}

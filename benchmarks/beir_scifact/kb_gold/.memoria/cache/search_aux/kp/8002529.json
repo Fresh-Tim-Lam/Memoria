@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8002529",
+  "source_fingerprint": "02166adc8fa7e71396e4ba20f038cc5d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8002529",
+    "depressive-symptoms-and-physical-decline-in-community-dwelling-older-persons."
+  ],
+  "key_phrases": [
+    "depressive",
+    "symptoms",
+    "physical",
+    "decline",
+    "community",
+    "dwelling",
+    "older",
+    "persons"
+  ],
+  "summary_1l": "Depressive symptoms and physical decline in community-dwelling older persons.",
+  "query_hits": [],
+  "embed_text": "8002529 Depressive symptoms and physical decline in community-dwelling older persons. science scifact CONTEXT Significant symptoms of depression are common in the older community-dwelling population. Although depressive symptoms and disability may commonly occur in the same person, whether depressive symptoms contribute to subsequent… 8002529 depressive-symptoms-and-physical-decline-in-community-dwelling-older-persons. depressive symptoms physical decline community dwelling older persons Depressive symptoms and physical decline in community-dwelling older persons. Depressive symptoms and physical decline in community-dwelling older persons. CONTEXT Significant symptoms of depression are common in the older community-dwelling population. Although depressive symptoms and disability may commonly occur in the same person, whether depressive symptoms contribute to subsequent functional decline has not been elucidated. OBJECTIVE To determine whether depressive symptoms in older persons increase the risk of subsequent decline in physical function as measured by objective performance-based tests. DESIGN A 4-year prospective cohort study. SETTING The communities of Iowa and Washington counties, Iowa. PARTICIPANTS A total of 1286 persons aged 71 years and older who completed a short battery of physical performance tests in 1988 and again 4 years later. MAIN O",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.695024+00:00"
+}

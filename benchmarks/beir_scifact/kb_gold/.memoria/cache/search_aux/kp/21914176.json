@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21914176",
+  "source_fingerprint": "cb65d2204ea67bfc8b23c8f09e3babda",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21914176",
+    "economic-impact-of-primary-open-angle-glaucoma-in-australia."
+  ],
+  "key_phrases": [
+    "economic",
+    "impact",
+    "primary",
+    "open",
+    "angle",
+    "glaucoma",
+    "australia",
+    "background"
+  ],
+  "summary_1l": "Economic impact of primary open-angle glaucoma in Australia.",
+  "query_hits": [],
+  "embed_text": "21914176 Economic impact of primary open-angle glaucoma in Australia. science scifact BACKGROUND Glaucoma is the World's leading cause of irreversible blindness, and poses serious public health and economic concerns. DESIGN   Review. SAMPLES Published randomized trials and population-based studies since 1985. METHODS We… 21914176 economic-impact-of-primary-open-angle-glaucoma-in-australia. economic impact primary open angle glaucoma australia background Economic impact of primary open-angle glaucoma in Australia. Economic impact of primary open-angle glaucoma in Australia. BACKGROUND Glaucoma is the World's leading cause of irreversible blindness, and poses serious public health and economic concerns. DESIGN Review. SAMPLES Published randomized trials and population-based studies since 1985. METHODS We report the economic impact of primary open-angle glaucoma and model the effect of changes in detection rates and management strategies. MAIN OUTCOME MEASURES The cost-effectiveness of different interventions to prevent vision loss from primary open-angle glaucoma was measured in terms of financial cost (Australian dollars) and disability-adjusted life years. RESULTS The prevalence of glaucoma in Australia is expected to increase from 208 000 in 2005 to 379 000 in 2025 because of the aging population.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.918387+00:00"
+}

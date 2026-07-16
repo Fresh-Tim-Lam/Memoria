@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8925851",
+  "source_fingerprint": "c1e9960d1b2901fab3ff1c454e1b4c9c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8925851",
+    "review-article"
+  ],
+  "key_phrases": [
+    "review",
+    "article",
+    "ribosomopathies",
+    "compose",
+    "collection",
+    "disorders",
+    "which",
+    "genetic"
+  ],
+  "summary_1l": "Ribosomopathies compose a collection of disorders in which genetic abnormalities cause impaired ribosome biogenesis and function, resulting in specific clinical phenotypes.",
+  "query_hits": [],
+  "embed_text": "8925851 Review article science scifact Ribosomopathies compose a collection of disorders in which genetic abnormalities cause impaired ribosome biogenesis and function, resulting in specific clinical phenotypes. Congenital mutations in RPS19 and other genes encoding ribosomal… 8925851 review-article review article ribosomopathies compose collection disorders which genetic Ribosomopathies compose a collection of disorders in which genetic abnormalities cause impaired ribosome biogenesis and function, resulting in specific clinical phenotypes. Review article Ribosomopathies compose a collection of disorders in which genetic abnormalities cause impaired ribosome biogenesis and function, resulting in specific clinical phenotypes. Congenital mutations in RPS19 and other genes encoding ribosomal proteins cause Diamond-Blackfan anemia, a disorder characterized by hypoplastic, macrocytic anemia. Mutations in other genes required for normal ribosome biogenesis have been implicated in other rare congenital syndromes, Schwachman-Diamond syndrome, dyskeratosis congenita, cartilage hair hypoplasia, and Treacher Collins syndrome. In addition, the 5q- syndrome, a subtype of myelodysplastic syndrome, is caused by a somatically acquired deletion of chromosome 5q, which leads to haploinsufficiency of the ribosomal protein RPS14 and an erythroid",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.978268+00:00"
+}

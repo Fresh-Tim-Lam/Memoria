@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "45096063",
+  "source_fingerprint": "d63847fa27f0454261c3c7950a94b06c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "45096063",
+    "cutting-edge:-interleukin-17-signals-through-a-heteromeric-receptor-complex."
+  ],
+  "key_phrases": [
+    "cutting",
+    "edge",
+    "interleukin",
+    "17",
+    "signals",
+    "through",
+    "heteromeric",
+    "receptor"
+  ],
+  "summary_1l": "Cutting edge: interleukin 17 signals through a heteromeric receptor complex.",
+  "query_hits": [],
+  "embed_text": "45096063 Cutting edge: interleukin 17 signals through a heteromeric receptor complex. science scifact IL-17 is an inflammatory cytokine produced primarily by a unique lineage of CD4 T cells that plays critical roles in the pathogenesis of multiple autoimmune diseases. IL-17RA is a ubiquitously expressed receptor that is essential for IL-17… 45096063 cutting-edge:-interleukin-17-signals-through-a-heteromeric-receptor-complex. cutting edge interleukin 17 signals through heteromeric receptor Cutting edge: interleukin 17 signals through a heteromeric receptor complex. Cutting edge: interleukin 17 signals through a heteromeric receptor complex. IL-17 is an inflammatory cytokine produced primarily by a unique lineage of CD4 T cells that plays critical roles in the pathogenesis of multiple autoimmune diseases. IL-17RA is a ubiquitously expressed receptor that is essential for IL-17 biologic activity. Despite widespread receptor expression, the activity of IL-17 is most classically defined by its ability to induce the expression of inflammatory cytokines, chemokines, and other mediators by stromal cells. The lack of IL-17 responsiveness in mouse stromal cells genetically deficient in IL-17RA is poorly complemented by human IL-17RA, suggesting the presence of an obligate ancillary component whose activity is species specific. This component is IL-17RC, a dis",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.133725+00:00"
+}

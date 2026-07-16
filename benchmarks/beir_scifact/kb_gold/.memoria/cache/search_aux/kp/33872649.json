@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "33872649",
+  "source_fingerprint": "2c6ad24dc826f318ce6a4f23567e2e87",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "33872649",
+    "secondary-aerosolization-of-viable-bacillus-anthracis-spores-in-a-contaminated-us-senate-office."
+  ],
+  "key_phrases": [
+    "secondary",
+    "aerosolization",
+    "viable",
+    "bacillus",
+    "anthracis",
+    "spores",
+    "contaminated",
+    "us"
+  ],
+  "summary_1l": "Secondary aerosolization of viable Bacillus anthracis spores in a contaminated US Senate Office.",
+  "query_hits": [],
+  "embed_text": "33872649 Secondary aerosolization of viable Bacillus anthracis spores in a contaminated US Senate Office. science scifact CONTEXT Bioterrorist attacks involving letters and mail-handling systems in Washington, DC, resulted in Bacillus anthracis (anthrax) spore contamination in the Hart Senate Office Building and other facilities in the US Capitol's vicinity.… 33872649 secondary-aerosolization-of-viable-bacillus-anthracis-spores-in-a-contaminated-us-senate-office. secondary aerosolization viable bacillus anthracis spores contaminated us Secondary aerosolization of viable Bacillus anthracis spores in a contaminated US Senate Office. Secondary aerosolization of viable Bacillus anthracis spores in a contaminated US Senate Office. CONTEXT Bioterrorist attacks involving letters and mail-handling systems in Washington, DC, resulted in Bacillus anthracis (anthrax) spore contamination in the Hart Senate Office Building and other facilities in the US Capitol's vicinity. OBJECTIVE To provide information about the nature and extent of indoor secondary aerosolization of B anthracis spores. DESIGN Stationary and personal air samples, surface dust, and swab samples were collected under semiquiescent (minimal activities) and then simulated active office conditions to estimate secondary aerosolization of B anthracis spores. Nominal size characteristics, airborne concentrations, and surface contamination of B anthracis particles (col",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.748265+00:00"
+}

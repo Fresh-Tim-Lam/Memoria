@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "73323408",
+  "source_fingerprint": "efbb69822240506874533c1f98e26529",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "73323408",
+    "diabetes-in-pregnancy:-management-of-diabetes-and-its-complications-from-preconception-to-the-postnatal-period-(ng3)"
+  ],
+  "key_phrases": [
+    "diabetes",
+    "pregnancy",
+    "management",
+    "its",
+    "complications",
+    "from",
+    "preconception",
+    "postnatal"
+  ],
+  "summary_1l": "In February 2015 the National Institute for Health and Care Excellence (NICE) publi",
+  "query_hits": [],
+  "embed_text": "73323408 Diabetes in pregnancy: management of diabetes and its complications from preconception to the postnatal period (NG3) science scifact In February 2015 the National Institute for Health and Care Excellence (NICE) published new guidance (NG3) on the management of diabetes in pregnancy. Care teams need to be aware of this guidance and implement its recommendations. These… 73323408 diabetes-in-pregnancy:-management-of-diabetes-and-its-complications-from-preconception-to-the-postnatal-period-(ng3) diabetes pregnancy management its complications from preconception postnatal In February 2015 the National Institute for Health and Care Excellence (NICE) publi Diabetes in pregnancy: management of diabetes and its complications from preconception to the postnatal period (NG3) In February 2015 the National Institute for Health and Care Excellence (NICE) published new guidance (NG3) on the management of diabetes in pregnancy. Care teams need to be aware of this guidance and implement its recommendations. These include preconception care with target HbA1c 48 mmol/mol. Women at risk of gestational diabetes mellitus (GDM) should have a 75 g oral glucose tolerance test (OGTT). Diagnostic criteria for GDM have changed to fasting glucose of 5.6 mmol/L or above or 2 hour glucose of 7.8 mmol/L or above. Glycaemic targets in all diabetic pregnancies have changed to fasting glucose below 5.3 mmol/L (4–5.2 mmol/L if on insulin) and 1 hour postprandial glucose",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.073448+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4421746",
+  "source_fingerprint": "e77147709f79eff998e8c99c13e437c0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4421746",
+    "genome-wide-genetic-analysis-of-polyploidy-in-yeast"
+  ],
+  "key_phrases": [
+    "genome",
+    "wide",
+    "genetic",
+    "analysis",
+    "polyploidy",
+    "yeast",
+    "increased",
+    "sets"
+  ],
+  "summary_1l": "Polyploidy, increased sets of chromosomes, occurs during development, cellular stress, disease and evolution.",
+  "query_hits": [],
+  "embed_text": "4421746 Genome-wide genetic analysis of polyploidy in yeast science scifact Polyploidy, increased sets of chromosomes, occurs during development, cellular stress, disease and evolution. Despite its prevalence, little is known about the physiological alterations that accompany polyploidy. We previously described… 4421746 genome-wide-genetic-analysis-of-polyploidy-in-yeast genome wide genetic analysis polyploidy yeast increased sets Polyploidy, increased sets of chromosomes, occurs during development, cellular stress, disease and evolution. Genome-wide genetic analysis of polyploidy in yeast Polyploidy, increased sets of chromosomes, occurs during development, cellular stress, disease and evolution. Despite its prevalence, little is known about the physiological alterations that accompany polyploidy. We previously described ‘ploidy-specific lethality’, where a gene deletion that is not lethal in haploid or diploid budding yeast causes lethality in triploids or tetraploids. Here we report a genome-wide screen to identify ploidy-specific lethal functions. Only 39 out of 3,740 mutations screened exhibited ploidy-specific lethality. Almost all of these mutations affect genomic stability by impairing homologous recombination, sister chromatid cohesion, or mitotic spindle function. We uncovered defects in wild-type tetraploids pred",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.978136+00:00"
+}

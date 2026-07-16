@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2947540",
+  "source_fingerprint": "13a138227211216c0ba6692c51d258a2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2947540",
+    "lam6-regulates-the-extent-of-contacts-between-organelles"
+  ],
+  "key_phrases": [
+    "lam6",
+    "regulates",
+    "extent",
+    "contacts",
+    "between",
+    "organelles",
+    "communication",
+    "crucial"
+  ],
+  "summary_1l": "Communication between organelles is crucial for eukaryotic cells to function as one coherent unit.",
+  "query_hits": [],
+  "embed_text": "2947540 Lam6 Regulates the Extent of Contacts between Organelles science scifact Communication between organelles is crucial for eukaryotic cells to function as one coherent unit. An important means of communication is through membrane contact sites, where two organelles come into close proximity allowing the transport… 2947540 lam6-regulates-the-extent-of-contacts-between-organelles lam6 regulates extent contacts between organelles communication crucial Communication between organelles is crucial for eukaryotic cells to function as one coherent unit. Lam6 Regulates the Extent of Contacts between Organelles Communication between organelles is crucial for eukaryotic cells to function as one coherent unit. An important means of communication is through membrane contact sites, where two organelles come into close proximity allowing the transport of lipids and small solutes between them. Contact sites are dynamic in size and can change in response to environmental or cellular stimuli; however, how this is regulated has been unclear. Here, we show that Saccharomyces cerevisiae Lam6 resides in several central contact sites: ERMES (ER/mitochondria encounter structure), vCLAMP (vacuole and mitochondria patch), and NVJ (nuclear vacuolar junction). We show that Lam6 is sufficient for expansion of contact sites under physiological conditions and n",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.976476+00:00"
+}

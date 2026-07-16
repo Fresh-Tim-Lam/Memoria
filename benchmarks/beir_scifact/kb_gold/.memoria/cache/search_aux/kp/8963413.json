@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8963413",
+  "source_fingerprint": "e329dd023761a9e799eddfd3ebe8afd4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8963413",
+    "pd-l1-expression-in-human-cancers-and-its-association-with-clinical-outcomes"
+  ],
+  "key_phrases": [
+    "pd",
+    "l1",
+    "expression",
+    "human",
+    "cancers",
+    "its",
+    "association",
+    "with"
+  ],
+  "summary_1l": "PD-L1 is an immunoinhibitory molecule that suppresses the activation of T cells, leading to the progression of tumors.",
+  "query_hits": [],
+  "embed_text": "8963413 PD-L1 expression in human cancers and its association with clinical outcomes science scifact PD-L1 is an immunoinhibitory molecule that suppresses the activation of T cells, leading to the progression of tumors. Overexpression of PD-L1 in cancers such as gastric cancer, hepatocellular carcinoma, renal cell carcinoma, esophageal… 8963413 pd-l1-expression-in-human-cancers-and-its-association-with-clinical-outcomes pd l1 expression human cancers its association with PD-L1 is an immunoinhibitory molecule that suppresses the activation of T cells, leading to the progression of tumors. PD-L1 expression in human cancers and its association with clinical outcomes PD-L1 is an immunoinhibitory molecule that suppresses the activation of T cells, leading to the progression of tumors. Overexpression of PD-L1 in cancers such as gastric cancer, hepatocellular carcinoma, renal cell carcinoma, esophageal cancer, pancreatic cancer, ovarian cancer, and bladder cancer is associated with poor clinical outcomes. In contrast, PD-L1 expression correlates with better clinical outcomes in breast cancer and merkel cell carcinoma. The prognostic value of PD-L1 expression in lung cancer, colorectal cancer, and melanoma is controversial. Blocking antibodies that target PD-1 and PD-L1 have achieved remarkable response rates in cancer patients who have PD-L1-overexpressing tumors. However, using",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.990649+00:00"
+}

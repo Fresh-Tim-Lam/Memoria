@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13952658",
+  "source_fingerprint": "30b028175a229822d9336f8e49916434",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13952658",
+    "immune-cell-promotion-of-metastasis"
+  ],
+  "key_phrases": [
+    "immune",
+    "cell",
+    "promotion",
+    "metastasis",
+    "metastatic",
+    "disease",
+    "major",
+    "cause"
+  ],
+  "summary_1l": "Metastatic disease is the major cause of death from cancer, and immunotherapy and chemotherapy have had limited success in reversing its progression.",
+  "query_hits": [],
+  "embed_text": "13952658 Immune cell promotion of metastasis science scifact Metastatic disease is the major cause of death from cancer, and immunotherapy and chemotherapy have had limited success in reversing its progression. Data from mouse models suggest that the recruitment of immunosuppressive cells to tumours… 13952658 immune-cell-promotion-of-metastasis immune cell promotion metastasis metastatic disease major cause Metastatic disease is the major cause of death from cancer, and immunotherapy and chemotherapy have had limited success in reversing its progression. Immune cell promotion of metastasis Metastatic disease is the major cause of death from cancer, and immunotherapy and chemotherapy have had limited success in reversing its progression. Data from mouse models suggest that the recruitment of immunosuppressive cells to tumours protects metastatic cancer cells from surveillance by killer cells, which nullifies the effects of immunotherapy and thus establishes metastasis. Furthermore, in most cases, tumour-infiltrating immune cells differentiate into cells that promote each step of the metastatic cascade and thus are novel targets for therapy. In this Review, we describe how tumour-infiltrating immune cells contribute to the metastatic cascade and we discuss potential therapeutic strategies to target these cells.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.734279+00:00"
+}

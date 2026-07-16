@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "810480",
+  "source_fingerprint": "f2944028522c402488c92fbfa47b1da3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "810480",
+    "localization-of-a-gene-for-partial-epilepsy-to-chromosome-10q"
+  ],
+  "key_phrases": [
+    "localization",
+    "gene",
+    "partial",
+    "epilepsy",
+    "chromosome",
+    "10q",
+    "there",
+    "strong"
+  ],
+  "summary_1l": "There is strong evidence for a genetic contribution to epilepsy, but it is commonly assumed that this genetic contribution is limited to ‘",
+  "query_hits": [],
+  "embed_text": "810480 Localization of a gene for partial epilepsy to chromosome 10q science scifact There is strong evidence for a genetic contribution to epilepsy, but it is commonly assumed that this genetic contribution is limited to ‘generalized’ epilepsies, and that most forms of ‘partial’ epilepsy are nongenetic. In a linkage… 810480 localization-of-a-gene-for-partial-epilepsy-to-chromosome-10q localization gene partial epilepsy chromosome 10q there strong There is strong evidence for a genetic contribution to epilepsy, but it is commonly assumed that this genetic contribution is limited to ‘ Localization of a gene for partial epilepsy to chromosome 10q There is strong evidence for a genetic contribution to epilepsy, but it is commonly assumed that this genetic contribution is limited to ‘generalized’ epilepsies, and that most forms of ‘partial’ epilepsy are nongenetic. In a linkage analysis of a single family containing 11 affected individuals, we obtained strong evidence for localization of a gene for partial epilepsy. This susceptibility gene maps to chromosome 10q, with a maximum two–point lod score for D10S192 of 3.99 at θ=0.0. All affected individuals share a single haplotype for seven tightly linked contiguous markers; the maximum lod score for this haplotype is 4.83 at θ=0.0. Key recombinants place the susceptibility locus within a 10 centimorgan interval.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.915875+00:00"
+}

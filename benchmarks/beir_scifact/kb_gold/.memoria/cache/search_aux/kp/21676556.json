@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21676556",
+  "source_fingerprint": "bba997f8335e75c9ba7c877bcaa47d42",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21676556",
+    "midbody-accumulation-through-evasion-of-autophagy-contributes-to-cellular-reprogramming-and-tumorigenicity"
+  ],
+  "key_phrases": [
+    "midbody",
+    "accumulation",
+    "through",
+    "evasion",
+    "autophagy",
+    "contributes",
+    "cellular",
+    "reprogramming"
+  ],
+  "summary_1l": "The midbody is a singular organelle formed between daughter cells during cytokinesis and requ",
+  "query_hits": [],
+  "embed_text": "21676556 Midbody accumulation through evasion of autophagy contributes to cellular reprogramming and tumorigenicity science scifact The midbody is a singular organelle formed between daughter cells during cytokinesis and required for their final separation. Midbodies persist in cells long after division as midbody derivatives (MBds), but their fate is unclear. Here we… 21676556 midbody-accumulation-through-evasion-of-autophagy-contributes-to-cellular-reprogramming-and-tumorigenicity midbody accumulation through evasion autophagy contributes cellular reprogramming The midbody is a singular organelle formed between daughter cells during cytokinesis and requ Midbody accumulation through evasion of autophagy contributes to cellular reprogramming and tumorigenicity The midbody is a singular organelle formed between daughter cells during cytokinesis and required for their final separation. Midbodies persist in cells long after division as midbody derivatives (MBds), but their fate is unclear. Here we show that MBds are inherited asymmetrically by the daughter cell with the older centrosome. They selectively accumulate in stem cells, induced pluripotent stem cells and potential cancer ‘stem cells’ in vivo and in vitro. MBd loss accompanies stem-cell differentiation, and involves autophagic degradation mediated by binding of the autophagic receptor NBR1 to the midbody protein CEP55. Differentiating cells and normal dividing cells do not accumulate",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.626880+00:00"
+}

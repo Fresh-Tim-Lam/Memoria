@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1044552",
+  "source_fingerprint": "3a357108ed4b7fdefc4fda17731cc4fe",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1044552",
+    "activation-of-proteinase-activated-receptor-2-in-human-osteoarthritic-cartilage-upregulates-catabolic-and-proinflammatory-pathways-capable-of-inducing-cartilage-degradation:-a-basic-science-study"
+  ],
+  "key_phrases": [
+    "activation",
+    "proteinase",
+    "activated",
+    "receptor",
+    "human",
+    "osteoarthritic",
+    "cartilage",
+    "upregulates"
+  ],
+  "summary_1l": "Activation of proteinase-activated receptor 2 in human osteoarthritic cartilage upregulates catabolic and proinflammatory pathways capable of inducing cartilage degradation: a basic science study Prot",
+  "query_hits": [],
+  "embed_text": "1044552 Activation of proteinase-activated receptor 2 in human osteoarthritic cartilage upregulates catabolic and proinflammatory pathways capable of inducing cartilage degradation: a basic science study science scifact Proteinase-activated receptors (PARs) belong to a family of G protein-coupled receptors. PARs are activated by a serine-dependent cleavage generating a tethered activating ligand. PAR-2 was shown to be involved in inflammatory pathways. We… 1044552 activation-of-proteinase-activated-receptor-2-in-human-osteoarthritic-cartilage-upregulates-catabolic-and-proinflammatory-pathways-capable-of-inducing-cartilage-degradation:-a-basic-science-study activation proteinase activated receptor human osteoarthritic cartilage upregulates Activation of proteinase-activated receptor 2 in human osteoarthritic cartilage upregulates catabolic and proinflammatory pathways capable of inducing cartilage degradation: a basic science study Prot Activation of proteinase-activated receptor 2 in human osteoarthritic cartilage upregulates catabolic and proinflammatory pathways capable of inducing cartilage degradation: a basic science study Proteinase-activated receptors (PARs) belong to a family of G protein-coupled receptors. PARs are activated by a serine-dependent cleavage generating a tethered activating ligand. PAR-2 was shown to be involved in inflammatory pathways. We investigated the in situ levels and modulation of PAR-2 in human normal and osteoarthritis (OA) cartilage/chondrocytes. Furthermore, we evaluated the role of PAR-2 on the synthesis of the major catabolic factors in OA cartilage, including metalloproteinase (MMP)-1 and MMP-13 and the inflammatory mediator cyclooxygenase 2 (COX-2), as well as the PAR-2-activated s",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.551374+00:00"
+}

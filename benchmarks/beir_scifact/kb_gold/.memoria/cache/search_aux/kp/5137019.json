@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5137019",
+  "source_fingerprint": "626f8eead7f801a934f50217515afe97",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5137019",
+    "suppressor-of-cytokine-signaling-3-inhibits-antiviral-ifn-beta-signaling-to-enhance-hiv-1-replication-in-macrophages."
+  ],
+  "key_phrases": [
+    "suppressor",
+    "cytokine",
+    "signaling",
+    "inhibits",
+    "antiviral",
+    "ifn",
+    "beta",
+    "enhance"
+  ],
+  "summary_1l": "Suppressor of cytokine signaling 3 inhibits antiviral IFN-beta signaling to enhance HIV-1 replication in macrophages.",
+  "query_hits": [],
+  "embed_text": "5137019 Suppressor of cytokine signaling 3 inhibits antiviral IFN-beta signaling to enhance HIV-1 replication in macrophages. science scifact HIV-1 replication within macrophages of the CNS often results in cognitive and motor impairment, which is known as HIV-associated dementia (HAD) in its most severe form. IFN-beta suppresses viral replication within these cells during early… 5137019 suppressor-of-cytokine-signaling-3-inhibits-antiviral-ifn-beta-signaling-to-enhance-hiv-1-replication-in-macrophages. suppressor cytokine signaling inhibits antiviral ifn beta enhance Suppressor of cytokine signaling 3 inhibits antiviral IFN-beta signaling to enhance HIV-1 replication in macrophages. Suppressor of cytokine signaling 3 inhibits antiviral IFN-beta signaling to enhance HIV-1 replication in macrophages. HIV-1 replication within macrophages of the CNS often results in cognitive and motor impairment, which is known as HIV-associated dementia (HAD) in its most severe form. IFN-beta suppresses viral replication within these cells during early CNS infection, but the effect is transient. HIV-1 eventually overcomes this protective innate immune response to resume replication through an unknown mechanism, initiating the progression toward HAD. In this article, we show that Suppressor of Cytokine Signaling (SOCS)3, a molecular inhibitor of IFN signaling, may allow HIV-1 to evade innate immunity within the CNS. We found that SOCS3 is elevated in an in vivo SIV/macaque model of HAD a",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.225364+00:00"
+}

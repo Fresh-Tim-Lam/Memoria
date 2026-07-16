@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5579368",
+  "source_fingerprint": "983f4bfe3623b85b56675344e9eaa650",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5579368",
+    "cohcap:-an-integrative-genomic-pipeline-for-single-nucleotide-resolution-dna-methylation-analysis"
+  ],
+  "key_phrases": [
+    "cohcap",
+    "integrative",
+    "genomic",
+    "pipeline",
+    "single",
+    "nucleotide",
+    "resolution",
+    "dna"
+  ],
+  "summary_1l": "COHCAP (City of Hope CpG Island Analysis Pipeline) is an algorithm to analyze single-nucleotide resolu",
+  "query_hits": [],
+  "embed_text": "5579368 COHCAP: an integrative genomic pipeline for single-nucleotide resolution DNA methylation analysis science scifact COHCAP (City of Hope CpG Island Analysis Pipeline) is an algorithm to analyze single-nucleotide resolution DNA methylation data produced by either an Illumina methylation array or targeted bisulfite sequencing. The goal of the COHCAP… 5579368 cohcap:-an-integrative-genomic-pipeline-for-single-nucleotide-resolution-dna-methylation-analysis cohcap integrative genomic pipeline single nucleotide resolution dna COHCAP (City of Hope CpG Island Analysis Pipeline) is an algorithm to analyze single-nucleotide resolu COHCAP: an integrative genomic pipeline for single-nucleotide resolution DNA methylation analysis COHCAP (City of Hope CpG Island Analysis Pipeline) is an algorithm to analyze single-nucleotide resolution DNA methylation data produced by either an Illumina methylation array or targeted bisulfite sequencing. The goal of the COHCAP algorithm is to identify CpG islands that show a consistent pattern of methylation among CpG sites. COHCAP is currently the only DNA methylation package that provides integration with gene expression data to identify a subset of CpG islands that are most likely to regulate downstream gene expression, and it can generate lists of differentially methylated CpG islands with ∼50% concordance with gene expression from both cell line data and heterogeneous patient data.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.668253+00:00"
+}

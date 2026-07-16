@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17844478",
+  "source_fingerprint": "2c82a12c42c6587f15951b2b6edfdda9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17844478",
+    "autocrine-vegf-signaling-synergizes-with-egfr-in-tumor-cells-to-promote-epithelial-cancer-development"
+  ],
+  "key_phrases": [
+    "autocrine",
+    "vegf",
+    "signaling",
+    "synergizes",
+    "with",
+    "egfr",
+    "tumor",
+    "cells"
+  ],
+  "summary_1l": "It is established that tumor cell-derived VEGF acts on endothelial cells to promote angiogenesis a",
+  "query_hits": [],
+  "embed_text": "17844478 Autocrine VEGF Signaling Synergizes with EGFR in Tumor Cells to Promote Epithelial Cancer Development science scifact It is established that tumor cell-derived VEGF acts on endothelial cells to promote angiogenesis and tumor growth. Here, we demonstrate that in K5-SOS-dependent mouse skin tumors, autocrine VEGF is required for tumor cell proliferation in… 17844478 autocrine-vegf-signaling-synergizes-with-egfr-in-tumor-cells-to-promote-epithelial-cancer-development autocrine vegf signaling synergizes with egfr tumor cells It is established that tumor cell-derived VEGF acts on endothelial cells to promote angiogenesis a Autocrine VEGF Signaling Synergizes with EGFR in Tumor Cells to Promote Epithelial Cancer Development It is established that tumor cell-derived VEGF acts on endothelial cells to promote angiogenesis and tumor growth. Here, we demonstrate that in K5-SOS-dependent mouse skin tumors, autocrine VEGF is required for tumor cell proliferation in a cell-autonomous and angiogenesis-independent manner. VEGF is upregulated in SOS-expressing tumors, and its deletion in epidermal cells delays tumorigenesis by suppressing angiogenesis and tumor cell proliferation. Epidermis-specific Flt1 deletion also impairs tumorigenesis and proliferation. Surprisingly, complete tumor inhibition occurs in the absence of VEGF in EGFR mutant mice, demonstrating that VEGFR and EGFR synergize in neoplastic cells to promot",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.369390+00:00"
+}

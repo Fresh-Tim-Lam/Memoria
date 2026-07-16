@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13902570",
+  "source_fingerprint": "952cf94aa1b5eec0c2d80b3247e74524",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13902570",
+    "bile-acid-receptor-tgr5-agonism-induces-no-production-and-reduces-monocyte-adhesion-in-vascular-endothelial-cells."
+  ],
+  "key_phrases": [
+    "bile",
+    "acid",
+    "receptor",
+    "tgr5",
+    "agonism",
+    "induces",
+    "no",
+    "production"
+  ],
+  "summary_1l": "Bile acid receptor TGR5 agonism induces NO production and reduces monocyte adhesion in vascular endothelial cells.",
+  "query_hits": [],
+  "embed_text": "13902570 Bile acid receptor TGR5 agonism induces NO production and reduces monocyte adhesion in vascular endothelial cells. science scifact OBJECTIVE TGR5 is a G-protein-coupled receptor for bile acids. So far, little is known about the function of TGR5 in vascular endothelial cells. APPROACH AND RESULTS In bovine aortic endothelial cells, treatment with a bile acid having a… 13902570 bile-acid-receptor-tgr5-agonism-induces-no-production-and-reduces-monocyte-adhesion-in-vascular-endothelial-cells. bile acid receptor tgr5 agonism induces no production Bile acid receptor TGR5 agonism induces NO production and reduces monocyte adhesion in vascular endothelial cells. Bile acid receptor TGR5 agonism induces NO production and reduces monocyte adhesion in vascular endothelial cells. OBJECTIVE TGR5 is a G-protein-coupled receptor for bile acids. So far, little is known about the function of TGR5 in vascular endothelial cells. APPROACH AND RESULTS In bovine aortic endothelial cells, treatment with a bile acid having a high affinity to TGR5, taurolithocholic acid (TLCA), significantly increased NO production. This effect was abolished by small interfering RNA-mediated depletion of TGR5. TLCA-induced NO production was also observed in human umbilical vein endothelial cells measured via intracellular cGMP accumulation. TLCA increased endothelial NO synthase(ser1177) phosphorylation in human umbilical vein endothelial cells. This response was accompanied by inc",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.415897+00:00"
+}

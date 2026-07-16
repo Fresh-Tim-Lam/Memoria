@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "46277811",
+  "source_fingerprint": "6ec5b2e59c2c274253f7ba00f2c75fb3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "46277811",
+    "lpa-gene,-ethnicity,-and-cardiovascular-events"
+  ],
+  "key_phrases": [
+    "lpa",
+    "gene",
+    "ethnicity",
+    "cardiovascular",
+    "events",
+    "background",
+    "relationship",
+    "single"
+  ],
+  "summary_1l": "Background: The relationship of LPA single nucleotide polymorphisms (SNPs), apolipoprotein(a) isoforms, and lipoprotein(a) [Lp(a)] levels with major adve",
+  "query_hits": [],
+  "embed_text": "46277811 LPA Gene, Ethnicity, and Cardiovascular Events science scifact Background: The relationship of LPA single nucleotide polymorphisms (SNPs), apolipoprotein(a) isoforms, and lipoprotein(a) [Lp(a)] levels with major adverse cardiovascular events (MACE) in different ethnic groups is not well known.… 46277811 lpa-gene,-ethnicity,-and-cardiovascular-events lpa gene ethnicity cardiovascular events background relationship single Background: The relationship of LPA single nucleotide polymorphisms (SNPs), apolipoprotein(a) isoforms, and lipoprotein(a) [Lp(a)] levels with major adve LPA Gene, Ethnicity, and Cardiovascular Events Background: The relationship of LPA single nucleotide polymorphisms (SNPs), apolipoprotein(a) isoforms, and lipoprotein(a) [Lp(a)] levels with major adverse cardiovascular events (MACE) in different ethnic groups is not well known. Methods: LPA SNPs, apolipoprotein(a) isoforms, Lp(a), and oxidized phospholipids on apolipoprotein B-100 (OxPL-apoB) levels were measured in 1792 black, 1030 white, and 597 Hispanic subjects enrolled in the Dallas Heart Study. Their interdependent relationships and prospective association with MACE after median 9.5-year follow-up were determined. Results: LPA SNP rs3798220 was most prevalent in Hispanics (42.38%), rs10455872 in whites (14.27%), and rs9457951 in blacks (32.92%). The correlation of each of these SNPs",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.725155+00:00"
+}

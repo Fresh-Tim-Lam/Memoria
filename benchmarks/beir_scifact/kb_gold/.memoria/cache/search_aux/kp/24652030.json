@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "24652030",
+  "source_fingerprint": "999fe7b97fa27b822954a9c3f31e1dab",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24652030"
+  ],
+  "key_phrases": [
+    "alzheimer",
+    "disease",
+    "ngf",
+    "signaling",
+    "age",
+    "related",
+    "degeneration",
+    "basal"
+  ],
+  "summary_1l": "Age-related degeneration of basal forebrain cholinergic neurons (BFCNs) occurs early and contributes significantly to cognitive decline in Alzheimer’s disease (AD",
+  "query_hits": [],
+  "embed_text": "24652030 Alzheimer’s disease and NGF signaling science scifact Age-related degeneration of basal forebrain cholinergic neurons (BFCNs) occurs early and contributes significantly to cognitive decline in Alzheimer’s disease (AD). Proper function and morphology of BFCNs depends on the supply of nerve… 24652030 alzheimer disease ngf signaling age related degeneration basal Age-related degeneration of basal forebrain cholinergic neurons (BFCNs) occurs early and contributes significantly to cognitive decline in Alzheimer’s disease (AD Alzheimer’s disease and NGF signaling Age-related degeneration of basal forebrain cholinergic neurons (BFCNs) occurs early and contributes significantly to cognitive decline in Alzheimer’s disease (AD). Proper function and morphology of BFCNs depends on the supply of nerve growth factor (NGF) from the cortex and the hippocampus. A large number of experiments have shown that decreased supply of NGF at the level of BFCN cell bodies leads to loss of neuronal markers and shrinkage, mimicking what is observed in AD. The delivery of sufficient amounts of NGF signal to BFCN cell bodies depends on the effective participation of several factors including sufficient synthesis and release of NGF, adequate synthesis and expression of NGF receptors by BFCNs, normal signaling and retrograde transport of",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.952105+00:00"
+}

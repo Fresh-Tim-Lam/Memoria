@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19855358",
+  "source_fingerprint": "c67cb856889a2d7d0f011b45176eff7b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19855358",
+    "direct-reprogramming-of-mouse-fibroblasts-to-cardiomyocyte-like-cells-using-yamanaka-factors-on-engineered-poly(ethylene-glycol)-(peg)-hydrogels."
+  ],
+  "key_phrases": [
+    "direct",
+    "reprogramming",
+    "mouse",
+    "fibroblasts",
+    "cardiomyocyte",
+    "like",
+    "cells",
+    "using"
+  ],
+  "summary_1l": "Direct reprogramming of mouse fibroblasts to cardiomyocyte-like cells using Yamanaka factors on engineered poly(ethylene glycol) (PEG) hydrogels.",
+  "query_hits": [],
+  "embed_text": "19855358 Direct reprogramming of mouse fibroblasts to cardiomyocyte-like cells using Yamanaka factors on engineered poly(ethylene glycol) (PEG) hydrogels. science scifact Direct reprogramming strategies enable rapid conversion of somatic cells to cardiomyocytes or cardiomyocyte-like cells without going through the pluripotent state. A recently described protocol couples Yamanaka factor induction with… 19855358 direct-reprogramming-of-mouse-fibroblasts-to-cardiomyocyte-like-cells-using-yamanaka-factors-on-engineered-poly(ethylene-glycol)-(peg)-hydrogels. direct reprogramming mouse fibroblasts cardiomyocyte like cells using Direct reprogramming of mouse fibroblasts to cardiomyocyte-like cells using Yamanaka factors on engineered poly(ethylene glycol) (PEG) hydrogels. Direct reprogramming of mouse fibroblasts to cardiomyocyte-like cells using Yamanaka factors on engineered poly(ethylene glycol) (PEG) hydrogels. Direct reprogramming strategies enable rapid conversion of somatic cells to cardiomyocytes or cardiomyocyte-like cells without going through the pluripotent state. A recently described protocol couples Yamanaka factor induction with pluripotency inhibition followed by BMP4 treatment to achieve rapid reprogramming of mouse fibroblasts to beating cardiomyocyte-like cells. The original study was performed using Matrigel-coated tissue culture polystyrene (TCPS), a stiff material that also non-specifically adsorbs serum proteins. Protein adsorption-resistant poly(ethylene glycol) (PEG) materials can be covalently modified to present precise concentrat",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.329652+00:00"
+}

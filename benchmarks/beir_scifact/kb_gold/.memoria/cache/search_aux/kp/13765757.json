@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13765757",
+  "source_fingerprint": "950105b0966a4081c62d4deb53e4505a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13765757",
+    "timing-of-menarche-and-first-full-term-birth-in-relation-to-breast-cancer-risk."
+  ],
+  "key_phrases": [
+    "timing",
+    "menarche",
+    "first",
+    "full",
+    "term",
+    "birth",
+    "relation",
+    "breast"
+  ],
+  "summary_1l": "Timing of menarche and first full-term birth in relation to breast cancer risk.",
+  "query_hits": [],
+  "embed_text": "13765757 Timing of menarche and first full-term birth in relation to breast cancer risk. science scifact Ages at menarche and first birth are established risk factors for breast cancer. The interval between these ages may also affect risk, since the breast is more susceptible to carcinogenic insults during this period than during the parous… 13765757 timing-of-menarche-and-first-full-term-birth-in-relation-to-breast-cancer-risk. timing menarche first full term birth relation breast Timing of menarche and first full-term birth in relation to breast cancer risk. Timing of menarche and first full-term birth in relation to breast cancer risk. Ages at menarche and first birth are established risk factors for breast cancer. The interval between these ages may also affect risk, since the breast is more susceptible to carcinogenic insults during this period than during the parous period. However, few investigators have studied this relation. Using logistic regression, the authors evaluated associations between the timing of reproductive events and breast cancer risk among 4,013 cases and 4,069 controls enrolled in a multicenter, population-based US case-control study of White and African-American women (1994-1998). For White, parous premenopausal and postmenopausal women, those who had an interval of > or =16 years between the ages of menarche and first",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.886282+00:00"
+}

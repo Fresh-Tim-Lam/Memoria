@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "35100235",
+  "source_fingerprint": "04f54b8a002f75529c8685af558db215",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "35100235",
+    "survival-rates-of-tropical-and-temperate-passerines:-a-trinidadian-perspective."
+  ],
+  "key_phrases": [
+    "survival",
+    "rates",
+    "tropical",
+    "temperate",
+    "passerines",
+    "trinidadian",
+    "perspective",
+    "mark"
+  ],
+  "summary_1l": "Survival rates of tropical and temperate passerines: a Trinidadian perspective.",
+  "query_hits": [],
+  "embed_text": "35100235 Survival rates of tropical and temperate passerines: a Trinidadian perspective. science scifact Mark-recapture data collected using mist nets over a 10-yr period in Trinidad were used to estimate adult survival rates for 17 species of forest passerines. Trinidadian survival rates (mean 65%, range 45%-85%) were significantly higher… 35100235 survival-rates-of-tropical-and-temperate-passerines:-a-trinidadian-perspective. survival rates tropical temperate passerines trinidadian perspective mark Survival rates of tropical and temperate passerines: a Trinidadian perspective. Survival rates of tropical and temperate passerines: a Trinidadian perspective. Mark-recapture data collected using mist nets over a 10-yr period in Trinidad were used to estimate adult survival rates for 17 species of forest passerines. Trinidadian survival rates (mean 65%, range 45%-85%) were significantly higher than published estimates for European (mean survival 52%, range 32%-71%) and North American (mean survival 53%, range 29%-63%) passerines of similar body size (equivalent to 45% higher mean life expectancy in Trinidad). These findings were confirmed after controlling for phylogeny using a method of independent contrasts. Transient and/or young birds were an important feature of the Trinidad data, and studies that fail to allow for the presence of such birds risk underestimating",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.978284+00:00"
+}

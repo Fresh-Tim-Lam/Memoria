@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "38211681",
+  "source_fingerprint": "73011b666195769c4da6f050ce998481",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "38211681",
+    "comparison-of-beck-depression-inventories--ia-and--ii-in-psychiatric-outpatients."
+  ],
+  "key_phrases": [
+    "comparison",
+    "beck",
+    "depression",
+    "inventories",
+    "ia",
+    "ii",
+    "psychiatric",
+    "outpatients"
+  ],
+  "summary_1l": "Comparison of Beck Depression Inventories -IA and -II in psychiatric outpatients.",
+  "query_hits": [],
+  "embed_text": "38211681 Comparison of Beck Depression Inventories -IA and -II in psychiatric outpatients. science scifact The amended (revised) Beck Depression Inventory (BDI-IA; Beck & Steer, 1993b) and the Beck Depression Inventory-II (BDI-II; Beck, Steer, & Brown, 1996) were self-administered to 140 psychiatric outpatients with various psychiatric… 38211681 comparison-of-beck-depression-inventories--ia-and--ii-in-psychiatric-outpatients. comparison beck depression inventories ia ii psychiatric outpatients Comparison of Beck Depression Inventories -IA and -II in psychiatric outpatients. Comparison of Beck Depression Inventories -IA and -II in psychiatric outpatients. The amended (revised) Beck Depression Inventory (BDI-IA; Beck & Steer, 1993b) and the Beck Depression Inventory-II (BDI-II; Beck, Steer, & Brown, 1996) were self-administered to 140 psychiatric outpatients with various psychiatric disorders. The coefficient alphas of the BDI-IA and the BDI-II were, respectively, .89 and .91. The mean rating for Sadness on the BDI-IA was higher than it was on the BDI-II, but the mean ratings for Past Failure, Self-Dislike, Change in Sleeping Pattern, and Change in Appetite were higher on the BDI-II than they were on the BDI-IA. The mean BDI-II total score was approximately 2 points higher than it was for the BDI-IA, and the outpatients also endorsed approximately one more symp",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.257433+00:00"
+}

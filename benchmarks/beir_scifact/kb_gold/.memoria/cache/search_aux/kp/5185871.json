@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5185871",
+  "source_fingerprint": "5d110b76ef713bee056222c755f616c8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5185871",
+    "prognostic-accuracy-of-the-sofa-score,-sirs-criteria,-and-qsofa-score-for-in-hospital-mortality-among-adults-with-suspected-infection-admitted-to-the-intensive-care-unit"
+  ],
+  "key_phrases": [
+    "prognostic",
+    "accuracy",
+    "sofa",
+    "score",
+    "sirs",
+    "criteria",
+    "qsofa",
+    "hospital"
+  ],
+  "summary_1l": "Importance The Sepsis-3 Criter",
+  "query_hits": [],
+  "embed_text": "5185871 Prognostic Accuracy of the SOFA Score, SIRS Criteria, and qSOFA Score for In-Hospital Mortality Among Adults With Suspected Infection Admitted to the Intensive Care Unit science scifact Importance The Sepsis-3 Criteria emphasized the value of a change of 2 or more points in the Sequential [Sepsis-related] Organ Failure Assessment (SOFA) score, introduced quick SOFA (qSOFA), and removed the systemic inflammatory response… 5185871 prognostic-accuracy-of-the-sofa-score,-sirs-criteria,-and-qsofa-score-for-in-hospital-mortality-among-adults-with-suspected-infection-admitted-to-the-intensive-care-unit prognostic accuracy sofa score sirs criteria qsofa hospital Importance The Sepsis-3 Criter Prognostic Accuracy of the SOFA Score, SIRS Criteria, and qSOFA Score for In-Hospital Mortality Among Adults With Suspected Infection Admitted to the Intensive Care Unit Importance The Sepsis-3 Criteria emphasized the value of a change of 2 or more points in the Sequential [Sepsis-related] Organ Failure Assessment (SOFA) score, introduced quick SOFA (qSOFA), and removed the systemic inflammatory response syndrome (SIRS) criteria from the sepsis definition. Objective Externally validate and assess the discriminatory capacities of an increase in SOFA score by 2 or more points, 2 or more SIRS criteria, or a qSOFA score of 2 or more points for outcomes among patients who are critically ill with suspected infection. Design, Setting, and Participants Retrospective cohort analysis of 184 875 pati",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.386323+00:00"
+}

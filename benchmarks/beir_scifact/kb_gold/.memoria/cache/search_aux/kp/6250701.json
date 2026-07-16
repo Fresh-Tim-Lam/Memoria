@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6250701",
+  "source_fingerprint": "1637374c9feac6bb68b151a70580399c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6250701",
+    "laboratory-prediction-of-the-requirement-for-renal-replacement-in-acute-falciparum-malaria"
+  ],
+  "key_phrases": [
+    "laboratory",
+    "prediction",
+    "requirement",
+    "renal",
+    "replacement",
+    "acute",
+    "falciparum",
+    "malaria"
+  ],
+  "summary_1l": "BACKGROUND Acute renal failure is a common complication of severe malaria in adults, and without renal replac",
+  "query_hits": [],
+  "embed_text": "6250701 Laboratory prediction of the requirement for renal replacement in acute falciparum malaria science scifact BACKGROUND Acute renal failure is a common complication of severe malaria in adults, and without renal replacement therapy (RRT), it carries a poor prognosis. Even when RRT is available, delaying its initiation may increase mortality.… 6250701 laboratory-prediction-of-the-requirement-for-renal-replacement-in-acute-falciparum-malaria laboratory prediction requirement renal replacement acute falciparum malaria BACKGROUND Acute renal failure is a common complication of severe malaria in adults, and without renal replac Laboratory prediction of the requirement for renal replacement in acute falciparum malaria BACKGROUND Acute renal failure is a common complication of severe malaria in adults, and without renal replacement therapy (RRT), it carries a poor prognosis. Even when RRT is available, delaying its initiation may increase mortality. Earlier identification of patients who will need RRT may improve outcomes. METHOD Prospectively collected data from two intervention studies in adults with severe malaria were analysed focusing on laboratory features on presentation and their association with a later requirement for RRT. In particular, laboratory indices of acute tubular necrosis (ATN) and acute kidney injury (AKI) that are used in other settings were examined. RESULTS Data from 163 patients were availa",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.354759+00:00"
+}

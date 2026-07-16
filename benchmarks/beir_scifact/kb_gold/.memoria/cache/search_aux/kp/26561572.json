@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26561572",
+  "source_fingerprint": "da471ae4871fd1fa433bf371ee276845",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26561572",
+    "ret,-ros1-and-alk-fusions-in-lung-cancer"
+  ],
+  "key_phrases": [
+    "ret",
+    "ros1",
+    "alk",
+    "fusions",
+    "lung",
+    "cancer",
+    "through",
+    "integrated"
+  ],
+  "summary_1l": "Through an integrated molecular- and histopathology-based screening system, we performed a screening for fusions of anaplastic lymphoma kinase (ALK) and c-ros",
+  "query_hits": [],
+  "embed_text": "26561572 RET, ROS1 and ALK fusions in lung cancer science scifact Through an integrated molecular- and histopathology-based screening system, we performed a screening for fusions of anaplastic lymphoma kinase (ALK) and c-ros oncogene 1, receptor tyrosine kinase (ROS1) in 1,529 lung cancers and identified… 26561572 ret,-ros1-and-alk-fusions-in-lung-cancer ret ros1 alk fusions lung cancer through integrated Through an integrated molecular- and histopathology-based screening system, we performed a screening for fusions of anaplastic lymphoma kinase (ALK) and c-ros RET, ROS1 and ALK fusions in lung cancer Through an integrated molecular- and histopathology-based screening system, we performed a screening for fusions of anaplastic lymphoma kinase (ALK) and c-ros oncogene 1, receptor tyrosine kinase (ROS1) in 1,529 lung cancers and identified 44 ALK-fusion–positive and 13 ROS1-fusion–positive adenocarcinomas, including for unidentified fusion partners for ROS1. In addition, we discovered previously unidentified kinase fusions that may be promising for molecular-targeted therapy, kinesin family member 5B (KIF5B)-ret proto-oncogene (RET) and coiled-coil domain containing 6 (CCDC6)-RET, in 14 adenocarcinomas. A multivariate analysis of 1,116 adenocarcinomas containing these 71 kinase-fusion–positive adenocarcinomas identified four independent factors that",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.846041+00:00"
+}

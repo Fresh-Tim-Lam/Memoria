@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "31882215",
+  "source_fingerprint": "b4d32864052d3625b1d5b9690195a2e7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "31882215",
+    "autophagy-and-mtorc1-regulate-the-stochastic-phase-of-somatic-cell-reprogramming"
+  ],
+  "key_phrases": [
+    "autophagy",
+    "mtorc1",
+    "regulate",
+    "stochastic",
+    "phase",
+    "somatic",
+    "cell",
+    "reprogramming"
+  ],
+  "summary_1l": "We describe robust induction of autophagy during the reprogramming of mouse fibroblasts to induced pluripotent stem cel",
+  "query_hits": [],
+  "embed_text": "31882215 Autophagy and mTORC1 regulate the stochastic phase of somatic cell reprogramming science scifact We describe robust induction of autophagy during the reprogramming of mouse fibroblasts to induced pluripotent stem cells by four reprogramming factors (Sox2, Oct4, Klf4 and c-Myc), henceforth 4F. This process occurs independently of p53… 31882215 autophagy-and-mtorc1-regulate-the-stochastic-phase-of-somatic-cell-reprogramming autophagy mtorc1 regulate stochastic phase somatic cell reprogramming We describe robust induction of autophagy during the reprogramming of mouse fibroblasts to induced pluripotent stem cel Autophagy and mTORC1 regulate the stochastic phase of somatic cell reprogramming We describe robust induction of autophagy during the reprogramming of mouse fibroblasts to induced pluripotent stem cells by four reprogramming factors (Sox2, Oct4, Klf4 and c-Myc), henceforth 4F. This process occurs independently of p53 activation, and is mediated by the synergistic downregulation of mechanistic target of rapamycin complex 1 (mTORC1) and the induction of autophagy-related genes. The 4F coordinately repress mTORC1, but bifurcate in their regulation of autophagy-related genes, with Klf4 and c-Myc inducing them but Sox2 and Oct4 inhibiting them. On one hand, inhibition of mTORC1 facilitates reprogramming by promoting cell reshaping (mitochondrial remodelling and cell size reduction). On the othe",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.929742+00:00"
+}

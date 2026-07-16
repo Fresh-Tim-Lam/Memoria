@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "43311750",
+  "source_fingerprint": "4d1b718cffb4a73a303bc6681ef0be28",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "43311750",
+    "nephrin-mutations-cause-childhood--and-adult-onset-focal-segmental-glomerulosclerosis."
+  ],
+  "key_phrases": [
+    "nephrin",
+    "mutations",
+    "cause",
+    "childhood",
+    "adult",
+    "onset",
+    "focal",
+    "segmental"
+  ],
+  "summary_1l": "Nephrin mutations cause childhood- and adult-onset focal segmental glomerulosclerosis.",
+  "query_hits": [],
+  "embed_text": "43311750 Nephrin mutations cause childhood- and adult-onset focal segmental glomerulosclerosis. science scifact Mutations in the NPHS1 gene cause congenital nephrotic syndrome of the Finnish type presenting before the first 3 months of life. Recently, NPHS1 mutations have also been identified in childhood-onset steroid-resistant nephrotic syndrome… 43311750 nephrin-mutations-cause-childhood--and-adult-onset-focal-segmental-glomerulosclerosis. nephrin mutations cause childhood adult onset focal segmental Nephrin mutations cause childhood- and adult-onset focal segmental glomerulosclerosis. Nephrin mutations cause childhood- and adult-onset focal segmental glomerulosclerosis. Mutations in the NPHS1 gene cause congenital nephrotic syndrome of the Finnish type presenting before the first 3 months of life. Recently, NPHS1 mutations have also been identified in childhood-onset steroid-resistant nephrotic syndrome and milder courses of disease, but their role in adults with focal segmental glomerulosclerosis remains unknown. Here we developed an in silico scoring matrix to evaluate the pathogenicity of amino-acid substitutions using the biophysical and biochemical difference between wild-type and mutant amino acid, the evolutionary conservation of the amino-acid residue in orthologs, and defined domains, with the addition of contextual information. Mutation analysis was performed",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.754263+00:00"
+}

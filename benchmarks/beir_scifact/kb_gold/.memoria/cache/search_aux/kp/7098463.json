@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7098463",
+  "source_fingerprint": "4201c0342ce4cf1f1f29fdc874a8cee4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7098463",
+    "adjustable-gastric-banding-and-conventional-therapy-for-type-2-diabetes:-a-randomized-controlled-trial."
+  ],
+  "key_phrases": [
+    "adjustable",
+    "gastric",
+    "banding",
+    "conventional",
+    "therapy",
+    "type",
+    "diabetes",
+    "randomized"
+  ],
+  "summary_1l": "Adjustable gastric banding and conventional therapy for type 2 diabetes: a randomized controlled trial.",
+  "query_hits": [],
+  "embed_text": "7098463 Adjustable gastric banding and conventional therapy for type 2 diabetes: a randomized controlled trial. science scifact CONTEXT Observational studies suggest that surgically induced loss of weight may be effective therapy for type 2 diabetes. OBJECTIVE To determine if surgically induced weight loss results in better glycemic control and less need for… 7098463 adjustable-gastric-banding-and-conventional-therapy-for-type-2-diabetes:-a-randomized-controlled-trial. adjustable gastric banding conventional therapy type diabetes randomized Adjustable gastric banding and conventional therapy for type 2 diabetes: a randomized controlled trial. Adjustable gastric banding and conventional therapy for type 2 diabetes: a randomized controlled trial. CONTEXT Observational studies suggest that surgically induced loss of weight may be effective therapy for type 2 diabetes. OBJECTIVE To determine if surgically induced weight loss results in better glycemic control and less need for diabetes medications than conventional approaches to weight loss and diabetes control. DESIGN, SETTING, AND PARTICIPANTS Unblinded randomized controlled trial conducted from December 2002 through December 2006 at the University Obesity Research Center in Australia, with general community recruitment to established treatment programs. Participants were 60 obese patients (BMI >30 and <40) with recently diagnosed (<2 years) type 2 diabetes. INTERVENTIONS Convent",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.455662+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1285713",
+  "source_fingerprint": "923ff36565db5d09081698bbb783c145",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1285713",
+    "pharmacologic-characterization-of-a-potent-inhibitor-of-class-i-phosphatidylinositide-3-kinases."
+  ],
+  "key_phrases": [
+    "pharmacologic",
+    "characterization",
+    "potent",
+    "inhibitor",
+    "class",
+    "phosphatidylinositide",
+    "kinases",
+    "extensive"
+  ],
+  "summary_1l": "Pharmacologic characterization of a potent inhibitor of class I phosphatidylinositide 3-kinases.",
+  "query_hits": [],
+  "embed_text": "1285713 Pharmacologic characterization of a potent inhibitor of class I phosphatidylinositide 3-kinases. science scifact Extensive evidence implicates activation of the lipid phosphatidylinositide 3-kinase (PI3K) pathway in the genesis and progression of various human cancers. PI3K inhibitors thus have considerable potential as molecular cancer therapeutics.… 1285713 pharmacologic-characterization-of-a-potent-inhibitor-of-class-i-phosphatidylinositide-3-kinases. pharmacologic characterization potent inhibitor class phosphatidylinositide kinases extensive Pharmacologic characterization of a potent inhibitor of class I phosphatidylinositide 3-kinases. Pharmacologic characterization of a potent inhibitor of class I phosphatidylinositide 3-kinases. Extensive evidence implicates activation of the lipid phosphatidylinositide 3-kinase (PI3K) pathway in the genesis and progression of various human cancers. PI3K inhibitors thus have considerable potential as molecular cancer therapeutics. Here, we detail the pharmacologic properties of a prototype of a new series of inhibitors of class I PI3K. PI103 is a potent inhibitor with low IC50 values against recombinant PI3K isoforms p110alpha (2 nmol/L), p110beta (3 nmol/L), p110delta (3 nmol/L), and p110gamma (15 nmol/L). PI103 also inhibited TORC1 by 83.9% at 0.5 micromol/L and exhibited an IC50 of 14 nmol/L against DNA-PK. A high degree of selectivity for the PI3K family was shown by the lack of ac",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:09.734649+00:00"
+}

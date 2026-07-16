@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "kp_id": "179859#0",
+  "source_fingerprint": "48111453b84a9ee63912692ff8cc38e9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "公司秘書",
+    "电子公司",
+    "共和国广场",
+    "国家石油公司",
+    "法國政府",
+    "法國政治",
+    "法本公司",
+    "馬來西亞國家基建公司"
+  ],
+  "aliases": [
+    "179859#0"
+  ],
+  "key_phrases": [
+    "香奈儿",
+    "香奈兒",
+    "公司",
+    "1910",
+    "可可",
+    "coco",
+    "chanel",
+    "1883"
+  ],
+  "summary_1l": "香奈兒公司（），是1910年由可可·香奈儿（\"Coco\" Chanel，1883年8月19日－1971年1月10日）所創辦的頂級法國女性知名時裝私人公司，由Pierre Wertheimer的孫子Alain Wertheimer和GérardWertheimer擁有，Pierre Wertheimer是創辦人可可·香奈兒的早期業務合作夥伴。",
+  "query_hits": [],
+  "embed_text": "179859#0 香奈儿 香奈儿 香奈兒公司（），是1910年由可可·香奈儿（\"Coco\" Chanel，1883年8月19日－1971年1月10日）所創辦的頂級法國女性知名時裝私人公司，由Pierre Wertheimer的孫子Alain Wertheimer和GérardWertheimer擁有，Pierre Wertheimer是創辦人可可·香奈兒的早期業務合作夥伴。一开始，这家小商店只是一間帽子店。1912年，可可将店搬至内搬迁至位于旺多姆广场旁边的31号康朋街。 公司秘書 电子公司 共和国广场 国家石油公司 法國政府 法國政治 法本公司 馬來西亞國家基建公司 179859#0 香奈儿 香奈兒 公司 1910 可可 coco chanel 1883 香奈兒公司（），是1910年由可可·香奈儿（\"Coco\" Chanel，1883年8月19日－1971年1月10日）所創辦的頂級法國女性知名時裝私人公司，由Pierre Wertheimer的孫子Alain Wertheimer和GérardWertheimer擁有，Pierre Wertheimer是創辦人可可·香奈兒的早期業務合作夥伴。 香奈儿 香奈兒公司（），是1910年由可可·香奈儿（\"Coco\" Chanel，1883年8月19日－1971年1月10日）所創辦的頂級法國女性知名時裝私人公司，由Pierre Wertheimer的孫子Alain Wertheimer和GérardWertheimer擁有，Pierre Wertheimer是創辦人可可·香奈兒的早期業務合作夥伴。一开始，这家小商店只是一間帽子店。1912年，可可将店搬至内搬迁至位于旺多姆广场旁边的31号康朋街。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:19:56.121296+00:00"
+}

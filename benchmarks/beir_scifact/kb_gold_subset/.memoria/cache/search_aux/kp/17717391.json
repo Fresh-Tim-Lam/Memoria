@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17717391",
+  "source_fingerprint": "d86ab8bede847252db8d7d335a3723e1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17717391",
+    "monitoring-tumorigenesis-and-senescence-in-vivo-with-a-p16ink4a-luciferase-model"
+  ],
+  "key_phrases": [
+    "monitoring",
+    "tumorigenesis",
+    "senescence",
+    "vivo",
+    "with",
+    "p16ink4a",
+    "luciferase",
+    "model"
+  ],
+  "summary_1l": "Monitoring cancer and aging in vivo remains experimentally challenging.",
+  "query_hits": [],
+  "embed_text": "17717391 Monitoring Tumorigenesis and Senescence In Vivo with a p16INK4a-Luciferase Model science scifact Monitoring cancer and aging in vivo remains experimentally challenging. Here, we describe a luciferase knockin mouse (p16(LUC)), which faithfully reports expression of p16(INK4a), a tumor suppressor and aging biomarker. Lifelong assessment… 17717391 monitoring-tumorigenesis-and-senescence-in-vivo-with-a-p16ink4a-luciferase-model monitoring tumorigenesis senescence vivo with p16ink4a luciferase model Monitoring cancer and aging in vivo remains experimentally challenging. Monitoring Tumorigenesis and Senescence In Vivo with a p16INK4a-Luciferase Model Monitoring cancer and aging in vivo remains experimentally challenging. Here, we describe a luciferase knockin mouse (p16(LUC)), which faithfully reports expression of p16(INK4a), a tumor suppressor and aging biomarker. Lifelong assessment of luminescence in p16(+/LUC) mice revealed an exponential increase with aging, which was highly variable in a cohort of contemporaneously housed, syngeneic mice. Expression of p16(INK4a) with aging did not predict cancer development, suggesting that the accumulation of senescent cells is not a principal determinant of cancer-related death. In 14 of 14 tested tumor models, expression of p16(LUC) was focally activated by early neoplastic events, enabling visualization of tumo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:11.903620+00:00"
+}

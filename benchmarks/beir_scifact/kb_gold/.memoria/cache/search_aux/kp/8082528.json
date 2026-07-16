@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8082528",
+  "source_fingerprint": "35efe7b2d9e45c640d42aee78fb7f6cc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8082528",
+    "risk-of-malignant-neoplasms-in-patients-with-pulmonary-sarcoidosis."
+  ],
+  "key_phrases": [
+    "risk",
+    "malignant",
+    "neoplasms",
+    "patients",
+    "with",
+    "pulmonary",
+    "sarcoidosis",
+    "background"
+  ],
+  "summary_1l": "Risk of malignant neoplasms in patients with pulmonary sarcoidosis.",
+  "query_hits": [],
+  "embed_text": "8082528 Risk of malignant neoplasms in patients with pulmonary sarcoidosis. science scifact BACKGROUND For over 20 years the association between sarcoidosis and malignancy, particularly lymphoma and lung cancer, has been disputed with misclassification being the major concern. The aim of the present study was to analyse the… 8082528 risk-of-malignant-neoplasms-in-patients-with-pulmonary-sarcoidosis. risk malignant neoplasms patients with pulmonary sarcoidosis background Risk of malignant neoplasms in patients with pulmonary sarcoidosis. Risk of malignant neoplasms in patients with pulmonary sarcoidosis. BACKGROUND For over 20 years the association between sarcoidosis and malignancy, particularly lymphoma and lung cancer, has been disputed with misclassification being the major concern. The aim of the present study was to analyse the incidence of malignancies in a cohort of patients with sarcoidosis by linkage to a nationwide population based cancer register. METHODS The cohort comprised 254 patients followed for a median of 25 years until death, emigration, or 31 December 1992, whichever came first. The expected number of cancer cases was calculated using the annual age and sex specific cancer rates from the Danish Cancer Registry. RESULTS Thirty six cancers were registered, three of which were misclassified as sarcoidosi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.858433+00:00"
+}

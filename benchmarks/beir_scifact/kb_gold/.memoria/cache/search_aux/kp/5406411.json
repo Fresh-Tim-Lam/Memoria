@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5406411",
+  "source_fingerprint": "2bcac049d1accc993f323ca765597367",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5406411",
+    "amphiregulin-enhances-regulatory-t-cell-suppressive-function-via-the-epidermal-growth-factor-receptor."
+  ],
+  "key_phrases": [
+    "amphiregulin",
+    "enhances",
+    "regulatory",
+    "cell",
+    "suppressive",
+    "function",
+    "via",
+    "epidermal"
+  ],
+  "summary_1l": "Amphiregulin enhances regulatory T cell-suppressive function via the epidermal growth factor receptor.",
+  "query_hits": [],
+  "embed_text": "5406411 Amphiregulin enhances regulatory T cell-suppressive function via the epidermal growth factor receptor. science scifact Epidermal growth factor receptor (EGFR) is known to be critically involved in tissue development and homeostasis as well as in the pathogenesis of cancer. Here we showed that Foxp3(+) regulatory T (Treg) cells express EGFR under… 5406411 amphiregulin-enhances-regulatory-t-cell-suppressive-function-via-the-epidermal-growth-factor-receptor. amphiregulin enhances regulatory cell suppressive function via epidermal Amphiregulin enhances regulatory T cell-suppressive function via the epidermal growth factor receptor. Amphiregulin enhances regulatory T cell-suppressive function via the epidermal growth factor receptor. Epidermal growth factor receptor (EGFR) is known to be critically involved in tissue development and homeostasis as well as in the pathogenesis of cancer. Here we showed that Foxp3(+) regulatory T (Treg) cells express EGFR under inflammatory conditions. Stimulation with the EGF-like growth factor Amphiregulin (AREG) markedly enhanced Treg cell function in vitro, and in a colitis and tumor vaccination model we showed that AREG was critical for efficient Treg cell function in vivo. In addition, mast cell-derived AREG fully restored optimal Treg cell function. These findings reveal EGFR as a component in the regulation of local immune responses and establish a link between mast cells and Tre",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.192086+00:00"
+}

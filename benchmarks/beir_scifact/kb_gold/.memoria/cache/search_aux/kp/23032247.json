@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "23032247",
+  "source_fingerprint": "72d48e123ce4893c2206bde6d3d7b62d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23032247"
+  ],
+  "key_phrases": [
+    "generation",
+    "cell",
+    "receptor",
+    "retrogenic",
+    "mice",
+    "improved",
+    "retroviral",
+    "mediated"
+  ],
+  "summary_1l": "The use of retrogenic mice offers a rapid and flexible approach to T cell receptor (TCR)-transgenic",
+  "query_hits": [],
+  "embed_text": "23032247 Generation of T cell receptor–retrogenic mice: improved retroviral-mediated stem cell gene transfer science scifact The use of retrogenic mice offers a rapid and flexible approach to T cell receptor (TCR)-transgenic mice. By transducing bone marrow progenitor cells with a retrovirus that encodes a given TCR-α/β subunit, TCR-retrogenic mice can be… 23032247 generation cell receptor retrogenic mice improved retroviral mediated The use of retrogenic mice offers a rapid and flexible approach to T cell receptor (TCR)-transgenic Generation of T cell receptor–retrogenic mice: improved retroviral-mediated stem cell gene transfer The use of retrogenic mice offers a rapid and flexible approach to T cell receptor (TCR)-transgenic mice. By transducing bone marrow progenitor cells with a retrovirus that encodes a given TCR-α/β subunit, TCR-retrogenic mice can be generated in as few as 4–6 weeks, whereas conventional TCR transgenics can take 6 months or longer. In this updated protocol, we have increased the efficiency of the bone marrow transduction and bone marrow reconstitution compared with our previously published protocol. The main departure from the previous protocol is the implementation of spin transduction with the viral supernatant instead of coculture with the viral producer cell line. The changes in this prot",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.761904+00:00"
+}

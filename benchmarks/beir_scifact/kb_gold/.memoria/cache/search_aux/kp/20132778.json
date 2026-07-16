@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20132778",
+  "source_fingerprint": "f0263012aa334f1a54d610ae1bb37b35",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20132778",
+    "molecular-strategies-in-biological-evolution-of-antimicrobial-peptides."
+  ],
+  "key_phrases": [
+    "molecular",
+    "strategies",
+    "biological",
+    "evolution",
+    "antimicrobial",
+    "peptides",
+    "gene",
+    "encoded"
+  ],
+  "summary_1l": "Molecular strategies in biological evolution of antimicrobial peptides.",
+  "query_hits": [],
+  "embed_text": "20132778 Molecular strategies in biological evolution of antimicrobial peptides. science scifact Gene-encoded antimicrobial peptides that protect the skin of hylid and ranin frogs against noxious microorganisms are processed from a unique family of precursor polypeptides with a unique pattern of conserved and variable regions opposite… 20132778 molecular-strategies-in-biological-evolution-of-antimicrobial-peptides. molecular strategies biological evolution antimicrobial peptides gene encoded Molecular strategies in biological evolution of antimicrobial peptides. Molecular strategies in biological evolution of antimicrobial peptides. Gene-encoded antimicrobial peptides that protect the skin of hylid and ranin frogs against noxious microorganisms are processed from a unique family of precursor polypeptides with a unique pattern of conserved and variable regions opposite to that of conventional secreted peptides. Precursors belonging to this family, designated the preprodermaseptin, have a common N-terminal preproregion that is remarkably well conserved both within and between species, but a hypervariable C-terminal domain corresponding to antimicrobial peptides with very different lengths, sequences, charges and antimicrobial spectra. Each frog species has its own distinct panoply of 10-20 antimicrobial peptides so that the 5000 species of ranids an",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.687179+00:00"
+}

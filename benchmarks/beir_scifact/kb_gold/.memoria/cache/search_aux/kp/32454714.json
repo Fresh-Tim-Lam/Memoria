@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "32454714",
+  "source_fingerprint": "a8a69d66464540dab5014eafbda18a92",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "32454714",
+    "role-of-gut-commensal-microflora-in-the-development-of-experimental-autoimmune-encephalomyelitis."
+  ],
+  "key_phrases": [
+    "role",
+    "gut",
+    "commensal",
+    "microflora",
+    "development",
+    "experimental",
+    "autoimmune",
+    "encephalomyelitis"
+  ],
+  "summary_1l": "Role of gut commensal microflora in the development of experimental autoimmune encephalomyelitis.",
+  "query_hits": [],
+  "embed_text": "32454714 Role of gut commensal microflora in the development of experimental autoimmune encephalomyelitis. science scifact Mucosal tolerance has been considered a potentially important pathway for the treatment of autoimmune disease, including human multiple sclerosis and experimental conditions such as experimental autoimmune encephalomyelitis (EAE). There is… 32454714 role-of-gut-commensal-microflora-in-the-development-of-experimental-autoimmune-encephalomyelitis. role gut commensal microflora development experimental autoimmune encephalomyelitis Role of gut commensal microflora in the development of experimental autoimmune encephalomyelitis. Role of gut commensal microflora in the development of experimental autoimmune encephalomyelitis. Mucosal tolerance has been considered a potentially important pathway for the treatment of autoimmune disease, including human multiple sclerosis and experimental conditions such as experimental autoimmune encephalomyelitis (EAE). There is limited information on the capacity of commensal gut bacteria to induce and maintain peripheral immune tolerance. Inbred SJL and C57BL/6 mice were treated orally with a broad spectrum of antibiotics to reduce gut microflora. Reduction of gut commensal bacteria impaired the development of EAE. Intraperitoneal antibiotic-treated mice showed no significant decline in the gut microflora and developed EAE similar to untreated mice, suggesting that reduction in di",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.576269+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24384587",
+  "source_fingerprint": "a5b42a36327c7b2638c4a5758bde174d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24384587",
+    "interleukin-18-function-in-atherosclerosis-is-mediated-by-the-interleukin-18-receptor-and-the-na-cl-co-transporter"
+  ],
+  "key_phrases": [
+    "interleukin",
+    "18",
+    "function",
+    "atherosclerosis",
+    "mediated",
+    "by",
+    "receptor",
+    "na"
+  ],
+  "summary_1l": "Interleukin-18 (IL18) participates in atherogenesis through several putative mechanis",
+  "query_hits": [],
+  "embed_text": "24384587 Interleukin 18 function in atherosclerosis is mediated by the interleukin 18 receptor and the Na-Cl co-transporter science scifact Interleukin-18 (IL18) participates in atherogenesis through several putative mechanisms. Interruption of IL18 action reduces atherosclerosis in mice. Here, we show that absence of the IL18 receptor (IL18r) does not affect atherosclerosis… 24384587 interleukin-18-function-in-atherosclerosis-is-mediated-by-the-interleukin-18-receptor-and-the-na-cl-co-transporter interleukin 18 function atherosclerosis mediated by receptor na Interleukin-18 (IL18) participates in atherogenesis through several putative mechanis Interleukin 18 function in atherosclerosis is mediated by the interleukin 18 receptor and the Na-Cl co-transporter Interleukin-18 (IL18) participates in atherogenesis through several putative mechanisms. Interruption of IL18 action reduces atherosclerosis in mice. Here, we show that absence of the IL18 receptor (IL18r) does not affect atherosclerosis in apolipoprotein E–deficient (Apoe−/−) mice, nor does it affect IL18 cell surface binding to or signaling in endothelial cells. As identified initially by co-immunoprecipitation with IL18, we found that IL18 interacts with the Na-Cl co-transporter (NCC; also known as SLC12A3), a 12-transmembrane-domain ion transporter protein preferentially expressed in the kidney. NCC is expressed in atherosclerotic lesions, where it colocalizes with IL18r.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.397341+00:00"
+}

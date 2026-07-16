@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "5914739",
+  "source_fingerprint": "c832fc887b0b2aa8b81c975acb9b2395",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5914739"
+  ],
+  "key_phrases": [
+    "local",
+    "changes",
+    "lipid",
+    "environment",
+    "tcr",
+    "microclusters",
+    "regulate",
+    "membrane"
+  ],
+  "summary_1l": "The CD3ε and ζ cytoplasmic domains of the T cell receptor bind to the inner leaflet of",
+  "query_hits": [],
+  "embed_text": "5914739 Local changes in lipid environment of TCR microclusters regulate membrane binding by the CD3ε cytoplasmic domain science scifact The CD3ε and ζ cytoplasmic domains of the T cell receptor bind to the inner leaflet of the plasma membrane (PM), and a previous nuclear magnetic resonance structure showed that both tyrosines of the CD3ε immunoreceptor tyrosine-based… 5914739 local changes lipid environment tcr microclusters regulate membrane The CD3ε and ζ cytoplasmic domains of the T cell receptor bind to the inner leaflet of Local changes in lipid environment of TCR microclusters regulate membrane binding by the CD3ε cytoplasmic domain The CD3ε and ζ cytoplasmic domains of the T cell receptor bind to the inner leaflet of the plasma membrane (PM), and a previous nuclear magnetic resonance structure showed that both tyrosines of the CD3ε immunoreceptor tyrosine-based activation motif partition into the bilayer. Electrostatic interactions between acidic phospholipids and clusters of basic CD3ε residues were previously shown to be essential for CD3ε and ζ membrane binding. Phosphatidylserine (PS) is the most abundant negatively charged lipid on the inner leaflet of the PM and makes a major contribution to membrane binding by the CD3ε cytoplasmic domain. Here, we show that TCR triggering by peptide--MHC complexes i",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.468924+00:00"
+}

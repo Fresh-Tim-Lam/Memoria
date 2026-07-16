@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15563864",
+  "source_fingerprint": "bbf4a6ed56b20e96e6944899e9c4ad70",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15563864",
+    "specific-killing-of-multiple-myeloma-cells-by-(-)-epigallocatechin-3-gallate-extracted-from-green-tea:-biologic-activity-and-therapeutic-implications."
+  ],
+  "key_phrases": [
+    "specific",
+    "killing",
+    "multiple",
+    "myeloma",
+    "cells",
+    "by",
+    "epigallocatechin",
+    "gallate"
+  ],
+  "summary_1l": "Specific killing of multiple myeloma cells by (-)-epigallocatechin-3-gallate extracted from green tea: biologic activity and therapeutic implications.",
+  "query_hits": [],
+  "embed_text": "15563864 Specific killing of multiple myeloma cells by (-)-epigallocatechin-3-gallate extracted from green tea: biologic activity and therapeutic implications. science scifact Epigallocatechin-3-gallate (EGCG), a polyphenol extracted from green tea, is an antioxidant with chemopreventive and chemotherapeutic actions. Based on its ability to modulate growth factor-mediated cell proliferation, we evaluated its… 15563864 specific-killing-of-multiple-myeloma-cells-by-(-)-epigallocatechin-3-gallate-extracted-from-green-tea:-biologic-activity-and-therapeutic-implications. specific killing multiple myeloma cells by epigallocatechin gallate Specific killing of multiple myeloma cells by (-)-epigallocatechin-3-gallate extracted from green tea: biologic activity and therapeutic implications. Specific killing of multiple myeloma cells by (-)-epigallocatechin-3-gallate extracted from green tea: biologic activity and therapeutic implications. Epigallocatechin-3-gallate (EGCG), a polyphenol extracted from green tea, is an antioxidant with chemopreventive and chemotherapeutic actions. Based on its ability to modulate growth factor-mediated cell proliferation, we evaluated its efficacy in multiple myeloma (MM). EGCG induced both dose- and time-dependent growth arrest and subsequent apoptotic cell death in MM cell lines including IL-6-dependent cells and primary patient cells, without significant effect on the growth of peripheral blood mononuclear cells (PBMCs) and normal fibroblasts. Treatment with EGCG also led to significant apoptosis in human myeloma cells grown as tumors in SCI",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.865911+00:00"
+}

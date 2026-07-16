@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "45487164",
+  "source_fingerprint": "0f03bfd97e455de08a40010a62230b33",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "45487164",
+    "a-sperm-cytoskeletal-protein-that-signals-oocyte-meiotic-maturation-and-ovulation."
+  ],
+  "key_phrases": [
+    "sperm",
+    "cytoskeletal",
+    "protein",
+    "that",
+    "signals",
+    "oocyte",
+    "meiotic",
+    "maturation"
+  ],
+  "summary_1l": "A sperm cytoskeletal protein that signals oocyte meiotic maturation and ovulation.",
+  "query_hits": [],
+  "embed_text": "45487164 A sperm cytoskeletal protein that signals oocyte meiotic maturation and ovulation. science scifact Caenorhabditis elegans oocytes, like those of most animals, arrest during meiotic prophase. Sperm promote the resumption of meiosis (maturation) and contraction of smooth muscle-like gonadal sheath cells, which are required for ovulation.… 45487164 a-sperm-cytoskeletal-protein-that-signals-oocyte-meiotic-maturation-and-ovulation. sperm cytoskeletal protein that signals oocyte meiotic maturation A sperm cytoskeletal protein that signals oocyte meiotic maturation and ovulation. A sperm cytoskeletal protein that signals oocyte meiotic maturation and ovulation. Caenorhabditis elegans oocytes, like those of most animals, arrest during meiotic prophase. Sperm promote the resumption of meiosis (maturation) and contraction of smooth muscle-like gonadal sheath cells, which are required for ovulation. We show that the major sperm cytoskeletal protein (MSP) is a bipartite signal for oocyte maturation and sheath contraction. MSP also functions in sperm locomotion, playing a role analogous to actin. Thus, during evolution, MSP has acquired extracellular signaling and intracellular cytoskeletal functions for reproduction. Proteins with MSP-like domains are found in plants, fungi, and other animals, suggesting that related signaling functions may exist in other phyla.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.438874+00:00"
+}

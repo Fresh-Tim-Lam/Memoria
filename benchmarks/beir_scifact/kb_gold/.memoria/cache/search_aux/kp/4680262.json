@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4680262",
+  "source_fingerprint": "b780a6cfec6cf2e027b918e917ba37ac",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4680262",
+    "mulberry-leaves-(morus-alba-l.)-ameliorate-obesity-induced-hepatic-lipogenesis,-fibrosis,-and-oxidative-stress-in-high-fat-diet-fed-mice"
+  ],
+  "key_phrases": [
+    "mulberry",
+    "leaves",
+    "morus",
+    "alba",
+    "ameliorate",
+    "obesity",
+    "induced",
+    "hepatic"
+  ],
+  "summary_1l": "Mulberry leaves (Morus alba L.",
+  "query_hits": [],
+  "embed_text": "4680262 Mulberry leaves (Morus alba L.) ameliorate obesity-induced hepatic lipogenesis, fibrosis, and oxidative stress in high-fat diet-fed mice science scifact Obesity is associated with chronic diseases such as fatty liver, type 2 diabetes, cardiovascular disease, and severe metabolic syndrome. Obesity causes metabolic impairment including excessive lipid accumulation and fibrosis in the hepatic… 4680262 mulberry-leaves-(morus-alba-l.)-ameliorate-obesity-induced-hepatic-lipogenesis,-fibrosis,-and-oxidative-stress-in-high-fat-diet-fed-mice mulberry leaves morus alba ameliorate obesity induced hepatic Mulberry leaves (Morus alba L. Mulberry leaves (Morus alba L.) ameliorate obesity-induced hepatic lipogenesis, fibrosis, and oxidative stress in high-fat diet-fed mice Obesity is associated with chronic diseases such as fatty liver, type 2 diabetes, cardiovascular disease, and severe metabolic syndrome. Obesity causes metabolic impairment including excessive lipid accumulation and fibrosis in the hepatic tissue as well as the increase in oxidative stress. In order to investigate the effect of mulberry leaf (Morus alba L.) extract (MLE) on obesity-induced oxidative stress, lipogenesis, and fibrosis in liver, MLE has been gavaged for 12 weeks in high-fat diet (HFD)-induced obese mice. MLE treatment significantly ameliorated LXRα-mediated lipogenesis and hepatic fibrosis markers such as α-smooth muscle actin, while MLE up-",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.133943+00:00"
+}

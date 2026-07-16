@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22963769",
+  "source_fingerprint": "3b879e97d57effcc9c304f4ec8ee2115",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22963769",
+    "aberrant-expression-and-altered-cellular-localization-of-desmosomal-and-hemidesmosomal-proteins-are-associated-with-aggressive-clinicopathological-features-of-oral-squamous-cell-carcinoma"
+  ],
+  "key_phrases": [
+    "aberrant",
+    "expression",
+    "altered",
+    "cellular",
+    "localization",
+    "desmosomal",
+    "hemidesmosomal",
+    "proteins"
+  ],
+  "summary_1l": "Disruption o",
+  "query_hits": [],
+  "embed_text": "22963769 Aberrant expression and altered cellular localization of desmosomal and hemidesmosomal proteins are associated with aggressive clinicopathological features of oral squamous cell carcinoma science scifact Disruption of cell adhesion plays a central role in dedifferentiation, invasion, and metastasis of various cancers. The desmosome and hemidesmosome are anchoring junctions that control cell-cell and cell-matrix adhesion, respectively. To… 22963769 aberrant-expression-and-altered-cellular-localization-of-desmosomal-and-hemidesmosomal-proteins-are-associated-with-aggressive-clinicopathological-features-of-oral-squamous-cell-carcinoma aberrant expression altered cellular localization desmosomal hemidesmosomal proteins Disruption o Aberrant expression and altered cellular localization of desmosomal and hemidesmosomal proteins are associated with aggressive clinicopathological features of oral squamous cell carcinoma Disruption of cell adhesion plays a central role in dedifferentiation, invasion, and metastasis of various cancers. The desmosome and hemidesmosome are anchoring junctions that control cell-cell and cell-matrix adhesion, respectively. To clarify their contributions in mediating the biological properties of oral cancer, we immunohistochemically examined the expression of desmoglein 1 (DSG1), DSG2, DSG3, desmocollin 2 (DSC2), integrin beta 4 (ITGB4), laminin gamma chain 2 (LAMC2), and collagen type 17 alpha 1 (COL17A1) in 51 cases of oral squamous cell carcinoma. On normal oral epithelial cells, DSG1, DSG3,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.630700+00:00"
+}

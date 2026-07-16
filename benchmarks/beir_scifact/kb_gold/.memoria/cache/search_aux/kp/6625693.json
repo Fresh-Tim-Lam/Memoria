@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6625693",
+  "source_fingerprint": "cd21d800e29eb8bad406a3902fec91f2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6625693",
+    "suppression-of-inflammatory-and-neuropathic-pain-by-uncoupling-crmp-2-from-the-presynaptic-ca2+-channel-complex"
+  ],
+  "key_phrases": [
+    "suppression",
+    "inflammatory",
+    "neuropathic",
+    "pain",
+    "by",
+    "uncoupling",
+    "crmp",
+    "from"
+  ],
+  "summary_1l": "The use of N-type voltage-gated calcium channel (CaV2.",
+  "query_hits": [],
+  "embed_text": "6625693 Suppression of inflammatory and neuropathic pain by uncoupling CRMP-2 from the presynaptic Ca2+ channel complex science scifact The use of N-type voltage-gated calcium channel (CaV2.2) blockers to treat pain is limited by many physiological side effects. Here we report that inflammatory and neuropathic hypersensitivity can be suppressed by inhibiting the binding of… 6625693 suppression-of-inflammatory-and-neuropathic-pain-by-uncoupling-crmp-2-from-the-presynaptic-ca2+-channel-complex suppression inflammatory neuropathic pain by uncoupling crmp from The use of N-type voltage-gated calcium channel (CaV2. Suppression of inflammatory and neuropathic pain by uncoupling CRMP-2 from the presynaptic Ca2+ channel complex The use of N-type voltage-gated calcium channel (CaV2.2) blockers to treat pain is limited by many physiological side effects. Here we report that inflammatory and neuropathic hypersensitivity can be suppressed by inhibiting the binding of collapsin response mediator protein 2 (CRMP-2) to CaV2.2 and thereby reducing channel function. A peptide of CRMP-2 fused to the HIV transactivator of transcription (TAT) protein (TAT-CBD3) decreased neuropeptide release from sensory neurons and excitatory synaptic transmission in dorsal horn neurons, reduced meningeal blood flow, reduced nocifensive behavior induced by formalin injection or corneal capsaicin application and reversed neuropathi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.309674+00:00"
+}

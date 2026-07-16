@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12102963",
+  "source_fingerprint": "177f8df7def1cc901e1cd4e3351f6821",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12102963",
+    "the-relation-between-dietary-flavonol-intake-and-coronary-heart-disease-mortality:-a-meta-analysis-of-prospective-cohort-studies"
+  ],
+  "key_phrases": [
+    "relation",
+    "between",
+    "dietary",
+    "flavonol",
+    "intake",
+    "coronary",
+    "heart",
+    "disease"
+  ],
+  "summary_1l": "Objective: To assess the association of dietary flavonol intake with th",
+  "query_hits": [],
+  "embed_text": "12102963 The relation between dietary flavonol intake and coronary heart disease mortality: a meta-analysis of prospective cohort studies science scifact Objective: To assess the association of dietary flavonol intake with the subsequent risk of coronary heart disease (CHD) mortality. Design: Meta-analysis of prospective cohort studies published before September 2001. Studies were… 12102963 the-relation-between-dietary-flavonol-intake-and-coronary-heart-disease-mortality:-a-meta-analysis-of-prospective-cohort-studies relation between dietary flavonol intake coronary heart disease Objective: To assess the association of dietary flavonol intake with th The relation between dietary flavonol intake and coronary heart disease mortality: a meta-analysis of prospective cohort studies Objective: To assess the association of dietary flavonol intake with the subsequent risk of coronary heart disease (CHD) mortality. Design: Meta-analysis of prospective cohort studies published before September 2001. Studies were identified by MEDLINE and EMBASE searches and by scanning relevant reference lists. The following information was extracted from published reports: size of cohort, mean age, mean duration of follow-up, number of fatal CHD events, mean flavonol intake, main sources of flavonol intake, degree of adjustment for potential confounders, and the relation of CHD mortality to dietary flavonol intake measured at baseline. Results: Seven prospectiv",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:08.272534+00:00"
+}

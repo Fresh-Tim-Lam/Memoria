@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9600826",
+  "source_fingerprint": "08db824a838a4368f2334e827dc0768a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9600826",
+    "gep100-arf6-amap1-cortactin-pathway-frequently-used-in-cancer-invasion-is-activated-by-vegfr2-to-promote-angiogenesis"
+  ],
+  "key_phrases": [
+    "gep100",
+    "arf6",
+    "amap1",
+    "cortactin",
+    "pathway",
+    "frequently",
+    "used",
+    "cancer"
+  ],
+  "summary_1l": "Angiogenesis and cancer invasiveness greatly contribute to cancer malignancy.",
+  "query_hits": [],
+  "embed_text": "9600826 GEP100-Arf6-AMAP1-Cortactin Pathway Frequently Used in Cancer Invasion Is Activated by VEGFR2 to Promote Angiogenesis science scifact Angiogenesis and cancer invasiveness greatly contribute to cancer malignancy. Arf6 and its effector, AMAP1, are frequently overexpressed in breast cancer, and constitute a central pathway to induce the invasion and metastasis. In this… 9600826 gep100-arf6-amap1-cortactin-pathway-frequently-used-in-cancer-invasion-is-activated-by-vegfr2-to-promote-angiogenesis gep100 arf6 amap1 cortactin pathway frequently used cancer Angiogenesis and cancer invasiveness greatly contribute to cancer malignancy. GEP100-Arf6-AMAP1-Cortactin Pathway Frequently Used in Cancer Invasion Is Activated by VEGFR2 to Promote Angiogenesis Angiogenesis and cancer invasiveness greatly contribute to cancer malignancy. Arf6 and its effector, AMAP1, are frequently overexpressed in breast cancer, and constitute a central pathway to induce the invasion and metastasis. In this pathway, Arf6 is activated by EGFR via GEP100. Arf6 is highly expressed also in human umbilical vein endothelial cells (HUVECs) and is implicated in angiogenesis. Here, we found that HUVECs also highly express AMAP1, and that vascular endothelial growth factor receptor-2 (VEGFR2) recruits GEP100 to activate Arf6. AMAP1 functions by binding to cortactin in cancer invasion and metastasis. We demonstrate that the same GEP100-Arf6-AMAP1-cortactin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.336618+00:00"
+}

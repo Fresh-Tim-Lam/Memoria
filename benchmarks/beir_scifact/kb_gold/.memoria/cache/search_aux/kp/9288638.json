@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9288638",
+  "source_fingerprint": "1baf1d5da2a7da8430b8c2533828e5e8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9288638",
+    "vascular-responsiveness-in-isolated-perfused-kidneys-of-diabetic-hypertensive-rats."
+  ],
+  "key_phrases": [
+    "vascular",
+    "responsiveness",
+    "isolated",
+    "perfused",
+    "kidneys",
+    "diabetic",
+    "hypertensive",
+    "rats"
+  ],
+  "summary_1l": "Vascular responsiveness in isolated perfused kidneys of diabetic hypertensive rats.",
+  "query_hits": [],
+  "embed_text": "9288638 Vascular responsiveness in isolated perfused kidneys of diabetic hypertensive rats. science scifact OBJECTIVE The aim of this study was to investigate whether diabetes and hypertension cause additive effects in the responses to various vasoconstrictor and vasodilator agents, in isolated perfused kidneys obtained from streptozotocin… 9288638 vascular-responsiveness-in-isolated-perfused-kidneys-of-diabetic-hypertensive-rats. vascular responsiveness isolated perfused kidneys diabetic hypertensive rats Vascular responsiveness in isolated perfused kidneys of diabetic hypertensive rats. Vascular responsiveness in isolated perfused kidneys of diabetic hypertensive rats. OBJECTIVE The aim of this study was to investigate whether diabetes and hypertension cause additive effects in the responses to various vasoconstrictor and vasodilator agents, in isolated perfused kidneys obtained from streptozotocin (STZ)-diabetic Wistar-Kyoto (WKY) rats and from diabetic spontaneously hypertensive rats (SHR). METHODS SHR and WKY rats were administered STZ 55 mg/kg by intravenous injection into a lateral tail vein at age 12 weeks. Eight weeks later the kidneys were isolated and perfused via the left renal artery with a physiological salt solution. Renal perfusion pressure was measured continuously. Concentration response curves were plotted for various vasoconstrictor and vasodilator agent",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.663695+00:00"
+}

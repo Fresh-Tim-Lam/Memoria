@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20690388",
+  "source_fingerprint": "65fa8abe617b113dfa7a7ecd9ad92cea",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20690388",
+    "human-nk-cells-in-acute-myeloid-leukaemia-patients:-analysis-of-nk-cell-activating-receptors-and-their-ligands"
+  ],
+  "key_phrases": [
+    "human",
+    "nk",
+    "cells",
+    "acute",
+    "myeloid",
+    "leukaemia",
+    "patients",
+    "analysis"
+  ],
+  "summary_1l": "Natural killer (NK) cell activation is strictly regulated to ensure that healthy cells ar",
+  "query_hits": [],
+  "embed_text": "20690388 Human NK cells in acute myeloid leukaemia patients: analysis of NK cell-activating receptors and their ligands science scifact Natural killer (NK) cell activation is strictly regulated to ensure that healthy cells are preserved, but tumour-transformed or virus-infected cells are recognized and eliminated. To carry out this selective killing, NK cells have an ample… 20690388 human-nk-cells-in-acute-myeloid-leukaemia-patients:-analysis-of-nk-cell-activating-receptors-and-their-ligands human nk cells acute myeloid leukaemia patients analysis Natural killer (NK) cell activation is strictly regulated to ensure that healthy cells ar Human NK cells in acute myeloid leukaemia patients: analysis of NK cell-activating receptors and their ligands Natural killer (NK) cell activation is strictly regulated to ensure that healthy cells are preserved, but tumour-transformed or virus-infected cells are recognized and eliminated. To carry out this selective killing, NK cells have an ample repertoire of receptors on their surface. Signalling by inhibitory and activating receptors by interaction with their ligands will determine whether the NK cell becomes activated and kills the target cell. Here, we show reduced expression of NKp46, NKp30, DNAM-1, CD244 and CD94/NKG2C activating receptors on NK cells from acute myeloid leukaemia patients. This reduction may be induced by chronic exposure to their ligands on leukaemic blasts. The",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.771673+00:00"
+}

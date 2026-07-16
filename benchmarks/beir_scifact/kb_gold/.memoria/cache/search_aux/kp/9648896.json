@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9648896",
+  "source_fingerprint": "a6dc6988e968c155a47d43bbcc0011c3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9648896",
+    "mir-1-mediated-paracrine-effect-of-cancer-associated-fibroblasts-on-lung-cancer-cell-proliferation-and-chemoresistance."
+  ],
+  "key_phrases": [
+    "mir",
+    "mediated",
+    "paracrine",
+    "effect",
+    "cancer",
+    "associated",
+    "fibroblasts",
+    "lung"
+  ],
+  "summary_1l": "mir-1-mediated paracrine effect of cancer-associated fibroblasts on lung cancer cell proliferation and chemoresistance.",
+  "query_hits": [],
+  "embed_text": "9648896 mir-1-mediated paracrine effect of cancer-associated fibroblasts on lung cancer cell proliferation and chemoresistance. science scifact Lung cancer is the leading cause of cancer-related mortality in humans worldwide. Moreover, the overall 5-year survival rate is only 15%. Pathologically almost 80% of all lung cancer cases are non-small cell lung cancer (NSCLC).… 9648896 mir-1-mediated-paracrine-effect-of-cancer-associated-fibroblasts-on-lung-cancer-cell-proliferation-and-chemoresistance. mir mediated paracrine effect cancer associated fibroblasts lung mir-1-mediated paracrine effect of cancer-associated fibroblasts on lung cancer cell proliferation and chemoresistance. mir-1-mediated paracrine effect of cancer-associated fibroblasts on lung cancer cell proliferation and chemoresistance. Lung cancer is the leading cause of cancer-related mortality in humans worldwide. Moreover, the overall 5-year survival rate is only 15%. Pathologically almost 80% of all lung cancer cases are non-small cell lung cancer (NSCLC). Cancer-associated fibroblasts (CAFs) have been found to exist in a large number of NSCLCs. CAFs have been proven to promote tumor progression, metastasis and resistance to therapy through paracrine effects in most solid tumors. In the present study, firstly we isolated CAFs from patient tissues and demonstrated that they promoted cell proliferation and chemoresistance to cisplatin in the lung cancer cell lines A549 and 95D in a paracrine manner. S",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.496704+00:00"
+}

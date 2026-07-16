@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4418582",
+  "source_fingerprint": "c6929aa359eac2b0fd884c788f9364c1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4418582",
+    "a-chromatin-remodelling-complex-involved-in-transcription-and-dna-processing."
+  ],
+  "key_phrases": [
+    "chromatin",
+    "remodelling",
+    "complex",
+    "involved",
+    "transcription",
+    "dna",
+    "processing",
+    "packaging"
+  ],
+  "summary_1l": "A chromatin remodelling complex involved in transcription and DNA processing.",
+  "query_hits": [],
+  "embed_text": "4418582 A chromatin remodelling complex involved in transcription and DNA processing. science scifact The packaging of the eukaryotic genome in chromatin presents barriers that restrict the access of enzymes that process DNA. To overcome these barriers, cells possess a number of multi-protein, ATP-dependent chromatin remodelling complexes,… 4418582 a-chromatin-remodelling-complex-involved-in-transcription-and-dna-processing. chromatin remodelling complex involved transcription dna processing packaging A chromatin remodelling complex involved in transcription and DNA processing. A chromatin remodelling complex involved in transcription and DNA processing. The packaging of the eukaryotic genome in chromatin presents barriers that restrict the access of enzymes that process DNA. To overcome these barriers, cells possess a number of multi-protein, ATP-dependent chromatin remodelling complexes, each containing an ATPase subunit from the SNF2/SWI2 superfamily. Chromatin remodelling complexes function by increasing nucleosome mobility and are clearly implicated in transcription. Here we have analysed SNF2/SWI2- and ISWI-related proteins to identify remodelling complexes that potentially assist other DNA transactions. We purified a complex from Saccharomyces cerevisiae that contains the Ino80 ATPase. The INO80 complex contains about 12 polypeptides including two proteins",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.921153+00:00"
+}

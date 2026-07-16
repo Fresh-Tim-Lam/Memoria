@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14019636",
+  "source_fingerprint": "37ee570d26abf822b013ae5e54af3f03",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14019636",
+    "ribosomal-dna-copy-number-loss-and-sequence-variation-in-cancer"
+  ],
+  "key_phrases": [
+    "ribosomal",
+    "dna",
+    "copy",
+    "number",
+    "loss",
+    "sequence",
+    "variation",
+    "cancer"
+  ],
+  "summary_1l": "Ribosomal DNA is one of the most variable regions in the human genome with respect to copy number.",
+  "query_hits": [],
+  "embed_text": "14019636 Ribosomal DNA copy number loss and sequence variation in cancer science scifact Ribosomal DNA is one of the most variable regions in the human genome with respect to copy number. Despite the importance of rDNA for cellular function, we know virtually nothing about what governs its copy number, stability, and sequence… 14019636 ribosomal-dna-copy-number-loss-and-sequence-variation-in-cancer ribosomal dna copy number loss sequence variation cancer Ribosomal DNA is one of the most variable regions in the human genome with respect to copy number. Ribosomal DNA copy number loss and sequence variation in cancer Ribosomal DNA is one of the most variable regions in the human genome with respect to copy number. Despite the importance of rDNA for cellular function, we know virtually nothing about what governs its copy number, stability, and sequence in the mammalian genome due to challenges associated with mapping and analysis. We applied computational and droplet digital PCR approaches to measure rDNA copy number in normal and cancer states in human and mouse genomes. We find that copy number and sequence can change in cancer genomes. Counterintuitively, human cancer genomes show a loss of copies, accompanied by global copy number co-variation. The sequence can also be more variable in the cancer genome. Cancer genomes with lower copies",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.954041+00:00"
+}

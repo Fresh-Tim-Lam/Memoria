@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "30353437",
+  "source_fingerprint": "27ddb0cd56e12bb47b9566dd74726c91",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "30353437",
+    "atm-and-ataxia-telangiectasia."
+  ],
+  "key_phrases": [
+    "atm",
+    "ataxia",
+    "telangiectasia",
+    "at",
+    "has",
+    "long",
+    "intrigued",
+    "biomedical"
+  ],
+  "summary_1l": "ATM and ataxia telangiectasia.",
+  "query_hits": [],
+  "embed_text": "30353437 ATM and ataxia telangiectasia. science scifact Ataxia telangiectasia (AT) has long intrigued the biomedical research community owing to the spectrum of defects that are characteristic of the disease, including neurodegeneration, immune dysfunction, radiosensitivity and cancer… 30353437 atm-and-ataxia-telangiectasia. atm ataxia telangiectasia at has long intrigued biomedical ATM and ataxia telangiectasia. ATM and ataxia telangiectasia. Ataxia telangiectasia (AT) has long intrigued the biomedical research community owing to the spectrum of defects that are characteristic of the disease, including neurodegeneration, immune dysfunction, radiosensitivity and cancer predisposition. Following the identification of mutations in ATM (ataxia telangiectasia, mutated) as the underlying cause of the disease, biochemical analysis of this protein kinase has shown that it is a crucial nexus for the cellular response to DNA double-stranded breaks. Many ATM kinase substrates are important players in the cellular responses that prevent cancer. Accordingly, AT is a disease that results from defects in the response to specific types of DNA damage. Thus, although it is a rare neurodegenerative disease, understa",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.609448+00:00"
+}

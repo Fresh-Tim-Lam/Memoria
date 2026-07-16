@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "40044800",
+  "source_fingerprint": "68dccb71964d30a36b1b7353d762a9a4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "40044800",
+    "cyclic-gmp-amp-synthase-is-a-cytosolic-dna-sensor-that-activates-the-type-i-interferon-pathway."
+  ],
+  "key_phrases": [
+    "cyclic",
+    "gmp",
+    "amp",
+    "synthase",
+    "cytosolic",
+    "dna",
+    "sensor",
+    "that"
+  ],
+  "summary_1l": "Cyclic GMP-AMP synthase is a cytosolic DNA sensor that activates the type I interferon pathway.",
+  "query_hits": [],
+  "embed_text": "40044800 Cyclic GMP-AMP synthase is a cytosolic DNA sensor that activates the type I interferon pathway. science scifact The presence of DNA in the cytoplasm of mammalian cells is a danger signal that triggers host immune responses such as the production of type I interferons. Cytosolic DNA induces interferons through the production of cyclic guanosine… 40044800 cyclic-gmp-amp-synthase-is-a-cytosolic-dna-sensor-that-activates-the-type-i-interferon-pathway. cyclic gmp amp synthase cytosolic dna sensor that Cyclic GMP-AMP synthase is a cytosolic DNA sensor that activates the type I interferon pathway. Cyclic GMP-AMP synthase is a cytosolic DNA sensor that activates the type I interferon pathway. The presence of DNA in the cytoplasm of mammalian cells is a danger signal that triggers host immune responses such as the production of type I interferons. Cytosolic DNA induces interferons through the production of cyclic guanosine monophosphate-adenosine monophosphate (cyclic GMP-AMP, or cGAMP), which binds to and activates the adaptor protein STING. Through biochemical fractionation and quantitative mass spectrometry, we identified a cGAMP synthase (cGAS), which belongs to the nucleotidyltransferase family. Overexpression of cGAS activated the transcription factor IRF3 and induced interferon-β in a STING-dependent manner. Knockdown of cGAS inhibited IRF3 activation and interferon-β induction",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.171752+00:00"
+}

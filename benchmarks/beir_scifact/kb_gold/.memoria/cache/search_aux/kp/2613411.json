@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2613411",
+  "source_fingerprint": "2d668c80c5943df5280de806cf83f214",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2613411",
+    "cell-cycle,-cdks-and-cancer:-a-changing-paradigm"
+  ],
+  "key_phrases": [
+    "cell",
+    "cycle",
+    "cdks",
+    "cancer",
+    "changing",
+    "paradigm",
+    "tumour",
+    "associated"
+  ],
+  "summary_1l": "Tumour-associated cell cycle defects are often mediated by alterations in cyclin-dependent kinase (CDK) activity.",
+  "query_hits": [],
+  "embed_text": "2613411 Cell cycle, CDKs and cancer: a changing paradigm science scifact Tumour-associated cell cycle defects are often mediated by alterations in cyclin-dependent kinase (CDK) activity. Misregulated CDKs induce unscheduled proliferation as well as genomic and chromosomal instability. According to current… 2613411 cell-cycle,-cdks-and-cancer:-a-changing-paradigm cell cycle cdks cancer changing paradigm tumour associated Tumour-associated cell cycle defects are often mediated by alterations in cyclin-dependent kinase (CDK) activity. Cell cycle, CDKs and cancer: a changing paradigm Tumour-associated cell cycle defects are often mediated by alterations in cyclin-dependent kinase (CDK) activity. Misregulated CDKs induce unscheduled proliferation as well as genomic and chromosomal instability. According to current models, mammalian CDKs are essential for driving each cell cycle phase, so therapeutic strategies that block CDK activity are unlikely to selectively target tumour cells. However, recent genetic evidence has revealed that, whereas CDK1 is required for the cell cycle, interphase CDKs are only essential for proliferation of specialized cells. Emerging evidence suggests that tumour cells may also require specific interphase CDKs for proliferation. Thus, selective CDK inhibition may provide therapeutic benefit again",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.472234+00:00"
+}

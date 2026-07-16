@@ -1,0 +1,3 @@
+# Cytokine control of memory T-cell development and survival
+
+Evidence has accumulated that cytokines have a fundamental role in the differentiation of memory T cells. Here, we follow the CD8+ T cell from initial activation to memory-cell generation, indicating the checkpoints at which cytokines determine the fate of the T cell. Members of the common cytokine-receptor γ-chain (γc)-cytokine family — in particular, interleukin-7 (IL-7) and IL-15 — act at each stage of the immune response to promote proliferation and survival. In this manner, a stable and protective, long-lived memory CD8+ T-cell pool can be propagated and maintained.

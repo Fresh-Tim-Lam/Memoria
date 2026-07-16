@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "kp_id": "78157#0",
+  "source_fingerprint": "cdb1c065fe4041034861bf7d38071b5e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "中国国家女子足球队",
+    "周深音樂作品列表",
+    "2000年美国人口普查",
+    "日本流行音樂",
+    "華語流行音樂"
+  ],
+  "aliases": [
+    "78157#0"
+  ],
+  "key_phrases": [
+    "女子",
+    "演唱",
+    "團體",
+    "其團名",
+    "取自",
+    "三位",
+    "成員",
+    "英文名字"
+  ],
+  "summary_1l": "S.",
+  "query_hits": [],
+  "embed_text": "78157#0 S.H.E S.H.E S.H.E，為臺灣女子演唱團體，其團名取自三位成員英文名字的首個字母，是由Selina（任家萱）、Hebe（田馥甄）和Ella（陳嘉樺）三位成員組成。三人在2000年參加《宇宙2000實力美少女爭霸戰》選秀比賽，之後被宇宙唱片（現名華研國際音樂）簽下培訓後，於2001年9月11日正式出道，發行首張專輯《女生宿舍》。 中国国家女子足球队 周深音樂作品列表 2000年美国人口普查 日本流行音樂 華語流行音樂 78157#0 女子 演唱 團體 其團名 取自 三位 成員 英文名字 S. S.H.E S.H.E，為臺灣女子演唱團體，其團名取自三位成員英文名字的首個字母，是由Selina（任家萱）、Hebe（田馥甄）和Ella（陳嘉樺）三位成員組成。三人在2000年參加《宇宙2000實力美少女爭霸戰》選秀比賽，之後被宇宙唱片（現名華研國際音樂）簽下培訓後，於2001年9月11日正式出道，發行首張專輯《女生宿舍》。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:19:14.925232+00:00"
+}

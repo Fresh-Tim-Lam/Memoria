@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19004126",
+  "source_fingerprint": "eda54650ddfa0f70006130ab85a51465",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19004126",
+    "fibrillar-collagen-inhibits-arterial-smooth-muscle-proliferation-through-regulation-of-cdk2-inhibitors"
+  ],
+  "key_phrases": [
+    "fibrillar",
+    "collagen",
+    "inhibits",
+    "arterial",
+    "smooth",
+    "muscle",
+    "proliferation",
+    "through"
+  ],
+  "summary_1l": "Arterial smooth muscle cells (SMCs) are arrested in the G1 phase of the cell cycle on polymerized",
+  "query_hits": [],
+  "embed_text": "19004126 Fibrillar Collagen Inhibits Arterial Smooth Muscle Proliferation through Regulation of Cdk2 Inhibitors science scifact Arterial smooth muscle cells (SMCs) are arrested in the G1 phase of the cell cycle on polymerized type I collagen fibrils, while monomer collagen supports SMC proliferation. Cyclin E-associated kinase and cyclin-dependent kinase 2 (cdk2)… 19004126 fibrillar-collagen-inhibits-arterial-smooth-muscle-proliferation-through-regulation-of-cdk2-inhibitors fibrillar collagen inhibits arterial smooth muscle proliferation through Arterial smooth muscle cells (SMCs) are arrested in the G1 phase of the cell cycle on polymerized Fibrillar Collagen Inhibits Arterial Smooth Muscle Proliferation through Regulation of Cdk2 Inhibitors Arterial smooth muscle cells (SMCs) are arrested in the G1 phase of the cell cycle on polymerized type I collagen fibrils, while monomer collagen supports SMC proliferation. Cyclin E-associated kinase and cyclin-dependent kinase 2 (cdk2) phosphorylation are inhibited on polymerized collagen, and levels of the cdk2 inhibitors p27Kip1 and p21Cip1/Waf1 are increased compared with SMCs on monomer collagen. p27Kip1 associates with the cyclin E-cdk2-p21Cip1/Waf1 complex in SMCs on polymerized collagen. Monovalent blocking antibodies to alpha2 integrins, integrins that mediate adhesion to both forms of collagen, mimic these effects on monomer collagen. Furthermore, polymerized collagen rapidly s",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.040951+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17768946",
+  "source_fingerprint": "b1234d028f41904f4bb7b9a698e4e5a7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17768946",
+    "xrcc4's-interaction-with-xlf-is-required-for-coding-(but-not-signal)-end-joining"
+  ],
+  "key_phrases": [
+    "xrcc4",
+    "interaction",
+    "with",
+    "xlf",
+    "required",
+    "coding",
+    "but",
+    "not"
+  ],
+  "summary_1l": "XRCC4 and XLF are structurally related proteins important for DNA Ligase IV function.",
+  "query_hits": [],
+  "embed_text": "17768946 XRCC4's interaction with XLF is required for coding (but not signal) end joining science scifact XRCC4 and XLF are structurally related proteins important for DNA Ligase IV function. XRCC4 forms a tight complex with DNA Ligase IV while XLF interacts directly with XRCC4. Both XRCC4 and XLF form homodimers that can polymerize as… 17768946 xrcc4's-interaction-with-xlf-is-required-for-coding-(but-not-signal)-end-joining xrcc4 interaction with xlf required coding but not XRCC4 and XLF are structurally related proteins important for DNA Ligase IV function. XRCC4's interaction with XLF is required for coding (but not signal) end joining XRCC4 and XLF are structurally related proteins important for DNA Ligase IV function. XRCC4 forms a tight complex with DNA Ligase IV while XLF interacts directly with XRCC4. Both XRCC4 and XLF form homodimers that can polymerize as heterotypic filaments independently of DNA Ligase IV. Emerging structural and in vitro biochemical data suggest that XRCC4 and XLF together generate a filamentous structure that promotes bridging between DNA molecules. Here, we show that ablating XRCC4's affinity for XLF results in DNA repair deficits including a surprising deficit in VDJ coding, but not signal end joining. These data are consistent with a model whereby XRCC4/XLF complexes hold DNA ends together--stringently require",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.251735+00:00"
+}

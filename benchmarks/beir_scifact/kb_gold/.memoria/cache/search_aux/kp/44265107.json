@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "44265107",
+  "source_fingerprint": "f05b4c0b9e230de387b7596b0fbf704b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "44265107",
+    "liver-transplantation-and-opioid-dependence."
+  ],
+  "key_phrases": [
+    "liver",
+    "transplantation",
+    "opioid",
+    "dependence",
+    "contextchronic",
+    "hepatitis",
+    "leading",
+    "cause"
+  ],
+  "summary_1l": "Liver transplantation and opioid dependence.",
+  "query_hits": [],
+  "embed_text": "44265107 Liver transplantation and opioid dependence. science scifact ContextChronic hepatitis C is the leading cause for liver transplantation in the United States. Intravenous drug use, the major risk factor, accounts for approximately 60% of hepatitis C virus transmission. Information from the United… 44265107 liver-transplantation-and-opioid-dependence. liver transplantation opioid dependence contextchronic hepatitis leading cause Liver transplantation and opioid dependence. Liver transplantation and opioid dependence. ContextChronic hepatitis C is the leading cause for liver transplantation in the United States. Intravenous drug use, the major risk factor, accounts for approximately 60% of hepatitis C virus transmission. Information from the United Network of Organ Sharing (UNOS) does not address substance use among liver transplantation patients. ObjectiveTo identify addiction-related criteria for admission to the UNOS liver transplantation waiting list and posttransplantation problems experienced by patients who are prescribed maintenance methadone. Design, Setting, and ParticipantsMail survey of all 97 adult US liver transplantation programs (belonging to UNOS) in March 2000 with telephone follow-up conducted in May and June 2000.Main Outcome MeasuresProgr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.129637+00:00"
+}

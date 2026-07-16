@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20645538",
+  "source_fingerprint": "cca74e0408873b8bc87385182a08a50d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20645538",
+    "prognostic-impact-of-minimal-pleural-effusion-in-non-small-cell-lung-cancer."
+  ],
+  "key_phrases": [
+    "prognostic",
+    "impact",
+    "minimal",
+    "pleural",
+    "effusion",
+    "non",
+    "small",
+    "cell"
+  ],
+  "summary_1l": "Prognostic impact of minimal pleural effusion in non-small-cell lung cancer.",
+  "query_hits": [],
+  "embed_text": "20645538 Prognostic impact of minimal pleural effusion in non-small-cell lung cancer. science scifact PURPOSE Minimal (< 10 mm thick) pleural effusion (PE) may represent an early phase of malignant PE, but its clinical relevance has rarely been studied. Therefore, we examined the proportion of minimal PE in patients with non-small-cell… 20645538 prognostic-impact-of-minimal-pleural-effusion-in-non-small-cell-lung-cancer. prognostic impact minimal pleural effusion non small cell Prognostic impact of minimal pleural effusion in non-small-cell lung cancer. Prognostic impact of minimal pleural effusion in non-small-cell lung cancer. PURPOSE Minimal (< 10 mm thick) pleural effusion (PE) may represent an early phase of malignant PE, but its clinical relevance has rarely been studied. Therefore, we examined the proportion of minimal PE in patients with non-small-cell lung cancer (NSCLC) and its impact on survival. We also considered possible accumulation mechanisms in our data set. PATIENTS AND METHODS On the basis of PE status from chest computed tomography scans at diagnosis, 2,061 patients were classified into three groups: no PE, minimal PE, and malignant PE. Twenty-one variables associated with four factors-patient, stage migration, tumor, and treatment-were investigated for correlation with survival. RESULTS Minimal PE presented in 272 pat",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.690814+00:00"
+}

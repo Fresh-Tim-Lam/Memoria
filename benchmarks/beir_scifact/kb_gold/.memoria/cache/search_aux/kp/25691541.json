@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25691541",
+  "source_fingerprint": "e5b9fb36e4909b0018cf5a2501904925",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25691541",
+    "preterm-patent-ductus-arteriosus:-a-continuing-conundrum-for-the-neonatologist?"
+  ],
+  "key_phrases": [
+    "preterm",
+    "patent",
+    "ductus",
+    "arteriosus",
+    "continuing",
+    "conundrum",
+    "neonatologist",
+    "how"
+  ],
+  "summary_1l": "Preterm patent ductus arteriosus: A continuing conundrum for the neonatologist?",
+  "query_hits": [],
+  "embed_text": "25691541 Preterm patent ductus arteriosus: A continuing conundrum for the neonatologist? science scifact How to manage the preterm patent ductus arteriosus (PDA) remains a conundrum. On the one hand, physiology and statistical association with adverse outcomes suggest that it is pathological. On the other hand, clinical trials of treatment… 25691541 preterm-patent-ductus-arteriosus:-a-continuing-conundrum-for-the-neonatologist? preterm patent ductus arteriosus continuing conundrum neonatologist how Preterm patent ductus arteriosus: A continuing conundrum for the neonatologist? Preterm patent ductus arteriosus: A continuing conundrum for the neonatologist? How to manage the preterm patent ductus arteriosus (PDA) remains a conundrum. On the one hand, physiology and statistical association with adverse outcomes suggest that it is pathological. On the other hand, clinical trials of treatment strategies have failed to show any long-term benefit. Ultrasound studies of PDA have suggested that the haemodynamic impact may be much earlier after birth than previously thought (in the first hours); however, we still do not know when to treat PDA. Studies that have tested symptomatic or pre-symptomatic treatment are mainly historical and have not tested the effect of no treatment. Prophylactic treatment is the best-studied regimen but improvements in some short-term outcomes",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.227878+00:00"
+}

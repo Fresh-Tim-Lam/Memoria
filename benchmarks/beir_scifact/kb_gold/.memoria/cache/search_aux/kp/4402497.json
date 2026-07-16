@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4402497",
+  "source_fingerprint": "f7919beb828a59c316a1b273bdccdaed",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4402497",
+    "innate-immunity-induced-by-composition-dependent-rig-i-recognition-of-hepatitis-c-virus-rna"
+  ],
+  "key_phrases": [
+    "innate",
+    "immunity",
+    "induced",
+    "by",
+    "composition",
+    "dependent",
+    "rig",
+    "recognition"
+  ],
+  "summary_1l": "Innate immune defences are essential for the control of virus infection and are triggered through host recog",
+  "query_hits": [],
+  "embed_text": "4402497 Innate immunity induced by composition-dependent RIG-I recognition of hepatitis C virus RNA science scifact Innate immune defences are essential for the control of virus infection and are triggered through host recognition of viral macromolecular motifs known as pathogen-associated molecular patterns (PAMPs). Hepatitis C virus (HCV) is an RNA… 4402497 innate-immunity-induced-by-composition-dependent-rig-i-recognition-of-hepatitis-c-virus-rna innate immunity induced by composition dependent rig recognition Innate immune defences are essential for the control of virus infection and are triggered through host recog Innate immunity induced by composition-dependent RIG-I recognition of hepatitis C virus RNA Innate immune defences are essential for the control of virus infection and are triggered through host recognition of viral macromolecular motifs known as pathogen-associated molecular patterns (PAMPs). Hepatitis C virus (HCV) is an RNA virus that replicates in the liver, and infects 200 million people worldwide. Infection is regulated by hepatic immune defences triggered by the cellular RIG-I helicase. RIG-I binds PAMP RNA and signals interferon regulatory factor 3 activation to induce the expression of interferon-α/β and antiviral/interferon-stimulated genes (ISGs) that limit infection. Here we identify the polyuridine motif of the HCV genome 3′ non-translated region and its replication intermedia",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.632241+00:00"
+}

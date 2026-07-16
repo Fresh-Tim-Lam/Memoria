@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "45875990",
+  "source_fingerprint": "e4cc25de4951acc0bf58b8adb32fbc32",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "45875990",
+    "cyclin-a2-is-an-rna-binding-protein-that-controls-mre11-mrna-translation"
+  ],
+  "key_phrases": [
+    "cyclin",
+    "a2",
+    "rna",
+    "binding",
+    "protein",
+    "that",
+    "controls",
+    "mre11"
+  ],
+  "summary_1l": "Cyclin A2 activates the cyclin-dependent kinases Cdk1 and Cdk2 and is expressed at elevated levels from S phase until early mit",
+  "query_hits": [],
+  "embed_text": "45875990 Cyclin A2 is an RNA binding protein that controls Mre11 mRNA translation science scifact Cyclin A2 activates the cyclin-dependent kinases Cdk1 and Cdk2 and is expressed at elevated levels from S phase until early mitosis. We found that mutant mice that cannot elevate cyclin A2 are chromosomally unstable and tumor-prone.… 45875990 cyclin-a2-is-an-rna-binding-protein-that-controls-mre11-mrna-translation cyclin a2 rna binding protein that controls mre11 Cyclin A2 activates the cyclin-dependent kinases Cdk1 and Cdk2 and is expressed at elevated levels from S phase until early mit Cyclin A2 is an RNA binding protein that controls Mre11 mRNA translation Cyclin A2 activates the cyclin-dependent kinases Cdk1 and Cdk2 and is expressed at elevated levels from S phase until early mitosis. We found that mutant mice that cannot elevate cyclin A2 are chromosomally unstable and tumor-prone. Underlying the chromosomal instability is a failure to up-regulate the meiotic recombination 11 (Mre11) nuclease in S phase, which leads to impaired resolution of stalled replication forks, insufficient repair of double-stranded DNA breaks, and improper segregation of sister chromosomes. Unexpectedly, cyclin A2 controlled Mre11 abundance through a C-terminal RNA binding domain that selectively and directly binds Mre11 transcripts to mediate polysome loading and translation. These data reve",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.583531+00:00"
+}

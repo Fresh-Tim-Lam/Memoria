@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14711483",
+  "source_fingerprint": "aeb5d92fb8356891a45d58cc263eca17",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14711483",
+    "preliminary-assessment-of-inhaled-nitric-oxide-for-acute-vaso-occlusive-crisis-in-pediatric-patients-with-sickle-cell-disease."
+  ],
+  "key_phrases": [
+    "preliminary",
+    "assessment",
+    "inhaled",
+    "nitric",
+    "oxide",
+    "acute",
+    "vaso",
+    "occlusive"
+  ],
+  "summary_1l": "Preliminary assessment of inhaled nitric oxide for acute vaso-occlusive crisis in pediatric patients with sickle cell disease.",
+  "query_hits": [],
+  "embed_text": "14711483 Preliminary assessment of inhaled nitric oxide for acute vaso-occlusive crisis in pediatric patients with sickle cell disease. science scifact CONTEXT Vaso-occlusion is central to the painful crises and acute and chronic organ damage in sickle cell disease. Abnormal nitric oxide-dependent regulation of vascular tone, adhesion, platelet activation, and inflammation contributes to… 14711483 preliminary-assessment-of-inhaled-nitric-oxide-for-acute-vaso-occlusive-crisis-in-pediatric-patients-with-sickle-cell-disease. preliminary assessment inhaled nitric oxide acute vaso occlusive Preliminary assessment of inhaled nitric oxide for acute vaso-occlusive crisis in pediatric patients with sickle cell disease. Preliminary assessment of inhaled nitric oxide for acute vaso-occlusive crisis in pediatric patients with sickle cell disease. CONTEXT Vaso-occlusion is central to the painful crises and acute and chronic organ damage in sickle cell disease. Abnormal nitric oxide-dependent regulation of vascular tone, adhesion, platelet activation, and inflammation contributes to the pathophysiology of vaso-occlusion. Nitric oxide may have promise as a mechanism-of-disease-based therapy for treatment of vaso-occlusion. OBJECTIVE To explore the efficacy and safety of inhaled nitric oxide (INO) for treatment of vaso-occlusive crisis in pediatric patients. DESIGN Prospective, double-blind, placebo-controlled, randomized clinical trial with enrollment between September 1999 and October 2001. SETTING Urban, ter",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.504824+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19205437",
+  "source_fingerprint": "f7d7182ceeb756fdd27197b4bad7ca0b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19205437",
+    "ucp1-independent-signaling-involving-serca2b-mediated-calcium-cycling-regulates-beige-fat-thermogenesis-and-systemic-glucose-homeostasis"
+  ],
+  "key_phrases": [
+    "ucp1",
+    "independent",
+    "signaling",
+    "involving",
+    "serca2b",
+    "mediated",
+    "calcium",
+    "cycling"
+  ],
+  "summary_1l": "Uncoupling protein 1 (UCP1) plays a central role in nonshiverin",
+  "query_hits": [],
+  "embed_text": "19205437 UCP1-independent signaling involving SERCA2b-mediated calcium cycling regulates beige fat thermogenesis and systemic glucose homeostasis science scifact Uncoupling protein 1 (UCP1) plays a central role in nonshivering thermogenesis in brown fat; however, its role in beige fat remains unclear. Here we report a robust UCP1-independent thermogenic mechanism in beige fat that involves enhanced… 19205437 ucp1-independent-signaling-involving-serca2b-mediated-calcium-cycling-regulates-beige-fat-thermogenesis-and-systemic-glucose-homeostasis ucp1 independent signaling involving serca2b mediated calcium cycling Uncoupling protein 1 (UCP1) plays a central role in nonshiverin UCP1-independent signaling involving SERCA2b-mediated calcium cycling regulates beige fat thermogenesis and systemic glucose homeostasis Uncoupling protein 1 (UCP1) plays a central role in nonshivering thermogenesis in brown fat; however, its role in beige fat remains unclear. Here we report a robust UCP1-independent thermogenic mechanism in beige fat that involves enhanced ATP-dependent Ca2+ cycling by sarco/endoplasmic reticulum Ca2+-ATPase 2b (SERCA2b) and ryanodine receptor 2 (RyR2). Inhibition of SERCA2b impairs UCP1-independent beige fat thermogenesis in humans and mice as well as in pigs, a species that lacks a functional UCP1 protein. Conversely, enhanced Ca2+ cycling by activation of α1- and/or β3-adrenergic receptors or the SERCA2b-RyR2 pathway stimulates UCP1-independent thermog",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.304817+00:00"
+}

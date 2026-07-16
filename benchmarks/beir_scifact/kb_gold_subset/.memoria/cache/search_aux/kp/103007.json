@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "103007",
+  "source_fingerprint": "78190536e512b253e7319db14bc8b91e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "103007",
+    "cross-sectional-stature-and-weight-reference-curves-for-the-uk,-1990."
+  ],
+  "key_phrases": [
+    "cross",
+    "sectional",
+    "stature",
+    "weight",
+    "reference",
+    "curves",
+    "uk",
+    "1990"
+  ],
+  "summary_1l": "Cross sectional stature and weight reference curves for the UK, 1990.",
+  "query_hits": [],
+  "embed_text": "103007 Cross sectional stature and weight reference curves for the UK, 1990. science scifact The current reference curves of stature and weight for the UK were first published in 1966 and have been used ever since despite increasing concern that they may not adequately describe the growth of present day British children. Using… 103007 cross-sectional-stature-and-weight-reference-curves-for-the-uk,-1990. cross sectional stature weight reference curves uk 1990 Cross sectional stature and weight reference curves for the UK, 1990. Cross sectional stature and weight reference curves for the UK, 1990. The current reference curves of stature and weight for the UK were first published in 1966 and have been used ever since despite increasing concern that they may not adequately describe the growth of present day British children. Using current data from seven sources new reference curves have been estimated from birth to 20 years for children in 1990. The great majority of the data are nationally representative. The analysis used Cole's LMS method and has produced efficient estimates of the conventional centiles and gives a good fit to the data. These curves differ from the currently used curves at key ages for both stature and weight. In view of the concerns expressed about the current curves and the differences between",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.435592+00:00"
+}

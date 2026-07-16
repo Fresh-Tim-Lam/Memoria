@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4857085",
+  "source_fingerprint": "4c9e7ad78f83dc57e885c0ce02c0e6b2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4857085",
+    "open-babel:-an-open-chemical-toolbox"
+  ],
+  "key_phrases": [
+    "open",
+    "babel",
+    "chemical",
+    "toolbox",
+    "background",
+    "frequent",
+    "problem",
+    "computational"
+  ],
+  "summary_1l": "BACKGROUND A frequent problem in computational modeling is the interconversion of chemical structures between different formats.",
+  "query_hits": [],
+  "embed_text": "4857085 Open Babel: An open chemical toolbox science scifact BACKGROUND A frequent problem in computational modeling is the interconversion of chemical structures between different formats. While standard interchange formats exist (for example, Chemical Markup Language) and de facto standards have… 4857085 open-babel:-an-open-chemical-toolbox open babel chemical toolbox background frequent problem computational BACKGROUND A frequent problem in computational modeling is the interconversion of chemical structures between different formats. Open Babel: An open chemical toolbox BACKGROUND A frequent problem in computational modeling is the interconversion of chemical structures between different formats. While standard interchange formats exist (for example, Chemical Markup Language) and de facto standards have arisen (for example, SMILES format) , the need to interconvert formats is a continuing problem due to the multitude of different application areas for chemistry data, differences in the data stored by different formats (0D versus 3D, for example), and competition between software along with a lack of vendor-neutral formats. RESULTS We discuss, for the first time, Open Babel, an open-source chemical toolbox that speaks the many languages of chemical data. Open Babel version 2.3 interconverts over 110 formats. The need to",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.591901+00:00"
+}

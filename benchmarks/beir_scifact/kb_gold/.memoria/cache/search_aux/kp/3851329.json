@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3851329",
+  "source_fingerprint": "63f51d9863c5550afa1034e06da1adc6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3851329",
+    "cdk-inhibitors-in-cancer-therapy:-what-is-next?"
+  ],
+  "key_phrases": [
+    "cdk",
+    "inhibitors",
+    "cancer",
+    "therapy",
+    "what",
+    "next",
+    "pursuit",
+    "drugs"
+  ],
+  "summary_1l": "CDK inhibitors in cancer therapy: what is next?",
+  "query_hits": [],
+  "embed_text": "3851329 CDK inhibitors in cancer therapy: what is next? science scifact The pursuit for drugs that inhibit cyclin-dependent kinases (CDKs) has been an intense area of research for more than 15 years. The first-generation inhibitors, Flavopiridol and CY-202, are in late-stage clinical trials, but so far have… 3851329 cdk-inhibitors-in-cancer-therapy:-what-is-next? cdk inhibitors cancer therapy what next pursuit drugs CDK inhibitors in cancer therapy: what is next? CDK inhibitors in cancer therapy: what is next? The pursuit for drugs that inhibit cyclin-dependent kinases (CDKs) has been an intense area of research for more than 15 years. The first-generation inhibitors, Flavopiridol and CY-202, are in late-stage clinical trials, but so far have demonstrated only modest activity. Several second-generation inhibitors are now in clinical trials. Future approaches to determine clinical benefit need to incorporate both the lessons learned from these early compounds and information recently obtained from the genetic analysis of CDKs in preclinical models. Here we discuss key concepts that should be considered when validating the clinical utility of CDK inhibitors in cancer therapy.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.597492+00:00"
+}

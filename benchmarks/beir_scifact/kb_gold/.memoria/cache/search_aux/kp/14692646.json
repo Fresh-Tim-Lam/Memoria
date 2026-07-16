@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14692646",
+  "source_fingerprint": "577e73203e2d1e8ca24d6c69930b82d8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14692646",
+    "regulation-of-immune-responses-by-extracellular-vesicles"
+  ],
+  "key_phrases": [
+    "regulation",
+    "immune",
+    "responses",
+    "by",
+    "extracellular",
+    "vesicles",
+    "including",
+    "exosomes"
+  ],
+  "summary_1l": "Extracellular vesicles, including exosomes, are small membrane vesicles derived from multivesicular bodies or from the plasma membrane.",
+  "query_hits": [],
+  "embed_text": "14692646 Regulation of immune responses by extracellular vesicles science scifact Extracellular vesicles, including exosomes, are small membrane vesicles derived from multivesicular bodies or from the plasma membrane. Most, if not all, cell types release extracellular vesicles, which then enter the bodily fluids. These… 14692646 regulation-of-immune-responses-by-extracellular-vesicles regulation immune responses by extracellular vesicles including exosomes Extracellular vesicles, including exosomes, are small membrane vesicles derived from multivesicular bodies or from the plasma membrane. Regulation of immune responses by extracellular vesicles Extracellular vesicles, including exosomes, are small membrane vesicles derived from multivesicular bodies or from the plasma membrane. Most, if not all, cell types release extracellular vesicles, which then enter the bodily fluids. These vesicles contain a subset of proteins, lipids and nucleic acids that are derived from the parent cell. It is thought that extracellular vesicles have important roles in intercellular communication, both locally and systemically, as they transfer their contents, including proteins, lipids and RNAs, between cells. Extracellular vesicles are involved in numerous physiological processes, and vesicles from both non-immune and immune cells have important roles in immune regulation. Moreover, extracellular",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.435619+00:00"
+}

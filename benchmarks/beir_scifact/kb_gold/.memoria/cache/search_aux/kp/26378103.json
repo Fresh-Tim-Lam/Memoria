@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26378103",
+  "source_fingerprint": "557a5b2ccd4978a655f971369044ed6b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26378103",
+    "the-structure-and-expression-of-a-novel-gene-activated-in-early-mouse-embryogenesis."
+  ],
+  "key_phrases": [
+    "structure",
+    "expression",
+    "novel",
+    "gene",
+    "activated",
+    "early",
+    "mouse",
+    "embryogenesis"
+  ],
+  "summary_1l": "The structure and expression of a novel gene activated in early mouse embryogenesis.",
+  "query_hits": [],
+  "embed_text": "26378103 The structure and expression of a novel gene activated in early mouse embryogenesis. science scifact We report the cloning and sequence determination of the mouse H19 gene. This gene is under the genetic control of two trans-acting loci in the mouse, termed raf and Rif. These loci determine the adult basal and inducible levels,… 26378103 the-structure-and-expression-of-a-novel-gene-activated-in-early-mouse-embryogenesis. structure expression novel gene activated early mouse embryogenesis The structure and expression of a novel gene activated in early mouse embryogenesis. The structure and expression of a novel gene activated in early mouse embryogenesis. We report the cloning and sequence determination of the mouse H19 gene. This gene is under the genetic control of two trans-acting loci in the mouse, termed raf and Rif. These loci determine the adult basal and inducible levels, respectively, of H19 mRNA, as well as the mRNA for alpha-fetoprotein. By elucidating the sequence and structure of the H19 gene we show that it is unrelated to the alpha-fetoprotein gene, and therefore must have acquired its regulation by raf and Rif independently. The sequence also indicates that the H19 gene has a very unusual structure. It is composed of five exons, 1307, 135, 119, 127 and 560 bp in size, along with four very small introns whose combined lengths are 270 bases. T",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.680727+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8790729",
+  "source_fingerprint": "55ca579df066ba895e198c2cad35ccfe",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8790729",
+    "islet-like-clusters-derived-from-mesenchymal-stem-cells-in-wharton's-jelly-of-the-human-umbilical-cord-for-transplantation-to-control-type-1-diabetes"
+  ],
+  "key_phrases": [
+    "islet",
+    "like",
+    "clusters",
+    "derived",
+    "from",
+    "mesenchymal",
+    "stem",
+    "cells"
+  ],
+  "summary_1l": "BACKGROUND There is a widespread interest in devel",
+  "query_hits": [],
+  "embed_text": "8790729 Islet-Like Clusters Derived from Mesenchymal Stem Cells in Wharton's Jelly of the Human Umbilical Cord for Transplantation to Control Type 1 Diabetes science scifact BACKGROUND There is a widespread interest in developing renewable sources of islet-replacement tissue for type I diabetes mellitus. Human mesenchymal cells isolated from the Wharton's jelly of the umbilical cord (HUMSCs), which can be… 8790729 islet-like-clusters-derived-from-mesenchymal-stem-cells-in-wharton's-jelly-of-the-human-umbilical-cord-for-transplantation-to-control-type-1-diabetes islet like clusters derived from mesenchymal stem cells BACKGROUND There is a widespread interest in devel Islet-Like Clusters Derived from Mesenchymal Stem Cells in Wharton's Jelly of the Human Umbilical Cord for Transplantation to Control Type 1 Diabetes BACKGROUND There is a widespread interest in developing renewable sources of islet-replacement tissue for type I diabetes mellitus. Human mesenchymal cells isolated from the Wharton's jelly of the umbilical cord (HUMSCs), which can be easily obtained and processed compared with embryonic and bone marrow stem cells, possess stem cell properties. HUMSCs may be a valuable source for the generation of islets. METHODOLOGY AND PRINCIPAL FINDINGS HUMSCs were induced to transform into islet-like cell clusters in vitro through stepwise culturing in neuron-conditioned medium. To assess the functional stability of the islet-like cell clusters in vivo, t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.744145+00:00"
+}

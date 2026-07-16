@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9791313",
+  "source_fingerprint": "008a12f68650cbdde8f9020b228a7b29",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9791313",
+    "setd2:-an-epigenetic-modifier-with-tumor-suppressor-functionality"
+  ],
+  "key_phrases": [
+    "setd2",
+    "epigenetic",
+    "modifier",
+    "with",
+    "tumor",
+    "suppressor",
+    "functionality",
+    "past"
+  ],
+  "summary_1l": "In the past decade important progress has been made in our understanding of the epigenetic regulatory machinery.",
+  "query_hits": [],
+  "embed_text": "9791313 SETD2: an epigenetic modifier with tumor suppressor functionality science scifact In the past decade important progress has been made in our understanding of the epigenetic regulatory machinery. It has become clear that genetic aberrations in multiple epigenetic modifier proteins are associated with various types of… 9791313 setd2:-an-epigenetic-modifier-with-tumor-suppressor-functionality setd2 epigenetic modifier with tumor suppressor functionality past In the past decade important progress has been made in our understanding of the epigenetic regulatory machinery. SETD2: an epigenetic modifier with tumor suppressor functionality In the past decade important progress has been made in our understanding of the epigenetic regulatory machinery. It has become clear that genetic aberrations in multiple epigenetic modifier proteins are associated with various types of cancer. Moreover, targeting the epigenome has emerged as a novel tool to treat cancer patients. Recently, the first drugs have been reported that specifically target SETD2-negative tumors. In this review we discuss the studies on the associated protein, Set domain containing 2 (SETD2), a histone modifier for which mutations have only recently been associated with cancer development. Our review starts with the structural characteristics of SETD2 and extends to its corresponding function by comb",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.845317+00:00"
+}

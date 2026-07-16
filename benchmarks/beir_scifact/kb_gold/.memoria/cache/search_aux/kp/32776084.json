@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "32776084",
+  "source_fingerprint": "f1155884b1b5ec455c652eb0758750ef",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "32776084",
+    "growth-restricted-in-vitro-culture-conditions-alter-the-imprinted-gene-expression-patterns-of-mouse-embryonic-stem-cells."
+  ],
+  "key_phrases": [
+    "growth",
+    "restricted",
+    "vitro",
+    "culture",
+    "conditions",
+    "alter",
+    "imprinted",
+    "gene"
+  ],
+  "summary_1l": "Growth restricted in vitro culture conditions alter the imprinted gene expression patterns of mouse embryonic stem cells.",
+  "query_hits": [],
+  "embed_text": "32776084 Growth restricted in vitro culture conditions alter the imprinted gene expression patterns of mouse embryonic stem cells. science scifact Embryonic stem (ES) cell-derived clones and chimeras are often associated with growth abnormalities during fetal development, leading to the production of over/under-weight offspring that show elevated neonatal mortality and morbidity. Due… 32776084 growth-restricted-in-vitro-culture-conditions-alter-the-imprinted-gene-expression-patterns-of-mouse-embryonic-stem-cells. growth restricted vitro culture conditions alter imprinted gene Growth restricted in vitro culture conditions alter the imprinted gene expression patterns of mouse embryonic stem cells. Growth restricted in vitro culture conditions alter the imprinted gene expression patterns of mouse embryonic stem cells. Embryonic stem (ES) cell-derived clones and chimeras are often associated with growth abnormalities during fetal development, leading to the production of over/under-weight offspring that show elevated neonatal mortality and morbidity. Due to the role played by imprinted genes in controlling fetal growth, much of the blame is pointed at improper epigenetic reprogramming of cells used in the procedures. We have analyzed the expression pattern of two growth regulatory imprinted genes, namely insulin like growth factor II (Igf2) and H19, in mouse ES cells cultured under growth restricted conditions and after in vitro aging. Culture of cells with serum-depleted media (starv",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.919054+00:00"
+}

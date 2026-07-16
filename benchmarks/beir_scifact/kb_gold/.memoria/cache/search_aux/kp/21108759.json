@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "21108759",
+  "source_fingerprint": "9f2fa2eec35ec78649b61983ceb2c904",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21108759"
+  ],
+  "key_phrases": [
+    "isolation",
+    "gene",
+    "encoding",
+    "functional",
+    "zinc",
+    "finger",
+    "protein",
+    "homologous"
+  ],
+  "summary_1l": "Isolation of a gene encoding a functional zinc finger protein homologous to erythroid Krüppel-like factor: identification of a new multigene family.",
+  "query_hits": [],
+  "embed_text": "21108759 Isolation of a gene encoding a functional zinc finger protein homologous to erythroid Krüppel-like factor: identification of a new multigene family. science scifact We have identified and characterized the gene for a novel zinc finger transcription factor which we have termed lung Krüppel-like factor (LKLF). LKLF was isolated through the use of the zinc finger domain of erythroid Krüppel-like factor… 21108759 isolation gene encoding functional zinc finger protein homologous Isolation of a gene encoding a functional zinc finger protein homologous to erythroid Krüppel-like factor: identification of a new multigene family. Isolation of a gene encoding a functional zinc finger protein homologous to erythroid Krüppel-like factor: identification of a new multigene family. We have identified and characterized the gene for a novel zinc finger transcription factor which we have termed lung Krüppel-like factor (LKLF). LKLF was isolated through the use of the zinc finger domain of erythroid Krüppel-like factor (ELKF) as a hybridization probe and is closely related to this erythroid cell-specific gene. LKLF is expressed in a limited number of tissues, with the predominant expression seen in the lungs and spleen. The gene is developmentally controlled, with expression noted in the 7-day embryo followed by a down-regulation at 11 days and subsequent reactivation. A high degree of similarity is noted in the zinc finger",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.404607+00:00"
+}

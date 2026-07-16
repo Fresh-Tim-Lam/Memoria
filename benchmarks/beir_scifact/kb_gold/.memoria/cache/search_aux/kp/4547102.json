@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4547102",
+  "source_fingerprint": "224cc67d766bbc25a2ccfc8fc0246682",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4547102",
+    "h3k9-demethylase-kdm4e-is-an-epigenetic-regulator-for-bovine-embryonic-development-and-a-defective-factor-for-nuclear-reprogramming."
+  ],
+  "key_phrases": [
+    "h3k9",
+    "demethylase",
+    "kdm4e",
+    "epigenetic",
+    "regulator",
+    "bovine",
+    "embryonic",
+    "development"
+  ],
+  "summary_1l": "H3K9 demethylase KDM4E is an epigenetic regulator for bovine embryonic development and a defective factor for nuclear reprogramming.",
+  "query_hits": [],
+  "embed_text": "4547102 H3K9 demethylase KDM4E is an epigenetic regulator for bovine embryonic development and a defective factor for nuclear reprogramming. science scifact Aberrant epigenetic reprogramming often results in developmental defects in somatic cell nuclear transfer (SCNT) embryos during embryonic genome activation (EGA). Bovine eight-cell SCNT embryos exhibit global hypermethylation of histone H3… 4547102 h3k9-demethylase-kdm4e-is-an-epigenetic-regulator-for-bovine-embryonic-development-and-a-defective-factor-for-nuclear-reprogramming. h3k9 demethylase kdm4e epigenetic regulator bovine embryonic development H3K9 demethylase KDM4E is an epigenetic regulator for bovine embryonic development and a defective factor for nuclear reprogramming. H3K9 demethylase KDM4E is an epigenetic regulator for bovine embryonic development and a defective factor for nuclear reprogramming. Aberrant epigenetic reprogramming often results in developmental defects in somatic cell nuclear transfer (SCNT) embryos during embryonic genome activation (EGA). Bovine eight-cell SCNT embryos exhibit global hypermethylation of histone H3 lysine 9 tri- and di-methylation (H3K9me3/2), but the intrinsic reason for this remains elusive. Here, we provide evidence that two H3K9 demethylase genes, lysine-specific demethylase 4D (KDM4D) and 4E (KDM4E), are related to active H3K9me3/2 demethylation in in vitro fertilized (IVF) embryos and are deficiently expressed in cloned embryos at the time of EGA. Moreover, KDM4E plays a more crucial role in IVF and SCNT embryon",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.427657+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24704139",
+  "source_fingerprint": "f35d4ebe11e385e3494af3b495ba302c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24704139",
+    "the-diabetes-prevention-program:-baseline-characteristics-of-the-randomized-cohort.-the-diabetes-prevention-program-research-group."
+  ],
+  "key_phrases": [
+    "diabetes",
+    "prevention",
+    "program",
+    "baseline",
+    "characteristics",
+    "randomized",
+    "cohort",
+    "research"
+  ],
+  "summary_1l": "The Diabetes Prevention Program: baseline characteristics of the randomized cohort.",
+  "query_hits": [],
+  "embed_text": "24704139 The Diabetes Prevention Program: baseline characteristics of the randomized cohort. The Diabetes Prevention Program Research Group. science scifact OBJECTIVE The Diabetes Prevention Program (DPP) is a 27-center randomized clinical trial designed to evaluate the safety and efficacy of interventions that may delay or prevent development of diabetes in people at increased risk for type 2… 24704139 the-diabetes-prevention-program:-baseline-characteristics-of-the-randomized-cohort.-the-diabetes-prevention-program-research-group. diabetes prevention program baseline characteristics randomized cohort research The Diabetes Prevention Program: baseline characteristics of the randomized cohort. The Diabetes Prevention Program: baseline characteristics of the randomized cohort. The Diabetes Prevention Program Research Group. OBJECTIVE The Diabetes Prevention Program (DPP) is a 27-center randomized clinical trial designed to evaluate the safety and efficacy of interventions that may delay or prevent development of diabetes in people at increased risk for type 2 diabetes. RESEARCH DESIGN AND METHODS Eligibility requirements were age > or = 25 years, BMI > or = 24 kg/m2 (> or = 22 kg/m2 for Asian-Americans), and impaired glucose tolerance plus a fasting plasma glucose of 5.3-6.9 mmol/l (or < or = 6.9 mmol for American Indians). Randomization of participants into the DPP over 2.7 years ended in June 1999. Baseline data for the three treatment groups--intensive lifestyle modification,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.025136+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5838067",
+  "source_fingerprint": "092697d019debe95a4c743969b1af523",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5838067",
+    "analysis-of-human-cytomegalovirus-encoded-microrna-activity-during-infection."
+  ],
+  "key_phrases": [
+    "analysis",
+    "human",
+    "cytomegalovirus",
+    "encoded",
+    "microrna",
+    "activity",
+    "during",
+    "infection"
+  ],
+  "summary_1l": "Analysis of human cytomegalovirus-encoded microRNA activity during infection.",
+  "query_hits": [],
+  "embed_text": "5838067 Analysis of human cytomegalovirus-encoded microRNA activity during infection. science scifact MicroRNAs (miRNAs) are expressed in a wide variety of organisms, ranging from plants to animals, and are key posttranscriptional regulators of gene expression. Virally encoded miRNAs are unique in that they could potentially target both… 5838067 analysis-of-human-cytomegalovirus-encoded-microrna-activity-during-infection. analysis human cytomegalovirus encoded microrna activity during infection Analysis of human cytomegalovirus-encoded microRNA activity during infection. Analysis of human cytomegalovirus-encoded microRNA activity during infection. MicroRNAs (miRNAs) are expressed in a wide variety of organisms, ranging from plants to animals, and are key posttranscriptional regulators of gene expression. Virally encoded miRNAs are unique in that they could potentially target both viral and host genes. Indeed, we have previously demonstrated that a human cytomegalovirus (HCMV)-encoded miRNA, miR-UL112, downregulates the expression of a host immune gene, MICB. Remarkably, it was shown that the same miRNA also downregulates immediate-early viral genes and that its ectopic expression resulted in reduced viral replication and viral titers. The targets for most of the viral miRNAs, and hence their functions, are still unknown. Here we demonstrate that miR-UL112",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.284319+00:00"
+}

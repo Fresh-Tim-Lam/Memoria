@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25462689",
+  "source_fingerprint": "f707b540646db01fc042ef0ff6df2c94",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25462689",
+    "genetic-and-physical-analysis-of-double-strand-break-repair-and-recombination-in-saccharomyces-cerevisiae."
+  ],
+  "key_phrases": [
+    "genetic",
+    "physical",
+    "analysis",
+    "double",
+    "strand",
+    "break",
+    "repair",
+    "recombination"
+  ],
+  "summary_1l": "Genetic and physical analysis of double-strand break repair and recombination in Saccharomyces cerevisiae.",
+  "query_hits": [],
+  "embed_text": "25462689 Genetic and physical analysis of double-strand break repair and recombination in Saccharomyces cerevisiae. science scifact We have investigated HO endonuclease-induced double-strand break (DSB) recombination and repair in a LACZ duplication plasmid in yeast. A 117-bp MATa fragment, embedded in one copy of LACZ, served as a site for initiation of a DSB when HO… 25462689 genetic-and-physical-analysis-of-double-strand-break-repair-and-recombination-in-saccharomyces-cerevisiae. genetic physical analysis double strand break repair recombination Genetic and physical analysis of double-strand break repair and recombination in Saccharomyces cerevisiae. Genetic and physical analysis of double-strand break repair and recombination in Saccharomyces cerevisiae. We have investigated HO endonuclease-induced double-strand break (DSB) recombination and repair in a LACZ duplication plasmid in yeast. A 117-bp MATa fragment, embedded in one copy of LACZ, served as a site for initiation of a DSB when HO endonuclease was expressed. The DSB could be repaired using wild-type sequences located on a second, promoterless, copy of LACZ on the same plasmid. In contrast to normal mating-type switching, crossing-over associated with gene conversion occurred at least 50% of the time. The proportion of conversion events accompanied by exchange was greater when the two copies of LACZ were in direct orientation (80%), than when inverted (50%). In addition, the fr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.683515+00:00"
+}

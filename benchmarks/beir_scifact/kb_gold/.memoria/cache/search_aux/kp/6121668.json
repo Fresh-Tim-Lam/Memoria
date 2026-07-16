@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6121668",
+  "source_fingerprint": "36fe755285d25320d84155cab7091ecc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6121668",
+    "cox-2-and-survivin-are-overexpressed-and-positively-correlated-in-endometrial-carcinoma."
+  ],
+  "key_phrases": [
+    "cox",
+    "survivin",
+    "overexpressed",
+    "positively",
+    "correlated",
+    "endometrial",
+    "carcinoma",
+    "objectives"
+  ],
+  "summary_1l": "COX-2 and survivin are overexpressed and positively correlated in endometrial carcinoma.",
+  "query_hits": [],
+  "embed_text": "6121668 COX-2 and survivin are overexpressed and positively correlated in endometrial carcinoma. science scifact OBJECTIVES To investigate the expressions of survivin and Cyclooxygenase-2 (COX-2), and their possible correlations in the development of endometrial adenocarcinoma (EC). We also looked at their association with classical prognostic… 6121668 cox-2-and-survivin-are-overexpressed-and-positively-correlated-in-endometrial-carcinoma. cox survivin overexpressed positively correlated endometrial carcinoma objectives COX-2 and survivin are overexpressed and positively correlated in endometrial carcinoma. COX-2 and survivin are overexpressed and positively correlated in endometrial carcinoma. OBJECTIVES To investigate the expressions of survivin and Cyclooxygenase-2 (COX-2), and their possible correlations in the development of endometrial adenocarcinoma (EC). We also looked at their association with classical prognostic factors in EC. To our knowledge, this is the first time survivin expression is investigated in terms of its relation to COX-2 in the developmental pathway of EC. METHODS Archived tissue samples of 50 EC, 30 endometrial hyperplasia and 20 proliferative endometrium were selected and immunohistochemically analyzed for survivin and COX-2 expression. RESULTS Both survivin and COX-2 were overexpressed in hyperplasia and endometrial adenocarcinoma cases compared to proliferative e",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.988467+00:00"
+}

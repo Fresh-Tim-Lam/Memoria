@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8816869",
+  "source_fingerprint": "00f64ecb554b8811f063cb3aed963b67",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8816869",
+    "bmal1-and-clock,-two-essential-components-of-the-circadian-clock,-are-involved-in-glucose-homeostasis"
+  ],
+  "key_phrases": [
+    "bmal1",
+    "clock",
+    "two",
+    "essential",
+    "components",
+    "circadian",
+    "involved",
+    "glucose"
+  ],
+  "summary_1l": "Circadian timing is generated through a unique series of autoregulatory interactions termed the mo",
+  "query_hits": [],
+  "embed_text": "8816869 BMAL1 and CLOCK, Two Essential Components of the Circadian Clock, Are Involved in Glucose Homeostasis science scifact Circadian timing is generated through a unique series of autoregulatory interactions termed the molecular clock. Behavioral rhythms subject to the molecular clock are well characterized. We demonstrate a role for Bmal1 and Clock in the… 8816869 bmal1-and-clock,-two-essential-components-of-the-circadian-clock,-are-involved-in-glucose-homeostasis bmal1 clock two essential components circadian involved glucose Circadian timing is generated through a unique series of autoregulatory interactions termed the mo BMAL1 and CLOCK, Two Essential Components of the Circadian Clock, Are Involved in Glucose Homeostasis Circadian timing is generated through a unique series of autoregulatory interactions termed the molecular clock. Behavioral rhythms subject to the molecular clock are well characterized. We demonstrate a role for Bmal1 and Clock in the regulation of glucose homeostasis. Inactivation of the known clock components Bmal1 (Mop3) and Clock suppress the diurnal variation in glucose and triglycerides. Gluconeogenesis is abolished by deletion of Bmal1 and is depressed in Clock mutants, but the counterregulatory response of corticosterone and glucagon to insulin-induced hypoglycaemia is retained. Furthermore, a high-fat diet modulates carbohydrate metabolism by amplifying circadian variation in glu",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.789565+00:00"
+}

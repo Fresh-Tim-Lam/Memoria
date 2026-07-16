@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "40900242",
+  "source_fingerprint": "5bd923971a84c60831e8e0becaab827d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "40900242",
+    "smallest-angiosperm-genomes-found-in-lentibulariaceae,-with-chromosomes-of-bacterial-size."
+  ],
+  "key_phrases": [
+    "smallest",
+    "angiosperm",
+    "genomes",
+    "found",
+    "lentibulariaceae",
+    "with",
+    "chromosomes",
+    "bacterial"
+  ],
+  "summary_1l": "Smallest angiosperm genomes found in lentibulariaceae, with chromosomes of bacterial size.",
+  "query_hits": [],
+  "embed_text": "40900242 Smallest angiosperm genomes found in lentibulariaceae, with chromosomes of bacterial size. science scifact Nuclear holoploid genome sizes (C-values) have been estimated to vary about 800-fold in angiosperms, with the smallest established 1C-value of 157 Mbp recorded in Arabidopsis thaliana. In the highly specialized carnivorous family… 40900242 smallest-angiosperm-genomes-found-in-lentibulariaceae,-with-chromosomes-of-bacterial-size. smallest angiosperm genomes found lentibulariaceae with chromosomes bacterial Smallest angiosperm genomes found in lentibulariaceae, with chromosomes of bacterial size. Smallest angiosperm genomes found in lentibulariaceae, with chromosomes of bacterial size. Nuclear holoploid genome sizes (C-values) have been estimated to vary about 800-fold in angiosperms, with the smallest established 1C-value of 157 Mbp recorded in Arabidopsis thaliana. In the highly specialized carnivorous family Lentibulariaceae now three taxa have been found that exhibit significantly lower values: Genlisea margaretae with 63 Mbp, G. aurea with 64 Mbp, and Utricularia gibba with 88 Mbp. The smallest mitotic anaphase chromatids in G. aurea have 2.1 Mbp and are thus of bacterial size (NB: E. coli has ca. 4 Mbp). Several Utricularia species range somewhat lower than A. thaliana or are similar in genome size. The highest 1C-value known from species of Lentibulariaceae was found in Genl",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.899280+00:00"
+}

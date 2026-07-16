@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29851836",
+  "source_fingerprint": "091873f40f04aeb89e49ecd670736a22",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29851836",
+    "uv-light-induced-dna-synthesis-arrest-in-hela-cells-is-associated-with-changes-in-phosphorylation-of-human-single-stranded-dna-binding-protein."
+  ],
+  "key_phrases": [
+    "uv",
+    "light",
+    "induced",
+    "dna",
+    "synthesis",
+    "arrest",
+    "hela",
+    "cells"
+  ],
+  "summary_1l": "UV light-induced DNA synthesis arrest in HeLa cells is associated with changes in phosphorylation of human single-stranded DNA-binding protein.",
+  "query_hits": [],
+  "embed_text": "29851836 UV light-induced DNA synthesis arrest in HeLa cells is associated with changes in phosphorylation of human single-stranded DNA-binding protein. science scifact We show that DNA replication activity in extracts of human HeLa cells decreases following UV irradiation. Alterations in replication activity in vitro parallel the UV-induced block in cell cycle progression of these cells in culture. UV… 29851836 uv-light-induced-dna-synthesis-arrest-in-hela-cells-is-associated-with-changes-in-phosphorylation-of-human-single-stranded-dna-binding-protein. uv light induced dna synthesis arrest hela cells UV light-induced DNA synthesis arrest in HeLa cells is associated with changes in phosphorylation of human single-stranded DNA-binding protein. UV light-induced DNA synthesis arrest in HeLa cells is associated with changes in phosphorylation of human single-stranded DNA-binding protein. We show that DNA replication activity in extracts of human HeLa cells decreases following UV irradiation. Alterations in replication activity in vitro parallel the UV-induced block in cell cycle progression of these cells in culture. UV irradiation also induces specific changes in the pattern of phosphorylation of the 34 kDa subunit of a DNA replication protein, human single-stranded DNA-binding protein (hSSB). The appearance of a hyperphosphorylated form of hSSB correlates with reduced in vitro DNA replication activity in extracts of UV-irradiated cells. Replication activity can be restored to these extracts in vitro by addition of purified hSSB.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.254219+00:00"
+}

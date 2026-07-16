@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1227277",
+  "source_fingerprint": "2d446690ac334e5b119335756b8c82e8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1227277",
+    "rapamycin-passes-the-torch:-a-new-generation-of-mtor-inhibitors"
+  ],
+  "key_phrases": [
+    "rapamycin",
+    "passes",
+    "torch",
+    "new",
+    "generation",
+    "mtor",
+    "inhibitors",
+    "mammalian"
+  ],
+  "summary_1l": "Mammalian target of rapamycin (mTOR) is an atypical protein kinase that controls growth and metabolism in response to nutrients, growth",
+  "query_hits": [],
+  "embed_text": "1227277 Rapamycin passes the torch: a new generation of mTOR inhibitors science scifact Mammalian target of rapamycin (mTOR) is an atypical protein kinase that controls growth and metabolism in response to nutrients, growth factors and cellular energy levels, and it is frequently dysregulated in cancer and metabolic… 1227277 rapamycin-passes-the-torch:-a-new-generation-of-mtor-inhibitors rapamycin passes torch new generation mtor inhibitors mammalian Mammalian target of rapamycin (mTOR) is an atypical protein kinase that controls growth and metabolism in response to nutrients, growth Rapamycin passes the torch: a new generation of mTOR inhibitors Mammalian target of rapamycin (mTOR) is an atypical protein kinase that controls growth and metabolism in response to nutrients, growth factors and cellular energy levels, and it is frequently dysregulated in cancer and metabolic disorders. Rapamycin is an allosteric inhibitor of mTOR, and was approved as an immuno-suppressant in 1999. In recent years, interest has focused on its potential as an anticancer drug. However, the performance of rapamycin and its analogues (rapalogues) has been undistinguished despite isolated successes in subsets of cancer, suggesting that the full therapeutic potential of targeting mTOR has yet to be exploited. A new generation of ATP-competitive inhibitors that directly target the mTOR catalytic",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:08.654731+00:00"
+}

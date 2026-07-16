@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25186412",
+  "source_fingerprint": "e6f0fa81853840f475d2ea3bc75a4345",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25186412",
+    "large-scale-gene-function-analysis-with-the-panther-classification-system"
+  ],
+  "key_phrases": [
+    "large",
+    "scale",
+    "gene",
+    "function",
+    "analysis",
+    "with",
+    "panther",
+    "classification"
+  ],
+  "summary_1l": "The PANTHER (protein annotation through evolutionary relationship) classification system (http://www.",
+  "query_hits": [],
+  "embed_text": "25186412 Large-scale gene function analysis with the PANTHER classification system science scifact The PANTHER (protein annotation through evolutionary relationship) classification system (http://www.pantherdb.org/) is a comprehensive system that combines gene function, ontology, pathways and statistical analysis tools that enable… 25186412 large-scale-gene-function-analysis-with-the-panther-classification-system large scale gene function analysis with panther classification The PANTHER (protein annotation through evolutionary relationship) classification system (http://www. Large-scale gene function analysis with the PANTHER classification system The PANTHER (protein annotation through evolutionary relationship) classification system (http://www.pantherdb.org/) is a comprehensive system that combines gene function, ontology, pathways and statistical analysis tools that enable biologists to analyze large-scale, genome-wide data from sequencing, proteomics or gene expression experiments. The system is built with 82 complete genomes organized into gene families and subfamilies, and their evolutionary relationships are captured in phylogenetic trees, multiple sequence alignments and statistical models (hidden Markov models or HMMs). Genes are classified according to their function in several different ways: families and subfamilies are annotated with ontology ter",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.159152+00:00"
+}

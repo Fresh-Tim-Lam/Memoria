@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "31200375",
+  "source_fingerprint": "abdced671c560e49d2147c5efba404ac",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "31200375",
+    "gene-expression-in-human-skeletal-muscle:-alternative-normalization-method-and-effect-of-repeated-biopsies"
+  ],
+  "key_phrases": [
+    "gene",
+    "expression",
+    "human",
+    "skeletal",
+    "muscle",
+    "alternative",
+    "normalization",
+    "method"
+  ],
+  "summary_1l": "The reverse transcriptase-polymerase chain reaction (RT-PCR) method has lately become widely",
+  "query_hits": [],
+  "embed_text": "31200375 Gene expression in human skeletal muscle: alternative normalization method and effect of repeated biopsies science scifact The reverse transcriptase-polymerase chain reaction (RT-PCR) method has lately become widely used to determine transcription and mRNA content in rodent and human muscle samples. However, the common use of endogenous controls for correcting… 31200375 gene-expression-in-human-skeletal-muscle:-alternative-normalization-method-and-effect-of-repeated-biopsies gene expression human skeletal muscle alternative normalization method The reverse transcriptase-polymerase chain reaction (RT-PCR) method has lately become widely Gene expression in human skeletal muscle: alternative normalization method and effect of repeated biopsies The reverse transcriptase-polymerase chain reaction (RT-PCR) method has lately become widely used to determine transcription and mRNA content in rodent and human muscle samples. However, the common use of endogenous controls for correcting for variance in cDNA between samples is not optimal. Specifically, we investigated (1) a new normalization method based on determining the cDNA content by the flourophores PicoGreen and OliGreen, (2) effect of repeated muscle biopsies on mRNA gene expression, and (3) the spatial heterogeneity in mRNA expression across the muscle. Standard curves using oligo standards revealed a high degree of sensitivity and linearity (2.5–45 ng; R 2>0.99) with OliG",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.389232+00:00"
+}

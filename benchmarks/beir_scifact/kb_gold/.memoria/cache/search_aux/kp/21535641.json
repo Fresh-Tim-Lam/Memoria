@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21535641",
+  "source_fingerprint": "874ed595713a97470afa608ba5ecc6b5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21535641",
+    "regulation-of-innate-immunity-by-nadph-oxidase."
+  ],
+  "key_phrases": [
+    "regulation",
+    "innate",
+    "immunity",
+    "by",
+    "nadph",
+    "oxidase",
+    "critical",
+    "regulator"
+  ],
+  "summary_1l": "Regulation of innate immunity by NADPH oxidase.",
+  "query_hits": [],
+  "embed_text": "21535641 Regulation of innate immunity by NADPH oxidase. science scifact NADPH oxidase is a critical regulator of both antimicrobial host defense and inflammation. Activated in nature by microbes and microbial-derived products, the phagocyte NADPH oxidase is rapidly assembled, and generates reactive oxidant… 21535641 regulation-of-innate-immunity-by-nadph-oxidase. regulation innate immunity by nadph oxidase critical regulator Regulation of innate immunity by NADPH oxidase. Regulation of innate immunity by NADPH oxidase. NADPH oxidase is a critical regulator of both antimicrobial host defense and inflammation. Activated in nature by microbes and microbial-derived products, the phagocyte NADPH oxidase is rapidly assembled, and generates reactive oxidant intermediates (ROIs) in response to infectious threat. Chronic granulomatous disease (CGD) is an inherited disorder of the NADPH oxidase characterized by recurrent and severe bacterial and fungal infections, and pathology related to excessive inflammation. Studies in CGD patients and CGD mouse models indicate that NADPH oxidase plays a key role in modulating inflammation and injury that is distinct from its antimicrobial function. The mechanisms by which NADPH oxidase mediates killing of pathogens and regulatio",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.298644+00:00"
+}

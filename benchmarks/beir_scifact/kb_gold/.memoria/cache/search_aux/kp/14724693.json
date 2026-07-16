@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14724693",
+  "source_fingerprint": "1b1b71e4f502bdc4c649736c7414f536",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14724693",
+    "effect-of-glucosamine-on-pain-related-disability-in-patients-with-chronic-low-back-pain-and-degenerative-lumbar-osteoarthritis:-a-randomized-controlled-trial."
+  ],
+  "key_phrases": [
+    "effect",
+    "glucosamine",
+    "pain",
+    "related",
+    "disability",
+    "patients",
+    "with",
+    "chronic"
+  ],
+  "summary_1l": "Effect of glucosamine on pain-related disability in patients with chronic low back pain and degenerative lumbar osteoarthritis: a randomized controlled trial.",
+  "query_hits": [],
+  "embed_text": "14724693 Effect of glucosamine on pain-related disability in patients with chronic low back pain and degenerative lumbar osteoarthritis: a randomized controlled trial. science scifact CONTEXT Chronic low back pain (LBP) with degenerative lumbar osteoarthritis (OA) is widespread in the adult population. Although glucosamine is increasingly used by patients with chronic LBP, little is known about its effect in this… 14724693 effect-of-glucosamine-on-pain-related-disability-in-patients-with-chronic-low-back-pain-and-degenerative-lumbar-osteoarthritis:-a-randomized-controlled-trial. effect glucosamine pain related disability patients with chronic Effect of glucosamine on pain-related disability in patients with chronic low back pain and degenerative lumbar osteoarthritis: a randomized controlled trial. Effect of glucosamine on pain-related disability in patients with chronic low back pain and degenerative lumbar osteoarthritis: a randomized controlled trial. CONTEXT Chronic low back pain (LBP) with degenerative lumbar osteoarthritis (OA) is widespread in the adult population. Although glucosamine is increasingly used by patients with chronic LBP, little is known about its effect in this setting. OBJECTIVE To investigate the effect of glucosamine in patients with chronic LBP and degenerative lumbar OA. DESIGN, SETTING, AND PARTICIPANTS A double-blind, randomized, placebo-controlled trial conducted at Oslo University Hospital Outpatient Clinic, Oslo, Norway, with 250 patients older than 25 years of age with chronic LBP (>6 months) and degenerative lumbar OA. INTERVENTIONS Daily intake of 1",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.556104+00:00"
+}

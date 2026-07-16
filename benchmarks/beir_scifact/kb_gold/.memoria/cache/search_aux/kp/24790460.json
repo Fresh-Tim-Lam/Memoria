@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24790460",
+  "source_fingerprint": "8bc25a21fbfb72da2bc85c25c9e7df0f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24790460",
+    "targeting-brain-cancer:-advances-in-the-molecular-pathology-of-malignant-glioma-and-medulloblastoma"
+  ],
+  "key_phrases": [
+    "targeting",
+    "brain",
+    "cancer",
+    "advances",
+    "molecular",
+    "pathology",
+    "malignant",
+    "glioma"
+  ],
+  "summary_1l": "Malignant brain tumours continue to be the cause of a disproportionate level of morbidity and mortal",
+  "query_hits": [],
+  "embed_text": "24790460 Targeting brain cancer: advances in the molecular pathology of malignant glioma and medulloblastoma science scifact Malignant brain tumours continue to be the cause of a disproportionate level of morbidity and mortality across a wide range of individuals. The most common variants in the adult and paediatric populations — malignant glioma and… 24790460 targeting-brain-cancer:-advances-in-the-molecular-pathology-of-malignant-glioma-and-medulloblastoma targeting brain cancer advances molecular pathology malignant glioma Malignant brain tumours continue to be the cause of a disproportionate level of morbidity and mortal Targeting brain cancer: advances in the molecular pathology of malignant glioma and medulloblastoma Malignant brain tumours continue to be the cause of a disproportionate level of morbidity and mortality across a wide range of individuals. The most common variants in the adult and paediatric populations — malignant glioma and medulloblastoma, respectively — have been the subject of increasingly intensive research over the past two decades that has led to considerable advances in the understanding of their basic biology and pathogenesis. This Review summarizes these developments in the context of the evolving notion of molecular pathology and discusses the implications that this work has on the design of new treatment regimens.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.311209+00:00"
+}

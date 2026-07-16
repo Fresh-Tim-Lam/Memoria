@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12130200",
+  "source_fingerprint": "e18ff3622d8722cc7c57f6e6cc4ffb22",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12130200",
+    "a-prospective-study-of-plasma-homocyst(e)ine-and-risk-of-myocardial-infarction-in-us-physicians."
+  ],
+  "key_phrases": [
+    "prospective",
+    "study",
+    "plasma",
+    "homocyst",
+    "ine",
+    "risk",
+    "myocardial",
+    "infarction"
+  ],
+  "summary_1l": "A prospective study of plasma homocyst(e)ine and risk of myocardial infarction in US physicians.",
+  "query_hits": [],
+  "embed_text": "12130200 A prospective study of plasma homocyst(e)ine and risk of myocardial infarction in US physicians. science scifact OBJECTIVE To assess prospectively the risk of coronary heart disease associated with elevated plasma levels of homocyst(e)ine. DESIGN Nested case-control study using prospectively collected blood samples. SETTING Participants in the… 12130200 a-prospective-study-of-plasma-homocyst(e)ine-and-risk-of-myocardial-infarction-in-us-physicians. prospective study plasma homocyst ine risk myocardial infarction A prospective study of plasma homocyst(e)ine and risk of myocardial infarction in US physicians. A prospective study of plasma homocyst(e)ine and risk of myocardial infarction in US physicians. OBJECTIVE To assess prospectively the risk of coronary heart disease associated with elevated plasma levels of homocyst(e)ine. DESIGN Nested case-control study using prospectively collected blood samples. SETTING Participants in the Physicians' Health Study. PARTICIPANTS A total of 14,916 male physicians, aged 40 to 84 years, with no prior myocardial infarction (MI) or stroke provided plasma samples at baseline and were followed up for 5 years. Samples from 271 men who subsequently developed MI were analyzed for homocyst(e)ine levels together with paired controls, matched by age and smoking. MAIN OUTCOME MEASURE Acute MI or death due to coronary disease. RESULTS Levels of homocyst(e)ine were hi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:07.800861+00:00"
+}

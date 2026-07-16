@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6550579",
+  "source_fingerprint": "c345a6a31db36e29ddd6ce754f30b8d9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6550579",
+    "a-central-role-for-her3-in-her2-amplified-breast-cancer:-implications-for-targeted-therapy."
+  ],
+  "key_phrases": [
+    "central",
+    "role",
+    "her3",
+    "her2",
+    "amplified",
+    "breast",
+    "cancer",
+    "implications"
+  ],
+  "summary_1l": "A central role for HER3 in HER2-amplified breast cancer: implications for targeted therapy.",
+  "query_hits": [],
+  "embed_text": "6550579 A central role for HER3 in HER2-amplified breast cancer: implications for targeted therapy. science scifact Epidermal growth factor receptor (EGFR) and HER3 each form heterodimers with HER2 and have independently been implicated as key coreceptors that drive HER2-amplified breast cancer. Some studies suggest a dominant role for EGFR, a notion of… 6550579 a-central-role-for-her3-in-her2-amplified-breast-cancer:-implications-for-targeted-therapy. central role her3 her2 amplified breast cancer implications A central role for HER3 in HER2-amplified breast cancer: implications for targeted therapy. A central role for HER3 in HER2-amplified breast cancer: implications for targeted therapy. Epidermal growth factor receptor (EGFR) and HER3 each form heterodimers with HER2 and have independently been implicated as key coreceptors that drive HER2-amplified breast cancer. Some studies suggest a dominant role for EGFR, a notion of renewed interest given the development of dual HER2/EGFR small-molecule inhibitors. Other studies point to HER3 as the primary coreceptor. To clarify the relative contributions of EGFR and HER3 to HER2 signaling, we studied receptor knockdown via small interfering RNA technology across a panel of six HER2-overexpressing cell lines. Interestingly, HER3 was as critical as HER2 for maintaining cell proliferation in most cell lines, whereas EGFR was dispensable. Induc",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.203158+00:00"
+}

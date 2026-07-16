@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16839245",
+  "source_fingerprint": "8be32b199c0a707ccbe7bee015f0b918",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16839245",
+    "physiological-relevance-of-cell-cycle-kinases."
+  ],
+  "key_phrases": [
+    "physiological",
+    "relevance",
+    "cell",
+    "cycle",
+    "kinases",
+    "basic",
+    "biology",
+    "division"
+  ],
+  "summary_1l": "Physiological relevance of cell cycle kinases.",
+  "query_hits": [],
+  "embed_text": "16839245 Physiological relevance of cell cycle kinases. science scifact The basic biology of the cell division cycle and its control by protein kinases was originally studied through genetic and biochemical studies in yeast and other model organisms. The major regulatory mechanisms identified in this pioneer… 16839245 physiological-relevance-of-cell-cycle-kinases. physiological relevance cell cycle kinases basic biology division Physiological relevance of cell cycle kinases. Physiological relevance of cell cycle kinases. The basic biology of the cell division cycle and its control by protein kinases was originally studied through genetic and biochemical studies in yeast and other model organisms. The major regulatory mechanisms identified in this pioneer work are conserved in mammals. However, recent studies in different cell types or genetic models are now providing a new perspective on the function of these major cell cycle regulators in different tissues. Here, we review the physiological relevance of mammalian cell cycle kinases such as cyclin-dependent kinases (Cdks), Aurora and Polo-like kinases, and mitotic checkpoint regulators (Bub1, BubR1, and Mps1) as well as other less-studied enzymes such as Cdc7, Nek proteins, or Mastl and their implications in d",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.918828+00:00"
+}

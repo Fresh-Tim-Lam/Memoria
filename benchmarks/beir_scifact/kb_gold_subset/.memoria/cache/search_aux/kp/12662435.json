@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "12662435",
+  "source_fingerprint": "de58e5f047f4f407b28dcafc62947584",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12662435"
+  ],
+  "key_phrases": [
+    "reversing",
+    "tide",
+    "diagnosis",
+    "prevention",
+    "t2dm",
+    "populations",
+    "african",
+    "descent"
+  ],
+  "summary_1l": "Abstract | Populations of African descent are at the forefront of the worldwide epidemic of type 2 diabetes mell",
+  "query_hits": [],
+  "embed_text": "12662435 Reversing the tide — diagnosis and prevention of T2DM in populations of African descent science scifact Abstract | Populations of African descent are at the forefront of the worldwide epidemic of type 2 diabetes mellitus (T2DM). The burden of T2DM is amplified by diagnosis after preventable complications of the disease have occurred. Earlier… 12662435 reversing tide diagnosis prevention t2dm populations african descent Abstract | Populations of African descent are at the forefront of the worldwide epidemic of type 2 diabetes mell Reversing the tide — diagnosis and prevention of T2DM in populations of African descent Abstract | Populations of African descent are at the forefront of the worldwide epidemic of type 2 diabetes mellitus (T2DM). The burden of T2DM is amplified by diagnosis after preventable complications of the disease have occurred. Earlier detection would result in a reduction in undiagnosed T2DM, more accurate statistics, more informed resource allocation and better health. An underappreciated factor contributing to undiagnosed T2DM in populations of African descent is that screening tests for hyperglycaemia, specifically, fasting plasma glucose and HbA1c, perform sub‐optimally in these populations. To offset this problem, combining tests or adding glycated albumin (a nonfasting marker of glycaemia), m",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:09.353404+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14185503",
+  "source_fingerprint": "f1f36725cdde69f9d8d52d89d9422b11",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14185503",
+    "the-miniature-genome-of-a-carnivorous-plant-genlisea-aurea-contains-a-low-number-of-genes-and-short-non-coding-sequences"
+  ],
+  "key_phrases": [
+    "miniature",
+    "genome",
+    "carnivorous",
+    "plant",
+    "genlisea",
+    "aurea",
+    "contains",
+    "low"
+  ],
+  "summary_1l": "BACKGROUND Genlisea aurea (Lentibulariaceae) is a carnivorous plant with unusua",
+  "query_hits": [],
+  "embed_text": "14185503 The miniature genome of a carnivorous plant Genlisea aurea contains a low number of genes and short non-coding sequences science scifact BACKGROUND Genlisea aurea (Lentibulariaceae) is a carnivorous plant with unusually small genome size - 63.6 Mb - one of the smallest known among higher plants. Data on the genome sizes and the phylogeny of Genlisea suggest that this is a… 14185503 the-miniature-genome-of-a-carnivorous-plant-genlisea-aurea-contains-a-low-number-of-genes-and-short-non-coding-sequences miniature genome carnivorous plant genlisea aurea contains low BACKGROUND Genlisea aurea (Lentibulariaceae) is a carnivorous plant with unusua The miniature genome of a carnivorous plant Genlisea aurea contains a low number of genes and short non-coding sequences BACKGROUND Genlisea aurea (Lentibulariaceae) is a carnivorous plant with unusually small genome size - 63.6 Mb - one of the smallest known among higher plants. Data on the genome sizes and the phylogeny of Genlisea suggest that this is a derived state within the genus. Thus, G. aurea is an excellent model organism for studying evolutionary mechanisms of genome contraction. RESULTS Here we report sequencing and de novo draft assembly of G. aurea genome. The assembly consists of 10,687 contigs of the total length of 43.4 Mb and includes 17,755 complete and partial protein-coding genes. Its comparison with the genome of Mimulus guttatus, another representative of higher cor",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.286595+00:00"
+}

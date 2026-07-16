@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8425533",
+  "source_fingerprint": "38416cc74866b30c9d6b71604a6bab88",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8425533",
+    "elimination-of-paternal-mitochondria-in-mouse-embryos-occurs-through-autophagic-degradation-dependent-on-parkin-and-mul1"
+  ],
+  "key_phrases": [
+    "elimination",
+    "paternal",
+    "mitochondria",
+    "mouse",
+    "embryos",
+    "occurs",
+    "through",
+    "autophagic"
+  ],
+  "summary_1l": "A defining feature of mitochondria is their maternal mode of inheritance.",
+  "query_hits": [],
+  "embed_text": "8425533 Elimination of paternal mitochondria in mouse embryos occurs through autophagic degradation dependent on PARKIN and MUL1 science scifact A defining feature of mitochondria is their maternal mode of inheritance. However, little is understood about the cellular mechanism through which paternal mitochondria, delivered from sperm, are eliminated from early mammalian embryos.… 8425533 elimination-of-paternal-mitochondria-in-mouse-embryos-occurs-through-autophagic-degradation-dependent-on-parkin-and-mul1 elimination paternal mitochondria mouse embryos occurs through autophagic A defining feature of mitochondria is their maternal mode of inheritance. Elimination of paternal mitochondria in mouse embryos occurs through autophagic degradation dependent on PARKIN and MUL1 A defining feature of mitochondria is their maternal mode of inheritance. However, little is understood about the cellular mechanism through which paternal mitochondria, delivered from sperm, are eliminated from early mammalian embryos. Autophagy has been implicated in nematodes, but whether this mechanism is conserved in mammals has been disputed. Here, we show that cultured mouse fibroblasts and pre-implantation embryos use a common pathway for elimination of mitochondria. Both situations utilize mitophagy, in which mitochondria are sequestered by autophagosomes and delivered to lysosomes for degradation. The E3 ubiquitin ligases PARKIN and MUL1 play redundant roles in",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.600802+00:00"
+}

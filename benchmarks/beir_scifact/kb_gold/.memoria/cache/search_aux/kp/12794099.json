@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12794099",
+  "source_fingerprint": "9d4292b159277e1e3334d933a9d6a169",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12794099",
+    "combined-impact-of-health-behaviours-and-mortality-in-men-and-women:-the-epic-norfolk-prospective-population-study"
+  ],
+  "key_phrases": [
+    "combined",
+    "impact",
+    "health",
+    "behaviours",
+    "mortality",
+    "men",
+    "women",
+    "epic"
+  ],
+  "summary_1l": "BACKGROUND There is overwhelming evidence that behavioural factors influence health,",
+  "query_hits": [],
+  "embed_text": "12794099 Combined Impact of Health Behaviours and Mortality in Men and Women: The EPIC-Norfolk Prospective Population Study science scifact BACKGROUND There is overwhelming evidence that behavioural factors influence health, but their combined impact on the general population is less well documented. We aimed to quantify the potential combined impact of four health behaviours… 12794099 combined-impact-of-health-behaviours-and-mortality-in-men-and-women:-the-epic-norfolk-prospective-population-study combined impact health behaviours mortality men women epic BACKGROUND There is overwhelming evidence that behavioural factors influence health, Combined Impact of Health Behaviours and Mortality in Men and Women: The EPIC-Norfolk Prospective Population Study BACKGROUND There is overwhelming evidence that behavioural factors influence health, but their combined impact on the general population is less well documented. We aimed to quantify the potential combined impact of four health behaviours on mortality in men and women living in the general community. METHODS AND FINDINGS We examined the prospective relationship between lifestyle and mortality in a prospective population study of 20,244 men and women aged 45-79 y with no known cardiovascular disease or cancer at baseline survey in 1993-1997, living in the general community in the United Kingdom, and followed up to 2006. Participants scored one point for each health behaviour: c",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:08.979590+00:00"
+}

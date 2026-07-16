@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4583180",
+  "source_fingerprint": "000deeaad749dba7d1bba1703e7e150b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4583180",
+    "extracellular-acidic-ph-activates-the-sterol-regulatory-element-binding-protein-2-to-promote-tumor-progression."
+  ],
+  "key_phrases": [
+    "extracellular",
+    "acidic",
+    "ph",
+    "activates",
+    "sterol",
+    "regulatory",
+    "element",
+    "binding"
+  ],
+  "summary_1l": "Extracellular Acidic pH Activates the Sterol Regulatory Element-Binding Protein 2 to Promote Tumor Progression.",
+  "query_hits": [],
+  "embed_text": "4583180 Extracellular Acidic pH Activates the Sterol Regulatory Element-Binding Protein 2 to Promote Tumor Progression. science scifact Conditions of the tumor microenvironment, such as hypoxia and nutrient starvation, play critical roles in cancer progression. However, the role of acidic extracellular pH in cancer progression is not studied as extensively as that of… 4583180 extracellular-acidic-ph-activates-the-sterol-regulatory-element-binding-protein-2-to-promote-tumor-progression. extracellular acidic ph activates sterol regulatory element binding Extracellular Acidic pH Activates the Sterol Regulatory Element-Binding Protein 2 to Promote Tumor Progression. Extracellular Acidic pH Activates the Sterol Regulatory Element-Binding Protein 2 to Promote Tumor Progression. Conditions of the tumor microenvironment, such as hypoxia and nutrient starvation, play critical roles in cancer progression. However, the role of acidic extracellular pH in cancer progression is not studied as extensively as that of hypoxia. Here, we show that extracellular acidic pH (pH 6.8) triggered activation of sterol regulatory element-binding protein 2 (SREBP2) by stimulating nuclear translocation and promoter binding to its targets, along with intracellular acidification. Interestingly, inhibition of SREBP2, but not SREBP1, suppressed the upregulation of low pH-induced cholesterol biosynthesis-related genes. Moreover, acyl-CoA synthetase short-chain family member 2 (ACSS",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.572936+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2701077",
+  "source_fingerprint": "e6a55754b82f4a8ab85555ab423e3de1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2701077",
+    "hematopoietic-stem-cell-quiescence-promotes-error-prone-dna-repair-and-mutagenesis."
+  ],
+  "key_phrases": [
+    "hematopoietic",
+    "stem",
+    "cell",
+    "quiescence",
+    "promotes",
+    "error",
+    "prone",
+    "dna"
+  ],
+  "summary_1l": "Hematopoietic stem cell quiescence promotes error-prone DNA repair and mutagenesis.",
+  "query_hits": [],
+  "embed_text": "2701077 Hematopoietic stem cell quiescence promotes error-prone DNA repair and mutagenesis. science scifact Most adult stem cells, including hematopoietic stem cells (HSCs), are maintained in a quiescent or resting state in vivo. Quiescence is widely considered to be an essential protective mechanism for stem cells that minimizes endogenous… 2701077 hematopoietic-stem-cell-quiescence-promotes-error-prone-dna-repair-and-mutagenesis. hematopoietic stem cell quiescence promotes error prone dna Hematopoietic stem cell quiescence promotes error-prone DNA repair and mutagenesis. Hematopoietic stem cell quiescence promotes error-prone DNA repair and mutagenesis. Most adult stem cells, including hematopoietic stem cells (HSCs), are maintained in a quiescent or resting state in vivo. Quiescence is widely considered to be an essential protective mechanism for stem cells that minimizes endogenous stress caused by cellular respiration and DNA replication. We demonstrate that HSC quiescence can also have detrimental effects. We found that HSCs have unique cell-intrinsic mechanisms ensuring their survival in response to ionizing irradiation (IR), which include enhanced prosurvival gene expression and strong activation of p53-mediated DNA damage response. We show that quiescent and proliferating HSCs are equally radioprotected but use different types of DNA repair mechanis",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.348243+00:00"
+}

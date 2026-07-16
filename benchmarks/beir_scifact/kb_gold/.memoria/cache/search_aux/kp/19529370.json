@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19529370",
+  "source_fingerprint": "4f6aba82dbf2b8bf4a0fc4e95b40ab23",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19529370",
+    "capsaicin-sensitive-sensory-nerve-fibers-contribute-to-the-generation-and-maintenance-of-skeletal-fracture-pain."
+  ],
+  "key_phrases": [
+    "capsaicin",
+    "sensitive",
+    "sensory",
+    "nerve",
+    "fibers",
+    "contribute",
+    "generation",
+    "maintenance"
+  ],
+  "summary_1l": "Capsaicin-sensitive sensory nerve fibers contribute to the generation and maintenance of skeletal fracture pain.",
+  "query_hits": [],
+  "embed_text": "19529370 Capsaicin-sensitive sensory nerve fibers contribute to the generation and maintenance of skeletal fracture pain. science scifact Although skeletal pain can have a marked impact on a patient's functional status and quality of life, relatively little is known about the specific populations of peripheral nerve fibers that drive non-malignant bone pain. In the present… 19529370 capsaicin-sensitive-sensory-nerve-fibers-contribute-to-the-generation-and-maintenance-of-skeletal-fracture-pain. capsaicin sensitive sensory nerve fibers contribute generation maintenance Capsaicin-sensitive sensory nerve fibers contribute to the generation and maintenance of skeletal fracture pain. Capsaicin-sensitive sensory nerve fibers contribute to the generation and maintenance of skeletal fracture pain. Although skeletal pain can have a marked impact on a patient's functional status and quality of life, relatively little is known about the specific populations of peripheral nerve fibers that drive non-malignant bone pain. In the present report, neonatal male Sprague-Dawley rats were treated with capsaicin or vehicle and femoral fracture was produced when the animals were young adults (15-16 weeks old). Capsaicin treatment, but not vehicle, resulted in a significant (>70%) depletion in the density of calcitonin-gene related peptide positive (CGRP(+)) sensory nerve fibers, but not 200 kDa neurofilament H positive (NF200(+)) sensory nerve fibers in the periosteum. The periosteum i",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.723800+00:00"
+}

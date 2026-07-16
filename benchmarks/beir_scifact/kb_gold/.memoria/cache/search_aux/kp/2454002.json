@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2454002",
+  "source_fingerprint": "901470019974e31dadaafcc5de18af0b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2454002",
+    "kobas-2.0:-a-web-server-for-annotation-and-identification-of-enriched-pathways-and-diseases"
+  ],
+  "key_phrases": [
+    "kobas",
+    "2.0",
+    "web",
+    "server",
+    "annotation",
+    "identification",
+    "enriched",
+    "pathways"
+  ],
+  "summary_1l": "KOBAS 2.",
+  "query_hits": [],
+  "embed_text": "2454002 KOBAS 2.0: a web server for annotation and identification of enriched pathways and diseases science scifact High-throughput experimental technologies often identify dozens to hundreds of genes related to, or changed in, a biological or pathological process. From these genes one wants to identify biological pathways that may be involved and… 2454002 kobas-2.0:-a-web-server-for-annotation-and-identification-of-enriched-pathways-and-diseases kobas 2.0 web server annotation identification enriched pathways KOBAS 2. KOBAS 2.0: a web server for annotation and identification of enriched pathways and diseases High-throughput experimental technologies often identify dozens to hundreds of genes related to, or changed in, a biological or pathological process. From these genes one wants to identify biological pathways that may be involved and diseases that may be implicated. Here, we report a web server, KOBAS 2.0, which annotates an input set of genes with putative pathways and disease relationships based on mapping to genes with known annotations. It allows for both ID mapping and cross-species sequence similarity mapping. It then performs statistical tests to identify statistically significantly enriched pathways and diseases. KOBAS 2.0 incorporates knowledge across 1327 species from 5 pathway databases (",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.675185+00:00"
+}

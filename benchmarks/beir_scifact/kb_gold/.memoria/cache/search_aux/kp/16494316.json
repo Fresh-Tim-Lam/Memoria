@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16494316",
+  "source_fingerprint": "ac8ca9d543d2e2f06df1bb2b870ed6e6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16494316",
+    "receptor-tyrosine-kinases-endocytosis-in-endothelium:-biology-and-signaling."
+  ],
+  "key_phrases": [
+    "receptor",
+    "tyrosine",
+    "kinases",
+    "endocytosis",
+    "endothelium",
+    "biology",
+    "signaling",
+    "involved"
+  ],
+  "summary_1l": "Receptor tyrosine kinases endocytosis in endothelium: biology and signaling.",
+  "query_hits": [],
+  "embed_text": "16494316 Receptor tyrosine kinases endocytosis in endothelium: biology and signaling. science scifact Receptor tyrosine kinases are involved in regulation of key processes in endothelial biology, including proliferation, migration, and angiogenesis. It is now generally accepted that receptor tyrosine kinase signaling occurs intracellularly… 16494316 receptor-tyrosine-kinases-endocytosis-in-endothelium:-biology-and-signaling. receptor tyrosine kinases endocytosis endothelium biology signaling involved Receptor tyrosine kinases endocytosis in endothelium: biology and signaling. Receptor tyrosine kinases endocytosis in endothelium: biology and signaling. Receptor tyrosine kinases are involved in regulation of key processes in endothelial biology, including proliferation, migration, and angiogenesis. It is now generally accepted that receptor tyrosine kinase signaling occurs intracellularly and on the plasma membrane, although many important details remain to be worked out. Endocytosis and subsequent intracellular trafficking spatiotemporally regulate receptor tyrosine kinase signaling, whereas signaling endosomes provide a platform for the compartmentalization of signaling events. This review summarizes recent advances in our understanding of endothelial receptor tyrosine kinase endocytosis and signaling using vascular endothelial growth factor receptor-2 as a par",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.341866+00:00"
+}

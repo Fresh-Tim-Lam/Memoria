@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7317051",
+  "source_fingerprint": "d08d1db300bd7adfe2c9812af354c008",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7317051",
+    "mutant-kras-is-a-druggable-target-for-pancreatic-cancer."
+  ],
+  "key_phrases": [
+    "mutant",
+    "kras",
+    "druggable",
+    "target",
+    "pancreatic",
+    "cancer",
+    "ductal",
+    "adenocarcinoma"
+  ],
+  "summary_1l": "Mutant KRAS is a druggable target for pancreatic cancer.",
+  "query_hits": [],
+  "embed_text": "7317051 Mutant KRAS is a druggable target for pancreatic cancer. science scifact Pancreatic ductal adenocarcinoma (PDA) represents an unmet therapeutic challenge. PDA is addicted to the activity of the mutated KRAS oncogene which is considered so far an undruggable therapeutic target. We propose an approach to target… 7317051 mutant-kras-is-a-druggable-target-for-pancreatic-cancer. mutant kras druggable target pancreatic cancer ductal adenocarcinoma Mutant KRAS is a druggable target for pancreatic cancer. Mutant KRAS is a druggable target for pancreatic cancer. Pancreatic ductal adenocarcinoma (PDA) represents an unmet therapeutic challenge. PDA is addicted to the activity of the mutated KRAS oncogene which is considered so far an undruggable therapeutic target. We propose an approach to target KRAS effectively in patients using RNA interference. To meet this challenge, we have developed a local prolonged siRNA delivery system (Local Drug EluteR, LODER) shedding siRNA against the mutated KRAS (siG12D LODER). The siG12D LODER was assessed for its structural, release, and delivery properties in vitro and in vivo. The effect of the siG12D LODER on tumor growth was assessed in s.c. and orthotopic mouse models. KRAS silencing effect was further assessed on the KRAS downstream signaling pathway.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.051158+00:00"
+}

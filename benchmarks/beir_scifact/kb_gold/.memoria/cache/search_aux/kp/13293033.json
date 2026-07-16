@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13293033",
+  "source_fingerprint": "885cb41350059dacd3ad4e95f4c6e5a4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13293033",
+    "integration-free-induced-pluripotent-stem-cells-model-genetic-and-neural-developmental-features-of-down-syndrome-etiology."
+  ],
+  "key_phrases": [
+    "integration",
+    "free",
+    "induced",
+    "pluripotent",
+    "stem",
+    "cells",
+    "model",
+    "genetic"
+  ],
+  "summary_1l": "Integration-free induced pluripotent stem cells model genetic and neural developmental features of down syndrome etiology.",
+  "query_hits": [],
+  "embed_text": "13293033 Integration-free induced pluripotent stem cells model genetic and neural developmental features of down syndrome etiology. science scifact Down syndrome (DS) is the most frequent cause of human congenital mental retardation. Cognitive deficits in DS result from perturbations of normal cellular processes both during development and in adult tissues, but the mechanisms… 13293033 integration-free-induced-pluripotent-stem-cells-model-genetic-and-neural-developmental-features-of-down-syndrome-etiology. integration free induced pluripotent stem cells model genetic Integration-free induced pluripotent stem cells model genetic and neural developmental features of down syndrome etiology. Integration-free induced pluripotent stem cells model genetic and neural developmental features of down syndrome etiology. Down syndrome (DS) is the most frequent cause of human congenital mental retardation. Cognitive deficits in DS result from perturbations of normal cellular processes both during development and in adult tissues, but the mechanisms underlying DS etiology remain poorly understood. To assess the ability of induced pluripotent stem cells (iPSCs) to model DS phenotypes, as a prototypical complex human disease, we generated bona fide DS and wild-type (WT) nonviral iPSCs by episomal reprogramming. DS iPSCs selectively overexpressed chromosome 21 genes, consistent with gene dosage, which was associated with deregulation of thousands of genes throughout the genome. DS and WT iP",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:09.992872+00:00"
+}

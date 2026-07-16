@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8317408",
+  "source_fingerprint": "71901ae25bf21576e114b4390a65271a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8317408",
+    "human-monocyte-characteristics-are-altered-in-hypercholesterolaemia."
+  ],
+  "key_phrases": [
+    "human",
+    "monocyte",
+    "characteristics",
+    "altered",
+    "hypercholesterolaemia",
+    "peripheral",
+    "blood",
+    "monocytes"
+  ],
+  "summary_1l": "Human monocyte characteristics are altered in hypercholesterolaemia.",
+  "query_hits": [],
+  "embed_text": "8317408 Human monocyte characteristics are altered in hypercholesterolaemia. science scifact Peripheral blood monocytes are involved during atherogenesis in adhering to endothelium, migrating into the subendothelial space and taking-up lipoproteins to become macrophage/foam cells. We have assessed whether peripheral blood monocyte… 8317408 human-monocyte-characteristics-are-altered-in-hypercholesterolaemia. human monocyte characteristics altered hypercholesterolaemia peripheral blood monocytes Human monocyte characteristics are altered in hypercholesterolaemia. Human monocyte characteristics are altered in hypercholesterolaemia. Peripheral blood monocytes are involved during atherogenesis in adhering to endothelium, migrating into the subendothelial space and taking-up lipoproteins to become macrophage/foam cells. We have assessed whether peripheral blood monocyte characteristics are altered in human hyperlipidaemia in age/sex/smoking status matched pairs of patients and controls. Monocytes from the hypercholesterolaemic patients, as opposed to the controls, were more sensitive to stimulation by the agonist, N-formyl-methionyl-leucyl-phenylalanine, with respect to chemokinesis (stimulation index 1.48 +/- 0.17 vs. 1.10 +/- 0.14), chemotaxis (4.05 +/- 0.55 vs. 2.72 +/- 0.24) and adhesion to porcine aortic endothelial monolayers (1.26 +/- 0.05 vs. 1",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.334365+00:00"
+}

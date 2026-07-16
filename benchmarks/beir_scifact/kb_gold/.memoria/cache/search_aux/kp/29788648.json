@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29788648",
+  "source_fingerprint": "5b31c4b830c60d36a9abd1bd47f7c822",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29788648",
+    "nua4-lysine-acetyltransferase-esa1-is-targeted-to-coding-regions-and-stimulates-transcription-elongation-with-gcn5."
+  ],
+  "key_phrases": [
+    "nua4",
+    "lysine",
+    "acetyltransferase",
+    "esa1",
+    "targeted",
+    "coding",
+    "regions",
+    "stimulates"
+  ],
+  "summary_1l": "NuA4 lysine acetyltransferase Esa1 is targeted to coding regions and stimulates transcription elongation with Gcn5.",
+  "query_hits": [],
+  "embed_text": "29788648 NuA4 lysine acetyltransferase Esa1 is targeted to coding regions and stimulates transcription elongation with Gcn5. science scifact NuA4, the major H4 lysine acetyltransferase (KAT) complex in Saccharomyces cerevisiae, is recruited to promoters and stimulates transcription initiation. NuA4 subunits contain domains that bind methylated histones, suggesting that histone… 29788648 nua4-lysine-acetyltransferase-esa1-is-targeted-to-coding-regions-and-stimulates-transcription-elongation-with-gcn5. nua4 lysine acetyltransferase esa1 targeted coding regions stimulates NuA4 lysine acetyltransferase Esa1 is targeted to coding regions and stimulates transcription elongation with Gcn5. NuA4 lysine acetyltransferase Esa1 is targeted to coding regions and stimulates transcription elongation with Gcn5. NuA4, the major H4 lysine acetyltransferase (KAT) complex in Saccharomyces cerevisiae, is recruited to promoters and stimulates transcription initiation. NuA4 subunits contain domains that bind methylated histones, suggesting that histone methylation should target NuA4 to coding sequences during transcription elongation. We show that NuA4 is cotranscriptionally recruited, dependent on its physical association with elongating polymerase II (Pol II) phosphorylated on the C-terminal domain by cyclin-dependent kinase 7/Kin28, but independently of subunits (Eaf1 and Tra1) required for NuA4 recruitment to promoters. Whereas histone methylation by Set1 and Set2 is dispensable for Nu",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.190996+00:00"
+}

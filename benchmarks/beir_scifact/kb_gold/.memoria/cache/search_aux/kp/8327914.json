@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8327914",
+  "source_fingerprint": "ce1dda2e1d431d2b8a1180d235b494e8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8327914",
+    "a-protein-inventory-of-human-ribosome-biogenesis-reveals-an-essential-function-of-exportin-5-in-60s-subunit-export"
+  ],
+  "key_phrases": [
+    "protein",
+    "inventory",
+    "human",
+    "ribosome",
+    "biogenesis",
+    "reveals",
+    "essential",
+    "function"
+  ],
+  "summary_1l": "The assembly of ribosomal subunits in eukaryotes is a complex, multistep process so f",
+  "query_hits": [],
+  "embed_text": "8327914 A Protein Inventory of Human Ribosome Biogenesis Reveals an Essential Function of Exportin 5 in 60S Subunit Export science scifact The assembly of ribosomal subunits in eukaryotes is a complex, multistep process so far mostly studied in yeast. In S. cerevisiae, more than 200 factors including ribosomal proteins and trans-acting factors are required for the ordered… 8327914 a-protein-inventory-of-human-ribosome-biogenesis-reveals-an-essential-function-of-exportin-5-in-60s-subunit-export protein inventory human ribosome biogenesis reveals essential function The assembly of ribosomal subunits in eukaryotes is a complex, multistep process so f A Protein Inventory of Human Ribosome Biogenesis Reveals an Essential Function of Exportin 5 in 60S Subunit Export The assembly of ribosomal subunits in eukaryotes is a complex, multistep process so far mostly studied in yeast. In S. cerevisiae, more than 200 factors including ribosomal proteins and trans-acting factors are required for the ordered assembly of 40S and 60S ribosomal subunits. To date, only few human homologs of these yeast ribosome synthesis factors have been characterized. Here, we used a systematic RNA interference (RNAi) approach to analyze the contribution of 464 candidate factors to ribosomal subunit biogenesis in human cells. The screen was based on visual readouts, using inducible, fluorescent ribosomal proteins as reporters. By performing computer-based image analys",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.382598+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "33669399",
+  "source_fingerprint": "af6ed621c7ec1e0e3ffd734fd269f840",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "33669399",
+    "loss-of-gametophytic-self-incompatibility-with-evolution-of-inbreeding-depression."
+  ],
+  "key_phrases": [
+    "loss",
+    "gametophytic",
+    "self",
+    "incompatibility",
+    "with",
+    "evolution",
+    "inbreeding",
+    "depression"
+  ],
+  "summary_1l": "Loss of gametophytic self-incompatibility with evolution of inbreeding depression.",
+  "query_hits": [],
+  "embed_text": "33669399 Loss of gametophytic self-incompatibility with evolution of inbreeding depression. science scifact Gametophytic self-incompatibility (SI) in plants is a widespread mechanism preventing self-fertilization and the ensuing inbreeding depression, but it often evolves to self-compatibility. We analyze genetic mechanisms for the breakdown of… 33669399 loss-of-gametophytic-self-incompatibility-with-evolution-of-inbreeding-depression. loss gametophytic self incompatibility with evolution inbreeding depression Loss of gametophytic self-incompatibility with evolution of inbreeding depression. Loss of gametophytic self-incompatibility with evolution of inbreeding depression. Gametophytic self-incompatibility (SI) in plants is a widespread mechanism preventing self-fertilization and the ensuing inbreeding depression, but it often evolves to self-compatibility. We analyze genetic mechanisms for the breakdown of gametophytic SI, incorporating a dynamic model for the evolution of inbreeding depression allowing for partial purging of nearly recessive lethal mutations by selfing, and accounting for pollen limitation and sheltered load linked to the S-locus. We consider two mechanisms for the breakdown of gametophytic SI: a nonfunctional S-allele and an unlinked modifier locus that inactivates the S-locus. We show that, under a wide range of conditions, self-compatible alleles can inva",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.597733+00:00"
+}

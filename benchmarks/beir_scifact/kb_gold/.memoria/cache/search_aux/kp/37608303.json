@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "37608303",
+  "source_fingerprint": "8df97186b0f2e190500df4c5fe0f0d0b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "37608303",
+    "opa1-dependent-cristae-modulation-is-essential-for-cellular-adaptation-to-metabolic-demand."
+  ],
+  "key_phrases": [
+    "opa1",
+    "dependent",
+    "cristae",
+    "modulation",
+    "essential",
+    "cellular",
+    "adaptation",
+    "metabolic"
+  ],
+  "summary_1l": "OPA1-dependent cristae modulation is essential for cellular adaptation to metabolic demand.",
+  "query_hits": [],
+  "embed_text": "37608303 OPA1-dependent cristae modulation is essential for cellular adaptation to metabolic demand. science scifact Cristae, the organized invaginations of the mitochondrial inner membrane, respond structurally to the energetic demands of the cell. The mechanism by which these dynamic changes are regulated and the consequences thereof are largely… 37608303 opa1-dependent-cristae-modulation-is-essential-for-cellular-adaptation-to-metabolic-demand. opa1 dependent cristae modulation essential cellular adaptation metabolic OPA1-dependent cristae modulation is essential for cellular adaptation to metabolic demand. OPA1-dependent cristae modulation is essential for cellular adaptation to metabolic demand. Cristae, the organized invaginations of the mitochondrial inner membrane, respond structurally to the energetic demands of the cell. The mechanism by which these dynamic changes are regulated and the consequences thereof are largely unknown. Optic atrophy 1 (OPA1) is the mitochondrial GTPase responsible for inner membrane fusion and maintenance of cristae structure. Here, we report that OPA1 responds dynamically to changes in energetic conditions to regulate cristae structure. This cristae regulation is independent of OPA1's role in mitochondrial fusion, since an OPA1 mutant that can still oligomerize but has no fusion activity was able to maintain cristae structure. Importantly, OPA1 was required f",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.670787+00:00"
+}

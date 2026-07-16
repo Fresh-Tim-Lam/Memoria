@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25175223",
+  "source_fingerprint": "178340601bd1737cf827228028846284",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25175223",
+    "specific-hdv-rna-templated-transcription-by-pol-ii-in-vitro."
+  ],
+  "key_phrases": [
+    "specific",
+    "hdv",
+    "rna",
+    "templated",
+    "transcription",
+    "by",
+    "pol",
+    "ii"
+  ],
+  "summary_1l": "Specific HDV RNA-templated transcription by pol II in vitro.",
+  "query_hits": [],
+  "embed_text": "25175223 Specific HDV RNA-templated transcription by pol II in vitro. science scifact RNA polymerase II is implicated in the RNA-templated RNA synthesis during replication of viroids and Hepatitis Delta Virus (HDV); however, neither the RNA template nor protein factor requirements for this process are well defined. We have… 25175223 specific-hdv-rna-templated-transcription-by-pol-ii-in-vitro. specific hdv rna templated transcription by pol ii Specific HDV RNA-templated transcription by pol II in vitro. Specific HDV RNA-templated transcription by pol II in vitro. RNA polymerase II is implicated in the RNA-templated RNA synthesis during replication of viroids and Hepatitis Delta Virus (HDV); however, neither the RNA template nor protein factor requirements for this process are well defined. We have developed an in vitro transcription system based on HeLa cell nuclear extract (NE), in which a segment of antigenomic RNA corresponding to the left-hand tip region of the HDV rod-like structure serves as a template for efficient and highly specific RNA synthesis. Accumulation of the unique RNA product is highly sensitive to alpha-amanitin in HeLa NE and only partially sensitive to this drug in NE from PMG cells that contain an allele of the alpha-amanitin-resistant subunit of pol II, strongly su",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.112589+00:00"
+}

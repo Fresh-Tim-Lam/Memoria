@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21369472",
+  "source_fingerprint": "249b7607d55209f3122154c4ff8e1276",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21369472",
+    "trpc6-is-a-glomerular-slit-diaphragm-associated-channel-required-for-normal-renal-function"
+  ],
+  "key_phrases": [
+    "trpc6",
+    "glomerular",
+    "slit",
+    "diaphragm",
+    "associated",
+    "channel",
+    "required",
+    "normal"
+  ],
+  "summary_1l": "Progressive kidney failure is a genetically and clinically heterogeneous group of disorders.",
+  "query_hits": [],
+  "embed_text": "21369472 TRPC6 is a glomerular slit diaphragm-associated channel required for normal renal function science scifact Progressive kidney failure is a genetically and clinically heterogeneous group of disorders. Podocyte foot processes and the interposed glomerular slit diaphragm are essential components of the permeability barrier in the kidney. Mutations… 21369472 trpc6-is-a-glomerular-slit-diaphragm-associated-channel-required-for-normal-renal-function trpc6 glomerular slit diaphragm associated channel required normal Progressive kidney failure is a genetically and clinically heterogeneous group of disorders. TRPC6 is a glomerular slit diaphragm-associated channel required for normal renal function Progressive kidney failure is a genetically and clinically heterogeneous group of disorders. Podocyte foot processes and the interposed glomerular slit diaphragm are essential components of the permeability barrier in the kidney. Mutations in genes encoding structural proteins of the podocyte lead to the development of proteinuria, resulting in progressive kidney failure and focal segmental glomerulosclerosis. Here, we show that the canonical transient receptor potential 6 (TRPC6) ion channel is expressed in podocytes and is a component of the glomerular slit diaphragm. We identified five families with autosomal dominant focal segmental glomerulosclerosis in which disease segregated with mutations in",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.887306+00:00"
+}

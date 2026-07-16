@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "14827874",
+  "source_fingerprint": "d0e88ac4bb483d0b992862da8c3a7ca8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14827874"
+  ],
+  "key_phrases": [
+    "0021",
+    "972x",
+    "06",
+    "15.00",
+    "journal",
+    "clinical",
+    "endocrinology",
+    "metabolism"
+  ],
+  "summary_1l": "0021-972X/06/$15.",
+  "query_hits": [],
+  "embed_text": "14827874 0021-972X/06/$15.00/0 The Journal of Clinical Endocrinology & Metabolism 91(3):760–771 Printed in U.S.A. Copyright © 2006 by The Endocrine Society doi: 10.1210/jc.2005-1923 REVIEW: Aromatase Inhibitors for Ovulation Induction science scifact CONTEXT For the last 40 yr, the first line of treatment for anovulation in infertile women has been clomiphene citrate (CC). CC is a safe, effective oral agent but is known to have relatively common antiestrogenic endometrial and cervical… 14827874 0021 972x 06 15.00 journal clinical endocrinology metabolism 0021-972X/06/$15. 0021-972X/06/$15.00/0 The Journal of Clinical Endocrinology & Metabolism 91(3):760–771 Printed in U.S.A. Copyright © 2006 by The Endocrine Society doi: 10.1210/jc.2005-1923 REVIEW: Aromatase Inhibitors for Ovulation Induction CONTEXT For the last 40 yr, the first line of treatment for anovulation in infertile women has been clomiphene citrate (CC). CC is a safe, effective oral agent but is known to have relatively common antiestrogenic endometrial and cervical mucous side effects that could prevent pregnancy in the face of successful ovulation. In addition, there is a significant risk of multiple pregnancy with CC, compared with natural cycles. Because of these problems, we proposed the concept of aromatase inhibition as a new method of ovulation induction that could avoid many of the adve",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.717731+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3758260",
+  "source_fingerprint": "353fe47d6c5fd45e1ce12df6a165f8cc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3758260",
+    "parathyroid-hormone-directs-bone-marrow-mesenchymal-cell-fate."
+  ],
+  "key_phrases": [
+    "parathyroid",
+    "hormone",
+    "directs",
+    "bone",
+    "marrow",
+    "mesenchymal",
+    "cell",
+    "fate"
+  ],
+  "summary_1l": "Parathyroid Hormone Directs Bone Marrow Mesenchymal Cell Fate.",
+  "query_hits": [],
+  "embed_text": "3758260 Parathyroid Hormone Directs Bone Marrow Mesenchymal Cell Fate. science scifact Intermittent PTH administration builds bone mass and prevents fractures, but its mechanism of action is unclear. We genetically deleted the PTH/PTHrP receptor (PTH1R) in mesenchymal stem cells using Prx1Cre and found low bone formation,… 3758260 parathyroid-hormone-directs-bone-marrow-mesenchymal-cell-fate. parathyroid hormone directs bone marrow mesenchymal cell fate Parathyroid Hormone Directs Bone Marrow Mesenchymal Cell Fate. Parathyroid Hormone Directs Bone Marrow Mesenchymal Cell Fate. Intermittent PTH administration builds bone mass and prevents fractures, but its mechanism of action is unclear. We genetically deleted the PTH/PTHrP receptor (PTH1R) in mesenchymal stem cells using Prx1Cre and found low bone formation, increased bone resorption, and high bone marrow adipose tissue (BMAT). Bone marrow adipocytes traced to Prx1 and expressed classic adipogenic markers and high receptor activator of nuclear factor kappa B ligand (Rankl) expression. RANKL levels were also elevated in bone marrow supernatant and serum, but undetectable in other adipose depots. By cell sorting, Pref1+RANKL+ marrow progenitors were twice as great in mutant versus control marrow. Intermittent PTH administration to control mice reduced",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.631290+00:00"
+}

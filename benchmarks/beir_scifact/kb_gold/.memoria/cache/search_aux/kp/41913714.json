@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "41913714",
+  "source_fingerprint": "24819e63c7c9920c53c30b444c027c39",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "41913714"
+  ],
+  "key_phrases": [
+    "cardiac",
+    "glycosides",
+    "inhibit",
+    "tnf",
+    "nf",
+    "signaling",
+    "by",
+    "blocking"
+  ],
+  "summary_1l": "Digitoxin and structurally related cardiac glycoside drugs potently",
+  "query_hits": [],
+  "embed_text": "41913714 Cardiac glycosides inhibit TNF-α/NF-κB signaling by blocking recruitment of TNF receptor-associated death domain to the TNF receptor science scifact Digitoxin and structurally related cardiac glycoside drugs potently block activation of the TNF-α/NF-κB signaling pathway. We have hypothesized that the mechanism might be discovered by searching systematically for selective inhibitory… 41913714 cardiac glycosides inhibit tnf nf signaling by blocking Digitoxin and structurally related cardiac glycoside drugs potently Cardiac glycosides inhibit TNF-α/NF-κB signaling by blocking recruitment of TNF receptor-associated death domain to the TNF receptor Digitoxin and structurally related cardiac glycoside drugs potently block activation of the TNF-α/NF-κB signaling pathway. We have hypothesized that the mechanism might be discovered by searching systematically for selective inhibitory action through the entire pathway. We report that the common action of these drugs is to block the TNF-α-dependent binding of TNF receptor 1 to TNF receptor-associated death domain. This drug action can be observed with native cells, such as HeLa, and reconstituted systems prepared in HEK293 cells. All other antiinflammatory effects of digitoxin on NF-κB and c-Jun N-terminal kinase pathways appear to follow from the blockade of",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.655755+00:00"
+}

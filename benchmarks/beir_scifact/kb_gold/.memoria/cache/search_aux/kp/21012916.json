@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "21012916",
+  "source_fingerprint": "52edff0a657c478e73dd431e31f5d8f3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21012916"
+  ],
+  "key_phrases": [
+    "ephrin",
+    "b1",
+    "mediated",
+    "repulsion",
+    "signaling",
+    "control",
+    "germinal",
+    "center"
+  ],
+  "summary_1l": "Follicular T helper (TFH) cells orchestrate the germinal center (GC) reaction locally.",
+  "query_hits": [],
+  "embed_text": "21012916 Ephrin B1–mediated repulsion and signaling control germinal center T cell territoriality and function science scifact Follicular T helper (TFH) cells orchestrate the germinal center (GC) reaction locally. Local mechanisms regulating their dynamics and helper functions are not well defined. Here we found that GC-expressed ephrin B1 (EFNB1) repulsively… 21012916 ephrin b1 mediated repulsion signaling control germinal center Follicular T helper (TFH) cells orchestrate the germinal center (GC) reaction locally. Ephrin B1–mediated repulsion and signaling control germinal center T cell territoriality and function Follicular T helper (TFH) cells orchestrate the germinal center (GC) reaction locally. Local mechanisms regulating their dynamics and helper functions are not well defined. Here we found that GC-expressed ephrin B1 (EFNB1) repulsively inhibited T cell to B cell adhesion and GC TFH retention by signaling through TFH-expressed EPHB6 receptor. At the same time, EFNB1 promoted interleukin-21 production from GC TFH cells by signaling predominantly through EPHB4. Consequently, EFNB1-null GCs were associated with defective production of plasma cells despite harboring excessive TFH cells. In a competitive GC reaction, EFNB1-deficient B cells more efficiently interacted with TFH cells and produced",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.290529+00:00"
+}

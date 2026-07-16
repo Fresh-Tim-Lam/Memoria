@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "409280",
+  "source_fingerprint": "c62fd66dfb791e8627d6eeca1dfa6af7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "409280",
+    "national-study-of-physician-awareness-and-adherence-to-cardiovascular-disease-prevention-guidelines."
+  ],
+  "key_phrases": [
+    "national",
+    "study",
+    "physician",
+    "awareness",
+    "adherence",
+    "cardiovascular",
+    "disease",
+    "prevention"
+  ],
+  "summary_1l": "National study of physician awareness and adherence to cardiovascular disease prevention guidelines.",
+  "query_hits": [],
+  "embed_text": "409280 National study of physician awareness and adherence to cardiovascular disease prevention guidelines. science scifact BACKGROUND Few data have evaluated physician adherence to cardiovascular disease (CVD) prevention guidelines according to physician specialty or patient characteristics, particularly gender. METHODS AND RESULTS An online study of 500… 409280 national-study-of-physician-awareness-and-adherence-to-cardiovascular-disease-prevention-guidelines. national study physician awareness adherence cardiovascular disease prevention National study of physician awareness and adherence to cardiovascular disease prevention guidelines. National study of physician awareness and adherence to cardiovascular disease prevention guidelines. BACKGROUND Few data have evaluated physician adherence to cardiovascular disease (CVD) prevention guidelines according to physician specialty or patient characteristics, particularly gender. METHODS AND RESULTS An online study of 500 randomly selected physicians (300 primary care physicians, 100 obstetricians/gynecologists, and 100 cardiologists) used a standardized questionnaire to assess awareness of, adoption of, and barriers to national CVD prevention guidelines by specialty. An experimental case study design tested physician accuracy and determinants of CVD risk level assignment and application of guidelines among high-, intermediate-, or low-risk patients. Intermediate-risk women, as",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.967699+00:00"
+}

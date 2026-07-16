@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24396137",
+  "source_fingerprint": "87106c3349c7e929ed263c1518c35d96",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24396137",
+    "blood-pressure,-salivary-cortisol,-and-inflammatory-cytokine-outcomes-in-senior-female-cancer-survivors-enrolled-in-a-tai-chi-chih-randomized-controlled-trial"
+  ],
+  "key_phrases": [
+    "blood",
+    "pressure",
+    "salivary",
+    "cortisol",
+    "inflammatory",
+    "cytokine",
+    "outcomes",
+    "senior"
+  ],
+  "summary_1l": "Older cancer survivors are a vulnerable p",
+  "query_hits": [],
+  "embed_text": "24396137 Blood pressure, salivary cortisol, and inflammatory cytokine outcomes in senior female cancer survivors enrolled in a tai chi chih randomized controlled trial science scifact Older cancer survivors are a vulnerable population due to an increased risk for chronic diseases (e.g., cardiovascular disease) compounded with treatment late-effects and declines in physical functioning. Therefore, interventions that… 24396137 blood-pressure,-salivary-cortisol,-and-inflammatory-cytokine-outcomes-in-senior-female-cancer-survivors-enrolled-in-a-tai-chi-chih-randomized-controlled-trial blood pressure salivary cortisol inflammatory cytokine outcomes senior Older cancer survivors are a vulnerable p Blood pressure, salivary cortisol, and inflammatory cytokine outcomes in senior female cancer survivors enrolled in a tai chi chih randomized controlled trial Older cancer survivors are a vulnerable population due to an increased risk for chronic diseases (e.g., cardiovascular disease) compounded with treatment late-effects and declines in physical functioning. Therefore, interventions that reduce chronic disease risk factors (i.e., blood pressure, chronic inflammation, and cortisol) are important in this population. Tai chi chih (TCC) is a mind-body exercise associated with reductions in chronic disease risk factors, but has not been examined with older cancer survivors. In a feasibility randomized controlled trial of TCC, we examined secondary outcomes of blood pressure, salivary cortiso",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.421563+00:00"
+}

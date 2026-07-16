@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1996292",
+  "source_fingerprint": "76f7e8fce2ebbb30645252e97a94dfc5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1996292",
+    "bmi-1-autoantibody-as-a-new-potential-biomarker-for-cervical-carcinoma"
+  ],
+  "key_phrases": [
+    "bmi",
+    "autoantibody",
+    "as",
+    "new",
+    "potential",
+    "biomarker",
+    "cervical",
+    "carcinoma"
+  ],
+  "summary_1l": "BMI-1 is overexpressed in a variety of cancers, which can elicit an immune response leading to the induction of autoantibodies.",
+  "query_hits": [],
+  "embed_text": "1996292 BMI-1 Autoantibody as a New Potential Biomarker for Cervical Carcinoma science scifact BMI-1 is overexpressed in a variety of cancers, which can elicit an immune response leading to the induction of autoantibodies. However, BMI-1 autoantibody as a biomarker has seldom been studied with the exception of nasopharyngeal… 1996292 bmi-1-autoantibody-as-a-new-potential-biomarker-for-cervical-carcinoma bmi autoantibody as new potential biomarker cervical carcinoma BMI-1 is overexpressed in a variety of cancers, which can elicit an immune response leading to the induction of autoantibodies. BMI-1 Autoantibody as a New Potential Biomarker for Cervical Carcinoma BMI-1 is overexpressed in a variety of cancers, which can elicit an immune response leading to the induction of autoantibodies. However, BMI-1 autoantibody as a biomarker has seldom been studied with the exception of nasopharyngeal carcinoma. Whether BMI-1 autoantibodies can be used as a biomarker for cervical carcinoma is unclear. In this study,BMI-1 proteins were isolated by screening of a T7 phage cDNA library from mixed cervical carcinoma tissues. We analyzed BMI-1 autoantibody levels in serum samples from 67 patients with cervical carcinoma and 65 controls using ELISA and immunoblot. BMI-1 mRNA or protein levels were over-expressed in cervical carcinoma cell lines. Immunoblot results exhibited increased BMI-1 autoa",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.454932+00:00"
+}

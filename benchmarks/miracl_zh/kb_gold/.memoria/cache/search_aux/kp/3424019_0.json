@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "kp_id": "3424019#0",
+  "source_fingerprint": "ea35bcbc8f05830e2501203ace8a60db",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "2022年法国总统选举"
+  ],
+  "aliases": [
+    "3424019#0"
+  ],
+  "key_phrases": [
+    "乌胡鲁",
+    "雅塔",
+    "uhuru",
+    "muigai",
+    "kenyatta",
+    "現任",
+    "肯尼亚",
+    "总统"
+  ],
+  "summary_1l": "乌胡鲁·肯雅塔（Uhuru Muigai Kenyatta ，），現任肯尼亚总统。",
+  "query_hits": [],
+  "embed_text": "3424019#0 乌胡鲁·肯雅塔 乌胡鲁·肯雅塔 乌胡鲁·肯雅塔（Uhuru Muigai Kenyatta ，），現任肯尼亚总统。 2022年法国总统选举 3424019#0 乌胡鲁 雅塔 uhuru muigai kenyatta 現任 肯尼亚 总统 乌胡鲁·肯雅塔（Uhuru Muigai Kenyatta ，），現任肯尼亚总统。 乌胡鲁·肯雅塔 乌胡鲁·肯雅塔（Uhuru Muigai Kenyatta ，），現任肯尼亚总统。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:21:52.401287+00:00"
+}

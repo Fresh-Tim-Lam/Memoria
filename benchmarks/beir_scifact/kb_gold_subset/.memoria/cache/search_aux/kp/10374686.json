@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10374686",
+  "source_fingerprint": "492e3de7ba74b700a51a8ac0cb8dfe3d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10374686",
+    "developing-primary-palliative-care."
+  ],
+  "key_phrases": [
+    "developing",
+    "primary",
+    "palliative",
+    "care",
+    "although",
+    "65%",
+    "people",
+    "with"
+  ],
+  "summary_1l": "Developing primary palliative care.",
+  "query_hits": [],
+  "embed_text": "10374686 Developing primary palliative care. science scifact Although 65% of people with cancer want to die at home, only about 30% are successful in doing so.1,2 A government committed to choice for patients must improve this figure.3 Developing palliative care services in primary care is essential… 10374686 developing-primary-palliative-care. developing primary palliative care although 65% people with Developing primary palliative care. Developing primary palliative care. Although 65% of people with cancer want to die at home, only about 30% are successful in doing so.1,2 A government committed to choice for patients must improve this figure.3 Developing palliative care services in primary care is essential for realising the expectations of dying people. Such services could also offer important opportunities for extending supportive humane care at an earlier stage, and to people not only with cancer but with chronic obstructive pulmonary disease, motor neurone disease, and cardiac failure, for example, who also often have palliative care needs. Primary care professionals have the potential and ability to provide end of life care for most patients, given adequate training, resources, and, when needed, specialist advice.4,5",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.502995+00:00"
+}

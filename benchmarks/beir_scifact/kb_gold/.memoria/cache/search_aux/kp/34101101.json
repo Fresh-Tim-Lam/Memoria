@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "34101101",
+  "source_fingerprint": "5e3141b945b30b0378be6ee91689e63f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "34101101",
+    "comparing-the-metabolism-of-quercetin-in-rats,-mice-and-gerbils"
+  ],
+  "key_phrases": [
+    "comparing",
+    "metabolism",
+    "quercetin",
+    "rats",
+    "mice",
+    "gerbils",
+    "several",
+    "species"
+  ],
+  "summary_1l": "Several species of rodents are used to investigate the metabolism of quercetin in vivo.",
+  "query_hits": [],
+  "embed_text": "34101101 Comparing the metabolism of quercetin in rats, mice and gerbils science scifact Several species of rodents are used to investigate the metabolism of quercetin in vivo. However, it is unclear whether they are a proper animal model. Thus, we compared the metabolism of quercetin in Wistar rats (rats), Balb/c mice (mice)… 34101101 comparing-the-metabolism-of-quercetin-in-rats,-mice-and-gerbils comparing metabolism quercetin rats mice gerbils several species Several species of rodents are used to investigate the metabolism of quercetin in vivo. Comparing the metabolism of quercetin in rats, mice and gerbils Several species of rodents are used to investigate the metabolism of quercetin in vivo. However, it is unclear whether they are a proper animal model. Thus, we compared the metabolism of quercetin in Wistar rats (rats), Balb/c mice (mice) and Mongolian gerbils (gerbils). We determined the levels of quercetin metabolites, quercetin-3-glucuronide (Q3G), quercetin-3′-sulfate (Q3′S) and methyl-quercetin isorhamnetin (IH), in the plasma, lungs and livers of three species of animals by high-performance liquid chromatography after acute and/or chronic quercetin administration. The metabolic enzyme activities in the intestinal mucosal membrane and liver were also investigated. First, we found that after acute quercetin administration,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.082413+00:00"
+}

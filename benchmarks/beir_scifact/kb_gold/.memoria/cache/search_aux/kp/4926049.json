@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4926049",
+  "source_fingerprint": "b8bfccc6924f7f27841c3b606eda071c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4926049",
+    "trf2-recruits-rtel1-to-telomeres-in-s-phase-to-promote-t-loop-unwinding"
+  ],
+  "key_phrases": [
+    "trf2",
+    "recruits",
+    "rtel1",
+    "telomeres",
+    "phase",
+    "promote",
+    "loop",
+    "unwinding"
+  ],
+  "summary_1l": "The helicase RTEL1 promotes t-loop unwinding and suppresses telomere fragility to maintain the integrity of vertebrate telomeres",
+  "query_hits": [],
+  "embed_text": "4926049 TRF2 Recruits RTEL1 to Telomeres in S Phase to Promote T-Loop Unwinding science scifact The helicase RTEL1 promotes t-loop unwinding and suppresses telomere fragility to maintain the integrity of vertebrate telomeres. An interaction between RTEL1 and PCNA is important to prevent telomere fragility, but how RTEL1 engages with… 4926049 trf2-recruits-rtel1-to-telomeres-in-s-phase-to-promote-t-loop-unwinding trf2 recruits rtel1 telomeres phase promote loop unwinding The helicase RTEL1 promotes t-loop unwinding and suppresses telomere fragility to maintain the integrity of vertebrate telomeres TRF2 Recruits RTEL1 to Telomeres in S Phase to Promote T-Loop Unwinding The helicase RTEL1 promotes t-loop unwinding and suppresses telomere fragility to maintain the integrity of vertebrate telomeres. An interaction between RTEL1 and PCNA is important to prevent telomere fragility, but how RTEL1 engages with the telomere to promote t-loop unwinding is unclear. Here, we establish that the shelterin protein TRF2 recruits RTEL1 to telomeres in S phase, which is required to prevent catastrophic t-loop processing by structure-specific nucleases. We show that the TRF2-RTEL1 interaction is mediated by a metal-coordinating C4C4 motif in RTEL1, which is compromised by the Hoyeraal-Hreidarsson syndrome (HHS) mutation, RTEL1(R1264H). Conversely, we define a TRF2(I124D) substitution mutation within t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.751802+00:00"
+}

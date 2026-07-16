@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18895793",
+  "source_fingerprint": "3e1fcd7234b078e92b8f94d3d7287996",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18895793",
+    "activator-control-of-nucleosome-occupancy-in-activation-and-repression-of-transcription"
+  ],
+  "key_phrases": [
+    "activator",
+    "control",
+    "nucleosome",
+    "occupancy",
+    "activation",
+    "repression",
+    "transcription",
+    "relationship"
+  ],
+  "summary_1l": "The relationship between chromatin structure and gene expression is a subject of intense study.",
+  "query_hits": [],
+  "embed_text": "18895793 Activator Control of Nucleosome Occupancy in Activation and Repression of Transcription science scifact The relationship between chromatin structure and gene expression is a subject of intense study. The universal transcriptional activator Gal4 removes promoter nucleosomes as it triggers transcription, but how it does so has remained… 18895793 activator-control-of-nucleosome-occupancy-in-activation-and-repression-of-transcription activator control nucleosome occupancy activation repression transcription relationship The relationship between chromatin structure and gene expression is a subject of intense study. Activator Control of Nucleosome Occupancy in Activation and Repression of Transcription The relationship between chromatin structure and gene expression is a subject of intense study. The universal transcriptional activator Gal4 removes promoter nucleosomes as it triggers transcription, but how it does so has remained obscure. The reverse process, repression of transcription, has often been correlated with the presence of nucleosomes. But it is not known whether nucleosomes are required for that effect. A new quantitative assay describes, for any given location, the fraction of DNA molecules in the population that bears a nucleosome at any given instant. This allows us to follow the time courses of nucleosome removal and reformation, in wild-type and mutant cells, upon activation (by galac",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.876150+00:00"
+}

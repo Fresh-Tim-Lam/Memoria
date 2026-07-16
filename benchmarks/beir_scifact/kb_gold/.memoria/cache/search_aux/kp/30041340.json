@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "30041340",
+  "source_fingerprint": "9a5c5acf355985eb2f3dffe6d49307e5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "30041340",
+    "antibodies-from-patients-with-rheumatoid-arthritis-target-citrullinated-histone-4-contained-in-neutrophils-extracellular-traps."
+  ],
+  "key_phrases": [
+    "antibodies",
+    "from",
+    "patients",
+    "with",
+    "rheumatoid",
+    "arthritis",
+    "target",
+    "citrullinated"
+  ],
+  "summary_1l": "Antibodies from patients with rheumatoid arthritis target citrullinated histone 4 contained in neutrophils extracellular traps.",
+  "query_hits": [],
+  "embed_text": "30041340 Antibodies from patients with rheumatoid arthritis target citrullinated histone 4 contained in neutrophils extracellular traps. science scifact BACKGROUND Histone deimination regulates gene function and contributes to antimicrobial response, allowing the formation of neutrophil extracellular traps (NETs). Deiminated proteins are target of anti-citrullinated peptides antibodies… 30041340 antibodies-from-patients-with-rheumatoid-arthritis-target-citrullinated-histone-4-contained-in-neutrophils-extracellular-traps. antibodies from patients with rheumatoid arthritis target citrullinated Antibodies from patients with rheumatoid arthritis target citrullinated histone 4 contained in neutrophils extracellular traps. Antibodies from patients with rheumatoid arthritis target citrullinated histone 4 contained in neutrophils extracellular traps. BACKGROUND Histone deimination regulates gene function and contributes to antimicrobial response, allowing the formation of neutrophil extracellular traps (NETs). Deiminated proteins are target of anti-citrullinated peptides antibodies (ACPA) in rheumatoid arthritis (RA). OBJECTIVE The objective of this paper is to test the hypothesis that RA sera react with deiminated histones contained in NETs. METHODS Neutrophils from peripheral blood were stimulated with A23187 and acid treated; NETosis was induced by phorbol myristate acetate, and NET proteins were isolated. Sera were tested by immunoblot on acid extracted proteins from neutrophils and from NETs, and by ELISA",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.372374+00:00"
+}

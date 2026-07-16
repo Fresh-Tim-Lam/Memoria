@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "195317463",
+  "source_fingerprint": "560c84576bc547635a93392eb3624bcc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "195317463",
+    "assessment-of-hemodynamic-efficacy-and-safety-of-6%-hydroxyethylstarch-130/0.4-vs.-0.9%-nacl-fluid-replacement-in-patients-with-severe-sepsis:-the-crystmas-study"
+  ],
+  "key_phrases": [
+    "assessment",
+    "hemodynamic",
+    "efficacy",
+    "safety",
+    "6%",
+    "hydroxyethylstarch",
+    "130",
+    "0.4"
+  ],
+  "summary_1l": "Assessment of hemodynamic efficacy and safety of 6% hydroxyethylstarch 130/0.",
+  "query_hits": [],
+  "embed_text": "195317463 Assessment of hemodynamic efficacy and safety of 6% hydroxyethylstarch 130/0.4 vs. 0.9% NaCl fluid replacement in patients with severe sepsis: The CRYSTMAS study science scifact Inadequate initial treatment and delayed hemodynamic stabilization (HDS) may be associated with increased risk of death in severe sepsis patients. In order to compare the hemodynamic efficacy and safety of 6% HES 130/0.4 and NaCl 0.9% for… 195317463 assessment-of-hemodynamic-efficacy-and-safety-of-6%-hydroxyethylstarch-130/0.4-vs.-0.9%-nacl-fluid-replacement-in-patients-with-severe-sepsis:-the-crystmas-study assessment hemodynamic efficacy safety 6% hydroxyethylstarch 130 0.4 Assessment of hemodynamic efficacy and safety of 6% hydroxyethylstarch 130/0. Assessment of hemodynamic efficacy and safety of 6% hydroxyethylstarch 130/0.4 vs. 0.9% NaCl fluid replacement in patients with severe sepsis: The CRYSTMAS study Inadequate initial treatment and delayed hemodynamic stabilization (HDS) may be associated with increased risk of death in severe sepsis patients. In order to compare the hemodynamic efficacy and safety of 6% HES 130/0.4 and NaCl 0.9% for HDS in patients with severe sepsis, we designed a prospective, multicenter, active-controlled, double-blind, randomized study in intensive care units. 174 out of 196 patients reached HDS (88 and 86 patients for HES and NaCl, respectively). Significantly less HES was used to reach HDS vs. NaCl (1,379 ±886 ml in the HES group and 1,709 ±1,164 ml in the NaCl group (mean difference = -331± 1,033, 95%",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.736441+00:00"
+}

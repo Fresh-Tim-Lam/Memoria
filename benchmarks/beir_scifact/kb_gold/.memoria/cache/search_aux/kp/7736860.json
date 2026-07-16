@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7736860",
+  "source_fingerprint": "e4b1f62d49b6675911402c39d758d641",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7736860",
+    "calcium-store-sensor-stromal-interaction-molecule-1-dependent-signaling-plays-an-important-role-in-cervical-cancer-growth,-migration,-and-angiogenesis."
+  ],
+  "key_phrases": [
+    "calcium",
+    "store",
+    "sensor",
+    "stromal",
+    "interaction",
+    "molecule",
+    "dependent",
+    "signaling"
+  ],
+  "summary_1l": "Calcium store sensor stromal-interaction molecule 1-dependent signaling plays an important role in cervical cancer growth, migration, and angiogenesis.",
+  "query_hits": [],
+  "embed_text": "7736860 Calcium store sensor stromal-interaction molecule 1-dependent signaling plays an important role in cervical cancer growth, migration, and angiogenesis. science scifact Store-operated Ca(2+) entry (SOCE) is the principal Ca(2+) entry mechanism in nonexcitable cells. Stromal-interaction molecule 1 (STIM1) is an endoplasmic reticulum Ca(2+) sensor that triggers SOCE activation. However, the role of STIM1 in… 7736860 calcium-store-sensor-stromal-interaction-molecule-1-dependent-signaling-plays-an-important-role-in-cervical-cancer-growth,-migration,-and-angiogenesis. calcium store sensor stromal interaction molecule dependent signaling Calcium store sensor stromal-interaction molecule 1-dependent signaling plays an important role in cervical cancer growth, migration, and angiogenesis. Calcium store sensor stromal-interaction molecule 1-dependent signaling plays an important role in cervical cancer growth, migration, and angiogenesis. Store-operated Ca(2+) entry (SOCE) is the principal Ca(2+) entry mechanism in nonexcitable cells. Stromal-interaction molecule 1 (STIM1) is an endoplasmic reticulum Ca(2+) sensor that triggers SOCE activation. However, the role of STIM1 in regulating cancer progression remains controversial and its clinical relevance is unclear. Here we show that STIM1-dependent signaling is important for cervical cancer cell proliferation, migration, and angiogenesis. STIM1 overexpression in tumor tissue is noted in 71% cases of early-stage cervical cancer. In tumor tissues, the level of STIM1 expression is significantly associated with the risk of metasta",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.127749+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "38502066",
+  "source_fingerprint": "af15bc09cd17fd3d826eb95de50d3262",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "38502066",
+    "il-2-receptor-signaling-is-essential-for-the-development-of-klrg1+-terminally-differentiated-t-regulatory-cells."
+  ],
+  "key_phrases": [
+    "il",
+    "receptor",
+    "signaling",
+    "essential",
+    "development",
+    "klrg1",
+    "terminally",
+    "differentiated"
+  ],
+  "summary_1l": "IL-2 receptor signaling is essential for the development of Klrg1+ terminally differentiated T regulatory cells.",
+  "query_hits": [],
+  "embed_text": "38502066 IL-2 receptor signaling is essential for the development of Klrg1+ terminally differentiated T regulatory cells. science scifact Thymic-derived natural T regulatory cells (Tregs) are characterized by functional and phenotypic heterogeneity. Recently, a small fraction of peripheral Tregs has been shown to express Klrg1, but it remains unclear as to what extent Klrg1… 38502066 il-2-receptor-signaling-is-essential-for-the-development-of-klrg1+-terminally-differentiated-t-regulatory-cells. il receptor signaling essential development klrg1 terminally differentiated IL-2 receptor signaling is essential for the development of Klrg1+ terminally differentiated T regulatory cells. IL-2 receptor signaling is essential for the development of Klrg1+ terminally differentiated T regulatory cells. Thymic-derived natural T regulatory cells (Tregs) are characterized by functional and phenotypic heterogeneity. Recently, a small fraction of peripheral Tregs has been shown to express Klrg1, but it remains unclear as to what extent Klrg1 defines a unique Treg subset. In this study, we show that Klrg1(+) Tregs represent a terminally differentiated Treg subset derived from Klrg1(-) Tregs. This subset is a recent Ag-responsive and highly activated short-lived Treg population that expresses enhanced levels of Treg suppressive molecules and that preferentially resides within mucosal tissues. The development of Klrg1(+) Tregs also requires extensive IL-2R signaling. This activity rep",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.588334+00:00"
+}

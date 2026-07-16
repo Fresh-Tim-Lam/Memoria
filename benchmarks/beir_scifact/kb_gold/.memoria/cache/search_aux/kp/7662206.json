@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7662206",
+  "source_fingerprint": "1edbcaecd38ac1d5dac15591f64da599",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7662206",
+    "a-century-of-cholesterol-and-coronaries:-from-plaques-to-genes-to-statins"
+  ],
+  "key_phrases": [
+    "century",
+    "cholesterol",
+    "coronaries",
+    "from",
+    "plaques",
+    "genes",
+    "statins",
+    "one"
+  ],
+  "summary_1l": "One-fourth of all deaths in industrialized countries result from coronary heart disease.",
+  "query_hits": [],
+  "embed_text": "7662206 A Century of Cholesterol and Coronaries: From Plaques to Genes to Statins science scifact One-fourth of all deaths in industrialized countries result from coronary heart disease. A century of research has revealed the essential causative agent: cholesterol-carrying low-density lipoprotein (LDL). LDL is controlled by specific… 7662206 a-century-of-cholesterol-and-coronaries:-from-plaques-to-genes-to-statins century cholesterol coronaries from plaques genes statins one One-fourth of all deaths in industrialized countries result from coronary heart disease. A Century of Cholesterol and Coronaries: From Plaques to Genes to Statins One-fourth of all deaths in industrialized countries result from coronary heart disease. A century of research has revealed the essential causative agent: cholesterol-carrying low-density lipoprotein (LDL). LDL is controlled by specific receptors (LDLRs) in liver that remove it from blood. Mutations that eliminate LDLRs raise LDL and cause heart attacks in childhood, whereas mutations that raise LDLRs reduce LDL and diminish heart attacks. If we are to eliminate coronary disease, lowering LDL should be the primary goal. Effective means to achieve this goal are currently available. The key questions are: who to treat, when to treat, and how long to treat.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.967401+00:00"
+}

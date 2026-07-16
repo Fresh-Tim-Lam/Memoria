@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "41087952",
+  "source_fingerprint": "af4170631f90c6efad2e309e7986ae81",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "41087952",
+    "ria1p-(ynl163c),-a-protein-similar-to-elongation-factors-2,-is-involved-in-the-biogenesis-of-the-60s-subunit-of-the-ribosome-in-saccharomyces-cerevisiae"
+  ],
+  "key_phrases": [
+    "ria1p",
+    "ynl163c",
+    "protein",
+    "similar",
+    "elongation",
+    "factors",
+    "involved",
+    "biogenesis"
+  ],
+  "summary_1l": "RIA1 (YNL163c) is a quasi-essential gene that e",
+  "query_hits": [],
+  "embed_text": "41087952 Ria1p (Ynl163c), a protein similar to elongation factors 2, is involved in the biogenesis of the 60S subunit of the ribosome in Saccharomyces cerevisiae science scifact RIA1 (YNL163c) is a quasi-essential gene that encodes a protein with strong similarities to elongation factors 2. Small C-terminal deletions in the protein lead to a severe growth defect. In the case of a 22-residue C-terminal deletion… 41087952 ria1p-(ynl163c),-a-protein-similar-to-elongation-factors-2,-is-involved-in-the-biogenesis-of-the-60s-subunit-of-the-ribosome-in-saccharomyces-cerevisiae ria1p ynl163c protein similar elongation factors involved biogenesis RIA1 (YNL163c) is a quasi-essential gene that e Ria1p (Ynl163c), a protein similar to elongation factors 2, is involved in the biogenesis of the 60S subunit of the ribosome in Saccharomyces cerevisiae RIA1 (YNL163c) is a quasi-essential gene that encodes a protein with strong similarities to elongation factors 2. Small C-terminal deletions in the protein lead to a severe growth defect. In the case of a 22-residue C-terminal deletion this can be suppressed by intragenic mutations in the RIA1 gene or dominant extragenic mutations in TIF6, which is thought to be involved in the biogenesis of the 60S subunit of the ribosome. The dominant TIF6 alleles can also suppress the phenotype associated with a complete deletion of the RIA1 gene. Depletion of Ria1p has a dramatic effect on the polysome profile: there is a severe reduction in the level",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.099551+00:00"
+}

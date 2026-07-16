@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29190724",
+  "source_fingerprint": "5219069da7a63ae41f748434d737ebd5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29190724",
+    "gene-methylation-in-gastric-cancer."
+  ],
+  "key_phrases": [
+    "gene",
+    "methylation",
+    "gastric",
+    "cancer",
+    "one",
+    "most",
+    "common",
+    "malignancies"
+  ],
+  "summary_1l": "Gene methylation in gastric cancer.",
+  "query_hits": [],
+  "embed_text": "29190724 Gene methylation in gastric cancer. science scifact Gastric cancer is one of the most common malignancies and remains the second leading cause of cancer-related death worldwide. Over 70% of new cases and deaths occur in developing countries. In the early years of the molecular biology… 29190724 gene-methylation-in-gastric-cancer. gene methylation gastric cancer one most common malignancies Gene methylation in gastric cancer. Gene methylation in gastric cancer. Gastric cancer is one of the most common malignancies and remains the second leading cause of cancer-related death worldwide. Over 70% of new cases and deaths occur in developing countries. In the early years of the molecular biology revolution, cancer research mainly focuses on genetic alterations, including gastric cancer. Epigenetic mechanisms are essential for normal development and maintenance of tissue-specific gene expression patterns in mammals. Disruption of epigenetic processes can lead to altered gene function and malignant cellular transformation. Recent advancements in the rapidly evolving field of cancer epigenetics have shown extensive reprogramming of every component of the epigenetic machinery in cancer, including DNA methylation, histon",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.688067+00:00"
+}

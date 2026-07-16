@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17454301",
+  "source_fingerprint": "2af34ec246bae198d3b0bbcd7fe6c62b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17454301",
+    "epidemiologic-studies-on-dengue-in-santiago-de-cuba,-1997."
+  ],
+  "key_phrases": [
+    "epidemiologic",
+    "studies",
+    "dengue",
+    "santiago",
+    "de",
+    "cuba",
+    "1997",
+    "small"
+  ],
+  "summary_1l": "Epidemiologic studies on Dengue in Santiago de Cuba, 1997.",
+  "query_hits": [],
+  "embed_text": "17454301 Epidemiologic studies on Dengue in Santiago de Cuba, 1997. science scifact A small, isolated outbreak of dengue hemorrhagic fever/dengue shock syndrome (DHF/DSS) due to dengue virus type 2 (DEN-2) was documented in Santiago de Cuba on the island of Cuba beginning in January 1997. There were 205 DHF/DSS cases, all… 17454301 epidemiologic-studies-on-dengue-in-santiago-de-cuba,-1997. epidemiologic studies dengue santiago de cuba 1997 small Epidemiologic studies on Dengue in Santiago de Cuba, 1997. Epidemiologic studies on Dengue in Santiago de Cuba, 1997. A small, isolated outbreak of dengue hemorrhagic fever/dengue shock syndrome (DHF/DSS) due to dengue virus type 2 (DEN-2) was documented in Santiago de Cuba on the island of Cuba beginning in January 1997. There were 205 DHF/DSS cases, all in persons older than age 15 years. All but three had evidence of a prior dengue infection, with the only known opportunity being the islandwide dengue virus type 1 (DEN-1) epidemic of 1977-1979. Virtually complete clinical and laboratory surveillance of overt disease was achieved. From December 1997 to January 1998, a random, age-stratified serum sample was obtained from 1,151 persons in 40 residential clusters in Santiago. Sera were tested for DEN-1 and DEN-2 neutralizing antibodies. The preval",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.794107+00:00"
+}

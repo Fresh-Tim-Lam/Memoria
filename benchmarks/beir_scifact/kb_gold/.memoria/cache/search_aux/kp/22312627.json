@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22312627",
+  "source_fingerprint": "8d48c3fc45e29f05859621b7b9f169c6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22312627",
+    "yqhc-regulates-transcription-of-the-adjacent-escherichia-coli-genes-yqhd-and-dkga-that-are-involved-in-furfural-tolerance"
+  ],
+  "key_phrases": [
+    "yqhc",
+    "regulates",
+    "transcription",
+    "adjacent",
+    "escherichia",
+    "coli",
+    "genes",
+    "yqhd"
+  ],
+  "summary_1l": "Previous results have demonstrated that the silencing of adjacent genes encodi",
+  "query_hits": [],
+  "embed_text": "22312627 YqhC regulates transcription of the adjacent Escherichia coli genes yqhD and dkgA that are involved in furfural tolerance science scifact Previous results have demonstrated that the silencing of adjacent genes encoding NADPH-dependent furfural oxidoreductases (yqhD dkgA) is responsible for increased furfural tolerance in an E. coli strain EMFR9 [Miller et al., Appl Environ… 22312627 yqhc-regulates-transcription-of-the-adjacent-escherichia-coli-genes-yqhd-and-dkga-that-are-involved-in-furfural-tolerance yqhc regulates transcription adjacent escherichia coli genes yqhd Previous results have demonstrated that the silencing of adjacent genes encodi YqhC regulates transcription of the adjacent Escherichia coli genes yqhD and dkgA that are involved in furfural tolerance Previous results have demonstrated that the silencing of adjacent genes encoding NADPH-dependent furfural oxidoreductases (yqhD dkgA) is responsible for increased furfural tolerance in an E. coli strain EMFR9 [Miller et al., Appl Environ Microbiol 75:4315–4323, 2009]. This gene silencing is now reported to result from the spontaneous insertion of an IS10 into the coding region of yqhC, an upstream gene. YqhC shares homology with transcriptional regulators belonging to the AraC/XylS family and was shown to act as a positive regulator of the adjacent operon encoding YqhD and DkgA. Regulation was demonstrated by constructing a chromosomal deletion of yqhC, a firefly lucife",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.552261+00:00"
+}

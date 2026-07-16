@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "11661377",
+  "source_fingerprint": "d712d2fcebdd5abab2e1d1315de9e495",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11661377"
+  ],
+  "key_phrases": [
+    "snares",
+    "engines",
+    "membrane",
+    "fusion",
+    "since",
+    "discovery",
+    "snare",
+    "proteins"
+  ],
+  "summary_1l": "Since the discovery of SNARE proteins in the late 1980s, SNAREs have been recognized as key components of protein complexes that drive membrane fusion.",
+  "query_hits": [],
+  "embed_text": "11661377 SNAREs — engines for membrane fusion science scifact Since the discovery of SNARE proteins in the late 1980s, SNAREs have been recognized as key components of protein complexes that drive membrane fusion. Despite considerable sequence divergence among SNARE proteins, their mechanism seems to… 11661377 snares engines membrane fusion since discovery snare proteins Since the discovery of SNARE proteins in the late 1980s, SNAREs have been recognized as key components of protein complexes that drive membrane fusion. SNAREs — engines for membrane fusion Since the discovery of SNARE proteins in the late 1980s, SNAREs have been recognized as key components of protein complexes that drive membrane fusion. Despite considerable sequence divergence among SNARE proteins, their mechanism seems to be conserved and is adaptable for fusion reactions as diverse as those involved in cell growth, membrane repair, cytokinesis and synaptic transmission. A fascinating picture of these robust nanomachines is emerging.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:06.901631+00:00"
+}

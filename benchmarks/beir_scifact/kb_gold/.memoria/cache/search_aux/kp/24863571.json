@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24863571",
+  "source_fingerprint": "2252968a35c5c3ce0c7ace20c9b78a5d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24863571",
+    "radioactive-labeling-of-mitochondrial-translation-products-in-cultured-cells."
+  ],
+  "key_phrases": [
+    "radioactive",
+    "labeling",
+    "mitochondrial",
+    "translation",
+    "products",
+    "cultured",
+    "cells",
+    "mammalian"
+  ],
+  "summary_1l": "Radioactive labeling of mitochondrial translation products in cultured cells.",
+  "query_hits": [],
+  "embed_text": "24863571 Radioactive labeling of mitochondrial translation products in cultured cells. science scifact The mammalian mitochondrial genome contains 37 genes, 13 of which encode polypeptide subunits in the enzyme complexes of the oxidative phosphorylation system. The other genes encode the rRNAs and tRNAs necessary for their translation. The… 24863571 radioactive-labeling-of-mitochondrial-translation-products-in-cultured-cells. radioactive labeling mitochondrial translation products cultured cells mammalian Radioactive labeling of mitochondrial translation products in cultured cells. Radioactive labeling of mitochondrial translation products in cultured cells. The mammalian mitochondrial genome contains 37 genes, 13 of which encode polypeptide subunits in the enzyme complexes of the oxidative phosphorylation system. The other genes encode the rRNAs and tRNAs necessary for their translation. The mitochondrial translation machinery is located in the mitochondrial matrix, and is exclusively dedicated to the synthesis of these 13 enzyme subunits. Mitochondrial disease in humans is often associated with defects in mitochondrial translation. This can manifest as a global decrease in the rate of mitochondrial protein synthesis, a decrease in the synthesis of specific polypeptides, the synthesis of abnormal polypeptides, or in altered stability of specific translation products",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.398553+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8856690",
+  "source_fingerprint": "d220ca5f0f57b002652a94f65fe02fba",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8856690",
+    "molecular-mechanisms-of-vitamin-d-action"
+  ],
+  "key_phrases": [
+    "molecular",
+    "mechanisms",
+    "vitamin",
+    "action",
+    "hormonal",
+    "metabolite",
+    "25",
+    "dihydroxyvitamin"
+  ],
+  "summary_1l": "The hormonal metabolite of vitamin D, 1α,25-dihydroxyvitamin D3 (1,25D), initiates biological responses via binding to the vitamin D receptor (VDR).",
+  "query_hits": [],
+  "embed_text": "8856690 Molecular Mechanisms of Vitamin D Action science scifact The hormonal metabolite of vitamin D, 1α,25-dihydroxyvitamin D3 (1,25D), initiates biological responses via binding to the vitamin D receptor (VDR). When occupied by 1,25D, VDR interacts with the retinoid X receptor (RXR) to form a… 8856690 molecular-mechanisms-of-vitamin-d-action molecular mechanisms vitamin action hormonal metabolite 25 dihydroxyvitamin The hormonal metabolite of vitamin D, 1α,25-dihydroxyvitamin D3 (1,25D), initiates biological responses via binding to the vitamin D receptor (VDR). Molecular Mechanisms of Vitamin D Action The hormonal metabolite of vitamin D, 1α,25-dihydroxyvitamin D3 (1,25D), initiates biological responses via binding to the vitamin D receptor (VDR). When occupied by 1,25D, VDR interacts with the retinoid X receptor (RXR) to form a heterodimer that binds to vitamin D responsive elements in the region of genes directly controlled by 1,25D. By recruiting complexes of either coactivators or corepressors, ligand-activated VDR-RXR modulates the transcription of genes encoding proteins that promulgate the traditional functions of vitamin D, including signaling intestinal calcium and phosphate absorption to effect skeletal and calcium homeostasis. Thus, vitamin D action in a particular cell depends upon the metabolic production or delivery of sufficient co",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.853367+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6599693",
+  "source_fingerprint": "f071dcc987bfc5e32e6310efe8a750c4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6599693",
+    "empirical-verification-of-evolutionary-theories-of-aging"
+  ],
+  "key_phrases": [
+    "empirical",
+    "verification",
+    "evolutionary",
+    "theories",
+    "aging",
+    "we",
+    "recently",
+    "selected"
+  ],
+  "summary_1l": "We recently selected 3 long-lived mutant strains of Saccharomyces cerevisiae by a lasting exposure to exogenous lithocholic acid.",
+  "query_hits": [],
+  "embed_text": "6599693 Empirical verification of evolutionary theories of aging science scifact We recently selected 3 long-lived mutant strains of Saccharomyces cerevisiae by a lasting exposure to exogenous lithocholic acid. Each mutant strain can maintain the extended chronological lifespan after numerous passages in medium without… 6599693 empirical-verification-of-evolutionary-theories-of-aging empirical verification evolutionary theories aging we recently selected We recently selected 3 long-lived mutant strains of Saccharomyces cerevisiae by a lasting exposure to exogenous lithocholic acid. Empirical verification of evolutionary theories of aging We recently selected 3 long-lived mutant strains of Saccharomyces cerevisiae by a lasting exposure to exogenous lithocholic acid. Each mutant strain can maintain the extended chronological lifespan after numerous passages in medium without lithocholic acid. In this study, we used these long-lived yeast mutants for empirical verification of evolutionary theories of aging. We provide evidence that the dominant polygenic trait extending longevity of each of these mutants 1) does not affect such key features of early-life fitness as the exponential growth rate, efficacy of post-exponential growth and fecundity; and 2) enhances such features of early-life fitness as susceptibility to chronic exogenous stresses, and the resistance to apopt",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.287434+00:00"
+}

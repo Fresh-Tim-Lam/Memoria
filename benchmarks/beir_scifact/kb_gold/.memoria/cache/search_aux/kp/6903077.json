@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6903077",
+  "source_fingerprint": "c7dca219408e50fddd063248fc865d40",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6903077",
+    "asymmetric-cryo-em-reconstruction-of-phage-ms2-reveals-genome-structure-in-situ"
+  ],
+  "key_phrases": [
+    "asymmetric",
+    "cryo",
+    "em",
+    "reconstruction",
+    "phage",
+    "ms2",
+    "reveals",
+    "genome"
+  ],
+  "summary_1l": "In single-stranded ribonucleic acid (RNA) viruses, virus capsid assembly and genome packaging are intertwined processes.",
+  "query_hits": [],
+  "embed_text": "6903077 Asymmetric cryo-EM reconstruction of phage MS2 reveals genome structure in situ science scifact In single-stranded ribonucleic acid (RNA) viruses, virus capsid assembly and genome packaging are intertwined processes. Using cryo-electron microscopy and single particle analysis we determined the asymmetric virion structure of… 6903077 asymmetric-cryo-em-reconstruction-of-phage-ms2-reveals-genome-structure-in-situ asymmetric cryo em reconstruction phage ms2 reveals genome In single-stranded ribonucleic acid (RNA) viruses, virus capsid assembly and genome packaging are intertwined processes. Asymmetric cryo-EM reconstruction of phage MS2 reveals genome structure in situ In single-stranded ribonucleic acid (RNA) viruses, virus capsid assembly and genome packaging are intertwined processes. Using cryo-electron microscopy and single particle analysis we determined the asymmetric virion structure of bacteriophage MS2, which includes 178 copies of the coat protein, a single copy of the A-protein and the RNA genome. This reveals that in situ, the viral RNA genome can adopt a defined conformation. The RNA forms a branched network of stem-loops that almost all allocate near the capsid inner surface, while predominantly binding to coat protein dimers that are located in one-half of the capsid. This suggests that genomic RNA is highly involved in genome packaging and virion assembly.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.909178+00:00"
+}

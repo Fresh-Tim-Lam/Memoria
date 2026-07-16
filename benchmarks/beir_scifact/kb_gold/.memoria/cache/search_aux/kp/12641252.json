@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12641252",
+  "source_fingerprint": "26bf4b767b57dc6fceafdbdc37474cb0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12641252",
+    "calreticulin-exposure-dictates-the-immunogenicity-of-cancer-cell-death"
+  ],
+  "key_phrases": [
+    "calreticulin",
+    "exposure",
+    "dictates",
+    "immunogenicity",
+    "cancer",
+    "cell",
+    "death",
+    "anthracyclin"
+  ],
+  "summary_1l": "Anthracyclin-treated tumor cells are particularly effective in eliciting an anticancer immune response, whereas other DNA-damagin",
+  "query_hits": [],
+  "embed_text": "12641252 Calreticulin exposure dictates the immunogenicity of cancer cell death science scifact Anthracyclin-treated tumor cells are particularly effective in eliciting an anticancer immune response, whereas other DNA-damaging agents such as etoposide and mitomycin C do not induce immunogenic cell death. Here we show that… 12641252 calreticulin-exposure-dictates-the-immunogenicity-of-cancer-cell-death calreticulin exposure dictates immunogenicity cancer cell death anthracyclin Anthracyclin-treated tumor cells are particularly effective in eliciting an anticancer immune response, whereas other DNA-damagin Calreticulin exposure dictates the immunogenicity of cancer cell death Anthracyclin-treated tumor cells are particularly effective in eliciting an anticancer immune response, whereas other DNA-damaging agents such as etoposide and mitomycin C do not induce immunogenic cell death. Here we show that anthracyclins induce the rapid, preapoptotic translocation of calreticulin (CRT) to the cell surface. Blockade or knockdown of CRT suppressed the phagocytosis of anthracyclin-treated tumor cells by dendritic cells and abolished their immunogenicity in mice. The anthracyclin-induced CRT translocation was mimicked by inhibition of the protein phosphatase 1/GADD34 complex. Administration of recombinant CRT or inhibitors of protein phosphatase 1/GADD34 restored the immunogenicity of cell death elicit",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:08.679167+00:00"
+}

@@ -99,7 +99,7 @@ def audit_file_graph_links(
     sidecar = sidecar or {}
     kps = resolve_knowledge_points(body, sidecar)
     ranges = kp_ranges_from_resolved(kps)
-    _, link_edges = derive_file_graph_edges(
+    _, link_edges, _sidecar_edges = derive_file_graph_edges(
         rel_path, body, sidecar, resolve_target_kp=resolve_target_kp
     )
     derived_by_source = _derived_outgoing_by_source(link_edges)

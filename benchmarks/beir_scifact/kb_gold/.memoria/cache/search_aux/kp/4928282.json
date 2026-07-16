@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "4928282",
+  "source_fingerprint": "702e39bcfc066f813d6c6b4ee87088dd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4928282"
+  ],
+  "key_phrases": [
+    "tunable",
+    "diffusion",
+    "consumption",
+    "mechanism",
+    "cytokine",
+    "propagation",
+    "enables",
+    "plasticity"
+  ],
+  "summary_1l": "&NA; Immune cells communicate by exchanging cytokines to achieve",
+  "query_hits": [],
+  "embed_text": "4928282 A Tunable Diffusion‐Consumption Mechanism of Cytokine Propagation Enables Plasticity in Cell‐to‐Cell Communication in the Immune System science scifact &NA; Immune cells communicate by exchanging cytokines to achieve a context‐appropriate response, but the distances over which such communication happens are not known. Here, we used theoretical considerations and experimental models of… 4928282 tunable diffusion consumption mechanism cytokine propagation enables plasticity &NA; Immune cells communicate by exchanging cytokines to achieve A Tunable Diffusion‐Consumption Mechanism of Cytokine Propagation Enables Plasticity in Cell‐to‐Cell Communication in the Immune System &NA; Immune cells communicate by exchanging cytokines to achieve a context‐appropriate response, but the distances over which such communication happens are not known. Here, we used theoretical considerations and experimental models of immune responses in vitro and in vivo to quantify the spatial extent of cytokine communications in dense tissues. We established that competition between cytokine diffusion and consumption generated spatial niches of high cytokine concentrations with sharp boundaries. The size of these self‐assembled niches scaled with the density of cytokine‐consuming cells, a parameter that gets tuned during immune responses. In vivo, we m",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.777807+00:00"
+}

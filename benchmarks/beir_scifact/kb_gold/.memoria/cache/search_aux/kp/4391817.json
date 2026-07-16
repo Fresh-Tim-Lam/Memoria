@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4391817",
+  "source_fingerprint": "4ea7fcdf2a17af6fb097fc40fa84090b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4391817",
+    "chromothripsis-from-dna-damage-in-micronuclei"
+  ],
+  "key_phrases": [
+    "chromothripsis",
+    "from",
+    "dna",
+    "damage",
+    "micronuclei",
+    "genome",
+    "sequencing",
+    "has"
+  ],
+  "summary_1l": "Genome sequencing has uncovered a new mutational phenomenon in cancer and congenital disorders called chromothripsis.",
+  "query_hits": [],
+  "embed_text": "4391817 CHROMOTHRIPSIS FROM DNA DAMAGE IN MICRONUCLEI science scifact Genome sequencing has uncovered a new mutational phenomenon in cancer and congenital disorders called chromothripsis. Chromothripsis is characterized by extensive genomic rearrangements and an oscillating pattern of DNA copy number levels,… 4391817 chromothripsis-from-dna-damage-in-micronuclei chromothripsis from dna damage micronuclei genome sequencing has Genome sequencing has uncovered a new mutational phenomenon in cancer and congenital disorders called chromothripsis. CHROMOTHRIPSIS FROM DNA DAMAGE IN MICRONUCLEI Genome sequencing has uncovered a new mutational phenomenon in cancer and congenital disorders called chromothripsis. Chromothripsis is characterized by extensive genomic rearrangements and an oscillating pattern of DNA copy number levels, all curiously restricted to one or a few chromosomes. The mechanism for chromothripsis is unknown, but we previously proposed that it could occur through the physical isolation of chromosomes in aberrant nuclear structures called micronuclei. Here, using a combination of live cell imaging and single-cell genome sequencing, we demonstrate that micronucleus formation can indeed generate a spectrum of genomic rearrangements, some of which recapitulate all known features of chromothripsis. These events are restri",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.489955+00:00"
+}

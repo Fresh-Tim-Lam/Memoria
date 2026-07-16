@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23763738",
+  "source_fingerprint": "5560959c1b5545b302aab8ff1bef5a28",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23763738",
+    "new-colorimetric-cytotoxicity-assay-for-anticancer-drug-screening."
+  ],
+  "key_phrases": [
+    "new",
+    "colorimetric",
+    "cytotoxicity",
+    "assay",
+    "anticancer",
+    "drug",
+    "screening",
+    "we"
+  ],
+  "summary_1l": "New colorimetric cytotoxicity assay for anticancer-drug screening.",
+  "query_hits": [],
+  "embed_text": "23763738 New colorimetric cytotoxicity assay for anticancer-drug screening. science scifact We have developed a rapid, sensitive, and inexpensive method for measuring the cellular protein content of adherent and suspension cultures in 96-well microtiter plates. The method is suitable for ordinary laboratory purposes and for very… 23763738 new-colorimetric-cytotoxicity-assay-for-anticancer-drug-screening. new colorimetric cytotoxicity assay anticancer drug screening we New colorimetric cytotoxicity assay for anticancer-drug screening. New colorimetric cytotoxicity assay for anticancer-drug screening. We have developed a rapid, sensitive, and inexpensive method for measuring the cellular protein content of adherent and suspension cultures in 96-well microtiter plates. The method is suitable for ordinary laboratory purposes and for very large-scale applications, such as the National Cancer Institute's disease-oriented in vitro anticancer-drug discovery screen, which requires the use of several million culture wells per year. Cultures fixed with trichloroacetic acid were stained for 30 minutes with 0.4% (wt/vol) sulforhodamine B (SRB) dissolved in 1% acetic acid. Unbound dye was removed by four washes with 1% acetic acid, and protein-bound dye was extracted with 10 mM unbuffered Tris base [tris (hydroxymethyl)aminomethane]",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.089081+00:00"
+}

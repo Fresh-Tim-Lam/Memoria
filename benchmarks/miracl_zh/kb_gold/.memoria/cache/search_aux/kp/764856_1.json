@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "kp_id": "764856#1",
+  "source_fingerprint": "b46b42dcacf5a7a44afcf1c2736a7648",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "基督教",
+    "基督教派系",
+    "(基督教)",
+    "基督教历史",
+    "基督教原始主義",
+    "基督教教派列表",
+    "基督教象徵",
+    "東正教會",
+    "美國基督教"
+  ],
+  "aliases": [
+    "764856#1"
+  ],
+  "key_phrases": [
+    "正教",
+    "東方",
+    "基督教",
+    "西方",
+    "公教",
+    "新教",
+    "大系",
+    "zhengjiaodongfangjidujiaodezhengjiaoyuxifangjidujiaodegongjiaoxinjiaoshijidujiaodesandaxitong"
+  ],
+  "summary_1l": "東方基督教的正教，與西方基督教的公教、新教，是基督教的三大系統。",
+  "query_hits": [],
+  "embed_text": "764856#1 正教 正教 東方基督教的正教，與西方基督教的公教、新教，是基督教的三大系統。 基督教 基督教派系 (基督教) 基督教历史 基督教原始主義 基督教教派列表 基督教象徵 東正教會 美國基督教 764856#1 正教 東方 基督教 西方 公教 新教 大系 zhengjiaodongfangjidujiaodezhengjiaoyuxifangjidujiaodegongjiaoxinjiaoshijidujiaodesandaxitong 東方基督教的正教，與西方基督教的公教、新教，是基督教的三大系統。 正教 東方基督教的正教，與西方基督教的公教、新教，是基督教的三大系統。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:21:00.569165+00:00"
+}

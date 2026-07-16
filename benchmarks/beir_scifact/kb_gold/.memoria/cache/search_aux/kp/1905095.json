@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1905095",
+  "source_fingerprint": "e7aff0ce49fab1575c94a279933e2025",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1905095",
+    "extracellular-vesicles-from-human-cardiac-progenitor-cells-inhibit-cardiomyocyte-apoptosis-and-improve-cardiac-function-after-myocardial-infarction."
+  ],
+  "key_phrases": [
+    "extracellular",
+    "vesicles",
+    "from",
+    "human",
+    "cardiac",
+    "progenitor",
+    "cells",
+    "inhibit"
+  ],
+  "summary_1l": "Extracellular vesicles from human cardiac progenitor cells inhibit cardiomyocyte apoptosis and improve cardiac function after myocardial infarction.",
+  "query_hits": [],
+  "embed_text": "1905095 Extracellular vesicles from human cardiac progenitor cells inhibit cardiomyocyte apoptosis and improve cardiac function after myocardial infarction. science scifact AIMS Recent evidence suggests that cardiac progenitor cells (CPCs) may improve cardiac function after injury. The underlying mechanisms are indirect, but their mediators remain unidentified. Exosomes and other secreted membrane vesicles,… 1905095 extracellular-vesicles-from-human-cardiac-progenitor-cells-inhibit-cardiomyocyte-apoptosis-and-improve-cardiac-function-after-myocardial-infarction. extracellular vesicles from human cardiac progenitor cells inhibit Extracellular vesicles from human cardiac progenitor cells inhibit cardiomyocyte apoptosis and improve cardiac function after myocardial infarction. Extracellular vesicles from human cardiac progenitor cells inhibit cardiomyocyte apoptosis and improve cardiac function after myocardial infarction. AIMS Recent evidence suggests that cardiac progenitor cells (CPCs) may improve cardiac function after injury. The underlying mechanisms are indirect, but their mediators remain unidentified. Exosomes and other secreted membrane vesicles, hereafter collectively referred to as extracellular vesicles (EVs), act as paracrine signalling mediators. Here, we report that EVs secreted by human CPCs are crucial cardioprotective agents. METHODS AND RESULTS CPCs were derived from atrial appendage explants from patients who underwent heart valve surgery. CPC-conditioned medium (CM) inhibited apoptosis in mouse HL-1 cardiomyocytic cells, while enhancing tub",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.086310+00:00"
+}

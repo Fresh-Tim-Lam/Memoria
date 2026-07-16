@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11887584",
+  "source_fingerprint": "17b4304f5094312a2daee551e46361d8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11887584",
+    "c-src-and-cooperating-partners-in-human-cancer."
+  ],
+  "key_phrases": [
+    "src",
+    "cooperating",
+    "partners",
+    "human",
+    "cancer",
+    "proto",
+    "oncogene",
+    "rarely"
+  ],
+  "summary_1l": "c-Src and cooperating partners in human cancer.",
+  "query_hits": [],
+  "embed_text": "11887584 c-Src and cooperating partners in human cancer. science scifact The proto-oncogene c-src is rarely mutated in human cancers, and when overexpressed in normal cells is non- or weakly oncogenic. These observations have raised doubts about the involvement of c-src in the etiology of human tumors. However,… 11887584 c-src-and-cooperating-partners-in-human-cancer. src cooperating partners human cancer proto oncogene rarely c-Src and cooperating partners in human cancer. c-Src and cooperating partners in human cancer. The proto-oncogene c-src is rarely mutated in human cancers, and when overexpressed in normal cells is non- or weakly oncogenic. These observations have raised doubts about the involvement of c-src in the etiology of human tumors. However, recent studies have shown that c-Src, a non-receptor tyrosine kinase, exhibits elevated protein levels and activity in numerous types of human cancers. Furthermore, it has been found to be a critical component of multiple signaling pathways that regulate proliferation, survival, metastasis, and angiogenesis. Because of its important role in these oncogenic processes, it represents a therapeutic target ripe for exploitation.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:07.766515+00:00"
+}

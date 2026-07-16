@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19958277",
+  "source_fingerprint": "e7aefd503ff66d7d74e645b032e4c8da",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19958277",
+    "recq-helicases:-caretakers-of-the-genome"
+  ],
+  "key_phrases": [
+    "recq",
+    "helicases",
+    "caretakers",
+    "genome",
+    "highly",
+    "conserved",
+    "from",
+    "bacteria"
+  ],
+  "summary_1l": "RecQ helicases are highly conserved from bacteria to man.",
+  "query_hits": [],
+  "embed_text": "19958277 RecQ helicases: caretakers of the genome science scifact RecQ helicases are highly conserved from bacteria to man. Germline mutations in three of the five known family members in humans give rise to debilitating disorders that are characterized by, amongst other things, a predisposition to the… 19958277 recq-helicases:-caretakers-of-the-genome recq helicases caretakers genome highly conserved from bacteria RecQ helicases are highly conserved from bacteria to man. RecQ helicases: caretakers of the genome RecQ helicases are highly conserved from bacteria to man. Germline mutations in three of the five known family members in humans give rise to debilitating disorders that are characterized by, amongst other things, a predisposition to the development of cancer. One of these disorders — Bloom's syndrome — is uniquely associated with a predisposition to cancers of all types. So how do RecQ helicases protect against cancer? They seem to maintain genomic stability by functioning at the interface between DNA replication and DNA repair.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.428851+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "86326468",
+  "source_fingerprint": "871b021f998366d073642d0f045eec85",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "86326468",
+    "gastropathies-in-the-lundehund"
+  ],
+  "key_phrases": [
+    "gastropathies",
+    "lundehund",
+    "mucin",
+    "profiles",
+    "gastric",
+    "mucosa",
+    "lundehunds",
+    "suffering"
+  ],
+  "summary_1l": "The mucin profiles of the gastric mucosa in Lundehunds suffering from intestinal lymphangiectasia were examined and compared to the mucin profiles in control dogs from o",
+  "query_hits": [],
+  "embed_text": "86326468 Gastropathies in the Lundehund science scifact The mucin profiles of the gastric mucosa in Lundehunds suffering from intestinal lymphangiectasia were examined and compared to the mucin profiles in control dogs from other breeds. A previous study performed on this material had shown… 86326468 gastropathies-in-the-lundehund gastropathies lundehund mucin profiles gastric mucosa lundehunds suffering The mucin profiles of the gastric mucosa in Lundehunds suffering from intestinal lymphangiectasia were examined and compared to the mucin profiles in control dogs from o Gastropathies in the Lundehund The mucin profiles of the gastric mucosa in Lundehunds suffering from intestinal lymphangiectasia were examined and compared to the mucin profiles in control dogs from other breeds. A previous study performed on this material had shown that all examined Lundehunds had gastritis and about 30% had gastric carcinoma. Neutral and acid mucins were identified using the periodic acid-Schiff (PAS) and Alcian blue (pH 2.5) periodic acid-Schiff (AB-PAS) methods. The acid mucins were divided into sialomucins and sulfomucins based on their reaction with high-iron diamine Alcian blue, pH 2.5 (HID-AB). In Lundehunds with chronic atrophic gastritis in the fundic and body regions the surface and foveolar epithelium showed a predominantly normal mucin profile although some Lu",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.294332+00:00"
+}

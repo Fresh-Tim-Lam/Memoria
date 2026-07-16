@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7039855",
+  "source_fingerprint": "5a25c4459efbbb3bae729b63695e455a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7039855",
+    "neuronal-activity-regulates-remyelination-via-glutamate-signalling-to-oligodendrocyte-progenitors"
+  ],
+  "key_phrases": [
+    "neuronal",
+    "activity",
+    "regulates",
+    "remyelination",
+    "via",
+    "glutamate",
+    "signalling",
+    "oligodendrocyte"
+  ],
+  "summary_1l": "Myelin regeneration can occur spontaneously in demyelinating diseases such as multiple sclerosis (MS).",
+  "query_hits": [],
+  "embed_text": "7039855 Neuronal activity regulates remyelination via glutamate signalling to oligodendrocyte progenitors science scifact Myelin regeneration can occur spontaneously in demyelinating diseases such as multiple sclerosis (MS). However, the underlying mechanisms and causes of its frequent failure remain incompletely understood. Here we show, using an in-vivo… 7039855 neuronal-activity-regulates-remyelination-via-glutamate-signalling-to-oligodendrocyte-progenitors neuronal activity regulates remyelination via glutamate signalling oligodendrocyte Myelin regeneration can occur spontaneously in demyelinating diseases such as multiple sclerosis (MS). Neuronal activity regulates remyelination via glutamate signalling to oligodendrocyte progenitors Myelin regeneration can occur spontaneously in demyelinating diseases such as multiple sclerosis (MS). However, the underlying mechanisms and causes of its frequent failure remain incompletely understood. Here we show, using an in-vivo remyelination model, that demyelinated axons are electrically active and generate de novo synapses with recruited oligodendrocyte progenitor cells (OPCs), which, early after lesion induction, sense neuronal activity by expressing AMPA (α-amino-3-hydroxy-5-methyl-4-isoxazolepropionic acid)/kainate receptors. Blocking neuronal activity, axonal vesicular release or AMPA receptors in demyelinated lesions results in reduced remyelination. In the absence of neuronal a",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.281881+00:00"
+}

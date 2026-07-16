@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24211561",
+  "source_fingerprint": "ffd2caa4a88f64082ff4e31e5908d721",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24211561",
+    "dexamethasone-decreases-vomiting-by-children-after-tonsillectomy."
+  ],
+  "key_phrases": [
+    "dexamethasone",
+    "decreases",
+    "vomiting",
+    "by",
+    "children",
+    "after",
+    "tonsillectomy",
+    "we"
+  ],
+  "summary_1l": "Dexamethasone decreases vomiting by children after tonsillectomy.",
+  "query_hits": [],
+  "embed_text": "24211561 Dexamethasone decreases vomiting by children after tonsillectomy. science scifact We evaluated the effect of dexamethasone on vomiting after elective tonsillectomy in 133 healthy children aged 2-12 yr in a randomized, stratified, blocked, double-blind, placebo-controlled study. General anesthesia was induced by… 24211561 dexamethasone-decreases-vomiting-by-children-after-tonsillectomy. dexamethasone decreases vomiting by children after tonsillectomy we Dexamethasone decreases vomiting by children after tonsillectomy. Dexamethasone decreases vomiting by children after tonsillectomy. We evaluated the effect of dexamethasone on vomiting after elective tonsillectomy in 133 healthy children aged 2-12 yr in a randomized, stratified, blocked, double-blind, placebo-controlled study. General anesthesia was induced by inhalation of N2O and halothane or intravenously (IV) with propofol. Anesthesia was maintained with N2O and halothane. Dexamethasone 150 micrograms/kg up to a maximum dose of 8 mg, or placebo, was administered IV before surgery. All patients received 1.5 mg/kg codeine intramuscularly (IM) intraoperatively. Perioperative IV fluids, management of emesis, postoperative pain and hospital discharge criteria were all standardized. The groups were similar with respect to number, age, weight, length of sur",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.973014+00:00"
+}

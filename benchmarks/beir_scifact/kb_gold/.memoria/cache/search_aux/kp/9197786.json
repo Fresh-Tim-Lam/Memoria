@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9197786",
+  "source_fingerprint": "835554d8f9e90d953f5e8b5e79693c14",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9197786",
+    "wnt5a-mediates-nerve-growth-factor-dependent-axonal-branching-and-growth-in-developing-sympathetic-neurons."
+  ],
+  "key_phrases": [
+    "wnt5a",
+    "mediates",
+    "nerve",
+    "growth",
+    "factor",
+    "dependent",
+    "axonal",
+    "branching"
+  ],
+  "summary_1l": "Wnt5a mediates nerve growth factor-dependent axonal branching and growth in developing sympathetic neurons.",
+  "query_hits": [],
+  "embed_text": "9197786 Wnt5a mediates nerve growth factor-dependent axonal branching and growth in developing sympathetic neurons. science scifact Nerve growth factor (NGF) is a potent survival and axon growth factor for neuronal populations in the peripheral nervous system. Although the mechanisms by which target-derived NGF influences survival of innervating neurons have been… 9197786 wnt5a-mediates-nerve-growth-factor-dependent-axonal-branching-and-growth-in-developing-sympathetic-neurons. wnt5a mediates nerve growth factor dependent axonal branching Wnt5a mediates nerve growth factor-dependent axonal branching and growth in developing sympathetic neurons. Wnt5a mediates nerve growth factor-dependent axonal branching and growth in developing sympathetic neurons. Nerve growth factor (NGF) is a potent survival and axon growth factor for neuronal populations in the peripheral nervous system. Although the mechanisms by which target-derived NGF influences survival of innervating neurons have been extensively investigated, its regulation of axonal growth and target innervation are just being elucidated. Here, we identify Wnt5a, a member of the Wnt family of secreted growth factors, as a key downstream effector of NGF in mediating axonal branching and growth in developing sympathetic neurons. Wnt5a is robustly expressed in sympathetic neurons when their axons are innervating NGF-expressing targets. NGF:TrkA signaling enhances neuronal expression of",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.421077+00:00"
+}

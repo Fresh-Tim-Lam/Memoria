@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "46451940",
+  "source_fingerprint": "a9ab314749f094db4892ceaa9f6266dc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "46451940",
+    "the-lateral-hypothalamus:-a-primary-site-mediating-excitatory-amino-acid-elicited-eating."
+  ],
+  "key_phrases": [
+    "lateral",
+    "hypothalamus",
+    "primary",
+    "site",
+    "mediating",
+    "excitatory",
+    "amino",
+    "acid"
+  ],
+  "summary_1l": "The lateral hypothalamus: a primary site mediating excitatory amino acid-elicited eating.",
+  "query_hits": [],
+  "embed_text": "46451940 The lateral hypothalamus: a primary site mediating excitatory amino acid-elicited eating. science scifact Lateral hypothalamic (LH) injections of the excitatory neurotransmitter glutamate, or its excitatory amino acid (EAA) agonists, kainic acid (KA), D,L-alpha-amino-3-hydroxy-5-methyl-isoxazole propionic acid (AMPA), or N-methyl-D-aspartic… 46451940 the-lateral-hypothalamus:-a-primary-site-mediating-excitatory-amino-acid-elicited-eating. lateral hypothalamus primary site mediating excitatory amino acid The lateral hypothalamus: a primary site mediating excitatory amino acid-elicited eating. The lateral hypothalamus: a primary site mediating excitatory amino acid-elicited eating. Lateral hypothalamic (LH) injections of the excitatory neurotransmitter glutamate, or its excitatory amino acid (EAA) agonists, kainic acid (KA), D,L-alpha-amino-3-hydroxy-5-methyl-isoxazole propionic acid (AMPA), or N-methyl-D-aspartic acid (NMDA), can rapidly elicit an intense feeding response in satiated rats. To determine whether the LH is the actual locus of this effect, we compared these compounds' ability to stimulate feeding when injected into the LH, versus when injected into sites bracketing this region. Food intake in groups of adult male rats was measured 1 h after injection of glutamate (30-900 nmol), KA (0.1-1.0 nmol), AMPA (0.33-3.3 nmol), NMDA (0.33-33.3 nmol) or vehicle, through chron",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.880353+00:00"
+}

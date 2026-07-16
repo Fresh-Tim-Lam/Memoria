@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1145473",
+  "source_fingerprint": "c39087cb844fd2459b9676387b203fb0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1145473",
+    "abnormalities-in-the-myeloid-progenitor-compartment-in-down-syndrome-fetal-liver-precede-acquisition-of-gata1-mutations."
+  ],
+  "key_phrases": [
+    "abnormalities",
+    "myeloid",
+    "progenitor",
+    "compartment",
+    "down",
+    "syndrome",
+    "fetal",
+    "liver"
+  ],
+  "summary_1l": "Abnormalities in the myeloid progenitor compartment in Down syndrome fetal liver precede acquisition of GATA1 mutations.",
+  "query_hits": [],
+  "embed_text": "1145473 Abnormalities in the myeloid progenitor compartment in Down syndrome fetal liver precede acquisition of GATA1 mutations. science scifact Down syndrome (DS) children have a high frequency of acute megakaryoblastic leukemia (AMKL) in early childhood. At least 2 in utero genetic events are required, although not sufficient, for DS-AMKL: trisomy 21 (T21) and… 1145473 abnormalities-in-the-myeloid-progenitor-compartment-in-down-syndrome-fetal-liver-precede-acquisition-of-gata1-mutations. abnormalities myeloid progenitor compartment down syndrome fetal liver Abnormalities in the myeloid progenitor compartment in Down syndrome fetal liver precede acquisition of GATA1 mutations. Abnormalities in the myeloid progenitor compartment in Down syndrome fetal liver precede acquisition of GATA1 mutations. Down syndrome (DS) children have a high frequency of acute megakaryoblastic leukemia (AMKL) in early childhood. At least 2 in utero genetic events are required, although not sufficient, for DS-AMKL: trisomy 21 (T21) and N-terminal-truncating GATA1 mutations. To investigate the role of T21 in DS-AMKL, we compared second trimester hemopoiesis in DS without GATA1 mutations to gestation-matched normal controls. In all DS fetal livers (FLs), but not marrows, megakaryocyte-erythroid progenitor frequency was increased (55.9% +/- 4% vs 17.1% +/- 3%, CD34(+)CD38(+) cells; P < .001) with common myeloid progenitors (19.6% +/- 2% vs 44.0% +/- 7%) and granulocyte-monocyte (GM) progen",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:06.541923+00:00"
+}

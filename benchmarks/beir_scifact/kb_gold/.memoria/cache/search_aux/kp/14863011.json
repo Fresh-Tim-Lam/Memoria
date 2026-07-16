@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14863011",
+  "source_fingerprint": "6431d50af0ebb7351a2b76d0e5e7792b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14863011",
+    "bcl2-regulation-by-the-melanocyte-master-regulator-mitf-modulates-lineage-survival-and-melanoma-cell-viability"
+  ],
+  "key_phrases": [
+    "bcl2",
+    "regulation",
+    "by",
+    "melanocyte",
+    "master",
+    "regulator",
+    "mitf",
+    "modulates"
+  ],
+  "summary_1l": "Kit/SCF signaling and Mitf-dependent transcription are both essential for melanocyte deve",
+  "query_hits": [],
+  "embed_text": "14863011 Bcl2 Regulation by the Melanocyte Master Regulator Mitf Modulates Lineage Survival and Melanoma Cell Viability science scifact Kit/SCF signaling and Mitf-dependent transcription are both essential for melanocyte development and pigmentation. To identify Mitf-dependent Kit transcriptional targets in primary melanocytes, microarray studies were undertaken. Among… 14863011 bcl2-regulation-by-the-melanocyte-master-regulator-mitf-modulates-lineage-survival-and-melanoma-cell-viability bcl2 regulation by melanocyte master regulator mitf modulates Kit/SCF signaling and Mitf-dependent transcription are both essential for melanocyte deve Bcl2 Regulation by the Melanocyte Master Regulator Mitf Modulates Lineage Survival and Melanoma Cell Viability Kit/SCF signaling and Mitf-dependent transcription are both essential for melanocyte development and pigmentation. To identify Mitf-dependent Kit transcriptional targets in primary melanocytes, microarray studies were undertaken. Among identified targets was BCL2, whose germline deletion produces melanocyte loss and which exhibited phenotypic synergy with Mitf in mice. BCL2's regulation by Mitf was verified in melanocytes and melanoma cells and by chromatin immunoprecipitation of the BCL2 promoter. Mitf also regulates BCL2 in osteoclasts, and both Mitf(mi/mi) and Bcl2(-/-) mice exhibit severe osteopetrosis. Disruption of Mitf in melanocytes or melanoma triggered profound apoptosis",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.792963+00:00"
+}

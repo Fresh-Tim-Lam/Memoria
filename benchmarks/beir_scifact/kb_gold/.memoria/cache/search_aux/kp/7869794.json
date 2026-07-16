@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "7869794",
+  "source_fingerprint": "564482f072a13ef1d487bef225f56a70",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7869794"
+  ],
+  "key_phrases": [
+    "calicum",
+    "microdomains",
+    "form",
+    "within",
+    "neutrophils",
+    "at",
+    "neutrophil",
+    "tumor"
+  ],
+  "summary_1l": "Ca2+ messages are broadly important in cellular signal transduction.",
+  "query_hits": [],
+  "embed_text": "7869794 Calicum microdomains form within neutrophils at the neutrophil–tumor cell synapse: role in antibody-dependent target cell apoptosis science scifact Ca2+ messages are broadly important in cellular signal transduction. In immune cells, Ca2+ signaling is an essential step in many forms of activation. Neutrophil-mediated antibody-dependent cell-mediated cytotoxicity (ADCC) is one form of… 7869794 calicum microdomains form within neutrophils at neutrophil tumor Ca2+ messages are broadly important in cellular signal transduction. Calicum microdomains form within neutrophils at the neutrophil–tumor cell synapse: role in antibody-dependent target cell apoptosis Ca2+ messages are broadly important in cellular signal transduction. In immune cells, Ca2+ signaling is an essential step in many forms of activation. Neutrophil-mediated antibody-dependent cell-mediated cytotoxicity (ADCC) is one form of leukocyte activation that plays an important role in tumor cell killing in vitro and in patient care. Using fluorescence methodologies, we found that neutrophils exhibit Ca2+ signals during ADCC directed against breast fibrosarcoma cells. Importantly, these signals were localized to Ca2+ microdomains at the neutrophil-to-tumor cell interface where they display dynamic features such as movement, fusion, and fission. These sign",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.363524+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1344498",
+  "source_fingerprint": "5c1ced94dd1a4b095d22cb85ba4cf4c5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1344498",
+    "glutaminolysis-activates-rag-mtorc1-signaling."
+  ],
+  "key_phrases": [
+    "glutaminolysis",
+    "activates",
+    "rag",
+    "mtorc1",
+    "signaling",
+    "amino",
+    "acids",
+    "control"
+  ],
+  "summary_1l": "Glutaminolysis activates Rag-mTORC1 signaling.",
+  "query_hits": [],
+  "embed_text": "1344498 Glutaminolysis activates Rag-mTORC1 signaling. science scifact Amino acids control cell growth via activation of the highly conserved kinase TORC1. Glutamine is a particularly important amino acid in cell growth control and metabolism. However, the role of glutamine in TORC1 activation remains poorly… 1344498 glutaminolysis-activates-rag-mtorc1-signaling. glutaminolysis activates rag mtorc1 signaling amino acids control Glutaminolysis activates Rag-mTORC1 signaling. Glutaminolysis activates Rag-mTORC1 signaling. Amino acids control cell growth via activation of the highly conserved kinase TORC1. Glutamine is a particularly important amino acid in cell growth control and metabolism. However, the role of glutamine in TORC1 activation remains poorly defined. Glutamine is metabolized through glutaminolysis to produce α-ketoglutarate. We demonstrate that glutamine in combination with leucine activates mammalian TORC1 (mTORC1) by enhancing glutaminolysis and α-ketoglutarate production. Inhibition of glutaminolysis prevented GTP loading of RagB and lysosomal translocation and subsequent activation of mTORC1. Constitutively active Rag heterodimer activated mTORC1 in the absence of glutaminolysis. Conversely, enhanced glutaminolysis or a cell-permeable α-ketog",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.247143+00:00"
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "dqn-discrete",
+  "source_fingerprint": "9b346e5beb4723806bd11a44dcaddd4d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "dqn-discrete"
+  ],
+  "key_phrases": [
+    "dqn",
+    "离散",
+    "控制算法",
+    "连续",
+    "控制",
+    "无关",
+    "lisankongzhisuanfayulianxukongzhiwuguan",
+    "dqn 离散控制算法，与连续控制无关。"
+  ],
+  "summary_1l": "DQN 离散控制算法，与连续控制无关。",
+  "query_hits": [],
+  "embed_text": "dqn-discrete 深度 Q 网络 dqn-family dqn-discrete dqn 离散 控制算法 连续 控制 无关 lisankongzhisuanfayulianxukongzhiwuguan dqn 离散控制算法，与连续控制无关。 DQN 离散控制算法，与连续控制无关。 DQN 离散控制算法，与连续控制无关。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T03:23:44.859881+00:00"
+}

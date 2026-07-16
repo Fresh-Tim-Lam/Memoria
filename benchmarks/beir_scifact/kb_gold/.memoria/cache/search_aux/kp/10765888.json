@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10765888",
+  "source_fingerprint": "ed8cc411d2d7ba77485bf49014f38502",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10765888",
+    "immune-cells-contribute-to-the-maintenance-of-neurogenesis-and-spatial-learning-abilities-in-adulthood"
+  ],
+  "key_phrases": [
+    "immune",
+    "cells",
+    "contribute",
+    "maintenance",
+    "neurogenesis",
+    "spatial",
+    "learning",
+    "abilities"
+  ],
+  "summary_1l": "Neurogenesis is known to take place in the adult brain.",
+  "query_hits": [],
+  "embed_text": "10765888 Immune cells contribute to the maintenance of neurogenesis and spatial learning abilities in adulthood science scifact Neurogenesis is known to take place in the adult brain. This work identifies T lymphocytes and microglia as being important to the maintenance of hippocampal neurogenesis and spatial learning abilities in adulthood. Hippocampal… 10765888 immune-cells-contribute-to-the-maintenance-of-neurogenesis-and-spatial-learning-abilities-in-adulthood immune cells contribute maintenance neurogenesis spatial learning abilities Neurogenesis is known to take place in the adult brain. Immune cells contribute to the maintenance of neurogenesis and spatial learning abilities in adulthood Neurogenesis is known to take place in the adult brain. This work identifies T lymphocytes and microglia as being important to the maintenance of hippocampal neurogenesis and spatial learning abilities in adulthood. Hippocampal neurogenesis induced by an enriched environment was associated with the recruitment of T cells and the activation of microglia. In immune-deficient mice, hippocampal neurogenesis was markedly impaired and could not be enhanced by environmental enrichment, but was restored and boosted by T cells recognizing a specific CNS antigen. CNS-specific T cells were also found to be required for spatial learning and memory and for the expression of brain-derived neurotrophic",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:05.458027+00:00"
+}

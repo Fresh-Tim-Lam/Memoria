@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13936152",
+  "source_fingerprint": "436e1f94edfcd9db8d90e6e551f40975",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13936152",
+    "an-actomyosin-based-barrier-inhibits-cell-mixing-at-compartmental-boundaries-in-drosophila-embryos"
+  ],
+  "key_phrases": [
+    "actomyosin",
+    "based",
+    "barrier",
+    "inhibits",
+    "cell",
+    "mixing",
+    "at",
+    "compartmental"
+  ],
+  "summary_1l": "Partitioning tissues into compartments that do not intermix is essential for the correct morphogenesi",
+  "query_hits": [],
+  "embed_text": "13936152 An actomyosin-based barrier inhibits cell mixing at compartmental boundaries in Drosophila embryos science scifact Partitioning tissues into compartments that do not intermix is essential for the correct morphogenesis of animal embryos and organs. Several hypotheses have been proposed to explain compartmental cell sorting, mainly differential adhesion,… 13936152 an-actomyosin-based-barrier-inhibits-cell-mixing-at-compartmental-boundaries-in-drosophila-embryos actomyosin based barrier inhibits cell mixing at compartmental Partitioning tissues into compartments that do not intermix is essential for the correct morphogenesi An actomyosin-based barrier inhibits cell mixing at compartmental boundaries in Drosophila embryos Partitioning tissues into compartments that do not intermix is essential for the correct morphogenesis of animal embryos and organs. Several hypotheses have been proposed to explain compartmental cell sorting, mainly differential adhesion, but also regulation of the cytoskeleton or of cell proliferation. Nevertheless, the molecular and cellular mechanisms that keep cells apart at boundaries remain unclear. Here we demonstrate, in early Drosophila melanogaster embryos, that actomyosin-based barriers stop cells from invading neighbouring compartments. Our analysis shows that cells can transiently invade neighbouring compartments, especially when they divide, but are then pushed back into their",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.668232+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13619127",
+  "source_fingerprint": "3ebe147db8de1b0eecbc2cdd5a9bcf46",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13619127",
+    "diabetes-treatments-and-risk-of-amputation,-blindness,-severe-kidney-failure,-hyperglycaemia,-and-hypoglycaemia:-open-cohort-study-in-primary-care"
+  ],
+  "key_phrases": [
+    "diabetes",
+    "treatments",
+    "risk",
+    "amputation",
+    "blindness",
+    "severe",
+    "kidney",
+    "failure"
+  ],
+  "summary_1l": "OBJECTIVE To assess the risks of amputation, blindnes",
+  "query_hits": [],
+  "embed_text": "13619127 Diabetes treatments and risk of amputation, blindness, severe kidney failure, hyperglycaemia, and hypoglycaemia: open cohort study in primary care science scifact OBJECTIVE To assess the risks of amputation, blindness, severe kidney failure, hyperglycaemia, and hypoglycaemia in patients with type 2 diabetes associated with prescribed diabetes drugs, particularly newer agents including gliptins or… 13619127 diabetes-treatments-and-risk-of-amputation,-blindness,-severe-kidney-failure,-hyperglycaemia,-and-hypoglycaemia:-open-cohort-study-in-primary-care diabetes treatments risk amputation blindness severe kidney failure OBJECTIVE To assess the risks of amputation, blindnes Diabetes treatments and risk of amputation, blindness, severe kidney failure, hyperglycaemia, and hypoglycaemia: open cohort study in primary care OBJECTIVE To assess the risks of amputation, blindness, severe kidney failure, hyperglycaemia, and hypoglycaemia in patients with type 2 diabetes associated with prescribed diabetes drugs, particularly newer agents including gliptins or glitazones (thiazolidinediones). DESIGN Open cohort study in primary care. SETTING 1243 practices contributing data to the QResearch database in England. PARTICIPANTS 469,688 patients with type 2 diabetes aged 25-84 years between 1 April 2007 and 31 January 2015. EXPOSURES Hypoglycaemic agents (glitazones, gliptins, metformin, sulphonylureas, insulin, and other) alone and in combination. MAIN OUTCOME MEASURES Fir",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:11.155114+00:00"
+}

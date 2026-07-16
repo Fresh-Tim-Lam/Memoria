@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8702697",
+  "source_fingerprint": "1ebf7cdda6d4ecb3a6af7b83a49d8b2d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8702697",
+    "mir-205-hinders-the-malignant-interplay-between-prostate-cancer-cells-and-associated-fibroblasts."
+  ],
+  "key_phrases": [
+    "mir",
+    "205",
+    "hinders",
+    "malignant",
+    "interplay",
+    "between",
+    "prostate",
+    "cancer"
+  ],
+  "summary_1l": "miR-205 hinders the malignant interplay between prostate cancer cells and associated fibroblasts.",
+  "query_hits": [],
+  "embed_text": "8702697 miR-205 hinders the malignant interplay between prostate cancer cells and associated fibroblasts. science scifact AIMS Tumor microenvironment is a strong determinant for the acquisition of metastatic potential of cancer cells. We have recently demonstrated that cancer-associated fibroblasts (CAFs) elicit a redox-dependent epithelial-mesenchymal… 8702697 mir-205-hinders-the-malignant-interplay-between-prostate-cancer-cells-and-associated-fibroblasts. mir 205 hinders malignant interplay between prostate cancer miR-205 hinders the malignant interplay between prostate cancer cells and associated fibroblasts. miR-205 hinders the malignant interplay between prostate cancer cells and associated fibroblasts. AIMS Tumor microenvironment is a strong determinant for the acquisition of metastatic potential of cancer cells. We have recently demonstrated that cancer-associated fibroblasts (CAFs) elicit a redox-dependent epithelial-mesenchymal transition (EMT) in prostate cancer (PCa) cells, driven by cycloxygenase-2/hypoxia-inducible factor-1 (HIF-1)/nuclear factor-κB pathway and enhancing tumor aggressiveness. Here, we investigated the involvement of microRNAs (miRNAs) in tumor-stroma interplay to identify possible tools to counteract oxidative stress and metastasis dissemination. RESULTS We found that miR-205 is the most downmodulated miRNA in PCa cells upon CAF stimulation, due to direct transcriptio",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.529974+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "42421723",
+  "source_fingerprint": "2569e78cb97ddfc1159f37e51f072c5e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "42421723",
+    "induction-of-galactokinase-in-saccharomyces-cerevisiae:-kinetics-of-induction-and-glucose-effects."
+  ],
+  "key_phrases": [
+    "induction",
+    "galactokinase",
+    "saccharomyces",
+    "cerevisiae",
+    "kinetics",
+    "glucose",
+    "effects",
+    "induced"
+  ],
+  "summary_1l": "Induction of galactokinase in Saccharomyces cerevisiae: kinetics of induction and glucose effects.",
+  "query_hits": [],
+  "embed_text": "42421723 Induction of galactokinase in Saccharomyces cerevisiae: kinetics of induction and glucose effects. science scifact The induced synthesis of galactokinase and the repressing effects of glucose on this synthesis have been investigated in whole yeast cells rendered permeable by treatment with dimethyl sulfoxide. It was found that the induction response of… 42421723 induction-of-galactokinase-in-saccharomyces-cerevisiae:-kinetics-of-induction-and-glucose-effects. induction galactokinase saccharomyces cerevisiae kinetics glucose effects induced Induction of galactokinase in Saccharomyces cerevisiae: kinetics of induction and glucose effects. Induction of galactokinase in Saccharomyces cerevisiae: kinetics of induction and glucose effects. The induced synthesis of galactokinase and the repressing effects of glucose on this synthesis have been investigated in whole yeast cells rendered permeable by treatment with dimethyl sulfoxide. It was found that the induction response of uninduced cells to galactose is clearly dependent on the nature of the carbon source upon which the culture was grown prior to exposure to galactose. Glucose-grown cells exhibited a long lag before induction, whereas lactate-grown cells exhibited induced synthesis within 8 min. A concentration of 0.5% galactose was found to be optimal for induction. The addition of glucose to yeast cultures growing on galactose resulted in a severe transient repression of s",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.015684+00:00"
+}

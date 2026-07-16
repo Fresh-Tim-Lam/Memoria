@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "41310252",
+  "source_fingerprint": "249c9175a8d486b91782aa1e0bf62626",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "41310252",
+    "dietary-fat-and-obesity:-evidence-from-epidemiology."
+  ],
+  "key_phrases": [
+    "dietary",
+    "fat",
+    "obesity",
+    "evidence",
+    "from",
+    "epidemiology",
+    "epidemiological",
+    "that"
+  ],
+  "summary_1l": "Dietary fat and obesity: evidence from epidemiology.",
+  "query_hits": [],
+  "embed_text": "41310252 Dietary fat and obesity: evidence from epidemiology. science scifact The epidemiological evidence that a high-fat diet promotes the development of obesity is considered suggestive but not definitive. The purpose of this paper is to provide a review of various epidemiological methods that have been used to… 41310252 dietary-fat-and-obesity:-evidence-from-epidemiology. dietary fat obesity evidence from epidemiology epidemiological that Dietary fat and obesity: evidence from epidemiology. Dietary fat and obesity: evidence from epidemiology. The epidemiological evidence that a high-fat diet promotes the development of obesity is considered suggestive but not definitive. The purpose of this paper is to provide a review of various epidemiological methods that have been used to address this issue as well as an updated summary of the existing evidence. Ecological studies describing dietary fat intake and obesity at the population level provide mixed results and are likely to be biased by both confounding and unknown data quality factors that differ systematically across the populations studied. Cross-sectional studies are generally in agreement that the concentration of fat in the diet is positively associated with relative weight. Prospective studies of diet in relation to subs",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.295311+00:00"
+}

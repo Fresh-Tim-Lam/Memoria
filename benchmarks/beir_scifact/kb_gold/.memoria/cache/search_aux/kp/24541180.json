@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24541180",
+  "source_fingerprint": "d643a65fb333c7f18680dee475cc8cd8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24541180",
+    "isolation-of-intact-nuclei-of-high-purity-from-mouse-liver."
+  ],
+  "key_phrases": [
+    "isolation",
+    "intact",
+    "nuclei",
+    "high",
+    "purity",
+    "from",
+    "mouse",
+    "liver"
+  ],
+  "summary_1l": "Isolation of intact nuclei of high purity from mouse liver.",
+  "query_hits": [],
+  "embed_text": "24541180 Isolation of intact nuclei of high purity from mouse liver. science scifact Current methods of nuclear isolation from liver disrupt the plasmalemmae via homogenization and separation of the nuclei by high centrifugal force (HCF) through gradients of sucrose or other substances for up to 80 min. The use of HCF for… 24541180 isolation-of-intact-nuclei-of-high-purity-from-mouse-liver. isolation intact nuclei high purity from mouse liver Isolation of intact nuclei of high purity from mouse liver. Isolation of intact nuclei of high purity from mouse liver. Current methods of nuclear isolation from liver disrupt the plasmalemmae via homogenization and separation of the nuclei by high centrifugal force (HCF) through gradients of sucrose or other substances for up to 80 min. The use of HCF for such a long time increases the potential for nuclear damage and degradation by endogenous proteases. We compared four combinations of alterations to classical nuclear isolation methods as follows. Mouse liver was gently crushed through a fine mesh with and without in vivo perfusion with collagenase. The cell suspension was centrifuged at 600 g to remove gross debris and then at moderate centrifugal force (MCF, 16,000 g) or high centrifugal force (HCF, 70,000 g) through sucrose gradients for 30 mi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.686254+00:00"
+}

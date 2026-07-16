@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "37405449",
+  "source_fingerprint": "0353230db7a59971fd96e7cb122518c0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "37405449",
+    "familial-gastroesophageal-reflux-and-development-of-barrett's-esophagus."
+  ],
+  "key_phrases": [
+    "familial",
+    "gastroesophageal",
+    "reflux",
+    "development",
+    "barrett",
+    "esophagus",
+    "family",
+    "elderly"
+  ],
+  "summary_1l": "Familial gastroesophageal reflux and development of Barrett's esophagus.",
+  "query_hits": [],
+  "embed_text": "37405449 Familial gastroesophageal reflux and development of Barrett's esophagus. science scifact The family of an elderly man with Barrett's esophagus was examined for gastroesophageal reflux and development of Barrett's esophagus. All five living children have gastroesophageal reflux or esophagitis, or both, and three have… 37405449 familial-gastroesophageal-reflux-and-development-of-barrett's-esophagus. familial gastroesophageal reflux development barrett esophagus family elderly Familial gastroesophageal reflux and development of Barrett's esophagus. Familial gastroesophageal reflux and development of Barrett's esophagus. The family of an elderly man with Barrett's esophagus was examined for gastroesophageal reflux and development of Barrett's esophagus. All five living children have gastroesophageal reflux or esophagitis, or both, and three have unequivocal Barrett's esophagus. Two third-generation descendents have gastroesophageal reflux. This pattern suggests autosomal dominant transmission of the gastroesophageal reflux trait. The family also has a high prevalence of cancer, which may represent the cancer family syndrome.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.423101+00:00"
+}

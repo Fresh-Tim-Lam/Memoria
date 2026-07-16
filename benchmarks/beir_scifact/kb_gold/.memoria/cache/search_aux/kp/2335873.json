@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2335873",
+  "source_fingerprint": "bc2c24cc41355dd692e778b8bbbb094a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2335873",
+    "arylsulfatase-b-improves-locomotor-function-after-mouse-spinal-cord-injury"
+  ],
+  "key_phrases": [
+    "arylsulfatase",
+    "improves",
+    "locomotor",
+    "function",
+    "after",
+    "mouse",
+    "spinal",
+    "cord"
+  ],
+  "summary_1l": "Bacterial chondroitinase ABC (ChaseABC) has been used to remove the inhibitory chondroitin sulfate chains from chondroitin su",
+  "query_hits": [],
+  "embed_text": "2335873 Arylsulfatase B Improves Locomotor Function after Mouse Spinal Cord Injury science scifact Bacterial chondroitinase ABC (ChaseABC) has been used to remove the inhibitory chondroitin sulfate chains from chondroitin sulfate proteoglycans to improve regeneration after rodent spinal cord injury. We hypothesized that the mammalian… 2335873 arylsulfatase-b-improves-locomotor-function-after-mouse-spinal-cord-injury arylsulfatase improves locomotor function after mouse spinal cord Bacterial chondroitinase ABC (ChaseABC) has been used to remove the inhibitory chondroitin sulfate chains from chondroitin su Arylsulfatase B Improves Locomotor Function after Mouse Spinal Cord Injury Bacterial chondroitinase ABC (ChaseABC) has been used to remove the inhibitory chondroitin sulfate chains from chondroitin sulfate proteoglycans to improve regeneration after rodent spinal cord injury. We hypothesized that the mammalian enzyme arylsulfatase B (ARSB) would also enhance recovery after mouse spinal cord injury. Application of the mammalian enzyme would be an attractive alternative to ChaseABC because of its more robust chemical stability and reduced immunogenicity. A one-time injection of human ARSB into injured mouse spinal cord eliminated immunoreactivity for chondroitin sulfates within five days, and up to 9 weeks after injury. After a moderate spinal cord injury, we observed improvements of locomot",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.353841+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15669393",
+  "source_fingerprint": "bd5bc63a92d5f7955fda4c76bee7b36e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15669393",
+    "brain-organization"
+  ],
+  "key_phrases": [
+    "brain",
+    "organization",
+    "transient",
+    "activation",
+    "estrogen",
+    "receptors",
+    "er",
+    "developing"
+  ],
+  "summary_1l": "Transient activation of estrogen receptors (ER) in the developing brain during a limited perinatal \"window of time\" is recognized as a key mechanism of defeminization of neural cont",
+  "query_hits": [],
+  "embed_text": "15669393 brain organization science scifact Transient activation of estrogen receptors (ER) in the developing brain during a limited perinatal \"window of time\" is recognized as a key mechanism of defeminization of neural control of reproductive function and sexual behavior. Two… 15669393 brain-organization brain organization transient activation estrogen receptors er developing Transient activation of estrogen receptors (ER) in the developing brain during a limited perinatal \"window of time\" is recognized as a key mechanism of defeminization of neural cont brain organization Transient activation of estrogen receptors (ER) in the developing brain during a limited perinatal \"window of time\" is recognized as a key mechanism of defeminization of neural control of reproductive function and sexual behavior. Two major ER isoforms, alpha and beta, are present in neural circuits that govern ovarian cycle and sexual behavior. Using highly selective ER agonists, this study provides the first evidence for distinct contribution of individual ER isoforms to the process of estrogen dependent defeminization. Neonatal activation of the ERalpha in female rats resulted in abrogation of cyclic ovarian activity and female sexual behavior in adulthood. These effects are associated with male-like alterations in the morphology of the anteroventral periventricular (",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.071164+00:00"
+}

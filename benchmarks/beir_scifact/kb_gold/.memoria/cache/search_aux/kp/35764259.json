@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "35764259",
+  "source_fingerprint": "b5405bc8220a4544e7e768f325d55a6f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "35764259",
+    "il-28,-il-29-and-their-class-ii-cytokine-receptor-il-28r"
+  ],
+  "key_phrases": [
+    "il",
+    "28",
+    "29",
+    "their",
+    "class",
+    "ii",
+    "cytokine",
+    "receptor"
+  ],
+  "summary_1l": "Cytokines play a critical role in modulating the innate and adaptive immune systems.",
+  "query_hits": [],
+  "embed_text": "35764259 IL-28, IL-29 and their class II cytokine receptor IL-28R science scifact Cytokines play a critical role in modulating the innate and adaptive immune systems. Here, we have identified from the human genomic sequence a family of three cytokines, designated interleukin 28A (IL-28A), IL-28B and IL-29, that are… 35764259 il-28,-il-29-and-their-class-ii-cytokine-receptor-il-28r il 28 29 their class ii cytokine receptor Cytokines play a critical role in modulating the innate and adaptive immune systems. IL-28, IL-29 and their class II cytokine receptor IL-28R Cytokines play a critical role in modulating the innate and adaptive immune systems. Here, we have identified from the human genomic sequence a family of three cytokines, designated interleukin 28A (IL-28A), IL-28B and IL-29, that are distantly related to type I interferons (IFNs) and the IL-10 family. We found that like type I IFNs, IL-28 and IL-29 were induced by viral infection and showed antiviral activity. However, IL-28 and IL-29 interacted with a heterodimeric class II cytokine receptor that consisted of IL-10 receptor β (IL-10Rβ) and an orphan class II receptor chain, designated IL-28Rα. This newly described cytokine family may serve as an alternative to type I IFNs in providing immunity to viral infection.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.588312+00:00"
+}

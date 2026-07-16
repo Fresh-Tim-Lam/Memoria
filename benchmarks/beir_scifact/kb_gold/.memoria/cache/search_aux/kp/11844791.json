@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11844791",
+  "source_fingerprint": "19fcd0ab667f1ee1088b4a040403637a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11844791",
+    "conserved-histone-variant-h2a.z-protects-euchromatin-from-the-ectopic-spread-of-silent-heterochromatin"
+  ],
+  "key_phrases": [
+    "conserved",
+    "histone",
+    "variant",
+    "h2a",
+    "protects",
+    "euchromatin",
+    "from",
+    "ectopic"
+  ],
+  "summary_1l": "Conserved Histone Variant H2A.",
+  "query_hits": [],
+  "embed_text": "11844791 Conserved Histone Variant H2A.Z Protects Euchromatin from the Ectopic Spread of Silent Heterochromatin science scifact Boundary elements hinder the spread of heterochromatin, yet these sites do not fully account for the preservation of adjacent euchromatin. Histone variant H2A.Z (Htz1 in yeast) replaces conventional H2A in many nucleosomes. Microarray… 11844791 conserved-histone-variant-h2a.z-protects-euchromatin-from-the-ectopic-spread-of-silent-heterochromatin conserved histone variant h2a protects euchromatin from ectopic Conserved Histone Variant H2A. Conserved Histone Variant H2A.Z Protects Euchromatin from the Ectopic Spread of Silent Heterochromatin Boundary elements hinder the spread of heterochromatin, yet these sites do not fully account for the preservation of adjacent euchromatin. Histone variant H2A.Z (Htz1 in yeast) replaces conventional H2A in many nucleosomes. Microarray analysis revealed that HTZ1-activated genes cluster near telomeres. The reduced expression of most of these genes in htz1Delta cells was reversed by the deletion of SIR2 (sir2Delta) suggesting that H2A.Z antagonizes telomeric silencing. Other Htz1-activated genes flank the silent HMR mating-type locus. Their requirement for Htz1 can be bypassed by sir2Delta or by a deletion encompassing the silencing nucleation sites in HMR. In htz1Delta cells, Sir2 and Sir3",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:07.204123+00:00"
+}

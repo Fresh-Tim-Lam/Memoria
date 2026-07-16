@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "35747505",
+  "source_fingerprint": "92ccc542349a28d5cfd64c8ae4b1b9a7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "35747505",
+    "nicotinic-acid-adenine-dinucleotide-2'-phosphate-(naadp)-binding-proteins-in-t-lymphocytes."
+  ],
+  "key_phrases": [
+    "nicotinic",
+    "acid",
+    "adenine",
+    "dinucleotide",
+    "phosphate",
+    "naadp",
+    "binding",
+    "proteins"
+  ],
+  "summary_1l": "Nicotinic Acid Adenine Dinucleotide 2'-Phosphate (NAADP) Binding Proteins in T-Lymphocytes.",
+  "query_hits": [],
+  "embed_text": "35747505 Nicotinic Acid Adenine Dinucleotide 2'-Phosphate (NAADP) Binding Proteins in T-Lymphocytes. science scifact Nicotinic acid adenine dinucleotide phosphate (NAADP) is a messenger that regulates calcium release from intracellular acidic stores. Although several channels, including two-pore channels (TPC), ryanodine receptor (RYR) and mucolipin… 35747505 nicotinic-acid-adenine-dinucleotide-2'-phosphate-(naadp)-binding-proteins-in-t-lymphocytes. nicotinic acid adenine dinucleotide phosphate naadp binding proteins Nicotinic Acid Adenine Dinucleotide 2'-Phosphate (NAADP) Binding Proteins in T-Lymphocytes. Nicotinic Acid Adenine Dinucleotide 2'-Phosphate (NAADP) Binding Proteins in T-Lymphocytes. Nicotinic acid adenine dinucleotide phosphate (NAADP) is a messenger that regulates calcium release from intracellular acidic stores. Although several channels, including two-pore channels (TPC), ryanodine receptor (RYR) and mucolipin (TRP-ML1) have been implicated in NAADP regulation of calcium signaling, the NAADP receptor has not been identified. In this study, the photoaffinity probe, [32P]-5-azido-NAADP ([32P]-5-N3-NAADP), was used to study NAADP binding proteins in extracts from NAADP responsive Jurkat T-lymphocytes. [32P]-5-N3-NAADP photolabeling of Jurkat S100 cytosolic fractions resulted in the labeling of at least ten distinct proteins. Several of these S100 proteins, including a doublet a",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.564149+00:00"
+}

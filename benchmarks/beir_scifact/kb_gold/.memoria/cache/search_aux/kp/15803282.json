@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15803282",
+  "source_fingerprint": "732dc5e5a34888d4c675ec15a555022e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15803282",
+    "histone-demethylase-expression-enhances-human-somatic-cell-nuclear-transfer-efficiency-and-promotes-derivation-of-pluripotent-stem-cells."
+  ],
+  "key_phrases": [
+    "histone",
+    "demethylase",
+    "expression",
+    "enhances",
+    "human",
+    "somatic",
+    "cell",
+    "nuclear"
+  ],
+  "summary_1l": "Histone Demethylase Expression Enhances Human Somatic Cell Nuclear Transfer Efficiency and Promotes Derivation of Pluripotent Stem Cells.",
+  "query_hits": [],
+  "embed_text": "15803282 Histone Demethylase Expression Enhances Human Somatic Cell Nuclear Transfer Efficiency and Promotes Derivation of Pluripotent Stem Cells. science scifact The extremely low efficiency of human embryonic stem cell (hESC) derivation using somatic cell nuclear transfer (SCNT) limits its potential application. Blastocyst formation from human SCNT embryos occurs at a low rate and with only some… 15803282 histone-demethylase-expression-enhances-human-somatic-cell-nuclear-transfer-efficiency-and-promotes-derivation-of-pluripotent-stem-cells. histone demethylase expression enhances human somatic cell nuclear Histone Demethylase Expression Enhances Human Somatic Cell Nuclear Transfer Efficiency and Promotes Derivation of Pluripotent Stem Cells. Histone Demethylase Expression Enhances Human Somatic Cell Nuclear Transfer Efficiency and Promotes Derivation of Pluripotent Stem Cells. The extremely low efficiency of human embryonic stem cell (hESC) derivation using somatic cell nuclear transfer (SCNT) limits its potential application. Blastocyst formation from human SCNT embryos occurs at a low rate and with only some oocyte donors. We previously showed in mice that reduction of histone H3 lysine 9 trimethylation (H3K9me3) through ectopic expression of the H3K9me3 demethylase Kdm4d greatly improves SCNT embryo development. Here we show that overexpression of a related H3K9me3 demethylase KDM4A improves human SCNT, and that, as in mice, H3K9me3 in the human somatic cell genome is an SCNT reprogramming barrier. Overexpression of KDM4A s",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.276802+00:00"
+}

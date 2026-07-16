@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "5386514",
+  "source_fingerprint": "6f6f5f58ebebb583c6ae8ca7f26f8d5e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5386514"
+  ],
+  "key_phrases": [
+    "activation",
+    "nlrp3",
+    "inflammasome",
+    "dendritic",
+    "cells",
+    "induces",
+    "il",
+    "dependent"
+  ],
+  "summary_1l": "The therapeutic efficacy of anticancer chemotherapies may depend on dendritic cells (DC",
+  "query_hits": [],
+  "embed_text": "5386514 Activation of the NLRP3 inflammasome in dendritic cells induces IL-1β–dependent adaptive immunity against tumors science scifact The therapeutic efficacy of anticancer chemotherapies may depend on dendritic cells (DCs), which present antigens from dying cancer cells to prime tumor-specific interferon-γ (IFN-γ)–producing T lymphocytes. Here we show that dying tumor… 5386514 activation nlrp3 inflammasome dendritic cells induces il dependent The therapeutic efficacy of anticancer chemotherapies may depend on dendritic cells (DC Activation of the NLRP3 inflammasome in dendritic cells induces IL-1β–dependent adaptive immunity against tumors The therapeutic efficacy of anticancer chemotherapies may depend on dendritic cells (DCs), which present antigens from dying cancer cells to prime tumor-specific interferon-γ (IFN-γ)–producing T lymphocytes. Here we show that dying tumor cells release ATP, which then acts on P2X7 purinergic receptors from DCs and triggers the NOD-like receptor family, pyrin domain containing-3 protein (NLRP3)-dependent caspase-1 activation complex ('inflammasome'), allowing for the secretion of interleukin-1β (IL-1β). The priming of IFN-γ–producing CD8+ T cells by dying tumor cells fails in the absence of a functional IL-1 receptor 1 and in Nlpr3-deficient (Nlrp3−/−) or caspase-1–deficient (Casp",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.103948+00:00"
+}

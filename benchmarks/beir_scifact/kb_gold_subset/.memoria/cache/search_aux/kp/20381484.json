@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20381484",
+  "source_fingerprint": "7e773d74151c025a97296013f6c087e8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20381484",
+    "gapdh-mediates-nitrosylation-of-nuclear-proteins"
+  ],
+  "key_phrases": [
+    "gapdh",
+    "mediates",
+    "nitrosylation",
+    "nuclear",
+    "proteins",
+    "by",
+    "nitric",
+    "oxide"
+  ],
+  "summary_1l": "S-nitrosylation of proteins by nitric oxide is a major mode of signalling in cells.",
+  "query_hits": [],
+  "embed_text": "20381484 GAPDH Mediates Nitrosylation of Nuclear Proteins science scifact S-nitrosylation of proteins by nitric oxide is a major mode of signalling in cells. S-nitrosylation can mediate the regulation of a range of proteins, including prominent nuclear proteins, such as HDAC2 (ref. 2) and PARP1 (ref. 3). The… 20381484 gapdh-mediates-nitrosylation-of-nuclear-proteins gapdh mediates nitrosylation nuclear proteins by nitric oxide S-nitrosylation of proteins by nitric oxide is a major mode of signalling in cells. GAPDH Mediates Nitrosylation of Nuclear Proteins S-nitrosylation of proteins by nitric oxide is a major mode of signalling in cells. S-nitrosylation can mediate the regulation of a range of proteins, including prominent nuclear proteins, such as HDAC2 (ref. 2) and PARP1 (ref. 3). The high reactivity of the nitric oxide group with protein thiols, but the selective nature of nitrosylation within the cell, implies the existence of targeting mechanisms. Specificity of nitric oxide signalling is often achieved by the binding of nitric oxide synthase (NOS) to target proteins, either directly or through scaffolding proteins such as PSD-95 (ref. 5) and CAPON. As the three principal isoforms of NOS--neuronal NOS (nNOS), endothelial NOS (eNOS) and inducible NOS (iNOS)--are primarily non-nuclear, the",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:12.267913+00:00"
+}

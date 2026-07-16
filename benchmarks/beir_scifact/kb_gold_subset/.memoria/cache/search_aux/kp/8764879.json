@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8764879",
+  "source_fingerprint": "6b51126c103613af6dac4c0a101bfc58",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8764879",
+    "pu.1-mediated-upregulation-of-csf1r-is-crucial-for-leukemia-stem-cell-potential-induced-by-moz-tif2"
+  ],
+  "key_phrases": [
+    "pu.1",
+    "mediated",
+    "upregulation",
+    "csf1r",
+    "crucial",
+    "leukemia",
+    "stem",
+    "cell"
+  ],
+  "summary_1l": "PU.",
+  "query_hits": [],
+  "embed_text": "8764879 PU.1-mediated upregulation of CSF1R is crucial for leukemia stem cell potential induced by MOZ-TIF2 science scifact Leukemias and other cancers possess self-renewing stem cells that help to maintain the cancer. Cancer stem cell eradication is thought to be crucial for successful anticancer therapy. Using an acute myeloid leukemia (AML) model induced by… 8764879 pu.1-mediated-upregulation-of-csf1r-is-crucial-for-leukemia-stem-cell-potential-induced-by-moz-tif2 pu.1 mediated upregulation csf1r crucial leukemia stem cell PU. PU.1-mediated upregulation of CSF1R is crucial for leukemia stem cell potential induced by MOZ-TIF2 Leukemias and other cancers possess self-renewing stem cells that help to maintain the cancer. Cancer stem cell eradication is thought to be crucial for successful anticancer therapy. Using an acute myeloid leukemia (AML) model induced by the leukemia-associated monocytic leukemia zinc finger (MOZ)-TIF2 fusion protein, we show here that AML can be cured by the ablation of leukemia stem cells. The MOZ fusion proteins MOZ-TIF2 and MOZ-CBP interacted with the transcription factor PU.1 to stimulate the expression of macrophage colony–stimulating factor receptor (CSF1R, also known as M-CSFR, c-FMS or CD115). Studies using PU.1-deficient mice showed that PU.1 is essential for the ability of MOZ-TI",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:13.984867+00:00"
+}

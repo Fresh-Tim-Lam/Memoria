@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21564598",
+  "source_fingerprint": "5396973f2094e459a6de84ce3bdc924a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21564598",
+    "regulation-of-beta-catenin-signaling-and-parathyroid-hormone-anabolic-effects-in-bone-by-the-matricellular-protein-periostin."
+  ],
+  "key_phrases": [
+    "regulation",
+    "beta",
+    "catenin",
+    "signaling",
+    "parathyroid",
+    "hormone",
+    "anabolic",
+    "effects"
+  ],
+  "summary_1l": "Regulation of beta catenin signaling and parathyroid hormone anabolic effects in bone by the matricellular protein periostin.",
+  "query_hits": [],
+  "embed_text": "21564598 Regulation of beta catenin signaling and parathyroid hormone anabolic effects in bone by the matricellular protein periostin. science scifact Periostin (Postn) is a matricellular protein preferentially expressed by osteocytes and periosteal osteoblasts in response to mechanical stimulation and parathyroid hormone (PTH). Whether and how periostin expression influences bone… 21564598 regulation-of-beta-catenin-signaling-and-parathyroid-hormone-anabolic-effects-in-bone-by-the-matricellular-protein-periostin. regulation beta catenin signaling parathyroid hormone anabolic effects Regulation of beta catenin signaling and parathyroid hormone anabolic effects in bone by the matricellular protein periostin. Regulation of beta catenin signaling and parathyroid hormone anabolic effects in bone by the matricellular protein periostin. Periostin (Postn) is a matricellular protein preferentially expressed by osteocytes and periosteal osteoblasts in response to mechanical stimulation and parathyroid hormone (PTH). Whether and how periostin expression influences bone anabolism, however, remains unknown. We investigated the skeletal response of adult Postn(-/-) and Postn(+/+) mice to intermittent PTH. Compared with Postn(+/+), Postn(-/-) mice had a lower bone mass, cortical bone volume, and strength response to PTH. PTH-stimulated bone-forming indices were all significantly lower in Postn(-/-) mice, particularly at the periosteum. Furthermore, in vivo stimulation of Wnt-β-catenin signaling by PTH, as",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.403847+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13256155",
+  "source_fingerprint": "a0c0506795b6f6c12620faeadb7a7ae2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13256155",
+    "molecularly-targeted-therapy-based-on-tumour-molecular-profiling-versus-conventional-therapy-for-advanced-cancer-(shiva):-a-multicentre,-open-label,-proof-of-concept,-randomised,-controlled-phase-2-trial."
+  ],
+  "key_phrases": [
+    "molecularly",
+    "targeted",
+    "therapy",
+    "based",
+    "tumour",
+    "molecular",
+    "profiling",
+    "versus"
+  ],
+  "summary_1l": "Molecularly targeted therapy based on tumour molecular profiling versus conventional therapy for advanced cancer (SHIVA): a multicentre, open-label, proof-of-concept, randomised, controlled phase 2 tr",
+  "query_hits": [],
+  "embed_text": "13256155 Molecularly targeted therapy based on tumour molecular profiling versus conventional therapy for advanced cancer (SHIVA): a multicentre, open-label, proof-of-concept, randomised, controlled phase 2 trial. science scifact BACKGROUND Molecularly targeted agents have been reported to have anti-tumour activity for patients whose tumours harbour the matching molecular alteration. These results have led to increased off-label use of molecularly targeted agents… 13256155 molecularly-targeted-therapy-based-on-tumour-molecular-profiling-versus-conventional-therapy-for-advanced-cancer-(shiva):-a-multicentre,-open-label,-proof-of-concept,-randomised,-controlled-phase-2-trial. molecularly targeted therapy based tumour molecular profiling versus Molecularly targeted therapy based on tumour molecular profiling versus conventional therapy for advanced cancer (SHIVA): a multicentre, open-label, proof-of-concept, randomised, controlled phase 2 tr Molecularly targeted therapy based on tumour molecular profiling versus conventional therapy for advanced cancer (SHIVA): a multicentre, open-label, proof-of-concept, randomised, controlled phase 2 trial. BACKGROUND Molecularly targeted agents have been reported to have anti-tumour activity for patients whose tumours harbour the matching molecular alteration. These results have led to increased off-label use of molecularly targeted agents on the basis of identified molecular alterations. We assessed the efficacy of several molecularly targeted agents marketed in France, which were chosen on the basis of tumour molecular profiling but used outside their indications, in patients with advanced cancer for whom standard-of-care therapy had failed. METHODS The open-label, randomised, controlled",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:09.905710+00:00"
+}

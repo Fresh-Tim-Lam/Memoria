@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12315072",
+  "source_fingerprint": "39cc5e2e8acf858a6eacea3660da1838",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12315072",
+    "early-chromatin-unfolding-by-runx1:-a-molecular-explanation-for-differential-requirements-during-specification-versus-maintenance-of-the-hematopoietic-gene-expression-program."
+  ],
+  "key_phrases": [
+    "early",
+    "chromatin",
+    "unfolding",
+    "by",
+    "runx1",
+    "molecular",
+    "explanation",
+    "differential"
+  ],
+  "summary_1l": "Early chromatin unfolding by RUNX1: a molecular explanation for differential requirements during specification versus maintenance of the hematopoietic gene expression program.",
+  "query_hits": [],
+  "embed_text": "12315072 Early chromatin unfolding by RUNX1: a molecular explanation for differential requirements during specification versus maintenance of the hematopoietic gene expression program. science scifact At the cellular level, development progresses through successive regulatory states, each characterized by their specific gene expression profile. However, the molecular mechanisms regulating first the priming and then maintenance of gene… 12315072 early-chromatin-unfolding-by-runx1:-a-molecular-explanation-for-differential-requirements-during-specification-versus-maintenance-of-the-hematopoietic-gene-expression-program. early chromatin unfolding by runx1 molecular explanation differential Early chromatin unfolding by RUNX1: a molecular explanation for differential requirements during specification versus maintenance of the hematopoietic gene expression program. Early chromatin unfolding by RUNX1: a molecular explanation for differential requirements during specification versus maintenance of the hematopoietic gene expression program. At the cellular level, development progresses through successive regulatory states, each characterized by their specific gene expression profile. However, the molecular mechanisms regulating first the priming and then maintenance of gene expression within one developmental pathway are essentially unknown. The hematopoietic system represents a powerful experimental model to address these questions and here we have focused on a regulatory circuit playing a central role in myelopoiesis: the transcription factor PU.1, its target gene colony-stimulating-factor 1 receptor (Csf1r), and key upstream regulators such as RUNX1.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:08.142678+00:00"
+}

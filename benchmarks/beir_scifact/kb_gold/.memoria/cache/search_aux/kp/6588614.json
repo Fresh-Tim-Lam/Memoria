@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6588614",
+  "source_fingerprint": "5b8a8e8fc4ca49fd841ab5a482ab8b17",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6588614",
+    "characterization-of-a-fgf19-variant-with-altered-receptor-specificity-revealed-a-central-role-for-fgfr1c-in-the-regulation-of-glucose-metabolism"
+  ],
+  "key_phrases": [
+    "characterization",
+    "fgf19",
+    "variant",
+    "with",
+    "altered",
+    "receptor",
+    "specificity",
+    "revealed"
+  ],
+  "summary_1l": "Diabetes and associated metabolic conditions have reach",
+  "query_hits": [],
+  "embed_text": "6588614 Characterization of a FGF19 Variant with Altered Receptor Specificity Revealed a Central Role for FGFR1c in the Regulation of Glucose Metabolism science scifact Diabetes and associated metabolic conditions have reached pandemic proportions worldwide, and there is a clear unmet medical need for new therapies that are both effective and safe. FGF19 and FGF21 are distinctive members of the FGF family… 6588614 characterization-of-a-fgf19-variant-with-altered-receptor-specificity-revealed-a-central-role-for-fgfr1c-in-the-regulation-of-glucose-metabolism characterization fgf19 variant with altered receptor specificity revealed Diabetes and associated metabolic conditions have reach Characterization of a FGF19 Variant with Altered Receptor Specificity Revealed a Central Role for FGFR1c in the Regulation of Glucose Metabolism Diabetes and associated metabolic conditions have reached pandemic proportions worldwide, and there is a clear unmet medical need for new therapies that are both effective and safe. FGF19 and FGF21 are distinctive members of the FGF family that function as endocrine hormones. Both have potent effects on normalizing glucose, lipid, and energy homeostasis, and therefore, represent attractive potential next generation therapies for combating the growing epidemics of type 2 diabetes and obesity. The mechanism responsible for these impressive metabolic effects remains unknown. While both FGF19 and FGF21 can activate FGFRs 1c, 2c, and 3c in the presence",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.275616+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17991818",
+  "source_fingerprint": "4c2142e5a6d5328ceb357e1f5d2b87dd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17991818",
+    "the-origin-and-differentiation-of-microglial-cells-during-development"
+  ],
+  "key_phrases": [
+    "origin",
+    "differentiation",
+    "microglial",
+    "cells",
+    "during",
+    "development",
+    "some",
+    "authors"
+  ],
+  "summary_1l": "Some authors claim that microglia originate from the neuroepithelium, although most now believe that microglial cells are of mesod",
+  "query_hits": [],
+  "embed_text": "17991818 THE ORIGIN AND DIFFERENTIATION OF MICROGLIAL CELLS DURING DEVELOPMENT science scifact Some authors claim that microglia originate from the neuroepithelium, although most now believe that microglial cells are of mesodermal origin, and probably belong to the monocyte/macrophage cell line. These cells must enter the developing… 17991818 the-origin-and-differentiation-of-microglial-cells-during-development origin differentiation microglial cells during development some authors Some authors claim that microglia originate from the neuroepithelium, although most now believe that microglial cells are of mesod THE ORIGIN AND DIFFERENTIATION OF MICROGLIAL CELLS DURING DEVELOPMENT Some authors claim that microglia originate from the neuroepithelium, although most now believe that microglial cells are of mesodermal origin, and probably belong to the monocyte/macrophage cell line. These cells must enter the developing central nervous system (CNS) from the blood stream, the ventricular space or the meninges. Afterward microglial cells are distributed more or less homogeneously through the entire nervous parenchyma. Stereotyped patterns of migration have been recognized during development, in which long-distance tangential migration precedes radial migration of individual cells. Microglial cells moving through the nervous parenchyma are ameboid microglia, which apparently differentiate into ramified m",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.606330+00:00"
+}

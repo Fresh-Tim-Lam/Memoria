@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21602220",
+  "source_fingerprint": "156d8843d0e8b11921c8c163e6e4cee6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21602220",
+    "complex-physiology-and-compound-stress-responses-during-fermentation-of-alkali-pretreated-corn-stover-hydrolysate-by-an-escherichia-coli-ethanologen."
+  ],
+  "key_phrases": [
+    "complex",
+    "physiology",
+    "compound",
+    "stress",
+    "responses",
+    "during",
+    "fermentation",
+    "alkali"
+  ],
+  "summary_1l": "Complex physiology and compound stress responses during fermentation of alkali-pretreated corn stover hydrolysate by an Escherichia coli ethanologen.",
+  "query_hits": [],
+  "embed_text": "21602220 Complex physiology and compound stress responses during fermentation of alkali-pretreated corn stover hydrolysate by an Escherichia coli ethanologen. science scifact The physiology of ethanologenic Escherichia coli grown anaerobically in alkali-pretreated plant hydrolysates is complex and not well studied. To gain insight into how E. coli responds to such hydrolysates, we studied an E. coli K-12… 21602220 complex-physiology-and-compound-stress-responses-during-fermentation-of-alkali-pretreated-corn-stover-hydrolysate-by-an-escherichia-coli-ethanologen. complex physiology compound stress responses during fermentation alkali Complex physiology and compound stress responses during fermentation of alkali-pretreated corn stover hydrolysate by an Escherichia coli ethanologen. Complex physiology and compound stress responses during fermentation of alkali-pretreated corn stover hydrolysate by an Escherichia coli ethanologen. The physiology of ethanologenic Escherichia coli grown anaerobically in alkali-pretreated plant hydrolysates is complex and not well studied. To gain insight into how E. coli responds to such hydrolysates, we studied an E. coli K-12 ethanologen fermenting a hydrolysate prepared from corn stover pretreated by ammonia fiber expansion. Despite the high sugar content (∼6% glucose, 3% xylose) and relatively low toxicity of this hydrolysate, E. coli ceased growth long before glucose was depleted. Nevertheless, the cells remained metabolically active and continued conversion of glucose to ethanol until all glucose was consumed. Gene expression profi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.502160+00:00"
+}

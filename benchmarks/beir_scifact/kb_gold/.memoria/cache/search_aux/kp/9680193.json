@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9680193",
+  "source_fingerprint": "5bf0fb8cdea85a78f3c424a6c9448406",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9680193",
+    "vps22/eap30-in-escrt-ii-mediates-endosomal-sorting-of-growth-factor-and-chemokine-receptors-destined-for-lysosomal-degradation."
+  ],
+  "key_phrases": [
+    "vps22",
+    "eap30",
+    "escrt",
+    "ii",
+    "mediates",
+    "endosomal",
+    "sorting",
+    "growth"
+  ],
+  "summary_1l": "Vps22/EAP30 in ESCRT-II mediates endosomal sorting of growth factor and chemokine receptors destined for lysosomal degradation.",
+  "query_hits": [],
+  "embed_text": "9680193 Vps22/EAP30 in ESCRT-II mediates endosomal sorting of growth factor and chemokine receptors destined for lysosomal degradation. science scifact The ubiquitin-binding protein Hrs and endosomal sorting complex required for transport (ESCRT)-I and ESCRT-III are involved in sorting endocytosed and ubiquitinated receptors to lysosomes for degradation and efficient termination of… 9680193 vps22/eap30-in-escrt-ii-mediates-endosomal-sorting-of-growth-factor-and-chemokine-receptors-destined-for-lysosomal-degradation. vps22 eap30 escrt ii mediates endosomal sorting growth Vps22/EAP30 in ESCRT-II mediates endosomal sorting of growth factor and chemokine receptors destined for lysosomal degradation. Vps22/EAP30 in ESCRT-II mediates endosomal sorting of growth factor and chemokine receptors destined for lysosomal degradation. The ubiquitin-binding protein Hrs and endosomal sorting complex required for transport (ESCRT)-I and ESCRT-III are involved in sorting endocytosed and ubiquitinated receptors to lysosomes for degradation and efficient termination of signaling. In this study, we have investigated the role of the ESCRT-II subunit Vps22/EAP30 in degradative protein sorting of ubiquitinated receptors. Vps22 transiently expressed in HeLa cells was detected in endosomes containing endocytosed epidermal growth factor receptors (EGFRs) as well as Hrs and ESCRT-I and ESCRT-III. Depletion of Vps22 by small interfering RNA, which was accompanied by decreased levels of other ESCRT-II subunits",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.566289+00:00"
+}

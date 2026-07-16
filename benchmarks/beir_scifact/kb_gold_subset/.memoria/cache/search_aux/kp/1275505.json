@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1275505",
+  "source_fingerprint": "923fccac86640852080b2b56c9019621",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1275505",
+    "high-threshold-mechanosensitive-ion-channels-blocked-by-a-novel-conopeptide-mediate-pressure-evoked-pain"
+  ],
+  "key_phrases": [
+    "high",
+    "threshold",
+    "mechanosensitive",
+    "ion",
+    "channels",
+    "blocked",
+    "by",
+    "novel"
+  ],
+  "summary_1l": "Little is known about the molecular basis of somatosensory mechanotransduction in mammals.",
+  "query_hits": [],
+  "embed_text": "1275505 High-Threshold Mechanosensitive Ion Channels Blocked by a Novel Conopeptide Mediate Pressure-Evoked Pain science scifact Little is known about the molecular basis of somatosensory mechanotransduction in mammals. We screened a library of peptide toxins for effects on mechanically activated currents in cultured dorsal root ganglion neurons. One conopeptide… 1275505 high-threshold-mechanosensitive-ion-channels-blocked-by-a-novel-conopeptide-mediate-pressure-evoked-pain high threshold mechanosensitive ion channels blocked by novel Little is known about the molecular basis of somatosensory mechanotransduction in mammals. High-Threshold Mechanosensitive Ion Channels Blocked by a Novel Conopeptide Mediate Pressure-Evoked Pain Little is known about the molecular basis of somatosensory mechanotransduction in mammals. We screened a library of peptide toxins for effects on mechanically activated currents in cultured dorsal root ganglion neurons. One conopeptide analogue, termed NMB-1 for noxious mechanosensation blocker 1, selectively inhibits (IC50 1 µM) sustained mechanically activated currents in a subset of sensory neurons. Biotinylated NMB-1 retains activity and binds selectively to peripherin-positive nociceptive sensory neurons. The selectivity of NMB-1 was confirmed by the fact that it has no inhibitory effects on voltage-gated sodium and calcium channels, or ligand-gated channels such as acid-sensing io",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:09.491246+00:00"
+}

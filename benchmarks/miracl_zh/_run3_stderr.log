@@ -1,0 +1,62 @@
+Building prefix dict from the default dictionary ...
+Loading model from cache C:\Users\LAMTIM~1\AppData\Local\Temp\jieba.cache
+Loading model cost 0.325 seconds.
+Prefix dict has been built successfully.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1783742811.919172   23060 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1783742813.557846   23060 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+Building prefix dict from the default dictionary ...
+Loading model from cache C:\Users\LAMTIM~1\AppData\Local\Temp\jieba.cache
+Loading model cost 0.327 seconds.
+Prefix dict has been built successfully.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1783742859.861162   23392 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1783742861.545227   23392 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+Building prefix dict from the default dictionary ...
+Loading model from cache C:\Users\LAMTIM~1\AppData\Local\Temp\jieba.cache
+Loading model cost 0.374 seconds.
+Prefix dict has been built successfully.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1783742907.186844    6940 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1783742908.845080    6940 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+Building prefix dict from the default dictionary ...
+Loading model from cache C:\Users\LAMTIM~1\AppData\Local\Temp\jieba.cache
+Loading model cost 0.324 seconds.
+Prefix dict has been built successfully.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1783742954.969377   25424 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1783742956.831089   25424 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+Process SpawnPoolWorker-6:
+Traceback (most recent call last):
+  File "D:\Python\Lib\multiprocessing\pool.py", line 131, in worker
+    put((job, i, result))
+  File "D:\Python\Lib\multiprocessing\queues.py", line 396, in put
+    self._writer.send_bytes(obj)
+  File "D:\Python\Lib\multiprocessing\connection.py", line 200, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+  File "D:\Python\Lib\multiprocessing\connection.py", line 289, in _send_bytes
+    ov, err = _winapi.WriteFile(self._handle, buf, overlapped=True)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [WinError 232] 管道正在被关闭。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Python\Lib\multiprocessing\process.py", line 314, in _bootstrap
+    self.run()
+  File "D:\Python\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "D:\Python\Lib\multiprocessing\pool.py", line 136, in worker
+    put((job, i, (False, wrapped)))
+  File "D:\Python\Lib\multiprocessing\queues.py", line 396, in put
+    self._writer.send_bytes(obj)
+  File "D:\Python\Lib\multiprocessing\connection.py", line 200, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+  File "D:\Python\Lib\multiprocessing\connection.py", line 289, in _send_bytes
+    ov, err = _winapi.WriteFile(self._handle, buf, overlapped=True)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [WinError 232] 管道正在被关闭。

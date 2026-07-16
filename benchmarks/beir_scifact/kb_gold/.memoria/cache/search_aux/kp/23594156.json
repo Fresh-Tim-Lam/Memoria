@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23594156",
+  "source_fingerprint": "0f574dec485d0d585c1faa1a859d306f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23594156",
+    "spatial-and-temporal-clusters-of-barmah-forest-virus-disease-in-queensland,-australia."
+  ],
+  "key_phrases": [
+    "spatial",
+    "temporal",
+    "clusters",
+    "barmah",
+    "forest",
+    "virus",
+    "disease",
+    "queensland"
+  ],
+  "summary_1l": "Spatial and temporal clusters of Barmah Forest virus disease in Queensland, Australia.",
+  "query_hits": [],
+  "embed_text": "23594156 Spatial and temporal clusters of Barmah Forest virus disease in Queensland, Australia. science scifact OBJECTIVE To identify the spatial and temporal clusters of Barmah Forest virus (BFV) disease in Queensland in Australia, using geographical information systems and spatial scan statistic (SaTScan). METHODS We obtained BFV disease cases,… 23594156 spatial-and-temporal-clusters-of-barmah-forest-virus-disease-in-queensland,-australia. spatial temporal clusters barmah forest virus disease queensland Spatial and temporal clusters of Barmah Forest virus disease in Queensland, Australia. Spatial and temporal clusters of Barmah Forest virus disease in Queensland, Australia. OBJECTIVE To identify the spatial and temporal clusters of Barmah Forest virus (BFV) disease in Queensland in Australia, using geographical information systems and spatial scan statistic (SaTScan). METHODS We obtained BFV disease cases, population and statistical local areas (SLAs) boundary data from Queensland Health and Australian Bureau of Statistics, respectively, during 1992-2008 for Queensland. A retrospective Poisson-based analysis using SaTScan software and method was conducted to identify both purely spatial and space-time BFV disease high-rate clusters. A spatial cluster size of a proportion of the population and a 200 km radius and varying time windows from 1 to 12 months were chosen (for the",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.785886+00:00"
+}

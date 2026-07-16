@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "kp_id": "1259702#4",
+  "source_fingerprint": "14df6c46ec158c14171412559a83ff9f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "复旦大学站",
+    "复旦大学邯郸校区",
+    "皇家学会院士"
+  ],
+  "aliases": [
+    "1259702#4"
+  ],
+  "key_phrases": [
+    "复旦大学",
+    "现任",
+    "校长",
+    "金力",
+    "院士",
+    "党委书记",
+    "焦扬",
+    "fudandaxuefudandaxuedexianrenxiaozhangweijinliyuanshixiaodangweishujiweijiaoyang"
+  ],
+  "summary_1l": "复旦大学的现任校长为金力院士，校党委书记为焦扬。",
+  "query_hits": [],
+  "embed_text": "1259702#4 复旦大学 复旦大学 复旦大学的现任校长为金力院士，校党委书记为焦扬。 复旦大学站 复旦大学邯郸校区 皇家学会院士 1259702#4 复旦大学 现任 校长 金力 院士 党委书记 焦扬 fudandaxuefudandaxuedexianrenxiaozhangweijinliyuanshixiaodangweishujiweijiaoyang 复旦大学的现任校长为金力院士，校党委书记为焦扬。 复旦大学 复旦大学的现任校长为金力院士，校党委书记为焦扬。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:21:26.353119+00:00"
+}

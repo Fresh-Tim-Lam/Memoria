@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2015929",
+  "source_fingerprint": "71919ac4cff7c0e2e173e2f2c4c912d7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2015929",
+    "astrocytes-from-familial-and-sporadic-als-patients-are-toxic-to-motor-neurons"
+  ],
+  "key_phrases": [
+    "astrocytes",
+    "from",
+    "familial",
+    "sporadic",
+    "als",
+    "patients",
+    "toxic",
+    "motor"
+  ],
+  "summary_1l": "Amyotrophic lateral sclerosis (ALS) is a fatal motor neuron disease, with astrocytes implicated as contributing substantia",
+  "query_hits": [],
+  "embed_text": "2015929 Astrocytes from Familial and Sporadic ALS Patients are Toxic to Motor Neurons science scifact Amyotrophic lateral sclerosis (ALS) is a fatal motor neuron disease, with astrocytes implicated as contributing substantially to motor neuron death in familial (F)ALS. However, the proposed role of astrocytes in the pathology of ALS… 2015929 astrocytes-from-familial-and-sporadic-als-patients-are-toxic-to-motor-neurons astrocytes from familial sporadic als patients toxic motor Amyotrophic lateral sclerosis (ALS) is a fatal motor neuron disease, with astrocytes implicated as contributing substantia Astrocytes from Familial and Sporadic ALS Patients are Toxic to Motor Neurons Amyotrophic lateral sclerosis (ALS) is a fatal motor neuron disease, with astrocytes implicated as contributing substantially to motor neuron death in familial (F)ALS. However, the proposed role of astrocytes in the pathology of ALS derives in part from rodent models of FALS based upon dominant mutations within the superoxide dismutase 1 (SOD1) gene, which account for <2% of all ALS cases. Their role in sporadic (S)ALS, which affects >90% of ALS patients, remains to be established. Using astrocytes generated from postmortem tissue from both FALS and SALS patients, we show that astrocytes derived from both patient groups are similarly toxic to motor neurons. We also demonstrate that SOD1 is a viable target for SAL",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.737624+00:00"
+}

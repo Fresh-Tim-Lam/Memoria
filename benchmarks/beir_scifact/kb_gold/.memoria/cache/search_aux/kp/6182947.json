@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6182947",
+  "source_fingerprint": "fa694208f1ad50d87f6fae3fb6c8e8b8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6182947",
+    "nrf2-protects-human-alveolar-epithelial-cells-against-injury-induced-by-influenza-a-virus"
+  ],
+  "key_phrases": [
+    "nrf2",
+    "protects",
+    "human",
+    "alveolar",
+    "epithelial",
+    "cells",
+    "against",
+    "injury"
+  ],
+  "summary_1l": "BACKGROUND Influenza A virus (IAV) infection primarily targets respiratory epithelial cells and produces clini",
+  "query_hits": [],
+  "embed_text": "6182947 Nrf2 protects human alveolar epithelial cells against injury induced by influenza A virus science scifact BACKGROUND Influenza A virus (IAV) infection primarily targets respiratory epithelial cells and produces clinical outcomes ranging from mild upper respiratory infection to severe pneumonia. Recent studies have shown the importance of lung… 6182947 nrf2-protects-human-alveolar-epithelial-cells-against-injury-induced-by-influenza-a-virus nrf2 protects human alveolar epithelial cells against injury BACKGROUND Influenza A virus (IAV) infection primarily targets respiratory epithelial cells and produces clini Nrf2 protects human alveolar epithelial cells against injury induced by influenza A virus BACKGROUND Influenza A virus (IAV) infection primarily targets respiratory epithelial cells and produces clinical outcomes ranging from mild upper respiratory infection to severe pneumonia. Recent studies have shown the importance of lung antioxidant defense systems against injury by IAV. Nuclear factor-erythroid 2 related factor 2 (Nrf2) activates the majority of antioxidant genes. METHODS Alveolar type II (ATII) cells and alveolar macrophages (AM) were isolated from human lungs not suitable for transplantation and donated for medical research. In some studies ATII cells were transdifferentiated to alveolar type I-like (ATI-like) cells. Alveolar epithelial cells were infected with A/PR/8/34 (PR8) vir",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.223182+00:00"
+}

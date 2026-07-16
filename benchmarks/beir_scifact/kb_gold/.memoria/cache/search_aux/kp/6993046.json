@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6993046",
+  "source_fingerprint": "89344353c678bd24153bfa7441bcd9a6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6993046",
+    "breathing-more-with-weaker-respiratory-muscles-in-pulmonary-arterial-hypertension."
+  ],
+  "key_phrases": [
+    "breathing",
+    "more",
+    "with",
+    "weaker",
+    "respiratory",
+    "muscles",
+    "pulmonary",
+    "arterial"
+  ],
+  "summary_1l": "Breathing more with weaker respiratory muscles in pulmonary arterial hypertension.",
+  "query_hits": [],
+  "embed_text": "6993046 Breathing more with weaker respiratory muscles in pulmonary arterial hypertension. science scifact Exertional fatigue and dyspnoea limit the daily activities of patients with pulmonary arterial hypertension 1. These symptoms are usually explained by the inability of the overloaded right ventricle to perfuse the lungs and to adapt… 6993046 breathing-more-with-weaker-respiratory-muscles-in-pulmonary-arterial-hypertension. breathing more with weaker respiratory muscles pulmonary arterial Breathing more with weaker respiratory muscles in pulmonary arterial hypertension. Breathing more with weaker respiratory muscles in pulmonary arterial hypertension. Exertional fatigue and dyspnoea limit the daily activities of patients with pulmonary arterial hypertension 1. These symptoms are usually explained by the inability of the overloaded right ventricle to perfuse the lungs and to adapt systemic oxygen delivery to oxygen demand. Accordingly, pulmonary hypertension patients present with reductions in peak oxygen uptake, anaerobic threshold, oxygen pulse, ventilatory efficiency and 6-min walk distance 2–8. This ergospirometric profile is strikingly similar to that of congestive heart failure 8–12, further supporting the notion of impaired cardiac output adaptation to peripheral oxygen requirements as the main cause of decreased exercise capacity. However, in both",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.172870+00:00"
+}

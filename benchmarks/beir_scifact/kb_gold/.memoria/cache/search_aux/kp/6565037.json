@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6565037",
+  "source_fingerprint": "27a6955447e82ce6deb992c6d25eb51d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6565037",
+    "extrasynaptic-glutamate-spillover-in-the-hippocampus:-dependence-on-temperature-and-the-role-of-active-glutamate-uptake"
+  ],
+  "key_phrases": [
+    "extrasynaptic",
+    "glutamate",
+    "spillover",
+    "hippocampus",
+    "dependence",
+    "temperature",
+    "role",
+    "active"
+  ],
+  "summary_1l": "At excitatory synapses on CA1 pyramidal cells of the hippocampus, a larger quant",
+  "query_hits": [],
+  "embed_text": "6565037 Extrasynaptic Glutamate Spillover in the Hippocampus: Dependence on Temperature and the Role of Active Glutamate Uptake science scifact At excitatory synapses on CA1 pyramidal cells of the hippocampus, a larger quantal content is sensed by N-methyl-D-aspartic acid receptors (NMDARs) than by alpha-amino-3-hydroxy-5-methyl-4-isoxazolepropionic acid receptors (AMPARs). A… 6565037 extrasynaptic-glutamate-spillover-in-the-hippocampus:-dependence-on-temperature-and-the-role-of-active-glutamate-uptake extrasynaptic glutamate spillover hippocampus dependence temperature role active At excitatory synapses on CA1 pyramidal cells of the hippocampus, a larger quant Extrasynaptic Glutamate Spillover in the Hippocampus: Dependence on Temperature and the Role of Active Glutamate Uptake At excitatory synapses on CA1 pyramidal cells of the hippocampus, a larger quantal content is sensed by N-methyl-D-aspartic acid receptors (NMDARs) than by alpha-amino-3-hydroxy-5-methyl-4-isoxazolepropionic acid receptors (AMPARs). A novel explanation for this discrepancy is that glutamate released from terminals presynaptic to one cell can diffuse to and activate NMDARs, but not AMPARs, on a neighboring cell. If this occurs in the living brain, it could invalidate the view that glutamatergic synapses function as private communication channels between neurons. Here, we show that the discrepancy in quantal content mediated by the two receptors is greatly decreased at phys",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.250869+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23126677",
+  "source_fingerprint": "9642cee9f06e2ffcad9c67a13cbb784f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23126677",
+    "circulating-plasma-micrornas-as-a-screening-method-for-detection-of-colorectal-adenomas."
+  ],
+  "key_phrases": [
+    "circulating",
+    "plasma",
+    "micrornas",
+    "as",
+    "screening",
+    "method",
+    "detection",
+    "colorectal"
+  ],
+  "summary_1l": "Circulating plasma microRNAs as a screening method for detection of colorectal adenomas.",
+  "query_hits": [],
+  "embed_text": "23126677 Circulating plasma microRNAs as a screening method for detection of colorectal adenomas. science scifact BACKGROUND MicroRNAs (miRNAs) are small non-coding RNA molecules. Reduced or increased levels of specific miRNAs are observed in colon and other cancers, supporting their role in carcinogenesis. Detection of colorectal polyps is the… 23126677 circulating-plasma-micrornas-as-a-screening-method-for-detection-of-colorectal-adenomas. circulating plasma micrornas as screening method detection colorectal Circulating plasma microRNAs as a screening method for detection of colorectal adenomas. Circulating plasma microRNAs as a screening method for detection of colorectal adenomas. BACKGROUND MicroRNAs (miRNAs) are small non-coding RNA molecules. Reduced or increased levels of specific miRNAs are observed in colon and other cancers, supporting their role in carcinogenesis. Detection of colorectal polyps is the cornerstone of the Bowel Cancer Screening Programme in the UK. However, uptake of screening nationally remains under 60%. We aimed to see whether circulating plasma miRNAs can be used to screen for patients with colorectal polyps, adenomas, or both. METHODS Blood samples were taken from patients from the Bowel Cancer Screening Programme (asymptomatic but faecal occult blood testing [FOBt] positive). Plasma RNA was extracted, target miRNAs (19a, 98, 146b, 186, 191, 222*, 331",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.903161+00:00"
+}

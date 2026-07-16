@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "37204802",
+  "source_fingerprint": "81a46813df4f34e65c87b431b4bbc7ea",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "37204802",
+    "jmjd6-promotes-colon-carcinogenesis-through-negative-regulation-of-p53-by-hydroxylation"
+  ],
+  "key_phrases": [
+    "jmjd6",
+    "promotes",
+    "colon",
+    "carcinogenesis",
+    "through",
+    "negative",
+    "regulation",
+    "p53"
+  ],
+  "summary_1l": "Jumonji domain-containing 6 (JMJD6) is a member of the Jumonji C domain-containing family of proteins.",
+  "query_hits": [],
+  "embed_text": "37204802 JMJD6 Promotes Colon Carcinogenesis through Negative Regulation of p53 by Hydroxylation science scifact Jumonji domain-containing 6 (JMJD6) is a member of the Jumonji C domain-containing family of proteins. Compared to other members of the family, the cellular activity of JMJD6 is still not clearly defined and its biological function is… 37204802 jmjd6-promotes-colon-carcinogenesis-through-negative-regulation-of-p53-by-hydroxylation jmjd6 promotes colon carcinogenesis through negative regulation p53 Jumonji domain-containing 6 (JMJD6) is a member of the Jumonji C domain-containing family of proteins. JMJD6 Promotes Colon Carcinogenesis through Negative Regulation of p53 by Hydroxylation Jumonji domain-containing 6 (JMJD6) is a member of the Jumonji C domain-containing family of proteins. Compared to other members of the family, the cellular activity of JMJD6 is still not clearly defined and its biological function is still largely unexplored. Here we report that JMJD6 is physically associated with the tumor suppressor p53. We demonstrated that JMJD6 acts as an α-ketoglutarate- and Fe(II)-dependent lysyl hydroxylase to catalyze p53 hydroxylation. We found that p53 indeed exists as a hydroxylated protein in vivo and that the hydroxylation occurs mainly on lysine 382 of p53. We showed that JMJD6 antagonizes p53 acetylation, promotes the association of p53 with its negative regulator MDMX,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.227909+00:00"
+}

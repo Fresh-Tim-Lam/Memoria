@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "kp_id": "433#55",
+  "source_fingerprint": "883e9b5541c5187e85414c040441d451",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "中国共产党江苏省委员会",
+    "江苏省沿江城市群城际轨道交通网"
+  ],
+  "aliases": [
+    "433#55"
+  ],
+  "key_phrases": [
+    "江苏省",
+    "现辖",
+    "13",
+    "地级市",
+    "其中",
+    "省会",
+    "南京市",
+    "省级"
+  ],
+  "summary_1l": "江苏省现辖13个地级市，其中省会南京市为副省级市。",
+  "query_hits": [],
+  "embed_text": "433#55 江苏省 江苏省 江苏省现辖13个地级市，其中省会南京市为副省级市。下分95个县级行政区，包括55个市辖区、21个县级市、19个县。 中国共产党江苏省委员会 江苏省沿江城市群城际轨道交通网 433#55 江苏省 现辖 13 地级市 其中 省会 南京市 省级 江苏省现辖13个地级市，其中省会南京市为副省级市。 江苏省 江苏省现辖13个地级市，其中省会南京市为副省级市。下分95个县级行政区，包括55个市辖区、21个县级市、19个县。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:17:49.926995+00:00"
+}

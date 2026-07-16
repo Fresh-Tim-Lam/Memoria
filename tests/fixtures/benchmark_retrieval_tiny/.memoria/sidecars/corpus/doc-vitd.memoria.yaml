@@ -1,0 +1,12 @@
+schema_version: 1
+file: corpus/doc-vitd.md
+description: SciFact-style tiny benchmark (vitamin D)
+knowledge_points:
+  - id: doc-vitd
+    name: Vitamin D and Immune Response
+    tags: [scifact, science, immunology]
+    description: Vitamin D modulates innate and adaptive immunity through receptor signaling.
+    range:
+      start: { line_hint: 1, snippet: "# Vitamin D and Immune Response" }
+      end: { line_hint: 3, snippet: receptor signaling in lymphocytes. }
+links: []

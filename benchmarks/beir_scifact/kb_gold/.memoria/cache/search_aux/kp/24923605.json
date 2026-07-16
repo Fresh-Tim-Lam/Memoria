@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24923605",
+  "source_fingerprint": "2cd27233dc0548c2e62203c52316e9ee",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24923605",
+    "molecular-elements-of-low-oxygen-signaling-in-plants."
+  ],
+  "key_phrases": [
+    "molecular",
+    "elements",
+    "low",
+    "oxygen",
+    "signaling",
+    "plants",
+    "its",
+    "limitation"
+  ],
+  "summary_1l": "Molecular elements of low-oxygen signaling in plants.",
+  "query_hits": [],
+  "embed_text": "24923605 Molecular elements of low-oxygen signaling in plants. science scifact Oxygen and its limitation are emerging as a crucial factor in plant fitness, growth and development. Recent studies revealed the mechanisms by which oxygen is perceived by plant cells. This sensory system partly relies on an… 24923605 molecular-elements-of-low-oxygen-signaling-in-plants. molecular elements low oxygen signaling plants its limitation Molecular elements of low-oxygen signaling in plants. Molecular elements of low-oxygen signaling in plants. Oxygen and its limitation are emerging as a crucial factor in plant fitness, growth and development. Recent studies revealed the mechanisms by which oxygen is perceived by plant cells. This sensory system partly relies on an oxygen-mediated branch of the N-end rule pathway for protein degradation acting on a specific clade of ethylene responsive transcription factors (ERF-VII). A complementary regulative step is provided by aerobic sequestration of an ERF-VII protein at the plasma membrane and its timely release when hypoxia occurs. Complete absence of oxygen triggers the transient accumulation of reactive hydrogen peroxide and induces an additional set of reactive oxygen species-related genes involved in both signaling and attenuation",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.588409+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4398832",
+  "source_fingerprint": "3db3cec8e2c2bb9861b53adc7ac620a3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4398832",
+    "cyclin-a-regulates-kinetochore-microtubules-to-promote-faithful-chromosome-segregation"
+  ],
+  "key_phrases": [
+    "cyclin",
+    "regulates",
+    "kinetochore",
+    "microtubules",
+    "promote",
+    "faithful",
+    "chromosome",
+    "segregation"
+  ],
+  "summary_1l": "The most conspicuous event in the cell cycle is the alignment of chromosomes in metaphase.",
+  "query_hits": [],
+  "embed_text": "4398832 Cyclin A Regulates Kinetochore-Microtubules to Promote Faithful Chromosome Segregation science scifact The most conspicuous event in the cell cycle is the alignment of chromosomes in metaphase. Chromosome alignment fosters faithful segregation through the formation of bi-oriented attachments of kinetochores to spindle microtubules. Notably,… 4398832 cyclin-a-regulates-kinetochore-microtubules-to-promote-faithful-chromosome-segregation cyclin regulates kinetochore microtubules promote faithful chromosome segregation The most conspicuous event in the cell cycle is the alignment of chromosomes in metaphase. Cyclin A Regulates Kinetochore-Microtubules to Promote Faithful Chromosome Segregation The most conspicuous event in the cell cycle is the alignment of chromosomes in metaphase. Chromosome alignment fosters faithful segregation through the formation of bi-oriented attachments of kinetochores to spindle microtubules. Notably, numerous kinetochore-microtubule (k-MT) attachment errors are present in early mitosis (prometaphase), and the persistence of those errors is the leading cause of chromosome mis-segregation in aneuploid human tumour cells that continually mis-segregate whole chromosomes and display chromosomal instability. How robust error correction is achieved in prometaphase to ensure error-free mitosis remains unknown. Here we show that k-MT attachments in prometaphase cells are co",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.574058+00:00"
+}

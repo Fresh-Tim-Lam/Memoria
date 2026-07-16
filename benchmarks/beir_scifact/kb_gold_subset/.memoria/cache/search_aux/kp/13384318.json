@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13384318",
+  "source_fingerprint": "e09d84bae2a85e5cd67492cde0c5508a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13384318",
+    "combinatorial-control-of-exon-recognition."
+  ],
+  "key_phrases": [
+    "combinatorial",
+    "control",
+    "exon",
+    "recognition",
+    "pre",
+    "mrna",
+    "splicing",
+    "fundamental"
+  ],
+  "summary_1l": "Combinatorial control of exon recognition.",
+  "query_hits": [],
+  "embed_text": "13384318 Combinatorial control of exon recognition. science scifact Pre-mRNA splicing is a fundamental process required for the expression of most metazoan genes. It is carried out by the spliceosome, which catalyzes the removal of noncoding intronic sequences to assemble exons into mature mRNAs prior to… 13384318 combinatorial-control-of-exon-recognition. combinatorial control exon recognition pre mrna splicing fundamental Combinatorial control of exon recognition. Combinatorial control of exon recognition. Pre-mRNA splicing is a fundamental process required for the expression of most metazoan genes. It is carried out by the spliceosome, which catalyzes the removal of noncoding intronic sequences to assemble exons into mature mRNAs prior to export and translation. Given the complexity of higher eukaryotic genes and the relatively low level of splice site conservation, the precision of the splicing machinery in recognizing and pairing splice sites is impressive. Introns ranging in size from <100 up to 100,000 bases are removed efficiently. At the same time, a large number of alternative splicing events are observed between different cell types, during development, or during other biological processes. This extensive alternative splicing implies a sign",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:10.906741+00:00"
+}

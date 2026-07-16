@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25523969",
+  "source_fingerprint": "e4a6307687231bceb46fa59c0de9c0ed",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25523969",
+    "microrna-expression-profiling-of-human-metastatic-cancers-identifies-cancer-gene-targets."
+  ],
+  "key_phrases": [
+    "microrna",
+    "expression",
+    "profiling",
+    "human",
+    "metastatic",
+    "cancers",
+    "identifies",
+    "cancer"
+  ],
+  "summary_1l": "MicroRNA expression profiling of human metastatic cancers identifies cancer gene targets.",
+  "query_hits": [],
+  "embed_text": "25523969 MicroRNA expression profiling of human metastatic cancers identifies cancer gene targets. science scifact Small non-coding microRNAs (miRNAs) contribute to cancer development and progression, and are differentially expressed in normal tissues and cancers. However, the specific role of miRNAs in the metastatic process is still unknown. To seek… 25523969 microrna-expression-profiling-of-human-metastatic-cancers-identifies-cancer-gene-targets. microrna expression profiling human metastatic cancers identifies cancer MicroRNA expression profiling of human metastatic cancers identifies cancer gene targets. MicroRNA expression profiling of human metastatic cancers identifies cancer gene targets. Small non-coding microRNAs (miRNAs) contribute to cancer development and progression, and are differentially expressed in normal tissues and cancers. However, the specific role of miRNAs in the metastatic process is still unknown. To seek a specific miRNA expression signature characterizing the metastatic phenotype of solid tumours, we performed a miRNA microarray analysis on 43 paired primary tumours (ten colon, ten bladder, 13 breast, and ten lung cancers) and one of their related metastatic lymph nodes. We identified a metastatic cancer miRNA signature comprising 15 overexpressed and 17 underexpressed miRNAs. Our results were confirmed by qRT-PCR analysis. Among the miRNAs identified, some have a w",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.858710+00:00"
+}

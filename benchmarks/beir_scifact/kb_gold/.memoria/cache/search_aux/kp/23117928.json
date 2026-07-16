@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23117928",
+  "source_fingerprint": "bd58a2cbdf749d5ec90e8f3755c934ee",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23117928",
+    "inter-viral-conflicts-that-exploit-host-crispr-immune-systems-of-sulfolobus."
+  ],
+  "key_phrases": [
+    "inter",
+    "viral",
+    "conflicts",
+    "that",
+    "exploit",
+    "host",
+    "crispr",
+    "immune"
+  ],
+  "summary_1l": "Inter-viral conflicts that exploit host CRISPR immune systems of Sulfolobus.",
+  "query_hits": [],
+  "embed_text": "23117928 Inter-viral conflicts that exploit host CRISPR immune systems of Sulfolobus. science scifact Infection of Sulfolobus islandicus REY15A with mixtures of different Sulfolobus viruses, including STSV2, did not induce spacer acquisition by the host CRISPR immune system. However, coinfection with the tailed fusiform viruses SMV1 and… 23117928 inter-viral-conflicts-that-exploit-host-crispr-immune-systems-of-sulfolobus. inter viral conflicts that exploit host crispr immune Inter-viral conflicts that exploit host CRISPR immune systems of Sulfolobus. Inter-viral conflicts that exploit host CRISPR immune systems of Sulfolobus. Infection of Sulfolobus islandicus REY15A with mixtures of different Sulfolobus viruses, including STSV2, did not induce spacer acquisition by the host CRISPR immune system. However, coinfection with the tailed fusiform viruses SMV1 and STSV2 generated hyperactive spacer acquisition in both CRISPR loci, exclusively from STSV2, with the resultant loss of STSV2 but not SMV1. SMV1 was shown to activate adaptation while itself being resistant to CRISPR-mediated adaptation and DNA interference. Exceptionally, a single clone S-1 isolated from an SMV1 + STSV2-infected culture, that carried STSV2-specific spacers and had lost STSV2 but not SMV1, acquired spacers from SMV1. This effect was also reproducible on reinfecting",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.869307+00:00"
+}

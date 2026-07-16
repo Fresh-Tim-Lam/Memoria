@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "34228604",
+  "source_fingerprint": "3ac963c3628f0215f3e038ddde561f8b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "34228604",
+    "why-females-live-longer-than-males:-control-of-longevity-by-sex-hormones."
+  ],
+  "key_phrases": [
+    "why",
+    "females",
+    "live",
+    "longer",
+    "than",
+    "males",
+    "control",
+    "longevity"
+  ],
+  "summary_1l": "Why females live longer than males: control of longevity by sex hormones.",
+  "query_hits": [],
+  "embed_text": "34228604 Why females live longer than males: control of longevity by sex hormones. science scifact Females live longer than males in many species, including humans. We have traced a possible explanation for this phenomenon to the beneficial action of estrogens, which bind to estrogen receptors and increase the expression of… 34228604 why-females-live-longer-than-males:-control-of-longevity-by-sex-hormones. why females live longer than males control longevity Why females live longer than males: control of longevity by sex hormones. Why females live longer than males: control of longevity by sex hormones. Females live longer than males in many species, including humans. We have traced a possible explanation for this phenomenon to the beneficial action of estrogens, which bind to estrogen receptors and increase the expression of longevity-associated genes, including those encoding the antioxidant enzymes superoxide dismutase and glutathione peroxidase. As a result, mitochondria from females produce fewer reactive oxygen species than those from males. Administering estrogens has serious drawbacks, however--they are feminizing (and thus cannot be administered to males) and may increase the incidence of serious diseases such as uterine cancer in postmenopausal women. Phytoestrogens, which are present in soy or wine, may h",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.270742+00:00"
+}

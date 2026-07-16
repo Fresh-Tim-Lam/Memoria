@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15541119",
+  "source_fingerprint": "476b1b0f1fca010f8c0398cb34a9ce7f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15541119",
+    "[new-guidelines-to-evaluate-the-response-to-treatment-in-solid-tumors]."
+  ],
+  "key_phrases": [
+    "new",
+    "guidelines",
+    "evaluate",
+    "response",
+    "treatment",
+    "solid",
+    "tumors",
+    "anticancer"
+  ],
+  "summary_1l": "[New guidelines to evaluate the response to treatment in solid tumors].",
+  "query_hits": [],
+  "embed_text": "15541119 [New guidelines to evaluate the response to treatment in solid tumors]. science scifact Anticancer agents go through a process by which their antitumor activity, on the basis of the amount of tumor shrinkage they could generate, has been investigated. In the late 1970s, the International Union Against Cancer and the World… 15541119 [new-guidelines-to-evaluate-the-response-to-treatment-in-solid-tumors]. new guidelines evaluate response treatment solid tumors anticancer [New guidelines to evaluate the response to treatment in solid tumors]. [New guidelines to evaluate the response to treatment in solid tumors]. Anticancer agents go through a process by which their antitumor activity, on the basis of the amount of tumor shrinkage they could generate, has been investigated. In the late 1970s, the International Union Against Cancer and the World Health Organization (WHO) introduced specific criteria for the codification of tumor response evaluation. In 1994, several organizations involved in clinical cancer research joined together to undertake the review of these response evaluation criteria on the basis of their experience and knowledge. After several years of intensive discussions, new guidelines are ready and will replace the previous WHO criteria. In parallel to this initiative, one of the participating groups developed a m",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.797993+00:00"
+}

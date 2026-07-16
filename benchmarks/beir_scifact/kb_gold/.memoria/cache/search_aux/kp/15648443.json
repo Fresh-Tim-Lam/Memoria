@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15648443",
+  "source_fingerprint": "f6d506feaa5fed8419579b1b79efd901",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15648443",
+    "long-term-effect-of-aspirin-on-cancer-risk-in-carriers-of-hereditary-colorectal-cancer:-an-analysis-from-the-capp2-randomised-controlled-trial"
+  ],
+  "key_phrases": [
+    "long",
+    "term",
+    "effect",
+    "aspirin",
+    "cancer",
+    "risk",
+    "carriers",
+    "hereditary"
+  ],
+  "summary_1l": "BACKGROUND Observational studies report reduced colorecta",
+  "query_hits": [],
+  "embed_text": "15648443 Long-term effect of aspirin on cancer risk in carriers of hereditary colorectal cancer: an analysis from the CAPP2 randomised controlled trial science scifact BACKGROUND Observational studies report reduced colorectal cancer in regular aspirin consumers. Randomised controlled trials have shown reduced risk of adenomas but none have employed prevention of colorectal cancer as a primary endpoint.… 15648443 long-term-effect-of-aspirin-on-cancer-risk-in-carriers-of-hereditary-colorectal-cancer:-an-analysis-from-the-capp2-randomised-controlled-trial long term effect aspirin cancer risk carriers hereditary BACKGROUND Observational studies report reduced colorecta Long-term effect of aspirin on cancer risk in carriers of hereditary colorectal cancer: an analysis from the CAPP2 randomised controlled trial BACKGROUND Observational studies report reduced colorectal cancer in regular aspirin consumers. Randomised controlled trials have shown reduced risk of adenomas but none have employed prevention of colorectal cancer as a primary endpoint. The CAPP2 trial aimed to investigate the antineoplastic effects of aspirin and a resistant starch in carriers of Lynch syndrome, the major form of hereditary colorectal cancer; we now report long-term follow-up of participants randomly assigned to aspirin or placebo. METHODS In the CAPP2 randomised trial, carriers of Lynch syndrome were randomly assigned in a two-by-two factorial design to 600 mg aspirin or aspirin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.009261+00:00"
+}

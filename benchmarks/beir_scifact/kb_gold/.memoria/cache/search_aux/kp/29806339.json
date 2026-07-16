@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "29806339",
+  "source_fingerprint": "7365a7b5ca9ecf987e3a01b2bdf0e3fd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29806339"
+  ],
+  "key_phrases": [
+    "targeting",
+    "mitotic",
+    "exit",
+    "leads",
+    "tumor",
+    "regression",
+    "vivo",
+    "modulation"
+  ],
+  "summary_1l": "Targeting mitotic exit leads to tumor regression in vivo: Modulation by Cdk1, Mastl, and the PP2A/B55α,δ phosphatase.",
+  "query_hits": [],
+  "embed_text": "29806339 Targeting mitotic exit leads to tumor regression in vivo: Modulation by Cdk1, Mastl, and the PP2A/B55α,δ phosphatase. science scifact Targeting mitotic exit has been recently proposed as a relevant therapeutic approach against cancer. By using genetically engineered mice, we show that the APC/C cofactor Cdc20 is essential for anaphase onset in vivo in embryonic or adult… 29806339 targeting mitotic exit leads tumor regression vivo modulation Targeting mitotic exit leads to tumor regression in vivo: Modulation by Cdk1, Mastl, and the PP2A/B55α,δ phosphatase. Targeting mitotic exit leads to tumor regression in vivo: Modulation by Cdk1, Mastl, and the PP2A/B55α,δ phosphatase. Targeting mitotic exit has been recently proposed as a relevant therapeutic approach against cancer. By using genetically engineered mice, we show that the APC/C cofactor Cdc20 is essential for anaphase onset in vivo in embryonic or adult cells, including progenitor/stem cells. Ablation of Cdc20 results in efficient regression of aggressive tumors, whereas current mitotic drugs display limited effects. Yet, Cdc20 null cells can exit from mitosis upon inactivation of Cdk1 and the kinase Mastl (Greatwall). This mitotic exit depends on the activity of PP2A phosphatase complexes containing B55α or B55δ regulatory subunits. These data illustrate the relevance of critical players",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.199031+00:00"
+}

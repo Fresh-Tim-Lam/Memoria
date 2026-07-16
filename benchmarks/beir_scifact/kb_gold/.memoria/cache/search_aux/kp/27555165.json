@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27555165",
+  "source_fingerprint": "fff76fdfa3af60a34ebae84a72f6246a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27555165",
+    "cytomegalovirus-us2-destroys-two-components-of-the-mhc-class-ii-pathway,-preventing-recognition-by-cd4+-t-cells"
+  ],
+  "key_phrases": [
+    "cytomegalovirus",
+    "us2",
+    "destroys",
+    "two",
+    "components",
+    "mhc",
+    "class",
+    "ii"
+  ],
+  "summary_1l": "Human cytomegalovirus (HCMV) is a ubiquitous herpesvirus that causes life-threatening di",
+  "query_hits": [],
+  "embed_text": "27555165 Cytomegalovirus US2 destroys two components of the MHC class II pathway, preventing recognition by CD4+ T cells science scifact Human cytomegalovirus (HCMV) is a ubiquitous herpesvirus that causes life-threatening disease in patients who are immunosuppressed for bone marrow or tissue transplantation or who have AIDS (ref. 1). HCMV establishes lifelong latent… 27555165 cytomegalovirus-us2-destroys-two-components-of-the-mhc-class-ii-pathway,-preventing-recognition-by-cd4+-t-cells cytomegalovirus us2 destroys two components mhc class ii Human cytomegalovirus (HCMV) is a ubiquitous herpesvirus that causes life-threatening di Cytomegalovirus US2 destroys two components of the MHC class II pathway, preventing recognition by CD4+ T cells Human cytomegalovirus (HCMV) is a ubiquitous herpesvirus that causes life-threatening disease in patients who are immunosuppressed for bone marrow or tissue transplantation or who have AIDS (ref. 1). HCMV establishes lifelong latent infections and, after periodic reactivation from latency, uses a panel of immune evasion proteins to survive and replicate in the face of robust, fully primed host immunity. Monocyte/macrophages are important host cells for HCMV, serving as a latent reservoir and as a means of dissemination throughout the body. Macrophages and other HCMV-permissive cells, such as endothelial and glial cells, can express MHC class II proteins and present antigens to CD",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.050808+00:00"
+}

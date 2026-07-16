@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9507605",
+  "source_fingerprint": "3b4a7a781f6275a0678505faef9ee8e8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9507605",
+    "focal-contacts-as-mechanosensors:-externally-applied-local-mechanical-force-induces-growth-of-focal-contacts-by-an-mdia1-dependent-and-rockindependent-mechanism"
+  ],
+  "key_phrases": [
+    "focal",
+    "contacts",
+    "as",
+    "mechanosensors",
+    "externally",
+    "applied",
+    "local",
+    "mechanical"
+  ],
+  "summary_1l": "The transition of cell–matrix adhesions",
+  "query_hits": [],
+  "embed_text": "9507605 Focal contacts as mechanosensors: externally applied local mechanical force induces growth of focal contacts by an mDia1-dependent and ROCKindependent mechanism science scifact The transition of cell–matrix adhesions from the initial punctate focal complexes into the mature elongated form, known as focal contacts, requires GTPase Rho activity. In particular, activation of myosin II–driven contractility by a Rho… 9507605 focal-contacts-as-mechanosensors:-externally-applied-local-mechanical-force-induces-growth-of-focal-contacts-by-an-mdia1-dependent-and-rockindependent-mechanism focal contacts as mechanosensors externally applied local mechanical The transition of cell–matrix adhesions Focal contacts as mechanosensors: externally applied local mechanical force induces growth of focal contacts by an mDia1-dependent and ROCKindependent mechanism The transition of cell–matrix adhesions from the initial punctate focal complexes into the mature elongated form, known as focal contacts, requires GTPase Rho activity. In particular, activation of myosin II–driven contractility by a Rho target known as Rho-associated kinase (ROCK) was shown to be essential for focal contact formation. To dissect the mechanism of Rho-dependent induction of focal contacts and to elucidate the role of cell contractility, we applied mechanical force to vinculin-containing dot-like adhesions at the cell edge using a micropipette. Local centripetal pulling led to local assembly and elongation of these s",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.104280+00:00"
+}

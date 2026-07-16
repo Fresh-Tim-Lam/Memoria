@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21114100",
+  "source_fingerprint": "c265b8f47e0927d1ea590c5ccc31c480",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21114100",
+    "a-small-molecule-restores-function-to-trpml1-mutant-isoforms-responsible-for-mucolipidosis-type-iv."
+  ],
+  "key_phrases": [
+    "small",
+    "molecule",
+    "restores",
+    "function",
+    "trpml1",
+    "mutant",
+    "isoforms",
+    "responsible"
+  ],
+  "summary_1l": "A small molecule restores function to TRPML1 mutant isoforms responsible for mucolipidosis type IV.",
+  "query_hits": [],
+  "embed_text": "21114100 A small molecule restores function to TRPML1 mutant isoforms responsible for mucolipidosis type IV. science scifact Mucolipidosis type IV (MLIV) is an autosomal recessive lysosomal storage disorder often characterized by severe neurodevelopmental abnormalities and neuro-retinal degeneration. Mutations in the TRPML1 gene are causative for MLIV. We used… 21114100 a-small-molecule-restores-function-to-trpml1-mutant-isoforms-responsible-for-mucolipidosis-type-iv. small molecule restores function trpml1 mutant isoforms responsible A small molecule restores function to TRPML1 mutant isoforms responsible for mucolipidosis type IV. A small molecule restores function to TRPML1 mutant isoforms responsible for mucolipidosis type IV. Mucolipidosis type IV (MLIV) is an autosomal recessive lysosomal storage disorder often characterized by severe neurodevelopmental abnormalities and neuro-retinal degeneration. Mutations in the TRPML1 gene are causative for MLIV. We used lead optimization strategies to identify--and MLIV patient fibroblasts to test--small-molecule activators for their potential to restore TRPML1 mutant channel function. Using the whole-lysosome planar patch-clamp technique, we found that activation of MLIV mutant isoforms by the endogenous ligand PI(3,5)P2 is strongly reduced, while activity can be increased using synthetic ligands. We also found that the F465L mutation renders TRPML1 pH insensitive, while F",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.414690+00:00"
+}

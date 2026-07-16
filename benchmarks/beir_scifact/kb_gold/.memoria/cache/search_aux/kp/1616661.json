@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1616661",
+  "source_fingerprint": "4cfda19b5e33b9f3699d3c472e5aef2a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1616661",
+    "canonical-wnt-signaling-regulates-organ-specific-assembly-and-differentiation-of-cns-vasculature."
+  ],
+  "key_phrases": [
+    "canonical",
+    "wnt",
+    "signaling",
+    "regulates",
+    "organ",
+    "specific",
+    "assembly",
+    "differentiation"
+  ],
+  "summary_1l": "Canonical Wnt signaling regulates organ-specific assembly and differentiation of CNS vasculature.",
+  "query_hits": [],
+  "embed_text": "1616661 Canonical Wnt signaling regulates organ-specific assembly and differentiation of CNS vasculature. science scifact Every organ depends on blood vessels for oxygen and nutrients, but the vasculature associated with individual organs can be structurally and molecularly diverse. The central nervous system (CNS) vasculature consists of a tightly sealed… 1616661 canonical-wnt-signaling-regulates-organ-specific-assembly-and-differentiation-of-cns-vasculature. canonical wnt signaling regulates organ specific assembly differentiation Canonical Wnt signaling regulates organ-specific assembly and differentiation of CNS vasculature. Canonical Wnt signaling regulates organ-specific assembly and differentiation of CNS vasculature. Every organ depends on blood vessels for oxygen and nutrients, but the vasculature associated with individual organs can be structurally and molecularly diverse. The central nervous system (CNS) vasculature consists of a tightly sealed endothelium that forms the blood-brain barrier, whereas blood vessels of other organs are more porous. Wnt7a and Wnt7b encode two Wnt ligands produced by the neuroepithelium of the developing CNS coincident with vascular invasion. Using genetic mouse models, we found that these ligands directly target the vascular endothelium and that the CNS uses the canonical Wnt signaling pathway to promote formation and CNS-specific differentiation of the organ's vasculature",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.880040+00:00"
+}

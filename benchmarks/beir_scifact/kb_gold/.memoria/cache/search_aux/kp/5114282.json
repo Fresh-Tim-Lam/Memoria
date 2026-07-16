@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5114282",
+  "source_fingerprint": "2042b1ee8a417a4d9310b5e788ed4bad",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5114282",
+    "the-global-spread-of-hepatitis-c-virus-1a-and-1b:-a-phylodynamic-and-phylogeographic-analysis"
+  ],
+  "key_phrases": [
+    "global",
+    "spread",
+    "hepatitis",
+    "virus",
+    "1a",
+    "1b",
+    "phylodynamic",
+    "phylogeographic"
+  ],
+  "summary_1l": "BACKGROUND Hepatitis C virus (HCV) is estimated to affect 130-180 million people worldwide.",
+  "query_hits": [],
+  "embed_text": "5114282 The Global Spread of Hepatitis C Virus 1a and 1b: A Phylodynamic and Phylogeographic Analysis science scifact BACKGROUND Hepatitis C virus (HCV) is estimated to affect 130-180 million people worldwide. Although its origin is unknown, patterns of viral diversity suggest that HCV genotype 1 probably originated from West Africa. Previous attempts to… 5114282 the-global-spread-of-hepatitis-c-virus-1a-and-1b:-a-phylodynamic-and-phylogeographic-analysis global spread hepatitis virus 1a 1b phylodynamic phylogeographic BACKGROUND Hepatitis C virus (HCV) is estimated to affect 130-180 million people worldwide. The Global Spread of Hepatitis C Virus 1a and 1b: A Phylodynamic and Phylogeographic Analysis BACKGROUND Hepatitis C virus (HCV) is estimated to affect 130-180 million people worldwide. Although its origin is unknown, patterns of viral diversity suggest that HCV genotype 1 probably originated from West Africa. Previous attempts to estimate the spatiotemporal parameters of the virus, both globally and regionally, have suggested that epidemic HCV transmission began in 1900 and grew steadily until the late 1980s. However, epidemiological data suggest that the expansion of HCV may have occurred after the Second World War. The aim of our study was to elucidate the timescale and route of the global spread of HCV. METHODS AND FINDINGS We show that the rarely sequenced HCV region (E2P7NS2) is more",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.149537+00:00"
+}

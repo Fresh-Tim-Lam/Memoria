@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "37628989",
+  "source_fingerprint": "d88d9ab432c25d0d02fcc6eca9f39b90",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "37628989",
+    "the-safety-of-intravenous-fluorescein-for-confocal-laser-endomicroscopy-in-the-gastrointestinal-tract."
+  ],
+  "key_phrases": [
+    "safety",
+    "intravenous",
+    "fluorescein",
+    "confocal",
+    "laser",
+    "endomicroscopy",
+    "gastrointestinal",
+    "tract"
+  ],
+  "summary_1l": "The safety of intravenous fluorescein for confocal laser endomicroscopy in the gastrointestinal tract.",
+  "query_hits": [],
+  "embed_text": "37628989 The safety of intravenous fluorescein for confocal laser endomicroscopy in the gastrointestinal tract. science scifact BACKGROUND Confocal laser endomicroscopy (CLE) is rapidly emerging as a valuable tool for gastrointestinal endoscopic imaging. Fluorescent contrast agents are used to optimize imaging with CLE, and intravenous fluorescein is the most… 37628989 the-safety-of-intravenous-fluorescein-for-confocal-laser-endomicroscopy-in-the-gastrointestinal-tract. safety intravenous fluorescein confocal laser endomicroscopy gastrointestinal tract The safety of intravenous fluorescein for confocal laser endomicroscopy in the gastrointestinal tract. The safety of intravenous fluorescein for confocal laser endomicroscopy in the gastrointestinal tract. BACKGROUND Confocal laser endomicroscopy (CLE) is rapidly emerging as a valuable tool for gastrointestinal endoscopic imaging. Fluorescent contrast agents are used to optimize imaging with CLE, and intravenous fluorescein is the most widely used contrast agent. Fluorescein is FDA-cleared for diagnostic angiography of the retina. For these indications, the safety profile of fluorescein has been well-documented; however, to date, fluorescein is not cleared for use with CLE. AIMS To estimate the rate of serious and total adverse events attributable to intravenous fluorescein when used for gastrointestinal CLE. METHODS We performed a cross sectional survey of 16 International Academic Medical",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.711810+00:00"
+}

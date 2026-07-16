@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29183629",
+  "source_fingerprint": "c6f145b6f9271db44840d8d49bf3183e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29183629",
+    "extra-centrosomes-and/or-chromosomes-prolong-mitosis-in-human-cells"
+  ],
+  "key_phrases": [
+    "extra",
+    "centrosomes",
+    "chromosomes",
+    "prolong",
+    "mitosis",
+    "human",
+    "cells",
+    "using"
+  ],
+  "summary_1l": "Using laser microsurgery and cell fusion we have explored how additional centrosomes and/or chromosomes influence the duration of mi",
+  "query_hits": [],
+  "embed_text": "29183629 Extra centrosomes and/or chromosomes prolong mitosis in human cells science scifact Using laser microsurgery and cell fusion we have explored how additional centrosomes and/or chromosomes influence the duration of mitosis in human cells. We found that doubling the chromosome number added approximately 10 min to a 20 min… 29183629 extra-centrosomes-and/or-chromosomes-prolong-mitosis-in-human-cells extra centrosomes chromosomes prolong mitosis human cells using Using laser microsurgery and cell fusion we have explored how additional centrosomes and/or chromosomes influence the duration of mi Extra centrosomes and/or chromosomes prolong mitosis in human cells Using laser microsurgery and cell fusion we have explored how additional centrosomes and/or chromosomes influence the duration of mitosis in human cells. We found that doubling the chromosome number added approximately 10 min to a 20 min division, whereas doubling the number of centrosomes added approximately 30 min more. Extra centrosomes and/or chromosomes prolong mitosis by delaying satisfaction of the spindle assembly checkpoint. Thus mitosis can be prolonged by non-genetic means and extra chromosomes and centrosomes probably contribute to the elevated mitotic index seen in many tumours.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.654478+00:00"
+}

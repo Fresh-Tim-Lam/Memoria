@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "219475",
+  "source_fingerprint": "aa87fea9fdc6ab032aa9d2a73416d284",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "219475",
+    "gr-1+cd11b+-myeloid-cells-tip-the-balance-of-immune-protection-to-tumor-promotion-in-the-premetastatic-lung."
+  ],
+  "key_phrases": [
+    "gr",
+    "cd11b",
+    "myeloid",
+    "cells",
+    "tip",
+    "balance",
+    "immune",
+    "protection"
+  ],
+  "summary_1l": "Gr-1+CD11b+ myeloid cells tip the balance of immune protection to tumor promotion in the premetastatic lung.",
+  "query_hits": [],
+  "embed_text": "219475 Gr-1+CD11b+ myeloid cells tip the balance of immune protection to tumor promotion in the premetastatic lung. science scifact The mechanisms by which a primary tumor affects a selected distant organ before tumor cell arrival remain to be elucidated. This report shows that Gr-1+CD11b+ cells are significantly increased in lungs of mice bearing mammary… 219475 gr-1+cd11b+-myeloid-cells-tip-the-balance-of-immune-protection-to-tumor-promotion-in-the-premetastatic-lung. gr cd11b myeloid cells tip balance immune protection Gr-1+CD11b+ myeloid cells tip the balance of immune protection to tumor promotion in the premetastatic lung. Gr-1+CD11b+ myeloid cells tip the balance of immune protection to tumor promotion in the premetastatic lung. The mechanisms by which a primary tumor affects a selected distant organ before tumor cell arrival remain to be elucidated. This report shows that Gr-1+CD11b+ cells are significantly increased in lungs of mice bearing mammary adenocarcinomas before tumor cell arrival. In the premetastatic lungs, these immature myeloid cells significantly decrease IFN-gamma production and increase proinflammatory cytokines. In addition, they produce large quantities of matrix metalloproteinase 9 (MMP9) and promote vascular remodeling. Deletion of MMP9 normalizes aberrant vasculature in the premetastatic lung and diminishes lung metastasis. The production and activity of MMP9 is selectively restricted",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.008312+00:00"
+}

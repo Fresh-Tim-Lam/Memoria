@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23190392",
+  "source_fingerprint": "8aeeaea4669eeb229a0bf7eefa0cecca",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23190392",
+    "functional-reprogramming-of-polyploidization-in-megakaryocytes."
+  ],
+  "key_phrases": [
+    "functional",
+    "reprogramming",
+    "polyploidization",
+    "megakaryocytes",
+    "natural",
+    "process",
+    "that",
+    "frequently"
+  ],
+  "summary_1l": "Functional reprogramming of polyploidization in megakaryocytes.",
+  "query_hits": [],
+  "embed_text": "23190392 Functional reprogramming of polyploidization in megakaryocytes. science scifact Polyploidization is a natural process that frequently accompanies differentiation; its deregulation is linked to genomic instability and cancer. Despite its relevance, why cells select different polyploidization mechanisms is unknown. Here… 23190392 functional-reprogramming-of-polyploidization-in-megakaryocytes. functional reprogramming polyploidization megakaryocytes natural process that frequently Functional reprogramming of polyploidization in megakaryocytes. Functional reprogramming of polyploidization in megakaryocytes. Polyploidization is a natural process that frequently accompanies differentiation; its deregulation is linked to genomic instability and cancer. Despite its relevance, why cells select different polyploidization mechanisms is unknown. Here we report a systematic genetic analysis of endomitosis, a process in which megakaryocytes become polyploid by entering mitosis but aborting anaphase. Whereas ablation of the APC/C cofactor Cdc20 results in mitotic arrest and severe thrombocytopenia, lack of the kinases Aurora-B, Cdk1, or Cdk2 does not affect megakaryocyte polyploidization or platelet levels. Ablation of Cdk1 forces a switch to endocycles without mitosis, whereas polyploidization in the absence of Cdk1 and Cdk2 occurs in the",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.993159+00:00"
+}

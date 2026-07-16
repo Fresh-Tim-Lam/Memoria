@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "40090058",
+  "source_fingerprint": "b0eccc999ed764cf4cf71a4192cc35fe",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "40090058",
+    "functional-in-vivo-interactions-between-jnk1-and-jnk2-isoforms-in-obesity-and-insulin-resistance."
+  ],
+  "key_phrases": [
+    "functional",
+    "vivo",
+    "interactions",
+    "between",
+    "jnk1",
+    "jnk2",
+    "isoforms",
+    "obesity"
+  ],
+  "summary_1l": "Functional in vivo interactions between JNK1 and JNK2 isoforms in obesity and insulin resistance.",
+  "query_hits": [],
+  "embed_text": "40090058 Functional in vivo interactions between JNK1 and JNK2 isoforms in obesity and insulin resistance. science scifact The c-Jun N-terminal kinases (JNKs) are key regulators of inflammation and interfere with insulin action in cultured cells and whole animals. Obesity increases total JNK activity, and JNK1, but not JNK2, deficiency results in reduced… 40090058 functional-in-vivo-interactions-between-jnk1-and-jnk2-isoforms-in-obesity-and-insulin-resistance. functional vivo interactions between jnk1 jnk2 isoforms obesity Functional in vivo interactions between JNK1 and JNK2 isoforms in obesity and insulin resistance. Functional in vivo interactions between JNK1 and JNK2 isoforms in obesity and insulin resistance. The c-Jun N-terminal kinases (JNKs) are key regulators of inflammation and interfere with insulin action in cultured cells and whole animals. Obesity increases total JNK activity, and JNK1, but not JNK2, deficiency results in reduced adiposity and improved insulin sensitivity. Interestingly, a higher-than-normal level of JNK activation is observed in Jnk2(-/-) mice, particularly in the liver, indicating an interaction between the isoforms that might have masked the metabolic activity of JNK2 in isolated mutant mice. To address the role of the JNK2 isoform in metabolic homeostasis, we intercrossed Jnk1(-/-) and Jnk2(-/-) mice and examined body weight and glucose metabolism in the resulting muta",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.233855+00:00"
+}

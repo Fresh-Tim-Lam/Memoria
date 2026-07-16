@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24311787",
+  "source_fingerprint": "8244da3302ddc5c7a5f3e4da203c7f34",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24311787",
+    "n-terminus-of-swr1-binds-to-histone-h2az-and-provides-a-platform-for-subunit-assembly-in-the-chromatin-remodeling-complex."
+  ],
+  "key_phrases": [
+    "terminus",
+    "swr1",
+    "binds",
+    "histone",
+    "h2az",
+    "provides",
+    "platform",
+    "subunit"
+  ],
+  "summary_1l": "N terminus of Swr1 binds to histone H2AZ and provides a platform for subunit assembly in the chromatin remodeling complex.",
+  "query_hits": [],
+  "embed_text": "24311787 N terminus of Swr1 binds to histone H2AZ and provides a platform for subunit assembly in the chromatin remodeling complex. science scifact Variant histone H2AZ-containing nucleosomes are involved in the regulation of gene expression. In Saccharomyces cerevisiae, chromatin deposition of histone H2AZ is mediated by the fourteen-subunit SWR1 complex, which catalyzes… 24311787 n-terminus-of-swr1-binds-to-histone-h2az-and-provides-a-platform-for-subunit-assembly-in-the-chromatin-remodeling-complex. terminus swr1 binds histone h2az provides platform subunit N terminus of Swr1 binds to histone H2AZ and provides a platform for subunit assembly in the chromatin remodeling complex. N terminus of Swr1 binds to histone H2AZ and provides a platform for subunit assembly in the chromatin remodeling complex. Variant histone H2AZ-containing nucleosomes are involved in the regulation of gene expression. In Saccharomyces cerevisiae, chromatin deposition of histone H2AZ is mediated by the fourteen-subunit SWR1 complex, which catalyzes ATP-dependent exchange of nucleosomal histone H2A for H2AZ. Previous work defined the role of seven SWR1 subunits (Swr1 ATPase, Swc2, Swc3, Arp6, Swc5, Yaf9, and Swc6) in maintaining complex integrity and H2AZ histone replacement activity. Here we examined the function of three additional SWR1 subunits, bromodomain containing Bdf1, actin-related protein Arp4 and Swc7, by analyzing affinity-purified mutant SWR1 complexes. We observed that depletio",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.188585+00:00"
+}

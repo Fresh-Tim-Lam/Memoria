@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7036529",
+  "source_fingerprint": "bdf2ef6b3e329fa21bde7fbbab9ed60a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7036529",
+    "light-activation-of-channelrhodopsin-2-in-excitable-cells-of-caenorhabditis-elegans-triggers-rapid-behavioral-responses"
+  ],
+  "key_phrases": [
+    "light",
+    "activation",
+    "channelrhodopsin",
+    "excitable",
+    "cells",
+    "caenorhabditis",
+    "elegans",
+    "triggers"
+  ],
+  "summary_1l": "For studying the function of specific neurons in their native circuitry, it is d",
+  "query_hits": [],
+  "embed_text": "7036529 Light Activation of Channelrhodopsin-2 in Excitable Cells of Caenorhabditis elegans Triggers Rapid Behavioral Responses science scifact For studying the function of specific neurons in their native circuitry, it is desired to precisely control their activity. This often requires dissection to allow accurate electrical stimulation or neurotransmitter application , and it is… 7036529 light-activation-of-channelrhodopsin-2-in-excitable-cells-of-caenorhabditis-elegans-triggers-rapid-behavioral-responses light activation channelrhodopsin excitable cells caenorhabditis elegans triggers For studying the function of specific neurons in their native circuitry, it is d Light Activation of Channelrhodopsin-2 in Excitable Cells of Caenorhabditis elegans Triggers Rapid Behavioral Responses For studying the function of specific neurons in their native circuitry, it is desired to precisely control their activity. This often requires dissection to allow accurate electrical stimulation or neurotransmitter application , and it is thus inherently difficult in live animals, especially in small model organisms. Here, we employed channelrhodopsin-2 (ChR2), a directly light-gated cation channel from the green alga Chlamydomonas reinhardtii, in excitable cells of the nematode Caenorhabditis elegans, to trigger specific behaviors, simply by illumination. Channelrhodopsins are 7-transmembrane-helix proteins that resemble the light-driven proton pump bacteriorhodopsin ,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.271541+00:00"
+}

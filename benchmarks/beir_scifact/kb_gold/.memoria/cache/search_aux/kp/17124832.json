@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17124832",
+  "source_fingerprint": "5edd28a249e426c55847ce97fdeac6f0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17124832",
+    "association-between-smoking-and-risk-of-bladder-cancer-among-men-and-women."
+  ],
+  "key_phrases": [
+    "association",
+    "between",
+    "smoking",
+    "risk",
+    "bladder",
+    "cancer",
+    "among",
+    "men"
+  ],
+  "summary_1l": "Association between smoking and risk of bladder cancer among men and women.",
+  "query_hits": [],
+  "embed_text": "17124832 Association between smoking and risk of bladder cancer among men and women. science scifact CONTEXT Previous studies indicate that the population attributable risk (PAR) of bladder cancer for tobacco smoking is 50% to 65% in men and 20% to 30% in women and that current cigarette smoking triples bladder cancer risk relative to… 17124832 association-between-smoking-and-risk-of-bladder-cancer-among-men-and-women. association between smoking risk bladder cancer among men Association between smoking and risk of bladder cancer among men and women. Association between smoking and risk of bladder cancer among men and women. CONTEXT Previous studies indicate that the population attributable risk (PAR) of bladder cancer for tobacco smoking is 50% to 65% in men and 20% to 30% in women and that current cigarette smoking triples bladder cancer risk relative to never smoking. During the last 30 years, incidence rates have remained stable in the United States in men (123.8 per 100,000 person-years to 142.2 per 100,000 person-years) and women (32.5 per 100,000 person-years to 33.2 per 100,000 person-years); however, changing smoking prevalence and cigarette composition warrant revisiting risk estimates for smoking and bladder cancer. OBJECTIVE To evaluate the association between tobacco smoking and bladder cancer. DESIGN, SETTING, AND PARTICI",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.381224+00:00"
+}

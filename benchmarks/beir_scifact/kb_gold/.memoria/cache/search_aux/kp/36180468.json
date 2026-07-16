@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36180468",
+  "source_fingerprint": "2abdb68bf046ff4b72f2efb5dd74df52",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36180468",
+    "processing-of-the-beta-amyloid-precursor.-multiple-proteases-generate-and-degrade-potentially-amyloidogenic-fragments."
+  ],
+  "key_phrases": [
+    "processing",
+    "beta",
+    "amyloid",
+    "precursor",
+    "multiple",
+    "proteases",
+    "generate",
+    "degrade"
+  ],
+  "summary_1l": "Processing of the beta-amyloid precursor.",
+  "query_hits": [],
+  "embed_text": "36180468 Processing of the beta-amyloid precursor. Multiple proteases generate and degrade potentially amyloidogenic fragments. science scifact Proteolytic processing of the beta-amyloid precursor proteins (APP) is required for release of the beta/A4 protein and its deposition into the amyloid plaques characteristic of aging and Alzheimer's disease. We have examined the… 36180468 processing-of-the-beta-amyloid-precursor.-multiple-proteases-generate-and-degrade-potentially-amyloidogenic-fragments. processing beta amyloid precursor multiple proteases generate degrade Processing of the beta-amyloid precursor. Processing of the beta-amyloid precursor. Multiple proteases generate and degrade potentially amyloidogenic fragments. Proteolytic processing of the beta-amyloid precursor proteins (APP) is required for release of the beta/A4 protein and its deposition into the amyloid plaques characteristic of aging and Alzheimer's disease. We have examined the involvement of acidic intracellular compartments in APP processing in cultured human cells. The use of acidotropic agents and inhibitors to a specific class of lysosomal protease, coupled with metabolic labeling and immunoprecipitation, revealed that APP is degraded within an acidic compartment to produce at least 12 COOH-terminal fragments. Nine likely contain the entire beta/A4 domain and, therefore, are potentially amyloidogenic. Treatment with",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.953835+00:00"
+}

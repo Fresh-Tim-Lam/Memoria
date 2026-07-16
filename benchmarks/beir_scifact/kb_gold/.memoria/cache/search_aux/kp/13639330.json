@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13639330",
+  "source_fingerprint": "54cf7bc2bb9309834a354701bfd8f651",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13639330",
+    "histone-methylation-dependent-mechanisms-impose-ligand-dependency-for-gene-activation-by-nuclear-receptors"
+  ],
+  "key_phrases": [
+    "histone",
+    "methylation",
+    "dependent",
+    "mechanisms",
+    "impose",
+    "ligand",
+    "dependency",
+    "gene"
+  ],
+  "summary_1l": "Nuclear receptors undergo ligand-dependent conformational changes that are required for corep",
+  "query_hits": [],
+  "embed_text": "13639330 Histone Methylation-Dependent Mechanisms Impose Ligand Dependency for Gene Activation by Nuclear Receptors science scifact Nuclear receptors undergo ligand-dependent conformational changes that are required for corepressor-coactivator exchange, but whether there is an actual requirement for specific epigenetic landmarks to impose ligand dependency for gene… 13639330 histone-methylation-dependent-mechanisms-impose-ligand-dependency-for-gene-activation-by-nuclear-receptors histone methylation dependent mechanisms impose ligand dependency gene Nuclear receptors undergo ligand-dependent conformational changes that are required for corep Histone Methylation-Dependent Mechanisms Impose Ligand Dependency for Gene Activation by Nuclear Receptors Nuclear receptors undergo ligand-dependent conformational changes that are required for corepressor-coactivator exchange, but whether there is an actual requirement for specific epigenetic landmarks to impose ligand dependency for gene activation remains unknown. Here we report an unexpected and general strategy that is based on the requirement for specific cohorts of inhibitory histone methyltransferases (HMTs) to impose gene-specific gatekeeper functions that prevent unliganded nuclear receptors and other classes of regulated transcription factors from binding to their target gene promoters and causing constitutive gene activation in the absence of stimulating signals. This strategy",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.704955+00:00"
+}

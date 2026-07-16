@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "34498325",
+  "source_fingerprint": "413983fff73de2e06a235ca54bd1b380",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "34498325",
+    "a-conserved-modified-wobble-nucleoside-(mcm5s2u)-in-lysyl-trna-is-required-for-viability-in-yeast."
+  ],
+  "key_phrases": [
+    "conserved",
+    "modified",
+    "wobble",
+    "nucleoside",
+    "mcm5s2u",
+    "lysyl",
+    "trna",
+    "required"
+  ],
+  "summary_1l": "A conserved modified wobble nucleoside (mcm5s2U) in lysyl-tRNA is required for viability in yeast.",
+  "query_hits": [],
+  "embed_text": "34498325 A conserved modified wobble nucleoside (mcm5s2U) in lysyl-tRNA is required for viability in yeast. science scifact Transfer RNAs specific for Gln, Lys, and Glu from all organisms (except Mycoplasma) and organelles have a 2-thiouridine derivative (xm(5)s(2)U) as wobble nucleoside. These tRNAs read the A- and G-ending codons in the split codon boxes… 34498325 a-conserved-modified-wobble-nucleoside-(mcm5s2u)-in-lysyl-trna-is-required-for-viability-in-yeast. conserved modified wobble nucleoside mcm5s2u lysyl trna required A conserved modified wobble nucleoside (mcm5s2U) in lysyl-tRNA is required for viability in yeast. A conserved modified wobble nucleoside (mcm5s2U) in lysyl-tRNA is required for viability in yeast. Transfer RNAs specific for Gln, Lys, and Glu from all organisms (except Mycoplasma) and organelles have a 2-thiouridine derivative (xm(5)s(2)U) as wobble nucleoside. These tRNAs read the A- and G-ending codons in the split codon boxes His/Gln, Asn/Lys, and Asp/Glu. In eukaryotic cytoplasmic tRNAs the conserved constituent (xm(5)-) in position 5 of uridine is 5-methoxycarbonylmethyl (mcm(5)). A protein (Tuc1p) from yeast resembling the bacterial protein TtcA, which is required for the synthesis of 2-thiocytidine in position 32 of the tRNA, was shown instead to be required for the synthesis of 2-thiouridine in the wobble position (position 34). Apparently, an ancient member of the TtcA family h",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.548220+00:00"
+}

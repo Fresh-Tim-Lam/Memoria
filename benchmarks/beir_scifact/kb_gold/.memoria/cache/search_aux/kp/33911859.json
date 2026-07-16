@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "33911859",
+  "source_fingerprint": "025e65c9d56fc7df6205c55dfc14e5c0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "33911859",
+    "mutant-dynactin-in-motor-neuron-disease"
+  ],
+  "key_phrases": [
+    "mutant",
+    "dynactin",
+    "motor",
+    "neuron",
+    "disease",
+    "impaired",
+    "axonal",
+    "transport"
+  ],
+  "summary_1l": "Impaired axonal transport in motor neurons has been proposed as a mechanism for neuronal degeneration in motor neuron disease.",
+  "query_hits": [],
+  "embed_text": "33911859 Mutant dynactin in motor neuron disease science scifact Impaired axonal transport in motor neurons has been proposed as a mechanism for neuronal degeneration in motor neuron disease. Here we show linkage of a lower motor neuron disease to a region of 4 Mb at chromosome 2p13. Mutation analysis… 33911859 mutant-dynactin-in-motor-neuron-disease mutant dynactin motor neuron disease impaired axonal transport Impaired axonal transport in motor neurons has been proposed as a mechanism for neuronal degeneration in motor neuron disease. Mutant dynactin in motor neuron disease Impaired axonal transport in motor neurons has been proposed as a mechanism for neuronal degeneration in motor neuron disease. Here we show linkage of a lower motor neuron disease to a region of 4 Mb at chromosome 2p13. Mutation analysis of a gene in this interval that encodes the largest subunit of the axonal transport protein dynactin showed a single base-pair change resulting in an amino-acid substitution that is predicted to distort the folding of dynactin's microtubule-binding domain. Binding assays show decreased binding of the mutant protein to microtubules. Our results show that dysfunction of dynactin-mediated transport can lead to human motor neuron disease.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.790586+00:00"
+}

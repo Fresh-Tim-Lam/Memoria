@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2587396",
+  "source_fingerprint": "2da51c93cec6bd192b3c24af684df901",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2587396",
+    "association-of-blood-monocyte-and-platelet-markers-with-carotid-artery-characteristics:-the-atherosclerosis-risk-in-communities-carotid-mri-study"
+  ],
+  "key_phrases": [
+    "association",
+    "blood",
+    "monocyte",
+    "platelet",
+    "markers",
+    "with",
+    "carotid",
+    "artery"
+  ],
+  "summary_1l": "Background: Atherosclerosis is characterized by infilt",
+  "query_hits": [],
+  "embed_text": "2587396 Association of Blood Monocyte and Platelet Markers with Carotid Artery Characteristics: The Atherosclerosis Risk in Communities Carotid MRI Study science scifact Background: Atherosclerosis is characterized by infiltration of inflammatory cells from circulating blood. Blood cell activation could play an important role in plaque formation. Methods: We analyzed the relationship between blood cellular… 2587396 association-of-blood-monocyte-and-platelet-markers-with-carotid-artery-characteristics:-the-atherosclerosis-risk-in-communities-carotid-mri-study association blood monocyte platelet markers with carotid artery Background: Atherosclerosis is characterized by infilt Association of Blood Monocyte and Platelet Markers with Carotid Artery Characteristics: The Atherosclerosis Risk in Communities Carotid MRI Study Background: Atherosclerosis is characterized by infiltration of inflammatory cells from circulating blood. Blood cell activation could play an important role in plaque formation. Methods: We analyzed the relationship between blood cellular markers and quantitative measures of carotid wall components in 1,546 participants from the ARIC (Atherosclerosis Risk in Communities) Carotid MRI Study. Carotid imaging was performed using a gadolinium contrast-enhanced MRI and cellular phenotyping by flow cytometry. Results: Monocyte Toll-like receptor (TLR)-2 is associated with larger plaques, while CD14, myeloperoxidase, and TLR-4 associate with smaller. Pl",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.629784+00:00"
+}

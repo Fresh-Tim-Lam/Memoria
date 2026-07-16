@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "2316374",
+  "source_fingerprint": "ffde345dfbaabccde02aaa54480e7c4e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2316374"
+  ],
+  "key_phrases": [
+    "histone",
+    "deacetylase",
+    "interacts",
+    "with",
+    "kr",
+    "ppel",
+    "like",
+    "factor"
+  ],
+  "summary_1l": "Histone deacetylase 5 interacts with Krüppel-like factor 2 and inhibits its transcriptional activity in endothelium.",
+  "query_hits": [],
+  "embed_text": "2316374 Histone deacetylase 5 interacts with Krüppel-like factor 2 and inhibits its transcriptional activity in endothelium. science scifact AIMS Vascular endothelial dysfunction and inflammation are hallmarks of atherosclerosis. Krüppel-like factor 2 (KLF2) is a key mediator of anti-inflammatory and anti-atherosclerotic properties of the endothelium. However, little is known… 2316374 histone deacetylase interacts with kr ppel like factor Histone deacetylase 5 interacts with Krüppel-like factor 2 and inhibits its transcriptional activity in endothelium. Histone deacetylase 5 interacts with Krüppel-like factor 2 and inhibits its transcriptional activity in endothelium. AIMS Vascular endothelial dysfunction and inflammation are hallmarks of atherosclerosis. Krüppel-like factor 2 (KLF2) is a key mediator of anti-inflammatory and anti-atherosclerotic properties of the endothelium. However, little is known of the molecular mechanisms for regulating KLF2 transcriptional activation. METHODS AND RESULTS Here, we found that histone deacetylase 5 (HDAC5) associates with KLF2 and represses KLF2 transcriptional activation. HDAC5 resided with KLF2 in the nuclei of human umbilical cord vein endothelial cells (HUVECs). Steady laminar flow attenuated the association of HDAC5 with KLF2 via stimulating HDAC5 phosphorylation-dependent nuclear export in HUVE",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.967102+00:00"
+}

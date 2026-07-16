@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7970974",
+  "source_fingerprint": "cb68b61242eb2b79065817b255c709d8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7970974",
+    "global-assessment-of-genomic-regions-required-for-growth-in-mycobacterium-tuberculosis"
+  ],
+  "key_phrases": [
+    "global",
+    "assessment",
+    "genomic",
+    "regions",
+    "required",
+    "growth",
+    "mycobacterium",
+    "tuberculosis"
+  ],
+  "summary_1l": "Identifying genomic elements required for viability is central to our understanding of the basic physiology of ba",
+  "query_hits": [],
+  "embed_text": "7970974 Global Assessment of Genomic Regions Required for Growth in Mycobacterium tuberculosis science scifact Identifying genomic elements required for viability is central to our understanding of the basic physiology of bacterial pathogens. Recently, the combination of high-density mutagenesis and deep sequencing has allowed for the… 7970974 global-assessment-of-genomic-regions-required-for-growth-in-mycobacterium-tuberculosis global assessment genomic regions required growth mycobacterium tuberculosis Identifying genomic elements required for viability is central to our understanding of the basic physiology of ba Global Assessment of Genomic Regions Required for Growth in Mycobacterium tuberculosis Identifying genomic elements required for viability is central to our understanding of the basic physiology of bacterial pathogens. Recently, the combination of high-density mutagenesis and deep sequencing has allowed for the identification of required and conditionally required genes in many bacteria. Genes, however, make up only a part of the complex genomes of important bacterial pathogens. Here, we use an unbiased analysis to comprehensively identify genomic regions, including genes, domains, and intergenic elements, required for the optimal growth of Mycobacterium tuberculosis, a major global health pathogen. We found that several proteins jointly contain both domains required for optimal growth and",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.590755+00:00"
+}

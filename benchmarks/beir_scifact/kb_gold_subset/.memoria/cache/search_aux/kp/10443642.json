@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10443642",
+  "source_fingerprint": "19f6babbbeb21fed407db1060fb1dbc9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10443642",
+    "staphylococcus-aureus-rnaiii-coordinately-represses-the-synthesis-of-virulence-factors-and-the-transcription-regulator-rot-by-an-antisense-mechanism."
+  ],
+  "key_phrases": [
+    "staphylococcus",
+    "aureus",
+    "rnaiii",
+    "coordinately",
+    "represses",
+    "synthesis",
+    "virulence",
+    "factors"
+  ],
+  "summary_1l": "Staphylococcus aureus RNAIII coordinately represses the synthesis of virulence factors and the transcription regulator Rot by an antisense mechanism.",
+  "query_hits": [],
+  "embed_text": "10443642 Staphylococcus aureus RNAIII coordinately represses the synthesis of virulence factors and the transcription regulator Rot by an antisense mechanism. science scifact RNAIII is the intracellular effector of the quorum-sensing system in Staphylococcus aureus. It is one of the largest regulatory RNAs (514 nucleotides long) that are known to control the expression of a large number of virulence genes.… 10443642 staphylococcus-aureus-rnaiii-coordinately-represses-the-synthesis-of-virulence-factors-and-the-transcription-regulator-rot-by-an-antisense-mechanism. staphylococcus aureus rnaiii coordinately represses synthesis virulence factors Staphylococcus aureus RNAIII coordinately represses the synthesis of virulence factors and the transcription regulator Rot by an antisense mechanism. Staphylococcus aureus RNAIII coordinately represses the synthesis of virulence factors and the transcription regulator Rot by an antisense mechanism. RNAIII is the intracellular effector of the quorum-sensing system in Staphylococcus aureus. It is one of the largest regulatory RNAs (514 nucleotides long) that are known to control the expression of a large number of virulence genes. Here, we show that the 3' domain of RNAIII coordinately represses at the post-transcriptional level, the expression of mRNAs that encode a class of virulence factors that act early in the infection process. We demonstrate that the 3' domain acts primarily as an antisense RNA and rapidly anneals to these mRNAs, forming long RNA duplexes. The interaction between RNAIII and the mRNAs results in repression of transl",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.542665+00:00"
+}

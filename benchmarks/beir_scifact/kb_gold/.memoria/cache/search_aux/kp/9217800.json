@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9217800",
+  "source_fingerprint": "0eed87b0e059c8071b078bb1cf46444f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9217800",
+    "the-als-associated-proteins-fus-and-tdp-43-function-together-to-affect-drosophila-locomotion-and-life-span."
+  ],
+  "key_phrases": [
+    "als",
+    "associated",
+    "proteins",
+    "fus",
+    "tdp",
+    "43",
+    "function",
+    "together"
+  ],
+  "summary_1l": "The ALS-associated proteins FUS and TDP-43 function together to affect Drosophila locomotion and life span.",
+  "query_hits": [],
+  "embed_text": "9217800 The ALS-associated proteins FUS and TDP-43 function together to affect Drosophila locomotion and life span. science scifact The fatal adult motor neuron disease amyotrophic lateral sclerosis (ALS) shares some clinical and pathological overlap with frontotemporal dementia (FTD), an early-onset neurodegenerative disorder. The RNA/DNA-binding proteins fused in… 9217800 the-als-associated-proteins-fus-and-tdp-43-function-together-to-affect-drosophila-locomotion-and-life-span. als associated proteins fus tdp 43 function together The ALS-associated proteins FUS and TDP-43 function together to affect Drosophila locomotion and life span. The ALS-associated proteins FUS and TDP-43 function together to affect Drosophila locomotion and life span. The fatal adult motor neuron disease amyotrophic lateral sclerosis (ALS) shares some clinical and pathological overlap with frontotemporal dementia (FTD), an early-onset neurodegenerative disorder. The RNA/DNA-binding proteins fused in sarcoma (FUS; also known as TLS) and TAR DNA binding protein-43 (TDP-43) have recently been shown to be genetically and pathologically associated with familial forms of ALS and FTD. It is currently unknown whether perturbation of these proteins results in disease through mechanisms that are independent of normal protein function or via the pathophysiological disruption of molecular processes in which they are both critical. Here, we report that Drosoph",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.459894+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22482024",
+  "source_fingerprint": "c472f0f57e4f0a2c9fa2fcfcd52df866",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22482024",
+    "ribosomal-protein-s17-gene-(rps17)-is-mutated-in-diamond-blackfan-anemia."
+  ],
+  "key_phrases": [
+    "ribosomal",
+    "protein",
+    "s17",
+    "gene",
+    "rps17",
+    "mutated",
+    "diamond",
+    "blackfan"
+  ],
+  "summary_1l": "Ribosomal protein S17 gene (RPS17) is mutated in Diamond-Blackfan anemia.",
+  "query_hits": [],
+  "embed_text": "22482024 Ribosomal protein S17 gene (RPS17) is mutated in Diamond-Blackfan anemia. science scifact Diamond-Blackfan anemia (DBA) is a congenital erythroid aplasia characterized as a normochromic macrocytic anemia with a selective deficiency in red blood cell precursors in otherwise normocellular bone marrow. In 40% of DBA patients,… 22482024 ribosomal-protein-s17-gene-(rps17)-is-mutated-in-diamond-blackfan-anemia. ribosomal protein s17 gene rps17 mutated diamond blackfan Ribosomal protein S17 gene (RPS17) is mutated in Diamond-Blackfan anemia. Ribosomal protein S17 gene (RPS17) is mutated in Diamond-Blackfan anemia. Diamond-Blackfan anemia (DBA) is a congenital erythroid aplasia characterized as a normochromic macrocytic anemia with a selective deficiency in red blood cell precursors in otherwise normocellular bone marrow. In 40% of DBA patients, various physical anomalies are also present. Currently two genes are associated with the DBA phenotype--the ribosomal protein (RP) S19 mutated in 25% of DBA patients and RPS24 mutated in approximately 1.4% of DBA patients. Here we report the identification of a mutation in yet another ribosomal protein, RPS17. The mutation affects the translation initiation start codon, changing T to G (c.2T>G), thus eliminating the natural start of RPS17 protein biosynthesis. RNA analysis revealed that",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.806309+00:00"
+}

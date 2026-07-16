@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "kp_id": "396804#44",
+  "source_fingerprint": "a6b87c8de9bdb41fe771f2442e18461b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "日本流行音樂",
+    "周深音樂作品列表",
+    "日本流行文化"
+  ],
+  "aliases": [
+    "396804#44"
+  ],
+  "key_phrases": [
+    "華語",
+    "流行",
+    "音樂",
+    "新生代",
+    "方面",
+    "畢書",
+    "周興哲",
+    "不俗"
+  ],
+  "summary_1l": "而臺灣新生代方面如畢書盡、周興哲等亦有不俗的成績。",
+  "query_hits": [],
+  "embed_text": "396804#44 華語流行音樂 華語流行音樂 而臺灣新生代方面如畢書盡、周興哲等亦有不俗的成績。值得一提的是，這時期臺灣嘻哈界人才輩出，開始攻佔流行歌排行榜，諸如頑童MJ116、Leo王、葛仲珊、J.Sheon、吳卓源、ØZI、9m88等人。 日本流行音樂 周深音樂作品列表 日本流行文化 396804#44 華語 流行 音樂 新生代 方面 畢書 周興哲 不俗 而臺灣新生代方面如畢書盡、周興哲等亦有不俗的成績。 華語流行音樂 而臺灣新生代方面如畢書盡、周興哲等亦有不俗的成績。值得一提的是，這時期臺灣嘻哈界人才輩出，開始攻佔流行歌排行榜，諸如頑童MJ116、Leo王、葛仲珊、J.Sheon、吳卓源、ØZI、9m88等人。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:20:27.187904+00:00"
+}

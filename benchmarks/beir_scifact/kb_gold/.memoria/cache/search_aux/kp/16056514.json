@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16056514",
+  "source_fingerprint": "5aefa6b1061234bf27bbef9aa0e6bc21",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16056514",
+    "a-key-role-for-orexin-in-panic-anxiety"
+  ],
+  "key_phrases": [
+    "key",
+    "role",
+    "orexin",
+    "panic",
+    "anxiety",
+    "disorder",
+    "severe",
+    "with"
+  ],
+  "summary_1l": "Panic disorder is a severe anxiety disorder with recurrent, debilitating panic attacks.",
+  "query_hits": [],
+  "embed_text": "16056514 A KEY ROLE FOR OREXIN IN PANIC ANXIETY science scifact Panic disorder is a severe anxiety disorder with recurrent, debilitating panic attacks. In individuals with panic disorder there is evidence of decreased central gamma-aminobutyric acid (GABA) activity as well as marked increases in… 16056514 a-key-role-for-orexin-in-panic-anxiety key role orexin panic anxiety disorder severe with Panic disorder is a severe anxiety disorder with recurrent, debilitating panic attacks. A KEY ROLE FOR OREXIN IN PANIC ANXIETY Panic disorder is a severe anxiety disorder with recurrent, debilitating panic attacks. In individuals with panic disorder there is evidence of decreased central gamma-aminobutyric acid (GABA) activity as well as marked increases in autonomic and respiratory responses after intravenous infusions of hypertonic sodium lactate. In a rat model of panic disorder, chronic inhibition of GABA synthesis in the dorsomedial-perifornical hypothalamus of rats produces anxiety-like states and a similar vulnerability to sodium lactate-induced cardioexcitatory responses. The dorsomedial-perifornical hypothalamus is enriched in neurons containing orexin (ORX, also known as hypocretin), which have a crucial role in arousal, vigilance and central autonomic mobilization,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.740012+00:00"
+}

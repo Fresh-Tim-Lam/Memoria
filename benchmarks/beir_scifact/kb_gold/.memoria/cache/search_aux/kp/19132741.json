@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19132741",
+  "source_fingerprint": "a6048a313f49c12c59f3b86776cac7bd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19132741",
+    "role-of-antioxidants-in-paraquat-toxicity."
+  ],
+  "key_phrases": [
+    "role",
+    "antioxidants",
+    "paraquat",
+    "toxicity",
+    "quarternary",
+    "nitrogen",
+    "herbicide",
+    "highly"
+  ],
+  "summary_1l": "Role of antioxidants in paraquat toxicity.",
+  "query_hits": [],
+  "embed_text": "19132741 Role of antioxidants in paraquat toxicity. science scifact Paraquat, a quarternary nitrogen herbicide, is a highly toxic compound for humans and animals and many cases of acute poisoning and death have been reported over the past few decades. The mechanisms of paraquat toxicity involve: the… 19132741 role-of-antioxidants-in-paraquat-toxicity. role antioxidants paraquat toxicity quarternary nitrogen herbicide highly Role of antioxidants in paraquat toxicity. Role of antioxidants in paraquat toxicity. Paraquat, a quarternary nitrogen herbicide, is a highly toxic compound for humans and animals and many cases of acute poisoning and death have been reported over the past few decades. The mechanisms of paraquat toxicity involve: the generation of the superoxide anion, which can lead to the formation of more toxic reactive oxygen species, such as hydrogen peroxide and hydroxyl radical; and the oxidation of the cellular NADPH, the major source of reducing equivalents for the intracellular reduction of paraquat, which results in the disruption of important NADPH-requiring biochemical processes. The major cause of death in paraquat poisoning is respiratory failure due to an oxidative insult to the alveolar epithelium with subsequent obliterating fibro",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.181561+00:00"
+}

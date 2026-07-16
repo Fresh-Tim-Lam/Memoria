@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21931005",
+  "source_fingerprint": "5a28df38583a11e26e0899f2fe8c6e12",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21931005",
+    "signal-transduction-proteins-that-associate-with-the-platelet-derived-growth-factor-(pdgf)-receptor-mediate-the-pdgf-induced-release-of-glucose-6-phosphate-dehydrogenase-from-permeabilized-cells."
+  ],
+  "key_phrases": [
+    "signal",
+    "transduction",
+    "proteins",
+    "that",
+    "associate",
+    "with",
+    "platelet",
+    "derived"
+  ],
+  "summary_1l": "Signal transduction proteins that associate with the platelet-derived growth factor (PDGF) receptor mediate the PDGF-induced release of glucose-6-phosphate dehydrogenase from permeabilized cells.",
+  "query_hits": [],
+  "embed_text": "21931005 Signal transduction proteins that associate with the platelet-derived growth factor (PDGF) receptor mediate the PDGF-induced release of glucose-6-phosphate dehydrogenase from permeabilized cells. science scifact Permeabilized rat kidney cells rapidly released glucose 6-phosphate dehydrogenase (G6PD) following stimulation with peptide growth factors (Stanton, R.C., Seifter, J.L., Boxer, D.C., Zimmerman, E., and Cantley, L. C. (1991) J. Biol. Chem.… 21931005 signal-transduction-proteins-that-associate-with-the-platelet-derived-growth-factor-(pdgf)-receptor-mediate-the-pdgf-induced-release-of-glucose-6-phosphate-dehydrogenase-from-permeabilized-cells. signal transduction proteins that associate with platelet derived Signal transduction proteins that associate with the platelet-derived growth factor (PDGF) receptor mediate the PDGF-induced release of glucose-6-phosphate dehydrogenase from permeabilized cells. Signal transduction proteins that associate with the platelet-derived growth factor (PDGF) receptor mediate the PDGF-induced release of glucose-6-phosphate dehydrogenase from permeabilized cells. Permeabilized rat kidney cells rapidly released glucose 6-phosphate dehydrogenase (G6PD) following stimulation with peptide growth factors (Stanton, R.C., Seifter, J.L., Boxer, D.C., Zimmerman, E., and Cantley, L. C. (1991) J. Biol. Chem. 266, 12442-12448). To evaluate the signal transduction pathways mediating release of G6PD, two cell lines transfected with wild type or mutant platelet-derived growth factor (PDGF) receptors (PDGFR) were studied using two permeabilization protocols. G6PD release was evaluated by enzyme activity and Western blot analysis. PDGF caused a significant increase in G6PD",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.951813+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23052989",
+  "source_fingerprint": "8851f437164c7a67b5704824e0c0e6b9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23052989",
+    "the-death-receptor-cd95-activates-adult-neural-stem-cells-for-working-memory-formation-and-brain-repair."
+  ],
+  "key_phrases": [
+    "death",
+    "receptor",
+    "cd95",
+    "activates",
+    "adult",
+    "neural",
+    "stem",
+    "cells"
+  ],
+  "summary_1l": "The death receptor CD95 activates adult neural stem cells for working memory formation and brain repair.",
+  "query_hits": [],
+  "embed_text": "23052989 The death receptor CD95 activates adult neural stem cells for working memory formation and brain repair. science scifact Adult neurogenesis persists in the subventricular zone and the dentate gyrus and can be induced upon central nervous system injury. However, the final contribution of newborn neurons to neuronal networks is limited. Here we show that in… 23052989 the-death-receptor-cd95-activates-adult-neural-stem-cells-for-working-memory-formation-and-brain-repair. death receptor cd95 activates adult neural stem cells The death receptor CD95 activates adult neural stem cells for working memory formation and brain repair. The death receptor CD95 activates adult neural stem cells for working memory formation and brain repair. Adult neurogenesis persists in the subventricular zone and the dentate gyrus and can be induced upon central nervous system injury. However, the final contribution of newborn neurons to neuronal networks is limited. Here we show that in neural stem cells, stimulation of the \"death receptor\" CD95 does not trigger apoptosis but unexpectedly leads to increased stem cell survival and neuronal specification. These effects are mediated via activation of the Src/PI3K/AKT/mTOR signaling pathway, ultimately leading to a global increase in protein translation. Induction of neurogenesis by CD95 was further confirmed in the ischemic CA1 region, in the naive dentate gyrus, and after forced expressio",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.785058+00:00"
+}

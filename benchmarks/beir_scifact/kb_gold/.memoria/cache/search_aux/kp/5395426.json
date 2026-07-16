@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5395426",
+  "source_fingerprint": "c73d61dd8512472aadb5bd02d2d051a5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5395426",
+    "excitotoxic-brain-injury-in-adult-zebrafish-stimulates-neurogenesis-and-long-distance-neuronal-integration."
+  ],
+  "key_phrases": [
+    "excitotoxic",
+    "brain",
+    "injury",
+    "adult",
+    "zebrafish",
+    "stimulates",
+    "neurogenesis",
+    "long"
+  ],
+  "summary_1l": "Excitotoxic brain injury in adult zebrafish stimulates neurogenesis and long-distance neuronal integration.",
+  "query_hits": [],
+  "embed_text": "5395426 Excitotoxic brain injury in adult zebrafish stimulates neurogenesis and long-distance neuronal integration. science scifact Zebrafish maintain a greater capacity than mammals for central nervous system repair after injury. Understanding differences in regenerative responses between different vertebrate species may shed light on mechanisms to improve repair in… 5395426 excitotoxic-brain-injury-in-adult-zebrafish-stimulates-neurogenesis-and-long-distance-neuronal-integration. excitotoxic brain injury adult zebrafish stimulates neurogenesis long Excitotoxic brain injury in adult zebrafish stimulates neurogenesis and long-distance neuronal integration. Excitotoxic brain injury in adult zebrafish stimulates neurogenesis and long-distance neuronal integration. Zebrafish maintain a greater capacity than mammals for central nervous system repair after injury. Understanding differences in regenerative responses between different vertebrate species may shed light on mechanisms to improve repair in humans. Quinolinic acid is an excitotoxin that has been used to induce brain injury in rodents for modeling Huntington's disease and stroke. When injected into the adult rodent striatum, this toxin stimulates subventricular zone neurogenesis and neuroblast migration to injury. However, most new neurons fail to survive and lesion repair is minimal. We used quinolinic acid to lesion the adult zebrafish telencephalon to study reparative processes. We al",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.141698+00:00"
+}

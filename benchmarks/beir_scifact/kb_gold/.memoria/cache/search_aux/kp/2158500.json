@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2158500",
+  "source_fingerprint": "95bb9af4182554354c61e39d00723276",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2158500",
+    "leptin-treatment-ameliorates-anxiety-in-ob/ob-obese-mice."
+  ],
+  "key_phrases": [
+    "leptin",
+    "treatment",
+    "ameliorates",
+    "anxiety",
+    "ob",
+    "obese",
+    "mice",
+    "we"
+  ],
+  "summary_1l": "Leptin treatment ameliorates anxiety in ob/ob obese mice.",
+  "query_hits": [],
+  "embed_text": "2158500 Leptin treatment ameliorates anxiety in ob/ob obese mice. science scifact We investigated whether or not administered leptin influences anxiety-like behavior in ob/ob mice. Repeated intraperitoneal administrations of leptin were continued for 5 days. Anxiety was assessed in the standard elevated plus maze. Body… 2158500 leptin-treatment-ameliorates-anxiety-in-ob/ob-obese-mice. leptin treatment ameliorates anxiety ob obese mice we Leptin treatment ameliorates anxiety in ob/ob obese mice. Leptin treatment ameliorates anxiety in ob/ob obese mice. We investigated whether or not administered leptin influences anxiety-like behavior in ob/ob mice. Repeated intraperitoneal administrations of leptin were continued for 5 days. Anxiety was assessed in the standard elevated plus maze. Body weight was measured daily. Repeated administrations of leptin significantly increased the percentage of the total number of entries in the open arms and the number of total entries. The body weight was significantly reduced by 13.2% after treatment. Leptin treatment ameliorated not only obesity but also anxiety in ob/ob mice. Our results indicate that the treatment of obesity may lead to the solution of psychological problems.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.437217+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11156883",
+  "source_fingerprint": "9017242879deb2930defb781c71488cc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11156883",
+    "compensatory-anti-inflammatory-response-syndrome."
+  ],
+  "key_phrases": [
+    "compensatory",
+    "anti",
+    "inflammatory",
+    "response",
+    "syndrome",
+    "concept",
+    "cars",
+    "was"
+  ],
+  "summary_1l": "Compensatory anti-inflammatory response syndrome.",
+  "query_hits": [],
+  "embed_text": "11156883 Compensatory anti-inflammatory response syndrome. science scifact The concept of 'Compensatory anti-inflammatory response syndrome' (CARS) was proposed in 1997 by Roger Bone (1941-1997) to qualify the consequences of the counter-regulatory mechanisms initiated to limit the overzealous inflammatory… 11156883 compensatory-anti-inflammatory-response-syndrome. compensatory anti inflammatory response syndrome concept cars was Compensatory anti-inflammatory response syndrome. Compensatory anti-inflammatory response syndrome. The concept of 'Compensatory anti-inflammatory response syndrome' (CARS) was proposed in 1997 by Roger Bone (1941-1997) to qualify the consequences of the counter-regulatory mechanisms initiated to limit the overzealous inflammatory process in patients with infectious (sepsis) or non-infectious systemic inflammatory response syndrome (SIRS). One major consequence of CARS is the modification of the immune status that could favour the enhanced susceptibility of intensive care patients to nosocomial infections. Indeed, most animal 'two-hit' models illustrate an enhanced sensitivity to infection after a first insult. However, this observation is highly dependent on the experimental procedure. Numerous functions of circulating leukocytes are alt",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:06.372630+00:00"
+}

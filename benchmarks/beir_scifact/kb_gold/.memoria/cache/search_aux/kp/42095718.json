@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "42095718",
+  "source_fingerprint": "d1c6252eec60fa045858f45cdce8c234",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "42095718",
+    "psychiatric-comorbidity-in-chronic-daily-headache."
+  ],
+  "key_phrases": [
+    "psychiatric",
+    "comorbidity",
+    "chronic",
+    "daily",
+    "headache",
+    "clinical",
+    "evidence",
+    "suggests"
+  ],
+  "summary_1l": "Psychiatric comorbidity in chronic daily headache.",
+  "query_hits": [],
+  "embed_text": "42095718 Psychiatric comorbidity in chronic daily headache. science scifact Clinical evidence suggests that chronic daily headache (CDH) occurs in association with psychopathologies: previous studies have focused particularly on migraine. To evaluate this association, we studied, using the DSM-IIIR criteria, a… 42095718 psychiatric-comorbidity-in-chronic-daily-headache. psychiatric comorbidity chronic daily headache clinical evidence suggests Psychiatric comorbidity in chronic daily headache. Psychiatric comorbidity in chronic daily headache. Clinical evidence suggests that chronic daily headache (CDH) occurs in association with psychopathologies: previous studies have focused particularly on migraine. To evaluate this association, we studied, using the DSM-IIIR criteria, a population of 88 patients (18M, 70F) affected by CDH (mean duration 7.4 +/- 8.7 years). We documented the presence of a psychiatric disorder in 90% of this population. The most frequent diagnosis was a comorbidity of anxiety and mood disorders. The comorbidity of psychiatric disorders and headache has important implications as far as treatment is concerned.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.789638+00:00"
+}

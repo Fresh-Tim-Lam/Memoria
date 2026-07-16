@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "95102458",
+  "source_fingerprint": "529e8a51c3431d03c134cd82855b518a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "95102458",
+    "process-analysis-and-economic-evaluation-for-poly(3-hydroxybutyrate)-production-by-fermentation"
+  ],
+  "key_phrases": [
+    "process",
+    "analysis",
+    "economic",
+    "evaluation",
+    "poly",
+    "hydroxybutyrate",
+    "production",
+    "by"
+  ],
+  "summary_1l": "Abstract Several processes for the production and recovery of poly(3-hydroxybutyrate) (PHB) by Alcaligen",
+  "query_hits": [],
+  "embed_text": "95102458 Process analysis and economic evaluation for Poly(3-hydroxybutyrate) production by fermentation science scifact Abstract Several processes for the production and recovery of poly(3-hydroxybutyrate) (PHB) by Alcaligenes eutrophus, Alcaligenes latus, Methylobacterium organophilum, and recombinant Escherichia coli were designed based on the previously… 95102458 process-analysis-and-economic-evaluation-for-poly(3-hydroxybutyrate)-production-by-fermentation process analysis economic evaluation poly hydroxybutyrate production by Abstract Several processes for the production and recovery of poly(3-hydroxybutyrate) (PHB) by Alcaligen Process analysis and economic evaluation for Poly(3-hydroxybutyrate) production by fermentation Abstract Several processes for the production and recovery of poly(3-hydroxybutyrate) (PHB) by Alcaligenes eutrophus, Alcaligenes latus, Methylobacterium organophilum, and recombinant Escherichia coli were designed based on the previously reported data and analyzed by computer-aided bioprocess design. PHB productivity, content, and yield significantly affected the final price of PHB. For the annual production of 2,850 tonnes of purified PHB, the process employing A. eutrophus with the recovery method of surfactant-hypochlorite digestion resulted in lowest price of PHB, 4.75/kg. The cost of carbon substrate significantly affected the overall economics in large production scale. Therefore, the pro",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.110795+00:00"
+}

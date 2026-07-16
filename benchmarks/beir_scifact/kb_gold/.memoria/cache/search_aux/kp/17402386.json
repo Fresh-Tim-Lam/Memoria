@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17402386",
+  "source_fingerprint": "367c3657648d75da837094bb8e96316d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17402386",
+    "the-embo-journal"
+  ],
+  "key_phrases": [
+    "embo",
+    "journal",
+    "glutamate",
+    "gated",
+    "ion",
+    "channels",
+    "ionotropic",
+    "receptors"
+  ],
+  "summary_1l": "Glutamate-gated ion channels (ionotropic glutamate receptors, iGluRs) sense the extracellular milieu via an extensive extracellular portion, comprised of two clamshell-shaped segments",
+  "query_hits": [],
+  "embed_text": "17402386 THE EMBO JOURNAL science scifact Glutamate-gated ion channels (ionotropic glutamate receptors, iGluRs) sense the extracellular milieu via an extensive extracellular portion, comprised of two clamshell-shaped segments. The distal, N-terminal domain (NTD) has allosteric… 17402386 the-embo-journal embo journal glutamate gated ion channels ionotropic receptors Glutamate-gated ion channels (ionotropic glutamate receptors, iGluRs) sense the extracellular milieu via an extensive extracellular portion, comprised of two clamshell-shaped segments THE EMBO JOURNAL Glutamate-gated ion channels (ionotropic glutamate receptors, iGluRs) sense the extracellular milieu via an extensive extracellular portion, comprised of two clamshell-shaped segments. The distal, N-terminal domain (NTD) has allosteric potential in NMDA-type iGluRs, which has not been ascribed to the analogous domain in AMPA receptors (AMPARs). In this study, we present new structural data uncovering dynamic properties of the GluA2 and GluA3 AMPAR NTDs. GluA3 features a zipped-open dimer interface with unconstrained lower clamshell lobes, reminiscent of metabotropic GluRs (mGluRs). The resulting labile interface supports interprotomer rotations, which can be transmitted to downstream receptor segments. Normal mode analysis reveals two dominant mechanisms of AMPAR NTD motio",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.656299+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3805841",
+  "source_fingerprint": "9b459839f0ba2729d6547182df0d622e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3805841",
+    "myc-disrupts-the-circadian-clock-and-metabolism-in-cancer-cells."
+  ],
+  "key_phrases": [
+    "myc",
+    "disrupts",
+    "circadian",
+    "clock",
+    "metabolism",
+    "cancer",
+    "cells",
+    "oncogene"
+  ],
+  "summary_1l": "MYC Disrupts the Circadian Clock and Metabolism in Cancer Cells.",
+  "query_hits": [],
+  "embed_text": "3805841 MYC Disrupts the Circadian Clock and Metabolism in Cancer Cells. science scifact The MYC oncogene encodes MYC, a transcription factor that binds the genome through sites termed E-boxes (5'-CACGTG-3'), which are identical to the binding sites of the heterodimeric CLOCK-BMAL1 master circadian transcription factor. Hence,… 3805841 myc-disrupts-the-circadian-clock-and-metabolism-in-cancer-cells. myc disrupts circadian clock metabolism cancer cells oncogene MYC Disrupts the Circadian Clock and Metabolism in Cancer Cells. MYC Disrupts the Circadian Clock and Metabolism in Cancer Cells. The MYC oncogene encodes MYC, a transcription factor that binds the genome through sites termed E-boxes (5'-CACGTG-3'), which are identical to the binding sites of the heterodimeric CLOCK-BMAL1 master circadian transcription factor. Hence, we hypothesized that ectopic MYC expression perturbs the clock by deregulating E-box-driven components of the circadian network in cancer cells. We report here that deregulated expression of MYC or N-MYC disrupts the molecular clock in vitro by directly inducing REV-ERBα to dampen expression and oscillation of BMAL1, and this could be rescued by knockdown of REV-ERB. REV-ERBα expression predicts poor clinical outcome for N-MYC-driven human neuroblastomas that have diminished BMAL1 expressio",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.179300+00:00"
+}

@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "kp_id": "109587#3",
+  "source_fingerprint": "a824b460fad16e2a308e245e8aee0257",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "2000年美国人口普查"
+  ],
+  "aliases": [
+    "109587#3"
+  ],
+  "key_phrases": [
+    "皇太后",
+    "目前",
+    "一位",
+    "昭和",
+    "天皇",
+    "皇后",
+    "香淳",
+    "仁天皇"
+  ],
+  "summary_1l": "目前最後一位皇太后是昭和天皇皇后—香淳皇后，在明仁天皇登基後成為皇太后。",
+  "query_hits": [],
+  "embed_text": "109587#3 皇太后 皇太后 目前最後一位皇太后是昭和天皇皇后—香淳皇后，在明仁天皇登基後成為皇太后。2000年6月16日，香淳皇后過世（日文稱“崩御”）。 2000年美国人口普查 109587#3 皇太后 目前 一位 昭和 天皇 皇后 香淳 仁天皇 目前最後一位皇太后是昭和天皇皇后—香淳皇后，在明仁天皇登基後成為皇太后。 皇太后 目前最後一位皇太后是昭和天皇皇后—香淳皇后，在明仁天皇登基後成為皇太后。2000年6月16日，香淳皇后過世（日文稱“崩御”）。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:19:33.166705+00:00"
+}

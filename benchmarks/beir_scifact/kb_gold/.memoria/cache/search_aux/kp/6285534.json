@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6285534",
+  "source_fingerprint": "b545345f3e4ea1959bf7f2b24a06bbe9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6285534",
+    "mir-302-is-required-for-timing-of-neural-differentiation,-neural-tube-closure,-and-embryonic-viability"
+  ],
+  "key_phrases": [
+    "mir",
+    "302",
+    "required",
+    "timing",
+    "neural",
+    "differentiation",
+    "tube",
+    "closure"
+  ],
+  "summary_1l": "The evolutionarily conserved miR-302 family of microRNAs is expressed during early mammalian embr",
+  "query_hits": [],
+  "embed_text": "6285534 miR-302 Is Required for Timing of Neural Differentiation, Neural Tube Closure, and Embryonic Viability science scifact The evolutionarily conserved miR-302 family of microRNAs is expressed during early mammalian embryonic development. Here, we report that deletion of miR-302a-d in mice results in a fully penetrant late embryonic lethal phenotype. Knockout… 6285534 mir-302-is-required-for-timing-of-neural-differentiation,-neural-tube-closure,-and-embryonic-viability mir 302 required timing neural differentiation tube closure The evolutionarily conserved miR-302 family of microRNAs is expressed during early mammalian embr miR-302 Is Required for Timing of Neural Differentiation, Neural Tube Closure, and Embryonic Viability The evolutionarily conserved miR-302 family of microRNAs is expressed during early mammalian embryonic development. Here, we report that deletion of miR-302a-d in mice results in a fully penetrant late embryonic lethal phenotype. Knockout embryos have an anterior neural tube closure defect associated with a thickened neuroepithelium. The neuroepithelium shows increased progenitor proliferation, decreased cell death, and precocious neuronal differentiation. mRNA profiling at multiple time points during neurulation uncovers a complex pattern of changing targets over time. Overexpression of one of these targets, Fgf15, in the neuroepithelium of the chick embryo induces precocious neuronal di",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.451421+00:00"
+}

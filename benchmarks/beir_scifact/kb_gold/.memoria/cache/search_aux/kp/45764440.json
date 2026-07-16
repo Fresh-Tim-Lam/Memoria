@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "45764440",
+  "source_fingerprint": "72bc40d773d5a4bc58b25b397da9ad2a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "45764440",
+    "inhibition-of-src-expression-and-activity-inhibits-tumor-progression-and-metastasis-of-human-pancreatic-adenocarcinoma-cells-in-an-orthotopic-nude-mouse-model."
+  ],
+  "key_phrases": [
+    "inhibition",
+    "src",
+    "expression",
+    "activity",
+    "inhibits",
+    "tumor",
+    "progression",
+    "metastasis"
+  ],
+  "summary_1l": "Inhibition of SRC expression and activity inhibits tumor progression and metastasis of human pancreatic adenocarcinoma cells in an orthotopic nude mouse model.",
+  "query_hits": [],
+  "embed_text": "45764440 Inhibition of SRC expression and activity inhibits tumor progression and metastasis of human pancreatic adenocarcinoma cells in an orthotopic nude mouse model. science scifact The nonreceptor protein tyrosine kinase Src is overexpressed in 70% of pancreatic adenocarcinomas. Here, we describe the effect of molecular and pharmacological down-regulation of Src on incidence, growth, and metastasis of pancreatic… 45764440 inhibition-of-src-expression-and-activity-inhibits-tumor-progression-and-metastasis-of-human-pancreatic-adenocarcinoma-cells-in-an-orthotopic-nude-mouse-model. inhibition src expression activity inhibits tumor progression metastasis Inhibition of SRC expression and activity inhibits tumor progression and metastasis of human pancreatic adenocarcinoma cells in an orthotopic nude mouse model. Inhibition of SRC expression and activity inhibits tumor progression and metastasis of human pancreatic adenocarcinoma cells in an orthotopic nude mouse model. The nonreceptor protein tyrosine kinase Src is overexpressed in 70% of pancreatic adenocarcinomas. Here, we describe the effect of molecular and pharmacological down-regulation of Src on incidence, growth, and metastasis of pancreatic tumor cells in an orthotopic model. Src expression in L3.6pl human pancreatic tumor cells was reduced by stable expression of a plasmid encoding small interfering RNA (siRNA) to c-src. In stable siRNA clones, Src expression was reduced >80%, with no change in expression of the related kinases c-Yes and c-Lyn, and proliferation rates were similar in all clones. Phosphorylation of Akt and p44/42 Erk mito",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.539163+00:00"
+}

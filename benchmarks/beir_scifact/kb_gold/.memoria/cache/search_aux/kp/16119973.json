@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "16119973",
+  "source_fingerprint": "5129090f0a0b72c120781dbc51393351",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16119973"
+  ],
+  "key_phrases": [
+    "article",
+    "ibd",
+    "characterized",
+    "by",
+    "uncontrolled",
+    "immune",
+    "responses",
+    "inflamed"
+  ],
+  "summary_1l": "IBD is characterized by uncontrolled immune responses in inflamed mucosa, with dominance of IL-17-producing cells and deficiency of Treg cells.",
+  "query_hits": [],
+  "embed_text": "16119973 Article science scifact IBD is characterized by uncontrolled immune responses in inflamed mucosa, with dominance of IL-17-producing cells and deficiency of Treg cells. The aim of this study was to explore the effect and mechanisms of RA, the ligand of RARalpha,… 16119973 article ibd characterized by uncontrolled immune responses inflamed IBD is characterized by uncontrolled immune responses in inflamed mucosa, with dominance of IL-17-producing cells and deficiency of Treg cells. Article IBD is characterized by uncontrolled immune responses in inflamed mucosa, with dominance of IL-17-producing cells and deficiency of Treg cells. The aim of this study was to explore the effect and mechanisms of RA, the ligand of RARalpha, on immune responses in human and murine colitis. Colonic biopsies from patients with UC were cultured and treated with RA as the agonist of RARalpha or LE135 as the antagonist of RARalpha. Expressions of IL-17 and FOXP3 were detected by immunohistochemistry. Murine colitis was induced by intrarectal administration with TNBS at Day 1. Mice were then i.p.-treated with RA or LE135 daily for 7 days. Cytokine levels in the cultures of mouse LPMCs were measured. Expressions of FOXP3 and IL-17 in colon tissues or MLN were detected by immunohistological an",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.847848+00:00"
+}

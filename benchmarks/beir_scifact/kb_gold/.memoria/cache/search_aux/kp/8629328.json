@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8629328",
+  "source_fingerprint": "dbc8d690492e3fd5fd245190d7b8c020",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8629328",
+    "peripheral-b-cell-subsets."
+  ],
+  "key_phrases": [
+    "peripheral",
+    "cell",
+    "subsets",
+    "our",
+    "understanding",
+    "origins",
+    "biological",
+    "functions"
+  ],
+  "summary_1l": "Peripheral B cell subsets.",
+  "query_hits": [],
+  "embed_text": "8629328 Peripheral B cell subsets. science scifact Our understanding of the origins and the biological functions of different peripheral B cell subsets continues to evolve. Some understanding has been obtained regarding the synergy between BCR-derived signals and other receptors and… 8629328 peripheral-b-cell-subsets. peripheral cell subsets our understanding origins biological functions Peripheral B cell subsets. Peripheral B cell subsets. Our understanding of the origins and the biological functions of different peripheral B cell subsets continues to evolve. Some understanding has been obtained regarding the synergy between BCR-derived signals and other receptors and signaling pathways that drive the development of follicular, marginal zone, and B-1 B cells, but this remains a complex and poorly understood issue. More recent information regarding the origins of B-1 and B-2 B cells, the ability of follicular B cells to mature both in the bone marrow and the spleen, the existence of a definable precursor for MZ B cells, and the ability of follicular B cells to occupy two distinct niches are all highlighted in this review.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.282257+00:00"
+}

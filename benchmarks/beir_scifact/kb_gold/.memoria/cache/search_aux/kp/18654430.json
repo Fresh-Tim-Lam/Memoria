@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18654430",
+  "source_fingerprint": "bde10289eef70bd01a5e195e4e6b1e69",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18654430",
+    "prediction-of-guide-strand-of-micrornas-from-its-sequence-and-secondary-structure"
+  ],
+  "key_phrases": [
+    "prediction",
+    "guide",
+    "strand",
+    "micrornas",
+    "from",
+    "its",
+    "sequence",
+    "secondary"
+  ],
+  "summary_1l": "BACKGROUND MicroRNAs (miRNAs) are produced by the sequential processing of a long hairpin RNA transcript by Drosha and",
+  "query_hits": [],
+  "embed_text": "18654430 Prediction of guide strand of microRNAs from its sequence and secondary structure science scifact BACKGROUND MicroRNAs (miRNAs) are produced by the sequential processing of a long hairpin RNA transcript by Drosha and Dicer, an RNase III enzymes, and form transitory small RNA duplexes. One strand of the duplex, which incorporates into… 18654430 prediction-of-guide-strand-of-micrornas-from-its-sequence-and-secondary-structure prediction guide strand micrornas from its sequence secondary BACKGROUND MicroRNAs (miRNAs) are produced by the sequential processing of a long hairpin RNA transcript by Drosha and Prediction of guide strand of microRNAs from its sequence and secondary structure BACKGROUND MicroRNAs (miRNAs) are produced by the sequential processing of a long hairpin RNA transcript by Drosha and Dicer, an RNase III enzymes, and form transitory small RNA duplexes. One strand of the duplex, which incorporates into RNA-induced silencing complex (RISC) and silences the gene expression is called guide strand, or miRNA; while the other strand of duplex is degraded and called the passenger strand, or miRNA*. Predicting the guide strand of miRNA is important for better understanding the RNA interference pathways. RESULTS This paper describes support vector machine (SVM) models developed for predicting the guide strands of miRNAs. All models were trained and tested on a dataset consisting of",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.529364+00:00"
+}

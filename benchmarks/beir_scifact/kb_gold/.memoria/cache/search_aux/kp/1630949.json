@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1630949",
+  "source_fingerprint": "dfd201b05a10557ac80566e61432d2fa",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1630949",
+    "oct4-induced-pluripotency-in-adult-neural-stem-cells"
+  ],
+  "key_phrases": [
+    "oct4",
+    "induced",
+    "pluripotency",
+    "adult",
+    "neural",
+    "stem",
+    "cells",
+    "four"
+  ],
+  "summary_1l": "The four transcription factors Oct4, Sox2, Klf4, and c-Myc can induce pluripotency in mouse and human fibroblasts.",
+  "query_hits": [],
+  "embed_text": "1630949 Oct4-Induced Pluripotency in Adult Neural Stem Cells science scifact The four transcription factors Oct4, Sox2, Klf4, and c-Myc can induce pluripotency in mouse and human fibroblasts. We previously described direct reprogramming of adult mouse neural stem cells (NSCs) by Oct4 and either Klf4 or c-Myc. NSCs… 1630949 oct4-induced-pluripotency-in-adult-neural-stem-cells oct4 induced pluripotency adult neural stem cells four The four transcription factors Oct4, Sox2, Klf4, and c-Myc can induce pluripotency in mouse and human fibroblasts. Oct4-Induced Pluripotency in Adult Neural Stem Cells The four transcription factors Oct4, Sox2, Klf4, and c-Myc can induce pluripotency in mouse and human fibroblasts. We previously described direct reprogramming of adult mouse neural stem cells (NSCs) by Oct4 and either Klf4 or c-Myc. NSCs endogenously express Sox2, c-Myc, and Klf4 as well as several intermediate reprogramming markers. Here we report that exogenous expression of the germline-specific transcription factor Oct4 is sufficient to generate pluripotent stem cells from adult mouse NSCs. These one-factor induced pluripotent stem cells (1F iPS) are similar to embryonic stem cells in vitro and in vivo. Not only can these cells can be efficiently differentiated into NSCs, cardiomyocytes, and germ cells in vitro, but they are also ca",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.089175+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3613041",
+  "source_fingerprint": "a6576159b326687ccd59d6bbdaf859b5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3613041",
+    "therapeutic-equivalence-of-alendronate-70-mg-once-weekly-and-alendronate-10-mg-daily-in-the-treatment-of-osteoporosis.-alendronate-once-weekly-study-group."
+  ],
+  "key_phrases": [
+    "therapeutic",
+    "equivalence",
+    "alendronate",
+    "70",
+    "mg",
+    "once",
+    "weekly",
+    "10"
+  ],
+  "summary_1l": "Therapeutic equivalence of alendronate 70 mg once-weekly and alendronate 10 mg daily in the treatment of osteoporosis.",
+  "query_hits": [],
+  "embed_text": "3613041 Therapeutic equivalence of alendronate 70 mg once-weekly and alendronate 10 mg daily in the treatment of osteoporosis. Alendronate Once-Weekly Study Group. science scifact Dosing convenience is a key element in the effective management of any chronic disease, and is particularly important in the long-term management of osteoporosis. Less frequent dosing with any medication may enhance compliance, thereby… 3613041 therapeutic-equivalence-of-alendronate-70-mg-once-weekly-and-alendronate-10-mg-daily-in-the-treatment-of-osteoporosis.-alendronate-once-weekly-study-group. therapeutic equivalence alendronate 70 mg once weekly 10 Therapeutic equivalence of alendronate 70 mg once-weekly and alendronate 10 mg daily in the treatment of osteoporosis. Therapeutic equivalence of alendronate 70 mg once-weekly and alendronate 10 mg daily in the treatment of osteoporosis. Alendronate Once-Weekly Study Group. Dosing convenience is a key element in the effective management of any chronic disease, and is particularly important in the long-term management of osteoporosis. Less frequent dosing with any medication may enhance compliance, thereby maximizing the effectiveness of therapy. Animal data support the rationale that once-weekly dosing with alendronate 70 mg (7 times the daily oral treatment dose) could provide similar efficacy to daily dosing with alendronate 10 mg due to its long duration of effect in bone. In addition, dog studies suggest that the potential for esophageal irritation, observed with daily oral bisphosphonates, may be subs",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.915129+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "40667577",
+  "source_fingerprint": "edff98adb47c3c2d36c76b0885b61488",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "40667577",
+    "emt,-the-cytoskeleton,-and-cancer-cell-invasion"
+  ],
+  "key_phrases": [
+    "emt",
+    "cytoskeleton",
+    "cancer",
+    "cell",
+    "invasion",
+    "metastatic",
+    "process",
+    "dissemination"
+  ],
+  "summary_1l": "The metastatic process, i.",
+  "query_hits": [],
+  "embed_text": "40667577 EMT, the cytoskeleton, and cancer cell invasion science scifact The metastatic process, i.e. the dissemination of cancer cells throughout the body to seed secondary tumors at distant sites, requires cancer cells to leave the primary tumor and to acquire migratory and invasive capabilities. In a process… 40667577 emt,-the-cytoskeleton,-and-cancer-cell-invasion emt cytoskeleton cancer cell invasion metastatic process dissemination The metastatic process, i. EMT, the cytoskeleton, and cancer cell invasion The metastatic process, i.e. the dissemination of cancer cells throughout the body to seed secondary tumors at distant sites, requires cancer cells to leave the primary tumor and to acquire migratory and invasive capabilities. In a process of epithelial-mesenchymal transition (EMT), besides changing their adhesive repertoire, cancer cells employ developmental processes to gain migratory and invasive properties that involve a dramatic reorganization of the actin cytoskeleton and the concomitant formation of membrane protrusions required for invasive growth. The molecular processes underlying such cellular changes are still only poorly understood, and the various migratory organelles, including lamellipodia, filopodia, invadopodia and podosomes",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.722270+00:00"
+}

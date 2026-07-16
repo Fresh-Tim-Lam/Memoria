@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "34469966",
+  "source_fingerprint": "6d14bd815196dcc25da2b1a7a4784378",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "34469966",
+    "human-monocytes-engage-an-alternative-inflammasome-pathway."
+  ],
+  "key_phrases": [
+    "human",
+    "monocytes",
+    "engage",
+    "alternative",
+    "inflammasome",
+    "pathway",
+    "interleukin",
+    "il"
+  ],
+  "summary_1l": "Human Monocytes Engage an Alternative Inflammasome Pathway.",
+  "query_hits": [],
+  "embed_text": "34469966 Human Monocytes Engage an Alternative Inflammasome Pathway. science scifact Interleukin-1β (IL-1β) is a cytokine whose bioactivity is controlled by activation of the inflammasome. However, in response to lipopolysaccharide, human monocytes secrete IL-1β independently of classical inflammasome stimuli. Here, we… 34469966 human-monocytes-engage-an-alternative-inflammasome-pathway. human monocytes engage alternative inflammasome pathway interleukin il Human Monocytes Engage an Alternative Inflammasome Pathway. Human Monocytes Engage an Alternative Inflammasome Pathway. Interleukin-1β (IL-1β) is a cytokine whose bioactivity is controlled by activation of the inflammasome. However, in response to lipopolysaccharide, human monocytes secrete IL-1β independently of classical inflammasome stimuli. Here, we report that this constituted a species-specific response that is not observed in the murine system. Indeed, in human monocytes, lipopolysaccharide triggered an \"alternative inflammasome\" that relied on NLRP3-ASC-caspase-1 signaling, yet was devoid of any classical inflammasome characteristics including pyroptosome formation, pyroptosis induction, and K(+) efflux dependency. Genetic dissection of the underlying signaling pathway in a monocyte transdifferentiation system revealed that alternative infl",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.514062+00:00"
+}

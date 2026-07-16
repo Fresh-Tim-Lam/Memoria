@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "42278130",
+  "source_fingerprint": "8af1904358d46de523194ea17f8d5888",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "42278130",
+    "unmet-need-for-personal-assistance-with-activities-of-daily-living-among-older-adults."
+  ],
+  "key_phrases": [
+    "unmet",
+    "need",
+    "personal",
+    "assistance",
+    "with",
+    "activities",
+    "daily",
+    "living"
+  ],
+  "summary_1l": "Unmet need for personal assistance with activities of daily living among older adults.",
+  "query_hits": [],
+  "embed_text": "42278130 Unmet need for personal assistance with activities of daily living among older adults. science scifact PURPOSE This study examined the prevalence, correlates, and negative consequences of unmet need for personal assistance with activities of daily living (ADLs) among older adults. DESIGN AND METHODS The authors analyzed cross-sectional data… 42278130 unmet-need-for-personal-assistance-with-activities-of-daily-living-among-older-adults. unmet need personal assistance with activities daily living Unmet need for personal assistance with activities of daily living among older adults. Unmet need for personal assistance with activities of daily living among older adults. PURPOSE This study examined the prevalence, correlates, and negative consequences of unmet need for personal assistance with activities of daily living (ADLs) among older adults. DESIGN AND METHODS The authors analyzed cross-sectional data from the 1994 National Health Interview Survey's Supplement on Aging. Data were weighted to be representative of the noninstitutionalized population aged 70 years and older. RESULTS Overall, 20.7% of those needing help to perform 1 or more ADLs (an estimated 629,000 persons) reported receiving inadequate assistance; for individual ADLs, the prevalence of unmet need ranged from 10.2% (eating) to 20.1% (transferring). The likelihood of having 1 or more unmet needs was as",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.867473+00:00"
+}

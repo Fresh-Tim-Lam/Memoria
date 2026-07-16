@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3847200",
+  "source_fingerprint": "f203a037b122d9b1d95385a9eda1bf8b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3847200",
+    "direct-reprogramming-of-hepatic-myofibroblasts-into-hepatocytes-in-vivo-attenuates-liver-fibrosis."
+  ],
+  "key_phrases": [
+    "direct",
+    "reprogramming",
+    "hepatic",
+    "myofibroblasts",
+    "into",
+    "hepatocytes",
+    "vivo",
+    "attenuates"
+  ],
+  "summary_1l": "Direct Reprogramming of Hepatic Myofibroblasts into Hepatocytes In Vivo Attenuates Liver Fibrosis.",
+  "query_hits": [],
+  "embed_text": "3847200 Direct Reprogramming of Hepatic Myofibroblasts into Hepatocytes In Vivo Attenuates Liver Fibrosis. science scifact Direct induction of induced hepatocytes (iHeps) from fibroblasts holds potential as a strategy for regenerative medicine but until now has only been shown in culture settings. Here, we describe in vivo iHep formation using transcription… 3847200 direct-reprogramming-of-hepatic-myofibroblasts-into-hepatocytes-in-vivo-attenuates-liver-fibrosis. direct reprogramming hepatic myofibroblasts into hepatocytes vivo attenuates Direct Reprogramming of Hepatic Myofibroblasts into Hepatocytes In Vivo Attenuates Liver Fibrosis. Direct Reprogramming of Hepatic Myofibroblasts into Hepatocytes In Vivo Attenuates Liver Fibrosis. Direct induction of induced hepatocytes (iHeps) from fibroblasts holds potential as a strategy for regenerative medicine but until now has only been shown in culture settings. Here, we describe in vivo iHep formation using transcription factor induction and genetic fate tracing in mouse models of chronic liver disease. We show that ectopic expression of the transcription factors FOXA3, GATA4, HNF1A, and HNF4A from a polycistronic lentiviral vector converts mouse myofibroblasts into cells with a hepatocyte phenotype. In vivo expression of the same set of transcription factors from a p75 neurotrophin receptor peptide (p75NTRp)-tagged adenovirus enabled the generation of hepatocyte-like cells fr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.511288+00:00"
+}

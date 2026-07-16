@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "597790",
+  "source_fingerprint": "bd7c46f2d2f1b575944ae8d67b6ec7f8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "597790",
+    "deficiency-and-pharmacological-stabilization-of-mast-cells-reduce-diet-induced-obesity-and-diabetes-in-mice"
+  ],
+  "key_phrases": [
+    "deficiency",
+    "pharmacological",
+    "stabilization",
+    "mast",
+    "cells",
+    "reduce",
+    "diet",
+    "induced"
+  ],
+  "summary_1l": "Although mast cell functions have classically been related to allergic responses, recent stu",
+  "query_hits": [],
+  "embed_text": "597790 Deficiency and pharmacological stabilization of mast cells reduce diet-induced obesity and diabetes in mice science scifact Although mast cell functions have classically been related to allergic responses, recent studies indicate that these cells contribute to other common diseases such as multiple sclerosis, rheumatoid arthritis, atherosclerosis, aortic… 597790 deficiency-and-pharmacological-stabilization-of-mast-cells-reduce-diet-induced-obesity-and-diabetes-in-mice deficiency pharmacological stabilization mast cells reduce diet induced Although mast cell functions have classically been related to allergic responses, recent stu Deficiency and pharmacological stabilization of mast cells reduce diet-induced obesity and diabetes in mice Although mast cell functions have classically been related to allergic responses, recent studies indicate that these cells contribute to other common diseases such as multiple sclerosis, rheumatoid arthritis, atherosclerosis, aortic aneurysm and cancer. This study presents evidence that mast cells also contribute to diet-induced obesity and diabetes. For example, white adipose tissue (WAT) from obese humans and mice contain more mast cells than WAT from their lean counterparts. Furthermore, in the context of mice on a Western diet, genetically induced deficiency of mast cells, or their pharmacological stabilization, reduces body weight gain and levels of inflammatory cytokines, chemo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.624376+00:00"
+}

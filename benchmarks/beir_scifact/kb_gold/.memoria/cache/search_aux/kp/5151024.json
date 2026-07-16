@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5151024",
+  "source_fingerprint": "54da0f78a553e5d9e432be48b1b93244",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5151024",
+    "cost-effectiveness-of-options-for-the-diagnosis-of-high-blood-pressure-in-primary-care:-a-modelling-study."
+  ],
+  "key_phrases": [
+    "cost",
+    "effectiveness",
+    "options",
+    "diagnosis",
+    "high",
+    "blood",
+    "pressure",
+    "primary"
+  ],
+  "summary_1l": "Cost-effectiveness of options for the diagnosis of high blood pressure in primary care: a modelling study.",
+  "query_hits": [],
+  "embed_text": "5151024 Cost-effectiveness of options for the diagnosis of high blood pressure in primary care: a modelling study. science scifact BACKGROUND The diagnosis of hypertension has traditionally been based on blood-pressure measurements in the clinic, but home and ambulatory measurements better correlate with cardiovascular outcome, and ambulatory monitoring is more… 5151024 cost-effectiveness-of-options-for-the-diagnosis-of-high-blood-pressure-in-primary-care:-a-modelling-study. cost effectiveness options diagnosis high blood pressure primary Cost-effectiveness of options for the diagnosis of high blood pressure in primary care: a modelling study. Cost-effectiveness of options for the diagnosis of high blood pressure in primary care: a modelling study. BACKGROUND The diagnosis of hypertension has traditionally been based on blood-pressure measurements in the clinic, but home and ambulatory measurements better correlate with cardiovascular outcome, and ambulatory monitoring is more accurate than both clinic and home monitoring in diagnosing hypertension. We aimed to compare the cost-effectiveness of different diagnostic strategies for hypertension. METHODS We did a Markov model-based probabilistic cost-effectiveness analysis. We used a hypothetical primary-care population aged 40 years or older with a screening blood-pressure measurement greater than 140/90 mm Hg and risk-factor prevalence equivalent to the general population. We com",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.282034+00:00"
+}

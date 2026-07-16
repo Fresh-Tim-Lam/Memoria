@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4256553",
+  "source_fingerprint": "c088725e5c95273e8fa83fba6c919d91",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4256553",
+    "establishment-in-culture-of-pluripotential-cells-from-mouse-embryos"
+  ],
+  "key_phrases": [
+    "establishment",
+    "culture",
+    "pluripotential",
+    "cells",
+    "from",
+    "mouse",
+    "embryos",
+    "present"
+  ],
+  "summary_1l": "Pluripotential cells are present in a mouse embryo until at least an early post-implantation stage, as shown by their ability to tak",
+  "query_hits": [],
+  "embed_text": "4256553 Establishment in culture of pluripotential cells from mouse embryos science scifact Pluripotential cells are present in a mouse embryo until at least an early post-implantation stage, as shown by their ability to take part hi the formation of chimaeric animals1 and to form teratocarcinomas2. Until now it has not been… 4256553 establishment-in-culture-of-pluripotential-cells-from-mouse-embryos establishment culture pluripotential cells from mouse embryos present Pluripotential cells are present in a mouse embryo until at least an early post-implantation stage, as shown by their ability to tak Establishment in culture of pluripotential cells from mouse embryos Pluripotential cells are present in a mouse embryo until at least an early post-implantation stage, as shown by their ability to take part hi the formation of chimaeric animals1 and to form teratocarcinomas2. Until now it has not been possible to establish progressively growing cultures of these cells in vitro, and cell lines have only been obtained after teratocarcinoma formation in vivo. We report here the establishment in tissue culture of pluripotent cell lines which have been isolated directly from in vitro cultures of mouse blastocysts. These cells are able to differentiate either in vitro or after innoculation into a mouse as a tumour in vivo. They have a normal karyotype.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.121725+00:00"
+}

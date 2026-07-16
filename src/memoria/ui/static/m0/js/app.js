@@ -812,14 +812,19 @@
     }
   }
 
-  function checkItemHtml(severity, message, path, openPath) {
+  function checkItemHtml(severity, message, path, openPath, meta) {
     const sev = normalizeCheckSeverity(severity);
     const badge =
       sev === "error"
         ? '<span class="m0-check-badge m0-check-badge--error">错误</span>'
         : '<span class="m0-check-badge m0-check-badge--warning">警告</span>';
+    const dataAttrs = [
+      meta?.kpId ? `data-check-kp="${esc(meta.kpId)}"` : "",
+      meta?.line ? `data-check-line="${meta.line}"` : "",
+      meta?.kind ? `data-check-kind="${esc(meta.kind)}"` : "",
+    ].filter(Boolean).join(" ");
     const openBtn = openPath
-      ? `<button type="button" class="m0-btn secondary m0-check-open-btn" data-check-open="${esc(openPath)}">打开</button>`
+      ? `<button type="button" class="m0-btn secondary m0-check-open-btn" data-check-open="${esc(openPath)}" ${dataAttrs}>打开</button>`
       : "";
     const pathHtml = path
       ? `<div class="m0-check-item-path">${esc(path)}</div>`
@@ -832,6 +837,18 @@
       </div>
       ${openBtn}
     </div>`;
+  }
+
+  function _issueMessage(e) {
+    return typeof e === "string" ? e : (e?.message || String(e));
+  }
+  function _issueMeta(e) {
+    if (typeof e === "string") return {};
+    return {
+      kpId: e?.kp_id || null,
+      line: e?.line || null,
+      kind: e?.kind || null,
+    };
   }
 
   function renderCheckModalBody(vr) {
@@ -923,10 +940,12 @@
     for (const fr of vr.files || []) {
       html += `<section class="m0-check-section"><h4 class="m0-check-section-title">${esc(fr.path)}</h4>`;
       for (const e of fr.errors || []) {
-        html += checkItemHtml("error", e, fr.path, fr.path);
+        const meta = _issueMeta(e);
+        html += checkItemHtml("error", _issueMessage(e), fr.path, fr.path, meta);
       }
       for (const w of fr.warnings || []) {
-        html += checkItemHtml("warning", w, fr.path, fr.path);
+        const meta = _issueMeta(w);
+        html += checkItemHtml("warning", _issueMessage(w), fr.path, fr.path, meta);
       }
       html += "</section>";
     }
@@ -1011,10 +1030,20 @@
     body.querySelectorAll("[data-check-open]").forEach((btn) => {
       btn.addEventListener("click", () => {
         const p = btn.getAttribute("data-check-open");
-        if (p) {
-          closeCheckModal();
-          openFile(p);
-        }
+        if (!p) return;
+        const kpId = btn.getAttribute("data-check-kp") || null;
+        const lineStr = btn.getAttribute("data-check-line");
+        const kind = btn.getAttribute("data-check-kind") || null;
+        const line = lineStr ? parseInt(lineStr, 10) : null;
+        closeCheckModal();
+        openFile(p, {
+          kpId,
+          errorHighlight: {
+            kind,
+            kpId,
+            line: line && Number.isFinite(line) ? line : null,
+          },
+        });
       });
     });
   }
@@ -1033,6 +1062,177 @@
 
   function closeCheckModal() {
     $("#check-modal")?.classList.add("hidden");
+  }
+
+  // ── R11: 平面文件导入 ──────────────────────────────────────────
+
+  let _importFileContents = null;
+  let _importScanResult = null;
+
+  async function startImport() {
+    if (!state.kbPath) {
+      setStatus("请先打开知识库");
+      return;
+    }
+    const btn = $("#btn-import");
+    if (btn) btn.disabled = true;
+    try {
+      const files = await call("select_import_files");
+      if (!files || !files.length) {
+        return;
+      }
+      _importFileContents = files;
+      setStatus("导入预扫描中…");
+      const scan = await call("pre_scan_import", files);
+      if (scan.status === "error") {
+        setStatusError(scan.message || "预扫描失败");
+        return;
+      }
+      _importScanResult = scan;
+      if (!scan.has_conflicts) {
+        await executeImportDirect(files, {});
+        return;
+      }
+      renderImportConflictDialog(scan);
+      $("#import-conflict-modal").classList.remove("hidden");
+    } catch (e) {
+      setStatusError("导入失败", e.message);
+    } finally {
+      if (btn) btn.disabled = false;
+    }
+  }
+
+  async function executeImportDirect(files, conflictResolution) {
+    const btn = $("#btn-import");
+    if (btn) btn.disabled = true;
+    try {
+      setStatus("导入中…");
+      const result = await call("execute_import", files, conflictResolution);
+      if (result.status === "error") {
+        setStatusError(result.message || "导入失败");
+        return;
+      }
+      await afterImportRefresh(result);
+      renderImportResultDialog(result);
+      $("#import-result-modal").classList.remove("hidden");
+    } catch (e) {
+      setStatusError("导入失败", e.message);
+    } finally {
+      if (btn) btn.disabled = false;
+    }
+  }
+
+  async function afterImportRefresh(result) {
+    await refreshFiles();
+    await loadLinkTargets();
+    await loadGraphData();
+    await refreshKbPendingSummary();
+    if (state.currentPath) {
+      await openFile(state.currentPath, { skipNav: true });
+    }
+    const kp = (result.kp_imported || 0) + (result.kp_overwritten || 0) + (result.kp_renamed || 0);
+    setStatus("导入完成", `${result.files_written || 0} 文件 · ${kp} KP`);
+  }
+
+  function renderImportConflictDialog(scanResult) {
+    const body = $("#import-conflict-body");
+    if (!body) return;
+    const conflicts = scanResult.conflicts || [];
+    let html = "";
+    html += `<div class="m0-import-scan-summary">`;
+    html += `<p>共 <strong>${esc(String(scanResult.total_files || 0))}</strong> 个文件，`;
+    html += `<strong>${esc(String(scanResult.total_sections || 0))}</strong> 个段落，`;
+    html += `<strong>${esc(String(scanResult.total_kp_declarations || 0))}</strong> 个 KP 声明。</p>`;
+    html += `<p class="m0-stat-error">检测到 <strong>${esc(String(conflicts.length))}</strong> 处 KP id 冲突：</p>`;
+    html += `</div>`;
+    html += `<div class="m0-import-conflict-report">`;
+    html += `<textarea id="import-conflict-report-text" class="m0-import-report-textarea" readonly rows="4">${esc(scanResult.conflict_report || "")}</textarea>`;
+    html += `</div>`;
+    html += `<div class="m0-import-conflict-list">`;
+    conflicts.forEach((c, i) => {
+      const kpId = esc(c.kp_id || "");
+      const source = esc(c.import_source || "");
+      const line = c.import_line || 0;
+      const existFile = esc(c.existing_file || "");
+      const existName = esc(c.existing_name || "");
+      html += `<div class="m0-import-conflict-item" data-conflict-idx="${i}">`;
+      html += `<div class="m0-import-conflict-header">`;
+      html += `<span class="m0-import-conflict-kp-id">${kpId}</span>`;
+      html += `<span class="m0-muted">来源: ${source}:${line} → 已存在: ${existFile} (${existName})</span>`;
+      html += `</div>`;
+      html += `<div class="m0-import-conflict-resolution">`;
+      html += `<label><input type="radio" name="import-res-${i}" value="skip" checked> 跳过</label>`;
+      html += `<label><input type="radio" name="import-res-${i}" value="overwrite"> 覆盖</label>`;
+      html += `<label><input type="radio" name="import-res-${i}" value="rename"> 重命名</label>`;
+      html += `<input type="text" class="m0-import-rename-input hidden" data-conflict-idx="${i}" placeholder="新 KP id">`;
+      html += `</div>`;
+      html += `</div>`;
+    });
+    html += `</div>`;
+    body.innerHTML = html;
+
+    body.querySelectorAll('input[type="radio"]').forEach((radio) => {
+      radio.addEventListener("change", (e) => {
+        const idx = e.target.name.replace("import-res-", "");
+        const renameInput = body.querySelector(`.m0-import-rename-input[data-conflict-idx="${idx}"]`);
+        if (renameInput) {
+          renameInput.classList.toggle("hidden", e.target.value !== "rename");
+          if (e.target.value === "rename") renameInput.focus();
+        }
+      });
+    });
+  }
+
+  function collectImportConflictResolution() {
+    const body = $("#import-conflict-body");
+    if (!body) return {};
+    const conflicts = (_importScanResult && _importScanResult.conflicts) || [];
+    const resolution = {};
+    conflicts.forEach((c, i) => {
+      const radios = body.querySelectorAll(`input[name="import-res-${i}"]`);
+      let choice = "skip";
+      radios.forEach((r) => { if (r.checked) choice = r.value; });
+      if (choice === "rename") {
+        const renameInput = body.querySelector(`.m0-import-rename-input[data-conflict-idx="${i}"]`);
+        const newId = (renameInput && renameInput.value.trim()) || c.kp_id;
+        resolution[c.kp_id] = "rename:" + newId;
+      } else {
+        resolution[c.kp_id] = choice;
+      }
+    });
+    return resolution;
+  }
+
+  function renderImportResultDialog(result) {
+    const body = $("#import-result-body");
+    if (!body) return;
+    const kp = (result.kp_imported || 0) + (result.kp_overwritten || 0) + (result.kp_renamed || 0);
+    let html = "";
+    html += `<div class="m0-import-result-summary">`;
+    html += `<p class="m0-stat-ok">导入成功</p>`;
+    html += `<p>写入 <strong>${esc(String(result.files_written || 0))}</strong> 个文件，`;
+    html += `导入 <strong>${esc(String(result.kp_imported || 0))}</strong> 个 KP，`;
+    html += `覆盖 <strong>${esc(String(result.kp_overwritten || 0))}</strong> 个，`;
+    html += `重命名 <strong>${esc(String(result.kp_renamed || 0))}</strong> 个，`;
+    html += `跳过 <strong>${esc(String(result.kp_skipped || 0))}</strong> 个。</p>`;
+    const errors = result.errors || [];
+    if (errors.length) {
+      html += `<p class="m0-stat-error">${esc(String(errors.length))} 个错误：</p><ul>`;
+      errors.forEach((e) => { html += `<li>${esc(String(e))}</li>`; });
+      html += `</ul>`;
+    }
+    html += `</div>`;
+    body.innerHTML = html;
+  }
+
+  function closeImportConflictModal() {
+    $("#import-conflict-modal").classList.add("hidden");
+    _importFileContents = null;
+    _importScanResult = null;
+  }
+
+  function closeImportResultModal() {
+    $("#import-result-modal").classList.add("hidden");
   }
 
   async function loadGraphData() {
@@ -1239,6 +1439,9 @@
         kpId,
         label: tabLabelFor({ ...candidate, file: path }),
         pending: !!opts.pending,
+        sourceScroll: 0,
+        previewScroll: 0,
+        kpListScroll: 0,
       };
       state.openTabs.push(tab);
     } else {
@@ -1248,6 +1451,30 @@
     }
     if (opts.activate) tab.pending = false;
     return tab;
+  }
+
+  function _saveCurrentTabScroll() {
+    if (!state.currentPath) return;
+    const tab = state.openTabs.find((t) => t.path === state.currentPath);
+    if (!tab) return;
+    const editorPane = $("#editor-pane");
+    const previewPane = $("#preview-pane");
+    const kpList = $("#kp-list");
+    tab.sourceScroll = editorPane ? editorPane.scrollTop : 0;
+    tab.previewScroll = previewPane ? previewPane.scrollTop : 0;
+    tab.kpListScroll = kpList ? kpList.scrollTop : 0;
+  }
+
+  function _restoreTabScroll() {
+    if (!state.currentPath) return;
+    const tab = state.openTabs.find((t) => t.path === state.currentPath);
+    if (!tab) return;
+    const editorPane = $("#editor-pane");
+    const previewPane = $("#preview-pane");
+    const kpList = $("#kp-list");
+    if (editorPane && tab.sourceScroll != null) editorPane.scrollTop = tab.sourceScroll;
+    if (previewPane && tab.previewScroll != null) previewPane.scrollTop = tab.previewScroll;
+    if (kpList && tab.kpListScroll != null) kpList.scrollTop = tab.kpListScroll;
   }
 
   function closeTabAt(index) {
@@ -1294,8 +1521,11 @@
       renderTabs();
       return;
     }
+    // Save scroll position of the current tab before switching
+    _saveCurrentTabScroll();
     ensureOpenTab({ file: path, kp_id: kpId }, { activate: true, pending: false });
-    await openFile(path, { fromNav: true, kpId: kpId || null, skipTabUpsert: true });
+    // Switching tabs should not trigger kp/line jump — restore last scroll
+    await openFile(path, { fromNav: true, skipTabUpsert: true, restoreScroll: true });
   }
 
   function renderTabs() {
@@ -1342,6 +1572,10 @@
   }
 
   async function openFile(relPath, opts = {}) {
+    // 切换文件前保存当前 tab 的滚动位置（含知识点栏）
+    if (state.currentPath && state.currentPath !== relPath) {
+      _saveCurrentTabScroll();
+    }
     cancelKpHighlightTimers();
     clearHighlights();
     clearPreviewHighlights();
@@ -1374,20 +1608,53 @@
     renderTabs();
     renderEditor(res);
     renderKpList(res);
+    // 恢复左侧知识点栏滚动位置（除非有 KP 跳转目标会滚动到特定 KP）
+    const hasKpJump = opts.kpId || opts.errorHighlight?.kpId;
+    if (!hasKpJump) {
+      const tab = state.openTabs.find((t) => t.path === relPath);
+      const kpList = $("#kp-list");
+      if (tab && kpList && tab.kpListScroll != null) {
+        kpList.scrollTop = tab.kpListScroll;
+      }
+    }
     setViewMode(state.viewMode, { skipSave: true });
     await renderPreview(res);
-    if (opts.kpId) {
+    if (opts.restoreScroll) {
+      // Tab switch: restore last scroll position instead of jumping to kp/line
+      _restoreTabScroll();
+    } else if (opts.errorHighlight) {
+      // 检查面板"打开"跳转：使用红色高亮定位
+      const eh = opts.errorHighlight;
+      if (eh.kind === "link") {
+        // 链接问题：红色高亮链接出现的行（多匹配取第一处）
+        if (eh.line && Number.isFinite(eh.line) && eh.line > 0) {
+          highlightRangeWithError(eh.line, eh.line);
+        }
+      } else if (eh.kpId) {
+        // 知识点问题：红色高亮 KP 范围 + 左侧列表定位高亮
+        const kp = (res.knowledge_points || []).find((k) => k.id === eh.kpId);
+        const rr = kp?.range_resolved;
+        if (rr?.ok) {
+          highlightRangeWithError(rr.start_line, rr.end_line);
+        } else if (eh.line && Number.isFinite(eh.line) && eh.line > 0) {
+          highlightRangeWithError(eh.line, eh.line);
+        }
+        highlightKpListItemWithError(eh.kpId);
+      } else if (eh.line && Number.isFinite(eh.line) && eh.line > 0) {
+        highlightRangeWithError(eh.line, eh.line);
+      }
+    } else if (opts.kpId) {
       const kp = (res.knowledge_points || []).find((k) => k.id === opts.kpId);
       const rr = kp?.range_resolved;
       if (rr?.ok) {
         highlightRange(rr.start_line, rr.end_line);
       }
+      // 左侧知识点栏定位到对应 KP（搜索跳转/直接跳转）
+      scrollKpListItemIntoView(opts.kpId);
     } else if (opts.lineHint) {
       const line = parseInt(String(opts.lineHint), 10);
       if (Number.isFinite(line) && line > 0) {
         highlightRange(line, line);
-        const el = document.getElementById(`line-${line}`);
-        el?.scrollIntoView({ block: "center", behavior: "smooth" });
       }
     }
     let stats = `${res.knowledge_points.length} KP · ${res.lines.length} 行`;
@@ -1402,6 +1669,31 @@
     syncGraphAuditStatusBar(stats);
     updateGraphAuditHint();
     syncToolbarSearchScopeUI();
+  }
+
+  // 分栏模式滚动同步：源码滚动→预览跟随，预览滚动→源码跟随
+  let splitSyncLock = false;
+  function setupSplitScrollSync() {
+    const editorPane = $("#editor-pane");
+    const previewPane = $("#preview-pane");
+    if (editorPane) {
+      editorPane.addEventListener("scroll", () => {
+        if (state.viewMode !== "split" || splitSyncLock) return;
+        splitSyncLock = true;
+        const line = _getViewTopSrcLine("source");
+        if (line != null) _scrollToSrcLine("preview", line);
+        requestAnimationFrame(() => { splitSyncLock = false; });
+      });
+    }
+    if (previewPane) {
+      previewPane.addEventListener("scroll", () => {
+        if (state.viewMode !== "split" || splitSyncLock) return;
+        splitSyncLock = true;
+        const line = _getViewTopSrcLine("preview");
+        if (line != null) _scrollToSrcLine("source", line);
+        requestAnimationFrame(() => { splitSyncLock = false; });
+      });
+    }
   }
 
   function renderEditor(doc) {
@@ -1421,10 +1713,20 @@
       .join("");
   }
 
-  function setViewMode(mode, opts) {
+  async function setViewMode(mode, opts) {
+    const prevMode = state.viewMode;
     state.viewMode = mode;
     if (!opts?.skipSave) {
       localStorage.setItem("m0-view", mode);
+    }
+    // Save scroll position of the outgoing view
+    if (prevMode !== mode) {
+      _saveCurrentViewScroll(prevMode);
+    }
+    // 记录源码行号锚点：用于跨视图（源码↔预览）的文本位置映射
+    let anchorLine = null;
+    if (prevMode !== mode) {
+      anchorLine = _getViewTopSrcLine(prevMode);
     }
     const split = $("#editor-split");
     split.classList.remove("view-source", "view-preview", "view-split");
@@ -1433,7 +1735,115 @@
       btn.classList.toggle("active", btn.dataset.view === mode);
     });
     if (mode !== "source" && state.doc) {
-      renderPreview(state.doc);
+      await renderPreview(state.doc);
+    }
+    // Restore scroll position of the incoming view after render
+    if (prevMode !== mode) {
+      if (mode === "split") {
+        // 分栏模式：两边都同步到锚点位置
+        if (anchorLine != null) {
+          _scrollToSrcLine("source", anchorLine);
+          _scrollToSrcLine("preview", anchorLine);
+        } else {
+          _restoreCurrentViewScroll("source");
+          _restoreCurrentViewScroll("preview");
+        }
+      } else if (anchorLine != null && _scrollToSrcLine(mode, anchorLine)) {
+        // 锚点恢复成功，跳过 scrollTop 数值恢复
+      } else {
+        _restoreCurrentViewScroll(mode);
+      }
+    }
+  }
+
+  // 获取当前视图顶部对应的源码行号
+  function _getViewTopSrcLine(mode) {
+    const editorPane = $("#editor-pane");
+    const previewPane = $("#preview-pane");
+    if ((mode === "source" || mode === "split") && editorPane) {
+      const containerTop = editorPane.getBoundingClientRect().top;
+      const lines = editorPane.querySelectorAll(".m0-line");
+      for (const line of lines) {
+        const r = line.getBoundingClientRect();
+        if (r.bottom >= containerTop) {
+          return +(line.dataset.line || 0) || null;
+        }
+      }
+    }
+    if ((mode === "preview" || mode === "split") && previewPane) {
+      const containerTop = previewPane.getBoundingClientRect().top;
+      const blocks = previewPane.querySelectorAll("[data-m0-src-line]");
+      for (const block of blocks) {
+        const r = block.getBoundingClientRect();
+        if (r.bottom >= containerTop) {
+          return +(block.dataset.m0SrcLine || 0) || null;
+        }
+      }
+    }
+    return null;
+  }
+
+  // 滚动到指定源码行号对应的视图位置；成功返回 true
+  function _scrollToSrcLine(mode, lineNum) {
+    if (!lineNum) return false;
+    const editorPane = $("#editor-pane");
+    const previewPane = $("#preview-pane");
+    if ((mode === "source" || mode === "split") && editorPane) {
+      const el = document.getElementById("line-" + lineNum);
+      if (el) {
+        const containerTop = editorPane.getBoundingClientRect().top;
+        editorPane.scrollTop += el.getBoundingClientRect().top - containerTop;
+        return true;
+      }
+    }
+    if ((mode === "preview" || mode === "split") && previewPane) {
+      const blocks = [...previewPane.querySelectorAll("[data-m0-src-line]")];
+      let target = null;
+      for (const block of blocks) {
+        const s = +(block.dataset.m0SrcLine || 0);
+        const e = +(block.dataset.m0SrcLineEnd || s);
+        if (s <= lineNum && e >= lineNum) {
+          target = block;
+          break;
+        }
+        if (s >= lineNum && !target) {
+          target = block;
+        }
+      }
+      if (target) {
+        const containerTop = previewPane.getBoundingClientRect().top;
+        previewPane.scrollTop += target.getBoundingClientRect().top - containerTop;
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function _saveCurrentViewScroll(mode) {
+    if (!state.currentPath) return;
+    const tab = state.openTabs.find((t) => t.path === state.currentPath);
+    if (!tab) return;
+    const editorPane = $("#editor-pane");
+    const previewPane = $("#preview-pane");
+    if (mode === "source" || mode === "split") {
+      tab.sourceScroll = editorPane ? editorPane.scrollTop : 0;
+    }
+    if (mode === "preview" || mode === "split") {
+      tab.previewScroll = previewPane ? previewPane.scrollTop : 0;
+    }
+  }
+
+  function _restoreCurrentViewScroll(mode) {
+    if (!state.currentPath) return;
+    const tab = state.openTabs.find((t) => t.path === state.currentPath);
+    if (!tab) return;
+    const editorPane = $("#editor-pane");
+    const previewPane = $("#preview-pane");
+    if (mode === "source" || mode === "split") {
+      if (editorPane && tab.sourceScroll != null) editorPane.scrollTop = tab.sourceScroll;
+    }
+    if (mode === "preview" || mode === "split") {
+      if (previewPane && tab.previewScroll != null) previewPane.scrollTop = tab.previewScroll;
     }
   }
 
@@ -1545,8 +1955,13 @@
       if (kpCount) kpCount.textContent = "";
       return;
     }
-    const kps = doc.knowledge_points || [];
+    const rawKps = doc.knowledge_points || [];
     const proposals = doc.heading_proposals || [];
+    const kps = [...rawKps].sort((a, b) => {
+      const la = a?.range_resolved?.start_line ?? a?.range?.start?.line_hint ?? 0;
+      const lb = b?.range_resolved?.start_line ?? b?.range?.start?.line_hint ?? 0;
+      return la - lb;
+    });
     if (kpCount) kpCount.textContent = kps.length ? `${kps.length}` : "";
 
     if (!kps.length && !proposals.length) {
@@ -1912,6 +2327,14 @@
     const searchOptsHtml =
       variant === "config" ? renderLinkSearchOptionsHtml(prefix, searchOpts) : "";
 
+    const selectableRows = m.matches.filter(
+      (row) => !row.is_substring && !row.excluded && !row.blocked
+    );
+    const allSelected =
+      selectableRows.length > 0 &&
+      selectableRows.every((row) => m.selected.has(row.line));
+    const allBtnLabel = allSelected ? "取消全选" : "全选";
+
     return `<div id="${panelId}" class="${panelCls}">
       <div class="m0-link-match-panel-header">
         <span class="m0-link-match-panel-title">匹配「${esc(m.anchorText)}」</span>
@@ -1920,7 +2343,7 @@
       </div>
       ${searchOptsHtml}
       <div class="m0-link-match-toolbar m0-btn-bar m0-btn-bar--start">
-        <button type="button" class="m0-btn secondary m0-btn--sm" id="${prefix}-all">全选</button>
+        <button type="button" class="m0-btn secondary m0-btn--sm" id="${prefix}-all">${esc(allBtnLabel)}</button>
         <button type="button" class="m0-btn secondary m0-btn--sm" id="${prefix}-plain">仅选未包裹</button>
       </div>
       <div class="m0-link-match-list">${rows || '<p class="m0-muted">未找到匹配</p>'}</div>
@@ -1944,7 +2367,20 @@
     );
   }
 
+  function _readLinkMatchListScroll(rootEl) {
+    const list = rootEl?.querySelector(".m0-link-match-list");
+    return list ? list.scrollTop : 0;
+  }
+
+  function _restoreLinkMatchListScroll(rootEl, scrollTop) {
+    if (scrollTop == null) return;
+    const list = rootEl?.querySelector(".m0-link-match-list");
+    if (list) list.scrollTop = scrollTop;
+  }
+
   function refreshConfigLinkMatchPanel() {
+    const prevSlot = configLinkMatchSlotEl(state.configLinkMatch?.anchorText);
+    const prevScroll = _readLinkMatchListScroll(prevSlot);
     document.querySelectorAll(".m0-config-link-match-slot").forEach((el) => {
       el.innerHTML = "";
     });
@@ -1952,6 +2388,7 @@
     const slot = configLinkMatchSlotEl(state.configLinkMatch.anchorText);
     if (!slot) return;
     slot.innerHTML = renderConfigLinkMatchPanelHtml();
+    _restoreLinkMatchListScroll(slot, prevScroll);
     if (state.configLinkMatch) {
       document.getElementById("config-link-match-panel")?.scrollIntoView({
         block: "nearest",
@@ -1963,7 +2400,9 @@
   function refreshLinkEditorMatchPanel() {
     const slot = document.getElementById("link-editor-match-slot");
     if (!slot) return;
+    const prevScroll = _readLinkMatchListScroll(slot);
     slot.innerHTML = renderLinkEditorMatchPanelHtml();
+    _restoreLinkMatchListScroll(slot, prevScroll);
     syncLinkEditorSaveButtons();
   }
 
@@ -2493,6 +2932,7 @@
       { id: "range", label: "范围" },
       { id: "identity", label: "标识" },
       { id: "tags", label: "标签" },
+      { id: "edges", label: "边" },
     ];
     return `<div class="m0-config-tabs m0-kp-tabs" role="tablist">
       ${tabs
@@ -2639,6 +3079,7 @@
   function syncKpModalLayout(tab) {
     const body = $("#kp-body");
     body?.classList.toggle("m0-modal-body-kp-range", tab === "range");
+    body?.classList.toggle("m0-modal-body-kp-edges", tab === "edges");
   }
 
   function syncKpModalFooter(_tab, isCreate = false) {
@@ -2646,9 +3087,14 @@
     const deleteBtn = $("#kp-delete");
     if (!saveBtn) return;
     if (deleteBtn) deleteBtn.classList.toggle("hidden", isCreate);
-    saveBtn.disabled = false;
-    saveBtn.textContent = "确定";
-    saveBtn.title = "确定";
+    if (_tab === "edges") {
+      saveBtn.classList.add("hidden");
+    } else {
+      saveBtn.classList.remove("hidden");
+      saveBtn.disabled = false;
+      saveBtn.textContent = "确定";
+      saveBtn.title = "确定";
+    }
   }
 
   function clearKpRangeAssist() {
@@ -2775,6 +3221,9 @@
         <p class="m0-config-hint">${isCreate ? "新建知识点请先在此填写 id 与名称，再到「范围」调整行号。" : "修改 id 将全库同步链接配置与正文 [[…]]（显示文字保持不变）。"}</p>
         ${isCreate ? "" : `<div id="kp-merge-suggest" class="m0-kp-merge-suggest hidden"></div>`}
       </div></div>`;
+    } else if (tab === "edges") {
+      clearKpRangeAssist();
+      content = renderKpEdgesTabHtml(kp);
     } else {
       clearKpRangeAssist();
       ensureKpTagState(panel, kp);
@@ -2785,11 +3234,16 @@
           : kp.description || "";
       content = `<div class="m0-kp-tab-panel"><div class="m0-kp-form">
         ${renderKpTagsEditorHtml(panel, kp, isCreate)}
+        ${renderKpAliasEditorHtml(panel, kp)}
         <label class="m0-link-field">描述
           <textarea id="kp-desc-input" rows="3" placeholder="可选；用于检索与图谱提示">${esc(desc)}</textarea>
         </label>
-        ${isCreate ? "" : `<button type="button" id="kp-suggest-desc" class="m0-btn secondary m0-btn--sm">建议描述</button>`}
-        <p class="m0-config-hint">${isCreate ? "描述可选；确认创建时会一并保存。" : "已选 tag 保存后参与检索；候选区需 ↑ 应用到已选。"}</p>
+        ${renderKpDescCandEditorHtml(panel, kp)}
+        <div class="m0-kp-tags-zone-toolbar">
+          <button type="button" id="kp-sync-aux" class="m0-btn secondary m0-btn--sm">同步检索 aux</button>
+          <button type="button" id="kp-suggest-desc" class="m0-btn secondary m0-btn--sm">建议描述</button>
+        </div>
+        <p class="m0-config-hint">${isCreate ? "描述可选；确认创建时会一并保存。tag/别名/描述候选可提前配置。" : "已选 tag/别名保存后参与检索；候选区点击应用；「同步检索 aux」合并隐式索引提议。"}</p>
       </div></div>`;
     }
 
@@ -2801,9 +3255,421 @@
       renderAssistPreview({ forceScroll: true });
     } else if (tab === "identity" && state.kpPanel?.mode === "edit") {
       loadKpMergeSuggestions(kp.id);
-    } else if (tab === "tags" && state.kpPanel?.mode === "edit") {
-      bindKpTagsEditor(kp.id, kp);
-      bindKpDescSuggest(kp.id);
+    } else if (tab === "tags") {
+      const bindKpId = isCreate ? (panel.kpId || "") : kp.id;
+      bindKpTagsEditor(bindKpId, kp);
+      bindKpAliasEditor(bindKpId, kp);
+      bindKpDescCandEditor(bindKpId);
+      bindKpDescSuggest(bindKpId);
+      bindKpSyncAux(bindKpId);
+    } else if (tab === "edges") {
+      bindKpEdgesEvents(kp);
+    }
+  }
+
+  /* ── KP Edges Tab ── */
+
+  function kpNameForId(kpId) {
+    const kp = (state.doc?.knowledge_points || []).find((k) => k.id === kpId);
+    return kp ? (kp.name || kp.id) : kpId;
+  }
+
+  function deriveKpEdgesForCurrentFile(kp) {
+    const kps = state.doc?.knowledge_points || [];
+    const sidecar = state.doc?.sidecar || {};
+    const links = sidecar.links || [];
+    const sidecarEdges = sidecar.edges || [];
+    const kpId = kp.id;
+
+    const edges = [];
+    const seen = new Set();
+
+    function addEdge(e) {
+      const key = [e.type, e.source_id, e.target_id, e.no_build ? 1 : 0].join("|");
+      if (seen.has(key)) return;
+      seen.add(key);
+      edges.push(e);
+    }
+
+    // 1. Contain edges: derive from KP range nesting
+    const ranges = kps
+      .filter((k) => {
+        const rr = k.range_resolved || {};
+        return rr.ok && rr.start_line != null && rr.end_line != null;
+      })
+      .map((k) => ({
+        kp_id: k.id,
+        start: k.range_resolved.start_line,
+        end: k.range_resolved.end_line,
+      }));
+
+    const noBuildSet = new Set();
+    for (const e of sidecarEdges) {
+      if (!e || typeof e !== "object") continue;
+      if (!e.no_build) continue;
+      if ((e.type || "").trim().toLowerCase() !== "contain") continue;
+      const sid = (e.source_id || "").trim();
+      for (const tgt of e.targets || []) {
+        noBuildSet.add(sid + "|" + String(tgt).trim());
+      }
+    }
+
+    for (const inner of ranges) {
+      for (const outer of ranges) {
+        if (outer.kp_id === inner.kp_id) continue;
+        if (outer.start > inner.start || inner.end > outer.end) continue;
+        if (!(outer.start < inner.start || inner.end < outer.end)) continue;
+        // Only include if outer or inner is current KP
+        if (outer.kp_id !== kpId && inner.kp_id !== kpId) continue;
+        const nb = noBuildSet.has(outer.kp_id + "|" + inner.kp_id);
+        addEdge({
+          type: "contain",
+          source_id: outer.kp_id,
+          target_id: inner.kp_id,
+          relevance: 0.9,
+          derived: true,
+          origin: "range",
+          no_build: nb,
+        });
+      }
+    }
+
+    // 2. Link-derived edges (reference/extend from links[])
+    for (const link of links) {
+      if (!link || typeof link !== "object") continue;
+      const targets = (link.targets || []).filter((t) => t && String(t).trim());
+      if (!targets.length) continue;
+      const instances = link.instances || [];
+      const instLines = instances
+        .filter((inst) => inst && typeof inst === "object" && inst.line != null)
+        .map((inst) => parseInt(inst.line, 10))
+        .filter((n) => n > 0);
+      if (!instLines.length) continue;
+
+      const edgeType = normalizeLinkEdgeType(link.edge_type);
+      const anchorText = link.anchor_text || "";
+
+      for (const line of instLines) {
+        const sourceKps = ranges
+          .filter((r) => r.start <= line && line <= r.end)
+          .filter((r) => {
+            const inner = ranges.find((rr) => rr.kp_id !== r.kp_id && rr.start >= r.start && rr.end <= r.end && rr.start <= line && line <= rr.end && (rr.start > r.start || rr.end < r.end));
+            return !inner;
+          })
+          .map((r) => r.kp_id);
+
+        const effectiveSources = sourceKps.length ? sourceKps : (link.source_id ? [link.source_id] : []);
+        for (const sourceId of effectiveSources) {
+          if (sourceId !== kpId) continue;
+          for (const rawTid of targets) {
+            const tid = String(rawTid).trim();
+            const tgtProps = loadTargetEdgesFromSidecar(link, edgeType);
+            const tgtEdge = tgtProps[tid] || defaultTargetEdgeProps(edgeType);
+            addEdge({
+              type: tgtEdge.edge_type,
+              source_id: sourceId,
+              target_id: tid,
+              relevance: tgtEdge.relevance,
+              derived: true,
+              origin: "link",
+              anchor_text: anchorText,
+              line,
+            });
+          }
+        }
+      }
+    }
+
+    // 3. Pure sidecar edges (from edges[] without no_build)
+    for (const e of sidecarEdges) {
+      if (!e || typeof e !== "object") continue;
+      if (e.no_build) continue;
+      const sid = (e.source_id || "").trim();
+      if (!sid) continue;
+      if (sid !== kpId) continue;
+      const et = normalizeLinkEdgeType(e.type);
+      for (const rawTid of e.targets || []) {
+        const tid = String(rawTid || "").trim();
+        if (!tid) continue;
+        addEdge({
+          type: et,
+          source_id: sid,
+          target_id: tid,
+          relevance: e.relevance != null ? Math.max(0, Math.min(1, Number(e.relevance))) : defaultRelevanceForEdgeType(et),
+          derived: false,
+          origin: "sidecar_edge",
+        });
+      }
+    }
+
+    // 4. no_build entries from edges[] (for display)
+    for (const e of sidecarEdges) {
+      if (!e || typeof e !== "object") continue;
+      if (!e.no_build) continue;
+      const sid = (e.source_id || "").trim();
+      const et = (e.type || "").trim().toLowerCase();
+      if (et !== "contain") continue;
+      if (!sid) continue;
+      if (sid !== kpId) continue;
+      for (const rawTid of e.targets || []) {
+        const tid = String(rawTid || "").trim();
+        if (!tid) continue;
+        addEdge({
+          type: "contain",
+          source_id: sid,
+          target_id: tid,
+          relevance: 0.9,
+          derived: true,
+          origin: "range",
+          no_build: true,
+        });
+      }
+    }
+
+    return edges;
+  }
+
+  function edgeTypeBadgeHtml(type) {
+    const colors = { contain: "#5cb85c", reference: "#5bc0de", extend: "#f0ad4e" };
+    const labels = { contain: "包含", reference: "引用", extend: "扩展" };
+    const color = colors[type] || "#999";
+    const label = labels[type] || type;
+    return `<span class="m0-edge-type-badge" style="background:${color};color:#fff">${esc(label)}</span>`;
+  }
+
+  function edgeOriginLabel(edge) {
+    if (edge.origin === "link") return "链接";
+    if (edge.origin === "range") return "嵌套";
+    if (edge.origin === "sidecar_edge") return "手动";
+    return edge.origin || "";
+  }
+
+  function renderKpEdgesTabHtml(kp) {
+    const kpId = kp.id;
+    const edges = deriveKpEdgesForCurrentFile(kp);
+    const outgoing = edges.filter((e) => e.source_id === kpId);
+    const incoming = edges.filter((e) => e.target_id === kpId && e.source_id !== kpId);
+
+    let html = `<div class="m0-kp-tab-panel m0-kp-edges-panel">`;
+
+    // Outgoing edges section
+    html += `<div class="m0-edge-section">`;
+    html += `<h4 class="m0-edge-section-title">出边 <span class="m0-tab-count">${outgoing.length}</span></h4>`;
+    if (outgoing.length) {
+      html += `<div class="m0-edge-list">`;
+      for (const e of outgoing) {
+        html += `<div class="m0-edge-item" data-edge-type="${esc(e.type)}" data-edge-source="${esc(e.source_id)}" data-edge-target="${esc(e.target_id)}" data-edge-origin="${esc(e.origin || "")}" ${e.anchor_text ? `data-edge-anchor="${esc(e.anchor_text)}"` : ""}>`;
+        html += `<div class="m0-edge-main">`;
+        html += edgeTypeBadgeHtml(e.type);
+        html += `<span class="m0-edge-arrow">${esc(kpNameForId(e.source_id))} → ${esc(kpNameForId(e.target_id))}</span>`;
+        html += `<span class="m0-edge-relevance">${e.relevance != null ? Number(e.relevance).toFixed(2) : "—"}</span>`;
+        html += `<span class="m0-edge-origin">${esc(edgeOriginLabel(e))}</span>`;
+        if (e.no_build) html += `<span class="m0-edge-no-build">已抑制</span>`;
+        html += `</div>`;
+        html += `<div class="m0-edge-actions">`;
+        if (e.type === "contain" && e.no_build) {
+          html += `<button type="button" class="m0-btn secondary m0-btn--sm m0-edge-btn-restore" data-source="${esc(e.source_id)}" data-target="${esc(e.target_id)}">恢复</button>`;
+        } else if (e.type === "contain" && !e.no_build) {
+          html += `<button type="button" class="m0-btn secondary m0-btn--sm m0-edge-btn-suppress" data-source="${esc(e.source_id)}" data-target="${esc(e.target_id)}">抑制</button>`;
+        }
+        if (e.origin === "sidecar_edge") {
+          html += `<button type="button" class="m0-btn danger m0-btn--sm m0-edge-btn-delete" data-source="${esc(e.source_id)}" data-target="${esc(e.target_id)}" data-type="${esc(e.type)}">删除</button>`;
+        }
+        if (e.origin === "link" && e.anchor_text) {
+          html += `<button type="button" class="m0-btn secondary m0-btn--sm m0-edge-btn-config-link" data-anchor="${esc(e.anchor_text)}">配置链接</button>`;
+        }
+        html += `</div>`;
+        html += `</div>`;
+      }
+      html += `</div>`;
+    } else {
+      html += `<p class="m0-muted">无出边</p>`;
+    }
+    html += `</div>`;
+
+    // Incoming edges section
+    html += `<div class="m0-edge-section">`;
+    html += `<h4 class="m0-edge-section-title">入边 <span class="m0-tab-count">${incoming.length}</span></h4>`;
+    if (incoming.length) {
+      html += `<div class="m0-edge-list">`;
+      for (const e of incoming) {
+        html += `<div class="m0-edge-item" data-edge-type="${esc(e.type)}" data-edge-source="${esc(e.source_id)}" data-edge-target="${esc(e.target_id)}" data-edge-origin="${esc(e.origin || "")}">`;
+        html += `<div class="m0-edge-main">`;
+        html += edgeTypeBadgeHtml(e.type);
+        html += `<span class="m0-edge-arrow">${esc(kpNameForId(e.source_id))} → ${esc(kpNameForId(e.target_id))}</span>`;
+        html += `<span class="m0-edge-relevance">${e.relevance != null ? Number(e.relevance).toFixed(2) : "—"}</span>`;
+        html += `<span class="m0-edge-origin">${esc(edgeOriginLabel(e))}</span>`;
+        if (e.no_build) html += `<span class="m0-edge-no-build">已抑制</span>`;
+        html += `</div>`;
+        html += `</div>`;
+      }
+      html += `</div>`;
+    } else {
+      html += `<p class="m0-muted">入边需全库扫描，当前仅显示本文件内入边</p>`;
+    }
+    html += `</div>`;
+
+    // Create new edge form
+    html += `<div class="m0-edge-section m0-edge-create-form">`;
+    html += `<h4 class="m0-edge-section-title">新建边</h4>`;
+    html += `<div class="m0-edge-create-fields">`;
+    html += `<label class="m0-link-field">目标 KP <input type="text" id="kp-edge-target" placeholder="输入 KP id" autocomplete="off" spellcheck="false"></label>`;
+    html += `<label class="m0-link-field">边类型 <select id="kp-edge-type"><option value="reference">引用 (reference)</option><option value="extend">扩展 (extend)</option></select></label>`;
+    html += `<label class="m0-link-field">关联度 <input type="range" id="kp-edge-relevance" min="0" max="1" step="0.05" value="0.7"><span id="kp-edge-relevance-val">0.70</span></label>`;
+    html += `<button type="button" id="kp-edge-create-btn" class="m0-btn primary m0-btn--sm">新建</button>`;
+    html += `</div>`;
+    html += `</div>`;
+
+    html += `</div>`;
+    return html;
+  }
+
+  async function reloadDocAndRefreshEdges(kpId) {
+    const res = await call("load_document", state.currentPath);
+    if (res.status === "ok") {
+      state.doc = res;
+    }
+    renderKpModalBody();
+  }
+
+  function bindKpEdgesEvents(kp) {
+    const body = $("#kp-body");
+    if (!body) return;
+
+    // Suppress contain edge
+    body.querySelectorAll(".m0-edge-btn-suppress").forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        const parentId = btn.dataset.source;
+        const childId = btn.dataset.target;
+        if (!state.currentPath || !parentId || !childId) return;
+        setStatus("抑制 contain 边…");
+        const res = await call("set_contain_no_build", state.currentPath, parentId, childId, true);
+        if (res.status !== "ok") {
+          setStatus(res.message || "操作失败");
+          return;
+        }
+        setStatus("已抑制 contain 边");
+        await reloadDocAndRefreshEdges(kp.id);
+      });
+    });
+
+    // Restore contain edge (remove no_build)
+    body.querySelectorAll(".m0-edge-btn-restore").forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        const parentId = btn.dataset.source;
+        const childId = btn.dataset.target;
+        if (!state.currentPath || !parentId || !childId) return;
+        setStatus("恢复 contain 边…");
+        const res = await call("set_contain_no_build", state.currentPath, parentId, childId, false);
+        if (res.status !== "ok") {
+          setStatus(res.message || "操作失败");
+          return;
+        }
+        setStatus("已恢复 contain 边");
+        await reloadDocAndRefreshEdges(kp.id);
+      });
+    });
+
+    // Delete pure sidecar edge
+    body.querySelectorAll(".m0-edge-btn-delete").forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        const sourceId = btn.dataset.source;
+        const targetId = btn.dataset.target;
+        const edgeType = btn.dataset.type;
+        if (!state.currentPath || !sourceId || !targetId || !edgeType) return;
+        if (!window.confirm(`删除边 ${sourceId} → ${targetId} (${edgeType})？`)) return;
+        setStatus("删除边…");
+        const res = await call("delete_edge", state.currentPath, sourceId, targetId, edgeType);
+        if (res.status !== "ok") {
+          setStatus(res.message || "操作失败");
+          return;
+        }
+        setStatus("已删除边");
+        await reloadDocAndRefreshEdges(kp.id);
+      });
+    });
+
+    // Configure link (opens link editor for that anchor)
+    body.querySelectorAll(".m0-edge-btn-config-link").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const anchor = btn.dataset.anchor;
+        if (!anchor) return;
+        const link = (state.doc?.sidecar?.links || []).find((l) => l.anchor_text === anchor);
+        if (!link) return;
+        openLinkEditor({
+          anchorText: anchor,
+          displayText: anchor,
+          mode: "edit",
+          returnTo: "kp",
+        });
+      });
+    });
+
+    // Create new edge form
+    const createBtn = $("#kp-edge-create-btn");
+    const relSlider = $("#kp-edge-relevance");
+    const relVal = $("#kp-edge-relevance-val");
+    if (relSlider && relVal) {
+      relSlider.addEventListener("input", () => {
+        relVal.textContent = Number(relSlider.value).toFixed(2);
+      });
+    }
+
+    // Target KP autocomplete
+    const targetInput = $("#kp-edge-target");
+    if (targetInput) {
+      targetInput.addEventListener("input", () => {
+        const val = targetInput.value.trim().toLowerCase();
+        const existing = body.querySelector(".m0-edge-target-datalist");
+        if (existing) existing.remove();
+        if (!val) return;
+        const kpIds = (state.doc?.knowledge_points || [])
+          .map((k) => k.id)
+          .filter((id) => id.toLowerCase().includes(val) && id !== kp.id);
+        const linkTargets = state.linkTargetList || [];
+        const allIds = [...new Set([...kpIds, ...linkTargets.filter((t) => t.toLowerCase().includes(val))])];
+        if (!allIds.length) return;
+        const datalist = document.createElement("div");
+        datalist.className = "m0-edge-target-datalist";
+        allIds.slice(0, 10).forEach((id) => {
+          const opt = document.createElement("div");
+          opt.className = "m0-edge-target-option";
+          opt.textContent = id;
+          opt.addEventListener("click", () => {
+            targetInput.value = id;
+            datalist.remove();
+          });
+          datalist.appendChild(opt);
+        });
+        targetInput.parentNode.appendChild(datalist);
+      });
+      targetInput.addEventListener("blur", () => {
+        setTimeout(() => {
+          const dl = body.querySelector(".m0-edge-target-datalist");
+          if (dl) dl.remove();
+        }, 200);
+      });
+    }
+
+    if (createBtn) {
+      createBtn.addEventListener("click", async () => {
+        const targetId = ($("#kp-edge-target")?.value || "").trim();
+        const edgeType = ($("#kp-edge-type")?.value || "reference").trim();
+        const relevance = parseFloat($("#kp-edge-relevance")?.value || "0.7");
+        if (!targetId) {
+          setStatusError("请输入目标 KP id");
+          return;
+        }
+        if (!state.currentPath) return;
+        setStatus("新建边…");
+        const res = await call("create_edge", state.currentPath, kp.id, targetId, edgeType, relevance);
+        if (res.status !== "ok") {
+          setStatus(res.message || "新建边失败");
+          return;
+        }
+        setStatus("已新建边");
+        await reloadDocAndRefreshEdges(kp.id);
+      });
     }
   }
 
@@ -2818,7 +3684,7 @@
         if (!tag) return null;
         return {
           tag,
-          source: c.source === "system" ? "system" : "user",
+          source: c.source === "system" ? "system" : c.source === "feedback" ? "feedback" : "user",
           score: c.score != null ? Number(c.score) : null,
         };
       })
@@ -2827,7 +3693,7 @@
 
   function serializeKpTagCandidates(candidates) {
     return (candidates || []).map((c) => {
-      const item = { tag: c.tag, source: c.source === "system" ? "system" : "user" };
+      const item = { tag: c.tag, source: c.source === "system" ? "system" : c.source === "feedback" ? "feedback" : "user" };
       if (c.score != null && Number.isFinite(Number(c.score))) {
         item.score = Math.round(Number(c.score) * 10) / 10;
       }
@@ -2858,6 +3724,181 @@
     if (!panel?.draft?.tagState) return;
     panel.draft.tags = [...panel.draft.tagState.selected];
     panel.draft.tagCandidates = serializeKpTagCandidates(panel.draft.tagState.candidates);
+    if (panel.draft.aliasState) {
+      panel.draft.aliases = [...panel.draft.aliasState.selected];
+      panel.draft.aliasCandidates = serializeKpAliasCandidates(panel.draft.aliasState.candidates);
+    }
+    if (panel.draft.descCandState) {
+      panel.draft.descriptionCandidates = serializeKpDescCandidates(
+        panel.draft.descCandState.candidates
+      );
+    }
+  }
+
+  function loadKpAliasCandidatesFromKp(kp) {
+    const raw = kp?.alias_candidates || kp?.aliasCandidates || [];
+    if (!Array.isArray(raw)) return [];
+    return raw
+      .map((c) => {
+        if (typeof c === "string") return { alias: c.trim(), source: "user" };
+        if (!c || typeof c !== "object") return null;
+        const alias = String(c.alias || "").trim();
+        if (!alias) return null;
+        const src = c.source === "system" ? "system" : c.source === "feedback" ? "feedback" : "user";
+        return { alias, source: src };
+      })
+      .filter(Boolean);
+  }
+
+  function serializeKpAliasCandidates(candidates) {
+    return (candidates || []).map((c) => ({
+      alias: c.alias,
+      source: c.source === "system" ? "system" : c.source === "feedback" ? "feedback" : "user",
+    }));
+  }
+
+  function ensureKpAliasState(panel, kp) {
+    panel.draft = panel.draft || {};
+    if (panel.draft.aliasState) return panel.draft.aliasState;
+    let selected = Array.isArray(panel.draft.aliases)
+      ? [...panel.draft.aliases]
+      : [...(kp?.aliases || [])];
+    const selectedSet = new Set(selected.map((a) => a.toLowerCase()));
+    const nameLower = String(kp?.name || "").trim().toLowerCase();
+    if (nameLower) selectedSet.add(nameLower);
+    const candidates = loadKpAliasCandidatesFromKp(kp).filter(
+      (c) => !selectedSet.has(c.alias.toLowerCase())
+    );
+    panel.draft.aliasState = { selected, candidates };
+    return panel.draft.aliasState;
+  }
+
+  function loadKpDescCandidatesFromKp(kp) {
+    const raw = kp?.description_candidates || kp?.descriptionCandidates || [];
+    if (!Array.isArray(raw)) return [];
+    return raw
+      .map((c) => {
+        if (typeof c === "string") return { text: c.trim(), source: "user" };
+        if (!c || typeof c !== "object") return null;
+        const text = String(c.text || "").trim();
+        if (!text) return null;
+        const src = c.source === "system" ? "system" : c.source === "feedback" ? "feedback" : "user";
+        return { text, source: src };
+      })
+      .filter(Boolean);
+  }
+
+  function serializeKpDescCandidates(candidates) {
+    return (candidates || []).map((c) => ({
+      text: c.text,
+      source: c.source === "system" ? "system" : c.source === "feedback" ? "feedback" : "user",
+    }));
+  }
+
+  function ensureKpDescCandState(panel, kp) {
+    panel.draft = panel.draft || {};
+    if (panel.draft.descCandState) return panel.draft.descCandState;
+    const current = String(
+      panel.draft.description != null ? panel.draft.description : kp?.description || ""
+    ).trim();
+    const candidates = loadKpDescCandidatesFromKp(kp).filter((c) => c.text !== current);
+    panel.draft.descCandState = { candidates };
+    return panel.draft.descCandState;
+  }
+
+  function renderKpAliasChip(alias, kind, opts = {}) {
+    const dismiss = `<button type="button" class="m0-kp-tag-chip-btn" data-alias-dismiss="${esc(alias)}" title="移除">×</button>`;
+    const kindCls =
+      kind === "selected"
+        ? "m0-kp-tag-pick--selected"
+        : kind === "cand-user"
+          ? "m0-kp-tag-pick--cand-user"
+          : "m0-kp-tag-pick--cand-system";
+    const title = kind === "selected" ? "点击移到候选" : "点击应用到已选";
+    return `<span class="m0-kp-tag-pick ${kindCls}" data-alias="${esc(alias)}" data-alias-kind="${kind === "selected" ? "selected" : "candidate"}" title="${title}">
+      <span class="m0-kp-tag-chip-label">${esc(alias)}</span>
+      <span class="m0-kp-tag-chip-actions">${dismiss}</span>
+    </span>`;
+  }
+
+  function renderKpDescCandChip(text, source) {
+    const kindCls = source === "user" ? "m0-kp-tag-pick--cand-user" : "m0-kp-tag-pick--cand-system";
+    const short = text.length > 72 ? text.slice(0, 70) + "…" : text;
+    return `<span class="m0-kp-tag-pick ${kindCls} m0-kp-desc-cand" data-desc-cand="${esc(text)}" title="点击填入描述">
+      <span class="m0-kp-tag-chip-label">${esc(short)}</span>
+      <button type="button" class="m0-kp-tag-chip-btn" data-desc-dismiss="${esc(text)}" title="移除">×</button>
+    </span>`;
+  }
+
+  function renderKpAliasEditorHtml(panel, kp) {
+    const as = ensureKpAliasState(panel, kp);
+    const selHtml = as.selected.length
+      ? as.selected.map((a) => renderKpAliasChip(a, "selected")).join("")
+      : `<span class="m0-muted m0-kp-tags-empty">暂无已选别名</span>`;
+    const candHtml = as.candidates.length
+      ? as.candidates
+          .map((c) =>
+            renderKpAliasChip(c.alias, c.source === "user" ? "cand-user" : "cand-system")
+          )
+          .join("")
+      : `<span class="m0-muted m0-kp-tags-empty">同步 aux 或下方新建</span>`;
+    return `<div class="m0-kp-tags-editor m0-kp-alias-editor" id="kp-alias-editor">
+      <div class="m0-kp-tags-zone m0-kp-tags-zone--selected">
+        <div class="m0-kp-tags-zone-head">已选别名 <span class="m0-muted">参与检索</span></div>
+        <div id="kp-alias-selected" class="m0-kp-tags-chips">${selHtml}</div>
+      </div>
+      <div class="m0-kp-tags-zone m0-kp-tags-zone--candidate">
+        <div class="m0-kp-tags-zone-head">别名候选</div>
+        <div class="m0-kp-tags-zone-toolbar">
+          <div class="m0-kp-tag-create-row">
+            <input type="text" id="kp-alias-new-input" placeholder="新建别名" autocomplete="off" spellcheck="false" />
+            <button type="button" id="kp-alias-add-btn" class="m0-btn secondary m0-btn--sm">加入候选</button>
+          </div>
+        </div>
+        <div id="kp-alias-candidates" class="m0-kp-tags-chips">${candHtml}</div>
+      </div>
+    </div>`;
+  }
+
+  function renderKpDescCandEditorHtml(panel, kp) {
+    const ds = ensureKpDescCandState(panel, kp);
+    const candHtml = ds.candidates.length
+      ? ds.candidates
+          .map((c) => renderKpDescCandChip(c.text, c.source))
+          .join("")
+      : `<span class="m0-muted m0-kp-tags-empty">同步 aux 后显示描述候选</span>`;
+    return `<div class="m0-kp-desc-cand-editor" id="kp-desc-cand-editor">
+      <div class="m0-kp-tags-zone-head">描述候选 <span class="m0-muted">点击填入上方描述框</span></div>
+      <div id="kp-desc-candidates" class="m0-kp-tags-chips">${candHtml}</div>
+    </div>`;
+  }
+
+  function refreshKpAliasEditorDom(panel, kp) {
+    const sel = $("#kp-alias-selected");
+    const cand = $("#kp-alias-candidates");
+    if (!panel?.draft?.aliasState || !sel) return;
+    const as = panel.draft.aliasState;
+    sel.innerHTML = as.selected.length
+      ? as.selected.map((a) => renderKpAliasChip(a, "selected")).join("")
+      : `<span class="m0-muted m0-kp-tags-empty">暂无已选别名</span>`;
+    if (cand) {
+      cand.innerHTML = as.candidates.length
+        ? as.candidates
+            .map((c) =>
+              renderKpAliasChip(c.alias, c.source === "user" ? "cand-user" : "cand-system")
+            )
+            .join("")
+        : `<span class="m0-muted m0-kp-tags-empty">同步 aux 或下方新建</span>`;
+    }
+  }
+
+  function refreshKpDescCandEditorDom(panel, kp) {
+    const root = $("#kp-desc-candidates");
+    if (!panel?.draft?.descCandState || !root) return;
+    const ds = panel.draft.descCandState;
+    root.innerHTML = ds.candidates.length
+      ? ds.candidates.map((c) => renderKpDescCandChip(c.text, c.source)).join("")
+      : `<span class="m0-muted m0-kp-tags-empty">同步 aux 后显示描述候选</span>`;
   }
 
   function renderKpTagChip(tag, kind, opts = {}) {
@@ -2881,9 +3922,6 @@
   }
 
   function renderKpTagsEditorHtml(panel, kp, isCreate) {
-    if (isCreate) {
-      return `<p class="m0-config-hint">创建知识点后可在此管理标签（已选 / 候选）。</p>`;
-    }
     const ts = ensureKpTagState(panel, kp);
     const selectedHtml = ts.selected.length
       ? ts.selected.map((t) => renderKpTagChip(t, "selected")).join("")
@@ -3035,15 +4073,178 @@
       }
     });
     $("#kp-suggest-tags")?.addEventListener("click", () => loadKpTagSuggestions(kpId));
-    if (!panel.draft.tagState.candidates.length) loadKpTagSuggestions(kpId);
+    if (panel.mode !== "create" && !panel.draft.tagState.candidates.length) loadKpTagSuggestions(kpId);
+  }
+
+  function promoteKpAlias(panel, alias) {
+    const as = panel.draft?.aliasState;
+    if (!as || !alias) return;
+    if (!as.selected.includes(alias)) as.selected.push(alias);
+    as.candidates = as.candidates.filter((c) => c.alias !== alias);
+    syncKpTagStateFromDom(panel);
+  }
+
+  function demoteKpAlias(panel, alias) {
+    const as = panel.draft?.aliasState;
+    if (!as || !alias) return;
+    as.selected = as.selected.filter((a) => a !== alias);
+    if (!as.candidates.some((c) => c.alias === alias)) {
+      as.candidates.push({ alias, source: "user" });
+    }
+    syncKpTagStateFromDom(panel);
+  }
+
+  function dismissKpAlias(panel, alias) {
+    const as = panel.draft?.aliasState;
+    if (!as || !alias) return;
+    as.selected = as.selected.filter((a) => a !== alias);
+    as.candidates = as.candidates.filter((c) => c.alias !== alias);
+    syncKpTagStateFromDom(panel);
+  }
+
+  function bindKpAliasEditor(kpId, kp) {
+    const panel = state.kpPanel;
+    if (!panel) return;
+    ensureKpAliasState(panel, kp);
+    const root = $("#kp-alias-editor");
+    if (!root) return;
+    if (!root.dataset.aliasBound) {
+      root.dataset.aliasBound = "1";
+      root.addEventListener("click", (e) => {
+        const dismiss = e.target.closest("[data-alias-dismiss]");
+        if (dismiss) {
+          e.stopPropagation();
+          dismissKpAlias(state.kpPanel, dismiss.getAttribute("data-alias-dismiss"));
+          refreshKpAliasEditorDom(
+            state.kpPanel,
+            state.doc?.knowledge_points?.find((k) => k.id === kpId) || { id: kpId }
+          );
+          return;
+        }
+        const chip = e.target.closest("[data-alias]");
+        if (!chip) return;
+        const alias = chip.getAttribute("data-alias");
+        const kind = chip.getAttribute("data-alias-kind");
+        if (!alias || !state.kpPanel) return;
+        if (kind === "selected") demoteKpAlias(state.kpPanel, alias);
+        else promoteKpAlias(state.kpPanel, alias);
+        refreshKpAliasEditorDom(
+          state.kpPanel,
+          state.doc?.knowledge_points?.find((k) => k.id === kpId) || { id: kpId }
+        );
+      });
+    }
+    $("#kp-alias-add-btn")?.addEventListener("click", () => {
+      const input = $("#kp-alias-new-input");
+      const raw = (input?.value || "").trim();
+      if (!raw || !panel.draft.aliasState) return;
+      const as = panel.draft.aliasState;
+      if (!as.selected.includes(raw) && !as.candidates.some((c) => c.alias === raw)) {
+        as.candidates.push({ alias: raw, source: "user" });
+      }
+      if (input) input.value = "";
+      refreshKpAliasEditorDom(panel, kp);
+    });
+  }
+
+  function bindKpDescCandEditor(kpId) {
+    const panel = state.kpPanel;
+    const kp = state.doc?.knowledge_points?.find((k) => k.id === kpId) || { id: kpId };
+    if (!panel) return;
+    ensureKpDescCandState(panel, kp);
+    const root = $("#kp-desc-cand-editor");
+    if (!root || root.dataset.descBound) return;
+    root.dataset.descBound = "1";
+    root.addEventListener("click", (e) => {
+      const dismiss = e.target.closest("[data-desc-dismiss]");
+      if (dismiss) {
+        e.stopPropagation();
+        const text = dismiss.getAttribute("data-desc-dismiss");
+        const ds = panel.draft?.descCandState;
+        if (ds && text) {
+          ds.candidates = ds.candidates.filter((c) => c.text !== text);
+          syncKpTagStateFromDom(panel);
+          refreshKpDescCandEditorDom(panel, kp);
+        }
+        return;
+      }
+      const chip = e.target.closest("[data-desc-cand]");
+      if (!chip) return;
+      const text = chip.getAttribute("data-desc-cand");
+      const ta = $("#kp-desc-input");
+      if (text && ta) {
+        ta.value = text;
+        panel.draft.description = text;
+      }
+    });
+  }
+
+  function bindKpSyncAux(kpId) {
+    $("#kp-sync-aux")?.addEventListener("click", () => loadKpImplicitProposals(kpId));
+  }
+
+  async function loadKpImplicitProposals(kpId) {
+    const panel = state.kpPanel;
+    if (!panel || !kpId || !state.currentPath) return;
+    const isCreate = panel.mode === "create";
+    const tempKp = isCreate
+      ? { start_line: panel.startLine, end_line: panel.endLine, name: panel.name || kpId }
+      : null;
+    const kp = state.doc?.knowledge_points?.find((k) => k.id === kpId) || { id: kpId };
+    ensureKpTagState(panel, kp);
+    ensureKpAliasState(panel, kp);
+    ensureKpDescCandState(panel, kp);
+    try {
+      const res = await call("sync_implicit_proposals", state.currentPath, kpId, tempKp);
+      if (res.status !== "ok") {
+        setStatus(res.message || "同步失败");
+        return;
+      }
+      let added = 0;
+      for (const row of res.tag_candidates || []) {
+        if (addKpTagCandidate(panel, row.tag, row.source || "system", row.score)) added += 1;
+      }
+      for (const row of res.alias_candidates || []) {
+        const as = panel.draft.aliasState;
+        const a = String(row.alias || "").trim();
+        if (!a || !as) continue;
+        const low = a.toLowerCase();
+        if (as.selected.some((x) => x.toLowerCase() === low)) continue;
+        if (!as.candidates.some((c) => c.alias.toLowerCase() === low)) {
+          as.candidates.push({ alias: a, source: row.source || "system" });
+          added += 1;
+        }
+      }
+      for (const row of res.description_candidates || []) {
+        const ds = panel.draft.descCandState;
+        const t = String(row.text || "").trim();
+        if (!t || !ds) continue;
+        if (!ds.candidates.some((c) => c.text === t)) {
+          ds.candidates.push({ text: t, source: row.source || "system" });
+          added += 1;
+        }
+      }
+      syncKpTagStateFromDom(panel);
+      refreshKpTagsEditorDom(panel, kp);
+      refreshKpAliasEditorDom(panel, kp);
+      refreshKpDescCandEditorDom(panel, kp);
+      setStatus(added ? `已从 aux 合并 ${added} 条候选` : "aux 已同步，无新候选");
+    } catch (e) {
+      setStatusError(String(e.message || e));
+    }
   }
 
   function bindKpDescSuggest(kpId) {
     $("#kp-suggest-desc")?.addEventListener("click", async () => {
       const ta = $("#kp-desc-input");
       if (!ta || !kpId || !state.currentPath) return;
+      const panel = state.kpPanel;
+      const isCreate = panel?.mode === "create";
+      const tempKp = isCreate
+        ? { start_line: panel.startLine, end_line: panel.endLine, name: panel.name || kpId }
+        : null;
       try {
-        const res = await call("suggest_description", state.currentPath, kpId);
+        const res = await call("suggest_description", state.currentPath, kpId, tempKp);
         if (res.suggested) ta.value = res.suggested;
       } catch (_) {
         /* ignore */
@@ -3054,9 +4255,13 @@
   async function loadKpTagSuggestions(kpId) {
     const panel = state.kpPanel;
     if (!panel || !kpId || !state.currentPath) return;
+    const isCreate = panel.mode === "create";
+    const tempKp = isCreate
+      ? { start_line: panel.startLine, end_line: panel.endLine, name: panel.name || kpId }
+      : null;
     ensureKpTagState(panel, state.doc?.knowledge_points?.find((k) => k.id === kpId) || { tags: [] });
     try {
-      const res = await call("suggest_tags", state.currentPath, kpId, 12);
+      const res = await call("suggest_tags", state.currentPath, kpId, 12, tempKp);
       const items = res.suggestions || [];
       let added = 0;
       for (const s of items) {
@@ -3183,6 +4388,7 @@
     clearKpRangeAssist();
     state.kpPanel = null;
     $("#kp-body")?.classList.remove("m0-modal-body-kp-range");
+    $("#kp-body")?.classList.remove("m0-modal-body-kp-edges");
     $("#kp-modal").classList.add("hidden");
     if (returnTo === "config") {
       openConfigModal({
@@ -3221,6 +4427,8 @@
         highlightLinkTarget: configHighlight || null,
         tab: state.configTab || "links",
       });
+    } else if (returnTo === "kp" && state.kpPanel) {
+      renderKpModalBody();
     }
   }
 
@@ -4264,9 +5472,15 @@
   function applyLinkMatchToolbarAction(m, action) {
     if (!m) return;
     if (action === "all") {
-      m.matches.forEach((row) => {
-        if (!row.is_substring && !row.excluded && !row.blocked) m.selected.add(row.line);
-      });
+      const selectable = m.matches.filter(
+        (row) => !row.is_substring && !row.excluded && !row.blocked
+      );
+      const allSelected = selectable.length > 0 && selectable.every((row) => m.selected.has(row.line));
+      if (allSelected) {
+        m.selected.clear();
+      } else {
+        selectable.forEach((row) => m.selected.add(row.line));
+      }
     } else if (action === "plain") {
       m.selected.clear();
       m.matches.forEach((row) => {
@@ -5121,6 +6335,7 @@
       MemoriaLinkContextMenu.showForSelection(e, info.text, {
         filePath: state.currentPath,
         lines: info.lines,
+        onStatus: setStatus,
         onCreateLink: ({ text: t }) =>
           openLinkEditorFromSelection(t, { preselectLines: info.lines }),
         onCreateKp: ({ text: t, lines }) => openAssistFromSelection({ text: t, lines }),
@@ -5136,9 +6351,18 @@
       if (!state.currentPath) return;
       const info = getSelectionInContainer(preview);
       if (!info) return;
+      const lines = state.doc?.lines || [];
+      const md = info.lines?.length
+        ? info.lines
+            .map((n) => lines[n - 1] || "")
+            .join("\n")
+            .trim()
+        : "";
       MemoriaLinkContextMenu.showForSelection(e, info.text, {
         filePath: state.currentPath,
         lines: info.lines,
+        onStatus: setStatus,
+        markdown: md || undefined,
         onCreateLink: ({ text: t }) =>
           openLinkEditorFromSelection(t, { preselectLines: info.lines }),
         onCreateKp: ({ text: t, lines }) => openAssistFromSelection({ text: t, lines }),
@@ -5203,7 +6427,13 @@
 
   function clearHighlights() {
     document.querySelectorAll(".m0-line").forEach((el) => {
-      el.classList.remove("kp-highlight-flash", "fade-out", "in-range", "kp-hover");
+      el.classList.remove("kp-highlight-flash", "kp-error-flash", "fade-out", "in-range", "kp-hover");
+    });
+  }
+
+  function clearKpListItemErrorHighlight() {
+    document.querySelectorAll(".m0-kp-item.error-highlight").forEach((el) => {
+      el.classList.remove("error-highlight");
     });
   }
 
@@ -5211,6 +6441,7 @@
     cancelKpHighlightTimers();
     clearHighlights();
     clearPreviewHighlights();
+    clearKpListItemErrorHighlight();
   }
 
   function clearKpHoverHighlight() {
@@ -5272,7 +6503,7 @@
       }
     }
     if (scrollSource && firstSource) {
-      firstSource.scrollIntoView({ block: "center", behavior: "smooth" });
+      firstSource.scrollIntoView({ block: "start", behavior: "smooth" });
     }
 
     if (state.viewMode !== "source") {
@@ -5291,6 +6522,57 @@
       dismissKpRangeHighlight();
       state.kpHighlightClearTimer = null;
     }, 2500);
+  }
+
+  // 检查面板"打开"跳转的红色错误高亮：不自动淡出，由用户后续操作清除
+  function highlightRangeWithError(startLine, endLine) {
+    dismissKpRangeHighlight();
+
+    const scrollSource = state.viewMode !== "preview";
+    let firstSource = null;
+    for (let n = startLine; n <= endLine; n++) {
+      const line = document.getElementById("line-" + n);
+      if (line) {
+        line.classList.add("in-range", "kp-error-flash");
+        if (n === startLine) firstSource = line;
+      }
+    }
+    if (scrollSource && firstSource) {
+      firstSource.scrollIntoView({ block: "start", behavior: "smooth" });
+    }
+
+    if (state.viewMode !== "source") {
+      highlightPreviewRange(startLine, endLine, { scroll: true, flash: true, error: true });
+    }
+  }
+
+  // 左侧知识点列表定位高亮：滚动到对应 KP 并添加 error 样式
+  function highlightKpListItemWithError(kpId) {
+    if (!kpId) return;
+    const items = document.querySelectorAll(".m0-kp-item");
+    for (const item of items) {
+      if (item.dataset.kp === kpId) {
+        item.classList.add("error-highlight");
+        item.scrollIntoView({ block: "center", behavior: "smooth" });
+        return;
+      }
+    }
+  }
+
+  // 滚动左侧知识点列表到指定 KP 项（不改变样式，仅定位）
+  function scrollKpListItemIntoView(kpId) {
+    if (!kpId) return;
+    const kpList = $("#kp-list");
+    if (!kpList) return;
+    const items = kpList.querySelectorAll(".m0-kp-item");
+    for (const item of items) {
+      if (item.dataset.kp === kpId) {
+        const containerTop = kpList.getBoundingClientRect().top;
+        const itemTop = item.getBoundingClientRect().top;
+        kpList.scrollTop += itemTop - containerTop;
+        return;
+      }
+    }
   }
 
   function clearPreviewHighlights() {
@@ -5327,6 +6609,12 @@
         first = el;
       }
     }
+    // Fallback: if no block starts at/after startLine (e.g. target line is
+    // inside a block whose startLine < target), pick the first match in DOM
+    // order (the outermost containing block).
+    if (!first && matches.length) {
+      first = matches[0];
+    }
 
     if (!Number.isFinite(top) || bottom <= top) return first;
 
@@ -5351,11 +6639,13 @@
     if (opts?.flash !== false) {
       clearPreviewHighlights();
     }
-
     const first = layoutPreviewRangeBand(preview, startLine, endLine);
-
+    const band = document.getElementById("m0-preview-range-band");
+    if (band) {
+      band.classList.toggle("error", !!opts?.error);
+    }
     if (opts?.scroll && first) {
-      first.scrollIntoView({ block: "center", behavior: "smooth" });
+      first.scrollIntoView({ block: "start", behavior: "smooth" });
     }
   }
 
@@ -5812,8 +7102,8 @@
     renderEditor(res);
     renderKpList(res);
     renderFileTree();
-    setViewMode(state.viewMode, { skipSave: true });
-    renderPreview(res);
+    await setViewMode(state.viewMode, { skipSave: true });
+    await renderPreview(res);
     onKpClick(kpId, { skipRangeModal: true });
     setStatus(message);
     return true;
@@ -5872,6 +7162,13 @@
       : panel.draft?.tagState?.selected || [];
     const description = ($("#kp-desc-input")?.value || "").trim();
     const tagCandidates = serializeKpTagCandidates(panel.draft?.tagState?.candidates || []);
+    const aliases = panel.draft?.aliasState?.selected || panel.draft?.aliases || [];
+    const aliasCandidates = serializeKpAliasCandidates(
+      panel.draft?.aliasState?.candidates || []
+    );
+    const descriptionCandidates = serializeKpDescCandidates(
+      panel.draft?.descCandState?.candidates || []
+    );
     setStatus("保存配置…");
     const res = await call(
       "update_kp",
@@ -5880,7 +7177,10 @@
       null,
       tags,
       description,
-      tagCandidates
+      tagCandidates,
+      aliasCandidates,
+      aliases,
+      descriptionCandidates
     );
     return reloadDocAfterKpChange(res, panel.kpId, `已更新标签 · ${panel.kpId}`);
   }
@@ -5897,6 +7197,7 @@
     let ok = false;
     if (tab === "range") ok = await saveKpRange();
     else if (tab === "identity") ok = await saveKpIdentity();
+    else if (tab === "edges") { closeKpModal(); return; }
     else ok = await saveKpTags();
     if (ok) closeKpModal();
   }
@@ -6055,9 +7356,13 @@
     renderEditor(res);
     renderKpList(res);
     renderFileTree();
-    setViewMode(state.viewMode, { skipSave: true });
-    renderPreview(res);
-    onKpClick(kpId);
+    await setViewMode(state.viewMode, { skipSave: true });
+    await renderPreview(res);
+    // 与 openFile 的 kpId 跳转路径一致：直接 highlightRange + scrollKpListItemIntoView
+    state.activeKpId = kpId;
+    renderKpList(state.doc);
+    highlightRange(start, end);
+    scrollKpListItemIntoView(kpId);
     const created = a.mode === "create";
     setStatus(created ? "已创建知识点" : "已更新 range", `${kpId} L${start}–${end}`);
     if (created) {
@@ -6197,11 +7502,19 @@
     if (mode === "semantic" && sem != null) {
       return `语义 ${Math.round(sem)}%`;
     }
-    if (mode === "both") {
+    if (mode === "both" || mode === "full") {
       const parts = [];
       if (lex != null && lex > 0) parts.push(`字 ${Math.round(lex)}`);
       if (sem != null && sem > 0) parts.push(`语义 ${Math.round(sem)}%`);
+      if (hit.tier) {
+        const tierLabel = { high: "高", medium: "中", low: "低" }[hit.tier] || hit.tier;
+        parts.push(tierLabel);
+      }
       if (parts.length) return parts.join(" · ");
+    }
+    if (hit.tier && mode === "lexical") {
+      const tierLabel = { high: "高", medium: "中", low: "低" }[hit.tier] || hit.tier;
+      return `字 ${Math.round(lex != null ? lex : hit.score || 0)} · ${tierLabel}`;
     }
     if (lex != null) return `字 ${Math.round(lex)}`;
     return String(Math.round(hit.score || 0));
@@ -6337,6 +7650,7 @@
   function bindEvents() {
     bindPointerDragHoverGuard();
     $("#btn-open").addEventListener("click", openKb);
+    $("#btn-import").addEventListener("click", () => startImport());
     $("#btn-kb-close").addEventListener("click", () => closeKb());
     $("#btn-welcome-open").addEventListener("click", openKb);
     $("#btn-nav-back").addEventListener("click", navBack);
@@ -6443,6 +7757,25 @@
     $("#link-close").addEventListener("click", closeLinkModal);
     $("#link-cancel").addEventListener("click", closeLinkModal);
     $("#link-confirm").addEventListener("click", confirmLinkPicker);
+    $("#import-conflict-close").addEventListener("click", closeImportConflictModal);
+    $("#import-conflict-cancel").addEventListener("click", closeImportConflictModal);
+    $("#import-conflict-modal .m0-modal-backdrop")?.addEventListener("click", closeImportConflictModal);
+    $("#import-conflict-copy-report").addEventListener("click", () => {
+      const ta = $("#import-conflict-report-text");
+      if (ta) {
+        ta.select();
+        navigator.clipboard.writeText(ta.value).then(() => setStatus("冲突报告已复制")).catch(() => { document.execCommand("copy"); setStatus("冲突报告已复制"); });
+      }
+    });
+    $("#import-conflict-confirm").addEventListener("click", async () => {
+      const resolution = collectImportConflictResolution();
+      const files = _importFileContents;
+      closeImportConflictModal();
+      if (files) await executeImportDirect(files, resolution);
+    });
+    $("#import-result-close").addEventListener("click", closeImportResultModal);
+    $("#import-result-dismiss").addEventListener("click", closeImportResultModal);
+    $("#import-result-modal .m0-modal-backdrop")?.addEventListener("click", closeImportResultModal);
     $("#link-save").addEventListener("click", () => saveLinkEditor(false));
     $("#link-save-jump").addEventListener("click", () => saveLinkEditor(true));
     $("#link-config-view").addEventListener("click", () => {
@@ -6590,6 +7923,8 @@
     document.querySelectorAll(".m0-view-btn").forEach((btn) => {
       btn.addEventListener("click", () => setViewMode(btn.dataset.view));
     });
+    // 分栏模式双向滚动同步
+    setupSplitScrollSync();
     setupSidebarResize();
     setupKpModalResize();
     document.querySelectorAll("[data-sidebar-tab]").forEach((btn) => {
@@ -6615,6 +7950,75 @@
     bindEditorLinkHover();
     bindPreviewSelectInteraction();
     bindPreviewSelectionMenu();
+    bindModalDrag();
+  }
+
+  /** 模态框标题栏拖拽：mousedown 在 header（排除交互元素）→ 移动整个 .m0-modal-box */
+  function bindModalDrag() {
+    const NO_DRAG =
+      ".m0-icon-btn, button, input, textarea, select, a, [contenteditable], [data-no-drag]";
+    let dragging = null;
+
+    function readCurrentTranslate(box) {
+      const t = (box.style.transform || "").match(/translate\(\s*(-?[\d.]+)px\s*,\s*(-?[\d.]+)px\s*\)/);
+      if (!t) return { dx: 0, dy: 0 };
+      return { dx: parseFloat(t[1]) || 0, dy: parseFloat(t[2]) || 0 };
+    }
+
+    document.addEventListener("mousedown", (e) => {
+      if (e.button !== 0) return;
+      const header = e.target.closest(".m0-modal-header");
+      if (!header) return;
+      if (e.target.closest(NO_DRAG)) return;
+      const box = header.closest(".m0-modal-box");
+      if (!box) return;
+      const modal = box.closest(".m0-modal");
+      if (!modal || modal.classList.contains("hidden")) return;
+      e.preventDefault();
+      const cur = readCurrentTranslate(box);
+      dragging = {
+        box,
+        sx: e.clientX,
+        sy: e.clientY,
+        dx: cur.dx,
+        dy: cur.dy,
+      };
+      box.style.cursor = "grabbing";
+      document.body.style.userSelect = "none";
+    });
+
+    document.addEventListener("mousemove", (e) => {
+      if (!dragging) return;
+      dragging.dx += e.clientX - dragging.sx;
+      dragging.dy += e.clientY - dragging.sy;
+      dragging.sx = e.clientX;
+      dragging.sy = e.clientY;
+      dragging.box.style.transform = `translate(${dragging.dx}px, ${dragging.dy}px)`;
+    });
+
+    const endDrag = () => {
+      if (!dragging) return;
+      dragging.box.style.cursor = "";
+      document.body.style.userSelect = "";
+      dragging = null;
+    };
+    document.addEventListener("mouseup", endDrag);
+    document.addEventListener("mouseleave", endDrag);
+
+    /** 模态框关闭时自动重置拖拽位移，下次打开回到居中位置 */
+    const observer = new MutationObserver((mutations) => {
+      for (const m of mutations) {
+        if (m.attributeName !== "class") continue;
+        const modal = m.target;
+        if (modal.classList.contains("hidden")) {
+          const box = modal.querySelector(".m0-modal-box");
+          if (box) box.style.transform = "";
+        }
+      }
+    });
+    document.querySelectorAll(".m0-modal").forEach((modal) => {
+      observer.observe(modal, { attributes: true, attributeFilter: ["class"] });
+    });
   }
 
   window.MemoriaBridge?.onReady?.(() => {

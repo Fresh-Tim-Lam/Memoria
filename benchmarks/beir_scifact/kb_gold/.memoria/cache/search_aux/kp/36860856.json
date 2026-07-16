@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36860856",
+  "source_fingerprint": "37163aeb5d1ab97896d45fbb6796e585",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36860856",
+    "a-40-hz-auditory-potential-recorded-from-the-human-scalp."
+  ],
+  "key_phrases": [
+    "40",
+    "hz",
+    "auditory",
+    "potential",
+    "recorded",
+    "from",
+    "human",
+    "scalp"
+  ],
+  "summary_1l": "A 40-Hz auditory potential recorded from the human scalp.",
+  "query_hits": [],
+  "embed_text": "36860856 A 40-Hz auditory potential recorded from the human scalp. science scifact Computer techniques readily extract from the brainwaves an orderly sequence of brain potentials locked in time to sound stimuli. The potentials that appear 8 to 80 msec after the stimulus resemble 3 or 4 cycles of a 40-Hz sine wave; we… 36860856 a-40-hz-auditory-potential-recorded-from-the-human-scalp. 40 hz auditory potential recorded from human scalp A 40-Hz auditory potential recorded from the human scalp. A 40-Hz auditory potential recorded from the human scalp. Computer techniques readily extract from the brainwaves an orderly sequence of brain potentials locked in time to sound stimuli. The potentials that appear 8 to 80 msec after the stimulus resemble 3 or 4 cycles of a 40-Hz sine wave; we show here that these waves combined to form a single, stable, composite wave when the sounds are repeated at rates around 40 per sec. This phenomenon, the 40-Hz event-related potential (ERP), displays several properties of theoretical and practical interest. First, it reportedly disappears with surgical anesthesia, and it resembles similar phenomena in the visual and olfactory system, facts which suggest that adequate processing of sensory information may require cyclical brain events in the 30- to 50",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:43.809144+00:00"
+}

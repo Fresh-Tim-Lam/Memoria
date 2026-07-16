@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24144677",
+  "source_fingerprint": "185dd63bf67bb22c882a59a6e6d0530e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24144677",
+    "the-atm-missense-mutation-p.ser49cys-(c.146c>g)-and-the-risk-of-breast-cancer."
+  ],
+  "key_phrases": [
+    "atm",
+    "missense",
+    "mutation",
+    "ser49cys",
+    "c.146",
+    "risk",
+    "breast",
+    "cancer"
+  ],
+  "summary_1l": "The ATM missense mutation p.",
+  "query_hits": [],
+  "embed_text": "24144677 The ATM missense mutation p.Ser49Cys (c.146C>G) and the risk of breast cancer. science scifact Homozygous mutation in the ATM gene causes ataxia telangiectasia and heterozygous mutation carriers may be at increased risk of breast cancer. We studied a total of 22 ATM variants; 18 variants were analyzed in one of two large… 24144677 the-atm-missense-mutation-p.ser49cys-(c.146c>g)-and-the-risk-of-breast-cancer. atm missense mutation ser49cys c.146 risk breast cancer The ATM missense mutation p. The ATM missense mutation p.Ser49Cys (c.146C>G) and the risk of breast cancer. Homozygous mutation in the ATM gene causes ataxia telangiectasia and heterozygous mutation carriers may be at increased risk of breast cancer. We studied a total of 22 ATM variants; 18 variants were analyzed in one of two large population-based studies from the U.S. and Poland, and four variants were analyzed in all 2,856 breast cancer cases and 3,344 controls from the two studies. The missense mutation Ser49Cys (c.146C>G, p. S49C), carried by approximately 2% of subjects, was more common in cases than controls in both study populations, combined odds ratio (OR) 1.69 (95% CI, 1.19-2.40; P=0.004). Another missense mutation at approximately 2% frequency, Phe858Leu (c.2572T>C, p. F858L), was associated with a signi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.815596+00:00"
+}

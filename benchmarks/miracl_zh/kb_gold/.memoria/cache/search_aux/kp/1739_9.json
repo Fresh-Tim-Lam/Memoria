@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "kp_id": "1739#9",
+  "source_fingerprint": "f112dff6765ff21ef325c7cfab47849c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "法国",
+    "(法国)",
+    "2022年法国总统选举",
+    "拿破仑·路易·波拿巴",
+    "挪威国旗",
+    "數字化革命",
+    "法国地理",
+    "法国美术",
+    "爱丁堡公爵菲利普亲王",
+    "爱德华·菲利普",
+    "英國王室",
+    "英國王室長壽成員列表"
+  ],
+  "aliases": [
+    "1739#9"
+  ],
+  "key_phrases": [
+    "法国",
+    "国旗",
+    "1815",
+    "波旁王朝",
+    "三色旗",
+    "革命",
+    "使用",
+    "王室"
+  ],
+  "summary_1l": "1815年波旁王朝復辟后，三色旗被革命前使用过的王室的丁香花（fleur-de-lis）白色旗代替。",
+  "query_hits": [],
+  "embed_text": "1739#9 法国国旗 法国国旗 1815年波旁王朝復辟后，三色旗被革命前使用过的王室的丁香花（fleur-de-lis）白色旗代替。然而1830年革命，路易-菲利普（Louis-Philippe）国王登上王位后，再一次指定三色旗为国旗，一直持续至今。 法国 (法国) 2022年法国总统选举 拿破仑·路易·波拿巴 挪威国旗 數字化革命 法国地理 法国美术 爱丁堡公爵菲利普亲王 爱德华·菲利普 英國王室 英國王室長壽成員列表 1739#9 法国 国旗 1815 波旁王朝 三色旗 革命 使用 王室 1815年波旁王朝復辟后，三色旗被革命前使用过的王室的丁香花（fleur-de-lis）白色旗代替。 法国国旗 1815年波旁王朝復辟后，三色旗被革命前使用过的王室的丁香花（fleur-de-lis）白色旗代替。然而1830年革命，路易-菲利普（Louis-Philippe）国王登上王位后，再一次指定三色旗为国旗，一直持续至今。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:18:04.283502+00:00"
+}

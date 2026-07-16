@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12207167",
+  "source_fingerprint": "1605a2d89e9087d5a55e2967cbb67e5b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12207167",
+    "adverse-effects-of-excessive-consumption-of-amino-acids."
+  ],
+  "key_phrases": [
+    "adverse",
+    "effects",
+    "excessive",
+    "consumption",
+    "amino",
+    "acids",
+    "phenylalanine",
+    "toxicity"
+  ],
+  "summary_1l": "Adverse effects of excessive consumption of amino acids.",
+  "query_hits": [],
+  "embed_text": "12207167 Adverse effects of excessive consumption of amino acids. science scifact PHENYLALANINE TOXICITY 158 Developing the 0. -M ethylphenylalanine Model. . . . . . .. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 160 Use of the a-Methyl phenylalanine Model in Brain Protein Synthesis . .… 12207167 adverse-effects-of-excessive-consumption-of-amino-acids. adverse effects excessive consumption amino acids phenylalanine toxicity Adverse effects of excessive consumption of amino acids. Adverse effects of excessive consumption of amino acids. PHENYLALANINE TOXICITY 158 Developing the 0. -M ethylphenylalanine Model. . . . . . .. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 160 Use of the a-Methyl phenylalanine Model in Brain Protein Synthesis . . . . . . . . . . . . . . . . . . . 161 TYROSINE TOXICITY 162 General Nutritional Observations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 162 Factors Affecting Tissue Concentrations of Tyrosine . ... .. .. .. ...... . . . . . . .. . . 163 Probable Cause of Tyrosine Toxicity . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 164 A New Animal Model for Human",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:07.954896+00:00"
+}

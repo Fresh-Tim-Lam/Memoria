@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24730100",
+  "source_fingerprint": "1abe2a98c25ca3646374ff2ef6180530",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24730100",
+    "cyclic-amp-dependent-phosphorylation-of-thromboxane-a(2)-receptor-associated-galpha(13)."
+  ],
+  "key_phrases": [
+    "cyclic",
+    "amp",
+    "dependent",
+    "phosphorylation",
+    "thromboxane",
+    "receptor",
+    "associated",
+    "galpha"
+  ],
+  "summary_1l": "Cyclic AMP-dependent phosphorylation of thromboxane A(2) receptor-associated Galpha(13).",
+  "query_hits": [],
+  "embed_text": "24730100 Cyclic AMP-dependent phosphorylation of thromboxane A(2) receptor-associated Galpha(13). science scifact Although it is well established that cAMP inhibits platelet activation induced by all agonists, the thromboxane A(2) signal transduction pathway was found to be particularly sensitive to such inhibition. Therefore, we examined whether… 24730100 cyclic-amp-dependent-phosphorylation-of-thromboxane-a(2)-receptor-associated-galpha(13). cyclic amp dependent phosphorylation thromboxane receptor associated galpha Cyclic AMP-dependent phosphorylation of thromboxane A(2) receptor-associated Galpha(13). Cyclic AMP-dependent phosphorylation of thromboxane A(2) receptor-associated Galpha(13). Although it is well established that cAMP inhibits platelet activation induced by all agonists, the thromboxane A(2) signal transduction pathway was found to be particularly sensitive to such inhibition. Therefore, we examined whether cAMP-dependent kinase mediates phosphorylation of the thromboxane A(2) receptor-G-protein complex. It was found that cAMP induces protein kinase A-dependent [gamma-(32)P]ATP labeling of solubilized membrane proteins in the region of Galpha subunits, i.e. 38-45 kDa. Moreover, ligand affinity chromatography purification of thromboxane A(2) receptor-G-protein complexes from these membranes revealed that 38-45-kDa phosphoproteins co-purify with thromboxane A(2) receptors. Imm",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.161073+00:00"
+}

@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "kp_id": "103582#3",
+  "source_fingerprint": "eb7fa3e210edaae3b5388e000ee2baad",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "(中國)",
+    "世界三大宗教",
+    "世界主要宗教",
+    "世界大戰",
+    "世界政府",
+    "世界水电站列表",
+    "中國政治史",
+    "中國文化史"
+  ],
+  "aliases": [
+    "103582#3"
+  ],
+  "key_phrases": [
+    "冲积平原",
+    "世界",
+    "最大",
+    "平原",
+    "亞馬遜",
+    "乃由亞馬遜",
+    "上游",
+    "泥沙"
+  ],
+  "summary_1l": "世界上最大的沖積平原是亞馬遜平原，乃由亞馬遜上游的泥沙堆積而成。",
+  "query_hits": [],
+  "embed_text": "103582#3 冲积平原 冲积平原 世界上最大的沖積平原是亞馬遜平原，乃由亞馬遜上游的泥沙堆積而成。而中國的黄淮海平原、宁夏平原和長江中下游平原亦屬這一地形。 (中國) 世界三大宗教 世界主要宗教 世界大戰 世界政府 世界水电站列表 中國政治史 中國文化史 103582#3 冲积平原 世界 最大 平原 亞馬遜 乃由亞馬遜 上游 泥沙 世界上最大的沖積平原是亞馬遜平原，乃由亞馬遜上游的泥沙堆積而成。 冲积平原 世界上最大的沖積平原是亞馬遜平原，乃由亞馬遜上游的泥沙堆積而成。而中國的黄淮海平原、宁夏平原和長江中下游平原亦屬這一地形。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:19:29.607977+00:00"
+}

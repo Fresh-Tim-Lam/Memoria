@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4421547",
+  "source_fingerprint": "d24f2f34cdbc4079f9b5e8227113f165",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4421547",
+    "ctcf-mediates-methylation-sensitive-enhancer-blocking-activity-at-the-h19/igf2-locus."
+  ],
+  "key_phrases": [
+    "ctcf",
+    "mediates",
+    "methylation",
+    "sensitive",
+    "enhancer",
+    "blocking",
+    "activity",
+    "at"
+  ],
+  "summary_1l": "CTCF mediates methylation-sensitive enhancer-blocking activity at the H19/Igf2 locus.",
+  "query_hits": [],
+  "embed_text": "4421547 CTCF mediates methylation-sensitive enhancer-blocking activity at the H19/Igf2 locus. science scifact The Insulin-like growth factor 2 (Igf2) and H19 genes are imprinted, resulting in silencing of the maternal and paternal alleles, respectively. This event is dependent upon an imprinted-control region two kilobases upstream of H19 (refs 1,… 4421547 ctcf-mediates-methylation-sensitive-enhancer-blocking-activity-at-the-h19/igf2-locus. ctcf mediates methylation sensitive enhancer blocking activity at CTCF mediates methylation-sensitive enhancer-blocking activity at the H19/Igf2 locus. CTCF mediates methylation-sensitive enhancer-blocking activity at the H19/Igf2 locus. The Insulin-like growth factor 2 (Igf2) and H19 genes are imprinted, resulting in silencing of the maternal and paternal alleles, respectively. This event is dependent upon an imprinted-control region two kilobases upstream of H19 (refs 1, 2). On the paternal chromosome this element is methylated and required for the silencing of H19 (refs 2-4). On the maternal chromosome the region is unmethylated and required for silencing of the Igf2 gene 90 kilobases upstream. We have proposed that the unmethylated imprinted-control region acts as a chromatin boundary that blocks the interaction of Igf2 with enhancers that lie 3' of H19 (refs 5, 6). This enhancer-blocking activity would then be lost when the region wa",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.945391+00:00"
+}

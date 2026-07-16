@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36654066",
+  "source_fingerprint": "9e091e94d773f1f5f280f39a79410f11",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36654066",
+    "increased-lipid-peroxidation-as-a-mechanism-of-methionine-induced-atherosclerosis-in-rabbits."
+  ],
+  "key_phrases": [
+    "increased",
+    "lipid",
+    "peroxidation",
+    "as",
+    "mechanism",
+    "methionine",
+    "induced",
+    "atherosclerosis"
+  ],
+  "summary_1l": "Increased lipid peroxidation as a mechanism of methionine-induced atherosclerosis in rabbits.",
+  "query_hits": [],
+  "embed_text": "36654066 Increased lipid peroxidation as a mechanism of methionine-induced atherosclerosis in rabbits. science scifact Methionine is converted by the transmethylation/transsulfuration pathway to homocysteine which may exert atherogenic effects by several mechanisms, including lipid peroxidation. Therefore, the excessive dietary methionine may induce the… 36654066 increased-lipid-peroxidation-as-a-mechanism-of-methionine-induced-atherosclerosis-in-rabbits. increased lipid peroxidation as mechanism methionine induced atherosclerosis Increased lipid peroxidation as a mechanism of methionine-induced atherosclerosis in rabbits. Increased lipid peroxidation as a mechanism of methionine-induced atherosclerosis in rabbits. Methionine is converted by the transmethylation/transsulfuration pathway to homocysteine which may exert atherogenic effects by several mechanisms, including lipid peroxidation. Therefore, the excessive dietary methionine may induce the development of atherosclerosis. To test this hypothesis, plasma and aortic thiobarbituric acid reactive substances (TBARS), as well as activities of aortic and erythrocyte superoxide dismutase (SOD), catalase and selenium-dependent glutathione peroxidase (GPX) were measured in rabbits fed a diet enriched with 0.3% methionine for 6 or 9 months. Histological examinations of aortas also were performed. Feeding rabbits a methionine-enriched diet for 6 or 9 months resul",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:43.623598+00:00"
+}

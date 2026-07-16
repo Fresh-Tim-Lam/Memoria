@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "kp_id": "lawful-administration-principle",
+  "source_fingerprint": "f070cd9078a450e26162d32167944b45",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "主体",
+    "行政行为",
+    "行政机关",
+    "合理行政",
+    "行政强制",
+    "行政法规",
+    "行政给付",
+    "实施主体",
+    "抽象行政行为",
+    "授益行政行为",
+    "行政公开",
+    "行政征收"
+  ],
+  "aliases": [
+    "lawful-administration-principle"
+  ],
+  "key_phrases": [
+    "行政",
+    "主体",
+    "xingzhengzhuti",
+    "行政主体"
+  ],
+  "summary_1l": "行政主体",
+  "query_hits": [],
+  "embed_text": "lawful-administration-principle 依法行政原则 行政法 依法行政 职权法定 法律优先 法律保留 主体 行政行为 行政机关 合理行政 行政强制 行政法规 行政给付 实施主体 抽象行政行为 授益行政行为 行政公开 行政征收 lawful-administration-principle 行政 主体 xingzhengzhuti 行政主体 行政主体 行政主体",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-16T05:57:15.774444+00:00"
+}

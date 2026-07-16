@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "5377642",
+  "source_fingerprint": "bac4586d3ca3ef1cb259b2919586153d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5377642"
+  ],
+  "key_phrases": [
+    "satb1",
+    "expression",
+    "governs",
+    "epigenetic",
+    "repression",
+    "pd",
+    "tumor",
+    "reactive"
+  ],
+  "summary_1l": "&NA; Despite the importance of programmed cell death‐1 (PD‐1) in inhibiting T cell effector activity, the mechanisms re",
+  "query_hits": [],
+  "embed_text": "5377642 SATB1 Expression Governs Epigenetic Repression of PD‐1 in Tumor‐Reactive T Cells science scifact &NA; Despite the importance of programmed cell death‐1 (PD‐1) in inhibiting T cell effector activity, the mechanisms regulating its expression remain poorly defined. We found that the chromatin organizer special AT‐rich sequence‐binding… 5377642 satb1 expression governs epigenetic repression pd tumor reactive &NA; Despite the importance of programmed cell death‐1 (PD‐1) in inhibiting T cell effector activity, the mechanisms re SATB1 Expression Governs Epigenetic Repression of PD‐1 in Tumor‐Reactive T Cells &NA; Despite the importance of programmed cell death‐1 (PD‐1) in inhibiting T cell effector activity, the mechanisms regulating its expression remain poorly defined. We found that the chromatin organizer special AT‐rich sequence‐binding protein‐1 (Satb1) restrains PD‐1 expression induced upon T cell activation by recruiting a nucleosome remodeling deacetylase (NuRD) complex to Pdcd1 regulatory regions. Satb1 deficienct T cells exhibited a 40‐fold increase in PD‐1 expression. Tumor‐derived transforming growth factor &bgr; (Tgf‐&bgr;) decreased Satb1 expression through binding of Smad proteins to the Satb1 promoter. Smad proteins also competed with the Satb1‐NuRD complex for binding to Pdcd1 enhancers, releasing",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.079031+00:00"
+}

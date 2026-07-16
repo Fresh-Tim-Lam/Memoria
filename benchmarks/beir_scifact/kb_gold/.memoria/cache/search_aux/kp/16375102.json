@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16375102",
+  "source_fingerprint": "1b777f9685028e7672a8bfbfdc30b0a4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16375102",
+    "direct-reprogramming-of-mouse-fibroblasts-to-neural-progenitors."
+  ],
+  "key_phrases": [
+    "direct",
+    "reprogramming",
+    "mouse",
+    "fibroblasts",
+    "neural",
+    "progenitors",
+    "simple",
+    "yet"
+  ],
+  "summary_1l": "Direct reprogramming of mouse fibroblasts to neural progenitors.",
+  "query_hits": [],
+  "embed_text": "16375102 Direct reprogramming of mouse fibroblasts to neural progenitors. science scifact The simple yet powerful technique of induced pluripotency may eventually supply a wide range of differentiated cells for cell therapy and drug development. However, making the appropriate cells via induced pluripotent stem cells (iPSCs)… 16375102 direct-reprogramming-of-mouse-fibroblasts-to-neural-progenitors. direct reprogramming mouse fibroblasts neural progenitors simple yet Direct reprogramming of mouse fibroblasts to neural progenitors. Direct reprogramming of mouse fibroblasts to neural progenitors. The simple yet powerful technique of induced pluripotency may eventually supply a wide range of differentiated cells for cell therapy and drug development. However, making the appropriate cells via induced pluripotent stem cells (iPSCs) requires reprogramming of somatic cells and subsequent redifferentiation. Given how arduous and lengthy this process can be, we sought to determine whether it might be possible to convert somatic cells into lineage-specific stem/progenitor cells of another germ layer in one step, bypassing the intermediate pluripotent stage. Here we show that transient induction of the four reprogramming factors (Oct4, Sox2, Klf4, and c-Myc) can efficiently transdifferentiate fibroblasts into functional neural",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.188497+00:00"
+}

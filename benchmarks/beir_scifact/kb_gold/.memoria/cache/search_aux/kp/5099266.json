@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5099266",
+  "source_fingerprint": "f6f1ce9213a4f9a09fdddf432fedae95",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5099266",
+    "caspase-11-promotes-the-fusion-of-phagosomes-harboring-pathogenic-bacteria-with-lysosomes-by-modulating-actin-polymerization."
+  ],
+  "key_phrases": [
+    "caspase",
+    "11",
+    "promotes",
+    "fusion",
+    "phagosomes",
+    "harboring",
+    "pathogenic",
+    "bacteria"
+  ],
+  "summary_1l": "Caspase-11 promotes the fusion of phagosomes harboring pathogenic bacteria with lysosomes by modulating actin polymerization.",
+  "query_hits": [],
+  "embed_text": "5099266 Caspase-11 promotes the fusion of phagosomes harboring pathogenic bacteria with lysosomes by modulating actin polymerization. science scifact Inflammasomes are multiprotein complexes that include members of the NLR (nucleotide-binding domain leucine-rich repeat containing) family and caspase-1. Once bacterial molecules are sensed within the macrophage, the inflammasome is… 5099266 caspase-11-promotes-the-fusion-of-phagosomes-harboring-pathogenic-bacteria-with-lysosomes-by-modulating-actin-polymerization. caspase 11 promotes fusion phagosomes harboring pathogenic bacteria Caspase-11 promotes the fusion of phagosomes harboring pathogenic bacteria with lysosomes by modulating actin polymerization. Caspase-11 promotes the fusion of phagosomes harboring pathogenic bacteria with lysosomes by modulating actin polymerization. Inflammasomes are multiprotein complexes that include members of the NLR (nucleotide-binding domain leucine-rich repeat containing) family and caspase-1. Once bacterial molecules are sensed within the macrophage, the inflammasome is assembled, mediating the activation of caspase-1. Caspase-11 mediates caspase-1 activation in response to lipopolysaccharide and bacterial toxins, and yet its role during bacterial infection is unknown. Here, we demonstrated that caspase-11 was dispensable for caspase-1 activation in response to Legionella, Salmonella, Francisella, and Listeria. We also determined that active mouse caspase-11 was required for restriction of L. pneumophil",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.099376+00:00"
+}

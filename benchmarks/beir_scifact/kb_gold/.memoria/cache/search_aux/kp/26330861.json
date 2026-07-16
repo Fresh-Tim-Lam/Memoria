@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26330861",
+  "source_fingerprint": "707b80427cfbd0067886504b17aa3f80",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26330861",
+    "requirement-of-nad-and-sir2-for-life-span-extension-by-calorie-restriction-in-saccharomyces-cerevisiae."
+  ],
+  "key_phrases": [
+    "requirement",
+    "nad",
+    "sir2",
+    "life",
+    "span",
+    "extension",
+    "by",
+    "calorie"
+  ],
+  "summary_1l": "Requirement of NAD and SIR2 for life-span extension by calorie restriction in Saccharomyces cerevisiae.",
+  "query_hits": [],
+  "embed_text": "26330861 Requirement of NAD and SIR2 for life-span extension by calorie restriction in Saccharomyces cerevisiae. science scifact Calorie restriction extends life-span in a wide variety of organisms. Although it has been suggested that calorie restriction may work by reducing the levels of reactive oxygen species produced during respiration, the mechanism by which… 26330861 requirement-of-nad-and-sir2-for-life-span-extension-by-calorie-restriction-in-saccharomyces-cerevisiae. requirement nad sir2 life span extension by calorie Requirement of NAD and SIR2 for life-span extension by calorie restriction in Saccharomyces cerevisiae. Requirement of NAD and SIR2 for life-span extension by calorie restriction in Saccharomyces cerevisiae. Calorie restriction extends life-span in a wide variety of organisms. Although it has been suggested that calorie restriction may work by reducing the levels of reactive oxygen species produced during respiration, the mechanism by which this regimen slows aging is uncertain. Here, we mimicked calorie restriction in yeast by physiological or genetic means and showed a substantial extension in life-span. This extension was not observed in strains mutant for SIR2 (which encodes the silencing protein Sir2p) or NPT1 (a gene in a pathway in the synthesis of NAD, the oxidized form of nicotinamide adenine dinucleotide). These findings suggest that the increased longevity induced by calorie restr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.619799+00:00"
+}

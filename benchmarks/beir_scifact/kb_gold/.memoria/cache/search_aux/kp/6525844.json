@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6525844",
+  "source_fingerprint": "6825558e76a7997735a725e0cbaf9640",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6525844",
+    "impact-of-aortic-stiffness-on-survival-in-end-stage-renal-disease."
+  ],
+  "key_phrases": [
+    "impact",
+    "aortic",
+    "stiffness",
+    "survival",
+    "end",
+    "stage",
+    "renal",
+    "disease"
+  ],
+  "summary_1l": "Impact of aortic stiffness on survival in end-stage renal disease.",
+  "query_hits": [],
+  "embed_text": "6525844 Impact of aortic stiffness on survival in end-stage renal disease. science scifact BACKGROUND Damage to large arteries is a major factor in the high cardiovascular morbidity and mortality of patients with end-stage renal disease (ESRD). Increased arterial stiffness and intima-media thickness, together with increased… 6525844 impact-of-aortic-stiffness-on-survival-in-end-stage-renal-disease. impact aortic stiffness survival end stage renal disease Impact of aortic stiffness on survival in end-stage renal disease. Impact of aortic stiffness on survival in end-stage renal disease. BACKGROUND Damage to large arteries is a major factor in the high cardiovascular morbidity and mortality of patients with end-stage renal disease (ESRD). Increased arterial stiffness and intima-media thickness, together with increased pulse pressure, are the principal arterial alterations. Whether increased aortic pulse-wave velocity (PWV), a classic marker of increased arterial stiffness, may predict all-cause and/or cardiovascular mortality has never been investigated. METHODS AND RESULTS A cohort of 241 patients with ESRD undergoing hemodialysis was studied between April 1987 and April 1998. The mean duration of follow-up was 72+/-41 months (mean+/-SD). Mean age at entry was 51.5+/-16.3 years. Seventy-three deaths occurr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.113420+00:00"
+}

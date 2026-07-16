@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5884524",
+  "source_fingerprint": "cfbd9042c675900712b475505caf3934",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5884524",
+    "impact-of-diabetes-on-long-term-prognosis-in-patients-with-unstable-angina-and-non-q-wave-myocardial-infarction:-results-of-the-oasis-(organization-to-assess-strategies-for-ischemic-syndromes)-registry."
+  ],
+  "key_phrases": [
+    "impact",
+    "diabetes",
+    "long",
+    "term",
+    "prognosis",
+    "patients",
+    "with",
+    "unstable"
+  ],
+  "summary_1l": "Impact of diabetes on long-term prognosis in patients with unstable angina and non-Q-wave myocardial infarction: results of the OASIS (Organization to Assess Strategies for Ischemic Syndromes) Registr",
+  "query_hits": [],
+  "embed_text": "5884524 Impact of diabetes on long-term prognosis in patients with unstable angina and non-Q-wave myocardial infarction: results of the OASIS (Organization to Assess Strategies for Ischemic Syndromes) Registry. science scifact BACKGROUND Although unstable coronary artery disease is the most common reason for admission to a coronary care unit, the long-term prognosis of patients with this diagnosis is unknown. This is particularly true for patients with diabetes… 5884524 impact-of-diabetes-on-long-term-prognosis-in-patients-with-unstable-angina-and-non-q-wave-myocardial-infarction:-results-of-the-oasis-(organization-to-assess-strategies-for-ischemic-syndromes)-registry. impact diabetes long term prognosis patients with unstable Impact of diabetes on long-term prognosis in patients with unstable angina and non-Q-wave myocardial infarction: results of the OASIS (Organization to Assess Strategies for Ischemic Syndromes) Registr Impact of diabetes on long-term prognosis in patients with unstable angina and non-Q-wave myocardial infarction: results of the OASIS (Organization to Assess Strategies for Ischemic Syndromes) Registry. BACKGROUND Although unstable coronary artery disease is the most common reason for admission to a coronary care unit, the long-term prognosis of patients with this diagnosis is unknown. This is particularly true for patients with diabetes mellitus, who are known to have a high morbidity and mortality after an acute myocardial infarction. METHODS AND RESULTS Prospectively collected data from 6 different countries in the Organization to Assess Strategies for Ischemic Syndromes (OASIS) registry were analyzed to determine the 2-year prognosis of diabetic and nondiabetic patients who were hospit",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:13.642783+00:00"
+}

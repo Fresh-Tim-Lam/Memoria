@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3984231",
+  "source_fingerprint": "981d927ea75f44f13d2f402950377298",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3984231",
+    "caveolin-1-deletion-exacerbates-cardiac-interstitial-fibrosis-by-promoting-m2-macrophage-activation-in-mice-after-myocardial-infarction."
+  ],
+  "key_phrases": [
+    "caveolin",
+    "deletion",
+    "exacerbates",
+    "cardiac",
+    "interstitial",
+    "fibrosis",
+    "by",
+    "promoting"
+  ],
+  "summary_1l": "Caveolin-1 deletion exacerbates cardiac interstitial fibrosis by promoting M2 macrophage activation in mice after myocardial infarction.",
+  "query_hits": [],
+  "embed_text": "3984231 Caveolin-1 deletion exacerbates cardiac interstitial fibrosis by promoting M2 macrophage activation in mice after myocardial infarction. science scifact Adverse remodeling following myocardial infarction (MI) leading to heart failure is driven by an imbalanced resolution of inflammation. The macrophage cell is an important control of post-MI inflammation, as macrophage subtypes secrete… 3984231 caveolin-1-deletion-exacerbates-cardiac-interstitial-fibrosis-by-promoting-m2-macrophage-activation-in-mice-after-myocardial-infarction. caveolin deletion exacerbates cardiac interstitial fibrosis by promoting Caveolin-1 deletion exacerbates cardiac interstitial fibrosis by promoting M2 macrophage activation in mice after myocardial infarction. Caveolin-1 deletion exacerbates cardiac interstitial fibrosis by promoting M2 macrophage activation in mice after myocardial infarction. Adverse remodeling following myocardial infarction (MI) leading to heart failure is driven by an imbalanced resolution of inflammation. The macrophage cell is an important control of post-MI inflammation, as macrophage subtypes secrete mediators to either promote inflammation and extend injury (M1 phenotype) or suppress inflammation and promote scar formation (M2 phenotype). We have previously shown that the absence of caveolin-1 (Cav1), a membrane scaffolding protein, is associated with adverse cardiac remodeling in mice, but the mechanisms responsible remain to be elucidated. We explore here the role of Cav1 in the activation of macrophages using wild t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.005906+00:00"
+}

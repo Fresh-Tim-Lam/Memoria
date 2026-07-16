@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7873737",
+  "source_fingerprint": "bda902d965b223f6d4d623f5053309b3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7873737",
+    "platelet-glycoprotein-iib/iiia-inhibitors-reduce-mortality-in-diabetic-patients-with-non-st-segment-elevation-acute-coronary-syndromes."
+  ],
+  "key_phrases": [
+    "platelet",
+    "glycoprotein",
+    "iib",
+    "iiia",
+    "inhibitors",
+    "reduce",
+    "mortality",
+    "diabetic"
+  ],
+  "summary_1l": "Platelet glycoprotein IIb/IIIa inhibitors reduce mortality in diabetic patients with non-ST-segment-elevation acute coronary syndromes.",
+  "query_hits": [],
+  "embed_text": "7873737 Platelet glycoprotein IIb/IIIa inhibitors reduce mortality in diabetic patients with non-ST-segment-elevation acute coronary syndromes. science scifact BACKGROUND Diabetes mellitus is a major risk factor for adverse outcomes after acute coronary syndromes (ACS). Because this disease may be associated with increased platelet aggregation, we investigated whether diabetic patients with ACS… 7873737 platelet-glycoprotein-iib/iiia-inhibitors-reduce-mortality-in-diabetic-patients-with-non-st-segment-elevation-acute-coronary-syndromes. platelet glycoprotein iib iiia inhibitors reduce mortality diabetic Platelet glycoprotein IIb/IIIa inhibitors reduce mortality in diabetic patients with non-ST-segment-elevation acute coronary syndromes. Platelet glycoprotein IIb/IIIa inhibitors reduce mortality in diabetic patients with non-ST-segment-elevation acute coronary syndromes. BACKGROUND Diabetes mellitus is a major risk factor for adverse outcomes after acute coronary syndromes (ACS). Because this disease may be associated with increased platelet aggregation, we investigated whether diabetic patients with ACS derive particular benefit from platelet glycoprotein (GP) IIb/IIIa receptor inhibition. METHODS AND RESULTS We performed a meta-analysis of the diabetic populations enrolled in the 6 large-scale platelet GP IIb/IIIa inhibitor ACS trials: PRISM, PRISM-PLUS, PARAGON A, PARAGON B, PURSUIT, and GUSTO IV. Among 6458 diabetic patients, platelet GP IIb/IIIa inhibition was associated with a significant mortality reduction at 30 da",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:13.897716+00:00"
+}

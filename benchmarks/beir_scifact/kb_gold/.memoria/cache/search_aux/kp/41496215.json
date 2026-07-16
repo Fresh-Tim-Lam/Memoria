@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "41496215",
+  "source_fingerprint": "d327ab9e53c42c0cf4bd33b6ad8bffdf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "41496215",
+    "dna-methylation-is-a-critical-cell-intrinsic-determinant-of-astrocyte-differentiation-in-the-fetal-brain."
+  ],
+  "key_phrases": [
+    "dna",
+    "methylation",
+    "critical",
+    "cell",
+    "intrinsic",
+    "determinant",
+    "astrocyte",
+    "differentiation"
+  ],
+  "summary_1l": "DNA methylation is a critical cell-intrinsic determinant of astrocyte differentiation in the fetal brain.",
+  "query_hits": [],
+  "embed_text": "41496215 DNA methylation is a critical cell-intrinsic determinant of astrocyte differentiation in the fetal brain. science scifact Astrocyte differentiation, which occurs late in brain development, is largely dependent on the activation of a transcription factor, STAT3. We show that astrocytes, as judged by glial fibrillary acidic protein (GFAP) expression, never… 41496215 dna-methylation-is-a-critical-cell-intrinsic-determinant-of-astrocyte-differentiation-in-the-fetal-brain. dna methylation critical cell intrinsic determinant astrocyte differentiation DNA methylation is a critical cell-intrinsic determinant of astrocyte differentiation in the fetal brain. DNA methylation is a critical cell-intrinsic determinant of astrocyte differentiation in the fetal brain. Astrocyte differentiation, which occurs late in brain development, is largely dependent on the activation of a transcription factor, STAT3. We show that astrocytes, as judged by glial fibrillary acidic protein (GFAP) expression, never emerge from neuroepithelial cells on embryonic day (E) 11.5 even when STAT3 is activated, in contrast to E14.5 neuroepithelial cells. A CpG dinucleotide within a STAT3 binding element in the GFAP promoter is highly methylated in E11.5 neuroepithelial cells, but is demethylated in cells responsive to the STAT3 activation signal to express GFAP. This CpG methylation leads to inaccessibility of STAT3 to the binding element. We suggest that methylation of a c",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.442086+00:00"
+}

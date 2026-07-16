@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26107000",
+  "source_fingerprint": "f069cadaee69ede5c3fe0db8502ee137",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26107000",
+    "extrapulmonary-effects-of-chronic-obstructive-pulmonary-disease-on-physical-activity:-a-cross-sectional-study."
+  ],
+  "key_phrases": [
+    "extrapulmonary",
+    "effects",
+    "chronic",
+    "obstructive",
+    "pulmonary",
+    "disease",
+    "physical",
+    "activity"
+  ],
+  "summary_1l": "Extrapulmonary effects of chronic obstructive pulmonary disease on physical activity: a cross-sectional study.",
+  "query_hits": [],
+  "embed_text": "26107000 Extrapulmonary effects of chronic obstructive pulmonary disease on physical activity: a cross-sectional study. science scifact RATIONALE Physical activity is reduced in patients with chronic obstructive pulmonary disease (COPD). COPD has a systemic component that includes significant extrapulmonary effects that may contribute to its severity in individual… 26107000 extrapulmonary-effects-of-chronic-obstructive-pulmonary-disease-on-physical-activity:-a-cross-sectional-study. extrapulmonary effects chronic obstructive pulmonary disease physical activity Extrapulmonary effects of chronic obstructive pulmonary disease on physical activity: a cross-sectional study. Extrapulmonary effects of chronic obstructive pulmonary disease on physical activity: a cross-sectional study. RATIONALE Physical activity is reduced in patients with chronic obstructive pulmonary disease (COPD). COPD has a systemic component that includes significant extrapulmonary effects that may contribute to its severity in individual patients. OBJECTIVES To investigate the association of extrapulmonary effects of the disease and its comorbidities with reduced physical activity in patients with COPD. METHODS In a cross-sectional study, 170 outpatients with COPD (GOLD [Global Initiative for Chronic Obstructive Lung Disease] stages I-IV; BODE [body mass index, airway obstruction, dyspnea, and exercise capacity] score 0-10) underwent a series of tests. Physical activity was assessed over",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.357611+00:00"
+}

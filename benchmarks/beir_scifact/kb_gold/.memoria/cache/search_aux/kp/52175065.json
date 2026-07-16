@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "52175065",
+  "source_fingerprint": "5b7af3798d7832cab3606ea05f7b8f14",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "52175065",
+    "acute-and-chronic-exercise-in-patients-with-heart-failure-with-reduced-ejection-fraction:-evidence-of-structural-and-functional-plasticity-and-intact-angiogenic-signalling-in-skeletal-muscle"
+  ],
+  "key_phrases": [
+    "acute",
+    "chronic",
+    "exercise",
+    "patients",
+    "with",
+    "heart",
+    "failure",
+    "reduced"
+  ],
+  "summary_1l": "KEY POINT",
+  "query_hits": [],
+  "embed_text": "52175065 Acute and chronic exercise in patients with heart failure with reduced ejection fraction: evidence of structural and functional plasticity and intact angiogenic signalling in skeletal muscle science scifact KEY POINTS The vascular endothelial growth factor (VEGF) responses to acute submaximal exercise and training effects in patients with heart failure with reduced ejection fraction (HFrEF) were investigated. Six patients and six healthy… 52175065 acute-and-chronic-exercise-in-patients-with-heart-failure-with-reduced-ejection-fraction:-evidence-of-structural-and-functional-plasticity-and-intact-angiogenic-signalling-in-skeletal-muscle acute chronic exercise patients with heart failure reduced KEY POINT Acute and chronic exercise in patients with heart failure with reduced ejection fraction: evidence of structural and functional plasticity and intact angiogenic signalling in skeletal muscle KEY POINTS The vascular endothelial growth factor (VEGF) responses to acute submaximal exercise and training effects in patients with heart failure with reduced ejection fraction (HFrEF) were investigated. Six patients and six healthy matched controls performed knee-extensor exercise (KE) at 50% of maximum work rate before and after (only patients) KE training. Muscle biopsies were taken to assess skeletal muscle structure and the angiogenic response. Before training, during this submaximal KE exercise, patients with HFrEF exhibited higher leg vascular resistance and greater noradrenaline spillover. Sk",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.499186+00:00"
+}

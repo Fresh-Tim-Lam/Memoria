@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1068106",
+  "source_fingerprint": "f4e03bf8a7313b36ef9f2e5b3cb0e18b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1068106",
+    "is-emotional-dysregulation-part-of-the-psychopathology-of-adhd-in-adults?"
+  ],
+  "key_phrases": [
+    "emotional",
+    "dysregulation",
+    "part",
+    "psychopathology",
+    "adhd",
+    "adults",
+    "attention",
+    "deficit"
+  ],
+  "summary_1l": "Is emotional dysregulation part of the psychopathology of ADHD in adults?",
+  "query_hits": [],
+  "embed_text": "1068106 Is emotional dysregulation part of the psychopathology of ADHD in adults? science scifact Attention-deficit hyperactivity disorder is a common condition in adulthood. The disorder is characterized by symptoms of inattention, hyperactivity, and impulsivity. Alongside these symptoms, it is discussed whether symptoms of emotional… 1068106 is-emotional-dysregulation-part-of-the-psychopathology-of-adhd-in-adults? emotional dysregulation part psychopathology adhd adults attention deficit Is emotional dysregulation part of the psychopathology of ADHD in adults? Is emotional dysregulation part of the psychopathology of ADHD in adults? Attention-deficit hyperactivity disorder is a common condition in adulthood. The disorder is characterized by symptoms of inattention, hyperactivity, and impulsivity. Alongside these symptoms, it is discussed whether symptoms of emotional dysregulation could add additional and better description of the psychopathology of ADHD. Neither the current ICD-10 and DSM-IV nor the upcoming DSM-5 includes symptoms of emotional dysregulation as a core aspect of ADHD. Several authors (e.g., Wender 1995) describe adult ADHD in a more differentiated way and propose concepts of the disorder that consider the subjective experiences of the adult patient by introducing the symptomatology of emotional symptoms. Empirical studies attest",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:05.301845+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25413327",
+  "source_fingerprint": "7d1325466a5de73309f5863ac0c282ab",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25413327",
+    "clonally-derived-human-embryonic-stem-cell-lines-maintain-pluripotency-and-proliferative-potential-for-prolonged-periods-of-culture."
+  ],
+  "key_phrases": [
+    "clonally",
+    "derived",
+    "human",
+    "embryonic",
+    "stem",
+    "cell",
+    "lines",
+    "maintain"
+  ],
+  "summary_1l": "Clonally derived human embryonic stem cell lines maintain pluripotency and proliferative potential for prolonged periods of culture.",
+  "query_hits": [],
+  "embed_text": "25413327 Clonally derived human embryonic stem cell lines maintain pluripotency and proliferative potential for prolonged periods of culture. science scifact Embryonic stem (ES) cell lines derived from human blastocysts have the developmental potential to form derivatives of all three embryonic germ layers even after prolonged culture. Here we describe the clonal derivation of two human ES cell… 25413327 clonally-derived-human-embryonic-stem-cell-lines-maintain-pluripotency-and-proliferative-potential-for-prolonged-periods-of-culture. clonally derived human embryonic stem cell lines maintain Clonally derived human embryonic stem cell lines maintain pluripotency and proliferative potential for prolonged periods of culture. Clonally derived human embryonic stem cell lines maintain pluripotency and proliferative potential for prolonged periods of culture. Embryonic stem (ES) cell lines derived from human blastocysts have the developmental potential to form derivatives of all three embryonic germ layers even after prolonged culture. Here we describe the clonal derivation of two human ES cell lines, H9.1 and H9.2. At the time of the clonal derivation of the H9.1 and H9.2 ES cell lines, the parental ES cell line, H9, had already been continuously cultured for 6 months. After an additional 8 months of culture, H9.1 and H9.2 ES cell lines continued to: (1) actively proliferate, (2) express high levels of telomerase, and (3) retain normal karyotypes. Telomere lengths, while somewhat variable, were maintained between",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.532584+00:00"
+}

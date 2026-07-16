@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "52873726",
+  "source_fingerprint": "65d510403eca54b3d7e0afd65e3a3c82",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "52873726",
+    "regulation-of-hippo-pathway-transcription-factor-tead-by-p38-mapk-induced-cytoplasmic-translocation"
+  ],
+  "key_phrases": [
+    "regulation",
+    "hippo",
+    "pathway",
+    "transcription",
+    "factor",
+    "tead",
+    "by",
+    "p38"
+  ],
+  "summary_1l": "The Hippo pathway controls organ size and tissue homeostasis, with deregulation leading to cancer.",
+  "query_hits": [],
+  "embed_text": "52873726 Regulation of Hippo pathway transcription factor TEAD by p38 MAPK-induced cytoplasmic translocation science scifact The Hippo pathway controls organ size and tissue homeostasis, with deregulation leading to cancer. The core Hippo components in mammals are composed of the upstream serine/threonine kinases Mst1/2, MAPK4Ks and Lats1/2. Inactivation of… 52873726 regulation-of-hippo-pathway-transcription-factor-tead-by-p38-mapk-induced-cytoplasmic-translocation regulation hippo pathway transcription factor tead by p38 The Hippo pathway controls organ size and tissue homeostasis, with deregulation leading to cancer. Regulation of Hippo pathway transcription factor TEAD by p38 MAPK-induced cytoplasmic translocation The Hippo pathway controls organ size and tissue homeostasis, with deregulation leading to cancer. The core Hippo components in mammals are composed of the upstream serine/threonine kinases Mst1/2, MAPK4Ks and Lats1/2. Inactivation of these upstream kinases leads to dephosphorylation, stabilization, nuclear translocation and thus activation of the major functional transducers of the Hippo pathway, YAP and its paralogue TAZ. YAP/TAZ are transcription co-activators that regulate gene expression primarily through interaction with the TEA domain DNA-binding family of transcription factors (TEAD). The current paradigm for regulation of this pathway centres on phosphorylation-dependent nucleocytop",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:13.544217+00:00"
+}

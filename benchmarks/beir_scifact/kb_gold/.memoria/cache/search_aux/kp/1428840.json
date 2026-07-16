@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1428840",
+  "source_fingerprint": "e2f072d3cefbf02d7dcad52355b029aa",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1428840",
+    "case-control-study-of-endogenous-steroid-hormones-and-endometrial-cancer."
+  ],
+  "key_phrases": [
+    "case",
+    "control",
+    "study",
+    "endogenous",
+    "steroid",
+    "hormones",
+    "endometrial",
+    "cancer"
+  ],
+  "summary_1l": "Case-control study of endogenous steroid hormones and endometrial cancer.",
+  "query_hits": [],
+  "embed_text": "1428840 Case-control study of endogenous steroid hormones and endometrial cancer. science scifact BACKGROUND It has been suggested that identified risk factors for endometrial cancer operate through a single etiologic pathway, i.e., exposure to relatively high levels of unopposed estrogen (estrogen in the absence of progestins). Only a… 1428840 case-control-study-of-endogenous-steroid-hormones-and-endometrial-cancer. case control study endogenous steroid hormones endometrial cancer Case-control study of endogenous steroid hormones and endometrial cancer. Case-control study of endogenous steroid hormones and endometrial cancer. BACKGROUND It has been suggested that identified risk factors for endometrial cancer operate through a single etiologic pathway, i.e., exposure to relatively high levels of unopposed estrogen (estrogen in the absence of progestins). Only a few studies, however, have addressed this issue directly. PURPOSE We assessed the risk of developing endometrial cancer among both premenopausal and postmenopausal women in relation to the circulating levels of steroid hormones and sex hormone-binding globulin (SHBG). The independent effect of hormones was assessed after adjustment for other known risk factors. METHODS The data used in the analysis are from a case-control study conducted in five geographic regions in the United Sta",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.471647+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "34846352",
+  "source_fingerprint": "5b34d15ccb12b80cd6be6076f2b6f805",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "34846352",
+    "identification-and-characterization-of-a-widely-expressed-form-of-adenylyl-cyclase."
+  ],
+  "key_phrases": [
+    "identification",
+    "characterization",
+    "widely",
+    "expressed",
+    "form",
+    "adenylyl",
+    "cyclase",
+    "novel"
+  ],
+  "summary_1l": "Identification and characterization of a widely expressed form of adenylyl cyclase.",
+  "query_hits": [],
+  "embed_text": "34846352 Identification and characterization of a widely expressed form of adenylyl cyclase. science scifact A novel mammalian adenylyl cyclase was identified by reverse transcription-polymerase chain reaction amplification using degenerate primers based on a conserved region of previously described adenylyl cyclases (Premont, R. T. (1994)… 34846352 identification-and-characterization-of-a-widely-expressed-form-of-adenylyl-cyclase. identification characterization widely expressed form adenylyl cyclase novel Identification and characterization of a widely expressed form of adenylyl cyclase. Identification and characterization of a widely expressed form of adenylyl cyclase. A novel mammalian adenylyl cyclase was identified by reverse transcription-polymerase chain reaction amplification using degenerate primers based on a conserved region of previously described adenylyl cyclases (Premont, R. T. (1994) Methods Enzymol. 238, 116-127). The full-length cDNA sequence obtained from mouse brain predicts a 1353-amino acid protein possessing a 12-membrane span topology, and containing two regions of high similarity with the catalytic domains of adenylyl cyclases. Comparison of this novel adenylyl cyclase with the eight previously described mammalian enzymes indicates that this type 9 adenylyl cyclase sequence is the most divergent, defining a sixth distinct subclass of mammalian adeny",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.772365+00:00"
+}

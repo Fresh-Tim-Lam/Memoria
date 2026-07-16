@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "493346",
+  "source_fingerprint": "ef1090787a010ac7bb5c33c48a585fa9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "493346",
+    "evidence-that-the-ipl1-sli15-(aurora-kinase-incenp)-complex-promotes-chromosome-bi-orientation-by-altering-kinetochore-spindle-pole-connections"
+  ],
+  "key_phrases": [
+    "evidence",
+    "that",
+    "ipl1",
+    "sli15",
+    "aurora",
+    "kinase",
+    "incenp",
+    "complex"
+  ],
+  "summary_1l": "How sister kinetochores attach to microtubules from oppo",
+  "query_hits": [],
+  "embed_text": "493346 Evidence that the Ipl1-Sli15 (Aurora Kinase-INCENP) Complex Promotes Chromosome Bi-orientation by Altering Kinetochore-Spindle Pole Connections science scifact How sister kinetochores attach to microtubules from opposite spindle poles during mitosis (bi-orientation) remains poorly understood. In yeast, the ortholog of the Aurora B-INCENP protein kinase complex (Ipl1-Sli15) may have a role in this… 493346 evidence-that-the-ipl1-sli15-(aurora-kinase-incenp)-complex-promotes-chromosome-bi-orientation-by-altering-kinetochore-spindle-pole-connections evidence that ipl1 sli15 aurora kinase incenp complex How sister kinetochores attach to microtubules from oppo Evidence that the Ipl1-Sli15 (Aurora Kinase-INCENP) Complex Promotes Chromosome Bi-orientation by Altering Kinetochore-Spindle Pole Connections How sister kinetochores attach to microtubules from opposite spindle poles during mitosis (bi-orientation) remains poorly understood. In yeast, the ortholog of the Aurora B-INCENP protein kinase complex (Ipl1-Sli15) may have a role in this crucial process, because it is necessary to prevent attachment of sister kinetochores to microtubules from the same spindle pole. We investigated IPL1 function in cells that cannot replicate their chromosomes but nevertheless duplicate their spindle pole bodies (SPBs). Kinetochores detach from old SPBs and reattach to old and new SPBs with equal frequency in IPL1+ cells, but remain attached to old SPBs in ipl1 mu",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.799390+00:00"
+}

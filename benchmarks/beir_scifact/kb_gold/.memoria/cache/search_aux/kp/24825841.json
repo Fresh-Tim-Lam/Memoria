@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24825841",
+  "source_fingerprint": "4bd4315d1a9a8404e5afbbdfcb092e90",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24825841",
+    "generating-an-ipsc-bank-for-hla-matched-tissue-transplantation-based-on-known-donor-and-recipient-hla-types."
+  ],
+  "key_phrases": [
+    "generating",
+    "ipsc",
+    "bank",
+    "hla",
+    "matched",
+    "tissue",
+    "transplantation",
+    "based"
+  ],
+  "summary_1l": "Generating an iPSC bank for HLA-matched tissue transplantation based on known donor and recipient HLA types.",
+  "query_hits": [],
+  "embed_text": "24825841 Generating an iPSC bank for HLA-matched tissue transplantation based on known donor and recipient HLA types. science scifact The likelihood for immunological rejection of Human Leukocyte Antigens (HLA)-mismatched induced pluripotent stem cells (iPSCs) limits their therapeutic potential. Here we show how a tissue bank from 150 selected homozygous HLA-typed… 24825841 generating-an-ipsc-bank-for-hla-matched-tissue-transplantation-based-on-known-donor-and-recipient-hla-types. generating ipsc bank hla matched tissue transplantation based Generating an iPSC bank for HLA-matched tissue transplantation based on known donor and recipient HLA types. Generating an iPSC bank for HLA-matched tissue transplantation based on known donor and recipient HLA types. The likelihood for immunological rejection of Human Leukocyte Antigens (HLA)-mismatched induced pluripotent stem cells (iPSCs) limits their therapeutic potential. Here we show how a tissue bank from 150 selected homozygous HLA-typed volunteers could match 93% of the UK population with a minimal requirement for immunosuppression. Our model provides a practical approach for using existing HLA-typed samples to generate an iPSC stem cell bank that circumvents prospective typing of a large number of individuals.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.349302+00:00"
+}

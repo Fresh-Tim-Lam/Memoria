@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9317504",
+  "source_fingerprint": "4c690488bdd02e46b0bb56bbaa36675c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9317504",
+    "varna:-interactive-drawing-and-editing-of-the-rna-secondary-structure"
+  ],
+  "key_phrases": [
+    "varna",
+    "interactive",
+    "drawing",
+    "editing",
+    "rna",
+    "secondary",
+    "structure",
+    "description"
+  ],
+  "summary_1l": "DESCRIPTION VARNA is a tool for the automated drawing, visualization and annotation of the secondary structure of RNA, designed as",
+  "query_hits": [],
+  "embed_text": "9317504 VARNA: Interactive drawing and editing of the RNA secondary structure science scifact DESCRIPTION VARNA is a tool for the automated drawing, visualization and annotation of the secondary structure of RNA, designed as a companion software for web servers and databases. FEATURES VARNA implements four drawing algorithms,… 9317504 varna:-interactive-drawing-and-editing-of-the-rna-secondary-structure varna interactive drawing editing rna secondary structure description DESCRIPTION VARNA is a tool for the automated drawing, visualization and annotation of the secondary structure of RNA, designed as VARNA: Interactive drawing and editing of the RNA secondary structure DESCRIPTION VARNA is a tool for the automated drawing, visualization and annotation of the secondary structure of RNA, designed as a companion software for web servers and databases. FEATURES VARNA implements four drawing algorithms, supports input/output using the classic formats dbn, ct, bpseq and RNAML and exports the drawing as five picture formats, either pixel-based (JPEG, PNG) or vector-based (SVG, EPS and XFIG). It also allows manual modification and structural annotation of the resulting drawing using either an interactive point and click approach, within a web server or through command-line arguments. AVAILABILITY VARNA is a free software, released under the terms of the GPLv3.0 license and available at http://",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.764261+00:00"
+}

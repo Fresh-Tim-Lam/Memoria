@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24557631",
+  "source_fingerprint": "0f666fc39a2fde33465ea832601daf26",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24557631",
+    "prevalence-of-multiple-sclerosis-in-isfahan,-iran"
+  ],
+  "key_phrases": [
+    "prevalence",
+    "multiple",
+    "sclerosis",
+    "isfahan",
+    "iran",
+    "background",
+    "ms",
+    "shows"
+  ],
+  "summary_1l": "Background: The prevalence of multiple sclerosis (MS) shows considerable variability all over the world.",
+  "query_hits": [],
+  "embed_text": "24557631 Prevalence of Multiple Sclerosis in Isfahan, Iran science scifact Background: The prevalence of multiple sclerosis (MS) shows considerable variability all over the world. According to Kurtzke, Iran is considered to have a low prevalence. Objective: To estimate the period prevalence and risk factors of MS… 24557631 prevalence-of-multiple-sclerosis-in-isfahan,-iran prevalence multiple sclerosis isfahan iran background ms shows Background: The prevalence of multiple sclerosis (MS) shows considerable variability all over the world. Prevalence of Multiple Sclerosis in Isfahan, Iran Background: The prevalence of multiple sclerosis (MS) shows considerable variability all over the world. According to Kurtzke, Iran is considered to have a low prevalence. Objective: To estimate the period prevalence and risk factors of MS in Isfahan, central part of Iran. Methods: A cross-sectional case register study conducted between 2004 and 2005. In the province of Isfahan, Iran, all patients known to have definite MS during 2004 and 2005, being alive and resident within Isfahan as well as being a member of the Isfahan MS Association were included in the study. Demographic and case-related information was recorded. 1,391 definite MS patients (308 men and 1,083 women) from the Isfahan MS Association, Iran, have been identified. The dise",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.757620+00:00"
+}

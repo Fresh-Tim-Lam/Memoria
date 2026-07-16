@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19130782",
+  "source_fingerprint": "abfa94d86b3330c1bab77b52ccddf354",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19130782",
+    "interferon-gamma-at-the-crossroads-of-tumor-immune-surveillance-or-evasion"
+  ],
+  "key_phrases": [
+    "interferon",
+    "gamma",
+    "at",
+    "crossroads",
+    "tumor",
+    "immune",
+    "surveillance",
+    "evasion"
+  ],
+  "summary_1l": "Interferon-gamma (IFN-γ) is a pleiotropic molecule with associated antiproliferative, pro-apoptotic and antitumor mechanisms.",
+  "query_hits": [],
+  "embed_text": "19130782 Interferon-Gamma at the Crossroads of Tumor Immune Surveillance or Evasion science scifact Interferon-gamma (IFN-γ) is a pleiotropic molecule with associated antiproliferative, pro-apoptotic and antitumor mechanisms. This effector cytokine, often considered as a major effector of immunity, has been used in the treatment of… 19130782 interferon-gamma-at-the-crossroads-of-tumor-immune-surveillance-or-evasion interferon gamma at crossroads tumor immune surveillance evasion Interferon-gamma (IFN-γ) is a pleiotropic molecule with associated antiproliferative, pro-apoptotic and antitumor mechanisms. Interferon-Gamma at the Crossroads of Tumor Immune Surveillance or Evasion Interferon-gamma (IFN-γ) is a pleiotropic molecule with associated antiproliferative, pro-apoptotic and antitumor mechanisms. This effector cytokine, often considered as a major effector of immunity, has been used in the treatment of several diseases, despite its adverse effects. Although broad evidence implicating IFN-γ in tumor immune surveillance, IFN-γ-based therapies undergoing clinical trials have been of limited success. In fact, recent reports suggested that it may also play a protumorigenic role, namely, through IFN-γ signaling insensitivity, downregulation of major histocompatibility complexes, and upregulation of indoleamine 2,3-dioxygenase and of checkpoint inhibitors, as programmed cell-death ligand 1.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.169755+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10944947",
+  "source_fingerprint": "214d64e69f57cd969ccf62635ed1a40c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10944947",
+    "high-throughput-sequencing-reveals-extensive-variation-in-human-specific-l1-content-in-individual-human-genomes."
+  ],
+  "key_phrases": [
+    "high",
+    "throughput",
+    "sequencing",
+    "reveals",
+    "extensive",
+    "variation",
+    "human",
+    "specific"
+  ],
+  "summary_1l": "High-throughput sequencing reveals extensive variation in human-specific L1 content in individual human genomes.",
+  "query_hits": [],
+  "embed_text": "10944947 High-throughput sequencing reveals extensive variation in human-specific L1 content in individual human genomes. science scifact Using high-throughput sequencing, we devised a technique to determine the insertion sites of virtually all members of the human-specific L1 retrotransposon family in any human genome. Using diagnostic nucleotides, we were able to locate… 10944947 high-throughput-sequencing-reveals-extensive-variation-in-human-specific-l1-content-in-individual-human-genomes. high throughput sequencing reveals extensive variation human specific High-throughput sequencing reveals extensive variation in human-specific L1 content in individual human genomes. High-throughput sequencing reveals extensive variation in human-specific L1 content in individual human genomes. Using high-throughput sequencing, we devised a technique to determine the insertion sites of virtually all members of the human-specific L1 retrotransposon family in any human genome. Using diagnostic nucleotides, we were able to locate the approximately 800 L1Hs copies corresponding specifically to the pre-Ta, Ta-0, and Ta-1 L1Hs subfamilies, with over 90% of sequenced reads corresponding to human-specific elements. We find that any two individual genomes differ at an average of 285 sites with respect to L1 insertion presence or absence. In total, we assayed 25 individuals, 15 of which are unrelated, at 1139 sites, including 772 shared with the reference genome and 367 nonrefer",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:05.710869+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4411760",
+  "source_fingerprint": "da2fb7e4e8b1c113b26a5eab9d594ba9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4411760",
+    "small-regulatory-rnas-inhibit-rna-polymerase-ii-during-the-elongation-phase-of-transcription"
+  ],
+  "key_phrases": [
+    "small",
+    "regulatory",
+    "rnas",
+    "inhibit",
+    "rna",
+    "polymerase",
+    "ii",
+    "during"
+  ],
+  "summary_1l": "Eukaryotic cells express a wide variety of endogenous small regulatory RNAs that regulate heterochromatin f",
+  "query_hits": [],
+  "embed_text": "4411760 Small regulatory RNAs inhibit RNA Polymerase II during the elongation phase of transcription science scifact Eukaryotic cells express a wide variety of endogenous small regulatory RNAs that regulate heterochromatin formation, developmental timing, defence against parasitic nucleic acids and genome rearrangement. Many small regulatory RNAs are… 4411760 small-regulatory-rnas-inhibit-rna-polymerase-ii-during-the-elongation-phase-of-transcription small regulatory rnas inhibit rna polymerase ii during Eukaryotic cells express a wide variety of endogenous small regulatory RNAs that regulate heterochromatin f Small regulatory RNAs inhibit RNA Polymerase II during the elongation phase of transcription Eukaryotic cells express a wide variety of endogenous small regulatory RNAs that regulate heterochromatin formation, developmental timing, defence against parasitic nucleic acids and genome rearrangement. Many small regulatory RNAs are thought to function in nuclei. For instance, in plants and fungi, short interfering RNA (siRNAs) associate with nascent transcripts and direct chromatin and/or DNA modifications. To understand further the biological roles of small regulatory RNAs, we conducted a genetic screen to identify factors required for RNA interference (RNAi) in Caenorhabditis elegans nuclei. Here we show that the gene nuclear RNAi defective-2 (nrde-2) encodes an evolutionarily conserved prote",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.781964+00:00"
+}

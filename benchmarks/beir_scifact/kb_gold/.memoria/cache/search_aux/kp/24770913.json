@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24770913",
+  "source_fingerprint": "06c0af478a1643c25a6a021d7ffc26ed",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24770913",
+    "potassium-channel-structure-and-function-as-reported-by-a-single-glycosylation-sequon."
+  ],
+  "key_phrases": [
+    "potassium",
+    "channel",
+    "structure",
+    "function",
+    "as",
+    "reported",
+    "by",
+    "single"
+  ],
+  "summary_1l": "Potassium channel structure and function as reported by a single glycosylation sequon.",
+  "query_hits": [],
+  "embed_text": "24770913 Potassium channel structure and function as reported by a single glycosylation sequon. science scifact Inwardly rectifying K+ channels (IRKs) are highly K(+)-selective, integral membrane proteins that help maintain resting the membrane potential and cell volume. Integral membrane proteins as a class are frequently N-glycosylated with the… 24770913 potassium-channel-structure-and-function-as-reported-by-a-single-glycosylation-sequon. potassium channel structure function as reported by single Potassium channel structure and function as reported by a single glycosylation sequon. Potassium channel structure and function as reported by a single glycosylation sequon. Inwardly rectifying K+ channels (IRKs) are highly K(+)-selective, integral membrane proteins that help maintain resting the membrane potential and cell volume. Integral membrane proteins as a class are frequently N-glycosylated with the attached carbohydrate being extracellular and perhaps modulating function. However, dynamic effects of glycosylation have yet to be demonstrated at the molecular level. ROMK1, a member of the IRK family is particularly suited to the study of glycosylation because it has a single N-glycosylation consensus sequence (Ho, K., Nichols, C. G., Lederer, W. J., Lytton, J., Vassilev, P. M., Kanazirska, M. V., and Herbert, S. C. (1993) Nature 362, 31-38). We show that ROMK1 is expr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.288808+00:00"
+}

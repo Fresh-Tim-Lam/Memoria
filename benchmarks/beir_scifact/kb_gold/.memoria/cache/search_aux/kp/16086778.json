@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16086778",
+  "source_fingerprint": "b5326751a51269ba49b821522617bcd8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16086778",
+    "loss-of-negative-regulation-by-numb-over-notch-is-relevant-to-human-breast-carcinogenesis"
+  ],
+  "key_phrases": [
+    "loss",
+    "negative",
+    "regulation",
+    "by",
+    "numb",
+    "over",
+    "notch",
+    "relevant"
+  ],
+  "summary_1l": "The biological antagonism between Notch and Numb controls the proliferative/differentiative balance in develop",
+  "query_hits": [],
+  "embed_text": "16086778 Loss of negative regulation by Numb over Notch is relevant to human breast carcinogenesis science scifact The biological antagonism between Notch and Numb controls the proliferative/differentiative balance in development and homeostasis. Although altered Notch signaling has been linked to human diseases, including cancer, evidence for a… 16086778 loss-of-negative-regulation-by-numb-over-notch-is-relevant-to-human-breast-carcinogenesis loss negative regulation by numb over notch relevant The biological antagonism between Notch and Numb controls the proliferative/differentiative balance in develop Loss of negative regulation by Numb over Notch is relevant to human breast carcinogenesis The biological antagonism between Notch and Numb controls the proliferative/differentiative balance in development and homeostasis. Although altered Notch signaling has been linked to human diseases, including cancer, evidence for a substantial involvement of Notch in human tumors has remained elusive. Here, we show that Numb-mediated control on Notch signaling is lost in ∼50% of human mammary carcinomas, due to specific Numb ubiquitination and proteasomal degradation. Mechanistically, Numb operates as an oncosuppressor, as its ectopic expression in Numb-negative, but not in Numb-positive, tumor cells inhibits proliferation. Increased Notch signaling is observed in Numb-negative tumors, but reverts to",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.803415+00:00"
+}

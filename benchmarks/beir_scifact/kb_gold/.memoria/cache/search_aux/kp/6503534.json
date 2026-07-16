@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6503534",
+  "source_fingerprint": "25bfebb269d0b08fb95d2e1820106ba3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6503534",
+    "mutations-among-italian-mucopolysaccharidosis-type-i-patients"
+  ],
+  "key_phrases": [
+    "mutations",
+    "among",
+    "italian",
+    "mucopolysaccharidosis",
+    "type",
+    "patients",
+    "group",
+    "27"
+  ],
+  "summary_1l": "A group of 27 Italian patients was screened for α-L-iduronidase mucopolysaccharidosis type I mutations.",
+  "query_hits": [],
+  "embed_text": "6503534 Mutations among Italian mucopolysaccharidosis type I patients science scifact A group of 27 Italian patients was screened for α-L-iduronidase mucopolysaccharidosis type I mutations. Mutations were found in 18 patients, with 28 alleles identified. The two most common mutations in northern Europeans (W402X and Q70X)… 6503534 mutations-among-italian-mucopolysaccharidosis-type-i-patients mutations among italian mucopolysaccharidosis type patients group 27 A group of 27 Italian patients was screened for α-L-iduronidase mucopolysaccharidosis type I mutations. Mutations among Italian mucopolysaccharidosis type I patients A group of 27 Italian patients was screened for α-L-iduronidase mucopolysaccharidosis type I mutations. Mutations were found in 18 patients, with 28 alleles identified. The two most common mutations in northern Europeans (W402X and Q70X) accounted for 11% and 13% of the alleles, respectively. The R89Q mutation, uncommon in Europeans, was found only in one patient, accounting for 1 of 54 alleles (1.9%). The other mutations, P533R, A327P and G51D, accounted for 11%, 5.6% and 9.3% of the total alleles, respectively. Interestingly, the high frequency of the P533R mutation seems to be confined to Sicily and is higher than the 3% reported in a British/Australian study.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.062647+00:00"
+}

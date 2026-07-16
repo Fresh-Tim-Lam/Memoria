@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "83667891",
+  "source_fingerprint": "158f15bfcbfb44c29f3152749f22e9c4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "83667891",
+    "identification-and-transmission-of-piper-yellow-mottle-virus-and-cucumber-mosaic-virus-infecting-black-pepper-(piper-nigrum)-in-sri-lanka"
+  ],
+  "key_phrases": [
+    "identification",
+    "transmission",
+    "piper",
+    "yellow",
+    "mottle",
+    "virus",
+    "cucumber",
+    "mosaic"
+  ],
+  "summary_1l": "Sri Lankan black pepper with symptoms of yellow mottle disease",
+  "query_hits": [],
+  "embed_text": "83667891 Identification and transmission of Piper yellow mottle virus and Cucumber mosaic virus infecting black pepper (Piper nigrum) in Sri Lanka science scifact Sri Lankan black pepper with symptoms of yellow mottle disease contained a mixture of viruses: Piper yellow mottle virus (PYMV) particles (30 × 130 nm), Cucumber mosaic virus (CMV, 30 nm diameter isometric particles), and unidentified,… 83667891 identification-and-transmission-of-piper-yellow-mottle-virus-and-cucumber-mosaic-virus-infecting-black-pepper-(piper-nigrum)-in-sri-lanka identification transmission piper yellow mottle virus cucumber mosaic Sri Lankan black pepper with symptoms of yellow mottle disease Identification and transmission of Piper yellow mottle virus and Cucumber mosaic virus infecting black pepper (Piper nigrum) in Sri Lanka Sri Lankan black pepper with symptoms of yellow mottle disease contained a mixture of viruses: Piper yellow mottle virus (PYMV) particles (30 × 130 nm), Cucumber mosaic virus (CMV, 30 nm diameter isometric particles), and unidentified, isometric virus-like particles (30 nm diameter). An effective purification procedure is described for PYMV. Immunosorbent and conventional electron microscopy successfully detected badnavirus particles only when at least partially purified extracts were used. PYMV was confirmed as the cause of the disease, with the other two viruses apparently playing no part in producing symptoms. PYMV was transmitted by grafting, by the",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.453676+00:00"
+}

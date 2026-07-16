@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "4506414",
+  "source_fingerprint": "588ea671c7562a45831a254ed03f4e2d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4506414"
+  ],
+  "key_phrases": [
+    "blood",
+    "pressure",
+    "incidence",
+    "twelve",
+    "cardiovascular",
+    "diseases",
+    "lifetime",
+    "risks"
+  ],
+  "summary_1l": "BACKGROUND The associations of blood press",
+  "query_hits": [],
+  "embed_text": "4506414 Blood pressure and incidence of twelve cardiovascular diseases: lifetime risks, healthy life-years lost, and age-specific associations in 1·25 million people science scifact BACKGROUND The associations of blood pressure with the different manifestations of incident cardiovascular disease in a contemporary population have not been compared. In this study, we aimed to analyse the associations of blood pressure… 4506414 blood pressure incidence twelve cardiovascular diseases lifetime risks BACKGROUND The associations of blood press Blood pressure and incidence of twelve cardiovascular diseases: lifetime risks, healthy life-years lost, and age-specific associations in 1·25 million people BACKGROUND The associations of blood pressure with the different manifestations of incident cardiovascular disease in a contemporary population have not been compared. In this study, we aimed to analyse the associations of blood pressure with 12 different presentations of cardiovascular disease. METHODS We used linked electronic health records from 1997 to 2010 in the CALIBER (CArdiovascular research using LInked Bespoke studies and Electronic health Records) programme to assemble a cohort of 1·25 million patients, 30 years of age or older and initially free from cardiovascular disease, a fifth of whom received blood pressure-lowering",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.106923+00:00"
+}

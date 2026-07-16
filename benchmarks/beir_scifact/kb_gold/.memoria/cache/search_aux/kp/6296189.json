@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6296189",
+  "source_fingerprint": "7dd9c37d652efa60d87dc3e83c31f869",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6296189",
+    "loss,-trauma,-and-human-resilience:-have-we-underestimated-the-human-capacity-to-thrive-after-extremely-aversive-events?"
+  ],
+  "key_phrases": [
+    "loss",
+    "trauma",
+    "human",
+    "resilience",
+    "have",
+    "we",
+    "underestimated",
+    "capacity"
+  ],
+  "summary_1l": "Loss, trauma, and human resilience: have we underestimated the human capacity to thrive after extremely aversive events?",
+  "query_hits": [],
+  "embed_text": "6296189 Loss, trauma, and human resilience: have we underestimated the human capacity to thrive after extremely aversive events? science scifact Many people are exposed to loss or potentially traumatic events at some point in their lives, and yet they continue to have positive emotional experiences and show only minor and transient disruptions in their ability to function.… 6296189 loss,-trauma,-and-human-resilience:-have-we-underestimated-the-human-capacity-to-thrive-after-extremely-aversive-events? loss trauma human resilience have we underestimated capacity Loss, trauma, and human resilience: have we underestimated the human capacity to thrive after extremely aversive events? Loss, trauma, and human resilience: have we underestimated the human capacity to thrive after extremely aversive events? Many people are exposed to loss or potentially traumatic events at some point in their lives, and yet they continue to have positive emotional experiences and show only minor and transient disruptions in their ability to function. Unfortunately, because much of psychology's knowledge about how adults cope with loss or trauma has come from individuals who sought treatment or exhibited great distress, loss and trauma theorists have often viewed this type of resilience as either rare or pathological. The author challenges these assumptions by reviewing evidence that resilience represents a distinct trajectory from the process of recovery, that resilience in the face of loss",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.476864+00:00"
+}

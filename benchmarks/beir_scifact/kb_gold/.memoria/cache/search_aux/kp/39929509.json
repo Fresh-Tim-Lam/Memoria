@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "39929509",
+  "source_fingerprint": "38a015d37279293e46b50efeeb282eb3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "39929509",
+    "the-wilms-tumour-suppressor-protein-wt1-(+kts-isoform)-binds-alpha-actinin-1-mrna-via-its-zinc-finger-domain."
+  ],
+  "key_phrases": [
+    "wilms",
+    "tumour",
+    "suppressor",
+    "protein",
+    "wt1",
+    "kts",
+    "isoform",
+    "binds"
+  ],
+  "summary_1l": "The Wilms tumour suppressor protein WT1 (+KTS isoform) binds alpha-actinin 1 mRNA via its zinc-finger domain.",
+  "query_hits": [],
+  "embed_text": "39929509 The Wilms tumour suppressor protein WT1 (+KTS isoform) binds alpha-actinin 1 mRNA via its zinc-finger domain. science scifact Mutations in WT1 are associated with developmental syndromes that affect the urogenital system and neoplasms, including Wilms tumour, acute myeloid leukemia, and breast and prostate cancers. The WT1 protein belongs to the early growth… 39929509 the-wilms-tumour-suppressor-protein-wt1-(+kts-isoform)-binds-alpha-actinin-1-mrna-via-its-zinc-finger-domain. wilms tumour suppressor protein wt1 kts isoform binds The Wilms tumour suppressor protein WT1 (+KTS isoform) binds alpha-actinin 1 mRNA via its zinc-finger domain. The Wilms tumour suppressor protein WT1 (+KTS isoform) binds alpha-actinin 1 mRNA via its zinc-finger domain. Mutations in WT1 are associated with developmental syndromes that affect the urogenital system and neoplasms, including Wilms tumour, acute myeloid leukemia, and breast and prostate cancers. The WT1 protein belongs to the early growth response family of zinc-finger transcription factors. Uniquely to WT1, an evolutionarily conserved alternative splice event inserts the tripeptide KTS, between zinc fingers 3 and 4. Whereas -KTS isoforms bind DNA and activate or repress transcription, +KTS isoforms bind DNA less efficiently and interact with splice factors and RNA in vitro and in vivo. Although candidate DNA targets have been found, physiological mRNA targets are yet to be defined. We",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.091226+00:00"
+}

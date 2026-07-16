@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8250852",
+  "source_fingerprint": "5d8c71db745b6fb8381b3fddb9ed5dd3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8250852",
+    "replisome-stall-events-have-shaped-the-distribution-of-replication-origins-in-the-genomes-of-yeasts"
+  ],
+  "key_phrases": [
+    "replisome",
+    "stall",
+    "events",
+    "have",
+    "shaped",
+    "distribution",
+    "replication",
+    "origins"
+  ],
+  "summary_1l": "During S phase, the entire genome must be precisely duplicated, with no sections of DNA left unrepli",
+  "query_hits": [],
+  "embed_text": "8250852 Replisome stall events have shaped the distribution of replication origins in the genomes of yeasts science scifact During S phase, the entire genome must be precisely duplicated, with no sections of DNA left unreplicated. Here, we develop a simple mathematical model to describe the probability of replication failing due to the irreversible stalling of… 8250852 replisome-stall-events-have-shaped-the-distribution-of-replication-origins-in-the-genomes-of-yeasts replisome stall events have shaped distribution replication origins During S phase, the entire genome must be precisely duplicated, with no sections of DNA left unrepli Replisome stall events have shaped the distribution of replication origins in the genomes of yeasts During S phase, the entire genome must be precisely duplicated, with no sections of DNA left unreplicated. Here, we develop a simple mathematical model to describe the probability of replication failing due to the irreversible stalling of replication forks. We show that the probability of complete genome replication is maximized if replication origins are evenly spaced, the largest inter-origin distances are minimized, and the end-most origins are positioned close to chromosome ends. We show that origin positions in the yeast Saccharomyces cerevisiae genome conform to all three predictions thereby maximizing the probability of complete replication if replication forks stall. Origin positions",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.192558+00:00"
+}

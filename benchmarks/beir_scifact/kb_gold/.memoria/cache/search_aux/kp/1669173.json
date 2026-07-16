@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1669173",
+  "source_fingerprint": "b674fdd2904733f0365c92df31e0e0e7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1669173",
+    "the-vti-family-of-snare-proteins-is-necessary-for-plant-viability-and-mediates-different-protein-transport-pathways."
+  ],
+  "key_phrases": [
+    "vti",
+    "family",
+    "snare",
+    "proteins",
+    "necessary",
+    "plant",
+    "viability",
+    "mediates"
+  ],
+  "summary_1l": "The VTI family of SNARE proteins is necessary for plant viability and mediates different protein transport pathways.",
+  "query_hits": [],
+  "embed_text": "1669173 The VTI family of SNARE proteins is necessary for plant viability and mediates different protein transport pathways. science scifact The Arabidopsis genome contains a family of v-SNAREs: VTI11, VTI12, and VTI13. Only VTI11 and VTI12 are expressed at appreciable levels. Although these two proteins are 60% identical, they complement different transport pathways when… 1669173 the-vti-family-of-snare-proteins-is-necessary-for-plant-viability-and-mediates-different-protein-transport-pathways. vti family snare proteins necessary plant viability mediates The VTI family of SNARE proteins is necessary for plant viability and mediates different protein transport pathways. The VTI family of SNARE proteins is necessary for plant viability and mediates different protein transport pathways. The Arabidopsis genome contains a family of v-SNAREs: VTI11, VTI12, and VTI13. Only VTI11 and VTI12 are expressed at appreciable levels. Although these two proteins are 60% identical, they complement different transport pathways when expressed in the yeast vti1 mutant. VTI11 was identified recently as the mutated gene in the shoot gravitropic mutant zig. Here, we show that the vti11 zig mutant has defects in vascular patterning and auxin transport. An Arabidopsis T-DNA insertion mutant, vti12, had a normal phenotype under nutrient-rich growth conditions. However, under nutrient-poor conditions, vti12 showed an accelerated senescence phenotype, suggesting that VTI12 may play",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.643084+00:00"
+}

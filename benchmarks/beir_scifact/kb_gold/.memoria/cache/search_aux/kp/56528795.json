@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "56528795",
+  "source_fingerprint": "df92307d877019f2e9fba6cfbbf1befa",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "56528795",
+    "omi/htra2-participates-in-age-related-autophagic-deficiency-in-rat-liver"
+  ],
+  "key_phrases": [
+    "omi",
+    "htra2",
+    "participates",
+    "age",
+    "related",
+    "autophagic",
+    "deficiency",
+    "rat"
+  ],
+  "summary_1l": "Liver is a vital organ with many important functions, and the maintenance of normal hepatic function is necessary for health.",
+  "query_hits": [],
+  "embed_text": "56528795 Omi/HtrA2 Participates in Age-Related Autophagic Deficiency in Rat Liver science scifact Liver is a vital organ with many important functions, and the maintenance of normal hepatic function is necessary for health. As an essential mechanism for maintaining cellular homeostasis, autophagy plays an important role in ensuring… 56528795 omi/htra2-participates-in-age-related-autophagic-deficiency-in-rat-liver omi htra2 participates age related autophagic deficiency rat Liver is a vital organ with many important functions, and the maintenance of normal hepatic function is necessary for health. Omi/HtrA2 Participates in Age-Related Autophagic Deficiency in Rat Liver Liver is a vital organ with many important functions, and the maintenance of normal hepatic function is necessary for health. As an essential mechanism for maintaining cellular homeostasis, autophagy plays an important role in ensuring normal organ function. Studies have indicated that the degeneration of hepatic function is associated with autophagic deficiency in aging liver. However, the underlying mechanisms still remain unclear. The serine protease Omi/HtrA2 belongs to the HtrA family and promotes apoptosis through either the caspase-dependent or caspase-independent pathway. Mice lacking Omi/HtrA2 exhibited progeria symptoms (premature aging), which were similar to the characteristics of autophagic insufficiency.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.826031+00:00"
+}

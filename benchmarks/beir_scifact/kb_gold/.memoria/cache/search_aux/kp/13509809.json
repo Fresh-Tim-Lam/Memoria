@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13509809",
+  "source_fingerprint": "8870b11cba28fdd6044d4900d04c18f2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13509809",
+    "matrix-embedded-osteocytes-regulate-mobilization-of-hematopoietic-stem/progenitor-cells."
+  ],
+  "key_phrases": [
+    "matrix",
+    "embedded",
+    "osteocytes",
+    "regulate",
+    "mobilization",
+    "hematopoietic",
+    "stem",
+    "progenitor"
+  ],
+  "summary_1l": "Matrix-embedded osteocytes regulate mobilization of hematopoietic stem/progenitor cells.",
+  "query_hits": [],
+  "embed_text": "13509809 Matrix-embedded osteocytes regulate mobilization of hematopoietic stem/progenitor cells. science scifact The bone marrow (BM) niche comprises multiple cell types that regulate hematopoietic stem/progenitor cell (HSPC) migration out of the niche and into the circulation. Here, we demonstrate that osteocytes, the major cellular component of… 13509809 matrix-embedded-osteocytes-regulate-mobilization-of-hematopoietic-stem/progenitor-cells. matrix embedded osteocytes regulate mobilization hematopoietic stem progenitor Matrix-embedded osteocytes regulate mobilization of hematopoietic stem/progenitor cells. Matrix-embedded osteocytes regulate mobilization of hematopoietic stem/progenitor cells. The bone marrow (BM) niche comprises multiple cell types that regulate hematopoietic stem/progenitor cell (HSPC) migration out of the niche and into the circulation. Here, we demonstrate that osteocytes, the major cellular component of mature bone, are regulators of HSPC egress. Granulocyte colony-stimulating factor (G-CSF), used clinically to mobilize HSPCs, induces changes in the morphology and gene expression of the osteocytic network that precedes changes in osteoblasts. This rapid response is likely under control of the sympathetic nervous system, since osteocytes express the β2-adrenergic receptor and surgical sympathectomy prevents it. Mice with targeted ablation of osteocytes or a disrupted ost",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.450998+00:00"
+}

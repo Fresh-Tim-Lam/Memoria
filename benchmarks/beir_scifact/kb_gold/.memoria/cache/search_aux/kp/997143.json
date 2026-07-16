@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "997143",
+  "source_fingerprint": "050a1ee94d3413d9ea4f522706c03595",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "997143",
+    "electromagnetic-interference-from-radio-frequency-identification-inducing-potentially-hazardous-incidents-in-critical-care-medical-equipment."
+  ],
+  "key_phrases": [
+    "electromagnetic",
+    "interference",
+    "from",
+    "radio",
+    "frequency",
+    "identification",
+    "inducing",
+    "potentially"
+  ],
+  "summary_1l": "Electromagnetic interference from radio frequency identification inducing potentially hazardous incidents in critical care medical equipment.",
+  "query_hits": [],
+  "embed_text": "997143 Electromagnetic interference from radio frequency identification inducing potentially hazardous incidents in critical care medical equipment. science scifact CONTEXT Health care applications of autoidentification technologies, such as radio frequency identification (RFID), have been proposed to improve patient safety and also the tracking and tracing of medical equipment. However,… 997143 electromagnetic-interference-from-radio-frequency-identification-inducing-potentially-hazardous-incidents-in-critical-care-medical-equipment. electromagnetic interference from radio frequency identification inducing potentially Electromagnetic interference from radio frequency identification inducing potentially hazardous incidents in critical care medical equipment. Electromagnetic interference from radio frequency identification inducing potentially hazardous incidents in critical care medical equipment. CONTEXT Health care applications of autoidentification technologies, such as radio frequency identification (RFID), have been proposed to improve patient safety and also the tracking and tracing of medical equipment. However, electromagnetic interference (EMI) by RFID on medical devices has never been reported. OBJECTIVE To assess and classify incidents of EMI by RFID on critical care equipment. DESIGN AND SETTING Without a patient being connected, EMI by 2 RFID systems (active 125 kHz and passive 868 MHz) was assessed under controlled conditions during May 2006, in the proximity of 41 medical devices (in 17 categories, 22 different manufacturers) at",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:06.191490+00:00"
+}

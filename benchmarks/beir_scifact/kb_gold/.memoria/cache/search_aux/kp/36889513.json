@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36889513",
+  "source_fingerprint": "2357dc9b2f667cdb5de717f13a3d6f2b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36889513",
+    "bile-acids:-natural-ligands-for-an-orphan-nuclear-receptor."
+  ],
+  "key_phrases": [
+    "bile",
+    "acids",
+    "natural",
+    "ligands",
+    "orphan",
+    "nuclear",
+    "receptor",
+    "regulate"
+  ],
+  "summary_1l": "Bile acids: natural ligands for an orphan nuclear receptor.",
+  "query_hits": [],
+  "embed_text": "36889513 Bile acids: natural ligands for an orphan nuclear receptor. science scifact Bile acids regulate the transcription of genes that control cholesterol homeostasis through molecular mechanisms that are poorly understood. Physiological concentrations of free and conjugated chenodeoxycholic acid, lithocholic acid, and… 36889513 bile-acids:-natural-ligands-for-an-orphan-nuclear-receptor. bile acids natural ligands orphan nuclear receptor regulate Bile acids: natural ligands for an orphan nuclear receptor. Bile acids: natural ligands for an orphan nuclear receptor. Bile acids regulate the transcription of genes that control cholesterol homeostasis through molecular mechanisms that are poorly understood. Physiological concentrations of free and conjugated chenodeoxycholic acid, lithocholic acid, and deoxycholic acid activated the farnesoid X receptor (FXR; NR1H4), an orphan nuclear receptor. As ligands, these bile acids and their conjugates modulated interaction of FXR with a peptide derived from steroid receptor coactivator 1. These results provide evidence for a nuclear bile acid signaling pathway that may regulate cholesterol homeostasis.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:43.818170+00:00"
+}

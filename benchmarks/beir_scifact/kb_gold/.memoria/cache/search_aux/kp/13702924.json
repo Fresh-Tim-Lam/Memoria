@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13702924",
+  "source_fingerprint": "8f8f9bdc7e5e276899afe5d06e7219ba",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13702924",
+    "the-developmental-transcriptome-of-the-mosquito-aedes-aegypti,-an-invasive-species-and-major-arbovirus-vector"
+  ],
+  "key_phrases": [
+    "developmental",
+    "transcriptome",
+    "mosquito",
+    "aedes",
+    "aegypti",
+    "invasive",
+    "species",
+    "major"
+  ],
+  "summary_1l": "Mosquitoes are vectors of a number of important human and animal diseases.",
+  "query_hits": [],
+  "embed_text": "13702924 The Developmental Transcriptome of the Mosquito Aedes aegypti, an Invasive Species and Major Arbovirus Vector science scifact Mosquitoes are vectors of a number of important human and animal diseases. The development of novel vector control strategies requires a thorough understanding of mosquito biology. To facilitate this, we used RNA-seq to identify novel… 13702924 the-developmental-transcriptome-of-the-mosquito-aedes-aegypti,-an-invasive-species-and-major-arbovirus-vector developmental transcriptome mosquito aedes aegypti invasive species major Mosquitoes are vectors of a number of important human and animal diseases. The Developmental Transcriptome of the Mosquito Aedes aegypti, an Invasive Species and Major Arbovirus Vector Mosquitoes are vectors of a number of important human and animal diseases. The development of novel vector control strategies requires a thorough understanding of mosquito biology. To facilitate this, we used RNA-seq to identify novel genes and provide the first high-resolution view of the transcriptome throughout development and in response to blood feeding in a mosquito vector of human disease, Aedes aegypti, the primary vector for Dengue and yellow fever. We characterized mRNA expression at 34 distinct time points throughout Aedes development, including adult somatic and germline tissues, by using polyA+ RNA-seq. We identify a total of 14,238 novel new transcribed regions corres",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.737264+00:00"
+}

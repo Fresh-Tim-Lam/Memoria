@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8671456",
+  "source_fingerprint": "69e92b664d1b673f2b3f643772d8647d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8671456",
+    "oncolytic-adenovirus-armed-with-il-24-inhibits-the-growth-of-breast-cancer-in-vitro-and-in-vivo"
+  ],
+  "key_phrases": [
+    "oncolytic",
+    "adenovirus",
+    "armed",
+    "with",
+    "il",
+    "24",
+    "inhibits",
+    "growth"
+  ],
+  "summary_1l": "BACKGROUND Interleukin-24 (IL-24) is a cytokine that belongs to the IL-10 family.",
+  "query_hits": [],
+  "embed_text": "8671456 Oncolytic adenovirus armed with IL-24 Inhibits the growth of breast cancer in vitro and in vivo science scifact BACKGROUND Interleukin-24 (IL-24) is a cytokine that belongs to the IL-10 family. It can selectively induce cancer cell apoptosis which has been utilized as a cancer gene therapy strategy. METHODS A recombinant type five adenovirus… 8671456 oncolytic-adenovirus-armed-with-il-24-inhibits-the-growth-of-breast-cancer-in-vitro-and-in-vivo oncolytic adenovirus armed with il 24 inhibits growth BACKGROUND Interleukin-24 (IL-24) is a cytokine that belongs to the IL-10 family. Oncolytic adenovirus armed with IL-24 Inhibits the growth of breast cancer in vitro and in vivo BACKGROUND Interleukin-24 (IL-24) is a cytokine that belongs to the IL-10 family. It can selectively induce cancer cell apoptosis which has been utilized as a cancer gene therapy strategy. METHODS A recombinant type five adenovirus containing IL-24 gene (designated CNHK600-IL24) was constructed, whose replication is activated only in tumor cells. The replication of CNHK600-IL24 in breast tumor cells and fibroblasts were assessed by TCID50 and MTT assay; the secretion of IL-24 was measured by ELISA and western blotting. The in vivo anti-tumor effect of CNHK600-IL24 was investigated in nude mice carrying orthotopic or metastatic breast tumor. RESULTS We observed that CNHK600-IL24 could replicate e",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.442494+00:00"
+}

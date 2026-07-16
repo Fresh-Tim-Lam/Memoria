@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8458567",
+  "source_fingerprint": "4bbde27b862b13b24b5e1cd8a1c7faec",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8458567",
+    "convergence-of-9-cis-retinoic-acid-and-peroxisome-proliferator-signalling-pathways-through-heterodimer-formation-of-their-receptors"
+  ],
+  "key_phrases": [
+    "convergence",
+    "cis",
+    "retinoic",
+    "acid",
+    "peroxisome",
+    "proliferator",
+    "signalling",
+    "pathways"
+  ],
+  "summary_1l": "PEROXISOMES are cytoplasmic organelles which are important in mammal",
+  "query_hits": [],
+  "embed_text": "8458567 Convergence of 9-cis retinoic acid and peroxisome proliferator signalling pathways through heterodimer formation of their receptors science scifact PEROXISOMES are cytoplasmic organelles which are important in mammals in modulation of lipid homeostasis, including the metabolism of long-chain fatty acids and conversion of cholesterol to bile salts (reviewed in refs 1 and 2).… 8458567 convergence-of-9-cis-retinoic-acid-and-peroxisome-proliferator-signalling-pathways-through-heterodimer-formation-of-their-receptors convergence cis retinoic acid peroxisome proliferator signalling pathways PEROXISOMES are cytoplasmic organelles which are important in mammal Convergence of 9-cis retinoic acid and peroxisome proliferator signalling pathways through heterodimer formation of their receptors PEROXISOMES are cytoplasmic organelles which are important in mammals in modulation of lipid homeostasis, including the metabolism of long-chain fatty acids and conversion of cholesterol to bile salts (reviewed in refs 1 and 2). Amphipathic carboxylates such as clofibric acid have been used in man as hypolipidaemic agents and in rodents they stimulate the proliferation of peroxisomes. These agents, termed peroxisome proliferators, and all-trans retinoic acid activate genes involved in peroxisomal-mediated β-oxidation of fatty acids1–4. Here we show that the receptor activated by peroxisome proliferators5 and the retinoid X receptor-α (ref. 6) form a heterodime",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.732783+00:00"
+}

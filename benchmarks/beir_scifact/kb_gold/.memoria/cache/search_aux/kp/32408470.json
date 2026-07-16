@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "32408470",
+  "source_fingerprint": "50fd07089a348ab2c289cda9aae57373",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "32408470"
+  ],
+  "key_phrases": [
+    "activation",
+    "ampk",
+    "adipocytes",
+    "essential",
+    "nicotine",
+    "induced",
+    "insulin",
+    "resistance"
+  ],
+  "summary_1l": "Cigarette smoking promotes body weight reduction in humans while paradoxically also promoting insulin re",
+  "query_hits": [],
+  "embed_text": "32408470 Activation of AMPKα2 in adipocytes is essential for nicotine-induced insulin resistance in vivo science scifact Cigarette smoking promotes body weight reduction in humans while paradoxically also promoting insulin resistance (IR) and hyperinsulinemia. However, the mechanisms behind these effects are unclear. Here we show that nicotine, a major… 32408470 activation ampk adipocytes essential nicotine induced insulin resistance Cigarette smoking promotes body weight reduction in humans while paradoxically also promoting insulin re Activation of AMPKα2 in adipocytes is essential for nicotine-induced insulin resistance in vivo Cigarette smoking promotes body weight reduction in humans while paradoxically also promoting insulin resistance (IR) and hyperinsulinemia. However, the mechanisms behind these effects are unclear. Here we show that nicotine, a major constituent of cigarette smoke, selectively activates AMP-activated protein kinase α2 (AMPKα2) in adipocytes, which in turn phosphorylates MAP kinase phosphatase-1 (MKP1) at serine 334, initiating its proteasome-dependent degradation. The nicotine-dependent reduction of MKP1 induces the aberrant activation of both p38 mitogen-activated protein kinase and c-Jun N-terminal kinase, leading to increased phosphorylation of insulin receptor substrate 1 (IRS1) at serine 30",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.513855+00:00"
+}

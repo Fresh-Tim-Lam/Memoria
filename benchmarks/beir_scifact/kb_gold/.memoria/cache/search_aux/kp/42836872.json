@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "42836872",
+  "source_fingerprint": "76764160b9e1bc46b9ba9eaa0357cd41",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "42836872",
+    "diverse-tumorigenic-pathways-in-ovarian-serous-carcinoma."
+  ],
+  "key_phrases": [
+    "diverse",
+    "tumorigenic",
+    "pathways",
+    "ovarian",
+    "serous",
+    "carcinoma",
+    "this",
+    "study"
+  ],
+  "summary_1l": "Diverse tumorigenic pathways in ovarian serous carcinoma.",
+  "query_hits": [],
+  "embed_text": "42836872 Diverse tumorigenic pathways in ovarian serous carcinoma. science scifact This study was undertaken to analyze genetic alterations in 108 sporadic serous ovarian neoplasms to elucidate ovarian serous carcinogenesis. Our results demonstrate that K-ras mutations occur in approximately 50% of serous borderline… 42836872 diverse-tumorigenic-pathways-in-ovarian-serous-carcinoma. diverse tumorigenic pathways ovarian serous carcinoma this study Diverse tumorigenic pathways in ovarian serous carcinoma. Diverse tumorigenic pathways in ovarian serous carcinoma. This study was undertaken to analyze genetic alterations in 108 sporadic serous ovarian neoplasms to elucidate ovarian serous carcinogenesis. Our results demonstrate that K-ras mutations occur in approximately 50% of serous borderline tumors (SBTs), non-invasive micropapillary serous carcinomas (MPSCs), and invasive micropapillary serous carcinomas, which represent a morphological continuum of tumor progression. Moreover, progressive increase in the degree of allelic imbalance of chromosomes 1p, 5q, 8p, 18q, 22q, and Xp was observed comparing serous borderline tumors to noninvasive and invasive micropapillary serous carcinomas. In contrast, high-grade (conventional serous carcinoma) tumors contained wild-type K-ras in all 23 cases s",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.274268+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20738970",
+  "source_fingerprint": "a6458b88fc038d01bdb65c546d09c2c3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20738970",
+    "non-receptor-tyrosine-kinase-etk-is-involved-in-the-apoptosis-of-small-cell-lung-cancer-cells."
+  ],
+  "key_phrases": [
+    "non",
+    "receptor",
+    "tyrosine",
+    "kinase",
+    "etk",
+    "involved",
+    "apoptosis",
+    "small"
+  ],
+  "summary_1l": "Non-receptor tyrosine kinase Etk is involved in the apoptosis of small cell lung cancer cells.",
+  "query_hits": [],
+  "embed_text": "20738970 Non-receptor tyrosine kinase Etk is involved in the apoptosis of small cell lung cancer cells. science scifact Epithelial and endothelial tyrosine kinase (Etk), also known as Bmx (bone marrow X kinase) plays an important role in apoptosis of epithelial cells. The goal of this study was to investigate whether Etk is involved in apoptosis of small… 20738970 non-receptor-tyrosine-kinase-etk-is-involved-in-the-apoptosis-of-small-cell-lung-cancer-cells. non receptor tyrosine kinase etk involved apoptosis small Non-receptor tyrosine kinase Etk is involved in the apoptosis of small cell lung cancer cells. Non-receptor tyrosine kinase Etk is involved in the apoptosis of small cell lung cancer cells. Epithelial and endothelial tyrosine kinase (Etk), also known as Bmx (bone marrow X kinase) plays an important role in apoptosis of epithelial cells. The goal of this study was to investigate whether Etk is involved in apoptosis of small cell lung cancer (SCLC) cells and correlated with the expression levels of apoptosis-associated proteins such as Bcl-2, Bcl-X(L) and p53. One hundred and seventy-one cases of lung cancer specimens including seventy-one SCLCs and one hundred NSCLCs were immunostained for Etk, Bcl-2, Bcl-X(L) and p53. Parental SCLC H446 cell line, and its subline (H446-Etk) that overexpresses Etk, were used to study the role of Etk in apoptosis induced by doxorubicin. It was found t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.851781+00:00"
+}

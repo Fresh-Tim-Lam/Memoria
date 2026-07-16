@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23702805",
+  "source_fingerprint": "62002c69131201639c29562af8ffbe31",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23702805",
+    "vesicular-trafficking-of-semaphorin-3a-is-activity-dependent-and-differs-between-axons-and-dendrites."
+  ],
+  "key_phrases": [
+    "vesicular",
+    "trafficking",
+    "semaphorin",
+    "3a",
+    "activity",
+    "dependent",
+    "differs",
+    "between"
+  ],
+  "summary_1l": "Vesicular trafficking of semaphorin 3A is activity-dependent and differs between axons and dendrites.",
+  "query_hits": [],
+  "embed_text": "23702805 Vesicular trafficking of semaphorin 3A is activity-dependent and differs between axons and dendrites. science scifact Secreted semaphorins act as guidance cues in the developing nervous system and may have additional functions in mature neurons. How semaphorins are transported and secreted by neurons is poorly understood. We find that endogenous… 23702805 vesicular-trafficking-of-semaphorin-3a-is-activity-dependent-and-differs-between-axons-and-dendrites. vesicular trafficking semaphorin 3a activity dependent differs between Vesicular trafficking of semaphorin 3A is activity-dependent and differs between axons and dendrites. Vesicular trafficking of semaphorin 3A is activity-dependent and differs between axons and dendrites. Secreted semaphorins act as guidance cues in the developing nervous system and may have additional functions in mature neurons. How semaphorins are transported and secreted by neurons is poorly understood. We find that endogenous semaphorin 3A (Sema3A) displays a punctate distribution in axons and dendrites of cultured cortical neurons. GFP-Sema3A shows a similar distribution and co-localizes with secretory vesicle cargo proteins. Live-cell imaging reveals highly dynamic trafficking of GFP-Sema3A vesicles with distinct properties in axons and dendrites regarding directionality, velocity, mobility and pausing time. In axons, most GFP-Sema3A vesicles move fast without interruption, almost ex",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.999394+00:00"
+}

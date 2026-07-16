@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25001628",
+  "source_fingerprint": "1c46f97330915d4bdc67b799eb4d049e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25001628",
+    "comparative-gene-expression-profiling-of-in-vitro-differentiated-megakaryocytes-and-erythroblasts-identifies-novel-activatory-and-inhibitory-platelet-membrane-proteins."
+  ],
+  "key_phrases": [
+    "comparative",
+    "gene",
+    "expression",
+    "profiling",
+    "vitro",
+    "differentiated",
+    "megakaryocytes",
+    "erythroblasts"
+  ],
+  "summary_1l": "Comparative gene expression profiling of in vitro differentiated megakaryocytes and erythroblasts identifies novel activatory and inhibitory platelet membrane proteins.",
+  "query_hits": [],
+  "embed_text": "25001628 Comparative gene expression profiling of in vitro differentiated megakaryocytes and erythroblasts identifies novel activatory and inhibitory platelet membrane proteins. science scifact To identify previously unknown platelet receptors we compared the transcriptomes of in vitro differentiated megakaryocytes (MKs) and erythroblasts (EBs). RNA was obtained from purified, biologically paired MK and EB cultures and compared… 25001628 comparative-gene-expression-profiling-of-in-vitro-differentiated-megakaryocytes-and-erythroblasts-identifies-novel-activatory-and-inhibitory-platelet-membrane-proteins. comparative gene expression profiling vitro differentiated megakaryocytes erythroblasts Comparative gene expression profiling of in vitro differentiated megakaryocytes and erythroblasts identifies novel activatory and inhibitory platelet membrane proteins. Comparative gene expression profiling of in vitro differentiated megakaryocytes and erythroblasts identifies novel activatory and inhibitory platelet membrane proteins. To identify previously unknown platelet receptors we compared the transcriptomes of in vitro differentiated megakaryocytes (MKs) and erythroblasts (EBs). RNA was obtained from purified, biologically paired MK and EB cultures and compared using cDNA microarrays. Bioinformatical analysis of MK-up-regulated genes identified 151 transcripts encoding transmembrane domain-containing proteins. Although many of these were known platelet genes, a number of previously unidentified or poorly characterized transcripts were also detected. Many of these transcripts, including G6b, G6f, LRRC32, LAT2, and the G protein-coupled receptor SUC",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.765480+00:00"
+}

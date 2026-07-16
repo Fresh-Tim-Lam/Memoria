@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11902109",
+  "source_fingerprint": "5f3f236bfbdde7be950606b45251472b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11902109",
+    "direct-sensing-of-systemic-and-nutritional-signals-by-hematopoietic-progenitors-in-drosophila"
+  ],
+  "key_phrases": [
+    "direct",
+    "sensing",
+    "systemic",
+    "nutritional",
+    "signals",
+    "by",
+    "hematopoietic",
+    "progenitors"
+  ],
+  "summary_1l": "The Drosophila lymph gland is a haematopoietic organ in which progenitor cells, which are most akin to the",
+  "query_hits": [],
+  "embed_text": "11902109 Direct sensing of systemic and nutritional signals by hematopoietic progenitors in Drosophila science scifact The Drosophila lymph gland is a haematopoietic organ in which progenitor cells, which are most akin to the common myeloid progenitor in mammals, proliferate and differentiate into three types of mature cell--plasmatocytes, crystal cells… 11902109 direct-sensing-of-systemic-and-nutritional-signals-by-hematopoietic-progenitors-in-drosophila direct sensing systemic nutritional signals by hematopoietic progenitors The Drosophila lymph gland is a haematopoietic organ in which progenitor cells, which are most akin to the Direct sensing of systemic and nutritional signals by hematopoietic progenitors in Drosophila The Drosophila lymph gland is a haematopoietic organ in which progenitor cells, which are most akin to the common myeloid progenitor in mammals, proliferate and differentiate into three types of mature cell--plasmatocytes, crystal cells and lamellocytes--the functions of which are reminiscent of mammalian myeloid cells. During the first and early second instars of larval development, the lymph gland contains only progenitors, whereas in the third instar, a medial region of the primary lobe of the lymph gland called the medullary zone contains these progenitors, and maturing blood cells are found juxtaposed in a peripheral region designated the cortical zone. A third group of cells referred to as t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:07.364754+00:00"
+}

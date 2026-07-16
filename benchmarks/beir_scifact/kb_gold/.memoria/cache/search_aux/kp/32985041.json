@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "32985041",
+  "source_fingerprint": "f63a8afa7a319b8ff2ca9ee2a1cce3cf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "32985041",
+    "protein-s-nitrosylation:-a-physiological-signal-for-neuronal-nitric-oxide"
+  ],
+  "key_phrases": [
+    "protein",
+    "nitrosylation",
+    "physiological",
+    "signal",
+    "neuronal",
+    "nitric",
+    "oxide",
+    "no"
+  ],
+  "summary_1l": "Nitric oxide (NO) has been linked to numerous physiological and pathophysiological events that are not readily explained by th",
+  "query_hits": [],
+  "embed_text": "32985041 Protein S-nitrosylation: a physiological signal for neuronal nitric oxide science scifact Nitric oxide (NO) has been linked to numerous physiological and pathophysiological events that are not readily explained by the well established effects of NO on soluble guanylyl cyclase. Exogenous NO S-nitrosylates cysteine residues in… 32985041 protein-s-nitrosylation:-a-physiological-signal-for-neuronal-nitric-oxide protein nitrosylation physiological signal neuronal nitric oxide no Nitric oxide (NO) has been linked to numerous physiological and pathophysiological events that are not readily explained by th Protein S-nitrosylation: a physiological signal for neuronal nitric oxide Nitric oxide (NO) has been linked to numerous physiological and pathophysiological events that are not readily explained by the well established effects of NO on soluble guanylyl cyclase. Exogenous NO S-nitrosylates cysteine residues in proteins, but whether this is an important function of endogenous NO is unclear. Here, using a new proteomic approach, we identify a population of proteins that are endogenously S-nitrosylated, and demonstrate the loss of this modification in mice harbouring a genomic deletion of neuronal NO synthase (nNOS). Targets of NO include metabolic, structural and signalling proteins that may be effectors for neuronally generated NO. These findings establish protein S-nitrosylation as a physio",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.129162+00:00"
+}

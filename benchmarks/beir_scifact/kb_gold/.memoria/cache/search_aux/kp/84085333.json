@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "84085333",
+  "source_fingerprint": "b662b31d9a2d7c829138c2412ea1981e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "84085333",
+    "the-growth-and-sporulation-of-the-benign-and-malignant-tertian-malarial-parasites-in-the-culture-tube-and-in-the-human-host"
+  ],
+  "key_phrases": [
+    "growth",
+    "sporulation",
+    "benign",
+    "malignant",
+    "tertian",
+    "malarial",
+    "parasites",
+    "culture"
+  ],
+  "summary_1l": "Researches on the cultivation of the parasites of malaria in Liverpool were",
+  "query_hits": [],
+  "embed_text": "84085333 The Growth and Sporulation of the Benign and Malignant Tertian Malarial Parasites in the Culture Tube and in the Human Host science scifact Researches on the cultivation of the parasites of malaria in Liverpool were commenced some time ago at my suggestion by Dr. Sinton, and then, with better success, by Drs. J. G. Thomson and McLellan, and by Dr. D. Thomson. We are greatly… 84085333 the-growth-and-sporulation-of-the-benign-and-malignant-tertian-malarial-parasites-in-the-culture-tube-and-in-the-human-host growth sporulation benign malignant tertian malarial parasites culture Researches on the cultivation of the parasites of malaria in Liverpool were The Growth and Sporulation of the Benign and Malignant Tertian Malarial Parasites in the Culture Tube and in the Human Host Researches on the cultivation of the parasites of malaria in Liverpool were commenced some time ago at my suggestion by Dr. Sinton, and then, with better success, by Drs. J. G. Thomson and McLellan, and by Dr. D. Thomson. We are greatly obliged to Sir Edwin Durning-Lawrence, Bart., for giving us the services of Dr. J. G. Thomson for this important enquiry.— Ronald Ross, 21st May, 1913.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.542466+00:00"
+}

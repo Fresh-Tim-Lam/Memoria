@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17708753",
+  "source_fingerprint": "87883a84edd41d43f03d64e75641ee0a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17708753",
+    "myeloid-cells-expressing-vegf-and-arginase-1-following-uptake-of-damaged-retinal-pigment-epithelium-suggests-potential-mechanism-that-drives-the-onset-of-choroidal-angiogenesis-in-mice"
+  ],
+  "key_phrases": [
+    "myeloid",
+    "cells",
+    "expressing",
+    "vegf",
+    "arginase",
+    "following",
+    "uptake",
+    "damaged"
+  ],
+  "summary_1l": "Whilst data rec",
+  "query_hits": [],
+  "embed_text": "17708753 Myeloid Cells Expressing VEGF and Arginase-1 Following Uptake of Damaged Retinal Pigment Epithelium Suggests Potential Mechanism That Drives the Onset of Choroidal Angiogenesis in Mice science scifact Whilst data recognise both myeloid cell accumulation during choroidal neovascularisation (CNV) as well as complement activation, none of the data has presented a clear explanation for the angiogenic drive that promotes pathological… 17708753 myeloid-cells-expressing-vegf-and-arginase-1-following-uptake-of-damaged-retinal-pigment-epithelium-suggests-potential-mechanism-that-drives-the-onset-of-choroidal-angiogenesis-in-mice myeloid cells expressing vegf arginase following uptake damaged Whilst data rec Myeloid Cells Expressing VEGF and Arginase-1 Following Uptake of Damaged Retinal Pigment Epithelium Suggests Potential Mechanism That Drives the Onset of Choroidal Angiogenesis in Mice Whilst data recognise both myeloid cell accumulation during choroidal neovascularisation (CNV) as well as complement activation, none of the data has presented a clear explanation for the angiogenic drive that promotes pathological angiogenesis. One possibility that is a pre-eminent drive is a specific and early conditioning and activation of the myeloid cell infiltrate. Using a laser-induced CNV murine model, we have identified that disruption of retinal pigment epithelium (RPE) and Bruch's membrane resulted in an early recruitment of macrophages derived from monocytes and microglia, prior to angiogenesis a",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.190685+00:00"
+}

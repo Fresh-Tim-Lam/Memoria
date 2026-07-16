@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5551138",
+  "source_fingerprint": "ebd6709d90ebb5213bdf39993ee5885f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5551138",
+    "nortriptyline-for-smoking-cessation:-a-review."
+  ],
+  "key_phrases": [
+    "nortriptyline",
+    "smoking",
+    "cessation",
+    "review",
+    "this",
+    "article",
+    "reviews",
+    "efficacy"
+  ],
+  "summary_1l": "Nortriptyline for smoking cessation: a review.",
+  "query_hits": [],
+  "embed_text": "5551138 Nortriptyline for smoking cessation: a review. science scifact This article reviews the efficacy of nortriptyline for smoking cessation based on a meta-analysis of the Cochrane Library. Six placebo-controlled trials have shown nortriptyline (75-100 mg) doubles quit rates (OR = 2.1). Between 4% and 12%… 5551138 nortriptyline-for-smoking-cessation:-a-review. nortriptyline smoking cessation review this article reviews efficacy Nortriptyline for smoking cessation: a review. Nortriptyline for smoking cessation: a review. This article reviews the efficacy of nortriptyline for smoking cessation based on a meta-analysis of the Cochrane Library. Six placebo-controlled trials have shown nortriptyline (75-100 mg) doubles quit rates (OR = 2.1). Between 4% and 12% of smokers dropped out because of adverse events, but no serious adverse events occurred. The efficacy of nortriptyline did not appear to be related to its antidepressant actions. Nortriptyline is an efficacious aid to smoking cessation with a magnitude of effect similar to that for bupropion and nicotine replacement therapies. Whether nortriptyline produces serious side effects at these doses in healthy, nondepressed smokers remains unclear because it has been tested in only 500 smokers. The finding that no",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.574393+00:00"
+}

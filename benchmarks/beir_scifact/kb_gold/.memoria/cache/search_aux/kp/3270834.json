@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3270834",
+  "source_fingerprint": "32057a82c894f05d2211f807f87838e2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3270834",
+    "a-sensitive-mass-spectrometry-platform-identifies-metabolic-changes-of-life-history-traits-in-c.-elegans"
+  ],
+  "key_phrases": [
+    "sensitive",
+    "mass",
+    "spectrometry",
+    "platform",
+    "identifies",
+    "metabolic",
+    "changes",
+    "life"
+  ],
+  "summary_1l": "A sensitive mass spectrometry platform identifies metabolic changes of life history traits in C.",
+  "query_hits": [],
+  "embed_text": "3270834 A sensitive mass spectrometry platform identifies metabolic changes of life history traits in C. elegans science scifact Abnormal nutrient metabolism is a hallmark of aging, and the underlying genetic and nutritional framework is rapidly being uncovered, particularly using C. elegans as a model. However, the direct metabolic consequences of perturbations in… 3270834 a-sensitive-mass-spectrometry-platform-identifies-metabolic-changes-of-life-history-traits-in-c.-elegans sensitive mass spectrometry platform identifies metabolic changes life A sensitive mass spectrometry platform identifies metabolic changes of life history traits in C. A sensitive mass spectrometry platform identifies metabolic changes of life history traits in C. elegans Abnormal nutrient metabolism is a hallmark of aging, and the underlying genetic and nutritional framework is rapidly being uncovered, particularly using C. elegans as a model. However, the direct metabolic consequences of perturbations in life history of C. elegans remain to be clarified. Based on recent advances in the metabolomics field, we optimized and validated a sensitive mass spectrometry (MS) platform for identification of major metabolite classes in worms and applied it to study age and diet related changes. Using this platform that allowed detection of over 600 metabolites in a sample of 2500 worms, we observed marked changes in fatty acids, amino acids and phospholipids durin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.748087+00:00"
+}

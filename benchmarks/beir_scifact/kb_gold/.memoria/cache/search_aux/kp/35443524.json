@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "35443524",
+  "source_fingerprint": "45b84f6ca5c4a565d0b9fbd3595bbeb9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "35443524",
+    "the-therapeutic-promise-of-the-cancer-stem-cell-concept."
+  ],
+  "key_phrases": [
+    "therapeutic",
+    "promise",
+    "cancer",
+    "stem",
+    "cell",
+    "concept",
+    "cells",
+    "cscs"
+  ],
+  "summary_1l": "The therapeutic promise of the cancer stem cell concept.",
+  "query_hits": [],
+  "embed_text": "35443524 The therapeutic promise of the cancer stem cell concept. science scifact Cancer stem cells (CSCs) are a subpopulation of tumor cells that selectively possess tumor initiation and self-renewal capacity and the ability to give rise to bulk populations of nontumorigenic cancer cell progeny through differentiation.… 35443524 the-therapeutic-promise-of-the-cancer-stem-cell-concept. therapeutic promise cancer stem cell concept cells cscs The therapeutic promise of the cancer stem cell concept. The therapeutic promise of the cancer stem cell concept. Cancer stem cells (CSCs) are a subpopulation of tumor cells that selectively possess tumor initiation and self-renewal capacity and the ability to give rise to bulk populations of nontumorigenic cancer cell progeny through differentiation. As we discuss here, they have been prospectively identified in several human malignancies, and their relative abundance in clinical cancer specimens has been correlated with malignant disease progression in human patients. Furthermore, recent findings suggest that clinical cancer progression driven by CSCs may contribute to the failure of existing therapies to consistently eradicate malignant tumors. Therefore, CSC-directed therapeutic approaches might represent translationally relevant strategies",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.237258+00:00"
+}

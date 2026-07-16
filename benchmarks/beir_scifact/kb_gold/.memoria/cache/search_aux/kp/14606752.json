@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14606752",
+  "source_fingerprint": "4b39e445749b4a9f52449f7781601e87",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14606752",
+    "tricyclic-antidepressants-and-headaches:-systematic-review-and-meta-analysis"
+  ],
+  "key_phrases": [
+    "tricyclic",
+    "antidepressants",
+    "headaches",
+    "systematic",
+    "review",
+    "meta",
+    "analysis",
+    "objective"
+  ],
+  "summary_1l": "OBJECTIVE To evaluate the efficacy and relative adverse effects of tricyclic antidepressants in the treatment of migraine,",
+  "query_hits": [],
+  "embed_text": "14606752 Tricyclic antidepressants and headaches: systematic review and meta-analysis science scifact OBJECTIVE To evaluate the efficacy and relative adverse effects of tricyclic antidepressants in the treatment of migraine, tension-type, and mixed headaches. DESIGN Meta-analysis. DATA SOURCES Medline, Embase, the Cochrane Trials Registry,… 14606752 tricyclic-antidepressants-and-headaches:-systematic-review-and-meta-analysis tricyclic antidepressants headaches systematic review meta analysis objective OBJECTIVE To evaluate the efficacy and relative adverse effects of tricyclic antidepressants in the treatment of migraine, Tricyclic antidepressants and headaches: systematic review and meta-analysis OBJECTIVE To evaluate the efficacy and relative adverse effects of tricyclic antidepressants in the treatment of migraine, tension-type, and mixed headaches. DESIGN Meta-analysis. DATA SOURCES Medline, Embase, the Cochrane Trials Registry, and PsycLIT. Studies reviewed Randomised trials of adults receiving tricyclics as only treatment for a minimum of four weeks. DATA EXTRACTION Frequency of headaches (number of headache attacks for migraine and number of days with headache for tension-type headaches), intensity of headache, and headache index. RESULTS 37 studies met the inclusion criteria. Tricyclics significantly reduced the number of days with tension-type headache and number of headache attacks from migraine t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.258717+00:00"
+}

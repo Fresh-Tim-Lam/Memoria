@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "智能体与环境",
+  "source_fingerprint": "6602a590974b2c10d34d6d880c4f8817",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "机器学习"
+  ],
+  "aliases": [],
+  "key_phrases": [
+    "智能",
+    "环境",
+    "强化",
+    "学习",
+    "交互",
+    "模型",
+    "构成",
+    "它们"
+  ],
+  "summary_1l": "强化学习的交互模型由智能体和环境构成，它们在离散时间步 中持续交互： 1.",
+  "query_hits": [],
+  "embed_text": "智能体与环境 智能体与环境 机器学习 智能 环境 强化 学习 交互 模型 构成 它们 强化学习的交互模型由智能体和环境构成，它们在离散时间步 中持续交互： 1. 智能体与环境 强化学习的交互模型由智能体和环境构成，它们在离散时间步 中持续交互： 1. **观察**：智能体观察当前状态 2. **决策**：根据策略 选择动作 3. **反馈**：环境返回奖励 并转移到新状态 4. **重复**：继续下一个时间步 这个循环形成了马尔可夫决策过程（MDP）的骨架。 智能体的核心要素： **策略（Policy）**：从状态到动作的映射，定义了智能体的行为方式 **价值函数（Value Function）**：评估状态或状态-动作对的好坏程度 **模型（Model）**：智能体对环境的内部表示（可选） 根据是否使用环境模型，RL 方法分为： **Model-based**：学习环境模型，可以规划（如 Dyna-Q） **Model-free**：直接从经验中学习，无需模型（如 Q-Learning、REINFORCE）",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T03:38:46.087395+00:00"
+}

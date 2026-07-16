@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15600979",
+  "source_fingerprint": "7f024edef0d303f56964eda20ae274cb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15600979",
+    "emsy-overexpression-disrupts-the-brca2/rad51-pathway-in-the-dna-damage-response:-implications-for-chromosomal-instability/recombination-syndromes-as-checkpoint-diseases"
+  ],
+  "key_phrases": [
+    "emsy",
+    "overexpression",
+    "disrupts",
+    "brca2",
+    "rad51",
+    "pathway",
+    "dna",
+    "damage"
+  ],
+  "summary_1l": "EMSY links the BRCA2 pathway to",
+  "query_hits": [],
+  "embed_text": "15600979 EMSY overexpression disrupts the BRCA2/RAD51 pathway in the DNA-damage response: implications for chromosomal instability/recombination syndromes as checkpoint diseases science scifact EMSY links the BRCA2 pathway to sporadic breast/ovarian cancer. It encodes a nuclear protein that binds to the BRCA2 N-terminal domain implicated in chromatin/transcription regulation, but when sporadically amplified/overexpressed,… 15600979 emsy-overexpression-disrupts-the-brca2/rad51-pathway-in-the-dna-damage-response:-implications-for-chromosomal-instability/recombination-syndromes-as-checkpoint-diseases emsy overexpression disrupts brca2 rad51 pathway dna damage EMSY links the BRCA2 pathway to EMSY overexpression disrupts the BRCA2/RAD51 pathway in the DNA-damage response: implications for chromosomal instability/recombination syndromes as checkpoint diseases EMSY links the BRCA2 pathway to sporadic breast/ovarian cancer. It encodes a nuclear protein that binds to the BRCA2 N-terminal domain implicated in chromatin/transcription regulation, but when sporadically amplified/overexpressed, increased EMSY level represses BRCA2 transactivation potential and induces chromosomal instability, mimicking the activity of BRCA2 mutations in the development of hereditary breast/ovarian cancer. In addition to chromatin/transcription regulation, EMSY may also play a role in the DNA-damage response, suggested by its ability to localize at chromatin sites of DNA damage/repair. This implies that",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.948222+00:00"
+}

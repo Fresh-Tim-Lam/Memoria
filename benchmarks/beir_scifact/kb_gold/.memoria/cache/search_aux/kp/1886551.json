@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1886551",
+  "source_fingerprint": "8fbd1c314d540f1c480dfc347ce74d96",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1886551",
+    "planning-for-postdisaster-resiliency"
+  ],
+  "key_phrases": [
+    "planning",
+    "postdisaster",
+    "resiliency",
+    "focus",
+    "this",
+    "article",
+    "aftermath",
+    "catastrophe"
+  ],
+  "summary_1l": "The focus of this article is planning for resiliency in the aftermath of a catastrophe.",
+  "query_hits": [],
+  "embed_text": "1886551 Planning for Postdisaster Resiliency science scifact The focus of this article is planning for resiliency in the aftermath of a catastrophe. First, the authors offer their conception of planning for resiliency as a goal for recovering communities, and the benefits of planning in efforts to… 1886551 planning-for-postdisaster-resiliency planning postdisaster resiliency focus this article aftermath catastrophe The focus of this article is planning for resiliency in the aftermath of a catastrophe. Planning for Postdisaster Resiliency The focus of this article is planning for resiliency in the aftermath of a catastrophe. First, the authors offer their conception of planning for resiliency as a goal for recovering communities, and the benefits of planning in efforts to create more resilient places. Next, they discuss major issues associated with planning for postdisaster recovery, including barriers posed by federal and state governments to planning for resiliency, the promise and risks of compact urban form models for guiding rebuilding, and the failure to involve citizens in planning for disasters. Finally, they discuss lessons from prior research that address these issues and policy recommendations that foster predisaster recovery planning for resilient communities.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.795605+00:00"
+}

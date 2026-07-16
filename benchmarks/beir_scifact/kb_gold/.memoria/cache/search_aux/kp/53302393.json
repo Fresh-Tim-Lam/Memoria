@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "53302393",
+  "source_fingerprint": "cadf4cfed4c2033ffa5447b0f25e1dc9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "53302393",
+    "the-pfam-protein-families-database."
+  ],
+  "key_phrases": [
+    "pfam",
+    "protein",
+    "families",
+    "database",
+    "widely",
+    "used",
+    "currently",
+    "containing"
+  ],
+  "summary_1l": "The Pfam protein families database.",
+  "query_hits": [],
+  "embed_text": "53302393 The Pfam protein families database. science scifact Pfam is a widely used database of protein families, currently containing more than 13,000 manually curated protein families as of release 26.0. Pfam is available via servers in the UK (http://pfam.sanger.ac.uk/), the USA… 53302393 the-pfam-protein-families-database. pfam protein families database widely used currently containing The Pfam protein families database. The Pfam protein families database. Pfam is a widely used database of protein families, currently containing more than 13,000 manually curated protein families as of release 26.0. Pfam is available via servers in the UK (http://pfam.sanger.ac.uk/), the USA (http://pfam.janelia.org/) and Sweden (http://pfam.sbc.su.se/). Here, we report on changes that have occurred since our 2010 NAR paper (release 24.0). Over the last 2 years, we have generated 1840 new families and increased coverage of the UniProt Knowledgebase (UniProtKB) to nearly 80%. Notably, we have taken the step of opening up the annotation of our families to the Wikipedia community, by linking Pfam families to relevant Wikipedia pages and encouraging the Pfam and Wikipedia communities to improve and expand those pages. We continu",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.008017+00:00"
+}

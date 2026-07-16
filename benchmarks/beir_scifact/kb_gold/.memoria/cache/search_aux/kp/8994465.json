@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8994465",
+  "source_fingerprint": "884622750164f407e02ec82d770c2634",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8994465",
+    "a-temporarily-distinct-subpopulation-of-slow-cycling-melanoma-cells-is-required-for-continuous-tumor-growth"
+  ],
+  "key_phrases": [
+    "temporarily",
+    "distinct",
+    "subpopulation",
+    "slow",
+    "cycling",
+    "melanoma",
+    "cells",
+    "required"
+  ],
+  "summary_1l": "Melanomas are highly heterogeneous tumors, but the biological significance of their differen",
+  "query_hits": [],
+  "embed_text": "8994465 A Temporarily Distinct Subpopulation of Slow-Cycling Melanoma Cells Is Required for Continuous Tumor Growth science scifact Melanomas are highly heterogeneous tumors, but the biological significance of their different subpopulations is not clear. Using the H3K4 demethylase JARID1B (KDM5B/PLU-1/RBP2-H1) as a biomarker, we have characterized a small subpopulation… 8994465 a-temporarily-distinct-subpopulation-of-slow-cycling-melanoma-cells-is-required-for-continuous-tumor-growth temporarily distinct subpopulation slow cycling melanoma cells required Melanomas are highly heterogeneous tumors, but the biological significance of their differen A Temporarily Distinct Subpopulation of Slow-Cycling Melanoma Cells Is Required for Continuous Tumor Growth Melanomas are highly heterogeneous tumors, but the biological significance of their different subpopulations is not clear. Using the H3K4 demethylase JARID1B (KDM5B/PLU-1/RBP2-H1) as a biomarker, we have characterized a small subpopulation of slow-cycling melanoma cells that cycle with doubling times of >4 weeks within the rapidly proliferating main population. Isolated JARID1B-positive melanoma cells give rise to a highly proliferative progeny. Knockdown of JARID1B leads to an initial acceleration of tumor growth followed by exhaustion which suggests that the JARID1B-positive subpopulation is essential for continuous tumor growth. Expression of JARID1B is dynamically regulated and d",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.027434+00:00"
+}

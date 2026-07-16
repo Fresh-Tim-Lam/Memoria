@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18909530",
+  "source_fingerprint": "4b98500eda096f50c3ce6141fbb8448c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18909530",
+    "contractile-forces-sustain-and-polarize-hematopoiesis-from-stem-and-progenitor-cells."
+  ],
+  "key_phrases": [
+    "contractile",
+    "forces",
+    "sustain",
+    "polarize",
+    "hematopoiesis",
+    "from",
+    "stem",
+    "progenitor"
+  ],
+  "summary_1l": "Contractile forces sustain and polarize hematopoiesis from stem and progenitor cells.",
+  "query_hits": [],
+  "embed_text": "18909530 Contractile forces sustain and polarize hematopoiesis from stem and progenitor cells. science scifact Self-renewal and differentiation of stem cells depend on asymmetric division and polarized motility processes that in other cell types are modulated by nonmuscle myosin-II (MII) forces and matrix mechanics. Here, mass… 18909530 contractile-forces-sustain-and-polarize-hematopoiesis-from-stem-and-progenitor-cells. contractile forces sustain polarize hematopoiesis from stem progenitor Contractile forces sustain and polarize hematopoiesis from stem and progenitor cells. Contractile forces sustain and polarize hematopoiesis from stem and progenitor cells. Self-renewal and differentiation of stem cells depend on asymmetric division and polarized motility processes that in other cell types are modulated by nonmuscle myosin-II (MII) forces and matrix mechanics. Here, mass spectrometry-calibrated intracellular flow cytometry of human hematopoiesis reveals MIIB to be a major isoform that is strongly polarized in hematopoietic stem cells and progenitors (HSC/Ps) and thereby downregulated in differentiated cells via asymmetric division. MIIA is constitutive and activated by dephosphorylation during cytokine-triggered differentiation of cells grown on stiff, endosteum-like matrix, but not soft, marrow-like matrix. In vivo, MIIB is required for generation of blood,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.887418+00:00"
+}

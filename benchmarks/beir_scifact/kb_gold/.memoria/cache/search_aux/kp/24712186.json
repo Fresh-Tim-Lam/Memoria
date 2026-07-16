@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24712186",
+  "source_fingerprint": "fc6518e49cdcd9f1c87f55ba400a6e5b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24712186",
+    "orai1-and-stim-reconstitute-store-operated-calcium-channel-function."
+  ],
+  "key_phrases": [
+    "orai1",
+    "stim",
+    "reconstitute",
+    "store",
+    "operated",
+    "calcium",
+    "channel",
+    "function"
+  ],
+  "summary_1l": "Orai1 and STIM reconstitute store-operated calcium channel function.",
+  "query_hits": [],
+  "embed_text": "24712186 Orai1 and STIM reconstitute store-operated calcium channel function. science scifact The two membrane proteins, STIM1 and Orai1, have each been shown to be essential for the activation of store-operated channels (SOC). Yet, how these proteins functionally interact is not known. Here, we reveal that STIM1 and Orai1… 24712186 orai1-and-stim-reconstitute-store-operated-calcium-channel-function. orai1 stim reconstitute store operated calcium channel function Orai1 and STIM reconstitute store-operated calcium channel function. Orai1 and STIM reconstitute store-operated calcium channel function. The two membrane proteins, STIM1 and Orai1, have each been shown to be essential for the activation of store-operated channels (SOC). Yet, how these proteins functionally interact is not known. Here, we reveal that STIM1 and Orai1 expressed together reconstitute functional SOCs. Expressed alone, Orai1 strongly reduces store-operated Ca(2+) entry (SOCE) in human embryonic kidney 293 cells and the Ca(2+) release-activated Ca(2+) current (I(CRAC)) in rat basophilic leukemia cells. However, expressed along with the store-sensing STIM1 protein, Orai1 causes a massive increase in SOCE, enhancing the rate of Ca(2+)entry by up to 103-fold. This entry is entirely store-dependent since the same coexpression causes no measurable sto",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.074518+00:00"
+}

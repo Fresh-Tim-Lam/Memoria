@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1914588",
+  "source_fingerprint": "1c5008469810d345fd78d8dbfe1e2b81",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1914588",
+    "characterization-of-a-single-stranded-dna-binding-protein-from-pseudomonas-aeruginosa-pao1."
+  ],
+  "key_phrases": [
+    "characterization",
+    "single",
+    "stranded",
+    "dna",
+    "binding",
+    "protein",
+    "from",
+    "pseudomonas"
+  ],
+  "summary_1l": "Characterization of a single-stranded DNA-binding protein from Pseudomonas aeruginosa PAO1.",
+  "query_hits": [],
+  "embed_text": "1914588 Characterization of a single-stranded DNA-binding protein from Pseudomonas aeruginosa PAO1. science scifact Single-stranded DNA-binding protein (SSB) plays an important role in DNA metabolism, such as in DNA replication, repair, and recombination, and is essential for cell survival. We characterized the single-stranded DNA (ssDNA)-binding… 1914588 characterization-of-a-single-stranded-dna-binding-protein-from-pseudomonas-aeruginosa-pao1. characterization single stranded dna binding protein from pseudomonas Characterization of a single-stranded DNA-binding protein from Pseudomonas aeruginosa PAO1. Characterization of a single-stranded DNA-binding protein from Pseudomonas aeruginosa PAO1. Single-stranded DNA-binding protein (SSB) plays an important role in DNA metabolism, such as in DNA replication, repair, and recombination, and is essential for cell survival. We characterized the single-stranded DNA (ssDNA)-binding properties of Pseudomonas aeruginosa PAO1 SSB (PaSSB) by using fluorescence quenching measurements and electrophoretic mobility shift analysis (EMSA). Analysis of purified PaSSB by gel filtration chromatography revealed a stable tetramer in solution. In fluorescence titrations, PaSSB bound 22-32 nucleotides (nt) per tetramer depending on salt concentration. Using EMSA, we characterized the stoichiometry of PaSSB complexed with a series of ssDNA homopolymers, and the size",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.219447+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5586392",
+  "source_fingerprint": "1a91f6493d91b8a17dea1affb7c351db",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5586392",
+    "subgrouping-of-patients-with-neuropathic-pain-according-to-pain-related-sensory-abnormalities:-a-first-step-to-a-stratified-treatment-approach."
+  ],
+  "key_phrases": [
+    "subgrouping",
+    "patients",
+    "with",
+    "neuropathic",
+    "pain",
+    "according",
+    "related",
+    "sensory"
+  ],
+  "summary_1l": "Subgrouping of patients with neuropathic pain according to pain-related sensory abnormalities: a first step to a stratified treatment approach.",
+  "query_hits": [],
+  "embed_text": "5586392 Subgrouping of patients with neuropathic pain according to pain-related sensory abnormalities: a first step to a stratified treatment approach. science scifact BACKGROUND Patients with neuropathic pain present with various pain-related sensory abnormalities. These sensory features form different patterns or mosaics-the sensory profile-in individual patients. One hypothesis for the development of… 5586392 subgrouping-of-patients-with-neuropathic-pain-according-to-pain-related-sensory-abnormalities:-a-first-step-to-a-stratified-treatment-approach. subgrouping patients with neuropathic pain according related sensory Subgrouping of patients with neuropathic pain according to pain-related sensory abnormalities: a first step to a stratified treatment approach. Subgrouping of patients with neuropathic pain according to pain-related sensory abnormalities: a first step to a stratified treatment approach. BACKGROUND Patients with neuropathic pain present with various pain-related sensory abnormalities. These sensory features form different patterns or mosaics-the sensory profile-in individual patients. One hypothesis for the development of sensory profiles is that distinct pathophysiological mechanisms of pain generation produce specific sensory abnormalities. Several controlled trials of promising new drugs have produced negative results, but these findings could have been a result of heterogeneity in the patient population. Subgrouping patients on the basis of individual sensory profiles could reduce this heterogeneity and improve trial design. RE",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.683408+00:00"
+}

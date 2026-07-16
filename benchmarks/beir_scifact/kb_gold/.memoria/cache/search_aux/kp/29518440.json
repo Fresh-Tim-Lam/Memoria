@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29518440",
+  "source_fingerprint": "e3e5f9c756bb933622c862669389c924",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29518440",
+    "hypoxia-of-the-renal-medulla--its-implications-for-disease."
+  ],
+  "key_phrases": [
+    "hypoxia",
+    "renal",
+    "medulla",
+    "--",
+    "its",
+    "implications",
+    "disease",
+    "land"
+  ],
+  "summary_1l": "Hypoxia of the renal medulla--its implications for disease.",
+  "query_hits": [],
+  "embed_text": "29518440 Hypoxia of the renal medulla--its implications for disease. science scifact In land mammals, a major task of the kidney is to reabsorb water to allow survival in a dry environment. Water conservation is enhanced by the renal medulla, which concentrates the urine to a level up to four times the osmolality of… 29518440 hypoxia-of-the-renal-medulla--its-implications-for-disease. hypoxia renal medulla -- its implications disease land Hypoxia of the renal medulla--its implications for disease. Hypoxia of the renal medulla--its implications for disease. In land mammals, a major task of the kidney is to reabsorb water to allow survival in a dry environment. Water conservation is enhanced by the renal medulla, which concentrates the urine to a level up to four times the osmolality of plasma. To produce this unique gradient of osmolality, the medulla has a countercurrent system of vessels and tubules that dictates active reabsorption of sodium in a milieu poor in oxygen (Figure 1).1 In this review, we describe how hypoxia of the medulla may relate to susceptibility to acute and chronic renal injury. The Renal Medullary Concentrating Mechanism as . . .",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.015358+00:00"
+}

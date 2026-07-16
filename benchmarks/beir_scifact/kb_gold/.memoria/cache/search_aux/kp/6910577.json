@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6910577",
+  "source_fingerprint": "af3b5bed9c89eb3b8df1eab743c4a980",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6910577",
+    "harnessing-transposons-for-cancer-gene-discovery"
+  ],
+  "key_phrases": [
+    "harnessing",
+    "transposons",
+    "cancer",
+    "gene",
+    "discovery",
+    "recently",
+    "it",
+    "has"
+  ],
+  "summary_1l": "Recently, it has become possible to mobilize the Tc1/mariner transposon, Sleeping Beauty (SB), in mouse somatic cells at frequencies high enough to ind",
+  "query_hits": [],
+  "embed_text": "6910577 Harnessing transposons for cancer gene discovery science scifact Recently, it has become possible to mobilize the Tc1/mariner transposon, Sleeping Beauty (SB), in mouse somatic cells at frequencies high enough to induce cancer. Tumours result from SB insertional mutagenesis of cancer genes, thus… 6910577 harnessing-transposons-for-cancer-gene-discovery harnessing transposons cancer gene discovery recently it has Recently, it has become possible to mobilize the Tc1/mariner transposon, Sleeping Beauty (SB), in mouse somatic cells at frequencies high enough to ind Harnessing transposons for cancer gene discovery Recently, it has become possible to mobilize the Tc1/mariner transposon, Sleeping Beauty (SB), in mouse somatic cells at frequencies high enough to induce cancer. Tumours result from SB insertional mutagenesis of cancer genes, thus facilitating the identification of the genes and signalling pathways that drive tumour formation. A conditional SB transposition system has also been developed that makes it possible to limit where SB mutagenesis occurs, providing a means to selectively model many types of human cancer. SB mutagenesis has already identified a large collection of known cancer genes in addition to a plethora of new candidate cancer genes and potential drug targets.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.930739+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "696006",
+  "source_fingerprint": "8f485487cf29abbfb13bf74c97c4a5aa",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "696006",
+    "innate-lymphoid-cells-mediate-influenza-induced-airway-hyper-reactivity-independently-of-adaptive-immunity"
+  ],
+  "key_phrases": [
+    "innate",
+    "lymphoid",
+    "cells",
+    "mediate",
+    "influenza",
+    "induced",
+    "airway",
+    "hyper"
+  ],
+  "summary_1l": "Patients with asthma, a major public health problem, are at high risk for serious disease fro",
+  "query_hits": [],
+  "embed_text": "696006 Innate lymphoid cells mediate influenza-induced airway hyper-reactivity independently of adaptive immunity science scifact Patients with asthma, a major public health problem, are at high risk for serious disease from influenza virus infection, but the pathogenic mechanisms by which influenza A causes airway disease and asthma are not fully known. We show here… 696006 innate-lymphoid-cells-mediate-influenza-induced-airway-hyper-reactivity-independently-of-adaptive-immunity innate lymphoid cells mediate influenza induced airway hyper Patients with asthma, a major public health problem, are at high risk for serious disease fro Innate lymphoid cells mediate influenza-induced airway hyper-reactivity independently of adaptive immunity Patients with asthma, a major public health problem, are at high risk for serious disease from influenza virus infection, but the pathogenic mechanisms by which influenza A causes airway disease and asthma are not fully known. We show here in a mouse model that influenza infection acutely induced airway hyper-reactivity (AHR), a cardinal feature of asthma, independently of T helper type 2 (TH2) cells and adaptive immunity. Instead, influenza infection induced AHR through a previously unknown pathway that required the interleukin 13 (IL-13)–IL-33 axis and cells of the non-T cell, non-B cell innate lymphoid type called 'natural helper cells'. Infection with influenza A virus, which acti",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.097722+00:00"
+}

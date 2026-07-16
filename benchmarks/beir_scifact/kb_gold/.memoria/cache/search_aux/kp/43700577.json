@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "43700577",
+  "source_fingerprint": "9ee6349821a02f1a52c4aee9abeca41c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "43700577",
+    "sphingosine-can-pre--and-post-condition-heart-and-utilizes-a-different-mechanism-from-sphingosine-1-phosphate."
+  ],
+  "key_phrases": [
+    "sphingosine",
+    "can",
+    "pre",
+    "post",
+    "condition",
+    "heart",
+    "utilizes",
+    "different"
+  ],
+  "summary_1l": "Sphingosine can pre- and post-condition heart and utilizes a different mechanism from sphingosine 1-phosphate.",
+  "query_hits": [],
+  "embed_text": "43700577 Sphingosine can pre- and post-condition heart and utilizes a different mechanism from sphingosine 1-phosphate. science scifact Consistent with previous reports, sphingosine at a high concentration (5 microM) was cardiotoxic as evidenced by increased infarct size in response to ischemia/reperfusion in an ex vivo rat heart. Sphingosine 1-phosphate (S1P) at 5 microM… 43700577 sphingosine-can-pre--and-post-condition-heart-and-utilizes-a-different-mechanism-from-sphingosine-1-phosphate. sphingosine can pre post condition heart utilizes different Sphingosine can pre- and post-condition heart and utilizes a different mechanism from sphingosine 1-phosphate. Sphingosine can pre- and post-condition heart and utilizes a different mechanism from sphingosine 1-phosphate. Consistent with previous reports, sphingosine at a high concentration (5 microM) was cardiotoxic as evidenced by increased infarct size in response to ischemia/reperfusion in an ex vivo rat heart. Sphingosine 1-phosphate (S1P) at 5 microM was cardioprotective. However, at a physiologic concentration (0.4 microM) sphingosine as well as S1P was effective in protecting the heart from ischemia/reperfusion injury both when perfused prior to 40 min of ischemia (preconditioning) or when added to reperfusion media following ischemia (postconditioning). Protection by sphingosine and S1P was evidenced with both pre- and post-conditioning by a >75% recovery of left ventricular developed pres",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.189608+00:00"
+}

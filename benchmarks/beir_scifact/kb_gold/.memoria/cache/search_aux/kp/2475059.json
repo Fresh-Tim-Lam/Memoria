@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2475059",
+  "source_fingerprint": "f1c1a2eaf14afe587a54f10052a6cba0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2475059",
+    "once-a-day-concerta-methylphenidate-versus-three-times-daily-methylphenidate-in-laboratory-and-natural-settings."
+  ],
+  "key_phrases": [
+    "once",
+    "day",
+    "concerta",
+    "methylphenidate",
+    "versus",
+    "three",
+    "times",
+    "daily"
+  ],
+  "summary_1l": "Once-a-day Concerta methylphenidate versus three-times-daily methylphenidate in laboratory and natural settings.",
+  "query_hits": [],
+  "embed_text": "2475059 Once-a-day Concerta methylphenidate versus three-times-daily methylphenidate in laboratory and natural settings. science scifact OBJECTIVE Methylphenidate (MPH), the most commonly prescribed drug for attention-deficit/hyperactivity disorder (ADHD), has a short half-life, which necessitates multiple daily doses. The need for multiple doses produces problems with… 2475059 once-a-day-concerta-methylphenidate-versus-three-times-daily-methylphenidate-in-laboratory-and-natural-settings. once day concerta methylphenidate versus three times daily Once-a-day Concerta methylphenidate versus three-times-daily methylphenidate in laboratory and natural settings. Once-a-day Concerta methylphenidate versus three-times-daily methylphenidate in laboratory and natural settings. OBJECTIVE Methylphenidate (MPH), the most commonly prescribed drug for attention-deficit/hyperactivity disorder (ADHD), has a short half-life, which necessitates multiple daily doses. The need for multiple doses produces problems with medication administration during school and after-school hours, and therefore with compliance. Previous long-acting stimulants and preparations have shown effects equivalent to twice-daily dosing of MPH. This study tests the efficacy and duration of action, in natural and laboratory settings, of an extended-release MPH preparation designed to last 12 hours and therefore be equivalent to 3-times-daily dosing. METHODS Sixty-eight children with ADHD,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.242035+00:00"
+}

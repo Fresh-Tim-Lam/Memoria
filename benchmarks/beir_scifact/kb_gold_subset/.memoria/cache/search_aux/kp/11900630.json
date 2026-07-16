@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11900630",
+  "source_fingerprint": "53024b6fc4bc319f5f25cfa96b524984",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11900630",
+    "hematopoietic-stem-cells-and-other-hematopoietic-cells-show-broad-resistance-to-chemotherapeutic-agents-in-vivo-when-overexpressing-bcl-2."
+  ],
+  "key_phrases": [
+    "hematopoietic",
+    "stem",
+    "cells",
+    "other",
+    "show",
+    "broad",
+    "resistance",
+    "chemotherapeutic"
+  ],
+  "summary_1l": "Hematopoietic stem cells and other hematopoietic cells show broad resistance to chemotherapeutic agents in vivo when overexpressing bcl-2.",
+  "query_hits": [],
+  "embed_text": "11900630 Hematopoietic stem cells and other hematopoietic cells show broad resistance to chemotherapeutic agents in vivo when overexpressing bcl-2. science scifact Objective. Chemotherapeutic agents function by inducing apoptosis and their effectiveness depends on the balance of pro- and anti-apoptotic proteins in cells. Due to the complicated interactions of the many proteins involved, it has been… 11900630 hematopoietic-stem-cells-and-other-hematopoietic-cells-show-broad-resistance-to-chemotherapeutic-agents-in-vivo-when-overexpressing-bcl-2. hematopoietic stem cells other show broad resistance chemotherapeutic Hematopoietic stem cells and other hematopoietic cells show broad resistance to chemotherapeutic agents in vivo when overexpressing bcl-2. Hematopoietic stem cells and other hematopoietic cells show broad resistance to chemotherapeutic agents in vivo when overexpressing bcl-2. Objective. Chemotherapeutic agents function by inducing apoptosis and their effectiveness depends on the balance of pro- and anti-apoptotic proteins in cells. Due to the complicated interactions of the many proteins involved, it has been difficult to determine in tumors whether overexpression of single genes is prognostic for increased resistance. Therefore, we studied the influence of bcl-2 overexpression on resistance to chemotherapeutics in a transgenic mouse system. This allowed us to study a wide variety of cells, including important but rare populations such as hematopoietic stem cells (HSC).Methods. H2K-bcl-2 transgenic and wild-type (WT) mice we",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:07.792858+00:00"
+}

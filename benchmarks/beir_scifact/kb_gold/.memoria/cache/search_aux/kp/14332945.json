@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14332945",
+  "source_fingerprint": "f4fbd6df222ec976fe6f3f206b284008",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14332945",
+    "mammalian-rad52-functions-in-break-induced-replication-repair-of-collapsed-dna-replication-forks"
+  ],
+  "key_phrases": [
+    "mammalian",
+    "rad52",
+    "functions",
+    "break",
+    "induced",
+    "replication",
+    "repair",
+    "collapsed"
+  ],
+  "summary_1l": "Human cancers are characterized by the presence of oncogene-induced DNA replication stress (DRS), makin",
+  "query_hits": [],
+  "embed_text": "14332945 Mammalian RAD52 Functions in Break-Induced Replication Repair of Collapsed DNA Replication Forks science scifact Human cancers are characterized by the presence of oncogene-induced DNA replication stress (DRS), making them dependent on repair pathways such as break-induced replication (BIR) for damaged DNA replication forks. To better understand BIR,… 14332945 mammalian-rad52-functions-in-break-induced-replication-repair-of-collapsed-dna-replication-forks mammalian rad52 functions break induced replication repair collapsed Human cancers are characterized by the presence of oncogene-induced DNA replication stress (DRS), makin Mammalian RAD52 Functions in Break-Induced Replication Repair of Collapsed DNA Replication Forks Human cancers are characterized by the presence of oncogene-induced DNA replication stress (DRS), making them dependent on repair pathways such as break-induced replication (BIR) for damaged DNA replication forks. To better understand BIR, we performed a targeted siRNA screen for genes whose depletion inhibited G1 to S phase progression when oncogenic cyclin E was overexpressed. RAD52, a gene dispensable for normal development in mice, was among the top hits. In cells in which fork collapse was induced by oncogenes or chemicals, the Rad52 protein localized to DRS foci. Depletion of Rad52 by siRNA or knockout of the gene by CRISPR/Cas9 compromised restart of collapsed forks and led to DNA damage",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.598561+00:00"
+}

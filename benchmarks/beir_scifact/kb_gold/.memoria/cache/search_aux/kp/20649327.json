@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20649327",
+  "source_fingerprint": "69d708e392a8f290256b45bb27c60117",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20649327",
+    "a-sequential-model-for-peptide-binding-and-transport-by-the-transporters-associated-with-antigen-processing."
+  ],
+  "key_phrases": [
+    "sequential",
+    "model",
+    "peptide",
+    "binding",
+    "transport",
+    "by",
+    "transporters",
+    "associated"
+  ],
+  "summary_1l": "A sequential model for peptide binding and transport by the transporters associated with antigen processing.",
+  "query_hits": [],
+  "embed_text": "20649327 A sequential model for peptide binding and transport by the transporters associated with antigen processing. science scifact The TAP proteins translocate antigenic peptides into the endoplasmic reticulum. Investigation of the specificity of this process has been complicated by TAP-independent factors that influence the amount of peptide that accumulates in the… 20649327 a-sequential-model-for-peptide-binding-and-transport-by-the-transporters-associated-with-antigen-processing. sequential model peptide binding transport by transporters associated A sequential model for peptide binding and transport by the transporters associated with antigen processing. A sequential model for peptide binding and transport by the transporters associated with antigen processing. The TAP proteins translocate antigenic peptides into the endoplasmic reticulum. Investigation of the specificity of this process has been complicated by TAP-independent factors that influence the amount of peptide that accumulates in the ER in transport assays. We have developed an overexpression system in which binding of peptides to the TAP substrate-binding site and peptide transport by TAP can be quantified separately. Efficiency of peptide accumulation in the ER parallels affinity for the TAP substrate-binding site, but can be modified by interaction with the glycosylation system within the ER and, probably, peptide efflux. Random peptide mixtures of 9-16 aa display significant",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.711017+00:00"
+}

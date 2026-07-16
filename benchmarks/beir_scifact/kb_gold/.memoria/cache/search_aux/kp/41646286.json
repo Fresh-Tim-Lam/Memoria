@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "41646286",
+  "source_fingerprint": "e26b33a6e1448f2548f310c0e1d38373",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "41646286",
+    "folate-affects-apoptosis-in-human-trophoblastic-cells."
+  ],
+  "key_phrases": [
+    "folate",
+    "affects",
+    "apoptosis",
+    "human",
+    "trophoblastic",
+    "cells",
+    "effects",
+    "deficiency"
+  ],
+  "summary_1l": "Folate affects apoptosis in human trophoblastic cells.",
+  "query_hits": [],
+  "embed_text": "41646286 Folate affects apoptosis in human trophoblastic cells. science scifact Effects of folate deficiency on the rate of apoptosis in human cytotrophoblastic cells has been investigated. Apoptosis was determined in cytotrophoblastic cells after culture in 1. control medium, 2. folate-free medium and 3. folate-free… 41646286 folate-affects-apoptosis-in-human-trophoblastic-cells. folate affects apoptosis human trophoblastic cells effects deficiency Folate affects apoptosis in human trophoblastic cells. Folate affects apoptosis in human trophoblastic cells. Effects of folate deficiency on the rate of apoptosis in human cytotrophoblastic cells has been investigated. Apoptosis was determined in cytotrophoblastic cells after culture in 1. control medium, 2. folate-free medium and 3. folate-free medium plus 10% fetal calf serum. Apoptosis rates in cells cultured in mediums 2 and 3 were significantly higher than those cultured in the control medium (P<0.02 and P<0.03, respectively). In conclusion, human cytotrophoblastic cells show a significantly increased rate of apoptosis in vitro after culture in a folate-free medium. Possible explanations for the association between folate deficiency and pregnancy complications are suggested.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.509008+00:00"
+}

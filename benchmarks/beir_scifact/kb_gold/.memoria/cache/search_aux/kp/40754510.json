@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "40754510",
+  "source_fingerprint": "bd83cf4d7afe95422223f019cf649226",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "40754510",
+    "staphylococcus-aureus-infections."
+  ],
+  "key_phrases": [
+    "staphylococcus",
+    "aureus",
+    "infections",
+    "micrococcus",
+    "which",
+    "when",
+    "limited",
+    "its"
+  ],
+  "summary_1l": "Staphylococcus aureus infections.",
+  "query_hits": [],
+  "embed_text": "40754510 Staphylococcus aureus infections. science scifact Micrococcus, which, when limited in its extent and activity, causes acute suppurative inflammation (phlegmon), produces, when more extensive and intense in its action on the human system, the most virulent forms of septicaemia and… 40754510 staphylococcus-aureus-infections. staphylococcus aureus infections micrococcus which when limited its Staphylococcus aureus infections. Staphylococcus aureus infections. Micrococcus, which, when limited in its extent and activity, causes acute suppurative inflammation (phlegmon), produces, when more extensive and intense in its action on the human system, the most virulent forms of septicaemia and pyaemia.1 In an elegant series of clinical observations and laboratory studies published in 1880 and 1882, Ogston described staphylococcal disease and its role in sepsis and abscess formation.1,2 More than 100 years later, Staphylococcus aureus remains a versatile and dangerous pathogen in humans. The frequencies of both community-acquired and hospital-acquired staphylococcal infections have increased steadily, with little change in overall mortality. Treatment of these infections . . .",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.793878+00:00"
+}

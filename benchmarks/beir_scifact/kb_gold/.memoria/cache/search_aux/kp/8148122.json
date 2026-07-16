@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8148122",
+  "source_fingerprint": "c0803172e3237958418a204957ee9645",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8148122",
+    "global-reorganization-of-replication-domains-during-embryonic-stem-cell-differentiation"
+  ],
+  "key_phrases": [
+    "global",
+    "reorganization",
+    "replication",
+    "domains",
+    "during",
+    "embryonic",
+    "stem",
+    "cell"
+  ],
+  "summary_1l": "DNA replication in mammals is regulated via the coordinate firing of clusters of replicons that duplicate megaba",
+  "query_hits": [],
+  "embed_text": "8148122 Global Reorganization of Replication Domains During Embryonic Stem Cell Differentiation science scifact DNA replication in mammals is regulated via the coordinate firing of clusters of replicons that duplicate megabase-sized chromosome segments at specific times during S-phase. Cytogenetic studies show that these \"replicon clusters\" coalesce… 8148122 global-reorganization-of-replication-domains-during-embryonic-stem-cell-differentiation global reorganization replication domains during embryonic stem cell DNA replication in mammals is regulated via the coordinate firing of clusters of replicons that duplicate megaba Global Reorganization of Replication Domains During Embryonic Stem Cell Differentiation DNA replication in mammals is regulated via the coordinate firing of clusters of replicons that duplicate megabase-sized chromosome segments at specific times during S-phase. Cytogenetic studies show that these \"replicon clusters\" coalesce as subchromosomal units that persist through multiple cell generations, but the molecular boundaries of such units have remained elusive. Moreover, the extent to which changes in replication timing occur during differentiation and their relationship to transcription changes has not been rigorously investigated. We have constructed high-resolution replication-timing profiles in mouse embryonic stem cells (mESCs) before and after differentiation to neural precursor cell",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.013395+00:00"
+}

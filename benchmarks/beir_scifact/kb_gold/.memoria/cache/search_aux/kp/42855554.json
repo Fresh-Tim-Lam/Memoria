@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "42855554",
+  "source_fingerprint": "af752007433e92047e51cc2e7bc90f67",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "42855554",
+    "tissue-inherent-fate-of-gpi-revealed-by-gpi-anchored-gfp-transgenesis."
+  ],
+  "key_phrases": [
+    "tissue",
+    "inherent",
+    "fate",
+    "gpi",
+    "revealed",
+    "by",
+    "anchored",
+    "gfp"
+  ],
+  "summary_1l": "Tissue-inherent fate of GPI revealed by GPI-anchored GFP transgenesis.",
+  "query_hits": [],
+  "embed_text": "42855554 Tissue-inherent fate of GPI revealed by GPI-anchored GFP transgenesis. science scifact To clarify the fate of glycosylphosphatidylinositol (GPI) in mammals, we developed GPI-anchored enhanced green fluorescent protein (EGFP-GPI) and transgenic mice carrying this fusion construct. When it was introduced to culture cells, the… 42855554 tissue-inherent-fate-of-gpi-revealed-by-gpi-anchored-gfp-transgenesis. tissue inherent fate gpi revealed by anchored gfp Tissue-inherent fate of GPI revealed by GPI-anchored GFP transgenesis. Tissue-inherent fate of GPI revealed by GPI-anchored GFP transgenesis. To clarify the fate of glycosylphosphatidylinositol (GPI) in mammals, we developed GPI-anchored enhanced green fluorescent protein (EGFP-GPI) and transgenic mice carrying this fusion construct. When it was introduced to culture cells, the EGFP-GPI protein was correctly sorted to plasma membranes and microsomes depending on GPI biosynthesis. Transgenic mice carrying EGFP-GPI were found to show a broad transgene expression. Histologically, a prominent polarized localization of EGFP-GPI protein was observed in various epithelia, the nervous system and liver and secreted from some exocrine glands, as well as non-polarized presence in non-epithelial tissues, demonstrating a tissue-inherent manner of GPI sorting.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.290917+00:00"
+}

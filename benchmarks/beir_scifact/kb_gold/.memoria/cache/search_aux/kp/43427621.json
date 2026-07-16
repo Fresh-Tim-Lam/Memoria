@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "43427621",
+  "source_fingerprint": "1cac45385d1eb59a57aa5e977bb2f23a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "43427621",
+    "psychological-treatment-of-malignant-vasovagal-syncope-due-to-bloodphobia."
+  ],
+  "key_phrases": [
+    "psychological",
+    "treatment",
+    "malignant",
+    "vasovagal",
+    "syncope",
+    "due",
+    "bloodphobia",
+    "17"
+  ],
+  "summary_1l": "Psychological treatment of malignant vasovagal syncope due to bloodphobia.",
+  "query_hits": [],
+  "embed_text": "43427621 Psychological treatment of malignant vasovagal syncope due to bloodphobia. science scifact A 17-year-old boy with frequent faints due to blood-injury phobia was studied. During cardiovascular reflex investigation in our syncope unit, 50 seconds of asystole were recorded. He was treated using systematic desensitization with… 43427621 psychological-treatment-of-malignant-vasovagal-syncope-due-to-bloodphobia. psychological treatment malignant vasovagal syncope due bloodphobia 17 Psychological treatment of malignant vasovagal syncope due to bloodphobia. Psychological treatment of malignant vasovagal syncope due to bloodphobia. A 17-year-old boy with frequent faints due to blood-injury phobia was studied. During cardiovascular reflex investigation in our syncope unit, 50 seconds of asystole were recorded. He was treated using systematic desensitization with muscular tension and cognitive techniques by the Pediatric Psychosocial Department and has not experienced syncopal events again.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.905026+00:00"
+}

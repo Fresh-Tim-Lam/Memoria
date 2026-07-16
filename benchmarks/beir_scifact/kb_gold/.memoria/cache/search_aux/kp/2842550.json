@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2842550",
+  "source_fingerprint": "0ff3c95cdfc123f4ffbb7083c89bea12",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2842550",
+    "pharmacodynamics-and-pharmacokinetics-of-eptifibatide-in-patients-with-acute-coronary-syndromes:-prospective-analysis-from-pursuit."
+  ],
+  "key_phrases": [
+    "pharmacodynamics",
+    "pharmacokinetics",
+    "eptifibatide",
+    "patients",
+    "with",
+    "acute",
+    "coronary",
+    "syndromes"
+  ],
+  "summary_1l": "Pharmacodynamics and pharmacokinetics of eptifibatide in patients with acute coronary syndromes: prospective analysis from PURSUIT.",
+  "query_hits": [],
+  "embed_text": "2842550 Pharmacodynamics and pharmacokinetics of eptifibatide in patients with acute coronary syndromes: prospective analysis from PURSUIT. science scifact BACKGROUND Platelet deposition and aggregation are central to the pathogenesis of ischemic complications of acute coronary syndromes (ACS). Pharmacodynamic effects of the platelet glycoprotein IIb/IIIa antagonist eptifibatide have been… 2842550 pharmacodynamics-and-pharmacokinetics-of-eptifibatide-in-patients-with-acute-coronary-syndromes:-prospective-analysis-from-pursuit. pharmacodynamics pharmacokinetics eptifibatide patients with acute coronary syndromes Pharmacodynamics and pharmacokinetics of eptifibatide in patients with acute coronary syndromes: prospective analysis from PURSUIT. Pharmacodynamics and pharmacokinetics of eptifibatide in patients with acute coronary syndromes: prospective analysis from PURSUIT. BACKGROUND Platelet deposition and aggregation are central to the pathogenesis of ischemic complications of acute coronary syndromes (ACS). Pharmacodynamic effects of the platelet glycoprotein IIb/IIIa antagonist eptifibatide have been delineated in healthy subjects but not in patients with ACS. We assessed effects of eptifibatide on ex vivo platelet aggregation in patients enrolled in the Platelet glycoprotein IIb/IIIa in Unstable angina: Receptor Suppression Using Integrilin (eptifibatide) Therapy (PURSUIT) trial of ACS. METHODS AND RESULTS Patients were randomly assigned to an intravenous bolus (180 microgram/kg) and 72-hour infusion of eptifibatide (2.0 mi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.996655+00:00"
+}

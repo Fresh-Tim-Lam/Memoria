@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14530534",
+  "source_fingerprint": "de8f0d81028f8f3903c2775f54381721",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14530534",
+    "comprehensive-identification-and-annotation-of-cell-type-specific-and-ubiquitous-ctcf-binding-sites-in-the-human-genome"
+  ],
+  "key_phrases": [
+    "comprehensive",
+    "identification",
+    "annotation",
+    "cell",
+    "type",
+    "specific",
+    "ubiquitous",
+    "ctcf"
+  ],
+  "summary_1l": "Chromatin insulators are DNA elements that regulate the level of gene expression",
+  "query_hits": [],
+  "embed_text": "14530534 Comprehensive Identification and Annotation of Cell Type-Specific and Ubiquitous CTCF-Binding Sites in the Human Genome science scifact Chromatin insulators are DNA elements that regulate the level of gene expression either by preventing gene silencing through the maintenance of heterochromatin boundaries or by preventing gene activation by blocking interactions between… 14530534 comprehensive-identification-and-annotation-of-cell-type-specific-and-ubiquitous-ctcf-binding-sites-in-the-human-genome comprehensive identification annotation cell type specific ubiquitous ctcf Chromatin insulators are DNA elements that regulate the level of gene expression Comprehensive Identification and Annotation of Cell Type-Specific and Ubiquitous CTCF-Binding Sites in the Human Genome Chromatin insulators are DNA elements that regulate the level of gene expression either by preventing gene silencing through the maintenance of heterochromatin boundaries or by preventing gene activation by blocking interactions between enhancers and promoters. CCCTC-binding factor (CTCF), a ubiquitously expressed 11-zinc-finger DNA-binding protein, is the only protein implicated in the establishment of insulators in vertebrates. While CTCF has been implicated in diverse regulatory functions, CTCF has only been studied in a limited number of cell types across human genome. Thus, it is not clear whether the identified cell type-specific differences in CTCF-binding sites ar",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.087176+00:00"
+}

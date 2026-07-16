@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7840442",
+  "source_fingerprint": "6ae139bef50ebd0c01b128a7fd21b965",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7840442",
+    "multisite-optical-recording-of-excitability-in-the-enteric-nervous-system."
+  ],
+  "key_phrases": [
+    "multisite",
+    "optical",
+    "recording",
+    "excitability",
+    "enteric",
+    "nervous",
+    "system",
+    "technique"
+  ],
+  "summary_1l": "Multisite optical recording of excitability in the enteric nervous system.",
+  "query_hits": [],
+  "embed_text": "7840442 Multisite optical recording of excitability in the enteric nervous system. science scifact A multisite optical recording technique consisting of an array of 464 photodiodes was used to measure dynamic changes in transmembrane potentials (Vm) of guinea-pig and mouse enteric neurones stained with the voltage-sensitive dye… 7840442 multisite-optical-recording-of-excitability-in-the-enteric-nervous-system. multisite optical recording excitability enteric nervous system technique Multisite optical recording of excitability in the enteric nervous system. Multisite optical recording of excitability in the enteric nervous system. A multisite optical recording technique consisting of an array of 464 photodiodes was used to measure dynamic changes in transmembrane potentials (Vm) of guinea-pig and mouse enteric neurones stained with the voltage-sensitive dye Di-8-ANEPPS. Optical recordings of Vm changes in enteric neurones which were evoked by depolarizing current pulses or synaptic activation mirrored the Vm changes measured intracellularly in the same neurone. Action potentials had fractional change in fluorescence of -0.09 +/- 0.06% and their peak to peak noise level was 20 +/- 14% of the action potential amplitude. Optical recordings after electrical stimulation of interganglionic nerve strands revealed slow EPSPs, nicotinergic supra- and",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.301320+00:00"
+}

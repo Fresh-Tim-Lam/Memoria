@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17050065",
+  "source_fingerprint": "5ea439a3914c4979f86f8754a10c9998",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17050065",
+    "odorant-specific-adaptation-pathways-generate-olfactory-plasticity-in-c.-elegans"
+  ],
+  "key_phrases": [
+    "odorant",
+    "specific",
+    "adaptation",
+    "pathways",
+    "generate",
+    "olfactory",
+    "plasticity",
+    "elegans"
+  ],
+  "summary_1l": "Odorant-specific adaptation pathways generate olfactory plasticity in C.",
+  "query_hits": [],
+  "embed_text": "17050065 Odorant-specific adaptation pathways generate olfactory plasticity in C. elegans science scifact Following prolonged exposure to an odorant, C. elegans exhibits a diminished response to the odorant for several hours. This olfactory adaptation is odorant selective; animals can adapt independently to different odorants sensed by a… 17050065 odorant-specific-adaptation-pathways-generate-olfactory-plasticity-in-c.-elegans odorant specific adaptation pathways generate olfactory plasticity elegans Odorant-specific adaptation pathways generate olfactory plasticity in C. Odorant-specific adaptation pathways generate olfactory plasticity in C. elegans Following prolonged exposure to an odorant, C. elegans exhibits a diminished response to the odorant for several hours. This olfactory adaptation is odorant selective; animals can adapt independently to different odorants sensed by a single pair of olfactory neurons, the AWC neurons. The mechanism of olfactory adaptation is genetically complex, with different genes required for adaptation to different odorants. Animals mutant for the gene adp-1 fail to adapt to a subset of AWC-sensed odorants; adp-1 affects a calcium-dependent process required for adaptation. Mutations in another gene, osm-9, affect adaptation to a different but overlapping subset of AWC-sensed odorants. Mutations in adp-1 and osm-9 do not dim",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.230648+00:00"
+}

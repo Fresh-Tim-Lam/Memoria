@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4468861",
+  "source_fingerprint": "44be563b380bc2fb565aefb8246ac1b7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4468861",
+    "radiation-and-dual-checkpoint-blockade-activates-non-redundant-immune-mechanisms-in-cancer"
+  ],
+  "key_phrases": [
+    "radiation",
+    "dual",
+    "checkpoint",
+    "blockade",
+    "activates",
+    "non",
+    "redundant",
+    "immune"
+  ],
+  "summary_1l": "Immune checkpoint inhibitors result in impressive clinical responses, but optimal results will require combin",
+  "query_hits": [],
+  "embed_text": "4468861 Radiation and Dual Checkpoint Blockade Activates Non-Redundant Immune Mechanisms in Cancer science scifact Immune checkpoint inhibitors result in impressive clinical responses, but optimal results will require combination with each other and other therapies. This raises fundamental questions about mechanisms of non-redundancy and resistance.… 4468861 radiation-and-dual-checkpoint-blockade-activates-non-redundant-immune-mechanisms-in-cancer radiation dual checkpoint blockade activates non redundant immune Immune checkpoint inhibitors result in impressive clinical responses, but optimal results will require combin Radiation and Dual Checkpoint Blockade Activates Non-Redundant Immune Mechanisms in Cancer Immune checkpoint inhibitors result in impressive clinical responses, but optimal results will require combination with each other and other therapies. This raises fundamental questions about mechanisms of non-redundancy and resistance. Here we report major tumour regressions in a subset of patients with metastatic melanoma treated with an anti-CTLA4 antibody (anti-CTLA4) and radiation, and reproduced this effect in mouse models. Although combined treatment improved responses in irradiated and unirradiated tumours, resistance was common. Unbiased analyses of mice revealed that resistance was due to upregulation of PD-L1 on melanoma cells and associated with T-cell exhaustion. Accordingly, optimal res",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.861499+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4401289",
+  "source_fingerprint": "1a2cb3b146b076b83ba430c779a87442",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4401289",
+    "break-induced-telomere-synthesis-underlies-alternative-telomere-maintenance"
+  ],
+  "key_phrases": [
+    "break",
+    "induced",
+    "telomere",
+    "synthesis",
+    "underlies",
+    "alternative",
+    "maintenance",
+    "homology"
+  ],
+  "summary_1l": "Homology-directed DNA repair is essential for genome maintenance through templated DNA synthesis.",
+  "query_hits": [],
+  "embed_text": "4401289 Break-induced telomere synthesis underlies alternative telomere maintenance science scifact Homology-directed DNA repair is essential for genome maintenance through templated DNA synthesis. Alternative lengthening of telomeres (ALT) necessitates homology-directed DNA repair to maintain telomeres in about 10–15% of human cancers.… 4401289 break-induced-telomere-synthesis-underlies-alternative-telomere-maintenance break induced telomere synthesis underlies alternative maintenance homology Homology-directed DNA repair is essential for genome maintenance through templated DNA synthesis. Break-induced telomere synthesis underlies alternative telomere maintenance Homology-directed DNA repair is essential for genome maintenance through templated DNA synthesis. Alternative lengthening of telomeres (ALT) necessitates homology-directed DNA repair to maintain telomeres in about 10–15% of human cancers. How DNA damage induces assembly and execution of a DNA replication complex (break-induced replisome) at telomeres or elsewhere in the mammalian genome is poorly understood. Here we define break-induced telomere synthesis and demonstrate that it utilizes a specialized replisome, which underlies ALT telomere maintenance. DNA double-strand breaks enact nascent telomere synthesis by long-tract unidirectional replication. Proliferating cell nuclear antigen (PCNA) loading by replication",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.618725+00:00"
+}

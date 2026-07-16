@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "35760786",
+  "source_fingerprint": "e851ac328c654455548fc04b9184f61c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "35760786",
+    "loss-of-subcellular-lipid-transport-due-to-arv1-deficiency-disrupts-organelle-homeostasis-and-activates-the-unfolded-protein-response."
+  ],
+  "key_phrases": [
+    "loss",
+    "subcellular",
+    "lipid",
+    "transport",
+    "due",
+    "arv1",
+    "deficiency",
+    "disrupts"
+  ],
+  "summary_1l": "Loss of subcellular lipid transport due to ARV1 deficiency disrupts organelle homeostasis and activates the unfolded protein response.",
+  "query_hits": [],
+  "embed_text": "35760786 Loss of subcellular lipid transport due to ARV1 deficiency disrupts organelle homeostasis and activates the unfolded protein response. science scifact The ARV1-encoded protein mediates sterol transport from the endoplasmic reticulum (ER) to the plasma membrane. Yeast ARV1 mutants accumulate multiple lipids in the ER and are sensitive to pharmacological modulators of both sterol and… 35760786 loss-of-subcellular-lipid-transport-due-to-arv1-deficiency-disrupts-organelle-homeostasis-and-activates-the-unfolded-protein-response. loss subcellular lipid transport due arv1 deficiency disrupts Loss of subcellular lipid transport due to ARV1 deficiency disrupts organelle homeostasis and activates the unfolded protein response. Loss of subcellular lipid transport due to ARV1 deficiency disrupts organelle homeostasis and activates the unfolded protein response. The ARV1-encoded protein mediates sterol transport from the endoplasmic reticulum (ER) to the plasma membrane. Yeast ARV1 mutants accumulate multiple lipids in the ER and are sensitive to pharmacological modulators of both sterol and sphingolipid metabolism. Using fluorescent and electron microscopy, we demonstrate sterol accumulation, subcellular membrane expansion, elevated lipid droplet formation, and vacuolar fragmentation in ARV1 mutants. Motif-based regression analysis of ARV1 deletion transcription profiles indicates activation of Hac1p, an integral component of the unfolded protein response (UPR). Accordingly, we show constitutive splicing of HAC1 t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.578766+00:00"
+}

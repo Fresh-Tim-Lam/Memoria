@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20130904",
+  "source_fingerprint": "69437b46a331fe0bf698288a5cffba77",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20130904",
+    "\"grazing\":-a-high-risk-behavior."
+  ],
+  "key_phrases": [
+    "grazing",
+    "high",
+    "risk",
+    "behavior",
+    "background",
+    "gastric",
+    "bypass",
+    "patients"
+  ],
+  "summary_1l": "\"Grazing\": a high-risk behavior.",
+  "query_hits": [],
+  "embed_text": "20130904 \"Grazing\": a high-risk behavior. science scifact BACKGROUND Gastric bypass patients with a range of disturbed eating patterns before surgery may be at risk of returning to old patterns postoperatively. Recent research has shown that binge eating is common among the obese before surgery… 20130904 \"grazing\":-a-high-risk-behavior. grazing high risk behavior background gastric bypass patients \"Grazing\": a high-risk behavior. \"Grazing\": a high-risk behavior. BACKGROUND Gastric bypass patients with a range of disturbed eating patterns before surgery may be at risk of returning to old patterns postoperatively. Recent research has shown that binge eating is common among the obese before surgery as well as in the postoperative maintenance phase and appears to be linked to poorer outcome. Although \"grazing\" behavior has not been specifically studied, it is also a high-risk pattern. This paper is a descriptive investigation summarizing postoperative eating patterns in a group of patients. METHODS Patients completed self-report questionnaires before surgery and were seen for a preoperative mental health evaluation with particular focus on assessing eating patterns. Patients with high-risk eating patterns, both binge e",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.675051+00:00"
+}

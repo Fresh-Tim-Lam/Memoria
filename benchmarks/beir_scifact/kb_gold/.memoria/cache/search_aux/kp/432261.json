@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "432261",
+  "source_fingerprint": "61b145a62ec30bb0bba9c02229cda885",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "432261",
+    "generation-of-gene-edited-rats-by-delivery-of-crispr/cas9-protein-and-donor-dna-into-intact-zygotes-using-electroporation"
+  ],
+  "key_phrases": [
+    "generation",
+    "gene",
+    "edited",
+    "rats",
+    "by",
+    "delivery",
+    "crispr",
+    "cas9"
+  ],
+  "summary_1l": "The generation of gene-edited animals using the CRISPRs/Cas9 system is based o",
+  "query_hits": [],
+  "embed_text": "432261 Generation of gene-edited rats by delivery of CRISPR/Cas9 protein and donor DNA into intact zygotes using electroporation science scifact The generation of gene-edited animals using the CRISPRs/Cas9 system is based on microinjection into zygotes which is inefficient, time consuming and demands high technical skills. We report the optimization of an electroporation method for… 432261 generation-of-gene-edited-rats-by-delivery-of-crispr/cas9-protein-and-donor-dna-into-intact-zygotes-using-electroporation generation gene edited rats by delivery crispr cas9 The generation of gene-edited animals using the CRISPRs/Cas9 system is based o Generation of gene-edited rats by delivery of CRISPR/Cas9 protein and donor DNA into intact zygotes using electroporation The generation of gene-edited animals using the CRISPRs/Cas9 system is based on microinjection into zygotes which is inefficient, time consuming and demands high technical skills. We report the optimization of an electroporation method for intact rat zygotes using sgRNAs and Cas9 protein in combination or not with ssODNs (~100 nt). This resulted in high frequency of knockouts, between 15 and 50% of analyzed animals. Importantly, using ssODNs as donor template resulted in precise knock-in mutations in 25-100% of analyzed animals, comparable to microinjection. Electroporation of long ssDNA or dsDNA donors successfully used in microinjection in the past did not allow gener",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.643103+00:00"
+}

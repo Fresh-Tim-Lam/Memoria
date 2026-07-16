@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "41782935",
+  "source_fingerprint": "693a42aaec1686e22466b8b0d9f3571c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "41782935",
+    "genetic-diagnosis-and-prognosis-of-alzheimer's-disease:-challenges-and-opportunities."
+  ],
+  "key_phrases": [
+    "genetic",
+    "diagnosis",
+    "prognosis",
+    "alzheimer",
+    "disease",
+    "challenges",
+    "opportunities",
+    "ad"
+  ],
+  "summary_1l": "Genetic diagnosis and prognosis of Alzheimer's disease: challenges and opportunities.",
+  "query_hits": [],
+  "embed_text": "41782935 Genetic diagnosis and prognosis of Alzheimer's disease: challenges and opportunities. science scifact Alzheimer's disease (AD), the most common form of dementia in western societies, is a pathologically and clinically heterogeneous disease with a strong genetic component. The recent advances in high-throughput genome technologies allowing… 41782935 genetic-diagnosis-and-prognosis-of-alzheimer's-disease:-challenges-and-opportunities. genetic diagnosis prognosis alzheimer disease challenges opportunities ad Genetic diagnosis and prognosis of Alzheimer's disease: challenges and opportunities. Genetic diagnosis and prognosis of Alzheimer's disease: challenges and opportunities. Alzheimer's disease (AD), the most common form of dementia in western societies, is a pathologically and clinically heterogeneous disease with a strong genetic component. The recent advances in high-throughput genome technologies allowing for the rapid analysis of millions of polymorphisms in thousands of subjects has significantly advanced our understanding of the genomic underpinnings of AD susceptibility. During the last 5 years, genome-wide association and whole-exome- and whole-genome sequencing studies have mapped more than 20 disease-associated loci, providing insights into the molecular pathways involved in AD pathogenesis and hinting at potential novel therapeutic targets. This review article sum",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.591031+00:00"
+}

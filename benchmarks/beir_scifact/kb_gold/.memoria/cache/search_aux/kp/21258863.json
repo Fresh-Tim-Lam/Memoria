@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21258863",
+  "source_fingerprint": "ec71dc9e0fef2a6c6edc198ea05b6069",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21258863",
+    "an-il-13-inhibitor-blocks-the-development-of-hepatic-fibrosis-during-a-t-helper-type-2-dominated-inflammatory-response."
+  ],
+  "key_phrases": [
+    "il",
+    "13",
+    "inhibitor",
+    "blocks",
+    "development",
+    "hepatic",
+    "fibrosis",
+    "during"
+  ],
+  "summary_1l": "An IL-13 inhibitor blocks the development of hepatic fibrosis during a T-helper type 2-dominated inflammatory response.",
+  "query_hits": [],
+  "embed_text": "21258863 An IL-13 inhibitor blocks the development of hepatic fibrosis during a T-helper type 2-dominated inflammatory response. science scifact In schistosomiasis, chronic parasite egg-induced granuloma formation can lead to tissue destruction and fibrosis, which causes much of the morbidity and mortality associated with this disease. Here we show the importance of IL-13 in the… 21258863 an-il-13-inhibitor-blocks-the-development-of-hepatic-fibrosis-during-a-t-helper-type-2-dominated-inflammatory-response. il 13 inhibitor blocks development hepatic fibrosis during An IL-13 inhibitor blocks the development of hepatic fibrosis during a T-helper type 2-dominated inflammatory response. An IL-13 inhibitor blocks the development of hepatic fibrosis during a T-helper type 2-dominated inflammatory response. In schistosomiasis, chronic parasite egg-induced granuloma formation can lead to tissue destruction and fibrosis, which causes much of the morbidity and mortality associated with this disease. Here we show the importance of IL-13 in the pathogenesis of schistosomiasis, and demonstrate, perhaps for the first time, the therapeutic efficacy of an IL-13 inhibitor, sIL-13Ralpha2-Fc, in the control of hepatic fibrosis. T-helper type 2 (Th2) cytokines dominate the immune response in mice infected with Schistosoma mansoni, yet the specific contributions of IL-13 and IL-4 to the development of fibrosis were not previously investigated. Our studies demonstrate that both cytokines p",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.661086+00:00"
+}

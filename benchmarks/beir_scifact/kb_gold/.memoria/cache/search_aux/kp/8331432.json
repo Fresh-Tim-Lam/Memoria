@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8331432",
+  "source_fingerprint": "dcb4b7e23e3080121df3034d9207e1d8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8331432",
+    "binding-of-the-winged-helix-transcription-factor-hnf3-to-a-linker-histone-site-on-the-nucleosome."
+  ],
+  "key_phrases": [
+    "binding",
+    "winged",
+    "helix",
+    "transcription",
+    "factor",
+    "hnf3",
+    "linker",
+    "histone"
+  ],
+  "summary_1l": "Binding of the winged-helix transcription factor HNF3 to a linker histone site on the nucleosome.",
+  "query_hits": [],
+  "embed_text": "8331432 Binding of the winged-helix transcription factor HNF3 to a linker histone site on the nucleosome. science scifact The transcription factor HNF3 and linker histones H1 and H5 possess winged-helix DNA-binding domains, yet HNF3 and other fork head-related proteins activate genes during development whereas linker histones compact DNA in chromatin and… 8331432 binding-of-the-winged-helix-transcription-factor-hnf3-to-a-linker-histone-site-on-the-nucleosome. binding winged helix transcription factor hnf3 linker histone Binding of the winged-helix transcription factor HNF3 to a linker histone site on the nucleosome. Binding of the winged-helix transcription factor HNF3 to a linker histone site on the nucleosome. The transcription factor HNF3 and linker histones H1 and H5 possess winged-helix DNA-binding domains, yet HNF3 and other fork head-related proteins activate genes during development whereas linker histones compact DNA in chromatin and repress gene expression. We compared how the two classes of factors interact with chromatin templates and found that HNF3 binds DNA at the side of nucleosome cores, similarly to what has been reported for linker histone. A nucleosome structural binding site for HNF3 is occupied at the albumin transcriptional enhancer in active and potentially active chromatin, but not in inactive chromatin in vivo. While wild-type HNF3 protein does not compact DNA extending from",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.404028+00:00"
+}

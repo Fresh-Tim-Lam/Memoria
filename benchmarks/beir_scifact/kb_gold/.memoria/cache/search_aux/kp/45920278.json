@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "45920278",
+  "source_fingerprint": "282daf117cf65d29db9205f577594d3a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "45920278",
+    "gender-differences-in-the-utilization-of-health-care-services."
+  ],
+  "key_phrases": [
+    "gender",
+    "differences",
+    "utilization",
+    "health",
+    "care",
+    "services",
+    "background",
+    "studies"
+  ],
+  "summary_1l": "Gender differences in the utilization of health care services.",
+  "query_hits": [],
+  "embed_text": "45920278 Gender differences in the utilization of health care services. science scifact BACKGROUND Studies have shown that women use more health care services than men. We used important independent variables, such as patient sociodemographics and health status, to investigate gender differences in the use and costs of these… 45920278 gender-differences-in-the-utilization-of-health-care-services. gender differences utilization health care services background studies Gender differences in the utilization of health care services. Gender differences in the utilization of health care services. BACKGROUND Studies have shown that women use more health care services than men. We used important independent variables, such as patient sociodemographics and health status, to investigate gender differences in the use and costs of these services. METHODS New adult patients (N = 509) were randomly assigned to primary care physicians at a university medical center. Their use of health care services and associated charges were monitored for 1 year of care. Self-reported health status was measured using the Medical Outcomes Study Short Form-36 (SF-36). We controlled for health status, sociodemographic information, and primary care physician specialty in the statistical analyses. RESULTS Women had significantly lower self-reported",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.618131+00:00"
+}

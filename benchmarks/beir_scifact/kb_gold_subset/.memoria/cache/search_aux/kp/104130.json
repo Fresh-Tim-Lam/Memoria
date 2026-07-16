@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "104130",
+  "source_fingerprint": "88753678129abdf053682ff47616e47a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "104130",
+    "the-suture-provides-a-niche-for-mesenchymal-stem-cells-of-craniofacial-bones"
+  ],
+  "key_phrases": [
+    "suture",
+    "provides",
+    "niche",
+    "mesenchymal",
+    "stem",
+    "cells",
+    "craniofacial",
+    "bones"
+  ],
+  "summary_1l": "Bone tissue undergoes constant turnover supported by stem cells.",
+  "query_hits": [],
+  "embed_text": "104130 The suture provides a niche for mesenchymal stem cells of craniofacial bones science scifact Bone tissue undergoes constant turnover supported by stem cells. Recent studies showed that perivascular mesenchymal stem cells (MSCs) contribute to the turnover of long bones. Craniofacial bones are flat bones derived from a different… 104130 the-suture-provides-a-niche-for-mesenchymal-stem-cells-of-craniofacial-bones suture provides niche mesenchymal stem cells craniofacial bones Bone tissue undergoes constant turnover supported by stem cells. The suture provides a niche for mesenchymal stem cells of craniofacial bones Bone tissue undergoes constant turnover supported by stem cells. Recent studies showed that perivascular mesenchymal stem cells (MSCs) contribute to the turnover of long bones. Craniofacial bones are flat bones derived from a different embryonic origin than the long bones. The identity and regulating niche for craniofacial-bone MSCs remain unknown. Here, we identify Gli1+ cells within the suture mesenchyme as the main MSC population for craniofacial bones. They are not associated with vasculature, give rise to all craniofacial bones in the adult and are activated during injury repair. Gli1+ cells are typical MSCs in vitro. Ablation of Gli1+ cells leads to craniosynostosis and arrest of skull growth, indicating tha",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.517561+00:00"
+}

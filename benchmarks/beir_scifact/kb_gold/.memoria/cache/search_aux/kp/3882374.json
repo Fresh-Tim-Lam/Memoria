@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3882374",
+  "source_fingerprint": "a092cf59aa09a6ed1bc7e54805ec15c7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3882374",
+    "lin28-regulates-stem-cell-metabolism-and-conversion-to-primed-pluripotency."
+  ],
+  "key_phrases": [
+    "lin28",
+    "regulates",
+    "stem",
+    "cell",
+    "metabolism",
+    "conversion",
+    "primed",
+    "pluripotency"
+  ],
+  "summary_1l": "LIN28 Regulates Stem Cell Metabolism and Conversion to Primed Pluripotency.",
+  "query_hits": [],
+  "embed_text": "3882374 LIN28 Regulates Stem Cell Metabolism and Conversion to Primed Pluripotency. science scifact The RNA-binding proteins LIN28A and LIN28B play critical roles in embryonic development, tumorigenesis, and pluripotency, but their exact functions are poorly understood. Here, we show that, like LIN28A, LIN28B can function effectively… 3882374 lin28-regulates-stem-cell-metabolism-and-conversion-to-primed-pluripotency. lin28 regulates stem cell metabolism conversion primed pluripotency LIN28 Regulates Stem Cell Metabolism and Conversion to Primed Pluripotency. LIN28 Regulates Stem Cell Metabolism and Conversion to Primed Pluripotency. The RNA-binding proteins LIN28A and LIN28B play critical roles in embryonic development, tumorigenesis, and pluripotency, but their exact functions are poorly understood. Here, we show that, like LIN28A, LIN28B can function effectively with NANOG, OCT4, and SOX2 in reprogramming to pluripotency and that reactivation of both endogenous LIN28A and LIN28B loci are required for maximal reprogramming efficiency. In human fibroblasts, LIN28B is activated early during reprogramming, while LIN28A is activated later during the transition to bona fide induced pluripotent stem cells (iPSCs). In murine cells, LIN28A and LIN28B facilitate conversion from naive to primed pluripotency. Proteomic and metabolomic analysis highlight",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.006842+00:00"
+}

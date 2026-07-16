@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17163294",
+  "source_fingerprint": "6d08f0be77558698b31e25feccdd4e94",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17163294",
+    "metabolic-phenotyping-of-human-blood-plasma:-a-powerful-tool-to-discriminate-between-cancer-types?"
+  ],
+  "key_phrases": [
+    "metabolic",
+    "phenotyping",
+    "human",
+    "blood",
+    "plasma",
+    "powerful",
+    "tool",
+    "discriminate"
+  ],
+  "summary_1l": "Metabolic phenotyping of human blood plasma: a powerful tool to discriminate between cancer types?",
+  "query_hits": [],
+  "embed_text": "17163294 Metabolic phenotyping of human blood plasma: a powerful tool to discriminate between cancer types? science scifact BACKGROUND Accumulating evidence has shown that cancer cell metabolism differs from that of normal cells. However, up to now it is not clear whether different cancer types are characterized by a specific metabolite profile. Therefore, this… 17163294 metabolic-phenotyping-of-human-blood-plasma:-a-powerful-tool-to-discriminate-between-cancer-types? metabolic phenotyping human blood plasma powerful tool discriminate Metabolic phenotyping of human blood plasma: a powerful tool to discriminate between cancer types? Metabolic phenotyping of human blood plasma: a powerful tool to discriminate between cancer types? BACKGROUND Accumulating evidence has shown that cancer cell metabolism differs from that of normal cells. However, up to now it is not clear whether different cancer types are characterized by a specific metabolite profile. Therefore, this study aims to evaluate whether the plasma metabolic phenotype allows to discriminate between lung and breast cancer. PATIENTS AND METHODS The proton nuclear magnetic resonance spectrum of plasma is divided into 110 integration regions, representing the metabolic phenotype. These integration regions reflect the relative metabolite concentrations and were used to train a classification model in discriminating between 80 female breast cancer patients and 54 fe",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.405353+00:00"
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "yizhu-jizhi",
+  "source_fingerprint": "457fa2969f68058893562b9c1354965b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "yizhu-jizhi"
+  ],
+  "key_phrases": [
+    "注意力",
+    "机制",
+    "中文",
+    "概念",
+    "独立",
+    "表述",
+    "英文",
+    "对照"
+  ],
+  "summary_1l": "中文概念名，独立表述无英文对照词。",
+  "query_hits": [],
+  "embed_text": "yizhu-jizhi 注意力机制 yizhu-jizhi 注意力 机制 中文 概念 独立 表述 英文 对照 中文概念名，独立表述无英文对照词。 注意力机制 中文概念名，独立表述无英文对照词。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T03:23:44.699353+00:00"
+}

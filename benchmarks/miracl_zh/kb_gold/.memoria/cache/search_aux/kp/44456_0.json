@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "kp_id": "44456#0",
+  "source_fingerprint": "fe99f7e94819a58bfc8b55068d0d798a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "十字架",
+    "法国国旗",
+    "中華人民共和國新聞自由",
+    "基督教象徵",
+    "瑞典國旗"
+  ],
+  "aliases": [
+    "44456#0"
+  ],
+  "key_phrases": [
+    "挪威",
+    "国旗",
+    "藍色",
+    "十字架",
+    "加上",
+    "白色",
+    "邊和",
+    "周围"
+  ],
+  "summary_1l": "挪威国旗由靛藍色十字架加上白色邊和周围的红色组成。",
+  "query_hits": [],
+  "embed_text": "44456#0 挪威国旗 挪威国旗 挪威国旗由靛藍色十字架加上白色邊和周围的红色组成。在白色十字中加入藍色十字，於是誕生了三种颜色的國旗。其中红白蓝三色象徵自由與獨立。 十字架 法国国旗 中華人民共和國新聞自由 基督教象徵 瑞典國旗 44456#0 挪威 国旗 藍色 十字架 加上 白色 邊和 周围 挪威国旗由靛藍色十字架加上白色邊和周围的红色组成。 挪威国旗 挪威国旗由靛藍色十字架加上白色邊和周围的红色组成。在白色十字中加入藍色十字，於是誕生了三种颜色的國旗。其中红白蓝三色象徵自由與獨立。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:19:01.289047+00:00"
+}

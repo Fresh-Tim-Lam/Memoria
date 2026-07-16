@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "39462488",
+  "source_fingerprint": "b7c519f90143a3651eb42d1614196b40",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "39462488",
+    "replisome-stalling-and-stabilization-at-cgg-repeats,-which-are-responsible-for-chromosomal-fragility"
+  ],
+  "key_phrases": [
+    "replisome",
+    "stalling",
+    "stabilization",
+    "at",
+    "cgg",
+    "repeats",
+    "which",
+    "responsible"
+  ],
+  "summary_1l": "Expanded CGG repeats cause chromosomal fragility and hereditary neurological disorders in humans.",
+  "query_hits": [],
+  "embed_text": "39462488 Replisome stalling and stabilization at CGG repeats, which are responsible for chromosomal fragility science scifact Expanded CGG repeats cause chromosomal fragility and hereditary neurological disorders in humans. Replication forks stall at CGG repeats in a length-dependent manner in primate cells and in yeast. Saccharomyces cerevisiae proteins Tof1 and… 39462488 replisome-stalling-and-stabilization-at-cgg-repeats,-which-are-responsible-for-chromosomal-fragility replisome stalling stabilization at cgg repeats which responsible Expanded CGG repeats cause chromosomal fragility and hereditary neurological disorders in humans. Replisome stalling and stabilization at CGG repeats, which are responsible for chromosomal fragility Expanded CGG repeats cause chromosomal fragility and hereditary neurological disorders in humans. Replication forks stall at CGG repeats in a length-dependent manner in primate cells and in yeast. Saccharomyces cerevisiae proteins Tof1 and Mrc1 facilitate replication fork progression through CGG repeats. Remarkably, the fork-stabilizing role of Mrc1 does not involve its checkpoint function. Thus, chromosomal fragility might occur when forks stalled at expanded CGG repeats escape the S-phase checkpoint.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.644942+00:00"
+}

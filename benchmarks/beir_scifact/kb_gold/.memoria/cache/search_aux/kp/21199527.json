@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21199527",
+  "source_fingerprint": "52ae35c9effc5176195cd896a8ff828c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21199527",
+    "parathyroid-hormone-induces-e4bp4-messenger-ribonucleic-acid-expression-primarily-through-cyclic-adenosine-3',5'-monophosphate-signaling-in-osteoblasts."
+  ],
+  "key_phrases": [
+    "parathyroid",
+    "hormone",
+    "induces",
+    "e4bp4",
+    "messenger",
+    "ribonucleic",
+    "acid",
+    "expression"
+  ],
+  "summary_1l": "Parathyroid hormone induces E4bp4 messenger ribonucleic acid expression primarily through cyclic adenosine 3',5'-monophosphate signaling in osteoblasts.",
+  "query_hits": [],
+  "embed_text": "21199527 Parathyroid hormone induces E4bp4 messenger ribonucleic acid expression primarily through cyclic adenosine 3',5'-monophosphate signaling in osteoblasts. science scifact PTH binding to its receptor activates protein kinase A (PKA), protein kinase C (PKC), and calcium signaling to induce transcription of primary response genes in osteoblasts. Adenovirus E4 promoter-binding protein/nuclear factor regulated… 21199527 parathyroid-hormone-induces-e4bp4-messenger-ribonucleic-acid-expression-primarily-through-cyclic-adenosine-3',5'-monophosphate-signaling-in-osteoblasts. parathyroid hormone induces e4bp4 messenger ribonucleic acid expression Parathyroid hormone induces E4bp4 messenger ribonucleic acid expression primarily through cyclic adenosine 3',5'-monophosphate signaling in osteoblasts. Parathyroid hormone induces E4bp4 messenger ribonucleic acid expression primarily through cyclic adenosine 3',5'-monophosphate signaling in osteoblasts. PTH binding to its receptor activates protein kinase A (PKA), protein kinase C (PKC), and calcium signaling to induce transcription of primary response genes in osteoblasts. Adenovirus E4 promoter-binding protein/nuclear factor regulated by IL-3 (E4BP4/NFIL3), a transcriptional repressor, is a PTH-induced primary response gene in primary mouse osteoblasts (MOBs). Here we investigate the signaling pathway(s) that lead to PTH induction of E4bp4 mRNA expression. Ten and 100 nm PTH induced maximum E4bp4 expression in MOBs. Forskolin (FSK), an adenylate cyclase inducer, 8-bromo-cAMP, a cAMP analog, and phorbol myristate acetate, a PKC activator",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.523363+00:00"
+}

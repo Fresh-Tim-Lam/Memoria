@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21487212",
+  "source_fingerprint": "3e4c49f26520085d2bc4edbedac14837",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21487212",
+    "inhibition-of-cell-proliferation-and-induction-of-apoptosis-by-exfabp-gene-targeting."
+  ],
+  "key_phrases": [
+    "inhibition",
+    "cell",
+    "proliferation",
+    "induction",
+    "apoptosis",
+    "by",
+    "exfabp",
+    "gene"
+  ],
+  "summary_1l": "Inhibition of cell proliferation and induction of apoptosis by ExFABP gene targeting.",
+  "query_hits": [],
+  "embed_text": "21487212 Inhibition of cell proliferation and induction of apoptosis by ExFABP gene targeting. science scifact Ex-FABP, an extracellular fatty acid binding lipocalin, is physiologically expressed by differentiating chicken chondrocytes and myoblasts. Its expression is enhanced after cell treatment with inflammatory stimuli and repressed by… 21487212 inhibition-of-cell-proliferation-and-induction-of-apoptosis-by-exfabp-gene-targeting. inhibition cell proliferation induction apoptosis by exfabp gene Inhibition of cell proliferation and induction of apoptosis by ExFABP gene targeting. Inhibition of cell proliferation and induction of apoptosis by ExFABP gene targeting. Ex-FABP, an extracellular fatty acid binding lipocalin, is physiologically expressed by differentiating chicken chondrocytes and myoblasts. Its expression is enhanced after cell treatment with inflammatory stimuli and repressed by anti-inflammatory agents, behaving as an acute phase protein. Chicken liver fragments in culture show enhanced protein expression after bacterial endotoxin treatment. To investigate the biological role of Ex-FABP, we stably transfected proliferating chondrocytes with an expression vector carrying antisense oriented Ex-FABP cDNA. We observed a dramatic loss of cell viability and a strong inhibition of cell proliferation and differentiation. When chondrocytes were transfected with",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.221609+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3052213",
+  "source_fingerprint": "da5d0d8aa4bee751184ccb3108e2f0c4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3052213",
+    "genome-wide-profiling-of-h3k56-acetylation-and-transcription-factor-binding-sites-in-human-adipocytes"
+  ],
+  "key_phrases": [
+    "genome",
+    "wide",
+    "profiling",
+    "h3k56",
+    "acetylation",
+    "transcription",
+    "factor",
+    "binding"
+  ],
+  "summary_1l": "The growing epidemic of obesity and metabolic diseases calls for a better understanding of adipocy",
+  "query_hits": [],
+  "embed_text": "3052213 Genome-Wide Profiling of H3K56 Acetylation and Transcription Factor Binding Sites in Human Adipocytes science scifact The growing epidemic of obesity and metabolic diseases calls for a better understanding of adipocyte biology. The regulation of transcription in adipocytes is particularly important, as it is a target for several therapeutic approaches.… 3052213 genome-wide-profiling-of-h3k56-acetylation-and-transcription-factor-binding-sites-in-human-adipocytes genome wide profiling h3k56 acetylation transcription factor binding The growing epidemic of obesity and metabolic diseases calls for a better understanding of adipocy Genome-Wide Profiling of H3K56 Acetylation and Transcription Factor Binding Sites in Human Adipocytes The growing epidemic of obesity and metabolic diseases calls for a better understanding of adipocyte biology. The regulation of transcription in adipocytes is particularly important, as it is a target for several therapeutic approaches. Transcriptional outcomes are influenced by both histone modifications and transcription factor binding. Although the epigenetic states and binding sites of several important transcription factors have been profiled in the mouse 3T3-L1 cell line, such data are lacking in human adipocytes. In this study, we identified H3K56 acetylation sites in human adipocytes derived from mesenchymal stem cells. H3K56 is acetylated by CBP and p300, and deacetylated by SIRT1",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.739611+00:00"
+}

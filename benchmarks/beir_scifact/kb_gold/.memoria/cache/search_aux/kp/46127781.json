@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "46127781",
+  "source_fingerprint": "13674b3c623190419bc5b54614e8daaa",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "46127781",
+    "detection-and-comparison-of-epidermal-growth-factor-receptor-mutations-in-cells-and-fluid-of-malignant-pleural-effusion-in-non-small-cell-lung-cancer."
+  ],
+  "key_phrases": [
+    "detection",
+    "comparison",
+    "epidermal",
+    "growth",
+    "factor",
+    "receptor",
+    "mutations",
+    "cells"
+  ],
+  "summary_1l": "Detection and comparison of epidermal growth factor receptor mutations in cells and fluid of malignant pleural effusion in non-small cell lung cancer.",
+  "query_hits": [],
+  "embed_text": "46127781 Detection and comparison of epidermal growth factor receptor mutations in cells and fluid of malignant pleural effusion in non-small cell lung cancer. science scifact Cells or cell-free fluid of malignant pleural effusion could be important clinical specimen for epidermal growth factor receptor (EGFR) mutation screening in advanced non-small cell lung cancer (NSCLC) patients. However, their usefulness… 46127781 detection-and-comparison-of-epidermal-growth-factor-receptor-mutations-in-cells-and-fluid-of-malignant-pleural-effusion-in-non-small-cell-lung-cancer. detection comparison epidermal growth factor receptor mutations cells Detection and comparison of epidermal growth factor receptor mutations in cells and fluid of malignant pleural effusion in non-small cell lung cancer. Detection and comparison of epidermal growth factor receptor mutations in cells and fluid of malignant pleural effusion in non-small cell lung cancer. Cells or cell-free fluid of malignant pleural effusion could be important clinical specimen for epidermal growth factor receptor (EGFR) mutation screening in advanced non-small cell lung cancer (NSCLC) patients. However, their usefulness in mutation detection has not been well compared. In this study we recruited 26 East Asian NSCLC patients with malignant pleural effusion, determined the mutation status of EGFR in both cells and matched cell-free fluid with the use of sequencing and mutant-enriched PCR. After comparing the mutation spectrums, we found both the cells and cell-free pleural fluid may be feasible clinical specimen for EGFR muta",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.649343+00:00"
+}

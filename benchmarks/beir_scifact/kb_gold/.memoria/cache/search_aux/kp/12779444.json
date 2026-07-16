@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12779444",
+  "source_fingerprint": "32eb5b12ac1c80897369f59a546bb01d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12779444",
+    "effect-of-screening-on-cervical-cancer-mortality-in-england-and-wales:-analysis-of-trends-with-an-age-period-cohort-model."
+  ],
+  "key_phrases": [
+    "effect",
+    "screening",
+    "cervical",
+    "cancer",
+    "mortality",
+    "england",
+    "wales",
+    "analysis"
+  ],
+  "summary_1l": "Effect of screening on cervical cancer mortality in England and Wales: analysis of trends with an age period cohort model.",
+  "query_hits": [],
+  "embed_text": "12779444 Effect of screening on cervical cancer mortality in England and Wales: analysis of trends with an age period cohort model. science scifact The number of women dying from cervical cancer in 1997 was 7% lower than in 1996 and has fallen by over 25% since 1992.1 Such rapid change must be at least partly due to cervical screening, although strong cohort effects have caused large… 12779444 effect-of-screening-on-cervical-cancer-mortality-in-england-and-wales:-analysis-of-trends-with-an-age-period-cohort-model. effect screening cervical cancer mortality england wales analysis Effect of screening on cervical cancer mortality in England and Wales: analysis of trends with an age period cohort model. Effect of screening on cervical cancer mortality in England and Wales: analysis of trends with an age period cohort model. The number of women dying from cervical cancer in 1997 was 7% lower than in 1996 and has fallen by over 25% since 1992.1 Such rapid change must be at least partly due to cervical screening, although strong cohort effects have caused large fluctuations in cervical mortality in the past.2 We modelled mortality data, taking into account the effects of age and year of birth and looking for trends in time within four age groups to estimate the beneficial effects of cervical screening. We obtained mortality data, in 5 year age bands, from death registrations in England and Wales and calculated rates using mid-year population estimates. Mortality since 1993 was adjusted upwar",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:08.929035+00:00"
+}

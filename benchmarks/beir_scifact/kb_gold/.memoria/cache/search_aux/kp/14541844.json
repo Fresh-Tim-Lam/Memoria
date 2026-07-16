@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14541844",
+  "source_fingerprint": "32f460c6560187d0193bf3f14880bb8e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14541844",
+    "reconstruction-of-the-yeast-snf1-kinase-regulatory-network-reveals-its-role-as-a-global-energy-regulator"
+  ],
+  "key_phrases": [
+    "reconstruction",
+    "yeast",
+    "snf1",
+    "kinase",
+    "regulatory",
+    "network",
+    "reveals",
+    "its"
+  ],
+  "summary_1l": "Highly conserved among eukaryotic cells, the AMP-activated kinase (AMPK) is a central regulator",
+  "query_hits": [],
+  "embed_text": "14541844 Reconstruction of the yeast Snf1 kinase regulatory network reveals its role as a global energy regulator science scifact Highly conserved among eukaryotic cells, the AMP-activated kinase (AMPK) is a central regulator of carbon metabolism. To map the complete network of interactions around AMPK in yeast (Snf1) and to evaluate the role of its regulatory… 14541844 reconstruction-of-the-yeast-snf1-kinase-regulatory-network-reveals-its-role-as-a-global-energy-regulator reconstruction yeast snf1 kinase regulatory network reveals its Highly conserved among eukaryotic cells, the AMP-activated kinase (AMPK) is a central regulator Reconstruction of the yeast Snf1 kinase regulatory network reveals its role as a global energy regulator Highly conserved among eukaryotic cells, the AMP-activated kinase (AMPK) is a central regulator of carbon metabolism. To map the complete network of interactions around AMPK in yeast (Snf1) and to evaluate the role of its regulatory subunit Snf4, we measured global mRNA, protein and metabolite levels in wild type, Deltasnf1, Deltasnf4, and Deltasnf1Deltasnf4 knockout strains. Using four newly developed computational tools, including novel DOGMA sub-network analysis, we showed the benefits of three-level ome-data integration to uncover the global Snf1 kinase role in yeast. We for the first time identified Snf1's global regulation on gene and protein expression levels, and showed that yea",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.139426+00:00"
+}

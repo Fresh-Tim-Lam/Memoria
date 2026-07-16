@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "kp_id": "150272#2",
+  "source_fingerprint": "321fa48b87f82dda175236b4edbd90fd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "數字化革命"
+  ],
+  "aliases": [
+    "150272#2"
+  ],
+  "key_phrases": [
+    "修正主义",
+    "马克思主义",
+    "修正",
+    "一词",
+    "来自",
+    "拉丁文",
+    "revidere",
+    "revisere"
+  ],
+  "summary_1l": "“修正”一词来自于拉丁文revidere和revisere，本意为“重判”、“重新审查”，原为中性词，其派生词“修正主义”原泛指对某种学说的修正。",
+  "query_hits": [],
+  "embed_text": "150272#2 修正主义 (马克思主义) 修正主义 (马克思主义) “修正”一词来自于拉丁文revidere和revisere，本意为“重判”、“重新审查”，原为中性词，其派生词“修正主义”原泛指对某种学说的修正。20世纪初后，被马克思主义者用于专门称呼那些修改马克思主义基础原理的流派和思潮。最早使用“修正主义”一词指称伯恩斯坦的思想可能是1898-1899年罗莎·卢森堡发表的一组论文，集为《社会改良还是社会革命？》。 數字化革命 150272#2 修正主义 马克思主义 修正 一词 来自 拉丁文 revidere revisere “修正”一词来自于拉丁文revidere和revisere，本意为“重判”、“重新审查”，原为中性词，其派生词“修正主义”原泛指对某种学说的修正。 修正主义 (马克思主义) “修正”一词来自于拉丁文revidere和revisere，本意为“重判”、“重新审查”，原为中性词，其派生词“修正主义”原泛指对某种学说的修正。20世纪初后，被马克思主义者用于专门称呼那些修改马克思主义基础原理的流派和思潮。最早使用“修正主义”一词指称伯恩斯坦的思想可能是1898-1899年罗莎·卢森堡发表的一组论文，集为《社会改良还是社会革命？》。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:19:47.038578+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22908536",
+  "source_fingerprint": "6e9b8d548c5d446ef80369adb037ff7e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22908536",
+    "stress-and-host-immunity-amplify-mycobacterium-tuberculosis-phenotypic-heterogeneity-and-induce-nongrowing-metabolically-active-forms."
+  ],
+  "key_phrases": [
+    "stress",
+    "host",
+    "immunity",
+    "amplify",
+    "mycobacterium",
+    "tuberculosis",
+    "phenotypic",
+    "heterogeneity"
+  ],
+  "summary_1l": "Stress and host immunity amplify Mycobacterium tuberculosis phenotypic heterogeneity and induce nongrowing metabolically active forms.",
+  "query_hits": [],
+  "embed_text": "22908536 Stress and host immunity amplify Mycobacterium tuberculosis phenotypic heterogeneity and induce nongrowing metabolically active forms. science scifact Nonreplicating and metabolically quiescent bacteria are implicated in latent tuberculosis infections and relapses following \"sterilizing\" chemotherapy. However, evidence linking bacterial dormancy and persistence in vivo is largely… 22908536 stress-and-host-immunity-amplify-mycobacterium-tuberculosis-phenotypic-heterogeneity-and-induce-nongrowing-metabolically-active-forms. stress host immunity amplify mycobacterium tuberculosis phenotypic heterogeneity Stress and host immunity amplify Mycobacterium tuberculosis phenotypic heterogeneity and induce nongrowing metabolically active forms. Stress and host immunity amplify Mycobacterium tuberculosis phenotypic heterogeneity and induce nongrowing metabolically active forms. Nonreplicating and metabolically quiescent bacteria are implicated in latent tuberculosis infections and relapses following \"sterilizing\" chemotherapy. However, evidence linking bacterial dormancy and persistence in vivo is largely inconclusive. Here we measure the single-cell dynamics of Mycobacterium tuberculosis replication and ribosomal activity using quantitative time-lapse microscopy and a reporter of ribosomal RNA gene expression. Single-cell dynamics exhibit heterogeneity under standard growth conditions, which is amplified by stressful conditions such as nutrient limitation, stationary phase, intracellular replication, and growth in mouse lungs. Ad",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.504303+00:00"
+}

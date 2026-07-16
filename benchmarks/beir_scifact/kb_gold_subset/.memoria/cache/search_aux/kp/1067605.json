@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1067605",
+  "source_fingerprint": "272d42417d34fd9d6e24b2d726c2c200",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1067605",
+    "effective-population-size-and-patterns-of-molecular-evolution-and-variation"
+  ],
+  "key_phrases": [
+    "effective",
+    "population",
+    "size",
+    "patterns",
+    "molecular",
+    "evolution",
+    "variation",
+    "ne"
+  ],
+  "summary_1l": "The effective size of a population, Ne, determines the rate of change in the composition of a population caused by genetic d",
+  "query_hits": [],
+  "embed_text": "1067605 Effective population size and patterns of molecular evolution and variation science scifact The effective size of a population, Ne, determines the rate of change in the composition of a population caused by genetic drift, which is the random sampling of genetic variants in a finite population. Ne is crucial in determining the… 1067605 effective-population-size-and-patterns-of-molecular-evolution-and-variation effective population size patterns molecular evolution variation ne The effective size of a population, Ne, determines the rate of change in the composition of a population caused by genetic d Effective population size and patterns of molecular evolution and variation The effective size of a population, Ne, determines the rate of change in the composition of a population caused by genetic drift, which is the random sampling of genetic variants in a finite population. Ne is crucial in determining the level of variability in a population, and the effectiveness of selection relative to drift. This article reviews the properties of Ne in a variety of different situations of biological interest, and the factors that influence it. In particular, the action of selection means that Ne varies across the genome, and advances in genomic techniques are giving new insights into how selection shapes Ne.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.867047+00:00"
+}

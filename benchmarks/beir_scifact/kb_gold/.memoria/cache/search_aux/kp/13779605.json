@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13779605",
+  "source_fingerprint": "a99f5e937f8b048f10d59c6c33c8c2c2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13779605",
+    "identification-of-vitronectin-as-an-extrinsic-inducer-of-cancer-stem-cell-differentiation-and-tumor-formation."
+  ],
+  "key_phrases": [
+    "identification",
+    "vitronectin",
+    "as",
+    "extrinsic",
+    "inducer",
+    "cancer",
+    "stem",
+    "cell"
+  ],
+  "summary_1l": "Identification of vitronectin as an extrinsic inducer of cancer stem cell differentiation and tumor formation.",
+  "query_hits": [],
+  "embed_text": "13779605 Identification of vitronectin as an extrinsic inducer of cancer stem cell differentiation and tumor formation. science scifact There is mounting evidence that tumors are initiated by a rare subset of cells called cancer stem cells (CSCs). CSCs are generally quiescent, self-renew, form tumors at low numbers, and give rise to the heterogeneous cell types found… 13779605 identification-of-vitronectin-as-an-extrinsic-inducer-of-cancer-stem-cell-differentiation-and-tumor-formation. identification vitronectin as extrinsic inducer cancer stem cell Identification of vitronectin as an extrinsic inducer of cancer stem cell differentiation and tumor formation. Identification of vitronectin as an extrinsic inducer of cancer stem cell differentiation and tumor formation. There is mounting evidence that tumors are initiated by a rare subset of cells called cancer stem cells (CSCs). CSCs are generally quiescent, self-renew, form tumors at low numbers, and give rise to the heterogeneous cell types found within a tumor. CSCs isolated from multiple tumor types differentiate both in vivo and in vitro when cultured in serum, yet the factors responsible for their differentiation have not yet been identified. Here we show that vitronectin is the component of human serum driving stem cell differentiation through an integrin alpha V beta 3-dependent mechanism. CSCs cultured on vitronectin result in downregulation of stem cell genes, modulation of differentia",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.988529+00:00"
+}

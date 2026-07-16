@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2613775",
+  "source_fingerprint": "0313d571941956829773ffa2165150f5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2613775",
+    "sudden-infant-death-syndrome."
+  ],
+  "key_phrases": [
+    "sudden",
+    "infant",
+    "death",
+    "syndrome",
+    "despite",
+    "declines",
+    "prevalence",
+    "during"
+  ],
+  "summary_1l": "Sudden infant death syndrome.",
+  "query_hits": [],
+  "embed_text": "2613775 Sudden infant death syndrome. science scifact Despite declines in prevalence during the past two decades, sudden infant death syndrome (SIDS) continues to be the leading cause of death for infants aged between 1 month and 1 year in developed countries. Behavioural risk factors… 2613775 sudden-infant-death-syndrome. sudden infant death syndrome despite declines prevalence during Sudden infant death syndrome. Sudden infant death syndrome. Despite declines in prevalence during the past two decades, sudden infant death syndrome (SIDS) continues to be the leading cause of death for infants aged between 1 month and 1 year in developed countries. Behavioural risk factors identified in epidemiological studies include prone and side positions for infant sleep, smoke exposure, soft bedding and sleep surfaces, and overheating. Evidence also suggests that pacifier use at sleep time and room sharing without bed sharing are associated with decreased risk of SIDS. Although the cause of SIDS is unknown, immature cardiorespiratory autonomic control and failure of arousal responsiveness from sleep are important factors. Gene polymorphisms relating to serotonin transport and autonomic nervous system development",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.482395+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5760247",
+  "source_fingerprint": "bdbeb5408b5544963135fd4ef4707257",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5760247",
+    "a-conserved-mechanism-for-centromeric-nucleosome-recognition-by-centromere-protein-cenp-c."
+  ],
+  "key_phrases": [
+    "conserved",
+    "mechanism",
+    "centromeric",
+    "nucleosome",
+    "recognition",
+    "by",
+    "centromere",
+    "protein"
+  ],
+  "summary_1l": "A conserved mechanism for centromeric nucleosome recognition by centromere protein CENP-C.",
+  "query_hits": [],
+  "embed_text": "5760247 A conserved mechanism for centromeric nucleosome recognition by centromere protein CENP-C. science scifact Chromosome segregation during mitosis requires assembly of the kinetochore complex at the centromere. Kinetochore assembly depends on specific recognition of the histone variant CENP-A in the centromeric nucleosome by centromere protein C… 5760247 a-conserved-mechanism-for-centromeric-nucleosome-recognition-by-centromere-protein-cenp-c. conserved mechanism centromeric nucleosome recognition by centromere protein A conserved mechanism for centromeric nucleosome recognition by centromere protein CENP-C. A conserved mechanism for centromeric nucleosome recognition by centromere protein CENP-C. Chromosome segregation during mitosis requires assembly of the kinetochore complex at the centromere. Kinetochore assembly depends on specific recognition of the histone variant CENP-A in the centromeric nucleosome by centromere protein C (CENP-C). We have defined the determinants of this recognition mechanism and discovered that CENP-C binds a hydrophobic region in the CENP-A tail and docks onto the acidic patch of histone H2A and H2B. We further found that the more broadly conserved CENP-C motif uses the same mechanism for CENP-A nucleosome recognition. Our findings reveal a conserved mechanism for protein recruitment to centromeres and a histone recognition mode whereby a disordered peptide binds",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.989569+00:00"
+}

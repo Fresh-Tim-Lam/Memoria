@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8247597",
+  "source_fingerprint": "d850b48b34b98e8caa28d7ded5a36990",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8247597",
+    "mitochondrial-dysfunction-leads-to-nuclear-genome-instability-via-an-iron-sulfur-cluster-defect"
+  ],
+  "key_phrases": [
+    "mitochondrial",
+    "dysfunction",
+    "leads",
+    "nuclear",
+    "genome",
+    "instability",
+    "via",
+    "iron"
+  ],
+  "summary_1l": "Mutations and deletions in the mitochondrial genome (mtDNA), as well as instability of the nuclear genom",
+  "query_hits": [],
+  "embed_text": "8247597 Mitochondrial Dysfunction Leads to Nuclear Genome Instability via an Iron-Sulfur Cluster Defect science scifact Mutations and deletions in the mitochondrial genome (mtDNA), as well as instability of the nuclear genome, are involved in multiple human diseases. Here, we report that in Saccharomyces cerevisiae, loss of mtDNA leads to nuclear genome… 8247597 mitochondrial-dysfunction-leads-to-nuclear-genome-instability-via-an-iron-sulfur-cluster-defect mitochondrial dysfunction leads nuclear genome instability via iron Mutations and deletions in the mitochondrial genome (mtDNA), as well as instability of the nuclear genom Mitochondrial Dysfunction Leads to Nuclear Genome Instability via an Iron-Sulfur Cluster Defect Mutations and deletions in the mitochondrial genome (mtDNA), as well as instability of the nuclear genome, are involved in multiple human diseases. Here, we report that in Saccharomyces cerevisiae, loss of mtDNA leads to nuclear genome instability, through a process of cell-cycle arrest and selection we define as a cellular crisis. This crisis is not mediated by the absence of respiration, but instead correlates with a reduction in the mitochondrial membrane potential. Analysis of cells undergoing this crisis identified a defect in iron-sulfur cluster (ISC) biogenesis, which requires normal mitochondrial function. We found that downregulation of nonmitochondrial ISC protein biogenesis was suffic",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.180415+00:00"
+}

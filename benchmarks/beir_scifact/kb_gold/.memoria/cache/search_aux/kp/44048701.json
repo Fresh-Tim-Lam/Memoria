@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "44048701",
+  "source_fingerprint": "b24dedcf2c06f48cf9972651b1822306",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "44048701",
+    "surgical-vs-nonsurgical-treatment-of-adults-with-displaced-fractures-of-the-proximal-humerus:-the-profher-randomized-clinical-trial."
+  ],
+  "key_phrases": [
+    "surgical",
+    "vs",
+    "nonsurgical",
+    "treatment",
+    "adults",
+    "with",
+    "displaced",
+    "fractures"
+  ],
+  "summary_1l": "Surgical vs nonsurgical treatment of adults with displaced fractures of the proximal humerus: the PROFHER randomized clinical trial.",
+  "query_hits": [],
+  "embed_text": "44048701 Surgical vs nonsurgical treatment of adults with displaced fractures of the proximal humerus: the PROFHER randomized clinical trial. science scifact IMPORTANCE The need for surgery for the majority of patients with displaced proximal humeral fractures is unclear, but its use is increasing. OBJECTIVE To evaluate the clinical effectiveness of surgical vs nonsurgical treatment for adults… 44048701 surgical-vs-nonsurgical-treatment-of-adults-with-displaced-fractures-of-the-proximal-humerus:-the-profher-randomized-clinical-trial. surgical vs nonsurgical treatment adults with displaced fractures Surgical vs nonsurgical treatment of adults with displaced fractures of the proximal humerus: the PROFHER randomized clinical trial. Surgical vs nonsurgical treatment of adults with displaced fractures of the proximal humerus: the PROFHER randomized clinical trial. IMPORTANCE The need for surgery for the majority of patients with displaced proximal humeral fractures is unclear, but its use is increasing. OBJECTIVE To evaluate the clinical effectiveness of surgical vs nonsurgical treatment for adults with displaced fractures of the proximal humerus involving the surgical neck. DESIGN, SETTING, AND PARTICIPANTS A pragmatic, multicenter, parallel-group, randomized clinical trial, the Proximal Fracture of the Humerus Evaluation by Randomization (PROFHER) trial, recruited 250 patients aged 16 years or older (mean age, 66 years [range, 24-92 years]; 192 [77%] were female; and 249 [99.6%] were white) who presented at the ortho",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.673248+00:00"
+}

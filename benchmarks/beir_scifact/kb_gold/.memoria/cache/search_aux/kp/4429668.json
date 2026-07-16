@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4429668",
+  "source_fingerprint": "0d392aa9728d52775f9b2054ad47015b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4429668",
+    "pif1-family-helicases-suppress-genome-instability-at-g-quadruplex-motifs"
+  ],
+  "key_phrases": [
+    "pif1",
+    "family",
+    "helicases",
+    "suppress",
+    "genome",
+    "instability",
+    "at",
+    "quadruplex"
+  ],
+  "summary_1l": "The Saccharomyces cerevisiae Pif1 helicase is the prototypical member of the Pif1 DNA helicase family, which is conserved from",
+  "query_hits": [],
+  "embed_text": "4429668 Pif1 family helicases suppress genome instability at G-quadruplex motifs science scifact The Saccharomyces cerevisiae Pif1 helicase is the prototypical member of the Pif1 DNA helicase family, which is conserved from bacteria to humans. Here we show that exceptionally potent G-quadruplex unwinding is conserved among Pif1… 4429668 pif1-family-helicases-suppress-genome-instability-at-g-quadruplex-motifs pif1 family helicases suppress genome instability at quadruplex The Saccharomyces cerevisiae Pif1 helicase is the prototypical member of the Pif1 DNA helicase family, which is conserved from Pif1 family helicases suppress genome instability at G-quadruplex motifs The Saccharomyces cerevisiae Pif1 helicase is the prototypical member of the Pif1 DNA helicase family, which is conserved from bacteria to humans. Here we show that exceptionally potent G-quadruplex unwinding is conserved among Pif1 helicases. Moreover, Pif1 helicases from organisms separated by more than 3 billion years of evolution suppressed DNA damage at G-quadruplex motifs in yeast. The G-quadruplex-induced damage generated in the absence of Pif1 helicases led to new genetic and epigenetic changes. Furthermore, when expressed in yeast, human PIF1 suppressed both G-quadruplex-associated DNA damage and telomere lengthening.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.184679+00:00"
+}

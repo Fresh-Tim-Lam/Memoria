@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "39285547",
+  "source_fingerprint": "ceae3a7bf67ffdcfab632cd32585404f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "39285547",
+    "microarray-analysis-of-pneumococcal-gene-expression-during-invasive-disease."
+  ],
+  "key_phrases": [
+    "microarray",
+    "analysis",
+    "pneumococcal",
+    "gene",
+    "expression",
+    "during",
+    "invasive",
+    "disease"
+  ],
+  "summary_1l": "Microarray analysis of pneumococcal gene expression during invasive disease.",
+  "query_hits": [],
+  "embed_text": "39285547 Microarray analysis of pneumococcal gene expression during invasive disease. science scifact Streptococcus pneumoniae is a leading cause of invasive bacterial disease. This is the first study to examine the expression of S. pneumoniae genes in vivo by using whole-genome microarrays available from The Institute for Genomic… 39285547 microarray-analysis-of-pneumococcal-gene-expression-during-invasive-disease. microarray analysis pneumococcal gene expression during invasive disease Microarray analysis of pneumococcal gene expression during invasive disease. Microarray analysis of pneumococcal gene expression during invasive disease. Streptococcus pneumoniae is a leading cause of invasive bacterial disease. This is the first study to examine the expression of S. pneumoniae genes in vivo by using whole-genome microarrays available from The Institute for Genomic Research. Total RNA was collected from pneumococci isolated from infected blood, infected cerebrospinal fluid, and bacteria attached to a pharyngeal epithelial cell line in vitro. Microarray analysis of pneumococcal genes expressed in these models identified body site-specific patterns of expression for virulence factors, transporters, transcription factors, translation-associated proteins, metabolism, and genes with unknown function. Contributions to virulence predicted for several unkn",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.382017+00:00"
+}

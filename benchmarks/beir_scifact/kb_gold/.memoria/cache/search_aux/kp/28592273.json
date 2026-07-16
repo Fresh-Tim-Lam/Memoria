@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "28592273",
+  "source_fingerprint": "67cfb1562bcbbd202be4be1fe4831744",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "28592273",
+    "siblings-with-opposite-chromosome-constitutions,-dup(2q)/del(7q)-and-del(2q)/dup(7q)."
+  ],
+  "key_phrases": [
+    "siblings",
+    "with",
+    "opposite",
+    "chromosome",
+    "constitutions",
+    "dup",
+    "2q",
+    "del"
+  ],
+  "summary_1l": "Siblings with opposite chromosome constitutions, dup(2q)/del(7q) and del(2q)/dup(7q).",
+  "query_hits": [],
+  "embed_text": "28592273 Siblings with opposite chromosome constitutions, dup(2q)/del(7q) and del(2q)/dup(7q). science scifact Chromosome 7q36 microdeletion syndrome is a rare genomic disorder characterized by underdevelopment of the brain, microcephaly, anomalies of the sex organs, and language problems. Developmental delay, intellectual disability, autistic… 28592273 siblings-with-opposite-chromosome-constitutions,-dup(2q)/del(7q)-and-del(2q)/dup(7q). siblings with opposite chromosome constitutions dup 2q del Siblings with opposite chromosome constitutions, dup(2q)/del(7q) and del(2q)/dup(7q). Siblings with opposite chromosome constitutions, dup(2q)/del(7q) and del(2q)/dup(7q). Chromosome 7q36 microdeletion syndrome is a rare genomic disorder characterized by underdevelopment of the brain, microcephaly, anomalies of the sex organs, and language problems. Developmental delay, intellectual disability, autistic spectrum disorders, BDMR syndrome, and unusual facial morphology are the key features of the chromosome 2q37 microdeletion syndrome. A genetic screening for two brothers with global developmental delay using high-resolution chromosomal analysis and subtelomeric multiplex ligation-dependent probe amplification revealed subtelomeric rearrangements on the same sites of 2q37.2 and 7q35, with reversed deletion and duplication. Both of them showed dysmorphic facial features, sever",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.153736+00:00"
+}

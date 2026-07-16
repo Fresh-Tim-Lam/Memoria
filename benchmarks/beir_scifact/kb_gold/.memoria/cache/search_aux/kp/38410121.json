@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "38410121",
+  "source_fingerprint": "1591e0d03faef84d6b5868f4be3e4c78",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "38410121",
+    "reported-side-effects-to-chloroquine,-chloroquine-plus-proguanil,-and-mefloquine-as-chemoprophylaxis-against-malaria-in-danish-travelers."
+  ],
+  "key_phrases": [
+    "reported",
+    "side",
+    "effects",
+    "chloroquine",
+    "plus",
+    "proguanil",
+    "mefloquine",
+    "as"
+  ],
+  "summary_1l": "Reported side effects to chloroquine, chloroquine plus proguanil, and mefloquine as chemoprophylaxis against malaria in Danish travelers.",
+  "query_hits": [],
+  "embed_text": "38410121 Reported side effects to chloroquine, chloroquine plus proguanil, and mefloquine as chemoprophylaxis against malaria in Danish travelers. science scifact BACKGROUND The aim of the study was to provide data on the relative frequency of reported symptoms in travelers using chloroquine, chloroquine plus proguanil, and mefloquine. METHOD The study was an open, nonrandomized study recording… 38410121 reported-side-effects-to-chloroquine,-chloroquine-plus-proguanil,-and-mefloquine-as-chemoprophylaxis-against-malaria-in-danish-travelers. reported side effects chloroquine plus proguanil mefloquine as Reported side effects to chloroquine, chloroquine plus proguanil, and mefloquine as chemoprophylaxis against malaria in Danish travelers. Reported side effects to chloroquine, chloroquine plus proguanil, and mefloquine as chemoprophylaxis against malaria in Danish travelers. BACKGROUND The aim of the study was to provide data on the relative frequency of reported symptoms in travelers using chloroquine, chloroquine plus proguanil, and mefloquine. METHOD The study was an open, nonrandomized study recording self-reported events in travelers recruited consecutively from two travel clinics in Copenhagen, Denmark. The main outcome measures were the relative proportion of travelers reporting particular symptoms in the three prophylaxis groups, compliance, hospitalization and premature termination of the travel. RESULTS From May 1996 to April 1998 5, 446 travelers were included and 4,158 questionnaires (76.3%) returned. Compliance",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.484876+00:00"
+}

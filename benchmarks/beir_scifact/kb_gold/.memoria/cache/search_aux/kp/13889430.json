@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13889430",
+  "source_fingerprint": "bffab232ce233f1fbb5599aa29faa7ab",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13889430",
+    "cancer-exosomes-trigger-fibroblast-to-myofibroblast-differentiation."
+  ],
+  "key_phrases": [
+    "cancer",
+    "exosomes",
+    "trigger",
+    "fibroblast",
+    "myofibroblast",
+    "differentiation",
+    "there",
+    "growing"
+  ],
+  "summary_1l": "Cancer exosomes trigger fibroblast to myofibroblast differentiation.",
+  "query_hits": [],
+  "embed_text": "13889430 Cancer exosomes trigger fibroblast to myofibroblast differentiation. science scifact There is a growing interest in the cell-cell communication roles in cancer mediated by secreted vesicles termed exosomes. In this study, we examined whether exosomes produced by cancer cells could transmit information to normal stromal… 13889430 cancer-exosomes-trigger-fibroblast-to-myofibroblast-differentiation. cancer exosomes trigger fibroblast myofibroblast differentiation there growing Cancer exosomes trigger fibroblast to myofibroblast differentiation. Cancer exosomes trigger fibroblast to myofibroblast differentiation. There is a growing interest in the cell-cell communication roles in cancer mediated by secreted vesicles termed exosomes. In this study, we examined whether exosomes produced by cancer cells could transmit information to normal stromal fibroblasts and trigger a cellular response. We found that some cancer-derived exosomes could trigger elevated α-smooth muscle actin expression and other changes consistent with the process of fibroblast differentiation into myofibroblasts. We show that TGF-β is expressed at the exosome surface in association with the transmembrane proteoglycan betaglycan. Although existing in a latent state, this complex was fully functional in eliciting SMAD-dependent signaling. Inhibiting either signalin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.333853+00:00"
+}

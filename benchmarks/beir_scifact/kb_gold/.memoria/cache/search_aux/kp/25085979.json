@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25085979",
+  "source_fingerprint": "157518e40605c355f99385bda2747efe",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25085979",
+    "developmental-gene-networks:-a-triathlon-on-the-course-to-t-cell-identity"
+  ],
+  "key_phrases": [
+    "developmental",
+    "gene",
+    "networks",
+    "triathlon",
+    "course",
+    "cell",
+    "identity",
+    "cells"
+  ],
+  "summary_1l": "Cells acquire their ultimate identities by activating combinations of transcription factors that initiate and sustain expressi",
+  "query_hits": [],
+  "embed_text": "25085979 Developmental gene networks: a triathlon on the course to T cell identity science scifact Cells acquire their ultimate identities by activating combinations of transcription factors that initiate and sustain expression of the appropriate cell type-specific genes. T cell development depends on the progression of progenitor cells… 25085979 developmental-gene-networks:-a-triathlon-on-the-course-to-t-cell-identity developmental gene networks triathlon course cell identity cells Cells acquire their ultimate identities by activating combinations of transcription factors that initiate and sustain expressi Developmental gene networks: a triathlon on the course to T cell identity Cells acquire their ultimate identities by activating combinations of transcription factors that initiate and sustain expression of the appropriate cell type-specific genes. T cell development depends on the progression of progenitor cells through three major phases, each of which is associated with distinct transcription factor ensembles that control the recruitment of these cells to the thymus, their proliferation, lineage commitment and responsiveness to T cell receptor signals, all before the allocation of cells to particular effector programmes. All three phases are essential for proper T cell development, as are the mechanisms that determine the boundaries between each phase. Cells that fail to shut off one set",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.980656+00:00"
+}

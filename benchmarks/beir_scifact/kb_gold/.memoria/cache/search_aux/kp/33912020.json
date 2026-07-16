@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "33912020",
+  "source_fingerprint": "dfc06265fcbf7ac4f7693b676c830ab6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "33912020",
+    "thioredoxin-mediates-oxidation-dependent-phosphorylation-of-crmp2-and-growth-cone-collapse."
+  ],
+  "key_phrases": [
+    "thioredoxin",
+    "mediates",
+    "oxidation",
+    "dependent",
+    "phosphorylation",
+    "crmp2",
+    "growth",
+    "cone"
+  ],
+  "summary_1l": "Thioredoxin mediates oxidation-dependent phosphorylation of CRMP2 and growth cone collapse.",
+  "query_hits": [],
+  "embed_text": "33912020 Thioredoxin mediates oxidation-dependent phosphorylation of CRMP2 and growth cone collapse. science scifact Semaphorin3A (Sema3A) is a repulsive guidance molecule for axons, which acts by inducing growth cone collapse through phosphorylation of CRMP2 (collapsin response mediator protein 2). Here, we show a role for CRMP2 oxidation and… 33912020 thioredoxin-mediates-oxidation-dependent-phosphorylation-of-crmp2-and-growth-cone-collapse. thioredoxin mediates oxidation dependent phosphorylation crmp2 growth cone Thioredoxin mediates oxidation-dependent phosphorylation of CRMP2 and growth cone collapse. Thioredoxin mediates oxidation-dependent phosphorylation of CRMP2 and growth cone collapse. Semaphorin3A (Sema3A) is a repulsive guidance molecule for axons, which acts by inducing growth cone collapse through phosphorylation of CRMP2 (collapsin response mediator protein 2). Here, we show a role for CRMP2 oxidation and thioredoxin (TRX) in the regulation of CRMP2 phosphorylation and growth cone collapse. Sema3A stimulation generated hydrogen peroxide (H2O2) through MICAL (molecule interacting with CasL) and oxidized CRMP2, enabling it to form a disulfide-linked homodimer through cysteine-504. Oxidized CRMP2 then formed a transient disulfide-linked complex with TRX, which stimulated CRMP2 phosphorylation by glycogen synthase kinase-3, leading to growth cone collapse. We also reconstituted o",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.800647+00:00"
+}

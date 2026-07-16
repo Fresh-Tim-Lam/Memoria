@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15113221",
+  "source_fingerprint": "0f50bc191e499c59c8777300587e2693",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15113221",
+    "poor-prognosis-in-carcinoma-is-associated-with-a-gene-expression-signature-of-aberrant-pten-tumor-suppressor-pathway-activity."
+  ],
+  "key_phrases": [
+    "poor",
+    "prognosis",
+    "carcinoma",
+    "associated",
+    "with",
+    "gene",
+    "expression",
+    "signature"
+  ],
+  "summary_1l": "Poor prognosis in carcinoma is associated with a gene expression signature of aberrant PTEN tumor suppressor pathway activity.",
+  "query_hits": [],
+  "embed_text": "15113221 Poor prognosis in carcinoma is associated with a gene expression signature of aberrant PTEN tumor suppressor pathway activity. science scifact Pathway-specific therapy is the future of cancer management. The oncogenic phosphatidylinositol 3-kinase (PI3K) pathway is frequently activated in solid tumors; however, currently, no reliable test for PI3K pathway activation exists for… 15113221 poor-prognosis-in-carcinoma-is-associated-with-a-gene-expression-signature-of-aberrant-pten-tumor-suppressor-pathway-activity. poor prognosis carcinoma associated with gene expression signature Poor prognosis in carcinoma is associated with a gene expression signature of aberrant PTEN tumor suppressor pathway activity. Poor prognosis in carcinoma is associated with a gene expression signature of aberrant PTEN tumor suppressor pathway activity. Pathway-specific therapy is the future of cancer management. The oncogenic phosphatidylinositol 3-kinase (PI3K) pathway is frequently activated in solid tumors; however, currently, no reliable test for PI3K pathway activation exists for human tumors. Taking advantage of the observation that loss of PTEN, the negative regulator of PI3K, results in robust activation of this pathway, we developed and validated a microarray gene expression signature for immunohistochemistry (IHC)-detectable PTEN loss in breast cancer (BC). The most significant signature gene was PTEN itself, indicating that PTEN mRNA levels are the primary determinant of PTEN protein levels in BC. Some",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.089767+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22901758",
+  "source_fingerprint": "89ee2715f42f02c8173bc8edd636d059",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22901758",
+    "hedgehog-signaling-regulates-brain-tumor-initiating-cell-proliferation-and-portends-shorter-survival-for-patients-with-pten-coexpressing-glioblastomas."
+  ],
+  "key_phrases": [
+    "hedgehog",
+    "signaling",
+    "regulates",
+    "brain",
+    "tumor",
+    "initiating",
+    "cell",
+    "proliferation"
+  ],
+  "summary_1l": "Hedgehog signaling regulates brain tumor-initiating cell proliferation and portends shorter survival for patients with PTEN-coexpressing glioblastomas.",
+  "query_hits": [],
+  "embed_text": "22901758 Hedgehog signaling regulates brain tumor-initiating cell proliferation and portends shorter survival for patients with PTEN-coexpressing glioblastomas. science scifact The identification of brain tumor stem-like cells (BTSCs) has implicated a role of biological self-renewal mechanisms in clinical brain tumor initiation and propagation. The molecular mechanisms underlying the tumor-forming capacity of… 22901758 hedgehog-signaling-regulates-brain-tumor-initiating-cell-proliferation-and-portends-shorter-survival-for-patients-with-pten-coexpressing-glioblastomas. hedgehog signaling regulates brain tumor initiating cell proliferation Hedgehog signaling regulates brain tumor-initiating cell proliferation and portends shorter survival for patients with PTEN-coexpressing glioblastomas. Hedgehog signaling regulates brain tumor-initiating cell proliferation and portends shorter survival for patients with PTEN-coexpressing glioblastomas. The identification of brain tumor stem-like cells (BTSCs) has implicated a role of biological self-renewal mechanisms in clinical brain tumor initiation and propagation. The molecular mechanisms underlying the tumor-forming capacity of BTSCs, however, remain unknown. Here, we have generated molecular signatures of glioblastoma multiforme (GBM) using gene expression profiles of BTSCs and have identified both Sonic Hedgehog (SHH) signaling-dependent and -independent BTSCs and their respective glioblastoma surgical specimens. BTSC proliferation could be abrogated in a pathway-dependent fashion in vitro and in an intracranial tumor model in ath",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.493746+00:00"
+}

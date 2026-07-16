@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "19079491",
+  "source_fingerprint": "19462e02e244ff35c69e388193c1cbfe",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19079491"
+  ],
+  "key_phrases": [
+    "calcium",
+    "regulation",
+    "cell",
+    "death",
+    "apoptosis",
+    "link",
+    "live",
+    "die"
+  ],
+  "summary_1l": "To live or to die?",
+  "query_hits": [],
+  "embed_text": "19079491 Calcium: Regulation of cell death: the calcium–apoptosis link science scifact To live or to die? This crucial question eloquently reflects the dual role of Ca2+ in living organisms – survival factor or ruthless killer. It has long been known that Ca2+ signals govern a host of vital cell functions and so are… 19079491 calcium regulation cell death apoptosis link live die To live or to die? Calcium: Regulation of cell death: the calcium–apoptosis link To live or to die? This crucial question eloquently reflects the dual role of Ca2+ in living organisms – survival factor or ruthless killer. It has long been known that Ca2+ signals govern a host of vital cell functions and so are necessary for cell survival. However, more recently it has become clear that cellular Ca2+ overload, or perturbation of intracellular Ca2+ compartmentalization, can cause cytotoxicity and trigger either apoptotic or necrotic cell death.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.138168+00:00"
+}

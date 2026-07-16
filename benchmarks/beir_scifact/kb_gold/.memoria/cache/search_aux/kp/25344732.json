@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25344732",
+  "source_fingerprint": "5eed173acf0f6f9550c46d9ac939396d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25344732",
+    "phc3,-a-component-of-the-hprc-h-complex,-associates-with-e2f6-during-g0-and-is-lost-in-osteosarcoma-tumors"
+  ],
+  "key_phrases": [
+    "phc3",
+    "component",
+    "hprc",
+    "complex",
+    "associates",
+    "with",
+    "e2f6",
+    "during"
+  ],
+  "summary_1l": "Polyhomeotic-like 3 (PHC3) is a ubiquitously expressed member of the polycomb gene family and",
+  "query_hits": [],
+  "embed_text": "25344732 PHC3, a component of the hPRC-H complex, associates with E2F6 during G0 and is lost in osteosarcoma tumors science scifact Polyhomeotic-like 3 (PHC3) is a ubiquitously expressed member of the polycomb gene family and part of the human polycomb complex hPRC-H. We found that in normal cells PHC3 associated with both hPRC-H complex components and with the… 25344732 phc3,-a-component-of-the-hprc-h-complex,-associates-with-e2f6-during-g0-and-is-lost-in-osteosarcoma-tumors phc3 component hprc complex associates with e2f6 during Polyhomeotic-like 3 (PHC3) is a ubiquitously expressed member of the polycomb gene family and PHC3, a component of the hPRC-H complex, associates with E2F6 during G0 and is lost in osteosarcoma tumors Polyhomeotic-like 3 (PHC3) is a ubiquitously expressed member of the polycomb gene family and part of the human polycomb complex hPRC-H. We found that in normal cells PHC3 associated with both hPRC-H complex components and with the transcription factor E2F6. In differentiating and confluent cells, PHC3 and E2F6 showed nuclear colocalization in a punctate pattern that resembled the binding of polycomb bodies to heterochromatin. This punctate pattern was not seen in proliferating cells suggesting that PHC3 may be part of an E2F6-polycomb complex that has been shown to occupy and silence target promoters in G0. Previous loss of heterozygosity (LoH) analyses had shown that the region cont",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.433878+00:00"
+}

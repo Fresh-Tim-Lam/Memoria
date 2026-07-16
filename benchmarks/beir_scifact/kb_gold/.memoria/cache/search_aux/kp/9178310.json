@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9178310",
+  "source_fingerprint": "45cbd9a01d5df2ab1bb71c7f8ebfa1f6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9178310",
+    "involvement-of-lysosomal-dysfunction-in-autophagosome-accumulation-and-early-pathologies-in-adipose-tissue-of-obese-mice"
+  ],
+  "key_phrases": [
+    "involvement",
+    "lysosomal",
+    "dysfunction",
+    "autophagosome",
+    "accumulation",
+    "early",
+    "pathologies",
+    "adipose"
+  ],
+  "summary_1l": "Whether obesity accelerates or suppresses autophagy in adipose tissue is still",
+  "query_hits": [],
+  "embed_text": "9178310 Involvement of lysosomal dysfunction in autophagosome accumulation and early pathologies in adipose tissue of obese mice science scifact Whether obesity accelerates or suppresses autophagy in adipose tissue is still debatable. To clarify dysregulation of autophagy and its role in pathologies of obese adipose tissue, we focused on lysosomal function, protease maturation and… 9178310 involvement-of-lysosomal-dysfunction-in-autophagosome-accumulation-and-early-pathologies-in-adipose-tissue-of-obese-mice involvement lysosomal dysfunction autophagosome accumulation early pathologies adipose Whether obesity accelerates or suppresses autophagy in adipose tissue is still Involvement of lysosomal dysfunction in autophagosome accumulation and early pathologies in adipose tissue of obese mice Whether obesity accelerates or suppresses autophagy in adipose tissue is still debatable. To clarify dysregulation of autophagy and its role in pathologies of obese adipose tissue, we focused on lysosomal function, protease maturation and activity, both in vivo and in vitro. First, we showed that autophagosome formation was accelerated, but autophagic clearance was impaired in obese adipose tissue. We also found protein and activity levels of CTSL (cathepsin L) were suppressed in obese adipose tissue, while the activity of CTSB (cathepsin B) was significantly enhanced. Moreover, cellular senescence and inflammasomes were activated in obese adipose tissue. In 3T3L1 adipoc",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.348039+00:00"
+}

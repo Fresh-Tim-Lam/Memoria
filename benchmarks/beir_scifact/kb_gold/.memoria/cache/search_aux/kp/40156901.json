@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "40156901",
+  "source_fingerprint": "f1f5dd329033c53d9a30e1e17e619d6d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "40156901",
+    "dose-dependent-effect-of-statins-on-the-incidence-of-acute-kidney-injury-after-cardiac-surgery."
+  ],
+  "key_phrases": [
+    "dose",
+    "dependent",
+    "effect",
+    "statins",
+    "incidence",
+    "acute",
+    "kidney",
+    "injury"
+  ],
+  "summary_1l": "Dose-dependent effect of statins on the incidence of acute kidney injury after cardiac surgery.",
+  "query_hits": [],
+  "embed_text": "40156901 Dose-dependent effect of statins on the incidence of acute kidney injury after cardiac surgery. science scifact BACKGROUND Acute kidney injury (AKI) after cardiac surgery is associated with increased morbidity and mortality. METHODS We assessed whether statin treatment is associated with a lower incidence of postoperative AKI in 2,104 consecutive… 40156901 dose-dependent-effect-of-statins-on-the-incidence-of-acute-kidney-injury-after-cardiac-surgery. dose dependent effect statins incidence acute kidney injury Dose-dependent effect of statins on the incidence of acute kidney injury after cardiac surgery. Dose-dependent effect of statins on the incidence of acute kidney injury after cardiac surgery. BACKGROUND Acute kidney injury (AKI) after cardiac surgery is associated with increased morbidity and mortality. METHODS We assessed whether statin treatment is associated with a lower incidence of postoperative AKI in 2,104 consecutive patients who underwent coronary artery bypass graft or valve surgery at the Minneapolis Veterans Administration Medical Center. Acute kidney injury was defined as absolute increase greater than 0.3 mg/dL or relative increase greater than 50% in serum creatinine from baseline, within 48 hours after surgery or requiring postoperative hemodialysis per AKI network. Propensity scores were utilized to adjust for the differences between the statin and the no-statin trea",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.321034+00:00"
+}

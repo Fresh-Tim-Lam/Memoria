@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5785219",
+  "source_fingerprint": "06836e30a6f430cabcf75ed0ec72ec8c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5785219",
+    "modulation-of-glucose-metabolism-in-macrophages-by-products-of-nitric-oxide-synthase."
+  ],
+  "key_phrases": [
+    "modulation",
+    "glucose",
+    "metabolism",
+    "macrophages",
+    "by",
+    "products",
+    "nitric",
+    "oxide"
+  ],
+  "summary_1l": "Modulation of glucose metabolism in macrophages by products of nitric oxide synthase.",
+  "query_hits": [],
+  "embed_text": "5785219 Modulation of glucose metabolism in macrophages by products of nitric oxide synthase. science scifact Nitric oxide (NO) is a product of L-arginine metabolism that suppresses cellular oxidative metabolism through the inhibition of tricarboxylic acid cycle and electron transport chain enzymes. The impact of NO synthase (NOS) activity on… 5785219 modulation-of-glucose-metabolism-in-macrophages-by-products-of-nitric-oxide-synthase. modulation glucose metabolism macrophages by products nitric oxide Modulation of glucose metabolism in macrophages by products of nitric oxide synthase. Modulation of glucose metabolism in macrophages by products of nitric oxide synthase. Nitric oxide (NO) is a product of L-arginine metabolism that suppresses cellular oxidative metabolism through the inhibition of tricarboxylic acid cycle and electron transport chain enzymes. The impact of NO synthase (NOS) activity on specific pathways of glucose metabolism in freshly harvested and overnight-cultured rat resident peritoneal macrophages, at rest and after stimulation with zymosan, was investigated using radiolabeled glucose. NOS activity was modulated through the L-arginine concentration in culture media and the use of its specific inhibitor, NG-monomethyl-L-arginine, and quantitated using radiolabeled L-arginine. Results demonstrated that NOS activity was associated with increased glucose",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.101816+00:00"
+}

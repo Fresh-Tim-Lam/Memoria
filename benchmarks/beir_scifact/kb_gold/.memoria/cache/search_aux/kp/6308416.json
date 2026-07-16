@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6308416",
+  "source_fingerprint": "b2d262a0b1c0748f69cb525f16d031b5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6308416",
+    "role-of-boundary-conditions-in-an-experimental-model-of-epithelial-wound-healing."
+  ],
+  "key_phrases": [
+    "role",
+    "boundary",
+    "conditions",
+    "experimental",
+    "model",
+    "epithelial",
+    "wound",
+    "healing"
+  ],
+  "summary_1l": "Role of boundary conditions in an experimental model of epithelial wound healing.",
+  "query_hits": [],
+  "embed_text": "6308416 Role of boundary conditions in an experimental model of epithelial wound healing. science scifact Coordinated cell movements in epithelial layers are essential for proper tissue morphogenesis and homeostasis, but our understanding of the mechanisms that coordinate the behavior of multiple cells in these processes is far from complete.… 6308416 role-of-boundary-conditions-in-an-experimental-model-of-epithelial-wound-healing. role boundary conditions experimental model epithelial wound healing Role of boundary conditions in an experimental model of epithelial wound healing. Role of boundary conditions in an experimental model of epithelial wound healing. Coordinated cell movements in epithelial layers are essential for proper tissue morphogenesis and homeostasis, but our understanding of the mechanisms that coordinate the behavior of multiple cells in these processes is far from complete. Recent experiments with Madin-Darby canine kidney epithelial monolayers revealed a wave-like pattern of injury-induced MAPK activation and showed that it is essential for collective cell migration after wounding. To investigate the effects of the different aspects of wounding on cell sheet migration, we engineered a system that allowed us to dissect the classic wound healing assay. We studied Madin-Darby canine kidney sheet migration under three different conditions: 1) the",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.491963+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "86704258",
+  "source_fingerprint": "5d218467ecd0d8fb44a29dcbd8806767",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "86704258",
+    "genome-downsizing-in-polyploid-plants"
+  ],
+  "key_phrases": [
+    "genome",
+    "downsizing",
+    "polyploid",
+    "plants",
+    "all",
+    "else",
+    "being",
+    "equal"
+  ],
+  "summary_1l": "All else being equal, polyploids are expected to have larger C-values (amount of DNA in the unreplicated gametic nucleus) than their diploid progenitors, increasi",
+  "query_hits": [],
+  "embed_text": "86704258 Genome downsizing in polyploid plants science scifact All else being equal, polyploids are expected to have larger C-values (amount of DNA in the unreplicated gametic nucleus) than their diploid progenitors, increasing in direct proportion with ploidy. This expectation is observed in some… 86704258 genome-downsizing-in-polyploid-plants genome downsizing polyploid plants all else being equal All else being equal, polyploids are expected to have larger C-values (amount of DNA in the unreplicated gametic nucleus) than their diploid progenitors, increasi Genome downsizing in polyploid plants All else being equal, polyploids are expected to have larger C-values (amount of DNA in the unreplicated gametic nucleus) than their diploid progenitors, increasing in direct proportion with ploidy. This expectation is observed in some polyploid series, especially those newly formed, but there are examples suggesting that C-values in particular polyploids are less than expected. The availability of the Angiosperm DNA C-values database (http:// www.rbgkew.org.uk/cvavhomepage.html) has allowed this question to be addressed across a broad range of angiosperms and has revealed striking results deviating from expectation: (i) mean 1C DNA amount did not increase in direct proportion with ploidy, and (ii) mean DNA amount per basic genome (calculated by dividi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.428942+00:00"
+}

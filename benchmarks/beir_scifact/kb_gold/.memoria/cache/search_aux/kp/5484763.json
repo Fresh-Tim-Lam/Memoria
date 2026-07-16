@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5484763",
+  "source_fingerprint": "9ad89fb985a1cfe9b3c8afa0d904a184",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5484763",
+    "a-new-genetic-subgroup-of-chronic-granulomatous-disease-with-autosomal-recessive-mutations-in-p40-phox-and-selective-defects-in-neutrophil-nadph-oxidase-activity."
+  ],
+  "key_phrases": [
+    "new",
+    "genetic",
+    "subgroup",
+    "chronic",
+    "granulomatous",
+    "disease",
+    "with",
+    "autosomal"
+  ],
+  "summary_1l": "A new genetic subgroup of chronic granulomatous disease with autosomal recessive mutations in p40 phox and selective defects in neutrophil NADPH oxidase activity.",
+  "query_hits": [],
+  "embed_text": "5484763 A new genetic subgroup of chronic granulomatous disease with autosomal recessive mutations in p40 phox and selective defects in neutrophil NADPH oxidase activity. science scifact Chronic granulomatous disease (CGD), an immunodeficiency with recurrent pyogenic infections and granulomatous inflammation, results from loss of phagocyte superoxide production by recessive mutations in any 1 of 4 genes encoding subunits… 5484763 a-new-genetic-subgroup-of-chronic-granulomatous-disease-with-autosomal-recessive-mutations-in-p40-phox-and-selective-defects-in-neutrophil-nadph-oxidase-activity. new genetic subgroup chronic granulomatous disease with autosomal A new genetic subgroup of chronic granulomatous disease with autosomal recessive mutations in p40 phox and selective defects in neutrophil NADPH oxidase activity. A new genetic subgroup of chronic granulomatous disease with autosomal recessive mutations in p40 phox and selective defects in neutrophil NADPH oxidase activity. Chronic granulomatous disease (CGD), an immunodeficiency with recurrent pyogenic infections and granulomatous inflammation, results from loss of phagocyte superoxide production by recessive mutations in any 1 of 4 genes encoding subunits of the phagocyte NADPH oxidase. These include gp91(phox) and p22(phox), which form the membrane-integrated flavocytochrome b, and cytosolic subunits p47(phox) and p67(phox). A fifth subunit, p40(phox), plays an important role in phagocytosis-induced superoxide production via a phox homology (PX) domain that binds to phosphatidylinositol 3-phosphate (PtdIns(3)P). We report the first case of autoso",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.426822+00:00"
+}

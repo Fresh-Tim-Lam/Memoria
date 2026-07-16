@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2032877",
+  "source_fingerprint": "65e646e8e0967833725659fbce5027ef",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2032877",
+    "predicting-mortality-of-patients-hospitalized-for-acutely-exacerbated-chronic-obstructive-pulmonary-disease."
+  ],
+  "key_phrases": [
+    "predicting",
+    "mortality",
+    "patients",
+    "hospitalized",
+    "acutely",
+    "exacerbated",
+    "chronic",
+    "obstructive"
+  ],
+  "summary_1l": "Predicting mortality of patients hospitalized for acutely exacerbated chronic obstructive pulmonary disease.",
+  "query_hits": [],
+  "embed_text": "2032877 Predicting mortality of patients hospitalized for acutely exacerbated chronic obstructive pulmonary disease. science scifact PURPOSE To identify factors affecting the short-term prognosis of patients with acutely exacerbated chronic obstructive pulmonary disease (COPD). PATIENTS AND METHODS The 590 patients having COPD as primary disease who were hospitalized in… 2032877 predicting-mortality-of-patients-hospitalized-for-acutely-exacerbated-chronic-obstructive-pulmonary-disease. predicting mortality patients hospitalized acutely exacerbated chronic obstructive Predicting mortality of patients hospitalized for acutely exacerbated chronic obstructive pulmonary disease. Predicting mortality of patients hospitalized for acutely exacerbated chronic obstructive pulmonary disease. PURPOSE To identify factors affecting the short-term prognosis of patients with acutely exacerbated chronic obstructive pulmonary disease (COPD). PATIENTS AND METHODS The 590 patients having COPD as primary disease who were hospitalized in the pneumology unit of a university hospital from 1981 to 1990 were studied. A standardized protocol for the treatment of acutely exacerbated COPD was adopted for all the patients. The patient records were retrospectively analyzed by two observers, and 23 clinical and laboratory variables defining the patient status on admission were collected. Age and arterial gas data were also taken into account, and the outcome mortality was recorded. Interobs",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.042238+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "41644178",
+  "source_fingerprint": "891b8a1b1f2cde8422bb32bce427dfdc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "41644178",
+    "increased-dendritic-complexity-and-axonal-length-in-cultured-mouse-cortical-neurons-overexpressing-methyl-cpg-binding-protein-mecp2"
+  ],
+  "key_phrases": [
+    "increased",
+    "dendritic",
+    "complexity",
+    "axonal",
+    "length",
+    "cultured",
+    "mouse",
+    "cortical"
+  ],
+  "summary_1l": "Rett syndrome is caused by loss-of-function mutations in the gene en",
+  "query_hits": [],
+  "embed_text": "41644178 Increased dendritic complexity and axonal length in cultured mouse cortical neurons overexpressing methyl-CpG-binding protein MeCP2 science scifact Rett syndrome is caused by loss-of-function mutations in the gene encoding the methyl DNA-binding factor MeCP2. As brain mass and neuronal complexity tend to be diminished in Rett patients, we tested whether MeCP2 directly influences the… 41644178 increased-dendritic-complexity-and-axonal-length-in-cultured-mouse-cortical-neurons-overexpressing-methyl-cpg-binding-protein-mecp2 increased dendritic complexity axonal length cultured mouse cortical Rett syndrome is caused by loss-of-function mutations in the gene en Increased dendritic complexity and axonal length in cultured mouse cortical neurons overexpressing methyl-CpG-binding protein MeCP2 Rett syndrome is caused by loss-of-function mutations in the gene encoding the methyl DNA-binding factor MeCP2. As brain mass and neuronal complexity tend to be diminished in Rett patients, we tested whether MeCP2 directly influences the morphological complexity of developing neurons. Our results show that cultured mouse neurons overexpressing MeCP2beta (MECP2A) develop more complex morphologies, having longer axonal and dendritic processes, and an increased number of axonal and dendritic terminal endings. We then tested whether overexpressing a mutant form of MeCP2beta lacking its carboxyl terminus would elicit the same effects. Interestingly, while neurons o",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.497959+00:00"
+}

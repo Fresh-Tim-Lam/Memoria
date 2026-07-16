@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22937651",
+  "source_fingerprint": "2c5bce9644667d253c441018ee4b09db",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22937651",
+    "antibodies-specific-for-epstein-barr-virus-nuclear-antigen-1-cross-react-with-human-heterogeneous-nuclear-ribonucleoprotein-l."
+  ],
+  "key_phrases": [
+    "antibodies",
+    "specific",
+    "epstein",
+    "barr",
+    "virus",
+    "nuclear",
+    "antigen",
+    "cross"
+  ],
+  "summary_1l": "Antibodies specific for Epstein-Barr virus nuclear antigen-1 cross-react with human heterogeneous nuclear ribonucleoprotein L.",
+  "query_hits": [],
+  "embed_text": "22937651 Antibodies specific for Epstein-Barr virus nuclear antigen-1 cross-react with human heterogeneous nuclear ribonucleoprotein L. science scifact Epstein-Barr virus (EBV) is associated with multiple sclerosis (MS), and antibodies to the EBV nuclear antigen-1 (EBNA-1) are consistently increased in MS patients. The hypothesis of this study is that anti-EBNA-1 antibodies cross-react… 22937651 antibodies-specific-for-epstein-barr-virus-nuclear-antigen-1-cross-react-with-human-heterogeneous-nuclear-ribonucleoprotein-l. antibodies specific epstein barr virus nuclear antigen cross Antibodies specific for Epstein-Barr virus nuclear antigen-1 cross-react with human heterogeneous nuclear ribonucleoprotein L. Antibodies specific for Epstein-Barr virus nuclear antigen-1 cross-react with human heterogeneous nuclear ribonucleoprotein L. Epstein-Barr virus (EBV) is associated with multiple sclerosis (MS), and antibodies to the EBV nuclear antigen-1 (EBNA-1) are consistently increased in MS patients. The hypothesis of this study is that anti-EBNA-1 antibodies cross-react with a self antigen in MS patients. We affinity purified anti-EBNA-1 antibodies from human plasma, used the anti-EBNA-1 to immunoprecipitate antigens from human brain, and identified bound antigens with mass spectrometry. Anti-EBNA-1 consistently bound heterogeneous nuclear ribonucleoprotein L (HNRNPL). We expressed both the long and short isoforms of this protein, and verified with Western blots and ELISA that the long isoform cros",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.549536+00:00"
+}

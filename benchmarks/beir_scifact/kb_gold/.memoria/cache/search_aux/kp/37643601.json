@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "37643601",
+  "source_fingerprint": "e830323bccc06be016432db24633d0e5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "37643601",
+    "the-flavivirus-precursor-membrane-envelope-protein-complex:-structure-and-maturation."
+  ],
+  "key_phrases": [
+    "flavivirus",
+    "precursor",
+    "membrane",
+    "envelope",
+    "protein",
+    "complex",
+    "structure",
+    "maturation"
+  ],
+  "summary_1l": "The flavivirus precursor membrane-envelope protein complex: structure and maturation.",
+  "query_hits": [],
+  "embed_text": "37643601 The flavivirus precursor membrane-envelope protein complex: structure and maturation. science scifact Many viruses go through a maturation step in the final stages of assembly before being transmitted to another host. The maturation process of flaviviruses is directed by the proteolytic cleavage of the precursor membrane protein (prM),… 37643601 the-flavivirus-precursor-membrane-envelope-protein-complex:-structure-and-maturation. flavivirus precursor membrane envelope protein complex structure maturation The flavivirus precursor membrane-envelope protein complex: structure and maturation. The flavivirus precursor membrane-envelope protein complex: structure and maturation. Many viruses go through a maturation step in the final stages of assembly before being transmitted to another host. The maturation process of flaviviruses is directed by the proteolytic cleavage of the precursor membrane protein (prM), turning inert virus into infectious particles. We have determined the 2.2 angstrom resolution crystal structure of a recombinant protein in which the dengue virus prM is linked to the envelope glycoprotein E. The structure represents the prM-E heterodimer and fits well into the cryo-electron microscopy density of immature virus at neutral pH. The pr peptide beta-barrel structure covers the fusion loop in E, preventing fusion with host cell membranes. The structure provides",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.734978+00:00"
+}

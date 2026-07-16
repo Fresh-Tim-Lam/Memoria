@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "427082",
+  "source_fingerprint": "e9f07ef558348dc82c29a43d861a2a86",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "427082",
+    "premigratory-and-migratory-neural-crest-cells-are-multipotent-in-vivo."
+  ],
+  "key_phrases": [
+    "premigratory",
+    "migratory",
+    "neural",
+    "crest",
+    "cells",
+    "multipotent",
+    "vivo",
+    "nc"
+  ],
+  "summary_1l": "Premigratory and migratory neural crest cells are multipotent in vivo.",
+  "query_hits": [],
+  "embed_text": "427082 Premigratory and migratory neural crest cells are multipotent in vivo. science scifact The neural crest (NC) is an embryonic stem/progenitor cell population that generates a diverse array of cell lineages, including peripheral neurons, myelinating Schwann cells, and melanocytes, among others. However, there is a… 427082 premigratory-and-migratory-neural-crest-cells-are-multipotent-in-vivo. premigratory migratory neural crest cells multipotent vivo nc Premigratory and migratory neural crest cells are multipotent in vivo. Premigratory and migratory neural crest cells are multipotent in vivo. The neural crest (NC) is an embryonic stem/progenitor cell population that generates a diverse array of cell lineages, including peripheral neurons, myelinating Schwann cells, and melanocytes, among others. However, there is a long-standing controversy as to whether this broad developmental perspective reflects in vivo multipotency of individual NC cells or whether the NC is comprised of a heterogeneous mixture of lineage-restricted progenitors. Here, we resolve this controversy by performing in vivo fate mapping of single trunk NC cells both at premigratory and migratory stages using the R26R-Confetti mouse model. By combining quantitative clonal analyses with definitive markers of differentiation, we demonstrate that",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.171024+00:00"
+}

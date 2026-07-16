@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9161988",
+  "source_fingerprint": "466ecf33fd40e859370ed99f72977135",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9161988",
+    "immune-activation-with-hiv-vaccines"
+  ],
+  "key_phrases": [
+    "immune",
+    "activation",
+    "with",
+    "hiv",
+    "vaccines",
+    "development",
+    "safe",
+    "effective"
+  ],
+  "summary_1l": "The development of a safe and effective HIV vaccine is perhaps the most important and challenging goal remaining in HIV-AIDS research.",
+  "query_hits": [],
+  "embed_text": "9161988 Immune Activation with HIV Vaccines science scifact The development of a safe and effective HIV vaccine is perhaps the most important and challenging goal remaining in HIV-AIDS research. Recent progress using a poxvirus vector prime and envelope protein boost strategy demonstrated a modest… 9161988 immune-activation-with-hiv-vaccines immune activation with hiv vaccines development safe effective The development of a safe and effective HIV vaccine is perhaps the most important and challenging goal remaining in HIV-AIDS research. Immune Activation with HIV Vaccines The development of a safe and effective HIV vaccine is perhaps the most important and challenging goal remaining in HIV-AIDS research. Recent progress using a poxvirus vector prime and envelope protein boost strategy demonstrated a modest but statistically significant level of efficacy and established the concept that a vaccine could prevent HIV infection (1), and approaches to boost durability and efficacy are currently in the planning stages (2). But the results of two vaccine concepts based on recombinant adenovirus serotype-5 (rAd5) (3–5) pointed to a potential major problem—that such vaccines might increase susceptibility to HIV infection. This also raised the question of whether the problem extends to some or all of the other recombinant adenovirus",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.284191+00:00"
+}

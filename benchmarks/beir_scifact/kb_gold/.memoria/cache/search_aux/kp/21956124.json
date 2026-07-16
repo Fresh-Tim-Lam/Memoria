@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21956124",
+  "source_fingerprint": "b236416cc76f1e9b9837b2cef3cf3e75",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21956124",
+    "review-article:-prebiotics-in-the-gastrointestinal-tract."
+  ],
+  "key_phrases": [
+    "review",
+    "article",
+    "prebiotics",
+    "gastrointestinal",
+    "tract",
+    "background",
+    "short",
+    "chain"
+  ],
+  "summary_1l": "Review article: prebiotics in the gastrointestinal tract.",
+  "query_hits": [],
+  "embed_text": "21956124 Review article: prebiotics in the gastrointestinal tract. science scifact BACKGROUND Prebiotics are short-chain carbohydrates that alter the composition, or metabolism, of the gut microbiota in a beneficial manner. It is therefore expected that prebiotics will improve health in a way similar to probiotics,… 21956124 review-article:-prebiotics-in-the-gastrointestinal-tract. review article prebiotics gastrointestinal tract background short chain Review article: prebiotics in the gastrointestinal tract. Review article: prebiotics in the gastrointestinal tract. BACKGROUND Prebiotics are short-chain carbohydrates that alter the composition, or metabolism, of the gut microbiota in a beneficial manner. It is therefore expected that prebiotics will improve health in a way similar to probiotics, whilst at the same time being cheaper, and carrying less risk and being easier to incorporate into the diet than probiotics. AIM To review published evidence for prebiotic effects on gut function and human health. METHODS We searched the Science Citation Index with the terms prebiotic, microbiota, gut bacteria, large intestine, mucosa, bowel habit, constipation, diarrhoea, inflammatory bowel disease, Crohn's disease, ulcerative colitis, pouchitis, calcium and cancer, focussing principally on studies in",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.028649+00:00"
+}

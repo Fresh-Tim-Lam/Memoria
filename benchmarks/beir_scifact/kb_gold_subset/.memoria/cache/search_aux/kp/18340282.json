@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "18340282",
+  "source_fingerprint": "7467f7a5632114536361d59449a0e09f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18340282"
+  ],
+  "key_phrases": [
+    "gene",
+    "environment",
+    "interactions",
+    "7610",
+    "women",
+    "with",
+    "breast",
+    "cancer"
+  ],
+  "summary_1l": "BACKGROUND Information is scarce about the combined effects on breast cancer incidence",
+  "query_hits": [],
+  "embed_text": "18340282 Gene–environment interactions in 7610 women with breast cancer: prospective evidence from the Million Women Study science scifact BACKGROUND Information is scarce about the combined effects on breast cancer incidence of low-penetrance genetic susceptibility polymorphisms and environmental factors (reproductive, behavioural, and anthropometric risk factors for breast… 18340282 gene environment interactions 7610 women with breast cancer BACKGROUND Information is scarce about the combined effects on breast cancer incidence Gene–environment interactions in 7610 women with breast cancer: prospective evidence from the Million Women Study BACKGROUND Information is scarce about the combined effects on breast cancer incidence of low-penetrance genetic susceptibility polymorphisms and environmental factors (reproductive, behavioural, and anthropometric risk factors for breast cancer). To test for evidence of gene-environment interactions, we compared genotypic relative risks for breast cancer across the other risk factors in a large UK prospective study. METHODS We tested gene-environment interactions in 7610 women who developed breast cancer and 10 196 controls without the disease, studying the effects of 12 polymorphisms (FGFR2-rs2981582, TNRC9-rs3803662, 2q35-rs13387042, MAP3K1-rs889312, 8q24-rs13281615, 2p-rs46",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:12.008143+00:00"
+}

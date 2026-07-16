@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6083952",
+  "source_fingerprint": "f28a80c56596f4e06394112713c614a7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6083952",
+    "antidepressant-fluoxetine-enhances-glucocorticoid-receptor-function-in-vitro-by-modulating-membrane-steroid-transporters."
+  ],
+  "key_phrases": [
+    "antidepressant",
+    "fluoxetine",
+    "enhances",
+    "glucocorticoid",
+    "receptor",
+    "function",
+    "vitro",
+    "by"
+  ],
+  "summary_1l": "Antidepressant fluoxetine enhances glucocorticoid receptor function in vitro by modulating membrane steroid transporters.",
+  "query_hits": [],
+  "embed_text": "6083952 Antidepressant fluoxetine enhances glucocorticoid receptor function in vitro by modulating membrane steroid transporters. science scifact 1. Incubation of LMCAT fibroblast cells with antidepressants potentiates glucocorticoid receptor (GR)-mediated gene transcription in the presence of dexamethasone and cortisol, but not of corticosterone. We have shown that antidepressants… 6083952 antidepressant-fluoxetine-enhances-glucocorticoid-receptor-function-in-vitro-by-modulating-membrane-steroid-transporters. antidepressant fluoxetine enhances glucocorticoid receptor function vitro by Antidepressant fluoxetine enhances glucocorticoid receptor function in vitro by modulating membrane steroid transporters. Antidepressant fluoxetine enhances glucocorticoid receptor function in vitro by modulating membrane steroid transporters. 1. Incubation of LMCAT fibroblast cells with antidepressants potentiates glucocorticoid receptor (GR)-mediated gene transcription in the presence of dexamethasone and cortisol, but not of corticosterone. We have shown that antidepressants do so by inhibiting the LMCAT cell membrane steroid transporter (which is virtually identical to the multidrug resistance P-glycoprotein) and thus by increasing dexamethasone or cortisol intracellular concentrations. However, previous experiments with the antidepressant fluoxetine in the presence of dexamethasone have produced negative results (Pariante et al. (2001). Br. J. Pharmacol., 134, 1335-1343). 2. We have since re-examined the",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.892938+00:00"
+}

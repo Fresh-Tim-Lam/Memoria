@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5476778",
+  "source_fingerprint": "514b05b47ae6af3626c786e683149940",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5476778",
+    "autoimmunity-due-to-molecular-mimicry-as-a-cause-of-neurological-disease"
+  ],
+  "key_phrases": [
+    "autoimmunity",
+    "due",
+    "molecular",
+    "mimicry",
+    "as",
+    "cause",
+    "neurological",
+    "disease"
+  ],
+  "summary_1l": "One hypothesis that couples infection with autoimmune disease is molecular mimicry.",
+  "query_hits": [],
+  "embed_text": "5476778 Autoimmunity due to molecular mimicry as a cause of neurological disease science scifact One hypothesis that couples infection with autoimmune disease is molecular mimicry. Molecular mimicry is characterized by an immune response to an environmental agent that cross-reacts with a host antigen, resulting in disease. This… 5476778 autoimmunity-due-to-molecular-mimicry-as-a-cause-of-neurological-disease autoimmunity due molecular mimicry as cause neurological disease One hypothesis that couples infection with autoimmune disease is molecular mimicry. Autoimmunity due to molecular mimicry as a cause of neurological disease One hypothesis that couples infection with autoimmune disease is molecular mimicry. Molecular mimicry is characterized by an immune response to an environmental agent that cross-reacts with a host antigen, resulting in disease. This hypothesis has been implicated in the pathogenesis of diabetes, lupus and multiple sclerosis (MS). There is limited direct evidence linking causative agents with pathogenic immune reactions in these diseases. Our study establishes a clear link between viral infection, autoimmunity and neurological disease in humans. As a model for molecular mimicry, we studied patients with human T-lymphotropic virus type 1 (HTLV-1)-associated myelopathy/tropical spastic paraparesis (HAM/TSP), a disease th",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:13.593095+00:00"
+}

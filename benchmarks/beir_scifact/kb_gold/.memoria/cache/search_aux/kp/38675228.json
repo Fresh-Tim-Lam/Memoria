@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "38675228",
+  "source_fingerprint": "0919f1a8cd7a739e78373df2d313b28d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "38675228",
+    "a-molecular-framework-for-plant-regeneration."
+  ],
+  "key_phrases": [
+    "molecular",
+    "framework",
+    "plant",
+    "regeneration",
+    "plants",
+    "some",
+    "animals",
+    "have"
+  ],
+  "summary_1l": "A molecular framework for plant regeneration.",
+  "query_hits": [],
+  "embed_text": "38675228 A molecular framework for plant regeneration. science scifact Plants and some animals have a profound capacity to regenerate organs from adult tissues. Molecular mechanisms for regeneration have, however, been largely unexplored. Here we investigate a local regeneration response in Arabidopsis roots.… 38675228 a-molecular-framework-for-plant-regeneration. molecular framework plant regeneration plants some animals have A molecular framework for plant regeneration. A molecular framework for plant regeneration. Plants and some animals have a profound capacity to regenerate organs from adult tissues. Molecular mechanisms for regeneration have, however, been largely unexplored. Here we investigate a local regeneration response in Arabidopsis roots. Laser-induced wounding disrupts the flow of auxin-a cell-fate-instructive plant hormone-in root tips, and we demonstrate that resulting cell-fate changes require the PLETHORA, SHORTROOT, and SCARECROW transcription factors. These transcription factors regulate the expression and polar position of PIN auxin efflux-facilitating membrane proteins to reconstitute auxin transport in renewed root tips. Thus, a regeneration mechanism using embryonic root stem-cell patterning factors first responds to and subsequentl",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.727515+00:00"
+}

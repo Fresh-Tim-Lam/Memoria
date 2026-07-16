@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "30658796",
+  "source_fingerprint": "19b6e712608f8d62c8db65ee0a6222e7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "30658796",
+    "anaphase-catastrophe-is-a-target-for-cancer-therapy."
+  ],
+  "key_phrases": [
+    "anaphase",
+    "catastrophe",
+    "target",
+    "cancer",
+    "therapy",
+    "neoplastic",
+    "cells",
+    "genetically"
+  ],
+  "summary_1l": "Anaphase catastrophe is a target for cancer therapy.",
+  "query_hits": [],
+  "embed_text": "30658796 Anaphase catastrophe is a target for cancer therapy. science scifact Neoplastic cells are genetically unstable. Strategies that target pathways affecting genome instability can be exploited to disrupt tumor cell growth, potentially with limited consequences to normal cells. Chromosomal instability (CIN) is… 30658796 anaphase-catastrophe-is-a-target-for-cancer-therapy. anaphase catastrophe target cancer therapy neoplastic cells genetically Anaphase catastrophe is a target for cancer therapy. Anaphase catastrophe is a target for cancer therapy. Neoplastic cells are genetically unstable. Strategies that target pathways affecting genome instability can be exploited to disrupt tumor cell growth, potentially with limited consequences to normal cells. Chromosomal instability (CIN) is one type of genome instability characterized by mitotic defects that increase the rate of chromosome mis-segregation. CIN is frequently caused by extra centrosomes that transiently disrupt normal bipolar spindle geometry needed for accurate chromosome segregation. Tumor cells survive with extra centrosomes because of biochemical pathways that cluster centrosomes and promote chromosome segregation on bipolar spindles. Recent work shows that targeted inhibition of these pathways prevents centrosome cluste",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.864194+00:00"
+}

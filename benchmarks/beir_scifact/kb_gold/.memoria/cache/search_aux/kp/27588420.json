@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27588420",
+  "source_fingerprint": "fd9dbc9c8a3fad59699278f75e885b58",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27588420",
+    "epigenetic-memory-and-preferential-lineage-specific-differentiation-in-induced-pluripotent-stem-cells-derived-from-human-pancreatic-islet-beta-cells."
+  ],
+  "key_phrases": [
+    "epigenetic",
+    "memory",
+    "preferential",
+    "lineage",
+    "specific",
+    "differentiation",
+    "induced",
+    "pluripotent"
+  ],
+  "summary_1l": "Epigenetic memory and preferential lineage-specific differentiation in induced pluripotent stem cells derived from human pancreatic islet beta cells.",
+  "query_hits": [],
+  "embed_text": "27588420 Epigenetic memory and preferential lineage-specific differentiation in induced pluripotent stem cells derived from human pancreatic islet beta cells. science scifact Human induced pluripotent stem cells (HiPSCs) appear to be highly similar to human embryonic stem cells (HESCs). Using two genetic lineage-tracing systems, we demonstrate the generation of iPSC lines from human pancreatic islet beta cells.… 27588420 epigenetic-memory-and-preferential-lineage-specific-differentiation-in-induced-pluripotent-stem-cells-derived-from-human-pancreatic-islet-beta-cells. epigenetic memory preferential lineage specific differentiation induced pluripotent Epigenetic memory and preferential lineage-specific differentiation in induced pluripotent stem cells derived from human pancreatic islet beta cells. Epigenetic memory and preferential lineage-specific differentiation in induced pluripotent stem cells derived from human pancreatic islet beta cells. Human induced pluripotent stem cells (HiPSCs) appear to be highly similar to human embryonic stem cells (HESCs). Using two genetic lineage-tracing systems, we demonstrate the generation of iPSC lines from human pancreatic islet beta cells. These reprogrammed cells acquired markers of pluripotent cells and differentiated into the three embryonic germ layers. However, the beta cell-derived iPSCs (BiPSCs) maintained open chromatin structure at key beta-cell genes, together with a unique DNA methylation signature that distinguishes them from other PSCs. BiPSCs also demonstrated an increased ability to differentiate into insulin-producing cells bo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.115428+00:00"
+}

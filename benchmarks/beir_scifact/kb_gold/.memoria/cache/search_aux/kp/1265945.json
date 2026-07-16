@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1265945",
+  "source_fingerprint": "98242896aaeb8d2d428a415cf71539c4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1265945",
+    "high-density-mapping-of-the-mhc-identifies-a-shared-role-for-hla-drb1*01:03-in-inflammatory-bowel-diseases-and-heterozygous-advantage-in-ulcerative-colitis"
+  ],
+  "key_phrases": [
+    "high",
+    "density",
+    "mapping",
+    "mhc",
+    "identifies",
+    "shared",
+    "role",
+    "hla"
+  ],
+  "summary_1l": "Genome-wide association studies of the relat",
+  "query_hits": [],
+  "embed_text": "1265945 High density mapping of the MHC identifies a shared role for HLA-DRB1*01:03 in inflammatory bowel diseases and heterozygous advantage in ulcerative colitis science scifact Genome-wide association studies of the related chronic inflammatory bowel diseases (IBD) known as Crohn's disease and ulcerative colitis have shown strong evidence of association to the major histocompatibility complex (MHC). This region… 1265945 high-density-mapping-of-the-mhc-identifies-a-shared-role-for-hla-drb1*01:03-in-inflammatory-bowel-diseases-and-heterozygous-advantage-in-ulcerative-colitis high density mapping mhc identifies shared role hla Genome-wide association studies of the relat High density mapping of the MHC identifies a shared role for HLA-DRB1*01:03 in inflammatory bowel diseases and heterozygous advantage in ulcerative colitis Genome-wide association studies of the related chronic inflammatory bowel diseases (IBD) known as Crohn's disease and ulcerative colitis have shown strong evidence of association to the major histocompatibility complex (MHC). This region encodes a large number of immunological candidates, including the antigen-presenting classical human leukocyte antigen (HLA) molecules. Studies in IBD have indicated that multiple independent associations exist at HLA and non-HLA genes, but they have lacked the statistical power to define the architecture of association and causal alleles. To address this, we performed high-density SNP typing of the MHC",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:08.755255+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9451052",
+  "source_fingerprint": "8402dd90494cd772ba0bf4e219128892",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9451052",
+    "stepwise-histone-replacement-by-swr1-requires-dual-activation-with-histone-h2a.z-and-canonical-nucleosome"
+  ],
+  "key_phrases": [
+    "stepwise",
+    "histone",
+    "replacement",
+    "by",
+    "swr1",
+    "requires",
+    "dual",
+    "activation"
+  ],
+  "summary_1l": "Stepwise Histone Replacement by SWR1 Requires Dual Activation with Histone H2A.",
+  "query_hits": [],
+  "embed_text": "9451052 Stepwise Histone Replacement by SWR1 Requires Dual Activation with Histone H2A.Z and Canonical Nucleosome science scifact Histone variant H2A.Z-containing nucleosomes are incorporated at most eukaryotic promoters. This incorporation is mediated by the conserved SWR1 complex, which replaces histone H2A in canonical nucleosomes with H2A.Z in an ATP-dependent… 9451052 stepwise-histone-replacement-by-swr1-requires-dual-activation-with-histone-h2a.z-and-canonical-nucleosome stepwise histone replacement by swr1 requires dual activation Stepwise Histone Replacement by SWR1 Requires Dual Activation with Histone H2A. Stepwise Histone Replacement by SWR1 Requires Dual Activation with Histone H2A.Z and Canonical Nucleosome Histone variant H2A.Z-containing nucleosomes are incorporated at most eukaryotic promoters. This incorporation is mediated by the conserved SWR1 complex, which replaces histone H2A in canonical nucleosomes with H2A.Z in an ATP-dependent manner. Here, we show that promoter-proximal nucleosomes are highly heterogeneous for H2A.Z in Saccharomyces cerevisiae, with substantial representation of nucleosomes containing one, two, or zero H2A.Z molecules. SWR1-catalyzed H2A.Z replacement in vitro occurs in a stepwise and unidirectional fashion, one H2A.Z-H2B dimer at a time, producing heterotypic nucleosomes as intermediates and homotypic H2A.Z nucleosomes as end products. The ATPase activity o",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.927434+00:00"
+}

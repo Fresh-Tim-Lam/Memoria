@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8502193",
+  "source_fingerprint": "74aa31f4c8a01b8878231e123cf4894b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8502193",
+    "the-worldwide-variation-in-avian-clutch-size-across-species-and-space"
+  ],
+  "key_phrases": [
+    "worldwide",
+    "variation",
+    "avian",
+    "clutch",
+    "size",
+    "across",
+    "species",
+    "space"
+  ],
+  "summary_1l": "Traits such as clutch size vary markedly across species and environmental gradients but have usually been investigated from either",
+  "query_hits": [],
+  "embed_text": "8502193 The Worldwide Variation in Avian Clutch Size across Species and Space science scifact Traits such as clutch size vary markedly across species and environmental gradients but have usually been investigated from either a comparative or a geographic perspective, respectively. We analyzed the global variation in clutch size… 8502193 the-worldwide-variation-in-avian-clutch-size-across-species-and-space worldwide variation avian clutch size across species space Traits such as clutch size vary markedly across species and environmental gradients but have usually been investigated from either The Worldwide Variation in Avian Clutch Size across Species and Space Traits such as clutch size vary markedly across species and environmental gradients but have usually been investigated from either a comparative or a geographic perspective, respectively. We analyzed the global variation in clutch size across 5,290 bird species, excluding brood parasites and pelagic species. We integrated intrinsic (morphological, behavioural), extrinsic (environmental), and phylogenetic effects in a combined model that predicts up to 68% of the interspecific variation in clutch size. We then applied the same species-level model to predict mean clutch size across 2,521 assemblages worldwide and found that it explains the observed eco-geographic pattern very well. Clutches are consistently largest in cavi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.842327+00:00"
+}

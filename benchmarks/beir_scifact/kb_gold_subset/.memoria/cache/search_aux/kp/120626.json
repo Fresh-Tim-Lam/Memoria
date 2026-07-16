@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "120626",
+  "source_fingerprint": "b923ec43d450108f60e05117e6a0585c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "120626",
+    "mechanisms-linking-obesity-to-insulin-resistance-and-type-2-diabetes"
+  ],
+  "key_phrases": [
+    "mechanisms",
+    "linking",
+    "obesity",
+    "insulin",
+    "resistance",
+    "type",
+    "diabetes",
+    "associated"
+  ],
+  "summary_1l": "Obesity is associated with an increased risk of developing insulin resistance and type 2 diabetes.",
+  "query_hits": [],
+  "embed_text": "120626 Mechanisms linking obesity to insulin resistance and type 2 diabetes science scifact Obesity is associated with an increased risk of developing insulin resistance and type 2 diabetes. In obese individuals, adipose tissue releases increased amounts of non-esterified fatty acids, glycerol, hormones, pro-inflammatory… 120626 mechanisms-linking-obesity-to-insulin-resistance-and-type-2-diabetes mechanisms linking obesity insulin resistance type diabetes associated Obesity is associated with an increased risk of developing insulin resistance and type 2 diabetes. Mechanisms linking obesity to insulin resistance and type 2 diabetes Obesity is associated with an increased risk of developing insulin resistance and type 2 diabetes. In obese individuals, adipose tissue releases increased amounts of non-esterified fatty acids, glycerol, hormones, pro-inflammatory cytokines and other factors that are involved in the development of insulin resistance. When insulin resistance is accompanied by dysfunction of pancreatic islet β-cells — the cells that release insulin — failure to control blood glucose levels results. Abnormalities in β-cell function are therefore critical in defining the risk and development of type 2 diabetes. This knowledge is fostering exploration of the molecular and genetic basis of the disease and new approaches to its treatment and pre",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:08.180860+00:00"
+}

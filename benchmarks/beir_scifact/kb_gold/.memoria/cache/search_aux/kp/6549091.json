@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6549091",
+  "source_fingerprint": "2ad225f968490c980f08df5a2a50d07c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6549091",
+    "permanent-cardiac-pacing-versus-medical-treatment-for-the-prevention-of-recurrent-vasovagal-syncope:-a-multicenter,-randomized,-controlled-trial."
+  ],
+  "key_phrases": [
+    "permanent",
+    "cardiac",
+    "pacing",
+    "versus",
+    "medical",
+    "treatment",
+    "prevention",
+    "recurrent"
+  ],
+  "summary_1l": "Permanent cardiac pacing versus medical treatment for the prevention of recurrent vasovagal syncope: a multicenter, randomized, controlled trial.",
+  "query_hits": [],
+  "embed_text": "6549091 Permanent cardiac pacing versus medical treatment for the prevention of recurrent vasovagal syncope: a multicenter, randomized, controlled trial. science scifact BACKGROUND This clinical investigation was performed to compare the effects of permanent dual-chamber cardiac pacing with pharmacological therapy in patients with recurrent vasovagal syncope. METHODS AND RESULTS Patients from 14 centers… 6549091 permanent-cardiac-pacing-versus-medical-treatment-for-the-prevention-of-recurrent-vasovagal-syncope:-a-multicenter,-randomized,-controlled-trial. permanent cardiac pacing versus medical treatment prevention recurrent Permanent cardiac pacing versus medical treatment for the prevention of recurrent vasovagal syncope: a multicenter, randomized, controlled trial. Permanent cardiac pacing versus medical treatment for the prevention of recurrent vasovagal syncope: a multicenter, randomized, controlled trial. BACKGROUND This clinical investigation was performed to compare the effects of permanent dual-chamber cardiac pacing with pharmacological therapy in patients with recurrent vasovagal syncope. METHODS AND RESULTS Patients from 14 centers were randomized to receive either a DDD pacemaker provided with rate-drop response function or the beta-blocker atenolol at the dosage of 100 mg once a day. Inclusion criteria were age >35 years, >/=3 syncopal spells in the preceding 2 years, and positive response to tilt table testing with syncope occurring in association with relative bradycardia. The primary outcome was the first recurrence of syncope after ran",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.189676+00:00"
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "2970834#0",
+  "source_fingerprint": "32ea9b5ba57e96a493fde4f1a94342b6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2970834#0"
+  ],
+  "key_phrases": [
+    "法蘭西島",
+    "格陵蘭",
+    "英語",
+    "法语",
+    "座位",
+    "格陵蘭海",
+    "無人島嶼",
+    "該島"
+  ],
+  "summary_1l": "法蘭西島（英語/法语：）是一座位於格陵蘭海的無人島嶼，該島面積為246.",
+  "query_hits": [],
+  "embed_text": "2970834#0 法蘭西島 (格陵蘭) 法蘭西島 (格陵蘭) 法蘭西島（英語/法语：）是一座位於格陵蘭海的無人島嶼，該島面積為246.1平方公里、海岸線長71.9公里。 2970834#0 法蘭西島 格陵蘭 英語 法语 座位 格陵蘭海 無人島嶼 該島 法蘭西島（英語/法语：）是一座位於格陵蘭海的無人島嶼，該島面積為246. 法蘭西島 (格陵蘭) 法蘭西島（英語/法语：）是一座位於格陵蘭海的無人島嶼，該島面積為246.1平方公里、海岸線長71.9公里。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:21:45.876050+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5765455",
+  "source_fingerprint": "e508393588e73f8025f29df134aa3949",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5765455",
+    "reactive-oxygen-species,-dna-damage,-and-error-prone-repair:-a-model-for-genomic-instability-with-progression-in-myeloid-leukemia?"
+  ],
+  "key_phrases": [
+    "reactive",
+    "oxygen",
+    "species",
+    "dna",
+    "damage",
+    "error",
+    "prone",
+    "repair"
+  ],
+  "summary_1l": "Reactive oxygen species, DNA damage, and error-prone repair: a model for genomic instability with progression in myeloid leukemia?",
+  "query_hits": [],
+  "embed_text": "5765455 Reactive oxygen species, DNA damage, and error-prone repair: a model for genomic instability with progression in myeloid leukemia? science scifact Myelodysplastic syndromes (MDS) comprise a heterogeneous group of disorders characterized by ineffective hematopoiesis, with an increased propensity to develop acute myelogenous leukemia (AML). The molecular basis for MDS progression is… 5765455 reactive-oxygen-species,-dna-damage,-and-error-prone-repair:-a-model-for-genomic-instability-with-progression-in-myeloid-leukemia? reactive oxygen species dna damage error prone repair Reactive oxygen species, DNA damage, and error-prone repair: a model for genomic instability with progression in myeloid leukemia? Reactive oxygen species, DNA damage, and error-prone repair: a model for genomic instability with progression in myeloid leukemia? Myelodysplastic syndromes (MDS) comprise a heterogeneous group of disorders characterized by ineffective hematopoiesis, with an increased propensity to develop acute myelogenous leukemia (AML). The molecular basis for MDS progression is unknown, but a key element in MDS disease progression is loss of chromosomal material (genomic instability). Using our two-step mouse model for myeloid leukemic disease progression involving overexpression of human mutant NRAS and BCL2 genes, we show that there is a stepwise increase in the frequency of DNA damage leading to an increased frequency of error-prone repair of double-strand breaks (DSB) by nonhomologous end-joining.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.011431+00:00"
+}

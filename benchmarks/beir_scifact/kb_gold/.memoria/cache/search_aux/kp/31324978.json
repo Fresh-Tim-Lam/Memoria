@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "31324978",
+  "source_fingerprint": "605125a4546d2eb1b69acac33d9d517e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "31324978",
+    "a-protein-farnesyltransferase-inhibitor-ameliorates-disease-in-a-mouse-model-of-progeria."
+  ],
+  "key_phrases": [
+    "protein",
+    "farnesyltransferase",
+    "inhibitor",
+    "ameliorates",
+    "disease",
+    "mouse",
+    "model",
+    "progeria"
+  ],
+  "summary_1l": "A protein farnesyltransferase inhibitor ameliorates disease in a mouse model of progeria.",
+  "query_hits": [],
+  "embed_text": "31324978 A protein farnesyltransferase inhibitor ameliorates disease in a mouse model of progeria. science scifact Progerias are rare genetic diseases characterized by premature aging. Several progeroid disorders are caused by mutations that lead to the accumulation of a lipid-modified (farnesylated) form of prelamin A, a protein that contributes to… 31324978 a-protein-farnesyltransferase-inhibitor-ameliorates-disease-in-a-mouse-model-of-progeria. protein farnesyltransferase inhibitor ameliorates disease mouse model progeria A protein farnesyltransferase inhibitor ameliorates disease in a mouse model of progeria. A protein farnesyltransferase inhibitor ameliorates disease in a mouse model of progeria. Progerias are rare genetic diseases characterized by premature aging. Several progeroid disorders are caused by mutations that lead to the accumulation of a lipid-modified (farnesylated) form of prelamin A, a protein that contributes to the structural scaffolding for the cell nucleus. In progeria, the accumulation of farnesyl-prelamin A disrupts this scaffolding, leading to misshapen nuclei. Previous studies have shown that farnesyltransferase inhibitors (FTIs) reverse this cellular abnormality. We tested the efficacy of an FTI (ABT-100) in Zmpste24-deficient mice, a mouse model of progeria. The FTI-treated mice exhibited improved body weight, grip strength, bone integrity, and percent survival at 20",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.495648+00:00"
+}

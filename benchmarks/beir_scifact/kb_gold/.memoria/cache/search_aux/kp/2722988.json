@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2722988",
+  "source_fingerprint": "dc5fb4b80bf5d6aa678d2d23e154b846",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2722988",
+    "the-mammalian-epigenome"
+  ],
+  "key_phrases": [
+    "mammalian",
+    "epigenome",
+    "chemical",
+    "modifications",
+    "dna",
+    "histone",
+    "proteins",
+    "form"
+  ],
+  "summary_1l": "Chemical modifications to DNA and histone proteins form a complex regulatory network that modulates chromatin structure and genome function.",
+  "query_hits": [],
+  "embed_text": "2722988 The Mammalian Epigenome science scifact Chemical modifications to DNA and histone proteins form a complex regulatory network that modulates chromatin structure and genome function. The epigenome refers to the complete description of these potentially heritable changes across the… 2722988 the-mammalian-epigenome mammalian epigenome chemical modifications dna histone proteins form Chemical modifications to DNA and histone proteins form a complex regulatory network that modulates chromatin structure and genome function. The Mammalian Epigenome Chemical modifications to DNA and histone proteins form a complex regulatory network that modulates chromatin structure and genome function. The epigenome refers to the complete description of these potentially heritable changes across the genome. The composition of the epigenome within a given cell is a function of genetic determinants, lineage, and environment. With the sequencing of the human genome completed, investigators now seek a comprehensive view of the epigenetic changes that determine how genetic information is made manifest across an incredibly varied background of developmental stages, tissue types, and disease states. Here we review current research efforts, with an emphasis on large-scale studies, emerging technologies, and challenges ahead.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.649585+00:00"
+}

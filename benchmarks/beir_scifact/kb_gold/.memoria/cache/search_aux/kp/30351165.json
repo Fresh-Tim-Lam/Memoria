@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "30351165",
+  "source_fingerprint": "ffe81b381b3269b2aedf2c2e3c3ab7a7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "30351165",
+    "brain-region-specific-up-regulation-of-mouse-apolipoprotein-e-by-pharmacological-estrogen-treatments."
+  ],
+  "key_phrases": [
+    "brain",
+    "region",
+    "specific",
+    "up",
+    "regulation",
+    "mouse",
+    "apolipoprotein",
+    "by"
+  ],
+  "summary_1l": "Brain region-specific up-regulation of mouse apolipoprotein E by pharmacological estrogen treatments.",
+  "query_hits": [],
+  "embed_text": "30351165 Brain region-specific up-regulation of mouse apolipoprotein E by pharmacological estrogen treatments. science scifact Cerebral apolipoprotein E (apoE) has been implicated in neuronal protection and repair. Due to the variable levels and types of estrogen receptors within different brain regions, the effect of estrogen on apoE and the mechanism of this… 30351165 brain-region-specific-up-regulation-of-mouse-apolipoprotein-e-by-pharmacological-estrogen-treatments. brain region specific up regulation mouse apolipoprotein by Brain region-specific up-regulation of mouse apolipoprotein E by pharmacological estrogen treatments. Brain region-specific up-regulation of mouse apolipoprotein E by pharmacological estrogen treatments. Cerebral apolipoprotein E (apoE) has been implicated in neuronal protection and repair. Due to the variable levels and types of estrogen receptors within different brain regions, the effect of estrogen on apoE and the mechanism of this effect may vary within different regions. Ovariectomized female C57BL/6 mice were treated with pharmacological levels of 17 beta-estradiol or placebo for 5 days, resulting in supraphysiological plasma levels of estradiol in the treated mice. ApoE and glial fibrillary acidic protein (GFAP) levels were measured in the cortex, hippocampus and diencephalon. 17 beta-Estradiol up-regulated apoE but not GFAP in the cortex and diencephalon, whereas in the hippocampu",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.599351+00:00"
+}

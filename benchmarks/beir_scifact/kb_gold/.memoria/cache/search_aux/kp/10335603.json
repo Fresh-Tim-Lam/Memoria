@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10335603",
+  "source_fingerprint": "3c2ef6e80007be7270a9019ca471b50f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10335603",
+    "long-tandem-arrays-of-complex-repeat-units-in-chironomus-telomeres."
+  ],
+  "key_phrases": [
+    "long",
+    "tandem",
+    "arrays",
+    "complex",
+    "repeat",
+    "units",
+    "chironomus",
+    "telomeres"
+  ],
+  "summary_1l": "Long tandem arrays of complex repeat units in Chironomus telomeres.",
+  "query_hits": [],
+  "embed_text": "10335603 Long tandem arrays of complex repeat units in Chironomus telomeres. science scifact A cloned 340-bp DNA fragment excised by EcoRI from the Chironomus pallividittatus genome has been localized to the telomeres by in situ hybridization as well as to connectives between telomeres. No hybridization was observed in other… 10335603 long-tandem-arrays-of-complex-repeat-units-in-chironomus-telomeres. long tandem arrays complex repeat units chironomus telomeres Long tandem arrays of complex repeat units in Chironomus telomeres. Long tandem arrays of complex repeat units in Chironomus telomeres. A cloned 340-bp DNA fragment excised by EcoRI from the Chironomus pallividittatus genome has been localized to the telomeres by in situ hybridization as well as to connectives between telomeres. No hybridization was observed in other regions of the chromosomes. Another cloned EcoRI fragment, 525 bp long has also been studied. This represents a partial duplication of the 340-bp sequence. Genomic blot hybridization experiments show that the 340-bp sequence is a representative monomeric unit of tandemly repeated arrays which account for 1.2% of the Chironomus genome, on average 300 kb per telomere. The repeat unit contains two types of subrepeats each present twice per repeat unit. Northern blot hybridization experiments show",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:04.613114+00:00"
+}

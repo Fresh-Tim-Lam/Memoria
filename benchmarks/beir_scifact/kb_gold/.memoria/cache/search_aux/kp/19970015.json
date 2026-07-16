@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19970015",
+  "source_fingerprint": "be51ccbba05d3279da49f2acf5fa0463",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19970015",
+    "modeling-neurogenesis-impairment-in-down-syndrome-with-induced-pluripotent-stem-cells-from-trisomy-21-amniotic-fluid-cells."
+  ],
+  "key_phrases": [
+    "modeling",
+    "neurogenesis",
+    "impairment",
+    "down",
+    "syndrome",
+    "with",
+    "induced",
+    "pluripotent"
+  ],
+  "summary_1l": "Modeling neurogenesis impairment in Down syndrome with induced pluripotent stem cells from Trisomy 21 amniotic fluid cells.",
+  "query_hits": [],
+  "embed_text": "19970015 Modeling neurogenesis impairment in Down syndrome with induced pluripotent stem cells from Trisomy 21 amniotic fluid cells. science scifact Down syndrome (DS), or Trisomy 21 (T21) syndrome, one of the most common chromosomal abnormalities, is caused by an extra duplication of chromosome 21. In studies of neuron development, experimental models based on human cells are… 19970015 modeling-neurogenesis-impairment-in-down-syndrome-with-induced-pluripotent-stem-cells-from-trisomy-21-amniotic-fluid-cells. modeling neurogenesis impairment down syndrome with induced pluripotent Modeling neurogenesis impairment in Down syndrome with induced pluripotent stem cells from Trisomy 21 amniotic fluid cells. Modeling neurogenesis impairment in Down syndrome with induced pluripotent stem cells from Trisomy 21 amniotic fluid cells. Down syndrome (DS), or Trisomy 21 (T21) syndrome, one of the most common chromosomal abnormalities, is caused by an extra duplication of chromosome 21. In studies of neuron development, experimental models based on human cells are considered to be the most desired and accurate for basic research. The generation of diseased induced pluripotetn stem (iPS) cell is a critical step in understanding the developmental stages of complex neuronal diseases. Here, we generated human DS iPS cell lines from second trimester amniotic fluid (AF) cells with T21 by co-expressing Yamanaka factors through lentiviral delivery and subsequently differentiated them into neuronal progenitor",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.476360+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24873253",
+  "source_fingerprint": "6559ac152d3f28e086bf920529576916",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24873253",
+    "clinical-benefits-and-considerations-of-bisphosphonate-treatment-in-metastatic-bone-disease."
+  ],
+  "key_phrases": [
+    "clinical",
+    "benefits",
+    "considerations",
+    "bisphosphonate",
+    "treatment",
+    "metastatic",
+    "bone",
+    "disease"
+  ],
+  "summary_1l": "Clinical benefits and considerations of bisphosphonate treatment in metastatic bone disease.",
+  "query_hits": [],
+  "embed_text": "24873253 Clinical benefits and considerations of bisphosphonate treatment in metastatic bone disease. science scifact Patients with metastatic bone disease are at risk for developing skeletal-related events that can negatively influence quality of life, contributing to loss of autonomy and functional capabilities. Bisphosphonates have become an important… 24873253 clinical-benefits-and-considerations-of-bisphosphonate-treatment-in-metastatic-bone-disease. clinical benefits considerations bisphosphonate treatment metastatic bone disease Clinical benefits and considerations of bisphosphonate treatment in metastatic bone disease. Clinical benefits and considerations of bisphosphonate treatment in metastatic bone disease. Patients with metastatic bone disease are at risk for developing skeletal-related events that can negatively influence quality of life, contributing to loss of autonomy and functional capabilities. Bisphosphonates have become an important component in the treatment of patients with bone metastases as they delay the onset and reduce the risk of skeletal-related events and also palliate or control bone pain in multiple cancer types, thus preserving quality of life. Zoledronic acid has proven efficacy and safety in patients with bone lesions from breast cancer, prostate cancer, lung cancer, and other solid tumors, as well as in patients with multiple myeloma. Current data suggest that early treatment",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.443788+00:00"
+}

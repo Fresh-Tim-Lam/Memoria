@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18414462",
+  "source_fingerprint": "56e4f4e218f20254c4da179b6ca9cd1f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18414462",
+    "thyroid-hormone-receptor-repression-linked-to-type-i-pneumocyte-associated-respiratory-distress-syndrome"
+  ],
+  "key_phrases": [
+    "thyroid",
+    "hormone",
+    "receptor",
+    "repression",
+    "linked",
+    "type",
+    "pneumocyte",
+    "associated"
+  ],
+  "summary_1l": "Although the lung is a defining feature of air-breathing animals, the pathway controlling the f",
+  "query_hits": [],
+  "embed_text": "18414462 Thyroid Hormone Receptor Repression Linked to Type I Pneumocyte Associated Respiratory Distress Syndrome science scifact Although the lung is a defining feature of air-breathing animals, the pathway controlling the formation of type I pneumocytes, the cells that mediate gas exchange, is poorly understood. In contrast, the glucocorticoid receptor and its… 18414462 thyroid-hormone-receptor-repression-linked-to-type-i-pneumocyte-associated-respiratory-distress-syndrome thyroid hormone receptor repression linked type pneumocyte associated Although the lung is a defining feature of air-breathing animals, the pathway controlling the f Thyroid Hormone Receptor Repression Linked to Type I Pneumocyte Associated Respiratory Distress Syndrome Although the lung is a defining feature of air-breathing animals, the pathway controlling the formation of type I pneumocytes, the cells that mediate gas exchange, is poorly understood. In contrast, the glucocorticoid receptor and its cognate ligand have long been known to promote type II pneumocyte maturation; prenatal administration of glucocorticoids is commonly used to attenuate the severity of infant respiratory distress syndrome (RDS). Here we show that knock-in mutations of the nuclear co-repressor SMRT (silencing mediator of retinoid and thyroid hormone receptors) in C57BL/6 mice (SMRTmRID) produces a previously unidentified respiratory distress syndrome caused by prematurity of",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.249640+00:00"
+}

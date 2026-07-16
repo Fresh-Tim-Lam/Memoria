@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25915873",
+  "source_fingerprint": "7c1f3f8460be24437e0ec4c79bce9fe2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25915873",
+    "dasatinib-inhibits-both-osteoclast-activation-and-prostate-cancer-pc-3-cell-induced-osteoclast-formation."
+  ],
+  "key_phrases": [
+    "dasatinib",
+    "inhibits",
+    "both",
+    "osteoclast",
+    "activation",
+    "prostate",
+    "cancer",
+    "pc"
+  ],
+  "summary_1l": "Dasatinib inhibits both osteoclast activation and prostate cancer PC-3-cell-induced osteoclast formation.",
+  "query_hits": [],
+  "embed_text": "25915873 Dasatinib inhibits both osteoclast activation and prostate cancer PC-3-cell-induced osteoclast formation. science scifact PURPOSE Therapies to target prostate cancer bone metastases have only limited effects. New treatments are focused on the interaction between cancer cells, bone marrow cells and the bone matrix. Osteoclasts play an important role in the… 25915873 dasatinib-inhibits-both-osteoclast-activation-and-prostate-cancer-pc-3-cell-induced-osteoclast-formation. dasatinib inhibits both osteoclast activation prostate cancer pc Dasatinib inhibits both osteoclast activation and prostate cancer PC-3-cell-induced osteoclast formation. Dasatinib inhibits both osteoclast activation and prostate cancer PC-3-cell-induced osteoclast formation. PURPOSE Therapies to target prostate cancer bone metastases have only limited effects. New treatments are focused on the interaction between cancer cells, bone marrow cells and the bone matrix. Osteoclasts play an important role in the development of bone tumors caused by prostate cancer. Since Src kinase has been shown to be necessary for osteoclast function, we hypothesized that dasatinib, a Src family kinase inhibitor, would reduce osteoclast activity and prostate cancer (PC-3) cell-induced osteoclast formation. RESULTS Dasatinib inhibited RANKL-induced osteoclast differentiation of bone marrow-derived monocytes with an EC(50) of 7.5 nM. PC-3 cells, a human prostate cancer cell line",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.714601+00:00"
+}

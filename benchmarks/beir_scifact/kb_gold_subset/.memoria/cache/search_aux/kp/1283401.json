@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1283401",
+  "source_fingerprint": "b616cbbd7631ba362da71b9f0fb2a9a2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1283401",
+    "fiji:-an-open-source-platform-for-biological-image-analysis"
+  ],
+  "key_phrases": [
+    "fiji",
+    "open",
+    "source",
+    "platform",
+    "biological",
+    "image",
+    "analysis",
+    "distribution"
+  ],
+  "summary_1l": "Fiji is a distribution of the popular open-source software ImageJ focused on biological-image analysis.",
+  "query_hits": [],
+  "embed_text": "1283401 Fiji: an open-source platform for biological-image analysis science scifact Fiji is a distribution of the popular open-source software ImageJ focused on biological-image analysis. Fiji uses modern software engineering practices to combine powerful software libraries with a broad range of scripting languages to… 1283401 fiji:-an-open-source-platform-for-biological-image-analysis fiji open source platform biological image analysis distribution Fiji is a distribution of the popular open-source software ImageJ focused on biological-image analysis. Fiji: an open-source platform for biological-image analysis Fiji is a distribution of the popular open-source software ImageJ focused on biological-image analysis. Fiji uses modern software engineering practices to combine powerful software libraries with a broad range of scripting languages to enable rapid prototyping of image-processing algorithms. Fiji facilitates the transformation of new algorithms into ImageJ plugins that can be shared with end users through an integrated update system. We propose Fiji as a platform for productive collaboration between computer science and biology research communities.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:09.707912+00:00"
+}

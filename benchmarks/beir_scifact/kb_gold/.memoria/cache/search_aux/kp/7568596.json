@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7568596",
+  "source_fingerprint": "816c52da7411f5cc6f42885e3385e0a9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7568596",
+    "osteoclasts-control-reactivation-of-dormant-myeloma-cells-by-remodelling-the-endosteal-niche"
+  ],
+  "key_phrases": [
+    "osteoclasts",
+    "control",
+    "reactivation",
+    "dormant",
+    "myeloma",
+    "cells",
+    "by",
+    "remodelling"
+  ],
+  "summary_1l": "Multiple myeloma is largely incurable, despite development of therapies that target myeloma cell-intrinsic",
+  "query_hits": [],
+  "embed_text": "7568596 Osteoclasts control reactivation of dormant myeloma cells by remodelling the endosteal niche science scifact Multiple myeloma is largely incurable, despite development of therapies that target myeloma cell-intrinsic pathways. Disease relapse is thought to originate from dormant myeloma cells, localized in specialized niches, which resist therapy… 7568596 osteoclasts-control-reactivation-of-dormant-myeloma-cells-by-remodelling-the-endosteal-niche osteoclasts control reactivation dormant myeloma cells by remodelling Multiple myeloma is largely incurable, despite development of therapies that target myeloma cell-intrinsic Osteoclasts control reactivation of dormant myeloma cells by remodelling the endosteal niche Multiple myeloma is largely incurable, despite development of therapies that target myeloma cell-intrinsic pathways. Disease relapse is thought to originate from dormant myeloma cells, localized in specialized niches, which resist therapy and repopulate the tumour. However, little is known about the niche, and how it exerts cell-extrinsic control over myeloma cell dormancy and reactivation. In this study, we track individual myeloma cells by intravital imaging as they colonize the endosteal niche, enter a dormant state and subsequently become activated to form colonies. We demonstrate that dormancy is a reversible state that is switched 'on' by engagement with bone-lining cells or osteoblasts, and",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.677382+00:00"
+}

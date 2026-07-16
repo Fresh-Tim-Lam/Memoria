@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4421742",
+  "source_fingerprint": "2debcf21688fe974eb0a582ebf6ce9a1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4421742",
+    "disruption-of-the-hepcidin/ferroportin-regulatory-system-causes-pulmonary-iron-overload-and-restrictive-lung-disease"
+  ],
+  "key_phrases": [
+    "disruption",
+    "hepcidin",
+    "ferroportin",
+    "regulatory",
+    "system",
+    "causes",
+    "pulmonary",
+    "iron"
+  ],
+  "summary_1l": "Emerging evidence suggests that pulmonary iron accumulation is implicated in a spec",
+  "query_hits": [],
+  "embed_text": "4421742 Disruption of the Hepcidin/Ferroportin Regulatory System Causes Pulmonary Iron Overload and Restrictive Lung Disease science scifact Emerging evidence suggests that pulmonary iron accumulation is implicated in a spectrum of chronic lung diseases. However, the mechanism(s) involved in pulmonary iron deposition and its role in the in vivo pathogenesis of lung diseases… 4421742 disruption-of-the-hepcidin/ferroportin-regulatory-system-causes-pulmonary-iron-overload-and-restrictive-lung-disease disruption hepcidin ferroportin regulatory system causes pulmonary iron Emerging evidence suggests that pulmonary iron accumulation is implicated in a spec Disruption of the Hepcidin/Ferroportin Regulatory System Causes Pulmonary Iron Overload and Restrictive Lung Disease Emerging evidence suggests that pulmonary iron accumulation is implicated in a spectrum of chronic lung diseases. However, the mechanism(s) involved in pulmonary iron deposition and its role in the in vivo pathogenesis of lung diseases remains unknown. Here we show that a point mutation in the murine ferroportin gene, which causes hereditary hemochromatosis type 4 (Slc40a1C326S), increases iron levels in alveolar macrophages, epithelial cells lining the conducting airways and lung parenchyma, and in vascular smooth muscle cells. Pulmonary iron overload is associated with oxidative stress, restrictive lung disease with decreased total lung capacity and reduced blood oxygen sa",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.966250+00:00"
+}

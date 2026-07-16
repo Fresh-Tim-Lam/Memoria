@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15570691",
+  "source_fingerprint": "2ebe299ad1331884833ea25233b8656f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15570691",
+    "pharmacologic-inhibition-of-cyclin-dependent-kinases-4-and-6-arrests-the-growth-of-glioblastoma-multiforme-intracranial-xenografts."
+  ],
+  "key_phrases": [
+    "pharmacologic",
+    "inhibition",
+    "cyclin",
+    "dependent",
+    "kinases",
+    "arrests",
+    "growth",
+    "glioblastoma"
+  ],
+  "summary_1l": "Pharmacologic inhibition of cyclin-dependent kinases 4 and 6 arrests the growth of glioblastoma multiforme intracranial xenografts.",
+  "query_hits": [],
+  "embed_text": "15570691 Pharmacologic inhibition of cyclin-dependent kinases 4 and 6 arrests the growth of glioblastoma multiforme intracranial xenografts. science scifact Activation of cyclin-dependent kinases 4 and 6 (cdk4/6) occurs in the majority of glioblastoma multiforme (GBM) tumors, and represents a promising molecular target for the development of small molecule inhibitors. In the current study, we… 15570691 pharmacologic-inhibition-of-cyclin-dependent-kinases-4-and-6-arrests-the-growth-of-glioblastoma-multiforme-intracranial-xenografts. pharmacologic inhibition cyclin dependent kinases arrests growth glioblastoma Pharmacologic inhibition of cyclin-dependent kinases 4 and 6 arrests the growth of glioblastoma multiforme intracranial xenografts. Pharmacologic inhibition of cyclin-dependent kinases 4 and 6 arrests the growth of glioblastoma multiforme intracranial xenografts. Activation of cyclin-dependent kinases 4 and 6 (cdk4/6) occurs in the majority of glioblastoma multiforme (GBM) tumors, and represents a promising molecular target for the development of small molecule inhibitors. In the current study, we investigated the molecular determinants and in vivo response of diverse GBM cell lines and xenografts to PD-0332991, a cdk4/6-specific inhibitor. In vitro testing of PD-0332991 against a panel of GBM cell lines revealed a potent G(1) cell cycle arrest and induction of senescence in each of 16 retinoblastoma protein (Rb)-proficient cell lines regardless of other genetic lesions, whereas 5 cell lines with homozygous inactivatio",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.878146+00:00"
+}

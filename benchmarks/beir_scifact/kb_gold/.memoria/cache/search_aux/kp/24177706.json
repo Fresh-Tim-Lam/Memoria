@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24177706",
+  "source_fingerprint": "2d47d80af7060b3c1142394401c7bb7e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24177706",
+    "innate-host-defense-requires-tfeb-mediated-transcription-of-cytoprotective-and-antimicrobial-genes."
+  ],
+  "key_phrases": [
+    "innate",
+    "host",
+    "defense",
+    "requires",
+    "tfeb",
+    "mediated",
+    "transcription",
+    "cytoprotective"
+  ],
+  "summary_1l": "Innate host defense requires TFEB-mediated transcription of cytoprotective and antimicrobial genes.",
+  "query_hits": [],
+  "embed_text": "24177706 Innate host defense requires TFEB-mediated transcription of cytoprotective and antimicrobial genes. science scifact Animal host defense against infection requires the expression of defense genes at the right place and the right time. Understanding such tight control of host defense requires the elucidation of the transcription factors involved. By using… 24177706 innate-host-defense-requires-tfeb-mediated-transcription-of-cytoprotective-and-antimicrobial-genes. innate host defense requires tfeb mediated transcription cytoprotective Innate host defense requires TFEB-mediated transcription of cytoprotective and antimicrobial genes. Innate host defense requires TFEB-mediated transcription of cytoprotective and antimicrobial genes. Animal host defense against infection requires the expression of defense genes at the right place and the right time. Understanding such tight control of host defense requires the elucidation of the transcription factors involved. By using an unbiased approach in the model Caenorhabditis elegans, we discovered that HLH-30 (known as TFEB in mammals) is a key transcription factor for host defense. HLH-30 was activated shortly after Staphylococcus aureus infection, and drove the expression of close to 80% of the host response, including antimicrobial and autophagy genes that were essential for host tolerance of infection. TFEB was also rapidly activated in murine macrophages upon S. aureus infe",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.913018+00:00"
+}

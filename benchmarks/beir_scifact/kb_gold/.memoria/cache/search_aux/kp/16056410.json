@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "16056410",
+  "source_fingerprint": "40490c4bdf8bb3e5c7e1810fc174bf4b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16056410"
+  ],
+  "key_phrases": [
+    "posttranslational",
+    "acetylation",
+    "tubulin",
+    "constrains",
+    "protofilament",
+    "number",
+    "native",
+    "microtubules"
+  ],
+  "summary_1l": "BACKGROUND Microtubules are built from linear polymers of α-β tubulin dimers (protofilaments) that for",
+  "query_hits": [],
+  "embed_text": "16056410 Posttranslational Acetylation of α-Tubulin Constrains Protofilament Number in Native Microtubules science scifact BACKGROUND Microtubules are built from linear polymers of α-β tubulin dimers (protofilaments) that form a tubular quinary structure. Microtubules assembled from purified tubulin in vitro contain between 10 and 16 protofilaments; however,… 16056410 posttranslational acetylation tubulin constrains protofilament number native microtubules BACKGROUND Microtubules are built from linear polymers of α-β tubulin dimers (protofilaments) that for Posttranslational Acetylation of α-Tubulin Constrains Protofilament Number in Native Microtubules BACKGROUND Microtubules are built from linear polymers of α-β tubulin dimers (protofilaments) that form a tubular quinary structure. Microtubules assembled from purified tubulin in vitro contain between 10 and 16 protofilaments; however, such structural polymorphisms are not found in cells. This discrepancy implies that factors other than tubulin constrain microtubule protofilament number, but the nature of these constraints is unknown. RESULTS Here, we show that acetylation of MEC-12 α-tubulin constrains protofilament number in C. elegans touch receptor neurons (TRNs). Whereas the sensory dendrite of wild-type TRNs is packed with a cross-linked bundle of long, 15-protofilament microtubules, m",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.728769+00:00"
+}

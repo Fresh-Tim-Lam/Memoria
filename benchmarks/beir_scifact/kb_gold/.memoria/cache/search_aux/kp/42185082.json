@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "42185082",
+  "source_fingerprint": "1835d81032bc5836f709e4eed3979e0d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "42185082",
+    "primary-care-and-health-insurance-among-women-released-from-new-york-city-jails."
+  ],
+  "key_phrases": [
+    "primary",
+    "care",
+    "health",
+    "insurance",
+    "among",
+    "women",
+    "released",
+    "from"
+  ],
+  "summary_1l": "Primary care and health insurance among women released from New York City jails.",
+  "query_hits": [],
+  "embed_text": "42185082 Primary care and health insurance among women released from New York City jails. science scifact Factors associated with primary care utilization and health insurance coverage were examined among 511 women leaving jail in New York City from 1997-2001. One year after release, roughly half of the sample reported primary care utilization… 42185082 primary-care-and-health-insurance-among-women-released-from-new-york-city-jails. primary care health insurance among women released from Primary care and health insurance among women released from New York City jails. Primary care and health insurance among women released from New York City jails. Factors associated with primary care utilization and health insurance coverage were examined among 511 women leaving jail in New York City from 1997-2001. One year after release, roughly half of the sample reported primary care utilization (47%) and health insurance coverage (56%). Neither outcome was more likely among those reporting diabetes, asthma, or depression. Primary care utilization was more likely among those reporting receipt of public benefits, health insurance coverage, moderate social support, avoidance of illegal activity, and HIV seropositivity. Health insurance coverage was associated with receipt of public benefits, hospitalization, primary care, and avoiding re-arrest. This study demonstrate",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.829933+00:00"
+}

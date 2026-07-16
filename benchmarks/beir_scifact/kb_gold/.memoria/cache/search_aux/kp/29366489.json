@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29366489",
+  "source_fingerprint": "dd7fbed76b88236bdfa2d943ad1fde25",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29366489",
+    "deleted-in-liver-cancer-1-(dlc-1):-a-tumor-suppressor-not-just-for-liver."
+  ],
+  "key_phrases": [
+    "deleted",
+    "liver",
+    "cancer",
+    "dlc",
+    "tumor",
+    "suppressor",
+    "not",
+    "just"
+  ],
+  "summary_1l": "Deleted in liver cancer-1 (DLC-1): a tumor suppressor not just for liver.",
+  "query_hits": [],
+  "embed_text": "29366489 Deleted in liver cancer-1 (DLC-1): a tumor suppressor not just for liver. science scifact Deleted in liver cancer 1 (DLC-1), as its name implied, was originally isolated as a potential tumor suppressor gene often deleted in hepatocellular carcinoma. Further studies have indicated that down-expression of DLC-1 either by genomic… 29366489 deleted-in-liver-cancer-1-(dlc-1):-a-tumor-suppressor-not-just-for-liver. deleted liver cancer dlc tumor suppressor not just Deleted in liver cancer-1 (DLC-1): a tumor suppressor not just for liver. Deleted in liver cancer-1 (DLC-1): a tumor suppressor not just for liver. Deleted in liver cancer 1 (DLC-1), as its name implied, was originally isolated as a potential tumor suppressor gene often deleted in hepatocellular carcinoma. Further studies have indicated that down-expression of DLC-1 either by genomic deletion or DNA methylation is associated with a variety of cancer types including lung, breast, prostate, kidney, colon, uterus, ovary, and stomach. Re-expression of DLC-1 in cancer cells regulates the structure of actin cytoskeleton and focal adhesions and significantly inhibits cell growth, supporting its role as a tumor suppressor. This tumor suppressive function relies on DLC-1's RhoGTPase activating protein (RhoGAP) activity and steroidogenic acute regulatory (StAR)-related li",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.825336+00:00"
+}

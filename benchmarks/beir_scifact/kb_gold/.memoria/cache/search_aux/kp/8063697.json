@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8063697",
+  "source_fingerprint": "153666b562c51223da30b9356a05497a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8063697",
+    "acellular-pertussis-vaccines-protect-against-disease-but-fail-to-prevent-infection-and-transmission-in-a-nonhuman-primate-model."
+  ],
+  "key_phrases": [
+    "acellular",
+    "pertussis",
+    "vaccines",
+    "protect",
+    "against",
+    "disease",
+    "but",
+    "fail"
+  ],
+  "summary_1l": "Acellular pertussis vaccines protect against disease but fail to prevent infection and transmission in a nonhuman primate model.",
+  "query_hits": [],
+  "embed_text": "8063697 Acellular pertussis vaccines protect against disease but fail to prevent infection and transmission in a nonhuman primate model. science scifact Pertussis is a highly contagious respiratory illness caused by the bacterial pathogen Bordetella pertussis. Pertussis rates in the United States have been rising and reached a 50-y high of 42,000 cases in 2012. Although pertussis… 8063697 acellular-pertussis-vaccines-protect-against-disease-but-fail-to-prevent-infection-and-transmission-in-a-nonhuman-primate-model. acellular pertussis vaccines protect against disease but fail Acellular pertussis vaccines protect against disease but fail to prevent infection and transmission in a nonhuman primate model. Acellular pertussis vaccines protect against disease but fail to prevent infection and transmission in a nonhuman primate model. Pertussis is a highly contagious respiratory illness caused by the bacterial pathogen Bordetella pertussis. Pertussis rates in the United States have been rising and reached a 50-y high of 42,000 cases in 2012. Although pertussis resurgence is not completely understood, we hypothesize that current acellular pertussis (aP) vaccines fail to prevent colonization and transmission. To test our hypothesis, infant baboons were vaccinated at 2, 4, and 6 mo of age with aP or whole-cell pertussis (wP) vaccines and challenged with B. pertussis at 7 mo. Infection was followed by quantifying colonization in nasopharyngeal washes and monitoring leukocytosis and symptoms. Baboo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.825221+00:00"
+}

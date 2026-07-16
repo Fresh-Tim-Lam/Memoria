@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3112885",
+  "source_fingerprint": "a66c7d4c9bc1033eaf5e36c8b15cd429",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3112885",
+    "two-sided-confidence-intervals-for-the-single-proportion:-comparison-of-seven-methods.-stat.-med"
+  ],
+  "key_phrases": [
+    "two",
+    "sided",
+    "confidence",
+    "intervals",
+    "single",
+    "proportion",
+    "comparison",
+    "seven"
+  ],
+  "summary_1l": "Two-sided confidence intervals for the single proportion: comparison of seven methods.",
+  "query_hits": [],
+  "embed_text": "3112885 Two-sided confidence intervals for the single proportion: comparison of seven methods. Stat. Med science scifact Simple interval estimate methods for proportions exhibit poor coverage and can produce evidently inappropriate intervals. Criteria appropriate to the evaluation of various proposed methods include: closeness of the achieved coverage… 3112885 two-sided-confidence-intervals-for-the-single-proportion:-comparison-of-seven-methods.-stat.-med two sided confidence intervals single proportion comparison seven Two-sided confidence intervals for the single proportion: comparison of seven methods. Two-sided confidence intervals for the single proportion: comparison of seven methods. Stat. Med Simple interval estimate methods for proportions exhibit poor coverage and can produce evidently inappropriate intervals. Criteria appropriate to the evaluation of various proposed methods include: closeness of the achieved coverage probability to its nominal value; whether intervals are located too close to or too distant from the middle of the scale; expected interval width; avoidance of aberrations such as limits outside [0,1] or zero width intervals; and ease of use, whether by tables, software or formulae. Seven methods for the single proportion are evaluated on 96,000 parameter space points. Intervals based on tail areas and the simpler score methods are recommended for use. In each case,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.311273+00:00"
+}

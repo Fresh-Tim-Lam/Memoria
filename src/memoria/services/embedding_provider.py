@@ -10,15 +10,22 @@ import threading
 from datetime import datetime, timezone
 from typing import Any
 
+# 必须在任何 HF/transformers 相关 import 之前设置，否则 huggingface_hub
+# 会在 import 时缓存 online 状态，后续 setdefault 无效
+os.environ.setdefault("HF_HUB_OFFLINE", "1")
+os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")
+
 from memoria.services.text_normalize import normalize_math_for_semantic
 from memoria.services.lexical_index import ensure_lexical_index
+from memoria.services.model_router import embed_recall_model
 from memoria.storage.ui_settings import load_ui_settings
 
-SCHEMA_VERSION = 2
-_SUPPORTED_SCHEMA_VERSIONS = {1, 2}
-DEFAULT_MODEL = "paraphrase-multilingual-MiniLM-L12-v2"
+SCHEMA_VERSION = 3
+_SUPPORTED_SCHEMA_VERSIONS = {1, 2, 3}
+DEFAULT_MODEL = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 
 _model_cache: dict[str, Any] = {}
+_model_load_lock = threading.Lock()
 _warmup_lock = threading.Lock()
 _warmup_started: set[str] = set()
 
@@ -37,8 +44,10 @@ def is_embedding_enabled() -> bool:
 
 
 def embedding_model_name() -> str:
+    from memoria.services.model_router import embed_recall_model, normalize_embed_recall_model
+
     name = str(_search_settings().get("embedding_model") or "").strip()
-    return name or DEFAULT_MODEL
+    return normalize_embed_recall_model(name) if name else embed_recall_model()
 
 
 def _cosine(a: list[float], b: list[float]) -> float:
@@ -52,12 +61,37 @@ def _cosine(a: list[float], b: list[float]) -> float:
     return dot / (na * nb)
 
 
+def _record_desc_text(rec: dict) -> str:
+    """元数据通道：有 description 时以描述为主；否则 name/tags/别名。"""
+    name = str(rec.get("name") or "").strip()
+    desc = str(rec.get("kp_description") or "").strip()
+    aliases = " ".join(str(a) for a in (rec.get("aliases_explicit") or []) if str(a).strip())
+    if desc:
+        parts = [desc, aliases] if aliases else [desc]
+    else:
+        parts = [
+            str(rec.get("kp_id") or ""),
+            name,
+            " ".join(str(t) for t in (rec.get("tags") or [])),
+            aliases,
+            str(rec.get("file_description") or ""),
+        ]
+    return normalize_math_for_semantic(" ".join(p for p in parts if p))
+
+
 def _record_text(rec: dict) -> str:
+    auto_tags = " ".join(str(t) for t in (rec.get("auto_tags") or []))
+    aliases = " ".join(str(a) for a in (rec.get("aliases") or []))
+    phrases = " ".join(str(p) for p in (rec.get("key_phrases") or []))
     parts = [
         str(rec.get("kp_id") or ""),
         str(rec.get("name") or ""),
         " ".join(str(t) for t in (rec.get("tags") or [])),
         str(rec.get("kp_description") or ""),
+        auto_tags,
+        aliases,
+        phrases,
+        str(rec.get("summary_1l") or ""),
         str(rec.get("body_excerpt") or "")[:800],
     ]
     return normalize_math_for_semantic(" ".join(p for p in parts if p))
@@ -67,27 +101,106 @@ def _text_fingerprint(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()[:16]
 
 
+class _TransformersEmbedder:
+    """Wraps transformers AutoTokenizer + AutoModel with mean pooling.
+
+    Replaces sentence_transformers.SentenceTransformer to avoid
+    ONNX/Keras compatibility issues.
+    """
+
+    def __init__(self, model_name: str):
+        import sys as _sys
+        os.environ.setdefault("HF_HUB_OFFLINE", "1")
+        os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")
+        from transformers import AutoTokenizer, AutoModel
+
+        _diag = os.environ.get("MEMORIA_EMB_DIAG")
+        if _diag:
+            print(f"[emb-diag] loading tokenizer: {model_name}", file=_sys.stderr, flush=True)
+        self.tokenizer = AutoTokenizer.from_pretrained(model_name, local_files_only=True)
+        if _diag:
+            print(f"[emb-diag] tokenizer OK, loading model: {model_name}", file=_sys.stderr, flush=True)
+        self.model = AutoModel.from_pretrained(model_name, local_files_only=True)
+        self.model.eval()
+        self._name = model_name
+        if _diag:
+            print(f"[emb-diag] model OK: {type(self.model).__name__}", file=_sys.stderr, flush=True)
+
+    def encode(self, sentences, *, normalize_embeddings: bool = True, show_progress_bar: bool = False):
+        import torch
+
+        if isinstance(sentences, str):
+            sentences = [sentences]
+        results = []
+        with torch.no_grad():
+            for text in sentences:
+                inputs = self.tokenizer(
+                    text, return_tensors="pt", padding=True, truncation=True, max_length=512
+                )
+                outputs = self.model(**inputs)
+                token_embeddings = outputs.last_hidden_state
+                attention_mask = inputs["attention_mask"]
+                input_mask_expanded = attention_mask.unsqueeze(-1).expand(token_embeddings.size()).float()
+                embedding = torch.sum(token_embeddings * input_mask_expanded, 1) / torch.clamp(
+                    input_mask_expanded.sum(1), min=1e-9
+                )
+                if normalize_embeddings:
+                    embedding = torch.nn.functional.normalize(embedding, p=2, dim=1)
+                results.append(embedding[0].cpu().tolist())
+        return results
+
+
 def _load_model(model_name: str):
-    if model_name in _model_cache:
-        return _model_cache[model_name]
-    from sentence_transformers import SentenceTransformer
+    name = (model_name or DEFAULT_MODEL).strip() or DEFAULT_MODEL
+    if name in _model_cache:
+        return _model_cache[name]
+    with _model_load_lock:
+        if name in _model_cache:
+            return _model_cache[name]
+        os.environ.setdefault("HF_HUB_OFFLINE", "1")
+        os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")
+        try:
+            model = _TransformersEmbedder(name)
+        except (OSError, ValueError, ImportError):
+            if name != DEFAULT_MODEL:
+                return _load_model(DEFAULT_MODEL)
+            raise
+        _model_cache[name] = model
+        return model
 
-    try:
-        model = SentenceTransformer(model_name, local_files_only=True)
-    except (OSError, ValueError, ImportError):
-        model = SentenceTransformer(model_name)
-    _model_cache[model_name] = model
-    return model
 
-
-def _make_out_record(lex_rec: dict, vec: list[float], text_fp: str) -> dict:
+def _make_out_record(
+    lex_rec: dict,
+    vec: list[float],
+    desc_vec: list[float],
+    text_fp: str,
+) -> dict:
     return {
         "kp_id": lex_rec.get("kp_id"),
         "file": lex_rec.get("file"),
         "name": lex_rec.get("name"),
         "text_fp": text_fp,
         "vector": vec,
+        "desc_vector": desc_vec,
     }
+
+
+def _combined_fingerprint(full_text: str, desc_text: str) -> str:
+    return _text_fingerprint(full_text + "\x1e" + desc_text)
+
+
+def _semantic_similarity(
+    q_list: list[float],
+    rec: dict,
+) -> tuple[float, str]:
+    """返回 (相似度 0–1, source: semantic | semantic-desc)。"""
+    vec = rec.get("vector") or []
+    desc_vec = rec.get("desc_vector") or []
+    sim_full = _cosine(q_list, vec)
+    sim_desc = _cosine(q_list, desc_vec) if desc_vec else 0.0
+    if sim_desc > sim_full + 1e-6:
+        return sim_desc, "semantic-desc"
+    return sim_full, "semantic"
 
 
 def _index_meta(
@@ -133,40 +246,59 @@ def sync_embedding_index(kb_path: str, *, force: bool = False) -> dict | None:
             return cached
 
         out_records: list[dict] = []
-        pending: list[tuple[dict, str, str]] = []
+        pending: list[tuple[dict, str, str, str]] = []
 
         for lex_rec in lexical_records:
             kid = str(lex_rec.get("kp_id") or "")
             if not kid:
                 continue
             text = _record_text(lex_rec)
-            text_fp = _text_fingerprint(text)
+            desc_text = _record_desc_text(lex_rec)
+            text_fp = _combined_fingerprint(text, desc_text)
             old = cached_by_id.get(kid)
             old_vec = old.get("vector") if isinstance(old, dict) else None
+            old_desc = old.get("desc_vector") if isinstance(old, dict) else None
             if (
                 not force
                 and isinstance(old_vec, list)
                 and old_vec
+                and isinstance(old_desc, list)
+                and old_desc
                 and str(old.get("text_fp") or "") == text_fp
             ):
-                out_records.append(_make_out_record(lex_rec, [float(x) for x in old_vec], text_fp))
+                out_records.append(
+                    _make_out_record(
+                        lex_rec,
+                        [float(x) for x in old_vec],
+                        [float(x) for x in old_desc],
+                        text_fp,
+                    )
+                )
                 continue
             if not force and isinstance(old_vec, list) and old_vec and not old.get("text_fp"):
-                # v1 索引迁移：KP 仍在且尚无指纹时先复用向量并写入指纹
-                out_records.append(_make_out_record(lex_rec, [float(x) for x in old_vec], text_fp))
+                pending.append((lex_rec, text, desc_text, text_fp))
                 continue
-            pending.append((lex_rec, text, text_fp))
+            pending.append((lex_rec, text, desc_text, text_fp))
 
         if pending:
             st_model = _load_model(model_name)
+            batch: list[str] = []
+            for _lex_rec, text, desc_text, _fp in pending:
+                batch.append(text)
+                batch.append(desc_text)
             vectors = st_model.encode(
-                [text for _, text, _ in pending],
+                batch,
                 normalize_embeddings=True,
                 show_progress_bar=False,
             )
-            for (lex_rec, _text, text_fp), vec in zip(pending, vectors):
+            for i, (lex_rec, _text, _desc_text, text_fp) in enumerate(pending):
                 out_records.append(
-                    _make_out_record(lex_rec, [float(x) for x in vec], text_fp)
+                    _make_out_record(
+                        lex_rec,
+                        [float(x) for x in vectors[i * 2]],
+                        [float(x) for x in vectors[i * 2 + 1]],
+                        text_fp,
+                    )
                 )
 
         out_records.sort(key=lambda r: str(r.get("kp_id") or ""))
@@ -271,6 +403,12 @@ def search_semantic(
     rel_path: str | None = None,
     limit: int = 20,
 ) -> dict:
+    import sys as _sys
+    _diag = os.environ.get("MEMORIA_EMB_DIAG")
+    def _dlog(msg):
+        if _diag:
+            print(f"[emb-search] {msg}", file=_sys.stderr, flush=True)
+
     q = (query or "").strip()
     if not q:
         return {
@@ -286,8 +424,10 @@ def search_semantic(
             "reason": "embedding_not_enabled",
             "results": [],
         }
+    _dlog("importing torch/transformers")
     try:
-        import sentence_transformers  # noqa: F401
+        import torch  # noqa: F401
+        from transformers import AutoTokenizer, AutoModel  # noqa: F401
     except ImportError:
         return {
             "status": "ok",
@@ -296,7 +436,9 @@ def search_semantic(
             "results": [],
         }
 
+    _dlog("ensure_embedding_index")
     index = ensure_embedding_index(kb_path)
+    _dlog(f"index records={len(index.get('records') or []) if index else 0}")
     if not index or not index.get("records"):
         return {
             "status": "ok",
@@ -305,7 +447,9 @@ def search_semantic(
             "results": [],
         }
 
+    _dlog("loading model")
     model = _load_model(str(index.get("model") or embedding_model_name()))
+    _dlog("model loaded, encoding query")
     q_text = normalize_math_for_semantic(q)
     q_vec = model.encode([q_text], normalize_embeddings=True, show_progress_bar=False)[0]
     q_list = [float(x) for x in q_vec]
@@ -318,14 +462,14 @@ def search_semantic(
         if scope_norm == "file" and file_norm and f != file_norm:
             continue
         vec = rec.get("vector") or []
-        sim = _cosine(q_list, vec)
+        sim, src = _semantic_similarity(q_list, rec)
         if sim <= 0.05:
             continue
-        scored.append((sim, rec))
+        scored.append((sim, src, rec))
 
-    scored.sort(key=lambda x: (-x[0], str(x[1].get("kp_id") or "")))
+    scored.sort(key=lambda x: (-x[0], str(x[2].get("kp_id") or "")))
     results = []
-    for sim, rec in scored[: max(1, int(limit))]:
+    for sim, src, rec in scored[: max(1, int(limit))]:
         pct = round(sim * 100, 1)
         name = rec.get("name") or rec.get("kp_id")
         results.append({
@@ -337,7 +481,7 @@ def search_semantic(
             "score": pct,
             "semantic_score": pct,
             "confidence": pct,
-            "sources": ["semantic"],
+            "sources": [src],
         })
     return {
         "status": "ok",

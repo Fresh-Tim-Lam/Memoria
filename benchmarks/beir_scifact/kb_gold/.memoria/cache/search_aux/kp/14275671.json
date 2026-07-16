@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14275671",
+  "source_fingerprint": "b66deaef957274765f605cad9ac1d53a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14275671",
+    "direct-coupling-analysis-of-residue-co-evolution-captures-native-contacts-across-many-protein-families"
+  ],
+  "key_phrases": [
+    "direct",
+    "coupling",
+    "analysis",
+    "residue",
+    "co",
+    "evolution",
+    "captures",
+    "native"
+  ],
+  "summary_1l": "The similarity in the three-dimensional structures of homologous proteins imposes strong constrai",
+  "query_hits": [],
+  "embed_text": "14275671 Direct-coupling analysis of residue co-evolution captures native contacts across many protein families science scifact The similarity in the three-dimensional structures of homologous proteins imposes strong constraints on their sequence variability. It has long been suggested that the resulting correlations among amino acid compositions at different… 14275671 direct-coupling-analysis-of-residue-co-evolution-captures-native-contacts-across-many-protein-families direct coupling analysis residue co evolution captures native The similarity in the three-dimensional structures of homologous proteins imposes strong constrai Direct-coupling analysis of residue co-evolution captures native contacts across many protein families The similarity in the three-dimensional structures of homologous proteins imposes strong constraints on their sequence variability. It has long been suggested that the resulting correlations among amino acid compositions at different sequence positions can be exploited to infer spatial contacts within the tertiary protein structure. Crucial to this inference is the ability to disentangle direct and indirect correlations, as accomplished by the recently introduced Direct Coupling Analysis (DCA) (Weigt et al. (2009) Proc Natl Acad Sci 106:67). Here we develop a computationally efficient implementation of DCA, which allows us to evaluate the accuracy of contact prediction by DCA for a large",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.447059+00:00"
+}

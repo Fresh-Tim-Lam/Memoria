@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23356816",
+  "source_fingerprint": "a655185e455df77dbb30848bd1218b1b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23356816",
+    "cyclin-a1-is-required-for-meiosis-in-the-male-mouse"
+  ],
+  "key_phrases": [
+    "cyclin",
+    "a1",
+    "required",
+    "meiosis",
+    "male",
+    "mouse",
+    "mammalian",
+    "type"
+  ],
+  "summary_1l": "The mammalian A-type cyclin family consists of two members, cyclin A1 (encoded by Ccna1) and cyclin A2 (encoded by Ccna2).",
+  "query_hits": [],
+  "embed_text": "23356816 Cyclin A1 is required for meiosis in the male mouse science scifact The mammalian A-type cyclin family consists of two members, cyclin A1 (encoded by Ccna1) and cyclin A2 (encoded by Ccna2). Cyclin A2 promotes both G1/S and G2/M transitions, and targeted deletion of Ccna2 in mouse is embryonic lethal.… 23356816 cyclin-a1-is-required-for-meiosis-in-the-male-mouse cyclin a1 required meiosis male mouse mammalian type The mammalian A-type cyclin family consists of two members, cyclin A1 (encoded by Ccna1) and cyclin A2 (encoded by Ccna2). Cyclin A1 is required for meiosis in the male mouse The mammalian A-type cyclin family consists of two members, cyclin A1 (encoded by Ccna1) and cyclin A2 (encoded by Ccna2). Cyclin A2 promotes both G1/S and G2/M transitions, and targeted deletion of Ccna2 in mouse is embryonic lethal. Cyclin A1 is expressed in mice exclusively in the germ cell lineage and is expressed in humans at highest levels in the testis and certain myeloid leukaemia cells. To investigate the role of cyclin A1 and possible redundancy among the cyclins in vivo, we generated mice bearing a null mutation of Ccna1. Ccna1-/- males were sterile due to a block of spermatogenesis before the first meiotic division, whereas females were normal. Meiosis arrest in Ccna1–/– males was associated with increased germ cell apoptosis,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.342753+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8148304",
+  "source_fingerprint": "62cb96e81f97465790dce5283fdeca27",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8148304",
+    "molecular-characterization-of-the-yeast-meiotic-regulatory-gene-rim1."
+  ],
+  "key_phrases": [
+    "molecular",
+    "characterization",
+    "yeast",
+    "meiotic",
+    "regulatory",
+    "gene",
+    "rim1",
+    "saccharomyces"
+  ],
+  "summary_1l": "Molecular characterization of the yeast meiotic regulatory gene RIM1.",
+  "query_hits": [],
+  "embed_text": "8148304 Molecular characterization of the yeast meiotic regulatory gene RIM1. science scifact In the yeast Saccharomyces cerevisiae, genetic studies suggest that the RIM1 gene encodes a positive regulator of meiosis. rim1 mutations cause reduced expression of IME1, which is required for expression of many meiotic genes, and thus… 8148304 molecular-characterization-of-the-yeast-meiotic-regulatory-gene-rim1. molecular characterization yeast meiotic regulatory gene rim1 saccharomyces Molecular characterization of the yeast meiotic regulatory gene RIM1. Molecular characterization of the yeast meiotic regulatory gene RIM1. In the yeast Saccharomyces cerevisiae, genetic studies suggest that the RIM1 gene encodes a positive regulator of meiosis. rim1 mutations cause reduced expression of IME1, which is required for expression of many meiotic genes, and thus lead to a partial defect in meiosis and spore formation. We report the sequence of RIM1 and functional analysis of its coding region. The RIM1 gene product (RIM1) contains three regions similar to C2H2 zinc fingers. Serine substitutions for cysteine in each of the putative zinc fingers abolish RIM1 function. The carboxyl-terminus of RIM1 is enriched in acidic amino acids and is required for full RIM1 activity. RIM1 also contains two putative cAMP-dependent protein kinase (cAPK) phosphoryl",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.024981+00:00"
+}

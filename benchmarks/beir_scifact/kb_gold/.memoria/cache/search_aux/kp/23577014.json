@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23577014",
+  "source_fingerprint": "04fa41fea359b1b0852d6cfe53d6059d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23577014",
+    "a-sumo-dependent-protein-network-regulates-chromosome-congression-during-oocyte-meiosis"
+  ],
+  "key_phrases": [
+    "sumo",
+    "dependent",
+    "protein",
+    "network",
+    "regulates",
+    "chromosome",
+    "congression",
+    "during"
+  ],
+  "summary_1l": "During Caenorhabditis elegans oocyte meiosis, a multi-protein ring complex (RC) localized between homologous chr",
+  "query_hits": [],
+  "embed_text": "23577014 A SUMO-Dependent Protein Network Regulates Chromosome Congression during Oocyte Meiosis science scifact During Caenorhabditis elegans oocyte meiosis, a multi-protein ring complex (RC) localized between homologous chromosomes, promotes chromosome congression through the action of the chromokinesin KLP-19. While some RC components are known,… 23577014 a-sumo-dependent-protein-network-regulates-chromosome-congression-during-oocyte-meiosis sumo dependent protein network regulates chromosome congression during During Caenorhabditis elegans oocyte meiosis, a multi-protein ring complex (RC) localized between homologous chr A SUMO-Dependent Protein Network Regulates Chromosome Congression during Oocyte Meiosis During Caenorhabditis elegans oocyte meiosis, a multi-protein ring complex (RC) localized between homologous chromosomes, promotes chromosome congression through the action of the chromokinesin KLP-19. While some RC components are known, the mechanism of RC assembly has remained obscure. We show that SUMO E3 ligase GEI-17/PIAS is required for KLP-19 recruitment to the RC, and proteomic analysis identified KLP-19 as a SUMO substrate in vivo. In vitro analysis revealed that KLP-19 is efficiently sumoylated in a GEI-17-dependent manner, while GEI-17 undergoes extensive auto-sumoylation. GEI-17 and another RC component, the kinase BUB-1, contain functional SUMO interaction motifs (SIMs), allowing them to re",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.725770+00:00"
+}

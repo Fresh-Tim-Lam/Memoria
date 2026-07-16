@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16511863",
+  "source_fingerprint": "d5e69fd6ba2ac8d6b48953324d0d76f1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16511863",
+    "integrin-linked-kinase-expression-is-elevated-in-human-cardiac-hypertrophy-and-induces-hypertrophy-in-transgenic-mice."
+  ],
+  "key_phrases": [
+    "integrin",
+    "linked",
+    "kinase",
+    "expression",
+    "elevated",
+    "human",
+    "cardiac",
+    "hypertrophy"
+  ],
+  "summary_1l": "Integrin-linked kinase expression is elevated in human cardiac hypertrophy and induces hypertrophy in transgenic mice.",
+  "query_hits": [],
+  "embed_text": "16511863 Integrin-linked kinase expression is elevated in human cardiac hypertrophy and induces hypertrophy in transgenic mice. science scifact BACKGROUND Although numerous signaling pathways are known to be activated in experimental cardiac hypertrophy, the molecular basis of the hypertrophic response inherent in human heart diseases remains largely unknown. Integrin-linked… 16511863 integrin-linked-kinase-expression-is-elevated-in-human-cardiac-hypertrophy-and-induces-hypertrophy-in-transgenic-mice. integrin linked kinase expression elevated human cardiac hypertrophy Integrin-linked kinase expression is elevated in human cardiac hypertrophy and induces hypertrophy in transgenic mice. Integrin-linked kinase expression is elevated in human cardiac hypertrophy and induces hypertrophy in transgenic mice. BACKGROUND Although numerous signaling pathways are known to be activated in experimental cardiac hypertrophy, the molecular basis of the hypertrophic response inherent in human heart diseases remains largely unknown. Integrin-linked kinase (ILK) is a multifunctional protein kinase that physically links beta-integrins with the actin cytoskeleton, suggesting a potential mechanoreceptor role. METHODS AND RESULTS Here, we show a marked increase in ILK protein levels in hypertrophic ventricles of patients with congenital and acquired outflow tract obstruction. This increase in ILK was associated with activation of the Rho family guanine triphosphatases, Rac1 and Cdc42, and kno",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.390898+00:00"
+}

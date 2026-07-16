@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6957332",
+  "source_fingerprint": "cb0b5f640ce68eeb1e4ae7f9f44f6679",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6957332",
+    "the-diagnosis-and-management-of-gastro-oesophageal-reflux-in-infants."
+  ],
+  "key_phrases": [
+    "diagnosis",
+    "management",
+    "gastro",
+    "oesophageal",
+    "reflux",
+    "infants",
+    "gor",
+    "disease"
+  ],
+  "summary_1l": "The diagnosis and management of gastro-oesophageal reflux in infants.",
+  "query_hits": [],
+  "embed_text": "6957332 The diagnosis and management of gastro-oesophageal reflux in infants. science scifact Gastro-oesophageal reflux (GOR) and gastro-oesophageal reflux disease (GORD) occur frequently during the first months of life. Gastro-oesophageal reflux may be a primary gastro-intestinal motility disorder, but it may also be secondary to… 6957332 the-diagnosis-and-management-of-gastro-oesophageal-reflux-in-infants. diagnosis management gastro oesophageal reflux infants gor disease The diagnosis and management of gastro-oesophageal reflux in infants. The diagnosis and management of gastro-oesophageal reflux in infants. Gastro-oesophageal reflux (GOR) and gastro-oesophageal reflux disease (GORD) occur frequently during the first months of life. Gastro-oesophageal reflux may be a primary gastro-intestinal motility disorder, but it may also be secondary to other conditions such as cow's milk protein allergy. Objective diagnosis can be difficult because there may be absence of correlation between history, results of pH monitoring and histology. Severe GORD may cause minor symptoms, and minor GOR may cause severe symptoms. Several different therapeutic interventions exist. Simply stated, thickened formula reduces regurgitation and alginates and proton pump inhibitors can be used to decrease acid GOR, depending on the severity of the GORD. E",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.076450+00:00"
+}

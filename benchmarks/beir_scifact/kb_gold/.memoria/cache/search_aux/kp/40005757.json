@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "40005757",
+  "source_fingerprint": "00c62107450c20273448d592b0d88505",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "40005757",
+    "survival-in-a-case-of-massive-paraquat-ingestion."
+  ],
+  "key_phrases": [
+    "survival",
+    "case",
+    "massive",
+    "paraquat",
+    "ingestion",
+    "serious",
+    "exposure",
+    "herbicide"
+  ],
+  "summary_1l": "Survival in a case of massive paraquat ingestion.",
+  "query_hits": [],
+  "embed_text": "40005757 Survival in a case of massive paraquat ingestion. science scifact Serious exposure to the herbicide paraquat usually results in death, either due to gastrointestinal caustic lesions, shock, and acute respiratory distress syndrome or related to the progressive development of pulmonary fibrosis associated… 40005757 survival-in-a-case-of-massive-paraquat-ingestion. survival case massive paraquat ingestion serious exposure herbicide Survival in a case of massive paraquat ingestion. Survival in a case of massive paraquat ingestion. Serious exposure to the herbicide paraquat usually results in death, either due to gastrointestinal caustic lesions, shock, and acute respiratory distress syndrome or related to the progressive development of pulmonary fibrosis associated with refractory hypoxemia. We report a case of suicidal paraquat ingestion in a 59-year-old man. Most of the indicators of poor prognosis were encountered in this patient. Treatment consisted of early digestive decontamination and hemodialysis, followed by antioxidant therapy, including the administration of deferoxamine (100 mg/kg in 24 h) and a continuous infusion of acetylcysteine (300 mg/kg/d during 3 weeks). The patient only developed a nonoliguric acute renal failure, a mild alteration of liver tests",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.159143+00:00"
+}

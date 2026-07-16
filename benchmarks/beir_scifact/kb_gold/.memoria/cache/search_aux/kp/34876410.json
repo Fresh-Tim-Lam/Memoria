@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "34876410",
+  "source_fingerprint": "fda03b4017d4fed437c7209a03eba665",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "34876410",
+    "pericyte-differentiation."
+  ],
+  "key_phrases": [
+    "pericyte",
+    "differentiation",
+    "pericytes",
+    "defined",
+    "vivo",
+    "by",
+    "their",
+    "location"
+  ],
+  "summary_1l": "Pericyte differentiation.",
+  "query_hits": [],
+  "embed_text": "34876410 Pericyte differentiation. science scifact Pericytes are defined in vivo by their location: They are embedded within the basement membrane of microvessels. They form an integral part of the microvascular wall and are believed to participate in angiogenesis, although their precise… 34876410 pericyte-differentiation. pericyte differentiation pericytes defined vivo by their location Pericyte differentiation. Pericyte differentiation. Pericytes are defined in vivo by their location: They are embedded within the basement membrane of microvessels. They form an integral part of the microvascular wall and are believed to participate in angiogenesis, although their precise role is not clear. Pericytes derived from the retinal microvasculature have been cultured and identified by a series of phenotypic characteristics that clearly distinguishes them from other stromal cells such as smooth muscle cells. Pericytes in vitro form multicellular nodules rich in extracellular matrix. This matrix becomes mineralized in the presence of growth medium containing serum, without exogenous beta-glycerophosphate. These results indicate that pericytes represent primitive mesenchymal cells able to differentiate into",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.805654+00:00"
+}

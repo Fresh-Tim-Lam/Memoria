@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21301090",
+  "source_fingerprint": "adaa624ac6d74915376ef5ba81e498a8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21301090",
+    "screening-for-concomitant-diseases-in-peripheral-vascular-patients.-results-of-a-systematic-approach."
+  ],
+  "key_phrases": [
+    "screening",
+    "concomitant",
+    "diseases",
+    "peripheral",
+    "vascular",
+    "patients",
+    "results",
+    "systematic"
+  ],
+  "summary_1l": "Screening for concomitant diseases in peripheral vascular patients.",
+  "query_hits": [],
+  "embed_text": "21301090 Screening for concomitant diseases in peripheral vascular patients. Results of a systematic approach. science scifact BACKGROUND Patients considered for arterial surgery, have been shown to have a high incidence of coexistent cardiac, vascular and other diseases, affecting operative risk and survival. We developed a systematic workup strategy for… 21301090 screening-for-concomitant-diseases-in-peripheral-vascular-patients.-results-of-a-systematic-approach. screening concomitant diseases peripheral vascular patients results systematic Screening for concomitant diseases in peripheral vascular patients. Screening for concomitant diseases in peripheral vascular patients. Results of a systematic approach. BACKGROUND Patients considered for arterial surgery, have been shown to have a high incidence of coexistent cardiac, vascular and other diseases, affecting operative risk and survival. We developed a systematic workup strategy for detecting these coexistent diseases in our vascular surgical patients, mainly based on non-invasive diagnostic techniques. METHODS We evaluated 200 consecutive patients, admitted to the department of vascular surgery in an academic teaching hospital, in order to establish the total incidence of relevant concomitant disorders, the extent to which this screening yielded previously unknown diagnostic information, and the impact on short-term (one year) survival. RES",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.769441+00:00"
+}

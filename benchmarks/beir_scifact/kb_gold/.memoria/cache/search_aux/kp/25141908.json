@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25141908",
+  "source_fingerprint": "200af2287a4732284651dad2a543d24b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25141908",
+    "expression-of-a-human-cytomegalovirus-latency-associated-homolog-of-interleukin-10-during-the-productive-phase-of-infection."
+  ],
+  "key_phrases": [
+    "expression",
+    "human",
+    "cytomegalovirus",
+    "latency",
+    "associated",
+    "homolog",
+    "interleukin",
+    "10"
+  ],
+  "summary_1l": "Expression of a human cytomegalovirus latency-associated homolog of interleukin-10 during the productive phase of infection.",
+  "query_hits": [],
+  "embed_text": "25141908 Expression of a human cytomegalovirus latency-associated homolog of interleukin-10 during the productive phase of infection. science scifact The human cytomegalovirus UL111A region is active during both productive and latent phases of infection. During productive infection, the virus expresses ORF79, a protein with oncogenic properties, and cmvIL-10, a functional homolog of… 25141908 expression-of-a-human-cytomegalovirus-latency-associated-homolog-of-interleukin-10-during-the-productive-phase-of-infection. expression human cytomegalovirus latency associated homolog interleukin 10 Expression of a human cytomegalovirus latency-associated homolog of interleukin-10 during the productive phase of infection. Expression of a human cytomegalovirus latency-associated homolog of interleukin-10 during the productive phase of infection. The human cytomegalovirus UL111A region is active during both productive and latent phases of infection. During productive infection, the virus expresses ORF79, a protein with oncogenic properties, and cmvIL-10, a functional homolog of human IL-10. During latent infection of myeloid progenitor cells, an alternately spliced variant of cmvIL-10, termed latency-associated (LA) cmvIL-10 has previously been identified. To determine whether LAcmvIL-10 transcription occurs during productive infection, we performed 5' and 3' RACE to map UL111A-region transcripts in productively infected human foreskin fibroblasts (HFFs). This analysis revealed the presence of a singly splice",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.077584+00:00"
+}

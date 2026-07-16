@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14328288",
+  "source_fingerprint": "d070f02fce0651340a0bcc4e0b85e342",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14328288",
+    "a-family-of-phosphoinositide-3-kinases-in-drosophila-identifies-a-new-mediator-of-signal-transduction"
+  ],
+  "key_phrases": [
+    "family",
+    "phosphoinositide",
+    "kinases",
+    "drosophila",
+    "identifies",
+    "new",
+    "mediator",
+    "signal"
+  ],
+  "summary_1l": "BACKGROUND Mammalian phosphoinositide 3-kinases (PI 3-kinases) are involved in receptor-mediated s",
+  "query_hits": [],
+  "embed_text": "14328288 A family of phosphoinositide 3-kinases in Drosophila identifies a new mediator of signal transduction science scifact BACKGROUND Mammalian phosphoinositide 3-kinases (PI 3-kinases) are involved in receptor-mediated signal transduction and have been implicated in processes such as transformation and mitogenesis through their role in elevating cellular… 14328288 a-family-of-phosphoinositide-3-kinases-in-drosophila-identifies-a-new-mediator-of-signal-transduction family phosphoinositide kinases drosophila identifies new mediator signal BACKGROUND Mammalian phosphoinositide 3-kinases (PI 3-kinases) are involved in receptor-mediated s A family of phosphoinositide 3-kinases in Drosophila identifies a new mediator of signal transduction BACKGROUND Mammalian phosphoinositide 3-kinases (PI 3-kinases) are involved in receptor-mediated signal transduction and have been implicated in processes such as transformation and mitogenesis through their role in elevating cellular phosphatidylinositol (3,4,5)-trisphosphate. Additionally, a PI 3-kinase activity which generates phosphatidylinositol 3-phosphate has been shown to be required for protein trafficking in yeast. RESULTS We have identified a family of three distinct PI 3-kinases in Drosophila, using an approach based on the polymerase chain reaction to amplify a region corresponding to the conserved catalytic domain of PI 3-kinases. One of these family members, PI3K_92D, is clo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.588550+00:00"
+}

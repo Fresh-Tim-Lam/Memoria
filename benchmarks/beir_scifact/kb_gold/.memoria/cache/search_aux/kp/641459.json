@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "641459",
+  "source_fingerprint": "5b2653574e1f1772dcadfd290f524cdf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "641459",
+    "asthma-in-united-states-olympic-athletes-who-participated-in-the-1996-summer-games."
+  ],
+  "key_phrases": [
+    "asthma",
+    "united",
+    "states",
+    "olympic",
+    "athletes",
+    "who",
+    "participated",
+    "1996"
+  ],
+  "summary_1l": "Asthma in United States Olympic athletes who participated in the 1996 Summer Games.",
+  "query_hits": [],
+  "embed_text": "641459 Asthma in United States Olympic athletes who participated in the 1996 Summer Games. science scifact BACKGROUND Asthma prevalence appears to be increasing in the general population. We sought to determine whether asthma prevalence has also increased in highly competitive athletes. OBJECTIVE Our aim was to determine how many United States… 641459 asthma-in-united-states-olympic-athletes-who-participated-in-the-1996-summer-games. asthma united states olympic athletes who participated 1996 Asthma in United States Olympic athletes who participated in the 1996 Summer Games. Asthma in United States Olympic athletes who participated in the 1996 Summer Games. BACKGROUND Asthma prevalence appears to be increasing in the general population. We sought to determine whether asthma prevalence has also increased in highly competitive athletes. OBJECTIVE Our aim was to determine how many United States Olympic athletes who were chosen to participate in the 1996 Summer Olympic Games had a past history of asthma or symptoms that suggested asthma or took asthma medications. METHODS We analyzed responses to questions that asked about allergic and respiratory diseases on the United States Olympic Committee (USOC) Medical History Questionnaire that was completed by all athletes who were chosen to represent the US at the 1996 Summer Olympic Games in Atlanta. RESULTS Of the 699",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:57.767202+00:00"
+}

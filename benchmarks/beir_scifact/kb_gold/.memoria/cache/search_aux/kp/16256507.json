@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16256507",
+  "source_fingerprint": "9d34d7d32a8fac9a1074f5c03dd3672b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16256507",
+    "relationship-between-serum-parathyroid-hormone-levels,-vitamin-d-sufficiency,-and-calcium-intake."
+  ],
+  "key_phrases": [
+    "relationship",
+    "between",
+    "serum",
+    "parathyroid",
+    "hormone",
+    "levels",
+    "vitamin",
+    "sufficiency"
+  ],
+  "summary_1l": "Relationship between serum parathyroid hormone levels, vitamin D sufficiency, and calcium intake.",
+  "query_hits": [],
+  "embed_text": "16256507 Relationship between serum parathyroid hormone levels, vitamin D sufficiency, and calcium intake. science scifact CONTEXT Adequate vitamin D status for optimum bone health has received increased recognition in recent years; however, the ideal intake is not known. Serum 25-hydroxyvitamin D is the generally accepted indicator of vitamin D status, but no… 16256507 relationship-between-serum-parathyroid-hormone-levels,-vitamin-d-sufficiency,-and-calcium-intake. relationship between serum parathyroid hormone levels vitamin sufficiency Relationship between serum parathyroid hormone levels, vitamin D sufficiency, and calcium intake. Relationship between serum parathyroid hormone levels, vitamin D sufficiency, and calcium intake. CONTEXT Adequate vitamin D status for optimum bone health has received increased recognition in recent years; however, the ideal intake is not known. Serum 25-hydroxyvitamin D is the generally accepted indicator of vitamin D status, but no universal reference level has been reached. OBJECTIVE To investigate the relative importance of high calcium intake and serum 25-hydroxyvitamin D for calcium homeostasis, as determined by serum intact parathyroid hormone (PTH). DESIGN, SETTING, AND PARTICIPANTS Cross-sectional study of 2310 healthy Icelandic adults who were divided equally into 3 age groups (30-45 years, 50-65 years, or 70-85 years) and recruited from February 2001 to January 2003. They were",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.028152+00:00"
+}

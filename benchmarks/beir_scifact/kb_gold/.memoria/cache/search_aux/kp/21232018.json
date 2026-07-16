@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21232018",
+  "source_fingerprint": "0e8c649ca2a55600ff541ca342a65e93",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21232018",
+    "age-of-ovary-determines-remaining-life-expectancy-in-old-ovariectomized-mice."
+  ],
+  "key_phrases": [
+    "age",
+    "ovary",
+    "determines",
+    "remaining",
+    "life",
+    "expectancy",
+    "old",
+    "ovariectomized"
+  ],
+  "summary_1l": "Age of ovary determines remaining life expectancy in old ovariectomized mice.",
+  "query_hits": [],
+  "embed_text": "21232018 Age of ovary determines remaining life expectancy in old ovariectomized mice. science scifact We investigated the capacity of young ovaries, transplanted into old ovariectomized CBA mice, to improve remaining life expectancy of the hosts. Donor females were sexually mature 2-month-olds; recipients were prepubertally ovariectomized… 21232018 age-of-ovary-determines-remaining-life-expectancy-in-old-ovariectomized-mice. age ovary determines remaining life expectancy old ovariectomized Age of ovary determines remaining life expectancy in old ovariectomized mice. Age of ovary determines remaining life expectancy in old ovariectomized mice. We investigated the capacity of young ovaries, transplanted into old ovariectomized CBA mice, to improve remaining life expectancy of the hosts. Donor females were sexually mature 2-month-olds; recipients were prepubertally ovariectomized at 3 weeks and received transplants at 5, 8 or 11 months of age. Relative to ovariectomized control females, life expectancy at 11 months was increased by 60% in 11-month recipient females and by 40% relative to intact control females. Only 20% of the 11-month transplant females died in the 300-day period following ovarian transplantation, whereas nearly 65% of the ovariectomized control females died during this same period. The 11-month-old recipient females resumed oestrus and",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.597587+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17587795",
+  "source_fingerprint": "8362dbf6c22d78c7b393f439fe0ec5c9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17587795",
+    "dnmt1-independent-cg-methylation-contributes-to-nucleosome-positioning-in-diverse-eukaryotes"
+  ],
+  "key_phrases": [
+    "dnmt1",
+    "independent",
+    "cg",
+    "methylation",
+    "contributes",
+    "nucleosome",
+    "positioning",
+    "diverse"
+  ],
+  "summary_1l": "Dnmt1 epigenetically propagates symmetrical CG methylation in many eukaryotes.",
+  "query_hits": [],
+  "embed_text": "17587795 Dnmt1-Independent CG Methylation Contributes to Nucleosome Positioning in Diverse Eukaryotes science scifact Dnmt1 epigenetically propagates symmetrical CG methylation in many eukaryotes. Their genomes are typically depleted of CG dinucleotides because of imperfect repair of deaminated methylcytosines. Here, we extensively survey diverse species… 17587795 dnmt1-independent-cg-methylation-contributes-to-nucleosome-positioning-in-diverse-eukaryotes dnmt1 independent cg methylation contributes nucleosome positioning diverse Dnmt1 epigenetically propagates symmetrical CG methylation in many eukaryotes. Dnmt1-Independent CG Methylation Contributes to Nucleosome Positioning in Diverse Eukaryotes Dnmt1 epigenetically propagates symmetrical CG methylation in many eukaryotes. Their genomes are typically depleted of CG dinucleotides because of imperfect repair of deaminated methylcytosines. Here, we extensively survey diverse species lacking Dnmt1 and show that, surprisingly, symmetrical CG methylation is nonetheless frequently present and catalyzed by a different DNA methyltransferase family, Dnmt5. Numerous Dnmt5-containing organisms that diverged more than a billion years ago exhibit clustered methylation, specifically in nucleosome linkers. Clustered methylation occurs at unprecedented densities and directly disfavors nucleosomes, contributing to nucleosome positioning between clusters. De",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:11.879512+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4300851",
+  "source_fingerprint": "2086463c48c0c9e81776db4ef0a217d0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4300851",
+    "single-cell-proteomic-analysis-of-s.-cerevisiae-reveals-the-architecture-of-biological-noise"
+  ],
+  "key_phrases": [
+    "single",
+    "cell",
+    "proteomic",
+    "analysis",
+    "cerevisiae",
+    "reveals",
+    "architecture",
+    "biological"
+  ],
+  "summary_1l": "Single-cell proteomic analysis of S.",
+  "query_hits": [],
+  "embed_text": "4300851 Single-cell proteomic analysis of S. cerevisiae reveals the architecture of biological noise science scifact A major goal of biology is to provide a quantitative description of cellular behaviour. This task, however, has been hampered by the difficulty in measuring protein abundances and their variation. Here we present a strategy that pairs… 4300851 single-cell-proteomic-analysis-of-s.-cerevisiae-reveals-the-architecture-of-biological-noise single cell proteomic analysis cerevisiae reveals architecture biological Single-cell proteomic analysis of S. Single-cell proteomic analysis of S. cerevisiae reveals the architecture of biological noise A major goal of biology is to provide a quantitative description of cellular behaviour. This task, however, has been hampered by the difficulty in measuring protein abundances and their variation. Here we present a strategy that pairs high-throughput flow cytometry and a library of GFP-tagged yeast strains to monitor rapidly and precisely protein levels at single-cell resolution. Bulk protein abundance measurements of >2,500 proteins in rich and minimal media provide a detailed view of the cellular response to these conditions, and capture many changes not observed by DNA microarray analyses. Our single-cell data argue that noise in protein expression is dominated by the stochastic production/destr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.364434+00:00"
+}

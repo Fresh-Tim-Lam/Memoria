@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3078550",
+  "source_fingerprint": "e4d26b7ebbb69dae668586b020e5b72e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3078550",
+    "wortmannin,-a-phosphoinositide-3-kinase-inhibitor,-selectively-enhances-cytotoxicity-of-receptor-directed-toxin-chimeras-in-vitro-and-in-vivo."
+  ],
+  "key_phrases": [
+    "wortmannin",
+    "phosphoinositide",
+    "kinase",
+    "inhibitor",
+    "selectively",
+    "enhances",
+    "cytotoxicity",
+    "receptor"
+  ],
+  "summary_1l": "Wortmannin, a phosphoinositide 3-kinase inhibitor, selectively enhances cytotoxicity of receptor-directed-toxin chimeras in vitro and in vivo.",
+  "query_hits": [],
+  "embed_text": "3078550 Wortmannin, a phosphoinositide 3-kinase inhibitor, selectively enhances cytotoxicity of receptor-directed-toxin chimeras in vitro and in vivo. science scifact BACKGROUND Generalized resistance of some neoplastic cell lines to treatment with ligand-toxin chimeras has been attributed to an increased rate of lysosomal uptake and degradation following endocytosis of the chimera-receptor complex.… 3078550 wortmannin,-a-phosphoinositide-3-kinase-inhibitor,-selectively-enhances-cytotoxicity-of-receptor-directed-toxin-chimeras-in-vitro-and-in-vivo. wortmannin phosphoinositide kinase inhibitor selectively enhances cytotoxicity receptor Wortmannin, a phosphoinositide 3-kinase inhibitor, selectively enhances cytotoxicity of receptor-directed-toxin chimeras in vitro and in vivo. Wortmannin, a phosphoinositide 3-kinase inhibitor, selectively enhances cytotoxicity of receptor-directed-toxin chimeras in vitro and in vivo. BACKGROUND Generalized resistance of some neoplastic cell lines to treatment with ligand-toxin chimeras has been attributed to an increased rate of lysosomal uptake and degradation following endocytosis of the chimera-receptor complex. Because phosphoinositide 3-kinase (Pl 3-kinase) activity is known to play a role in intracellular trafficking, particularly from endosomes to lysosomes, we hypothesized that co-exposing cells to the Pl 3-kinase inhibitor, wortmannin, might enhance cytotoxicity of ligand-toxin chimeras. METHODS In vitro, cytotoxicity of five receptor directed-toxin chimeras (bFGF-SAP, bFGF-PE, aFGF-PE, HBEGF-SAP, bFGF-gelonin) and an i",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.962213+00:00"
+}

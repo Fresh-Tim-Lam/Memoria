@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "kp_id": "85960#0",
+  "source_fingerprint": "aebd2d4cd020b916f031db4cceb2985b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "2010年美國人口普查",
+    "美國參議院臨時議長",
+    "美國基督教"
+  ],
+  "aliases": [
+    "85960#0"
+  ],
+  "key_phrases": [
+    "教父",
+    "電影",
+    "一部",
+    "1972",
+    "美國",
+    "根據馬里",
+    "普佐",
+    "mario"
+  ],
+  "summary_1l": "是一部1972年的美國電影，根據馬里奧·普佐（Mario Puzo）的同名暢銷小說改編，法蘭西斯·柯波拉執導，由馬龍·白蘭度和艾爾·帕西諾主演的幫派電影。",
+  "query_hits": [],
+  "embed_text": "85960#0 教父 (電影) 教父 (電影) 是一部1972年的美國電影，根據馬里奧·普佐（Mario Puzo）的同名暢銷小說改編，法蘭西斯·柯波拉執導，由馬龍·白蘭度和艾爾·帕西諾主演的幫派電影。 2010年美國人口普查 美國參議院臨時議長 美國基督教 85960#0 教父 電影 一部 1972 美國 根據馬里 普佐 mario 是一部1972年的美國電影，根據馬里奧·普佐（Mario Puzo）的同名暢銷小說改編，法蘭西斯·柯波拉執導，由馬龍·白蘭度和艾爾·帕西諾主演的幫派電影。 教父 (電影) 是一部1972年的美國電影，根據馬里奧·普佐（Mario Puzo）的同名暢銷小說改編，法蘭西斯·柯波拉執導，由馬龍·白蘭度和艾爾·帕西諾主演的幫派電影。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:19:19.781101+00:00"
+}

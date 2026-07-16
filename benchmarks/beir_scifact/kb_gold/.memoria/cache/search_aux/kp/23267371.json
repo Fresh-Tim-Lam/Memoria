@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23267371",
+  "source_fingerprint": "d37230c89ad735c775bb75b721f70482",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23267371",
+    "vitamin-d:-the-\"sunshine\"-vitamin."
+  ],
+  "key_phrases": [
+    "vitamin",
+    "sunshine",
+    "insufficiency",
+    "affects",
+    "almost",
+    "50%",
+    "population",
+    "worldwide"
+  ],
+  "summary_1l": "Vitamin D: The \"sunshine\" vitamin.",
+  "query_hits": [],
+  "embed_text": "23267371 Vitamin D: The \"sunshine\" vitamin. science scifact Vitamin D insufficiency affects almost 50% of the population worldwide. An estimated 1 billion people worldwide, across all ethnicities and age groups, have a vitamin D deficiency (VDD). This pandemic of hypovitaminosis D can mainly be… 23267371 vitamin-d:-the-\"sunshine\"-vitamin. vitamin sunshine insufficiency affects almost 50% population worldwide Vitamin D: The \"sunshine\" vitamin. Vitamin D: The \"sunshine\" vitamin. Vitamin D insufficiency affects almost 50% of the population worldwide. An estimated 1 billion people worldwide, across all ethnicities and age groups, have a vitamin D deficiency (VDD). This pandemic of hypovitaminosis D can mainly be attributed to lifestyle (for example, reduced outdoor activities) and environmental (for example, air pollution) factors that reduce exposure to sunlight, which is required for ultraviolet-B (UVB)-induced vitamin D production in the skin. High prevalence of vitamin D insufficiency is a particularly important public health issue because hypovitaminosis D is an independent risk factor for total mortality in the general population. Current studies suggest that we may need more vitamin D than presently recommended to prevent ch",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.140728+00:00"
+}

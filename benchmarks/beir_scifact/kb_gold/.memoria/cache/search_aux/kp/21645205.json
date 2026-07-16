@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21645205",
+  "source_fingerprint": "b5ddf2fe459d8274b56d915bc9babd4e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21645205",
+    "circadian-mechanisms-in-murine-and-human-bone-marrow-mesenchymal-stem-cells-following-dexamethasone-exposure."
+  ],
+  "key_phrases": [
+    "circadian",
+    "mechanisms",
+    "murine",
+    "human",
+    "bone",
+    "marrow",
+    "mesenchymal",
+    "stem"
+  ],
+  "summary_1l": "Circadian mechanisms in murine and human bone marrow mesenchymal stem cells following dexamethasone exposure.",
+  "query_hits": [],
+  "embed_text": "21645205 Circadian mechanisms in murine and human bone marrow mesenchymal stem cells following dexamethasone exposure. science scifact A core group of regulatory factors control circadian rhythms in mammalian cells. While the suprachiasmatic nucleus in the brain serves as the central core circadian oscillator, circadian clocks also exist within peripheral tissues and… 21645205 circadian-mechanisms-in-murine-and-human-bone-marrow-mesenchymal-stem-cells-following-dexamethasone-exposure. circadian mechanisms murine human bone marrow mesenchymal stem Circadian mechanisms in murine and human bone marrow mesenchymal stem cells following dexamethasone exposure. Circadian mechanisms in murine and human bone marrow mesenchymal stem cells following dexamethasone exposure. A core group of regulatory factors control circadian rhythms in mammalian cells. While the suprachiasmatic nucleus in the brain serves as the central core circadian oscillator, circadian clocks also exist within peripheral tissues and cells. A growing body of evidence has demonstrated that >20% of expressed mRNAs in bone and adipose tissues oscillate in a circadian manner. The current manuscript reports evidence of the core circadian transcriptional apparatus within primary cultures of murine and human bone marrow-derived mesenchymal stem cells (BMSCs). Exposure of confluent, quiescent BMSCs to dexamethasone synchronized the oscillating expression of the mRNAs encoding the albumin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.608651+00:00"
+}

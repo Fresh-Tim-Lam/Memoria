@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2758012",
+  "source_fingerprint": "3b47b9782da29134d098769d399e4aed",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2758012",
+    "blm-helicase-facilitates-telomere-replication-during-leading-strand-synthesis-of-telomeres"
+  ],
+  "key_phrases": [
+    "blm",
+    "helicase",
+    "facilitates",
+    "telomere",
+    "replication",
+    "during",
+    "leading",
+    "strand"
+  ],
+  "summary_1l": "Based on its in vitro unwinding activity on G-quadruplex (G4) DNA, the Bloom syndrome-associated helicase BLM",
+  "query_hits": [],
+  "embed_text": "2758012 BLM helicase facilitates telomere replication during leading strand synthesis of telomeres science scifact Based on its in vitro unwinding activity on G-quadruplex (G4) DNA, the Bloom syndrome-associated helicase BLM is proposed to participate in telomere replication by aiding fork progression through G-rich telomeric DNA. Single molecule… 2758012 blm-helicase-facilitates-telomere-replication-during-leading-strand-synthesis-of-telomeres blm helicase facilitates telomere replication during leading strand Based on its in vitro unwinding activity on G-quadruplex (G4) DNA, the Bloom syndrome-associated helicase BLM BLM helicase facilitates telomere replication during leading strand synthesis of telomeres Based on its in vitro unwinding activity on G-quadruplex (G4) DNA, the Bloom syndrome-associated helicase BLM is proposed to participate in telomere replication by aiding fork progression through G-rich telomeric DNA. Single molecule analysis of replicated DNA (SMARD) was used to determine the contribution of BLM helicase to telomere replication. In BLM-deficient cells, replication forks initiating from origins within the telomere, which copy the G-rich strand by leading strand synthesis, moved slower through the telomere compared with the adjacent subtelomere. Fork progression through the telomere was further slowed in the presence of a G4 stabilizer. Using a G4-specific antibody, we found that defi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.083206+00:00"
+}

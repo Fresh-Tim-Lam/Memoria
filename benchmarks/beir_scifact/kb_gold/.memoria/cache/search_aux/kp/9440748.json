@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9440748",
+  "source_fingerprint": "36679a836b541b82c23a6eb3a1329ff0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9440748",
+    "small-airway-obstruction-and-emphysema-in-chronic-obstructive-pulmonary-disease."
+  ],
+  "key_phrases": [
+    "small",
+    "airway",
+    "obstruction",
+    "emphysema",
+    "chronic",
+    "obstructive",
+    "pulmonary",
+    "disease"
+  ],
+  "summary_1l": "Small-airway obstruction and emphysema in chronic obstructive pulmonary disease.",
+  "query_hits": [],
+  "embed_text": "9440748 Small-airway obstruction and emphysema in chronic obstructive pulmonary disease. science scifact BACKGROUND The major sites of obstruction in chronic obstructive pulmonary disease (COPD) are small airways (<2 mm in diameter). We wanted to determine whether there was a relationship between small-airway obstruction and emphysematous… 9440748 small-airway-obstruction-and-emphysema-in-chronic-obstructive-pulmonary-disease. small airway obstruction emphysema chronic obstructive pulmonary disease Small-airway obstruction and emphysema in chronic obstructive pulmonary disease. Small-airway obstruction and emphysema in chronic obstructive pulmonary disease. BACKGROUND The major sites of obstruction in chronic obstructive pulmonary disease (COPD) are small airways (<2 mm in diameter). We wanted to determine whether there was a relationship between small-airway obstruction and emphysematous destruction in COPD. METHODS We used multidetector computed tomography (CT) to compare the number of airways measuring 2.0 to 2.5 mm in 78 patients who had various stages of COPD, as judged by scoring on the Global Initiative for Chronic Obstructive Lung Disease (GOLD) scale, in isolated lungs removed from patients with COPD who underwent lung transplantation, and in donor (control) lungs. MicroCT was used to measure the extent of emphysema (mean linear intercept), the number of",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.916831+00:00"
+}

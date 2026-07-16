@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15913433",
+  "source_fingerprint": "e9fa791d8ecbbc33da1cf76d1f133830",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15913433",
+    "telomerase-negative-immortalized-human-cells-contain-a-novel-type-of-promyelocytic-leukemia-(pml)-body."
+  ],
+  "key_phrases": [
+    "telomerase",
+    "negative",
+    "immortalized",
+    "human",
+    "cells",
+    "contain",
+    "novel",
+    "type"
+  ],
+  "summary_1l": "Telomerase-negative immortalized human cells contain a novel type of promyelocytic leukemia (PML) body.",
+  "query_hits": [],
+  "embed_text": "15913433 Telomerase-negative immortalized human cells contain a novel type of promyelocytic leukemia (PML) body. science scifact Telomerase-negative immortalized human cells maintain their telomeres by a mechanism known as alternative lengthening of telomeres (ALT). We report here that ALT cells contain a novel promyelocytic leukemia (PML) body (ALT-associated PML… 15913433 telomerase-negative-immortalized-human-cells-contain-a-novel-type-of-promyelocytic-leukemia-(pml)-body. telomerase negative immortalized human cells contain novel type Telomerase-negative immortalized human cells contain a novel type of promyelocytic leukemia (PML) body. Telomerase-negative immortalized human cells contain a novel type of promyelocytic leukemia (PML) body. Telomerase-negative immortalized human cells maintain their telomeres by a mechanism known as alternative lengthening of telomeres (ALT). We report here that ALT cells contain a novel promyelocytic leukemia (PML) body (ALT-associated PML body, APB). APBs are large donut-shaped nuclear structures containing PML protein, telomeric DNA, and the telomere binding proteins human telomere repeat binding factors 1 and 2. Immunostaining showed that APBs also contain replication factor A, RAD51, and RAD52, proteins involved in DNA synthesis and recombination. During immortalization, APBs appeared at exactly the same time as activation of ALT. APBs were found in ALT tumors and cell lines but not in",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.437074+00:00"
+}

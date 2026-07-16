@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27274441",
+  "source_fingerprint": "bb519417e85e32703d336e79761ba06b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27274441",
+    "swc2-is-a-widely-conserved-h2az-binding-module-essential-for-atp-dependent-histone-exchange"
+  ],
+  "key_phrases": [
+    "swc2",
+    "widely",
+    "conserved",
+    "h2az",
+    "binding",
+    "module",
+    "essential",
+    "atp"
+  ],
+  "summary_1l": "The histone variant H2AZ is incorporated preferentially at specific locations in chromatin to modulate chrom",
+  "query_hits": [],
+  "embed_text": "27274441 Swc2 is a widely conserved H2AZ-binding module essential for ATP-dependent histone exchange science scifact The histone variant H2AZ is incorporated preferentially at specific locations in chromatin to modulate chromosome functions. In Saccharomyces cerevisiae, deposition of histone H2AZ is mediated by the multiprotein SWR1 complex, which… 27274441 swc2-is-a-widely-conserved-h2az-binding-module-essential-for-atp-dependent-histone-exchange swc2 widely conserved h2az binding module essential atp The histone variant H2AZ is incorporated preferentially at specific locations in chromatin to modulate chrom Swc2 is a widely conserved H2AZ-binding module essential for ATP-dependent histone exchange The histone variant H2AZ is incorporated preferentially at specific locations in chromatin to modulate chromosome functions. In Saccharomyces cerevisiae, deposition of histone H2AZ is mediated by the multiprotein SWR1 complex, which catalyzes ATP-dependent exchange of nucleosomal histone H2A for H2AZ. Here, we define interactions between SWR1 components and H2AZ, revealing a link between the ATPase domain of Swr1 and three subunits required for the binding of H2AZ. We discovered that Swc2 binds directly to and is essential for transfer of H2AZ. Swc6 and Arp6 are necessary for the association of Swc2 and for nucleosome binding, whereas other subunits, Swc5 and Yaf9, are required for H2AZ transfer but",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.757753+00:00"
+}

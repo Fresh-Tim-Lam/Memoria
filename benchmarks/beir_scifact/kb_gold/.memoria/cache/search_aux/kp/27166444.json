@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27166444",
+  "source_fingerprint": "93e2c5a3dc7e8df7f9b068df4b1526d7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27166444",
+    "preservation-of-pancreatic-beta-cell-function-and-prevention-of-type-2-diabetes-by-pharmacological-treatment-of-insulin-resistance-in-high-risk-hispanic-women."
+  ],
+  "key_phrases": [
+    "preservation",
+    "pancreatic",
+    "beta",
+    "cell",
+    "function",
+    "prevention",
+    "type",
+    "diabetes"
+  ],
+  "summary_1l": "Preservation of pancreatic beta-cell function and prevention of type 2 diabetes by pharmacological treatment of insulin resistance in high-risk hispanic women.",
+  "query_hits": [],
+  "embed_text": "27166444 Preservation of pancreatic beta-cell function and prevention of type 2 diabetes by pharmacological treatment of insulin resistance in high-risk hispanic women. science scifact Type 2 diabetes frequently results from progressive failure of pancreatic beta-cell function in the presence of chronic insulin resistance. We tested whether chronic amelioration of insulin resistance would preserve pancreatic beta-cell… 27166444 preservation-of-pancreatic-beta-cell-function-and-prevention-of-type-2-diabetes-by-pharmacological-treatment-of-insulin-resistance-in-high-risk-hispanic-women. preservation pancreatic beta cell function prevention type diabetes Preservation of pancreatic beta-cell function and prevention of type 2 diabetes by pharmacological treatment of insulin resistance in high-risk hispanic women. Preservation of pancreatic beta-cell function and prevention of type 2 diabetes by pharmacological treatment of insulin resistance in high-risk hispanic women. Type 2 diabetes frequently results from progressive failure of pancreatic beta-cell function in the presence of chronic insulin resistance. We tested whether chronic amelioration of insulin resistance would preserve pancreatic beta-cell function and delay or prevent the onset of type 2 diabetes in high-risk Hispanic women. Women with previous gestational diabetes were randomized to placebo (n = 133) or the insulin-sensitizing drug troglitazone (400 mg/day; n = 133) administered in double-blind fashion. Fasting plasma glucose was measured every 3 months, and oral glucose tolerance tests (OGTTs) were performed annually to detect diabe",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.605987+00:00"
+}

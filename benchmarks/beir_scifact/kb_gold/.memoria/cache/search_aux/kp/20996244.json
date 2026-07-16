@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20996244",
+  "source_fingerprint": "59a8cfde96308e1ad67aba02770098b3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20996244",
+    "nonproductive-human-immunodeficiency-virus-type-1-infection-in-nucleoside-treated-g0-lymphocytes."
+  ],
+  "key_phrases": [
+    "nonproductive",
+    "human",
+    "immunodeficiency",
+    "virus",
+    "type",
+    "infection",
+    "nucleoside",
+    "treated"
+  ],
+  "summary_1l": "Nonproductive human immunodeficiency virus type 1 infection in nucleoside-treated G0 lymphocytes.",
+  "query_hits": [],
+  "embed_text": "20996244 Nonproductive human immunodeficiency virus type 1 infection in nucleoside-treated G0 lymphocytes. science scifact Productive infection by human immunodeficiency virus type 1 (HIV-1) requires the activation of target cells. Infection of quiescent peripheral CD4 lymphocytes by HIV-1 results in incomplete, labile, reverse transcripts. We have previously… 20996244 nonproductive-human-immunodeficiency-virus-type-1-infection-in-nucleoside-treated-g0-lymphocytes. nonproductive human immunodeficiency virus type infection nucleoside treated Nonproductive human immunodeficiency virus type 1 infection in nucleoside-treated G0 lymphocytes. Nonproductive human immunodeficiency virus type 1 infection in nucleoside-treated G0 lymphocytes. Productive infection by human immunodeficiency virus type 1 (HIV-1) requires the activation of target cells. Infection of quiescent peripheral CD4 lymphocytes by HIV-1 results in incomplete, labile, reverse transcripts. We have previously identified G1b as the cell cycle stage required for the optimal completion of the reverse transcription process in T lymphocytes. However, the mechanism(s) involved in the blockage of reverse transcription remains undefined. In this study we investigated whether nucleotide levels influence viral reverse transcription in G0 cells. For this purpose the role of the enzyme ribonucleotide reductase was bypassed, by adding exogenous deoxyribonucleosides to highly p",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.238592+00:00"
+}

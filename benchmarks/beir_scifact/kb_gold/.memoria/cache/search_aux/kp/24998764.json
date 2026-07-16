@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24998764",
+  "source_fingerprint": "341917f15df4587c892dfa4dc46cd135",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24998764",
+    "relation-between-renal-function-within-the-normal-range-and-central-and-peripheral-arterial-stiffness-in-hypertension."
+  ],
+  "key_phrases": [
+    "relation",
+    "between",
+    "renal",
+    "function",
+    "within",
+    "normal",
+    "range",
+    "central"
+  ],
+  "summary_1l": "Relation between renal function within the normal range and central and peripheral arterial stiffness in hypertension.",
+  "query_hits": [],
+  "embed_text": "24998764 Relation between renal function within the normal range and central and peripheral arterial stiffness in hypertension. science scifact Chronic kidney disease is accompanied by increased large-artery stiffness, but the relation between glomerular filtration rate within the reference range and central or peripheral arterial stiffness has been understudied. The link between… 24998764 relation-between-renal-function-within-the-normal-range-and-central-and-peripheral-arterial-stiffness-in-hypertension. relation between renal function within normal range central Relation between renal function within the normal range and central and peripheral arterial stiffness in hypertension. Relation between renal function within the normal range and central and peripheral arterial stiffness in hypertension. Chronic kidney disease is accompanied by increased large-artery stiffness, but the relation between glomerular filtration rate within the reference range and central or peripheral arterial stiffness has been understudied. The link between renal function and arterial stiffness was assessed in 305 patients with never-treated essential hypertension (men: 58%; age: 48+/-11 years, blood pressure: 151/95+/-20/11 mm Hg), free from overt cardiovascular disease and with serum creatinine values <1.4 mg/dL (men) and <1.2 mg/dL (women), who underwent noninvasive aortic and upper-limb pulse wave velocity (PWV) determination. Aortic PWV was strongly related to age (r=0.55; P<0.001), whe",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.753442+00:00"
+}

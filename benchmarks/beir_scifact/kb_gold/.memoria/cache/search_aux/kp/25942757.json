@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25942757",
+  "source_fingerprint": "d23ef27e6806850b027a2733dc610cc0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25942757",
+    "psgl-1-function-in-immunity-and-steady-state-homeostasis."
+  ],
+  "key_phrases": [
+    "psgl",
+    "function",
+    "immunity",
+    "steady",
+    "state",
+    "homeostasis",
+    "substantial",
+    "importance"
+  ],
+  "summary_1l": "PSGL-1 function in immunity and steady state homeostasis.",
+  "query_hits": [],
+  "embed_text": "25942757 PSGL-1 function in immunity and steady state homeostasis. science scifact The substantial importance of P-selectin glycoprotein ligand 1 (PSGL-1) in leukocyte trafficking has continued to emerge beyond its initial identification as a selectin ligand. PSGL-1 seemed to be a relatively simple molecule with an… 25942757 psgl-1-function-in-immunity-and-steady-state-homeostasis. psgl function immunity steady state homeostasis substantial importance PSGL-1 function in immunity and steady state homeostasis. PSGL-1 function in immunity and steady state homeostasis. The substantial importance of P-selectin glycoprotein ligand 1 (PSGL-1) in leukocyte trafficking has continued to emerge beyond its initial identification as a selectin ligand. PSGL-1 seemed to be a relatively simple molecule with an extracellular mucin domain extended as a flexible rod, teleologically consistent with its primary role in tethering leukocytes to endothelial selectins. The rolling interaction between leukocyte and endothelium mediated by this selectin-PSGL-1 interaction requires branched O-glycan extensions on specific PSGL-1 amino acid residues. In some cells, such as neutrophils, the glycosyltransferases involved in formation of the O-glycans are constitutively expressed, while in other cells, such as T cells, they",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.786865+00:00"
+}

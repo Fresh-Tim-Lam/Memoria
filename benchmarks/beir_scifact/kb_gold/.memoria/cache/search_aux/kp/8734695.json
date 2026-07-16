@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8734695",
+  "source_fingerprint": "114583a74fa99a80b27142d475996765",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8734695",
+    "a-transition-in-brain-state-during-propofol-induced-unconsciousness."
+  ],
+  "key_phrases": [
+    "transition",
+    "brain",
+    "state",
+    "during",
+    "propofol",
+    "induced",
+    "unconsciousness",
+    "rhythmic"
+  ],
+  "summary_1l": "A transition in brain state during propofol-induced unconsciousness.",
+  "query_hits": [],
+  "embed_text": "8734695 A transition in brain state during propofol-induced unconsciousness. science scifact Rhythmic oscillations shape cortical dynamics during active behavior, sleep, and general anesthesia. Cross-frequency phase-amplitude coupling is a prominent feature of cortical oscillations, but its role in organizing conscious and… 8734695 a-transition-in-brain-state-during-propofol-induced-unconsciousness. transition brain state during propofol induced unconsciousness rhythmic A transition in brain state during propofol-induced unconsciousness. A transition in brain state during propofol-induced unconsciousness. Rhythmic oscillations shape cortical dynamics during active behavior, sleep, and general anesthesia. Cross-frequency phase-amplitude coupling is a prominent feature of cortical oscillations, but its role in organizing conscious and unconscious brain states is poorly understood. Using high-density EEG and intracranial electrocorticography during gradual induction of propofol general anesthesia in humans, we discovered a rapid drug-induced transition between distinct states with opposite phase-amplitude coupling and different cortical source distributions. One state occurs during unconsciousness and may be similar to sleep slow oscillations. A second state occurs at the loss or recovery of consciousness and resembles an enh",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.589911+00:00"
+}

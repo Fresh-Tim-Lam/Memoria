@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "30297355",
+  "source_fingerprint": "033ece5f9a07bf943063023b83fc1121",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "30297355",
+    "expression-of-the-norrie-disease-gene-(ndp)-in-developing-and-adult-mouse-eye,-ear,-and-brain."
+  ],
+  "key_phrases": [
+    "expression",
+    "norrie",
+    "disease",
+    "gene",
+    "ndp",
+    "developing",
+    "adult",
+    "mouse"
+  ],
+  "summary_1l": "Expression of the Norrie disease gene (Ndp) in developing and adult mouse eye, ear, and brain.",
+  "query_hits": [],
+  "embed_text": "30297355 Expression of the Norrie disease gene (Ndp) in developing and adult mouse eye, ear, and brain. science scifact The Norrie disease gene (Ndp) codes for a secreted protein, Norrin, that activates canonical Wnt signaling by binding to its receptor, Frizzled-4. This signaling system is required for normal vascular development in the retina and for… 30297355 expression-of-the-norrie-disease-gene-(ndp)-in-developing-and-adult-mouse-eye,-ear,-and-brain. expression norrie disease gene ndp developing adult mouse Expression of the Norrie disease gene (Ndp) in developing and adult mouse eye, ear, and brain. Expression of the Norrie disease gene (Ndp) in developing and adult mouse eye, ear, and brain. The Norrie disease gene (Ndp) codes for a secreted protein, Norrin, that activates canonical Wnt signaling by binding to its receptor, Frizzled-4. This signaling system is required for normal vascular development in the retina and for vascular survival in the cochlea. In mammals, the pattern of Ndp expression beyond the retina is poorly defined due to the low abundance of Norrin mRNA and protein. Here, we characterize Ndp expression during mouse development by studying a knock-in mouse that carries the coding sequence of human placental alkaline phosphatase (AP) inserted at the Ndp locus (Ndp(AP)). In the CNS, Ndp(AP) expression is apparent by E10.5 and is dynamic and complex. The anatomically de",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.551629+00:00"
+}

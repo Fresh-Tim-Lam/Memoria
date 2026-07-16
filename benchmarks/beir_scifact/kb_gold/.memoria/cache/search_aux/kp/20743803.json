@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20743803",
+  "source_fingerprint": "fb836131501569b3a525521852ee6868",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20743803",
+    "no-pasaran!-role-of-the-axon-initial-segment-in-the-regulation-of-protein-transport-and-the-maintenance-of-axonal-identity."
+  ],
+  "key_phrases": [
+    "no",
+    "pasaran",
+    "role",
+    "axon",
+    "initial",
+    "segment",
+    "regulation",
+    "protein"
+  ],
+  "summary_1l": "No Pasaran!",
+  "query_hits": [],
+  "embed_text": "20743803 No Pasaran! Role of the axon initial segment in the regulation of protein transport and the maintenance of axonal identity. science scifact The transmission of information in the brain depends on the highly polarized architecture of neurons. A number of cellular transport processes support this organization, including active targeting of proteins and passive corralling between… 20743803 no-pasaran!-role-of-the-axon-initial-segment-in-the-regulation-of-protein-transport-and-the-maintenance-of-axonal-identity. no pasaran role axon initial segment regulation protein No Pasaran! No Pasaran! Role of the axon initial segment in the regulation of protein transport and the maintenance of axonal identity. The transmission of information in the brain depends on the highly polarized architecture of neurons. A number of cellular transport processes support this organization, including active targeting of proteins and passive corralling between compartments. The axon initial segment (AIS), which separates the somatodendritic and axonal compartments, has a key role in neuronal physiology, as both the initiation site of action potentials and the gatekeeper of the axonal arborization. Over the years, the AIS main components and their interactions have been progressively unraveled, as well as their role in the AIS assembly and maintenance. Two mechanisms have been shown to con",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.861867+00:00"
+}

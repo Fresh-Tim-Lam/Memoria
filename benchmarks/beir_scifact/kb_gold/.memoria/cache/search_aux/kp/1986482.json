@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1986482",
+  "source_fingerprint": "6cd23b42e3c8d9407598195fe4daa571",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1986482",
+    "the-impact-of-the-new-who-antiretroviral-treatment-guidelines-on-hiv-epidemic-dynamics-and-cost-in-south-africa"
+  ],
+  "key_phrases": [
+    "impact",
+    "new",
+    "who",
+    "antiretroviral",
+    "treatment",
+    "guidelines",
+    "hiv",
+    "epidemic"
+  ],
+  "summary_1l": "BACKGROUND Since November 2009, WHO recommends that adults infected with HIV should init",
+  "query_hits": [],
+  "embed_text": "1986482 The Impact of the New WHO Antiretroviral Treatment Guidelines on HIV Epidemic Dynamics and Cost in South Africa science scifact BACKGROUND Since November 2009, WHO recommends that adults infected with HIV should initiate antiretroviral therapy (ART) at CD4+ cell counts of ≤350 cells/µl rather than ≤200 cells/µl. South Africa decided to adopt this strategy for… 1986482 the-impact-of-the-new-who-antiretroviral-treatment-guidelines-on-hiv-epidemic-dynamics-and-cost-in-south-africa impact new who antiretroviral treatment guidelines hiv epidemic BACKGROUND Since November 2009, WHO recommends that adults infected with HIV should init The Impact of the New WHO Antiretroviral Treatment Guidelines on HIV Epidemic Dynamics and Cost in South Africa BACKGROUND Since November 2009, WHO recommends that adults infected with HIV should initiate antiretroviral therapy (ART) at CD4+ cell counts of ≤350 cells/µl rather than ≤200 cells/µl. South Africa decided to adopt this strategy for pregnant and TB co-infected patients only. We estimated the impact of fully adopting the new WHO guidelines on HIV epidemic dynamics and associated costs. METHODS AND FINDING We used an established model of the transmission and control of HIV in specified sexual networks and healthcare settings. We quantified the model to represent Hlabisa subdistrict, KwaZulu-Natal, South Africa. We predicted the HIV epidemic dynamics, number on ART and program cost",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.341928+00:00"
+}

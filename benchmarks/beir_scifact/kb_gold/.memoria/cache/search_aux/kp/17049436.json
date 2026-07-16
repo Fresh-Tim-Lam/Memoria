@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17049436",
+  "source_fingerprint": "8295ba39a4e6a8f9f1bed041dd316d5d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17049436",
+    "concentration-sensing-by-the-moving-nucleus-in-cell-fate-determination:-a-computational-analysis"
+  ],
+  "key_phrases": [
+    "concentration",
+    "sensing",
+    "by",
+    "moving",
+    "nucleus",
+    "cell",
+    "fate",
+    "determination"
+  ],
+  "summary_1l": "During development of the vertebrate neuroepithelium, the nucleus in neural progenitor cells (NPCs) mov",
+  "query_hits": [],
+  "embed_text": "17049436 Concentration Sensing by the Moving Nucleus in Cell Fate Determination: A Computational Analysis science scifact During development of the vertebrate neuroepithelium, the nucleus in neural progenitor cells (NPCs) moves from the apex toward the base and returns to the apex (called interkinetic nuclear migration) at which point the cell divides. The… 17049436 concentration-sensing-by-the-moving-nucleus-in-cell-fate-determination:-a-computational-analysis concentration sensing by moving nucleus cell fate determination During development of the vertebrate neuroepithelium, the nucleus in neural progenitor cells (NPCs) mov Concentration Sensing by the Moving Nucleus in Cell Fate Determination: A Computational Analysis During development of the vertebrate neuroepithelium, the nucleus in neural progenitor cells (NPCs) moves from the apex toward the base and returns to the apex (called interkinetic nuclear migration) at which point the cell divides. The fate of the resulting daughter cells is thought to depend on the sampling by the moving nucleus of a spatial concentration profile of the cytoplasmic Notch intracellular domain (NICD). However, the nucleus executes complex stochastic motions including random waiting and back and forth motions, which can expose the nucleus to randomly varying levels of cytoplasmic NICD. How nuclear position can determine daughter cell fate despite the stochastic nature of nuclear",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.222144+00:00"
+}

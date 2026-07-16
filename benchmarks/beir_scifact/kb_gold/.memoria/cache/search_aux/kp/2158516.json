@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2158516",
+  "source_fingerprint": "c3ee00fd6d1f6045664007602ae4db24",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2158516",
+    "predicting-new-molecular-targets-for-known-drugs"
+  ],
+  "key_phrases": [
+    "predicting",
+    "new",
+    "molecular",
+    "targets",
+    "known",
+    "drugs",
+    "although",
+    "intended"
+  ],
+  "summary_1l": "Although drugs are intended to be selective, at least some bind to several physiological targets, explaining side effects and efficacy.",
+  "query_hits": [],
+  "embed_text": "2158516 Predicting new molecular targets for known drugs science scifact Although drugs are intended to be selective, at least some bind to several physiological targets, explaining side effects and efficacy. Because many drug-target combinations exist, it would be useful to explore possible interactions… 2158516 predicting-new-molecular-targets-for-known-drugs predicting new molecular targets known drugs although intended Although drugs are intended to be selective, at least some bind to several physiological targets, explaining side effects and efficacy. Predicting new molecular targets for known drugs Although drugs are intended to be selective, at least some bind to several physiological targets, explaining side effects and efficacy. Because many drug-target combinations exist, it would be useful to explore possible interactions computationally. Here we compared 3,665 US Food and Drug Administration (FDA)-approved and investigational drugs against hundreds of targets, defining each target by its ligands. Chemical similarities between drugs and ligand sets predicted thousands of unanticipated associations. Thirty were tested experimentally, including the antagonism of the beta(1) receptor by the transporter inhibitor Prozac, the inhibition of the 5-hydroxytryptamine (5-HT) transporter by the ion channel drug Vadilex, and antagonism of the",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.447294+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4346436",
+  "source_fingerprint": "3760c59bb314292b78f0e66cd77d8e5c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4346436",
+    "nonlinear-elasticity-in-biological-gels"
+  ],
+  "key_phrases": [
+    "nonlinear",
+    "elasticity",
+    "biological",
+    "gels",
+    "unlike",
+    "most",
+    "synthetic",
+    "materials"
+  ],
+  "summary_1l": "Unlike most synthetic materials, biological materials often stiffen as they are deformed.",
+  "query_hits": [],
+  "embed_text": "4346436 Nonlinear Elasticity in Biological Gels science scifact Unlike most synthetic materials, biological materials often stiffen as they are deformed. This nonlinear elastic response, critical for the physiological function of some tissues, has been documented since at least the 19th century, but… 4346436 nonlinear-elasticity-in-biological-gels nonlinear elasticity biological gels unlike most synthetic materials Unlike most synthetic materials, biological materials often stiffen as they are deformed. Nonlinear Elasticity in Biological Gels Unlike most synthetic materials, biological materials often stiffen as they are deformed. This nonlinear elastic response, critical for the physiological function of some tissues, has been documented since at least the 19th century, but the molecular structure and the design principles responsible for it are unknown. Current models for this response require geometrically complex ordered structures unique to each material. In this Article we show that a much simpler molecular theory accounts for strain stiffening in a wide range of molecularly distinct biopolymer gels formed from purified cytoskeletal and extracellular proteins. This theory shows that systems of semi-flexible chains such as filamentous proteins arranged in an open crosslinked meshwork",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.964924+00:00"
+}

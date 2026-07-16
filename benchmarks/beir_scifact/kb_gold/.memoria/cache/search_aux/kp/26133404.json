@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26133404",
+  "source_fingerprint": "5bd69e7b4d1c49cfead7fb0e07363ace",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26133404",
+    "a-novel-viral-transcript-with-homology-to-human-interleukin-10-is-expressed-during-latent-human-cytomegalovirus-infection."
+  ],
+  "key_phrases": [
+    "novel",
+    "viral",
+    "transcript",
+    "with",
+    "homology",
+    "human",
+    "interleukin",
+    "10"
+  ],
+  "summary_1l": "A novel viral transcript with homology to human interleukin-10 is expressed during latent human cytomegalovirus infection.",
+  "query_hits": [],
+  "embed_text": "26133404 A novel viral transcript with homology to human interleukin-10 is expressed during latent human cytomegalovirus infection. science scifact Human cytomegalovirus (CMV) establishes latent infections in hematopoietic cells such as granulocyte-macrophage progenitors (GM-Ps). During latency the virus is sequestered in a nonreplicating state, although limited transcriptional… 26133404 a-novel-viral-transcript-with-homology-to-human-interleukin-10-is-expressed-during-latent-human-cytomegalovirus-infection. novel viral transcript with homology human interleukin 10 A novel viral transcript with homology to human interleukin-10 is expressed during latent human cytomegalovirus infection. A novel viral transcript with homology to human interleukin-10 is expressed during latent human cytomegalovirus infection. Human cytomegalovirus (CMV) establishes latent infections in hematopoietic cells such as granulocyte-macrophage progenitors (GM-Ps). During latency the virus is sequestered in a nonreplicating state, although limited transcriptional activity has been previously reported. In this study we sought to further examine viral gene expression during the latent phase of infection. Using an experimental model of latency, primary human GM-Ps were latently infected with CMV strain Toledo and extracted RNA subjected to reverse transcription-PCR by using CMV gene-specific primers. Using this approach, we detected transcription from the UL111.5A region of the viral genome. This trans",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.464221+00:00"
+}

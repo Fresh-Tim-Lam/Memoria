@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1967017",
+  "source_fingerprint": "47f92caaa95e3064f2867b64d0d24568",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1967017",
+    "a-candidate-gene-approach-identifies-the-traf1/c5-region-as-a-risk-factor-for-rheumatoid-arthritis"
+  ],
+  "key_phrases": [
+    "candidate",
+    "gene",
+    "approach",
+    "identifies",
+    "traf1",
+    "c5",
+    "region",
+    "as"
+  ],
+  "summary_1l": "Correction for: Kurreeman FAS, Padyukov L, Marques RB, Schrodi SJ, Seddighzadeh M, et al.",
+  "query_hits": [],
+  "embed_text": "1967017 A Candidate Gene Approach Identifies the TRAF1/C5 Region as a Risk Factor for Rheumatoid Arthritis science scifact Correction for:    Kurreeman FAS, Padyukov L, Marques RB, Schrodi SJ, Seddighzadeh M, et al. (2007) A Candidate Gene Approach Identifies the TRAF1/C5 Region as a Risk Factor for Rheumatoid Arthritis. PLoS Med 4(9): e278.… 1967017 a-candidate-gene-approach-identifies-the-traf1/c5-region-as-a-risk-factor-for-rheumatoid-arthritis candidate gene approach identifies traf1 c5 region as Correction for: Kurreeman FAS, Padyukov L, Marques RB, Schrodi SJ, Seddighzadeh M, et al. A Candidate Gene Approach Identifies the TRAF1/C5 Region as a Risk Factor for Rheumatoid Arthritis Correction for: Kurreeman FAS, Padyukov L, Marques RB, Schrodi SJ, Seddighzadeh M, et al. (2007) A Candidate Gene Approach Identifies the TRAF1/C5 Region as a Risk Factor for Rheumatoid Arthritis. PLoS Med 4(9): e278. doi:10.1371/journal.pmed.0040278 In Table 1, the allele ratio in column eight (Allele Ratiosb: Cases, Controls) refers to allele A: allele B and not allele1:allele2 as described in footnote b, with Allele A being the Susceptibility Allele as denoted in column seven. The footnote should read: bNumber of alleles were compared in cases versus controls: allele A: allele B cases, allele A: allele B controls. Allele A refers to the susceptibility alleles as given in column seven.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.979432+00:00"
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "23698769",
+  "source_fingerprint": "1fa831ea5c27fa45337019a9b7bad463",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23698769"
+  ],
+  "key_phrases": [
+    "sustained",
+    "active",
+    "site",
+    "rigidity",
+    "during",
+    "synthesis",
+    "by",
+    "human"
+  ],
+  "summary_1l": "DNA polymerase μ (Pol μ) is the only template-dependent human DNA polymerase capable of repairing double-strand DNA breaks (DS",
+  "query_hits": [],
+  "embed_text": "23698769 Sustained active site rigidity during synthesis by human DNA polymerase μ science scifact DNA polymerase μ (Pol μ) is the only template-dependent human DNA polymerase capable of repairing double-strand DNA breaks (DSBs) with unpaired 3′ ends in nonhomologous end joining (NHEJ). To probe this function, we structurally… 23698769 sustained active site rigidity during synthesis by human DNA polymerase μ (Pol μ) is the only template-dependent human DNA polymerase capable of repairing double-strand DNA breaks (DS Sustained active site rigidity during synthesis by human DNA polymerase μ DNA polymerase μ (Pol μ) is the only template-dependent human DNA polymerase capable of repairing double-strand DNA breaks (DSBs) with unpaired 3′ ends in nonhomologous end joining (NHEJ). To probe this function, we structurally characterized Pol μ's catalytic cycle for single-nucleotide incorporation. These structures indicate that, unlike other template-dependent DNA polymerases, Pol μ shows no large-scale conformational changes in protein subdomains, amino acid side chains or DNA upon dNTP binding or catalysis. Instead, the only major conformational change is seen earlier in the catalytic cycle, when the flexible loop 1 region repositions upon DNA binding. Pol μ variants with changes in loop 1 have altered catalyt",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.975688+00:00"
+}

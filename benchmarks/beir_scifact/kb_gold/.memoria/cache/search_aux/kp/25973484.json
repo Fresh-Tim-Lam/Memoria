@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25973484",
+  "source_fingerprint": "6f196ff20111fd4075266e55749972c2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25973484",
+    "breast-cancer-and-obesity:-an-update."
+  ],
+  "key_phrases": [
+    "breast",
+    "cancer",
+    "obesity",
+    "update",
+    "has",
+    "complicated",
+    "relationship",
+    "both"
+  ],
+  "summary_1l": "Breast cancer and obesity: an update.",
+  "query_hits": [],
+  "embed_text": "25973484 Breast cancer and obesity: an update. science scifact Obesity has a complicated relationship to both breast cancer risk and the clinical behavior of the established disease. In postmenopausal women, particularly the elderly, various measures of obesity have been positively associated with… 25973484 breast-cancer-and-obesity:-an-update. breast cancer obesity update has complicated relationship both Breast cancer and obesity: an update. Breast cancer and obesity: an update. Obesity has a complicated relationship to both breast cancer risk and the clinical behavior of the established disease. In postmenopausal women, particularly the elderly, various measures of obesity have been positively associated with risk. However, before menopause increased body weight is inversely related to breast cancer risk. In both premenopausal and postmenopausal breast cancer, the mechanisms by which body weight and obesity affect risk have been related to estrogenic activity. Obesity has also been related to advanced disease at diagnosis and with a poor prognosis in both premenopausal and postmenopausal breast cancer. Breast cancer in African-American women, considering its relationship to obesity, exhibits some important differences from th",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.858985+00:00"
+}

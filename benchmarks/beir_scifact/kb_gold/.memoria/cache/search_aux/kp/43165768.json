@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "43165768",
+  "source_fingerprint": "8f497879703fe0ac84985bbfa74a6bb6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "43165768",
+    "in-vitro-antimicrobial-activity-of-mangrove-plant-sonneratia-alba."
+  ],
+  "key_phrases": [
+    "vitro",
+    "antimicrobial",
+    "activity",
+    "mangrove",
+    "plant",
+    "sonneratia",
+    "alba",
+    "objective"
+  ],
+  "summary_1l": "In vitro antimicrobial activity of mangrove plant Sonneratia alba.",
+  "query_hits": [],
+  "embed_text": "43165768 In vitro antimicrobial activity of mangrove plant Sonneratia alba. science scifact OBJECTIVE To investigate the antimicrobial property of mangrove plant Sonneratia alba (S. alba). METHODS The antimicrobial activity was evaluated using disc diffusion and microdilution methods against six microorganisms. Soxhlet apparatus… 43165768 in-vitro-antimicrobial-activity-of-mangrove-plant-sonneratia-alba. vitro antimicrobial activity mangrove plant sonneratia alba objective In vitro antimicrobial activity of mangrove plant Sonneratia alba. In vitro antimicrobial activity of mangrove plant Sonneratia alba. OBJECTIVE To investigate the antimicrobial property of mangrove plant Sonneratia alba (S. alba). METHODS The antimicrobial activity was evaluated using disc diffusion and microdilution methods against six microorganisms. Soxhlet apparatus was used for extraction with a series of solvents, n-hexane, ethyl acetate and methanol in sequence of increasing polarity. RESULTS Methanol extract appeared to be the most effective extract while n-hexane extract showed no activity. The antimicrobial activities were observed against the gram positive bacteria Staphylococcus aureus (S. aureus) and Bacillus cereus (B. cereus), the gram negative Escherichia coli (E. coli) and the yeast Cryptococcus neoformans. Pseudomonas aeruginosa and Cand",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.524077+00:00"
+}

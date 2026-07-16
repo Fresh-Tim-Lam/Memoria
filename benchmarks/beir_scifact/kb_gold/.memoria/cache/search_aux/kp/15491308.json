@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15491308",
+  "source_fingerprint": "6ea652111cd9e323aecb6b2c65a1785c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15491308",
+    "sirt1-is-required-for-long-term-growth-of-human-mesenchymal-stem-cells"
+  ],
+  "key_phrases": [
+    "sirt1",
+    "required",
+    "long",
+    "term",
+    "growth",
+    "human",
+    "mesenchymal",
+    "stem"
+  ],
+  "summary_1l": "Human mesenchymal stem cells (MSCs) have therapeutic potential because of their ability to self-renew and differentiate into mult",
+  "query_hits": [],
+  "embed_text": "15491308 SIRT1 is required for long-term growth of human mesenchymal stem cells science scifact Human mesenchymal stem cells (MSCs) have therapeutic potential because of their ability to self-renew and differentiate into multiple tissues. However, senescence often occurs in MSCs when they are cultured in vitro and the molecular… 15491308 sirt1-is-required-for-long-term-growth-of-human-mesenchymal-stem-cells sirt1 required long term growth human mesenchymal stem Human mesenchymal stem cells (MSCs) have therapeutic potential because of their ability to self-renew and differentiate into mult SIRT1 is required for long-term growth of human mesenchymal stem cells Human mesenchymal stem cells (MSCs) have therapeutic potential because of their ability to self-renew and differentiate into multiple tissues. However, senescence often occurs in MSCs when they are cultured in vitro and the molecular mechanisms underlying this effect remain unclear. In this study, we found that NAD-dependent protein deacetylase SIRT1 is differentially expressed in both human bone marrow-derived MSCs (B-MSCs) and adipose tissue-derived MSCs after increasing passages of cell culture. Using lentiviral shRNA we demonstrated that selective knockdown of SIRT1 in human MSCs at early passage slows down cell growth and accelerates cellular senescence. Conversely, overexpression of SIRT1 delays senescence in B-MS",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.708709+00:00"
+}

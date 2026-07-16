@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11016410",
+  "source_fingerprint": "5b72f70a457129a44a162db0b154ca2a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11016410",
+    "experimental-evolution-of-an-rna-virus-in-wild-birds:-evidence-for-host-dependent-impacts-on-population-structure-and-competitive-fitness"
+  ],
+  "key_phrases": [
+    "experimental",
+    "evolution",
+    "rna",
+    "virus",
+    "wild",
+    "birds",
+    "evidence",
+    "host"
+  ],
+  "summary_1l": "Within hosts, RNA viruses form populations that are geneticall",
+  "query_hits": [],
+  "embed_text": "11016410 Experimental Evolution of an RNA Virus in Wild Birds: Evidence for Host-Dependent Impacts on Population Structure and Competitive Fitness science scifact Within hosts, RNA viruses form populations that are genetically and phenotypically complex. Heterogeneity in RNA virus genomes arises due to error-prone replication and is reduced by stochastic and selective mechanisms that are… 11016410 experimental-evolution-of-an-rna-virus-in-wild-birds:-evidence-for-host-dependent-impacts-on-population-structure-and-competitive-fitness experimental evolution rna virus wild birds evidence host Within hosts, RNA viruses form populations that are geneticall Experimental Evolution of an RNA Virus in Wild Birds: Evidence for Host-Dependent Impacts on Population Structure and Competitive Fitness Within hosts, RNA viruses form populations that are genetically and phenotypically complex. Heterogeneity in RNA virus genomes arises due to error-prone replication and is reduced by stochastic and selective mechanisms that are incompletely understood. Defining how natural selection shapes RNA virus populations is critical because it can inform treatment paradigms and enhance control efforts. We allowed West Nile virus (WNV) to replicate in wild-caught American crows, house sparrows and American robins to assess how natural selection shapes RNA virus populations in ecologically relevant hosts that differ in susceptibility to virus-induced mortality. Afte",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:05.829929+00:00"
+}

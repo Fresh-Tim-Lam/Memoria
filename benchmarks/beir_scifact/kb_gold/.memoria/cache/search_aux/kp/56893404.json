@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "56893404",
+  "source_fingerprint": "e893b572fc48e87efe60f2640f666829",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "56893404",
+    "macrosomia-and-hyperinsulinaemic-hypoglycaemia-in-patients-with-heterozygous-mutations-in-the-hnf4a-gene"
+  ],
+  "key_phrases": [
+    "macrosomia",
+    "hyperinsulinaemic",
+    "hypoglycaemia",
+    "patients",
+    "with",
+    "heterozygous",
+    "mutations",
+    "hnf4a"
+  ],
+  "summary_1l": "Background Macrosomia is associated with considerable neonatal and maternal morbidity.",
+  "query_hits": [],
+  "embed_text": "56893404 Macrosomia and Hyperinsulinaemic Hypoglycaemia in Patients with Heterozygous Mutations in the HNF4A Gene science scifact Background  Macrosomia is associated with considerable neonatal and maternal morbidity. Factors that predict macrosomia are poorly understood. The increased rate of macrosomia in the offspring of pregnant women with diabetes and in… 56893404 macrosomia-and-hyperinsulinaemic-hypoglycaemia-in-patients-with-heterozygous-mutations-in-the-hnf4a-gene macrosomia hyperinsulinaemic hypoglycaemia patients with heterozygous mutations hnf4a Background Macrosomia is associated with considerable neonatal and maternal morbidity. Macrosomia and Hyperinsulinaemic Hypoglycaemia in Patients with Heterozygous Mutations in the HNF4A Gene Background Macrosomia is associated with considerable neonatal and maternal morbidity. Factors that predict macrosomia are poorly understood. The increased rate of macrosomia in the offspring of pregnant women with diabetes and in congenital hyperinsulinaemia is mediated by increased foetal insulin secretion. We assessed the in utero and neonatal role of two key regulators of pancreatic insulin secretion by studying birthweight and the incidence of neonatal hypoglycaemia in patients with heterozygous mutations in the maturity-onset diabetes of the young (MODY) genes HNF4A (encoding HNF-4α) and HNF1A/TCF1 (encoding HNF-1α), and the effect of pancreatic deletion of Hnf4a on foetal and neo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.850696+00:00"
+}

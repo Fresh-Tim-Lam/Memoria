@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5487448",
+  "source_fingerprint": "8e020c5599634eb80a05d7dfc072c344",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5487448",
+    "birth-weight-and-mammographic-density-among-postmenopausal-women-in-sweden."
+  ],
+  "key_phrases": [
+    "birth",
+    "weight",
+    "mammographic",
+    "density",
+    "among",
+    "postmenopausal",
+    "women",
+    "sweden"
+  ],
+  "summary_1l": "Birth weight and mammographic density among postmenopausal women in Sweden.",
+  "query_hits": [],
+  "embed_text": "5487448 Birth weight and mammographic density among postmenopausal women in Sweden. science scifact Birth weight is a significant predictor of breast cancer risk in adult life and mammary gland mass could be an intermediate stage in this long process. We have studied the association of birth size measurements with mammographic density, a… 5487448 birth-weight-and-mammographic-density-among-postmenopausal-women-in-sweden. birth weight mammographic density among postmenopausal women sweden Birth weight and mammographic density among postmenopausal women in Sweden. Birth weight and mammographic density among postmenopausal women in Sweden. Birth weight is a significant predictor of breast cancer risk in adult life and mammary gland mass could be an intermediate stage in this long process. We have studied the association of birth size measurements with mammographic density, a marker of mammary gland mass. For a population-based sample of 893 postmenopausal women without previous cancer in Sweden, we retrieved information on birth size from birth records and their most recent mammography. Film mammograms of the medio-lateral oblique view were digitized and the Cumulus software was used for computer-assisted semi-automated thresholding of mammographic density. Results were analyzed using generalized linear models controlling for possible confounders. Me",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.440422+00:00"
+}

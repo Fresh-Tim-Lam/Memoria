@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36618603",
+  "source_fingerprint": "f3173b21040b044538c3973a47252ce9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36618603",
+    "the-murine-h19-gene-is-activated-during-embryonic-stem-cell-differentiation-in-vitro-and-at-the-time-of-implantation-in-the-developing-embryo."
+  ],
+  "key_phrases": [
+    "murine",
+    "h19",
+    "gene",
+    "activated",
+    "during",
+    "embryonic",
+    "stem",
+    "cell"
+  ],
+  "summary_1l": "The murine H19 gene is activated during embryonic stem cell differentiation in vitro and at the time of implantation in the developing embryo.",
+  "query_hits": [],
+  "embed_text": "36618603 The murine H19 gene is activated during embryonic stem cell differentiation in vitro and at the time of implantation in the developing embryo. science scifact The differentiation in vitro of murine embryonic stem cells to embryoid bodies mimics events that occur in vivo shortly before and after embryonic implantation. We have used this system, together with differential cDNA cloning, to identify… 36618603 the-murine-h19-gene-is-activated-during-embryonic-stem-cell-differentiation-in-vitro-and-at-the-time-of-implantation-in-the-developing-embryo. murine h19 gene activated during embryonic stem cell The murine H19 gene is activated during embryonic stem cell differentiation in vitro and at the time of implantation in the developing embryo. The murine H19 gene is activated during embryonic stem cell differentiation in vitro and at the time of implantation in the developing embryo. The differentiation in vitro of murine embryonic stem cells to embryoid bodies mimics events that occur in vivo shortly before and after embryonic implantation. We have used this system, together with differential cDNA cloning, to identify genes the expression of which is regulated during early embryogenesis. Here we describe the isolation of several such cDNA clones, one of which corresponds to the gene H19. This gene is activated in extraembryonic cell types at the time of implantation, suggesting that it may play a role at this stage of development, and is subsequently expressed in all of the cells of the mid-gestation embryo with the striking ex",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:43.523650+00:00"
+}

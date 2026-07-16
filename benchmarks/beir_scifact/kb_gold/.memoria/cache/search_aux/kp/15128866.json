@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15128866",
+  "source_fingerprint": "20b50bdf3f9add492e827025fc7ce612",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15128866",
+    "cd4+-t-cell-mediated-cytotoxicity-eliminates-primary-tumor-cells-in-metastatic-melanoma-through-high-mhc-class-ii-expression-and-can-be-enhanced-by-inhibitory-receptor-blockade"
+  ],
+  "key_phrases": [
+    "cd4",
+    "cell",
+    "mediated",
+    "cytotoxicity",
+    "eliminates",
+    "primary",
+    "tumor",
+    "cells"
+  ],
+  "summary_1l": "Metastatic melanoma is",
+  "query_hits": [],
+  "embed_text": "15128866 CD4+ T cell-mediated cytotoxicity eliminates primary tumor cells in metastatic melanoma through high MHC class II expression and can be enhanced by inhibitory receptor blockade science scifact Metastatic melanoma is a rapidly progressing disease with high mortality rate and limited treatment options. Immunotherapy based on tumor-targeting cytotoxic T cell responses represents a promising strategy. To assist in its development,… 15128866 cd4+-t-cell-mediated-cytotoxicity-eliminates-primary-tumor-cells-in-metastatic-melanoma-through-high-mhc-class-ii-expression-and-can-be-enhanced-by-inhibitory-receptor-blockade cd4 cell mediated cytotoxicity eliminates primary tumor cells Metastatic melanoma is CD4+ T cell-mediated cytotoxicity eliminates primary tumor cells in metastatic melanoma through high MHC class II expression and can be enhanced by inhibitory receptor blockade Metastatic melanoma is a rapidly progressing disease with high mortality rate and limited treatment options. Immunotherapy based on tumor-targeting cytotoxic T cell responses represents a promising strategy. To assist in its development, we examined the possibility and efficacy of using CD4+ cytotoxic T cells. The regulatory mechanisms controlling CD4+ T cell-mediated cytotoxicity were also investigated. We found that naturally occurring granzyme B and perforin-expressing CD4+ cytotoxic T cells can be recovered from metastatic melanoma patients at significantly elevated frequencies compared to those from healthy con",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.113488+00:00"
+}

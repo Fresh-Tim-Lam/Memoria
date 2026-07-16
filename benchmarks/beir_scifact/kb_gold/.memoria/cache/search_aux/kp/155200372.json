@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "155200372",
+  "source_fingerprint": "ab0900a0667e287f8dbe541551f4fafc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "155200372",
+    "population-growth,-urban-sprawl-and-landscape-integrity-of-beijing-city"
+  ],
+  "key_phrases": [
+    "population",
+    "growth",
+    "urban",
+    "sprawl",
+    "landscape",
+    "integrity",
+    "beijing",
+    "city"
+  ],
+  "summary_1l": "The detailed landscape pattern of the urban area within the 6th ring road in Beijing City was identified using airborne remote s",
+  "query_hits": [],
+  "embed_text": "155200372 Population growth, urban sprawl and landscape integrity of Beijing City science scifact The detailed landscape pattern of the urban area within the 6th ring road in Beijing City was identified using airborne remote sensing data acquired between 1997 and 2002. The landscape indices at landscape level were computed using… 155200372 population-growth,-urban-sprawl-and-landscape-integrity-of-beijing-city population growth urban sprawl landscape integrity beijing city The detailed landscape pattern of the urban area within the 6th ring road in Beijing City was identified using airborne remote s Population growth, urban sprawl and landscape integrity of Beijing City The detailed landscape pattern of the urban area within the 6th ring road in Beijing City was identified using airborne remote sensing data acquired between 1997 and 2002. The landscape indices at landscape level were computed using Fragstats 3.3, and changes in land use/cover types in Beijing from 1997 to 2002 were examined. The results show that urban built area (UBA) and farmland changed greatly within the 6th ring road, and that farmland had been replaced by UBA. The number of patches increased by 106.6%, mean patch area decreased by 51.6%, the splitting index increased by 94.3%, and the landscape diversity index increased by 17.8%. The landscape pattern had become more fragmented and diversified in these 5 years.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.760245+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25451374",
+  "source_fingerprint": "278458f0243403611f9e339672ce2c0c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25451374",
+    "cardiovascular-risk-and-events-in-17-low-,-middle-,-and-high-income-countries."
+  ],
+  "key_phrases": [
+    "cardiovascular",
+    "risk",
+    "events",
+    "17",
+    "low",
+    "middle",
+    "high",
+    "income"
+  ],
+  "summary_1l": "Cardiovascular risk and events in 17 low-, middle-, and high-income countries.",
+  "query_hits": [],
+  "embed_text": "25451374 Cardiovascular risk and events in 17 low-, middle-, and high-income countries. science scifact BACKGROUND More than 80% of deaths from cardiovascular disease are estimated to occur in low-income and middle-income countries, but the reasons are unknown. METHODS We enrolled 156,424 persons from 628 urban and rural communities in 17… 25451374 cardiovascular-risk-and-events-in-17-low-,-middle-,-and-high-income-countries. cardiovascular risk events 17 low middle high income Cardiovascular risk and events in 17 low-, middle-, and high-income countries. Cardiovascular risk and events in 17 low-, middle-, and high-income countries. BACKGROUND More than 80% of deaths from cardiovascular disease are estimated to occur in low-income and middle-income countries, but the reasons are unknown. METHODS We enrolled 156,424 persons from 628 urban and rural communities in 17 countries (3 high-income, 10 middle-income, and 4 low-income countries) and assessed their cardiovascular risk using the INTERHEART Risk Score, a validated score for quantifying risk-factor burden without the use of laboratory testing (with higher scores indicating greater risk-factor burden). Participants were followed for incident cardiovascular disease and death for a mean of 4.1 years. RESULTS The mean INTERHEART Risk Score was highest in high-income countries, intermediate i",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.645220+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2474731",
+  "source_fingerprint": "29ecf24328d3b01178e242701b9c9756",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2474731",
+    "arginine-depletion-as-a-mechanism-for-the-immune-privilege-of-corneal-allografts"
+  ],
+  "key_phrases": [
+    "arginine",
+    "depletion",
+    "as",
+    "mechanism",
+    "immune",
+    "privilege",
+    "corneal",
+    "allografts"
+  ],
+  "summary_1l": "The cornea is an immune privileged tissue.",
+  "query_hits": [],
+  "embed_text": "2474731 Arginine depletion as a mechanism for the immune privilege of corneal allografts science scifact The cornea is an immune privileged tissue. Since arginase has been found to modulate T-cell function by depleting arginine, we investigated the expression of arginase in the cornea and its possible role in immune privilege using a murine… 2474731 arginine-depletion-as-a-mechanism-for-the-immune-privilege-of-corneal-allografts arginine depletion as mechanism immune privilege corneal allografts The cornea is an immune privileged tissue. Arginine depletion as a mechanism for the immune privilege of corneal allografts The cornea is an immune privileged tissue. Since arginase has been found to modulate T-cell function by depleting arginine, we investigated the expression of arginase in the cornea and its possible role in immune privilege using a murine transplant model. We found that both the endothelium and epithelium of murine corneas express functional arginase I, capable of down-regulating T-cell proliferation in an in vitro culture system. The administration of the specific arginase inhibitor N-hydroxy-nor-L-Arg to recipient mice resulted in an accelerated rejection of allogeneic C57BL/6 (B6) corneal grafts. In contrast, in vivo blockade of arginase activity had no effect in altering the course of rejection of primary s",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.225673+00:00"
+}

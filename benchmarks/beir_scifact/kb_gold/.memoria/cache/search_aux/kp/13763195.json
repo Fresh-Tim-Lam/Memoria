@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13763195",
+  "source_fingerprint": "11f4e2740d5d366d8e668f3dc76ec542",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13763195",
+    "lincrna-p21-suppresses-target-mrna-translation."
+  ],
+  "key_phrases": [
+    "lincrna",
+    "p21",
+    "suppresses",
+    "target",
+    "mrna",
+    "translation",
+    "mammalian",
+    "long"
+  ],
+  "summary_1l": "LincRNA-p21 suppresses target mRNA translation.",
+  "query_hits": [],
+  "embed_text": "13763195 LincRNA-p21 suppresses target mRNA translation. science scifact Mammalian long intergenic noncoding RNAs (lincRNAs) are best known for modulating transcription. Here we report a posttranscriptional function for lincRNA-p21 as a modulator of translation. Association of the RNA-binding protein HuR with… 13763195 lincrna-p21-suppresses-target-mrna-translation. lincrna p21 suppresses target mrna translation mammalian long LincRNA-p21 suppresses target mRNA translation. LincRNA-p21 suppresses target mRNA translation. Mammalian long intergenic noncoding RNAs (lincRNAs) are best known for modulating transcription. Here we report a posttranscriptional function for lincRNA-p21 as a modulator of translation. Association of the RNA-binding protein HuR with lincRNA-p21 favored the recruitment of let-7/Ago2 to lincRNA-p21, leading to lower lincRNA-p21 stability. Under reduced HuR levels, lincRNA-p21 accumulated in human cervical carcinoma HeLa cells, increasing its association with JUNB and CTNNB1 mRNAs and selectively lowering their translation. With elevated HuR, lincRNA-p21 levels declined, which in turn derepressed JunB and β-catenin translation and increased the levels of these proteins. We propose that HuR controls translation of a subset of target mRNAs by",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.863697+00:00"
+}

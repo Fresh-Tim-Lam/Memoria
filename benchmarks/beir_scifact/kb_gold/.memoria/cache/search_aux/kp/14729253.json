@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14729253",
+  "source_fingerprint": "0dd8976013e60dc6310bab3cad2a1267",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14729253",
+    "genetic-variation-and-gastric-cancer-risk:-a-field-synopsis-and-meta-analysis."
+  ],
+  "key_phrases": [
+    "genetic",
+    "variation",
+    "gastric",
+    "cancer",
+    "risk",
+    "field",
+    "synopsis",
+    "meta"
+  ],
+  "summary_1l": "Genetic variation and gastric cancer risk: a field synopsis and meta-analysis.",
+  "query_hits": [],
+  "embed_text": "14729253 Genetic variation and gastric cancer risk: a field synopsis and meta-analysis. science scifact BACKGROUND Data on genetic susceptibility to sporadic gastric carcinoma have been published at a growing pace, but to date no comprehensive overview and quantitative summary has been available. METHODS We conducted a systematic review and… 14729253 genetic-variation-and-gastric-cancer-risk:-a-field-synopsis-and-meta-analysis. genetic variation gastric cancer risk field synopsis meta Genetic variation and gastric cancer risk: a field synopsis and meta-analysis. Genetic variation and gastric cancer risk: a field synopsis and meta-analysis. BACKGROUND Data on genetic susceptibility to sporadic gastric carcinoma have been published at a growing pace, but to date no comprehensive overview and quantitative summary has been available. METHODS We conducted a systematic review and meta-analysis of the evidence on the association between DNA variation and risk of developing stomach cancer. To assess result credibility, summary evidence was graded according to the Venice criteria and false positive report probability (FPRP) was calculated to further validate result noteworthiness. Meta-analysis was also conducted for subgroups, which were defined by ethnicity (Asian vs Caucasian), tumour histology (intestinal vs diffuse), tumour site (cardia vs non-cardia)",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.592377+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8548635",
+  "source_fingerprint": "9460c4b08106b65453d8c8483b11d143",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8548635",
+    "rbp2-belongs-to-a-family-of-demethylases,-specific-for-tri-and-dimethylated-lysine-4-on-histone-3"
+  ],
+  "key_phrases": [
+    "rbp2",
+    "belongs",
+    "family",
+    "demethylases",
+    "specific",
+    "tri",
+    "dimethylated",
+    "lysine"
+  ],
+  "summary_1l": "Methylation of histones has been regarded as a stable modification defining the epigenetic program of",
+  "query_hits": [],
+  "embed_text": "8548635 RBP2 Belongs to a Family of Demethylases, Specific for Tri-and Dimethylated Lysine 4 on Histone 3 science scifact Methylation of histones has been regarded as a stable modification defining the epigenetic program of the cell, which regulates chromatin structure and transcription. However, the recent discovery of histone demethylases has challenged the… 8548635 rbp2-belongs-to-a-family-of-demethylases,-specific-for-tri-and-dimethylated-lysine-4-on-histone-3 rbp2 belongs family demethylases specific tri dimethylated lysine Methylation of histones has been regarded as a stable modification defining the epigenetic program of RBP2 Belongs to a Family of Demethylases, Specific for Tri-and Dimethylated Lysine 4 on Histone 3 Methylation of histones has been regarded as a stable modification defining the epigenetic program of the cell, which regulates chromatin structure and transcription. However, the recent discovery of histone demethylases has challenged the stable nature of histone methylation. Here we demonstrate that the JARID1 proteins RBP2, PLU1, and SMCX are histone demethylases specific for di- and trimethylated histone 3 lysine 4 (H3K4). Consistent with a role for the JARID1 Drosophila homolog Lid in regulating expression of homeotic genes during development, we show that RBP2 is displaced from Hox genes during embryonic stem (ES) cell differentiation correlating with an increase of their H3K4me3 levels",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.001262+00:00"
+}

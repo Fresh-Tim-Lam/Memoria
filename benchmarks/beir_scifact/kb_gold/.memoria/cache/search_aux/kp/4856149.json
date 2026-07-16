@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4856149",
+  "source_fingerprint": "e09fa625faa2834929a175c4da6c4f05",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4856149",
+    "clonal-competition-in-bcrabl-driven-leukemia:-how-transplantations-can-accelerate-clonal-conversion"
+  ],
+  "key_phrases": [
+    "clonal",
+    "competition",
+    "bcrabl",
+    "driven",
+    "leukemia",
+    "how",
+    "transplantations",
+    "can"
+  ],
+  "summary_1l": "BACKGROUND Clonal competition in cancer describes the process in which the progeny of a cell clone s",
+  "query_hits": [],
+  "embed_text": "4856149 Clonal competition in BcrAbl-driven leukemia: how transplantations can accelerate clonal conversion science scifact BACKGROUND Clonal competition in cancer describes the process in which the progeny of a cell clone supersedes or succumbs to other competing clones due to differences in their functional characteristics, mostly based on subsequently… 4856149 clonal-competition-in-bcrabl-driven-leukemia:-how-transplantations-can-accelerate-clonal-conversion clonal competition bcrabl driven leukemia how transplantations can BACKGROUND Clonal competition in cancer describes the process in which the progeny of a cell clone s Clonal competition in BcrAbl-driven leukemia: how transplantations can accelerate clonal conversion BACKGROUND Clonal competition in cancer describes the process in which the progeny of a cell clone supersedes or succumbs to other competing clones due to differences in their functional characteristics, mostly based on subsequently acquired mutations. Even though the patterns of those mutations are well explored in many tumors, the dynamical process of clonal selection is underexposed. METHODS We studied the dynamics of clonal competition in a BcrAbl-induced leukemia using a γ-retroviral vector library encoding the oncogene in conjunction with genetic barcodes. To this end, we studied the growth dynamics of transduced cells on the clonal level both in vitro and in vivo in transplanted mice.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.579010+00:00"
+}

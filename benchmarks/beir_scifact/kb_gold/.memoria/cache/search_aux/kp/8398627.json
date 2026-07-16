@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8398627",
+  "source_fingerprint": "aceabc3179a217cc62fe9dc7ea10a71b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8398627",
+    "geographic-distribution-of-community-acquired-methicillin-resistant-staphylococcus-aureus-soft-tissue-infections."
+  ],
+  "key_phrases": [
+    "geographic",
+    "distribution",
+    "community",
+    "acquired",
+    "methicillin",
+    "resistant",
+    "staphylococcus",
+    "aureus"
+  ],
+  "summary_1l": "Geographic distribution of community-acquired methicillin-resistant Staphylococcus aureus soft tissue infections.",
+  "query_hits": [],
+  "embed_text": "8398627 Geographic distribution of community-acquired methicillin-resistant Staphylococcus aureus soft tissue infections. science scifact PURPOSE The goal of this study is to look at the geographic growth patterns of community-acquired methicillin-resistant Staphylococcus aureus (MRSA) infections in our local region and to determine if specific geographic areas are at… 8398627 geographic-distribution-of-community-acquired-methicillin-resistant-staphylococcus-aureus-soft-tissue-infections. geographic distribution community acquired methicillin resistant staphylococcus aureus Geographic distribution of community-acquired methicillin-resistant Staphylococcus aureus soft tissue infections. Geographic distribution of community-acquired methicillin-resistant Staphylococcus aureus soft tissue infections. PURPOSE The goal of this study is to look at the geographic growth patterns of community-acquired methicillin-resistant Staphylococcus aureus (MRSA) infections in our local region and to determine if specific geographic areas are at increased risk. METHODS After Institution Review Board approval (132603-3), a retrospective chart review was conducted of 614 patients who underwent incision and drainage of an abscess by a single pediatric surgical practice from January 2004 to December 2008. In addition, previously published data from 195 patients who underwent incision and drainage of an abscess from January 2000 to December 2003 were reviewed. RESULTS The most commonly cultured",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.533815+00:00"
+}

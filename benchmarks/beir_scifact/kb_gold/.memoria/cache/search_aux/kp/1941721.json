@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1941721",
+  "source_fingerprint": "389b8f4bbb81c315fc0525e73b264c64",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1941721",
+    "oxygen-metabolism-causes-chromosome-breaks-and-is-associated-with-the-neuronal-apoptosis-observed-in-dna-double-strand-break-repair-mutants"
+  ],
+  "key_phrases": [
+    "oxygen",
+    "metabolism",
+    "causes",
+    "chromosome",
+    "breaks",
+    "associated",
+    "with",
+    "neuronal"
+  ],
+  "summary_1l": "Cells deficient in a major DNA double-strand break repair pa",
+  "query_hits": [],
+  "embed_text": "1941721 Oxygen Metabolism Causes Chromosome Breaks and Is Associated with the Neuronal Apoptosis Observed in DNA Double-Strand Break Repair Mutants science scifact Cells deficient in a major DNA double-strand break repair pathway (nonhomologous DNA end joining [NHEJ]) have increased spontaneous chromosome breaks; however, the source of these chromosome breaks has remained undefined. Here, we show… 1941721 oxygen-metabolism-causes-chromosome-breaks-and-is-associated-with-the-neuronal-apoptosis-observed-in-dna-double-strand-break-repair-mutants oxygen metabolism causes chromosome breaks associated with neuronal Cells deficient in a major DNA double-strand break repair pa Oxygen Metabolism Causes Chromosome Breaks and Is Associated with the Neuronal Apoptosis Observed in DNA Double-Strand Break Repair Mutants Cells deficient in a major DNA double-strand break repair pathway (nonhomologous DNA end joining [NHEJ]) have increased spontaneous chromosome breaks; however, the source of these chromosome breaks has remained undefined. Here, we show that the observed spontaneous chromosome breaks are partially suppressed by reducing the cellular oxygen tension. Conversely, elevating the level of reactive oxygen species by overexpressing the antioxidant enzyme superoxide dismutase 1 (SOD1), in a transgenic mouse, increases chromosome breakage. The effect of SOD1 can also be modulated by cellular oxygen tension. The elevated chromosome breakage correlates histological",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.528041+00:00"
+}

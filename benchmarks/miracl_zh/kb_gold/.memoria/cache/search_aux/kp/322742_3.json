@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "kp_id": "322742#3",
+  "source_fingerprint": "e85f88845c9c6dc8631fcf02b8d7e0ea",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "秘鲁",
+    "以色列行政区划",
+    "秘鲁地理",
+    "马来西亚行政区划"
+  ],
+  "aliases": [
+    "322742#3"
+  ],
+  "key_phrases": [
+    "秘鲁",
+    "行政区划",
+    "分为",
+    "1832",
+    "个区",
+    "biluxingzhengquhuabilufenweigequ",
+    "秘鲁行政区划 秘鲁分为1832个区。"
+  ],
+  "summary_1l": "秘鲁分为1832个区。",
+  "query_hits": [],
+  "embed_text": "322742#3 秘鲁行政区划 秘鲁行政区划 秘鲁分为1832个区。 秘鲁 以色列行政区划 秘鲁地理 马来西亚行政区划 322742#3 秘鲁 行政区划 分为 1832 个区 biluxingzhengquhuabilufenweigequ 秘鲁行政区划 秘鲁分为1832个区。 秘鲁分为1832个区。 秘鲁行政区划 秘鲁分为1832个区。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:20:18.316583+00:00"
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "1800734",
+  "source_fingerprint": "61e4194e844fa33aaac274767a64714b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1800734"
+  ],
+  "key_phrases": [
+    "cxcr2",
+    "mediates",
+    "nadph",
+    "oxidase",
+    "independent",
+    "neutrophil",
+    "extracellular",
+    "trap"
+  ],
+  "summary_1l": "Upon activation, neutrophils release DNA fibers decorated with antimicrobial pro",
+  "query_hits": [],
+  "embed_text": "1800734 CXCR2 mediates NADPH oxidase–independent neutrophil extracellular trap formation in cystic fibrosis airway inflammation science scifact Upon activation, neutrophils release DNA fibers decorated with antimicrobial proteins, forming neutrophil extracellular traps (NETs). Although NETs are bactericidal and contribute to innate host defense, excessive NET formation has been… 1800734 cxcr2 mediates nadph oxidase independent neutrophil extracellular trap Upon activation, neutrophils release DNA fibers decorated with antimicrobial pro CXCR2 mediates NADPH oxidase–independent neutrophil extracellular trap formation in cystic fibrosis airway inflammation Upon activation, neutrophils release DNA fibers decorated with antimicrobial proteins, forming neutrophil extracellular traps (NETs). Although NETs are bactericidal and contribute to innate host defense, excessive NET formation has been linked to the pathogenesis of autoinflammatory diseases. However, the mechanisms regulating NET formation, particularly during chronic inflammation, are poorly understood. Here we show that the G protein–coupled receptor (GPCR) CXCR2 mediates NET formation. Downstream analyses showed that CXCR2-mediated NET formation was independent of NADPH oxidase and involved Src family kinases. We show the pathophysiological relevance of this mechanism",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.628100+00:00"
+}

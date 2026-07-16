@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "13992047",
+  "source_fingerprint": "948d021cdc8acee3deb9f2313942b630",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13992047"
+  ],
+  "key_phrases": [
+    "directed",
+    "actin",
+    "polymerization",
+    "driving",
+    "force",
+    "epithelial",
+    "cell",
+    "adhesion"
+  ],
+  "summary_1l": "We have found that epithelial cells engage in a process of cadherin-mediated intercellular adhesion that utilizes c",
+  "query_hits": [],
+  "embed_text": "13992047 Directed Actin Polymerization Is the Driving Force for Epithelial Cell–Cell Adhesion science scifact We have found that epithelial cells engage in a process of cadherin-mediated intercellular adhesion that utilizes calcium and actin polymerization in unexpected ways. Calcium stimulates filopodia, which penetrate and embed into neighboring… 13992047 directed actin polymerization driving force epithelial cell adhesion We have found that epithelial cells engage in a process of cadherin-mediated intercellular adhesion that utilizes c Directed Actin Polymerization Is the Driving Force for Epithelial Cell–Cell Adhesion We have found that epithelial cells engage in a process of cadherin-mediated intercellular adhesion that utilizes calcium and actin polymerization in unexpected ways. Calcium stimulates filopodia, which penetrate and embed into neighboring cells. E-cadherin complexes cluster at filopodia tips, generating a two-rowed zipper of embedded puncta. Opposing cell surfaces are clamped by desmosomes, while vinculin, zyxin, VASP, and Mena are recruited to adhesion zippers by a mechanism that requires alpha-catenin. Actin reorganizes and polymerizes to merge puncta into a single row and seal cell borders. In keratinocytes either null for alpha-catenin or blocked in VASP/Mena function, filopodia embed, but actin reorg",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.927869+00:00"
+}

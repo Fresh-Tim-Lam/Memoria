@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "8069939",
+  "source_fingerprint": "ab859d296c9e5147bc3cc27050763178",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8069939"
+  ],
+  "key_phrases": [
+    "acam2000",
+    "new",
+    "smallpox",
+    "vaccine",
+    "united",
+    "states",
+    "strategic",
+    "national"
+  ],
+  "summary_1l": "Smallpox was eradicated more than 30 years ago, but heightened concerns over bioterrorism have brought smallpox and s",
+  "query_hits": [],
+  "embed_text": "8069939 ACAM2000™: The new smallpox vaccine for United States Strategic National Stockpile science scifact Smallpox was eradicated more than 30 years ago, but heightened concerns over bioterrorism have brought smallpox and smallpox vaccination back to the forefront. The previously licensed smallpox vaccine in the United States, Dryvax (Wyeth… 8069939 acam2000 new smallpox vaccine united states strategic national Smallpox was eradicated more than 30 years ago, but heightened concerns over bioterrorism have brought smallpox and s ACAM2000™: The new smallpox vaccine for United States Strategic National Stockpile Smallpox was eradicated more than 30 years ago, but heightened concerns over bioterrorism have brought smallpox and smallpox vaccination back to the forefront. The previously licensed smallpox vaccine in the United States, Dryvax (Wyeth Laboratories, Inc.), was highly effective, but the supply was insufficient to vaccinate the entire current US population. Additionally, Dryvax had a questionable safety profile since it consisted of a pool of vaccinia virus strains with varying degrees of virulence, and was grown on the skin of calves, an outdated technique that poses an unnecessary risk of contamination. The US government has therefore recently supported development of an improved live vaccinia virus smallpo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.846403+00:00"
+}

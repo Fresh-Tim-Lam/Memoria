@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24278870",
+  "source_fingerprint": "c46e69501fcfea6caa7d70ed598dbb39",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24278870",
+    "temsirolimus,-interferon-alfa,-or-both-for-advanced-renal-cell-carcinoma."
+  ],
+  "key_phrases": [
+    "temsirolimus",
+    "interferon",
+    "alfa",
+    "both",
+    "advanced",
+    "renal",
+    "cell",
+    "carcinoma"
+  ],
+  "summary_1l": "Temsirolimus, interferon alfa, or both for advanced renal-cell carcinoma.",
+  "query_hits": [],
+  "embed_text": "24278870 Temsirolimus, interferon alfa, or both for advanced renal-cell carcinoma. science scifact BACKGROUND Interferon alfa is widely used for metastatic renal-cell carcinoma but has limited efficacy and tolerability. Temsirolimus, a specific inhibitor of the mammalian target of rapamycin kinase, may benefit patients with this… 24278870 temsirolimus,-interferon-alfa,-or-both-for-advanced-renal-cell-carcinoma. temsirolimus interferon alfa both advanced renal cell carcinoma Temsirolimus, interferon alfa, or both for advanced renal-cell carcinoma. Temsirolimus, interferon alfa, or both for advanced renal-cell carcinoma. BACKGROUND Interferon alfa is widely used for metastatic renal-cell carcinoma but has limited efficacy and tolerability. Temsirolimus, a specific inhibitor of the mammalian target of rapamycin kinase, may benefit patients with this disease. METHODS In this multicenter, phase 3 trial, we randomly assigned 626 patients with previously untreated, poor-prognosis metastatic renal-cell carcinoma to receive 25 mg of intravenous temsirolimus weekly, 3 million U of interferon alfa (with an increase to 18 million U) subcutaneously three times weekly, or combination therapy with 15 mg of temsirolimus weekly plus 6 million U of interferon alfa three times weekly. The primary end point was overall survival in comparisons of the t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.135076+00:00"
+}

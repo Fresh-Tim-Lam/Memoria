@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "45770026",
+  "source_fingerprint": "a36ce1e51fe656f878ea3b67f46de06a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "45770026"
+  ],
+  "key_phrases": [
+    "eicosapentaenoic",
+    "acid",
+    "converted",
+    "via",
+    "epoxygenation",
+    "anti",
+    "inflammatory",
+    "metabolite"
+  ],
+  "summary_1l": "Eicosapentaenoic acid is converted via ω-3 epoxygenation to the anti-inflammatory metabolite 12-hydroxy-17,18-epoxyeicosatetraenoic acid.",
+  "query_hits": [],
+  "embed_text": "45770026 Eicosapentaenoic acid is converted via ω-3 epoxygenation to the anti-inflammatory metabolite 12-hydroxy-17,18-epoxyeicosatetraenoic acid. science scifact Eicosapentaenoic acid (EPA) has beneficial effects in many inflammatory disorders. In this study, dietary EPA was converted to 17,18-epoxyeicosatetraenoic acid (17,18-EpETE) by ω-3 epoxygenation in the mouse peritoneal cavity. Mediator… 45770026 eicosapentaenoic acid converted via epoxygenation anti inflammatory metabolite Eicosapentaenoic acid is converted via ω-3 epoxygenation to the anti-inflammatory metabolite 12-hydroxy-17,18-epoxyeicosatetraenoic acid. Eicosapentaenoic acid is converted via ω-3 epoxygenation to the anti-inflammatory metabolite 12-hydroxy-17,18-epoxyeicosatetraenoic acid. Eicosapentaenoic acid (EPA) has beneficial effects in many inflammatory disorders. In this study, dietary EPA was converted to 17,18-epoxyeicosatetraenoic acid (17,18-EpETE) by ω-3 epoxygenation in the mouse peritoneal cavity. Mediator lipidomics revealed a series of novel oxygenated metabolites of 17,18-EpETE, and one of the major metabolites, 12-hydroxy-17,18-epoxyeicosatetraenoic acid (12-OH-17,18-EpETE), displayed a potent anti-inflammatory action by limiting neutrophil infiltration in murine zymosan-induced peritonitis. 12-OH-17,18-EpETE inhibited leukotriene B4-induced neutrophil chemotaxis and polarization in vitro in a low nanomolar range (EC50 0",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.550267+00:00"
+}

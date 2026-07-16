@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2192419",
+  "source_fingerprint": "a6afc5bd16249ddf2bf2d5780b30507b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2192419",
+    "local-proliferation-dominates-lesional-macrophage-accumulation-in-atherosclerosis"
+  ],
+  "key_phrases": [
+    "local",
+    "proliferation",
+    "dominates",
+    "lesional",
+    "macrophage",
+    "accumulation",
+    "atherosclerosis",
+    "during"
+  ],
+  "summary_1l": "During the inflammatory response that drives atherogenesis, macrophages accumulate progressively in the expanding arte",
+  "query_hits": [],
+  "embed_text": "2192419 Local proliferation dominates lesional macrophage accumulation in atherosclerosis science scifact During the inflammatory response that drives atherogenesis, macrophages accumulate progressively in the expanding arterial wall. The observation that circulating monocytes give rise to lesional macrophages has reinforced the concept that… 2192419 local-proliferation-dominates-lesional-macrophage-accumulation-in-atherosclerosis local proliferation dominates lesional macrophage accumulation atherosclerosis during During the inflammatory response that drives atherogenesis, macrophages accumulate progressively in the expanding arte Local proliferation dominates lesional macrophage accumulation in atherosclerosis During the inflammatory response that drives atherogenesis, macrophages accumulate progressively in the expanding arterial wall. The observation that circulating monocytes give rise to lesional macrophages has reinforced the concept that monocyte infiltration dictates macrophage buildup. Recent work has indicated, however, that macrophage accumulation does not depend on monocyte recruitment in some inflammatory contexts. We therefore revisited the mechanism underlying macrophage accumulation in atherosclerosis. In murine atherosclerotic lesions, we found that macrophages turn over rapidly, after 4 weeks. Replenishment of macrophages in these experimental atheromata depends predominantly on local macrophage pr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.940649+00:00"
+}

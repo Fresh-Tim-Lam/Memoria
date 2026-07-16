@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "30553457",
+  "source_fingerprint": "213246ab4dd72058ff047cc5ef12ae4b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "30553457",
+    "de-novo-expression-of-trpm4-initiates-secondary-hemorrhage-in-spinal-cord-injury"
+  ],
+  "key_phrases": [
+    "de",
+    "novo",
+    "expression",
+    "trpm4",
+    "initiates",
+    "secondary",
+    "hemorrhage",
+    "spinal"
+  ],
+  "summary_1l": "The role of transient receptor potential M4 (Trpm4), an unusual member of the Trp family of ion channels, is poorly und",
+  "query_hits": [],
+  "embed_text": "30553457 De novo expression of Trpm4 initiates secondary hemorrhage in spinal cord injury science scifact The role of transient receptor potential M4 (Trpm4), an unusual member of the Trp family of ion channels, is poorly understood. Using rodent models of spinal cord injury, we studied involvement of Trpm4 in the progressive expansion of… 30553457 de-novo-expression-of-trpm4-initiates-secondary-hemorrhage-in-spinal-cord-injury de novo expression trpm4 initiates secondary hemorrhage spinal The role of transient receptor potential M4 (Trpm4), an unusual member of the Trp family of ion channels, is poorly und De novo expression of Trpm4 initiates secondary hemorrhage in spinal cord injury The role of transient receptor potential M4 (Trpm4), an unusual member of the Trp family of ion channels, is poorly understood. Using rodent models of spinal cord injury, we studied involvement of Trpm4 in the progressive expansion of secondary hemorrhage associated with capillary fragmentation, the most destructive mechanism of secondary injury in the central nervous system. Trpm4 mRNA and protein were abundantly upregulated in capillaries preceding their fragmentation and formation of petechial hemorrhages. Trpm4 expression in vitro rendered COS-7 cells highly susceptible to oncotic swelling and oncotic death following ATP depletion. After spinal cord injury, in vivo gene suppression in rats treated with Trp",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.782474+00:00"
+}

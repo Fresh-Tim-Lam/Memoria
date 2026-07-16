@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "92499",
+  "source_fingerprint": "a11e1e8d28a0c398672d6384ad877257",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "92499",
+    "the-journey-of-developing-hematopoietic-stem-cells."
+  ],
+  "key_phrases": [
+    "journey",
+    "developing",
+    "hematopoietic",
+    "stem",
+    "cells",
+    "hscs",
+    "develop",
+    "during"
+  ],
+  "summary_1l": "The journey of developing hematopoietic stem cells.",
+  "query_hits": [],
+  "embed_text": "92499 The journey of developing hematopoietic stem cells. science scifact Hematopoietic stem cells (HSCs) develop during embryogenesis in a complex process that involves multiple anatomical sites. Once HSC precursors have been specified from mesoderm, they have to mature into functional HSCs and undergo… 92499 the-journey-of-developing-hematopoietic-stem-cells. journey developing hematopoietic stem cells hscs develop during The journey of developing hematopoietic stem cells. The journey of developing hematopoietic stem cells. Hematopoietic stem cells (HSCs) develop during embryogenesis in a complex process that involves multiple anatomical sites. Once HSC precursors have been specified from mesoderm, they have to mature into functional HSCs and undergo self-renewing divisions to generate a pool of HSCs. During this process, developing HSCs migrate through various embryonic niches, which provide signals for their establishment and the conservation of their self-renewal ability. These processes have to be recapitulated to generate HSCs from embryonic stem cells. Elucidating the interactions between developing HSCs and their niches should facilitate the generation and expansion of HSCs in vitro to exploit their clinical potential.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.534438+00:00"
+}

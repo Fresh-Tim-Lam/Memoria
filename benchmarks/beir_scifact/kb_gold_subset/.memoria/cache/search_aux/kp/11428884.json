@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "11428884",
+  "source_fingerprint": "a3d7c554d9133500b51e26db3657b067",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11428884"
+  ],
+  "key_phrases": [
+    "lipoatrophy",
+    "severe",
+    "metabolic",
+    "disturbance",
+    "mice",
+    "with",
+    "fat",
+    "specific"
+  ],
+  "summary_1l": "Lipoatrophy and severe metabolic disturbance in mice with fat-specific deletion of PPARγ.",
+  "query_hits": [],
+  "embed_text": "11428884 Lipoatrophy and severe metabolic disturbance in mice with fat-specific deletion of PPARγ. science scifact Adipose tissue is an important metabolic organ, the dysfunction of which is associated with the development of obesity, diabetes mellitus, and cardiovascular disease. The nuclear receptor peroxisome proliferator-activated receptor gamma… 11428884 lipoatrophy severe metabolic disturbance mice with fat specific Lipoatrophy and severe metabolic disturbance in mice with fat-specific deletion of PPARγ. Lipoatrophy and severe metabolic disturbance in mice with fat-specific deletion of PPARγ. Adipose tissue is an important metabolic organ, the dysfunction of which is associated with the development of obesity, diabetes mellitus, and cardiovascular disease. The nuclear receptor peroxisome proliferator-activated receptor gamma (PPARγ) is considered the master regulator of adipocyte differentiation and function. Although its cell-autonomous role in adipogenesis has been clearly demonstrated in cell culture, previous fat-specific knockouts of the murine PPARγ gene did not demonstrate a dramatic phenotype in vivo. Here, using Adipoq-Cre mice to drive adipose-specific recombination, we report a unique fat-specific PPARγ knockout (PPARγ FKO) mouse model with almost no visible brown and white adip",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:06.889428+00:00"
+}

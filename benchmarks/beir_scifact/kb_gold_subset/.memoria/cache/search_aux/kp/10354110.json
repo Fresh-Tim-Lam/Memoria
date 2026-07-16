@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10354110",
+  "source_fingerprint": "42ff06236c83412090f7a98f7e58d2a3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10354110",
+    "follicular-b-cell-trafficking-within-the-spleen-actively-restricts-humoral-immune-responses."
+  ],
+  "key_phrases": [
+    "follicular",
+    "cell",
+    "trafficking",
+    "within",
+    "spleen",
+    "actively",
+    "restricts",
+    "humoral"
+  ],
+  "summary_1l": "Follicular B cell trafficking within the spleen actively restricts humoral immune responses.",
+  "query_hits": [],
+  "embed_text": "10354110 Follicular B cell trafficking within the spleen actively restricts humoral immune responses. science scifact Follicular (FO) and marginal zone (MZ) B cells are maintained in distinct locations within the spleen, but the genetic basis for this separation is still enigmatic. We now report that B cell sequestration requires lineage-specific… 10354110 follicular-b-cell-trafficking-within-the-spleen-actively-restricts-humoral-immune-responses. follicular cell trafficking within spleen actively restricts humoral Follicular B cell trafficking within the spleen actively restricts humoral immune responses. Follicular B cell trafficking within the spleen actively restricts humoral immune responses. Follicular (FO) and marginal zone (MZ) B cells are maintained in distinct locations within the spleen, but the genetic basis for this separation is still enigmatic. We now report that B cell sequestration requires lineage-specific regulation of migratory receptors by the transcription factor Klf2. Moreover, using gene-targeted mice we show that altered splenic B cell migration confers a significant in vivo gain-of-function phenotype to FO B cells, including the ability to quickly respond to MZ-associated antigens and pathogens in a T cell-dependent manner. This work demonstrates that in wild-type animals, naive FO B cells are actively removed from the MZ, thus restricting their capacity to respond",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.476753+00:00"
+}

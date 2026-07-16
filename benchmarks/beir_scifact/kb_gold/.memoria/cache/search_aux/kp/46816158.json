@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "46816158",
+  "source_fingerprint": "f76ec0cbc262c895c8482003c645ab7c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "46816158",
+    "the-crystal-structure-of-tal-effector-pthxo1-bound-to-its-dna-target."
+  ],
+  "key_phrases": [
+    "crystal",
+    "structure",
+    "tal",
+    "effector",
+    "pthxo1",
+    "bound",
+    "its",
+    "dna"
+  ],
+  "summary_1l": "The crystal structure of TAL effector PthXo1 bound to its DNA target.",
+  "query_hits": [],
+  "embed_text": "46816158 The crystal structure of TAL effector PthXo1 bound to its DNA target. science scifact DNA recognition by TAL effectors is mediated by tandem repeats, each 33 to 35 residues in length, that specify nucleotides via unique repeat-variable diresidues (RVDs). The crystal structure of PthXo1 bound to its DNA target was determined… 46816158 the-crystal-structure-of-tal-effector-pthxo1-bound-to-its-dna-target. crystal structure tal effector pthxo1 bound its dna The crystal structure of TAL effector PthXo1 bound to its DNA target. The crystal structure of TAL effector PthXo1 bound to its DNA target. DNA recognition by TAL effectors is mediated by tandem repeats, each 33 to 35 residues in length, that specify nucleotides via unique repeat-variable diresidues (RVDs). The crystal structure of PthXo1 bound to its DNA target was determined by high-throughput computational structure prediction and validated by heavy-atom derivatization. Each repeat forms a left-handed, two-helix bundle that presents an RVD-containing loop to the DNA. The repeats self-associate to form a right-handed superhelix wrapped around the DNA major groove. The first RVD residue forms a stabilizing contact with the protein backbone, while the second makes a base-specific contact to the DNA sense strand. Two degenerate amino-terminal repeats also int",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.145059+00:00"
+}

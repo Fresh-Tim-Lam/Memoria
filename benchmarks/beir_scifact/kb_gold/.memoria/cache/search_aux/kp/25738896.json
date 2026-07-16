@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25738896",
+  "source_fingerprint": "6163a7b4a55e38a38f7abf95e59d11d6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25738896",
+    "aire-deficiency-promotes-trp-1-specific-immune-rejection-of-melanoma."
+  ],
+  "key_phrases": [
+    "aire",
+    "deficiency",
+    "promotes",
+    "trp",
+    "specific",
+    "immune",
+    "rejection",
+    "melanoma"
+  ],
+  "summary_1l": "Aire deficiency promotes TRP-1-specific immune rejection of melanoma.",
+  "query_hits": [],
+  "embed_text": "25738896 Aire deficiency promotes TRP-1-specific immune rejection of melanoma. science scifact The thymic transcription factor autoimmune regulator (Aire) prevents autoimmunity in part by promoting expression of tissue-specific self-antigens, which include many cancer antigens. For example, AIRE-deficient patients are predisposed to… 25738896 aire-deficiency-promotes-trp-1-specific-immune-rejection-of-melanoma. aire deficiency promotes trp specific immune rejection melanoma Aire deficiency promotes TRP-1-specific immune rejection of melanoma. Aire deficiency promotes TRP-1-specific immune rejection of melanoma. The thymic transcription factor autoimmune regulator (Aire) prevents autoimmunity in part by promoting expression of tissue-specific self-antigens, which include many cancer antigens. For example, AIRE-deficient patients are predisposed to vitiligo, an autoimmune disease of melanocytes that is often triggered by efficacious immunotherapies against melanoma. Therefore, we hypothesized that Aire deficiency in mice may elevate immune responses to cancer and provide insights into how such responses might be triggered. In this study, we show that Aire deficiency decreases thymic expression of TRP-1 (TYRP1), which is a self-antigen in melanocytes and a cancer antigen in melanomas. Aire deficiency resulted in defective negative",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.297581+00:00"
+}

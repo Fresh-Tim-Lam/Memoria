@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "16325#6",
+  "source_fingerprint": "d9fb70ca4ac7daea861766c8a0757b9f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16325#6"
+  ],
+  "key_phrases": [
+    "楷书",
+    "厘米",
+    "小楷",
+    "小字",
+    "以上",
+    "大楷",
+    "大字",
+    "之間"
+  ],
+  "summary_1l": "1─2厘米的為小楷（小字），5厘米以上的為大楷（大字），之間的為中楷。",
+  "query_hits": [],
+  "embed_text": "16325#6 楷书 楷书 1─2厘米的為小楷（小字），5厘米以上的為大楷（大字），之間的為中楷。但這僅僅是籠統的分法，實際上出現過10厘米的小字和大到1.8米的大字。 16325#6 楷书 厘米 小楷 小字 以上 大楷 大字 之間 1─2厘米的為小楷（小字），5厘米以上的為大楷（大字），之間的為中楷。 楷书 1─2厘米的為小楷（小字），5厘米以上的為大楷（大字），之間的為中楷。但這僅僅是籠統的分法，實際上出現過10厘米的小字和大到1.8米的大字。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:18:33.268073+00:00"
+}

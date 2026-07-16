@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "44562221",
+  "source_fingerprint": "443306bea3762c581a49358fa3211ab8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "44562221",
+    "tissue-specific-alterations-in-the-glucocorticoid-sensitivity-of-immune-cells-following-repeated-social-defeat-in-mice"
+  ],
+  "key_phrases": [
+    "tissue",
+    "specific",
+    "alterations",
+    "glucocorticoid",
+    "sensitivity",
+    "immune",
+    "cells",
+    "following"
+  ],
+  "summary_1l": "Endogenous glucocorticoids (GC) play an important role in the termination of the",
+  "query_hits": [],
+  "embed_text": "44562221 Tissue-specific alterations in the glucocorticoid sensitivity of immune cells following repeated social defeat in mice science scifact Endogenous glucocorticoids (GC) play an important role in the termination of the inflammatory response following infection and tissue injury. However, recent findings indicate that stress can impair the anti-inflammatory capacities of… 44562221 tissue-specific-alterations-in-the-glucocorticoid-sensitivity-of-immune-cells-following-repeated-social-defeat-in-mice tissue specific alterations glucocorticoid sensitivity immune cells following Endogenous glucocorticoids (GC) play an important role in the termination of the Tissue-specific alterations in the glucocorticoid sensitivity of immune cells following repeated social defeat in mice Endogenous glucocorticoids (GC) play an important role in the termination of the inflammatory response following infection and tissue injury. However, recent findings indicate that stress can impair the anti-inflammatory capacities of these hormones. Lipopolysaccharide (LPS)-stimulated splenocytes of mice that were repeatedly subjected to social disruption (SDR) stress were less sensitive to the immunosuppressive effects of corticosterone (CORT) as demonstrated by an increased production of pro-inflammatory cytokines and enhanced cell survival. Myeloid cells expressing the marker CD11b were shown to play a key role in this process. Here we investigated the role of the bone",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.488394+00:00"
+}

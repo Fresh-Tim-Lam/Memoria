@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19485243",
+  "source_fingerprint": "0ad44d26c6e95738b41f0ba5165ef9cf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19485243",
+    "opening-of-compacted-chromatin-by-early-developmental-transcription-factors-hnf3-(foxa)-and-gata-4."
+  ],
+  "key_phrases": [
+    "opening",
+    "compacted",
+    "chromatin",
+    "by",
+    "early",
+    "developmental",
+    "transcription",
+    "factors"
+  ],
+  "summary_1l": "Opening of compacted chromatin by early developmental transcription factors HNF3 (FoxA) and GATA-4.",
+  "query_hits": [],
+  "embed_text": "19485243 Opening of compacted chromatin by early developmental transcription factors HNF3 (FoxA) and GATA-4. science scifact The transcription factors HNF3 (FoxA) and GATA-4 are the earliest known to bind the albumin gene enhancer in liver precursor cells in embryos. To understand how they access sites in silent chromatin, we assembled nucleosome arrays… 19485243 opening-of-compacted-chromatin-by-early-developmental-transcription-factors-hnf3-(foxa)-and-gata-4. opening compacted chromatin by early developmental transcription factors Opening of compacted chromatin by early developmental transcription factors HNF3 (FoxA) and GATA-4. Opening of compacted chromatin by early developmental transcription factors HNF3 (FoxA) and GATA-4. The transcription factors HNF3 (FoxA) and GATA-4 are the earliest known to bind the albumin gene enhancer in liver precursor cells in embryos. To understand how they access sites in silent chromatin, we assembled nucleosome arrays containing albumin enhancer sequences and compacted them with linker histone. HNF3 and GATA-4, but not NF-1, C/EBP, and GAL4-AH, bound their sites in compacted chromatin and opened the local nucleosomal domain in the absence of ATP-dependent enzymes. The ability of HNF3 to open chromatin is mediated by a high affinity DNA binding site and by the C-terminal domain of the protein, which binds histones H3 and H4. Thus, factors that potentiate transcription in developm",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.627468+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4394525",
+  "source_fingerprint": "41374d74677883f46d4f170ef1f1ad1e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4394525",
+    "bacteria-activate-sensory-neurons-that-modulate-pain-and-inflammation"
+  ],
+  "key_phrases": [
+    "bacteria",
+    "activate",
+    "sensory",
+    "neurons",
+    "that",
+    "modulate",
+    "pain",
+    "inflammation"
+  ],
+  "summary_1l": "Nociceptor sensory neurons are specialized to detect potentially damaging stimuli, protecting the organism by initiating the sensa",
+  "query_hits": [],
+  "embed_text": "4394525 Bacteria activate sensory neurons that modulate pain and inflammation science scifact Nociceptor sensory neurons are specialized to detect potentially damaging stimuli, protecting the organism by initiating the sensation of pain and eliciting defensive behaviours. Bacterial infections produce pain by unknown molecular… 4394525 bacteria-activate-sensory-neurons-that-modulate-pain-and-inflammation bacteria activate sensory neurons that modulate pain inflammation Nociceptor sensory neurons are specialized to detect potentially damaging stimuli, protecting the organism by initiating the sensa Bacteria activate sensory neurons that modulate pain and inflammation Nociceptor sensory neurons are specialized to detect potentially damaging stimuli, protecting the organism by initiating the sensation of pain and eliciting defensive behaviours. Bacterial infections produce pain by unknown molecular mechanisms, although they are presumed to be secondary to immune activation. Here we demonstrate that bacteria directly activate nociceptors, and that the immune response mediated through TLR2, MyD88, T cells, B cells, and neutrophils and monocytes is not necessary for Staphylococcus aureus-induced pain in mice. Mechanical and thermal hyperalgesia in mice is correlated with live bacterial load rather than tissue swelling or immune activation. Bacteria induce calcium flux and action potential",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.524643+00:00"
+}

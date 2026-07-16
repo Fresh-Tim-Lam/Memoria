@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11411060",
+  "source_fingerprint": "25ca432d16a2c7ded716a4d7df96263f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11411060",
+    "bromodomain-proteins-contribute-to-maintenance-of-bloodstream-form-stage-identity-in-the-african-trypanosome"
+  ],
+  "key_phrases": [
+    "bromodomain",
+    "proteins",
+    "contribute",
+    "maintenance",
+    "bloodstream",
+    "form",
+    "stage",
+    "identity"
+  ],
+  "summary_1l": "Trypanosoma brucei, the causative agent of African sleeping sickness, is transmitted to its",
+  "query_hits": [],
+  "embed_text": "11411060 Bromodomain Proteins Contribute to Maintenance of Bloodstream Form Stage Identity in the African Trypanosome science scifact Trypanosoma brucei, the causative agent of African sleeping sickness, is transmitted to its mammalian host by the tsetse. In the fly, the parasite's surface is covered with invariant procyclin, while in the mammal it resides… 11411060 bromodomain-proteins-contribute-to-maintenance-of-bloodstream-form-stage-identity-in-the-african-trypanosome bromodomain proteins contribute maintenance bloodstream form stage identity Trypanosoma brucei, the causative agent of African sleeping sickness, is transmitted to its Bromodomain Proteins Contribute to Maintenance of Bloodstream Form Stage Identity in the African Trypanosome Trypanosoma brucei, the causative agent of African sleeping sickness, is transmitted to its mammalian host by the tsetse. In the fly, the parasite's surface is covered with invariant procyclin, while in the mammal it resides extracellularly in its bloodstream form (BF) and is densely covered with highly immunogenic Variant Surface Glycoprotein (VSG). In the BF, the parasite varies this highly immunogenic surface VSG using a repertoire of ~2500 distinct VSG genes. Recent reports in mammalian systems point to a role for histone acetyl-lysine recognizing bromodomain proteins in the maintenance of stem cell fate, leading us to hypothesize that bromodomain proteins may maintain the BF ce",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:06.485065+00:00"
+}

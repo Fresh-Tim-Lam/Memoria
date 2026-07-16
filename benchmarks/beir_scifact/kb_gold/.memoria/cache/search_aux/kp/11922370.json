@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11922370",
+  "source_fingerprint": "fdf17e0d13359ff474bfd17c22dd6deb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11922370",
+    "gemc1-is-a-topbp1-interacting-protein-required-for-chromosomal-dna-replication"
+  ],
+  "key_phrases": [
+    "gemc1",
+    "topbp1",
+    "interacting",
+    "protein",
+    "required",
+    "chromosomal",
+    "dna",
+    "replication"
+  ],
+  "summary_1l": "Many of the factors required for chromosomal DNA replication have been identified in unicellular eukaryotes.",
+  "query_hits": [],
+  "embed_text": "11922370 GEMC1 is a TopBP1 interacting protein required for chromosomal DNA replication science scifact Many of the factors required for chromosomal DNA replication have been identified in unicellular eukaryotes. However, DNA replication is poorly understood in multicellular organisms. Here, we report the identification of GEMC1 (geminin… 11922370 gemc1-is-a-topbp1-interacting-protein-required-for-chromosomal-dna-replication gemc1 topbp1 interacting protein required chromosomal dna replication Many of the factors required for chromosomal DNA replication have been identified in unicellular eukaryotes. GEMC1 is a TopBP1 interacting protein required for chromosomal DNA replication Many of the factors required for chromosomal DNA replication have been identified in unicellular eukaryotes. However, DNA replication is poorly understood in multicellular organisms. Here, we report the identification of GEMC1 (geminin coiled-coil containing protein 1), a novel vertebrate protein required for chromosomal DNA replication. GEMC1 is highly conserved in vertebrates and is preferentially expressed in proliferating cells. Using Xenopus laevis egg extract we show that Xenopus GEMC1 (xGEMC1) binds to the checkpoint and replication factor TopBP1, which promotes binding of xGEMC1 to chromatin during pre-replication complex (pre-RC) formation. We demonstrate that xGEMC1 interacts directly with replication",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:07.428939+00:00"
+}

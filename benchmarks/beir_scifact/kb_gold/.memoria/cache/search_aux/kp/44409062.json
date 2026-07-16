@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "44409062",
+  "source_fingerprint": "738b9b65f1f6c3d44e2060aefb053848",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "44409062",
+    "high-throughput-parallel-proteogenomics:-a-bacterial-case-study."
+  ],
+  "key_phrases": [
+    "high",
+    "throughput",
+    "parallel",
+    "proteogenomics",
+    "bacterial",
+    "case",
+    "study",
+    "recent"
+  ],
+  "summary_1l": "High-throughput parallel proteogenomics: a bacterial case study.",
+  "query_hits": [],
+  "embed_text": "44409062 High-throughput parallel proteogenomics: a bacterial case study. science scifact In recent years, a new paradigm for genome annotation has emerged, termed \"proteogenomics,\" that leverages peptide MS to annotate a genome. This is achieved by mapping peptides to a six-frame translation of a genome, including available… 44409062 high-throughput-parallel-proteogenomics:-a-bacterial-case-study. high throughput parallel proteogenomics bacterial case study recent High-throughput parallel proteogenomics: a bacterial case study. High-throughput parallel proteogenomics: a bacterial case study. In recent years, a new paradigm for genome annotation has emerged, termed \"proteogenomics,\" that leverages peptide MS to annotate a genome. This is achieved by mapping peptides to a six-frame translation of a genome, including available splice databases, which may suggest refinements to gene models. Using this approach, it is possible to refine gene regions such as exon boundaries, novel genes, gene boundaries, frame shifts, reverse strands, translated UTRs, and novel splice junctions. One of the challenges of proteogenomics is how best to (1) tackle assigning confidence to any resulting annotation and (2) apply these gene model refinements, either through manual annotation or through an automated process via training gene pr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.308080+00:00"
+}

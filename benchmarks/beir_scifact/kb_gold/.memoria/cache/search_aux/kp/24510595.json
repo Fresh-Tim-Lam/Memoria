@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24510595",
+  "source_fingerprint": "1718e08bd8ba818055efda1f23fe2794",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24510595",
+    "prevalence-of-frequent-headache-in-a-population-sample."
+  ],
+  "key_phrases": [
+    "prevalence",
+    "frequent",
+    "headache",
+    "population",
+    "sample",
+    "purpose",
+    "patients",
+    "with"
+  ],
+  "summary_1l": "Prevalence of frequent headache in a population sample.",
+  "query_hits": [],
+  "embed_text": "24510595 Prevalence of frequent headache in a population sample. science scifact PURPOSE Patients with daily or near-daily headaches are commonly seen in neurology practices and in headache subspecialty centers, but there is little information on the prevalence of this condition in the general population. We present… 24510595 prevalence-of-frequent-headache-in-a-population-sample. prevalence frequent headache population sample purpose patients with Prevalence of frequent headache in a population sample. Prevalence of frequent headache in a population sample. PURPOSE Patients with daily or near-daily headaches are commonly seen in neurology practices and in headache subspecialty centers, but there is little information on the prevalence of this condition in the general population. We present the first US-based study describing the prevalence and characteristics of frequent headache in the general population. METHODS In Baltimore County, Maryland, 13 343 individuals 18 to 65 years of age were selected by random-digit dialing and interviewed by telephone about their headaches. Subjects reporting 180 or more headaches per year were classified as having frequent headache. Three mutually exclusive subtypes of frequent headache were identified: frequent headache with migrainous features, chronic",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.553786+00:00"
+}

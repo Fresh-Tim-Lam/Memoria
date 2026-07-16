@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "34338075",
+  "source_fingerprint": "e27656490e4e399df15ec84b6f287dfa",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "34338075",
+    "prevention-of-central-venous-catheter-associated-thrombosis:-a-meta-analysis."
+  ],
+  "key_phrases": [
+    "prevention",
+    "central",
+    "venous",
+    "catheter",
+    "associated",
+    "thrombosis",
+    "meta",
+    "analysis"
+  ],
+  "summary_1l": "Prevention of central venous catheter-associated thrombosis: a meta-analysis.",
+  "query_hits": [],
+  "embed_text": "34338075 Prevention of central venous catheter-associated thrombosis: a meta-analysis. science scifact PURPOSE Anticoagulant prophylaxis in patients with central venous catheters is controversial. We performed a meta-analysis of randomized controlled trials of anticoagulant prophylaxis in patients with central venous catheters. METHODS… 34338075 prevention-of-central-venous-catheter-associated-thrombosis:-a-meta-analysis. prevention central venous catheter associated thrombosis meta analysis Prevention of central venous catheter-associated thrombosis: a meta-analysis. Prevention of central venous catheter-associated thrombosis: a meta-analysis. PURPOSE Anticoagulant prophylaxis in patients with central venous catheters is controversial. We performed a meta-analysis of randomized controlled trials of anticoagulant prophylaxis in patients with central venous catheters. METHODS MEDLINE and EMBASE were searched up to May 2006, supplemented by manual searches of conference proceedings and bibliographies. RESULTS Fifteen trials were included. Unfractionated heparin infusion, oral fixed low-dose vitamin K antagonist, and subcutaneous low-molecular-weight heparin were evaluated. For all catheter-associated deep vein thrombosis (symptomatic and asymptomatic combined), the summary relative risks ranged from 0.31 to 0.73 (all achieved statistical significance). Fo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.367133+00:00"
+}

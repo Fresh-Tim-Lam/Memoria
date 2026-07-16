@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2682997",
+  "source_fingerprint": "e14397e47d371af251ad7bc6a5b525f3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2682997",
+    "wnt/beta-catenin-signaling-is-required-for-cns,-but-not-non-cns,-angiogenesis."
+  ],
+  "key_phrases": [
+    "wnt",
+    "beta",
+    "catenin",
+    "signaling",
+    "required",
+    "cns",
+    "but",
+    "not"
+  ],
+  "summary_1l": "Wnt/beta-catenin signaling is required for CNS, but not non-CNS, angiogenesis.",
+  "query_hits": [],
+  "embed_text": "2682997 Wnt/beta-catenin signaling is required for CNS, but not non-CNS, angiogenesis. science scifact Despite the importance of CNS blood vessels, the molecular mechanisms that regulate CNS angiogenesis and blood-brain barrier (BBB) formation are largely unknown. Here we analyze the role of Wnt/beta-catenin signaling in regulating the… 2682997 wnt/beta-catenin-signaling-is-required-for-cns,-but-not-non-cns,-angiogenesis. wnt beta catenin signaling required cns but not Wnt/beta-catenin signaling is required for CNS, but not non-CNS, angiogenesis. Wnt/beta-catenin signaling is required for CNS, but not non-CNS, angiogenesis. Despite the importance of CNS blood vessels, the molecular mechanisms that regulate CNS angiogenesis and blood-brain barrier (BBB) formation are largely unknown. Here we analyze the role of Wnt/beta-catenin signaling in regulating the formation of CNS blood vessels. First, through the analysis of TOP-Gal Wnt reporter mice, we identify that canonical Wnt/beta-catenin signaling is specifically activated in CNS, but not non-CNS, blood vessels during development. This activation correlates with the expression of different Wnt ligands by neural progenitor cells in distinct locations throughout the CNS, including Wnt7a and Wnt7b in ventral regions and Wnt1, Wnt3, Wnt3a, and Wnt4 in dorsal regions. Blockade of Wnt/beta",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.172499+00:00"
+}

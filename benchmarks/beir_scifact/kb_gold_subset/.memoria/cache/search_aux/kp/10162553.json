@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10162553",
+  "source_fingerprint": "c7fbd223cc9d22854b453cfe26165bb6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10162553",
+    "ablation-and-regeneration-of-tolerance-inducing-medullary-thymic-epithelial-cells-after-cyclosporine,-cyclophosphamide,-and-dexamethasone-treatment."
+  ],
+  "key_phrases": [
+    "ablation",
+    "regeneration",
+    "tolerance",
+    "inducing",
+    "medullary",
+    "thymic",
+    "epithelial",
+    "cells"
+  ],
+  "summary_1l": "Ablation and regeneration of tolerance-inducing medullary thymic epithelial cells after cyclosporine, cyclophosphamide, and dexamethasone treatment.",
+  "query_hits": [],
+  "embed_text": "10162553 Ablation and regeneration of tolerance-inducing medullary thymic epithelial cells after cyclosporine, cyclophosphamide, and dexamethasone treatment. science scifact Immunosuppressive drugs and cytotoxic chemotherapy agents are designed to kill or suppress autoreactive, alloaggressive, or hyperinflammatory T cells, or disseminated malignancies. However, they also cause severe immunological side effects… 10162553 ablation-and-regeneration-of-tolerance-inducing-medullary-thymic-epithelial-cells-after-cyclosporine,-cyclophosphamide,-and-dexamethasone-treatment. ablation regeneration tolerance inducing medullary thymic epithelial cells Ablation and regeneration of tolerance-inducing medullary thymic epithelial cells after cyclosporine, cyclophosphamide, and dexamethasone treatment. Ablation and regeneration of tolerance-inducing medullary thymic epithelial cells after cyclosporine, cyclophosphamide, and dexamethasone treatment. Immunosuppressive drugs and cytotoxic chemotherapy agents are designed to kill or suppress autoreactive, alloaggressive, or hyperinflammatory T cells, or disseminated malignancies. However, they also cause severe immunological side effects ranging from interrupted thymopoiesis and general immunodeficiency to, paradoxically, autoimmunity. Consistent with the cross-talk between thymocytes and stromal cells, we now show that these common therapeutic agents have major effects on murine thymic epithelial cells (TEC), crucially required to rebuild immunity posttreatment. We show that the immunosuppressant cyclosporine A, which has been linked to a t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.307503+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2638387",
+  "source_fingerprint": "ebb621845d5e29faf764b6e2382d6353",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2638387",
+    "the-cytidine-deaminase-cem15-induces-hypermutation-in-newly-synthesized-hiv-1-dna"
+  ],
+  "key_phrases": [
+    "cytidine",
+    "deaminase",
+    "cem15",
+    "induces",
+    "hypermutation",
+    "newly",
+    "synthesized",
+    "hiv"
+  ],
+  "summary_1l": "High mutation frequency during reverse transcription has a principal role in the genetic variation of primate lentivir",
+  "query_hits": [],
+  "embed_text": "2638387 The cytidine deaminase CEM15 induces hypermutation in newly synthesized HIV-1 DNA science scifact High mutation frequency during reverse transcription has a principal role in the genetic variation of primate lentiviral populations. It is the main driving force for the generation of drug resistance and the escape from immune… 2638387 the-cytidine-deaminase-cem15-induces-hypermutation-in-newly-synthesized-hiv-1-dna cytidine deaminase cem15 induces hypermutation newly synthesized hiv High mutation frequency during reverse transcription has a principal role in the genetic variation of primate lentivir The cytidine deaminase CEM15 induces hypermutation in newly synthesized HIV-1 DNA High mutation frequency during reverse transcription has a principal role in the genetic variation of primate lentiviral populations. It is the main driving force for the generation of drug resistance and the escape from immune surveillance. G to A hypermutation is one of the characteristics of primate lentiviruses, as well as other retroviruses, during replication in vivo and in cell culture. The molecular mechanisms of this process, however, remain to be clarified. Here, we demonstrate that CEM15 (also known as apolipoprotein B mRNA editing enzyme, catalytic polypeptide-like 3G; APOBEC3G), an endogenous inhibitor of human immunodeficiency virus type 1 (HIV-1) replication, is a cytidine deaminase and is able",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.692194+00:00"
+}

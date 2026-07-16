@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "102662",
+  "source_fingerprint": "15a0c23e9f102d94e8832aba7d1cc029",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "102662",
+    "a-rapid-method-for-extraction-of-cotton-(gossypium-spp.)-genomic-dna-suitable-for-rflp-or-pcr-analysis"
+  ],
+  "key_phrases": [
+    "rapid",
+    "method",
+    "extraction",
+    "cotton",
+    "gossypium",
+    "spp",
+    "genomic",
+    "dna"
+  ],
+  "summary_1l": "A rapid method for extraction of cotton (Gossypium spp.",
+  "query_hits": [],
+  "embed_text": "102662 A rapid method for extraction of cotton (Gossypium spp.) genomic DNA suitable for RFLP or PCR analysis science scifact Extraction of high-quality genomic DNA fromGossypium (cotton) species is difficult due to high levels of polysaccharide, oxidizable quinones, and other interfering substances. We describe a procedure that consistently permits isolation of… 102662 a-rapid-method-for-extraction-of-cotton-(gossypium-spp.)-genomic-dna-suitable-for-rflp-or-pcr-analysis rapid method extraction cotton gossypium spp genomic dna A rapid method for extraction of cotton (Gossypium spp. A rapid method for extraction of cotton (Gossypium spp.) genomic DNA suitable for RFLP or PCR analysis Extraction of high-quality genomic DNA fromGossypium (cotton) species is difficult due to high levels of polysaccharide, oxidizable quinones, and other interfering substances. We describe a procedure that consistently permits isolation of cotton genomic DNA of satisfactory size and quality for RFLP and PCR analysis, as well as for most routine cloning applications. Several antioxidants, phenol-binding reagents, and phenol oxidase inhibitors are used throughout the procedure, and most polysaccharides are eliminated early in the procedure by isolation of nuclei.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:04.495866+00:00"
+}

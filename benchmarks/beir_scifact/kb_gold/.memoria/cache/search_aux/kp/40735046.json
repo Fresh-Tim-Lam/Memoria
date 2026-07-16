@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "40735046",
+  "source_fingerprint": "fcbf208c28eb6fc5e019c095cb953361",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "40735046",
+    "periodic-screening-for-breast-cancer:-the-hip-randomized-controlled-trial.-health-insurance-plan."
+  ],
+  "key_phrases": [
+    "periodic",
+    "screening",
+    "breast",
+    "cancer",
+    "hip",
+    "randomized",
+    "controlled",
+    "trial"
+  ],
+  "summary_1l": "Periodic screening for breast cancer: the HIP Randomized Controlled Trial.",
+  "query_hits": [],
+  "embed_text": "40735046 Periodic screening for breast cancer: the HIP Randomized Controlled Trial. Health Insurance Plan. science scifact This paper summarizes the findings of the first breast cancer screening trial, which was initiated in December 1963 to explore the efficacy of screening. Women aged 40-64 years were selected from enrollees in the Health Insurance Plan… 40735046 periodic-screening-for-breast-cancer:-the-hip-randomized-controlled-trial.-health-insurance-plan. periodic screening breast cancer hip randomized controlled trial Periodic screening for breast cancer: the HIP Randomized Controlled Trial. Periodic screening for breast cancer: the HIP Randomized Controlled Trial. Health Insurance Plan. This paper summarizes the findings of the first breast cancer screening trial, which was initiated in December 1963 to explore the efficacy of screening. Women aged 40-64 years were selected from enrollees in the Health Insurance Plan (HIP) of Greater New York and were randomly assigned to study and control groups. Study group women were invited for screening, an initial examination, and three annual reexaminations. Screening consisted of film mammography (cephalocaudal and lateral views of each breast) and clinical examination of breasts. Breast cancer and mortality from breast cancer were examined by treatment group (study vs. control) and by entry-age subgroup. By the end of 18 years from e",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.784347+00:00"
+}

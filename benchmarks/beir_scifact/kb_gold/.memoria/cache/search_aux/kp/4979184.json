@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4979184",
+  "source_fingerprint": "e276ac0e483ad3f32ffecf3810e25c02",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4979184",
+    "transdifferentiation-of-glioblastoma-cells-into-vascular-endothelial-cells."
+  ],
+  "key_phrases": [
+    "transdifferentiation",
+    "glioblastoma",
+    "cells",
+    "into",
+    "vascular",
+    "endothelial",
+    "gbm",
+    "most"
+  ],
+  "summary_1l": "Transdifferentiation of glioblastoma cells into vascular endothelial cells.",
+  "query_hits": [],
+  "embed_text": "4979184 Transdifferentiation of glioblastoma cells into vascular endothelial cells. science scifact Glioblastoma (GBM) is the most malignant brain tumor and is highly resistant to intensive combination therapies and anti-VEGF therapies. To assess the resistance mechanism to anti-VEGF therapy, we examined the vessels of GBMs in tumors… 4979184 transdifferentiation-of-glioblastoma-cells-into-vascular-endothelial-cells. transdifferentiation glioblastoma cells into vascular endothelial gbm most Transdifferentiation of glioblastoma cells into vascular endothelial cells. Transdifferentiation of glioblastoma cells into vascular endothelial cells. Glioblastoma (GBM) is the most malignant brain tumor and is highly resistant to intensive combination therapies and anti-VEGF therapies. To assess the resistance mechanism to anti-VEGF therapy, we examined the vessels of GBMs in tumors that were induced by the transduction of p53(+/-) heterozygous mice with lentiviral vectors containing oncogenes and the marker GFP in the hippocampus of GFAP-Cre recombinase (Cre) mice. We were surprised to observe GFP(+) vascular endothelial cells (ECs). Transplantation of mouse GBM cells revealed that the tumor-derived endothelial cells (TDECs) originated from tumor-initiating cells and did not result from cell fusion of ECs and tumor cells. An in vitro differentiation assay sugge",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.932158+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6936141",
+  "source_fingerprint": "e3f4e2662d7f41c66fdd45bc446234f1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6936141",
+    "nef-is-physically-recruited-into-the-immunological-synapse-and-potentiates-t-cell-activation-early-after-tcr-engagement."
+  ],
+  "key_phrases": [
+    "nef",
+    "physically",
+    "recruited",
+    "into",
+    "immunological",
+    "synapse",
+    "potentiates",
+    "cell"
+  ],
+  "summary_1l": "Nef is physically recruited into the immunological synapse and potentiates T cell activation early after TCR engagement.",
+  "query_hits": [],
+  "embed_text": "6936141 Nef is physically recruited into the immunological synapse and potentiates T cell activation early after TCR engagement. science scifact The HIV-1 protein Nef enhances viral pathogenicity and accelerates disease progression in vivo. Nef potentiates T cell activation by an unknown mechanism, probably by optimizing the intracellular environment for HIV replication. Using a… 6936141 nef-is-physically-recruited-into-the-immunological-synapse-and-potentiates-t-cell-activation-early-after-tcr-engagement. nef physically recruited into immunological synapse potentiates cell Nef is physically recruited into the immunological synapse and potentiates T cell activation early after TCR engagement. Nef is physically recruited into the immunological synapse and potentiates T cell activation early after TCR engagement. The HIV-1 protein Nef enhances viral pathogenicity and accelerates disease progression in vivo. Nef potentiates T cell activation by an unknown mechanism, probably by optimizing the intracellular environment for HIV replication. Using a new T cell reporter system, we have found that Nef more than doubles the number of cells expressing the transcription factors NF-kappaB and NFAT after TCR stimulation. This Nef-induced priming of TCR signaling pathways occurred independently of calcium signaling and involved a very proximal step before protein kinase C activation. Engagement of the TCR by MHC-bound Ag triggers the formation of the immunological synapse by recruiting deter",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.993226+00:00"
+}

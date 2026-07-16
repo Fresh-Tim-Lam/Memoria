@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1256116",
+  "source_fingerprint": "aa2326041e4af6c2f34f0c84c23cf076",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1256116",
+    "yeastract:-providing-a-programmatic-access-to-curated-transcriptional-regulatory-associations-in-saccharomyces-cerevisiae-through-a-web-services-interface"
+  ],
+  "key_phrases": [
+    "yeastract",
+    "providing",
+    "programmatic",
+    "access",
+    "curated",
+    "transcriptional",
+    "regulatory",
+    "associations"
+  ],
+  "summary_1l": "The YEAst Search for Transcriptional Regulato",
+  "query_hits": [],
+  "embed_text": "1256116 YEASTRACT: providing a programmatic access to curated transcriptional regulatory associations in Saccharomyces cerevisiae through a web services interface science scifact The YEAst Search for Transcriptional Regulators And Consensus Tracking (YEASTRACT) information system (http://www.yeastract.com) was developed to support the analysis of transcription regulatory associations in Saccharomyces cerevisiae.… 1256116 yeastract:-providing-a-programmatic-access-to-curated-transcriptional-regulatory-associations-in-saccharomyces-cerevisiae-through-a-web-services-interface yeastract providing programmatic access curated transcriptional regulatory associations The YEAst Search for Transcriptional Regulato YEASTRACT: providing a programmatic access to curated transcriptional regulatory associations in Saccharomyces cerevisiae through a web services interface The YEAst Search for Transcriptional Regulators And Consensus Tracking (YEASTRACT) information system (http://www.yeastract.com) was developed to support the analysis of transcription regulatory associations in Saccharomyces cerevisiae. Last updated in June 2010, this database contains over 48,200 regulatory associations between transcription factors (TFs) and target genes, including 298 specific DNA-binding sites for 110 characterized TFs. All regulatory associations stored in the database were revisited and detailed information on the experimental evidences that sustain those associations was added and classified as direct or indirect",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:09.118350+00:00"
+}

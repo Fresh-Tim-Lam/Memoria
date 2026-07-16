@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "kp_id": "1739#0",
+  "source_fingerprint": "092ddc9f0f8c36151e3e04261a4b2591",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "法国",
+    "(法国)",
+    "2022年法国总统选举",
+    "挪威国旗",
+    "法国地理",
+    "法国美术"
+  ],
+  "aliases": [
+    "1739#0"
+  ],
+  "key_phrases": [
+    "法国",
+    "国旗",
+    "一面",
+    "红色",
+    "垂直",
+    "排列",
+    "三色旗",
+    "法国人"
+  ],
+  "summary_1l": "法国国旗是一面从左至右蓝、白、红色垂直排列的三色旗。",
+  "query_hits": [],
+  "embed_text": "1739#0 法国国旗 法国国旗 法国国旗是一面从左至右蓝、白、红色垂直排列的三色旗。法国人称之为： 法国 (法国) 2022年法国总统选举 挪威国旗 法国地理 法国美术 1739#0 法国 国旗 一面 红色 垂直 排列 三色旗 法国人 法国国旗是一面从左至右蓝、白、红色垂直排列的三色旗。 法国国旗 法国国旗是一面从左至右蓝、白、红色垂直排列的三色旗。法国人称之为：",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:18:02.917098+00:00"
+}

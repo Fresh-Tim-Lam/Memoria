@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24323695",
+  "source_fingerprint": "d1eb7a6bb11f771a186e503c0fad90e3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24323695",
+    "pulmonologist-involvement,-stage-specific-treatment,-and-survival-in-adults-with-non-small-cell-lung-cancer-and-chronic-obstructive-pulmonary-disease."
+  ],
+  "key_phrases": [
+    "pulmonologist",
+    "involvement",
+    "stage",
+    "specific",
+    "treatment",
+    "survival",
+    "adults",
+    "with"
+  ],
+  "summary_1l": "Pulmonologist involvement, stage-specific treatment, and survival in adults with non-small cell lung cancer and chronic obstructive pulmonary disease.",
+  "query_hits": [],
+  "embed_text": "24323695 Pulmonologist involvement, stage-specific treatment, and survival in adults with non-small cell lung cancer and chronic obstructive pulmonary disease. science scifact RATIONALE Up to 80% of patients with lung cancer have comorbid chronic obstructive pulmonary disease (COPD). Many of them are poor candidates for stage-specific lung cancer treatment due to diminished lung function and poor functional… 24323695 pulmonologist-involvement,-stage-specific-treatment,-and-survival-in-adults-with-non-small-cell-lung-cancer-and-chronic-obstructive-pulmonary-disease. pulmonologist involvement stage specific treatment survival adults with Pulmonologist involvement, stage-specific treatment, and survival in adults with non-small cell lung cancer and chronic obstructive pulmonary disease. Pulmonologist involvement, stage-specific treatment, and survival in adults with non-small cell lung cancer and chronic obstructive pulmonary disease. RATIONALE Up to 80% of patients with lung cancer have comorbid chronic obstructive pulmonary disease (COPD). Many of them are poor candidates for stage-specific lung cancer treatment due to diminished lung function and poor functional status, and many forego treatment. The negative effect of COPD may be moderated by pulmonologist-guided management. OBJECTIVES This study examined the association between pulmonologist management and the probability of receiving the recommended stage-specific treatment modality and overall survival among patients with non-small cell lung cancer (NSCLC) with preexisting COPD. METHODS Early- and advanced-stage NS",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.235945+00:00"
+}

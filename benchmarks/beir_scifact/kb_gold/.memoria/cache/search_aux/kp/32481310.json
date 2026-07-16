@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "32481310",
+  "source_fingerprint": "24b424f0191f5681ee92c1c4f8752f9b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "32481310",
+    "abnormal-hemoglobins-in-a-quarter-million-people."
+  ],
+  "key_phrases": [
+    "abnormal",
+    "hemoglobins",
+    "quarter",
+    "million",
+    "people",
+    "hemolysates",
+    "erythrocytes",
+    "from"
+  ],
+  "summary_1l": "Abnormal hemoglobins in a quarter million people.",
+  "query_hits": [],
+  "embed_text": "32481310 Abnormal hemoglobins in a quarter million people. science scifact Hemolysates of erythrocytes from more than a quarter million people in Alabama were electrophoresed on cellulose acetate, pH 8.4, and those samples exhibiting an abnormality were also electrophoresed in citrate agar, pH 6.0. The globin… 32481310 abnormal-hemoglobins-in-a-quarter-million-people. abnormal hemoglobins quarter million people hemolysates erythrocytes from Abnormal hemoglobins in a quarter million people. Abnormal hemoglobins in a quarter million people. Hemolysates of erythrocytes from more than a quarter million people in Alabama were electrophoresed on cellulose acetate, pH 8.4, and those samples exhibiting an abnormality were also electrophoresed in citrate agar, pH 6.0. The globin chains of mutants other than Hb S and C were electrophoresed in urea-mercaptoethanol buffers at both pH 8.9 and pH 6.0, and 60 of them were also analyzed structurally. Of about 6000 samples from whites, only three contained abnormal hemoglobins--Hb D Los Angeles, Hb J Baltimore, and one unidentified. Of 249,000 samples from blacks, about 29,000 contained electrophoretically detectable abnormalities, most of them associated with Hb S or C, present in a frequency of about 9% and 3%, respectively. About 1000 sam",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.619582+00:00"
+}

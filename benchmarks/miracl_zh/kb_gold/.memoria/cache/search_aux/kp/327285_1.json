@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "kp_id": "327285#1",
+  "source_fingerprint": "ea5f0961e0cea56dd3898a0c7a8a0746",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "波德星系",
+    "洛杉矶音乐中心"
+  ],
+  "aliases": [
+    "327285#1",
+    "ngc-1232"
+  ],
+  "key_phrases": [
+    "ngc",
+    "1232",
+    "環繞",
+    "中心",
+    "螺旋",
+    "大量",
+    "明亮",
+    "恆星"
+  ],
+  "summary_1l": "NGC 1232環繞中心的螺旋臂內有大量明亮恆星與暗灰塵。",
+  "query_hits": [],
+  "embed_text": "327285#1 NGC 1232 NGC 1232 NGC 1232環繞中心的螺旋臂內有大量明亮恆星與暗灰塵。螺旋臂內的疏散星团內有大量藍色恆星沿著螺旋臂分佈，其間有大量的星際塵埃暗區。較暗的恆星和星際氣體佔了星系質量大部分，並且主導了星系內側動力狀態。而星系外側可見物體的動力模式則必須以目前無法被直接觀察的暗物质的存在解釋。 波德星系 洛杉矶音乐中心 327285#1 ngc-1232 ngc 1232 環繞 中心 螺旋 大量 明亮 恆星 NGC 1232環繞中心的螺旋臂內有大量明亮恆星與暗灰塵。 NGC 1232 NGC 1232環繞中心的螺旋臂內有大量明亮恆星與暗灰塵。螺旋臂內的疏散星团內有大量藍色恆星沿著螺旋臂分佈，其間有大量的星際塵埃暗區。較暗的恆星和星際氣體佔了星系質量大部分，並且主導了星系內側動力狀態。而星系外側可見物體的動力模式則必須以目前無法被直接觀察的暗物质的存在解釋。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:20:19.287452+00:00"
+}

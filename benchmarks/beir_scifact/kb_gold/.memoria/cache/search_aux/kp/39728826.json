@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "39728826",
+  "source_fingerprint": "f4ec03fa7d8fba84e13f43b11674abd0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "39728826",
+    "use-of-tls-parameters-to-model-anisotropic-displacements-in-macromolecular-refinement."
+  ],
+  "key_phrases": [
+    "use",
+    "tls",
+    "parameters",
+    "model",
+    "anisotropic",
+    "displacements",
+    "macromolecular",
+    "refinement"
+  ],
+  "summary_1l": "Use of TLS parameters to model anisotropic displacements in macromolecular refinement.",
+  "query_hits": [],
+  "embed_text": "39728826 Use of TLS parameters to model anisotropic displacements in macromolecular refinement. science scifact An essential step in macromolecular refinement is the selection of model parameters which give as good a description of the experimental data as possible while retaining a realistic data-to-parameter ratio. This is particularly true of the… 39728826 use-of-tls-parameters-to-model-anisotropic-displacements-in-macromolecular-refinement. use tls parameters model anisotropic displacements macromolecular refinement Use of TLS parameters to model anisotropic displacements in macromolecular refinement. Use of TLS parameters to model anisotropic displacements in macromolecular refinement. An essential step in macromolecular refinement is the selection of model parameters which give as good a description of the experimental data as possible while retaining a realistic data-to-parameter ratio. This is particularly true of the choice of atomic displacement parameters, where the move from individual isotropic to individual anisotropic refinement involves a sixfold increase in the number of required displacement parameters. The number of refinement parameters can be reduced by using collective variables rather than independent atomic variables and one of the simplest examples of this is the TLS parameterization for describing the translation, libration and screw-rotation displacements of a pse",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.873085+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "43752562",
+  "source_fingerprint": "ec927dc238b04682b1457e010b91c3df",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "43752562",
+    "phospholipid-synthesis-and-lipid-composition-of-subcellular-membranes-in-the-unicellular-eukaryote-saccharomyces-cerevisiae."
+  ],
+  "key_phrases": [
+    "phospholipid",
+    "synthesis",
+    "lipid",
+    "composition",
+    "subcellular",
+    "membranes",
+    "unicellular",
+    "eukaryote"
+  ],
+  "summary_1l": "Phospholipid synthesis and lipid composition of subcellular membranes in the unicellular eukaryote Saccharomyces cerevisiae.",
+  "query_hits": [],
+  "embed_text": "43752562 Phospholipid synthesis and lipid composition of subcellular membranes in the unicellular eukaryote Saccharomyces cerevisiae. science scifact Subcellular membranes of Saccharomyces cerevisiae, including mitochondria, microsomes, plasma membranes, secretory vesicles, vacuoles, nuclear membranes, peroxisomes, and lipid particles, were isolated by improved procedures and analyzed… 43752562 phospholipid-synthesis-and-lipid-composition-of-subcellular-membranes-in-the-unicellular-eukaryote-saccharomyces-cerevisiae. phospholipid synthesis lipid composition subcellular membranes unicellular eukaryote Phospholipid synthesis and lipid composition of subcellular membranes in the unicellular eukaryote Saccharomyces cerevisiae. Phospholipid synthesis and lipid composition of subcellular membranes in the unicellular eukaryote Saccharomyces cerevisiae. Subcellular membranes of Saccharomyces cerevisiae, including mitochondria, microsomes, plasma membranes, secretory vesicles, vacuoles, nuclear membranes, peroxisomes, and lipid particles, were isolated by improved procedures and analyzed for their lipid composition and their capacity to synthesize phospholipids and to catalyze sterol delta 24-methylation. The microsomal fraction is heterogeneous in terms of density and classical microsomal marker proteins and also with respect to the distribution of phospholipid-synthesizing enzymes. The specific activity of phosphatidylserine synthase was highest in a microsomal subfraction which was distinct from heavier microsomes",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.237969+00:00"
+}

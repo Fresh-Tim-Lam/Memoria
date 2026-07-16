@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1546650",
+  "source_fingerprint": "29757ff51a0dc0d1a3a25701abb423d2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1546650",
+    "functional-elements-within-the-dynein-microtubule-binding-domain"
+  ],
+  "key_phrases": [
+    "functional",
+    "elements",
+    "within",
+    "dynein",
+    "microtubule",
+    "binding",
+    "domain",
+    "interacts"
+  ],
+  "summary_1l": "Dynein interacts with microtubules through an ATP-sensitive linkage mapped to a structurally complex region of the heavy chain followin",
+  "query_hits": [],
+  "embed_text": "1546650 Functional elements within the dynein microtubule-binding domain science scifact Dynein interacts with microtubules through an ATP-sensitive linkage mapped to a structurally complex region of the heavy chain following the fourth P-loop motif. Virtually nothing is known regarding how binding affinity is achieved and… 1546650 functional-elements-within-the-dynein-microtubule-binding-domain functional elements within dynein microtubule binding domain interacts Dynein interacts with microtubules through an ATP-sensitive linkage mapped to a structurally complex region of the heavy chain followin Functional elements within the dynein microtubule-binding domain Dynein interacts with microtubules through an ATP-sensitive linkage mapped to a structurally complex region of the heavy chain following the fourth P-loop motif. Virtually nothing is known regarding how binding affinity is achieved and modulated during ATP hydrolysis. We have performed a detailed dissection of the microtubule contact site, using fragment expression, alanine substitution, and peptide competition. Our work identifies three clusters of amino acids important for the physical contact with microtubules; two of these fall within a region sharing sequence homology with MAP1B, the third in a region just downstream. Amino acid substitutions within any one of these regions can eliminate or weaken microtubule binding (KK",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.603864+00:00"
+}

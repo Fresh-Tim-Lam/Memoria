@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13878643",
+  "source_fingerprint": "2d1914fae2bbb299c81ff0b146c1f6be",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13878643",
+    "the-sterol-regulatory-element-binding-proteins-are-essential-for-the-metabolic-programming-of-effector-t-cells-and-adaptive-immunity"
+  ],
+  "key_phrases": [
+    "sterol",
+    "regulatory",
+    "element",
+    "binding",
+    "proteins",
+    "essential",
+    "metabolic",
+    "programming"
+  ],
+  "summary_1l": "Newly activated CD8(+) T cells reprogram their metabolism to meet t",
+  "query_hits": [],
+  "embed_text": "13878643 The sterol regulatory element binding proteins are essential for the metabolic programming of effector T cells and adaptive immunity science scifact Newly activated CD8(+) T cells reprogram their metabolism to meet the extraordinary biosynthetic demands of clonal expansion; however, the signals that mediate metabolic reprogramming remain poorly defined. Here we demonstrate an essential… 13878643 the-sterol-regulatory-element-binding-proteins-are-essential-for-the-metabolic-programming-of-effector-t-cells-and-adaptive-immunity sterol regulatory element binding proteins essential metabolic programming Newly activated CD8(+) T cells reprogram their metabolism to meet t The sterol regulatory element binding proteins are essential for the metabolic programming of effector T cells and adaptive immunity Newly activated CD8(+) T cells reprogram their metabolism to meet the extraordinary biosynthetic demands of clonal expansion; however, the signals that mediate metabolic reprogramming remain poorly defined. Here we demonstrate an essential role for sterol regulatory element-binding proteins (SREBPs) in the acquisition of effector-cell metabolism. Without SREBP signaling, CD8(+) T cells were unable to blast, which resulted in attenuated clonal expansion during viral infection. Mechanistic studies indicated that SREBPs were essential for meeting the heightened lipid requirements of membrane synthesis during blastogenesis. SREBPs were dispensable for homeostatic",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.285059+00:00"
+}

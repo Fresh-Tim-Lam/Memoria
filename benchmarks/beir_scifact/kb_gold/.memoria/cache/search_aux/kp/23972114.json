@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23972114",
+  "source_fingerprint": "b7c0cb499010d7d28de5cef1980fd6ad",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23972114",
+    "phosphorylation-of-the-autophagy-receptor-optineurin-restricts-salmonella-growth."
+  ],
+  "key_phrases": [
+    "phosphorylation",
+    "autophagy",
+    "receptor",
+    "optineurin",
+    "restricts",
+    "salmonella",
+    "growth",
+    "selective"
+  ],
+  "summary_1l": "Phosphorylation of the autophagy receptor optineurin restricts Salmonella growth.",
+  "query_hits": [],
+  "embed_text": "23972114 Phosphorylation of the autophagy receptor optineurin restricts Salmonella growth. science scifact Selective autophagy can be mediated via receptor molecules that link specific cargoes to the autophagosomal membranes decorated by ubiquitin-like microtubule-associated protein light chain 3 (LC3) modifiers. Although several autophagy… 23972114 phosphorylation-of-the-autophagy-receptor-optineurin-restricts-salmonella-growth. phosphorylation autophagy receptor optineurin restricts salmonella growth selective Phosphorylation of the autophagy receptor optineurin restricts Salmonella growth. Phosphorylation of the autophagy receptor optineurin restricts Salmonella growth. Selective autophagy can be mediated via receptor molecules that link specific cargoes to the autophagosomal membranes decorated by ubiquitin-like microtubule-associated protein light chain 3 (LC3) modifiers. Although several autophagy receptors have been identified, little is known about mechanisms controlling their functions in vivo. In this work, we found that phosphorylation of an autophagy receptor, optineurin, promoted selective autophagy of ubiquitin-coated cytosolic Salmonella enterica. The protein kinase TANK binding kinase 1 (TBK1) phosphorylated optineurin on serine-177, enhancing LC3 binding affinity and autophagic clearance of cytosolic Salmonella. Conversely, ubiquitin- or LC3-binding optineurin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.557488+00:00"
+}

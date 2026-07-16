@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11420613",
+  "source_fingerprint": "0df654f877af9838106858e31f8c2830",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11420613",
+    "molecular-mechanisms-of-ribosomal-protein-gene-coregulation."
+  ],
+  "key_phrases": [
+    "molecular",
+    "mechanisms",
+    "ribosomal",
+    "protein",
+    "gene",
+    "coregulation",
+    "137",
+    "genes"
+  ],
+  "summary_1l": "Molecular mechanisms of ribosomal protein gene coregulation.",
+  "query_hits": [],
+  "embed_text": "11420613 Molecular mechanisms of ribosomal protein gene coregulation. science scifact The 137 ribosomal protein genes (RPGs) of Saccharomyces provide a model for gene coregulation. We examined the positional and functional organization of their regulators (Rap1 [repressor activator protein 1], Fhl1, Ifh1, Sfp1, and Hmo1),… 11420613 molecular-mechanisms-of-ribosomal-protein-gene-coregulation. molecular mechanisms ribosomal protein gene coregulation 137 genes Molecular mechanisms of ribosomal protein gene coregulation. Molecular mechanisms of ribosomal protein gene coregulation. The 137 ribosomal protein genes (RPGs) of Saccharomyces provide a model for gene coregulation. We examined the positional and functional organization of their regulators (Rap1 [repressor activator protein 1], Fhl1, Ifh1, Sfp1, and Hmo1), the transcription machinery (TFIIB, TFIID, and RNA polymerase II), and chromatin at near-base-pair resolution using ChIP-exo, as RPGs are coordinately reprogrammed. Where Hmo1 is enriched, Fhl1, Ifh1, Sfp1, and Hmo1 cross-linked broadly to promoter DNA in an RPG-specific manner and demarcated by general minor groove widening. Importantly, Hmo1 extended 20-50 base pairs (bp) downstream from Fhl1. Upon RPG repression, Fhl1 remained in place. Hmo1 dissociated, which was coupled to an upstream shift",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:06.507668+00:00"
+}

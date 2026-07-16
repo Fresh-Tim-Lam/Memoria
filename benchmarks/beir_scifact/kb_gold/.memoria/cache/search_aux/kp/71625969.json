@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "71625969",
+  "source_fingerprint": "1b49f78bed11d1ebe5b49f35da7a4ef7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "71625969",
+    "alcohol,-wine,-and-health"
+  ],
+  "key_phrases": [
+    "alcohol",
+    "wine",
+    "health",
+    "abstract",
+    "background",
+    "past",
+    "20",
+    "years"
+  ],
+  "summary_1l": "Abstract Background: For the past 20 years numerous epidemiological studies have correlated the consumption of alcohol and a variety of disease states: overall mortality, art",
+  "query_hits": [],
+  "embed_text": "71625969 Alcohol, wine, and health science scifact Abstract Background: For the past 20 years numerous epidemiological studies have correlated the consumption of alcohol and a variety of disease states: overall mortality, arteriosclerotic vascular diseases, hypertension, cancers, peptic… 71625969 alcohol,-wine,-and-health alcohol wine health abstract background past 20 years Abstract Background: For the past 20 years numerous epidemiological studies have correlated the consumption of alcohol and a variety of disease states: overall mortality, art Alcohol, wine, and health Abstract Background: For the past 20 years numerous epidemiological studies have correlated the consumption of alcohol and a variety of disease states: overall mortality, arteriosclerotic vascular diseases, hypertension, cancers, peptic ulcer, respiratory infections, gall stones, kidney stones, age-related macular degeneration, bone density, and cognitive function. Methods: A review of these articles reveals that each of these studies has compared the outcome of individuals at various levels of alcohol consumption with that of abstainers. Results: Each analysis has identified a U-shaped or J-shaped curve of reduced relative risk for a given disease state compared with abstainers. A clear definition of consumption in moderation becomes evident: for men it should no",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.657533+00:00"
+}

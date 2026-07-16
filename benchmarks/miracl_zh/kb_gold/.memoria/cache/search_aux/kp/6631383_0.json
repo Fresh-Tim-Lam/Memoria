@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "kp_id": "6631383#0",
+  "source_fingerprint": "a0d108ad196cc70becf6f72c7f0081fe",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "美国国家公园列表",
+    "美国",
+    "美国宪法历史",
+    "中国国家女子足球队",
+    "旧金山",
+    "国家公务员考试",
+    "中国历史",
+    "美国流行音乐",
+    "西班牙语国家和地区列表",
+    "圣经博物馆",
+    "江苏历史",
+    "美国人口"
+  ],
+  "aliases": [
+    "6631383#0"
+  ],
+  "key_phrases": [
+    "旧金山",
+    "国立",
+    "海事",
+    "历史",
+    "公园",
+    "san",
+    "francisco",
+    "maritime"
+  ],
+  "summary_1l": "旧金山国立海事历史公园（San Francisco Maritime National Historical Park）位于美国加州旧金山，包括一批历史船只、游客中心、海事博物馆和图书馆/研究设施。",
+  "query_hits": [],
+  "embed_text": "6631383#0 旧金山国立海事历史公园 旧金山国立海事历史公园 旧金山国立海事历史公园（San Francisco Maritime National Historical Park）位于美国加州旧金山，包括一批历史船只、游客中心、海事博物馆和图书馆/研究设施。公园原名\"旧金山海事博物馆\"，1978年藏品被国家公园管理局收购时改名。今天的旧金山国立海事历史公园于1988年获得批准，海事博物馆是公园众多的文化资源之一。公园还包括水上公园历史区（Aquatic Park Historic District），以范尼斯大道、波尔克街和海德街为界 美国国家公园列表 美国 美国宪法历史 中国国家女子足球队 旧金山 国家公务员考试 中国历史 美国流行音乐 西班牙语国家和地区列表 圣经博物馆 江苏历史 美国人口 6631383#0 旧金山 国立 海事 历史 公园 san francisco maritime 旧金山国立海事历史公园（San Francisco Maritime National Historical Park）位于美国加州旧金山，包括一批历史船只、游客中心、海事博物馆和图书馆/研究设施。 旧金山国立海事历史公园 旧金山国立海事历史公园（San Francisco Maritime National Historical Park）位于美国加州旧金山，包括一批历史船只、游客中心、海事博物馆和图书馆/研究设施。公园原名\"旧金山海事博物馆\"，1978年藏品被国家公园管理局收购时改名。今天的旧金山国立海事历史公园于1988年获得批准，海事博物馆是公园众多的文化资源之一。公园还包括水上公园历史区（Aquatic Park Historic District），以范尼斯大道、波尔克街和海德街为界。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:23:01.056149+00:00"
+}

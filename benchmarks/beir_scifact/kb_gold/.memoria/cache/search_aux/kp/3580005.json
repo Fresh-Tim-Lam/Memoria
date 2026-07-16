@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3580005",
+  "source_fingerprint": "6533bfc6e4846defef8f68e7e4b7f2b3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3580005",
+    "who-is-where-at-risk-for-chronic-obstructive-pulmonary-disease?-a-spatial-epidemiological-analysis-of-health-insurance-claims-for-copd-in-northeastern-germany"
+  ],
+  "key_phrases": [
+    "who",
+    "where",
+    "at",
+    "risk",
+    "chronic",
+    "obstructive",
+    "pulmonary",
+    "disease"
+  ],
+  "summary_1l": "Who is where at risk for Chronic Obstructive Pulmonary Disease?",
+  "query_hits": [],
+  "embed_text": "3580005 Who is where at risk for Chronic Obstructive Pulmonary Disease? A spatial epidemiological analysis of health insurance claims for COPD in Northeastern Germany science scifact BACKGROUND Chronic obstructive pulmonary disease (COPD) has a high prevalence rate in Germany and a further increase is expected within the next years. Although risk factors on an individual level are widely understood, only little is… 3580005 who-is-where-at-risk-for-chronic-obstructive-pulmonary-disease?-a-spatial-epidemiological-analysis-of-health-insurance-claims-for-copd-in-northeastern-germany who where at risk chronic obstructive pulmonary disease Who is where at risk for Chronic Obstructive Pulmonary Disease? Who is where at risk for Chronic Obstructive Pulmonary Disease? A spatial epidemiological analysis of health insurance claims for COPD in Northeastern Germany BACKGROUND Chronic obstructive pulmonary disease (COPD) has a high prevalence rate in Germany and a further increase is expected within the next years. Although risk factors on an individual level are widely understood, only little is known about the spatial heterogeneity and population-based risk factors of COPD. Background knowledge about broader, population-based processes could help to plan the future provision of healthcare and prevention strategies more aligned to the expected demand. The aim of this study is to analyze how the prevalence of COPD varies across northeastern Germany on the smallest spatial-scale possible and to i",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.660115+00:00"
+}

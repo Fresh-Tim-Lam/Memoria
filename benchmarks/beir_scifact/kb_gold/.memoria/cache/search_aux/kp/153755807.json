@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "153755807",
+  "source_fingerprint": "f7a6b127e55755f37b2ad2a9cd98595c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "153755807",
+    "the-changing-problem-of-overcrowded-housing"
+  ],
+  "key_phrases": [
+    "changing",
+    "problem",
+    "overcrowded",
+    "housing",
+    "abstract",
+    "overcrowding",
+    "has",
+    "increased"
+  ],
+  "summary_1l": "Abstract Overcrowding has increased in the U.",
+  "query_hits": [],
+  "embed_text": "153755807 The Changing Problem of Overcrowded Housing science scifact Abstract Overcrowding has increased in the U.S. after decades of decline—dramatically so in some locales and for some ethnic groups. The nature of the problem and its very definition for policy purposes are also changing. We examine the… 153755807 the-changing-problem-of-overcrowded-housing changing problem overcrowded housing abstract overcrowding has increased Abstract Overcrowding has increased in the U. The Changing Problem of Overcrowded Housing Abstract Overcrowding has increased in the U.S. after decades of decline—dramatically so in some locales and for some ethnic groups. The nature of the problem and its very definition for policy purposes are also changing. We examine the special characteristics of the overcrowded, where they are located, why the incidence of crowding has resurged, and why it is confined to specific locales. Ethnicity, age, immigration, and poverty play important roles, but housing market conditions appear much less important. We also show that the planning standard used to judge overcrowding is a relative one that has varied over time, and that the social norms vary among ethnic groups. The issue of overcrowding may exemplify the current perplexities about imposin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.421660+00:00"
+}

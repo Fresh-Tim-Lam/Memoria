@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9095394",
+  "source_fingerprint": "a5dca4789c0961dad8f0b4e1b3165ce6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9095394",
+    "expression-of-basal-cell-keratin-15-and-keratin-19-in-oral-squamous-neoplasms-represents-diverse-pathophysiologies."
+  ],
+  "key_phrases": [
+    "expression",
+    "basal",
+    "cell",
+    "keratin",
+    "15",
+    "19",
+    "oral",
+    "squamous"
+  ],
+  "summary_1l": "Expression of basal cell keratin 15 and keratin 19 in oral squamous neoplasms represents diverse pathophysiologies.",
+  "query_hits": [],
+  "embed_text": "9095394 Expression of basal cell keratin 15 and keratin 19 in oral squamous neoplasms represents diverse pathophysiologies. science scifact Human epithelium contains keratin, which is expressed during differentiation. Depending on the target cell type, different types of keratin are expressed, and their alterations seem to represent changes in cell properties. The basal cells… 9095394 expression-of-basal-cell-keratin-15-and-keratin-19-in-oral-squamous-neoplasms-represents-diverse-pathophysiologies. expression basal cell keratin 15 19 oral squamous Expression of basal cell keratin 15 and keratin 19 in oral squamous neoplasms represents diverse pathophysiologies. Expression of basal cell keratin 15 and keratin 19 in oral squamous neoplasms represents diverse pathophysiologies. Human epithelium contains keratin, which is expressed during differentiation. Depending on the target cell type, different types of keratin are expressed, and their alterations seem to represent changes in cell properties. The basal cells of oral epithelium express keratin 5 (K5), K14, K15 and K19, but their alterations in tumors are unclear. To address this issue and to seek possible diagnostic application, we examined the expression of these keratins in oral squamous cell carcinoma (OSCC) and squamous intraepithelial neoplasm (SIN). cDNA microarray analysis of 43 OSCC revealed slight upregulation of KRT14, downregulation of KRT15 and KRT19, and unaltered KRT5 expression. Th",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.166679+00:00"
+}

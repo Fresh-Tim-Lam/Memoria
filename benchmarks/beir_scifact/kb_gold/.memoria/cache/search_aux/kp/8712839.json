@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8712839",
+  "source_fingerprint": "ba8ad2a0511d2bc020a7df3a96fc3685",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8712839",
+    "the-transcriptional-landscape-of-the-mammalian-genome."
+  ],
+  "key_phrases": [
+    "transcriptional",
+    "landscape",
+    "mammalian",
+    "genome",
+    "this",
+    "study",
+    "describes",
+    "comprehensive"
+  ],
+  "summary_1l": "The transcriptional landscape of the mammalian genome.",
+  "query_hits": [],
+  "embed_text": "8712839 The transcriptional landscape of the mammalian genome. science scifact This study describes comprehensive polling of transcription start and termination sites and analysis of previously unidentified full-length complementary DNAs derived from the mouse genome. We identify the 5' and 3' boundaries of 181,047… 8712839 the-transcriptional-landscape-of-the-mammalian-genome. transcriptional landscape mammalian genome this study describes comprehensive The transcriptional landscape of the mammalian genome. The transcriptional landscape of the mammalian genome. This study describes comprehensive polling of transcription start and termination sites and analysis of previously unidentified full-length complementary DNAs derived from the mouse genome. We identify the 5' and 3' boundaries of 181,047 transcripts with extensive variation in transcripts arising from alternative promoter usage, splicing, and polyadenylation. There are 16,247 new mouse protein-coding transcripts, including 5154 encoding previously unidentified proteins. Genomic mapping of the transcriptome reveals transcriptional forests, with overlapping transcription on both strands, separated by deserts in which few transcripts are observed. The data provide a comprehensive platform for the comparative analysis of mammalian transcri",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.548622+00:00"
+}

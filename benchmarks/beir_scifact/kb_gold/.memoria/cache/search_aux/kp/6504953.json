@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6504953",
+  "source_fingerprint": "68ca415a62b62996eff0d3674516dee7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6504953",
+    "radiation-related-cancer-risks-at-low-doses-among-atomic-bomb-survivors"
+  ],
+  "key_phrases": [
+    "radiation",
+    "related",
+    "cancer",
+    "risks",
+    "at",
+    "low",
+    "doses",
+    "among"
+  ],
+  "summary_1l": "Abstract Pierce, D.",
+  "query_hits": [],
+  "embed_text": "6504953 Radiation-Related Cancer Risks at Low Doses among Atomic Bomb Survivors science scifact Abstract Pierce, D. A. and Preston, D. L. Radiation-Related Cancer Risks at Low Doses among Atomic Bomb Survivors. To clarify the information in the Radiation Effects Research Foundation data regarding cancer risks of low radiation doses,… 6504953 radiation-related-cancer-risks-at-low-doses-among-atomic-bomb-survivors radiation related cancer risks at low doses among Abstract Pierce, D. Radiation-Related Cancer Risks at Low Doses among Atomic Bomb Survivors Abstract Pierce, D. A. and Preston, D. L. Radiation-Related Cancer Risks at Low Doses among Atomic Bomb Survivors. To clarify the information in the Radiation Effects Research Foundation data regarding cancer risks of low radiation doses, we focus on survivors with doses less than 0.5 Sv. For reasons indicated, we also restrict attention mainly to survivors within 3,000 m of the hypocenter of the bombs. Analysis is of solid cancer incidence from 1958–1994, involving 7,000 cancer cases among 50,000 survivors in that dose and distance range. The results provide useful risk estimates for doses as low as 0.05–0.1 Sv, which are not overestimated by linear risk estimates computed from the wider dose ranges 0–2 Sv or 0–4 Sv.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.073955+00:00"
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "4456756",
+  "source_fingerprint": "0feb37770e9d4db117213807ae98bb2e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4456756"
+  ],
+  "key_phrases": [
+    "autocrine",
+    "bdnf",
+    "trkb",
+    "signalling",
+    "within",
+    "single",
+    "dendritic",
+    "spine"
+  ],
+  "summary_1l": "Brain-derived neurotrophic factor (BDNF) and its receptor TrkB are crucial for many forms of neuronal plasticity, including structural lo",
+  "query_hits": [],
+  "embed_text": "4456756 Autocrine BDNF–TrkB signalling within a single dendritic spine science scifact Brain-derived neurotrophic factor (BDNF) and its receptor TrkB are crucial for many forms of neuronal plasticity, including structural long-term potentiation (sLTP), which is a correlate of an animal’s learning. However, it is unknown… 4456756 autocrine bdnf trkb signalling within single dendritic spine Brain-derived neurotrophic factor (BDNF) and its receptor TrkB are crucial for many forms of neuronal plasticity, including structural lo Autocrine BDNF–TrkB signalling within a single dendritic spine Brain-derived neurotrophic factor (BDNF) and its receptor TrkB are crucial for many forms of neuronal plasticity, including structural long-term potentiation (sLTP), which is a correlate of an animal’s learning. However, it is unknown whether BDNF release and TrkB activation occur during sLTP, and if so, when and where. Here, using a fluorescence resonance energy transfer-based sensor for TrkB and two-photon fluorescence lifetime imaging microscopy, we monitor TrkB activity in single dendritic spines of CA1 pyramidal neurons in cultured murine hippocampal slices. In response to sLTP induction, we find fast (onset < 1 min) and sustained (>20 min) activation of TrkB in the stimulated spine that depends on NMDAR (N-methyl-d-aspart",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.514750+00:00"
+}

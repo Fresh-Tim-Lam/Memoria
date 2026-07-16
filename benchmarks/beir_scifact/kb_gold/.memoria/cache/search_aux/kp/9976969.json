@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9976969",
+  "source_fingerprint": "20a3949ce54cb0557eed0f8f0ff6a2b6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9976969",
+    "an-analysis-of-age-and-gender-influences-on-the-relative-risk-for-suicide-and-psychotropic-drug-self-poisoning."
+  ],
+  "key_phrases": [
+    "analysis",
+    "age",
+    "gender",
+    "influences",
+    "relative",
+    "risk",
+    "suicide",
+    "psychotropic"
+  ],
+  "summary_1l": "An analysis of age and gender influences on the relative risk for suicide and psychotropic drug self-poisoning.",
+  "query_hits": [],
+  "embed_text": "9976969 An analysis of age and gender influences on the relative risk for suicide and psychotropic drug self-poisoning. science scifact Psychiatric illness is a significant risk factor for both attempted and completed suicide and psychotropic medications account for 80% of all drug overdoses involving prescription medications. One challenge facing clinicians is to balance… 9976969 an-analysis-of-age-and-gender-influences-on-the-relative-risk-for-suicide-and-psychotropic-drug-self-poisoning. analysis age gender influences relative risk suicide psychotropic An analysis of age and gender influences on the relative risk for suicide and psychotropic drug self-poisoning. An analysis of age and gender influences on the relative risk for suicide and psychotropic drug self-poisoning. Psychiatric illness is a significant risk factor for both attempted and completed suicide and psychotropic medications account for 80% of all drug overdoses involving prescription medications. One challenge facing clinicians is to balance the benefit of treatment against the risk of drug overdose. The aim of the present study was to compare the age and gender distribution of patients prescribed psychotropic drugs with patients attempting and completing suicide with these drugs. Data were obtained from the Australian census and studies of general practitioner prescribing, patients who committed suicide or presented with self-poisoning within a defined geographic area. The characte",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:06.219461+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "153744",
+  "source_fingerprint": "701c6fdeb84514b7900726252c2e8ef8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "153744",
+    "down-regulation-of-a-host-microrna-by-a-herpesvirus-saimiri-noncoding-rna."
+  ],
+  "key_phrases": [
+    "down",
+    "regulation",
+    "host",
+    "microrna",
+    "by",
+    "herpesvirus",
+    "saimiri",
+    "noncoding"
+  ],
+  "summary_1l": "Down-regulation of a host microRNA by a Herpesvirus saimiri noncoding RNA.",
+  "query_hits": [],
+  "embed_text": "153744 Down-regulation of a host microRNA by a Herpesvirus saimiri noncoding RNA. science scifact T cells transformed by Herpesvirus saimiri express seven viral U-rich noncoding RNAs of unknown function called HSURs. We noted that conserved sequences in HSURs 1 and 2 constitute potential binding sites for three host-cell microRNAs… 153744 down-regulation-of-a-host-microrna-by-a-herpesvirus-saimiri-noncoding-rna. down regulation host microrna by herpesvirus saimiri noncoding Down-regulation of a host microRNA by a Herpesvirus saimiri noncoding RNA. Down-regulation of a host microRNA by a Herpesvirus saimiri noncoding RNA. T cells transformed by Herpesvirus saimiri express seven viral U-rich noncoding RNAs of unknown function called HSURs. We noted that conserved sequences in HSURs 1 and 2 constitute potential binding sites for three host-cell microRNAs (miRNAs). Coimmunoprecipitation experiments confirmed that HSURs 1 and 2 interact with the predicted miRNAs in virally transformed T cells. The abundance of one of these miRNAs, miR-27, is dramatically lowered in transformed cells, with consequent effects on the expression of miR-27 target genes. Transient knockdown and ectopic expression of HSUR 1 demonstrate that it directs degradation of mature miR-27 in a sequence-specific and binding-dependent manner. This viral strategy illustrat",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.411636+00:00"
+}

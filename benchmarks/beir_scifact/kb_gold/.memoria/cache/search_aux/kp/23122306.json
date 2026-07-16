@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23122306",
+  "source_fingerprint": "025228e97f12914c686bef89b4200678",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23122306",
+    "lung-carcinogenesis-by-diesel-exhaust-particles-and-the-carcinogenic-mechanism-via-active-oxygens."
+  ],
+  "key_phrases": [
+    "lung",
+    "carcinogenesis",
+    "by",
+    "diesel",
+    "exhaust",
+    "particles",
+    "carcinogenic",
+    "mechanism"
+  ],
+  "summary_1l": "Lung Carcinogenesis by Diesel Exhaust Particles and the Carcinogenic Mechanism Via Active Oxygens.",
+  "query_hits": [],
+  "embed_text": "23122306 Lung Carcinogenesis by Diesel Exhaust Particles and the Carcinogenic Mechanism Via Active Oxygens. science scifact In an experiment to clarify the involvement of oxygen radicals in lung carcinogenesis induced by diesel exhaust particles (DEP), we found that there is a strong relation between lung tumor response and formation of 8-hydroxydeoxyguanosine… 23122306 lung-carcinogenesis-by-diesel-exhaust-particles-and-the-carcinogenic-mechanism-via-active-oxygens. lung carcinogenesis by diesel exhaust particles carcinogenic mechanism Lung Carcinogenesis by Diesel Exhaust Particles and the Carcinogenic Mechanism Via Active Oxygens. Lung Carcinogenesis by Diesel Exhaust Particles and the Carcinogenic Mechanism Via Active Oxygens. In an experiment to clarify the involvement of oxygen radicals in lung carcinogenesis induced by diesel exhaust particles (DEP), we found that there is a strong relation between lung tumor response and formation of 8-hydroxydeoxyguanosine (8-OHdG) in lung DNA of mice administered DEP by repeated intratracheal instillation. Repeated intratracheal instillation of DEP also induced the activity of cytochrome P-450 reductase in the lungs as a representative enzyme of superoxide generation, and two types of nitric oxide (NO) synthase, cNOS and iNOS, in the lungs. On the other hand, activities of CuZn-superoxide dismutase (SOD) and Mn-SOD antioxidant enzymes were depressed by the instillation of DEP",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.879373+00:00"
+}

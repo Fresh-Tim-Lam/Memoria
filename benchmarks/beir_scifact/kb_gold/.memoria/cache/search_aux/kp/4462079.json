@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4462079",
+  "source_fingerprint": "0f62e345af2380d4408af603cd9d3797",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4462079",
+    "estimation-of-optimal-serum-concentrations-of-25-hydroxyvitamin-d-for-multiple-health-outcomes."
+  ],
+  "key_phrases": [
+    "estimation",
+    "optimal",
+    "serum",
+    "concentrations",
+    "25",
+    "hydroxyvitamin",
+    "multiple",
+    "health"
+  ],
+  "summary_1l": "Estimation of optimal serum concentrations of 25-hydroxyvitamin D for multiple health outcomes.",
+  "query_hits": [],
+  "embed_text": "4462079 Estimation of optimal serum concentrations of 25-hydroxyvitamin D for multiple health outcomes. science scifact Recent evidence suggests that vitamin D intakes above current recommendations may be associated with better health outcomes. However, optimal serum concentrations of 25-hydroxyvitamin D [25(OH)D] have not been defined. This review… 4462079 estimation-of-optimal-serum-concentrations-of-25-hydroxyvitamin-d-for-multiple-health-outcomes. estimation optimal serum concentrations 25 hydroxyvitamin multiple health Estimation of optimal serum concentrations of 25-hydroxyvitamin D for multiple health outcomes. Estimation of optimal serum concentrations of 25-hydroxyvitamin D for multiple health outcomes. Recent evidence suggests that vitamin D intakes above current recommendations may be associated with better health outcomes. However, optimal serum concentrations of 25-hydroxyvitamin D [25(OH)D] have not been defined. This review summarizes evidence from studies that evaluated thresholds for serum 25(OH)D concentrations in relation to bone mineral density (BMD), lower-extremity function, dental health, and risk of falls, fractures, and colorectal cancer. For all endpoints, the most advantageous serum concentrations of 25(OH)D begin at 75 nmol/L (30 ng/mL), and the best are between 90 and 100 nmol/L (36-40 ng/mL). In most persons, these concentrations could not be reached with the currently reco",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.619440+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "46765242",
+  "source_fingerprint": "72502f3e7dd67bf457516e8c2e59095a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "46765242",
+    "interaction-of-cytosine-arabinoside-and-lovastatin-in-human-leukemia-cells."
+  ],
+  "key_phrases": [
+    "interaction",
+    "cytosine",
+    "arabinoside",
+    "lovastatin",
+    "human",
+    "leukemia",
+    "cells",
+    "ara"
+  ],
+  "summary_1l": "Interaction of cytosine arabinoside and lovastatin in human leukemia cells.",
+  "query_hits": [],
+  "embed_text": "46765242 Interaction of cytosine arabinoside and lovastatin in human leukemia cells. science scifact Cytosine arabinoside (ara-C) is widely used for the treatment of leukemias and displays significant toxicities. Lovastatin, an HMG-CoA reductase inhibitor, is extensively used to treat hypercholesterolemia. To determine whether lovastatin… 46765242 interaction-of-cytosine-arabinoside-and-lovastatin-in-human-leukemia-cells. interaction cytosine arabinoside lovastatin human leukemia cells ara Interaction of cytosine arabinoside and lovastatin in human leukemia cells. Interaction of cytosine arabinoside and lovastatin in human leukemia cells. Cytosine arabinoside (ara-C) is widely used for the treatment of leukemias and displays significant toxicities. Lovastatin, an HMG-CoA reductase inhibitor, is extensively used to treat hypercholesterolemia. To determine whether lovastatin could augment ara-C's activity we have examined their effects in the human erythroleukemia K562 cell line and the ara-C resistant ARAC8D cell line. A synergistic interaction between the two drugs was found. We have demonstrated that the interaction does not occur at the level of RAS but may involve lovastatin's effect of downregulating MAPK activity and preventing ara-C-induced MAPK activation. These studies represent the first description of a potentially beneficial interaction b",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.093235+00:00"
+}

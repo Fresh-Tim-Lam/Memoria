@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6826636",
+  "source_fingerprint": "1b402a2ef6f36a01999426e4d03bf645",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6826636",
+    "giardiadb-and-trichdb:-integrated-genomic-resources-for-the-eukaryotic-protist-pathogens-giardia-lamblia-and-trichomonas-vaginalis"
+  ],
+  "key_phrases": [
+    "giardiadb",
+    "trichdb",
+    "integrated",
+    "genomic",
+    "resources",
+    "eukaryotic",
+    "protist",
+    "pathogens"
+  ],
+  "summary_1l": "GiardiaDB (http://GiardiaDB.",
+  "query_hits": [],
+  "embed_text": "6826636 GiardiaDB and TrichDB: integrated genomic resources for the eukaryotic protist pathogens Giardia lamblia and Trichomonas vaginalis science scifact GiardiaDB (http://GiardiaDB.org) and TrichDB (http://TrichDB.org) house the genome databases for Giardia lamblia and Trichomonas vaginalis, respectively, and represent the latest additions to the EuPathDB (http://EuPathDB.org) family of… 6826636 giardiadb-and-trichdb:-integrated-genomic-resources-for-the-eukaryotic-protist-pathogens-giardia-lamblia-and-trichomonas-vaginalis giardiadb trichdb integrated genomic resources eukaryotic protist pathogens GiardiaDB (http://GiardiaDB. GiardiaDB and TrichDB: integrated genomic resources for the eukaryotic protist pathogens Giardia lamblia and Trichomonas vaginalis GiardiaDB (http://GiardiaDB.org) and TrichDB (http://TrichDB.org) house the genome databases for Giardia lamblia and Trichomonas vaginalis, respectively, and represent the latest additions to the EuPathDB (http://EuPathDB.org) family of functional genomic databases. GiardiaDB and TrichDB employ the same framework as other EuPathDB sites (CryptoDB, PlasmoDB and ToxoDB), supporting fully integrated and searchable databases. Genomic-scale data available via these resources may be queried based on BLAST searches, annotation keywords and gene ID searches, GO terms, sequence motifs and other protein characteristics. Functional queries may also be formulated, based on",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.793560+00:00"
+}

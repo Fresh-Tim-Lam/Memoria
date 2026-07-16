@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7643848",
+  "source_fingerprint": "8419cb4496cfc6f2b09cc560d85e5e9e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7643848",
+    "membrane-topology-of-the-60-kda-oxa1p-homologue-from-escherichia-coli."
+  ],
+  "key_phrases": [
+    "membrane",
+    "topology",
+    "60",
+    "kda",
+    "oxa1p",
+    "homologue",
+    "from",
+    "escherichia"
+  ],
+  "summary_1l": "Membrane topology of the 60-kDa Oxa1p homologue from Escherichia coli.",
+  "query_hits": [],
+  "embed_text": "7643848 Membrane topology of the 60-kDa Oxa1p homologue from Escherichia coli. science scifact We have characterized the membrane topology of a 60-kDa inner membrane protein from Escherichia coli that is homologous to the recently identified Oxa1p protein in Saccharomyces cerevisiae mitochondria implicated in the assembly of… 7643848 membrane-topology-of-the-60-kda-oxa1p-homologue-from-escherichia-coli. membrane topology 60 kda oxa1p homologue from escherichia Membrane topology of the 60-kDa Oxa1p homologue from Escherichia coli. Membrane topology of the 60-kDa Oxa1p homologue from Escherichia coli. We have characterized the membrane topology of a 60-kDa inner membrane protein from Escherichia coli that is homologous to the recently identified Oxa1p protein in Saccharomyces cerevisiae mitochondria implicated in the assembly of mitochondrial inner membrane proteins. Hydrophobicity and alkaline phosphatase fusion analyses suggest a membrane topology with six transmembrane segments, including an N-terminal signal-anchor sequence not present in mitochondrial Oxa1p. In contrast to partial N-terminal fusion protein constructs, the full-length protein folds into a protease-resistant conformation, suggesting that important folding determinants are present in the C-terminal part of the molecule.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.886686+00:00"
+}

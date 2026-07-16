@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23305547",
+  "source_fingerprint": "df468ea873645ee780e85e7638d196d6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23305547",
+    "prion-like-activity-of-cu/zn-superoxide-dismutase:-implications-for-amyotrophic-lateral-sclerosis."
+  ],
+  "key_phrases": [
+    "prion",
+    "like",
+    "activity",
+    "cu",
+    "zn",
+    "superoxide",
+    "dismutase",
+    "implications"
+  ],
+  "summary_1l": "Prion-like activity of Cu/Zn superoxide dismutase: implications for amyotrophic lateral sclerosis.",
+  "query_hits": [],
+  "embed_text": "23305547 Prion-like activity of Cu/Zn superoxide dismutase: implications for amyotrophic lateral sclerosis. science scifact Neurodegenerative diseases belong to a larger group of protein misfolding disorders, known as proteinopathies. There is increasing experimental evidence implicating prion-like mechanisms in many common neurodegenerative disorders,… 23305547 prion-like-activity-of-cu/zn-superoxide-dismutase:-implications-for-amyotrophic-lateral-sclerosis. prion like activity cu zn superoxide dismutase implications Prion-like activity of Cu/Zn superoxide dismutase: implications for amyotrophic lateral sclerosis. Prion-like activity of Cu/Zn superoxide dismutase: implications for amyotrophic lateral sclerosis. Neurodegenerative diseases belong to a larger group of protein misfolding disorders, known as proteinopathies. There is increasing experimental evidence implicating prion-like mechanisms in many common neurodegenerative disorders, including Alzheimer disease, Parkinson disease, the tauopathies, and amyotrophic lateral sclerosis (ALS), all of which feature the aberrant misfolding and aggregation of specific proteins. The prion paradigm provides a mechanism by which a mutant or wild-type protein can dominate pathogenesis through the initiation of self-propagating protein misfolding. ALS, a lethal disease characterized by progressive degeneration of motor neurons is understood as a classical pro",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.244078+00:00"
+}

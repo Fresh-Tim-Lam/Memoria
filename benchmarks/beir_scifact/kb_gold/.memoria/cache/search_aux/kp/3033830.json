@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3033830",
+  "source_fingerprint": "d1b963b73adec2df8d39c61b5ad327d0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3033830",
+    "identification-and-analysis-of-ribonuclease-p-and-mrp-rna-in-a-broad-range-of-eukaryotes"
+  ],
+  "key_phrases": [
+    "identification",
+    "analysis",
+    "ribonuclease",
+    "mrp",
+    "rna",
+    "broad",
+    "range",
+    "eukaryotes"
+  ],
+  "summary_1l": "RNases P and MRP are ribonucleoprotein complexes involved in tRNA and rRNA processing, respectively.",
+  "query_hits": [],
+  "embed_text": "3033830 Identification and analysis of ribonuclease P and MRP RNA in a broad range of eukaryotes science scifact RNases P and MRP are ribonucleoprotein complexes involved in tRNA and rRNA processing, respectively. The RNA subunits of these two enzymes are structurally related to each other and play an essential role in the enzymatic reaction. Both of… 3033830 identification-and-analysis-of-ribonuclease-p-and-mrp-rna-in-a-broad-range-of-eukaryotes identification analysis ribonuclease mrp rna broad range eukaryotes RNases P and MRP are ribonucleoprotein complexes involved in tRNA and rRNA processing, respectively. Identification and analysis of ribonuclease P and MRP RNA in a broad range of eukaryotes RNases P and MRP are ribonucleoprotein complexes involved in tRNA and rRNA processing, respectively. The RNA subunits of these two enzymes are structurally related to each other and play an essential role in the enzymatic reaction. Both of the RNAs have a highly conserved helical region, P4, which is important in the catalytic reaction. We have used a bioinformatics approach based on conserved elements to computationally analyze available genomic sequences of eukaryotic organisms and have identified a large number of novel nuclear RNase P and MRP RNA genes. For MRP RNA for instance, this investigation increases the number of known sequences by a factor of three. We present secondary structure models of",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.573650+00:00"
+}

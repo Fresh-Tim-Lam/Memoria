@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "44264297",
+  "source_fingerprint": "25fbcae8837a3dcbc427a3579b8d32f2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "44264297",
+    "network-meta-analysis-for-indirect-treatment-comparisons."
+  ],
+  "key_phrases": [
+    "network",
+    "meta",
+    "analysis",
+    "indirect",
+    "treatment",
+    "comparisons",
+    "present",
+    "methods"
+  ],
+  "summary_1l": "Network meta-analysis for indirect treatment comparisons.",
+  "query_hits": [],
+  "embed_text": "44264297 Network meta-analysis for indirect treatment comparisons. science scifact I present methods for assessing the relative effectiveness of two treatments when they have not been compared directly in a randomized trial but have each been compared to other treatments. These network meta-analysis techniques allow… 44264297 network-meta-analysis-for-indirect-treatment-comparisons. network meta analysis indirect treatment comparisons present methods Network meta-analysis for indirect treatment comparisons. Network meta-analysis for indirect treatment comparisons. I present methods for assessing the relative effectiveness of two treatments when they have not been compared directly in a randomized trial but have each been compared to other treatments. These network meta-analysis techniques allow estimation of both heterogeneity in the effect of any given treatment and inconsistency ('incoherence') in the evidence from different pairs of treatments. A simple estimation procedure using linear mixed models is given and used in a meta-analysis of treatments for acute myocardial infarction.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.115396+00:00"
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "735130",
+  "source_fingerprint": "cacf83957723df938ad9cf727121b7db",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "735130"
+  ],
+  "key_phrases": [
+    "myosin",
+    "light",
+    "chain",
+    "activating",
+    "phosphorylation",
+    "sites",
+    "required",
+    "oogenesis"
+  ],
+  "summary_1l": "The Drosophila spaghetti squash ( sqh ) gene encodes the regulatory myosin light chain (RMLC) of nonmuscle",
+  "query_hits": [],
+  "embed_text": "735130 Myosin Light Chain–activating Phosphorylation Sites Are Required for Oogenesis in Drosophila science scifact The Drosophila spaghetti squash ( sqh ) gene encodes the regulatory myosin light chain (RMLC) of nonmuscle myosin II. Biochemical analysis of vertebrate nonmuscle and smooth muscle myosin II has established that phosphorylation of certain… 735130 myosin light chain activating phosphorylation sites required oogenesis The Drosophila spaghetti squash ( sqh ) gene encodes the regulatory myosin light chain (RMLC) of nonmuscle Myosin Light Chain–activating Phosphorylation Sites Are Required for Oogenesis in Drosophila The Drosophila spaghetti squash ( sqh ) gene encodes the regulatory myosin light chain (RMLC) of nonmuscle myosin II. Biochemical analysis of vertebrate nonmuscle and smooth muscle myosin II has established that phosphorylation of certain amino acids of the RMLC greatly increases the actin-dependent myosin ATPase and motor activity of myosin in vitro. We have assessed the in vivo importance of these sites, which in Drosophila correspond to serine-21 and threonine-20, by creating a series of transgenes in which these specific amino acids were altered. The phenotypes of the transgenes were examined in an otherwise null mutant background during oocyte development in Drosophila females. Germ line cysto",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.111001+00:00"
+}

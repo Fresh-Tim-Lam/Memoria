@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12039953",
+  "source_fingerprint": "be96d2a12f1fdad541898f40ea9231c3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12039953",
+    "serotonin-and-fluoxetine-levels-in-plasma-and-platelets-after-fluoxetine-treatment-in-depressive-patients."
+  ],
+  "key_phrases": [
+    "serotonin",
+    "fluoxetine",
+    "levels",
+    "plasma",
+    "platelets",
+    "after",
+    "treatment",
+    "depressive"
+  ],
+  "summary_1l": "Serotonin and fluoxetine levels in plasma and platelets after fluoxetine treatment in depressive patients.",
+  "query_hits": [],
+  "embed_text": "12039953 Serotonin and fluoxetine levels in plasma and platelets after fluoxetine treatment in depressive patients. science scifact Depression is a mood disorder characterized by complex alterations of neurotransmitters such as serotonin, norepinephrine, and dopamine. In particular, there is substantial evidence of abnormalities in serotonin neurotransmission.… 12039953 serotonin-and-fluoxetine-levels-in-plasma-and-platelets-after-fluoxetine-treatment-in-depressive-patients. serotonin fluoxetine levels plasma platelets after treatment depressive Serotonin and fluoxetine levels in plasma and platelets after fluoxetine treatment in depressive patients. Serotonin and fluoxetine levels in plasma and platelets after fluoxetine treatment in depressive patients. Depression is a mood disorder characterized by complex alterations of neurotransmitters such as serotonin, norepinephrine, and dopamine. In particular, there is substantial evidence of abnormalities in serotonin neurotransmission. Peripheral parameters of serotoninergic transmission, such as the 5-hydroxytryptamine content of plasma and platelets, have been used to identify biochemical alterations related to depression. In recent years, these parameters have also been used to examine the mechanism of action of antidepressive drugs such as the selective serotonin reuptake inhibitors. This study investigated the interaction between the plasma and platelet levels of fluoxetine and seroto",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:07.669442+00:00"
+}

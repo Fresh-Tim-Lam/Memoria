@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14464451",
+  "source_fingerprint": "2acb6e7fd42dde1b25c862826189e7fd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14464451",
+    "effects-of-gc-bias-in-next-generation-sequencing-data-on-de-novo-genome-assembly"
+  ],
+  "key_phrases": [
+    "effects",
+    "gc",
+    "bias",
+    "next",
+    "generation",
+    "sequencing",
+    "data",
+    "de"
+  ],
+  "summary_1l": "Next-generation-sequencing (NGS) has revolutionized the field of genome assembly because of its much higher data throug",
+  "query_hits": [],
+  "embed_text": "14464451 Effects of GC Bias in Next-Generation-Sequencing Data on De Novo Genome Assembly science scifact Next-generation-sequencing (NGS) has revolutionized the field of genome assembly because of its much higher data throughput and much lower cost compared with traditional Sanger sequencing. However, NGS poses new computational challenges to… 14464451 effects-of-gc-bias-in-next-generation-sequencing-data-on-de-novo-genome-assembly effects gc bias next generation sequencing data de Next-generation-sequencing (NGS) has revolutionized the field of genome assembly because of its much higher data throug Effects of GC Bias in Next-Generation-Sequencing Data on De Novo Genome Assembly Next-generation-sequencing (NGS) has revolutionized the field of genome assembly because of its much higher data throughput and much lower cost compared with traditional Sanger sequencing. However, NGS poses new computational challenges to de novo genome assembly. Among the challenges, GC bias in NGS data is known to aggravate genome assembly. However, it is not clear to what extent GC bias affects genome assembly in general. In this work, we conduct a systematic analysis on the effects of GC bias on genome assembly. Our analyses reveal that GC bias only lowers assembly completeness when the degree of GC bias is above a threshold. At a strong GC bias, the assembly fragmentation due to GC bias can be explained",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.927745+00:00"
+}

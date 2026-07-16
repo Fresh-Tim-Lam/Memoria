@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26658659",
+  "source_fingerprint": "a95e42654e37d30872f71325e9b519fd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26658659",
+    "hydrogen-sulfide-increases-nitric-oxide-production-with-calcium-dependent-activation-of-endothelial-nitric-oxide-synthase-in-endothelial-cells."
+  ],
+  "key_phrases": [
+    "hydrogen",
+    "sulfide",
+    "increases",
+    "nitric",
+    "oxide",
+    "production",
+    "with",
+    "calcium"
+  ],
+  "summary_1l": "Hydrogen sulfide increases nitric oxide production with calcium-dependent activation of endothelial nitric oxide synthase in endothelial cells.",
+  "query_hits": [],
+  "embed_text": "26658659 Hydrogen sulfide increases nitric oxide production with calcium-dependent activation of endothelial nitric oxide synthase in endothelial cells. science scifact Hydrogen sulfide (H(2)S) was recently discovered to be synthesized in mammalian tissues by several different enzymes. Numerous studies have shown that H(2)S has vasodilator and antihypertensive effects in the cardiovascular system.… 26658659 hydrogen-sulfide-increases-nitric-oxide-production-with-calcium-dependent-activation-of-endothelial-nitric-oxide-synthase-in-endothelial-cells. hydrogen sulfide increases nitric oxide production with calcium Hydrogen sulfide increases nitric oxide production with calcium-dependent activation of endothelial nitric oxide synthase in endothelial cells. Hydrogen sulfide increases nitric oxide production with calcium-dependent activation of endothelial nitric oxide synthase in endothelial cells. Hydrogen sulfide (H(2)S) was recently discovered to be synthesized in mammalian tissues by several different enzymes. Numerous studies have shown that H(2)S has vasodilator and antihypertensive effects in the cardiovascular system. However, intracellular mechanisms of the H(2)S-induced vasodilation and its interactions with other endothelium-derived relaxing factors, such as nitric oxide (NO), remain unclear. We investigated whether H(2)S directly regulates endothelial NO synthase (eNOS) activity and NO production in endothelial cells. NaHS, a H(2)S donor, dose-dependently increased NO production in cultured endothelial cells. This effect was aboli",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.989465+00:00"
+}

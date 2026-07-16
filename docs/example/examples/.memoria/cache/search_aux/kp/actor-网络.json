@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "actor-网络",
+  "source_fingerprint": "8311252b6a0b9a67fa579d3952367f72",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "actor-网络"
+  ],
+  "key_phrases": [
+    "actor",
+    "网络",
+    "接收",
+    "状态",
+    "输出",
+    "确定性",
+    "动作",
+    "一个"
+  ],
+  "summary_1l": "Actor 网络 接收状态 ，输出确定性动作 。",
+  "query_hits": [],
+  "embed_text": "actor-网络 Actor 网络 actor-网络 actor 网络 接收 状态 输出 确定性 动作 一个 Actor 网络 接收状态 ，输出确定性动作 。 Actor 网络 Actor 网络 接收状态 ，输出确定性动作 。它是一个将状态映射到动作的函数近似器。 Actor 的更新目标：最大化 Q 值。通过链式法则： 这个梯度的直觉是：先找到 Q 值关于动作的梯度方向（Critic 告诉 Actor 怎么改进动作），再通过 Actor 网络反传更新参数。 Actor 网络结构通常为： 输入层：状态维度 隐藏层：2-3 层全连接，ReLU 激活，Batch Normalization",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T03:38:46.324903+00:00"
+}

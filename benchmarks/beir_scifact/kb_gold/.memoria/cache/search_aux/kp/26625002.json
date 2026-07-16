@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26625002",
+  "source_fingerprint": "55281776a3dcba9e1056d969e1b727e5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26625002",
+    "metabolic-shutdown-in-escherichia-coli-cells-lacking-the-outer-membrane-channel-tolc."
+  ],
+  "key_phrases": [
+    "metabolic",
+    "shutdown",
+    "escherichia",
+    "coli",
+    "cells",
+    "lacking",
+    "outer",
+    "membrane"
+  ],
+  "summary_1l": "Metabolic shutdown in Escherichia coli cells lacking the outer membrane channel TolC.",
+  "query_hits": [],
+  "embed_text": "26625002 Metabolic shutdown in Escherichia coli cells lacking the outer membrane channel TolC. science scifact The outer membrane channel TolC is a key component of multidrug efflux and type I secretion transporters in Escherichia coli. Mutational inactivation of TolC renders cells highly susceptible to antibiotics and leads to defects in secretion… 26625002 metabolic-shutdown-in-escherichia-coli-cells-lacking-the-outer-membrane-channel-tolc. metabolic shutdown escherichia coli cells lacking outer membrane Metabolic shutdown in Escherichia coli cells lacking the outer membrane channel TolC. Metabolic shutdown in Escherichia coli cells lacking the outer membrane channel TolC. The outer membrane channel TolC is a key component of multidrug efflux and type I secretion transporters in Escherichia coli. Mutational inactivation of TolC renders cells highly susceptible to antibiotics and leads to defects in secretion of protein toxins. Despite impairment of various transport functions, no growth defects were reported in cells lacking TolC. Unexpectedly, we found that the loss of TolC notably impairs cell division and growth in minimal glucose medium. The TolC-dependent phenotype was further exacerbated by the loss of ygiB and ygiC genes expressed in the same operon as tolC and their homologues yjfM and yjfC located elsewhere on the chromosome. Our results show that this growth defic",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.935793+00:00"
+}

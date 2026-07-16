@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "14434123",
+  "source_fingerprint": "60acee54bd07ea3f295ddb5ebfdf675d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14434123"
+  ],
+  "key_phrases": [
+    "aberrant",
+    "expression",
+    "rcan1",
+    "alzheimer",
+    "pathogenesis",
+    "new",
+    "molecular",
+    "mechanism"
+  ],
+  "summary_1l": "AD, a devastating neurodegenerative disorder, is the most common cause of dementia in the el",
+  "query_hits": [],
+  "embed_text": "14434123 Aberrant Expression of RCAN1 in Alzheimer’s Pathogenesis: A New Molecular Mechanism and a Novel Drug Target science scifact AD, a devastating neurodegenerative disorder, is the most common cause of dementia in the elderly. Patients with AD are characterized by three hallmarks of neuropathology including neuritic plaque deposition, neurofibrillary tangle… 14434123 aberrant expression rcan1 alzheimer pathogenesis new molecular mechanism AD, a devastating neurodegenerative disorder, is the most common cause of dementia in the el Aberrant Expression of RCAN1 in Alzheimer’s Pathogenesis: A New Molecular Mechanism and a Novel Drug Target AD, a devastating neurodegenerative disorder, is the most common cause of dementia in the elderly. Patients with AD are characterized by three hallmarks of neuropathology including neuritic plaque deposition, neurofibrillary tangle formation, and neuronal loss. Growing evidences indicate that dysregulation of regulator of calcineurin 1 (RCAN1) plays an important role in the pathogenesis of AD. Aberrant RCAN1 expression facilitates neuronal apoptosis and Tau hyperphosphorylation, leading to neuronal loss and neurofibrillary tangle formation. This review aims to describe the recent advances of the regulation of RCAN1 expression and its physiological functions. Moreover, the AD risk fac",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.861016+00:00"
+}

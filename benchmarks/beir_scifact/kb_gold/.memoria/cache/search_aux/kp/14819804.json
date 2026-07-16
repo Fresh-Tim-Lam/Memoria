@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14819804",
+  "source_fingerprint": "128ce642cf2a8703fe12cb58d81820ae",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14819804",
+    "mutations-in-the-phosphatidylinositol-3-kinase-pathway-predict-for-antitumor-activity-of-the-inhibitor-px-866-whereas-oncogenic-ras-is-a-dominant-predictor-for-resistance."
+  ],
+  "key_phrases": [
+    "mutations",
+    "phosphatidylinositol",
+    "kinase",
+    "pathway",
+    "predict",
+    "antitumor",
+    "activity",
+    "inhibitor"
+  ],
+  "summary_1l": "Mutations in the phosphatidylinositol-3-kinase pathway predict for antitumor activity of the inhibitor PX-866 whereas oncogenic Ras is a dominant predictor for resistance.",
+  "query_hits": [],
+  "embed_text": "14819804 Mutations in the phosphatidylinositol-3-kinase pathway predict for antitumor activity of the inhibitor PX-866 whereas oncogenic Ras is a dominant predictor for resistance. science scifact The novel phosphatidylinositol-3-kinase (PI3K) inhibitor PX-866 was tested against 13 experimental human tumor xenografts derived from cell lines of various tissue origins. Mutant PI3K (PIK3CA) and loss of PTEN activity were sufficient,… 14819804 mutations-in-the-phosphatidylinositol-3-kinase-pathway-predict-for-antitumor-activity-of-the-inhibitor-px-866-whereas-oncogenic-ras-is-a-dominant-predictor-for-resistance. mutations phosphatidylinositol kinase pathway predict antitumor activity inhibitor Mutations in the phosphatidylinositol-3-kinase pathway predict for antitumor activity of the inhibitor PX-866 whereas oncogenic Ras is a dominant predictor for resistance. Mutations in the phosphatidylinositol-3-kinase pathway predict for antitumor activity of the inhibitor PX-866 whereas oncogenic Ras is a dominant predictor for resistance. The novel phosphatidylinositol-3-kinase (PI3K) inhibitor PX-866 was tested against 13 experimental human tumor xenografts derived from cell lines of various tissue origins. Mutant PI3K (PIK3CA) and loss of PTEN activity were sufficient, but not necessary, as predictors of sensitivity to the antitumor activity of the PI3K inhibitor PX-866 in the presence of wild-type Ras, whereas mutant oncogenic Ras was a dominant determinant of resistance, even in tumors with coexisting mutations in PIK3CA. The level of activation of PI3K signaling measured by tumor phosphorylated Ser(473)-Akt was insufficient to predict in vivo antitum",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.686660+00:00"
+}

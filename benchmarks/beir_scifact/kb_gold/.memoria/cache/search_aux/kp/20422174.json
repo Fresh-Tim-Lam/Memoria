@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20422174",
+  "source_fingerprint": "b35acbaa1b38953e1eae0cf7450f71bb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20422174",
+    "findings-to-date-from-the-ascus-lsil-triage-study-(alts)."
+  ],
+  "key_phrases": [
+    "findings",
+    "date",
+    "from",
+    "ascus",
+    "lsil",
+    "triage",
+    "study",
+    "alts"
+  ],
+  "summary_1l": "Findings to date from the ASCUS-LSIL Triage Study (ALTS).",
+  "query_hits": [],
+  "embed_text": "20422174 Findings to date from the ASCUS-LSIL Triage Study (ALTS). science scifact Controversy exists in the United States regarding the proper evaluation and management of low-grade squamous intraepithelial lesion (LSIL) and equivocal (atypical squamous cells of undetermined significance [ASCUS, now ASC-US]) cervical… 20422174 findings-to-date-from-the-ascus-lsil-triage-study-(alts). findings date from ascus lsil triage study alts Findings to date from the ASCUS-LSIL Triage Study (ALTS). Findings to date from the ASCUS-LSIL Triage Study (ALTS). Controversy exists in the United States regarding the proper evaluation and management of low-grade squamous intraepithelial lesion (LSIL) and equivocal (atypical squamous cells of undetermined significance [ASCUS, now ASC-US]) cervical cytologic interpretations. To address this issue, the National Cancer Institute initiated the ASCUS-LSIL Triage Study (ALTS). ALTS is a multicenter, randomized clinical trial designed to evaluate 3 alternative methods of management, namely, immediate colposcopy, cytologic follow-up, and triage by human papillomavirus (HPV) DNA testing. This article summarizes the major findings of ALTS that have been published to date. Patients with ASCUS (n = 3488) or LSIL (n = 1572) were randomly assigned to resear",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.272178+00:00"
+}

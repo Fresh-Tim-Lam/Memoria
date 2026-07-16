@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12232678",
+  "source_fingerprint": "5ded7243c895fe35c4b393d3696bedf6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12232678",
+    "all-dosage-compensation-is-local:-gene-by-gene-regulation-of-sex-biased-expression-on-the-chicken-z-chromosome"
+  ],
+  "key_phrases": [
+    "all",
+    "dosage",
+    "compensation",
+    "local",
+    "gene",
+    "by",
+    "regulation",
+    "sex"
+  ],
+  "summary_1l": "Recent reports have suggested that birds lack a mechanism of wholesale dosage compensatio",
+  "query_hits": [],
+  "embed_text": "12232678 All dosage compensation is local: Gene-by-gene regulation of sex-biased expression on the chicken Z chromosome science scifact Recent reports have suggested that birds lack a mechanism of wholesale dosage compensation for the Z sex chromosome. This discovery was rather unexpected, as all other animals investigated with chromosomal mechanisms of sex determination… 12232678 all-dosage-compensation-is-local:-gene-by-gene-regulation-of-sex-biased-expression-on-the-chicken-z-chromosome all dosage compensation local gene by regulation sex Recent reports have suggested that birds lack a mechanism of wholesale dosage compensatio All dosage compensation is local: Gene-by-gene regulation of sex-biased expression on the chicken Z chromosome Recent reports have suggested that birds lack a mechanism of wholesale dosage compensation for the Z sex chromosome. This discovery was rather unexpected, as all other animals investigated with chromosomal mechanisms of sex determination have some method to counteract the effects of gene dosage of the dominant sex chromosome in males and females. Despite the lack of a global mechanism of avian dosage compensation, the pattern of gene expression difference between males and females varies a great deal for individual Z-linked genes. This suggests that some genes may be individually dosage compensated, and that some less-than-global pattern of dosage compensation, such as local or te",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:08.546676+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10650521",
+  "source_fingerprint": "5087a26e45fa40f5818bf58a9eb9de5e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10650521",
+    "a-general-role-for-splicing-enhancers-in-exon-definition."
+  ],
+  "key_phrases": [
+    "general",
+    "role",
+    "splicing",
+    "enhancers",
+    "exon",
+    "definition",
+    "exonic",
+    "eses"
+  ],
+  "summary_1l": "A general role for splicing enhancers in exon definition.",
+  "query_hits": [],
+  "embed_text": "10650521 A general role for splicing enhancers in exon definition. science scifact Exonic splicing enhancers (ESEs) facilitate exon definition by assisting in the recruitment of splicing factors to the adjacent intron. Here we demonstrate that suboptimal 5' and 3' splice sites are activated independently by ESEs when… 10650521 a-general-role-for-splicing-enhancers-in-exon-definition. general role splicing enhancers exon definition exonic eses A general role for splicing enhancers in exon definition. A general role for splicing enhancers in exon definition. Exonic splicing enhancers (ESEs) facilitate exon definition by assisting in the recruitment of splicing factors to the adjacent intron. Here we demonstrate that suboptimal 5' and 3' splice sites are activated independently by ESEs when they are located on different exons. However, when they are situated within a single exon, the same weak 5' and 3' splice sites are activated simultaneously by a single ESE. These findings demonstrate that a single ESE promotes the recognition of both exon/intron junctions within the same step during exon definition. Our results suggest that ESEs recruit a multicomponent complex that minimally contains components of the splicing machinery required for 5' and 3' splice site selection.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:05.207185+00:00"
+}

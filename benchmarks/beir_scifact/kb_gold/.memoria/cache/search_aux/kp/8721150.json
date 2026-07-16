@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8721150",
+  "source_fingerprint": "c297ab4084b80d083a8e3dc791583435",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8721150",
+    "the-protein-data-bank"
+  ],
+  "key_phrases": [
+    "protein",
+    "data",
+    "bank",
+    "pdb",
+    "berman",
+    "westbrook",
+    "et",
+    "al"
+  ],
+  "summary_1l": "The Protein Data Bank [PDB; Berman, Westbrook et al.",
+  "query_hits": [],
+  "embed_text": "8721150 The Protein Data Bank science scifact The Protein Data Bank [PDB; Berman, Westbrook et al. (2000), Nucleic Acids Res. 28, 235-242; http://www.pdb.org/] is the single worldwide archive of primary structural data of biological macromolecules. Many secondary sources of… 8721150 the-protein-data-bank protein data bank pdb berman westbrook et al The Protein Data Bank [PDB; Berman, Westbrook et al. The Protein Data Bank The Protein Data Bank [PDB; Berman, Westbrook et al. (2000), Nucleic Acids Res. 28, 235-242; http://www.pdb.org/] is the single worldwide archive of primary structural data of biological macromolecules. Many secondary sources of information are derived from PDB data. It is the starting point for studies in structural bioinformatics. This article describes the goals of the PDB, the systems in place for data deposition and access, how to obtain further information and plans for the future development of the resource. The reader should come away with an understanding of the scope of the PDB and what is provided by the resource.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.557184+00:00"
+}

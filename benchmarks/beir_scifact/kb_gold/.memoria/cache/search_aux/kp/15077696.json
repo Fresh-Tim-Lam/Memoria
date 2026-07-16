@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15077696",
+  "source_fingerprint": "c05f5063a213c95efa82e4bb06326432",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15077696",
+    "primpol-bypasses-uv-photoproducts-during-eukaryotic-chromosomal-dna-replication"
+  ],
+  "key_phrases": [
+    "primpol",
+    "bypasses",
+    "uv",
+    "photoproducts",
+    "during",
+    "eukaryotic",
+    "chromosomal",
+    "dna"
+  ],
+  "summary_1l": "DNA damage can stall the DNA replication machinery, leading to genomic instability.",
+  "query_hits": [],
+  "embed_text": "15077696 PrimPol Bypasses UV Photoproducts during Eukaryotic Chromosomal DNA Replication science scifact DNA damage can stall the DNA replication machinery, leading to genomic instability. Thus, numerous mechanisms exist to complete genome duplication in the absence of a pristine DNA template, but identification of the enzymes involved… 15077696 primpol-bypasses-uv-photoproducts-during-eukaryotic-chromosomal-dna-replication primpol bypasses uv photoproducts during eukaryotic chromosomal dna DNA damage can stall the DNA replication machinery, leading to genomic instability. PrimPol Bypasses UV Photoproducts during Eukaryotic Chromosomal DNA Replication DNA damage can stall the DNA replication machinery, leading to genomic instability. Thus, numerous mechanisms exist to complete genome duplication in the absence of a pristine DNA template, but identification of the enzymes involved remains incomplete. Here, we establish that Primase-Polymerase (PrimPol; CCDC111), an archaeal-eukaryotic primase (AEP) in eukaryotic cells, is involved in chromosomal DNA replication. PrimPol is required for replication fork progression on ultraviolet (UV) light-damaged DNA templates, possibly mediated by its ability to catalyze translesion synthesis (TLS) of these lesions. This PrimPol UV lesion bypass pathway is not epistatic with the Pol η-dependent pathway and, as a consequence",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.063649+00:00"
+}

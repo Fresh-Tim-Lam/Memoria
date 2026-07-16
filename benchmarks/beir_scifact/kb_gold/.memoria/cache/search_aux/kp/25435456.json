@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25435456",
+  "source_fingerprint": "e356aa5bebc3eaa638ef4114189e0dd0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25435456",
+    "microenvironmental-regulation-of-biomacromolecular-therapies"
+  ],
+  "key_phrases": [
+    "microenvironmental",
+    "regulation",
+    "biomacromolecular",
+    "therapies",
+    "there",
+    "currently",
+    "great",
+    "interest"
+  ],
+  "summary_1l": "There is currently great interest in molecular therapies to treat various diseases, and this has prompted extensive efforts to achieve targ",
+  "query_hits": [],
+  "embed_text": "25435456 Microenvironmental regulation of biomacromolecular therapies science scifact There is currently great interest in molecular therapies to treat various diseases, and this has prompted extensive efforts to achieve target-specific and controlled delivery of bioactive macromolecules (for example, proteins, antibodies,… 25435456 microenvironmental-regulation-of-biomacromolecular-therapies microenvironmental regulation biomacromolecular therapies there currently great interest There is currently great interest in molecular therapies to treat various diseases, and this has prompted extensive efforts to achieve targ Microenvironmental regulation of biomacromolecular therapies There is currently great interest in molecular therapies to treat various diseases, and this has prompted extensive efforts to achieve target-specific and controlled delivery of bioactive macromolecules (for example, proteins, antibodies, DNA and small interfering RNA) through the design of smart drug carriers. By contrast, the influence of the microenvironment in which the target cell resides and the effect it might have on the success of biomacromolecular therapies has been under-appreciated. The extracellular matrix (ECM) component of the cellular niche may be particularly important, as many diseases and injury disrupt the normal ECM architecture, the cell adhesion to ECM, and the subsequent cellular activities. This Review wi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.607492+00:00"
+}

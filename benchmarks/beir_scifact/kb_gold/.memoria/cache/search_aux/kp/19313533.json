@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19313533",
+  "source_fingerprint": "f178e8f1a18123a079777e1ba9065197",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19313533",
+    "structural-basis-of-allosteric-and-synergistic-activation-of-ampk-by-furan-2-phosphonic-derivative-c2-binding."
+  ],
+  "key_phrases": [
+    "structural",
+    "basis",
+    "allosteric",
+    "synergistic",
+    "activation",
+    "ampk",
+    "by",
+    "furan"
+  ],
+  "summary_1l": "Structural basis of allosteric and synergistic activation of AMPK by furan-2-phosphonic derivative C2 binding.",
+  "query_hits": [],
+  "embed_text": "19313533 Structural basis of allosteric and synergistic activation of AMPK by furan-2-phosphonic derivative C2 binding. science scifact The metabolic stress-sensing enzyme AMP-activated protein kinase (AMPK) is responsible for regulating metabolism in response to energy supply and demand. Drugs that activate AMPK may be useful in the treatment of metabolic diseases… 19313533 structural-basis-of-allosteric-and-synergistic-activation-of-ampk-by-furan-2-phosphonic-derivative-c2-binding. structural basis allosteric synergistic activation ampk by furan Structural basis of allosteric and synergistic activation of AMPK by furan-2-phosphonic derivative C2 binding. Structural basis of allosteric and synergistic activation of AMPK by furan-2-phosphonic derivative C2 binding. The metabolic stress-sensing enzyme AMP-activated protein kinase (AMPK) is responsible for regulating metabolism in response to energy supply and demand. Drugs that activate AMPK may be useful in the treatment of metabolic diseases including type 2 diabetes. We have determined the crystal structure of AMPK in complex with its activator 5-(5-hydroxyl-isoxazol-3-yl)-furan-2-phosphonic acid (C2), revealing two C2-binding sites in the γ-subunit distinct from nucleotide sites. C2 acts synergistically with the drug A769662 to activate AMPK α1-containing complexes independent of upstream kinases. Our results show that dual drug therapies could be effective AMPK-targeting strategies to tr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.402757+00:00"
+}

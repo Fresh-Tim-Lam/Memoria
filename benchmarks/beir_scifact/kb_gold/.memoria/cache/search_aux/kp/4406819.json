@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4406819",
+  "source_fingerprint": "be0f5e784b65d6432ef958dec4d82e5d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4406819",
+    "paar-repeat-proteins-sharpen-and-diversify-the-type-vi-secretion-system-spike"
+  ],
+  "key_phrases": [
+    "paar",
+    "repeat",
+    "proteins",
+    "sharpen",
+    "diversify",
+    "type",
+    "vi",
+    "secretion"
+  ],
+  "summary_1l": "The bacterial type VI secretion system (T6SS) is a large multicomponent, dynamic macromolecular machine that has an import",
+  "query_hits": [],
+  "embed_text": "4406819 PAAR-repeat proteins sharpen and diversify the Type VI secretion system spike science scifact The bacterial type VI secretion system (T6SS) is a large multicomponent, dynamic macromolecular machine that has an important role in the ecology of many Gram-negative bacteria. T6SS is responsible for translocation of a wide range of… 4406819 paar-repeat-proteins-sharpen-and-diversify-the-type-vi-secretion-system-spike paar repeat proteins sharpen diversify type vi secretion The bacterial type VI secretion system (T6SS) is a large multicomponent, dynamic macromolecular machine that has an import PAAR-repeat proteins sharpen and diversify the Type VI secretion system spike The bacterial type VI secretion system (T6SS) is a large multicomponent, dynamic macromolecular machine that has an important role in the ecology of many Gram-negative bacteria. T6SS is responsible for translocation of a wide range of toxic effector molecules, allowing predatory cells to kill both prokaryotic as well as eukaryotic prey cells. The T6SS organelle is functionally analogous to contractile tails of bacteriophages and is thought to attack cells by initially penetrating them with a trimeric protein complex called the VgrG spike. Neither the exact protein composition of the T6SS organelle nor the mechanisms of effector selection and delivery are known. Here we report that proteins from the PAAR (proline-",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.698587+00:00"
+}

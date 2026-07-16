@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5223817",
+  "source_fingerprint": "35eb7149ab1d556152f632ea30df6c5a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5223817",
+    "shaping-the-landscape-of-the-escherichia-coli-chromosome:-replication-transcription-encounters-in-cells-with-an-ectopic-replication-origin"
+  ],
+  "key_phrases": [
+    "shaping",
+    "landscape",
+    "escherichia",
+    "coli",
+    "chromosome",
+    "replication",
+    "transcription",
+    "encounters"
+  ],
+  "summary_1l": "Each cell division requires the unwinding of millions of DNA",
+  "query_hits": [],
+  "embed_text": "5223817 Shaping the landscape of the Escherichia coli chromosome: replication-transcription encounters in cells with an ectopic replication origin science scifact Each cell division requires the unwinding of millions of DNA base pairs to allow chromosome duplication and gene transcription. As DNA replication and transcription share the same template, conflicts between both processes are unavoidable… 5223817 shaping-the-landscape-of-the-escherichia-coli-chromosome:-replication-transcription-encounters-in-cells-with-an-ectopic-replication-origin shaping landscape escherichia coli chromosome replication transcription encounters Each cell division requires the unwinding of millions of DNA Shaping the landscape of the Escherichia coli chromosome: replication-transcription encounters in cells with an ectopic replication origin Each cell division requires the unwinding of millions of DNA base pairs to allow chromosome duplication and gene transcription. As DNA replication and transcription share the same template, conflicts between both processes are unavoidable and head-on collisions are thought to be particularly problematic. Surprisingly, a recent study reported unperturbed cell cycle progression in Escherichia coli cells with an ectopic replication origin in which highly transcribed rrn operons were forced to be replicated opposite to normal. In this study we have re-generated a similar strain and found the doubling time to be twice that of normal cells. Replication profil",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.565795+00:00"
+}

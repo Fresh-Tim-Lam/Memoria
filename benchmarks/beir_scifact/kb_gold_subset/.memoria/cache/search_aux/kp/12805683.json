@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12805683",
+  "source_fingerprint": "f4910208363a6e340fe7841734114549",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12805683",
+    "nuclear-hormone-receptor-nhr-49-controls-fat-consumption-and-fatty-acid-composition-in-c.-elegans"
+  ],
+  "key_phrases": [
+    "nuclear",
+    "hormone",
+    "receptor",
+    "nhr",
+    "49",
+    "controls",
+    "fat",
+    "consumption"
+  ],
+  "summary_1l": "Nuclear Hormone Receptor NHR-49 Controls Fat Consumption and Fatty Acid Composition in C.",
+  "query_hits": [],
+  "embed_text": "12805683 Nuclear Hormone Receptor NHR-49 Controls Fat Consumption and Fatty Acid Composition in C. elegans science scifact Mammalian nuclear hormone receptors (NHRs), such as liver X receptor, farnesoid X receptor, and peroxisome proliferator-activated receptors (PPARs), precisely control energy metabolism. Consequently, these receptors are important targets… 12805683 nuclear-hormone-receptor-nhr-49-controls-fat-consumption-and-fatty-acid-composition-in-c.-elegans nuclear hormone receptor nhr 49 controls fat consumption Nuclear Hormone Receptor NHR-49 Controls Fat Consumption and Fatty Acid Composition in C. Nuclear Hormone Receptor NHR-49 Controls Fat Consumption and Fatty Acid Composition in C. elegans Mammalian nuclear hormone receptors (NHRs), such as liver X receptor, farnesoid X receptor, and peroxisome proliferator-activated receptors (PPARs), precisely control energy metabolism. Consequently, these receptors are important targets for the treatment of metabolic diseases, including diabetes and obesity. A thorough understanding of NHR fat regulatory networks has been limited, however, by a lack of genetically tractable experimental systems. Here we show that deletion of the Caenorhabditis elegans NHR gene nhr-49 yielded worms with elevated fat content and shortened life span. Employing a quantitative RT-PCR screen, we found that nhr-49 influenced the expression of 13 genes involved in en",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:09.632775+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17967608",
+  "source_fingerprint": "6bb9980cad309c504c60f36ec750c170",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17967608",
+    "pad4-is-essential-for-antibacterial-innate-immunity-mediated-by-neutrophil-extracellular-traps"
+  ],
+  "key_phrases": [
+    "pad4",
+    "essential",
+    "antibacterial",
+    "innate",
+    "immunity",
+    "mediated",
+    "by",
+    "neutrophil"
+  ],
+  "summary_1l": "Neutrophils trap and kill bacteria by forming highly decondensed chromatin structures, termed neutrophil",
+  "query_hits": [],
+  "embed_text": "17967608 PAD4 is essential for antibacterial innate immunity mediated by neutrophil extracellular traps science scifact Neutrophils trap and kill bacteria by forming highly decondensed chromatin structures, termed neutrophil extracellular traps (NETs). We previously reported that histone hypercitrullination catalyzed by peptidylarginine deiminase 4 (PAD4)… 17967608 pad4-is-essential-for-antibacterial-innate-immunity-mediated-by-neutrophil-extracellular-traps pad4 essential antibacterial innate immunity mediated by neutrophil Neutrophils trap and kill bacteria by forming highly decondensed chromatin structures, termed neutrophil PAD4 is essential for antibacterial innate immunity mediated by neutrophil extracellular traps Neutrophils trap and kill bacteria by forming highly decondensed chromatin structures, termed neutrophil extracellular traps (NETs). We previously reported that histone hypercitrullination catalyzed by peptidylarginine deiminase 4 (PAD4) correlates with chromatin decondensation during NET formation. However, the role of PAD4 in NET-mediated bacterial trapping and killing has not been tested. Here, we use PAD4 knockout mice to show that PAD4 is essential for NET-mediated antibacterial function. Unlike PAD4(+/+) neutrophils, PAD4(-/-) neutrophils cannot form NETs after stimulation with chemokines or incubation with bacteria, and are deficient in bacterial killing by NETs. In a mouse infectious dise",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.557245+00:00"
+}

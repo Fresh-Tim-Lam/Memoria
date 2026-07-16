@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "11569583",
+  "source_fingerprint": "a6d1580082416621fddd270ebc987507",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11569583"
+  ],
+  "key_phrases": [
+    "deregulated",
+    "dna",
+    "polymerase",
+    "strengthens",
+    "ionizing",
+    "radiation",
+    "induced",
+    "nucleotidic"
+  ],
+  "summary_1l": "DNA polymerase β (Pol β) is an error-prone enzyme which has been found to be overexpressed",
+  "query_hits": [],
+  "embed_text": "11569583 Deregulated DNA polymerase β strengthens ionizing radiation-induced nucleotidic and chromosomal instabilities science scifact DNA polymerase β (Pol β) is an error-prone enzyme which has been found to be overexpressed in several human tumors. By using a couple of recombinant CHO cells differing only from the exogenous expression of Pol β, we showed here that cells… 11569583 deregulated dna polymerase strengthens ionizing radiation induced nucleotidic DNA polymerase β (Pol β) is an error-prone enzyme which has been found to be overexpressed Deregulated DNA polymerase β strengthens ionizing radiation-induced nucleotidic and chromosomal instabilities DNA polymerase β (Pol β) is an error-prone enzyme which has been found to be overexpressed in several human tumors. By using a couple of recombinant CHO cells differing only from the exogenous expression of Pol β, we showed here that cells overexpressing Pol β are much more sensitive to IR treatments by increasing apoptosis. We also found that the surviving cells displayed an hypermutator phenotype which could be explained by different pathways involving Pol β, such as (i) an increased capacity to incorporate into DNA the mutagenic dGTP analog, 8-oxo-dGTP, one of the most abundant purine-derived nucleotides exposed to γ-irradiation, (ii) the induction of IR-induced DNA breaks and (",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:06.745658+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "34753204",
+  "source_fingerprint": "69201d1a36093ed97cf716125cd0b26f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "34753204",
+    "zmpste24-deficiency-in-mice-causes-spontaneous-bone-fractures,-muscle-weakness,-and-a-prelamin-a-processing-defect."
+  ],
+  "key_phrases": [
+    "zmpste24",
+    "deficiency",
+    "mice",
+    "causes",
+    "spontaneous",
+    "bone",
+    "fractures",
+    "muscle"
+  ],
+  "summary_1l": "Zmpste24 deficiency in mice causes spontaneous bone fractures, muscle weakness, and a prelamin A processing defect.",
+  "query_hits": [],
+  "embed_text": "34753204 Zmpste24 deficiency in mice causes spontaneous bone fractures, muscle weakness, and a prelamin A processing defect. science scifact Zmpste24 is an integral membrane metalloproteinase of the endoplasmic reticulum. Biochemical studies of tissues from Zmpste24-deficient mice (Zmpste24(-/-)) have indicated a role for Zmpste24 in the processing of CAAX-type prenylated… 34753204 zmpste24-deficiency-in-mice-causes-spontaneous-bone-fractures,-muscle-weakness,-and-a-prelamin-a-processing-defect. zmpste24 deficiency mice causes spontaneous bone fractures muscle Zmpste24 deficiency in mice causes spontaneous bone fractures, muscle weakness, and a prelamin A processing defect. Zmpste24 deficiency in mice causes spontaneous bone fractures, muscle weakness, and a prelamin A processing defect. Zmpste24 is an integral membrane metalloproteinase of the endoplasmic reticulum. Biochemical studies of tissues from Zmpste24-deficient mice (Zmpste24(-/-)) have indicated a role for Zmpste24 in the processing of CAAX-type prenylated proteins. Here, we report the pathologic consequences of Zmpste24 deficiency in mice. Zmpste24(-/-) mice gain weight slowly, appear malnourished, and exhibit progressive hair loss. The most striking pathologic phenotype is multiple spontaneous bone fractures-akin to those occurring in mouse models of osteogenesis imperfecta. Cortical and trabecular bone volumes are significantly reduced in Zmpste24(-/-) mice. Zmpste24(-/-) mice also manifested mu",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.738627+00:00"
+}

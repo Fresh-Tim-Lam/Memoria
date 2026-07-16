@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6492658",
+  "source_fingerprint": "95fe2986dd00a546b3ee263371191f7a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6492658",
+    "a-null-mutation-in-inositol-polyphosphate-4-phosphatase-type-i-causes-selective-neuronal-loss-in-weeble-mutant-mice"
+  ],
+  "key_phrases": [
+    "null",
+    "mutation",
+    "inositol",
+    "polyphosphate",
+    "phosphatase",
+    "type",
+    "causes",
+    "selective"
+  ],
+  "summary_1l": "Weeble mutant mice have severe locomotor instability and significant neuronal loss i",
+  "query_hits": [],
+  "embed_text": "6492658 A Null Mutation in Inositol Polyphosphate 4-Phosphatase Type I Causes Selective Neuronal Loss in Weeble Mutant Mice science scifact Weeble mutant mice have severe locomotor instability and significant neuronal loss in the cerebellum and in the hippocampal CA1 field. Genetic mapping was used to localize the mutation to the gene encoding inositol polyphosphate… 6492658 a-null-mutation-in-inositol-polyphosphate-4-phosphatase-type-i-causes-selective-neuronal-loss-in-weeble-mutant-mice null mutation inositol polyphosphate phosphatase type causes selective Weeble mutant mice have severe locomotor instability and significant neuronal loss i A Null Mutation in Inositol Polyphosphate 4-Phosphatase Type I Causes Selective Neuronal Loss in Weeble Mutant Mice Weeble mutant mice have severe locomotor instability and significant neuronal loss in the cerebellum and in the hippocampal CA1 field. Genetic mapping was used to localize the mutation to the gene encoding inositol polyphosphate 4-phosphatase type I (Inpp4a), where a single nucleotide deletion results in a likely null allele. The substrates of INPP4A are intermediates in a pathway affecting intracellular Ca(2+) release but are also involved in cell cycle regulation through binding the Akt protooncogene; dysfunction in either may account for the neuronal loss of weeble mice. Although other mutations in phosphoinositide enzymes are associated with synaptic defects without neuro",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.004244+00:00"
+}

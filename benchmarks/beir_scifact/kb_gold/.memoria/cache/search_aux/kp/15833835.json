@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15833835",
+  "source_fingerprint": "78f64d6afb57997865102aa462ab2a5f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15833835",
+    "embryonic-origin-of-postnatal-neural-stem-cells"
+  ],
+  "key_phrases": [
+    "embryonic",
+    "origin",
+    "postnatal",
+    "neural",
+    "stem",
+    "cells",
+    "adult",
+    "progenitor"
+  ],
+  "summary_1l": "Adult neural stem/progenitor (B1) cells within the walls of the lateral ventricles generate different types of neurons for the olfactory bulb (OB).",
+  "query_hits": [],
+  "embed_text": "15833835 Embryonic Origin of Postnatal Neural Stem Cells science scifact Adult neural stem/progenitor (B1) cells within the walls of the lateral ventricles generate different types of neurons for the olfactory bulb (OB). The location of B1 cells determines the types of OB neurons they generate. Here we show… 15833835 embryonic-origin-of-postnatal-neural-stem-cells embryonic origin postnatal neural stem cells adult progenitor Adult neural stem/progenitor (B1) cells within the walls of the lateral ventricles generate different types of neurons for the olfactory bulb (OB). Embryonic Origin of Postnatal Neural Stem Cells Adult neural stem/progenitor (B1) cells within the walls of the lateral ventricles generate different types of neurons for the olfactory bulb (OB). The location of B1 cells determines the types of OB neurons they generate. Here we show that the majority of mouse B1 cell precursors are produced between embryonic days (E) 13.5 and 15.5 and remain largely quiescent until they become reactivated postnatally. Using a retroviral library carrying over 100,000 genetic tags, we found that B1 cells share a common progenitor with embryonic cells of the cortex, striatum, and septum, but this lineage relationship is lost before E15.5. The regional specification of B1 cells is evident as early as E11.5 and is spatially linked to the production of neurons t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.334391+00:00"
+}

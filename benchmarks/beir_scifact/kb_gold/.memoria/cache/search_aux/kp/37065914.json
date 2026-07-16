@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "37065914",
+  "source_fingerprint": "14303d2ef9c8329a4fa68d3326bb82e9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "37065914",
+    "serum-soluble-corin-is-decreased-in-stroke."
+  ],
+  "key_phrases": [
+    "serum",
+    "soluble",
+    "corin",
+    "decreased",
+    "stroke",
+    "background",
+    "purpose",
+    "was"
+  ],
+  "summary_1l": "Serum Soluble Corin is Decreased in Stroke.",
+  "query_hits": [],
+  "embed_text": "37065914 Serum Soluble Corin is Decreased in Stroke. science scifact BACKGROUND AND PURPOSE Soluble corin was decreased in coronary heart disease. Given the connections between cardiac dysfunction and stroke, circulating corin might be a candidate marker of stroke risk. However, the association between… 37065914 serum-soluble-corin-is-decreased-in-stroke. serum soluble corin decreased stroke background purpose was Serum Soluble Corin is Decreased in Stroke. Serum Soluble Corin is Decreased in Stroke. BACKGROUND AND PURPOSE Soluble corin was decreased in coronary heart disease. Given the connections between cardiac dysfunction and stroke, circulating corin might be a candidate marker of stroke risk. However, the association between circulating corin and stroke has not yet been studied in humans. Here, we aimed to examine the association in patients wtith stroke and community-based healthy controls. METHODS Four hundred eighty-one patients with ischemic stroke, 116 patients with hemorrhagic stroke, and 2498 healthy controls were studied. Serum soluble corin and some conventional risk factors of stroke were examined. Because circulating corin was reported to be varied between men and women, the association between serum soluble corin and stroke",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.095170+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20649735",
+  "source_fingerprint": "7b83a6500bae4f6d597339579540116a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20649735",
+    "outcome-of-repeated-radiosurgery-for-recurrent-metastatic-brain-tumors."
+  ],
+  "key_phrases": [
+    "outcome",
+    "repeated",
+    "radiosurgery",
+    "recurrent",
+    "metastatic",
+    "brain",
+    "tumors",
+    "objective"
+  ],
+  "summary_1l": "Outcome of repeated radiosurgery for recurrent metastatic brain tumors.",
+  "query_hits": [],
+  "embed_text": "20649735 Outcome of repeated radiosurgery for recurrent metastatic brain tumors. science scifact OBJECTIVE We investigated the outcome of repeated gamma knife radiosurgery (GKS) for local or remote recurrence after initial radiosurgery. MATERIAL AND METHODS We retrospectively reviewed 204 patients who were treated with GKS. Among them… 20649735 outcome-of-repeated-radiosurgery-for-recurrent-metastatic-brain-tumors. outcome repeated radiosurgery recurrent metastatic brain tumors objective Outcome of repeated radiosurgery for recurrent metastatic brain tumors. Outcome of repeated radiosurgery for recurrent metastatic brain tumors. OBJECTIVE We investigated the outcome of repeated gamma knife radiosurgery (GKS) for local or remote recurrence after initial radiosurgery. MATERIAL AND METHODS We retrospectively reviewed 204 patients who were treated with GKS. Among them 43 patients (21%) underwent GKS more than once. The second GKS was given for recurrence at the previously treated sites in 16 patients, new lesions at remote sites in 13, and both local recurrence and new lesions in 14. RESULTS The median survival from the first GKS was 36 (7-190) weeks in all patients and 68 (16-156) weeks in 43 patients with repeated GKS. The median time from the first GKS to the second was 37 weeks. The median survival from the second radiosurgical intervention wa",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.722631+00:00"
+}

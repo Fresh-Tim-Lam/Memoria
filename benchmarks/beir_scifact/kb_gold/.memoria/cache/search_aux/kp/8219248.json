@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8219248",
+  "source_fingerprint": "3100e23f7a3c5e56b85c25e1f90a7694",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8219248",
+    "use-of-synthetic-peptides-to-locate-novel-integrin-alpha2beta1-binding-motifs-in-human-collagen-iii."
+  ],
+  "key_phrases": [
+    "use",
+    "synthetic",
+    "peptides",
+    "locate",
+    "novel",
+    "integrin",
+    "alpha2beta1",
+    "binding"
+  ],
+  "summary_1l": "Use of synthetic peptides to locate novel integrin alpha2beta1-binding motifs in human collagen III.",
+  "query_hits": [],
+  "embed_text": "8219248 Use of synthetic peptides to locate novel integrin alpha2beta1-binding motifs in human collagen III. science scifact A set of 57 synthetic peptides encompassing the entire triplehelical domain of human collagen III was used to locate binding sites for the collagen-binding integrin alpha(2)beta(1). The capacity of the peptides to support Mg(2+)-dependent… 8219248 use-of-synthetic-peptides-to-locate-novel-integrin-alpha2beta1-binding-motifs-in-human-collagen-iii. use synthetic peptides locate novel integrin alpha2beta1 binding Use of synthetic peptides to locate novel integrin alpha2beta1-binding motifs in human collagen III. Use of synthetic peptides to locate novel integrin alpha2beta1-binding motifs in human collagen III. A set of 57 synthetic peptides encompassing the entire triplehelical domain of human collagen III was used to locate binding sites for the collagen-binding integrin alpha(2)beta(1). The capacity of the peptides to support Mg(2+)-dependent binding of several integrin preparations was examined. Wild-type integrins (recombinant alpha(2) I-domain, alpha(2)beta(1) purified from platelet membranes, and recombinant soluble alpha(2)beta(1) expressed as an alpha(2)-Fos/beta(1)-Jun heterodimer) bound well to only three peptides, two containing GXX'GER motifs (GROGER and GMOGER, where O is hydroxyproline) and one containing two adjacent GXX'GEN motifs (GLKGEN and GLOGEN). Two mutant alpha(2) I-domains",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.119525+00:00"
+}

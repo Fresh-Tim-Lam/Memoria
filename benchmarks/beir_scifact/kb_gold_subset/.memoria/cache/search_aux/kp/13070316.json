@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13070316",
+  "source_fingerprint": "ed70958b388c32abd35da9e233c4911d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13070316",
+    "role-of-tumor-associated-macrophages-in-tumor-angiogenesis-and-lymphangiogenesis"
+  ],
+  "key_phrases": [
+    "role",
+    "tumor",
+    "associated",
+    "macrophages",
+    "angiogenesis",
+    "lymphangiogenesis",
+    "essential",
+    "process"
+  ],
+  "summary_1l": "Tumor angiogenesis is an essential process for supplying rapidly growing malignant tissues with essential nutrients and",
+  "query_hits": [],
+  "embed_text": "13070316 Role of tumor associated macrophages in tumor angiogenesis and lymphangiogenesis science scifact Tumor angiogenesis is an essential process for supplying rapidly growing malignant tissues with essential nutrients and oxygen. An angiogenic switch allows tumor cells to survive and grow, and provides them access to vasculature resulting… 13070316 role-of-tumor-associated-macrophages-in-tumor-angiogenesis-and-lymphangiogenesis role tumor associated macrophages angiogenesis lymphangiogenesis essential process Tumor angiogenesis is an essential process for supplying rapidly growing malignant tissues with essential nutrients and Role of tumor associated macrophages in tumor angiogenesis and lymphangiogenesis Tumor angiogenesis is an essential process for supplying rapidly growing malignant tissues with essential nutrients and oxygen. An angiogenic switch allows tumor cells to survive and grow, and provides them access to vasculature resulting in metastatic disease. Monocyte-derived macrophages recruited and reprogrammed by tumor cells serve as a major source of angiogenic factors boosting the angiogenic switch. Tumor endothelium releases angiopoietin-2 and further facilitates recruitment of TIE2 receptor expressing monocytes (TEM) into tumor sites. Tumor-associated macrophages (TAM) sense hypoxia in avascular areas of tumors, and react by production of angiogenic factors such as VEGFA. VEGFA stimulates chemotaxis",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:10.259695+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5921065",
+  "source_fingerprint": "53c6bd28ee2a99fba80dab42b2bdeb18",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5921065",
+    "humans-and-great-apes-share-a-large-frontal-cortex"
+  ],
+  "key_phrases": [
+    "humans",
+    "great",
+    "apes",
+    "share",
+    "large",
+    "frontal",
+    "cortex",
+    "some"
+  ],
+  "summary_1l": "Some of the outstanding cognitive capabilities of humans are commonly attributed to a disproportionate enlargement of the human frontal lobe during e",
+  "query_hits": [],
+  "embed_text": "5921065 Humans and great apes share a large frontal cortex science scifact Some of the outstanding cognitive capabilities of humans are commonly attributed to a disproportionate enlargement of the human frontal lobe during evolution. This claim is based primarily on comparisons between the brains of humans and of… 5921065 humans-and-great-apes-share-a-large-frontal-cortex humans great apes share large frontal cortex some Some of the outstanding cognitive capabilities of humans are commonly attributed to a disproportionate enlargement of the human frontal lobe during e Humans and great apes share a large frontal cortex Some of the outstanding cognitive capabilities of humans are commonly attributed to a disproportionate enlargement of the human frontal lobe during evolution. This claim is based primarily on comparisons between the brains of humans and of other primates, to the exclusion of most great apes. We compared the relative size of the frontal cortices in living specimens of several primate species, including all extant hominoids, using magnetic resonance imaging. Human frontal cortices were not disproportionately large in comparison to those of the great apes. We suggest that the special cognitive abilities attributed to a frontal advantage may be due to differences in individual cortical areas and to a richer interconnectivity, none of which req",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.477080+00:00"
+}

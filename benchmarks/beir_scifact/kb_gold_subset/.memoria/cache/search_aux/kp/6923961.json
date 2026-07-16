@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6923961",
+  "source_fingerprint": "743bc8450a4bc5bfe4eacfc59f63fa07",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6923961",
+    "prostaglandin-e2-promotes-intestinal-tumor-growth-via-dna-methylation"
+  ],
+  "key_phrases": [
+    "prostaglandin",
+    "e2",
+    "promotes",
+    "intestinal",
+    "tumor",
+    "growth",
+    "via",
+    "dna"
+  ],
+  "summary_1l": "Although aberrant DNA methylation is considered to be one of the key ways by which tumor-suppressor and DNA-repair genes are silen",
+  "query_hits": [],
+  "embed_text": "6923961 Prostaglandin E2 promotes intestinal tumor growth via DNA methylation science scifact Although aberrant DNA methylation is considered to be one of the key ways by which tumor-suppressor and DNA-repair genes are silenced during tumor initiation and progression, the mechanisms underlying DNA methylation alterations in cancer… 6923961 prostaglandin-e2-promotes-intestinal-tumor-growth-via-dna-methylation prostaglandin e2 promotes intestinal tumor growth via dna Although aberrant DNA methylation is considered to be one of the key ways by which tumor-suppressor and DNA-repair genes are silen Prostaglandin E2 promotes intestinal tumor growth via DNA methylation Although aberrant DNA methylation is considered to be one of the key ways by which tumor-suppressor and DNA-repair genes are silenced during tumor initiation and progression, the mechanisms underlying DNA methylation alterations in cancer remain unclear. Here we show that prostaglandin E(2) (PGE(2)) silences certain tumor-suppressor and DNA-repair genes through DNA methylation to promote tumor growth. These findings uncover a previously unrecognized role for PGE(2) in the promotion of tumor progression.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:13.807174+00:00"
+}

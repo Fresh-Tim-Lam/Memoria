@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3981033",
+  "source_fingerprint": "9792a8e26641633ece9a945a6ed7648c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3981033",
+    "iap-antagonists-induce-anti-tumor-immunity-in-multiple-myeloma"
+  ],
+  "key_phrases": [
+    "iap",
+    "antagonists",
+    "induce",
+    "anti",
+    "tumor",
+    "immunity",
+    "multiple",
+    "myeloma"
+  ],
+  "summary_1l": "The cellular inhibitors of apoptosis (cIAP) 1 and 2 are amplified in about 3% of cancers and have been identified in multiple malignancie",
+  "query_hits": [],
+  "embed_text": "3981033 IAP antagonists induce anti-tumor immunity in multiple myeloma science scifact The cellular inhibitors of apoptosis (cIAP) 1 and 2 are amplified in about 3% of cancers and have been identified in multiple malignancies as being potential therapeutic targets as a result of their role in the evasion of apoptosis.… 3981033 iap-antagonists-induce-anti-tumor-immunity-in-multiple-myeloma iap antagonists induce anti tumor immunity multiple myeloma The cellular inhibitors of apoptosis (cIAP) 1 and 2 are amplified in about 3% of cancers and have been identified in multiple malignancie IAP antagonists induce anti-tumor immunity in multiple myeloma The cellular inhibitors of apoptosis (cIAP) 1 and 2 are amplified in about 3% of cancers and have been identified in multiple malignancies as being potential therapeutic targets as a result of their role in the evasion of apoptosis. Consequently, small-molecule IAP antagonists, such as LCL161, have entered clinical trials for their ability to induce tumor necrosis factor (TNF)-mediated apoptosis of cancer cells. However, cIAP1 and cIAP2 are recurrently homozygously deleted in multiple myeloma (MM), resulting in constitutive activation of the noncanonical nuclear factor (NF)-κB pathway. To our surprise, we observed robust in vivo anti-myeloma activity of LCL161 in a transgenic myeloma mouse model and in patients with relapsed-re",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.957158+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8672737",
+  "source_fingerprint": "66b850c7ecfec7a052127926c4b13e6d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8672737",
+    "brain-stem-and-cerebellar-hyperintense-lesions-in-migraine."
+  ],
+  "key_phrases": [
+    "brain",
+    "stem",
+    "cerebellar",
+    "hyperintense",
+    "lesions",
+    "migraine",
+    "background",
+    "purpose"
+  ],
+  "summary_1l": "Brain stem and cerebellar hyperintense lesions in migraine.",
+  "query_hits": [],
+  "embed_text": "8672737 Brain stem and cerebellar hyperintense lesions in migraine. science scifact BACKGROUND AND PURPOSE Migraineurs are at increased risk of cerebellar infarcts and supratentorial white matter lesions. The prevalence, frequency, and distribution of infratentorial hyperintense lesions in migraine are unknown. METHODS… 8672737 brain-stem-and-cerebellar-hyperintense-lesions-in-migraine. brain stem cerebellar hyperintense lesions migraine background purpose Brain stem and cerebellar hyperintense lesions in migraine. Brain stem and cerebellar hyperintense lesions in migraine. BACKGROUND AND PURPOSE Migraineurs are at increased risk of cerebellar infarcts and supratentorial white matter lesions. The prevalence, frequency, and distribution of infratentorial hyperintense lesions in migraine are unknown. METHODS Migraineurs with aura (n=161), without aura (n=134), and controls (n=140) from a population-based sample of adults (30 to 60 years of age) were evaluated with MRI. RESULTS Infratentorial hyperintensities were identified in 13 of 295 (4.4%) migraineurs and in 1 of 140 (0.7%) controls (P=0.04). Twelve cases had hyperintensities, mostly bilaterally, in the dorsal basis pontis. Those with infratentorial hyperintensities also had supratentorial white matter lesions more often. CONCLUSIONS We found an in",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.452900+00:00"
+}

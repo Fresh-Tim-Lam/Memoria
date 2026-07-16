@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4662264",
+  "source_fingerprint": "603eaa48a12387ce61d5405b80ad1809",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4662264",
+    "activation-of-the-estrogen-receptor-through-phosphorylation-by-mitogen-activated-protein-kinase."
+  ],
+  "key_phrases": [
+    "activation",
+    "estrogen",
+    "receptor",
+    "through",
+    "phosphorylation",
+    "by",
+    "mitogen",
+    "activated"
+  ],
+  "summary_1l": "Activation of the estrogen receptor through phosphorylation by mitogen-activated protein kinase.",
+  "query_hits": [],
+  "embed_text": "4662264 Activation of the estrogen receptor through phosphorylation by mitogen-activated protein kinase. science scifact The phosphorylation of the human estrogen receptor (ER) serine residue at position 118 is required for full activity of the ER activation function 1 (AF-1). This Ser118 is phosphorylated by mitogen-activated protein kinase (MAPK) in vitro… 4662264 activation-of-the-estrogen-receptor-through-phosphorylation-by-mitogen-activated-protein-kinase. activation estrogen receptor through phosphorylation by mitogen activated Activation of the estrogen receptor through phosphorylation by mitogen-activated protein kinase. Activation of the estrogen receptor through phosphorylation by mitogen-activated protein kinase. The phosphorylation of the human estrogen receptor (ER) serine residue at position 118 is required for full activity of the ER activation function 1 (AF-1). This Ser118 is phosphorylated by mitogen-activated protein kinase (MAPK) in vitro and in cells treated with epidermal growth factor (EGF) and insulin-like growth factor (IGF) in vivo. Overexpression of MAPK kinase (MAPKK) or of the guanine nucleotide binding protein Ras, both of which activate MAPK, enhanced estrogen-induced and antiestrogen (tamoxifen)-induced transcriptional activity of wild-type ER, but not that of a mutant ER with an alanine in place of Ser118. Thus, the activity of the amino-terminal AF-1 of the ER is modulated by the",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.031262+00:00"
+}

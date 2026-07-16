@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "143381103",
+  "source_fingerprint": "b8e1e3e96904858f5609217b6696bbda",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "143381103"
+  ],
+  "key_phrases": [
+    "psychometric",
+    "evaluation",
+    "beck",
+    "depression",
+    "inventory",
+    "ii",
+    "this",
+    "article"
+  ],
+  "summary_1l": "A psychometric evaluation of the Beck Depression Inventory–II.",
+  "query_hits": [],
+  "embed_text": "143381103 A psychometric evaluation of the Beck Depression Inventory–II. science scifact This article provides psychometric information on the second edition of the Beck Depression Inventory (BDI-II; A. T. Beck, R. A. Steer, & G. K. Brown, 1996), with respect to internal consistency, factorial validity, and gender differences.… 143381103 psychometric evaluation beck depression inventory ii this article A psychometric evaluation of the Beck Depression Inventory–II. A psychometric evaluation of the Beck Depression Inventory–II. This article provides psychometric information on the second edition of the Beck Depression Inventory (BDI-II; A. T. Beck, R. A. Steer, & G. K. Brown, 1996), with respect to internal consistency, factorial validity, and gender differences. Both measures demonstrated high internal reliability in the full student sample. Significant differences between the mean BDI and BDI-II scores necessitated the development of new cutoffs for analogue research on the BDI-II. Results from exploratory and confirmatory factor analyses indicated that a 2-factor solution optimally summarized the data for both versions of the inventory and accounted for a cumulative 41% and 46% of the common variance in BDI and BDI-II responses, respectively. These",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.636196+00:00"
+}

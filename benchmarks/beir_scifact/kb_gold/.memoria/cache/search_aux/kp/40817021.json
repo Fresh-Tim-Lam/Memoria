@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "40817021",
+  "source_fingerprint": "cb943ea145534fa8c339a78a1b3a3a73",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "40817021",
+    "effects-of-exercise-training-on-health-status-in-patients-with-chronic-heart-failure:-hf-action-randomized-controlled-trial."
+  ],
+  "key_phrases": [
+    "effects",
+    "exercise",
+    "training",
+    "health",
+    "status",
+    "patients",
+    "with",
+    "chronic"
+  ],
+  "summary_1l": "Effects of exercise training on health status in patients with chronic heart failure: HF-ACTION randomized controlled trial.",
+  "query_hits": [],
+  "embed_text": "40817021 Effects of exercise training on health status in patients with chronic heart failure: HF-ACTION randomized controlled trial. science scifact CONTEXT Findings from previous studies of the effects of exercise training on patient-reported health status have been inconsistent. OBJECTIVE To test the effects of exercise training on health status among patients with heart failure.… 40817021 effects-of-exercise-training-on-health-status-in-patients-with-chronic-heart-failure:-hf-action-randomized-controlled-trial. effects exercise training health status patients with chronic Effects of exercise training on health status in patients with chronic heart failure: HF-ACTION randomized controlled trial. Effects of exercise training on health status in patients with chronic heart failure: HF-ACTION randomized controlled trial. CONTEXT Findings from previous studies of the effects of exercise training on patient-reported health status have been inconsistent. OBJECTIVE To test the effects of exercise training on health status among patients with heart failure. DESIGN, SETTING, AND PATIENTS Multicenter, randomized controlled trial among 2331 medically stable outpatients with heart failure with left ventricular ejection fraction of 35% or less. Patients were randomized from April 2003 through February 2007. INTERVENTIONS Usual care plus aerobic exercise training (n = 1172), consisting of 36 supervised sessions followed by home-based training, vs usual care alone (n = 1159). Randomization was s",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.858796+00:00"
+}

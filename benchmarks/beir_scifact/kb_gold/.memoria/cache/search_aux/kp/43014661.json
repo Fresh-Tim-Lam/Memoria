@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "43014661",
+  "source_fingerprint": "041485546a533afcabb636c4d37856f1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "43014661",
+    "increased-susceptibility-to-uv-induced-skin-carcinogenesis-in-polymerase-eta-deficient-mice."
+  ],
+  "key_phrases": [
+    "increased",
+    "susceptibility",
+    "uv",
+    "induced",
+    "skin",
+    "carcinogenesis",
+    "polymerase",
+    "eta"
+  ],
+  "summary_1l": "Increased susceptibility to UV-induced skin carcinogenesis in polymerase eta-deficient mice.",
+  "query_hits": [],
+  "embed_text": "43014661 Increased susceptibility to UV-induced skin carcinogenesis in polymerase eta-deficient mice. science scifact Xeroderma pigmentosum variant (XPV) patients with mutations in the DNA polymerase eta (pol eta) gene are hypersensitive to sunlight and have greatly increased susceptibility to sunlight-induced skin cancer. Consistent with the ability of… 43014661 increased-susceptibility-to-uv-induced-skin-carcinogenesis-in-polymerase-eta-deficient-mice. increased susceptibility uv induced skin carcinogenesis polymerase eta Increased susceptibility to UV-induced skin carcinogenesis in polymerase eta-deficient mice. Increased susceptibility to UV-induced skin carcinogenesis in polymerase eta-deficient mice. Xeroderma pigmentosum variant (XPV) patients with mutations in the DNA polymerase eta (pol eta) gene are hypersensitive to sunlight and have greatly increased susceptibility to sunlight-induced skin cancer. Consistent with the ability of Pol eta to efficiently bypass UV light-induced cyclobutane pyrimidine dimers, XPV cells lacking Pol eta have diminished capacity to replicate UV-damaged DNA and are sensitive to UV light-induced killing and mutagenesis. To better understand these and other Pol eta functions, we generated Pol eta-deficient mice. Mice homozygous for a null mutation in pol eta are viable, fertile, and do not show any obvious spontaneous defects during the first year of life. However,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.375958+00:00"
+}

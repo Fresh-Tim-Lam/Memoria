@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "33904473",
+  "source_fingerprint": "5799a029d9454615c566e25faa14b200",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "33904473"
+  ],
+  "key_phrases": [
+    "induced",
+    "regeneration",
+    "progress",
+    "promise",
+    "direct",
+    "reprogramming",
+    "heart",
+    "repair"
+  ],
+  "summary_1l": "Regeneration of cardiac tissue has the potential to transform cardiovascular medicine.",
+  "query_hits": [],
+  "embed_text": "33904473 Induced regeneration—the progress and promise of direct reprogramming for heart repair science scifact Regeneration of cardiac tissue has the potential to transform cardiovascular medicine. Recent advances in stem cell biology and direct reprogramming, or transdifferentiation, have produced powerful new tools to advance this goal. In this… 33904473 induced regeneration progress promise direct reprogramming heart repair Regeneration of cardiac tissue has the potential to transform cardiovascular medicine. Induced regeneration—the progress and promise of direct reprogramming for heart repair Regeneration of cardiac tissue has the potential to transform cardiovascular medicine. Recent advances in stem cell biology and direct reprogramming, or transdifferentiation, have produced powerful new tools to advance this goal. In this Review we examine key developments in the generation of new cardiomyocytes in vitro as well as the exciting progress that has been made toward in vivo reprogramming of cardiac tissue. We also address controversies and hurdles that challenge the field.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.770774+00:00"
+}

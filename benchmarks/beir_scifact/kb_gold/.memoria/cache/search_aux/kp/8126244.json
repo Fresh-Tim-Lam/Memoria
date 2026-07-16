@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8126244",
+  "source_fingerprint": "70eb41dc958f5fa5d89b1e95155fdde5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8126244",
+    "rational-extension-of-the-ribosome-biogenesis-pathway-using-network-guided-genetics"
+  ],
+  "key_phrases": [
+    "rational",
+    "extension",
+    "ribosome",
+    "biogenesis",
+    "pathway",
+    "using",
+    "network",
+    "guided"
+  ],
+  "summary_1l": "Biogenesis of ribosomes is an essential cellular process conserved across all eukaryotes and is known to require >17",
+  "query_hits": [],
+  "embed_text": "8126244 Rational Extension of the Ribosome Biogenesis Pathway Using Network-Guided Genetics science scifact Biogenesis of ribosomes is an essential cellular process conserved across all eukaryotes and is known to require >170 genes for the assembly, modification, and trafficking of ribosome components through multiple cellular compartments.… 8126244 rational-extension-of-the-ribosome-biogenesis-pathway-using-network-guided-genetics rational extension ribosome biogenesis pathway using network guided Biogenesis of ribosomes is an essential cellular process conserved across all eukaryotes and is known to require >17 Rational Extension of the Ribosome Biogenesis Pathway Using Network-Guided Genetics Biogenesis of ribosomes is an essential cellular process conserved across all eukaryotes and is known to require >170 genes for the assembly, modification, and trafficking of ribosome components through multiple cellular compartments. Despite intensive study, this pathway likely involves many additional genes. Here, we employ network-guided genetics-an approach for associating candidate genes with biological processes that capitalizes on recent advances in functional genomic and proteomic studies-to computationally identify additional ribosomal biogenesis genes. We experimentally evaluated >100 candidate yeast genes in a battery of assays, confirming involvement of at least 15 new genes, including previousl",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.942827+00:00"
+}

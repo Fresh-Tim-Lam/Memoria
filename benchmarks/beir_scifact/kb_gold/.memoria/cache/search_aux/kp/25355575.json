@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25355575",
+  "source_fingerprint": "4231b2ff1b978fe72394bf00e1e3c919",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25355575",
+    "high-cardiovascular-mortality-in-russia-cannot-be-explained-by-the-classical-risk-factors.-the-arkhangelsk-study-2000"
+  ],
+  "key_phrases": [
+    "high",
+    "cardiovascular",
+    "mortality",
+    "russia",
+    "cannot",
+    "be",
+    "explained",
+    "by"
+  ],
+  "summary_1l": "High cardiovascular mortality in Russia cannot be explained by the classical risk factors.",
+  "query_hits": [],
+  "embed_text": "25355575 High cardiovascular mortality in Russia cannot be explained by the classical risk factors. The Arkhangelsk study 2000 science scifact Since the beginning of the 1990s the public health situation in Russia has been characterized by an extremely high mortality and a significant reduction in life expectancy. Cardiovascular diseases remained the major cause of death. Only a… 25355575 high-cardiovascular-mortality-in-russia-cannot-be-explained-by-the-classical-risk-factors.-the-arkhangelsk-study-2000 high cardiovascular mortality russia cannot be explained by High cardiovascular mortality in Russia cannot be explained by the classical risk factors. High cardiovascular mortality in Russia cannot be explained by the classical risk factors. The Arkhangelsk study 2000 Since the beginning of the 1990s the public health situation in Russia has been characterized by an extremely high mortality and a significant reduction in life expectancy. Cardiovascular diseases remained the major cause of death. Only a few large population studies were conducted in Russia during this period. A total of 1968 men and 1737 women aged 18–75 years participated in a health survey in Arkhangelsk, Russia, over the period 1999–2000. Investigation included assessment of classic cardiovascular risk factors (family history, smoking, blood pressure, and blood lipids) along with general health variables. The paper presents sex specific data on risk factors for coronar",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.459832+00:00"
+}

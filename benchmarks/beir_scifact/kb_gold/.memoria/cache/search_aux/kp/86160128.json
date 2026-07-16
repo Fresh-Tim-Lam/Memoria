@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "86160128",
+  "source_fingerprint": "8de7ecfcb126da78185256e0126994da",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "86160128",
+    "fenugreek-(trigonella-foenum-graecum):-a-review-of-health-beneficial-physiological-effects"
+  ],
+  "key_phrases": [
+    "fenugreek",
+    "trigonella",
+    "foenum",
+    "graecum",
+    "review",
+    "health",
+    "beneficial",
+    "physiological"
+  ],
+  "summary_1l": "Among the spices that are esoteric food adjuncts being used to enhance flavoring and color, fenugreek (Trigon",
+  "query_hits": [],
+  "embed_text": "86160128 Fenugreek (Trigonella foenum-graecum): A Review of Health Beneficial Physiological Effects science scifact Among the spices that are esoteric food adjuncts being used to enhance flavoring and color, fenugreek (Trigonella foenum-graecum) also modifies the texture of food. This seed spice is also employed for medicinal purpose in many traditional… 86160128 fenugreek-(trigonella-foenum-graecum):-a-review-of-health-beneficial-physiological-effects fenugreek trigonella foenum graecum review health beneficial physiological Among the spices that are esoteric food adjuncts being used to enhance flavoring and color, fenugreek (Trigon Fenugreek (Trigonella foenum-graecum): A Review of Health Beneficial Physiological Effects Among the spices that are esoteric food adjuncts being used to enhance flavoring and color, fenugreek (Trigonella foenum-graecum) also modifies the texture of food. This seed spice is also employed for medicinal purpose in many traditional systems as antibacterial, gastric stimulant, against anorexia, antidiabetic agent and as a galactogogue. In recent decades, several health beneficial physiological attributes of fenugreek seeds have been seen in animal studies as well as human trials. These include antidiabetic effect, hypocholesterolemic influence, antioxidant potency, digestive stimulant action, and hepatoprotective effect. Among these beneficial physiological effects, the antidiabetic and hypoch",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.225928+00:00"
+}

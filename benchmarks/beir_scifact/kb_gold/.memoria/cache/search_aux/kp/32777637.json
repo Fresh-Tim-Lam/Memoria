@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "32777637",
+  "source_fingerprint": "38e896bd81faa66417148b203a0bf2ad",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "32777637",
+    "when-is-antipsychotic-polypharmacy-supported-by-research-evidence?-implications-for-qi."
+  ],
+  "key_phrases": [
+    "when",
+    "antipsychotic",
+    "polypharmacy",
+    "supported",
+    "by",
+    "research",
+    "evidence",
+    "implications"
+  ],
+  "summary_1l": "When is antipsychotic polypharmacy supported by research evidence?",
+  "query_hits": [],
+  "embed_text": "32777637 When is antipsychotic polypharmacy supported by research evidence? Implications for QI. science scifact BACKGROUND Concurrent use of multiple standing antipsychotics (antipsychotic polypharmacy) is increasingly common among both inpatients and outpatients. Although this has often been cited as a potential quality-of-care problem, reviews of… 32777637 when-is-antipsychotic-polypharmacy-supported-by-research-evidence?-implications-for-qi. when antipsychotic polypharmacy supported by research evidence implications When is antipsychotic polypharmacy supported by research evidence? When is antipsychotic polypharmacy supported by research evidence? Implications for QI. BACKGROUND Concurrent use of multiple standing antipsychotics (antipsychotic polypharmacy) is increasingly common among both inpatients and outpatients. Although this has often been cited as a potential quality-of-care problem, reviews of research evidence on antipsychotic polypharmacy have not distinguished between appropriate versus inappropriate use. METHODS A MEDLINE search from 1966 to December 2007 was completed to identify studies comparing changes in symptoms, functioning, and/or side effects between patients treated with multiple antipsychotics and patients treated with a single antipsychotic. The studies were reviewed in two groups on the basis of whether prescribing was concordant with guidel",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.945013+00:00"
+}

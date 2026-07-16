@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16267205",
+  "source_fingerprint": "abe9b47a05968e81b4f08d516a4df253",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16267205",
+    "sex-specific-effects-of-the-daf-12-steroid-receptor-on-aging-in-caenorhabditis-elegans."
+  ],
+  "key_phrases": [
+    "sex",
+    "specific",
+    "effects",
+    "daf",
+    "12",
+    "steroid",
+    "receptor",
+    "aging"
+  ],
+  "summary_1l": "Sex-specific effects of the DAF-12 steroid receptor on aging in Caenorhabditis elegans.",
+  "query_hits": [],
+  "embed_text": "16267205 Sex-specific effects of the DAF-12 steroid receptor on aging in Caenorhabditis elegans. science scifact Sex differences in longevity and aging are seen throughout the animal kingdom. These are likely to result, in part, from sex differences in endocrinology. In the nematode Caenorhabditis elegans, males are the longer-lived sex. Here we… 16267205 sex-specific-effects-of-the-daf-12-steroid-receptor-on-aging-in-caenorhabditis-elegans. sex specific effects daf 12 steroid receptor aging Sex-specific effects of the DAF-12 steroid receptor on aging in Caenorhabditis elegans. Sex-specific effects of the DAF-12 steroid receptor on aging in Caenorhabditis elegans. Sex differences in longevity and aging are seen throughout the animal kingdom. These are likely to result, in part, from sex differences in endocrinology. In the nematode Caenorhabditis elegans, males are the longer-lived sex. Here we explore the possibility that sex differences in insulin/insulin-like growth factor 1 (IGF-1) and steroid endocrinology contribute to this sex difference in aging by studying C. elegans populations in liquid culture. We report that in hermaphrodite populations, mutational loss of the DAF-12 steroid receptor affected life span as in previous plate-culture studies: mutant longevity is suppressed in a weak daf-2 insulin/IGF-1 receptor mutant but enhanced in a stronger daf-2 mu",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.038844+00:00"
+}

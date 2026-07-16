@@ -63,7 +63,8 @@ def test_sync_embedding_incremental_reuses_vectors(kb_with_lexical):
     assert first is not None
     assert first["schema_version"] == SCHEMA_VERSION
     assert len(first["records"]) == 1
-    assert encode_calls and len(encode_calls[0]) == 1
+    assert encode_calls and len(encode_calls[0]) == 2
+    assert "desc_vector" in first["records"][0]
 
     encode_calls.clear()
     second = sync_embedding_index(str(kb), force=False)
@@ -101,7 +102,7 @@ def test_sync_embedding_only_encodes_changed_kp(kb_with_lexical):
     assert index is not None
     assert len(index["records"]) == 2
     assert len(encode_calls) == 1
-    assert len(encode_calls[0]) == 1
+    assert len(encode_calls[0]) == 2
 
 
 def test_embedding_index_persisted_on_disk(kb_with_lexical):

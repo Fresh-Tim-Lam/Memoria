@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13790144",
+  "source_fingerprint": "7f493faca85406f3a46c0db837bb305f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13790144",
+    "histone-structure-and-nucleosome-stability."
+  ],
+  "key_phrases": [
+    "histone",
+    "structure",
+    "nucleosome",
+    "stability",
+    "proteins",
+    "play",
+    "essential",
+    "structural"
+  ],
+  "summary_1l": "Histone structure and nucleosome stability.",
+  "query_hits": [],
+  "embed_text": "13790144 Histone structure and nucleosome stability. science scifact Histone proteins play essential structural and functional roles in the transition between active and inactive chromatin states. Although histones have a high degree of conservation due to constraints to maintain the overall structure of… 13790144 histone-structure-and-nucleosome-stability. histone structure nucleosome stability proteins play essential structural Histone structure and nucleosome stability. Histone structure and nucleosome stability. Histone proteins play essential structural and functional roles in the transition between active and inactive chromatin states. Although histones have a high degree of conservation due to constraints to maintain the overall structure of the nucleosomal octameric core, variants have evolved to assume diverse roles in gene regulation and epigenetic silencing. Histone variants, post-translational modifications and interactions with chromatin remodeling complexes influence DNA replication, transcription, repair and recombination. The authors review recent findings on the structure of chromatin that confirm previous interparticle interactions observed in crystal structures.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.019083+00:00"
+}

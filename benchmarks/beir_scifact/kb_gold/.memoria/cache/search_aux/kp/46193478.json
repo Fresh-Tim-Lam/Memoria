@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "46193478",
+  "source_fingerprint": "df0423a688a6f8ec878d28f1f956de0d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "46193478",
+    "a-negative-staining-method-for-high-resolution-electron-microscopy-of-viruses."
+  ],
+  "key_phrases": [
+    "negative",
+    "staining",
+    "method",
+    "high",
+    "resolution",
+    "electron",
+    "microscopy",
+    "viruses"
+  ],
+  "summary_1l": "A negative staining method for high resolution electron microscopy of viruses.",
+  "query_hits": [],
+  "embed_text": "46193478 A negative staining method for high resolution electron microscopy of viruses. science scifact Abstract A simple technique has been developed for the study of the external form and structure of virus particles. High contrast with good preservation is obtained by mixing virus preparations with 1% phosphotungstic acid adjusted to pH… 46193478 a-negative-staining-method-for-high-resolution-electron-microscopy-of-viruses. negative staining method high resolution electron microscopy viruses A negative staining method for high resolution electron microscopy of viruses. A negative staining method for high resolution electron microscopy of viruses. Abstract A simple technique has been developed for the study of the external form and structure of virus particles. High contrast with good preservation is obtained by mixing virus preparations with 1% phosphotungstic acid adjusted to pH 7.5 and spraying directly onto electron microscope supporting films made from evaporated carbon. The application of the technique to tobacco mosaic virus and turnip yellow mosaic virus is described. Structural details suggested by X-ray diffraction methods have been resolved.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.701516+00:00"
+}

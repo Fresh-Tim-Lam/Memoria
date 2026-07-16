@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3090454",
+  "source_fingerprint": "a74b45240e1281c63a151b7b5f314ad6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3090454",
+    "factors-influencing-b-lymphopoiesis-after-allogeneic-hematopoietic-cell-transplantation."
+  ],
+  "key_phrases": [
+    "factors",
+    "influencing",
+    "lymphopoiesis",
+    "after",
+    "allogeneic",
+    "hematopoietic",
+    "cell",
+    "transplantation"
+  ],
+  "summary_1l": "Factors influencing B lymphopoiesis after allogeneic hematopoietic cell transplantation.",
+  "query_hits": [],
+  "embed_text": "3090454 Factors influencing B lymphopoiesis after allogeneic hematopoietic cell transplantation. science scifact In 93 allograft recipients, the numbers of marrow B-cell precursors on days 80 and 365 correlated with the counts of circulating B cells, suggesting that the posttransplantation B-cell deficiency is at least in part due to insufficient B… 3090454 factors-influencing-b-lymphopoiesis-after-allogeneic-hematopoietic-cell-transplantation. factors influencing lymphopoiesis after allogeneic hematopoietic cell transplantation Factors influencing B lymphopoiesis after allogeneic hematopoietic cell transplantation. Factors influencing B lymphopoiesis after allogeneic hematopoietic cell transplantation. In 93 allograft recipients, the numbers of marrow B-cell precursors on days 80 and 365 correlated with the counts of circulating B cells, suggesting that the posttransplantation B-cell deficiency is at least in part due to insufficient B lymphopoiesis. Factors that could affect B lymphopoiesis were evaluated. The number of marrow B-cell precursors on days 30 and 80 was at least 4-fold lower in patients with grade 2 to 4 acute graft-versus-host disease (GVHD) compared with patients with grade 0 to 1 acute GVHD. The number of B-cell precursors on day 365 was 18-fold lower in patients with extensive chronic GVHD compared with patients with no or limited chronic GVHD. The number of B-cell precursors was no",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.110996+00:00"
+}

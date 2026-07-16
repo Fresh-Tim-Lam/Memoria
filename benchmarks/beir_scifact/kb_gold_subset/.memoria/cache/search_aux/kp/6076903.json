@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6076903",
+  "source_fingerprint": "2b942bbe42992dec213c0abda42caefc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6076903",
+    "regulation-of-admp-and-bmp2/4/7-at-opposite-embryonic-poles-generates-a-self-regulating-morphogenetic-field"
+  ],
+  "key_phrases": [
+    "regulation",
+    "admp",
+    "bmp2",
+    "at",
+    "opposite",
+    "embryonic",
+    "poles",
+    "generates"
+  ],
+  "summary_1l": "Embryos have the ability to self-regulate and regenerate normal structures after being secti",
+  "query_hits": [],
+  "embed_text": "6076903 Regulation of ADMP and BMP2/4/7 at Opposite Embryonic Poles Generates a Self-Regulating Morphogenetic Field science scifact Embryos have the ability to self-regulate and regenerate normal structures after being sectioned in half. How is such a morphogenetic field established? We discovered that quadruple knockdown of ADMP and BMP2/4/7 in Xenopus embryos… 6076903 regulation-of-admp-and-bmp2/4/7-at-opposite-embryonic-poles-generates-a-self-regulating-morphogenetic-field regulation admp bmp2 at opposite embryonic poles generates Embryos have the ability to self-regulate and regenerate normal structures after being secti Regulation of ADMP and BMP2/4/7 at Opposite Embryonic Poles Generates a Self-Regulating Morphogenetic Field Embryos have the ability to self-regulate and regenerate normal structures after being sectioned in half. How is such a morphogenetic field established? We discovered that quadruple knockdown of ADMP and BMP2/4/7 in Xenopus embryos eliminates self-regulation, causing ubiquitous neural induction throughout the ectoderm. ADMP transcription in the Spemann organizer is activated at low BMP levels. When ventral BMP2/4/7 signals are depleted, Admp expression increases, allowing for self-regulation. ADMP has BMP-like activity and signals via the ALK-2 receptor. It is unable to signal dorsally because of inhibition by Chordin. The ventral BMP antagonists Sizzled and Bambi further refine the",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:13.698745+00:00"
+}

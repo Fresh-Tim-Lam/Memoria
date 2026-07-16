@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "82665667",
+  "source_fingerprint": "8cfa4d6af466a282f35c4cce176de1e3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "82665667",
+    "detection-of-[ca2+]i-changes-in-sub-plasma-membrane-micro-domains-in-a-single-living-cell-by-an-optical-fiber-based-nanobiosensor"
+  ],
+  "key_phrases": [
+    "detection",
+    "ca2",
+    "changes",
+    "sub",
+    "plasma",
+    "membrane",
+    "micro",
+    "domains"
+  ],
+  "summary_1l": "An optical fiber-based nanobiosensor, for advanced detection of [Ca 2+",
+  "query_hits": [],
+  "embed_text": "82665667 Detection of [Ca2+]I Changes In Sub-Plasma Membrane Micro Domains in A Single Living Cell By an Optical Fiber-Based Nanobiosensor science scifact An optical fiber-based nanobiosensor, for advanced detection of [Ca 2+ ]i (i.e. intracellular Ca 2+ concentration) changes in sub-plasma membrane microdomains in a single living smooth muscle cell and a single living cardiomyocyte, was… 82665667 detection-of-[ca2+]i-changes-in-sub-plasma-membrane-micro-domains-in-a-single-living-cell-by-an-optical-fiber-based-nanobiosensor detection ca2 changes sub plasma membrane micro domains An optical fiber-based nanobiosensor, for advanced detection of [Ca 2+ Detection of [Ca2+]I Changes In Sub-Plasma Membrane Micro Domains in A Single Living Cell By an Optical Fiber-Based Nanobiosensor An optical fiber-based nanobiosensor, for advanced detection of [Ca 2+ ]i (i.e. intracellular Ca 2+ concentration) changes in sub-plasma membrane microdomains in a single living smooth muscle cell and a single living cardiomyocyte, was successfully prepared by coating silver and then immobilizing Calcium Green-1 Dextran, a calcium ion sensitive dye, on the distal end of the nanoprobe. The constructed nanobiosensor was capable of detecting ultra-low and local intracellular calcium ion concentration within the nanomolar range, which is around the physiological level of free cytosolic calcium ion in a single living cell. The response time was less than milliseconds",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.211300+00:00"
+}

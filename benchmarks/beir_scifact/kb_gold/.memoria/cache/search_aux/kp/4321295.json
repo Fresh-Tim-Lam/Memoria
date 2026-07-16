@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4321295",
+  "source_fingerprint": "ecfa64dd408a55536b3afb636708d91d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4321295",
+    "evolution-of-novel-cooperative-swarming-in-the-bacterium-myxococcus-xanthus"
+  ],
+  "key_phrases": [
+    "evolution",
+    "novel",
+    "cooperative",
+    "swarming",
+    "bacterium",
+    "myxococcus",
+    "xanthus",
+    "cooperation"
+  ],
+  "summary_1l": "Cooperation among individuals is necessary for evolutionary transitions to higher levels of biological organization.",
+  "query_hits": [],
+  "embed_text": "4321295 Evolution of novel cooperative swarming in the bacterium Myxococcus xanthus science scifact Cooperation among individuals is necessary for evolutionary transitions to higher levels of biological organization. In such transitions, groups of individuals at one level (such as single cells) cooperate to form selective units at a… 4321295 evolution-of-novel-cooperative-swarming-in-the-bacterium-myxococcus-xanthus evolution novel cooperative swarming bacterium myxococcus xanthus cooperation Cooperation among individuals is necessary for evolutionary transitions to higher levels of biological organization. Evolution of novel cooperative swarming in the bacterium Myxococcus xanthus Cooperation among individuals is necessary for evolutionary transitions to higher levels of biological organization. In such transitions, groups of individuals at one level (such as single cells) cooperate to form selective units at a higher level (such as multicellular organisms). Though the evolution of cooperation is difficult to observe directly in higher eukaryotes, microorganisms do offer such an opportunity. Here we report the evolution of novel cooperative behaviour in experimental lineages of the bacterium Myxococcus xanthus. Wild-type strains of M. xanthus exhibit socially dependent swarming across soft surfaces by a mechanism known as ‘S-motility’ that requires the presence of extracellular type IV pili.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.592542+00:00"
+}

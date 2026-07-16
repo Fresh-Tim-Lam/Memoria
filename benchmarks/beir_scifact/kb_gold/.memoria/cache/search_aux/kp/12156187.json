@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12156187",
+  "source_fingerprint": "8369a44ceba7d7ddb812bf896cabfc23",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12156187",
+    "rapid-induction-of-alternative-lengthening-of-telomeres-by-depletion-of-the-histone-chaperone-asf1"
+  ],
+  "key_phrases": [
+    "rapid",
+    "induction",
+    "alternative",
+    "lengthening",
+    "telomeres",
+    "by",
+    "depletion",
+    "histone"
+  ],
+  "summary_1l": "The mechanism of activation of the alternative lengthening of telomeres (ALT) pathway of mammalian ch",
+  "query_hits": [],
+  "embed_text": "12156187 Rapid induction of Alternative Lengthening of Telomeres by depletion of the histone chaperone ASF1 science scifact The mechanism of activation of the alternative lengthening of telomeres (ALT) pathway of mammalian chromosome-end maintenance has been unclear. We have now discovered that co-depletion of the histone chaperones ASF1a and ASF1b in human… 12156187 rapid-induction-of-alternative-lengthening-of-telomeres-by-depletion-of-the-histone-chaperone-asf1 rapid induction alternative lengthening telomeres by depletion histone The mechanism of activation of the alternative lengthening of telomeres (ALT) pathway of mammalian ch Rapid induction of Alternative Lengthening of Telomeres by depletion of the histone chaperone ASF1 The mechanism of activation of the alternative lengthening of telomeres (ALT) pathway of mammalian chromosome-end maintenance has been unclear. We have now discovered that co-depletion of the histone chaperones ASF1a and ASF1b in human cells induced all hallmarks of ALT in both primary and cancer cells. These included the formation of ALT-associated PML (promyelocytic leukemia) bodies (APBs), the presence of extrachromosomal telomeric DNA species, an elevated frequency of telomeric sister chromatid exchanges (t-SCE) events and intertelomeric exchange of an integrated tag. The induction of ALT characteristics in this setting led to the simultaneous suppression of telomerase. We determined that",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:07.866723+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13290521",
+  "source_fingerprint": "da833f2211bbf13697f7ec16c05f4a6d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13290521",
+    "microrna-7:-a-mirna-with-expanding-roles-in-development-and-disease."
+  ],
+  "key_phrases": [
+    "microrna",
+    "mirna",
+    "with",
+    "expanding",
+    "roles",
+    "development",
+    "disease",
+    "micrornas"
+  ],
+  "summary_1l": "MicroRNA-7: A miRNA with expanding roles in development and disease.",
+  "query_hits": [],
+  "embed_text": "13290521 MicroRNA-7: A miRNA with expanding roles in development and disease. science scifact MicroRNAs (miRNAs) are a family of short, non-coding RNA molecules (∼22nt) involved in post-transcriptional control of gene expression. They act via base-pairing with mRNA transcripts that harbour target sequences, resulting in accelerated… 13290521 microrna-7:-a-mirna-with-expanding-roles-in-development-and-disease. microrna mirna with expanding roles development disease micrornas MicroRNA-7: A miRNA with expanding roles in development and disease. MicroRNA-7: A miRNA with expanding roles in development and disease. MicroRNAs (miRNAs) are a family of short, non-coding RNA molecules (∼22nt) involved in post-transcriptional control of gene expression. They act via base-pairing with mRNA transcripts that harbour target sequences, resulting in accelerated mRNA decay and/or translational attenuation. Given miRNAs mediate the expression of molecules involved in many aspects of normal cell development and functioning, it is not surprising that aberrant miRNA expression is closely associated with many human diseases. Their pivotal role in driving a range of normal cellular physiology as well as pathological processes has established miRNAs as potential therapeutics, as well as potential diagnostic and prognostic tools in human health. MicroR",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:10.693668+00:00"
+}

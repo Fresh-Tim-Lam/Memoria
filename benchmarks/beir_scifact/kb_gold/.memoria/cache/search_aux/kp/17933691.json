@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17933691",
+  "source_fingerprint": "71187cb0aba9f7f4798bc50129108788",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17933691",
+    "characterization-of-adipocytes-derived-from-fibro/adipogenic-progenitors-resident-in-human-skeletal-muscle"
+  ],
+  "key_phrases": [
+    "characterization",
+    "adipocytes",
+    "derived",
+    "from",
+    "fibro",
+    "adipogenic",
+    "progenitors",
+    "resident"
+  ],
+  "summary_1l": "A population of fibro/adipogenic but non-myogenic progenitors located between skeletal muscle",
+  "query_hits": [],
+  "embed_text": "17933691 Characterization of adipocytes derived from fibro/adipogenic progenitors resident in human skeletal muscle science scifact A population of fibro/adipogenic but non-myogenic progenitors located between skeletal muscle fibers was recently discovered. The aim of this study was to determine the extent to which these progenitors differentiate into fully functional… 17933691 characterization-of-adipocytes-derived-from-fibro/adipogenic-progenitors-resident-in-human-skeletal-muscle characterization adipocytes derived from fibro adipogenic progenitors resident A population of fibro/adipogenic but non-myogenic progenitors located between skeletal muscle Characterization of adipocytes derived from fibro/adipogenic progenitors resident in human skeletal muscle A population of fibro/adipogenic but non-myogenic progenitors located between skeletal muscle fibers was recently discovered. The aim of this study was to determine the extent to which these progenitors differentiate into fully functional adipocytes. The characterization of muscle progenitor-derived adipocytes is a central issue in understanding muscle homeostasis. They are considered as being the cellular origin of intermuscular adipose tissue that develops in several pathophysiological situations. Here fibro/adipogenic progenitors were isolated from a panel of 15 human muscle biopsies on the basis of the specific cell-surface immunophenotype CD15+/PDGFRα+CD56-. This allowed investig",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.501653+00:00"
+}

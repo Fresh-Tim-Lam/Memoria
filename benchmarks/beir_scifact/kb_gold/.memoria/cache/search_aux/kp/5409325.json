@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5409325",
+  "source_fingerprint": "4c164d759a27dab31c29df9315156654",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5409325",
+    "gonadotrope-specific-deletion-of-dicer-results-in-severely-suppressed-gonadotropins-and-fertility-defects."
+  ],
+  "key_phrases": [
+    "gonadotrope",
+    "specific",
+    "deletion",
+    "dicer",
+    "results",
+    "severely",
+    "suppressed",
+    "gonadotropins"
+  ],
+  "summary_1l": "Gonadotrope-specific deletion of Dicer results in severely suppressed gonadotropins and fertility defects.",
+  "query_hits": [],
+  "embed_text": "5409325 Gonadotrope-specific deletion of Dicer results in severely suppressed gonadotropins and fertility defects. science scifact Pituitary gonadotropins follicle-stimulating hormone and luteinizing hormone are heterodimeric glycoproteins expressed in gonadotropes. They act on gonads and promote their development and functions including steroidogenesis and… 5409325 gonadotrope-specific-deletion-of-dicer-results-in-severely-suppressed-gonadotropins-and-fertility-defects. gonadotrope specific deletion dicer results severely suppressed gonadotropins Gonadotrope-specific deletion of Dicer results in severely suppressed gonadotropins and fertility defects. Gonadotrope-specific deletion of Dicer results in severely suppressed gonadotropins and fertility defects. Pituitary gonadotropins follicle-stimulating hormone and luteinizing hormone are heterodimeric glycoproteins expressed in gonadotropes. They act on gonads and promote their development and functions including steroidogenesis and gametogenesis. Although transcriptional regulation of gonadotropin subunits has been well studied, the post-transcriptional regulation of gonadotropin subunits is not well understood. To test if microRNAs regulate the hormone-specific gonadotropin β subunits in vivo, we deleted Dicer in gonadotropes by a Cre-lox genetic approach. We found that many of the DICER-dependent microRNAs, predicted in silico to bind gonadotropin β subunit mRNAs, were suppressed in pu",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.206100+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12370190",
+  "source_fingerprint": "5364eacbb6e85c1fefe32eef1366dc44",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12370190",
+    "a-load-driver-device-for-engineering-modularity-in-biological-networks"
+  ],
+  "key_phrases": [
+    "load",
+    "driver",
+    "device",
+    "engineering",
+    "modularity",
+    "biological",
+    "networks",
+    "behavior"
+  ],
+  "summary_1l": "The behavior of gene modules in complex synthetic circuits is often unpredictable.",
+  "query_hits": [],
+  "embed_text": "12370190 A load driver device for engineering modularity in biological networks science scifact The behavior of gene modules in complex synthetic circuits is often unpredictable. After joining modules to create a circuit, downstream elements (such as binding sites for a regulatory protein) apply a load to upstream modules that can… 12370190 a-load-driver-device-for-engineering-modularity-in-biological-networks load driver device engineering modularity biological networks behavior The behavior of gene modules in complex synthetic circuits is often unpredictable. A load driver device for engineering modularity in biological networks The behavior of gene modules in complex synthetic circuits is often unpredictable. After joining modules to create a circuit, downstream elements (such as binding sites for a regulatory protein) apply a load to upstream modules that can negatively affect circuit function. Here we devised a genetic device named a load driver that mitigates the impact of load on circuit function, and we demonstrate its behavior in Saccharomyces cerevisiae. The load driver implements the design principle of timescale separation: inclusion of the load driver's fast phosphotransfer processes restores the capability of a slower transcriptional circuit to respond to time-varying input signals even in the presence of substantial load. Without t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:08.206717+00:00"
+}

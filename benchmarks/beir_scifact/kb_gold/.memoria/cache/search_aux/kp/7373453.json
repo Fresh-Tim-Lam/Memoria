@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7373453",
+  "source_fingerprint": "aa204501e979365d6448e344b0f4ce50",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7373453",
+    "role-of-endothelial-shear-stress-in-the-natural-history-of-coronary-atherosclerosis-and-vascular-remodeling:-molecular,-cellular,-and-vascular-behavior."
+  ],
+  "key_phrases": [
+    "role",
+    "endothelial",
+    "shear",
+    "stress",
+    "natural",
+    "history",
+    "coronary",
+    "atherosclerosis"
+  ],
+  "summary_1l": "Role of endothelial shear stress in the natural history of coronary atherosclerosis and vascular remodeling: molecular, cellular, and vascular behavior.",
+  "query_hits": [],
+  "embed_text": "7373453 Role of endothelial shear stress in the natural history of coronary atherosclerosis and vascular remodeling: molecular, cellular, and vascular behavior. science scifact Although the entire coronary tree is exposed to the atherogenic effect of the systemic risk factors, atherosclerotic lesions form at specific arterial regions, where low and oscillatory endothelial shear stress (ESS) occur. Low ESS… 7373453 role-of-endothelial-shear-stress-in-the-natural-history-of-coronary-atherosclerosis-and-vascular-remodeling:-molecular,-cellular,-and-vascular-behavior. role endothelial shear stress natural history coronary atherosclerosis Role of endothelial shear stress in the natural history of coronary atherosclerosis and vascular remodeling: molecular, cellular, and vascular behavior. Role of endothelial shear stress in the natural history of coronary atherosclerosis and vascular remodeling: molecular, cellular, and vascular behavior. Although the entire coronary tree is exposed to the atherogenic effect of the systemic risk factors, atherosclerotic lesions form at specific arterial regions, where low and oscillatory endothelial shear stress (ESS) occur. Low ESS modulates endothelial gene expression through complex mechanoreception and mechanotransduction processes, inducing an atherogenic endothelial phenotype and formation of an early atherosclerotic plaque. Each early plaque exhibits an individual natural history of progression, regression, or stabilization, which is dependent not only on the formation and progression of atherosclerosis but also on the vascular remod",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.163528+00:00"
+}

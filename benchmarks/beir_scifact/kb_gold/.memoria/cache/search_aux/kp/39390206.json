@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "39390206",
+  "source_fingerprint": "0c2c743d077d9cccd0eb08c35aefe6bf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "39390206",
+    "a-diffusion-tensor-magnetic-resonance-imaging-study-of-brain-tissue-from-patients-with-migraine."
+  ],
+  "key_phrases": [
+    "diffusion",
+    "tensor",
+    "magnetic",
+    "resonance",
+    "imaging",
+    "study",
+    "brain",
+    "tissue"
+  ],
+  "summary_1l": "A diffusion tensor magnetic resonance imaging study of brain tissue from patients with migraine.",
+  "query_hits": [],
+  "embed_text": "39390206 A diffusion tensor magnetic resonance imaging study of brain tissue from patients with migraine. science scifact OBJECTIVE To measure in vivo, using diffusion tensor magnetic resonance imaging (DT-MRI) the extent of pathological damage of normal appearing brain tissue (NABT) from patients with migraine. METHODS Dual echo and DT-MRI scans of the brain… 39390206 a-diffusion-tensor-magnetic-resonance-imaging-study-of-brain-tissue-from-patients-with-migraine. diffusion tensor magnetic resonance imaging study brain tissue A diffusion tensor magnetic resonance imaging study of brain tissue from patients with migraine. A diffusion tensor magnetic resonance imaging study of brain tissue from patients with migraine. OBJECTIVE To measure in vivo, using diffusion tensor magnetic resonance imaging (DT-MRI) the extent of pathological damage of normal appearing brain tissue (NABT) from patients with migraine. METHODS Dual echo and DT-MRI scans of the brain were acquired from 34 patients with migraine and 17 sex and age matched healthy volunteers. Mean diffusivity (MD) and fractional anisotropy (FA) histograms of the NABT were obtained from all subjects and the histograms' peak heights and average NABT MD and FA measured. When present, average MD and FA values of T2 visible lesions were also measured. RESULTS In comparison with healthy volunteers, patients with migraine had lower MD histogram peak height (p=0.02",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.552314+00:00"
+}

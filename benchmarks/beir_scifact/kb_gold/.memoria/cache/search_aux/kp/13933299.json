@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "13933299",
+  "source_fingerprint": "9525f72e90c037696cf0d1a224de783f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13933299"
+  ],
+  "key_phrases": [
+    "midlife",
+    "serum",
+    "cholesterol",
+    "increased",
+    "risk",
+    "alzheimer",
+    "vascular",
+    "dementia"
+  ],
+  "summary_1l": "Aims: To investigate midlife cholesterol in relation to Alzheimer’s disease (AD) and vascular deme",
+  "query_hits": [],
+  "embed_text": "13933299 Midlife Serum Cholesterol and Increased Risk of Alzheimer’s and Vascular Dementia Three Decades Later science scifact Aims: To investigate midlife cholesterol in relation to Alzheimer’s disease (AD) and vascular dementia (VaD) in a large multiethnic cohort of women and men. Methods: The Kaiser Permanente Northern California Medical Group (healthcare… 13933299 midlife serum cholesterol increased risk alzheimer vascular dementia Aims: To investigate midlife cholesterol in relation to Alzheimer’s disease (AD) and vascular deme Midlife Serum Cholesterol and Increased Risk of Alzheimer’s and Vascular Dementia Three Decades Later Aims: To investigate midlife cholesterol in relation to Alzheimer’s disease (AD) and vascular dementia (VaD) in a large multiethnic cohort of women and men. Methods: The Kaiser Permanente Northern California Medical Group (healthcare delivery organization) formed the database for this study. The 9,844 participants underwent detailed health evaluations during 1964–1973 at ages 40–45 years; they were still members of the health plan in 1994. AD and VaD were ascertained by medical records between 1 January 1994 and 1 June 2007. Cox proportional hazards models – adjusted for age, education, race/ethnic group, sex, midlife diabetes, hypertension, BMI and late-life stroke – were conducted. Resul",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.640690+00:00"
+}

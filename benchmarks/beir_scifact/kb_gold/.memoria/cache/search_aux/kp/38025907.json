@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "38025907",
+  "source_fingerprint": "bb07114ee0d8f7cdd2d723d921c4acd7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "38025907",
+    "engineered-fgf19-eliminates-bile-acid-toxicity-and-lipotoxicity-leading-to-resolution-of-steatohepatitis-and-fibrosis-in-mice"
+  ],
+  "key_phrases": [
+    "engineered",
+    "fgf19",
+    "eliminates",
+    "bile",
+    "acid",
+    "toxicity",
+    "lipotoxicity",
+    "leading"
+  ],
+  "summary_1l": "Nonalcoholic fatty liver disease (NAFLD) is an increasingly prevalent chro",
+  "query_hits": [],
+  "embed_text": "38025907 Engineered FGF19 eliminates bile acid toxicity and lipotoxicity leading to resolution of steatohepatitis and fibrosis in mice science scifact Nonalcoholic fatty liver disease (NAFLD) is an increasingly prevalent chronic liver disease for which no approved therapies are available. Despite intensive research, the cellular mechanisms that mediate NAFLD pathogenesis and progression… 38025907 engineered-fgf19-eliminates-bile-acid-toxicity-and-lipotoxicity-leading-to-resolution-of-steatohepatitis-and-fibrosis-in-mice engineered fgf19 eliminates bile acid toxicity lipotoxicity leading Nonalcoholic fatty liver disease (NAFLD) is an increasingly prevalent chro Engineered FGF19 eliminates bile acid toxicity and lipotoxicity leading to resolution of steatohepatitis and fibrosis in mice Nonalcoholic fatty liver disease (NAFLD) is an increasingly prevalent chronic liver disease for which no approved therapies are available. Despite intensive research, the cellular mechanisms that mediate NAFLD pathogenesis and progression are poorly understood. Although obesity, diabetes, insulin resistance, and related metabolic syndrome, all consequences of a Western diet lifestyle, are well-recognized risk factors for NAFLD development, dysregulated bile acid metabolism is emerging as a novel mechanism contributing to NAFLD pathogenesis. Notably, NAFLD patients exhibit a deficiency in fibroblast growth factor 19 (FGF19), an endocrine hormone in the gut-liver axis",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.106714+00:00"
+}

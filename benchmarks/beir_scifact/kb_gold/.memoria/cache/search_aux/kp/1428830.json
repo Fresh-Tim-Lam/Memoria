@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1428830",
+  "source_fingerprint": "67652b59afda82f77d086ef592414384",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1428830",
+    "the-atypical-antipsychotic-olanzapine-causes-weight-gain-by-targeting-serotonin-receptor-2c."
+  ],
+  "key_phrases": [
+    "atypical",
+    "antipsychotic",
+    "olanzapine",
+    "causes",
+    "weight",
+    "gain",
+    "by",
+    "targeting"
+  ],
+  "summary_1l": "The atypical antipsychotic olanzapine causes weight gain by targeting serotonin receptor 2C.",
+  "query_hits": [],
+  "embed_text": "1428830 The atypical antipsychotic olanzapine causes weight gain by targeting serotonin receptor 2C. science scifact Atypical antipsychotics such as olanzapine often induce excessive weight gain and type 2 diabetes. However, the mechanisms underlying these drug-induced metabolic perturbations remain poorly understood. Here, we used an experimental model… 1428830 the-atypical-antipsychotic-olanzapine-causes-weight-gain-by-targeting-serotonin-receptor-2c. atypical antipsychotic olanzapine causes weight gain by targeting The atypical antipsychotic olanzapine causes weight gain by targeting serotonin receptor 2C. The atypical antipsychotic olanzapine causes weight gain by targeting serotonin receptor 2C. Atypical antipsychotics such as olanzapine often induce excessive weight gain and type 2 diabetes. However, the mechanisms underlying these drug-induced metabolic perturbations remain poorly understood. Here, we used an experimental model that reproduces olanzapine-induced hyperphagia and obesity in female C57BL/6 mice. We found that olanzapine treatment acutely increased food intake, impaired glucose tolerance, and altered physical activity and energy expenditure in mice. Furthermore, olanzapine-induced hyperphagia and weight gain were blunted in mice lacking the serotonin 2C receptor (HTR2C). Finally, we showed that treatment with the HTR2C-specific agonist lorcaserin suppressed olanzapine-induce",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.456089+00:00"
+}

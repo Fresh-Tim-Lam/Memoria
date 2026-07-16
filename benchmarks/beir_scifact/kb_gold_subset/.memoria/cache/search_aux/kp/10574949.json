@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10574949",
+  "source_fingerprint": "5481cbda3ace3fc1344923a7b7a77c5b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10574949",
+    "a-missense-lamb2-mutation-causes-congenital-nephrotic-syndrome-by-impairing-laminin-secretion."
+  ],
+  "key_phrases": [
+    "missense",
+    "lamb2",
+    "mutation",
+    "causes",
+    "congenital",
+    "nephrotic",
+    "syndrome",
+    "by"
+  ],
+  "summary_1l": "A missense LAMB2 mutation causes congenital nephrotic syndrome by impairing laminin secretion.",
+  "query_hits": [],
+  "embed_text": "10574949 A missense LAMB2 mutation causes congenital nephrotic syndrome by impairing laminin secretion. science scifact Laminin β2 is a component of laminin-521, which is an important constituent of the glomerular basement membrane (GBM). Null mutations in laminin β2 (LAMB2) cause Pierson syndrome, a severe congenital nephrotic syndrome with ocular and… 10574949 a-missense-lamb2-mutation-causes-congenital-nephrotic-syndrome-by-impairing-laminin-secretion. missense lamb2 mutation causes congenital nephrotic syndrome by A missense LAMB2 mutation causes congenital nephrotic syndrome by impairing laminin secretion. A missense LAMB2 mutation causes congenital nephrotic syndrome by impairing laminin secretion. Laminin β2 is a component of laminin-521, which is an important constituent of the glomerular basement membrane (GBM). Null mutations in laminin β2 (LAMB2) cause Pierson syndrome, a severe congenital nephrotic syndrome with ocular and neurologic defects. In contrast, patients with LAMB2 missense mutations, such as R246Q, can have less severe extrarenal defects but still exhibit congenital nephrotic syndrome. To investigate how such missense mutations in LAMB2 cause proteinuria, we generated three transgenic lines of mice in which R246Q-mutant rat laminin β2 replaced the wild-type mouse laminin β2 in the GBM. These transgenic mice developed much less severe proteinuria than their nontransgenic Lam",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.713864+00:00"
+}

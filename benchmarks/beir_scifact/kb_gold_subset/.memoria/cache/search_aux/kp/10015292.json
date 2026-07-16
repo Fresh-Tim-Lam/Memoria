@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10015292",
+  "source_fingerprint": "b656ae27bfb3415e99387d0501ec2e9a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10015292",
+    "a-distinctive-dna-damage-response-in-human-hematopoietic-stem-cells-reveals-an-apoptosis-independent-role-for-p53-in-self-renewal."
+  ],
+  "key_phrases": [
+    "distinctive",
+    "dna",
+    "damage",
+    "response",
+    "human",
+    "hematopoietic",
+    "stem",
+    "cells"
+  ],
+  "summary_1l": "A distinctive DNA damage response in human hematopoietic stem cells reveals an apoptosis-independent role for p53 in self-renewal.",
+  "query_hits": [],
+  "embed_text": "10015292 A distinctive DNA damage response in human hematopoietic stem cells reveals an apoptosis-independent role for p53 in self-renewal. science scifact Highly regenerative tissues such as blood must possess effective DNA damage responses (DDR) that balance long-term regeneration with protection from leukemogenesis. Hematopoietic stem cells (HSCs) sustain life-long blood production, yet… 10015292 a-distinctive-dna-damage-response-in-human-hematopoietic-stem-cells-reveals-an-apoptosis-independent-role-for-p53-in-self-renewal. distinctive dna damage response human hematopoietic stem cells A distinctive DNA damage response in human hematopoietic stem cells reveals an apoptosis-independent role for p53 in self-renewal. A distinctive DNA damage response in human hematopoietic stem cells reveals an apoptosis-independent role for p53 in self-renewal. Highly regenerative tissues such as blood must possess effective DNA damage responses (DDR) that balance long-term regeneration with protection from leukemogenesis. Hematopoietic stem cells (HSCs) sustain life-long blood production, yet their response to DNA damage remains largely unexplored. We report that human HSCs exhibit delayed DNA double-strand break rejoining, persistent gammaH2AX foci, and enhanced p53- and ASPP1-dependent apoptosis after gamma-radiation compared to progenitors. p53 inactivation or Bcl-2 overexpression reduced radiation-induced apoptosis and preserved in vivo repopulating HSC function. Despite similar protection from irradiation-induce",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.207133+00:00"
+}

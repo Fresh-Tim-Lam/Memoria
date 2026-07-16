@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "43122426",
+  "source_fingerprint": "cefbf7f214f49667e1f3f6cb96c4b857",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "43122426",
+    "131-i-radioiodine-therapy-for-hyperthyroidism-in-patients-with-graves'-disease,-uninodular-goitre-and-multinodular-goitre."
+  ],
+  "key_phrases": [
+    "131",
+    "radioiodine",
+    "therapy",
+    "hyperthyroidism",
+    "patients",
+    "with",
+    "graves",
+    "disease"
+  ],
+  "summary_1l": "131-I radioiodine therapy for hyperthyroidism in patients with Graves' disease, uninodular goitre and multinodular goitre.",
+  "query_hits": [],
+  "embed_text": "43122426 131-I radioiodine therapy for hyperthyroidism in patients with Graves' disease, uninodular goitre and multinodular goitre. science scifact We studied 201 consecutive patients who received a relatively fixed dose of radioiodine for the treatment of hyperthyroidism between the years 1981-6. Patients with Graves' disease (170) were initially treated with a mean (SE) dose of 369… 43122426 131-i-radioiodine-therapy-for-hyperthyroidism-in-patients-with-graves'-disease,-uninodular-goitre-and-multinodular-goitre. 131 radioiodine therapy hyperthyroidism patients with graves disease 131-I radioiodine therapy for hyperthyroidism in patients with Graves' disease, uninodular goitre and multinodular goitre. 131-I radioiodine therapy for hyperthyroidism in patients with Graves' disease, uninodular goitre and multinodular goitre. We studied 201 consecutive patients who received a relatively fixed dose of radioiodine for the treatment of hyperthyroidism between the years 1981-6. Patients with Graves' disease (170) were initially treated with a mean (SE) dose of 369 (10) MBq 131-I with a remission rate of 94% at 6 months and a cumulative relapse rate of 12% at one year and 21% at 5 years. The cumulative incidence of hypothyroidism was 26% at 3 months, 55% at 6 months, 61% at 1 year and 66% at 5 years. Patients with a uninodular goitre (10) were initially treated with a mean (SE) dose of 438 (85) MBq 131-I with a remission rate of 100% at 6 months, without relapse at 1 year but relapsing in 17% at",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.481827+00:00"
+}

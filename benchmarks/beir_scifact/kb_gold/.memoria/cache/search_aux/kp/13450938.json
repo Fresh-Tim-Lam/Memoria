@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13450938",
+  "source_fingerprint": "ec88779d48f3c1068515c99a18721624",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13450938",
+    "genetic-and-epigenetic-mutations-affect-the-dna-binding-capability-of-human-zfp57-in-transient-neonatal-diabetes-type-1"
+  ],
+  "key_phrases": [
+    "genetic",
+    "epigenetic",
+    "mutations",
+    "affect",
+    "dna",
+    "binding",
+    "capability",
+    "human"
+  ],
+  "summary_1l": "In the mouse, ZFP57 contains three classical Cys2His2 zinc finger domains (ZF) a",
+  "query_hits": [],
+  "embed_text": "13450938 Genetic and epigenetic mutations affect the DNA binding capability of human ZFP57 in transient neonatal diabetes type 1 science scifact In the mouse, ZFP57 contains three classical Cys2His2 zinc finger domains (ZF) and recognizes the methylated TGC(met)CGC target sequence using the first and the second ZFs. In this study, we demonstrate that the human ZFP57 (hZFP57)… 13450938 genetic-and-epigenetic-mutations-affect-the-dna-binding-capability-of-human-zfp57-in-transient-neonatal-diabetes-type-1 genetic epigenetic mutations affect dna binding capability human In the mouse, ZFP57 contains three classical Cys2His2 zinc finger domains (ZF) a Genetic and epigenetic mutations affect the DNA binding capability of human ZFP57 in transient neonatal diabetes type 1 In the mouse, ZFP57 contains three classical Cys2His2 zinc finger domains (ZF) and recognizes the methylated TGC(met)CGC target sequence using the first and the second ZFs. In this study, we demonstrate that the human ZFP57 (hZFP57) containing six Cys2His2 ZFs, binds the same methylated sequence through the third and the fourth ZFs, and identify the aminoacids critical for DNA interaction. In addition, we present evidences indicating that hZFP57 mutations and hypomethylation of the TNDM1 ICR both associated with Transient Neonatal Diabetes Mellitus type 1 result in loss of hZFP57 binding to the TNDM1 locus, likely causing PLAGL1 activation.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.281613+00:00"
+}

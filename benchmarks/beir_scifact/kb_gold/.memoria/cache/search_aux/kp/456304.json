@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "456304",
+  "source_fingerprint": "8be06d33c05bbf851c727057532c6c6c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "456304",
+    "multiple-risk-behaviour:-increasing-socio-economic-gap-over-time?"
+  ],
+  "key_phrases": [
+    "multiple",
+    "risk",
+    "behaviour",
+    "increasing",
+    "socio",
+    "economic",
+    "gap",
+    "over"
+  ],
+  "summary_1l": "Multiple risk behaviour: increasing socio-economic gap over time?",
+  "query_hits": [],
+  "embed_text": "456304 Multiple risk behaviour: increasing socio-economic gap over time? science scifact BACKGROUND Unhealthy behaviours often occur in combination. In this study the relationship between education and lifestyle, defined as a cluster of risk behaviours, has been analysed with the purpose to assess socio-economic changes in… 456304 multiple-risk-behaviour:-increasing-socio-economic-gap-over-time? multiple risk behaviour increasing socio economic gap over Multiple risk behaviour: increasing socio-economic gap over time? Multiple risk behaviour: increasing socio-economic gap over time? BACKGROUND Unhealthy behaviours often occur in combination. In this study the relationship between education and lifestyle, defined as a cluster of risk behaviours, has been analysed with the purpose to assess socio-economic changes in multiple risk behaviour over time. METHODS Cross-sectional data from the Belgian Health Interview Surveys 1997, 2001 and 2004 were analysed. This study is restricted to persons aged ≥ 15 years with information on those health behaviours and education (n = 7431, n = 8142 and n = 7459, respectively). A lifestyle index was created based on the sum of the four unhealthy behaviours: smokers vs. non-smokers, risky versus non-risky alcohol use, sedentaryness vs. physically active and poor vs. healthy",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.493420+00:00"
+}

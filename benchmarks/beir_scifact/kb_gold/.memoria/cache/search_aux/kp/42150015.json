@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "42150015",
+  "source_fingerprint": "91612de8b11d6eaadbe36fc9ef9bcab1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "42150015"
+  ],
+  "key_phrases": [
+    "reproductive",
+    "lifestyle",
+    "determinants",
+    "anti",
+    "llerian",
+    "hormone",
+    "large",
+    "population"
+  ],
+  "summary_1l": "Reproductive and lifestyle determinants of anti-Müllerian hormone in a large population-based study.",
+  "query_hits": [],
+  "embed_text": "42150015 Reproductive and lifestyle determinants of anti-Müllerian hormone in a large population-based study. science scifact CONTEXT Anti-müllerian hormone (AMH) is an ovarian reserve marker that is increasingly applied in clinical practice as a prognostic and diagnostic tool. Despite increased use of AMH in clinical practice, large-scale studies addressing the… 42150015 reproductive lifestyle determinants anti llerian hormone large population Reproductive and lifestyle determinants of anti-Müllerian hormone in a large population-based study. Reproductive and lifestyle determinants of anti-Müllerian hormone in a large population-based study. CONTEXT Anti-müllerian hormone (AMH) is an ovarian reserve marker that is increasingly applied in clinical practice as a prognostic and diagnostic tool. Despite increased use of AMH in clinical practice, large-scale studies addressing the influence of possible determinants on AMH levels are scarce. OBJECTIVE We aimed to address the role of reproductive and lifestyle determinants of AMH in a large population-based cohort of women. DESIGN In this cross-sectional study, age-specific AMH percentiles were calculated using general linear modeling with CG-LMS (Cole and Green, Lambda, Mu, and Sigma model, an established method to calculate growth curves for children). SETTING Women from the general",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.817822+00:00"
+}

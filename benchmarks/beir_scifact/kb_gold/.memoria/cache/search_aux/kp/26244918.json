@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26244918",
+  "source_fingerprint": "71ae2ddf6bee5ce4fe9fdef59b8585cd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26244918",
+    "long-term-inhibition-of-dipeptidyl-peptidase-4-in-alzheimer's-prone-mice."
+  ],
+  "key_phrases": [
+    "long",
+    "term",
+    "inhibition",
+    "dipeptidyl",
+    "peptidase",
+    "alzheimer",
+    "prone",
+    "mice"
+  ],
+  "summary_1l": "Long-term inhibition of dipeptidyl peptidase-4 in Alzheimer's prone mice.",
+  "query_hits": [],
+  "embed_text": "26244918 Long-term inhibition of dipeptidyl peptidase-4 in Alzheimer's prone mice. science scifact We tested here the impact of a long-term inhibition of dipeptidyl peptidase-4 (DPP-4) with sitagliptin on the deposition of amyloid-beta within the brain and deficits in memory-related behavioral paradigms in a model of Alzheimer's disease… 26244918 long-term-inhibition-of-dipeptidyl-peptidase-4-in-alzheimer's-prone-mice. long term inhibition dipeptidyl peptidase alzheimer prone mice Long-term inhibition of dipeptidyl peptidase-4 in Alzheimer's prone mice. Long-term inhibition of dipeptidyl peptidase-4 in Alzheimer's prone mice. We tested here the impact of a long-term inhibition of dipeptidyl peptidase-4 (DPP-4) with sitagliptin on the deposition of amyloid-beta within the brain and deficits in memory-related behavioral paradigms in a model of Alzheimer's disease (AD): double transgenic mice B6*Cg-Tg(APPswe,PSEN1dE9)85Dbo/J. Mice began to receive sitagliptin at 7 months of age. Three different dose of sitagliptin (5, 10 and 20 mg/kg), were administered daily for 12 weeks by gastric gavage. The treatments counteracted: (i) the memory impairment in the contextual fear conditioning test; (ii) increased the brain levels of GLP-1; (iii) produced significant reductions of nitrosative stress and inflammation hallmarks within the brain, as well as",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.580803+00:00"
+}

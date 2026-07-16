@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6913227",
+  "source_fingerprint": "1f6fdba248a7995fdb5d7798fa0aa2b0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6913227",
+    "microrna-containing-t-regulatory-cell-derived-exosomes-suppress-pathogenic-t-helper-1-cells"
+  ],
+  "key_phrases": [
+    "microrna",
+    "containing",
+    "regulatory",
+    "cell",
+    "derived",
+    "exosomes",
+    "suppress",
+    "pathogenic"
+  ],
+  "summary_1l": "Foxp3(+) T regulatory (Treg) cells prevent inflammatory disease but the mechanistic basis of suppression is",
+  "query_hits": [],
+  "embed_text": "6913227 MicroRNA-Containing T-Regulatory-Cell-Derived Exosomes Suppress Pathogenic T Helper 1 Cells science scifact Foxp3(+) T regulatory (Treg) cells prevent inflammatory disease but the mechanistic basis of suppression is not understood completely. Gene silencing by RNA interference can act in a cell-autonomous and non-cell-autonomous manner,… 6913227 microrna-containing-t-regulatory-cell-derived-exosomes-suppress-pathogenic-t-helper-1-cells microrna containing regulatory cell derived exosomes suppress pathogenic Foxp3(+) T regulatory (Treg) cells prevent inflammatory disease but the mechanistic basis of suppression is MicroRNA-Containing T-Regulatory-Cell-Derived Exosomes Suppress Pathogenic T Helper 1 Cells Foxp3(+) T regulatory (Treg) cells prevent inflammatory disease but the mechanistic basis of suppression is not understood completely. Gene silencing by RNA interference can act in a cell-autonomous and non-cell-autonomous manner, providing mechanisms of intercellular regulation. Here, we demonstrate that non-cell-autonomous gene silencing, mediated by miRNA-containing exosomes, is a mechanism employed by Treg cells to suppress T-cell-mediated disease. Treg cells transferred microRNAs (miRNA) to various immune cells, including T helper 1 (Th1) cells, suppressing Th1 cell proliferation and cytokine secretion. Use of Dicer-deficient or Rab27a and Rab27b double-deficient Treg cells to disrupt miRNA bio",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.941828+00:00"
+}

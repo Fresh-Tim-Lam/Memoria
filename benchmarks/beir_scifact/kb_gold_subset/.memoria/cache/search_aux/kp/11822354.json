@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11822354",
+  "source_fingerprint": "927b82ebd32a494a72275851cd08dcee",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11822354",
+    "unr-facilitates-the-interaction-of-mle-with-the-lncrna-rox2-during-drosophila-dosage-compensation."
+  ],
+  "key_phrases": [
+    "unr",
+    "facilitates",
+    "interaction",
+    "mle",
+    "with",
+    "lncrna",
+    "rox2",
+    "during"
+  ],
+  "summary_1l": "UNR facilitates the interaction of MLE with the lncRNA roX2 during Drosophila dosage compensation.",
+  "query_hits": [],
+  "embed_text": "11822354 UNR facilitates the interaction of MLE with the lncRNA roX2 during Drosophila dosage compensation. science scifact Dosage compensation is a regulatory process that balances the expression of X-chromosomal genes between males (XY) and females (XX). In Drosophila, this requires non-coding RNAs and RNA-binding proteins (RBPs) whose specific functions… 11822354 unr-facilitates-the-interaction-of-mle-with-the-lncrna-rox2-during-drosophila-dosage-compensation. unr facilitates interaction mle with lncrna rox2 during UNR facilitates the interaction of MLE with the lncRNA roX2 during Drosophila dosage compensation. UNR facilitates the interaction of MLE with the lncRNA roX2 during Drosophila dosage compensation. Dosage compensation is a regulatory process that balances the expression of X-chromosomal genes between males (XY) and females (XX). In Drosophila, this requires non-coding RNAs and RNA-binding proteins (RBPs) whose specific functions remain elusive. Here we show that the Drosophila RBP UNR promotes the targeting of the activating male-specific-lethal complex to the X-chromosome by facilitating the interaction of two crucial subunits: the RNA helicase MLE and the long non-coding RNA roX2.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:07.586652+00:00"
+}

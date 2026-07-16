@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2734421",
+  "source_fingerprint": "ff62a767b1eadc2b701a46dc1a51fc55",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2734421",
+    "the-tumor-necrosis-factor-family-receptors-rank-and-cd40-cooperatively-establish-the-thymic-medullary-microenvironment-and-self-tolerance."
+  ],
+  "key_phrases": [
+    "tumor",
+    "necrosis",
+    "factor",
+    "family",
+    "receptors",
+    "rank",
+    "cd40",
+    "cooperatively"
+  ],
+  "summary_1l": "The tumor necrosis factor family receptors RANK and CD40 cooperatively establish the thymic medullary microenvironment and self-tolerance.",
+  "query_hits": [],
+  "embed_text": "2734421 The tumor necrosis factor family receptors RANK and CD40 cooperatively establish the thymic medullary microenvironment and self-tolerance. science scifact Medullary thymic epithelial cells (mTECs) establish T cell self-tolerance through the expression of autoimmune regulator (Aire) and peripheral tissue-specific self-antigens. However, signals underlying mTEC development remain largely… 2734421 the-tumor-necrosis-factor-family-receptors-rank-and-cd40-cooperatively-establish-the-thymic-medullary-microenvironment-and-self-tolerance. tumor necrosis factor family receptors rank cd40 cooperatively The tumor necrosis factor family receptors RANK and CD40 cooperatively establish the thymic medullary microenvironment and self-tolerance. The tumor necrosis factor family receptors RANK and CD40 cooperatively establish the thymic medullary microenvironment and self-tolerance. Medullary thymic epithelial cells (mTECs) establish T cell self-tolerance through the expression of autoimmune regulator (Aire) and peripheral tissue-specific self-antigens. However, signals underlying mTEC development remain largely unclear. Here, we demonstrate crucial regulation of mTEC development by receptor activator of NF-kappaB (RANK) and CD40 signals. Whereas only RANK signaling was essential for mTEC development during embryogenesis, in postnatal mice, cooperation between CD40 and RANK signals was required for mTEC development to successfully establish the medullary microenvironment. Ligation of RANK or CD40 on fetal thymic stroma in vitro ind",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.793856+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4407455",
+  "source_fingerprint": "bb0e60518f1fcf39d2404b15075662ab",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4407455",
+    "cleavage-of-gsdmd-by-inflammatory-caspases-determines-pyroptotic-cell-death"
+  ],
+  "key_phrases": [
+    "cleavage",
+    "gsdmd",
+    "by",
+    "inflammatory",
+    "caspases",
+    "determines",
+    "pyroptotic",
+    "cell"
+  ],
+  "summary_1l": "Inflammatory caspases (caspase-1, -4, -5 and -11) are critical for innate defences.",
+  "query_hits": [],
+  "embed_text": "4407455 Cleavage of GSDMD by inflammatory caspases determines pyroptotic cell death science scifact Inflammatory caspases (caspase-1, -4, -5 and -11) are critical for innate defences. Caspase-1 is activated by ligands of various canonical inflammasomes, and caspase-4, -5 and -11 directly recognize bacterial lipopolysaccharide, both of… 4407455 cleavage-of-gsdmd-by-inflammatory-caspases-determines-pyroptotic-cell-death cleavage gsdmd by inflammatory caspases determines pyroptotic cell Inflammatory caspases (caspase-1, -4, -5 and -11) are critical for innate defences. Cleavage of GSDMD by inflammatory caspases determines pyroptotic cell death Inflammatory caspases (caspase-1, -4, -5 and -11) are critical for innate defences. Caspase-1 is activated by ligands of various canonical inflammasomes, and caspase-4, -5 and -11 directly recognize bacterial lipopolysaccharide, both of which trigger pyroptosis. Despite the crucial role in immunity and endotoxic shock, the mechanism for pyroptosis induction by inflammatory caspases is unknown. Here we identify gasdermin D (Gsdmd) by genome-wide clustered regularly interspaced palindromic repeat (CRISPR)-Cas9 nuclease screens of caspase-11- and caspase-1-mediated pyroptosis in mouse bone marrow macrophages. GSDMD-deficient cells resisted the induction of pyroptosis by cytosolic lipopolysaccharide and known canonical",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.732791+00:00"
+}

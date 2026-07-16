@@ -33,6 +33,17 @@ class PyWebViewHost:
             return result[0]
         return None
 
+    def pick_import_files(self) -> list[str]:
+        window = self._window()
+        if window is None:
+            return []
+        result = window.create_file_dialog(
+            webview.OPEN_DIALOG,
+            allow_multiple=True,
+            file_types=("Text Files (*.txt;*.md)", "All Files (*.*)"),
+        )
+        return list(result) if result else []
+
     def minimize(self) -> None:
         window = self._window()
         if window is None:

@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "kp_id": "74340#19",
+  "source_fingerprint": "8b6361dbbc89096e9c96eb64cb98eda6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "Stay",
+    "with",
+    "You",
+    "2020年瑞典羽毛球公開賽",
+    "马来西亚－新加坡边界"
+  ],
+  "aliases": [
+    "74340#19"
+  ],
+  "key_phrases": [
+    "孙燕姿",
+    "2020",
+    "月底",
+    "孫燕姿",
+    "林俊傑",
+    "合作",
+    "疫情",
+    "公益"
+  ],
+  "summary_1l": "2020年1月底，孫燕姿和林俊傑合作疫情公益歌曲《STAY WITH YOU》。",
+  "query_hits": [],
+  "embed_text": "74340#19 孙燕姿 孙燕姿 2020年1月底，孫燕姿和林俊傑合作疫情公益歌曲《STAY WITH YOU》。同年8月，二人在新加坡國慶日首次表演這首歌曲。 Stay with You 2020年瑞典羽毛球公開賽 马来西亚－新加坡边界 74340#19 孙燕姿 2020 月底 孫燕姿 林俊傑 合作 疫情 公益 2020年1月底，孫燕姿和林俊傑合作疫情公益歌曲《STAY WITH YOU》。 孙燕姿 2020年1月底，孫燕姿和林俊傑合作疫情公益歌曲《STAY WITH YOU》。同年8月，二人在新加坡國慶日首次表演這首歌曲。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:19:13.597886+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8447873",
+  "source_fingerprint": "833fd9e91debfdbe68970a7146f5c9bd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8447873",
+    "systematic-review-of-controlled-clinical-trials-of-gastric-lavage-in-acute-organophosphorus-pesticide-poisoning."
+  ],
+  "key_phrases": [
+    "systematic",
+    "review",
+    "controlled",
+    "clinical",
+    "trials",
+    "gastric",
+    "lavage",
+    "acute"
+  ],
+  "summary_1l": "Systematic review of controlled clinical trials of gastric lavage in acute organophosphorus pesticide poisoning.",
+  "query_hits": [],
+  "embed_text": "8447873 Systematic review of controlled clinical trials of gastric lavage in acute organophosphorus pesticide poisoning. science scifact BACKGROUND Organophosphorus pesticide (OP) self-poisoning is a major problem in the developing rural world. There is little clinical trial data to guide therapy, hindering the identification of best therapy. Despite the recognition of… 8447873 systematic-review-of-controlled-clinical-trials-of-gastric-lavage-in-acute-organophosphorus-pesticide-poisoning. systematic review controlled clinical trials gastric lavage acute Systematic review of controlled clinical trials of gastric lavage in acute organophosphorus pesticide poisoning. Systematic review of controlled clinical trials of gastric lavage in acute organophosphorus pesticide poisoning. BACKGROUND Organophosphorus pesticide (OP) self-poisoning is a major problem in the developing rural world. There is little clinical trial data to guide therapy, hindering the identification of best therapy. Despite the recognition of adverse effects, gastric lavage is commonly done in Asia. We aimed to identify studies assessing its effectiveness. METHOD We systematically searched the literature for controlled clinical studies that assessed the effect of gastric lavage in OP pesticide self-poisoning. RESULTS All 56 studies identified were Chinese and reported benefit from the intervention studied, including multiple gastric lavages, use of norepinephrine or pralidoxime in the l",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.698250+00:00"
+}

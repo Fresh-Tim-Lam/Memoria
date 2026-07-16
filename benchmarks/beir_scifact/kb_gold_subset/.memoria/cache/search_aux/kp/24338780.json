@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24338780",
+  "source_fingerprint": "96d95331377a3c4b25f3cff9fc9d9771",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24338780",
+    "lethal-autoimmune-myocarditis-in-interferon-gamma-receptor-deficient-mice:-enhanced-disease-severity-by-impaired-inducible-nitric-oxide-synthase-induction."
+  ],
+  "key_phrases": [
+    "lethal",
+    "autoimmune",
+    "myocarditis",
+    "interferon",
+    "gamma",
+    "receptor",
+    "deficient",
+    "mice"
+  ],
+  "summary_1l": "Lethal autoimmune myocarditis in interferon-gamma receptor-deficient mice: enhanced disease severity by impaired inducible nitric oxide synthase induction.",
+  "query_hits": [],
+  "embed_text": "24338780 Lethal autoimmune myocarditis in interferon-gamma receptor-deficient mice: enhanced disease severity by impaired inducible nitric oxide synthase induction. science scifact BACKGROUND Interferon-gamma (IFN-gamma) is an essential cytokine in the regulation of inflammatory responses in autoimmune diseases. Little is known about its role in inflammatory heart disease. METHODS AND RESULTS We showed that IFN-gamma… 24338780 lethal-autoimmune-myocarditis-in-interferon-gamma-receptor-deficient-mice:-enhanced-disease-severity-by-impaired-inducible-nitric-oxide-synthase-induction. lethal autoimmune myocarditis interferon gamma receptor deficient mice Lethal autoimmune myocarditis in interferon-gamma receptor-deficient mice: enhanced disease severity by impaired inducible nitric oxide synthase induction. Lethal autoimmune myocarditis in interferon-gamma receptor-deficient mice: enhanced disease severity by impaired inducible nitric oxide synthase induction. BACKGROUND Interferon-gamma (IFN-gamma) is an essential cytokine in the regulation of inflammatory responses in autoimmune diseases. Little is known about its role in inflammatory heart disease. METHODS AND RESULTS We showed that IFN-gamma receptor-deficient mice (IFN-gammaR(-/-)) on a BALB/c background immunized with a peptide derived from cardiac alpha-myosin heavy chain develop severe myocarditis with high mortality. Although myocarditis subsided in wild-type mice after 3 weeks, IFN-gammaR(-/-) mice showed persistent disease. The persistent inflammation was accompanied by vigorous in vitro CD4 T-cell responses and impaired inducible",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:12.542819+00:00"
+}

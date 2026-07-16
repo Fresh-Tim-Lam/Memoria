@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8208212",
+  "source_fingerprint": "3ae6b838f144471d7cbbfb69f3781a79",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8208212",
+    "dual-and-opposing-roles-of-primary-cilia-in-medulloblastoma-development"
+  ],
+  "key_phrases": [
+    "dual",
+    "opposing",
+    "roles",
+    "primary",
+    "cilia",
+    "medulloblastoma",
+    "development",
+    "recent"
+  ],
+  "summary_1l": "Recent work has shown that primary cilia are essential for Hedgehog (Hh) signaling during mammalian development.",
+  "query_hits": [],
+  "embed_text": "8208212 Dual and opposing roles of primary cilia in medulloblastoma development science scifact Recent work has shown that primary cilia are essential for Hedgehog (Hh) signaling during mammalian development. It is also known that aberrant Hh signaling can lead to cancer, but the role of primary cilia in oncogenesis is not known.… 8208212 dual-and-opposing-roles-of-primary-cilia-in-medulloblastoma-development dual opposing roles primary cilia medulloblastoma development recent Recent work has shown that primary cilia are essential for Hedgehog (Hh) signaling during mammalian development. Dual and opposing roles of primary cilia in medulloblastoma development Recent work has shown that primary cilia are essential for Hedgehog (Hh) signaling during mammalian development. It is also known that aberrant Hh signaling can lead to cancer, but the role of primary cilia in oncogenesis is not known. Cerebellar granule neuron precursors (GNPs) can give rise to medulloblastomas, the most common malignant brain tumor in children. The primary cilium and Hh signaling are required for GNP proliferation. We asked whether primary cilia in GNPs have a role in medulloblastoma growth in mice. Genetic ablation of primary cilia blocked medulloblastoma formation when this tumor was driven by a constitutively active Smoothened protein (Smo), an upstream activator of Hh signaling. In contrast, remo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.098504+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17939443",
+  "source_fingerprint": "ef2c6e84aca4c233c919cff5136ee84d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17939443",
+    "displacement-of-a-dna-binding-protein-by-dda-helicase"
+  ],
+  "key_phrases": [
+    "displacement",
+    "dna",
+    "binding",
+    "protein",
+    "by",
+    "dda",
+    "helicase",
+    "bacteriophage"
+  ],
+  "summary_1l": "Bacteriophage T4 Dda helicase has recently been shown to be active as a monomer for unwinding of short duplex oligonucleotides and for displacing",
+  "query_hits": [],
+  "embed_text": "17939443 Displacement of a DNA binding protein by Dda helicase science scifact Bacteriophage T4 Dda helicase has recently been shown to be active as a monomer for unwinding of short duplex oligonucleotides and for displacing streptavidin from 3′-biotinylated oligonucleotides. However, its activity for streptavidin… 17939443 displacement-of-a-dna-binding-protein-by-dda-helicase displacement dna binding protein by dda helicase bacteriophage Bacteriophage T4 Dda helicase has recently been shown to be active as a monomer for unwinding of short duplex oligonucleotides and for displacing Displacement of a DNA binding protein by Dda helicase Bacteriophage T4 Dda helicase has recently been shown to be active as a monomer for unwinding of short duplex oligonucleotides and for displacing streptavidin from 3′-biotinylated oligonucleotides. However, its activity for streptavidin displacement and DNA unwinding has been shown to increase as the number of Dda molecules bound to the substrate molecule increases. A substrate was designed to address the ability of Dda to displace DNA binding proteins. A DNA binding site for the Escherichia coli trp repressor was introduced into an oligonucleotide substrate for Dda helicase containing single-stranded overhang. Here we show that a Dda monomer is insufficient to displace the E.coli trp repressor from dsDNA under single turnover condition",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.536003+00:00"
+}

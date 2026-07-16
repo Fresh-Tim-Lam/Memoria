@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10937190",
+  "source_fingerprint": "5c626aa69b824cf722b0a6bdbbb5d1af",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10937190",
+    "table-of-contents"
+  ],
+  "key_phrases": [
+    "table",
+    "contents",
+    "morphogenesis",
+    "elegans",
+    "embryo",
+    "largely",
+    "controlled",
+    "by"
+  ],
+  "summary_1l": "The morphogenesis of the C.",
+  "query_hits": [],
+  "embed_text": "10937190 Table of Contents science scifact The morphogenesis of the C. elegans embryo is largely controlled by the development of the epidermis, also known as the hypodermis, a single epithelial layer that surrounds the animal. Morphogenesis of the epidermis involves cell-cell… 10937190 table-of-contents table contents morphogenesis elegans embryo largely controlled by The morphogenesis of the C. Table of Contents The morphogenesis of the C. elegans embryo is largely controlled by the development of the epidermis, also known as the hypodermis, a single epithelial layer that surrounds the animal. Morphogenesis of the epidermis involves cell-cell interactions with internal tissues, such as the developing nervous system and musculature. Genetic analysis of mutants with aberrant epidermal morphology has defined multiple steps in epidermal morphogenesis. In the wild type, epidermal cells are generated on the dorsal side of the embryo among the progeny of four early embryonic blastomeres. Specification of epidermal fate is regulated by a hierarchy of transcription factors. After specification, dorsal epidermal cells rearrange, a process known as dorsal intercalation. Most epidermal cells",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:05.701214+00:00"
+}

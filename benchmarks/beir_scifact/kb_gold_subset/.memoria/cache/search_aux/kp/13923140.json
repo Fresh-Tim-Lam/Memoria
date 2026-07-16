@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13923140",
+  "source_fingerprint": "4e2e0af8cde55d4bd42b12ebfb5504a7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13923140",
+    "interleukin-2-gene-variation-impairs-regulatory-t-cell-function-and-causes-autoimmunity"
+  ],
+  "key_phrases": [
+    "interleukin",
+    "gene",
+    "variation",
+    "impairs",
+    "regulatory",
+    "cell",
+    "function",
+    "causes"
+  ],
+  "summary_1l": "Autoimmune diseases are thought to result from imbalances in normal immune physiology and regulation.",
+  "query_hits": [],
+  "embed_text": "13923140 Interleukin-2 gene variation impairs regulatory T cell function and causes autoimmunity science scifact Autoimmune diseases are thought to result from imbalances in normal immune physiology and regulation. Here, we show that autoimmune disease susceptibility and resistance alleles on mouse chromosome 3 (Idd3) correlate with differential… 13923140 interleukin-2-gene-variation-impairs-regulatory-t-cell-function-and-causes-autoimmunity interleukin gene variation impairs regulatory cell function causes Autoimmune diseases are thought to result from imbalances in normal immune physiology and regulation. Interleukin-2 gene variation impairs regulatory T cell function and causes autoimmunity Autoimmune diseases are thought to result from imbalances in normal immune physiology and regulation. Here, we show that autoimmune disease susceptibility and resistance alleles on mouse chromosome 3 (Idd3) correlate with differential expression of the key immunoregulatory cytokine interleukin-2 (IL-2). In order to test directly that an approximately twofold reduction in IL-2 underpins the Idd3-linked destabilization of immune homeostasis, we show that engineered haplodeficiency of Il2 gene expression not only reduces T cell IL-2 production by twofold but also mimics the autoimmune dysregulatory effects of the naturally occurring susceptibility alleles of Il2. Reduced IL-2 production achieved by either",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:11.317335+00:00"
+}

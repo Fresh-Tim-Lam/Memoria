@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "37964706",
+  "source_fingerprint": "2ea7fe4382251ad4e55118c5d7a8473a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "37964706",
+    "local-ca2+-influx-through-ca2+-release-activated-ca2+-(crac)-channels-stimulates-production-of-an-intracellular-messenger-and-an-intercellular-pro-inflammatory-signal."
+  ],
+  "key_phrases": [
+    "local",
+    "ca2",
+    "influx",
+    "through",
+    "release",
+    "activated",
+    "crac",
+    "channels"
+  ],
+  "summary_1l": "Local Ca2+ influx through Ca2+ release-activated Ca2+ (CRAC) channels stimulates production of an intracellular messenger and an intercellular pro-inflammatory signal.",
+  "query_hits": [],
+  "embed_text": "37964706 Local Ca2+ influx through Ca2+ release-activated Ca2+ (CRAC) channels stimulates production of an intracellular messenger and an intercellular pro-inflammatory signal. science scifact Ca2+ entry through store-operated Ca2+ channels drives the production of the pro-inflammatory molecule leukotriene C4 (LTC4) from mast cells through a pathway involving Ca2+-dependent protein kinase C, mitogen-activated protein kinases… 37964706 local-ca2+-influx-through-ca2+-release-activated-ca2+-(crac)-channels-stimulates-production-of-an-intracellular-messenger-and-an-intercellular-pro-inflammatory-signal. local ca2 influx through release activated crac channels Local Ca2+ influx through Ca2+ release-activated Ca2+ (CRAC) channels stimulates production of an intracellular messenger and an intercellular pro-inflammatory signal. Local Ca2+ influx through Ca2+ release-activated Ca2+ (CRAC) channels stimulates production of an intracellular messenger and an intercellular pro-inflammatory signal. Ca2+ entry through store-operated Ca2+ channels drives the production of the pro-inflammatory molecule leukotriene C4 (LTC4) from mast cells through a pathway involving Ca2+-dependent protein kinase C, mitogen-activated protein kinases ERK1/2, phospholipase A2, and 5-lipoxygenase. Here we examine whether local Ca2+ influx through store-operated Ca2+ release-activated Ca2+ (CRAC) channels in the plasma membrane stimulates this signaling pathway. Manipulating the amplitude and spatial extent of Ca2+ entry by altering chemical and electrical gradients for Ca2+ influx or changing the Ca2+ buffering of the cytoplasm all impacted",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.039086+00:00"
+}

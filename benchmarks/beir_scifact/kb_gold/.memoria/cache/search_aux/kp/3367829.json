@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3367829",
+  "source_fingerprint": "e7c2f820f7822b30c84898a035fbf993",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3367829",
+    "identification-and-distinct-regulation-of-yeast-tata-box-containing-genes."
+  ],
+  "key_phrases": [
+    "identification",
+    "distinct",
+    "regulation",
+    "yeast",
+    "tata",
+    "box",
+    "containing",
+    "genes"
+  ],
+  "summary_1l": "Identification and distinct regulation of yeast TATA box-containing genes.",
+  "query_hits": [],
+  "embed_text": "3367829 Identification and distinct regulation of yeast TATA box-containing genes. science scifact Despite being one of the first eukaryotic transcriptional regulatory elements identified, the sequence of a native TATA box and its significance remain elusive. Applying criteria associated with TATA boxes we queried several Saccharomyces… 3367829 identification-and-distinct-regulation-of-yeast-tata-box-containing-genes. identification distinct regulation yeast tata box containing genes Identification and distinct regulation of yeast TATA box-containing genes. Identification and distinct regulation of yeast TATA box-containing genes. Despite being one of the first eukaryotic transcriptional regulatory elements identified, the sequence of a native TATA box and its significance remain elusive. Applying criteria associated with TATA boxes we queried several Saccharomyces genomes and arrived at the consensus TATA(A/T)A(A/T)(A/G). Approximately 20% of yeast genes contain a TATA box. Strikingly, TATA box-containing genes are associated with responses to stress, are highly regulated, and preferentially utilize SAGA rather than TFIID when compared to TATA-less promoters. Transcriptional regulation in yeast appears to be mechanistically bipolar, possibly reflecting a need to balance inducible stress-related responses with constitutive housekeeping functi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.619466+00:00"
+}

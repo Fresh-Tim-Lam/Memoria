@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11344428",
+  "source_fingerprint": "778114f3ff1c3074276a4876b3f70d07",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11344428",
+    "development-of-leukemia-in-donor-cells-after-allogeneic-stem-cell-transplantation--a-survey-of-the-european-group-for-blood-and-marrow-transplantation-(ebmt)."
+  ],
+  "key_phrases": [
+    "development",
+    "leukemia",
+    "donor",
+    "cells",
+    "after",
+    "allogeneic",
+    "stem",
+    "cell"
+  ],
+  "summary_1l": "Development of leukemia in donor cells after allogeneic stem cell transplantation--a survey of the European Group for Blood and Marrow Transplantation (EBMT).",
+  "query_hits": [],
+  "embed_text": "11344428 Development of leukemia in donor cells after allogeneic stem cell transplantation--a survey of the European Group for Blood and Marrow Transplantation (EBMT). science scifact Leukemia in donor cells (donor cell leukemia; DCL) has been reported as a rare but severe complication of allogeneic stem cell transplantation (SCT). However, the incidence, potential pathogenetic factors, therapeutic options and outcome… 11344428 development-of-leukemia-in-donor-cells-after-allogeneic-stem-cell-transplantation--a-survey-of-the-european-group-for-blood-and-marrow-transplantation-(ebmt). development leukemia donor cells after allogeneic stem cell Development of leukemia in donor cells after allogeneic stem cell transplantation--a survey of the European Group for Blood and Marrow Transplantation (EBMT). Development of leukemia in donor cells after allogeneic stem cell transplantation--a survey of the European Group for Blood and Marrow Transplantation (EBMT). Leukemia in donor cells (donor cell leukemia; DCL) has been reported as a rare but severe complication of allogeneic stem cell transplantation (SCT). However, the incidence, potential pathogenetic factors, therapeutic options and outcome of patients suffering from DCL and the leukemia risk of their donors are not well defined. A questionnaire survey was carried out within European Blood and Marrow Transplantation Group (EBMT) centers. Ninety-one EBMT centers participated in this survey, covering 10489 allogeneic SCT between 12/1982 and 09/2003. Fourteen cases of DCL, most with a myeloid phenotype (7 cases of acute myeloid leukemia, 3",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:06.411028+00:00"
+}

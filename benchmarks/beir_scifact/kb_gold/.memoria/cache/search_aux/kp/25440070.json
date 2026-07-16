@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25440070",
+  "source_fingerprint": "87892cafed71e0edbb0dbeb133eae0b2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25440070",
+    "intrahippocampal-administration-of-an-androgen-receptor-antagonist,-flutamide,-can-increase-anxiety-like-behavior-in-intact-and-dht-replaced-male-rats."
+  ],
+  "key_phrases": [
+    "intrahippocampal",
+    "administration",
+    "androgen",
+    "receptor",
+    "antagonist",
+    "flutamide",
+    "can",
+    "increase"
+  ],
+  "summary_1l": "Intrahippocampal administration of an androgen receptor antagonist, flutamide, can increase anxiety-like behavior in intact and DHT-replaced male rats.",
+  "query_hits": [],
+  "embed_text": "25440070 Intrahippocampal administration of an androgen receptor antagonist, flutamide, can increase anxiety-like behavior in intact and DHT-replaced male rats. science scifact Testosterone (T) and its 5alpha-reduced metabolite, dihydrotestosterone (DHT), can decrease anxiety-like behavior; however, the mechanisms underlying these effects have not been established. First, we hypothesized that if T reduces… 25440070 intrahippocampal-administration-of-an-androgen-receptor-antagonist,-flutamide,-can-increase-anxiety-like-behavior-in-intact-and-dht-replaced-male-rats. intrahippocampal administration androgen receptor antagonist flutamide can increase Intrahippocampal administration of an androgen receptor antagonist, flutamide, can increase anxiety-like behavior in intact and DHT-replaced male rats. Intrahippocampal administration of an androgen receptor antagonist, flutamide, can increase anxiety-like behavior in intact and DHT-replaced male rats. Testosterone (T) and its 5alpha-reduced metabolite, dihydrotestosterone (DHT), can decrease anxiety-like behavior; however, the mechanisms underlying these effects have not been established. First, we hypothesized that if T reduces anxiety-like behavior through actions of its 5alpha-reduced metabolite, DHT, then gonadectomy (GDX) would increase anxiety-like behavior, an effect which would be reversed by systemic administration of DHT. Second, we hypothesized that if T and DHT reduce anxiety-like behavior in part through actions at intracellular androgen receptors in the hippocampus, then administration of an androgen receptor antagonist, fl",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.630908+00:00"
+}

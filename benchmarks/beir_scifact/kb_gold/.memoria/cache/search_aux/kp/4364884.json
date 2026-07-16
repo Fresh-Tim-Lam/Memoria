@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4364884",
+  "source_fingerprint": "ee4402226d16feb6b5d97577404e69bd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4364884",
+    "a-mechanism-linking-extra-centrosomes-to-chromosomal-instability"
+  ],
+  "key_phrases": [
+    "mechanism",
+    "linking",
+    "extra",
+    "centrosomes",
+    "chromosomal",
+    "instability",
+    "cin",
+    "hallmark"
+  ],
+  "summary_1l": "Chromosomal instability (CIN) is a hallmark of many tumours and correlates with the presence of extra centrosomes.",
+  "query_hits": [],
+  "embed_text": "4364884 A Mechanism Linking Extra Centrosomes to Chromosomal Instability science scifact Chromosomal instability (CIN) is a hallmark of many tumours and correlates with the presence of extra centrosomes. However, a direct mechanistic link between extra centrosomes and CIN has not been established. It has been proposed that… 4364884 a-mechanism-linking-extra-centrosomes-to-chromosomal-instability mechanism linking extra centrosomes chromosomal instability cin hallmark Chromosomal instability (CIN) is a hallmark of many tumours and correlates with the presence of extra centrosomes. A Mechanism Linking Extra Centrosomes to Chromosomal Instability Chromosomal instability (CIN) is a hallmark of many tumours and correlates with the presence of extra centrosomes. However, a direct mechanistic link between extra centrosomes and CIN has not been established. It has been proposed that extra centrosomes generate CIN by promoting multipolar anaphase, a highly abnormal division that produces three or more aneuploid daughter cells. Here we use long-term live-cell imaging to demonstrate that cells with multiple centrosomes rarely undergo multipolar cell divisions, and the progeny of these divisions are typically inviable. Thus, multipolar divisions cannot explain observed rates of CIN. In contrast, we observe that CIN cells with extra centrosomes routinely undergo bipolar cell di",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.151493+00:00"
+}

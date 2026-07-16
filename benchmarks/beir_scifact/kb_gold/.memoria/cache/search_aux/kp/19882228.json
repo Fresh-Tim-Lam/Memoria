@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "19882228",
+  "source_fingerprint": "f6d753c135a77eca04e92975f567c51e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19882228"
+  ],
+  "key_phrases": [
+    "hypoxia",
+    "key",
+    "regulatory",
+    "factor",
+    "tumour",
+    "growth",
+    "cells",
+    "undergo"
+  ],
+  "summary_1l": "Cells undergo a variety of biological responses when placed in hypoxic conditions, including activation of signalling pathways that regulate prolifer",
+  "query_hits": [],
+  "embed_text": "19882228 Hypoxia — a key regulatory factor in tumour growth science scifact Cells undergo a variety of biological responses when placed in hypoxic conditions, including activation of signalling pathways that regulate proliferation, angiogenesis and death. Cancer cells have adapted these pathways, allowing tumours… 19882228 hypoxia key regulatory factor tumour growth cells undergo Cells undergo a variety of biological responses when placed in hypoxic conditions, including activation of signalling pathways that regulate prolifer Hypoxia — a key regulatory factor in tumour growth Cells undergo a variety of biological responses when placed in hypoxic conditions, including activation of signalling pathways that regulate proliferation, angiogenesis and death. Cancer cells have adapted these pathways, allowing tumours to survive and even grow under hypoxic conditions, and tumour hypoxia is associated with poor prognosis and resistance to radiation therapy. Many elements of the hypoxia-response pathway are therefore good candidates for therapeutic targeting.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.356682+00:00"
+}

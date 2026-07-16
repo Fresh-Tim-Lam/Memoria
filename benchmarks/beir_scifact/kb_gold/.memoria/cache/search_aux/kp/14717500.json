@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14717500",
+  "source_fingerprint": "49a9cb8b44ccb137b52761cd8ade0984",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14717500",
+    "rare-variants-create-synthetic-genome-wide-associations"
+  ],
+  "key_phrases": [
+    "rare",
+    "variants",
+    "create",
+    "synthetic",
+    "genome",
+    "wide",
+    "associations",
+    "association"
+  ],
+  "summary_1l": "Genome-wide association studies (GWAS) have now identified at least 2,000 common variants that appear associated with common diseases or related",
+  "query_hits": [],
+  "embed_text": "14717500 Rare Variants Create Synthetic Genome-Wide Associations science scifact Genome-wide association studies (GWAS) have now identified at least 2,000 common variants that appear associated with common diseases or related traits (http://www.genome.gov/gwastudies), hundreds of which have been convincingly… 14717500 rare-variants-create-synthetic-genome-wide-associations rare variants create synthetic genome wide associations association Genome-wide association studies (GWAS) have now identified at least 2,000 common variants that appear associated with common diseases or related Rare Variants Create Synthetic Genome-Wide Associations Genome-wide association studies (GWAS) have now identified at least 2,000 common variants that appear associated with common diseases or related traits (http://www.genome.gov/gwastudies), hundreds of which have been convincingly replicated. It is generally thought that the associated markers reflect the effect of a nearby common (minor allele frequency >0.05) causal site, which is associated with the marker, leading to extensive resequencing efforts to find causal sites. We propose as an alternative explanation that variants much less common than the associated one may create \"synthetic associations\" by occurring, stochastically, more often in association with one of the alleles at the common site versus the other allele. Although syn",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.529373+00:00"
+}

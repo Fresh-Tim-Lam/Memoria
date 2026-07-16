@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20754359",
+  "source_fingerprint": "95581602b84988aa08ff973637f2d4ae",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20754359",
+    "natural-history-of-adult-t-cell-leukemia/lymphoma-and-approaches-to-therapy"
+  ],
+  "key_phrases": [
+    "natural",
+    "history",
+    "adult",
+    "cell",
+    "leukemia",
+    "lymphoma",
+    "approaches",
+    "therapy"
+  ],
+  "summary_1l": "After cell-to-cell transmission, HTLV-I increases its viral genome by de novo infection and proliferation of infected cells.",
+  "query_hits": [],
+  "embed_text": "20754359 Natural history of adult T-cell leukemia/lymphoma and approaches to therapy science scifact After cell-to-cell transmission, HTLV-I increases its viral genome by de novo infection and proliferation of infected cells. Proliferation of infected cells is clonal and persistent in vivo. During the carrier state, infected cells are… 20754359 natural-history-of-adult-t-cell-leukemia/lymphoma-and-approaches-to-therapy natural history adult cell leukemia lymphoma approaches therapy After cell-to-cell transmission, HTLV-I increases its viral genome by de novo infection and proliferation of infected cells. Natural history of adult T-cell leukemia/lymphoma and approaches to therapy After cell-to-cell transmission, HTLV-I increases its viral genome by de novo infection and proliferation of infected cells. Proliferation of infected cells is clonal and persistent in vivo. During the carrier state, infected cells are selected in vivo by the host's immune system, the genetic and epigenetic environment of proviral integration sites, and other factors. In leukemic cells, tax gene expression is frequently impaired by genetic and epigenetic mechanisms. Such loss of Tax expression enables ATL cells to escape the host immune system. On the other hand, ATL cells acquire the ability to proliferate without Tax by intracellular genetic and epigenetic changes. Despite advances in support and the development",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.889641+00:00"
+}

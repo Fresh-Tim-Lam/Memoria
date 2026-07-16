@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11181416",
+  "source_fingerprint": "11d35a90634ad8dec8991c3c6e9e09ae",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11181416",
+    "arginase-i:-a-limiting-factor-for-nitric-oxide-and-polyamine-synthesis-by-activated-macrophages?"
+  ],
+  "key_phrases": [
+    "arginase",
+    "limiting",
+    "factor",
+    "nitric",
+    "oxide",
+    "polyamine",
+    "synthesis",
+    "by"
+  ],
+  "summary_1l": "Arginase I: a limiting factor for nitric oxide and polyamine synthesis by activated macrophages?",
+  "query_hits": [],
+  "embed_text": "11181416 Arginase I: a limiting factor for nitric oxide and polyamine synthesis by activated macrophages? science scifact Because arginase hydrolyzes arginine to produce ornithine and urea, it has the potential to regulate nitric oxide (NO) and polyamine synthesis. We tested whether expression of the cytosolic isoform of arginase (arginase I) was limiting for… 11181416 arginase-i:-a-limiting-factor-for-nitric-oxide-and-polyamine-synthesis-by-activated-macrophages? arginase limiting factor nitric oxide polyamine synthesis by Arginase I: a limiting factor for nitric oxide and polyamine synthesis by activated macrophages? Arginase I: a limiting factor for nitric oxide and polyamine synthesis by activated macrophages? Because arginase hydrolyzes arginine to produce ornithine and urea, it has the potential to regulate nitric oxide (NO) and polyamine synthesis. We tested whether expression of the cytosolic isoform of arginase (arginase I) was limiting for NO or polyamine production by activated RAW 264.7 macrophage cells. RAW 264.7 cells, stably transfected to overexpress arginase I or beta-galactosidase, were treated with interferon-gamma to induce type 2 NO synthase or with lipopolysaccharide or 8-bromo-cAMP (8-BrcAMP) to induce ornithine decarboxylase. Overexpression of arginase I had no effect on NO synthesis. In contrast, cells overexpressing arginase I produced twice as much putrescine after activation t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:06.043387+00:00"
+}

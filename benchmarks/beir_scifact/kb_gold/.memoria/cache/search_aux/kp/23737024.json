@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23737024",
+  "source_fingerprint": "7a73c52427e1bdf84aca153104e01f9d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23737024",
+    "acute-exercise-activates-nuclear-factor-(nf)-kappab-signaling-pathway-in-rat-skeletal-muscle."
+  ],
+  "key_phrases": [
+    "acute",
+    "exercise",
+    "activates",
+    "nuclear",
+    "factor",
+    "nf",
+    "kappab",
+    "signaling"
+  ],
+  "summary_1l": "Acute exercise activates nuclear factor (NF)-kappaB signaling pathway in rat skeletal muscle.",
+  "query_hits": [],
+  "embed_text": "23737024 Acute exercise activates nuclear factor (NF)-kappaB signaling pathway in rat skeletal muscle. science scifact Two studies were performed to investigate the effects of an acute bout of physical exercise on the nuclear protein kappaB (NF-kappaB) signaling pathway in rat skeletal muscle. In Study 1, a group of rats (n=6) was run on the treadmill at… 23737024 acute-exercise-activates-nuclear-factor-(nf)-kappab-signaling-pathway-in-rat-skeletal-muscle. acute exercise activates nuclear factor nf kappab signaling Acute exercise activates nuclear factor (NF)-kappaB signaling pathway in rat skeletal muscle. Acute exercise activates nuclear factor (NF)-kappaB signaling pathway in rat skeletal muscle. Two studies were performed to investigate the effects of an acute bout of physical exercise on the nuclear protein kappaB (NF-kappaB) signaling pathway in rat skeletal muscle. In Study 1, a group of rats (n=6) was run on the treadmill at 25 m/min, 5% grade, for 1 h or until exhaustion (Ex), and compared with a second group (n=6) injected with two doses of pyrrolidine dithiocarbamate (PDTC, 100 mg/kg, i.p.) 24 and 1 h prior to the acute exercise bout. Three additional groups of rats (n=6) were injected with either 8 mg/kg (i.p.) of lipopolysaccharide (LPS), 1 mmol/kg (i.p.) t-butylhydroperoxide (tBHP), or saline (C) and killed at resting condition. Ex rats showed higher levels of NF-kappaB binding",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.046906+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "106301",
+  "source_fingerprint": "97da956c258f99f78fc50530865f37fb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "106301",
+    "cardiac-neural-crest-cells-contribute-to-the-dormant-multipotent-stem-cell-in-the-mammalian-heart"
+  ],
+  "key_phrases": [
+    "cardiac",
+    "neural",
+    "crest",
+    "cells",
+    "contribute",
+    "dormant",
+    "multipotent",
+    "stem"
+  ],
+  "summary_1l": "Arodent cardiac side population cell fraction formed clonal spheroids in serum-free medium, which expr",
+  "query_hits": [],
+  "embed_text": "106301 Cardiac neural crest cells contribute to the dormant multipotent stem cell in the mammalian heart science scifact Arodent cardiac side population cell fraction formed clonal spheroids in serum-free medium, which expressed nestin, Musashi-1, and multi-drug resistance transporter gene 1, markers of undifferentiated neural precursor cells. These markers… 106301 cardiac-neural-crest-cells-contribute-to-the-dormant-multipotent-stem-cell-in-the-mammalian-heart cardiac neural crest cells contribute dormant multipotent stem Arodent cardiac side population cell fraction formed clonal spheroids in serum-free medium, which expr Cardiac neural crest cells contribute to the dormant multipotent stem cell in the mammalian heart Arodent cardiac side population cell fraction formed clonal spheroids in serum-free medium, which expressed nestin, Musashi-1, and multi-drug resistance transporter gene 1, markers of undifferentiated neural precursor cells. These markers were lost following differentiation, and were replaced by the expression of neuron-, glial-, smooth muscle cell–, or cardiomyocyte-specific proteins. Cardiosphere-derived cells transplanted into chick embryos migrated to the truncus arteriosus and cardiac outflow tract and contributed to dorsal root ganglia, spinal nerves, and aortic smooth muscle cells. Lineage studies using double transgenic mice encoding protein 0–Cre/Floxed-EGFP revealed undifferentiated",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.796367+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14657344",
+  "source_fingerprint": "5182df25d2464fde5a03357f2630561b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14657344",
+    "cd8-cells-of-patients-with-diffuse-cutaneous-leishmaniasis-display-functional-exhaustion:-the-latter-is-reversed,-in-vitro,-by-tlr2-agonists"
+  ],
+  "key_phrases": [
+    "cd8",
+    "cells",
+    "patients",
+    "with",
+    "diffuse",
+    "cutaneous",
+    "leishmaniasis",
+    "display"
+  ],
+  "summary_1l": "Leishmania mexicana (Lm) causes localized (LCL) and diffuse",
+  "query_hits": [],
+  "embed_text": "14657344 CD8 Cells of Patients with Diffuse Cutaneous Leishmaniasis Display Functional Exhaustion: The Latter Is Reversed, In Vitro, by TLR2 Agonists science scifact Leishmania mexicana (Lm) causes localized (LCL) and diffuse (DCL) cutaneous leishmaniasis. DCL patients have a poor cellular immune response leading to chronicity. It has been proposed that CD8 T lymphocytes (CD8) play a crucial role in… 14657344 cd8-cells-of-patients-with-diffuse-cutaneous-leishmaniasis-display-functional-exhaustion:-the-latter-is-reversed,-in-vitro,-by-tlr2-agonists cd8 cells patients with diffuse cutaneous leishmaniasis display Leishmania mexicana (Lm) causes localized (LCL) and diffuse CD8 Cells of Patients with Diffuse Cutaneous Leishmaniasis Display Functional Exhaustion: The Latter Is Reversed, In Vitro, by TLR2 Agonists Leishmania mexicana (Lm) causes localized (LCL) and diffuse (DCL) cutaneous leishmaniasis. DCL patients have a poor cellular immune response leading to chronicity. It has been proposed that CD8 T lymphocytes (CD8) play a crucial role in infection clearance, although the role of CD8 cytotoxicity in disease control has not been elucidated. Lesions of DCL patients have been shown to harbor low numbers of CD8, as compared to patients with LCL, and leishmanicidal treatment restores CD8 numbers. The marked response of CD8 towards Leishmania parasites led us to analyze possible functional differences between CD8 from patients with LCL and DCL. We compared IF",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.352168+00:00"
+}

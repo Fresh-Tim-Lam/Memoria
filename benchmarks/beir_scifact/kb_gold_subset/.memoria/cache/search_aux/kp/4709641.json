@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4709641",
+  "source_fingerprint": "8ac84e6bfc9ac1b669bbc7c71d26ee26",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4709641",
+    "gain-of-toxic-apolipoprotein-e4-effects-in-human-ipsc-derived-neurons-is-ameliorated-by-a-small-molecule-structure-corrector"
+  ],
+  "key_phrases": [
+    "gain",
+    "toxic",
+    "apolipoprotein",
+    "e4",
+    "effects",
+    "human",
+    "ipsc",
+    "derived"
+  ],
+  "summary_1l": "Efforts to develop drugs for Alzheimer's disease (AD) have shown promise in",
+  "query_hits": [],
+  "embed_text": "4709641 Gain of toxic Apolipoprotein E4 effects in Human iPSC-Derived Neurons Is Ameliorated by a Small-Molecule Structure Corrector science scifact Efforts to develop drugs for Alzheimer's disease (AD) have shown promise in animal studies, only to fail in human trials, suggesting a pressing need to study AD in human model systems. Using human neurons derived from induced pluripotent… 4709641 gain-of-toxic-apolipoprotein-e4-effects-in-human-ipsc-derived-neurons-is-ameliorated-by-a-small-molecule-structure-corrector gain toxic apolipoprotein e4 effects human ipsc derived Efforts to develop drugs for Alzheimer's disease (AD) have shown promise in Gain of toxic Apolipoprotein E4 effects in Human iPSC-Derived Neurons Is Ameliorated by a Small-Molecule Structure Corrector Efforts to develop drugs for Alzheimer's disease (AD) have shown promise in animal studies, only to fail in human trials, suggesting a pressing need to study AD in human model systems. Using human neurons derived from induced pluripotent stem cells that expressed apolipoprotein E4 (ApoE4), a variant of the APOE gene product and the major genetic risk factor for AD, we demonstrated that ApoE4-expressing neurons had higher levels of tau phosphorylation, unrelated to their increased production of amyloid-β (Aβ) peptides, and that they displayed GABAergic neuron degeneration. ApoE4 increased Aβ production in human, but not in mouse, neurons. Converting ApoE4 to ApoE3 by",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:13.458888+00:00"
+}

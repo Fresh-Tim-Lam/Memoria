@@ -1,0 +1,13 @@
+imports start
+imports done
+enabling embedding in UI settings
+embedding_enabled=True
+embedding_model=sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+KB=D:\AAA_Jupyter\Memoria\benchmarks\beir_scifact\kb_gold_subset
+rebuild_lexical_index start
+rebuild_lexical_index done
+ensure_embedding_index start
+embedding_index done: records=783
+queries=300 qrels=300
+batch range: [0, 5), batch size=5
+batch done: evaluated=5, skipped=0, crashed=0

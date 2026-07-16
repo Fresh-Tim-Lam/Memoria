@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16066726",
+  "source_fingerprint": "4c9d4555beed2f0283ca4e8a7186a6b2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16066726",
+    "tumor-necrosis-factor-signaling-mediates-resistance-to-mycobacteria-by-inhibiting-bacterial-growth-and-macrophage-death."
+  ],
+  "key_phrases": [
+    "tumor",
+    "necrosis",
+    "factor",
+    "signaling",
+    "mediates",
+    "resistance",
+    "mycobacteria",
+    "by"
+  ],
+  "summary_1l": "Tumor necrosis factor signaling mediates resistance to mycobacteria by inhibiting bacterial growth and macrophage death.",
+  "query_hits": [],
+  "embed_text": "16066726 Tumor necrosis factor signaling mediates resistance to mycobacteria by inhibiting bacterial growth and macrophage death. science scifact Tumor necrosis factor (TNF), a key effector in controlling tuberculosis, is thought to exert protection by directing formation of granulomas, organized aggregates of macrophages and other immune cells. Loss of TNF signaling causes… 16066726 tumor-necrosis-factor-signaling-mediates-resistance-to-mycobacteria-by-inhibiting-bacterial-growth-and-macrophage-death. tumor necrosis factor signaling mediates resistance mycobacteria by Tumor necrosis factor signaling mediates resistance to mycobacteria by inhibiting bacterial growth and macrophage death. Tumor necrosis factor signaling mediates resistance to mycobacteria by inhibiting bacterial growth and macrophage death. Tumor necrosis factor (TNF), a key effector in controlling tuberculosis, is thought to exert protection by directing formation of granulomas, organized aggregates of macrophages and other immune cells. Loss of TNF signaling causes progression of tuberculosis in humans, and the increased mortality of Mycobacterium tuberculosis-infected mice is associated with disorganized necrotic granulomas, although the precise roles of TNF signaling preceding this endpoint remain undefined. We monitored transparent Mycobacterium marinum-infected zebrafish live to conduct a stepwise dissection of how TNF signaling operates in mycobacterial pathogenesis. We found that loss of TNF signali",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.790940+00:00"
+}

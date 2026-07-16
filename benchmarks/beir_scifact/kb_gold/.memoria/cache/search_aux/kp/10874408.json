@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10874408",
+  "source_fingerprint": "8e5f19a644a29286f9b3ac64e51efaea",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10874408",
+    "mapping-meiotic-single-strand-dna-reveals-a-new-landscape-of-dna-double-strand-breaks-in-saccharomyces-cerevisiae"
+  ],
+  "key_phrases": [
+    "mapping",
+    "meiotic",
+    "single",
+    "strand",
+    "dna",
+    "reveals",
+    "new",
+    "landscape"
+  ],
+  "summary_1l": "DNA double-strand breaks (DSBs), which are formed by the Spo11 protein, initiate meiot",
+  "query_hits": [],
+  "embed_text": "10874408 Mapping Meiotic Single-Strand DNA Reveals a New Landscape of DNA Double-Strand Breaks in Saccharomyces cerevisiae science scifact DNA double-strand breaks (DSBs), which are formed by the Spo11 protein, initiate meiotic recombination. Previous DSB-mapping studies have used rad50S or sae2Δ mutants, which are defective in break processing, to accumulate Spo11-linked… 10874408 mapping-meiotic-single-strand-dna-reveals-a-new-landscape-of-dna-double-strand-breaks-in-saccharomyces-cerevisiae mapping meiotic single strand dna reveals new landscape DNA double-strand breaks (DSBs), which are formed by the Spo11 protein, initiate meiot Mapping Meiotic Single-Strand DNA Reveals a New Landscape of DNA Double-Strand Breaks in Saccharomyces cerevisiae DNA double-strand breaks (DSBs), which are formed by the Spo11 protein, initiate meiotic recombination. Previous DSB-mapping studies have used rad50S or sae2Δ mutants, which are defective in break processing, to accumulate Spo11-linked DSBs, and report large (≥ 50 kb) “DSB-hot” regions that are separated by “DSB-cold” domains of similar size. Substantial recombination occurs in some DSB-cold regions, suggesting that DSB patterns are not normal in rad50S or sae2Δ mutants. We therefore developed a novel method to map genome-wide, single-strand DNA (ssDNA)–associated DSBs that accumulate in processing-capable, repair-defective dmc1Δ and dmc1Δ rad51Δ mutants. DSBs were observed at",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:05.613949+00:00"
+}

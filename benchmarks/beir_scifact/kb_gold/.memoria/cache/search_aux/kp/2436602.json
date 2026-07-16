@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "2436602",
+  "source_fingerprint": "fa4ad4189e23d19f4ba291ef3459257a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2436602"
+  ],
+  "key_phrases": [
+    "adrenergic",
+    "receptor",
+    "antagonism",
+    "prevents",
+    "anxiety",
+    "like",
+    "behavior",
+    "microglial"
+  ],
+  "summary_1l": "β-Adrenergic receptor antagonism prevents anxiety-like behavior and microglial reactivity induced by repeated social defeat.",
+  "query_hits": [],
+  "embed_text": "2436602 β-Adrenergic receptor antagonism prevents anxiety-like behavior and microglial reactivity induced by repeated social defeat. science scifact Psychosocial stress is associated with altered immune function and development of psychological disorders including anxiety and depression. Here we show that repeated social defeat in mice increased c-Fos staining in brain regions… 2436602 adrenergic receptor antagonism prevents anxiety like behavior microglial β-Adrenergic receptor antagonism prevents anxiety-like behavior and microglial reactivity induced by repeated social defeat. β-Adrenergic receptor antagonism prevents anxiety-like behavior and microglial reactivity induced by repeated social defeat. Psychosocial stress is associated with altered immune function and development of psychological disorders including anxiety and depression. Here we show that repeated social defeat in mice increased c-Fos staining in brain regions associated with fear and threat appraisal and promoted anxiety-like behavior in a β-adrenergic receptor-dependent manner. Repeated social defeat also significantly increased the number of CD11b(+)/CD45(high)/Ly6C(high) macrophages that trafficked to the brain. In addition, several inflammatory markers were increased on the surface of microglia (CD14, CD86, and TLR4) and macrophages (CD14 and CD86) after social defeat. Repeated social defeat",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.362930+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24697979",
+  "source_fingerprint": "3d4237c4cf6ecb22f058630a4b203c10",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24697979",
+    "[efficacy-on-post-stroke-depression-treated-with-acupuncture-at-the-acupoints-based-on-ziwuliuzhu-and-prozac]."
+  ],
+  "key_phrases": [
+    "efficacy",
+    "post",
+    "stroke",
+    "depression",
+    "treated",
+    "with",
+    "acupuncture",
+    "at"
+  ],
+  "summary_1l": "[Efficacy on post-stroke depression treated with acupuncture at the acupoints based on ziwuliuzhu and prozac].",
+  "query_hits": [],
+  "embed_text": "24697979 [Efficacy on post-stroke depression treated with acupuncture at the acupoints based on ziwuliuzhu and prozac]. science scifact OBJECTIVE To observe the effects on post-stroke depression treated with acupuncture at the acu points based on ziwuliuzhu (the midnight-noon ebb-flow theory). METHODS Ninety-three patients were randomized into a comprehensive group, a… 24697979 [efficacy-on-post-stroke-depression-treated-with-acupuncture-at-the-acupoints-based-on-ziwuliuzhu-and-prozac]. efficacy post stroke depression treated with acupuncture at [Efficacy on post-stroke depression treated with acupuncture at the acupoints based on ziwuliuzhu and prozac]. [Efficacy on post-stroke depression treated with acupuncture at the acupoints based on ziwuliuzhu and prozac]. OBJECTIVE To observe the effects on post-stroke depression treated with acupuncture at the acu points based on ziwuliuzhu (the midnight-noon ebb-flow theory). METHODS Ninety-three patients were randomized into a comprehensive group, a ziwuliuzhu group and a prozac group, 31 cases in each group. In the ziwuliuzhu group, acupuncture was applied to the acupoints based on ziwuliuzhu, once a day, 5 times in a week. In the prozac group, fluoxertine hydrochloride (prozac) was prescribed for oral administration, once a day, 20 mg each time. In the comprehensive group, acupuncture based on ziwuliuzhu combined with the oral administration of prozac were adopted and the treatment frequency w",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.002777+00:00"
+}

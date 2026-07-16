@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "34258065",
+  "source_fingerprint": "f26dc7cfd10af6da1ec74b9050fb8474",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "34258065",
+    "helicobacter-species-methods-and-protocols.-introduction."
+  ],
+  "key_phrases": [
+    "helicobacter",
+    "species",
+    "methods",
+    "protocols",
+    "introduction",
+    "infection",
+    "chronic",
+    "persistent"
+  ],
+  "summary_1l": "Helicobacter species methods and protocols.",
+  "query_hits": [],
+  "embed_text": "34258065 Helicobacter species methods and protocols. Introduction. science scifact Helicobacter infection is a chronic persistent condition which is responsible for the majority of cases of gastric and duodenal ulcers, and gastric cancer. The study of the bacteria, the interaction of the bacteria with the host, and the… 34258065 helicobacter-species-methods-and-protocols.-introduction. helicobacter species methods protocols introduction infection chronic persistent Helicobacter species methods and protocols. Helicobacter species methods and protocols. Introduction. Helicobacter infection is a chronic persistent condition which is responsible for the majority of cases of gastric and duodenal ulcers, and gastric cancer. The study of the bacteria, the interaction of the bacteria with the host, and the host immune response has greatly benefited from standardization of culture techniques and animal models. The following chapters will describe the clinical aspects of infection and touch on the important techniques for optimal investigation of this infection.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.288297+00:00"
+}

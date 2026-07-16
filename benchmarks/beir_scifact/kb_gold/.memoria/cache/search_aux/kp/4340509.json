@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4340509",
+  "source_fingerprint": "2c14c1388349ab361c1091792c6d1c64",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4340509",
+    "surface-mechanics-mediate-pattern-formation-in-the-developing-retina"
+  ],
+  "key_phrases": [
+    "surface",
+    "mechanics",
+    "mediate",
+    "pattern",
+    "formation",
+    "developing",
+    "retina",
+    "biological"
+  ],
+  "summary_1l": "Pattern formation of biological structures involves organizing different types of cells into a spatial configuration.",
+  "query_hits": [],
+  "embed_text": "4340509 Surface mechanics mediate pattern formation in the developing retina science scifact Pattern formation of biological structures involves organizing different types of cells into a spatial configuration. In this study, we investigate the physical basis of biological patterning of the Drosophila retina in vivo. We… 4340509 surface-mechanics-mediate-pattern-formation-in-the-developing-retina surface mechanics mediate pattern formation developing retina biological Pattern formation of biological structures involves organizing different types of cells into a spatial configuration. Surface mechanics mediate pattern formation in the developing retina Pattern formation of biological structures involves organizing different types of cells into a spatial configuration. In this study, we investigate the physical basis of biological patterning of the Drosophila retina in vivo. We demonstrate that E- and N-cadherins mediate apical adhesion between retina epithelial cells. Differential expression of N-cadherin within a sub-group of retinal cells (cone cells) causes them to form an overall shape that minimizes their surface contact with surrounding cells. The cells within this group, in both normal and experimentally manipulated conditions, pack together in the same way as soap bubbles do. The shaping of the cone cell group and packing of its components precisely imitate the",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.877339+00:00"
+}

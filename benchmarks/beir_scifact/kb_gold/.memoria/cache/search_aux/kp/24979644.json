@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24979644",
+  "source_fingerprint": "60b2adf7b00f0f0f04e17cc228794a52",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24979644",
+    "frozen-robust-multiarray-analysis-(frma)."
+  ],
+  "key_phrases": [
+    "frozen",
+    "robust",
+    "multiarray",
+    "analysis",
+    "frma",
+    "rma",
+    "most",
+    "widely"
+  ],
+  "summary_1l": "Frozen robust multiarray analysis (fRMA).",
+  "query_hits": [],
+  "embed_text": "24979644 Frozen robust multiarray analysis (fRMA). science scifact Robust multiarray analysis (RMA) is the most widely used preprocessing algorithm for Affymetrix and Nimblegen gene expression microarrays. RMA performs background correction, normalization, and summarization in a modular way. The last 2… 24979644 frozen-robust-multiarray-analysis-(frma). frozen robust multiarray analysis frma rma most widely Frozen robust multiarray analysis (fRMA). Frozen robust multiarray analysis (fRMA). Robust multiarray analysis (RMA) is the most widely used preprocessing algorithm for Affymetrix and Nimblegen gene expression microarrays. RMA performs background correction, normalization, and summarization in a modular way. The last 2 steps require multiple arrays to be analyzed simultaneously. The ability to borrow information across samples provides RMA various advantages. For example, the summarization step fits a parametric model that accounts for probe effects, assumed to be fixed across arrays, and improves outlier detection. Residuals, obtained from the fitted model, permit the creation of useful quality metrics. However, the dependence on multiple arrays has 2 drawbacks: (1) RMA cannot be used in clinical settings where samples must be pr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.678560+00:00"
+}

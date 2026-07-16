@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15473205",
+  "source_fingerprint": "026550a3b90b55c187c1d7d268cd1b4d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15473205",
+    "regulators-of-trypanosoma-brucei-cell-cycle-progression-and-differentiation-identified-using-a-kinome-wide-rnai-screen"
+  ],
+  "key_phrases": [
+    "regulators",
+    "trypanosoma",
+    "brucei",
+    "cell",
+    "cycle",
+    "progression",
+    "differentiation",
+    "identified"
+  ],
+  "summary_1l": "The African trypanosome, Trypanosoma brucei, maintains an integral link between c",
+  "query_hits": [],
+  "embed_text": "15473205 Regulators of Trypanosoma brucei Cell Cycle Progression and Differentiation Identified Using a Kinome-Wide RNAi Screen science scifact The African trypanosome, Trypanosoma brucei, maintains an integral link between cell cycle regulation and differentiation during its intricate life cycle. Whilst extensive changes in phosphorylation have been documented between the… 15473205 regulators-of-trypanosoma-brucei-cell-cycle-progression-and-differentiation-identified-using-a-kinome-wide-rnai-screen regulators trypanosoma brucei cell cycle progression differentiation identified The African trypanosome, Trypanosoma brucei, maintains an integral link between c Regulators of Trypanosoma brucei Cell Cycle Progression and Differentiation Identified Using a Kinome-Wide RNAi Screen The African trypanosome, Trypanosoma brucei, maintains an integral link between cell cycle regulation and differentiation during its intricate life cycle. Whilst extensive changes in phosphorylation have been documented between the mammalian bloodstream form and the insect procyclic form, relatively little is known about the parasite's protein kinases (PKs) involved in the control of cellular proliferation and differentiation. To address this, a T. brucei kinome-wide RNAi cell line library was generated, allowing independent inducible knockdown of each of the parasite's 190 predicted protein kinases. Screening of this library using a cell viability assay identified ≥42 PKs",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.628261+00:00"
+}

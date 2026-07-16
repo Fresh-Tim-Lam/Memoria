@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7848113",
+  "source_fingerprint": "9fa1c1e4da50eb6b69e6a11e08f2c679",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7848113",
+    "telomere-bound-trf1-and-trf2-stall-the-replication-fork-at-telomeric-repeats."
+  ],
+  "key_phrases": [
+    "telomere",
+    "bound",
+    "trf1",
+    "trf2",
+    "stall",
+    "replication",
+    "fork",
+    "at"
+  ],
+  "summary_1l": "Telomere-bound TRF1 and TRF2 stall the replication fork at telomeric repeats.",
+  "query_hits": [],
+  "embed_text": "7848113 Telomere-bound TRF1 and TRF2 stall the replication fork at telomeric repeats. science scifact Vertebrate telomeres consist of tandem repeats of T2AG3 and associated proteins including the telomeric DNA-binding proteins, TRF1 and TRF2. It has been proposed that telomeres assume two interswitchable states, the open state that is… 7848113 telomere-bound-trf1-and-trf2-stall-the-replication-fork-at-telomeric-repeats. telomere bound trf1 trf2 stall replication fork at Telomere-bound TRF1 and TRF2 stall the replication fork at telomeric repeats. Telomere-bound TRF1 and TRF2 stall the replication fork at telomeric repeats. Vertebrate telomeres consist of tandem repeats of T2AG3 and associated proteins including the telomeric DNA-binding proteins, TRF1 and TRF2. It has been proposed that telomeres assume two interswitchable states, the open state that is accessible to various trans-acting factors and the closed state that excludes those factors. TRF1 and TRF2 are believed to promote the formation of the closed state. However, little is known about how those two states influence DNA replication. We analyzed the effects of TRF1 and TRF2 on telomeric replication both in vitro and in vivo. By exploiting the in vitro replication system of linear SV40 DNA, we found that telomeric repeats are a poor replication template. Moreover, the addi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.313364+00:00"
+}

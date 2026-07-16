@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2264455",
+  "source_fingerprint": "01c0a9418cac2d76b35bf6a1960bc3f6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2264455",
+    "vaccines-against-malaria"
+  ],
+  "key_phrases": [
+    "vaccines",
+    "against",
+    "malaria",
+    "there",
+    "no",
+    "licenced",
+    "vaccine",
+    "any"
+  ],
+  "summary_1l": "There is no licenced vaccine against any human parasitic disease and Plasmodium falciparum malaria, a major cause of infectious mortality, presents a great challenge to vaccin",
+  "query_hits": [],
+  "embed_text": "2264455 Vaccines against malaria science scifact There is no licenced vaccine against any human parasitic disease and Plasmodium falciparum malaria, a major cause of infectious mortality, presents a great challenge to vaccine developers. This has led to the assessment of a wide variety… 2264455 vaccines-against-malaria vaccines against malaria there no licenced vaccine any There is no licenced vaccine against any human parasitic disease and Plasmodium falciparum malaria, a major cause of infectious mortality, presents a great challenge to vaccin Vaccines against malaria There is no licenced vaccine against any human parasitic disease and Plasmodium falciparum malaria, a major cause of infectious mortality, presents a great challenge to vaccine developers. This has led to the assessment of a wide variety of approaches to malaria vaccine design and development, assisted by the availability of a safe challenge model for small-scale efficacy testing of vaccine candidates. Malaria vaccine development has been at the forefront of assessing many new vaccine technologies including novel adjuvants, vectored prime-boost regimes and the concept of community vaccination to block malaria transmission. Most current vaccine candidates target a single stage of the parasite's life cycle and vaccines against the early pre-erythrocytic stages have s",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.143871+00:00"
+}

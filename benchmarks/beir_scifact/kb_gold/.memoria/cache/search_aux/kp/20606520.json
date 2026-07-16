@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20606520",
+  "source_fingerprint": "7afa56d858b4445e4379973b8949dd23",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20606520",
+    "long-term-survival,-quality-of-life,-and-quality-adjusted-life-years-among-critically-ill-elderly-patients."
+  ],
+  "key_phrases": [
+    "long",
+    "term",
+    "survival",
+    "quality",
+    "life",
+    "adjusted",
+    "years",
+    "among"
+  ],
+  "summary_1l": "Long-term survival, quality of life, and quality-adjusted life-years among critically ill elderly patients.",
+  "query_hits": [],
+  "embed_text": "20606520 Long-term survival, quality of life, and quality-adjusted life-years among critically ill elderly patients. science scifact OBJECTIVES To assess mortality, quality of life (QOL), and quality-adjusted life-years (QALYs) for critically ill elderly patients. DESIGN Cross-sectional survey. SETTING A ten-bed medical-surgical intensive care unit (ICU) in a tertiary… 20606520 long-term-survival,-quality-of-life,-and-quality-adjusted-life-years-among-critically-ill-elderly-patients. long term survival quality life adjusted years among Long-term survival, quality of life, and quality-adjusted life-years among critically ill elderly patients. Long-term survival, quality of life, and quality-adjusted life-years among critically ill elderly patients. OBJECTIVES To assess mortality, quality of life (QOL), and quality-adjusted life-years (QALYs) for critically ill elderly patients. DESIGN Cross-sectional survey. SETTING A ten-bed medical-surgical intensive care unit (ICU) in a tertiary care university hospital. PATIENTS The study group included 882 elderly patients (> or =65 yrs of age) and 1,827 controls (<65 yrs of age) treated during the period of 1995 to 2000. INTERVENTION None. MEASUREMENTS AND MAIN RESULTS Mortality was assessed during the ICU and hospital stays, and 12, 24, and 36 months after ICU discharge. The cumulative 3-yr mortality rate among the elderly (57%) was higher (p < .05) than that among the controls (40%). Th",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.570763+00:00"
+}

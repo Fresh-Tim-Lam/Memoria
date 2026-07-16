@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12074066",
+  "source_fingerprint": "c8b6aa69c416148588e8ce020063860e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12074066",
+    "vitamin-d-and-prevention-of-colorectal-cancer."
+  ],
+  "key_phrases": [
+    "vitamin",
+    "prevention",
+    "colorectal",
+    "cancer",
+    "background",
+    "inadequate",
+    "photosynthesis",
+    "oral"
+  ],
+  "summary_1l": "Vitamin D and prevention of colorectal cancer.",
+  "query_hits": [],
+  "embed_text": "12074066 Vitamin D and prevention of colorectal cancer. science scifact BACKGROUND Inadequate photosynthesis or oral intake of Vitamin D are associated with high incidence rates of colorectal cancer, but the dose-response relationship has not been adequately studied. METHODS Dose-response gradients from… 12074066 vitamin-d-and-prevention-of-colorectal-cancer. vitamin prevention colorectal cancer background inadequate photosynthesis oral Vitamin D and prevention of colorectal cancer. Vitamin D and prevention of colorectal cancer. BACKGROUND Inadequate photosynthesis or oral intake of Vitamin D are associated with high incidence rates of colorectal cancer, but the dose-response relationship has not been adequately studied. METHODS Dose-response gradients from observational studies of Vitamin D intake and serum 25-hydroxyvitamin D were plotted as trend lines. The point on each linear trend line corresponding to an odds ratio of 0.50 provided the prediagnostic Vitamin D intake or 25-hydroxyvitamin D concentration associated with 50% lower risk compared to <100IU/day Vitamin D or <13ng/ml serum 25-hydroxyvitamin D. Medians of these values were determined. RESULTS Overall, individuals with >or=1000IU/day oral Vitamin D (p<0.0001) or >or=33ng/ml (82nmol/l) serum 25-hydroxyvi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:07.709178+00:00"
+}

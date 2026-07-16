@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3222122",
+  "source_fingerprint": "c008a4d73b4743ec17986a243326d038",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3222122",
+    "best--worst-scaling:-what-it-can-do-for-health-care-research-and-how-to-do-it."
+  ],
+  "key_phrases": [
+    "best",
+    "--",
+    "worst",
+    "scaling",
+    "what",
+    "it",
+    "can",
+    "do"
+  ],
+  "summary_1l": "Best--worst scaling: What it can do for health care research and how to do it.",
+  "query_hits": [],
+  "embed_text": "3222122 Best--worst scaling: What it can do for health care research and how to do it. science scifact Statements like \"quality of care is more highly valued than waiting time\" can neither be supported nor refuted by comparisons of utility parameters from a traditional discrete choice experiment (DCE). Best--worst scaling can overcome this… 3222122 best--worst-scaling:-what-it-can-do-for-health-care-research-and-how-to-do-it. best -- worst scaling what it can do Best--worst scaling: What it can do for health care research and how to do it. Best--worst scaling: What it can do for health care research and how to do it. Statements like \"quality of care is more highly valued than waiting time\" can neither be supported nor refuted by comparisons of utility parameters from a traditional discrete choice experiment (DCE). Best--worst scaling can overcome this problem because it asks respondents to perform a different choice task. However, whilst the nature of the best--worst task is generally understood, there are a number of issues relating to the design and analysis of a best--worst choice experiment that require further exposition. This paper illustrates how to aggregate and analyse such data and using a quality of life pilot study demonstrates how richer insights can be drawn by the use of best--worst tasks.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.298822+00:00"
+}

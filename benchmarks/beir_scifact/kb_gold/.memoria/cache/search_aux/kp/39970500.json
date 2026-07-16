@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "39970500",
+  "source_fingerprint": "03d2240fdd1eb912cf9abbc8ad80520e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "39970500",
+    "how-safe-are-psychiatric-medications-after-a-voluntary-overdose?"
+  ],
+  "key_phrases": [
+    "how",
+    "safe",
+    "psychiatric",
+    "medications",
+    "after",
+    "voluntary",
+    "overdose",
+    "purpose"
+  ],
+  "summary_1l": "How safe are psychiatric medications after a voluntary overdose?",
+  "query_hits": [],
+  "embed_text": "39970500 How safe are psychiatric medications after a voluntary overdose? science scifact PURPOSE This study assessed psychiatric medications and their potential lethality in a representative sample of suicide attempts. MATERIALS AND METHODS During 1996-98, 563 suicide attempts were studied in a general hospital in Madrid… 39970500 how-safe-are-psychiatric-medications-after-a-voluntary-overdose? how safe psychiatric medications after voluntary overdose purpose How safe are psychiatric medications after a voluntary overdose? How safe are psychiatric medications after a voluntary overdose? PURPOSE This study assessed psychiatric medications and their potential lethality in a representative sample of suicide attempts. MATERIALS AND METHODS During 1996-98, 563 suicide attempts were studied in a general hospital in Madrid (Spain). Medication overdose was used in 456 suicide attempts (81%). The ratio between dose taken and maximum prescription dose recommended was used to evaluate the medication toxicity. RESULTS Benzodiazepines were the drugs most often used in self-poisoning (65% of overdoses), followed by new antidepressants (11%), tricyclic antidepressants (TCAs) (10%), and antipsychotics (8%). An overdose with any of the three latter psychiatric medications was significantly more frequent in patients prescribe",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.103289+00:00"
+}

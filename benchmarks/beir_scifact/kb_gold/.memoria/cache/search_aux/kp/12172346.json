@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12172346",
+  "source_fingerprint": "798145318258cc6208d66057f7686454",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12172346",
+    "targeting-bromodomains:-epigenetic-readers-of-lysine-acetylation"
+  ],
+  "key_phrases": [
+    "targeting",
+    "bromodomains",
+    "epigenetic",
+    "readers",
+    "lysine",
+    "acetylation",
+    "key",
+    "mechanism"
+  ],
+  "summary_1l": "Lysine acetylation is a key mechanism that regulates chromatin structure; aberrant acetylation levels have been linked to the developme",
+  "query_hits": [],
+  "embed_text": "12172346 Targeting bromodomains: epigenetic readers of lysine acetylation science scifact Lysine acetylation is a key mechanism that regulates chromatin structure; aberrant acetylation levels have been linked to the development of several diseases. Acetyl-lysine modifications create docking sites for bromodomains, which are… 12172346 targeting-bromodomains:-epigenetic-readers-of-lysine-acetylation targeting bromodomains epigenetic readers lysine acetylation key mechanism Lysine acetylation is a key mechanism that regulates chromatin structure; aberrant acetylation levels have been linked to the developme Targeting bromodomains: epigenetic readers of lysine acetylation Lysine acetylation is a key mechanism that regulates chromatin structure; aberrant acetylation levels have been linked to the development of several diseases. Acetyl-lysine modifications create docking sites for bromodomains, which are small interaction modules found on diverse proteins, some of which have a key role in the acetylation-dependent assembly of transcriptional regulator complexes. These complexes can then initiate transcriptional programmes that result in phenotypic changes. The recent discovery of potent and highly specific inhibitors for the BET (bromodomain and extra-terminal) family of bromodomains has stimulated intensive research activity in diverse therapeutic areas, particularly in oncology, where BET pro",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:07.886888+00:00"
+}

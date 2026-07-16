@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "32322418",
+  "source_fingerprint": "0b4aa0ff4194b7d0a9cb950cb2cd03a2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "32322418",
+    "moderate-regular-exercise-increases-basal-production-of-nitric-oxide-in-elderly-women."
+  ],
+  "key_phrases": [
+    "moderate",
+    "regular",
+    "exercise",
+    "increases",
+    "basal",
+    "production",
+    "nitric",
+    "oxide"
+  ],
+  "summary_1l": "Moderate regular exercise increases basal production of nitric oxide in elderly women.",
+  "query_hits": [],
+  "embed_text": "32322418 Moderate regular exercise increases basal production of nitric oxide in elderly women. science scifact Vascular endothelial cells produce nitric oxide (NO), which is a potent vasodilator substance and is thought to have antiatherosclerotic properties. Therefore, it has also been proposed that NO may be useful to regulate vascular tonus and… 32322418 moderate-regular-exercise-increases-basal-production-of-nitric-oxide-in-elderly-women. moderate regular exercise increases basal production nitric oxide Moderate regular exercise increases basal production of nitric oxide in elderly women. Moderate regular exercise increases basal production of nitric oxide in elderly women. Vascular endothelial cells produce nitric oxide (NO), which is a potent vasodilator substance and is thought to have antiatherosclerotic properties. Therefore, it has also been proposed that NO may be useful to regulate vascular tonus and prevent progression of atherosclerosis. On the other hand, NO activity reduces with aging. We previously reported that the plasma nitrite/nitrate (NOx: the stable end product of NO) concentration was significantly increased by intense aerobic exercise training in healthy young humans. We hypothesized that lifestyle modification (e.g., even mild regular exercise training) can increase NO production in previously sedentary older humans. We measured the plasma NOx concentr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.392525+00:00"
+}

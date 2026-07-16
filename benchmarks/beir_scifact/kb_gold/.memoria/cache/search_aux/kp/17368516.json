@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17368516",
+  "source_fingerprint": "3d690ab928a3c14c33ad7ba1b94455f0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17368516",
+    "primpol,-an-archaic-primase/polymerase-operating-in-human-cells"
+  ],
+  "key_phrases": [
+    "primpol",
+    "archaic",
+    "primase",
+    "polymerase",
+    "operating",
+    "human",
+    "cells",
+    "we"
+  ],
+  "summary_1l": "We describe a second primase in human cells, PrimPol, which has the ability to start DNA chains with deoxynucleotides unlike regular pri",
+  "query_hits": [],
+  "embed_text": "17368516 PrimPol, an Archaic Primase/Polymerase Operating in Human Cells science scifact We describe a second primase in human cells, PrimPol, which has the ability to start DNA chains with deoxynucleotides unlike regular primases, which use exclusively ribonucleotides. Moreover, PrimPol is also a DNA polymerase tailored to… 17368516 primpol,-an-archaic-primase/polymerase-operating-in-human-cells primpol archaic primase polymerase operating human cells we We describe a second primase in human cells, PrimPol, which has the ability to start DNA chains with deoxynucleotides unlike regular pri PrimPol, an Archaic Primase/Polymerase Operating in Human Cells We describe a second primase in human cells, PrimPol, which has the ability to start DNA chains with deoxynucleotides unlike regular primases, which use exclusively ribonucleotides. Moreover, PrimPol is also a DNA polymerase tailored to bypass the most common oxidative lesions in DNA, such as abasic sites and 8-oxoguanine. Subcellular fractionation and immunodetection studies indicated that PrimPol is present in both nuclear and mitochondrial DNA compartments. PrimPol activity is detectable in mitochondrial lysates from human and mouse cells but is absent from mitochondria derived from PRIMPOL knockout mice. PRIMPOL gene silencing or ablation in human and mouse cells impaired mitochondrial DNA replication. On the basis of the",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.626730+00:00"
+}

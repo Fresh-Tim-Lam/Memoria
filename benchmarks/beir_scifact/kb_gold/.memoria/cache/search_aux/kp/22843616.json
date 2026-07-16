@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22843616",
+  "source_fingerprint": "812aec1af662b129372bb69ea3b4d88c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22843616",
+    "myc-represses-primitive-endoderm-differentiation-in-pluripotent-stem-cells."
+  ],
+  "key_phrases": [
+    "myc",
+    "represses",
+    "primitive",
+    "endoderm",
+    "differentiation",
+    "pluripotent",
+    "stem",
+    "cells"
+  ],
+  "summary_1l": "Myc represses primitive endoderm differentiation in pluripotent stem cells.",
+  "query_hits": [],
+  "embed_text": "22843616 Myc represses primitive endoderm differentiation in pluripotent stem cells. science scifact The generation of induced pluripotent stem cells (iPSCs) provides a novel method to facilitate investigations into the mechanisms that control stem cell pluripotency and self-renewal. Myc has previously been shown to be critical for murine… 22843616 myc-represses-primitive-endoderm-differentiation-in-pluripotent-stem-cells. myc represses primitive endoderm differentiation pluripotent stem cells Myc represses primitive endoderm differentiation in pluripotent stem cells. Myc represses primitive endoderm differentiation in pluripotent stem cells. The generation of induced pluripotent stem cells (iPSCs) provides a novel method to facilitate investigations into the mechanisms that control stem cell pluripotency and self-renewal. Myc has previously been shown to be critical for murine embryonic stem cell (mESC) maintenance, while also enhancing directed reprogramming of fibroblasts by effecting widespread changes in gene expression. Despite several studies identifying in vivo target genes, the precise mechanism by which Myc regulates pluripotency remains unknown. Here we report that codeletion of c- and N-MYC in iPSCs and ESCs results in their spontaneous differentiation to primitive endoderm. We show that Myc sustains pluripotency through repression of the pr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.385839+00:00"
+}

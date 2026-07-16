@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "28015516",
+  "source_fingerprint": "c23b186d590c8358334e0e71c3361e42",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "28015516",
+    "netting-neutrophils-are-major-inducers-of-type-i-ifn-production-in-pediatric-systemic-lupus-erythematosus."
+  ],
+  "key_phrases": [
+    "netting",
+    "neutrophils",
+    "major",
+    "inducers",
+    "type",
+    "ifn",
+    "production",
+    "pediatric"
+  ],
+  "summary_1l": "Netting neutrophils are major inducers of type I IFN production in pediatric systemic lupus erythematosus.",
+  "query_hits": [],
+  "embed_text": "28015516 Netting neutrophils are major inducers of type I IFN production in pediatric systemic lupus erythematosus. science scifact Systemic lupus erythematosus (SLE) is a systemic autoimmune disease characterized by a breakdown of tolerance to nuclear antigens and the development of immune complexes. Genomic approaches have shown that human SLE leukocytes… 28015516 netting-neutrophils-are-major-inducers-of-type-i-ifn-production-in-pediatric-systemic-lupus-erythematosus. netting neutrophils major inducers type ifn production pediatric Netting neutrophils are major inducers of type I IFN production in pediatric systemic lupus erythematosus. Netting neutrophils are major inducers of type I IFN production in pediatric systemic lupus erythematosus. Systemic lupus erythematosus (SLE) is a systemic autoimmune disease characterized by a breakdown of tolerance to nuclear antigens and the development of immune complexes. Genomic approaches have shown that human SLE leukocytes homogeneously express type I interferon (IFN)-induced and neutrophil-related transcripts. Increased production and/or bioavailability of IFN-α and associated alterations in dendritic cell (DC) homeostasis have been linked to lupus pathogenesis. Although neutrophils have long been shown to be associated with lupus, their potential role in disease pathogenesis remains elusive. Here, we show that mature SLE neutrophils are primed in vivo by type I IFN and die upon",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.513998+00:00"
+}

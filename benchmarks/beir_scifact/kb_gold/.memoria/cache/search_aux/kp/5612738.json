@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5612738",
+  "source_fingerprint": "465ec01890ca9e47d72d3cce091f91e4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5612738",
+    "microrna-148a-regulates-ldl-receptor-and-abca1-expression-to-control-circulating-lipoprotein-levels"
+  ],
+  "key_phrases": [
+    "microrna",
+    "148a",
+    "regulates",
+    "ldl",
+    "receptor",
+    "abca1",
+    "expression",
+    "control"
+  ],
+  "summary_1l": "The hepatic low-density lipoprotein receptor (LDLR) pathway is essential for clearing circulating LD",
+  "query_hits": [],
+  "embed_text": "5612738 MicroRNA-148a regulates LDL receptor and ABCA1 expression to control circulating lipoprotein levels science scifact The hepatic low-density lipoprotein receptor (LDLR) pathway is essential for clearing circulating LDL cholesterol (LDL-C). Whereas the transcriptional regulation of LDLR is well characterized, the post-transcriptional mechanisms that… 5612738 microrna-148a-regulates-ldl-receptor-and-abca1-expression-to-control-circulating-lipoprotein-levels microrna 148a regulates ldl receptor abca1 expression control The hepatic low-density lipoprotein receptor (LDLR) pathway is essential for clearing circulating LD MicroRNA-148a regulates LDL receptor and ABCA1 expression to control circulating lipoprotein levels The hepatic low-density lipoprotein receptor (LDLR) pathway is essential for clearing circulating LDL cholesterol (LDL-C). Whereas the transcriptional regulation of LDLR is well characterized, the post-transcriptional mechanisms that govern LDLR expression are just beginning to emerge. Here we develop a high-throughput genome-wide screening assay to systematically identify microRNAs (miRNAs) that regulate LDLR activity in human hepatic cells. From this screen we identified and characterized miR-148a as a negative regulator of LDLR expression and activity and defined a sterol regulatory element–binding protein 1 (SREBP1)-mediated pathway through which miR-148a regulates LDL-C uptake. In mice,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.724729+00:00"
+}

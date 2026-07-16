@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1180972",
+  "source_fingerprint": "3d8adf5b49e8317c5ee94c563901b472",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1180972",
+    "genetics-of-obesity-in-adult-adoptees-and-their-biological-siblings."
+  ],
+  "key_phrases": [
+    "genetics",
+    "obesity",
+    "adult",
+    "adoptees",
+    "their",
+    "biological",
+    "siblings",
+    "adoption"
+  ],
+  "summary_1l": "Genetics of obesity in adult adoptees and their biological siblings.",
+  "query_hits": [],
+  "embed_text": "1180972 Genetics of obesity in adult adoptees and their biological siblings. science scifact An adoption study of genetic effects on obesity in adulthood was carried out in which adoptees separated from their natural parents very early in life were compared with their biological full and half siblings reared by their natural… 1180972 genetics-of-obesity-in-adult-adoptees-and-their-biological-siblings. genetics obesity adult adoptees their biological siblings adoption Genetics of obesity in adult adoptees and their biological siblings. Genetics of obesity in adult adoptees and their biological siblings. An adoption study of genetic effects on obesity in adulthood was carried out in which adoptees separated from their natural parents very early in life were compared with their biological full and half siblings reared by their natural parents. The adoptees represented four groups who by sampling from a larger population were categorised as either thin, medium weight, overweight, or obese. Weight and height were obtained for 115 full siblings of 57 adoptees and for 850 half siblings of 341 adoptees. In full siblings body mass index (kg/m2) significantly increased with weight of the adoptees. Body mass index of the half siblings showed a steady but weaker increase across the four weight groups of adoptees. There were no sign",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:07.568930+00:00"
+}

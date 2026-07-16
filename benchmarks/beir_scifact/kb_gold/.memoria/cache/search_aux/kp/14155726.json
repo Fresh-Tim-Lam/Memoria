@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14155726",
+  "source_fingerprint": "45aefaeba98fe2cb65a98c2ec2b3401a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14155726",
+    "structure-of-actin-related-protein-8-and-its-contribution-to-nucleosome-binding"
+  ],
+  "key_phrases": [
+    "structure",
+    "actin",
+    "related",
+    "protein",
+    "its",
+    "contribution",
+    "nucleosome",
+    "binding"
+  ],
+  "summary_1l": "Nuclear actin-related proteins (Arps) are subunits of several chromatin remodelers, but their molecular functions within",
+  "query_hits": [],
+  "embed_text": "14155726 Structure of Actin-related protein 8 and its contribution to nucleosome binding science scifact Nuclear actin-related proteins (Arps) are subunits of several chromatin remodelers, but their molecular functions within these complexes are unclear. We report the crystal structure of the INO80 complex subunit Arp8 in its ATP-bound form.… 14155726 structure-of-actin-related-protein-8-and-its-contribution-to-nucleosome-binding structure actin related protein its contribution nucleosome binding Nuclear actin-related proteins (Arps) are subunits of several chromatin remodelers, but their molecular functions within Structure of Actin-related protein 8 and its contribution to nucleosome binding Nuclear actin-related proteins (Arps) are subunits of several chromatin remodelers, but their molecular functions within these complexes are unclear. We report the crystal structure of the INO80 complex subunit Arp8 in its ATP-bound form. Human Arp8 has several insertions in the conserved actin fold that explain its inability to polymerize. Most remarkably, one insertion wraps over the active site cleft and appears to rigidify the domain architecture, while active site features shared with actin suggest an allosterically controlled ATPase activity. Quantitative binding studies with nucleosomes and histone complexes reveal that Arp8 and the Arp8-Arp4-actin-HSA sub-complex of INO80 strongly prefer nucleosomes and",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.226536+00:00"
+}

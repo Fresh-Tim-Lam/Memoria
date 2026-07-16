@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26108767",
+  "source_fingerprint": "184d157d7cb7b6d81e4b45cafb85dfdc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26108767",
+    "cleavage-efficient-2a-peptides-for-high-level-monoclonal-antibody-expression-in-cho-cells."
+  ],
+  "key_phrases": [
+    "cleavage",
+    "efficient",
+    "2a",
+    "peptides",
+    "high",
+    "level",
+    "monoclonal",
+    "antibody"
+  ],
+  "summary_1l": "Cleavage efficient 2A peptides for high level monoclonal antibody expression in CHO cells.",
+  "query_hits": [],
+  "embed_text": "26108767 Cleavage efficient 2A peptides for high level monoclonal antibody expression in CHO cells. science scifact Linking the heavy chain (HC) and light chain (LC) genes required for monoclonal antibodies (mAb) production on a single cassette using 2A peptides allows control of LC and HC ratio and reduces non-expressing cells. Four 2A peptides derived… 26108767 cleavage-efficient-2a-peptides-for-high-level-monoclonal-antibody-expression-in-cho-cells. cleavage efficient 2a peptides high level monoclonal antibody Cleavage efficient 2A peptides for high level monoclonal antibody expression in CHO cells. Cleavage efficient 2A peptides for high level monoclonal antibody expression in CHO cells. Linking the heavy chain (HC) and light chain (LC) genes required for monoclonal antibodies (mAb) production on a single cassette using 2A peptides allows control of LC and HC ratio and reduces non-expressing cells. Four 2A peptides derived from the foot-and-mouth disease virus (F2A), equine rhinitis A virus (E2A), porcine teschovirus-1 (P2A) and Thosea asigna virus (T2A), respectively, were compared for expression of 3 biosimilar IgG1 mAbs in Chinese hamster ovary (CHO) cell lines. HC and LC were linked by different 2A peptides both in the absence and presence of GSG linkers. Insertion of a furin recognition site upstream of 2A allowed removal of 2A residues that would otherwise be attached to the HC",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.369669+00:00"
+}

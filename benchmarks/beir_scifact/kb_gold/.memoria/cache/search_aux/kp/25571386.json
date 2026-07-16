@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25571386",
+  "source_fingerprint": "3e3ded23099ca5880a0cce17a25c41b2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25571386",
+    "shared-and-distinct-genetic-variants-in-type-1-diabetes-and-celiac-disease."
+  ],
+  "key_phrases": [
+    "shared",
+    "distinct",
+    "genetic",
+    "variants",
+    "type",
+    "diabetes",
+    "celiac",
+    "disease"
+  ],
+  "summary_1l": "Shared and distinct genetic variants in type 1 diabetes and celiac disease.",
+  "query_hits": [],
+  "embed_text": "25571386 Shared and distinct genetic variants in type 1 diabetes and celiac disease. science scifact BACKGROUND Two inflammatory disorders, type 1 diabetes and celiac disease, cosegregate in populations, suggesting a common genetic origin. Since both diseases are associated with the HLA class II genes on chromosome 6p21, we tested whether… 25571386 shared-and-distinct-genetic-variants-in-type-1-diabetes-and-celiac-disease. shared distinct genetic variants type diabetes celiac disease Shared and distinct genetic variants in type 1 diabetes and celiac disease. Shared and distinct genetic variants in type 1 diabetes and celiac disease. BACKGROUND Two inflammatory disorders, type 1 diabetes and celiac disease, cosegregate in populations, suggesting a common genetic origin. Since both diseases are associated with the HLA class II genes on chromosome 6p21, we tested whether non-HLA loci are shared. METHODS We evaluated the association between type 1 diabetes and eight loci related to the risk of celiac disease by genotyping and statistical analyses of DNA samples from 8064 patients with type 1 diabetes, 9339 control subjects, and 2828 families providing 3064 parent-child trios (consisting of an affected child and both biologic parents). We also investigated 18 loci associated with type 1 diabetes in 2560 patients with celiac disease and 9339 control",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.918643+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24612804",
+  "source_fingerprint": "49dd250b681c2ce3b23a2e72ecccfde6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24612804",
+    "requirement-of-endogenous-stem-cell-factor-and-granulocyte-colony-stimulating-factor-for-il-17-mediated-granulopoiesis."
+  ],
+  "key_phrases": [
+    "requirement",
+    "endogenous",
+    "stem",
+    "cell",
+    "factor",
+    "granulocyte",
+    "colony",
+    "stimulating"
+  ],
+  "summary_1l": "Requirement of endogenous stem cell factor and granulocyte-colony-stimulating factor for IL-17-mediated granulopoiesis.",
+  "query_hits": [],
+  "embed_text": "24612804 Requirement of endogenous stem cell factor and granulocyte-colony-stimulating factor for IL-17-mediated granulopoiesis. science scifact IL-17 is a novel, CD4+ T cell-restricted cytokine. In vivo, it stimulates hematopoiesis and causes neutrophilia consisting of mature granulocytes. In this study, we show that IL-17-mediated granulopoiesis requires G-CSF release and the… 24612804 requirement-of-endogenous-stem-cell-factor-and-granulocyte-colony-stimulating-factor-for-il-17-mediated-granulopoiesis. requirement endogenous stem cell factor granulocyte colony stimulating Requirement of endogenous stem cell factor and granulocyte-colony-stimulating factor for IL-17-mediated granulopoiesis. Requirement of endogenous stem cell factor and granulocyte-colony-stimulating factor for IL-17-mediated granulopoiesis. IL-17 is a novel, CD4+ T cell-restricted cytokine. In vivo, it stimulates hematopoiesis and causes neutrophilia consisting of mature granulocytes. In this study, we show that IL-17-mediated granulopoiesis requires G-CSF release and the presence or induction of the transmembrane form of stem cell factor (SCF) for optimal granulopoiesis. However, IL-17 also protects mice from G-CSF neutralization-induced neutropenia. G-CSF neutralization completely reversed IL-17-induced BM progenitor expansion, whereas splenic CFU-GM/CFU-granulocyte-erythrocyte-megakaryocyte-monocyte was only reduced by 50% in both Sl/Sld and littermate control mice. Thus, there remained a significant SCF/",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.853337+00:00"
+}

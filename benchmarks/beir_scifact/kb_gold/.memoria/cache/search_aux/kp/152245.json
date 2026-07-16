@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "152245",
+  "source_fingerprint": "d160a322c15518e0b23bf3c80aff43d7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "152245",
+    "effects-of-an-opal-termination-codon-preceding-the-nsp4-gene-sequence-in-the-o'nyong-nyong-virus-genome-on-anopheles-gambiae-infectivity."
+  ],
+  "key_phrases": [
+    "effects",
+    "opal",
+    "termination",
+    "codon",
+    "preceding",
+    "nsp4",
+    "gene",
+    "sequence"
+  ],
+  "summary_1l": "Effects of an opal termination codon preceding the nsP4 gene sequence in the O'Nyong-Nyong virus genome on Anopheles gambiae infectivity.",
+  "query_hits": [],
+  "embed_text": "152245 Effects of an opal termination codon preceding the nsP4 gene sequence in the O'Nyong-Nyong virus genome on Anopheles gambiae infectivity. science scifact The genomic RNA of an alphavirus encodes four different nonstructural proteins, nsP1, nsP2, nsP3, and nsP4. The polyprotein P123 is produced when translation terminates at an opal termination codon between nsP3 and nsP4. The polyprotein… 152245 effects-of-an-opal-termination-codon-preceding-the-nsp4-gene-sequence-in-the-o'nyong-nyong-virus-genome-on-anopheles-gambiae-infectivity. effects opal termination codon preceding nsp4 gene sequence Effects of an opal termination codon preceding the nsP4 gene sequence in the O'Nyong-Nyong virus genome on Anopheles gambiae infectivity. Effects of an opal termination codon preceding the nsP4 gene sequence in the O'Nyong-Nyong virus genome on Anopheles gambiae infectivity. The genomic RNA of an alphavirus encodes four different nonstructural proteins, nsP1, nsP2, nsP3, and nsP4. The polyprotein P123 is produced when translation terminates at an opal termination codon between nsP3 and nsP4. The polyprotein P1234 is produced when translational readthrough occurs or when the opal termination codon has been replaced by a sense codon in the alphavirus genome. Evolutionary pressures appear to have maintained genomic sequences encoding both a stop codon (opal) and an open reading frame (arginine) as a general feature of the O'nyong-nyong virus (ONNV) genome, indicating that both are required at some point. Alternate replication o",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.218825+00:00"
+}

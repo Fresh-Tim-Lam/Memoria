@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "970012",
+  "source_fingerprint": "07884dbde0927c86c2efcacf12df8f1f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "970012",
+    "cold-exposure-promotes-atherosclerotic-plaque-growth-and-instability-via-ucp1-dependent-lipolysis"
+  ],
+  "key_phrases": [
+    "cold",
+    "exposure",
+    "promotes",
+    "atherosclerotic",
+    "plaque",
+    "growth",
+    "instability",
+    "via"
+  ],
+  "summary_1l": "Molecular mechanisms underlying the cold-associated high cardiovascular risk remain unknown.",
+  "query_hits": [],
+  "embed_text": "970012 Cold Exposure Promotes Atherosclerotic Plaque Growth and Instability via UCP1-Dependent Lipolysis science scifact Molecular mechanisms underlying the cold-associated high cardiovascular risk remain unknown. Here, we show that the cold-triggered food-intake-independent lipolysis significantly increased plasma levels of small low-density lipoprotein… 970012 cold-exposure-promotes-atherosclerotic-plaque-growth-and-instability-via-ucp1-dependent-lipolysis cold exposure promotes atherosclerotic plaque growth instability via Molecular mechanisms underlying the cold-associated high cardiovascular risk remain unknown. Cold Exposure Promotes Atherosclerotic Plaque Growth and Instability via UCP1-Dependent Lipolysis Molecular mechanisms underlying the cold-associated high cardiovascular risk remain unknown. Here, we show that the cold-triggered food-intake-independent lipolysis significantly increased plasma levels of small low-density lipoprotein (LDL) remnants, leading to accelerated development of atherosclerotic lesions in mice. In two genetic mouse knockout models (apolipoprotein E(-/-) [ApoE(-/-)] and LDL receptor(-/-) [Ldlr(-/-)] mice), persistent cold exposure stimulated atherosclerotic plaque growth by increasing lipid deposition. Furthermore, marked increase of inflammatory cells and plaque-associated microvessels were detected in the cold-acclimated ApoE(-/-) and Ldlr(-/-) mice, leading to plaq",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.599221+00:00"
+}

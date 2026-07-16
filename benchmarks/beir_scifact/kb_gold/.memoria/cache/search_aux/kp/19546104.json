@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19546104",
+  "source_fingerprint": "d1c556801f899c3f117f5d4ab6efca2b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19546104",
+    "uptake-of-rosuvastatin-by-isolated-rat-hepatocytes:-comparison-with-pravastatin."
+  ],
+  "key_phrases": [
+    "uptake",
+    "rosuvastatin",
+    "by",
+    "isolated",
+    "rat",
+    "hepatocytes",
+    "comparison",
+    "with"
+  ],
+  "summary_1l": "Uptake of rosuvastatin by isolated rat hepatocytes: comparison with pravastatin.",
+  "query_hits": [],
+  "embed_text": "19546104 Uptake of rosuvastatin by isolated rat hepatocytes: comparison with pravastatin. science scifact 1. The liver is the target organ for the lipid-regulating effect of rosuvastatin, a new 3-hydroxy-3-methylglutaryl coenzyme A reductase inhibitor, and liver-selective uptake of this drug is therefore a desirable property. The uptake… 19546104 uptake-of-rosuvastatin-by-isolated-rat-hepatocytes:-comparison-with-pravastatin. uptake rosuvastatin by isolated rat hepatocytes comparison with Uptake of rosuvastatin by isolated rat hepatocytes: comparison with pravastatin. Uptake of rosuvastatin by isolated rat hepatocytes: comparison with pravastatin. 1. The liver is the target organ for the lipid-regulating effect of rosuvastatin, a new 3-hydroxy-3-methylglutaryl coenzyme A reductase inhibitor, and liver-selective uptake of this drug is therefore a desirable property. The uptake kinetics of rosuvastatin were investigated and compared with those of pravastatin using isolated rat hepatocytes. 2. Uptake for both drugs involved both active transport and passive diffusion processes. The Michaelis constant (K(m)) of uptake rate for rosuvastatin (9.17 micro M) was approximately half that for pravastatin (16.5 micro M). However, the maximum uptake rate (V(max)) and carrier-mediated uptake clearance (V(max)/K(m)) of rosuvastatin were significantly (p < 0.01) greate",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.780684+00:00"
+}

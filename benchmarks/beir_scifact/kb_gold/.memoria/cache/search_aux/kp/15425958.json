@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15425958",
+  "source_fingerprint": "db36e6410fb9b03e97d7c3a9c61b99fb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15425958",
+    "human-cytomegalovirus-encoded-interleukin-10-homolog-inhibits-maturation-of-dendritic-cells-and-alters-their-functionality"
+  ],
+  "key_phrases": [
+    "human",
+    "cytomegalovirus",
+    "encoded",
+    "interleukin",
+    "10",
+    "homolog",
+    "inhibits",
+    "maturation"
+  ],
+  "summary_1l": "Interleukin-10 (IL-10) suppresses the maturation and cytokine production of d",
+  "query_hits": [],
+  "embed_text": "15425958 Human Cytomegalovirus-Encoded Interleukin-10 Homolog Inhibits Maturation of Dendritic Cells and Alters Their Functionality science scifact Interleukin-10 (IL-10) suppresses the maturation and cytokine production of dendritic cells (DCs), key regulators of adaptive immunity, and prevents the activation and polarization of naïve T cells towards protective gamma… 15425958 human-cytomegalovirus-encoded-interleukin-10-homolog-inhibits-maturation-of-dendritic-cells-and-alters-their-functionality human cytomegalovirus encoded interleukin 10 homolog inhibits maturation Interleukin-10 (IL-10) suppresses the maturation and cytokine production of d Human Cytomegalovirus-Encoded Interleukin-10 Homolog Inhibits Maturation of Dendritic Cells and Alters Their Functionality Interleukin-10 (IL-10) suppresses the maturation and cytokine production of dendritic cells (DCs), key regulators of adaptive immunity, and prevents the activation and polarization of naïve T cells towards protective gamma interferon-producing effectors. We hypothesized that human cytomegalovirus (HCMV) utilizes its viral IL-10 homolog (cmvIL-10) to attenuate DC functionality, thereby subverting the efficient induction of antiviral immune responses. RNA and protein analyses demonstrated that the cmvIL-10 gene was expressed with late gene kinetics. Treatment of immature DCs (iDCs) with supernatant from HCMV-infected cultures inhibited both the lipopolysaccharide-induced",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.538714+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22401720",
+  "source_fingerprint": "a488110eb4e25a37d1a17707428a383d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22401720",
+    "expression-of-the-angiogenic-factors-vascular-endothelial-cell-growth-factor,-acidic-and-basic-fibroblast-growth-factor,-tumor-growth-factor-beta-1,-platelet-derived-endothelial-cell-growth-factor,-placenta-growth-factor,-and-pleiotrophin-in-human-primary-breast-cancer-and-its-relation-to-angiogenes"
+  ],
+  "key_phrases": [
+    "expression",
+    "angiogenic",
+    "factors",
+    "vascular",
+    "endothelial",
+    "cell",
+    "growth",
+    "factor"
+  ],
+  "summary_1l": "Expression of the angiogenic factors vascular endothelial cell growth factor, acidic and basic fibroblast growth factor, tumor growth factor beta-1, platelet-derived endothelial cell growth factor, pl",
+  "query_hits": [],
+  "embed_text": "22401720 Expression of the angiogenic factors vascular endothelial cell growth factor, acidic and basic fibroblast growth factor, tumor growth factor beta-1, platelet-derived endothelial cell growth factor, placenta growth factor, and pleiotrophin in human primary breast cancer and its relation to angiogenes science scifact Angiogenesis is a significant prognostic factor in breast cancer, but the factors that control angiogenesis in vivo are not well defined. Multiple angiogenic polypeptides are known, and we have determined the expression of seven of these… 22401720 expression-of-the-angiogenic-factors-vascular-endothelial-cell-growth-factor,-acidic-and-basic-fibroblast-growth-factor,-tumor-growth-factor-beta-1,-platelet-derived-endothelial-cell-growth-factor,-placenta-growth-factor,-and-pleiotrophin-in-human-primary-breast-cancer-and-its-relation-to-angiogenes expression angiogenic factors vascular endothelial cell growth factor Expression of the angiogenic factors vascular endothelial cell growth factor, acidic and basic fibroblast growth factor, tumor growth factor beta-1, platelet-derived endothelial cell growth factor, pl Expression of the angiogenic factors vascular endothelial cell growth factor, acidic and basic fibroblast growth factor, tumor growth factor beta-1, platelet-derived endothelial cell growth factor, placenta growth factor, and pleiotrophin in human primary breast cancer and its relation to angiogenes Angiogenesis is a significant prognostic factor in breast cancer, but the factors that control angiogenesis in vivo are not well defined. Multiple angiogenic polypeptides are known, and we have determined the expression of seven of these in primary human breast cancers; the relationship of expression to estrogen receptor and vascular density was also examined. Vascular endothelial growth factor (VEGF) and its four isoforms (121, 165, 189, and 206 amino acids), transforming growth factor (TGF)-b",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.652057+00:00"
+}

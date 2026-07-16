@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4457160",
+  "source_fingerprint": "3114cc39e4e66b358424a991af672030",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4457160",
+    "whole-genomes-redefine-the-mutational-landscape-of-pancreatic-cancer"
+  ],
+  "key_phrases": [
+    "whole",
+    "genomes",
+    "redefine",
+    "mutational",
+    "landscape",
+    "pancreatic",
+    "cancer",
+    "remains"
+  ],
+  "summary_1l": "Pancreatic cancer remains one of the most lethal of malignancies and a major health burden.",
+  "query_hits": [],
+  "embed_text": "4457160 Whole genomes redefine the mutational landscape of pancreatic cancer science scifact Pancreatic cancer remains one of the most lethal of malignancies and a major health burden. We performed whole-genome sequencing and copy number variation (CNV) analysis of 100 pancreatic ductal adenocarcinomas (PDACs). Chromosomal… 4457160 whole-genomes-redefine-the-mutational-landscape-of-pancreatic-cancer whole genomes redefine mutational landscape pancreatic cancer remains Pancreatic cancer remains one of the most lethal of malignancies and a major health burden. Whole genomes redefine the mutational landscape of pancreatic cancer Pancreatic cancer remains one of the most lethal of malignancies and a major health burden. We performed whole-genome sequencing and copy number variation (CNV) analysis of 100 pancreatic ductal adenocarcinomas (PDACs). Chromosomal rearrangements leading to gene disruption were prevalent, affecting genes known to be important in pancreatic cancer (TP53, SMAD4, CDKN2A, ARID1A and ROBO2) and new candidate drivers of pancreatic carcinogenesis (KDM6A and PREX2). Patterns of structural variation (variation in chromosomal structure) classified PDACs into 4 subtypes with potential clinical utility: the subtypes were termed stable, locally rearranged, scattered and unstable. A significant proportion harboured focal amplifications",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.524803+00:00"
+}

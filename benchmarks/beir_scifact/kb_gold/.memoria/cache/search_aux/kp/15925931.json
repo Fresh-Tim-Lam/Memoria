@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15925931",
+  "source_fingerprint": "fe3d1608f9501ffca7d367929ed472f6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15925931",
+    "prediction-of-coronary-artery-disease-by-a-systemic-atherosclerosis-score-index-derived-from-whole-body-mr-angiography"
+  ],
+  "key_phrases": [
+    "prediction",
+    "coronary",
+    "artery",
+    "disease",
+    "by",
+    "systemic",
+    "atherosclerosis",
+    "score"
+  ],
+  "summary_1l": "BACKGROUND Whole-body magnetic resonance angiography (WB-MRA) has shown its poten",
+  "query_hits": [],
+  "embed_text": "15925931 Prediction of coronary artery disease by a systemic atherosclerosis score index derived from whole-body MR angiography science scifact BACKGROUND Whole-body magnetic resonance angiography (WB-MRA) has shown its potential for the non-invasive assessment of nearly the entire arterial vasculature within one examination. Since the presence of extra-cardiac atherosclerosis is… 15925931 prediction-of-coronary-artery-disease-by-a-systemic-atherosclerosis-score-index-derived-from-whole-body-mr-angiography prediction coronary artery disease by systemic atherosclerosis score BACKGROUND Whole-body magnetic resonance angiography (WB-MRA) has shown its poten Prediction of coronary artery disease by a systemic atherosclerosis score index derived from whole-body MR angiography BACKGROUND Whole-body magnetic resonance angiography (WB-MRA) has shown its potential for the non-invasive assessment of nearly the entire arterial vasculature within one examination. Since the presence of extra-cardiac atherosclerosis is associated with an increased risk of coronary events, our goal was to establish the relationship between WB-MRA findings, including a systemic atherosclerosis score index, and the presence of significant coronary artery disease (CAD). METHODS WB-MRA was performed on a 1.5T scanner in 50 patients scheduled to undergo elective cardiac catheterization for suspected CAD. In each patient, 40 extra-cardiac vessel segments were evaluated and ass",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.452775+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21571708",
+  "source_fingerprint": "dae3375f3a3a821ec901a6077f20c389",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21571708",
+    "lipoprotein(a)-concentration-and-the-risk-of-coronary-heart-disease,-stroke,-and-nonvascular-mortality."
+  ],
+  "key_phrases": [
+    "lipoprotein",
+    "concentration",
+    "risk",
+    "coronary",
+    "heart",
+    "disease",
+    "stroke",
+    "nonvascular"
+  ],
+  "summary_1l": "Lipoprotein(a) concentration and the risk of coronary heart disease, stroke, and nonvascular mortality.",
+  "query_hits": [],
+  "embed_text": "21571708 Lipoprotein(a) concentration and the risk of coronary heart disease, stroke, and nonvascular mortality. science scifact CONTEXT Circulating concentration of lipoprotein(a) (Lp[a]), a large glycoprotein attached to a low-density lipoprotein-like particle, may be associated with risk of coronary heart disease (CHD) and stroke. OBJECTIVE To assess the… 21571708 lipoprotein(a)-concentration-and-the-risk-of-coronary-heart-disease,-stroke,-and-nonvascular-mortality. lipoprotein concentration risk coronary heart disease stroke nonvascular Lipoprotein(a) concentration and the risk of coronary heart disease, stroke, and nonvascular mortality. Lipoprotein(a) concentration and the risk of coronary heart disease, stroke, and nonvascular mortality. CONTEXT Circulating concentration of lipoprotein(a) (Lp[a]), a large glycoprotein attached to a low-density lipoprotein-like particle, may be associated with risk of coronary heart disease (CHD) and stroke. OBJECTIVE To assess the relationship of Lp(a) concentration with risk of major vascular and nonvascular outcomes. STUDY SELECTION Long-term prospective studies that recorded Lp(a) concentration and subsequent major vascular morbidity and/or cause-specific mortality published between January 1970 and March 2009 were identified through electronic searches of MEDLINE and other databases, manual searches of reference lists, and discussion with collaborators. DATA EXTRACTION Individual rec",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.419439+00:00"
+}

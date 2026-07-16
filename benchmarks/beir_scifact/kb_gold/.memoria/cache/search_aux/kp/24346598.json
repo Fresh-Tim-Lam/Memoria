@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24346598",
+  "source_fingerprint": "123e468dcdd7faf27b379381e3280197",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24346598",
+    "long-term,-nightly-benzodiazepine-treatment-of-injurious-parasomnias-and-other-disorders-of-disrupted-nocturnal-sleep-in-170-adults."
+  ],
+  "key_phrases": [
+    "long",
+    "term",
+    "nightly",
+    "benzodiazepine",
+    "treatment",
+    "injurious",
+    "parasomnias",
+    "other"
+  ],
+  "summary_1l": "Long-term, nightly benzodiazepine treatment of injurious parasomnias and other disorders of disrupted nocturnal sleep in 170 adults.",
+  "query_hits": [],
+  "embed_text": "24346598 Long-term, nightly benzodiazepine treatment of injurious parasomnias and other disorders of disrupted nocturnal sleep in 170 adults. science scifact PURPOSE To assess the efficacy, dose stability, safety, and abuse potential of long-term, nightly benzodiazepine treatment of chronic disorders of disrupted nocturnal sleep. PATIENTS AND METHODS During a 12-year period, one author… 24346598 long-term,-nightly-benzodiazepine-treatment-of-injurious-parasomnias-and-other-disorders-of-disrupted-nocturnal-sleep-in-170-adults. long term nightly benzodiazepine treatment injurious parasomnias other Long-term, nightly benzodiazepine treatment of injurious parasomnias and other disorders of disrupted nocturnal sleep in 170 adults. Long-term, nightly benzodiazepine treatment of injurious parasomnias and other disorders of disrupted nocturnal sleep in 170 adults. PURPOSE To assess the efficacy, dose stability, safety, and abuse potential of long-term, nightly benzodiazepine treatment of chronic disorders of disrupted nocturnal sleep. PATIENTS AND METHODS During a 12-year period, one author evaluated and treated 170 adult referrals for > or = 6 months with nightly benzodiazepine therapy for longstanding, sleep-disruptive disorders: injurious sleepwalking and sleep terrors (69); rapid eye movement sleep behavior disorder (52); chronic, severe insomnia (25); and restless legs syndrome/periodic limb movement disorder (24). RESULTS Complete/substantial control of the sleep disorders was achieved by 146 patients (86%); 8% h",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.284579+00:00"
+}

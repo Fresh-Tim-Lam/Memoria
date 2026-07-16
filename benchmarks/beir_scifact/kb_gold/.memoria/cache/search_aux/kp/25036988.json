@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25036988",
+  "source_fingerprint": "dcf594b4077625a05f606c1fa5f05cb2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25036988",
+    "loss-of-lamin-b1-results-in-prolongation-of-s-phase-and-decondensation-of-chromosome-territories."
+  ],
+  "key_phrases": [
+    "loss",
+    "lamin",
+    "b1",
+    "results",
+    "prolongation",
+    "phase",
+    "decondensation",
+    "chromosome"
+  ],
+  "summary_1l": "Loss of lamin B1 results in prolongation of S phase and decondensation of chromosome territories.",
+  "query_hits": [],
+  "embed_text": "25036988 Loss of lamin B1 results in prolongation of S phase and decondensation of chromosome territories. science scifact Nuclear lamin B1 (LMNB1) constitutes one of the major structural proteins in the lamina mesh. We silenced the expression of LMNB1 by RNA interference in the colon cancer cell line DLD-1 and showed a dramatic redistribution of H3K27me3 from… 25036988 loss-of-lamin-b1-results-in-prolongation-of-s-phase-and-decondensation-of-chromosome-territories. loss lamin b1 results prolongation phase decondensation chromosome Loss of lamin B1 results in prolongation of S phase and decondensation of chromosome territories. Loss of lamin B1 results in prolongation of S phase and decondensation of chromosome territories. Nuclear lamin B1 (LMNB1) constitutes one of the major structural proteins in the lamina mesh. We silenced the expression of LMNB1 by RNA interference in the colon cancer cell line DLD-1 and showed a dramatic redistribution of H3K27me3 from the periphery to a more homogeneous nuclear dispersion. In addition, we observed telomere attrition and an increased frequency of micronuclei and nuclear blebs. By 3D-FISH analyses, we demonstrated that the volume and surface of chromosome territories were significantly larger in LMNB1-depleted cells, suggesting that LMNB1 is required to maintain chromatin condensation in interphase nuclei. These changes led to a prolonged S phase due to activation of Chk1.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.838498+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7343711",
+  "source_fingerprint": "0178ad528938af6b1e395704c9c294da",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7343711",
+    "basics-of-pd-1-in-self-tolerance,-infection,-and-cancer-immunity"
+  ],
+  "key_phrases": [
+    "basics",
+    "pd",
+    "self",
+    "tolerance",
+    "infection",
+    "cancer",
+    "immunity",
+    "successful"
+  ],
+  "summary_1l": "Successful cancer treatment requires understanding host immune response against tumor cells.",
+  "query_hits": [],
+  "embed_text": "7343711 Basics of PD-1 in self-tolerance, infection, and cancer immunity science scifact Successful cancer treatment requires understanding host immune response against tumor cells. PD-1 belongs to the CD28 superfamily of receptors that work as “checkpoints” of immune activation. PD-1 maintains immune self-tolerance to prevent… 7343711 basics-of-pd-1-in-self-tolerance,-infection,-and-cancer-immunity basics pd self tolerance infection cancer immunity successful Successful cancer treatment requires understanding host immune response against tumor cells. Basics of PD-1 in self-tolerance, infection, and cancer immunity Successful cancer treatment requires understanding host immune response against tumor cells. PD-1 belongs to the CD28 superfamily of receptors that work as “checkpoints” of immune activation. PD-1 maintains immune self-tolerance to prevent autoimmunity and controls T-cell reaction during infection to prevent excessive tissue damage. Tumor cells that arise from normal tissue acquire mutations that can be targeted by lymphocytes. Accumulating lines of evidence suggest that tumor cells evade host immune attack by expressing physiological PD-1 ligands and stimulating PD-1 on the lymphocytes. Based on this idea, researchers have successfully demonstrated that systemic administration of monoclonal antibodies that inhibit the bindin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.083711+00:00"
+}

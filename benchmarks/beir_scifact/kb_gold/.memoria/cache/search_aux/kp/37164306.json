@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "37164306",
+  "source_fingerprint": "e3af911e9279dbc1c168290e4fd50a9e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "37164306",
+    "knockdown-of-the-co-chaperone-hop-promotes-extranuclear-accumulation-of-stat3-in-mouse-embryonic-stem-cells."
+  ],
+  "key_phrases": [
+    "knockdown",
+    "co",
+    "chaperone",
+    "hop",
+    "promotes",
+    "extranuclear",
+    "accumulation",
+    "stat3"
+  ],
+  "summary_1l": "Knockdown of the co-chaperone Hop promotes extranuclear accumulation of Stat3 in mouse embryonic stem cells.",
+  "query_hits": [],
+  "embed_text": "37164306 Knockdown of the co-chaperone Hop promotes extranuclear accumulation of Stat3 in mouse embryonic stem cells. science scifact A key event in the mechanism of mouse embryonic stem cell (mESC) pluripotency is phosphorylation, dimerisation and translocation to the nucleus of the signal transducer and activator of transcription3, Stat3. We used RNAi to suppress the… 37164306 knockdown-of-the-co-chaperone-hop-promotes-extranuclear-accumulation-of-stat3-in-mouse-embryonic-stem-cells. knockdown co chaperone hop promotes extranuclear accumulation stat3 Knockdown of the co-chaperone Hop promotes extranuclear accumulation of Stat3 in mouse embryonic stem cells. Knockdown of the co-chaperone Hop promotes extranuclear accumulation of Stat3 in mouse embryonic stem cells. A key event in the mechanism of mouse embryonic stem cell (mESC) pluripotency is phosphorylation, dimerisation and translocation to the nucleus of the signal transducer and activator of transcription3, Stat3. We used RNAi to suppress the levels of the co-chaperone Hsp70/Hsp90 organising protein (Hop) in an mESC line. Hop knockdown caused 68% depletion in Stat3 mRNA levels, decreased soluble pYStat3 levels, and led to an extranuclear accumulation of Stat3. The major binding partner of Hop, Hsp90, co-localised with a small non-nuclear fraction of Stat3 in mESCs, and both Stat3 and Hop co-precipitated with Hsp90. Hop knockdown did not affect Nanog and Oct4 protein levels; however, Nano",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.191632+00:00"
+}

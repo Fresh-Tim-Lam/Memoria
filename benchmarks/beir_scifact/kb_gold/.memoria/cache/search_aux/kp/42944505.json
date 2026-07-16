@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "42944505",
+  "source_fingerprint": "398ea30703afe3b69fb5871bd6323942",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "42944505",
+    "juvenile-mortality-increases-with-clutch-size-in-a-neotropical-bird"
+  ],
+  "key_phrases": [
+    "juvenile",
+    "mortality",
+    "increases",
+    "with",
+    "clutch",
+    "size",
+    "neotropical",
+    "bird"
+  ],
+  "summary_1l": "The change in avian clutch size with latitude is a celebrated example of geographic variation in a vertebrate life-history trait.",
+  "query_hits": [],
+  "embed_text": "42944505 JUVENILE MORTALITY INCREASES WITH CLUTCH SIZE IN A NEOTROPICAL BIRD science scifact The change in avian clutch size with latitude is a celebrated example of geographic variation in a vertebrate life-history trait. Alternative hypotheses for this pattern invoke nest predation, limited food for nestlings, or post-fledging… 42944505 juvenile-mortality-increases-with-clutch-size-in-a-neotropical-bird juvenile mortality increases with clutch size neotropical bird The change in avian clutch size with latitude is a celebrated example of geographic variation in a vertebrate life-history trait. JUVENILE MORTALITY INCREASES WITH CLUTCH SIZE IN A NEOTROPICAL BIRD The change in avian clutch size with latitude is a celebrated example of geographic variation in a vertebrate life-history trait. Alternative hypotheses for this pattern invoke nest predation, limited food for nestlings, or post-fledging juvenile mortality as selection pressures leading to small clutch size of tropical birds. We manipulated the clutch size of Spotted Antbirds (Hylophylax naevioides) in central Panama to test these hypotheses. We observed that rates of nest predation were not influenced by parental activity at nests and parents could successfully feed nestlings in enlarged broods. Although larger broods produced the most fledged juveniles, these individuals were less likely to survive to dispersal than were",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.343835+00:00"
+}

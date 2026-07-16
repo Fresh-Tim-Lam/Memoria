@@ -1,0 +1,63 @@
+schema_version: 1
+file: administrative-coercion.md
+knowledge_points:
+- id: administrative-levy
+  name: 行政征收
+  range:
+    start:
+      snippet: '## 行政征收'
+    end:
+      snippet: 行政征收：行政主体依法向行政相对人强制性地收取税费或私有财产的[[administrative-act|行政行为]]
+- id: administrative-expropriation
+  name: 行政征用
+  range:
+    start:
+      snippet: '## 行政征用'
+    end:
+      snippet: 行政征用：指行政主体根据法律规定，出于公共利益的需要，强制性的使用相对人的财产并给予补偿的行政行为。
+- id: administrative-coercive-measures
+  name: 行政强制措施
+  range:
+    start:
+      snippet: '## 行政强制措施'
+    end:
+      snippet: '- 如果违法，划拨，收缴；没有违法或冻结期限届满，解除'
+- id: administrative-coercive-execution
+  name: 行政强制执行
+  range:
+    start:
+      snippet: '## 行政强制执行'
+    end:
+      snippet: 处罚和措施：措施是预防性，无明确期限；处罚是惩戒目的，有确定期限；
+links:
+- anchor_text: administrative-act
+  occurrence: 0
+  targets:
+  - administrative-act
+  edge_type: reference
+  instances:
+  - line: 3
+    wrapped: true
+  source_id: administrative-levy
+- anchor_text: administrative-penalty
+  occurrence: 0
+  targets:
+  - administrative-penalty
+  edge_type: reference
+  instances:
+  - line: 25
+    wrapped: true
+  - line: 30
+    wrapped: true
+  source_id: administrative-coercive-measures
+- anchor_text: administrative-license
+  occurrence: 0
+  targets:
+  - administrative-license
+  edge_type: reference
+  instances:
+  - line: 25
+    wrapped: true
+  - line: 30
+    wrapped: true
+  source_id: administrative-coercive-measures

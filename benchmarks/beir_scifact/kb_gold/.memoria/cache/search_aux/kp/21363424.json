@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21363424",
+  "source_fingerprint": "c890c4773b96d685dcbfd7ca302b0513",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21363424",
+    "blimp-1-attenuates-th1-differentiation-by-repression-of-ifng,-tbx21,-and-bcl6-gene-expression."
+  ],
+  "key_phrases": [
+    "blimp",
+    "attenuates",
+    "th1",
+    "differentiation",
+    "by",
+    "repression",
+    "ifng",
+    "tbx21"
+  ],
+  "summary_1l": "Blimp-1 attenuates Th1 differentiation by repression of ifng, tbx21, and bcl6 gene expression.",
+  "query_hits": [],
+  "embed_text": "21363424 Blimp-1 attenuates Th1 differentiation by repression of ifng, tbx21, and bcl6 gene expression. science scifact T cell-specific deletion of Blimp-1 causes abnormal T cell homeostasis and function, leading to spontaneous, fatal colitis in mice. Herein we explore the role of Blimp-1 in Th1/Th2 differentiation. Blimp-1 mRNA and protein are more highly… 21363424 blimp-1-attenuates-th1-differentiation-by-repression-of-ifng,-tbx21,-and-bcl6-gene-expression. blimp attenuates th1 differentiation by repression ifng tbx21 Blimp-1 attenuates Th1 differentiation by repression of ifng, tbx21, and bcl6 gene expression. Blimp-1 attenuates Th1 differentiation by repression of ifng, tbx21, and bcl6 gene expression. T cell-specific deletion of Blimp-1 causes abnormal T cell homeostasis and function, leading to spontaneous, fatal colitis in mice. Herein we explore the role of Blimp-1 in Th1/Th2 differentiation. Blimp-1 mRNA and protein are more highly expressed in Th2 cells compared with Th1 cells, and Blimp-1 attenuates IFN-gamma production in CD4 cells activated under nonpolarizing conditions. Although Blimp-1-deficient T cells differentiate normally to Th2 cytokines in vitro, Blimp-1 is required in vivo for normal Th2 humoral responses to NP-KLH (4-hydroxy-3-nitrophenylacetyl/keyhole lymphocyte hemocyanin) immunization. Lack of Blimp-1 in CD4 T cells causes increased IFN-gamma, T-bet, and Bcl-6 mRNA. By ch",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.867028+00:00"
+}

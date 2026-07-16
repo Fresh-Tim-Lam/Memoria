@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "28910120",
+  "source_fingerprint": "cc5f7442a71f09339cae491f7b6524f7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "28910120",
+    "recombinant-human-tumor-necrosis-factor-administered-as-a-five-day-continuous-infusion-in-cancer-patients:-phase-i-toxicity-and-effects-on-lipid-metabolism."
+  ],
+  "key_phrases": [
+    "recombinant",
+    "human",
+    "tumor",
+    "necrosis",
+    "factor",
+    "administered",
+    "as",
+    "five"
+  ],
+  "summary_1l": "Recombinant human tumor necrosis factor administered as a five-day continuous infusion in cancer patients: phase I toxicity and effects on lipid metabolism.",
+  "query_hits": [],
+  "embed_text": "28910120 Recombinant human tumor necrosis factor administered as a five-day continuous infusion in cancer patients: phase I toxicity and effects on lipid metabolism. science scifact Recombinant human tumor necrosis factor (rH-TNF) is a cytotoxic monokine with pleiotropic effects. A phase I trial of rH-TNF was initiated using a five-day continuous intravenous (IV) infusion repeated every 28 days. Thirty-eight courses… 28910120 recombinant-human-tumor-necrosis-factor-administered-as-a-five-day-continuous-infusion-in-cancer-patients:-phase-i-toxicity-and-effects-on-lipid-metabolism. recombinant human tumor necrosis factor administered as five Recombinant human tumor necrosis factor administered as a five-day continuous infusion in cancer patients: phase I toxicity and effects on lipid metabolism. Recombinant human tumor necrosis factor administered as a five-day continuous infusion in cancer patients: phase I toxicity and effects on lipid metabolism. Recombinant human tumor necrosis factor (rH-TNF) is a cytotoxic monokine with pleiotropic effects. A phase I trial of rH-TNF was initiated using a five-day continuous intravenous (IV) infusion repeated every 28 days. Thirty-eight courses of therapy were administered to 19 patients. The starting dose was 5 X 10(4) U/m2/d, with escalations to 1.0 X 10(5), 2.0 X 10(5), 2.4 X 10(5), and 3.0 X 10(5) U/m2/d. Systemic side effects, including fever, chills, hypotension, fatigue, anorexia, and headaches, were mild and self-limiting. At the maximum tolerated dose of 3.0 X 10(5) U/m2/d, dose-limiting hematologic toxicity was manifested by transie",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.439572+00:00"
+}

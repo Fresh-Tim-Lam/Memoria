@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16737210",
+  "source_fingerprint": "a8797d738d59824032bc4f5b17ca19cc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16737210",
+    "kidney-paired-donation-and-optimizing-the-use-of-live-donor-organs."
+  ],
+  "key_phrases": [
+    "kidney",
+    "paired",
+    "donation",
+    "optimizing",
+    "use",
+    "live",
+    "donor",
+    "organs"
+  ],
+  "summary_1l": "Kidney paired donation and optimizing the use of live donor organs.",
+  "query_hits": [],
+  "embed_text": "16737210 Kidney paired donation and optimizing the use of live donor organs. science scifact CONTEXT Blood type and crossmatch incompatibility will exclude at least one third of patients in need from receiving a live donor kidney transplant. Kidney paired donation (KPD) offers incompatible donor/recipient pairs the opportunity to… 16737210 kidney-paired-donation-and-optimizing-the-use-of-live-donor-organs. kidney paired donation optimizing use live donor organs Kidney paired donation and optimizing the use of live donor organs. Kidney paired donation and optimizing the use of live donor organs. CONTEXT Blood type and crossmatch incompatibility will exclude at least one third of patients in need from receiving a live donor kidney transplant. Kidney paired donation (KPD) offers incompatible donor/recipient pairs the opportunity to match for compatible transplants. Despite its increasing popularity, very few transplants have resulted from KPD. OBJECTIVE To determine the potential impact of improved matching schemes on the number and quality of transplants achievable with KPD. DESIGN, SETTING, AND POPULATION We developed a model that simulates pools of incompatible donor/recipient pairs. We designed a mathematically verifiable optimized matching algorithm and compared it with the scheme currently used in some centers",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:11.755548+00:00"
+}

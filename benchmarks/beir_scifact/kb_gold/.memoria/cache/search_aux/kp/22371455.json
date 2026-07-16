@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22371455",
+  "source_fingerprint": "ff203da963a40782e86455dd4828fcf3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22371455",
+    "drug-induced-thrombocytopenia:-pathogenesis,-evaluation,-and-management."
+  ],
+  "key_phrases": [
+    "drug",
+    "induced",
+    "thrombocytopenia",
+    "pathogenesis",
+    "evaluation",
+    "management",
+    "although",
+    "drugs"
+  ],
+  "summary_1l": "Drug-induced thrombocytopenia: pathogenesis, evaluation, and management.",
+  "query_hits": [],
+  "embed_text": "22371455 Drug-induced thrombocytopenia: pathogenesis, evaluation, and management. science scifact Although drugs are a common cause of acute immune-mediated thrombocytopenia in adults, the drug etiology is often initially unrecognized. Most cases of drug-induced thrombocytopenia (DITP) are caused by drug-dependent antibodies that are… 22371455 drug-induced-thrombocytopenia:-pathogenesis,-evaluation,-and-management. drug induced thrombocytopenia pathogenesis evaluation management although drugs Drug-induced thrombocytopenia: pathogenesis, evaluation, and management. Drug-induced thrombocytopenia: pathogenesis, evaluation, and management. Although drugs are a common cause of acute immune-mediated thrombocytopenia in adults, the drug etiology is often initially unrecognized. Most cases of drug-induced thrombocytopenia (DITP) are caused by drug-dependent antibodies that are specific for the drug structure and bind tightly to platelets by their Fab regions but only in the presence of the drug. A comprehensive database of 1301 published reports describing 317 drugs, available at www.ouhsc.edu/platelets, provides information on the level of evidence for a causal relation to thrombocytopenia. Typically, DITP occurs 1 to 2 weeks after beginning a new drug or suddenly after a single dose when a drug has previously been taken intermittently. However, severe thr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.627248+00:00"
+}

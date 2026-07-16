@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "28517384",
+  "source_fingerprint": "7491e8c54423e8fa827d2b36df45a3e6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "28517384",
+    "soluble-md-2-is-an-acute-phase-protein-and-an-opsonin-for-gram-negative-bacteria."
+  ],
+  "key_phrases": [
+    "soluble",
+    "md",
+    "acute",
+    "phase",
+    "protein",
+    "opsonin",
+    "gram",
+    "negative"
+  ],
+  "summary_1l": "Soluble MD-2 is an acute-phase protein and an opsonin for Gram-negative bacteria.",
+  "query_hits": [],
+  "embed_text": "28517384 Soluble MD-2 is an acute-phase protein and an opsonin for Gram-negative bacteria. science scifact Myeloid differentiation factor-2 (MD-2) is a lipopolysaccharide (LPS)-binding protein usually coexpressed with and binding to Toll-like receptor 4 (TLR4), conferring LPS responsiveness of immune cells. MD-2 is also found as a soluble… 28517384 soluble-md-2-is-an-acute-phase-protein-and-an-opsonin-for-gram-negative-bacteria. soluble md acute phase protein opsonin gram negative Soluble MD-2 is an acute-phase protein and an opsonin for Gram-negative bacteria. Soluble MD-2 is an acute-phase protein and an opsonin for Gram-negative bacteria. Myeloid differentiation factor-2 (MD-2) is a lipopolysaccharide (LPS)-binding protein usually coexpressed with and binding to Toll-like receptor 4 (TLR4), conferring LPS responsiveness of immune cells. MD-2 is also found as a soluble protein. Soluble MD-2 (sMD-2) levels are markedly elevated in plasma from patients with severe infections, and in other fluids from inflamed tissues. We show that sMD-2 is a type II acute-phase protein. Soluble MD-2 mRNA and protein levels are up-regulated in mouse liver after the induction of an acute-phase response. It is secreted by human hepatocytic cells and up-regulated by interleukin-6. Soluble MD-2 binds to Gram-negative but not Gram-positive bacteria, and sMD-2 secreted",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.080986+00:00"
+}

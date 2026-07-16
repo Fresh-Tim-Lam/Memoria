@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4414481",
+  "source_fingerprint": "1db2129a5bc9e309fbe2791543c44cdc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4414481",
+    "calorie-restriction-extends-saccharomyces-cerevisiae-lifespan-by-increasing-respiration"
+  ],
+  "key_phrases": [
+    "calorie",
+    "restriction",
+    "extends",
+    "saccharomyces",
+    "cerevisiae",
+    "lifespan",
+    "by",
+    "increasing"
+  ],
+  "summary_1l": "Calorie restriction (CR) extends lifespan in a wide spectrum of organisms and is the only regimen known to lengt",
+  "query_hits": [],
+  "embed_text": "4414481 Calorie restriction extends Saccharomyces cerevisiae lifespan by increasing respiration science scifact Calorie restriction (CR) extends lifespan in a wide spectrum of organisms and is the only regimen known to lengthen the lifespan of mammals. We established a model of CR in budding yeast Saccharomyces cerevisiae. In this system, lifespan… 4414481 calorie-restriction-extends-saccharomyces-cerevisiae-lifespan-by-increasing-respiration calorie restriction extends saccharomyces cerevisiae lifespan by increasing Calorie restriction (CR) extends lifespan in a wide spectrum of organisms and is the only regimen known to lengt Calorie restriction extends Saccharomyces cerevisiae lifespan by increasing respiration Calorie restriction (CR) extends lifespan in a wide spectrum of organisms and is the only regimen known to lengthen the lifespan of mammals. We established a model of CR in budding yeast Saccharomyces cerevisiae. In this system, lifespan can be extended by limiting glucose or by reducing the activity of the glucose-sensing cyclic-AMP-dependent kinase (PKA). Lifespan extension in a mutant with reduced PKA activity requires Sir2 and NAD (nicotinamide adenine dinucleotide). In this study we explore how CR activates Sir2 to extend lifespan. Here we show that the shunting of carbon metabolism toward the mitochondrial tricarboxylic acid cycle and the concomitant increase in respiration play a central part in",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.806796+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21746539",
+  "source_fingerprint": "6f860327324a578b8f4118a37dcdb01a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21746539",
+    "t-cell-antigen-recognition-and-the-immunological-synapse"
+  ],
+  "key_phrases": [
+    "cell",
+    "antigen",
+    "recognition",
+    "immunological",
+    "synapse",
+    "much",
+    "excitement",
+    "past"
+  ],
+  "summary_1l": "Much excitement of the past five years in the area of T-cell-antigen recognition has centred around the immunological synapse — a complex cellu",
+  "query_hits": [],
+  "embed_text": "21746539 T-cell-antigen recognition and the immunological synapse science scifact Much excitement of the past five years in the area of T-cell-antigen recognition has centred around the immunological synapse — a complex cellular structure that forms at the interface of a T cell and a cell that expresses the appropriate… 21746539 t-cell-antigen-recognition-and-the-immunological-synapse cell antigen recognition immunological synapse much excitement past Much excitement of the past five years in the area of T-cell-antigen recognition has centred around the immunological synapse — a complex cellu T-cell-antigen recognition and the immunological synapse Much excitement of the past five years in the area of T-cell-antigen recognition has centred around the immunological synapse — a complex cellular structure that forms at the interface of a T cell and a cell that expresses the appropriate peptide–MHC complexes. Thanks to new imaging technologies, we are now beginning to understand the role of cell-surface molecules and some of their attendant signalling modules in the context of cell-to-cell communication. Progress has been so rapid that T-cell-antigen recognition might be the first system in which the molecular basis of cell–cell recognition is understood.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.671807+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12810152",
+  "source_fingerprint": "47c51496afc61fd515ad3d5e3fe95c70",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12810152",
+    "folate-and-vitamin-b6-from-diet-and-supplements-in-relation-to-risk-of-coronary-heart-disease-among-women."
+  ],
+  "key_phrases": [
+    "folate",
+    "vitamin",
+    "b6",
+    "from",
+    "diet",
+    "supplements",
+    "relation",
+    "risk"
+  ],
+  "summary_1l": "Folate and vitamin B6 from diet and supplements in relation to risk of coronary heart disease among women.",
+  "query_hits": [],
+  "embed_text": "12810152 Folate and vitamin B6 from diet and supplements in relation to risk of coronary heart disease among women. science scifact CONTEXT Hyperhomocysteinemia is caused by genetic and lifestyle influences, including low intakes of folate and vitamin B6. However, prospective data relating intake of these vitamins to risk of coronary heart disease (CHD) are not… 12810152 folate-and-vitamin-b6-from-diet-and-supplements-in-relation-to-risk-of-coronary-heart-disease-among-women. folate vitamin b6 from diet supplements relation risk Folate and vitamin B6 from diet and supplements in relation to risk of coronary heart disease among women. Folate and vitamin B6 from diet and supplements in relation to risk of coronary heart disease among women. CONTEXT Hyperhomocysteinemia is caused by genetic and lifestyle influences, including low intakes of folate and vitamin B6. However, prospective data relating intake of these vitamins to risk of coronary heart disease (CHD) are not available. OBJECTIVE To examine intakes of folate and vitamin B6 in relation to the incidence of nonfatal myocardial infarction (MI) and fatal CHD. DESIGN Prospective cohort study. SETTING AND PATIENTS In 1980, a total of 80082 women from the Nurses' Health Study with no previous history of cardiovascular disease, cancer, hypercholesterolemia, or diabetes completed a detailed food frequency questionnaire from which we derived usual intake of folate and vita",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:09.037679+00:00"
+}

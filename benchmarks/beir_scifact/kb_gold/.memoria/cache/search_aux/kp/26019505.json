@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26019505",
+  "source_fingerprint": "7cd1881fd908d4dbdc561b9e68878438",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26019505",
+    "protein-interaction-network-of-the-mammalian-hippo-pathway-reveals-mechanisms-of-kinase-phosphatase-interactions."
+  ],
+  "key_phrases": [
+    "protein",
+    "interaction",
+    "network",
+    "mammalian",
+    "hippo",
+    "pathway",
+    "reveals",
+    "mechanisms"
+  ],
+  "summary_1l": "Protein interaction network of the mammalian Hippo pathway reveals mechanisms of kinase-phosphatase interactions.",
+  "query_hits": [],
+  "embed_text": "26019505 Protein interaction network of the mammalian Hippo pathway reveals mechanisms of kinase-phosphatase interactions. science scifact The Hippo pathway regulates organ size and tissue homeostasis in response to multiple stimuli, including cell density and mechanotransduction. Pharmacological inhibition of phosphatases can also stimulate Hippo signaling in cell culture.… 26019505 protein-interaction-network-of-the-mammalian-hippo-pathway-reveals-mechanisms-of-kinase-phosphatase-interactions. protein interaction network mammalian hippo pathway reveals mechanisms Protein interaction network of the mammalian Hippo pathway reveals mechanisms of kinase-phosphatase interactions. Protein interaction network of the mammalian Hippo pathway reveals mechanisms of kinase-phosphatase interactions. The Hippo pathway regulates organ size and tissue homeostasis in response to multiple stimuli, including cell density and mechanotransduction. Pharmacological inhibition of phosphatases can also stimulate Hippo signaling in cell culture. We defined the Hippo protein-protein interaction network with and without inhibition of serine and threonine phosphatases by okadaic acid. We identified 749 protein interactions, including 599 previously unrecognized interactions, and demonstrated that several interactions with serine and threonine phosphatases were phosphorylation-dependent. Mutation of the T-loop of MST2 (mammalian STE20-like protein kinase 2), which prevented autophosphoryla",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.056950+00:00"
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "23804187",
+  "source_fingerprint": "cc47a522c96cc51edba6b5cc47200300",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23804187"
+  ],
+  "key_phrases": [
+    "wnt",
+    "catenin",
+    "signaling",
+    "defines",
+    "organizing",
+    "centers",
+    "that",
+    "orchestrate"
+  ],
+  "summary_1l": "Wnt/β-catenin signaling defines organizing centers that orchestrate growth and differentiation of the regenerating zebrafish caudal fin.",
+  "query_hits": [],
+  "embed_text": "23804187 Wnt/β-catenin signaling defines organizing centers that orchestrate growth and differentiation of the regenerating zebrafish caudal fin. science scifact Zebrafish regenerate their fins via the formation of a population of progenitor cells, the blastema. Wnt/β-catenin signaling is essential for blastemal cell proliferation and patterning of the overlying epidermis. Yet, we find that… 23804187 wnt catenin signaling defines organizing centers that orchestrate Wnt/β-catenin signaling defines organizing centers that orchestrate growth and differentiation of the regenerating zebrafish caudal fin. Wnt/β-catenin signaling defines organizing centers that orchestrate growth and differentiation of the regenerating zebrafish caudal fin. Zebrafish regenerate their fins via the formation of a population of progenitor cells, the blastema. Wnt/β-catenin signaling is essential for blastemal cell proliferation and patterning of the overlying epidermis. Yet, we find that β-catenin signaling is neither active in the epidermis nor the majority of the proliferative blastemal cells. Rather, tissue-specific pathway interference indicates that Wnt signaling in the nonproliferative distal blastema is required for cell proliferation in the proximal blastema, and signaling in cells lining the osteoblasts directs osteoblast differentiation. Thus, Wnt signaling regulates epidermal patterning, blastemal ce",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.171807+00:00"
+}

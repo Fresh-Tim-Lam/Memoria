@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25799020",
+  "source_fingerprint": "aa8c68e837de93319c5cd1166ea84ff9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25799020",
+    "direct-isolation-and-identification-of-promoters-in-the-human-genome."
+  ],
+  "key_phrases": [
+    "direct",
+    "isolation",
+    "identification",
+    "promoters",
+    "human",
+    "genome",
+    "transcriptional",
+    "regulatory"
+  ],
+  "summary_1l": "Direct isolation and identification of promoters in the human genome.",
+  "query_hits": [],
+  "embed_text": "25799020 Direct isolation and identification of promoters in the human genome. science scifact Transcriptional regulatory elements play essential roles in gene expression during animal development and cellular response to environmental signals, but our knowledge of these regions in the human genome is limited despite the… 25799020 direct-isolation-and-identification-of-promoters-in-the-human-genome. direct isolation identification promoters human genome transcriptional regulatory Direct isolation and identification of promoters in the human genome. Direct isolation and identification of promoters in the human genome. Transcriptional regulatory elements play essential roles in gene expression during animal development and cellular response to environmental signals, but our knowledge of these regions in the human genome is limited despite the availability of the complete genome sequence. Promoters mark the start of every transcript and are an important class of regulatory elements. A large, complex protein structure known as the pre-initiation complex (PIC) is assembled on all active promoters, and the presence of these proteins distinguishes promoters from other sequences in the genome. Using components of the PIC as tags, we isolated promoters directly from human cells as protein-DNA complexes and identified the resulting DNA sequenc",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.428067+00:00"
+}

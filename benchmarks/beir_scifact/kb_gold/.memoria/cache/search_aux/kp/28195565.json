@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "28195565",
+  "source_fingerprint": "0164c3dbd1649e174fbce6db27e0e46a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "28195565",
+    "regulation-of-the-small-gtp-binding-protein-rho-by-cell-adhesion-and-the-cytoskeleton."
+  ],
+  "key_phrases": [
+    "regulation",
+    "small",
+    "gtp",
+    "binding",
+    "protein",
+    "rho",
+    "by",
+    "cell"
+  ],
+  "summary_1l": "Regulation of the small GTP-binding protein Rho by cell adhesion and the cytoskeleton.",
+  "query_hits": [],
+  "embed_text": "28195565 Regulation of the small GTP-binding protein Rho by cell adhesion and the cytoskeleton. science scifact Soluble factors from serum such as lysophosphatidic acid (LPA) are thought to activate the small GTP-binding protein Rho based on their ability to induce actin stress fibers and focal adhesions in a Rho-dependent manner. Cell adhesion to… 28195565 regulation-of-the-small-gtp-binding-protein-rho-by-cell-adhesion-and-the-cytoskeleton. regulation small gtp binding protein rho by cell Regulation of the small GTP-binding protein Rho by cell adhesion and the cytoskeleton. Regulation of the small GTP-binding protein Rho by cell adhesion and the cytoskeleton. Soluble factors from serum such as lysophosphatidic acid (LPA) are thought to activate the small GTP-binding protein Rho based on their ability to induce actin stress fibers and focal adhesions in a Rho-dependent manner. Cell adhesion to extracellular matrices (ECM) has also been proposed to activate Rho, but this point has been controversial due to the difficulty of distinguishing changes in Rho activity from the structural contributions of ECM to the formation of focal adhesions. To address these questions, we established an assay for GTP-bound cellular Rho. Plating Swiss 3T3 cells on fibronectin-coated dishes elicited a transient inhibition of Rho, followed by a phase of Rho activation. The activation",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.661414+00:00"
+}

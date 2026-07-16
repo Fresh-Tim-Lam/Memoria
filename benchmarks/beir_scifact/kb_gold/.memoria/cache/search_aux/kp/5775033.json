@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5775033",
+  "source_fingerprint": "71927247aa87b76afa6cb1bbd21a8c5d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5775033",
+    "pyruvate-dehydrogenase-activity-and-acetyl-group-accumulation-during-exercise-after-different-diets."
+  ],
+  "key_phrases": [
+    "pyruvate",
+    "dehydrogenase",
+    "activity",
+    "acetyl",
+    "group",
+    "accumulation",
+    "during",
+    "exercise"
+  ],
+  "summary_1l": "Pyruvate dehydrogenase activity and acetyl group accumulation during exercise after different diets.",
+  "query_hits": [],
+  "embed_text": "5775033 Pyruvate dehydrogenase activity and acetyl group accumulation during exercise after different diets. science scifact Pyruvate dehydrogenase activity (PDHa) and acetyl group accumulation were examined in human skeletal muscle at rest and during exercise after different diets. Five males cycled at 75% of maximal O2 uptake (VO2 max) to exhaustion after… 5775033 pyruvate-dehydrogenase-activity-and-acetyl-group-accumulation-during-exercise-after-different-diets. pyruvate dehydrogenase activity acetyl group accumulation during exercise Pyruvate dehydrogenase activity and acetyl group accumulation during exercise after different diets. Pyruvate dehydrogenase activity and acetyl group accumulation during exercise after different diets. Pyruvate dehydrogenase activity (PDHa) and acetyl group accumulation were examined in human skeletal muscle at rest and during exercise after different diets. Five males cycled at 75% of maximal O2 uptake (VO2 max) to exhaustion after consuming a low-carbohydrate diet (LCD) for 3 days and again 1-2 wk later for the same duration after consuming a high-carbohydrate diet (HCD) for 3 days. Resting PDHa was lower after a LCD (0.20 +/- 0.04 vs. 0.69 +/- 0.05 mmol.min-1.kg wet wt-1; P < 0.05) and coincided with a greater intramuscular acetyl-CoA-to-CoASH ratio, acetyl-CoA content, and acetylcarnitine content. PDHa increased during exercise in both conditions but at a lower rate in the LCD conditi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.036803+00:00"
+}

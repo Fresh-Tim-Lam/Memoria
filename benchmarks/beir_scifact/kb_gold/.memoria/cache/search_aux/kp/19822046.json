@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "19822046",
+  "source_fingerprint": "07f5a4ad8b8dda93bdedc12ca39961df",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "19822046",
+    "bone-marrow-failure-and-developmental-delay-caused-by-mutations-in-poly(a)-specific-ribonuclease-(parn)."
+  ],
+  "key_phrases": [
+    "bone",
+    "marrow",
+    "failure",
+    "developmental",
+    "delay",
+    "caused",
+    "by",
+    "mutations"
+  ],
+  "summary_1l": "Bone marrow failure and developmental delay caused by mutations in poly(A)-specific ribonuclease (PARN).",
+  "query_hits": [],
+  "embed_text": "19822046 Bone marrow failure and developmental delay caused by mutations in poly(A)-specific ribonuclease (PARN). science scifact BACKGROUND Deadenylation regulates RNA function and fate. Poly(A)-specific ribonuclease (PARN) is a deadenylase that processes mRNAs and non-coding RNA. Little is known about the biological significance of germline mutations in PARN.… 19822046 bone-marrow-failure-and-developmental-delay-caused-by-mutations-in-poly(a)-specific-ribonuclease-(parn). bone marrow failure developmental delay caused by mutations Bone marrow failure and developmental delay caused by mutations in poly(A)-specific ribonuclease (PARN). Bone marrow failure and developmental delay caused by mutations in poly(A)-specific ribonuclease (PARN). BACKGROUND Deadenylation regulates RNA function and fate. Poly(A)-specific ribonuclease (PARN) is a deadenylase that processes mRNAs and non-coding RNA. Little is known about the biological significance of germline mutations in PARN. METHODS We identified mutations in PARN in patients with haematological and neurological manifestations. Genomic, biochemical and knockdown experiments in human marrow cells and in zebrafish have been performed to clarify the role of PARN in the human disease. RESULTS We identified large monoallelic deletions in PARN in four patients with developmental delay or mental illness. One patient in particular had a severe neurological phenotype, central hypomyelin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.216752+00:00"
+}

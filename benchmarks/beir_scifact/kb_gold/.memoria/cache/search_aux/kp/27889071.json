@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27889071",
+  "source_fingerprint": "53037b83827d1d4143a922b37674adb3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27889071",
+    "microcytosis,-iron-deficiency-and-thalassaemia-in-a-multi-ethnic-community:-a-pilot-study."
+  ],
+  "key_phrases": [
+    "microcytosis",
+    "iron",
+    "deficiency",
+    "thalassaemia",
+    "multi",
+    "ethnic",
+    "community",
+    "pilot"
+  ],
+  "summary_1l": "Microcytosis, iron deficiency and thalassaemia in a multi-ethnic community: a pilot study.",
+  "query_hits": [],
+  "embed_text": "27889071 Microcytosis, iron deficiency and thalassaemia in a multi-ethnic community: a pilot study. science scifact The high prevalence of microcytosis (defined here as mean cell haemoglobin<27 pg) with no other abnormality is a principal cause of confusion in screening for haemoglobin disorders. Here we report the results of a small pilot study aiming… 27889071 microcytosis,-iron-deficiency-and-thalassaemia-in-a-multi-ethnic-community:-a-pilot-study. microcytosis iron deficiency thalassaemia multi ethnic community pilot Microcytosis, iron deficiency and thalassaemia in a multi-ethnic community: a pilot study. Microcytosis, iron deficiency and thalassaemia in a multi-ethnic community: a pilot study. The high prevalence of microcytosis (defined here as mean cell haemoglobin<27 pg) with no other abnormality is a principal cause of confusion in screening for haemoglobin disorders. Here we report the results of a small pilot study aiming to resolve this confusion by routinely proceeding to plasma ferritin and HPLC assay, using the original sequestrene blood sample, when microcytosis is detected. Participants comprised a random sample of 1,302 people referred for a full blood count by their General Practitioner (GP) to the laboratory of a North London district general hospital serving a multi-ethnic inner-city population. Ethnicity was established by questionnaire. In North Europeans, microcytosis wa",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.416510+00:00"
+}

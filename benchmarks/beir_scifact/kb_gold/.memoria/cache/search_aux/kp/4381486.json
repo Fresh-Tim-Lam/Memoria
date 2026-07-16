@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4381486",
+  "source_fingerprint": "76e8b4f0c58a85ede6aaa90821ef6f96",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4381486",
+    "haematopoietic-stem-cells-do-not-asymmetrically-segregate-chromosomes-or-retain-brdu"
+  ],
+  "key_phrases": [
+    "haematopoietic",
+    "stem",
+    "cells",
+    "do",
+    "not",
+    "asymmetrically",
+    "segregate",
+    "chromosomes"
+  ],
+  "summary_1l": "Stem cells are proposed to segregate chromosomes asymmetrically during self-renewing divisions so that older (‘immo",
+  "query_hits": [],
+  "embed_text": "4381486 Haematopoietic stem cells do not asymmetrically segregate chromosomes or retain BrdU science scifact Stem cells are proposed to segregate chromosomes asymmetrically during self-renewing divisions so that older (‘immortal’) DNA strands are retained in daughter stem cells whereas newly synthesized strands segregate to differentiating cells.… 4381486 haematopoietic-stem-cells-do-not-asymmetrically-segregate-chromosomes-or-retain-brdu haematopoietic stem cells do not asymmetrically segregate chromosomes Stem cells are proposed to segregate chromosomes asymmetrically during self-renewing divisions so that older (‘immo Haematopoietic stem cells do not asymmetrically segregate chromosomes or retain BrdU Stem cells are proposed to segregate chromosomes asymmetrically during self-renewing divisions so that older (‘immortal’) DNA strands are retained in daughter stem cells whereas newly synthesized strands segregate to differentiating cells. Stem cells are also proposed to retain DNA labels, such as 5-bromo-2-deoxyuridine (BrdU), either because they segregate chromosomes asymmetrically or because they divide slowly. However, the purity of stem cells among BrdU-label-retaining cells has not been documented in any tissue, and the ‘immortal strand hypothesis’ has not been tested in a system with definitive stem cell markers. Here we tested these hypotheses in haematopoietic stem cells (HSCs), which can be highl",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.314840+00:00"
+}

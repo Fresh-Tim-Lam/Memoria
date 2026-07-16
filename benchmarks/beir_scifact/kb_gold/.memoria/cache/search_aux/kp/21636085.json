@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21636085",
+  "source_fingerprint": "443a3a854e0ae7ea16c2612990850367",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21636085",
+    "the-effect-of-folic-acid-supplementation-on-plasma-homocysteine-in-an-elderly-population."
+  ],
+  "key_phrases": [
+    "effect",
+    "folic",
+    "acid",
+    "supplementation",
+    "plasma",
+    "homocysteine",
+    "elderly",
+    "population"
+  ],
+  "summary_1l": "The effect of folic acid supplementation on plasma homocysteine in an elderly population.",
+  "query_hits": [],
+  "embed_text": "21636085 The effect of folic acid supplementation on plasma homocysteine in an elderly population. science scifact BACKGROUND Increased plasma homocysteine is associated with coronary artery disease, peripheral vascular disease and venous thrombosis. Folic acid is the most effective therapy for reducing homocysteine levels. The lowest effective… 21636085 the-effect-of-folic-acid-supplementation-on-plasma-homocysteine-in-an-elderly-population. effect folic acid supplementation plasma homocysteine elderly population The effect of folic acid supplementation on plasma homocysteine in an elderly population. The effect of folic acid supplementation on plasma homocysteine in an elderly population. BACKGROUND Increased plasma homocysteine is associated with coronary artery disease, peripheral vascular disease and venous thrombosis. Folic acid is the most effective therapy for reducing homocysteine levels. The lowest effective supplement of folic acid is not known, particularly for the elderly who have the highest prevalence of these conditions. AIM To explore the effects of daily supplements of 0, 50, 100, 200, 400 and 600 microg folic acid on plasma homocysteine in an elderly population. DESIGN Randomized double-blind placebo-controlled trial. METHODS Participants (n=368) aged 65-75 years were randomly allocated to receive one of the treatments for 6 weeks. Plasma homocysteine was recorded afte",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.571376+00:00"
+}

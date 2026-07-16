@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "9505402",
+  "source_fingerprint": "17dfc8ad2cf920f181e9aac429c26f37",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9505402"
+  ],
+  "key_phrases": [
+    "acquired",
+    "egfr",
+    "c797s",
+    "mutation",
+    "mediates",
+    "resistance",
+    "azd9291",
+    "non"
+  ],
+  "summary_1l": "Here we studied cell-free plasma DNA (cfDNA) collected from subjects with advanced lung c",
+  "query_hits": [],
+  "embed_text": "9505402 Acquired EGFR C797S mutation mediates resistance to AZD9291 in non–small cell lung cancer harboring EGFR T790M science scifact Here we studied cell-free plasma DNA (cfDNA) collected from subjects with advanced lung cancer whose tumors had developed resistance to the epidermal growth factor receptor (EGFR) tyrosine kinase inhibitor (TKI) AZD9291. We first performed… 9505402 acquired egfr c797s mutation mediates resistance azd9291 non Here we studied cell-free plasma DNA (cfDNA) collected from subjects with advanced lung c Acquired EGFR C797S mutation mediates resistance to AZD9291 in non–small cell lung cancer harboring EGFR T790M Here we studied cell-free plasma DNA (cfDNA) collected from subjects with advanced lung cancer whose tumors had developed resistance to the epidermal growth factor receptor (EGFR) tyrosine kinase inhibitor (TKI) AZD9291. We first performed next-generation sequencing of cfDNA from seven subjects and detected an acquired EGFR C797S mutation in one; expression of this mutant EGFR construct in a cell line rendered it resistant to AZD9291. We then performed droplet digital PCR on serial cfDNA specimens collected from 15 AZD9291-treated subjects. All were positive for the T790M mutation before treatment, but upon developing AZD9291 resistance three molecular subtypes emerged: six cases",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.073769+00:00"
+}

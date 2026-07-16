@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13368032",
+  "source_fingerprint": "f48a8c38362df01aaa899c728bf14b01",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13368032",
+    "a-self-inactivating-lentiviral-vector-for-scid-x1-gene-therapy-that-does-not-activate-lmo2-expression-in-human-t-cells."
+  ],
+  "key_phrases": [
+    "self",
+    "inactivating",
+    "lentiviral",
+    "vector",
+    "scid",
+    "x1",
+    "gene",
+    "therapy"
+  ],
+  "summary_1l": "A self-inactivating lentiviral vector for SCID-X1 gene therapy that does not activate LMO2 expression in human T cells.",
+  "query_hits": [],
+  "embed_text": "13368032 A self-inactivating lentiviral vector for SCID-X1 gene therapy that does not activate LMO2 expression in human T cells. science scifact To develop safer and more effective vectors for gene therapy of X-linked severe combined immunodeficiency (SCID-X1), we have evaluated new self-inactivating lentiviral vectors based on the HIV virus. The CL20i4-hgamma(c)-Revgen vector… 13368032 a-self-inactivating-lentiviral-vector-for-scid-x1-gene-therapy-that-does-not-activate-lmo2-expression-in-human-t-cells. self inactivating lentiviral vector scid x1 gene therapy A self-inactivating lentiviral vector for SCID-X1 gene therapy that does not activate LMO2 expression in human T cells. A self-inactivating lentiviral vector for SCID-X1 gene therapy that does not activate LMO2 expression in human T cells. To develop safer and more effective vectors for gene therapy of X-linked severe combined immunodeficiency (SCID-X1), we have evaluated new self-inactivating lentiviral vectors based on the HIV virus. The CL20i4-hgamma(c)-Revgen vector contains the entire human common gamma chain (gamma(c)) genomic sequence driven by the gamma(c) promoter. The CL20i4-EF1alpha-hgamma(c)OPT vector uses a promoter fragment from the eukaryotic elongation factor alpha (EF1alpha) gene to express a codon-optimized human gamma(c) cDNA. Both vectors contain a 400-bp insulator fragment from the chicken beta-globin locus within the self-inactivating long-terminal repeat. Transduction of bone marrow c",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:10.840729+00:00"
+}

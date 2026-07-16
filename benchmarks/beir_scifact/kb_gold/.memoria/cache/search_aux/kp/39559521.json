@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "39559521",
+  "source_fingerprint": "64b37c2a3ab49571c3dc51e4ac63f852",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "39559521",
+    "control-of-central-and-peripheral-tolerance-by-aire."
+  ],
+  "key_phrases": [
+    "control",
+    "central",
+    "peripheral",
+    "tolerance",
+    "by",
+    "aire",
+    "negative",
+    "selection"
+  ],
+  "summary_1l": "Control of central and peripheral tolerance by Aire.",
+  "query_hits": [],
+  "embed_text": "39559521 Control of central and peripheral tolerance by Aire. science scifact The negative selection of self-reactive thymocytes depends on the expression of tissue-specific antigens by medullary thymic epithelial cells. The autoimmune regulator (Aire) protein plays an important role in turning on these antigens,… 39559521 control-of-central-and-peripheral-tolerance-by-aire. control central peripheral tolerance by aire negative selection Control of central and peripheral tolerance by Aire. Control of central and peripheral tolerance by Aire. The negative selection of self-reactive thymocytes depends on the expression of tissue-specific antigens by medullary thymic epithelial cells. The autoimmune regulator (Aire) protein plays an important role in turning on these antigens, and the absence of even one Aire-induced tissue-specific antigen in the thymus can lead to autoimmunity in the antigen-expressing target organ. Recently, Aire protein has been detected in peripheral lymphoid organs, suggesting that peripheral Aire plays a complementary role here. In these peripheral sites, Aire was found to regulate the expression of a group of tissue-specific antigens that is distinct from those expressed in the thymus. Furthermore, transgenic antigen expression in extrathymic Aire-expre",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.767237+00:00"
+}

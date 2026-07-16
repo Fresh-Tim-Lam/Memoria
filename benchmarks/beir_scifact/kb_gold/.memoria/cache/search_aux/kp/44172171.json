@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "44172171",
+  "source_fingerprint": "5ecbae3eec7b624ca4e31c04a6be91c3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "44172171",
+    "kinetics-and-fidelity-of-the-repair-of-cas9-induced-double-strand-dna-breaks"
+  ],
+  "key_phrases": [
+    "kinetics",
+    "fidelity",
+    "repair",
+    "cas9",
+    "induced",
+    "double",
+    "strand",
+    "dna"
+  ],
+  "summary_1l": "The RNA-guided DNA endonuclease Cas9 is a powerful tool for genome editing.",
+  "query_hits": [],
+  "embed_text": "44172171 Kinetics and Fidelity of the Repair of Cas9-Induced Double-Strand DNA Breaks science scifact The RNA-guided DNA endonuclease Cas9 is a powerful tool for genome editing. Little is known about the kinetics and fidelity of the double-strand break (DSB) repair process that follows a Cas9 cutting event in living cells. Here, we… 44172171 kinetics-and-fidelity-of-the-repair-of-cas9-induced-double-strand-dna-breaks kinetics fidelity repair cas9 induced double strand dna The RNA-guided DNA endonuclease Cas9 is a powerful tool for genome editing. Kinetics and Fidelity of the Repair of Cas9-Induced Double-Strand DNA Breaks The RNA-guided DNA endonuclease Cas9 is a powerful tool for genome editing. Little is known about the kinetics and fidelity of the double-strand break (DSB) repair process that follows a Cas9 cutting event in living cells. Here, we developed a strategy to measure the kinetics of DSB repair for single loci in human cells. Quantitative modeling of repaired DNA in time series after Cas9 activation reveals variable and often slow repair rates, with half-life times up to ∼10 hr. Furthermore, repair of the DSBs tends to be error prone. Both classical and microhomology-mediated end joining pathways contribute to the erroneous repair. Estimation of their individual rate constants indicates that the balance between these t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:50.855611+00:00"
+}

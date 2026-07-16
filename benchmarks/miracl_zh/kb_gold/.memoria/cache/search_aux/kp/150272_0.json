@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "kp_id": "150272#0",
+  "source_fingerprint": "bb08716bf03f213ccd2424c2c04d5ebd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "德国",
+    "动力系统理论"
+  ],
+  "aliases": [
+    "150272#0"
+  ],
+  "key_phrases": [
+    "修正主义",
+    "马克思主义",
+    "通常",
+    "德国",
+    "思想家",
+    "卡尔",
+    "马克思",
+    "提出"
+  ],
+  "summary_1l": "修正主义通常是指对德国思想家卡尔·马克思所提出的一系列学术理论（即马克思主义）做出“修正”的一种思潮和流派。",
+  "query_hits": [],
+  "embed_text": "150272#0 修正主义 (马克思主义) 修正主义 (马克思主义) 修正主义通常是指对德国思想家卡尔·马克思所提出的一系列学术理论（即马克思主义）做出“修正”的一种思潮和流派。 德国 动力系统理论 150272#0 修正主义 马克思主义 通常 德国 思想家 卡尔 马克思 提出 修正主义通常是指对德国思想家卡尔·马克思所提出的一系列学术理论（即马克思主义）做出“修正”的一种思潮和流派。 修正主义 (马克思主义) 修正主义通常是指对德国思想家卡尔·马克思所提出的一系列学术理论（即马克思主义）做出“修正”的一种思潮和流派。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:19:46.693127+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24003461",
+  "source_fingerprint": "2deb90c8a5f689798a922d22896122ad",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24003461",
+    "valvular-interstitial-cells-suppress-calcification-of-valvular-endothelial-cells."
+  ],
+  "key_phrases": [
+    "valvular",
+    "interstitial",
+    "cells",
+    "suppress",
+    "calcification",
+    "endothelial",
+    "background",
+    "calcific"
+  ],
+  "summary_1l": "Valvular interstitial cells suppress calcification of valvular endothelial cells.",
+  "query_hits": [],
+  "embed_text": "24003461 Valvular interstitial cells suppress calcification of valvular endothelial cells. science scifact BACKGROUND Calcific aortic valve disease (CAVD) is the most common heart valve disease in the Western world. We previously proposed that valvular endothelial cells (VECs) replenish injured adult valve leaflets via… 24003461 valvular-interstitial-cells-suppress-calcification-of-valvular-endothelial-cells. valvular interstitial cells suppress calcification endothelial background calcific Valvular interstitial cells suppress calcification of valvular endothelial cells. Valvular interstitial cells suppress calcification of valvular endothelial cells. BACKGROUND Calcific aortic valve disease (CAVD) is the most common heart valve disease in the Western world. We previously proposed that valvular endothelial cells (VECs) replenish injured adult valve leaflets via endothelial-to-mesenchymal transformation (EndMT); however, whether EndMT contributes to valvular calcification is unknown. We hypothesized that aortic VECs undergo osteogenic differentiation via an EndMT process that can be inhibited by valvular interstitial cells (VICs). APPROACH AND RESULTS VEC clones underwent TGF-β1-mediated EndMT, shown by significantly increased mRNA expression of the EndMT markers α-SMA (5.3 ± 1.2), MMP-2 (13.5 ± 0.6) and Slug (12 ± 2.1) (p < 0.05), (compared to unstimulated",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.610827+00:00"
+}

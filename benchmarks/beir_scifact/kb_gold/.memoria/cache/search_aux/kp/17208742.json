@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17208742",
+  "source_fingerprint": "add93eb3a8020c2df2d9b17ba07fd6a3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17208742",
+    "self-organization-of-the-escherichia-coli-chemotaxis-network-imaged-with-super-resolution-light-microscopy"
+  ],
+  "key_phrases": [
+    "self",
+    "organization",
+    "escherichia",
+    "coli",
+    "chemotaxis",
+    "network",
+    "imaged",
+    "with"
+  ],
+  "summary_1l": "The Escherichia coli chemotaxis network is a model system for biological signal processing.",
+  "query_hits": [],
+  "embed_text": "17208742 Self-Organization of the Escherichia coli Chemotaxis Network Imaged with Super-Resolution Light Microscopy science scifact The Escherichia coli chemotaxis network is a model system for biological signal processing. In E. coli, transmembrane receptors responsible for signal transduction assemble into large clusters containing several thousand proteins. These… 17208742 self-organization-of-the-escherichia-coli-chemotaxis-network-imaged-with-super-resolution-light-microscopy self organization escherichia coli chemotaxis network imaged with The Escherichia coli chemotaxis network is a model system for biological signal processing. Self-Organization of the Escherichia coli Chemotaxis Network Imaged with Super-Resolution Light Microscopy The Escherichia coli chemotaxis network is a model system for biological signal processing. In E. coli, transmembrane receptors responsible for signal transduction assemble into large clusters containing several thousand proteins. These sensory clusters have been observed at cell poles and future division sites. Despite extensive study, it remains unclear how chemotaxis clusters form, what controls cluster size and density, and how the cellular location of clusters is robustly maintained in growing and dividing cells. Here, we use photoactivated localization microscopy (PALM) to map the cellular locations of three proteins central to bacterial chemotaxis (the Tar receptor, CheY, and C",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.469041+00:00"
+}

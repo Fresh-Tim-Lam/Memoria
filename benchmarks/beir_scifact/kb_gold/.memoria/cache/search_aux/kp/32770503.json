@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "32770503",
+  "source_fingerprint": "7853a6848739bd5dc629f12685165410",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "32770503",
+    "full-length-transcriptome-assembly-from-rna-seq-data-without-a-reference-genome."
+  ],
+  "key_phrases": [
+    "full",
+    "length",
+    "transcriptome",
+    "assembly",
+    "from",
+    "rna",
+    "seq",
+    "data"
+  ],
+  "summary_1l": "Full-length transcriptome assembly from RNA-Seq data without a reference genome.",
+  "query_hits": [],
+  "embed_text": "32770503 Full-length transcriptome assembly from RNA-Seq data without a reference genome. science scifact Massively parallel sequencing of cDNA has enabled deep and efficient probing of transcriptomes. Current approaches for transcript reconstruction from such data often rely on aligning reads to a reference genome, and are thus unsuitable for… 32770503 full-length-transcriptome-assembly-from-rna-seq-data-without-a-reference-genome. full length transcriptome assembly from rna seq data Full-length transcriptome assembly from RNA-Seq data without a reference genome. Full-length transcriptome assembly from RNA-Seq data without a reference genome. Massively parallel sequencing of cDNA has enabled deep and efficient probing of transcriptomes. Current approaches for transcript reconstruction from such data often rely on aligning reads to a reference genome, and are thus unsuitable for samples with a partial or missing reference genome. Here we present the Trinity method for de novo assembly of full-length transcripts and evaluate it on samples from fission yeast, mouse and whitefly, whose reference genome is not yet available. By efficiently constructing and analyzing sets of de Bruijn graphs, Trinity fully reconstructs a large fraction of transcripts, including alternatively spliced isoforms and transcripts from recently duplicated genes. Compared with o",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.904423+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21479575",
+  "source_fingerprint": "2c91fe7e5e6047c52ba60d581424aabf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21479575",
+    "high-prevalence-of-evolutionarily-conserved-and-species-specific-genomic-aberrations-in-mouse-pluripotent-stem-cells."
+  ],
+  "key_phrases": [
+    "high",
+    "prevalence",
+    "evolutionarily",
+    "conserved",
+    "species",
+    "specific",
+    "genomic",
+    "aberrations"
+  ],
+  "summary_1l": "High prevalence of evolutionarily conserved and species-specific genomic aberrations in mouse pluripotent stem cells.",
+  "query_hits": [],
+  "embed_text": "21479575 High prevalence of evolutionarily conserved and species-specific genomic aberrations in mouse pluripotent stem cells. science scifact Mouse pluripotent stem cells (PSCs) are the best studied pluripotent system and are regarded as the \"gold standard\" to which human PSCs are compared. However, while the genomic integrity of human PSCs has recently drawn much attention,… 21479575 high-prevalence-of-evolutionarily-conserved-and-species-specific-genomic-aberrations-in-mouse-pluripotent-stem-cells. high prevalence evolutionarily conserved species specific genomic aberrations High prevalence of evolutionarily conserved and species-specific genomic aberrations in mouse pluripotent stem cells. High prevalence of evolutionarily conserved and species-specific genomic aberrations in mouse pluripotent stem cells. Mouse pluripotent stem cells (PSCs) are the best studied pluripotent system and are regarded as the \"gold standard\" to which human PSCs are compared. However, while the genomic integrity of human PSCs has recently drawn much attention, mouse PSCs have not been systematically evaluated in this regard. The genomic stability of PSCs is a matter of profound significance, as it affects their pluripotency, differentiation, and tumorigenicity. We thus performed a thorough analysis of the genomic integrity of 325 samples of mouse PSCs, including 127 induced pluripotent stem cell (iPSC) samples. We found that genomic aberrations occur frequently in mouse embryonic stem cells of vari",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.211913+00:00"
+}

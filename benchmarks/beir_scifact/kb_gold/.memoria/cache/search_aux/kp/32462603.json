@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "32462603",
+  "source_fingerprint": "1e296a488747b2ff30d8a64dd94909c2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "32462603",
+    "epidemiology-of-surgically-managed-pelvic-organ-prolapse-and-urinary-incontinence."
+  ],
+  "key_phrases": [
+    "epidemiology",
+    "surgically",
+    "managed",
+    "pelvic",
+    "organ",
+    "prolapse",
+    "urinary",
+    "incontinence"
+  ],
+  "summary_1l": "Epidemiology of surgically managed pelvic organ prolapse and urinary incontinence.",
+  "query_hits": [],
+  "embed_text": "32462603 Epidemiology of surgically managed pelvic organ prolapse and urinary incontinence. science scifact OBJECTIVE To determine the incidence of surgically managed pelvic organ prolapse and urinary incontinence in a population-based cohort, and to describe their clinical characteristics. METHODS Our retrospective cohort study included all… 32462603 epidemiology-of-surgically-managed-pelvic-organ-prolapse-and-urinary-incontinence. epidemiology surgically managed pelvic organ prolapse urinary incontinence Epidemiology of surgically managed pelvic organ prolapse and urinary incontinence. Epidemiology of surgically managed pelvic organ prolapse and urinary incontinence. OBJECTIVE To determine the incidence of surgically managed pelvic organ prolapse and urinary incontinence in a population-based cohort, and to describe their clinical characteristics. METHODS Our retrospective cohort study included all patients undergoing surgical treatment for prolapse and incontinence during 1995; all were members of Kaiser Permanente Northwest, which included 149,554 women age 20 or older. A standardized data-collection form was used to review all inpatient and outpatient charts of the 395 women identified. Variables examined included age, ethnicity, height, weight, vaginal parity, smoking history, medical history, and surgical history, including the preoperative evaluation, procedure per",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.590832+00:00"
+}

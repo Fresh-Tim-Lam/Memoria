@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9310407",
+  "source_fingerprint": "88d83a29660244d843e68c7ad2d00455",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9310407",
+    "the-intravascular-volume-effect-of-ringer's-lactate-is-below-20%:-a-prospective-study-in-humans"
+  ],
+  "key_phrases": [
+    "intravascular",
+    "volume",
+    "effect",
+    "ringer",
+    "lactate",
+    "below",
+    "20%",
+    "prospective"
+  ],
+  "summary_1l": "INTRODUCTION Isotonic crystalloids play a central role in perioperative fluid management.",
+  "query_hits": [],
+  "embed_text": "9310407 The intravascular volume effect of Ringer's lactate is below 20%: a prospective study in humans science scifact INTRODUCTION Isotonic crystalloids play a central role in perioperative fluid management. Isooncotic preparations of colloids (for example, human albumin or hydroxyethyl starch) remain nearly completely intravascular when infused to… 9310407 the-intravascular-volume-effect-of-ringer's-lactate-is-below-20%:-a-prospective-study-in-humans intravascular volume effect ringer lactate below 20% prospective INTRODUCTION Isotonic crystalloids play a central role in perioperative fluid management. The intravascular volume effect of Ringer's lactate is below 20%: a prospective study in humans INTRODUCTION Isotonic crystalloids play a central role in perioperative fluid management. Isooncotic preparations of colloids (for example, human albumin or hydroxyethyl starch) remain nearly completely intravascular when infused to compensate for acute blood losses. Recent data were interpreted to indicate a comparable intravascular volume effect for crystalloids, challenging the occasionally suggested advantage of using colloids to treat hypovolemia. General physiological knowledge and clinical experience, however, suggest otherwise. METHODS In a prospective study, double-tracer blood volume measurements were performed before and after intended normovolemic hemodilution in ten female adults, s",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.740650+00:00"
+}

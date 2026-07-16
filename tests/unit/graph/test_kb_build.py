@@ -116,7 +116,7 @@ def test_sync_parent_only_gap_between_children():
     assert sync["instances_added"] >= 1
     assert sidecar["links"][0]["source_id"] == "parent"
     kps = resolve_knowledge_points(body, sidecar)
-    _, edges = derive_file_graph_edges(
+    _, edges, _ = derive_file_graph_edges(
         "x.md", body, sidecar, resolve_target_kp=resolve
     )
     parent_edges = [e for e in edges if e["source_id"] == "parent"]

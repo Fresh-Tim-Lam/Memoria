@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "37256966",
+  "source_fingerprint": "ea6dfe2c4aa21ac18138b655ffa36d09",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "37256966",
+    "melatonin-synthesized-by-t-lymphocytes-as-a-ligand-of-the-retinoic-acid-related-orphan-receptor."
+  ],
+  "key_phrases": [
+    "melatonin",
+    "synthesized",
+    "by",
+    "lymphocytes",
+    "as",
+    "ligand",
+    "retinoic",
+    "acid"
+  ],
+  "summary_1l": "Melatonin synthesized by T lymphocytes as a ligand of the retinoic acid-related orphan receptor.",
+  "query_hits": [],
+  "embed_text": "37256966 Melatonin synthesized by T lymphocytes as a ligand of the retinoic acid-related orphan receptor. science scifact Melatonin modulates a wide array of physiological events with pleiotropic effects on the immune system. While the relevance of specific melatonin membrane receptors has been well established for several biological functions, retinoic… 37256966 melatonin-synthesized-by-t-lymphocytes-as-a-ligand-of-the-retinoic-acid-related-orphan-receptor. melatonin synthesized by lymphocytes as ligand retinoic acid Melatonin synthesized by T lymphocytes as a ligand of the retinoic acid-related orphan receptor. Melatonin synthesized by T lymphocytes as a ligand of the retinoic acid-related orphan receptor. Melatonin modulates a wide array of physiological events with pleiotropic effects on the immune system. While the relevance of specific melatonin membrane receptors has been well established for several biological functions, retinoic acid-related orphan receptor alpha (RORα) has been suggested as a mediator of nuclear melatonin signalling by results obtained from pharmacological approaches. However, a melatonin-mediated downstream effect cannot be ruled out, and further evidence is needed to support a direct interaction between melatonin and RORα. Here, we show that RORα is mainly located in human Jurkat T-cell nucleus, and it is co-immunoprecipitated with melatonin. Moreover, immunocytochemist",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.307158+00:00"
+}

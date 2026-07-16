@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "kp_id": "104392#11",
+  "source_fingerprint": "ea1565c5254cab782fbb1f67bd4cc3be",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "染色单体",
+    "依赖类型"
+  ],
+  "aliases": [
+    "104392#11"
+  ],
+  "key_phrases": [
+    "染色体",
+    "形态",
+    "中期",
+    "最为",
+    "典型",
+    "每条",
+    "两条",
+    "染色"
+  ],
+  "summary_1l": "染色体的形态以中期时最为典型。",
+  "query_hits": [],
+  "embed_text": "104392#11 染色体 染色体 染色体的形态以中期时最为典型。每条染色体由两条染色单体组成，中间狭窄处称为着丝點（centromere），又称主缢痕（primary constriction），它将染色体分为短臂（p）和长臂（q）。按着丝粒位置的不同，人类染色体可分为中着丝粒染色体、亚中着丝粒染色体和近端着丝粒染色体等3种类型。近端着丝粒染色体的短臂末端有一个叫做随体（satellite）的结构，它呈圆球形，中间以细丝与短臂相连。有的染色体长臂上还可看到另一些较小的狭窄区，称为次缢痕（secondary c 染色单体 依赖类型 104392#11 染色体 形态 中期 最为 典型 每条 两条 染色 染色体的形态以中期时最为典型。 染色体 染色体的形态以中期时最为典型。每条染色体由两条染色单体组成，中间狭窄处称为着丝點（centromere），又称主缢痕（primary constriction），它将染色体分为短臂（p）和长臂（q）。按着丝粒位置的不同，人类染色体可分为中着丝粒染色体、亚中着丝粒染色体和近端着丝粒染色体等3种类型。近端着丝粒染色体的短臂末端有一个叫做随体（satellite）的结构，它呈圆球形，中间以细丝与短臂相连。有的染色体长臂上还可看到另一些较小的狭窄区，称为次缢痕（secondary constriction）。染色体臂的末端存在着一种叫做端粒（telomere）的结构，它有保持染色体完整性的功能。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:19:31.236220+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "8354687",
+  "source_fingerprint": "44d9c01a8145fd21d65ce4a87ffd1df0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "8354687",
+    "detection-of-an-autoreactive-t-cell-population-within-the-polyclonal-repertoire-that-undergoes-distinct-autoimmune-regulator-(aire)-mediated-selection."
+  ],
+  "key_phrases": [
+    "detection",
+    "autoreactive",
+    "cell",
+    "population",
+    "within",
+    "polyclonal",
+    "repertoire",
+    "that"
+  ],
+  "summary_1l": "Detection of an autoreactive T-cell population within the polyclonal repertoire that undergoes distinct autoimmune regulator (Aire)-mediated selection.",
+  "query_hits": [],
+  "embed_text": "8354687 Detection of an autoreactive T-cell population within the polyclonal repertoire that undergoes distinct autoimmune regulator (Aire)-mediated selection. science scifact The autoimmune regulator (Aire) plays a critical role in central tolerance by promoting the display of tissue-specific antigens in the thymus. To study the influence of Aire on thymic selection in a physiological setting, we used tetramer… 8354687 detection-of-an-autoreactive-t-cell-population-within-the-polyclonal-repertoire-that-undergoes-distinct-autoimmune-regulator-(aire)-mediated-selection. detection autoreactive cell population within polyclonal repertoire that Detection of an autoreactive T-cell population within the polyclonal repertoire that undergoes distinct autoimmune regulator (Aire)-mediated selection. Detection of an autoreactive T-cell population within the polyclonal repertoire that undergoes distinct autoimmune regulator (Aire)-mediated selection. The autoimmune regulator (Aire) plays a critical role in central tolerance by promoting the display of tissue-specific antigens in the thymus. To study the influence of Aire on thymic selection in a physiological setting, we used tetramer reagents to detect autoreactive T cells specific for the Aire-dependent tissue-specific antigen interphotoreceptor retinoid-binding protein (IRBP), in the polyclonal repertoire. Two class II tetramer reagents were designed to identify T cells specific for two different peptide epitopes of IRBP. Analyses of the polyclonal T-cell repertoire showed a high frequency of activated T cells specific for both IRBP",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:02.442593+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18078750",
+  "source_fingerprint": "31a0941409ed5cd30f3a8c7c21a5a98e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18078750",
+    "golgi-export-of-the-kir2.1-channel-is-driven-by-a-trafficking-signal-located-within-its-tertiary-structure"
+  ],
+  "key_phrases": [
+    "golgi",
+    "export",
+    "kir2.1",
+    "channel",
+    "driven",
+    "by",
+    "trafficking",
+    "signal"
+  ],
+  "summary_1l": "Golgi Export of the Kir2.",
+  "query_hits": [],
+  "embed_text": "18078750 Golgi Export of the Kir2.1 Channel Is Driven by a Trafficking Signal Located within Its Tertiary Structure science scifact Mechanisms that are responsible for sorting newly synthesized proteins for traffic to the cell surface from the Golgi are poorly understood. Here, we show that the potassium channel Kir2.1, mutations in which are associated with… 18078750 golgi-export-of-the-kir2.1-channel-is-driven-by-a-trafficking-signal-located-within-its-tertiary-structure golgi export kir2.1 channel driven by trafficking signal Golgi Export of the Kir2. Golgi Export of the Kir2.1 Channel Is Driven by a Trafficking Signal Located within Its Tertiary Structure Mechanisms that are responsible for sorting newly synthesized proteins for traffic to the cell surface from the Golgi are poorly understood. Here, we show that the potassium channel Kir2.1, mutations in which are associated with Andersen-Tawil syndrome, is selected as cargo into Golgi export carriers in an unusual signal-dependent manner. Unlike conventional trafficking signals, which are typically comprised of short linear peptide sequences, Golgi exit of Kir2.1 is dictated by residues that are embedded within the confluence of two separate domains. This signal patch forms a recognition site for interaction with the AP1 adaptor complex, thereby marking Kir2.1 for incorporation into c",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.765947+00:00"
+}

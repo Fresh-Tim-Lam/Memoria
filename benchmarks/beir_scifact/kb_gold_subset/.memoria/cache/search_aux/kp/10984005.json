@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10984005",
+  "source_fingerprint": "c3bf89ee18d9f30ec03bcf2f8b5f7569",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10984005",
+    "adhd-medications-and-risk-of-serious-cardiovascular-events-in-young-and-middle-aged-adults."
+  ],
+  "key_phrases": [
+    "adhd",
+    "medications",
+    "risk",
+    "serious",
+    "cardiovascular",
+    "events",
+    "young",
+    "middle"
+  ],
+  "summary_1l": "ADHD medications and risk of serious cardiovascular events in young and middle-aged adults.",
+  "query_hits": [],
+  "embed_text": "10984005 ADHD medications and risk of serious cardiovascular events in young and middle-aged adults. science scifact CONTEXT More than 1.5 million US adults use stimulants and other medications labeled for treatment of attention-deficit/hyperactivity disorder (ADHD). These agents can increase heart rate and blood pressure, raising concerns about their… 10984005 adhd-medications-and-risk-of-serious-cardiovascular-events-in-young-and-middle-aged-adults. adhd medications risk serious cardiovascular events young middle ADHD medications and risk of serious cardiovascular events in young and middle-aged adults. ADHD medications and risk of serious cardiovascular events in young and middle-aged adults. CONTEXT More than 1.5 million US adults use stimulants and other medications labeled for treatment of attention-deficit/hyperactivity disorder (ADHD). These agents can increase heart rate and blood pressure, raising concerns about their cardiovascular safety. OBJECTIVE To examine whether current use of medications prescribed primarily to treat ADHD is associated with increased risk of serious cardiovascular events in young and middle-aged adults. DESIGN, SETTING, AND PARTICIPANTS Retrospective, population-based cohort study using electronic health care records from 4 study sites (OptumInsight Epidemiology, Tennessee Medicaid, Kaiser Permanente California, and the HMO Research Network), starting in 1",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:06.138973+00:00"
+}

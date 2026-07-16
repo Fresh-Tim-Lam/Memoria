@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "41264017",
+  "source_fingerprint": "560ac67d0df0a284676e751f9a0d035c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "41264017",
+    "aggregation-of-vascular-risk-factors-and-risk-of-incident-alzheimer-disease."
+  ],
+  "key_phrases": [
+    "aggregation",
+    "vascular",
+    "risk",
+    "factors",
+    "incident",
+    "alzheimer",
+    "disease",
+    "background"
+  ],
+  "summary_1l": "Aggregation of vascular risk factors and risk of incident Alzheimer disease.",
+  "query_hits": [],
+  "embed_text": "41264017 Aggregation of vascular risk factors and risk of incident Alzheimer disease. science scifact BACKGROUND The prevalence of Alzheimer disease (AD) is increasing in the elderly, and vascular risk factors may increase its risk. OBJECTIVE To explore the association of the aggregation of vascular risk factors with AD. METHODS The… 41264017 aggregation-of-vascular-risk-factors-and-risk-of-incident-alzheimer-disease. aggregation vascular risk factors incident alzheimer disease background Aggregation of vascular risk factors and risk of incident Alzheimer disease. Aggregation of vascular risk factors and risk of incident Alzheimer disease. BACKGROUND The prevalence of Alzheimer disease (AD) is increasing in the elderly, and vascular risk factors may increase its risk. OBJECTIVE To explore the association of the aggregation of vascular risk factors with AD. METHODS The authors followed 1,138 individuals without dementia at baseline (mean age 76.2) for a mean of 5.5 years. The presence of vascular risk factors was related to incident possible and probable AD. RESULTS Four risk factors (diabetes, hypertension, heart disease, and current smoking) were associated with a higher risk of AD (p < 0.10) when analyzed individually. The risk of AD increased with the number of risk factors (diabetes + hypertension + heart disease + current smoking). The adjusted",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.240796+00:00"
+}

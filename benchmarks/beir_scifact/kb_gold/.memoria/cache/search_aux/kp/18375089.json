@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18375089",
+  "source_fingerprint": "e1441a90876a9336941edfab9d1f3f49",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18375089",
+    "the-role-of-the-tissue-omega-6/omega-3-fatty-acid-ratio-in-regulating-tumor-angiogenesis"
+  ],
+  "key_phrases": [
+    "role",
+    "tissue",
+    "omega",
+    "fatty",
+    "acid",
+    "ratio",
+    "regulating",
+    "tumor"
+  ],
+  "summary_1l": "Angiogenesis is a necessary step in tumor growth and metastasis.",
+  "query_hits": [],
+  "embed_text": "18375089 The role of the tissue omega-6/omega-3 fatty acid ratio in regulating tumor angiogenesis science scifact Angiogenesis is a necessary step in tumor growth and metastasis. It is well established that the metabolites of omega-6 and omega-3 fatty acids, which must be obtained through the diet and cannot be synthesized de novo in mammals, have… 18375089 the-role-of-the-tissue-omega-6/omega-3-fatty-acid-ratio-in-regulating-tumor-angiogenesis role tissue omega fatty acid ratio regulating tumor Angiogenesis is a necessary step in tumor growth and metastasis. The role of the tissue omega-6/omega-3 fatty acid ratio in regulating tumor angiogenesis Angiogenesis is a necessary step in tumor growth and metastasis. It is well established that the metabolites of omega-6 and omega-3 fatty acids, which must be obtained through the diet and cannot be synthesized de novo in mammals, have differential effects on cellular processes. Omega-6 fatty acid (n−6 FA)-derived metabolites promote angiogenesis by increasing growth factor expression whereas omega-3 fatty acids (n−3 FA) have anti-angiogenic and antitumor properties. However, most studies thus far have failed to account for the role of the n−6 FA/n−3 FA ratio in angiogenesis and instead examined the absolute levels of n−6 and n−3 FA. This review highlights the biochemical interactions between n−6 and n",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.202210+00:00"
+}

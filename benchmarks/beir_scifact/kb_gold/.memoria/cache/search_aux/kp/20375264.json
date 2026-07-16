@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20375264",
+  "source_fingerprint": "7cce060e89aea89133936c341bad2d6b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20375264",
+    "automated-genome-sequence-analysis-and-annotation."
+  ],
+  "key_phrases": [
+    "automated",
+    "genome",
+    "sequence",
+    "analysis",
+    "annotation",
+    "motivation",
+    "large",
+    "scale"
+  ],
+  "summary_1l": "Automated genome sequence analysis and annotation.",
+  "query_hits": [],
+  "embed_text": "20375264 Automated genome sequence analysis and annotation. science scifact MOTIVATION Large-scale genome projects generate a rapidly increasing number of sequences, most of them biochemically uncharacterized. Research in bioinformatics contributes to the development of methods for the computational… 20375264 automated-genome-sequence-analysis-and-annotation. automated genome sequence analysis annotation motivation large scale Automated genome sequence analysis and annotation. Automated genome sequence analysis and annotation. MOTIVATION Large-scale genome projects generate a rapidly increasing number of sequences, most of them biochemically uncharacterized. Research in bioinformatics contributes to the development of methods for the computational characterization of these sequences. However, the installation and application of these methods require experience and are time consuming. RESULTS We present here an automatic system for preliminary functional annotation of protein sequences that has been applied to the analysis of sets of sequences from complete genomes, both to refine overall performance and to make new discoveries comparable to those made by human experts. The GeneQuiz system includes a Web-based browser that allows examination of the evidence leadi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.168832+00:00"
+}

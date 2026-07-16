@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24575065",
+  "source_fingerprint": "b5eca178e1d1c0d5f362e7d65dd84edb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24575065",
+    "association-between-the-medicare-modernization-act-of-2003-and-patient-wait-times-and-travel-distance-for-chemotherapy."
+  ],
+  "key_phrases": [
+    "association",
+    "between",
+    "medicare",
+    "modernization",
+    "act",
+    "2003",
+    "patient",
+    "wait"
+  ],
+  "summary_1l": "Association between the Medicare Modernization Act of 2003 and patient wait times and travel distance for chemotherapy.",
+  "query_hits": [],
+  "embed_text": "24575065 Association between the Medicare Modernization Act of 2003 and patient wait times and travel distance for chemotherapy. science scifact CONTEXT The Medicare Prescription Drug, Improvement, and Modernization Act of 2003 (MMA) altered reimbursements for outpatient chemotherapy drugs and drug administration services. Anecdotal reports suggest that these adjustments may have… 24575065 association-between-the-medicare-modernization-act-of-2003-and-patient-wait-times-and-travel-distance-for-chemotherapy. association between medicare modernization act 2003 patient wait Association between the Medicare Modernization Act of 2003 and patient wait times and travel distance for chemotherapy. Association between the Medicare Modernization Act of 2003 and patient wait times and travel distance for chemotherapy. CONTEXT The Medicare Prescription Drug, Improvement, and Modernization Act of 2003 (MMA) altered reimbursements for outpatient chemotherapy drugs and drug administration services. Anecdotal reports suggest that these adjustments may have negatively affected access to chemotherapy for Medicare beneficiaries. OBJECTIVE To compare patient wait times and travel distances for chemotherapy before and after the enactment of the MMA. DESIGN, SETTING, AND PATIENTS Analysis of a nationally representative 5% sample of claims from the Centers for Medicare & Medicaid Services for the period 2003 through 2006. Patients were Medicare beneficiaries with incident breast cancer, colorectal",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.783261+00:00"
+}

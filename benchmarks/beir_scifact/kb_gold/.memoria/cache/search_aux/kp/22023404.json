@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22023404",
+  "source_fingerprint": "c4a80f456643a3b6f0488519f6477f9f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22023404",
+    "genetic-and-environmental-determinants-of-25-hydroxyvitamin-d-and-1,25-dihydroxyvitamin-d-levels-in-hispanic-and-african-americans."
+  ],
+  "key_phrases": [
+    "genetic",
+    "environmental",
+    "determinants",
+    "25",
+    "hydroxyvitamin",
+    "dihydroxyvitamin",
+    "levels",
+    "hispanic"
+  ],
+  "summary_1l": "Genetic and environmental determinants of 25-hydroxyvitamin D and 1,25-dihydroxyvitamin D levels in Hispanic and African Americans.",
+  "query_hits": [],
+  "embed_text": "22023404 Genetic and environmental determinants of 25-hydroxyvitamin D and 1,25-dihydroxyvitamin D levels in Hispanic and African Americans. science scifact CONTEXT Vitamin D deficiency is associated with many adverse health outcomes, yet little is known about the genetic epidemiology of vitamin D or its metabolites. OBJECTIVE Our objective was to examine the relationship among three vitamin… 22023404 genetic-and-environmental-determinants-of-25-hydroxyvitamin-d-and-1,25-dihydroxyvitamin-d-levels-in-hispanic-and-african-americans. genetic environmental determinants 25 hydroxyvitamin dihydroxyvitamin levels hispanic Genetic and environmental determinants of 25-hydroxyvitamin D and 1,25-dihydroxyvitamin D levels in Hispanic and African Americans. Genetic and environmental determinants of 25-hydroxyvitamin D and 1,25-dihydroxyvitamin D levels in Hispanic and African Americans. CONTEXT Vitamin D deficiency is associated with many adverse health outcomes, yet little is known about the genetic epidemiology of vitamin D or its metabolites. OBJECTIVE Our objective was to examine the relationship among three vitamin D-related genes and levels of 25-hydroxyvitamin D [25(OH)D] and 1,25-dihydroxyvitamin D [1,25(OH)2D] in Hispanics (HAs) and African Americans (AAs). DESIGN AND SETTING The cross-sectional Insulin Resistance Atherosclerosis Family Study recruited and examined subjects in: Los Angeles, California (AAs; 513 individuals from 42 families); San Luis Valley (SLV), Colorado (HAs; 513 individuals from 30 families); and San Antonio (SA)",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.102081+00:00"
+}

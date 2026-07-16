@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24530633",
+  "source_fingerprint": "961af0f1d02c9094dfa51937f3245452",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24530633",
+    "identification-and-characterization-of-subpopulations-in-undifferentiated-es-cell-culture."
+  ],
+  "key_phrases": [
+    "identification",
+    "characterization",
+    "subpopulations",
+    "undifferentiated",
+    "es",
+    "cell",
+    "culture",
+    "embryonic"
+  ],
+  "summary_1l": "Identification and characterization of subpopulations in undifferentiated ES cell culture.",
+  "query_hits": [],
+  "embed_text": "24530633 Identification and characterization of subpopulations in undifferentiated ES cell culture. science scifact Embryonic stem (ES) cells are pluripotent cells derived from the inner cell mass (ICM) and the epiblast, and have been suggested to be a homogeneous population with characteristics intermediate between them. These cells express Oct3/4 and… 24530633 identification-and-characterization-of-subpopulations-in-undifferentiated-es-cell-culture. identification characterization subpopulations undifferentiated es cell culture embryonic Identification and characterization of subpopulations in undifferentiated ES cell culture. Identification and characterization of subpopulations in undifferentiated ES cell culture. Embryonic stem (ES) cells are pluripotent cells derived from the inner cell mass (ICM) and the epiblast, and have been suggested to be a homogeneous population with characteristics intermediate between them. These cells express Oct3/4 and Rex1 genes, which have been used as markers to indicate the undifferentiated state of ES cells. Whereas Oct3/4 is expressed in totipotent and pluripotent cells in the mouse life cycle, Rex1 expression is restricted to the ICM, and is downregulated in pluripotent cell populations in the later stages, i.e. the epiblast and primitive ectoderm (PrE). To address whether ES cells comprise a homogeneous population equivalent to a certain developmental stage of pluripotent",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.665647+00:00"
+}

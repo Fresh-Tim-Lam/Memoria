@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "3590806",
+  "source_fingerprint": "c0ff9ae6ebd204682a056936be6a0293",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3590806"
+  ],
+  "key_phrases": [
+    "up",
+    "regulated",
+    "nrip2",
+    "colorectal",
+    "cancer",
+    "initiating",
+    "cells",
+    "modulates"
+  ],
+  "summary_1l": "BACKGROUND Colorectal cancer remains one of the most common malignant tumors worldwide.",
+  "query_hits": [],
+  "embed_text": "3590806 Up-regulated NRIP2 in colorectal cancer initiating cells modulates the Wnt pathway by targeting RORβ science scifact BACKGROUND Colorectal cancer remains one of the most common malignant tumors worldwide. Colorectal cancer initiating cells (CCICs) are a small subpopulation responsible for malignant behaviors of colorectal cancer. Aberrant activation of… 3590806 up regulated nrip2 colorectal cancer initiating cells modulates BACKGROUND Colorectal cancer remains one of the most common malignant tumors worldwide. Up-regulated NRIP2 in colorectal cancer initiating cells modulates the Wnt pathway by targeting RORβ BACKGROUND Colorectal cancer remains one of the most common malignant tumors worldwide. Colorectal cancer initiating cells (CCICs) are a small subpopulation responsible for malignant behaviors of colorectal cancer. Aberrant activation of the Wnt pathways regulates the self-renewal of CCIC. However, the underlying mechanism(s) remain poorly understood. METHODS Via retroviral library screening, we identified Nuclear Receptor-Interacting Protein 2 (NRIP2) as a novel interactor of the Wnt pathway from enriched colorectal cancer colosphere cells. The expression levels of NRIP2 and retinoic acid-related orphan receptor β (RORβ) were further examined by FISH, qRT-PCR, IHC and Western blot. NRIP2 o",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.740921+00:00"
+}

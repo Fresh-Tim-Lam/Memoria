@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11289247",
+  "source_fingerprint": "02a23bd1ceffbb6f3451cc1c132a42d8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11289247",
+    "metabolic-regulation-by-the-mitochondrial-phosphatase-ptpmt1-is-required-for-hematopoietic-stem-cell-differentiation."
+  ],
+  "key_phrases": [
+    "metabolic",
+    "regulation",
+    "by",
+    "mitochondrial",
+    "phosphatase",
+    "ptpmt1",
+    "required",
+    "hematopoietic"
+  ],
+  "summary_1l": "Metabolic regulation by the mitochondrial phosphatase PTPMT1 is required for hematopoietic stem cell differentiation.",
+  "query_hits": [],
+  "embed_text": "11289247 Metabolic regulation by the mitochondrial phosphatase PTPMT1 is required for hematopoietic stem cell differentiation. science scifact The regulation and coordination of mitochondrial metabolism with hematopoietic stem cell (HSC) self-renewal and differentiation is not fully understood. Here we report that depletion of PTPMT1, a PTEN-like mitochondrial phosphatase, in… 11289247 metabolic-regulation-by-the-mitochondrial-phosphatase-ptpmt1-is-required-for-hematopoietic-stem-cell-differentiation. metabolic regulation by mitochondrial phosphatase ptpmt1 required hematopoietic Metabolic regulation by the mitochondrial phosphatase PTPMT1 is required for hematopoietic stem cell differentiation. Metabolic regulation by the mitochondrial phosphatase PTPMT1 is required for hematopoietic stem cell differentiation. The regulation and coordination of mitochondrial metabolism with hematopoietic stem cell (HSC) self-renewal and differentiation is not fully understood. Here we report that depletion of PTPMT1, a PTEN-like mitochondrial phosphatase, in inducible or hematopoietic-cell-specific knockout mice resulted in hematopoietic failure due to changes in the cell cycle and a block in the differentiation of HSCs. Surprisingly, the HSC pool was increased by ∼40-fold in PTPMT1 knockout mice. Reintroduction of wild-type PTPMT1, but not catalytically deficient PTPMT1 or truncated PTPMT1 lacking mitochondrial localization, restored differentiation capabilities of PTPMT1 knockout HSCs. Further",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:06.654266+00:00"
+}

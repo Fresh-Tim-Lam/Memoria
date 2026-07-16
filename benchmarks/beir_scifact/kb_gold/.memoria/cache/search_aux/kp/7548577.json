@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7548577",
+  "source_fingerprint": "e5186ddcb661b8eccbe475253ad7b6c4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7548577",
+    "antagonistic-controls-of-autophagy-and-glycogen-accumulation-by-snf1p,-the-yeast-homolog-of-amp-activated-protein-kinase,-and-the-cyclin-dependent"
+  ],
+  "key_phrases": [
+    "antagonistic",
+    "controls",
+    "autophagy",
+    "glycogen",
+    "accumulation",
+    "by",
+    "snf1p",
+    "yeast"
+  ],
+  "summary_1l": "In the yeast Saccharomyces cerevisiae, glycogen is ac",
+  "query_hits": [],
+  "embed_text": "7548577 Antagonistic Controls of Autophagy and Glycogen Accumulation by Snf1p, the Yeast Homolog of AMP-Activated Protein Kinase, and the Cyclin-Dependent science scifact In the yeast Saccharomyces cerevisiae, glycogen is accumulated as a carbohydrate reserve when cells are deprived of nutrients. Yeast mutated in SNF1, a gene encoding a protein kinase required for glucose derepression, has diminished… 7548577 antagonistic-controls-of-autophagy-and-glycogen-accumulation-by-snf1p,-the-yeast-homolog-of-amp-activated-protein-kinase,-and-the-cyclin-dependent antagonistic controls autophagy glycogen accumulation by snf1p yeast In the yeast Saccharomyces cerevisiae, glycogen is ac Antagonistic Controls of Autophagy and Glycogen Accumulation by Snf1p, the Yeast Homolog of AMP-Activated Protein Kinase, and the Cyclin-Dependent In the yeast Saccharomyces cerevisiae, glycogen is accumulated as a carbohydrate reserve when cells are deprived of nutrients. Yeast mutated in SNF1, a gene encoding a protein kinase required for glucose derepression, has diminished glycogen accumulation and concomitant inactivation of glycogen synthase. Restoration of synthesis in an snf1 strain results only in transient glycogen accumulation, implying the existence of other SNF1-dependent controls of glycogen storage. A genetic screen revealed that two genes involved in autophagy, APG1 and APG13, may be regulated by SNF1. Increased autophagic activity was observed in wild-type cells entering t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.601803+00:00"
+}

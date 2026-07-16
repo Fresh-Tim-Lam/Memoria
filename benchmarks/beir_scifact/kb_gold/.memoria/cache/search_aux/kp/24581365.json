@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24581365",
+  "source_fingerprint": "91dd97c71685818181a7ab873cb842cf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24581365",
+    "20-year-outcomes-following-conservative-management-of-clinically-localized-prostate-cancer."
+  ],
+  "key_phrases": [
+    "20",
+    "year",
+    "outcomes",
+    "following",
+    "conservative",
+    "management",
+    "clinically",
+    "localized"
+  ],
+  "summary_1l": "20-year outcomes following conservative management of clinically localized prostate cancer.",
+  "query_hits": [],
+  "embed_text": "24581365 20-year outcomes following conservative management of clinically localized prostate cancer. science scifact CONTEXT The appropriate therapy for men with clinically localized prostate cancer is uncertain. A recent study suggested an increasing prostate cancer mortality rate for men who are alive more than 15 years following diagnosis. OBJECTIVE… 24581365 20-year-outcomes-following-conservative-management-of-clinically-localized-prostate-cancer. 20 year outcomes following conservative management clinically localized 20-year outcomes following conservative management of clinically localized prostate cancer. 20-year outcomes following conservative management of clinically localized prostate cancer. CONTEXT The appropriate therapy for men with clinically localized prostate cancer is uncertain. A recent study suggested an increasing prostate cancer mortality rate for men who are alive more than 15 years following diagnosis. OBJECTIVE To estimate 20-year survival based on a competing risk analysis of men who were diagnosed with clinically localized prostate cancer and treated with observation or androgen withdrawal therapy alone, stratified by age at diagnosis and histological findings. DESIGN, SETTING, AND PATIENTS A retrospective population-based cohort study using Connecticut Tumor Registry data supplemented by hospital record and histology review of 767 men aged 55 to 74 years with clinically",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.796800+00:00"
+}

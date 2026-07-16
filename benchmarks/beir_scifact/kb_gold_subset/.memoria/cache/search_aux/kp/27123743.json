@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27123743",
+  "source_fingerprint": "19818ea6ffc59d47dca715ff1c4ee7e8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27123743",
+    "role-of-birthweight-in-the-etiology-of-breast-cancer."
+  ],
+  "key_phrases": [
+    "role",
+    "birthweight",
+    "etiology",
+    "breast",
+    "cancer",
+    "may",
+    "originate",
+    "utero"
+  ],
+  "summary_1l": "Role of birthweight in the etiology of breast cancer.",
+  "query_hits": [],
+  "embed_text": "27123743 Role of birthweight in the etiology of breast cancer. science scifact Breast cancer may originate in utero. We reviewed the available evidence on the association between birthweight and the risk of breast cancer. To date, 26 research papers addressing this issue have been published. The majority of studies… 27123743 role-of-birthweight-in-the-etiology-of-breast-cancer. role birthweight etiology breast cancer may originate utero Role of birthweight in the etiology of breast cancer. Role of birthweight in the etiology of breast cancer. Breast cancer may originate in utero. We reviewed the available evidence on the association between birthweight and the risk of breast cancer. To date, 26 research papers addressing this issue have been published. The majority of studies identified a positive link between birthweight and premenopausal, but not postmenopausal, breast cancer. The relative risk estimate for breast cancer comparing women with high birthweight to women with low birthweight combining all studies including both pre- and postmenopausal breast cancer was 1.23 (95% confidence interval 1.13-1.34). The mechanisms underlying this association likely include elevated levels of growth factors that may increase the number of susceptible stem cells in the mammary gland o",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:12.696405+00:00"
+}

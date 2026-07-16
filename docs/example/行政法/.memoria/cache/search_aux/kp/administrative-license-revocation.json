@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "kp_id": "administrative-license-revocation",
+  "source_fingerprint": "eda60e55b148cd3141dd26551d3eef94",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "administrative-license-revocation"
+  ],
+  "key_phrases": [
+    "授益",
+    "行政",
+    "行为",
+    "shouyixingzhengxingwei",
+    "授益行政行为"
+  ],
+  "summary_1l": "授益行政行为",
+  "query_hits": [],
+  "embed_text": "administrative-license-revocation 行政许可撤销 administrative-license-revocation 授益 行政 行为 shouyixingzhengxingwei 授益行政行为 授益行政行为 授益行政行为",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-15T12:51:06.266925+00:00"
+}

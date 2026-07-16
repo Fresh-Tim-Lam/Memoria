@@ -1,0 +1,87 @@
+schema_version: 1
+file: administrative-reconsideration.md
+knowledge_points:
+- id: administrative-reconsideration
+  name: 行政复议
+  range:
+    start:
+      snippet: '## 行政复议'
+    end:
+      snippet: '- 全不知：不知内容不知可以行政复议：知道内容60日内；行为作出5年内，不动产20年（即5年内任何时候你知道了，就是60日）'
+- id: reconsideration-applicant
+  name: 行政复议申请人
+  range:
+    start:
+      snippet: '### 行政复议申请人'
+    end:
+      snippet: 公民、法人或其他组织
+- id: reconsideration-respondent
+  name: 行政复议被申请人
+  range:
+    start:
+      snippet: '### 行政复议被申请人'
+    end:
+      snippet: '- 行政机关设立的派出机构、内设机构或者其他组织，未经法律、法规、规章授权，对外以自己名义作出行政行为的，该行政机关为被申请人'
+- id: reconsideration-third-party
+  name: 行政复议第三人
+  range:
+    start:
+      snippet: '### 行政复议第三人'
+    end:
+      snippet: 不参加行政复议不影响审理
+- id: reconsideration-authority
+  name: 行政复议机关
+  range:
+    start:
+      snippet: '### 行政复议机关'
+    end:
+      snippet: 复议代表人：超过5人推选1- 5名代表
+- id: reconsideration-procedure
+  name: 行政复议程序
+  range:
+    start:
+      snippet: '### 行政复议程序'
+    end:
+      snippet: '- 全不知：不知内容不知可以行政复议：知道内容60日内；行为作出5年内，不动产20年（即5年内任何时候你知道了，就是60日）'
+- id: incidental-review-of-abstract-acts
+  name: 抽象行为的附带性审查
+  range:
+    start:
+      snippet: '## 行政复议'
+    end:
+      snippet: '## 行政复议'
+- id: reconsideration-evidence
+  name: 行政复议证据制度
+  range:
+    start:
+      snippet: '## 行政复议'
+    end:
+      snippet: '## 行政复议'
+links:
+- anchor_text: administrative-act
+  occurrence: 0
+  targets:
+  - administrative-act
+  edge_type: reference
+  instances:
+  - line: 3
+    wrapped: true
+  source_id: administrative-reconsideration
+- anchor_text: administrative-levy
+  occurrence: 0
+  targets:
+  - administrative-levy
+  edge_type: reference
+  instances:
+  - line: 17
+    wrapped: true
+  source_id: administrative-reconsideration
+- anchor_text: administrative-expropriation
+  occurrence: 0
+  targets:
+  - administrative-expropriation
+  edge_type: reference
+  instances:
+  - line: 17
+    wrapped: true
+  source_id: administrative-reconsideration

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36310858",
+  "source_fingerprint": "645b24bd9633cae544d01ac10aa783cd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36310858",
+    "downstream-of-mutant-kras,-the-transcription-regulator-yap-is-essential-for-neoplastic-progression-to-pancreatic-ductal-adenocarcinoma"
+  ],
+  "key_phrases": [
+    "downstream",
+    "mutant",
+    "kras",
+    "transcription",
+    "regulator",
+    "yap",
+    "essential",
+    "neoplastic"
+  ],
+  "summary_1l": "Pancreatic ductal adenocarcinoma (PDAC) is an aggressive cancer w",
+  "query_hits": [],
+  "embed_text": "36310858 Downstream of Mutant KRAS, the Transcription Regulator YAP Is Essential for Neoplastic Progression to Pancreatic Ductal Adenocarcinoma science scifact Pancreatic ductal adenocarcinoma (PDAC) is an aggressive cancer with poor survival rates and frequently carries oncogenic KRAS mutation. However, KRAS has thus far not been a viable therapeutic target. We found that the abundance of YAP… 36310858 downstream-of-mutant-kras,-the-transcription-regulator-yap-is-essential-for-neoplastic-progression-to-pancreatic-ductal-adenocarcinoma downstream mutant kras transcription regulator yap essential neoplastic Pancreatic ductal adenocarcinoma (PDAC) is an aggressive cancer w Downstream of Mutant KRAS, the Transcription Regulator YAP Is Essential for Neoplastic Progression to Pancreatic Ductal Adenocarcinoma Pancreatic ductal adenocarcinoma (PDAC) is an aggressive cancer with poor survival rates and frequently carries oncogenic KRAS mutation. However, KRAS has thus far not been a viable therapeutic target. We found that the abundance of YAP mRNA, which encodes Yes-associated protein (YAP), a protein regulated by the Hippo pathway during tissue development and homeostasis, was increased in human PDAC tissue compared with that in normal pancreatic epithelia. In genetically engineered KrasG12D and KrasG12D:Trp53R172H mouse models, pancreas-specific deletion of Yap halted the progression of early neoplastic lesions to PDAC without affecting normal pancreatic develo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:43.119907+00:00"
+}

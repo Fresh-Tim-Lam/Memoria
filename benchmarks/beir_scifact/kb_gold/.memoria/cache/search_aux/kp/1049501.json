@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1049501",
+  "source_fingerprint": "295edde404227d7b54521cd3487987ab",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1049501",
+    "neutrophil-extracellular-traps-enriched-in-oxidized-mitochondrial-dna-are-interferogenic-and-contribute-to-lupus-like-disease"
+  ],
+  "key_phrases": [
+    "neutrophil",
+    "extracellular",
+    "traps",
+    "enriched",
+    "oxidized",
+    "mitochondrial",
+    "dna",
+    "interferogenic"
+  ],
+  "summary_1l": "Neutrophil extracellular traps (NETs) are implicated in autoimmunity, but",
+  "query_hits": [],
+  "embed_text": "1049501 Neutrophil extracellular traps enriched in oxidized mitochondrial DNA are interferogenic and contribute to lupus-like disease science scifact Neutrophil extracellular traps (NETs) are implicated in autoimmunity, but how they are generated and their roles in sterile inflammation remain unclear. Ribonucleoprotein immune complexes (RNP ICs), inducers of NETosis, require… 1049501 neutrophil-extracellular-traps-enriched-in-oxidized-mitochondrial-dna-are-interferogenic-and-contribute-to-lupus-like-disease neutrophil extracellular traps enriched oxidized mitochondrial dna interferogenic Neutrophil extracellular traps (NETs) are implicated in autoimmunity, but Neutrophil extracellular traps enriched in oxidized mitochondrial DNA are interferogenic and contribute to lupus-like disease Neutrophil extracellular traps (NETs) are implicated in autoimmunity, but how they are generated and their roles in sterile inflammation remain unclear. Ribonucleoprotein immune complexes (RNP ICs), inducers of NETosis, require mitochondrial reactive oxygen species (ROS) for maximal NET stimulation. After RNP IC stimulation of neutrophils, mitochondria become hypopolarized and translocate to the cell surface. Extracellular release of oxidized mitochondrial DNA is proinflammatory in vitro, and when this DNA is injected into mice, it stimulates type I interferon (IFN) signaling through a pathway dependent on the DNA sensor STING. Mitochondrial ROS are also necessary f",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:04.887833+00:00"
+}

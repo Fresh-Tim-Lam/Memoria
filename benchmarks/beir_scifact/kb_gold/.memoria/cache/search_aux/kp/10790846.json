@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10790846",
+  "source_fingerprint": "8bffae073eda726656c9647103300ad7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10790846",
+    "a-rapamycin-sensitive-signaling-pathway-contributes-to-long-term-synaptic-plasticity-in-the-hippocampus."
+  ],
+  "key_phrases": [
+    "rapamycin",
+    "sensitive",
+    "signaling",
+    "pathway",
+    "contributes",
+    "long",
+    "term",
+    "synaptic"
+  ],
+  "summary_1l": "A rapamycin-sensitive signaling pathway contributes to long-term synaptic plasticity in the hippocampus.",
+  "query_hits": [],
+  "embed_text": "10790846 A rapamycin-sensitive signaling pathway contributes to long-term synaptic plasticity in the hippocampus. science scifact Many forms of long-lasting behavioral and synaptic plasticity require the synthesis of new proteins. For example, long-term potentiation (LTP) that endures for more than an hour requires both transcription and translation. The… 10790846 a-rapamycin-sensitive-signaling-pathway-contributes-to-long-term-synaptic-plasticity-in-the-hippocampus. rapamycin sensitive signaling pathway contributes long term synaptic A rapamycin-sensitive signaling pathway contributes to long-term synaptic plasticity in the hippocampus. A rapamycin-sensitive signaling pathway contributes to long-term synaptic plasticity in the hippocampus. Many forms of long-lasting behavioral and synaptic plasticity require the synthesis of new proteins. For example, long-term potentiation (LTP) that endures for more than an hour requires both transcription and translation. The signal-transduction mechanisms that couple synaptic events to protein translational machinery during long-lasting synaptic plasticity, however, are not well understood. One signaling pathway that is stimulated by growth factors and results in the translation of specific mRNAs includes the rapamycin-sensitive kinase mammalian target of rapamycin (mTOR, also known as FRAP and RAFT-1). Several components of this translational signaling pathway, including mTOR, eukary",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:05.494988+00:00"
+}

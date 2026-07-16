@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4430962",
+  "source_fingerprint": "338f76d3d7ea1a695a4e9c82b13edfaa",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4430962",
+    "identification-of-human-brain-tumour-initiating-cells"
+  ],
+  "key_phrases": [
+    "identification",
+    "human",
+    "brain",
+    "tumour",
+    "initiating",
+    "cells",
+    "cancer",
+    "stem"
+  ],
+  "summary_1l": "The cancer stem cell (CSC) hypothesis suggests that neoplastic clones are maintained exclusively by a rare fraction of cells with stem cell proper",
+  "query_hits": [],
+  "embed_text": "4430962 Identification of human brain tumour initiating cells science scifact The cancer stem cell (CSC) hypothesis suggests that neoplastic clones are maintained exclusively by a rare fraction of cells with stem cell properties. Although the existence of CSCs in human leukaemia is established, little evidence… 4430962 identification-of-human-brain-tumour-initiating-cells identification human brain tumour initiating cells cancer stem The cancer stem cell (CSC) hypothesis suggests that neoplastic clones are maintained exclusively by a rare fraction of cells with stem cell proper Identification of human brain tumour initiating cells The cancer stem cell (CSC) hypothesis suggests that neoplastic clones are maintained exclusively by a rare fraction of cells with stem cell properties. Although the existence of CSCs in human leukaemia is established, little evidence exists for CSCs in solid tumours, except for breast cancer. Recently, we prospectively isolated a CD133+ cell subpopulation from human brain tumours that exhibited stem cell properties in vitro. However, the true measures of CSCs are their capacity for self renewal and exact recapitulation of the original tumour. Here we report the development of a xenograft assay that identified human brain tumour initiating cells that initiate tumours in vivo. Only the CD133+ brain tumour fraction contains cells that are",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.209251+00:00"
+}

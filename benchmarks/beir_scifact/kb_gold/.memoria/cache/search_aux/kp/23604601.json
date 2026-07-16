@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23604601",
+  "source_fingerprint": "9e74b626b37a6fd21b27b25161b604df",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23604601",
+    "post-transcriptional-regulation-of-ime1-determines-initiation-of-meiosis-in-saccharomyces-cerevisiae."
+  ],
+  "key_phrases": [
+    "post",
+    "transcriptional",
+    "regulation",
+    "ime1",
+    "determines",
+    "initiation",
+    "meiosis",
+    "saccharomyces"
+  ],
+  "summary_1l": "Post-transcriptional regulation of IME1 determines initiation of meiosis in Saccharomyces cerevisiae.",
+  "query_hits": [],
+  "embed_text": "23604601 Post-transcriptional regulation of IME1 determines initiation of meiosis in Saccharomyces cerevisiae. science scifact The IME1 gene of Saccharomyces cerevisiae is required for initiation of meiosis. Transcription of IME1 is detected under conditions which are known to induce initiation of meiosis, namely starvation for nitrogen and glucose, and the… 23604601 post-transcriptional-regulation-of-ime1-determines-initiation-of-meiosis-in-saccharomyces-cerevisiae. post transcriptional regulation ime1 determines initiation meiosis saccharomyces Post-transcriptional regulation of IME1 determines initiation of meiosis in Saccharomyces cerevisiae. Post-transcriptional regulation of IME1 determines initiation of meiosis in Saccharomyces cerevisiae. The IME1 gene of Saccharomyces cerevisiae is required for initiation of meiosis. Transcription of IME1 is detected under conditions which are known to induce initiation of meiosis, namely starvation for nitrogen and glucose, and the presence of MATa1 and MAT alpha 2 gene products. In this paper we show that IME1 is also subject to translational regulation. Translation of IME1 mRNA is achieved either upon nitrogen starvation, or upon G1 arrest. In the presence of nutrients, constitutively elevated transcription of IME1 is also sufficient for the translation of IME1 RNA. Four different conditions were found to cause expression of Ime1 protein in vegetative cultures: elevated transcription le",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.821838+00:00"
+}

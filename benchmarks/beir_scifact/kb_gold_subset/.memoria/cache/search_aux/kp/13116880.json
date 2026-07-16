@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13116880",
+  "source_fingerprint": "3249b06f32abe6136d0fdd42d5a08433",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13116880",
+    "hematopoietic-stem-cell:-self-renewal-versus-differentiation."
+  ],
+  "key_phrases": [
+    "hematopoietic",
+    "stem",
+    "cell",
+    "self",
+    "renewal",
+    "versus",
+    "differentiation",
+    "mammalian"
+  ],
+  "summary_1l": "Hematopoietic stem cell: self-renewal versus differentiation.",
+  "query_hits": [],
+  "embed_text": "13116880 Hematopoietic stem cell: self-renewal versus differentiation. science scifact The mammalian blood system, containing more than 10 distinct mature cell types, stands on one specific cell type, hematopoietic stem cell (HSC). Within the system, only HSCs possess the ability of both multipotency and self-renewal.… 13116880 hematopoietic-stem-cell:-self-renewal-versus-differentiation. hematopoietic stem cell self renewal versus differentiation mammalian Hematopoietic stem cell: self-renewal versus differentiation. Hematopoietic stem cell: self-renewal versus differentiation. The mammalian blood system, containing more than 10 distinct mature cell types, stands on one specific cell type, hematopoietic stem cell (HSC). Within the system, only HSCs possess the ability of both multipotency and self-renewal. Multipotency is the ability to differentiate into all functional blood cells. Self-renewal is the ability to give rise to HSC itself without differentiation. Since mature blood cells (MBCs) are predominantly short-lived, HSCs continuously provide more differentiated progenitors while properly maintaining the HSC pool size throughout life by precisely balancing self-renewal and differentiation. Thus, understanding the mechanisms of self-renewal and differentiation of HSC has been a central issue. In t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:10.371039+00:00"
+}

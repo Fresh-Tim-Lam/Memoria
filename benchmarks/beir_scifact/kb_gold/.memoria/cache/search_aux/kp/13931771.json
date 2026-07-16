@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13931771",
+  "source_fingerprint": "2f1c38473f390e7c380ae71e4b6791e0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13931771",
+    "grsf1-regulates-rna-processing-in-mitochondrial-rna-granules"
+  ],
+  "key_phrases": [
+    "grsf1",
+    "regulates",
+    "rna",
+    "processing",
+    "mitochondrial",
+    "granules",
+    "various",
+    "specialized"
+  ],
+  "summary_1l": "Various specialized domains have been described in the cytosol and the nucleus; however, little is known about compartmentalization within",
+  "query_hits": [],
+  "embed_text": "13931771 GRSF1 Regulates RNA Processing in Mitochondrial RNA Granules science scifact Various specialized domains have been described in the cytosol and the nucleus; however, little is known about compartmentalization within the mitochondrial matrix. GRSF1 (G-rich sequence factor 1) is an RNA binding protein that was… 13931771 grsf1-regulates-rna-processing-in-mitochondrial-rna-granules grsf1 regulates rna processing mitochondrial granules various specialized Various specialized domains have been described in the cytosol and the nucleus; however, little is known about compartmentalization within GRSF1 Regulates RNA Processing in Mitochondrial RNA Granules Various specialized domains have been described in the cytosol and the nucleus; however, little is known about compartmentalization within the mitochondrial matrix. GRSF1 (G-rich sequence factor 1) is an RNA binding protein that was previously reported to localize in the cytosol. We found that an isoform of GRSF1 accumulates in discrete foci in the mitochondrial matrix. These foci are composed of nascent mitochondrial RNA and also contain RNase P, an enzyme that participates in mitochondrial RNA processing. GRSF1 was found to interact with RNase P and to be required for processing of both classical and tRNA-less RNA precursors. In its absence, cleavage of primary RNA transcripts is abnormal, leading to decreased expression of mit",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.627319+00:00"
+}

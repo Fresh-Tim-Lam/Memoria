@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "30919024",
+  "source_fingerprint": "15a2ae308c15f2693c9b1afa3c478466",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "30919024",
+    "molecular-mechanisms-underlying-tumor-dormancy."
+  ],
+  "key_phrases": [
+    "molecular",
+    "mechanisms",
+    "underlying",
+    "tumor",
+    "dormancy",
+    "evidence",
+    "suggests",
+    "that"
+  ],
+  "summary_1l": "Molecular mechanisms underlying tumor dormancy.",
+  "query_hits": [],
+  "embed_text": "30919024 Molecular mechanisms underlying tumor dormancy. science scifact Evidence suggests that dormant, microscopic tumors are not only common, but are highly prevalent in otherwise healthy individuals. Due to their small size and non-invasive nature, these dormant tumors remain asymptomatic and, in most… 30919024 molecular-mechanisms-underlying-tumor-dormancy. molecular mechanisms underlying tumor dormancy evidence suggests that Molecular mechanisms underlying tumor dormancy. Molecular mechanisms underlying tumor dormancy. Evidence suggests that dormant, microscopic tumors are not only common, but are highly prevalent in otherwise healthy individuals. Due to their small size and non-invasive nature, these dormant tumors remain asymptomatic and, in most cases, undetected. With advances in diagnostic imaging and molecular biology, it is now becoming clear that such neoplasms can remain in an asymptomatic, dormant stage for considerable periods of time without expanding in size. Although a number of processes may play a role in thwarting the expansion of microscopic tumors, one critical mechanism behind tumor dormancy is the ability of the tumor population to induce angiogenesis. Although cancer can arise through multiple pathways, it is assumed that essentially m",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.151489+00:00"
+}

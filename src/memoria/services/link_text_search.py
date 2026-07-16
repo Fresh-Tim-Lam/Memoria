@@ -7,6 +7,7 @@
 from __future__ import annotations
 
 import re
+import unicodedata
 from dataclasses import asdict, dataclass, field
 
 from memoria.services.link_md import _ok_plain_prefix, _ok_plain_suffix
@@ -63,8 +64,13 @@ DEFAULT_SEARCH_OPTIONS = LinkTextSearchOptions()
 
 
 def compact_text(text: str, *, case_insensitive: bool = False) -> str:
-    """去掉全部空白，用于空白模糊比较。"""
-    s = re.sub(r"\s+", "", (text or "").strip())
+    """去掉全部空白，用于空白模糊比较。
+
+    同时做 Unicode NFKC 规范化，使全角/半角字符（如 （）vs ()、Ａ vs A）
+    能正确匹配。这样"完整性 （integrity）"和"完整性 (integrity)"被视为相等。
+    """
+    s = unicodedata.normalize("NFKC", (text or "").strip())
+    s = re.sub(r"\s+", "", s)
     return s.lower() if case_insensitive else s
 
 
@@ -337,10 +343,13 @@ def _find_plain_in_view(
 
 
 def _anchors_equal(a: str, b: str, options: LinkTextSearchOptions) -> bool:
+    # NFKC normalize both sides so full-width/half-width variants match.
+    na = unicodedata.normalize("NFKC", a)
+    nb = unicodedata.normalize("NFKC", b)
     if options.case_insensitive:
-        if a.lower() == b.lower():
+        if na.lower() == nb.lower():
             return True
-    elif a == b:
+    elif na == nb:
         return True
     if options.fuzzy_whitespace:
         return compact_text(a, case_insensitive=options.case_insensitive) == compact_text(

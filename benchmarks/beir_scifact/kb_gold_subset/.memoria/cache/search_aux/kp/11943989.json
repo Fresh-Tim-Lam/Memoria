@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11943989",
+  "source_fingerprint": "d725ecc9be856e2a6f786b6e5b9605a1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11943989",
+    "baby-hands-that-move-to-the-rhythm-of-language:-hearing-babies-acquiring-sign-languages-babble-silently-on-the-hands"
+  ],
+  "key_phrases": [
+    "baby",
+    "hands",
+    "that",
+    "move",
+    "rhythm",
+    "language",
+    "hearing",
+    "babies"
+  ],
+  "summary_1l": "The \"ba, ba, ba\" sound universal to babies' babbling around 7 months captures scien",
+  "query_hits": [],
+  "embed_text": "11943989 Baby hands that move to the rhythm of language: hearing babies acquiring sign languages babble silently on the hands science scifact The \"ba, ba, ba\" sound universal to babies' babbling around 7 months captures scientific attention because it provides insights into the mechanisms underlying language acquisition and vestiges of its evolutionary origins. Yet the… 11943989 baby-hands-that-move-to-the-rhythm-of-language:-hearing-babies-acquiring-sign-languages-babble-silently-on-the-hands baby hands that move rhythm language hearing babies The \"ba, ba, ba\" sound universal to babies' babbling around 7 months captures scien Baby hands that move to the rhythm of language: hearing babies acquiring sign languages babble silently on the hands The \"ba, ba, ba\" sound universal to babies' babbling around 7 months captures scientific attention because it provides insights into the mechanisms underlying language acquisition and vestiges of its evolutionary origins. Yet the prevailing mystery is what is the biological basis of babbling, with one hypothesis being that it is a non-linguistic motoric activity driven largely by the baby's emerging control over the mouth and jaw, and another being that it is a linguistic activity reflecting the babies' early sensitivity to specific phonetic-syllabic patterns. Two groups of hearing babies were studied over time (ages 6, 10, and 12 months), equal in all developmental respects",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:07.968940+00:00"
+}

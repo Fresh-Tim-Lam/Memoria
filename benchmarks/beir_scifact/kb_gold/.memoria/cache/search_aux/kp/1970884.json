@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1970884",
+  "source_fingerprint": "9b5333bc737fa0150bfa3729823823fa",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1970884",
+    "rational-design-of-a-flavivirus-vaccine-by-abolishing-viral-rna-2'-o-methylation."
+  ],
+  "key_phrases": [
+    "rational",
+    "design",
+    "flavivirus",
+    "vaccine",
+    "by",
+    "abolishing",
+    "viral",
+    "rna"
+  ],
+  "summary_1l": "Rational design of a flavivirus vaccine by abolishing viral RNA 2'-O methylation.",
+  "query_hits": [],
+  "embed_text": "1970884 Rational design of a flavivirus vaccine by abolishing viral RNA 2'-O methylation. science scifact Viruses that replicate in the cytoplasm cannot access the host nuclear capping machinery. These viruses have evolved viral methyltransferase(s) to methylate N-7 and 2'-O cap of their RNA; alternatively, they \"snatch\" host mRNA cap to form… 1970884 rational-design-of-a-flavivirus-vaccine-by-abolishing-viral-rna-2'-o-methylation. rational design flavivirus vaccine by abolishing viral rna Rational design of a flavivirus vaccine by abolishing viral RNA 2'-O methylation. Rational design of a flavivirus vaccine by abolishing viral RNA 2'-O methylation. Viruses that replicate in the cytoplasm cannot access the host nuclear capping machinery. These viruses have evolved viral methyltransferase(s) to methylate N-7 and 2'-O cap of their RNA; alternatively, they \"snatch\" host mRNA cap to form the 5' end of viral RNA. The function of 2'-O methylation of viral RNA cap is to mimic cellular mRNA and to evade host innate immune restriction. A cytoplasmic virus defective in 2'-O methylation is replicative, but its viral RNA lacks 2'-O methylation and is recognized and eliminated by the host immune response. Such a mutant virus could be rationally designed as a live attenuated vaccine. Here, we use Japanese encephalitis virus (JEV), an important mosquito-borne flaviviru",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.070929+00:00"
+}

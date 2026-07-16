@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10504681",
+  "source_fingerprint": "7e098a1b30e2aaaec2a17ec7d3166dfa",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10504681",
+    "taa1-mediated-auxin-biosynthesis-is-essential-for-hormone-crosstalk-and-plant-development"
+  ],
+  "key_phrases": [
+    "taa1",
+    "mediated",
+    "auxin",
+    "biosynthesis",
+    "essential",
+    "hormone",
+    "crosstalk",
+    "plant"
+  ],
+  "summary_1l": "Plants have evolved a tremendous ability to respond to environmental changes by adapting their growth and deve",
+  "query_hits": [],
+  "embed_text": "10504681 TAA1-Mediated Auxin Biosynthesis Is Essential for Hormone Crosstalk and Plant Development science scifact Plants have evolved a tremendous ability to respond to environmental changes by adapting their growth and development. The interaction between hormonal and developmental signals is a critical mechanism in the generation of this enormous… 10504681 taa1-mediated-auxin-biosynthesis-is-essential-for-hormone-crosstalk-and-plant-development taa1 mediated auxin biosynthesis essential hormone crosstalk plant Plants have evolved a tremendous ability to respond to environmental changes by adapting their growth and deve TAA1-Mediated Auxin Biosynthesis Is Essential for Hormone Crosstalk and Plant Development Plants have evolved a tremendous ability to respond to environmental changes by adapting their growth and development. The interaction between hormonal and developmental signals is a critical mechanism in the generation of this enormous plasticity. A good example is the response to the hormone ethylene that depends on tissue type, developmental stage, and environmental conditions. By characterizing the Arabidopsis wei8 mutant, we have found that a small family of genes mediates tissue-specific responses to ethylene. Biochemical studies revealed that WEI8 encodes a long-anticipated tryptophan aminotransferase, TAA1, in the essential, yet genetically uncharacterized, indole-3-pyruvic acid (IPA) branch o",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.622262+00:00"
+}

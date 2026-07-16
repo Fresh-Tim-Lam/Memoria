@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27731651",
+  "source_fingerprint": "b8f7cf188afb64aeeaf167a4ac345053",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27731651",
+    "a-view-to-a-kill:-the-bacterial-type-vi-secretion-system."
+  ],
+  "key_phrases": [
+    "view",
+    "kill",
+    "bacterial",
+    "type",
+    "vi",
+    "secretion",
+    "system",
+    "t6ss"
+  ],
+  "summary_1l": "A view to a kill: the bacterial type VI secretion system.",
+  "query_hits": [],
+  "embed_text": "27731651 A view to a kill: the bacterial type VI secretion system. science scifact The bacterial type VI secretion system (T6SS) is an organelle that is structurally and mechanistically analogous to an intracellular membrane-attached contractile phage tail. Recent studies determined that a rapid conformational change in… 27731651 a-view-to-a-kill:-the-bacterial-type-vi-secretion-system. view kill bacterial type vi secretion system t6ss A view to a kill: the bacterial type VI secretion system. A view to a kill: the bacterial type VI secretion system. The bacterial type VI secretion system (T6SS) is an organelle that is structurally and mechanistically analogous to an intracellular membrane-attached contractile phage tail. Recent studies determined that a rapid conformational change in the structure of a sheath protein complex propels T6SS spike and tube components along with antibacterial and antieukaryotic effectors out of predatory T6SS(+) cells and into prey cells. The contracted organelle is then recycled in an ATP-dependent process. T6SS is regulated at transcriptional and posttranslational levels, the latter involving detection of membrane perturbation in some species. In addition to directly targeting eukaryotic cells, the T6SS can also target other bacteria coinfecting a",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.263840+00:00"
+}

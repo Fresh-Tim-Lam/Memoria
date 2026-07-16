@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11172205",
+  "source_fingerprint": "1aa1ab2c6e9fe2e55462c33128ed002c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11172205",
+    "quantum-dots-spectrally-distinguish-multiple-species-within-the-tumor-milieu-in-vivo"
+  ],
+  "key_phrases": [
+    "quantum",
+    "dots",
+    "spectrally",
+    "distinguish",
+    "multiple",
+    "species",
+    "within",
+    "tumor"
+  ],
+  "summary_1l": "A solid tumor is an organ composed of cancer and host cells embedded in an extracellular matrix and nourished by bl",
+  "query_hits": [],
+  "embed_text": "11172205 Quantum dots spectrally distinguish multiple species within the tumor milieu in vivo science scifact A solid tumor is an organ composed of cancer and host cells embedded in an extracellular matrix and nourished by blood vessels. A prerequisite to understanding tumor pathophysiology is the ability to distinguish and monitor each component… 11172205 quantum-dots-spectrally-distinguish-multiple-species-within-the-tumor-milieu-in-vivo quantum dots spectrally distinguish multiple species within tumor A solid tumor is an organ composed of cancer and host cells embedded in an extracellular matrix and nourished by bl Quantum dots spectrally distinguish multiple species within the tumor milieu in vivo A solid tumor is an organ composed of cancer and host cells embedded in an extracellular matrix and nourished by blood vessels. A prerequisite to understanding tumor pathophysiology is the ability to distinguish and monitor each component in dynamic studies. Standard fluorophores hamper simultaneous intravital imaging of these components. Here, we used multiphoton microscopy techniques and transgenic mice that expressed green fluorescent protein, and combined them with the use of quantum dot preparations. We show that these fluorescent semiconductor nanocrystals can be customized to concurrently image and differentiate tumor vessels from both the perivascular cells and the matrix. Moreover, we used them to",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:06.033284+00:00"
+}

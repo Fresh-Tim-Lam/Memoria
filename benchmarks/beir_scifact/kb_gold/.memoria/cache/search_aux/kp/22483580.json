@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22483580",
+  "source_fingerprint": "f1f261409aa5e79b49dceca896f22d11",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22483580",
+    "disturbed-sleep-in-bipolar-disorder-is-related-to-an-elevation-of-il-6-in-peripheral-monocytes."
+  ],
+  "key_phrases": [
+    "disturbed",
+    "sleep",
+    "bipolar",
+    "disorder",
+    "related",
+    "elevation",
+    "il",
+    "peripheral"
+  ],
+  "summary_1l": "Disturbed sleep in bipolar disorder is related to an elevation of IL-6 in peripheral monocytes.",
+  "query_hits": [],
+  "embed_text": "22483580 Disturbed sleep in bipolar disorder is related to an elevation of IL-6 in peripheral monocytes. science scifact Bipolar disorder is a severe psychiatric disorder that is associated with persistent changes in the quality, duration and architecture of sleep. Currently there is no unifying hypothesis explaining the alterations in sleep observable in… 22483580 disturbed-sleep-in-bipolar-disorder-is-related-to-an-elevation-of-il-6-in-peripheral-monocytes. disturbed sleep bipolar disorder related elevation il peripheral Disturbed sleep in bipolar disorder is related to an elevation of IL-6 in peripheral monocytes. Disturbed sleep in bipolar disorder is related to an elevation of IL-6 in peripheral monocytes. Bipolar disorder is a severe psychiatric disorder that is associated with persistent changes in the quality, duration and architecture of sleep. Currently there is no unifying hypothesis explaining the alterations in sleep observable in patients with bipolar disorder and management is often difficult though vital. Sleep is modified by various cytokines including IL-6. Elevated levels of IL-6 are associated with a poorer quality of sleep and changes in the architecture of sleep similar to those observed in bipolar disorder. Therapeutic administration of Interferon causes elevations of intrathecal IL-6 concentrations and appears to provoke a deteriorating quality of sleep. The blockade of IL-6 wit",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.828573+00:00"
+}

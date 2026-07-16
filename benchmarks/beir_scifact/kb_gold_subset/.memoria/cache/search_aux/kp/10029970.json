@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10029970",
+  "source_fingerprint": "670d92cf860c35ed4e014d8da1764270",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10029970",
+    "cdd:-conserved-domains-and-protein-three-dimensional-structure"
+  ],
+  "key_phrases": [
+    "cdd",
+    "conserved",
+    "domains",
+    "protein",
+    "three",
+    "dimensional",
+    "structure",
+    "domain"
+  ],
+  "summary_1l": "CDD, the Conserved Domain Database, is part of NCBI's Entrez query and retrieval system and is also accessible via http://www.",
+  "query_hits": [],
+  "embed_text": "10029970 CDD: conserved domains and protein three-dimensional structure science scifact CDD, the Conserved Domain Database, is part of NCBI's Entrez query and retrieval system and is also accessible via http://www.ncbi.nlm.nih.gov/Structure/cdd/cdd.shtml. CDD provides annotation of protein sequences with the location of… 10029970 cdd:-conserved-domains-and-protein-three-dimensional-structure cdd conserved domains protein three dimensional structure domain CDD, the Conserved Domain Database, is part of NCBI's Entrez query and retrieval system and is also accessible via http://www. CDD: conserved domains and protein three-dimensional structure CDD, the Conserved Domain Database, is part of NCBI's Entrez query and retrieval system and is also accessible via http://www.ncbi.nlm.nih.gov/Structure/cdd/cdd.shtml. CDD provides annotation of protein sequences with the location of conserved domain footprints and functional sites inferred from these footprints. Pre-computed annotation is available via Entrez, and interactive search services accept single protein or nucleotide queries, as well as batch submissions of protein query sequences, utilizing RPS-BLAST to rapidly identify putative matches. CDD incorporates several protein domain and full-length protein model collections, and maintains an active curation effort that aims at providing fine grained classifications for ma",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.229273+00:00"
+}

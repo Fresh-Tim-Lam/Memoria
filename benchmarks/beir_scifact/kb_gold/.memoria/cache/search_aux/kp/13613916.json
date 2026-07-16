@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13613916",
+  "source_fingerprint": "ae26583a473fbec64790d5f5334e55f4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13613916",
+    "glucose-repression-in-saccharomyces-cerevisiae"
+  ],
+  "key_phrases": [
+    "glucose",
+    "repression",
+    "saccharomyces",
+    "cerevisiae",
+    "primary",
+    "source",
+    "energy",
+    "budding"
+  ],
+  "summary_1l": "Glucose is the primary source of energy for the budding yeast Saccharomyces cerevisiae.",
+  "query_hits": [],
+  "embed_text": "13613916 Glucose repression in Saccharomyces cerevisiae science scifact Glucose is the primary source of energy for the budding yeast Saccharomyces cerevisiae. Although yeast cells can utilize a wide range of carbon sources, presence of glucose suppresses molecular activities involved in the use of alternate… 13613916 glucose-repression-in-saccharomyces-cerevisiae glucose repression saccharomyces cerevisiae primary source energy budding Glucose is the primary source of energy for the budding yeast Saccharomyces cerevisiae. Glucose repression in Saccharomyces cerevisiae Glucose is the primary source of energy for the budding yeast Saccharomyces cerevisiae. Although yeast cells can utilize a wide range of carbon sources, presence of glucose suppresses molecular activities involved in the use of alternate carbon sources as well as it represses respiration and gluconeogenesis. This dominant effect of glucose on yeast carbon metabolism is coordinated by several signaling and metabolic interactions that mainly regulate transcriptional activity but are also effective at post-transcriptional and post-translational levels. This review describes effects of glucose repression on yeast carbon metabolism with a focus on roles of the Snf3/Rgt2 glucose-sensing pathway and Snf1 signal transduction in establishment and relie",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:10.616840+00:00"
+}

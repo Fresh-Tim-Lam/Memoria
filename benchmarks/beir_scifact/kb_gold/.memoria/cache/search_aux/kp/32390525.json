@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "32390525",
+  "source_fingerprint": "75e58e64825425577ba9a3b4983c3d12",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "32390525",
+    "prevention-of-malaria-in-long-term-travelers."
+  ],
+  "key_phrases": [
+    "prevention",
+    "malaria",
+    "long",
+    "term",
+    "travelers",
+    "context",
+    "defined",
+    "here"
+  ],
+  "summary_1l": "Prevention of malaria in long-term travelers.",
+  "query_hits": [],
+  "embed_text": "32390525 Prevention of malaria in long-term travelers. science scifact CONTEXT Long-term travelers, defined here as those traveling for periods of 6 months or longer, face particular challenges regarding malaria prevention. Current guidelines for malaria prevention primarily address prevention of Plasmodium… 32390525 prevention-of-malaria-in-long-term-travelers. prevention malaria long term travelers context defined here Prevention of malaria in long-term travelers. Prevention of malaria in long-term travelers. CONTEXT Long-term travelers, defined here as those traveling for periods of 6 months or longer, face particular challenges regarding malaria prevention. Current guidelines for malaria prevention primarily address prevention of Plasmodium falciparum infections in short-term travelers. OBJECTIVES To examine the risk of malaria in long-term travelers, recent developments in personal protective measures, and the safety and tolerability of malaria chemoprophylaxis during long-term use and to consider prevention strategies including continuous chemoprophylaxis, stand-by emergency self-treatment, seasonal prophylaxis, and strategies to prevent primary infection and relapses from P vivax malaria. EVIDENCE ACQUISITION Comprehensive search of scientific",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.497757+00:00"
+}

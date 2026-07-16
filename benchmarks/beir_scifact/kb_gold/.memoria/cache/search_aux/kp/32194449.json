@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "32194449",
+  "source_fingerprint": "abdb3e745f011773477b393a204c8d60",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "32194449",
+    "adhesion-disengagement-uncouples-intrinsic-and-extrinsic-forces-to-drive-cytokinesis-in-epithelial-tissues."
+  ],
+  "key_phrases": [
+    "adhesion",
+    "disengagement",
+    "uncouples",
+    "intrinsic",
+    "extrinsic",
+    "forces",
+    "drive",
+    "cytokinesis"
+  ],
+  "summary_1l": "Adhesion disengagement uncouples intrinsic and extrinsic forces to drive cytokinesis in epithelial tissues.",
+  "query_hits": [],
+  "embed_text": "32194449 Adhesion disengagement uncouples intrinsic and extrinsic forces to drive cytokinesis in epithelial tissues. science scifact Cytokinesis entails cell invagination by a contractile actomyosin ring. In epithelia, E-cadherin-mediated adhesion connects the cortices of contacting cells; thus, it is unclear how invagination occurs, how the new junction forms, and how… 32194449 adhesion-disengagement-uncouples-intrinsic-and-extrinsic-forces-to-drive-cytokinesis-in-epithelial-tissues. adhesion disengagement uncouples intrinsic extrinsic forces drive cytokinesis Adhesion disengagement uncouples intrinsic and extrinsic forces to drive cytokinesis in epithelial tissues. Adhesion disengagement uncouples intrinsic and extrinsic forces to drive cytokinesis in epithelial tissues. Cytokinesis entails cell invagination by a contractile actomyosin ring. In epithelia, E-cadherin-mediated adhesion connects the cortices of contacting cells; thus, it is unclear how invagination occurs, how the new junction forms, and how tissue integrity is preserved. Investigations in Drosophila embryos first show that apicobasal cleavage is polarized: invagination is faster from the basal than from the apical side. Ring contraction but not its polarized constriction is controlled by septin filaments and Anillin. Polarized cleavage is due instead to mechanical anchorage of the ring to E-cadherin complexes. Formation of the new junction requires local adhesion disengagement in the c",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.289721+00:00"
+}

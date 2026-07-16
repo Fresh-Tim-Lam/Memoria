@@ -27,6 +27,12 @@
     alphaTarget: 0.12,
     dragReheat: 0.28,
     dragReleaseReheat: 0.2,
+    zoomMin2d: 0.05,
+    zoomMax2d: 8,
+    zoomSensitivity2d: 1.0,
+    zoomMinDistance3d: 5,
+    zoomMaxDistance3d: 3000,
+    zoomSensitivity3d: 1.0,
   };
 
   const SPLIT_DEFAULTS = {
@@ -253,6 +259,12 @@
       alphaTarget: s.alphaTarget,
       dragReheat: s.dragReheat,
       dragReleaseReheat: s.dragReleaseReheat,
+      zoomMin2d: s.zoomMin2d,
+      zoomMax2d: s.zoomMax2d,
+      zoomSensitivity2d: s.zoomSensitivity2d,
+      zoomMinDistance3d: s.zoomMinDistance3d,
+      zoomMaxDistance3d: s.zoomMaxDistance3d,
+      zoomSensitivity3d: s.zoomSensitivity3d,
     };
   }
 
@@ -285,7 +297,9 @@
 
   function teardownPreview() {
     stopPreview();
-    if (previewView) previewView.destroy();
+    if (previewView) {
+      previewView.destroy();
+    }
     previewEngine = null;
     previewLayout = null;
     previewView = null;
@@ -491,6 +505,15 @@
     const arrow = includeArrow
       ? rangeField("arrowSize", "箭头大小", 4, 12, 1, s.arrowSize)
       : "";
+    const zoomFields = includeArrow
+      ? `<p class="m0-muted m0-settings-note">缩放：滚轮灵敏度与范围。</p>
+         ${rangeField("zoomSensitivity2d", "缩放灵敏度", 0.3, 2.5, 0.1, s.zoomSensitivity2d, true)}
+         ${rangeField("zoomMin2d", "最小缩放", 0.02, 0.5, 0.01, s.zoomMin2d, true)}
+         ${rangeField("zoomMax2d", "最大缩放", 2, 16, 0.5, s.zoomMax2d)}`
+      : `<p class="m0-muted m0-settings-note">缩放：相机距离范围与灵敏度。</p>
+         ${rangeField("zoomSensitivity3d", "缩放灵敏度", 0.3, 2.5, 0.1, s.zoomSensitivity3d, true)}
+         ${rangeField("zoomMinDistance3d", "最近距离", 2, 50, 1, s.zoomMinDistance3d)}
+         ${rangeField("zoomMaxDistance3d", "最远距离", 500, 8000, 100, s.zoomMaxDistance3d)}`;
     return `<section class="m0-settings-section">
             <h3 class="m0-settings-heading">${title}</h3>
             <p class="m0-muted m0-settings-note">力导向参数；2D/3D 各自独立布局，参数名共用。</p>
@@ -507,6 +530,7 @@
             ${rangeField("alphaTarget", "初始余温", 0.05, 0.5, 0.01, s.alphaTarget, true)}
             ${rangeField("dragReheat", "拖拽加热", 0.1, 0.6, 0.02, s.dragReheat, true)}
             ${rangeField("dragReleaseReheat", "松手加热", 0.05, 0.5, 0.02, s.dragReleaseReheat, true)}
+            ${zoomFields}
           </section>`;
   }
 
@@ -639,7 +663,9 @@
       return;
     }
     const root = document.getElementById("graph-settings-preview");
-    if (!root) return;
+    if (!root) {
+      return;
+    }
     if (!previewEngine) {
       previewEngine = new MemoriaGraphEngine();
       previewEngine.loadPayload(SAMPLE_GRAPH);
@@ -668,7 +694,9 @@
       return;
     }
     const root = document.getElementById("graph-settings-preview");
-    if (!root) return;
+    if (!root) {
+      return;
+    }
     if (!previewEngine) {
       previewEngine = new MemoriaGraphEngine();
       previewEngine.loadPayload(SAMPLE_GRAPH);

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21551568",
+  "source_fingerprint": "622c70b6416fd75e8cbb5fecc6d045f3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21551568",
+    "genetic-alterations-and-their-relationship-in-the-phosphatidylinositol-3-kinase/akt-pathway-in-thyroid-cancer."
+  ],
+  "key_phrases": [
+    "genetic",
+    "alterations",
+    "their",
+    "relationship",
+    "phosphatidylinositol",
+    "kinase",
+    "akt",
+    "pathway"
+  ],
+  "summary_1l": "Genetic alterations and their relationship in the phosphatidylinositol 3-kinase/Akt pathway in thyroid cancer.",
+  "query_hits": [],
+  "embed_text": "21551568 Genetic alterations and their relationship in the phosphatidylinositol 3-kinase/Akt pathway in thyroid cancer. science scifact PURPOSE To investigate the overall occurrence and relationship of genetic alterations in the phosphatidylinositol 3-kinase (PI3K)/Akt pathway in thyroid tumors and explore the scope of this pathway as a therapeutic target for thyroid… 21551568 genetic-alterations-and-their-relationship-in-the-phosphatidylinositol-3-kinase/akt-pathway-in-thyroid-cancer. genetic alterations their relationship phosphatidylinositol kinase akt pathway Genetic alterations and their relationship in the phosphatidylinositol 3-kinase/Akt pathway in thyroid cancer. Genetic alterations and their relationship in the phosphatidylinositol 3-kinase/Akt pathway in thyroid cancer. PURPOSE To investigate the overall occurrence and relationship of genetic alterations in the phosphatidylinositol 3-kinase (PI3K)/Akt pathway in thyroid tumors and explore the scope of this pathway as a therapeutic target for thyroid cancer. EXPERIMENTAL DESIGN We examined collectively the major genetic alterations and their relationship in this pathway, including PIK3CA copy number gain and mutation, Ras mutation, and PTEN mutation, in a large series of primary thyroid tumors. RESULTS Occurrence of any of these genetic alterations was found in 25 of 81 (31%) benign thyroid adenoma (BTA), 47 of 86 (55%) follicular thyroid cancer (FTC), 21 of 86 (24%) papillary thyroid cancer (PTC)",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.336075+00:00"
+}

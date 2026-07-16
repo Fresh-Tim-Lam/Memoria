@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11674288",
+  "source_fingerprint": "e7d2af3f4960c503008125051b52e08e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11674288",
+    "cell-type-of-origin-influences-the-molecular-and-functional-properties-of-mouse-induced-pluripotent-stem-cells"
+  ],
+  "key_phrases": [
+    "cell",
+    "type",
+    "origin",
+    "influences",
+    "molecular",
+    "functional",
+    "properties",
+    "mouse"
+  ],
+  "summary_1l": "Induced pluripotent stem cells (iPSCs) have been derived from various somatic cell popula",
+  "query_hits": [],
+  "embed_text": "11674288 Cell type of origin influences the molecular and functional properties of mouse induced pluripotent stem cells science scifact Induced pluripotent stem cells (iPSCs) have been derived from various somatic cell populations through ectopic expression of defined factors. It remains unclear whether iPSCs generated from different cell types are molecularly and… 11674288 cell-type-of-origin-influences-the-molecular-and-functional-properties-of-mouse-induced-pluripotent-stem-cells cell type origin influences molecular functional properties mouse Induced pluripotent stem cells (iPSCs) have been derived from various somatic cell popula Cell type of origin influences the molecular and functional properties of mouse induced pluripotent stem cells Induced pluripotent stem cells (iPSCs) have been derived from various somatic cell populations through ectopic expression of defined factors. It remains unclear whether iPSCs generated from different cell types are molecularly and functionally similar. Here we show that iPSCs obtained from mouse fibroblasts, hematopoietic and myogenic cells exhibit distinct transcriptional and epigenetic patterns. Moreover, we demonstrate that cellular origin influences the in vitro differentiation potentials of iPSCs into embryoid bodies and different hematopoietic cell types. Notably, continuous passaging of iPSCs largely attenuates these differences. Our results suggest that early-passage iPSCs",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:06.920378+00:00"
+}

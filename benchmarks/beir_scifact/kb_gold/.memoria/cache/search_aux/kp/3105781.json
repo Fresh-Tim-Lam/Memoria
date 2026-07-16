@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3105781",
+  "source_fingerprint": "daf7a8d36e2efaac11d9020e5de5be3e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3105781",
+    "mobilization-of-intracellular-copper-stores-by-the-ctr2-vacuolar-copper-transporter."
+  ],
+  "key_phrases": [
+    "mobilization",
+    "intracellular",
+    "copper",
+    "stores",
+    "by",
+    "ctr2",
+    "vacuolar",
+    "transporter"
+  ],
+  "summary_1l": "Mobilization of intracellular copper stores by the ctr2 vacuolar copper transporter.",
+  "query_hits": [],
+  "embed_text": "3105781 Mobilization of intracellular copper stores by the ctr2 vacuolar copper transporter. science scifact Copper plays an essential role in processes including signaling to the transcription and protein trafficking machinery, oxidative phosphorylation, iron mobilization, neuropeptide maturation, and normal development. Whereas much is known… 3105781 mobilization-of-intracellular-copper-stores-by-the-ctr2-vacuolar-copper-transporter. mobilization intracellular copper stores by ctr2 vacuolar transporter Mobilization of intracellular copper stores by the ctr2 vacuolar copper transporter. Mobilization of intracellular copper stores by the ctr2 vacuolar copper transporter. Copper plays an essential role in processes including signaling to the transcription and protein trafficking machinery, oxidative phosphorylation, iron mobilization, neuropeptide maturation, and normal development. Whereas much is known about intracellular mobilization of ions such as calcium, little information is available on how eukaryotic cells mobilize intracellular copper stores. We describe a mechanism by which the Saccharomyces cerevisiae Ctr2 protein provides bioavailable copper via mobilization of intracellular copper stores. Whereas Ctr2 exhibits structural similarity to the Ctr1 plasma membrane copper importer, microscopic and biochemical fractionation studies localize Ctr2 to the vacuole membr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.267136+00:00"
+}

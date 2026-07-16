@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "380526",
+  "source_fingerprint": "8f44a3a327d6380f0f589bb2d05a06ab",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "380526",
+    "common-variants-in-dgkk-are-strongly-associated-with-risk-of-hypospadias"
+  ],
+  "key_phrases": [
+    "common",
+    "variants",
+    "dgkk",
+    "strongly",
+    "associated",
+    "with",
+    "risk",
+    "hypospadias"
+  ],
+  "summary_1l": "Hypospadias is a common congenital malformation of the male external genitalia.",
+  "query_hits": [],
+  "embed_text": "380526 Common variants in DGKK are strongly associated with risk of hypospadias science scifact Hypospadias is a common congenital malformation of the male external genitalia. We performed a genome-wide association study using pooled DNA from 436 individuals with hypospadias (cases) and 494 controls of European descent and selected… 380526 common-variants-in-dgkk-are-strongly-associated-with-risk-of-hypospadias common variants dgkk strongly associated with risk hypospadias Hypospadias is a common congenital malformation of the male external genitalia. Common variants in DGKK are strongly associated with risk of hypospadias Hypospadias is a common congenital malformation of the male external genitalia. We performed a genome-wide association study using pooled DNA from 436 individuals with hypospadias (cases) and 494 controls of European descent and selected the highest ranked SNPs for individual genotyping in the discovery sample, an additional Dutch sample of 133 cases and their parents, and a Swedish series of 266 cases and 402 controls. Individual genotyping of two SNPs (rs1934179 and rs7063116) in DGKK, encoding diacylglycerol kinase κ, produced compelling evidence for association with hypospadias in the discovery sample (allele-specific odds ratio (OR) = 2.5, P = 2.5 × 10−11 and OR = 2.3, P = 2.9 × 10−9, respectively) and in the Dut",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.168294+00:00"
+}

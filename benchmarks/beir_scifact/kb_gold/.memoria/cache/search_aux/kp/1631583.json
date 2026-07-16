@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1631583",
+  "source_fingerprint": "58b04a542cad912d418612ffb085ad61",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1631583",
+    "getting-started-with-yeast."
+  ],
+  "key_phrases": [
+    "getting",
+    "started",
+    "with",
+    "yeast",
+    "publisher",
+    "summary",
+    "saccharomyces",
+    "cerevisiae"
+  ],
+  "summary_1l": "Getting started with yeast.",
+  "query_hits": [],
+  "embed_text": "1631583 Getting started with yeast. science scifact Publisher Summary The yeast Saccharomyces cerevisiae is now recognized as a model system representing a simple eukaryote whose genome can be easily manipulated. Yeast has only a slightly greater genetic complexity than bacteria and shares… 1631583 getting-started-with-yeast. getting started with yeast publisher summary saccharomyces cerevisiae Getting started with yeast. Getting started with yeast. Publisher Summary The yeast Saccharomyces cerevisiae is now recognized as a model system representing a simple eukaryote whose genome can be easily manipulated. Yeast has only a slightly greater genetic complexity than bacteria and shares many of the technical advantages that permitted rapid progress in the molecular genetics of prokaryotes and their viruses. Some of the properties that make yeast particularly suitable for biological studies include rapid growth, dispersed cells, the ease of replica plating and mutant isolation, a well-defined genetic system, and most important, a highly versatile DNA transformation system. Being nonpathogenic, yeast can be handled with little precautions. Large quantities of normal baker's yeast are commercially available and c",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.100693+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36216395",
+  "source_fingerprint": "f3786c976cd1301355465bd959927aaa",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36216395",
+    "amelioration-of-colitis-by-genetically-engineered-murine-regulatory-t-cells-redirected-by-antigen-specific-chimeric-receptor."
+  ],
+  "key_phrases": [
+    "amelioration",
+    "colitis",
+    "by",
+    "genetically",
+    "engineered",
+    "murine",
+    "regulatory",
+    "cells"
+  ],
+  "summary_1l": "Amelioration of colitis by genetically engineered murine regulatory T cells redirected by antigen-specific chimeric receptor.",
+  "query_hits": [],
+  "embed_text": "36216395 Amelioration of colitis by genetically engineered murine regulatory T cells redirected by antigen-specific chimeric receptor. science scifact BACKGROUND & AIMS The therapeutic application of regulatory T cells (Tregs) for the treatment of inflammatory diseases is limited by the scarcity of antigen-specific Tregs. A preferred approach to endow effector T cells (Teff) with a… 36216395 amelioration-of-colitis-by-genetically-engineered-murine-regulatory-t-cells-redirected-by-antigen-specific-chimeric-receptor. amelioration colitis by genetically engineered murine regulatory cells Amelioration of colitis by genetically engineered murine regulatory T cells redirected by antigen-specific chimeric receptor. Amelioration of colitis by genetically engineered murine regulatory T cells redirected by antigen-specific chimeric receptor. BACKGROUND & AIMS The therapeutic application of regulatory T cells (Tregs) for the treatment of inflammatory diseases is limited by the scarcity of antigen-specific Tregs. A preferred approach to endow effector T cells (Teff) with a desired specificity uses chimeric immune receptors with antibody-type specificity. Accordingly, employing such chimeric immune receptors to redirect Tregs to sites of inflammation may be a useful therapeutic approach to alleviate a broad scope of diseases in which an uncontrolled inflammatory response plays a major role. METHODS To enable application of the approach in clinical setting, which requires the genetic modification of the pat",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:43.046008+00:00"
+}

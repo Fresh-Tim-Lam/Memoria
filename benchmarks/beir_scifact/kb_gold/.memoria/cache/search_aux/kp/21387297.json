@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21387297",
+  "source_fingerprint": "40c08255e0cb324a99e57c8536ccafc1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21387297",
+    "production-of-de-novo-cardiomyocytes:-human-pluripotent-stem-cell-differentiation-and-direct-reprogramming."
+  ],
+  "key_phrases": [
+    "production",
+    "de",
+    "novo",
+    "cardiomyocytes",
+    "human",
+    "pluripotent",
+    "stem",
+    "cell"
+  ],
+  "summary_1l": "Production of de novo cardiomyocytes: human pluripotent stem cell differentiation and direct reprogramming.",
+  "query_hits": [],
+  "embed_text": "21387297 Production of de novo cardiomyocytes: human pluripotent stem cell differentiation and direct reprogramming. science scifact Cardiovascular disease is a leading cause of death worldwide. The limited capability of heart tissue to regenerate has prompted methodological developments for creating de novo cardiomyocytes, both in vitro and in vivo. Beyond uses in cell… 21387297 production-of-de-novo-cardiomyocytes:-human-pluripotent-stem-cell-differentiation-and-direct-reprogramming. production de novo cardiomyocytes human pluripotent stem cell Production of de novo cardiomyocytes: human pluripotent stem cell differentiation and direct reprogramming. Production of de novo cardiomyocytes: human pluripotent stem cell differentiation and direct reprogramming. Cardiovascular disease is a leading cause of death worldwide. The limited capability of heart tissue to regenerate has prompted methodological developments for creating de novo cardiomyocytes, both in vitro and in vivo. Beyond uses in cell replacement therapy, patient-specific cardiomyocytes may find applications in drug testing, drug discovery, and disease modeling. Recently, approaches for generating cardiomyocytes have expanded to encompass three major sources of starting cells: human pluripotent stem cells (hPSCs), adult heart-derived cardiac progenitor cells (CPCs), and reprogrammed fibroblasts. We discuss state-of-the-art methods for generating de novo cardiomyocytes from hPSCs",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.988146+00:00"
+}

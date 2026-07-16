@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "37686718",
+  "source_fingerprint": "90a9e893f1a08e4b10720c852051c6c5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "37686718",
+    "experimental-approaches-for-the-treatment-of-malignant-gliomas."
+  ],
+  "key_phrases": [
+    "experimental",
+    "approaches",
+    "treatment",
+    "malignant",
+    "gliomas",
+    "which",
+    "include",
+    "glioblastomas"
+  ],
+  "summary_1l": "Experimental approaches for the treatment of malignant gliomas.",
+  "query_hits": [],
+  "embed_text": "37686718 Experimental approaches for the treatment of malignant gliomas. science scifact Malignant gliomas, which include glioblastomas and anaplastic astrocytomas, are the most common primary tumors of the brain. Over the past 30 years, the standard treatment for these tumors has evolved to include maximal safe surgical… 37686718 experimental-approaches-for-the-treatment-of-malignant-gliomas. experimental approaches treatment malignant gliomas which include glioblastomas Experimental approaches for the treatment of malignant gliomas. Experimental approaches for the treatment of malignant gliomas. Malignant gliomas, which include glioblastomas and anaplastic astrocytomas, are the most common primary tumors of the brain. Over the past 30 years, the standard treatment for these tumors has evolved to include maximal safe surgical resection, radiation therapy and temozolomide chemotherapy. While the median survival of patients with glioblastomas has improved from 6 months to 14.6 months, these tumors continue to be lethal for the vast majority of patients. There has, however, been recent substantial progress in our mechanistic understanding of tumor development and growth. The translation of these genetic, epigenetic and biochemical findings into therapies that have been tested in clinical trials is the subject of this revi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.781427+00:00"
+}

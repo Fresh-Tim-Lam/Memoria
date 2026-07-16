@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24554740",
+  "source_fingerprint": "2af7391b198916e1f7760a1e42125a98",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24554740",
+    "integrins-and-cell-proliferation:-regulation-of-cyclin-dependent-kinases-via-cytoplasmic-signaling-pathways."
+  ],
+  "key_phrases": [
+    "integrins",
+    "cell",
+    "proliferation",
+    "regulation",
+    "cyclin",
+    "dependent",
+    "kinases",
+    "via"
+  ],
+  "summary_1l": "Integrins and cell proliferation: regulation of cyclin-dependent kinases via cytoplasmic signaling pathways.",
+  "query_hits": [],
+  "embed_text": "24554740 Integrins and cell proliferation: regulation of cyclin-dependent kinases via cytoplasmic signaling pathways. science scifact Cell cycle progression in mammalian cells is strictly regulated by both integrin-mediated adhesion to the extracellular matrix and by binding of growth factors to their receptors. This regulation is mediated by G1 phase cyclin-dependent… 24554740 integrins-and-cell-proliferation:-regulation-of-cyclin-dependent-kinases-via-cytoplasmic-signaling-pathways. integrins cell proliferation regulation cyclin dependent kinases via Integrins and cell proliferation: regulation of cyclin-dependent kinases via cytoplasmic signaling pathways. Integrins and cell proliferation: regulation of cyclin-dependent kinases via cytoplasmic signaling pathways. Cell cycle progression in mammalian cells is strictly regulated by both integrin-mediated adhesion to the extracellular matrix and by binding of growth factors to their receptors. This regulation is mediated by G1 phase cyclin-dependent kinases (CDKs), which are downstream of signaling pathways under the integrated control of both integrins and growth factor receptors. Recent advances demonstrate a surprisingly diverse array of integrin-dependent signals that are channeled into the regulation of the G1 phase CDKs. Regulation of cyclin D1 by the ERK pathway may provide a paradigm for understanding how cell adhesion can determine cell cycle progression.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.720281+00:00"
+}

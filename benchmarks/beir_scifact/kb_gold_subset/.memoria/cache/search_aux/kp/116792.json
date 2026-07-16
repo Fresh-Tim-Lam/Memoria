@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "116792",
+  "source_fingerprint": "f2814ea9aa53ed8994931115eca88f18",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "116792",
+    "the-mammalian-target-of-rapamycin-signaling-pathway-mediates-epileptogenesis-in-a-model-of-temporal-lobe-epilepsy."
+  ],
+  "key_phrases": [
+    "mammalian",
+    "target",
+    "rapamycin",
+    "signaling",
+    "pathway",
+    "mediates",
+    "epileptogenesis",
+    "model"
+  ],
+  "summary_1l": "The mammalian target of rapamycin signaling pathway mediates epileptogenesis in a model of temporal lobe epilepsy.",
+  "query_hits": [],
+  "embed_text": "116792 The mammalian target of rapamycin signaling pathway mediates epileptogenesis in a model of temporal lobe epilepsy. science scifact Understanding molecular mechanisms mediating epileptogenesis is critical for developing more effective therapies for epilepsy. We recently found that the mammalian target of rapamycin (mTOR) signaling pathway is involved in… 116792 the-mammalian-target-of-rapamycin-signaling-pathway-mediates-epileptogenesis-in-a-model-of-temporal-lobe-epilepsy. mammalian target rapamycin signaling pathway mediates epileptogenesis model The mammalian target of rapamycin signaling pathway mediates epileptogenesis in a model of temporal lobe epilepsy. The mammalian target of rapamycin signaling pathway mediates epileptogenesis in a model of temporal lobe epilepsy. Understanding molecular mechanisms mediating epileptogenesis is critical for developing more effective therapies for epilepsy. We recently found that the mammalian target of rapamycin (mTOR) signaling pathway is involved in epileptogenesis, and mTOR inhibitors prevent epilepsy in a mouse model of tuberous sclerosis complex. Here, we investigated the potential role of mTOR in a rat model of temporal lobe epilepsy initiated by status epilepticus. Acute kainate-induced seizures resulted in biphasic activation of the mTOR pathway, as evident by an increase in phospho-S6 (P-S6) expression. An initial rise in P-S6 expression started approximately 1 h after seizure onset, peaked at 3",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:07.357364+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15521377",
+  "source_fingerprint": "bad3810b6073a1e99c14814bc2cc2e27",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15521377",
+    "keeping-your-senescent-cells-under-control"
+  ],
+  "key_phrases": [
+    "keeping",
+    "your",
+    "senescent",
+    "cells",
+    "under",
+    "control",
+    "cellular",
+    "senescence"
+  ],
+  "summary_1l": "Cellular senescence is a stable form of cell-cycle arrest which is thought to limit the proliferative potential of premalignant cells [1].",
+  "query_hits": [],
+  "embed_text": "15521377 Keeping your senescent cells under control science scifact Cellular senescence is a stable form of cell-cycle arrest which is thought to limit the proliferative potential of premalignant cells [1]. The senescence phenotype was initially described by Hayflick and Moorhead in 1961 on human… 15521377 keeping-your-senescent-cells-under-control keeping your senescent cells under control cellular senescence Cellular senescence is a stable form of cell-cycle arrest which is thought to limit the proliferative potential of premalignant cells [1]. Keeping your senescent cells under control Cellular senescence is a stable form of cell-cycle arrest which is thought to limit the proliferative potential of premalignant cells [1]. The senescence phenotype was initially described by Hayflick and Moorhead in 1961 on human fibroblasts undergoing replicative exhaustion in culture [2]. It has been shown that senescence can be triggered in different cell types in response to diverse forms of cellular damage or stress (for review see [1]). Importantly, while senescence was denounced as a tissue culture phenomenon for many years, recent in vivo studies demonstrated that cellular senescence represents a potent failsafe mechanism against tumorigenesis and contributes to the cytotoxicity of certain anticancer agents (see for example [3-7]). Interes",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.776270+00:00"
+}

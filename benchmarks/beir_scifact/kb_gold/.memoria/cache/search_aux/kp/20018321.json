@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20018321",
+  "source_fingerprint": "9c73217d9cc2d0c4c2b35dc56d167d53",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20018321",
+    "mitochondrial-rna-granules-are-centers-for-posttranscriptional-rna-processing-and-ribosome-biogenesis."
+  ],
+  "key_phrases": [
+    "mitochondrial",
+    "rna",
+    "granules",
+    "centers",
+    "posttranscriptional",
+    "processing",
+    "ribosome",
+    "biogenesis"
+  ],
+  "summary_1l": "Mitochondrial RNA Granules Are Centers for Posttranscriptional RNA Processing and Ribosome Biogenesis.",
+  "query_hits": [],
+  "embed_text": "20018321 Mitochondrial RNA Granules Are Centers for Posttranscriptional RNA Processing and Ribosome Biogenesis. science scifact Cytoplasmic RNA granules play a central role in mRNA metabolism, but the importance of mitochondrial RNA granules remains relatively unexplored. We characterized their proteome and found that they contain a large toolbox of proteins… 20018321 mitochondrial-rna-granules-are-centers-for-posttranscriptional-rna-processing-and-ribosome-biogenesis. mitochondrial rna granules centers posttranscriptional processing ribosome biogenesis Mitochondrial RNA Granules Are Centers for Posttranscriptional RNA Processing and Ribosome Biogenesis. Mitochondrial RNA Granules Are Centers for Posttranscriptional RNA Processing and Ribosome Biogenesis. Cytoplasmic RNA granules play a central role in mRNA metabolism, but the importance of mitochondrial RNA granules remains relatively unexplored. We characterized their proteome and found that they contain a large toolbox of proteins dedicated to RNA metabolism. Investigation of four uncharacterized putative RNA-binding proteins-two RNA helicases, DHX30 and DDX28, and two proteins of the Fas-activated serine-threonine kinase (FASTKD) family, FASTKD2 and FASTKD5-demonstrated that both helicases and FASTKD2 are required for mitochondrial ribosome biogenesis. RNA-sequencing (RNA-seq) analysis showed that DDX28 and FASTKD2 bound the 16S rRNA. FASTKD5 is required for maturing precursor mRNAs th",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.537753+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26668245",
+  "source_fingerprint": "9375563bc601276ebd3212f56ff246d5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26668245",
+    "fear-of-falling-and-visual-field-loss-from-glaucoma."
+  ],
+  "key_phrases": [
+    "fear",
+    "falling",
+    "visual",
+    "field",
+    "loss",
+    "from",
+    "glaucoma",
+    "objective"
+  ],
+  "summary_1l": "Fear of falling and visual field loss from glaucoma.",
+  "query_hits": [],
+  "embed_text": "26668245 Fear of falling and visual field loss from glaucoma. science scifact OBJECTIVE To determine if visual field (VF) loss resulting from glaucoma is associated with greater fear of falling. DESIGN Prospective, observational study. PARTICIPANTS Fear of falling was compared between 83 glaucoma subjects with… 26668245 fear-of-falling-and-visual-field-loss-from-glaucoma. fear falling visual field loss from glaucoma objective Fear of falling and visual field loss from glaucoma. Fear of falling and visual field loss from glaucoma. OBJECTIVE To determine if visual field (VF) loss resulting from glaucoma is associated with greater fear of falling. DESIGN Prospective, observational study. PARTICIPANTS Fear of falling was compared between 83 glaucoma subjects with bilateral VF loss and 60 control subjects with good visual acuity and without significant VF loss recruited from patients followed up for suspicion of glaucoma. METHODS Participants completed the University of Illinois at Chicago Fear of Falling Questionnaire. The extent of fear of falling was assessed using Rasch analysis. MAIN OUTCOME MEASURES Subject ability to perform tasks without fear of falling was expressed in logits, with lower scores implying less ability and greater fear of falling. RESULTS Glauco",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.017465+00:00"
+}

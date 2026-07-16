@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9967265",
+  "source_fingerprint": "8b0e8038f937b1f8387b4cc623255ac6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9967265",
+    "surgical-versus-medical-treatment-with-cyclooxygenase-inhibitors-for-symptomatic-patent-ductus-arteriosus-in-preterm-infants."
+  ],
+  "key_phrases": [
+    "surgical",
+    "versus",
+    "medical",
+    "treatment",
+    "with",
+    "cyclooxygenase",
+    "inhibitors",
+    "symptomatic"
+  ],
+  "summary_1l": "Surgical versus medical treatment with cyclooxygenase inhibitors for symptomatic patent ductus arteriosus in preterm infants.",
+  "query_hits": [],
+  "embed_text": "9967265 Surgical versus medical treatment with cyclooxygenase inhibitors for symptomatic patent ductus arteriosus in preterm infants. science scifact BACKGROUND Patent ductus arteriosus (PDA) with significant left to right shunt in preterm infants increases morbidity and mortality. Early closure of the ductus arteriosus may be achieved pharmacologically using cyclooxygenase inhibitors… 9967265 surgical-versus-medical-treatment-with-cyclooxygenase-inhibitors-for-symptomatic-patent-ductus-arteriosus-in-preterm-infants. surgical versus medical treatment with cyclooxygenase inhibitors symptomatic Surgical versus medical treatment with cyclooxygenase inhibitors for symptomatic patent ductus arteriosus in preterm infants. Surgical versus medical treatment with cyclooxygenase inhibitors for symptomatic patent ductus arteriosus in preterm infants. BACKGROUND Patent ductus arteriosus (PDA) with significant left to right shunt in preterm infants increases morbidity and mortality. Early closure of the ductus arteriosus may be achieved pharmacologically using cyclooxygenase inhibitors or by surgery. The efficacy of both treatment modalities is well established. However, the preferred initial treatment of a symptomatic PDA in a preterm infant, surgical ligation or treatment with indomethacin, has not been well established. OBJECTIVES To compare the effect of surgical ligation of PDA vs. medical treatment with cyclooxygenase inhibitors (using indomethacin, ibuprofen, or mefenamic acid), each used as the initial tre",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:06.176299+00:00"
+}

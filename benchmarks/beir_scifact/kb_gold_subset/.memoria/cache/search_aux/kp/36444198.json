@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "36444198",
+  "source_fingerprint": "849b566db0f5d54c4ea94bf9979a28b5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "36444198",
+    "subpopulations-of-mouse-blood-monocytes-differ-in-maturation-stage-and-inflammatory-response."
+  ],
+  "key_phrases": [
+    "subpopulations",
+    "mouse",
+    "blood",
+    "monocytes",
+    "differ",
+    "maturation",
+    "stage",
+    "inflammatory"
+  ],
+  "summary_1l": "Subpopulations of mouse blood monocytes differ in maturation stage and inflammatory response.",
+  "query_hits": [],
+  "embed_text": "36444198 Subpopulations of mouse blood monocytes differ in maturation stage and inflammatory response. science scifact Blood monocytes are well-characterized precursors for macrophages and dendritic cells. Subsets of human monocytes with differential representation in various disease states are well known. In contrast, mouse monocyte subsets have been… 36444198 subpopulations-of-mouse-blood-monocytes-differ-in-maturation-stage-and-inflammatory-response. subpopulations mouse blood monocytes differ maturation stage inflammatory Subpopulations of mouse blood monocytes differ in maturation stage and inflammatory response. Subpopulations of mouse blood monocytes differ in maturation stage and inflammatory response. Blood monocytes are well-characterized precursors for macrophages and dendritic cells. Subsets of human monocytes with differential representation in various disease states are well known. In contrast, mouse monocyte subsets have been characterized minimally. In this study we identify three subpopulations of mouse monocytes that can be distinguished by differential expression of Ly-6C, CD43, CD11c, MBR, and CD62L. The subsets share the characteristics of extensive phagocytosis, similar expression of M-CSF receptor (CD115), and development into macrophages upon M-CSF stimulation. By eliminating blood monocytes with dichloromethylene-bisphosphonate-loaded liposomes and monitoring their repopulation,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:13.108124+00:00"
+}

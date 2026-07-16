@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "253672",
+  "source_fingerprint": "6d99bdf46af4b6f770aff773af0cbbe3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "253672",
+    "probable-person-to-person-transmission-of-novel-avian-influenza-a-(h7n9)-virus-in-eastern-china,-2013:-epidemiological-investigation"
+  ],
+  "key_phrases": [
+    "probable",
+    "person",
+    "transmission",
+    "novel",
+    "avian",
+    "influenza",
+    "h7n9",
+    "virus"
+  ],
+  "summary_1l": "OBJECTIVE To determine whether the novel avian influenza H7N9 virus",
+  "query_hits": [],
+  "embed_text": "253672 Probable person to person transmission of novel avian influenza A (H7N9) virus in Eastern China, 2013: epidemiological investigation science scifact OBJECTIVE To determine whether the novel avian influenza H7N9 virus can transmit from person to person and its efficiency. DESIGN Epidemiological investigations conducted after a family cluster of two patients with avian H7N9 in March… 253672 probable-person-to-person-transmission-of-novel-avian-influenza-a-(h7n9)-virus-in-eastern-china,-2013:-epidemiological-investigation probable person transmission novel avian influenza h7n9 virus OBJECTIVE To determine whether the novel avian influenza H7N9 virus Probable person to person transmission of novel avian influenza A (H7N9) virus in Eastern China, 2013: epidemiological investigation OBJECTIVE To determine whether the novel avian influenza H7N9 virus can transmit from person to person and its efficiency. DESIGN Epidemiological investigations conducted after a family cluster of two patients with avian H7N9 in March 2013. SETTING Wuxi, Eastern China. PARTICIPANTS Two patients, their close contacts, and relevant environments. Samples from the patients and environments were collected and tested by real time reverse transcriptase-polymerase chain reaction (rRT-PCR), viral culture, and haemagglutination inhibition assay. Any contacts who became ill had samples tested for avian H7N9 by rRT-PCR. Paired serum samples were obtained from contacts fo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.484209+00:00"
+}

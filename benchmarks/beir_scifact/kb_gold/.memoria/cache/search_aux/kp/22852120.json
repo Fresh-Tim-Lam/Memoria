@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22852120",
+  "source_fingerprint": "62439f771f4e34b6edd89bdd43587cf0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22852120",
+    "type-2-cytokines:-mechanisms-and-therapeutic-strategies"
+  ],
+  "key_phrases": [
+    "type",
+    "cytokines",
+    "mechanisms",
+    "therapeutic",
+    "strategies",
+    "immune",
+    "responses",
+    "defined"
+  ],
+  "summary_1l": "Type 2 immune responses are defined by the cytokines interleukin-4 (IL-4), IL-5, IL-9 and IL-13, which can either be host protective or have pat",
+  "query_hits": [],
+  "embed_text": "22852120 Type 2 cytokines: mechanisms and therapeutic strategies science scifact Type 2 immune responses are defined by the cytokines interleukin-4 (IL-4), IL-5, IL-9 and IL-13, which can either be host protective or have pathogenic activity. Type 2 immunity promotes antihelminth immunity, suppresses type 1-driven… 22852120 type-2-cytokines:-mechanisms-and-therapeutic-strategies type cytokines mechanisms therapeutic strategies immune responses defined Type 2 immune responses are defined by the cytokines interleukin-4 (IL-4), IL-5, IL-9 and IL-13, which can either be host protective or have pat Type 2 cytokines: mechanisms and therapeutic strategies Type 2 immune responses are defined by the cytokines interleukin-4 (IL-4), IL-5, IL-9 and IL-13, which can either be host protective or have pathogenic activity. Type 2 immunity promotes antihelminth immunity, suppresses type 1-driven autoimmune disease, neutralizes toxins, maintains metabolic homeostasis, and regulates wound repair and tissue regeneration pathways following infection or injury. Nevertheless, when type 2 responses are dysregulated, they can become important drivers of disease. Type 2 immunity induces a complex inflammatory response characterized by eosinophils, mast cells, basophils, type 2 innate lymphoid cells, IL-4-and/or IL-13-conditioned macrophages and T helper 2 (TH2) cells, which are crucial to the pathogenesi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.404489+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17463549",
+  "source_fingerprint": "f826c14cab0d18f180170ee2e08c1bcc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17463549",
+    "two-subsets-of-naive-t-helper-cells-with-distinct-t-cell-receptor-excision-circle-content-in-human-adult-peripheral-blood"
+  ],
+  "key_phrases": [
+    "two",
+    "subsets",
+    "naive",
+    "helper",
+    "cells",
+    "with",
+    "distinct",
+    "cell"
+  ],
+  "summary_1l": "During ageing thymic function declines and is unable to meet the demand for pe",
+  "query_hits": [],
+  "embed_text": "17463549 Two Subsets of Naive T Helper Cells with Distinct T Cell Receptor Excision Circle Content in Human Adult Peripheral Blood science scifact During ageing thymic function declines and is unable to meet the demand for peripheral T helper (Th) cell replenishment. Therefore, population maintenance of naive Th cells must be at least partly peripherally based. Such peripheral… 17463549 two-subsets-of-naive-t-helper-cells-with-distinct-t-cell-receptor-excision-circle-content-in-human-adult-peripheral-blood two subsets naive helper cells with distinct cell During ageing thymic function declines and is unable to meet the demand for pe Two Subsets of Naive T Helper Cells with Distinct T Cell Receptor Excision Circle Content in Human Adult Peripheral Blood During ageing thymic function declines and is unable to meet the demand for peripheral T helper (Th) cell replenishment. Therefore, population maintenance of naive Th cells must be at least partly peripherally based. Such peripheral postthymic expansion of recent thymic emigrants (RTEs) during ageing consequently should lead to loss or dilution of T cell receptor excision circles (TRECs) from a subset of naive T cells. We have identified two subsets of naive Th cells in human adult peripheral blood characterized by a striking unequal content of TRECs, indicating different peripheral proliferative histories. TRECs are highly enriched in peripheral naive CD45RA+ Th cells",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.826870+00:00"
+}

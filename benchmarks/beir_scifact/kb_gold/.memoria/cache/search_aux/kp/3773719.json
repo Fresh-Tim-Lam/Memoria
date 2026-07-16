@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3773719",
+  "source_fingerprint": "d0440805eccb1b4cb503746c6dc124a3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3773719",
+    "the-tumorigenic-potential-of-pluripotent-stem-cells:-what-can-we-do-to-minimize-it?"
+  ],
+  "key_phrases": [
+    "tumorigenic",
+    "potential",
+    "pluripotent",
+    "stem",
+    "cells",
+    "what",
+    "can",
+    "we"
+  ],
+  "summary_1l": "The tumorigenic potential of pluripotent stem cells: What can we do to minimize it?",
+  "query_hits": [],
+  "embed_text": "3773719 The tumorigenic potential of pluripotent stem cells: What can we do to minimize it? science scifact Human pluripotent stem cells (hPSCs) have the potential to fundamentally change the way that we go about treating and understanding human disease. Despite this extraordinary potential, these cells also have an innate capability to form… 3773719 the-tumorigenic-potential-of-pluripotent-stem-cells:-what-can-we-do-to-minimize-it? tumorigenic potential pluripotent stem cells what can we The tumorigenic potential of pluripotent stem cells: What can we do to minimize it? The tumorigenic potential of pluripotent stem cells: What can we do to minimize it? Human pluripotent stem cells (hPSCs) have the potential to fundamentally change the way that we go about treating and understanding human disease. Despite this extraordinary potential, these cells also have an innate capability to form tumors in immunocompromised individuals when they are introduced in their pluripotent state. Although current therapeutic strategies involve transplantation of only differentiated hPSC derivatives, there is still a concern that transplanted cell populations could contain a small percentage of cells that are not fully differentiated. In addition, these cells have been frequently reported to acquire genetic alterations that, in some cases, are associated with certain types of h",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:44.923520+00:00"
+}

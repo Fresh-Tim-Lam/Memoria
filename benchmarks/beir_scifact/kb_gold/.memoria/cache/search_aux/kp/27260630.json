@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27260630",
+  "source_fingerprint": "467b683763128baee54195edbcd6b57d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27260630",
+    "composition-of-gall-bladder-stones-associated-with-octreotide:-response-to-oral-ursodeoxycholic-acid."
+  ],
+  "key_phrases": [
+    "composition",
+    "gall",
+    "bladder",
+    "stones",
+    "associated",
+    "with",
+    "octreotide",
+    "response"
+  ],
+  "summary_1l": "Composition of gall bladder stones associated with octreotide: response to oral ursodeoxycholic acid.",
+  "query_hits": [],
+  "embed_text": "27260630 Composition of gall bladder stones associated with octreotide: response to oral ursodeoxycholic acid. science scifact Octreotide, an effective treatment for acromegaly, induces gall bladder stones in 13-60% of patients. Because knowledge of stone composition is essential for studies of their pathogenesis, treatment, and prevention, this was investigated… 27260630 composition-of-gall-bladder-stones-associated-with-octreotide:-response-to-oral-ursodeoxycholic-acid. composition gall bladder stones associated with octreotide response Composition of gall bladder stones associated with octreotide: response to oral ursodeoxycholic acid. Composition of gall bladder stones associated with octreotide: response to oral ursodeoxycholic acid. Octreotide, an effective treatment for acromegaly, induces gall bladder stones in 13-60% of patients. Because knowledge of stone composition is essential for studies of their pathogenesis, treatment, and prevention, this was investigated by direct and indirect methods in 14 octreotide treated acromegalic patients with gall stones. Chemical analysis of gall stones retrieved at cholecystectomy from two patients, showed that they contained 71% and 87% cholesterol by weight. In the remaining 12 patients, localised computed tomography of the gall bladder showed that eight had stones with maximum attenuation scores of < 100 Hounsfield units (values of < 100 HU predict cholesterol rich, dissolvab",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.709292+00:00"
+}

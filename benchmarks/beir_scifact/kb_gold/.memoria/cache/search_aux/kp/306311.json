@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "306311",
+  "source_fingerprint": "a15298c3cf0249f0125db735b769a45f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "306311",
+    "control-of-glutamate-clearance-and-synaptic-efficacy-by-glial-coverage-of-neurons."
+  ],
+  "key_phrases": [
+    "control",
+    "glutamate",
+    "clearance",
+    "synaptic",
+    "efficacy",
+    "by",
+    "glial",
+    "coverage"
+  ],
+  "summary_1l": "Control of glutamate clearance and synaptic efficacy by glial coverage of neurons.",
+  "query_hits": [],
+  "embed_text": "306311 Control of glutamate clearance and synaptic efficacy by glial coverage of neurons. science scifact Analysis of excitatory synaptic transmission in the rat hypothalamic supraoptic nucleus revealed that glutamate clearance and, as a consequence, glutamate concentration and diffusion in the extracellular space, is associated with the… 306311 control-of-glutamate-clearance-and-synaptic-efficacy-by-glial-coverage-of-neurons. control glutamate clearance synaptic efficacy by glial coverage Control of glutamate clearance and synaptic efficacy by glial coverage of neurons. Control of glutamate clearance and synaptic efficacy by glial coverage of neurons. Analysis of excitatory synaptic transmission in the rat hypothalamic supraoptic nucleus revealed that glutamate clearance and, as a consequence, glutamate concentration and diffusion in the extracellular space, is associated with the degree of astrocytic coverage of its neurons. Reduction in glutamate clearance, whether induced pharmacologically or associated with a relative decrease of glial coverage in the vicinity of synapses, affected transmitter release through modulation of presynaptic metabotropic glutamate receptors. Astrocytic wrapping of neurons, therefore, contributes to the regulation of synaptic efficacy in the central nervous system.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.827883+00:00"
+}

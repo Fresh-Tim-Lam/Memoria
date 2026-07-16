@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "34854444",
+  "source_fingerprint": "71d7d6999df6e2cf7f268738a3e80631",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "34854444",
+    "expression-of-golli-mrna-during-development-in-primary-immune-lymphoid-organs-of-the-rat"
+  ],
+  "key_phrases": [
+    "expression",
+    "golli",
+    "mrna",
+    "during",
+    "development",
+    "primary",
+    "immune",
+    "lymphoid"
+  ],
+  "summary_1l": "The gene-of-the-oligodendrocyte lineage (Golli)-MBP transcription unit contains three Golli-specific exons toge",
+  "query_hits": [],
+  "embed_text": "34854444 Expression of Golli mRNA during development in primary immune lymphoid organs of the rat science scifact The gene-of-the-oligodendrocyte lineage (Golli)-MBP transcription unit contains three Golli-specific exons together with eight exons of the \"classical\" myelin basic protein (MBP) gene, yielding alternatively spliced proteins which share… 34854444 expression-of-golli-mrna-during-development-in-primary-immune-lymphoid-organs-of-the-rat expression golli mrna during development primary immune lymphoid The gene-of-the-oligodendrocyte lineage (Golli)-MBP transcription unit contains three Golli-specific exons toge Expression of Golli mRNA during development in primary immune lymphoid organs of the rat The gene-of-the-oligodendrocyte lineage (Golli)-MBP transcription unit contains three Golli-specific exons together with eight exons of the \"classical\" myelin basic protein (MBP) gene, yielding alternatively spliced proteins which share amino acid sequence with MBP. Unlike MBP, a late antigen expressed only in the nervous system, Golli gene products are expressed pre- and post-natally at many sites. In this study, we determined the sequence of Golli in rat by RT-PCR and 5' RACE and showed that Golli sequences are expressed in primary lymphoid organs as early as e16.5, which could explain the anergic rat T cell response we previously observed in Golli-induced meningitis.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.780926+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2762601",
+  "source_fingerprint": "55c1425783528a130bf8e96739166659",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2762601",
+    "reflecting-on-25-years-with-myc"
+  ],
+  "key_phrases": [
+    "reflecting",
+    "25",
+    "years",
+    "with",
+    "myc",
+    "just",
+    "over",
+    "ago"
+  ],
+  "summary_1l": "Just over 25 years ago, MYC, the human homologue of a retroviral oncogene, was identified.",
+  "query_hits": [],
+  "embed_text": "2762601 Reflecting on 25 years with MYC science scifact Just over 25 years ago, MYC, the human homologue of a retroviral oncogene, was identified. Since that time, MYC research has been intense and the advances impressive. On reflection, it is astonishing how each incremental insight into MYC… 2762601 reflecting-on-25-years-with-myc reflecting 25 years with myc just over ago Just over 25 years ago, MYC, the human homologue of a retroviral oncogene, was identified. Reflecting on 25 years with MYC Just over 25 years ago, MYC, the human homologue of a retroviral oncogene, was identified. Since that time, MYC research has been intense and the advances impressive. On reflection, it is astonishing how each incremental insight into MYC regulation and function has also had an impact on numerous biological disciplines, including our understanding of molecular oncogenesis in general. Here we chronicle the major advances in our understanding of MYC biology, and peer into the future of MYC research.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.157929+00:00"
+}

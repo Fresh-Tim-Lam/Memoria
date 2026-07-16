@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "169264",
+  "source_fingerprint": "28627a5ce46b8346ecdc367abd95086c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "169264",
+    "analysis-of-sio2-nanoparticles-binding-proteins-in-rat-blood-and-brain-homogenate"
+  ],
+  "key_phrases": [
+    "analysis",
+    "sio2",
+    "nanoparticles",
+    "binding",
+    "proteins",
+    "rat",
+    "blood",
+    "brain"
+  ],
+  "summary_1l": "A multitude of nanoparticles, such as titanium oxide (TiO2), zinc oxide, aluminum oxide, gold oxide, silver oxide, iro",
+  "query_hits": [],
+  "embed_text": "169264 Analysis of SiO2 nanoparticles binding proteins in rat blood and brain homogenate science scifact A multitude of nanoparticles, such as titanium oxide (TiO2), zinc oxide, aluminum oxide, gold oxide, silver oxide, iron oxide, and silica oxide, are found in many chemical, cosmetic, pharmaceutical, and electronic products. Recently, SiO2… 169264 analysis-of-sio2-nanoparticles-binding-proteins-in-rat-blood-and-brain-homogenate analysis sio2 nanoparticles binding proteins rat blood brain A multitude of nanoparticles, such as titanium oxide (TiO2), zinc oxide, aluminum oxide, gold oxide, silver oxide, iro Analysis of SiO2 nanoparticles binding proteins in rat blood and brain homogenate A multitude of nanoparticles, such as titanium oxide (TiO2), zinc oxide, aluminum oxide, gold oxide, silver oxide, iron oxide, and silica oxide, are found in many chemical, cosmetic, pharmaceutical, and electronic products. Recently, SiO2 nanoparticles were shown to have an inert toxicity profile and no association with an irreversible toxicological change in animal models. Hence, exposure to SiO2 nanoparticles is on the increase. SiO2 nanoparticles are routinely used in numerous materials, from strengthening filler for concrete and other construction composites, to nontoxic platforms for biomedical application, such as drug delivery and theragnostics. On the other hand, recent in vitro experiments indicated",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.026023+00:00"
+}

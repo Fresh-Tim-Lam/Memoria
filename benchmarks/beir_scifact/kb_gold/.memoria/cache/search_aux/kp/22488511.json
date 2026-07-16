@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "22488511",
+  "source_fingerprint": "6845600255b1a3f4efde04926199603d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22488511"
+  ],
+  "key_phrases": [
+    "targeted",
+    "blockade",
+    "tgf",
+    "il",
+    "jak2",
+    "stat3",
+    "pathways",
+    "inhibits"
+  ],
+  "summary_1l": "To investigate the role of TGF-β and IL-6 in myofibroblasts (MFs) - l",
+  "query_hits": [],
+  "embed_text": "22488511 Targeted blockade of TGF-β and IL-6/JAK2/STAT3 pathways inhibits lung cancer growth promoted by bone marrow-derived myofibroblasts science scifact To investigate the role of TGF-β and IL-6 in myofibroblasts (MFs) - lung cancer cell interactions, lung cancer cells (Lewis and CTM-167 cell lines) were stimulated by IL-6, MF-conditioned medium (MF-CM) or MFs, with or without TGF-β… 22488511 targeted blockade tgf il jak2 stat3 pathways inhibits To investigate the role of TGF-β and IL-6 in myofibroblasts (MFs) - l Targeted blockade of TGF-β and IL-6/JAK2/STAT3 pathways inhibits lung cancer growth promoted by bone marrow-derived myofibroblasts To investigate the role of TGF-β and IL-6 in myofibroblasts (MFs) - lung cancer cell interactions, lung cancer cells (Lewis and CTM-167 cell lines) were stimulated by IL-6, MF-conditioned medium (MF-CM) or MFs, with or without TGF-β signaling inhibitor - SB431542 and/or JAK2/STAT3 inhibitor - JSI-124. MFs were stimulated by TGF-β, cancer cell-CM or cancer cells, with or without SB431542 and JSI-124. Cell proliferation, the levels of cytokines, expression of mRNA and protein were determined. Mice bearing xenograft tumors were intraperitoneally treated with SB431542 or JSI-124 and monitored for up to 45 days. In co-culture systems, MFs secreted high levels of IL-",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.839730+00:00"
+}

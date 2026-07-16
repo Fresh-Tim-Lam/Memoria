@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4350400",
+  "source_fingerprint": "65d72e6e493701980f03508fd67fc1ca",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4350400",
+    "generation-of-cell-polarity-in-plants-links-endocytosis,-auxin-distribution-and-cell-fate-decisions"
+  ],
+  "key_phrases": [
+    "generation",
+    "cell",
+    "polarity",
+    "plants",
+    "links",
+    "endocytosis",
+    "auxin",
+    "distribution"
+  ],
+  "summary_1l": "Dynamically polarized membrane proteins define different cell boundaries and have an important role",
+  "query_hits": [],
+  "embed_text": "4350400 Generation of cell polarity in plants links endocytosis, auxin distribution and cell fate decisions science scifact Dynamically polarized membrane proteins define different cell boundaries and have an important role in intercellular communication—a vital feature of multicellular development. Efflux carriers for the signalling molecule auxin from the PIN… 4350400 generation-of-cell-polarity-in-plants-links-endocytosis,-auxin-distribution-and-cell-fate-decisions generation cell polarity plants links endocytosis auxin distribution Dynamically polarized membrane proteins define different cell boundaries and have an important role Generation of cell polarity in plants links endocytosis, auxin distribution and cell fate decisions Dynamically polarized membrane proteins define different cell boundaries and have an important role in intercellular communication—a vital feature of multicellular development. Efflux carriers for the signalling molecule auxin from the PIN family are landmarks of cell polarity in plants and have a crucial involvement in auxin distribution-dependent development including embryo patterning, organogenesis and tropisms. Polar PIN localization determines the direction of intercellular auxin flow, yet the mechanisms generating PIN polarity remain unclear. Here we identify an endocytosis-dependent mechanism of PIN polarity generation and analyse its developmental implications. Real-time PIN trackin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:13.270446+00:00"
+}

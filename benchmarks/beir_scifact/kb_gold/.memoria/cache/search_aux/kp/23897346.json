@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23897346",
+  "source_fingerprint": "3f2bbfaa74aaa7992a12fbf7c996957c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23897346",
+    "bayesian-models-leveraging-bioactivity-and-cytotoxicity-information-for-drug-discovery."
+  ],
+  "key_phrases": [
+    "bayesian",
+    "models",
+    "leveraging",
+    "bioactivity",
+    "cytotoxicity",
+    "information",
+    "drug",
+    "discovery"
+  ],
+  "summary_1l": "Bayesian models leveraging bioactivity and cytotoxicity information for drug discovery.",
+  "query_hits": [],
+  "embed_text": "23897346 Bayesian models leveraging bioactivity and cytotoxicity information for drug discovery. science scifact Identification of unique leads represents a significant challenge in drug discovery. This hurdle is magnified in neglected diseases such as tuberculosis. We have leveraged public high-throughput screening (HTS) data to experimentally… 23897346 bayesian-models-leveraging-bioactivity-and-cytotoxicity-information-for-drug-discovery. bayesian models leveraging bioactivity cytotoxicity information drug discovery Bayesian models leveraging bioactivity and cytotoxicity information for drug discovery. Bayesian models leveraging bioactivity and cytotoxicity information for drug discovery. Identification of unique leads represents a significant challenge in drug discovery. This hurdle is magnified in neglected diseases such as tuberculosis. We have leveraged public high-throughput screening (HTS) data to experimentally validate a virtual screening approach employing Bayesian models built with bioactivity information (single-event model) as well as bioactivity and cytotoxicity information (dual-event model). We virtually screened a commercial library and experimentally confirmed actives with hit rates exceeding typical HTS results by one to two orders of magnitude. This initial dual-event Bayesian model identified compounds with antitubercular whole-cell activity and low mammalian cell cyt",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.375718+00:00"
+}

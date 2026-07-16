@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "46202852",
+  "source_fingerprint": "c85ead89fbf697b594f4a54083f1c04b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "46202852",
+    "nef-induces-multiple-genes-involved-in-cholesterol-synthesis-and-uptake-in-human-immunodeficiency-virus-type-1-infected-t-cells."
+  ],
+  "key_phrases": [
+    "nef",
+    "induces",
+    "multiple",
+    "genes",
+    "involved",
+    "cholesterol",
+    "synthesis",
+    "uptake"
+  ],
+  "summary_1l": "Nef induces multiple genes involved in cholesterol synthesis and uptake in human immunodeficiency virus type 1-infected T cells.",
+  "query_hits": [],
+  "embed_text": "46202852 Nef induces multiple genes involved in cholesterol synthesis and uptake in human immunodeficiency virus type 1-infected T cells. science scifact Several recent reports indicate that cholesterol might play an important role in human immunodeficiency virus type 1 (HIV-1) replication. We investigated the effects of HIV-1 infection on cholesterol biosynthesis and uptake using… 46202852 nef-induces-multiple-genes-involved-in-cholesterol-synthesis-and-uptake-in-human-immunodeficiency-virus-type-1-infected-t-cells. nef induces multiple genes involved cholesterol synthesis uptake Nef induces multiple genes involved in cholesterol synthesis and uptake in human immunodeficiency virus type 1-infected T cells. Nef induces multiple genes involved in cholesterol synthesis and uptake in human immunodeficiency virus type 1-infected T cells. Several recent reports indicate that cholesterol might play an important role in human immunodeficiency virus type 1 (HIV-1) replication. We investigated the effects of HIV-1 infection on cholesterol biosynthesis and uptake using microarrays. HIV-1 increased gene expression of cholesterol genes in both transformed T-cell lines and primary CD4(+) T cells. Consistent with our microarray data, (14)C-labeled mevalonate and acetate incorporation was increased in HIV-1-infected cells. Our data also demonstrate that changes in cholesterol biosynthesis and uptake are only observed in the presence of functional Nef, suggesting that increased cholesterol synthesis may cont",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.706038+00:00"
+}

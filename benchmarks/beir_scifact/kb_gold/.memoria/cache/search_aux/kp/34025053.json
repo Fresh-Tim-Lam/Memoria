@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "34025053",
+  "source_fingerprint": "95fada4219f3e2a6075cbdce2468250d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "34025053",
+    "antithymocyte-globulin-treatment-for-patients-with-recent-onset-type-1-diabetes:-12-month-results-of-a-randomised,-placebo-controlled,-phase-2-trial."
+  ],
+  "key_phrases": [
+    "antithymocyte",
+    "globulin",
+    "treatment",
+    "patients",
+    "with",
+    "recent",
+    "onset",
+    "type"
+  ],
+  "summary_1l": "Antithymocyte globulin treatment for patients with recent-onset type 1 diabetes: 12-month results of a randomised, placebo-controlled, phase 2 trial.",
+  "query_hits": [],
+  "embed_text": "34025053 Antithymocyte globulin treatment for patients with recent-onset type 1 diabetes: 12-month results of a randomised, placebo-controlled, phase 2 trial. science scifact BACKGROUND Type 1 diabetes results from T-cell-mediated destruction of β cells. Findings from preclinical studies and pilot clinical trials suggest that antithymocyte globulin (ATG) might be effective for reducing this autoimmune response.… 34025053 antithymocyte-globulin-treatment-for-patients-with-recent-onset-type-1-diabetes:-12-month-results-of-a-randomised,-placebo-controlled,-phase-2-trial. antithymocyte globulin treatment patients with recent onset type Antithymocyte globulin treatment for patients with recent-onset type 1 diabetes: 12-month results of a randomised, placebo-controlled, phase 2 trial. Antithymocyte globulin treatment for patients with recent-onset type 1 diabetes: 12-month results of a randomised, placebo-controlled, phase 2 trial. BACKGROUND Type 1 diabetes results from T-cell-mediated destruction of β cells. Findings from preclinical studies and pilot clinical trials suggest that antithymocyte globulin (ATG) might be effective for reducing this autoimmune response. We assessed the safety and efficacy of rabbit ATG in preserving islet function in participants with recent-onset type 1 diabetes, and report here our 12-month results. METHODS For this phase 2, randomised, placebo-controlled, clinical trial, we enrolled patients with recent-onset type 1 diabetes, aged 12-35 years, and with a peak C-peptide of 0.4 nM or greater on mixed meal tolerance test from 11 sites in t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.978943+00:00"
+}

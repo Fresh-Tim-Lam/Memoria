@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1203035",
+  "source_fingerprint": "019b78b7a4013a6f0bde3e26b51ee3d6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1203035",
+    "basal-keratinocyte-tetrasomy-in-low-grade-squamous-intra-epithelial-lesions-of-the-cervix-is-restricted-to-high-and-intermediate-risk-hpv-infection-but-is-not-type-specific"
+  ],
+  "key_phrases": [
+    "basal",
+    "keratinocyte",
+    "tetrasomy",
+    "low",
+    "grade",
+    "squamous",
+    "intra",
+    "epithelial"
+  ],
+  "summary_1l": "Human papillomavirus (HPV)",
+  "query_hits": [],
+  "embed_text": "1203035 Basal keratinocyte tetrasomy in low-grade squamous intra-epithelial lesions of the cervix is restricted to high and intermediate risk HPV infection but is not type-specific science scifact Human papillomavirus (HPV) infection appears to be an early event in cervical carcinogenesis with additional abnormalities being required for biological transformation. We have analysed 179 low-grade cervical squamous intra-epithelial… 1203035 basal-keratinocyte-tetrasomy-in-low-grade-squamous-intra-epithelial-lesions-of-the-cervix-is-restricted-to-high-and-intermediate-risk-hpv-infection-but-is-not-type-specific basal keratinocyte tetrasomy low grade squamous intra epithelial Human papillomavirus (HPV) Basal keratinocyte tetrasomy in low-grade squamous intra-epithelial lesions of the cervix is restricted to high and intermediate risk HPV infection but is not type-specific Human papillomavirus (HPV) infection appears to be an early event in cervical carcinogenesis with additional abnormalities being required for biological transformation. We have analysed 179 low-grade cervical squamous intra-epithelial lesions (SILs) and 15 normal cervices for the presence of HPV using both in situ hybridization and polymerase chain reaction (PCR). PCR was performed with GP5+/GP6+ primers followed by hybridization using probes for low (HPV 6, 11, 40, 42, 43, 44), intermediate (HPV 31, 33, 35, 39, 51, 52, 58, 59, 66 and 68) and high-risk HPVs (HPV 16, 18, 45 and 56). Interphase cytogenetic analysis using",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:08.100468+00:00"
+}

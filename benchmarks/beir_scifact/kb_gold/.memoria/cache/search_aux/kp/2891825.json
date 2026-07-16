@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2891825",
+  "source_fingerprint": "1cee256d26cc547d7f9b6ec3dd93a32c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2891825",
+    "high-prevalence-of-asthma-in-cross-country-skiers."
+  ],
+  "key_phrases": [
+    "high",
+    "prevalence",
+    "asthma",
+    "cross",
+    "country",
+    "skiers",
+    "objectives",
+    "study"
+  ],
+  "summary_1l": "High prevalence of asthma in cross country skiers.",
+  "query_hits": [],
+  "embed_text": "2891825 High prevalence of asthma in cross country skiers. science scifact OBJECTIVES To study the prevalence of asthma (asthma symptoms and bronchial hyperresponsiveness) in Swedish cross country skiers compared with non-skiers and monitor changes in symptoms and bronchial hyperresponsiveness during the year.… 2891825 high-prevalence-of-asthma-in-cross-country-skiers. high prevalence asthma cross country skiers objectives study High prevalence of asthma in cross country skiers. High prevalence of asthma in cross country skiers. OBJECTIVES To study the prevalence of asthma (asthma symptoms and bronchial hyperresponsiveness) in Swedish cross country skiers compared with non-skiers and monitor changes in symptoms and bronchial hyperresponsiveness during the year. DESIGN Cross sectional study during the winter ski season and in the summer. SETTING Six ski clubs for élite skiers (total 47) in two different areas of Sweden. SUBJECTS 42 élite cross country skiers and 29 non-skiing referents. MAIN OUTCOME MEASURES Bronchial responsiveness, asthma symptoms, and lung function. RESULTS Bronchial responsiveness was significantly greater and asthma symptoms more prevalent in the skiers than in the referents. There was no difference in bronchial responsiveness within either gr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.452777+00:00"
+}

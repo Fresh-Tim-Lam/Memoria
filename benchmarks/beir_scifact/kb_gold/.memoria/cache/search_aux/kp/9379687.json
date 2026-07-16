@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "9379687",
+  "source_fingerprint": "e64f4e74c88a1a4a9522d75efdefe3ac",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9379687"
+  ],
+  "key_phrases": [
+    "dna",
+    "polymerase",
+    "activity",
+    "pol",
+    "holoenzyme",
+    "required",
+    "rapid",
+    "efficient"
+  ],
+  "summary_1l": "DNA polymerase ε (Pol ε) is involved in DNA replication, repair,",
+  "query_hits": [],
+  "embed_text": "9379687 The DNA polymerase activity of Pol ε holoenzyme is required for rapid and efficient chromosomal DNA replication in Xenopus egg extracts science scifact DNA polymerase ε (Pol ε) is involved in DNA replication, repair, and cell-cycle checkpoint control in eukaryotic cells. Although the roles of replicative Pol α and Pol δ in chromosomal DNA replication are relatively well understood and… 9379687 dna polymerase activity pol holoenzyme required rapid efficient DNA polymerase ε (Pol ε) is involved in DNA replication, repair, The DNA polymerase activity of Pol ε holoenzyme is required for rapid and efficient chromosomal DNA replication in Xenopus egg extracts DNA polymerase ε (Pol ε) is involved in DNA replication, repair, and cell-cycle checkpoint control in eukaryotic cells. Although the roles of replicative Pol α and Pol δ in chromosomal DNA replication are relatively well understood and well documented, the precise role of Pol ε in chromosomal DNA replication is not well understood. This study uses a Xenopus egg extract DNA replication system to further elucidate the replicative role(s) played by Pol ε. Previous studies show that the initiation timing and elongation of chromosomal DNA replication are markedly impaired in Pol ε-depleted Xenopus egg extracts, with reduced accumulation of replicative intermedi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.814952+00:00"
+}

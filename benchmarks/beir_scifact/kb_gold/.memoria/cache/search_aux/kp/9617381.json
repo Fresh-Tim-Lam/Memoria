@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9617381",
+  "source_fingerprint": "4cc86e63080a214a5c6753c702fff519",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9617381",
+    "serum-plant-and-other-noncholesterol-sterols,-cholesterol-metabolism-and-22-year-mortality-among-middle-aged-men."
+  ],
+  "key_phrases": [
+    "serum",
+    "plant",
+    "other",
+    "noncholesterol",
+    "sterols",
+    "cholesterol",
+    "metabolism",
+    "22"
+  ],
+  "summary_1l": "Serum plant and other noncholesterol sterols, cholesterol metabolism and 22-year mortality among middle-aged men.",
+  "query_hits": [],
+  "embed_text": "9617381 Serum plant and other noncholesterol sterols, cholesterol metabolism and 22-year mortality among middle-aged men. science scifact OBJECTIVE To evaluate long-term prognostic effect of serum noncholesterol sterols, including plant sterols, in middle-aged men with high cardiovascular disease (CVD) risk, without statins at baseline. METHODS This was a prospective study… 9617381 serum-plant-and-other-noncholesterol-sterols,-cholesterol-metabolism-and-22-year-mortality-among-middle-aged-men. serum plant other noncholesterol sterols cholesterol metabolism 22 Serum plant and other noncholesterol sterols, cholesterol metabolism and 22-year mortality among middle-aged men. Serum plant and other noncholesterol sterols, cholesterol metabolism and 22-year mortality among middle-aged men. OBJECTIVE To evaluate long-term prognostic effect of serum noncholesterol sterols, including plant sterols, in middle-aged men with high cardiovascular disease (CVD) risk, without statins at baseline. METHODS This was a prospective study of 232 men (mean age 60 years) at high risk of CVD in 1985-1986. Most were hypercholesterolemic, 29 (12%) had a history of CVD or cancer, 6 (3%) had diabetes, and 46 (20%) had metabolic syndrome (MS). Measured noncholesterol sterols (expressed as absolute concentrations or ratios to serum cholesterol to standardize for cholesterol concentrations) included lathosterol and desmosterol (reflect cholesterol synthesis), and plant sterols (campestero",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.393228+00:00"
+}

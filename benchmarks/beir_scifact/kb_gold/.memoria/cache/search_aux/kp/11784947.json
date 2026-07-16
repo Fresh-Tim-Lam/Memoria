@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11784947",
+  "source_fingerprint": "2160f42bd79472c2dac0878399183733",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11784947",
+    "a-genome-wide-short-hairpin-rna-screening-of-jurkat-t-cells-for-human-proteins-contributing-to-productive-hiv-1-replication."
+  ],
+  "key_phrases": [
+    "genome",
+    "wide",
+    "short",
+    "hairpin",
+    "rna",
+    "screening",
+    "jurkat",
+    "cells"
+  ],
+  "summary_1l": "A genome-wide short hairpin RNA screening of jurkat T-cells for human proteins contributing to productive HIV-1 replication.",
+  "query_hits": [],
+  "embed_text": "11784947 A genome-wide short hairpin RNA screening of jurkat T-cells for human proteins contributing to productive HIV-1 replication. science scifact Short interfering RNAs (siRNAs) have been used to inhibit HIV-1 replication. The durable inhibition of HIV-1 replication by RNA interference has been impeded, however, by a high mutation rate when viral sequences are targeted and by… 11784947 a-genome-wide-short-hairpin-rna-screening-of-jurkat-t-cells-for-human-proteins-contributing-to-productive-hiv-1-replication. genome wide short hairpin rna screening jurkat cells A genome-wide short hairpin RNA screening of jurkat T-cells for human proteins contributing to productive HIV-1 replication. A genome-wide short hairpin RNA screening of jurkat T-cells for human proteins contributing to productive HIV-1 replication. Short interfering RNAs (siRNAs) have been used to inhibit HIV-1 replication. The durable inhibition of HIV-1 replication by RNA interference has been impeded, however, by a high mutation rate when viral sequences are targeted and by cytotoxicity when cellular genes are knocked down. To identify cellular proteins that contribute to HIV-1 replication that can be chronically silenced without significant cytotoxicity, we employed a shRNA library that targets 54,509 human transcripts. We used this library to select a comprehensive population of Jurkat T-cell clones, each expressing a single discrete shRNA. The Jurkat clones were then infected with HIV-1. Clones that survi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:07.119258+00:00"
+}

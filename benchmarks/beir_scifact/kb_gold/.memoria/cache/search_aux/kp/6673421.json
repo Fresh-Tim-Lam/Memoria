@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6673421",
+  "source_fingerprint": "78232483c5fc65c1ce168a464ef9d374",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6673421",
+    "cell-and-molecular-mechanisms-of-insulin-induced-angiogenesis"
+  ],
+  "key_phrases": [
+    "cell",
+    "molecular",
+    "mechanisms",
+    "insulin",
+    "induced",
+    "angiogenesis",
+    "development",
+    "new"
+  ],
+  "summary_1l": "Angiogenesis, the development of new blood vessel from pre-existing vessels, is a key process in the formation of the granulation tissue d",
+  "query_hits": [],
+  "embed_text": "6673421 Cell and molecular mechanisms of insulin-induced angiogenesis science scifact Angiogenesis, the development of new blood vessel from pre-existing vessels, is a key process in the formation of the granulation tissue during wound healing. The appropriate development of new blood vessels, along with their subsequent… 6673421 cell-and-molecular-mechanisms-of-insulin-induced-angiogenesis cell molecular mechanisms insulin induced angiogenesis development new Angiogenesis, the development of new blood vessel from pre-existing vessels, is a key process in the formation of the granulation tissue d Cell and molecular mechanisms of insulin-induced angiogenesis Angiogenesis, the development of new blood vessel from pre-existing vessels, is a key process in the formation of the granulation tissue during wound healing. The appropriate development of new blood vessels, along with their subsequent maturation and differentiation, establishes the foundation for functional wound neovasculature. We performed studies in vivo and used a variety of cellular and molecular approaches in vitro to show that insulin stimulates angiogenesis and to elucidate the signalling mechanisms by which this protein stimulates microvessel development. Mice skin injected with insulin shows longer vessels with more branches, along with increased numbers of associated alpha-smooth muscle actin-expressing cells, sugge",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.418760+00:00"
+}

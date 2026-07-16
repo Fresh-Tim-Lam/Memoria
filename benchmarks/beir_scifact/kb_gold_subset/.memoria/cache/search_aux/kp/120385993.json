@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "120385993",
+  "source_fingerprint": "2b16570821b6bda830c222b16adf3b10",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "120385993",
+    "on-the-theory-and-computation-of-evolutionary-distances"
+  ],
+  "key_phrases": [
+    "theory",
+    "computation",
+    "evolutionary",
+    "distances",
+    "this",
+    "paper",
+    "gives",
+    "formal"
+  ],
+  "summary_1l": "This paper gives a formal definition of the biological concept of evolutionary distance and an algorithm to compute it.",
+  "query_hits": [],
+  "embed_text": "120385993 On the Theory and Computation of Evolutionary Distances science scifact This paper gives a formal definition of the biological concept of evolutionary distance and an algorithm to compute it. For any set S of finite sequences of varying lengths this distance is a real-valued function on $S \\times S$, and it is… 120385993 on-the-theory-and-computation-of-evolutionary-distances theory computation evolutionary distances this paper gives formal This paper gives a formal definition of the biological concept of evolutionary distance and an algorithm to compute it. On the Theory and Computation of Evolutionary Distances This paper gives a formal definition of the biological concept of evolutionary distance and an algorithm to compute it. For any set S of finite sequences of varying lengths this distance is a real-valued function on , and it is shown to be a metric under conditions which are wide enough to include the biological application. The algorithm, introduced here, lends itself to computer programming and provides a method to compute evolutionary distance which is shorter than the other methods currently in use.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:08.134257+00:00"
+}

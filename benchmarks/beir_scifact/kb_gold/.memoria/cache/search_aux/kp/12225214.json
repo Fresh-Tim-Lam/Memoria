@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12225214",
+  "source_fingerprint": "b79d0d86b29ecf416c082c27c2591570",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12225214",
+    "ubiquitination-on-nonlysine-residues-by-a-viral-e3-ubiquitin-ligase."
+  ],
+  "key_phrases": [
+    "ubiquitination",
+    "nonlysine",
+    "residues",
+    "by",
+    "viral",
+    "e3",
+    "ubiquitin",
+    "ligase"
+  ],
+  "summary_1l": "Ubiquitination on nonlysine residues by a viral E3 ubiquitin ligase.",
+  "query_hits": [],
+  "embed_text": "12225214 Ubiquitination on nonlysine residues by a viral E3 ubiquitin ligase. science scifact Ubiquitination controls a broad range of cellular functions. The last step of the ubiquitination pathway is regulated by enzyme type 3 (E3) ubiquitin ligases. E3 enzymes are responsible for substrate specificity and catalyze the formation… 12225214 ubiquitination-on-nonlysine-residues-by-a-viral-e3-ubiquitin-ligase. ubiquitination nonlysine residues by viral e3 ubiquitin ligase Ubiquitination on nonlysine residues by a viral E3 ubiquitin ligase. Ubiquitination on nonlysine residues by a viral E3 ubiquitin ligase. Ubiquitination controls a broad range of cellular functions. The last step of the ubiquitination pathway is regulated by enzyme type 3 (E3) ubiquitin ligases. E3 enzymes are responsible for substrate specificity and catalyze the formation of an isopeptide bond between a lysine residue of the substrate (or the N terminus of the substrate) and ubiquitin. MIR1 and MIR2 are two E3 ubiquitin ligases encoded by Kaposi's sarcoma-associated herpesvirus that mediate the ubiquitination of major histocompatibility complex class I (MHC I) molecules and subsequent internalization. Here, we found that MIR1, but not MIR2, promoted down-regulation of MHC I molecules lacking lysine residues in their intracytoplasmic domain. In the presenc",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:08.011082+00:00"
+}

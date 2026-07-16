@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "kp_id": "多跳链路",
+  "source_fingerprint": "b34abbe13cfc5dc52658d7f95c769d6d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [],
+  "key_phrases": [
+    "同段",
+    "链接",
+    "tongduanduolianjie",
+    "1. 2. 3. 同段多链接"
+  ],
+  "summary_1l": "1.",
+  "query_hits": [],
+  "embed_text": "多跳链路 多跳链路 哈哈哈 同段 链接 tongduanduolianjie 1. 2. 3. 同段多链接 1. 1. 2. 3. 同段多链接",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [
+      "哈哈哈"
+    ],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T03:38:46.653080+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1904291",
+  "source_fingerprint": "ae9ebcf770ab468210d8b344227995db",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1904291",
+    "partitioning-the-symptoms-of-hypoglycaemia-using-multi-sample-confirmatory-factor-analysis"
+  ],
+  "key_phrases": [
+    "partitioning",
+    "symptoms",
+    "hypoglycaemia",
+    "using",
+    "multi",
+    "sample",
+    "confirmatory",
+    "factor"
+  ],
+  "summary_1l": "The allocation of hypoglycaemic symptoms to autonomie or neuroglycopenic groups tends to occur on an a priori",
+  "query_hits": [],
+  "embed_text": "1904291 Partitioning the symptoms of hypoglycaemia using multi-sample confirmatory factor analysis science scifact The allocation of hypoglycaemic symptoms to autonomie or neuroglycopenic groups tends to occur on an a priori basis. In view of the practical need for clear symptom markers of hypoglycaemia more scientific approaches must be pursued.… 1904291 partitioning-the-symptoms-of-hypoglycaemia-using-multi-sample-confirmatory-factor-analysis partitioning symptoms hypoglycaemia using multi sample confirmatory factor The allocation of hypoglycaemic symptoms to autonomie or neuroglycopenic groups tends to occur on an a priori Partitioning the symptoms of hypoglycaemia using multi-sample confirmatory factor analysis The allocation of hypoglycaemic symptoms to autonomie or neuroglycopenic groups tends to occur on an a priori basis. In view of the practical need for clear symptom markers of hypoglycaemia more scientific approaches must be pursued. Substantial evidence is presented from two large scale studies we performed which support a three factor model of hypoglycaemic symptomatology, based on the statistical associations discovered among symptoms reported by diabetic patients. Study 1 involved 295 insulin-treated outpatients and found that 11 key hypoglycaemic symptoms segregated into three clear factors: autonomie (sweating, palpitation, shaking and hunger) neuroglycopenic (confusion, drowsiness, odd behavio",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:20.061987+00:00"
+}

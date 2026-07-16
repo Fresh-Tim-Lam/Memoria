@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26038789",
+  "source_fingerprint": "ac79d3766518406b91f5ffbcde2184d9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26038789",
+    "hiv-1-therapy-with-monoclonal-antibody-3bnc117-elicits-host-immune-responses-against-hiv-1"
+  ],
+  "key_phrases": [
+    "hiv",
+    "therapy",
+    "with",
+    "monoclonal",
+    "antibody",
+    "3bnc117",
+    "elicits",
+    "host"
+  ],
+  "summary_1l": "3BNC117 is a broad and potent neutralizing antibody to HIV-1 that targets the CD4 binding site on the viral e",
+  "query_hits": [],
+  "embed_text": "26038789 HIV-1 therapy with monoclonal antibody 3BNC117 elicits host immune responses against HIV-1 science scifact 3BNC117 is a broad and potent neutralizing antibody to HIV-1 that targets the CD4 binding site on the viral envelope spike. When administered passively, this antibody can prevent infection in animal models and suppress viremia in… 26038789 hiv-1-therapy-with-monoclonal-antibody-3bnc117-elicits-host-immune-responses-against-hiv-1 hiv therapy with monoclonal antibody 3bnc117 elicits host 3BNC117 is a broad and potent neutralizing antibody to HIV-1 that targets the CD4 binding site on the viral e HIV-1 therapy with monoclonal antibody 3BNC117 elicits host immune responses against HIV-1 3BNC117 is a broad and potent neutralizing antibody to HIV-1 that targets the CD4 binding site on the viral envelope spike. When administered passively, this antibody can prevent infection in animal models and suppress viremia in HIV-1–infected individuals. Here we report that HIV-1 immunotherapy with a single injection of 3BNC117 affects host antibody responses in viremic individuals. In comparison to untreated controls that showed little change in their neutralizing activity over a 6-month period, 3BNC117 infusion significantly improved neutralizing responses to heterologous tier 2 viruses in nearly all study participants. We conclude that 3BNC117-mediated immunotherapy enhances host humoral immuni",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.132250+00:00"
+}

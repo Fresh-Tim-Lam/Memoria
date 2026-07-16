@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "778436",
+  "source_fingerprint": "638ed6edbaf07406f2c1c9ad982301d8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "778436",
+    "negative-effect-of-the-transcriptional-activator-gal4"
+  ],
+  "key_phrases": [
+    "negative",
+    "effect",
+    "transcriptional",
+    "activator",
+    "gal4",
+    "yeast",
+    "binds",
+    "specific"
+  ],
+  "summary_1l": "The yeast transcriptional activator GAL4 binds specific sites on DNA to activate transcription of adjacent genes1–5.",
+  "query_hits": [],
+  "embed_text": "778436 Negative effect of the transcriptional activator GAL4 science scifact The yeast transcriptional activator GAL4 binds specific sites on DNA to activate transcription of adjacent genes1–5. The distinct activating regions of GAL4 are rich in acidic residues and it has been suggested that these regions interact… 778436 negative-effect-of-the-transcriptional-activator-gal4 negative effect transcriptional activator gal4 yeast binds specific The yeast transcriptional activator GAL4 binds specific sites on DNA to activate transcription of adjacent genes1–5. Negative effect of the transcriptional activator GAL4 The yeast transcriptional activator GAL4 binds specific sites on DNA to activate transcription of adjacent genes1–5. The distinct activating regions of GAL4 are rich in acidic residues and it has been suggested that these regions interact with another protein component of the transcriptional machinery (such as the TATA-binding protein or RNA polymerase II) while the DNA-binding region serves to position the activating region near the gene6,7,8. Here we show that various GAL4 derivatives, when expressed at high levels in yeast, inhibit transcription of certain genes lacking GAL4 binding sites, that more efficient activators inhibit more strongly and that inhibition does not depend on the DNA-binding domain. We suggest that this inhibitio",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.188127+00:00"
+}

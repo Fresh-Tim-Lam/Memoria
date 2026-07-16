@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13914198",
+  "source_fingerprint": "fb422fca2e6045b6d7eec4cc8a78888e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13914198",
+    "haplotype-estimation-using-sequencing-reads."
+  ],
+  "key_phrases": [
+    "haplotype",
+    "estimation",
+    "using",
+    "sequencing",
+    "reads",
+    "high",
+    "throughput",
+    "technologies"
+  ],
+  "summary_1l": "Haplotype estimation using sequencing reads.",
+  "query_hits": [],
+  "embed_text": "13914198 Haplotype estimation using sequencing reads. science scifact High-throughput sequencing technologies produce short sequence reads that can contain phase information if they span two or more heterozygote genotypes. This information is not routinely used by current methods that infer haplotypes from… 13914198 haplotype-estimation-using-sequencing-reads. haplotype estimation using sequencing reads high throughput technologies Haplotype estimation using sequencing reads. Haplotype estimation using sequencing reads. High-throughput sequencing technologies produce short sequence reads that can contain phase information if they span two or more heterozygote genotypes. This information is not routinely used by current methods that infer haplotypes from genotype data. We have extended the SHAPEIT2 method to use phase-informative sequencing reads to improve phasing accuracy. Our model incorporates the read information in a probabilistic model through base quality scores within each read. The method is primarily designed for high-coverage sequence data or data sets that already have genotypes called. One important application is phasing of single samples sequenced at high coverage for use in medical sequencing and studies of rare diseases. Our method can also use",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.529901+00:00"
+}

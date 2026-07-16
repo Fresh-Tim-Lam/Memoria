@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "kp_id": "tmppp",
+  "source_fingerprint": "e9f51d3edc28d8cb52c42c2fe35f0467",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "nlp"
+  ],
+  "aliases": [
+    "tmppp"
+  ],
+  "key_phrases": [
+    "目标",
+    "链接",
+    "rl",
+    "基础",
+    "三角",
+    "deep",
+    "集群",
+    "nlp"
+  ],
+  "summary_1l": "三目标链接（RL 基础三角） 四目标链接（Deep RL 集群） NLP 三件套 虚链对照 仅有 frontmatter concept、未绑定 KP，应显示为灰色虚链。",
+  "query_hits": [],
+  "embed_text": "tmppp 拖拽右键创建知识点 nlp tmppp 目标 链接 rl 基础 三角 deep 集群 nlp 三目标链接（RL 基础三角） 四目标链接（Deep RL 集群） NLP 三件套 虚链对照 仅有 frontmatter concept、未绑定 KP，应显示为灰色虚链。 三目标链接（RL 基础三角） 四目标链接（Deep RL 集群） NLP 三件套 虚链对照 仅有 frontmatter concept、未绑定 KP，应显示为灰色虚链。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T03:38:47.141207+00:00"
+}

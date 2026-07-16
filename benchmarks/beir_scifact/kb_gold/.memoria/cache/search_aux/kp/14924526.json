@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14924526",
+  "source_fingerprint": "9d6f1008a550226de7b1a14498ea092f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14924526",
+    "febrile-seizures-in-the-developing-brain-result-in-persistent-modification-of-neuronal-excitability-in-limbic-circuits"
+  ],
+  "key_phrases": [
+    "febrile",
+    "seizures",
+    "developing",
+    "brain",
+    "result",
+    "persistent",
+    "modification",
+    "neuronal"
+  ],
+  "summary_1l": "Febrile (fever-induced) seizures affect 3–5% of infants and young children.",
+  "query_hits": [],
+  "embed_text": "14924526 Febrile seizures in the developing brain result in persistent modification of neuronal excitability in limbic circuits science scifact Febrile (fever-induced) seizures affect 3–5% of infants and young children. Despite the high incidence of febrile seizures, their contribution to the development of epilepsy later in life has remained controversial. Combining a new rat… 14924526 febrile-seizures-in-the-developing-brain-result-in-persistent-modification-of-neuronal-excitability-in-limbic-circuits febrile seizures developing brain result persistent modification neuronal Febrile (fever-induced) seizures affect 3–5% of infants and young children. Febrile seizures in the developing brain result in persistent modification of neuronal excitability in limbic circuits Febrile (fever-induced) seizures affect 3–5% of infants and young children. Despite the high incidence of febrile seizures, their contribution to the development of epilepsy later in life has remained controversial. Combining a new rat model of complex febrile seizures and patch clamp techniques, we determined that hyperthermia-induced seizures in the immature rat cause a selective presynaptic increase in inhibitory synaptic transmission in the hippocampus that lasts into adulthood. The long-lasting nature of these potent alterations in synaptic communication after febrile seizures does not support the prevalent view of the 'benign' nature of early-life febrile convulsions",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.892852+00:00"
+}

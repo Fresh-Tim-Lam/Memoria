@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17097974",
+  "source_fingerprint": "5c030fd3e1ecf63f241639c976f8194a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17097974",
+    "exercise-causes-a-tissue-specific-change-of-no-production-in-the-kidney-and-lung."
+  ],
+  "key_phrases": [
+    "exercise",
+    "causes",
+    "tissue",
+    "specific",
+    "change",
+    "no",
+    "production",
+    "kidney"
+  ],
+  "summary_1l": "Exercise causes a tissue-specific change of NO production in the kidney and lung.",
+  "query_hits": [],
+  "embed_text": "17097974 Exercise causes a tissue-specific change of NO production in the kidney and lung. science scifact Nitric oxide (NO) is produced in the vascular endothelium and is a potent vasodilator substance that participates in the regulation of local vascular tone. Exercise causes peculiar changes in systemic and regional blood flow, i.e., an… 17097974 exercise-causes-a-tissue-specific-change-of-no-production-in-the-kidney-and-lung. exercise causes tissue specific change no production kidney Exercise causes a tissue-specific change of NO production in the kidney and lung. Exercise causes a tissue-specific change of NO production in the kidney and lung. Nitric oxide (NO) is produced in the vascular endothelium and is a potent vasodilator substance that participates in the regulation of local vascular tone. Exercise causes peculiar changes in systemic and regional blood flow, i.e., an increase of systemic blood flow and a redistribution of local tissue blood flow, by which the blood flow is greatly increased in the working muscles, whereas it is decreased in some organs such as the kidney and intestine. Thus we hypothesized that exercise causes a tissue-specific change of NO production in some internal organs. We studied whether exercise affects expression of NO synthase (NOS) mRNA and protein, NOS activity, and tissue level of nitrite/nitrate (stable end pro",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.299802+00:00"
+}

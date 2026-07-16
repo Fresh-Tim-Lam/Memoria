@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "42782688",
+  "source_fingerprint": "32815e8f1e4f1269c89afa4ed316c8a6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "42782688",
+    "vsl#3-probiotic-upregulates-intestinal-mucosal-alkaline-sphingomyelinase-and-reduces-inflammation."
+  ],
+  "key_phrases": [
+    "vsl",
+    "probiotic",
+    "upregulates",
+    "intestinal",
+    "mucosal",
+    "alkaline",
+    "sphingomyelinase",
+    "reduces"
+  ],
+  "summary_1l": "VSL#3 probiotic upregulates intestinal mucosal alkaline sphingomyelinase and reduces inflammation.",
+  "query_hits": [],
+  "embed_text": "42782688 VSL#3 probiotic upregulates intestinal mucosal alkaline sphingomyelinase and reduces inflammation. science scifact BACKGROUND Alkaline sphingomyelinase, an enzyme found exclusively in bile and the intestinal brush border, hydrolyzes sphingomyelin into ceramide, sphingosine and sphingosine-1-phosphate, thereby inducing epithelial apoptosis. Reduced… 42782688 vsl#3-probiotic-upregulates-intestinal-mucosal-alkaline-sphingomyelinase-and-reduces-inflammation. vsl probiotic upregulates intestinal mucosal alkaline sphingomyelinase reduces VSL#3 probiotic upregulates intestinal mucosal alkaline sphingomyelinase and reduces inflammation. VSL#3 probiotic upregulates intestinal mucosal alkaline sphingomyelinase and reduces inflammation. BACKGROUND Alkaline sphingomyelinase, an enzyme found exclusively in bile and the intestinal brush border, hydrolyzes sphingomyelin into ceramide, sphingosine and sphingosine-1-phosphate, thereby inducing epithelial apoptosis. Reduced levels of alkaline sphingomyelinase have been found in premalignant and malignant intestinal epithelia and in ulcerative colitis tissue. Probiotic bacteria can be a source of sphingomyelinase. OBJECTIVE To determine the effect of VSL#3 probiotic therapy on mucosal levels of alkaline sphingomyelinase, both in a mouse model of colitis and in patients with ulcerative colitis. METHODS Interleukin-10 gene-deficient (IL10KO) and wild type control mice were treated wit",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:49.225578+00:00"
+}

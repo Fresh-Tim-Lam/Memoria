@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14637235",
+  "source_fingerprint": "2309c50aedf6c10f9bf9a5bc0bb7ad15",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14637235",
+    "histone-levels-are-regulated-by-phosphorylation-and-ubiquitylation-dependent-proteolysis"
+  ],
+  "key_phrases": [
+    "histone",
+    "levels",
+    "regulated",
+    "by",
+    "phosphorylation",
+    "ubiquitylation",
+    "dependent",
+    "proteolysis"
+  ],
+  "summary_1l": "Histone levels are tightly regulated to prevent harmful effects such as genomic instability and hypersensitivit",
+  "query_hits": [],
+  "embed_text": "14637235 Histone levels are regulated by phosphorylation and ubiquitylation dependent proteolysis science scifact Histone levels are tightly regulated to prevent harmful effects such as genomic instability and hypersensitivity to DNA-damaging agents due to the accumulation of these highly basic proteins when DNA replication slows down or stops.… 14637235 histone-levels-are-regulated-by-phosphorylation-and-ubiquitylation-dependent-proteolysis histone levels regulated by phosphorylation ubiquitylation dependent proteolysis Histone levels are tightly regulated to prevent harmful effects such as genomic instability and hypersensitivit Histone levels are regulated by phosphorylation and ubiquitylation dependent proteolysis Histone levels are tightly regulated to prevent harmful effects such as genomic instability and hypersensitivity to DNA-damaging agents due to the accumulation of these highly basic proteins when DNA replication slows down or stops. Although chromosomal histones are stable, excess (non-chromatin bound) histones are rapidly degraded in a Rad53 (radiation sensitive 53) kinase-dependent manner in Saccharomyces cerevisiae. Here we demonstrate that excess histones associate with Rad53 in vivo and seem to undergo modifications such as tyrosine phosphorylation and polyubiquitylation, before their proteolysis by the proteasome. We have identified the Tyr 99 residue of histone H3 as being critical for the effic",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:11.419641+00:00"
+}

@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "kp_id": "2930845#0",
+  "source_fingerprint": "713b5f6080e7760c36471611347b158a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "墨西哥城",
+    "墨西哥墨西哥城聖殿",
+    "首都",
+    "天主教會",
+    "多首都國家"
+  ],
+  "aliases": [
+    "2930845#0"
+  ],
+  "key_phrases": [
+    "天主教",
+    "墨西哥城",
+    "總教區",
+    "是羅馬",
+    "一個",
+    "墨西哥",
+    "首都",
+    "下轄三個"
+  ],
+  "summary_1l": "天主教墨西哥城總教區（；）是羅馬天主教一個總教區，位於墨西哥首都墨西哥城。",
+  "query_hits": [],
+  "embed_text": "2930845#0 天主教墨西哥城總教區 天主教墨西哥城總教區 天主教墨西哥城總教區（；）是羅馬天主教一個總教區，位於墨西哥首都墨西哥城。此總教區下轄三個教區。 墨西哥城 墨西哥墨西哥城聖殿 首都 天主教會 多首都國家 2930845#0 天主教 墨西哥城 總教區 是羅馬 一個 墨西哥 首都 下轄三個 天主教墨西哥城總教區（；）是羅馬天主教一個總教區，位於墨西哥首都墨西哥城。 天主教墨西哥城總教區 天主教墨西哥城總教區（；）是羅馬天主教一個總教區，位於墨西哥首都墨西哥城。此總教區下轄三個教區。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:21:44.902204+00:00"
+}

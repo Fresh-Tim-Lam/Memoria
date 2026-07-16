@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "52868579",
+  "source_fingerprint": "7beb026ea093f02d56adaa2f1f313b50",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "52868579",
+    "chromatin-signatures-of-pluripotent-cell-lines."
+  ],
+  "key_phrases": [
+    "chromatin",
+    "signatures",
+    "pluripotent",
+    "cell",
+    "lines",
+    "epigenetic",
+    "genome",
+    "modifications"
+  ],
+  "summary_1l": "Chromatin signatures of pluripotent cell lines.",
+  "query_hits": [],
+  "embed_text": "52868579 Chromatin signatures of pluripotent cell lines. science scifact Epigenetic genome modifications are thought to be important for specifying the lineage and developmental stage of cells within a multicellular organism. Here, we show that the epigenetic profile of pluripotent embryonic stem cells (ES) is… 52868579 chromatin-signatures-of-pluripotent-cell-lines. chromatin signatures pluripotent cell lines epigenetic genome modifications Chromatin signatures of pluripotent cell lines. Chromatin signatures of pluripotent cell lines. Epigenetic genome modifications are thought to be important for specifying the lineage and developmental stage of cells within a multicellular organism. Here, we show that the epigenetic profile of pluripotent embryonic stem cells (ES) is distinct from that of embryonic carcinoma cells, haematopoietic stem cells (HSC) and their differentiated progeny. Silent, lineage-specific genes replicated earlier in pluripotent cells than in tissue-specific stem cells or differentiated cells and had unexpectedly high levels of acetylated H3K9 and methylated H3K4. Unusually, in ES cells these markers of open chromatin were also combined with H3K27 trimethylation at some non-expressed genes. Thus, pluripotency of ES cells is characterized by a specific epig",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.828487+00:00"
+}

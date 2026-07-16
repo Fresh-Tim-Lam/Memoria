@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5752492",
+  "source_fingerprint": "d3c13940f638cf01e80ae3e404e1eb8d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5752492",
+    "characterization-of-programmed-death-1-homologue-1-(pd-1h)-expression-and-function-in-normal-and-hiv-infected-individuals"
+  ],
+  "key_phrases": [
+    "characterization",
+    "programmed",
+    "death",
+    "homologue",
+    "pd",
+    "1h",
+    "expression",
+    "function"
+  ],
+  "summary_1l": "Chronic immune activation that persists despite anti-retroviral therapy (ART)",
+  "query_hits": [],
+  "embed_text": "5752492 Characterization of Programmed Death-1 Homologue-1 (PD-1H) Expression and Function in Normal and HIV Infected Individuals science scifact Chronic immune activation that persists despite anti-retroviral therapy (ART) is the strongest predictor of disease progression in HIV infection. Monocyte/macrophages in HIV-infected individuals are known to spontaneously secrete… 5752492 characterization-of-programmed-death-1-homologue-1-(pd-1h)-expression-and-function-in-normal-and-hiv-infected-individuals characterization programmed death homologue pd 1h expression function Chronic immune activation that persists despite anti-retroviral therapy (ART) Characterization of Programmed Death-1 Homologue-1 (PD-1H) Expression and Function in Normal and HIV Infected Individuals Chronic immune activation that persists despite anti-retroviral therapy (ART) is the strongest predictor of disease progression in HIV infection. Monocyte/macrophages in HIV-infected individuals are known to spontaneously secrete cytokines, although neither the mechanism nor the molecules involved are known. Here we show that overexpression of the newly described co-stimulatory molecule, PD1 homologue (PD-1H) in human monocyte/macrophages is sufficient to induce spontaneous secretion of multiple cytokines. The process requires signaling via PD-1H as cytokine secretion could be abrogated by deletion of the cytoplasmic domain. Such overexpression of PD-1H, associated with",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.968335+00:00"
+}

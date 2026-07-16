@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12966719",
+  "source_fingerprint": "7d0953c2e0e066a6fdd1d41edb6c529c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12966719",
+    "a-local-macrophage-chemokine-network-sustains-protective-tissue-resident-memory-cd4-t-cells"
+  ],
+  "key_phrases": [
+    "local",
+    "macrophage",
+    "chemokine",
+    "network",
+    "sustains",
+    "protective",
+    "tissue",
+    "resident"
+  ],
+  "summary_1l": "CD8 tissue-resident memory T (TRM) cells provide efficient local control of viral infection, but the role of",
+  "query_hits": [],
+  "embed_text": "12966719 A local macrophage chemokine network sustains protective tissue-resident memory CD4 T cells science scifact CD8 tissue-resident memory T (TRM) cells provide efficient local control of viral infection, but the role of CD4 TRM is less clear. Here, by using parabiotic mice, we show that a preexisting pool of CD4 TRM cells in the genital mucosa was… 12966719 a-local-macrophage-chemokine-network-sustains-protective-tissue-resident-memory-cd4-t-cells local macrophage chemokine network sustains protective tissue resident CD8 tissue-resident memory T (TRM) cells provide efficient local control of viral infection, but the role of A local macrophage chemokine network sustains protective tissue-resident memory CD4 T cells CD8 tissue-resident memory T (TRM) cells provide efficient local control of viral infection, but the role of CD4 TRM is less clear. Here, by using parabiotic mice, we show that a preexisting pool of CD4 TRM cells in the genital mucosa was required for full protection from a lethal herpes simplex virus 2 (HSV-2) infection. Chemokines secreted by a local network of macrophages maintained vaginal CD4 TRM in memory lymphocyte clusters (MLCs), independently of circulating memory T cells. CD4 TRM cells within the MLCs were enriched in clones that expanded in response to HSV-2. Our results highlight the need for vaccine strategies that enable establishment of TRM cells for protection from a sexually transm",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:09.378190+00:00"
+}

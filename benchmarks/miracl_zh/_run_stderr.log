@@ -1,0 +1,130 @@
+Building prefix dict from the default dictionary ...
+Loading model from cache C:\Users\LAMTIM~1\AppData\Local\Temp\jieba.cache
+Loading model cost 0.342 seconds.
+Prefix dict has been built successfully.
+Building prefix dict from the default dictionary ...
+Loading model from cache C:\Users\LAMTIM~1\AppData\Local\Temp\jieba.cache
+Loading model cost 0.564 seconds.
+Prefix dict has been built successfully.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1783740487.914434   23640 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1783740490.220212   23640 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+Building prefix dict from the default dictionary ...
+Loading model from cache C:\Users\LAMTIM~1\AppData\Local\Temp\jieba.cache
+Loading model cost 0.684 seconds.
+Prefix dict has been built successfully.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1783741067.278172   26116 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1783741069.241959   26116 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+Building prefix dict from the default dictionary ...
+Loading model from cache C:\Users\LAMTIM~1\AppData\Local\Temp\jieba.cache
+Loading model cost 0.326 seconds.
+Prefix dict has been built successfully.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1783741116.639980   21684 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1783741118.363803   21684 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+Building prefix dict from the default dictionary ...
+Loading model from cache C:\Users\LAMTIM~1\AppData\Local\Temp\jieba.cache
+Loading model cost 0.594 seconds.
+Prefix dict has been built successfully.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1783741200.545845    7144 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1783741202.823225    7144 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+Process SpawnPoolWorker-6:
+Traceback (most recent call last):
+  File "D:\Python\Lib\multiprocessing\process.py", line 314, in _bootstrap
+    self.run()
+  File "D:\Python\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "D:\Python\Lib\multiprocessing\pool.py", line 109, in worker
+    initializer(*initargs)
+  File "D:\AAA_Jupyter\Memoria\scripts\benchmark\_run_miracl_zh.py", line 80, in init_worker_rerank
+    rebuild_lexical_index(_kb)
+  File "D:\AAA_Jupyter\Memoria\src\memoria\services\lexical_index.py", line 229, in rebuild_lexical_index
+    index = build_lexical_index(kb_path)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\AAA_Jupyter\Memoria\src\memoria\services\lexical_index.py", line 151, in build_lexical_index
+    sidecar = load_sidecar_for_md(full, kb_path) or {}
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\AAA_Jupyter\Memoria\src\memoria\storage\sidecar.py", line 113, in load_sidecar_for_md
+    return load_sidecar(resolve_sidecar_path(md_path, kb_root))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\AAA_Jupyter\Memoria\src\memoria\storage\sidecar.py", line 106, in load_sidecar
+    data = yaml.safe_load(f)
+           ^^^^^^^^^^^^^^^^^
+  File "D:\Python\Lib\site-packages\yaml\__init__.py", line 125, in safe_load
+    return load(stream, SafeLoader)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Python\Lib\site-packages\yaml\__init__.py", line 81, in load
+    return loader.get_single_data()
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Python\Lib\site-packages\yaml\constructor.py", line 49, in get_single_data
+    node = self.get_single_node()
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Python\Lib\site-packages\yaml\composer.py", line 36, in get_single_node
+    document = self.compose_document()
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Python\Lib\site-packages\yaml\composer.py", line 55, in compose_document
+    node = self.compose_node(None, None)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Python\Lib\site-packages\yaml\composer.py", line 84, in compose_node
+    node = self.compose_mapping_node(anchor)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Python\Lib\site-packages\yaml\composer.py", line 133, in compose_mapping_node
+    item_value = self.compose_node(node, item_key)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Python\Lib\site-packages\yaml\composer.py", line 64, in compose_node
+    if self.check_event(AliasEvent):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Python\Lib\site-packages\yaml\parser.py", line 98, in check_event
+    self.current_event = self.state()
+                         ^^^^^^^^^^^^
+  File "D:\Python\Lib\site-packages\yaml\parser.py", line 449, in parse_block_mapping_value
+    if not self.check_token(KeyToken, ValueToken, BlockEndToken):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Python\Lib\site-packages\yaml\scanner.py", line 116, in check_token
+    self.fetch_more_tokens()
+  File "D:\Python\Lib\site-packages\yaml\scanner.py", line 215, in fetch_more_tokens
+    return self.fetch_block_entry()
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Python\Lib\site-packages\yaml\scanner.py", line 496, in fetch_block_entry
+    if self.add_indent(self.column):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Python\Lib\site-packages\yaml\scanner.py", line 349, in add_indent
+    def add_indent(self, column):
+    
+KeyboardInterrupt
+Building prefix dict from the default dictionary ...
+Loading model from cache C:\Users\LAMTIM~1\AppData\Local\Temp\jieba.cache
+Loading model cost 0.573 seconds.
+Prefix dict has been built successfully.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1783741292.715821   23724 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1783741294.785628   23724 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+Traceback (most recent call last):
+  File "D:\AAA_Jupyter\Memoria\scripts\benchmark\_run_miracl_zh.py", line 297, in <module>
+    main()
+  File "D:\AAA_Jupyter\Memoria\scripts\benchmark\_run_miracl_zh.py", line 291, in main
+    run_mode("rerank", "both", init_worker_rerank, use_timeout=True, query_timeout=180)
+  File "D:\AAA_Jupyter\Memoria\scripts\benchmark\_run_miracl_zh.py", line 178, in run_mode
+    rows, timed_out = _run_batch_with_timeout(chunk, init_func, query_timeout)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\AAA_Jupyter\Memoria\scripts\benchmark\_run_miracl_zh.py", line 139, in _run_batch_with_timeout
+    row = async_res.get(timeout=query_timeout)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Python\Lib\multiprocessing\pool.py", line 768, in get
+    self.wait(timeout)
+  File "D:\Python\Lib\multiprocessing\pool.py", line 765, in wait
+    self._event.wait(timeout)
+  File "D:\Python\Lib\threading.py", line 655, in wait
+    signaled = self._cond.wait(timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Python\Lib\threading.py", line 359, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

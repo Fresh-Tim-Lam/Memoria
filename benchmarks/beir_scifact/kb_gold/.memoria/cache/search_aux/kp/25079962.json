@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25079962",
+  "source_fingerprint": "27ac696c4e2d60f143ca25920d2a295c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25079962",
+    "nitrite-infusions-to-prevent-delayed-cerebral-vasospasm-in-a-primate-model-of-subarachnoid-hemorrhage."
+  ],
+  "key_phrases": [
+    "nitrite",
+    "infusions",
+    "prevent",
+    "delayed",
+    "cerebral",
+    "vasospasm",
+    "primate",
+    "model"
+  ],
+  "summary_1l": "Nitrite infusions to prevent delayed cerebral vasospasm in a primate model of subarachnoid hemorrhage.",
+  "query_hits": [],
+  "embed_text": "25079962 Nitrite infusions to prevent delayed cerebral vasospasm in a primate model of subarachnoid hemorrhage. science scifact CONTEXT Delayed cerebral vasospasm causes permanent neurological deficits or death in at least 15% of patients following otherwise successful treatment for ruptured intracranial aneurysm. Decreased bioavailability of nitric oxide has been… 25079962 nitrite-infusions-to-prevent-delayed-cerebral-vasospasm-in-a-primate-model-of-subarachnoid-hemorrhage. nitrite infusions prevent delayed cerebral vasospasm primate model Nitrite infusions to prevent delayed cerebral vasospasm in a primate model of subarachnoid hemorrhage. Nitrite infusions to prevent delayed cerebral vasospasm in a primate model of subarachnoid hemorrhage. CONTEXT Delayed cerebral vasospasm causes permanent neurological deficits or death in at least 15% of patients following otherwise successful treatment for ruptured intracranial aneurysm. Decreased bioavailability of nitric oxide has been associated with the development of cerebral vasospasm. OBJECTIVE To determine whether infusions of nitrite will prevent delayed cerebral vasospasm. DESIGN, SETTING, AND SUBJECTS A total of 14 anesthetized cynomolgus monkeys had an autologous blood clot placed around the right middle cerebral artery. Cerebral arteriography was performed before clot placement and on days 7 and 14 to assess vasospasm. The study was conducted from August 2003 to February 200",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.970715+00:00"
+}

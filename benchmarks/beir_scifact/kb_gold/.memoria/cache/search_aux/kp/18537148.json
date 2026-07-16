@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18537148",
+  "source_fingerprint": "003e15b28bad055d061f3de6d83e6b02",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18537148",
+    "comparison-of-maximal-oxygen-consumption-between-black-and-white-prepubertal-and-pubertal-children"
+  ],
+  "key_phrases": [
+    "comparison",
+    "maximal",
+    "oxygen",
+    "consumption",
+    "between",
+    "black",
+    "white",
+    "prepubertal"
+  ],
+  "summary_1l": "The purpose of this investigation was to determine whether maximal oxygen consumption (VO2max) differ",
+  "query_hits": [],
+  "embed_text": "18537148 Comparison of Maximal Oxygen Consumption Between Black and White Prepubertal and Pubertal Children science scifact The purpose of this investigation was to determine whether maximal oxygen consumption (VO2max) differed between two selected groups of black and white children and whether a difference existed to determine whether it was related to… 18537148 comparison-of-maximal-oxygen-consumption-between-black-and-white-prepubertal-and-pubertal-children comparison maximal oxygen consumption between black white prepubertal The purpose of this investigation was to determine whether maximal oxygen consumption (VO2max) differ Comparison of Maximal Oxygen Consumption Between Black and White Prepubertal and Pubertal Children The purpose of this investigation was to determine whether maximal oxygen consumption (VO2max) differed between two selected groups of black and white children and whether a difference existed to determine whether it was related to hematologic profiles, body composition, and/or physical activity/inactivity level. Forty-five prepubertal and 42 pubertal, clinically normal black and white children participated. Dual-energy x-ray absorptiometry was used to determine body composition. A computed tomography scan of the abdomen was used to determine visceral adipose tissue and s.c. adipose tissue. Daily physical activity/inactivity was assessed by questionnaire. Black prepubertal and pubertal childr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.396286+00:00"
+}

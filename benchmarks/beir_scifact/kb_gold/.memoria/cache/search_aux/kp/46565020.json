@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "46565020",
+  "source_fingerprint": "974be3ebbd1dec67b9f294958dad5160",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "46565020",
+    "clinical-effects-of-abeta-immunization-(an1792)-in-patients-with-ad-in-an-interrupted-trial."
+  ],
+  "key_phrases": [
+    "clinical",
+    "effects",
+    "abeta",
+    "immunization",
+    "an1792",
+    "patients",
+    "with",
+    "ad"
+  ],
+  "summary_1l": "Clinical effects of Abeta immunization (AN1792) in patients with AD in an interrupted trial.",
+  "query_hits": [],
+  "embed_text": "46565020 Clinical effects of Abeta immunization (AN1792) in patients with AD in an interrupted trial. science scifact BACKGROUND AN1792 (beta-amyloid [Abeta]1-42) immunization reduces Abeta plaque burden and preserves cognitive function in APP transgenic mice. The authors report the results of a phase IIa immunotherapy trial of AN1792(QS-21) in patients… 46565020 clinical-effects-of-abeta-immunization-(an1792)-in-patients-with-ad-in-an-interrupted-trial. clinical effects abeta immunization an1792 patients with ad Clinical effects of Abeta immunization (AN1792) in patients with AD in an interrupted trial. Clinical effects of Abeta immunization (AN1792) in patients with AD in an interrupted trial. BACKGROUND AN1792 (beta-amyloid [Abeta]1-42) immunization reduces Abeta plaque burden and preserves cognitive function in APP transgenic mice. The authors report the results of a phase IIa immunotherapy trial of AN1792(QS-21) in patients with mild to moderate Alzheimer disease (AD) that was interrupted because of meningoencephalitis in 6% of immunized patients. METHODS This randomized, multicenter, placebo-controlled, double-blind trial of IM AN1792 225 microg plus the adjuvant QS-21 50 microg (300 patients) and saline (72 patients) included patients aged 50 to 85 years with probable AD, Mini-Mental State Examination (MMSE) 15 to 26. Injections were planned for months 0, 1, 3, 6, 9, and 12. Safety",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.967059+00:00"
+}

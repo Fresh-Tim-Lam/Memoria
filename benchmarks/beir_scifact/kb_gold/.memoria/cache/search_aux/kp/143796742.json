@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "143796742",
+  "source_fingerprint": "dacaa7090ea1ef42153fc09ead488c44",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "143796742",
+    "why-people-feel-crowded:-an-examination-of-objective-and-subjective-crowding"
+  ],
+  "key_phrases": [
+    "why",
+    "people",
+    "feel",
+    "crowded",
+    "examination",
+    "objective",
+    "subjective",
+    "crowding"
+  ],
+  "summary_1l": "Prior studies have found only a modest relationship between objective and subjective crowding, defying logic and commonsens",
+  "query_hits": [],
+  "embed_text": "143796742 Why people feel crowded: An examination of objective and subjective crowding science scifact Prior studies have found only a modest relationship between objective and subjective crowding, defying logic and commonsensical notions of why people feel crowded. Using data from a representative sample of Bangkok, Thailand, where the… 143796742 why-people-feel-crowded:-an-examination-of-objective-and-subjective-crowding why people feel crowded examination objective subjective crowding Prior studies have found only a modest relationship between objective and subjective crowding, defying logic and commonsens Why people feel crowded: An examination of objective and subjective crowding Prior studies have found only a modest relationship between objective and subjective crowding, defying logic and commonsensical notions of why people feel crowded. Using data from a representative sample of Bangkok, Thailand, where the level of household crowding is four times that in western societies, we explore several possibilities of why this is the case. Examining seven different indicators of objective crowding, our analyses suggest that the modest relationship is not an artifact of measurement. Contrary to the assumption of prior investigations, the findings indicate that the objective-subjective crowding relationship is nonlinear and that there is a ceiling effect muting the impact of increased objective",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.734082+00:00"
+}

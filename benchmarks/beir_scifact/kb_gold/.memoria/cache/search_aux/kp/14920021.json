@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14920021",
+  "source_fingerprint": "197ad4dea2e25156219fa30ee91e3850",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14920021",
+    "up-to-date-catalogues-of-yeast-protein-complexes"
+  ],
+  "key_phrases": [
+    "up",
+    "date",
+    "catalogues",
+    "yeast",
+    "protein",
+    "complexes",
+    "gold",
+    "standard"
+  ],
+  "summary_1l": "Gold standard datasets on protein complexes are key to inferring and validating protein-protein interactions.",
+  "query_hits": [],
+  "embed_text": "14920021 Up-to-date catalogues of yeast protein complexes science scifact Gold standard datasets on protein complexes are key to inferring and validating protein-protein interactions. Despite much progress in characterizing protein complexes in the yeast Saccharomyces cerevisiae, numerous researchers still use… 14920021 up-to-date-catalogues-of-yeast-protein-complexes up date catalogues yeast protein complexes gold standard Gold standard datasets on protein complexes are key to inferring and validating protein-protein interactions. Up-to-date catalogues of yeast protein complexes Gold standard datasets on protein complexes are key to inferring and validating protein-protein interactions. Despite much progress in characterizing protein complexes in the yeast Saccharomyces cerevisiae, numerous researchers still use as reference the manually curated complexes catalogued by the Munich Information Center of Protein Sequences database. Although this catalogue has served the community extremely well, it no longer reflects the current state of knowledge. Here, we report two catalogues of yeast protein complexes as results of systematic curation efforts. The first one, denoted as CYC2008, is a comprehensive catalogue of 408 manually curated heteromeric protein complexes reliably backed by small-scale experiments reported in t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.872818+00:00"
+}

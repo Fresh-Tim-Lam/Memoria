@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "3462075",
+  "source_fingerprint": "881a95d3f3ee1b94af047f2d572862db",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3462075"
+  ],
+  "key_phrases": [
+    "long",
+    "term",
+    "follow",
+    "up",
+    "cd19",
+    "car",
+    "therapy",
+    "acute"
+  ],
+  "summary_1l": "Background CD19‐specific chimeric antigen receptor (CAR) T cells induce high rates of initial response among patients with relap",
+  "query_hits": [],
+  "embed_text": "3462075 Long‐Term Follow‐up of CD19 CAR Therapy in Acute Lymphoblastic Leukemia science scifact Background CD19‐specific chimeric antigen receptor (CAR) T cells induce high rates of initial response among patients with relapsed B‐cell acute lymphoblastic leukemia (ALL) and long‐term remissions in a subgroup of patients. Methods We… 3462075 long term follow up cd19 car therapy acute Background CD19‐specific chimeric antigen receptor (CAR) T cells induce high rates of initial response among patients with relap Long‐Term Follow‐up of CD19 CAR Therapy in Acute Lymphoblastic Leukemia Background CD19‐specific chimeric antigen receptor (CAR) T cells induce high rates of initial response among patients with relapsed B‐cell acute lymphoblastic leukemia (ALL) and long‐term remissions in a subgroup of patients. Methods We conducted a phase 1 trial involving adults with relapsed B‐cell ALL who received an infusion of autologous T cells expressing the 19‐28z CAR at the Memorial Sloan Kettering Cancer Center (MSKCC). Safety and long‐term outcomes were assessed, as were their associations with demographic, clinical, and disease characteristics. Results A total of 53 adults received 19‐28z CAR T cells that were manufactured at MSKCC. After infusion, severe cytokine release syndrome occurred in 14 of 53 patien",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.640499+00:00"
+}

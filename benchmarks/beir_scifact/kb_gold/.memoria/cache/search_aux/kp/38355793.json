@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "38355793",
+  "source_fingerprint": "bcf68fd42a5955412fe1c34924e6c790",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "38355793",
+    "a20-is-overexpressed-in-glioma-cells-and-may-serve-as-a-potential-therapeutic-target."
+  ],
+  "key_phrases": [
+    "a20",
+    "overexpressed",
+    "glioma",
+    "cells",
+    "may",
+    "serve",
+    "as",
+    "potential"
+  ],
+  "summary_1l": "A20 is overexpressed in glioma cells and may serve as a potential therapeutic target.",
+  "query_hits": [],
+  "embed_text": "38355793 A20 is overexpressed in glioma cells and may serve as a potential therapeutic target. science scifact OBJECTIVE A20 is a TNF-inducible primary response gene, which has been found to have antiapoptotic function in several cancer cells. This study investigates A20 expression in human glioma tissues and four glioma cell lines, and its effect… 38355793 a20-is-overexpressed-in-glioma-cells-and-may-serve-as-a-potential-therapeutic-target. a20 overexpressed glioma cells may serve as potential A20 is overexpressed in glioma cells and may serve as a potential therapeutic target. A20 is overexpressed in glioma cells and may serve as a potential therapeutic target. OBJECTIVE A20 is a TNF-inducible primary response gene, which has been found to have antiapoptotic function in several cancer cells. This study investigates A20 expression in human glioma tissues and four glioma cell lines, and its effect on tumorigenesis of glioma cells and a mouse tumor model. METHODS Human glioma tissue samples and cells were subject to reverse transcription-PCR (RT-PCR), western blotting and immunohistochemistry. Glioma cells was tested by flow cytometry. A xenograft tumor model in mice was utilized to examine the knock-down effect of specific A20 siRNAs on tumorigenesis. RESULTS A20 was overexpressed in clinical glioma tissue samples (63.9%) and correlated with clinical staging. All",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.413854+00:00"
+}

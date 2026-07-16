@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "38623601",
+  "source_fingerprint": "d4981ccf3a232d698f79c1f4f991c15a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "38623601",
+    "arginine-starvation-impairs-mitochondrial-respiratory-function-in-ass1-deficient-breast-cancer-cells"
+  ],
+  "key_phrases": [
+    "arginine",
+    "starvation",
+    "impairs",
+    "mitochondrial",
+    "respiratory",
+    "function",
+    "ass1",
+    "deficient"
+  ],
+  "summary_1l": "Autophagy is the principal catabolic response to nutrient starvation and is necessary to clear dysf",
+  "query_hits": [],
+  "embed_text": "38623601 Arginine Starvation Impairs Mitochondrial Respiratory Function in ASS1-Deficient Breast Cancer Cells science scifact Autophagy is the principal catabolic response to nutrient starvation and is necessary to clear dysfunctional or damaged organelles, but excessive autophagy can be cytotoxic or cytostatic and contributes to cell death. Depending on the… 38623601 arginine-starvation-impairs-mitochondrial-respiratory-function-in-ass1-deficient-breast-cancer-cells arginine starvation impairs mitochondrial respiratory function ass1 deficient Autophagy is the principal catabolic response to nutrient starvation and is necessary to clear dysf Arginine Starvation Impairs Mitochondrial Respiratory Function in ASS1-Deficient Breast Cancer Cells Autophagy is the principal catabolic response to nutrient starvation and is necessary to clear dysfunctional or damaged organelles, but excessive autophagy can be cytotoxic or cytostatic and contributes to cell death. Depending on the abundance of enzymes involved in molecule biosynthesis, cells can be dependent on uptake of exogenous nutrients to provide these molecules. Argininosuccinate synthetase 1 (ASS1) is a key enzyme in arginine biosynthesis, and its abundance is reduced in many solid tumors, making them sensitive to external arginine depletion. We demonstrated that prolonged arginine starvation by exposure to ADI-PEG20 (pegylated arginine deiminase) induced autophagy-dependent deat",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.665692+00:00"
+}

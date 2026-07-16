@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "16962732",
+  "source_fingerprint": "2551211bd5a1ec52ebb286e92d8a7e23",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16962732"
+  ],
+  "key_phrases": [
+    "multicolor",
+    "diolistic",
+    "labeling",
+    "nervous",
+    "system",
+    "using",
+    "lipophilic",
+    "dye"
+  ],
+  "summary_1l": "We describe a technique for rapid labeling of a large number of cells in the nervous system with many different",
+  "query_hits": [],
+  "embed_text": "16962732 Multicolor “DiOlistic” Labeling of the Nervous System Using Lipophilic Dye Combinations science scifact We describe a technique for rapid labeling of a large number of cells in the nervous system with many different colors. By delivering lipophilic dye-coated particles to neuronal preparations with a \"gene gun,\" individual neurons and glia… 16962732 multicolor diolistic labeling nervous system using lipophilic dye We describe a technique for rapid labeling of a large number of cells in the nervous system with many different Multicolor “DiOlistic” Labeling of the Nervous System Using Lipophilic Dye Combinations We describe a technique for rapid labeling of a large number of cells in the nervous system with many different colors. By delivering lipophilic dye-coated particles to neuronal preparations with a \"gene gun,\" individual neurons and glia whose membranes are contacted by the particles are quickly labeled. Using particles that are each coated with different combinations of various lipophilic dyes, many cells within a complex neuronal network can be simultaneously labeled with a wide variety of colors. This approach is most effective in living material but also labels previously fixed material. In living material, labeled neurons continue to show normal synaptic responses and undergo dendritic remodeling.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.079114+00:00"
+}

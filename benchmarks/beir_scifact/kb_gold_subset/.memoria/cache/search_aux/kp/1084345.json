@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1084345",
+  "source_fingerprint": "1849df1eee23580b881ae561d6cacd4d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1084345",
+    "restoration-of-chaperone-mediated-autophagy-in-aging-liver-improves-cellular-maintenance-and-hepatic-function"
+  ],
+  "key_phrases": [
+    "restoration",
+    "chaperone",
+    "mediated",
+    "autophagy",
+    "aging",
+    "liver",
+    "improves",
+    "cellular"
+  ],
+  "summary_1l": "Chaperone-mediated autophagy (CMA), a selective mechanism for degradation of cytosolic pro",
+  "query_hits": [],
+  "embed_text": "1084345 Restoration of chaperone-mediated autophagy in aging liver improves cellular maintenance and hepatic function science scifact Chaperone-mediated autophagy (CMA), a selective mechanism for degradation of cytosolic proteins in lysosomes, contributes to the removal of altered proteins as part of the cellular quality-control systems. We have previously found that CMA… 1084345 restoration-of-chaperone-mediated-autophagy-in-aging-liver-improves-cellular-maintenance-and-hepatic-function restoration chaperone mediated autophagy aging liver improves cellular Chaperone-mediated autophagy (CMA), a selective mechanism for degradation of cytosolic pro Restoration of chaperone-mediated autophagy in aging liver improves cellular maintenance and hepatic function Chaperone-mediated autophagy (CMA), a selective mechanism for degradation of cytosolic proteins in lysosomes, contributes to the removal of altered proteins as part of the cellular quality-control systems. We have previously found that CMA activity declines in aged organisms and have proposed that this failure in cellular clearance could contribute to the accumulation of altered proteins, the abnormal cellular homeostasis and, eventually, the functional loss characteristic of aged organisms. To determine whether these negative features of aging can be prevented by maintaining efficient autophagic activity until late in life, in this work we have corrected the CMA defect in aged rod",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:06.024495+00:00"
+}

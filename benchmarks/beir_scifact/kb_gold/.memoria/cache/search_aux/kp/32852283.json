@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "32852283",
+  "source_fingerprint": "ae3f2a6bcb488800555a04e6143faa8b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "32852283",
+    "zoledronic-acid-is-unable-to-induce-apoptosis,-but-slows-tumor-growth-and-prolongs-survival-for-non-small-cell-lung-cancers."
+  ],
+  "key_phrases": [
+    "zoledronic",
+    "acid",
+    "unable",
+    "induce",
+    "apoptosis",
+    "but",
+    "slows",
+    "tumor"
+  ],
+  "summary_1l": "Zoledronic acid is unable to induce apoptosis, but slows tumor growth and prolongs survival for non-small-cell lung cancers.",
+  "query_hits": [],
+  "embed_text": "32852283 Zoledronic acid is unable to induce apoptosis, but slows tumor growth and prolongs survival for non-small-cell lung cancers. science scifact BACKGROUND Although zoledronic acid (ZOL), a third-generation nitrogen-containing bisphosphonate, has been identified as an attractive therapeutic agent against breast cancer, prostate cancer, multiple myeloma as well as small-cell lung… 32852283 zoledronic-acid-is-unable-to-induce-apoptosis,-but-slows-tumor-growth-and-prolongs-survival-for-non-small-cell-lung-cancers. zoledronic acid unable induce apoptosis but slows tumor Zoledronic acid is unable to induce apoptosis, but slows tumor growth and prolongs survival for non-small-cell lung cancers. Zoledronic acid is unable to induce apoptosis, but slows tumor growth and prolongs survival for non-small-cell lung cancers. BACKGROUND Although zoledronic acid (ZOL), a third-generation nitrogen-containing bisphosphonate, has been identified as an attractive therapeutic agent against breast cancer, prostate cancer, multiple myeloma as well as small-cell lung cancer (SCLC), as best as we are aware, the anti-tumor effect of ZOL upon non-small-cell lung cancer (NSCLC) remains to be effectively investigated. This study examined the effects of ZOL upon the line-1 tumor cell, using a murine lung adenocarcinoma cell line similar to the behavior of human lung adenocarcinoma. METHODS We investigated the anti-tumor effects of ZOL (3-100 microM) on line-1 tumor cells in vitro, including cellular pro",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.027092+00:00"
+}

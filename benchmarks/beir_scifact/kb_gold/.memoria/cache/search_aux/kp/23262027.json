@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23262027",
+  "source_fingerprint": "07775775d8cddcc4671aac6dd5fdb6e2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23262027",
+    "bacteremia-caused-by-a-strain-of-desulfovibrio-related-to-the-provisionally-named-desulfovibrio-fairfieldensis."
+  ],
+  "key_phrases": [
+    "bacteremia",
+    "caused",
+    "by",
+    "strain",
+    "desulfovibrio",
+    "related",
+    "provisionally",
+    "named"
+  ],
+  "summary_1l": "Bacteremia caused by a strain of Desulfovibrio related to the provisionally named Desulfovibrio fairfieldensis.",
+  "query_hits": [],
+  "embed_text": "23262027 Bacteremia caused by a strain of Desulfovibrio related to the provisionally named Desulfovibrio fairfieldensis. science scifact Eight isolates of Desulfovibrio spp. have been obtained over 5 years from abdominal or brain abscesses or blood. Seven isolates were part of a mixed flora [corrected]. One strain was isolated in pure culture from the blood of a patient… 23262027 bacteremia-caused-by-a-strain-of-desulfovibrio-related-to-the-provisionally-named-desulfovibrio-fairfieldensis. bacteremia caused by strain desulfovibrio related provisionally named Bacteremia caused by a strain of Desulfovibrio related to the provisionally named Desulfovibrio fairfieldensis. Bacteremia caused by a strain of Desulfovibrio related to the provisionally named Desulfovibrio fairfieldensis. Eight isolates of Desulfovibrio spp. have been obtained over 5 years from abdominal or brain abscesses or blood. Seven isolates were part of a mixed flora [corrected]. One strain was isolated in pure culture from the blood of a patient with peritonitis of appendicular origin. According to the 16S rRNA gene sequences, this strain was close to Desulfovibrio fairfieldensis. The present report describes the fourth isolate of this recently described species to be isolated in pure culture or as a predominant part of the flora and to be associated with infectious processes. Thus, D. fairfieldensis may possess a higher pathogenic potential than other Desulfovibrio species.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.127153+00:00"
+}

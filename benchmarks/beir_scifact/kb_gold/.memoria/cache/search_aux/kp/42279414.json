@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "42279414",
+  "source_fingerprint": "974aaed1229f84888c838ce7f588678f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "42279414",
+    "multi-stage-chemical-carcinogenesis-in-mouse-skin:-fundamentals-and-applications"
+  ],
+  "key_phrases": [
+    "multi",
+    "stage",
+    "chemical",
+    "carcinogenesis",
+    "mouse",
+    "skin",
+    "fundamentals",
+    "applications"
+  ],
+  "summary_1l": "For more than 60 years, the chemical induction of tumors in mouse skin has been used to study mechanisms of epithelial",
+  "query_hits": [],
+  "embed_text": "42279414 Multi-stage chemical carcinogenesis in mouse skin: Fundamentals and applications science scifact For more than 60 years, the chemical induction of tumors in mouse skin has been used to study mechanisms of epithelial carcinogenesis and evaluate modifying factors. In the traditional two-stage skin carcinogenesis model, the initiation… 42279414 multi-stage-chemical-carcinogenesis-in-mouse-skin:-fundamentals-and-applications multi stage chemical carcinogenesis mouse skin fundamentals applications For more than 60 years, the chemical induction of tumors in mouse skin has been used to study mechanisms of epithelial Multi-stage chemical carcinogenesis in mouse skin: Fundamentals and applications For more than 60 years, the chemical induction of tumors in mouse skin has been used to study mechanisms of epithelial carcinogenesis and evaluate modifying factors. In the traditional two-stage skin carcinogenesis model, the initiation phase is accomplished by the application of a sub-carcinogenic dose of a carcinogen. Subsequently, tumor development is elicited by repeated treatment with a tumor-promoting agent. The initiation protocol can be completed within 1–3 h depending on the number of mice used; whereas the promotion phase requires twice weekly treatments (1–2 h) and once weekly tumor palpation (1–2 h) for the duration of the study. Using the protocol described here, a highly reproducible papilloma bu",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.880024+00:00"
+}

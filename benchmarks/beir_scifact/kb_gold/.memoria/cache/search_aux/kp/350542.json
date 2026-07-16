@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "350542",
+  "source_fingerprint": "163020b709633019fb35f7bfc066159a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "350542",
+    "antimicrobial-peptide-pleurocidin-synergizes-with-antibiotics-through-hydroxyl-radical-formation-and-membrane-damage,-and-exerts-antibiofilm-activity."
+  ],
+  "key_phrases": [
+    "antimicrobial",
+    "peptide",
+    "pleurocidin",
+    "synergizes",
+    "with",
+    "antibiotics",
+    "through",
+    "hydroxyl"
+  ],
+  "summary_1l": "Antimicrobial peptide pleurocidin synergizes with antibiotics through hydroxyl radical formation and membrane damage, and exerts antibiofilm activity.",
+  "query_hits": [],
+  "embed_text": "350542 Antimicrobial peptide pleurocidin synergizes with antibiotics through hydroxyl radical formation and membrane damage, and exerts antibiofilm activity. science scifact BACKGROUND Pleurocidin, a 25-mer antimicrobial peptide (AMP), is known to exert bactericidal activity. However, the synergistic activity and mechanism(s) of pleurocidin in combination with conventional antibiotics, and the antibiofilm… 350542 antimicrobial-peptide-pleurocidin-synergizes-with-antibiotics-through-hydroxyl-radical-formation-and-membrane-damage,-and-exerts-antibiofilm-activity. antimicrobial peptide pleurocidin synergizes with antibiotics through hydroxyl Antimicrobial peptide pleurocidin synergizes with antibiotics through hydroxyl radical formation and membrane damage, and exerts antibiofilm activity. Antimicrobial peptide pleurocidin synergizes with antibiotics through hydroxyl radical formation and membrane damage, and exerts antibiofilm activity. BACKGROUND Pleurocidin, a 25-mer antimicrobial peptide (AMP), is known to exert bactericidal activity. However, the synergistic activity and mechanism(s) of pleurocidin in combination with conventional antibiotics, and the antibiofilm effect of the peptide are poorly understood. METHODS The interaction between pleurocidin and antibiotics was evaluated using checkerboard assay. To study the mechanism(s) involved in their synergism, we detected hydroxyl radical formation using 3'-(p-hydroxyphenyl) fluorescein, measured the NAD(+)/NADH ratio by NAD(+) cycling assay, observed change in bacterial viability with the hydroxyl radical scavenger thio",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:41.916896+00:00"
+}

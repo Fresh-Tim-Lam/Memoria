@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7581911",
+  "source_fingerprint": "0a3a1b0367289b646ae891db2c2cf350",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7581911",
+    "human-embryonic-stem-cells-with-biological-and-epigenetic-characteristics-similar-to-those-of-mouse-escs."
+  ],
+  "key_phrases": [
+    "human",
+    "embryonic",
+    "stem",
+    "cells",
+    "with",
+    "biological",
+    "epigenetic",
+    "characteristics"
+  ],
+  "summary_1l": "Human embryonic stem cells with biological and epigenetic characteristics similar to those of mouse ESCs.",
+  "query_hits": [],
+  "embed_text": "7581911 Human embryonic stem cells with biological and epigenetic characteristics similar to those of mouse ESCs. science scifact Human and mouse embryonic stem cells (ESCs) are derived from blastocyst-stage embryos but have very different biological properties, and molecular analyses suggest that the pluripotent state of human ESCs isolated so far corresponds to… 7581911 human-embryonic-stem-cells-with-biological-and-epigenetic-characteristics-similar-to-those-of-mouse-escs. human embryonic stem cells with biological epigenetic characteristics Human embryonic stem cells with biological and epigenetic characteristics similar to those of mouse ESCs. Human embryonic stem cells with biological and epigenetic characteristics similar to those of mouse ESCs. Human and mouse embryonic stem cells (ESCs) are derived from blastocyst-stage embryos but have very different biological properties, and molecular analyses suggest that the pluripotent state of human ESCs isolated so far corresponds to that of mouse-derived epiblast stem cells (EpiSCs). Here we rewire the identity of conventional human ESCs into a more immature state that extensively shares defining features with pluripotent mouse ESCs. This was achieved by ectopic induction of Oct4, Klf4, and Klf2 factors combined with LIF and inhibitors of glycogen synthase kinase 3beta (GSK3beta) and mitogen-activated protein kinase (ERK1/2) pathway. Forskolin, a protein kinase A pathway agonist whi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.705524+00:00"
+}

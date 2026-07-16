@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1006165",
+  "source_fingerprint": "e0b7baa63878b204c4e1c225aec27e3b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1006165",
+    "potent-rnai-by-short-rna-triggers."
+  ],
+  "key_phrases": [
+    "potent",
+    "rnai",
+    "by",
+    "short",
+    "rna",
+    "triggers",
+    "interference",
+    "gene"
+  ],
+  "summary_1l": "Potent RNAi by short RNA triggers.",
+  "query_hits": [],
+  "embed_text": "1006165 Potent RNAi by short RNA triggers. science scifact RNA interference (RNAi) is a gene-silencing mechanism by which a ribonucleoprotein complex, the RNA-induced silencing complex (RISC) and a double-stranded (ds) short-interfering RNA (siRNA), targets a complementary mRNA for site-specific… 1006165 potent-rnai-by-short-rna-triggers. potent rnai by short rna triggers interference gene Potent RNAi by short RNA triggers. Potent RNAi by short RNA triggers. RNA interference (RNAi) is a gene-silencing mechanism by which a ribonucleoprotein complex, the RNA-induced silencing complex (RISC) and a double-stranded (ds) short-interfering RNA (siRNA), targets a complementary mRNA for site-specific cleavage and subsequent degradation. While longer dsRNA are endogenously processed into 21- to 24-nucleotide (nt) siRNAs or miRNAs to induce gene silencing, RNAi studies in human cells typically use synthetic 19- to 20-nt siRNA duplexes with 2-nt overhangs at the 3'-end of both strands. Here, we report that systematic synthesis and analysis of siRNAs with deletions at the passenger and/or guide strand revealed a short RNAi trigger, 16-nt siRNA, which induces potent RNAi in human cells. Our results indicate that the minima",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T12:31:45.964406+00:00"
+}

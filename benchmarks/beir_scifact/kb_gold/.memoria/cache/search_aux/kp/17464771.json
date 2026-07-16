@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "17464771",
+  "source_fingerprint": "8acbed73f4968a37da3860ccdbc3d996",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17464771"
+  ],
+  "key_phrases": [
+    "role",
+    "vacuolating",
+    "cytotoxin",
+    "vaca",
+    "colonization",
+    "helicobacter",
+    "pylori",
+    "induced"
+  ],
+  "summary_1l": "Carriage of Helicobacter pylori strains producing more active (s1/i1) forms of Vac",
+  "query_hits": [],
+  "embed_text": "17464771 A Role for the Vacuolating Cytotoxin, VacA, in Colonization and Helicobacter pylori–Induced Metaplasia in the Stomach science scifact Carriage of Helicobacter pylori strains producing more active (s1/i1) forms of VacA is strongly associated with gastric adenocarcinoma. To our knowledge, we are the first to determine effects of different polymorphic forms of VacA on… 17464771 role vacuolating cytotoxin vaca colonization helicobacter pylori induced Carriage of Helicobacter pylori strains producing more active (s1/i1) forms of Vac A Role for the Vacuolating Cytotoxin, VacA, in Colonization and Helicobacter pylori–Induced Metaplasia in the Stomach Carriage of Helicobacter pylori strains producing more active (s1/i1) forms of VacA is strongly associated with gastric adenocarcinoma. To our knowledge, we are the first to determine effects of different polymorphic forms of VacA on inflammation and metaplasia in the mouse stomach. Bacteria producing the less active s2/i2 form of VacA colonized mice more efficiently than mutants null for VacA or producing more active forms of it, providing the first evidence of a positive role for the minimally active s2/i2 toxin. Strains producing more active toxin forms induced more severe and extensive metaplasia and inflammation in the mouse stomach than strains producing weakly active",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.837198+00:00"
+}

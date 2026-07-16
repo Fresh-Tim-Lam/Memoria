@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7560876",
+  "source_fingerprint": "27e92af27550e0e1861b05f64d18331d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7560876",
+    "the-centrosome-cycle:-centriole-biogenesis,-duplication-and-inherent-asymmetries"
+  ],
+  "key_phrases": [
+    "centrosome",
+    "cycle",
+    "centriole",
+    "biogenesis",
+    "duplication",
+    "inherent",
+    "asymmetries",
+    "centrosomes"
+  ],
+  "summary_1l": "Centrosomes are microtubule-organizing centres of animal cells.",
+  "query_hits": [],
+  "embed_text": "7560876 The centrosome cycle: Centriole biogenesis, duplication and inherent asymmetries science scifact Centrosomes are microtubule-organizing centres of animal cells. They influence the morphology of the microtubule cytoskeleton, function as the base for the primary cilium and serve as a nexus for important signalling pathways. At the core… 7560876 the-centrosome-cycle:-centriole-biogenesis,-duplication-and-inherent-asymmetries centrosome cycle centriole biogenesis duplication inherent asymmetries centrosomes Centrosomes are microtubule-organizing centres of animal cells. The centrosome cycle: Centriole biogenesis, duplication and inherent asymmetries Centrosomes are microtubule-organizing centres of animal cells. They influence the morphology of the microtubule cytoskeleton, function as the base for the primary cilium and serve as a nexus for important signalling pathways. At the core of a typical centrosome are two cylindrical microtubule-based structures termed centrioles, which recruit a matrix of associated pericentriolar material. Cells begin the cell cycle with exactly one centrosome, and the duplication of centrioles is constrained such that it occurs only once per cell cycle and at a specific site in the cell. As a result of this duplication mechanism, the two centrioles differ in age and maturity, and thus have different functions; for example, th",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:00.653378+00:00"
+}

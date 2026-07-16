@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9646449",
+  "source_fingerprint": "e9bd58491fc867c125f26132b93c33c3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9646449",
+    "induction-of-ectopic-eyes-by-targeted-expression-of-the-eyeless-gene-in-drosophila."
+  ],
+  "key_phrases": [
+    "induction",
+    "ectopic",
+    "eyes",
+    "by",
+    "targeted",
+    "expression",
+    "eyeless",
+    "gene"
+  ],
+  "summary_1l": "Induction of ectopic eyes by targeted expression of the eyeless gene in Drosophila.",
+  "query_hits": [],
+  "embed_text": "9646449 Induction of ectopic eyes by targeted expression of the eyeless gene in Drosophila. science scifact The Drosophila gene eyeless (ey) encodes a transcription factor with both a paired domain and a homeodomain. It is homologous to the mouse Small eye (Pax-6) gene and to the Aniridia gene in humans. These genes share extensive sequence… 9646449 induction-of-ectopic-eyes-by-targeted-expression-of-the-eyeless-gene-in-drosophila. induction ectopic eyes by targeted expression eyeless gene Induction of ectopic eyes by targeted expression of the eyeless gene in Drosophila. Induction of ectopic eyes by targeted expression of the eyeless gene in Drosophila. The Drosophila gene eyeless (ey) encodes a transcription factor with both a paired domain and a homeodomain. It is homologous to the mouse Small eye (Pax-6) gene and to the Aniridia gene in humans. These genes share extensive sequence identity, the position of three intron splice sites is conserved, and these genes are expressed similarly in the developing nervous system and in the eye during morphogenesis. Loss-of-function mutations in both the insect and in the mammalian genes have been shown to lead to a reduction or absence of eye structures, which suggests that ey functions in eye morphogenesis. By targeted expression of the ey complementary DNA in various imaginal disc primordia of Drosophila, ectopic",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.483956+00:00"
+}

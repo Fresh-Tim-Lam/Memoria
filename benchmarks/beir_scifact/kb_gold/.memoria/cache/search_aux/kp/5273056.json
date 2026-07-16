@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5273056",
+  "source_fingerprint": "cf7ab8c5a04ecf837ee663bafe6b3361",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5273056",
+    "a-vertebrate-gene,-ticrr,-is-an-essential-checkpoint-and-replication-regulator."
+  ],
+  "key_phrases": [
+    "vertebrate",
+    "gene",
+    "ticrr",
+    "essential",
+    "checkpoint",
+    "replication",
+    "regulator",
+    "eukaryotes"
+  ],
+  "summary_1l": "A vertebrate gene, ticrr, is an essential checkpoint and replication regulator.",
+  "query_hits": [],
+  "embed_text": "5273056 A vertebrate gene, ticrr, is an essential checkpoint and replication regulator. science scifact Eukaryotes have numerous checkpoint pathways to protect genome fidelity during normal cell division and in response to DNA damage. Through a screen for G2/M checkpoint regulators in zebrafish, we identified ticrr (for TopBP1-interacting,… 5273056 a-vertebrate-gene,-ticrr,-is-an-essential-checkpoint-and-replication-regulator. vertebrate gene ticrr essential checkpoint replication regulator eukaryotes A vertebrate gene, ticrr, is an essential checkpoint and replication regulator. A vertebrate gene, ticrr, is an essential checkpoint and replication regulator. Eukaryotes have numerous checkpoint pathways to protect genome fidelity during normal cell division and in response to DNA damage. Through a screen for G2/M checkpoint regulators in zebrafish, we identified ticrr (for TopBP1-interacting, checkpoint, and replication regulator), a previously uncharacterized gene that is required to prevent mitotic entry after treatment with ionizing radiation. Ticrr deficiency is embryonic-lethal in the absence of exogenous DNA damage because it is essential for normal cell cycle progression. Specifically, the loss of ticrr impairs DNA replication and disrupts the S/M checkpoint, leading to premature mitotic entry and mitotic catastrophe. We show that the human TICRR ortholog ass",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.723583+00:00"
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "16167746",
+  "source_fingerprint": "3c5675c978833083e86ae3ae64515343",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16167746"
+  ],
+  "key_phrases": [
+    "phylogenetic",
+    "analysis",
+    "mrna",
+    "polyadenylation",
+    "sites",
+    "reveals",
+    "role",
+    "transposable"
+  ],
+  "summary_1l": "mRNA polyadenylation is an essential step for the maturation of almost a",
+  "query_hits": [],
+  "embed_text": "16167746 Phylogenetic analysis of mRNA polyadenylation sites reveals a role of transposable elements in evolution of the 3′-end of genes science scifact mRNA polyadenylation is an essential step for the maturation of almost all eukaryotic mRNAs, and is tightly coupled with termination of transcription in defining the 3'-end of genes. Large numbers of human and mouse genes harbor… 16167746 phylogenetic analysis mrna polyadenylation sites reveals role transposable mRNA polyadenylation is an essential step for the maturation of almost a Phylogenetic analysis of mRNA polyadenylation sites reveals a role of transposable elements in evolution of the 3′-end of genes mRNA polyadenylation is an essential step for the maturation of almost all eukaryotic mRNAs, and is tightly coupled with termination of transcription in defining the 3'-end of genes. Large numbers of human and mouse genes harbor alternative polyadenylation sites [poly(A) sites] that lead to mRNA variants containing different 3'-untranslated regions (UTRs) and/or encoding distinct protein sequences. Here, we examined the conservation and divergence of different types of alternative poly(A) sites across human, mouse, rat and chicken. We found that the 3'-most poly(A) sites tend to be more conserved than upstream ones, whereas poly(A) sites located upstream of the 3'",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.890560+00:00"
+}

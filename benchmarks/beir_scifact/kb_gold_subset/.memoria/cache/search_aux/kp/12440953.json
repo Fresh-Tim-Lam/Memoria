@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12440953",
+  "source_fingerprint": "37c8973d73b244dbea67293c5e3725b3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12440953",
+    "roles-for-micrornas-in-conferring-robustness-to-biological-processes"
+  ],
+  "key_phrases": [
+    "roles",
+    "micrornas",
+    "conferring",
+    "robustness",
+    "biological",
+    "processes",
+    "systems",
+    "use"
+  ],
+  "summary_1l": "Biological systems use a variety of mechanisms to maintain their functions in the face of environmental and genetic perturbations.",
+  "query_hits": [],
+  "embed_text": "12440953 Roles for MicroRNAs in Conferring Robustness to Biological Processes science scifact Biological systems use a variety of mechanisms to maintain their functions in the face of environmental and genetic perturbations. Increasing evidence suggests that, among their roles as posttranscriptional repressors of gene expression,… 12440953 roles-for-micrornas-in-conferring-robustness-to-biological-processes roles micrornas conferring robustness biological processes systems use Biological systems use a variety of mechanisms to maintain their functions in the face of environmental and genetic perturbations. Roles for MicroRNAs in Conferring Robustness to Biological Processes Biological systems use a variety of mechanisms to maintain their functions in the face of environmental and genetic perturbations. Increasing evidence suggests that, among their roles as posttranscriptional repressors of gene expression, microRNAs (miRNAs) help to confer robustness to biological processes by reinforcing transcriptional programs and attenuating aberrant transcripts, and they may in some network contexts help suppress random fluctuations in transcript copy number. These activities have important consequences for normal development and physiology, disease, and evolution. Here, we will discuss examples and principles of miRNAs that contribute to robustness in animal systems.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:08.906002+00:00"
+}

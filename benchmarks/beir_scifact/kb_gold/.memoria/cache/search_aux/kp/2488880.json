@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2488880",
+  "source_fingerprint": "c078f9fc8a223a3a504598c3ee502f04",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2488880",
+    "gender-dependent-differences-in-outcome-after-the-treatment-of-infection-in-hospitalized-patients."
+  ],
+  "key_phrases": [
+    "gender",
+    "dependent",
+    "differences",
+    "outcome",
+    "after",
+    "treatment",
+    "infection",
+    "hospitalized"
+  ],
+  "summary_1l": "Gender-dependent differences in outcome after the treatment of infection in hospitalized patients.",
+  "query_hits": [],
+  "embed_text": "2488880 Gender-dependent differences in outcome after the treatment of infection in hospitalized patients. science scifact CONTEXT While it is established that management strategies and outcomes differ by gender for many diseases, its effect on infection has not been adequately studied. OBJECTIVE To investigate the role of gender among hospitalized patients… 2488880 gender-dependent-differences-in-outcome-after-the-treatment-of-infection-in-hospitalized-patients. gender dependent differences outcome after treatment infection hospitalized Gender-dependent differences in outcome after the treatment of infection in hospitalized patients. Gender-dependent differences in outcome after the treatment of infection in hospitalized patients. CONTEXT While it is established that management strategies and outcomes differ by gender for many diseases, its effect on infection has not been adequately studied. OBJECTIVE To investigate the role of gender among hospitalized patients treated for infection. DESIGN Observational cohort study conducted during a 26-month period from December 1996 through January 1999. SETTING University-affiliated hospital. PARTICIPANTS A total of 892 patients in the surgical units of the hospital with 1470 consecutive infectious episodes (782 in men and 688 in women). MAIN OUTCOME MEASURES Mortality during hospitalization by gender for infection episodes overall and for specific infectious sites, including lu",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.481112+00:00"
+}

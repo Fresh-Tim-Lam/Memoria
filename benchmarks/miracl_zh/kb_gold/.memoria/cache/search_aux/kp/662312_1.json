@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "kp_id": "662312#1",
+  "source_fingerprint": "87a38401d7c63e8f7f9e6693daacad6b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "曼聯足球俱樂部歷史",
+    "2021年新疆棉花争议事件",
+    "山东省足球代表队",
+    "巴塞罗那足球俱乐部",
+    "曼徹斯特聯足球俱樂部",
+    "白俄羅斯地理",
+    "英格兰足球超级联赛",
+    "足球週刊"
+  ],
+  "aliases": [
+    "662312#1"
+  ],
+  "key_phrases": [
+    "白俄",
+    "足球",
+    "超級",
+    "聯賽",
+    "2021",
+    "參賽",
+    "隊伍",
+    "共有"
+  ],
+  "summary_1l": "2021年白俄羅斯足球超級聯賽參賽隊伍共有 16 支。",
+  "query_hits": [],
+  "embed_text": "662312#1 白俄羅斯足球超級聯賽 白俄羅斯足球超級聯賽 2021年白俄羅斯足球超級聯賽參賽隊伍共有 16 支。 曼聯足球俱樂部歷史 2021年新疆棉花争议事件 山东省足球代表队 巴塞罗那足球俱乐部 曼徹斯特聯足球俱樂部 白俄羅斯地理 英格兰足球超级联赛 足球週刊 662312#1 白俄 足球 超級 聯賽 2021 參賽 隊伍 共有 2021年白俄羅斯足球超級聯賽參賽隊伍共有 16 支。 白俄羅斯足球超級聯賽 2021年白俄羅斯足球超級聯賽參賽隊伍共有 16 支。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:20:52.842486+00:00"
+}

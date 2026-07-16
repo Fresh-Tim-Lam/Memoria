@@ -1,0 +1,23 @@
+imports start
+imports done
+enabling embedding in UI settings
+embedding_enabled=True
+embedding_model=sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+KB=D:\AAA_Jupyter\Memoria\benchmarks\beir_scifact\kb_gold_subset
+rebuild_lexical_index start
+rebuild_lexical_index done
+ensure_embedding_index start
+embedding_index done: records=783
+queries=300 qrels=300
+batch range: [0, 5), batch size=5
+  [0] qid=1 searching...
+  [0] qid=1 results=20
+  [1] qid=100 searching...
+  [1] qid=100 results=20
+  [2] qid=1012 searching...
+  [2] qid=1012 results=20
+  [3] qid=1014 searching...
+  [3] qid=1014 results=20
+  [4] qid=1019 searching...
+  [4] qid=1019 results=20
+batch done: evaluated=5, skipped=0, crashed=0

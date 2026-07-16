@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16660256",
+  "source_fingerprint": "7db7a413b3a28aa600e13bd775013f45",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16660256",
+    "sprouty1-regulates-reversible-quiescence-of-a-self-renewing-adult-muscle-stem-cell-pool-during-regeneration"
+  ],
+  "key_phrases": [
+    "sprouty1",
+    "regulates",
+    "reversible",
+    "quiescence",
+    "self",
+    "renewing",
+    "adult",
+    "muscle"
+  ],
+  "summary_1l": "Satellite cells are skeletal muscle stem cells capable of self-renewal and differentiation a",
+  "query_hits": [],
+  "embed_text": "16660256 Sprouty1 Regulates Reversible Quiescence of a Self-Renewing Adult Muscle Stem Cell Pool during Regeneration science scifact Satellite cells are skeletal muscle stem cells capable of self-renewal and differentiation after transplantation, but whether they contribute to endogenous muscle fiber repair has been unclear. The transcription factor Pax7 marks satellite… 16660256 sprouty1-regulates-reversible-quiescence-of-a-self-renewing-adult-muscle-stem-cell-pool-during-regeneration sprouty1 regulates reversible quiescence self renewing adult muscle Satellite cells are skeletal muscle stem cells capable of self-renewal and differentiation a Sprouty1 Regulates Reversible Quiescence of a Self-Renewing Adult Muscle Stem Cell Pool during Regeneration Satellite cells are skeletal muscle stem cells capable of self-renewal and differentiation after transplantation, but whether they contribute to endogenous muscle fiber repair has been unclear. The transcription factor Pax7 marks satellite cells and is critical for establishing the adult satellite cell pool. By using a lineage tracing approach, we show that after injury, quiescent adult Pax7(+) cells enter the cell cycle; a subpopulation returns to quiescence to replenish the satellite cell compartment, while others contribute to muscle fiber formation. We demonstrate that Sprouty1 (Spry1), a receptor tyrosine kinase signaling inhibitor, is expressed in quiescent Pax7(+) satellite ce",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.588828+00:00"
+}

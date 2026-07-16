@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3559136",
+  "source_fingerprint": "86ad100fdcc03bbea898b52a6f265ff8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3559136",
+    "cancer-associated-fibroblasts-neutralize-the-anti-tumor-effect-of-csf1-receptor-blockade-by-inducing-pmn-mdsc-infiltration-of-tumors."
+  ],
+  "key_phrases": [
+    "cancer",
+    "associated",
+    "fibroblasts",
+    "neutralize",
+    "anti",
+    "tumor",
+    "effect",
+    "csf1"
+  ],
+  "summary_1l": "Cancer-Associated Fibroblasts Neutralize the Anti-tumor Effect of CSF1 Receptor Blockade by Inducing PMN-MDSC Infiltration of Tumors.",
+  "query_hits": [],
+  "embed_text": "3559136 Cancer-Associated Fibroblasts Neutralize the Anti-tumor Effect of CSF1 Receptor Blockade by Inducing PMN-MDSC Infiltration of Tumors. science scifact Tumor-associated macrophages (TAM) contribute to all aspects of tumor progression. Use of CSF1R inhibitors to target TAM is therapeutically appealing, but has had very limited anti-tumor effects. Here, we have identified the mechanism that… 3559136 cancer-associated-fibroblasts-neutralize-the-anti-tumor-effect-of-csf1-receptor-blockade-by-inducing-pmn-mdsc-infiltration-of-tumors. cancer associated fibroblasts neutralize anti tumor effect csf1 Cancer-Associated Fibroblasts Neutralize the Anti-tumor Effect of CSF1 Receptor Blockade by Inducing PMN-MDSC Infiltration of Tumors. Cancer-Associated Fibroblasts Neutralize the Anti-tumor Effect of CSF1 Receptor Blockade by Inducing PMN-MDSC Infiltration of Tumors. Tumor-associated macrophages (TAM) contribute to all aspects of tumor progression. Use of CSF1R inhibitors to target TAM is therapeutically appealing, but has had very limited anti-tumor effects. Here, we have identified the mechanism that limited the effect of CSF1R targeted therapy. We demonstrated that carcinoma-associated fibroblasts (CAF) are major sources of chemokines that recruit granulocytes to tumors. CSF1 produced by tumor cells caused HDAC2-mediated downregulation of granulocyte-specific chemokine expression in CAF, which limited migration of these cells to tumors. Treatment with CSF1R inhibitors disrupted this crosstalk and triggered a profound",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.401868+00:00"
+}

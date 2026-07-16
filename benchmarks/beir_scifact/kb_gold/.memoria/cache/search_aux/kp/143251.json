@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "143251",
+  "source_fingerprint": "b2616bdf60e0f4eda6899a670bc78251",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "143251",
+    "de-novo-assembly-of-a-pml-nuclear-subcompartment-occurs-through-multiple-pathways-and-induces-telomere-elongation."
+  ],
+  "key_phrases": [
+    "de",
+    "novo",
+    "assembly",
+    "pml",
+    "nuclear",
+    "subcompartment",
+    "occurs",
+    "through"
+  ],
+  "summary_1l": "De novo assembly of a PML nuclear subcompartment occurs through multiple pathways and induces telomere elongation.",
+  "query_hits": [],
+  "embed_text": "143251 De novo assembly of a PML nuclear subcompartment occurs through multiple pathways and induces telomere elongation. science scifact Telomerase-negative tumor cells use an alternative lengthening of telomeres (ALT) pathway that involves DNA recombination and repair to maintain their proliferative potential. The cytological hallmark of this process is the accumulation of… 143251 de-novo-assembly-of-a-pml-nuclear-subcompartment-occurs-through-multiple-pathways-and-induces-telomere-elongation. de novo assembly pml nuclear subcompartment occurs through De novo assembly of a PML nuclear subcompartment occurs through multiple pathways and induces telomere elongation. De novo assembly of a PML nuclear subcompartment occurs through multiple pathways and induces telomere elongation. Telomerase-negative tumor cells use an alternative lengthening of telomeres (ALT) pathway that involves DNA recombination and repair to maintain their proliferative potential. The cytological hallmark of this process is the accumulation of promyelocytic leukemia (PML) nuclear protein at telomeric DNA to form ALT-associated PML bodies (APBs). Here, the de novo formation of a telomeric PML nuclear subcompartment was investigated by recruiting APB protein components. We show that functionally distinct proteins were able to initiate the formation of bona fide APBs with high efficiency in a self-organizing and self-propagating manner. These included: (1) PML and Sp100 as the consti",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.573958+00:00"
+}

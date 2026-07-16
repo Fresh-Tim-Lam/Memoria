@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "44420873",
+  "source_fingerprint": "90d3b37e99498bedb28c2264b306791c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "44420873",
+    "keratinocyte-specific-transglutaminase-of-cultured-human-epidermal-cells:-relation-to-cross-linked-envelope-formation-and-terminal-differentiation."
+  ],
+  "key_phrases": [
+    "keratinocyte",
+    "specific",
+    "transglutaminase",
+    "cultured",
+    "human",
+    "epidermal",
+    "cells",
+    "relation"
+  ],
+  "summary_1l": "Keratinocyte-specific transglutaminase of cultured human epidermal cells: relation to cross-linked envelope formation and terminal differentiation.",
+  "query_hits": [],
+  "embed_text": "44420873 Keratinocyte-specific transglutaminase of cultured human epidermal cells: relation to cross-linked envelope formation and terminal differentiation. science scifact The predominant form of the cross-linking enzyme, transglutaminase, in cultured normal human epidermal keratinocytes, is found in cell particulate material and can be solubilized by nonionic detergent. It elutes as a single peak upon… 44420873 keratinocyte-specific-transglutaminase-of-cultured-human-epidermal-cells:-relation-to-cross-linked-envelope-formation-and-terminal-differentiation. keratinocyte specific transglutaminase cultured human epidermal cells relation Keratinocyte-specific transglutaminase of cultured human epidermal cells: relation to cross-linked envelope formation and terminal differentiation. Keratinocyte-specific transglutaminase of cultured human epidermal cells: relation to cross-linked envelope formation and terminal differentiation. The predominant form of the cross-linking enzyme, transglutaminase, in cultured normal human epidermal keratinocytes, is found in cell particulate material and can be solubilized by nonionic detergent. It elutes as a single peak upon either anion-exchange or gel-filtration chromatography. Monoclonal antibodies raised to the particulate enzyme cross-react with one of two transglutaminases in the cell cytosol. The second cytosolic transglutaminase, which has distinct kinetic and physical properties from the first, does not cross-react and is not essential for formation of the keratinocyte cross-linked envelope in vitro. The anti-transglutaminase",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.318273+00:00"
+}

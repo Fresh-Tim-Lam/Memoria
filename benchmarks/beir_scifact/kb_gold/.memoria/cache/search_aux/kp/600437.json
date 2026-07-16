@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "600437",
+  "source_fingerprint": "f10b22f069dc3c1e049cd98364cc3668",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "600437",
+    "endosome-er-contacts-control-actin-nucleation-and-retromer-function-through-vap-dependent-regulation-of-pi4p"
+  ],
+  "key_phrases": [
+    "endosome",
+    "er",
+    "contacts",
+    "control",
+    "actin",
+    "nucleation",
+    "retromer",
+    "function"
+  ],
+  "summary_1l": "VAP (VAPA and VAPB) is an evolutionarily conserved endoplasmic reticulum (ER)-anchored prot",
+  "query_hits": [],
+  "embed_text": "600437 Endosome-ER Contacts Control Actin Nucleation and Retromer Function through VAP-Dependent Regulation of PI4P science scifact VAP (VAPA and VAPB) is an evolutionarily conserved endoplasmic reticulum (ER)-anchored protein that helps generate tethers between the ER and other membranes through which lipids are exchanged across adjacent bilayers. Here, we report that… 600437 endosome-er-contacts-control-actin-nucleation-and-retromer-function-through-vap-dependent-regulation-of-pi4p endosome er contacts control actin nucleation retromer function VAP (VAPA and VAPB) is an evolutionarily conserved endoplasmic reticulum (ER)-anchored prot Endosome-ER Contacts Control Actin Nucleation and Retromer Function through VAP-Dependent Regulation of PI4P VAP (VAPA and VAPB) is an evolutionarily conserved endoplasmic reticulum (ER)-anchored protein that helps generate tethers between the ER and other membranes through which lipids are exchanged across adjacent bilayers. Here, we report that by regulating PI4P levels on endosomes, VAP affects WASH-dependent actin nucleation on these organelles and the function of the retromer, a protein coat responsible for endosome-to-Golgi traffic. VAP is recruited to retromer budding sites on endosomes via an interaction with the retromer SNX2 subunit. Cells lacking VAP accumulate high levels of PI4P, actin comets, and trans-Golgi proteins on endosomes. Such defects are mimicked by downregulation o",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.692576+00:00"
+}

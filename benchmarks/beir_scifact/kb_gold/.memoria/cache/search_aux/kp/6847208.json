@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6847208",
+  "source_fingerprint": "9a3ed7e47643353de2c660797671b47d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6847208",
+    "autoinduction-and-signal-transduction-in-the-regulation-of-staphylococcal-virulence."
+  ],
+  "key_phrases": [
+    "autoinduction",
+    "signal",
+    "transduction",
+    "regulation",
+    "staphylococcal",
+    "virulence",
+    "accessory",
+    "genes"
+  ],
+  "summary_1l": "Autoinduction and signal transduction in the regulation of staphylococcal virulence.",
+  "query_hits": [],
+  "embed_text": "6847208 Autoinduction and signal transduction in the regulation of staphylococcal virulence. science scifact The accessory genes of Staphylococcus aureus, including those involved in pathogenesis, are controlled by a complex regulatory network that includes at least four two-component systems, one of which, agr, is a quorum sensor, an alternative… 6847208 autoinduction-and-signal-transduction-in-the-regulation-of-staphylococcal-virulence. autoinduction signal transduction regulation staphylococcal virulence accessory genes Autoinduction and signal transduction in the regulation of staphylococcal virulence. Autoinduction and signal transduction in the regulation of staphylococcal virulence. The accessory genes of Staphylococcus aureus, including those involved in pathogenesis, are controlled by a complex regulatory network that includes at least four two-component systems, one of which, agr, is a quorum sensor, an alternative sigma factor and a large set of transcription factors, including at least two of the superantigen genes, tst and seb. These regulatory genes are hypothesized to act in a time- and population density-dependent manner to integrate signals received from the external environment with the internal metabolic machinery of the cell, in order to achieve the production of particular subsets of accessory/virulence factors at the time and in quantities that are appropriate to the ne",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.857708+00:00"
+}

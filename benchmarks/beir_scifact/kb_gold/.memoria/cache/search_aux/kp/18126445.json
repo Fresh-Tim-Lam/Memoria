@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "18126445",
+  "source_fingerprint": "2ca66c235eed098cce628aac83e6e382",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18126445"
+  ],
+  "key_phrases": [
+    "laminin",
+    "based",
+    "cell",
+    "adhesion",
+    "anchors",
+    "microtubule",
+    "plus",
+    "ends"
+  ],
+  "summary_1l": "LL5beta has been identified as a microtubule-anchoring factor that attaches EB1/CLIP-associ",
+  "query_hits": [],
+  "embed_text": "18126445 Laminin-based cell adhesion anchors microtubule plus ends to the epithelial cell basal cortex through LL5α/β science scifact LL5beta has been identified as a microtubule-anchoring factor that attaches EB1/CLIP-associating protein (CLASP)-bound microtubule plus ends to the cell cortex. In this study, we show that LL5beta and its homologue LL5alpha (LL5s)… 18126445 laminin based cell adhesion anchors microtubule plus ends LL5beta has been identified as a microtubule-anchoring factor that attaches EB1/CLIP-associ Laminin-based cell adhesion anchors microtubule plus ends to the epithelial cell basal cortex through LL5α/β LL5beta has been identified as a microtubule-anchoring factor that attaches EB1/CLIP-associating protein (CLASP)-bound microtubule plus ends to the cell cortex. In this study, we show that LL5beta and its homologue LL5alpha (LL5s) colocalize with autocrine laminin-5 and its receptors, integrins alpha3beta1 and alpha6beta4, at the basal side of fully polarized epithelial sheets. Depletion of both laminin receptor integrins abolishes the cortical localization of LL5s, whereas LL5 depletion reduces the amount of integrin alpha3 at the basal cell cortex. Activation of integrin alpha3 is sufficient to initiate LL5 accumulation at the cell cortex. LL5s form a complex with the cytoplasmic",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.821938+00:00"
+}

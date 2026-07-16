@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16701509",
+  "source_fingerprint": "0571259ca112ef29fe3dd1dde771f89c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16701509",
+    "serum-high-density-lipoprotein-cholesterol,-metabolic-profile,-and-breast-cancer-risk."
+  ],
+  "key_phrases": [
+    "serum",
+    "high",
+    "density",
+    "lipoprotein",
+    "cholesterol",
+    "metabolic",
+    "profile",
+    "breast"
+  ],
+  "summary_1l": "Serum high-density lipoprotein cholesterol, metabolic profile, and breast cancer risk.",
+  "query_hits": [],
+  "embed_text": "16701509 Serum high-density lipoprotein cholesterol, metabolic profile, and breast cancer risk. science scifact BACKGROUND The prevalence of metabolic syndrome (obesity, glucose intolerance, low serum high-density lipoprotein cholesterol [HDL-C], high serum triglycerides, hypertension) is high and increasing in parallel with an increasing breast… 16701509 serum-high-density-lipoprotein-cholesterol,-metabolic-profile,-and-breast-cancer-risk. serum high density lipoprotein cholesterol metabolic profile breast Serum high-density lipoprotein cholesterol, metabolic profile, and breast cancer risk. Serum high-density lipoprotein cholesterol, metabolic profile, and breast cancer risk. BACKGROUND The prevalence of metabolic syndrome (obesity, glucose intolerance, low serum high-density lipoprotein cholesterol [HDL-C], high serum triglycerides, hypertension) is high and increasing in parallel with an increasing breast cancer incidence worldwide. HDL-C represents an important aspect of the syndrome, yet its role in breast cancer is still undefined. METHODS In two population-based screening surveys during 1977-1983 and 1985-1987, serum HDL-C was assayed enzymatically among 38,823 Norwegian women aged 17-54 years at entry. Height, weight, blood pressure, serum lipids, fat and energy intake, physical activity, parity, oral contraceptive use, hormone therapy use, alcohol intake, and tobacco",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.665209+00:00"
+}

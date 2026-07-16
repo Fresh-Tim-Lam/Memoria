@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18038955",
+  "source_fingerprint": "b8261c99630649600d80c0f6096201cc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18038955",
+    "global-regulation-of-h2a.z-localization-by-the-ino80-chromatin-remodeling-enzyme-is-essential-for-genome-integrity"
+  ],
+  "key_phrases": [
+    "global",
+    "regulation",
+    "h2a",
+    "localization",
+    "by",
+    "ino80",
+    "chromatin",
+    "remodeling"
+  ],
+  "summary_1l": "Global Regulation of H2A.",
+  "query_hits": [],
+  "embed_text": "18038955 Global Regulation of H2A.Z Localization by the INO80 Chromatin-Remodeling Enzyme Is Essential for Genome Integrity science scifact INO80 is an evolutionarily conserved, ATP-dependent chromatin-remodeling enzyme that plays roles in transcription, DNA repair, and replication. Here, we show that yeast INO80 facilitates these diverse processes at least in part by… 18038955 global-regulation-of-h2a.z-localization-by-the-ino80-chromatin-remodeling-enzyme-is-essential-for-genome-integrity global regulation h2a localization by ino80 chromatin remodeling Global Regulation of H2A. Global Regulation of H2A.Z Localization by the INO80 Chromatin-Remodeling Enzyme Is Essential for Genome Integrity INO80 is an evolutionarily conserved, ATP-dependent chromatin-remodeling enzyme that plays roles in transcription, DNA repair, and replication. Here, we show that yeast INO80 facilitates these diverse processes at least in part by controlling genome-wide distribution of the histone variant H2A.Z. In the absence of INO80, H2A.Z nucleosomes are mislocalized, and H2A.Z levels at promoters show reduced responsiveness to transcriptional changes, suggesting that INO80 controls H2A.Z dynamics. Additionally, we demonstrate that INO80 has a histone-exchange activity in which the enzyme can replace nucleosomal H2A.Z/H2B with free H2A/H2B dimers. Genetic interactions between ino80 and ht",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:18.681029+00:00"
+}

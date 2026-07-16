@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13791206",
+  "source_fingerprint": "dd2ae69029a5f258e821408ca3e21323",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13791206",
+    "53bp1-inhibits-homologous-recombination-in-brca1-deficient-cells-by-blocking-resection-of-dna-breaks"
+  ],
+  "key_phrases": [
+    "53bp1",
+    "inhibits",
+    "homologous",
+    "recombination",
+    "brca1",
+    "deficient",
+    "cells",
+    "by"
+  ],
+  "summary_1l": "Defective DNA repair by homologous recombination (HR) is thought to be a major contributor to tumor",
+  "query_hits": [],
+  "embed_text": "13791206 53BP1 Inhibits Homologous Recombination in Brca1-Deficient Cells by Blocking Resection of DNA Breaks science scifact Defective DNA repair by homologous recombination (HR) is thought to be a major contributor to tumorigenesis in individuals carrying Brca1 mutations. Here, we show that DNA breaks in Brca1-deficient cells are aberrantly joined into complex… 13791206 53bp1-inhibits-homologous-recombination-in-brca1-deficient-cells-by-blocking-resection-of-dna-breaks 53bp1 inhibits homologous recombination brca1 deficient cells by Defective DNA repair by homologous recombination (HR) is thought to be a major contributor to tumor 53BP1 Inhibits Homologous Recombination in Brca1-Deficient Cells by Blocking Resection of DNA Breaks Defective DNA repair by homologous recombination (HR) is thought to be a major contributor to tumorigenesis in individuals carrying Brca1 mutations. Here, we show that DNA breaks in Brca1-deficient cells are aberrantly joined into complex chromosome rearrangements by a process dependent on the nonhomologous end-joining (NHEJ) factors 53BP1 and DNA ligase 4. Loss of 53BP1 alleviates hypersensitivity of Brca1 mutant cells to PARP inhibition and restores error-free repair by HR. Mechanistically, 53BP1 deletion promotes ATM-dependent processing of broken DNA ends to produce recombinogenic single-stranded DNA competent for HR. In contrast, Lig4 deficiency does not rescue the HR defect in Brca1 m",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.044327+00:00"
+}

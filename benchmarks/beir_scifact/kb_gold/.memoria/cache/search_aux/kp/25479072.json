@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25479072",
+  "source_fingerprint": "0035cedd9bfb4eea6f9167995cc740ed",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25479072",
+    "efficient-t-cell-activation-requires-an-optimal-dwell-time-of-interaction-between-the-tcr-and-the-pmhc-complex"
+  ],
+  "key_phrases": [
+    "efficient",
+    "cell",
+    "activation",
+    "requires",
+    "optimal",
+    "dwell",
+    "time",
+    "interaction"
+  ],
+  "summary_1l": "Cytotoxic T cell (CTL) activation by antigen requires the specific detection of peptide–m",
+  "query_hits": [],
+  "embed_text": "25479072 Efficient T cell activation requires an optimal dwell-time of interaction between the TCR and the pMHC complex science scifact Cytotoxic T cell (CTL) activation by antigen requires the specific detection of peptide–major histo-compatibility class I (pMHC) molecules on the target-cell surface by the T cell receptor (TCR). We examined the effect of mutations in the… 25479072 efficient-t-cell-activation-requires-an-optimal-dwell-time-of-interaction-between-the-tcr-and-the-pmhc-complex efficient cell activation requires optimal dwell time interaction Cytotoxic T cell (CTL) activation by antigen requires the specific detection of peptide–m Efficient T cell activation requires an optimal dwell-time of interaction between the TCR and the pMHC complex Cytotoxic T cell (CTL) activation by antigen requires the specific detection of peptide–major histo-compatibility class I (pMHC) molecules on the target-cell surface by the T cell receptor (TCR). We examined the effect of mutations in the antigen-binding site of a Kb-restricted TCR on T cell activation, antigen binding and dissociation from antigen. These parameters were also examined for variants derived from a Kd-restricted peptide that was recognized by a CTL clone. Using these two independent systems, we show that T cell activation can be impaired by mutations that either decrease or increase the binding half-life of the TCR-pMHC interaction. Our data indicate that efficient T",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.717191+00:00"
+}

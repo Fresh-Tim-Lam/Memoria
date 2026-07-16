@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5939172",
+  "source_fingerprint": "84c0abb4c8aecdc0b3ef84e3793af0f4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5939172",
+    "drinking-pattern-and-mortality:-the-italian-risk-factor-and-life-expectancy-pooling-project."
+  ],
+  "key_phrases": [
+    "drinking",
+    "pattern",
+    "mortality",
+    "italian",
+    "risk",
+    "factor",
+    "life",
+    "expectancy"
+  ],
+  "summary_1l": "Drinking pattern and mortality: the Italian Risk Factor and Life Expectancy pooling project.",
+  "query_hits": [],
+  "embed_text": "5939172 Drinking pattern and mortality: the Italian Risk Factor and Life Expectancy pooling project. science scifact PURPOSE To analyze the relationship between an aspect of drinking pattern (i.e., drinking with or without meals) and risk of all-cause and specific-cause mortality. METHODS The Risk Factors and Life Expectancy Study, is a pooling of a… 5939172 drinking-pattern-and-mortality:-the-italian-risk-factor-and-life-expectancy-pooling-project. drinking pattern mortality italian risk factor life expectancy Drinking pattern and mortality: the Italian Risk Factor and Life Expectancy pooling project. Drinking pattern and mortality: the Italian Risk Factor and Life Expectancy pooling project. PURPOSE To analyze the relationship between an aspect of drinking pattern (i.e., drinking with or without meals) and risk of all-cause and specific-cause mortality. METHODS The Risk Factors and Life Expectancy Study, is a pooling of a series of epidemiological studies conducted in Italy. Eight-thousand six-hundred and forty-seven men and 6521 women, age 30-59 at baseline, and free of cardiovascular disease, were followed for mortality from all causes, cardiovascular and noncardiovascular, during an average follow-up of 7 years. RESULTS Drinkers of wine outside meals exhibited higher death rates from all causes, noncardiovascular diseases, and cancer, as compared to drinkers of wine with meals. This",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.524010+00:00"
+}

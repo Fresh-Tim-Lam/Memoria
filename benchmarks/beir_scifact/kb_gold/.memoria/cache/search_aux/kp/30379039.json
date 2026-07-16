@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "30379039",
+  "source_fingerprint": "db8e985d3633c7bc4948836d6b0c93cd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "30379039",
+    "comparison-of-the-intrinsic-kinase-activity-and-substrate-specificity-of-c-abl-and-bcr-abl."
+  ],
+  "key_phrases": [
+    "comparison",
+    "intrinsic",
+    "kinase",
+    "activity",
+    "substrate",
+    "specificity",
+    "abl",
+    "bcr"
+  ],
+  "summary_1l": "Comparison of the intrinsic kinase activity and substrate specificity of c-Abl and Bcr-Abl.",
+  "query_hits": [],
+  "embed_text": "30379039 Comparison of the intrinsic kinase activity and substrate specificity of c-Abl and Bcr-Abl. science scifact We studied the intrinsic tyrosine kinase activity and substrate specificity of c-Abl and Bcr-Abl protein tyrosine kinases (PTKs) using the peptide substrates discovered from a synthetic combinatorial peptide library. Our data indicate that… 30379039 comparison-of-the-intrinsic-kinase-activity-and-substrate-specificity-of-c-abl-and-bcr-abl. comparison intrinsic kinase activity substrate specificity abl bcr Comparison of the intrinsic kinase activity and substrate specificity of c-Abl and Bcr-Abl. Comparison of the intrinsic kinase activity and substrate specificity of c-Abl and Bcr-Abl. We studied the intrinsic tyrosine kinase activity and substrate specificity of c-Abl and Bcr-Abl protein tyrosine kinases (PTKs) using the peptide substrates discovered from a synthetic combinatorial peptide library. Our data indicate that the phosphorylation of these peptides by Bcr-Abl was consistently stronger than that by c-Abl. Bcr-Abl also showed substrate preference towards those peptides with one or more positive charges.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:37.628668+00:00"
+}

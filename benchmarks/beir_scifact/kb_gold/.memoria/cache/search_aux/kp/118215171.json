@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "118215171",
+  "source_fingerprint": "562835c45eb7d1ab9b8e380e0f8315f9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "118215171",
+    "how-to-calculate-sample-size-in-animal-studies"
+  ],
+  "key_phrases": [
+    "how",
+    "calculate",
+    "sample",
+    "size",
+    "animal",
+    "studies",
+    "researcher",
+    "must"
+  ],
+  "summary_1l": "Researcher must calculate the sample size before starting of any animal study.",
+  "query_hits": [],
+  "embed_text": "118215171 How to calculate sample size in animal studies science scifact Researcher must calculate the sample size before starting of any animal study. It should be adequate enough to detect a small significant difference between the groups. Small sample size is not only responsible for the insignificant result… 118215171 how-to-calculate-sample-size-in-animal-studies how calculate sample size animal studies researcher must Researcher must calculate the sample size before starting of any animal study. How to calculate sample size in animal studies Researcher must calculate the sample size before starting of any animal study. It should be adequate enough to detect a small significant difference between the groups. Small sample size is not only responsible for the insignificant result but also for the less power of the study. Calculation of sample size involves complex statistics but it can be simplified to help the researchers who are not from statistical background.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:07.147504+00:00"
+}

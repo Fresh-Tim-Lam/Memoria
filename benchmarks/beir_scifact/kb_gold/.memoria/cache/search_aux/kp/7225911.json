@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7225911",
+  "source_fingerprint": "6396bc3ff6398672d564021885f9f3d6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7225911",
+    "the-human-long-non-coding-rna-ror-is-a-p53-repressor-in-response-to-dna-damage"
+  ],
+  "key_phrases": [
+    "human",
+    "long",
+    "non",
+    "coding",
+    "rna",
+    "ror",
+    "p53",
+    "repressor"
+  ],
+  "summary_1l": "It is well known that upon stress, the level of the tumor suppressor p53 is remarkably elevated.",
+  "query_hits": [],
+  "embed_text": "7225911 The human long non-coding RNA-RoR is a p53 repressor in response to DNA damage science scifact It is well known that upon stress, the level of the tumor suppressor p53 is remarkably elevated. However, despite extensive studies, the underlying mechanism involving important inter-players for stress-induced p53 regulation is still not… 7225911 the-human-long-non-coding-rna-ror-is-a-p53-repressor-in-response-to-dna-damage human long non coding rna ror p53 repressor It is well known that upon stress, the level of the tumor suppressor p53 is remarkably elevated. The human long non-coding RNA-RoR is a p53 repressor in response to DNA damage It is well known that upon stress, the level of the tumor suppressor p53 is remarkably elevated. However, despite extensive studies, the underlying mechanism involving important inter-players for stress-induced p53 regulation is still not fully understood. We present evidence that the human lincRNA-RoR (RoR) is a strong negative regulator of p53. Unlike MDM2 that causes p53 degradation through the ubiquitin-proteasome pathway, RoR suppresses p53 translation through direct interaction with the heterogeneous nuclear ribonucleoprotein I (hnRNP I). Importantly, a 28-base RoR sequence carrying hnRNP I binding motifs is essential and sufficient for p53 repression. We further show that RoR inhibits p53-mediated cell cy",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.852894+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14768471",
+  "source_fingerprint": "1901c2568ae9b2c3f9e3ae1a1b8c5081",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14768471",
+    "extracellular-vesicles-derived-from-renal-cancer-stem-cells-induce-a-pro-tumorigenic-phenotype-in-mesenchymal-stromal-cells"
+  ],
+  "key_phrases": [
+    "extracellular",
+    "vesicles",
+    "derived",
+    "from",
+    "renal",
+    "cancer",
+    "stem",
+    "cells"
+  ],
+  "summary_1l": "Renal carcinomas have been shown to contain a population of cancer stem cell",
+  "query_hits": [],
+  "embed_text": "14768471 Extracellular vesicles derived from renal cancer stem cells induce a pro-tumorigenic phenotype in mesenchymal stromal cells science scifact Renal carcinomas have been shown to contain a population of cancer stem cells (CSCs) that present self-renewing capacity and support tumor growth and metastasis. CSCs were shown to secrete large amount of extracellular vesicles (EVs) that… 14768471 extracellular-vesicles-derived-from-renal-cancer-stem-cells-induce-a-pro-tumorigenic-phenotype-in-mesenchymal-stromal-cells extracellular vesicles derived from renal cancer stem cells Renal carcinomas have been shown to contain a population of cancer stem cell Extracellular vesicles derived from renal cancer stem cells induce a pro-tumorigenic phenotype in mesenchymal stromal cells Renal carcinomas have been shown to contain a population of cancer stem cells (CSCs) that present self-renewing capacity and support tumor growth and metastasis. CSCs were shown to secrete large amount of extracellular vesicles (EVs) that can transfer several molecules (proteins, lipids and nucleic acids) and induce epigenetic changes in target cells. Mesenchymal Stromal Cells (MSCs) are susceptible to tumor signalling and can be recruited to tumor regions. The precise role of MSCs in tumor development is still under debate since both pro- and anti-tumorigenic effects have been reported. In this study we analysed the participation of renal CSC-derived EVs in the inter",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.624245+00:00"
+}

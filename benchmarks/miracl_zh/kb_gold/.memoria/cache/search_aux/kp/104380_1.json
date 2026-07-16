@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "kp_id": "104380#1",
+  "source_fingerprint": "d3f3b4354c1b574fbd049c5120abdb7a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "染色体"
+  ],
+  "aliases": [
+    "104380#1"
+  ],
+  "key_phrases": [
+    "染色",
+    "单体",
+    "减数分裂",
+    "有丝分裂",
+    "过程",
+    "复制",
+    "染色体",
+    "两条"
+  ],
+  "summary_1l": "在减数分裂或有丝分裂过程中，复制了的染色体中的两条子染色体。",
+  "query_hits": [],
+  "embed_text": "104380#1 染色单体 染色单体 在减数分裂或有丝分裂过程中，复制了的染色体中的两条子染色体。每个染色单体是由一条脱氧核糖核酸（DNA）双链经过紧密盘旋折叠而成。中期染色体由两条染色单体组成，两者在着丝粒（著絲點）（centromere）部位相互结合。 染色体 104380#1 染色 单体 减数分裂 有丝分裂 过程 复制 染色体 两条 在减数分裂或有丝分裂过程中，复制了的染色体中的两条子染色体。 染色单体 在减数分裂或有丝分裂过程中，复制了的染色体中的两条子染色体。每个染色单体是由一条脱氧核糖核酸（DNA）双链经过紧密盘旋折叠而成。中期染色体由两条染色单体组成，两者在着丝粒（著絲點）（centromere）部位相互结合。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:19:30.238640+00:00"
+}

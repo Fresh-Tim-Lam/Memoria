@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5567005",
+  "source_fingerprint": "77b587407eb7ad909dfca2c6932aa634",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5567005",
+    "etiology-of-type-1-diabetes."
+  ],
+  "key_phrases": [
+    "etiology",
+    "type",
+    "diabetes",
+    "recent",
+    "genetic",
+    "mapping",
+    "gene",
+    "phenotype"
+  ],
+  "summary_1l": "Etiology of type 1 diabetes.",
+  "query_hits": [],
+  "embed_text": "5567005 Etiology of type 1 diabetes. science scifact Recent genetic mapping and gene-phenotype studies have revealed the genetic architecture of type 1 diabetes. At least ten genes so far can be singled out as strong causal candidates. The known functions of these genes indicate the primary… 5567005 etiology-of-type-1-diabetes. etiology type diabetes recent genetic mapping gene phenotype Etiology of type 1 diabetes. Etiology of type 1 diabetes. Recent genetic mapping and gene-phenotype studies have revealed the genetic architecture of type 1 diabetes. At least ten genes so far can be singled out as strong causal candidates. The known functions of these genes indicate the primary etiological pathways of this disease, including HLA class II and I molecules binding to preproinsulin peptides and T cell receptors, T and B cell activation, innate pathogen-viral responses, chemokine and cytokine signaling, and T regulatory and antigen-presenting cell functions. This review considers research in the field of type 1 diabetes toward identifying disease mechanisms using genetic approaches. The expression and functions of these pathways, and, therefore, disease susceptibility, will be influenced by epigenetic and",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:55.620990+00:00"
+}

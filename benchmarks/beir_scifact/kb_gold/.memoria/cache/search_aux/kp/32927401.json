@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "32927401",
+  "source_fingerprint": "2825b8a310e69821525cb8123907db8f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "32927401",
+    "toll-like-receptor-7-mediates-pruritus"
+  ],
+  "key_phrases": [
+    "toll",
+    "like",
+    "receptor",
+    "mediates",
+    "pruritus",
+    "receptors",
+    "typically",
+    "expressed"
+  ],
+  "summary_1l": "Toll-like receptors are typically expressed in immune cells to regulate innate immunity.",
+  "query_hits": [],
+  "embed_text": "32927401 Toll-like receptor 7 mediates pruritus science scifact Toll-like receptors are typically expressed in immune cells to regulate innate immunity. We found that functional Toll-like receptor 7 (TLR7) was expressed in C-fiber primary sensory neurons and was important for inducing itch (pruritus),… 32927401 toll-like-receptor-7-mediates-pruritus toll like receptor mediates pruritus receptors typically expressed Toll-like receptors are typically expressed in immune cells to regulate innate immunity. Toll-like receptor 7 mediates pruritus Toll-like receptors are typically expressed in immune cells to regulate innate immunity. We found that functional Toll-like receptor 7 (TLR7) was expressed in C-fiber primary sensory neurons and was important for inducing itch (pruritus), but was not necessary for eliciting mechanical, thermal, inflammatory and neuropathic pain in mice. Our results indicate that TLR7 mediates itching and is a potential therapeutic target for anti-itch treatment in skin disease conditions.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.080973+00:00"
+}

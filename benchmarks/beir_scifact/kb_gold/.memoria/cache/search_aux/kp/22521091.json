@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22521091",
+  "source_fingerprint": "d850e95ef17c0d7060fb4b1a678a0e85",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22521091",
+    "nrage-promotes-the-malignant-phenotype-of-hepatocellular-carcinoma."
+  ],
+  "key_phrases": [
+    "nrage",
+    "promotes",
+    "malignant",
+    "phenotype",
+    "hepatocellular",
+    "carcinoma",
+    "hcc",
+    "fatal"
+  ],
+  "summary_1l": "NRAGE promotes the malignant phenotype of hepatocellular carcinoma.",
+  "query_hits": [],
+  "embed_text": "22521091 NRAGE promotes the malignant phenotype of hepatocellular carcinoma. science scifact Hepatocellular carcinoma (HCC) is a fatal disease, primarily due to the limited effective therapies available for patients with advanced or recurrent stages of the disease. Therefore, in order to improve patient prognosis, it is important… 22521091 nrage-promotes-the-malignant-phenotype-of-hepatocellular-carcinoma. nrage promotes malignant phenotype hepatocellular carcinoma hcc fatal NRAGE promotes the malignant phenotype of hepatocellular carcinoma. NRAGE promotes the malignant phenotype of hepatocellular carcinoma. Hepatocellular carcinoma (HCC) is a fatal disease, primarily due to the limited effective therapies available for patients with advanced or recurrent stages of the disease. Therefore, in order to improve patient prognosis, it is important to identify an informative biomarker for HCC progression, as well as a molecular target for therapy. Neurotrophin receptor-interacting melanoma antigen-encoding protein (NRAGE), a member of the type II melanoma-associated antigen family, mediates apoptosis and cell death through interactions with a wide range of proteins, and is implicated as a tumor suppressor or oncoprotein depending on cell type. However, the role of NRAGE in HCC is currently unknown, therefore, the present study aimed",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.959453+00:00"
+}

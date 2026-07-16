@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "42035464",
+  "source_fingerprint": "31e49d9c8d0f084c5fc4269b45cc144f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "42035464",
+    "mitosis-specific-anchoring-of-gamma-tubulin-complexes-by-pericentrin-controls-spindle-organization-and-mitotic-entry."
+  ],
+  "key_phrases": [
+    "mitosis",
+    "specific",
+    "anchoring",
+    "gamma",
+    "tubulin",
+    "complexes",
+    "by",
+    "pericentrin"
+  ],
+  "summary_1l": "Mitosis-specific anchoring of gamma tubulin complexes by pericentrin controls spindle organization and mitotic entry.",
+  "query_hits": [],
+  "embed_text": "42035464 Mitosis-specific anchoring of gamma tubulin complexes by pericentrin controls spindle organization and mitotic entry. science scifact Microtubule nucleation is the best known function of centrosomes. Centrosomal microtubule nucleation is mediated primarily by gamma tubulin ring complexes (gamma TuRCs). However, little is known about the molecules that anchor these… 42035464 mitosis-specific-anchoring-of-gamma-tubulin-complexes-by-pericentrin-controls-spindle-organization-and-mitotic-entry. mitosis specific anchoring gamma tubulin complexes by pericentrin Mitosis-specific anchoring of gamma tubulin complexes by pericentrin controls spindle organization and mitotic entry. Mitosis-specific anchoring of gamma tubulin complexes by pericentrin controls spindle organization and mitotic entry. Microtubule nucleation is the best known function of centrosomes. Centrosomal microtubule nucleation is mediated primarily by gamma tubulin ring complexes (gamma TuRCs). However, little is known about the molecules that anchor these complexes to centrosomes. In this study, we show that the centrosomal coiled-coil protein pericentrin anchors gamma TuRCs at spindle poles through an interaction with gamma tubulin complex proteins 2 and 3 (GCP2/3). Pericentrin silencing by small interfering RNAs in somatic cells disrupted gamma tubulin localization and spindle organization in mitosis but had no effect on gamma tubulin localization or microtubule organization in interphase cells",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.753923+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14566771",
+  "source_fingerprint": "fce8562397c1ac92def3d6562ccbe1be",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14566771",
+    "stroke-and-migraine--the-spectrum-of-cause-and-effect."
+  ],
+  "key_phrases": [
+    "stroke",
+    "migraine",
+    "--",
+    "spectrum",
+    "cause",
+    "effect",
+    "relationship",
+    "complex"
+  ],
+  "summary_1l": "Stroke and migraine--the spectrum of cause and effect.",
+  "query_hits": [],
+  "embed_text": "14566771 Stroke and migraine--the spectrum of cause and effect. science scifact The relationship of migraine and stroke is complex. Stroke may be coincidental with migraine but migraine may confer an increased risk of stroke in women under 45 years of age and possibly in men who have migraine with aura. Stroke may… 14566771 stroke-and-migraine--the-spectrum-of-cause-and-effect. stroke migraine -- spectrum cause effect relationship complex Stroke and migraine--the spectrum of cause and effect. Stroke and migraine--the spectrum of cause and effect. The relationship of migraine and stroke is complex. Stroke may be coincidental with migraine but migraine may confer an increased risk of stroke in women under 45 years of age and possibly in men who have migraine with aura. Stroke may mimic migraine but migraine syndromes may be symptomatic of underlying cerebrovascular disorders. True migraine-induced stroke is rare. The mechanisms of stroke induced during a migraine attack remain to be determined but probably involve an interaction between the dynamic shifts in cerebral blood flow and stroke risk factors.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.206409+00:00"
+}

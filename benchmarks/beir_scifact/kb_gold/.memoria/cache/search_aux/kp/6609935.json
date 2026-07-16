@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "6609935",
+  "source_fingerprint": "98e682c7c8b924ef2f4d49e5e93cae5a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6609935",
+    "differential-regulation-of-actin-microfilaments-by-human-mical-proteins."
+  ],
+  "key_phrases": [
+    "differential",
+    "regulation",
+    "actin",
+    "microfilaments",
+    "by",
+    "human",
+    "mical",
+    "proteins"
+  ],
+  "summary_1l": "Differential regulation of actin microfilaments by human MICAL proteins.",
+  "query_hits": [],
+  "embed_text": "6609935 Differential regulation of actin microfilaments by human MICAL proteins. science scifact The Drosophila melanogaster MICAL protein is essential for the neuronal growth cone machinery that functions through plexin- and semaphorin-mediated axonal signaling. Drosophila MICAL is also involved in regulating myofilament organization… 6609935 differential-regulation-of-actin-microfilaments-by-human-mical-proteins. differential regulation actin microfilaments by human mical proteins Differential regulation of actin microfilaments by human MICAL proteins. Differential regulation of actin microfilaments by human MICAL proteins. The Drosophila melanogaster MICAL protein is essential for the neuronal growth cone machinery that functions through plexin- and semaphorin-mediated axonal signaling. Drosophila MICAL is also involved in regulating myofilament organization and synaptic structures, and serves as an actin disassembly factor downstream of plexin-mediated axonal repulsion. In mammalian cells there are three known isoforms, MICAL1, MICAL2 and MICAL3, as well as the MICAL-like proteins MICAL-L1 and MICAL-L2, but little is known of their function, and information comes almost exclusively from neural cells. In this study we show that in non-neural cells human MICALs are required for normal actin organization, and all three MICALs regulate act",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.297998+00:00"
+}

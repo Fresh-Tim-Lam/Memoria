@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "33458992",
+  "source_fingerprint": "7749714eb4738d600b0400ff52540ce7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "33458992",
+    "trabecular-bone-score-as-an-indicator-for-skeletal-deterioration-in-diabetes."
+  ],
+  "key_phrases": [
+    "trabecular",
+    "bone",
+    "score",
+    "as",
+    "indicator",
+    "skeletal",
+    "deterioration",
+    "diabetes"
+  ],
+  "summary_1l": "Trabecular bone score as an indicator for skeletal deterioration in diabetes.",
+  "query_hits": [],
+  "embed_text": "33458992 Trabecular bone score as an indicator for skeletal deterioration in diabetes. science scifact CONTEXT Trabecular bone score (TBS) is a novel texture index that evaluates the pixel gray-level variations in lumbar spine dual-energy X-ray absorptiometry images and is related to bone microarchitecture independent of bone mineral… 33458992 trabecular-bone-score-as-an-indicator-for-skeletal-deterioration-in-diabetes. trabecular bone score as indicator skeletal deterioration diabetes Trabecular bone score as an indicator for skeletal deterioration in diabetes. Trabecular bone score as an indicator for skeletal deterioration in diabetes. CONTEXT Trabecular bone score (TBS) is a novel texture index that evaluates the pixel gray-level variations in lumbar spine dual-energy X-ray absorptiometry images and is related to bone microarchitecture independent of bone mineral density (BMD). OBJECTIVE We investigated lumbar spine TBS as an indicator for skeletal deterioration in diabetes. DESIGN AND SETTING Cross-sectional data were collected from subjects participating in an ongoing prospective, community-based, cohort study from 2009 to 2010. PARTICIPANTS We included 1229 men and 1529 postmenopausal women older than 50 years in the Ansung cohort. OUTCOME MEASURES Biochemical parameters, lumbar spine TBS, and BMD from dual-energy X-ray absorptiometry image",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.405807+00:00"
+}

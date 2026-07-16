@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "543889#2",
+  "source_fingerprint": "51f78ba3e1cef370751e92fec3daa0d7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "543889#2"
+  ],
+  "key_phrases": [
+    "启示录",
+    "骑士",
+    "一种",
+    "解释",
+    "认为",
+    "第一位",
+    "骑马",
+    "象征"
+  ],
+  "summary_1l": "另一种解释认为第一位骑马者象征死亡或異象，第二位骑马者象征戰爭，第三、第四位象征饥荒和死亡，不过这种解释通常被认为有缺陷。",
+  "query_hits": [],
+  "embed_text": "543889#2 启示录中的四骑士 启示录中的四骑士 另一种解释认为第一位骑马者象征死亡或異象，第二位骑马者象征戰爭，第三、第四位象征饥荒和死亡，不过这种解释通常被认为有缺陷。 543889#2 启示录 骑士 一种 解释 认为 第一位 骑马 象征 另一种解释认为第一位骑马者象征死亡或異象，第二位骑马者象征戰爭，第三、第四位象征饥荒和死亡，不过这种解释通常被认为有缺陷。 启示录中的四骑士 另一种解释认为第一位骑马者象征死亡或異象，第二位骑马者象征戰爭，第三、第四位象征饥荒和死亡，不过这种解释通常被认为有缺陷。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:20:41.729822+00:00"
+}

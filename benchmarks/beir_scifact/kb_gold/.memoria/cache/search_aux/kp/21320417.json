@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21320417",
+  "source_fingerprint": "5c492a141bf39fb4390fc6dd0b9908e0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21320417",
+    "t-cell-memory."
+  ],
+  "key_phrases": [
+    "cell",
+    "memory",
+    "induced",
+    "by",
+    "prior",
+    "infection",
+    "vaccination",
+    "provides"
+  ],
+  "summary_1l": "T cell memory.",
+  "query_hits": [],
+  "embed_text": "21320417 T cell memory. science scifact T cell memory induced by prior infection or vaccination provides enhanced protection against subsequent microbial infections. The processes involved in generating and maintaining T cell memory are becoming better understood due to recent… 21320417 t-cell-memory. cell memory induced by prior infection vaccination provides T cell memory. T cell memory. T cell memory induced by prior infection or vaccination provides enhanced protection against subsequent microbial infections. The processes involved in generating and maintaining T cell memory are becoming better understood due to recent technological advances in identifying memory T cells and monitoring their behavior and function in vivo. Memory T cells develop in response to a progressive set of cues-starting with signals from antigen-loaded, activated antigen-presenting cells (APCs) and inflammatory mediators induced by the innate immune response, to the poorly defined subsequent signals triggered as the immune response wanes toward homeostasis. The persistence of the resting memory T cells that eventually develop is regulated by cytokines. This chapter discusses recent",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.825462+00:00"
+}

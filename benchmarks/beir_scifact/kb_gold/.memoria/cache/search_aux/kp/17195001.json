@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17195001",
+  "source_fingerprint": "e81f503b94698f0d51c019d619cc5875",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17195001",
+    "tor-signaling-in-growth-and-metabolism"
+  ],
+  "key_phrases": [
+    "tor",
+    "signaling",
+    "growth",
+    "metabolism",
+    "target",
+    "rapamycin",
+    "conserved",
+    "ser"
+  ],
+  "summary_1l": "The target of rapamycin (TOR) is a conserved Ser/Thr kinase that regulates cell growth and metabolism in response to environmental cues.",
+  "query_hits": [],
+  "embed_text": "17195001 TOR Signaling in Growth and Metabolism science scifact The target of rapamycin (TOR) is a conserved Ser/Thr kinase that regulates cell growth and metabolism in response to environmental cues. Here, highlighting contributions from studies in model organisms, we review mammalian TOR complexes… 17195001 tor-signaling-in-growth-and-metabolism tor signaling growth metabolism target rapamycin conserved ser The target of rapamycin (TOR) is a conserved Ser/Thr kinase that regulates cell growth and metabolism in response to environmental cues. TOR Signaling in Growth and Metabolism The target of rapamycin (TOR) is a conserved Ser/Thr kinase that regulates cell growth and metabolism in response to environmental cues. Here, highlighting contributions from studies in model organisms, we review mammalian TOR complexes and the signaling branches they mediate. TOR is part of two distinct multiprotein complexes, TOR complex 1 (TORC1), which is sensitive to rapamycin, and TORC2, which is not. The physiological consequences of mammalian TORC1 dysregulation suggest that inhibitors of mammalian TOR may be useful in the treatment of cancer, cardiovascular disease, autoimmunity, and metabolic disorders.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.457871+00:00"
+}

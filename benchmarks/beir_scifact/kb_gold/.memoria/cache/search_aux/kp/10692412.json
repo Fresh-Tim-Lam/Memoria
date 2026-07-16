@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10692412",
+  "source_fingerprint": "c52d813e0a9d3298df63084baba30851",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10692412",
+    "geovisual-analytics-to-enhance-spatial-scan-statistic-interpretation:-an-analysis-of-u.s.-cervical-cancer-mortality"
+  ],
+  "key_phrases": [
+    "geovisual",
+    "analytics",
+    "enhance",
+    "spatial",
+    "scan",
+    "statistic",
+    "interpretation",
+    "analysis"
+  ],
+  "summary_1l": "Geovisual analytics to enhance spatial scan statistic interpretation: an analysis of U.",
+  "query_hits": [],
+  "embed_text": "10692412 Geovisual analytics to enhance spatial scan statistic interpretation: an analysis of U.S. cervical cancer mortality science scifact BACKGROUND Kulldorff's spatial scan statistic and its software implementation - SaTScan - are widely used for detecting and evaluating geographic clusters. However, two issues make using the method and interpreting its results non-trivial:… 10692412 geovisual-analytics-to-enhance-spatial-scan-statistic-interpretation:-an-analysis-of-u.s.-cervical-cancer-mortality geovisual analytics enhance spatial scan statistic interpretation analysis Geovisual analytics to enhance spatial scan statistic interpretation: an analysis of U. Geovisual analytics to enhance spatial scan statistic interpretation: an analysis of U.S. cervical cancer mortality BACKGROUND Kulldorff's spatial scan statistic and its software implementation - SaTScan - are widely used for detecting and evaluating geographic clusters. However, two issues make using the method and interpreting its results non-trivial: (1) the method lacks cartographic support for understanding the clusters in geographic context and (2) results from the method are sensitive to parameter choices related to cluster scaling (abbreviated as scaling parameters), but the system provides no direct support for making these choices. We employ both established and novel geovisual analytics methods to address these issues and to enhance the interpretation of SaTScan results. We demo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:05.316101+00:00"
+}

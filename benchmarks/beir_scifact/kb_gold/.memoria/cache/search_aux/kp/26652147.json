@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26652147",
+  "source_fingerprint": "dc7278674c119d2260c8f3fc07fe284a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26652147",
+    "acyl-and-total-ghrelin-are-suppressed-strongly-by-ingested-proteins,-weakly-by-lipids,-and-biphasically-by-carbohydrates."
+  ],
+  "key_phrases": [
+    "acyl",
+    "total",
+    "ghrelin",
+    "suppressed",
+    "strongly",
+    "by",
+    "ingested",
+    "proteins"
+  ],
+  "summary_1l": "Acyl and total ghrelin are suppressed strongly by ingested proteins, weakly by lipids, and biphasically by carbohydrates.",
+  "query_hits": [],
+  "embed_text": "26652147 Acyl and total ghrelin are suppressed strongly by ingested proteins, weakly by lipids, and biphasically by carbohydrates. science scifact CONTEXT Ghrelin is an orexigenic hormone that can increase body weight. Its circulating levels increase before meals and are suppressed after food ingestion. Understanding the effects of specific types of ingested macronutrients on ghrelin… 26652147 acyl-and-total-ghrelin-are-suppressed-strongly-by-ingested-proteins,-weakly-by-lipids,-and-biphasically-by-carbohydrates. acyl total ghrelin suppressed strongly by ingested proteins Acyl and total ghrelin are suppressed strongly by ingested proteins, weakly by lipids, and biphasically by carbohydrates. Acyl and total ghrelin are suppressed strongly by ingested proteins, weakly by lipids, and biphasically by carbohydrates. CONTEXT Ghrelin is an orexigenic hormone that can increase body weight. Its circulating levels increase before meals and are suppressed after food ingestion. Understanding the effects of specific types of ingested macronutrients on ghrelin regulation could facilitate the design of weight-reducing diets. OBJECTIVE We sought to understand how ingestion of carbohydrates, proteins, or lipids affect acyl (bioactive) and total ghrelin levels among human subjects, hypothesizing that lipids might suppress ghrelin levels less effectively than do either carbohydrates or proteins. DESIGN This was a randomized, within-subjects cross-over study. SETTING The study was conducted at a",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.950986+00:00"
+}

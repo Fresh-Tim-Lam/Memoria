@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "31682248",
+  "source_fingerprint": "d1af565f3c91c6ddfa8bfc02a4998e10",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "31682248",
+    "tgf-beta-suppresses-tumor-progression-in-colon-cancer-by-inhibition-of-il-6-trans-signaling."
+  ],
+  "key_phrases": [
+    "tgf",
+    "beta",
+    "suppresses",
+    "tumor",
+    "progression",
+    "colon",
+    "cancer",
+    "by"
+  ],
+  "summary_1l": "TGF-beta suppresses tumor progression in colon cancer by inhibition of IL-6 trans-signaling.",
+  "query_hits": [],
+  "embed_text": "31682248 TGF-beta suppresses tumor progression in colon cancer by inhibition of IL-6 trans-signaling. science scifact Alterations of TGF-beta signaling have been described in colorectal cancer, although the molecular consequences are largely unknown. By using transgenic mice overexpressing TGF-beta or a dominant-negative TGF-betaRII, we demonstrate that… 31682248 tgf-beta-suppresses-tumor-progression-in-colon-cancer-by-inhibition-of-il-6-trans-signaling. tgf beta suppresses tumor progression colon cancer by TGF-beta suppresses tumor progression in colon cancer by inhibition of IL-6 trans-signaling. TGF-beta suppresses tumor progression in colon cancer by inhibition of IL-6 trans-signaling. Alterations of TGF-beta signaling have been described in colorectal cancer, although the molecular consequences are largely unknown. By using transgenic mice overexpressing TGF-beta or a dominant-negative TGF-betaRII, we demonstrate that TGF-beta signaling in tumor infiltrating T lymphocytes controls the growth of dysplastic epithelial cells in experimental colorectal cancer, as determined by histology and a novel system for high-resolution chromoendoscopy. At the molecular level, TGF-beta signaling in T cells regulated STAT-3 activation in tumor cells via IL-6. IL-6 signaling required tumor cell-derived soluble IL-6R rather than membrane bound IL-6R and suppression of such TGF-beta-dependent IL-6",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.815668+00:00"
+}

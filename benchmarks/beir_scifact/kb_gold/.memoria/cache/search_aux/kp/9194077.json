@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9194077",
+  "source_fingerprint": "5e8697f5b45b8b8b47994d2866908ee4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9194077",
+    "effects-of-hypoxia-and-oxidative-stress-on-expression-of-neprilysin-in-human-neuroblastoma-cells-and-rat-cortical-neurones-and-astrocytes"
+  ],
+  "key_phrases": [
+    "effects",
+    "hypoxia",
+    "oxidative",
+    "stress",
+    "expression",
+    "neprilysin",
+    "human",
+    "neuroblastoma"
+  ],
+  "summary_1l": "Pathogenesis of Alzheimer’s disease (AD), which is characteris",
+  "query_hits": [],
+  "embed_text": "9194077 Effects of Hypoxia and Oxidative Stress on Expression of Neprilysin in Human Neuroblastoma Cells and Rat Cortical Neurones and Astrocytes science scifact Pathogenesis of Alzheimer’s disease (AD), which is characterised by accumulation of extracellular deposits of β-amyloid peptide (Aβ) in the brain, has recently been linked to vascular disorders such as ischemia and stroke. Aβ is constantly… 9194077 effects-of-hypoxia-and-oxidative-stress-on-expression-of-neprilysin-in-human-neuroblastoma-cells-and-rat-cortical-neurones-and-astrocytes effects hypoxia oxidative stress expression neprilysin human neuroblastoma Pathogenesis of Alzheimer’s disease (AD), which is characteris Effects of Hypoxia and Oxidative Stress on Expression of Neprilysin in Human Neuroblastoma Cells and Rat Cortical Neurones and Astrocytes Pathogenesis of Alzheimer’s disease (AD), which is characterised by accumulation of extracellular deposits of β-amyloid peptide (Aβ) in the brain, has recently been linked to vascular disorders such as ischemia and stroke. Aβ is constantly produced in the brain from amyloid precursor protein (APP) through its cleavage by β- and γ-secretases and certain Aβ species are toxic for neurones. The brain has an endogenous mechanism of Aβ removal via proteolytic degradation and the zinc metalloproteinase neprilysin (NEP) is a critical regulator of Aβ concentration. Down-regulation of NEP could predispose to AD. By comparing the effects of hypoxia and oxidative st",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:04.382219+00:00"
+}

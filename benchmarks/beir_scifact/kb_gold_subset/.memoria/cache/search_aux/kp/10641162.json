@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10641162",
+  "source_fingerprint": "f052f965e38175b7d234d2b665c4e3ad",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10641162",
+    "a-unique-cell-division-machinery-in-the-archaea."
+  ],
+  "key_phrases": [
+    "unique",
+    "cell",
+    "division",
+    "machinery",
+    "archaea",
+    "contrast",
+    "machineries",
+    "bacteria"
+  ],
+  "summary_1l": "A unique cell division machinery in the Archaea.",
+  "query_hits": [],
+  "embed_text": "10641162 A unique cell division machinery in the Archaea. science scifact In contrast to the cell division machineries of bacteria, euryarchaea, and eukaryotes, no division components have been identified in the second main archaeal phylum, Crenarchaeota. Here, we demonstrate that a three-gene operon, cdv, in… 10641162 a-unique-cell-division-machinery-in-the-archaea. unique cell division machinery archaea contrast machineries bacteria A unique cell division machinery in the Archaea. A unique cell division machinery in the Archaea. In contrast to the cell division machineries of bacteria, euryarchaea, and eukaryotes, no division components have been identified in the second main archaeal phylum, Crenarchaeota. Here, we demonstrate that a three-gene operon, cdv, in the crenarchaeon Sulfolobus acidocaldarius, forms part of a unique cell division machinery. The operon is induced at the onset of genome segregation and division, and the Cdv proteins then polymerize between segregating nucleoids and persist throughout cell division, forming a successively smaller structure during constriction. The cdv operon is dramatically down-regulated after UV irradiation, indicating division inhibition in response to DNA damage, reminiscent of eukaryotic checkpoint systems. The cdv gene",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.801367+00:00"
+}

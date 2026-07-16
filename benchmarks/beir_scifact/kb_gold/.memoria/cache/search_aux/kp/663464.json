@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "663464",
+  "source_fingerprint": "09a8a86b8629a1f24bd9139508e53600",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "663464"
+  ],
+  "key_phrases": [
+    "age",
+    "associated",
+    "microrna",
+    "expression",
+    "human",
+    "peripheral",
+    "blood",
+    "with"
+  ],
+  "summary_1l": "Recent studies provide evidence of correlations of DNA methylation and expres",
+  "query_hits": [],
+  "embed_text": "663464 Age‐associated microRNA expression in human peripheral blood is associated with all‐cause mortality and age‐related traits science scifact Recent studies provide evidence of correlations of DNA methylation and expression of protein-coding genes with human aging. The relations of microRNA expression with age and age-related clinical outcomes have not been characterized… 663464 age associated microrna expression human peripheral blood with Recent studies provide evidence of correlations of DNA methylation and expres Age‐associated microRNA expression in human peripheral blood is associated with all‐cause mortality and age‐related traits Recent studies provide evidence of correlations of DNA methylation and expression of protein-coding genes with human aging. The relations of microRNA expression with age and age-related clinical outcomes have not been characterized thoroughly. We explored associations of age with whole-blood microRNA expression in 5221 adults and identified 127 microRNAs that were differentially expressed by age at P < 3.3 × 10-4 (Bonferroni-corrected). Most microRNAs were underexpressed in older individuals. Integrative analysis of microRNA and mRNA expression revealed changes in age-associated mRNA expression possibly driven by age-associated microRNAs in pathways that involve RNA pr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.324225+00:00"
+}

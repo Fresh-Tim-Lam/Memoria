@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4653837",
+  "source_fingerprint": "46cf87b81b800b1f17f3ed9b547e68a5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4653837",
+    "microrna-29-induces-cellular-senescence-in-aging-muscle-through-multiple-signaling-pathways"
+  ],
+  "key_phrases": [
+    "microrna",
+    "29",
+    "induces",
+    "cellular",
+    "senescence",
+    "aging",
+    "muscle",
+    "through"
+  ],
+  "summary_1l": "The mechanisms underlying the development of aging-induced muscle atrophy are unclear.",
+  "query_hits": [],
+  "embed_text": "4653837 MicroRNA-29 induces cellular senescence in aging muscle through multiple signaling pathways science scifact The mechanisms underlying the development of aging-induced muscle atrophy are unclear. By microRNA array and individual qPCR analyses, we found significant up-regulation of miR-29 in muscles of aged rodents vs. results in young. With… 4653837 microrna-29-induces-cellular-senescence-in-aging-muscle-through-multiple-signaling-pathways microrna 29 induces cellular senescence aging muscle through The mechanisms underlying the development of aging-induced muscle atrophy are unclear. MicroRNA-29 induces cellular senescence in aging muscle through multiple signaling pathways The mechanisms underlying the development of aging-induced muscle atrophy are unclear. By microRNA array and individual qPCR analyses, we found significant up-regulation of miR-29 in muscles of aged rodents vs. results in young. With aging, p85α, IGF-1 and B-myb muscle levels were lower while the expression of certain cell arrest proteins (p53, p16 and pRB) increased. When miR-29 was expressed in muscle progenitor cells (MPC), their proliferation was impaired while SA-βgal expression increased signifying the development of senescence. Impaired MPC proliferation resulted from interactions between miR-29 and the 3'-UTR of p85a, IGF-1 and B-myb, suppressing the translation of these mediators of myoblas",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.953003+00:00"
+}

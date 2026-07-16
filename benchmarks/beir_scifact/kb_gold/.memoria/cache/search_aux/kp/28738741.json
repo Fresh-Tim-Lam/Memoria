@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "28738741",
+  "source_fingerprint": "63d1c1cd9919c1c10029e290307ea6b8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "28738741",
+    "adult-t-cell-leukemia/lymphoma-in-london:-clinical-experience-of-21-cases."
+  ],
+  "key_phrases": [
+    "adult",
+    "cell",
+    "leukemia",
+    "lymphoma",
+    "london",
+    "clinical",
+    "experience",
+    "21"
+  ],
+  "summary_1l": "Adult T-cell leukemia/lymphoma in London: clinical experience of 21 cases.",
+  "query_hits": [],
+  "embed_text": "28738741 Adult T-cell leukemia/lymphoma in London: clinical experience of 21 cases. science scifact Adult T-cell leukemia/lymphoma (ATLL) is uncommon in the United Kingdom and has so far been restricted to people of Afro-Caribbean extraction. Between 1981 and 1995, 21 cases presented to 2 inner London teaching hospitals where 17% of the… 28738741 adult-t-cell-leukemia/lymphoma-in-london:-clinical-experience-of-21-cases. adult cell leukemia lymphoma london clinical experience 21 Adult T-cell leukemia/lymphoma in London: clinical experience of 21 cases. Adult T-cell leukemia/lymphoma in London: clinical experience of 21 cases. Adult T-cell leukemia/lymphoma (ATLL) is uncommon in the United Kingdom and has so far been restricted to people of Afro-Caribbean extraction. Between 1981 and 1995, 21 cases presented to 2 inner London teaching hospitals where 17% of the population are of Afro-Caribbean origin. Clinical presentations were similar to those of the disease in HTLV-I-endemic areas. Major responses (CR + PR) were obtained in 10/16 assessable patients (63%) treated with combination chemotherapy. However, median survival was only 5.5 months. Disease progression and opportunistic infection were the major causes of treatment failure and death. Three patients (14%) relapsed in the central nervous system (CNS). Our cases confirm the profound",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.319245+00:00"
+}

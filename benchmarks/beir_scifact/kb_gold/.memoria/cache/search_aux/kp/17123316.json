@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "17123316",
+  "source_fingerprint": "4486941b256cf82dbca00aa2a2881550",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "17123316",
+    "erbb4-neuregulin-signaling-modulates-synapse-development-and-dendritic-arborization-through-distinct-mechanisms."
+  ],
+  "key_phrases": [
+    "erbb4",
+    "neuregulin",
+    "signaling",
+    "modulates",
+    "synapse",
+    "development",
+    "dendritic",
+    "arborization"
+  ],
+  "summary_1l": "ErbB4-neuregulin signaling modulates synapse development and dendritic arborization through distinct mechanisms.",
+  "query_hits": [],
+  "embed_text": "17123316 ErbB4-neuregulin signaling modulates synapse development and dendritic arborization through distinct mechanisms. science scifact Perturbations in neuregulin-1 (NRG1)/ErbB4 function have been associated with schizophrenia. Affected patients exhibit altered levels of these proteins and display hypofunction of glutamatergic synapses as well as altered neuronal… 17123316 erbb4-neuregulin-signaling-modulates-synapse-development-and-dendritic-arborization-through-distinct-mechanisms. erbb4 neuregulin signaling modulates synapse development dendritic arborization ErbB4-neuregulin signaling modulates synapse development and dendritic arborization through distinct mechanisms. ErbB4-neuregulin signaling modulates synapse development and dendritic arborization through distinct mechanisms. Perturbations in neuregulin-1 (NRG1)/ErbB4 function have been associated with schizophrenia. Affected patients exhibit altered levels of these proteins and display hypofunction of glutamatergic synapses as well as altered neuronal circuitry. However, the role of NRG1/ErbB4 in regulating synapse maturation and neuronal process formation has not been extensively examined. Here we demonstrate that ErbB4 is expressed in inhibitory interneurons at both excitatory and inhibitory postsynaptic sites. Overexpression of ErbB4 postsynaptically enhances size but not number of presynaptic inputs. Conversely, knockdown of ErbB4 using shRNA decreases the size of presynaptic inputs, demonstrati",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.358127+00:00"
+}

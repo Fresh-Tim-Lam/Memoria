@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "97884",
+  "source_fingerprint": "1c156e9a692d1a799515199ddf6808ec",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "97884",
+    "the-sacroiliac-joint-in-the-spondyloarthropathies."
+  ],
+  "key_phrases": [
+    "sacroiliac",
+    "joint",
+    "spondyloarthropathies",
+    "term",
+    "spondyloarthropathy",
+    "spa",
+    "describes",
+    "defines"
+  ],
+  "summary_1l": "The sacroiliac joint in the spondyloarthropathies.",
+  "query_hits": [],
+  "embed_text": "97884 The sacroiliac joint in the spondyloarthropathies. science scifact The term spondyloarthropathy (SpA) describes and defines a group of related inflammatory joint disease that share characteristic clinical features and a unique association with the major histocompatibility complex class I molecule HLA-B27.… 97884 the-sacroiliac-joint-in-the-spondyloarthropathies. sacroiliac joint spondyloarthropathies term spondyloarthropathy spa describes defines The sacroiliac joint in the spondyloarthropathies. The sacroiliac joint in the spondyloarthropathies. The term spondyloarthropathy (SpA) describes and defines a group of related inflammatory joint disease that share characteristic clinical features and a unique association with the major histocompatibility complex class I molecule HLA-B27. Five subgroups can be differentiated: ankylosing spondylitis, reactive arthritis, psoriatic arthritis, arthritis associated with inflammatory bowel disease, and undifferentiated SpA. The sacroiliac joints are centrally involved in the SpA, most clearly and pathognomonic in ankylosing spondylitis, in which most patients are affected early in the disease. Overcoming some of the diagnostic difficulties of early sacroiliitis, dynamic magnetic resonance imaging was shown to visualize both acute and chronic ch",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.832965+00:00"
+}

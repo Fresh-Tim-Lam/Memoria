@@ -1,0 +1,56 @@
+imports start
+jieba/pypinyin disabled (C extension crash workaround)
+KB=D:\AAA_Jupyter\Memoria\benchmarks\beir_scifact\kb_gold_subset
+rebuild_index
+rebuild done
+queries=300 qrels=300
+starting loop over 300 queries
+test search before loop
+test search ok, results=20
+  progress: evaluated=10, skipped=0, crashed=0, i=9, last top1=11844791
+  progress: evaluated=20, skipped=0, crashed=0, i=19, last top1=13843341
+  progress: evaluated=30, skipped=0, crashed=0, i=29, last top1=11369  progress: 300 queries evaluated, last top1=12922760
+aggregating
+query_count  progress: evaluated=50, skipped=0, crashed=0, i=49, last top1=11578459
+  progress: evaluated=60, skipped=0, crashed=0, i=59, last top1=13900610
+  progress: evaluated=70, skipped=0, crashed=0, i=69, last top1=13277039
+  progress: evaluated=80, skipped=0, crashed=0, i=79, last top1=14241418
+  progress: evaluated=90, skipped=0, crashed=0, i=89, last top1=11614737
+  progress: evaluated=100, skipped=0, crashed=0, i=99, last top1=13277039
+  progress: evaluated=110, skipped=0, crashed=0, i=109, last top1=10078024
+  progress: evaluated=120, skipped=0, crashed=0, i=119, last top1=12794099
+  progress: evaluated=130, skipped=0, crashed=0, i=129, last top1=970012
+  progress: evaluated=140, skipped=0, crashed=0, i=139, last top1=12232678
+  progress: evaluated=150, skipped=0, crashed=0, i=149, last top1=10078024
+  progress: evaluated=160, skipped=0, crashed=0, i=159, last top1=18174210
+  progress: evaluated=170, skipped=0, crashed=0, i=169, last top1=13277039
+  progress: evaluated=180, skipped=0, crashed=0, i=179, last top1=24341590
+  progress: evaluated=190, skipped=0, crashed=0, i=189, last top1=12991445
+  progress: evaluated=200, skipped=0, crashed=0, i=199, last top1=1471041
+  progress: evaluated=210, skipped=0, crashed=0, i=209, last top1=10984005
+  progress: evaluated=220, skipped=0, crashed=0, i=219, last top1=5912283
+  progress: evaluated=230, skipped=0, crashed=0, i=229, last top1=24088502
+  progress: evaluated=240, skipped=0, crashed=0, i=239, last top1=36444198
+  progress: evaluated=250, skipped=0, crashed=0, i=249, last top1=15476777
+  progress: evaluated=260, skipped=0, crashed=0, i=259, last top1=13350374
+  progress: evaluated=270, skipped=0, crashed=0, i=269, last top1=1196631
+  progress: evaluated=280, skipped=0, crashed=0, i=279, last top1=11344428
+  progress: evaluated=290, skipped=0, crashed=0, i=289, last top1=13277039
+  progress: evaluated=300, skipped=0, crashed=0, i=299, last top1=13940200
+loop completed: evaluated=300, skipped=0, crashed=0, total=300
+aggregating
+query_count=300
+mrr=0.4859
+recall@1=0.3869
+precision@1=0.41
+noise@1=0.59
+ndcg@1=0.41
+recall@5=0.5426
+precision@5=0.1187
+noise@5=0.8813
+ndcg@5=0.4834
+recall@10=0.6047
+precision@10=0.0677
+noise@10=0.9323
+ndcg@10=0.5047
+DONE

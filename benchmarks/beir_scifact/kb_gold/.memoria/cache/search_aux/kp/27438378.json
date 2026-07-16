@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27438378",
+  "source_fingerprint": "c84ff00d81a0a4c59dc1d9c6a77adcfb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27438378",
+    "misread-protein-creates-membrane-channels:-an-essential-step-in-the-bactericidal-action-of-aminoglycosides."
+  ],
+  "key_phrases": [
+    "misread",
+    "protein",
+    "creates",
+    "membrane",
+    "channels",
+    "essential",
+    "step",
+    "bactericidal"
+  ],
+  "summary_1l": "Misread protein creates membrane channels: an essential step in the bactericidal action of aminoglycosides.",
+  "query_hits": [],
+  "embed_text": "27438378 Misread protein creates membrane channels: an essential step in the bactericidal action of aminoglycosides. science scifact Among the pleiotropic effects of aminoglycosides, their irreversible uptake and their blockade of initiating ribosomes have appeared to explain their bactericidal action, while the contributions of translational misreading and membrane… 27438378 misread-protein-creates-membrane-channels:-an-essential-step-in-the-bactericidal-action-of-aminoglycosides. misread protein creates membrane channels essential step bactericidal Misread protein creates membrane channels: an essential step in the bactericidal action of aminoglycosides. Misread protein creates membrane channels: an essential step in the bactericidal action of aminoglycosides. Among the pleiotropic effects of aminoglycosides, their irreversible uptake and their blockade of initiating ribosomes have appeared to explain their bactericidal action, while the contributions of translational misreading and membrane damage and the mechanism of that damage have remained uncertain. We now present evidence that incorporation of misread proteins into the membrane can account for the membrane damage. The bactericidal action thus appears to result from the following sequence, in which each step is essential: slight initial entry of the antibiotic; interaction with chain-elongating ribosomes, resulting in misreading; incorporation of misread protein into the membrane, cr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:34.912199+00:00"
+}

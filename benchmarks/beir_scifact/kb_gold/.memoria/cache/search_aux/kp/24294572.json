@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24294572",
+  "source_fingerprint": "ff9586d098d604eaa35d6ace53c5c15f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24294572",
+    "pten-regulates-pi(3,4)p2-signaling-downstream-of-class-i-pi3k"
+  ],
+  "key_phrases": [
+    "pten",
+    "regulates",
+    "pi",
+    "p2",
+    "signaling",
+    "downstream",
+    "class",
+    "pi3k"
+  ],
+  "summary_1l": "The PI3K signaling pathway regulates cell growth and movement and is heavily mutated in cancer.",
+  "query_hits": [],
+  "embed_text": "24294572 PTEN Regulates PI(3,4)P2 Signaling Downstream of Class I PI3K science scifact The PI3K signaling pathway regulates cell growth and movement and is heavily mutated in cancer. Class I PI3Ks synthesize the lipid messenger PI(3,4,5)P3. PI(3,4,5)P3 can be dephosphorylated by 3- or 5-phosphatases, the latter producing… 24294572 pten-regulates-pi(3,4)p2-signaling-downstream-of-class-i-pi3k pten regulates pi p2 signaling downstream class pi3k The PI3K signaling pathway regulates cell growth and movement and is heavily mutated in cancer. PTEN Regulates PI(3,4)P2 Signaling Downstream of Class I PI3K The PI3K signaling pathway regulates cell growth and movement and is heavily mutated in cancer. Class I PI3Ks synthesize the lipid messenger PI(3,4,5)P3. PI(3,4,5)P3 can be dephosphorylated by 3- or 5-phosphatases, the latter producing PI(3,4)P2. The PTEN tumor suppressor is thought to function primarily as a PI(3,4,5)P3 3-phosphatase, limiting activation of this pathway. Here we show that PTEN also functions as a PI(3,4)P2 3-phosphatase, both in vitro and in vivo. PTEN is a major PI(3,4)P2 phosphatase in Mcf10a cytosol, and loss of PTEN and INPP4B, a known PI(3,4)P2 4-phosphatase, leads to synergistic accumulation of PI(3,4)P2, which correlated with increased invadopodia in epidermal growth factor (EGF)-stimulated cells. PTEN d",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.168350+00:00"
+}

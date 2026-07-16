@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1449692",
+  "source_fingerprint": "68a6eb07aa65ccbe29268febf77cdb15",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1449692",
+    "gestational-protein-restriction-affects-trophoblast-differentiation."
+  ],
+  "key_phrases": [
+    "gestational",
+    "protein",
+    "restriction",
+    "affects",
+    "trophoblast",
+    "differentiation",
+    "whether",
+    "how"
+  ],
+  "summary_1l": "Gestational protein restriction affects trophoblast differentiation.",
+  "query_hits": [],
+  "embed_text": "1449692 Gestational protein restriction affects trophoblast differentiation. science scifact Whether and how gestational protein restriction (PR) affects placental development and function remain unknown. To test the hypothesis that PR can affect trophoblast differentiation in mid-and late pregnancy, rats were fed a 20% or an… 1449692 gestational-protein-restriction-affects-trophoblast-differentiation. gestational protein restriction affects trophoblast differentiation whether how Gestational protein restriction affects trophoblast differentiation. Gestational protein restriction affects trophoblast differentiation. Whether and how gestational protein restriction (PR) affects placental development and function remain unknown. To test the hypothesis that PR can affect trophoblast differentiation in mid-and late pregnancy, rats were fed a 20% or an isocaloric 6% protein diet from Day 1 to 14 or 18 of pregnancy and effects of PR on trophoblast differentiation were determined by changes in expressions of marker gene(s) for trophoblast lineages. At Day 18 of pregnancy, PR increased expressions of Esrrb, Id1 andId2 (trophoblast stem cell markers), decreased expressions of Ascl2 (spongiotrophblast cell marker) and Prl2c1 (trophoblast giant cell marker), but did not alter expressions of Gjb3 and Pcdh12(glycogen cell markers) in the junctiona",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.048801+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2060137",
+  "source_fingerprint": "df6346f56b7556e4265fe0b50e611701",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2060137",
+    "cardiac-myocyte-remodeling-mediated-by-n-cadherin-dependent-mechanosensing."
+  ],
+  "key_phrases": [
+    "cardiac",
+    "myocyte",
+    "remodeling",
+    "mediated",
+    "by",
+    "cadherin",
+    "dependent",
+    "mechanosensing"
+  ],
+  "summary_1l": "Cardiac myocyte remodeling mediated by N-cadherin-dependent mechanosensing.",
+  "query_hits": [],
+  "embed_text": "2060137 Cardiac myocyte remodeling mediated by N-cadherin-dependent mechanosensing. science scifact Cell-to-cell adhesions are crucial in maintaining the structural and functional integrity of cardiac cells. Little is known about the mechanosensitivity and mechanotransduction of cell-to-cell interactions. Most studies of cardiac… 2060137 cardiac-myocyte-remodeling-mediated-by-n-cadherin-dependent-mechanosensing. cardiac myocyte remodeling mediated by cadherin dependent mechanosensing Cardiac myocyte remodeling mediated by N-cadherin-dependent mechanosensing. Cardiac myocyte remodeling mediated by N-cadherin-dependent mechanosensing. Cell-to-cell adhesions are crucial in maintaining the structural and functional integrity of cardiac cells. Little is known about the mechanosensitivity and mechanotransduction of cell-to-cell interactions. Most studies of cardiac mechanotransduction and myofibrillogenesis have focused on cell-extracellular matrix (ECM)-specific interactions. This study assesses the direct role of intercellular adhesion, specifically that of N-cadherin-mediated mechanotransduction, on the morphology and internal organization of neonatal ventricular cardiac myocytes. The results show that cadherin-mediated cell attachments are capable of eliciting a cytoskeletal network response similar to that of integrin-mediated force response an",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.545773+00:00"
+}

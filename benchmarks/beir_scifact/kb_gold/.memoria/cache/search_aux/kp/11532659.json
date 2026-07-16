@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11532659",
+  "source_fingerprint": "46e67ac7033c7531ccaddfc8f84f68a0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11532659",
+    "phosphorylation-of-histone-h3(t118)-alters-nucleosome-dynamics-and-remodeling"
+  ],
+  "key_phrases": [
+    "phosphorylation",
+    "histone",
+    "h3",
+    "t118",
+    "alters",
+    "nucleosome",
+    "dynamics",
+    "remodeling"
+  ],
+  "summary_1l": "Nucleosomes, the fundamental units of chromatin structure, are regulators and barriers to transcription, replication and r",
+  "query_hits": [],
+  "embed_text": "11532659 Phosphorylation of histone H3(T118) alters nucleosome dynamics and remodeling science scifact Nucleosomes, the fundamental units of chromatin structure, are regulators and barriers to transcription, replication and repair. Post-translational modifications (PTMs) of the histone proteins within nucleosomes regulate these DNA… 11532659 phosphorylation-of-histone-h3(t118)-alters-nucleosome-dynamics-and-remodeling phosphorylation histone h3 t118 alters nucleosome dynamics remodeling Nucleosomes, the fundamental units of chromatin structure, are regulators and barriers to transcription, replication and r Phosphorylation of histone H3(T118) alters nucleosome dynamics and remodeling Nucleosomes, the fundamental units of chromatin structure, are regulators and barriers to transcription, replication and repair. Post-translational modifications (PTMs) of the histone proteins within nucleosomes regulate these DNA processes. Histone H3(T118) is a site of phosphorylation [H3(T118ph)] and is implicated in regulation of transcription and DNA repair. We prepared H3(T118ph) by expressed protein ligation and determined its influence on nucleosome dynamics. We find H3(T118ph) reduces DNA-histone binding by 2 kcal/mol, increases nucleosome mobility by 28-fold and increases DNA accessibility near the dyad region by 6-fold. Moreover, H3(T118ph) increases the rate of hMSH2-hMSH6 nucleosome disassembly and e",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:06.667064+00:00"
+}

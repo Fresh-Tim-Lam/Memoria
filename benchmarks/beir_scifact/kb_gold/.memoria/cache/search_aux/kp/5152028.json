@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5152028",
+  "source_fingerprint": "7898a4f8e9710b8f5c0088fb0c101125",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5152028",
+    "folic-acid-improves-endothelial-function-in-coronary-artery-disease-via-mechanisms-largely-independent-of-homocysteine-lowering."
+  ],
+  "key_phrases": [
+    "folic",
+    "acid",
+    "improves",
+    "endothelial",
+    "function",
+    "coronary",
+    "artery",
+    "disease"
+  ],
+  "summary_1l": "Folic acid improves endothelial function in coronary artery disease via mechanisms largely independent of homocysteine lowering.",
+  "query_hits": [],
+  "embed_text": "5152028 Folic acid improves endothelial function in coronary artery disease via mechanisms largely independent of homocysteine lowering. science scifact BACKGROUND Homocysteine is a risk factor for coronary artery disease (CAD), although a causal relation remains to be proven. The importance of determining direct causality rests in the fact that plasma homocysteine can be safely and… 5152028 folic-acid-improves-endothelial-function-in-coronary-artery-disease-via-mechanisms-largely-independent-of-homocysteine-lowering. folic acid improves endothelial function coronary artery disease Folic acid improves endothelial function in coronary artery disease via mechanisms largely independent of homocysteine lowering. Folic acid improves endothelial function in coronary artery disease via mechanisms largely independent of homocysteine lowering. BACKGROUND Homocysteine is a risk factor for coronary artery disease (CAD), although a causal relation remains to be proven. The importance of determining direct causality rests in the fact that plasma homocysteine can be safely and inexpensively reduced by 25% with folic acid. This reduction is maximally achieved by doses of 0.4 mg/d. High-dose folic acid (5 mg/d) improves endothelial function in CAD, although the mechanism is controversial. It has been proposed that improvement occurs through reduction in total (tHcy) or free (non-protein bound) homocysteine (fHcy). We investigated the effects of folic acid on endothelial function before a change in homocystein",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.297019+00:00"
+}

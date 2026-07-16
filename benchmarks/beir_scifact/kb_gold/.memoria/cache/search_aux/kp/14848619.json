@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "14848619",
+  "source_fingerprint": "3752ece21492bc39da27f1895e51854e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14848619"
+  ],
+  "key_phrases": [
+    "bh3",
+    "only",
+    "protein",
+    "noxa",
+    "mediator",
+    "hypoxic",
+    "cell",
+    "death"
+  ],
+  "summary_1l": "Hypoxia is a common cause of cell death and is implicated in many disease processes including stroke an",
+  "query_hits": [],
+  "embed_text": "14848619 BH3-only Protein Noxa Is a Mediator of Hypoxic Cell Death Induced by Hypoxia-inducible Factor 1α science scifact Hypoxia is a common cause of cell death and is implicated in many disease processes including stroke and chronic degenerative disorders. In response to hypoxia, cells express a variety of genes, which allow adaptation to altered metabolic… 14848619 bh3 only protein noxa mediator hypoxic cell death Hypoxia is a common cause of cell death and is implicated in many disease processes including stroke an BH3-only Protein Noxa Is a Mediator of Hypoxic Cell Death Induced by Hypoxia-inducible Factor 1α Hypoxia is a common cause of cell death and is implicated in many disease processes including stroke and chronic degenerative disorders. In response to hypoxia, cells express a variety of genes, which allow adaptation to altered metabolic demands, decreased oxygen demands, and the removal of irreversibly damaged cells. Using polymerase chain reaction–based suppression subtractive hybridization to find genes that are differentially expressed in hypoxia, we identified the BH3-only Bcl-2 family protein Noxa. Noxa is a candidate molecule mediating p53-induced apoptosis. We show that Noxa promoter responds directly to hypoxia via hypoxia-inducible factor (HIF)-1α. Suppression of Noxa expression by a",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.772615+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "39048693",
+  "source_fingerprint": "7bf6df9c555bab2c584531a5a24a9491",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "39048693",
+    "synapsin-i-cre-transgene-expression-in-male-mice-produces-germline-recombination-in-progeny."
+  ],
+  "key_phrases": [
+    "synapsin",
+    "cre",
+    "transgene",
+    "expression",
+    "male",
+    "mice",
+    "produces",
+    "germline"
+  ],
+  "summary_1l": "Synapsin I Cre transgene expression in male mice produces germline recombination in progeny.",
+  "query_hits": [],
+  "embed_text": "39048693 Synapsin I Cre transgene expression in male mice produces germline recombination in progeny. science scifact The cre/LoxP system can produce conditional loss of gene function in specific cell types such as neurons. A transgenic mouse line, utilized by multiple studies, used the Synapsin I promoter to drive expression of cre (SynCre) to achieve… 39048693 synapsin-i-cre-transgene-expression-in-male-mice-produces-germline-recombination-in-progeny. synapsin cre transgene expression male mice produces germline Synapsin I Cre transgene expression in male mice produces germline recombination in progeny. Synapsin I Cre transgene expression in male mice produces germline recombination in progeny. The cre/LoxP system can produce conditional loss of gene function in specific cell types such as neurons. A transgenic mouse line, utilized by multiple studies, used the Synapsin I promoter to drive expression of cre (SynCre) to achieve neuronal-specific cre expression. Herein we describe that cre expression can also be observed in SynCre mice within the testes after being bred into a floxed transgenic mouse line. Cre transcript was expressed in testes resulting in recombination of the floxed substrate in testes. In the majority of cases, progeny of male SynCre mice inherited a germline recombined floxed allele, while this was never observed in progeny from female mice carrying the SynCre allele. T",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:46.221584+00:00"
+}

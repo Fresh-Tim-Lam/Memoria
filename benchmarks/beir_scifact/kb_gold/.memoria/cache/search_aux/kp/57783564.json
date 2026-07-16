@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "57783564",
+  "source_fingerprint": "8feae2c25ac6c3156bea5909ac43f0bc",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "57783564"
+  ],
+  "key_phrases": [
+    "cdx2",
+    "inhibits",
+    "proliferation",
+    "tumor",
+    "formation",
+    "colon",
+    "cancer",
+    "cells"
+  ],
+  "summary_1l": "Caudal-related homeobox transcriptio",
+  "query_hits": [],
+  "embed_text": "57783564 CDX2 inhibits the proliferation and tumor formation of colon cancer cells by suppressing Wnt/β-catenin signaling via transactivation of GSK-3β and Axin2 expression science scifact Caudal-related homeobox transcription factor 2 (CDX2), an intestine-specific nuclear transcription factor, has been strongly implicated in the tumourigenesis of various human cancers. However, the functional role of CDX2 in the development… 57783564 cdx2 inhibits proliferation tumor formation colon cancer cells Caudal-related homeobox transcriptio CDX2 inhibits the proliferation and tumor formation of colon cancer cells by suppressing Wnt/β-catenin signaling via transactivation of GSK-3β and Axin2 expression Caudal-related homeobox transcription factor 2 (CDX2), an intestine-specific nuclear transcription factor, has been strongly implicated in the tumourigenesis of various human cancers. However, the functional role of CDX2 in the development and progression of colorectal cancer (CRC) is not well known. In this study, CDX2 knockdown in colon cancer cells promoted cell proliferation in vitro, accelerated tumor formation in vivo, and induced a cell cycle transition from G0/G1 to S phase, whereas CDX2 overexpression inhibited cell proliferation. TOP/FOP-Flash reporter assay showed that CDX2 knockdown or CDX2 overexpression significant",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.066028+00:00"
+}

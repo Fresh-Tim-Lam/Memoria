@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11666252",
+  "source_fingerprint": "7a30c6b59e9a5c5773c53bc9ed308ab4",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11666252",
+    "maintaining-the-norm:-t-cell-homeostasis"
+  ],
+  "key_phrases": [
+    "maintaining",
+    "norm",
+    "cell",
+    "homeostasis",
+    "persistence",
+    "naive",
+    "memory",
+    "cells"
+  ],
+  "summary_1l": "The persistence of naive and memory T cells has long been of interest to immunologists, but the factors that influence the survival and homeostasis of these su",
+  "query_hits": [],
+  "embed_text": "11666252 Maintaining the norm: T-cell homeostasis science scifact The persistence of naive and memory T cells has long been of interest to immunologists, but the factors that influence the survival and homeostasis of these subsets have remained obscure. In recent years, it has become evident that the… 11666252 maintaining-the-norm:-t-cell-homeostasis maintaining norm cell homeostasis persistence naive memory cells The persistence of naive and memory T cells has long been of interest to immunologists, but the factors that influence the survival and homeostasis of these su Maintaining the norm: T-cell homeostasis The persistence of naive and memory T cells has long been of interest to immunologists, but the factors that influence the survival and homeostasis of these subsets have remained obscure. In recent years, it has become evident that the homeostasis of both naive and memory T-cell pools is highly dynamic and tightly regulated by internal stimuli, including cytokines and self-peptide–MHC ligands for the T-cell receptor. These homeostatic mechanisms might have a vital influence on the capacity of the T-cell pool to respond to both foreign and self-antigens.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:07.320110+00:00"
+}

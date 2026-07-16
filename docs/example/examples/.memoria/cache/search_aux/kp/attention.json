@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "kp_id": "attention",
+  "source_fingerprint": "1a2808e4f31da7f543dd93a59c4c7770",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "nlp"
+  ],
+  "aliases": [
+    "attention"
+  ],
+  "key_phrases": [
+    "注意力",
+    "机制",
+    "attention",
+    "mechanism",
+    "深度",
+    "学习",
+    "重要",
+    "创新"
+  ],
+  "summary_1l": "注意力机制（Attention Mechanism）是深度学习中最重要的创新之一。",
+  "query_hits": [],
+  "embed_text": "attention 注意力机制 机器学习 nlp attention 注意力 机制 attention mechanism 深度 学习 重要 创新 注意力机制（Attention Mechanism）是深度学习中最重要的创新之一。 注意力机制 注意力机制（Attention Mechanism）是深度学习中最重要的创新之一。它允许模型在处理输入序列时，动态地将计算资源分配给最相关的部分，而非均匀地处理所有信息。 注意力机制的灵感来源于人类 ——我们在观察场景时，并不会同时处理所有视觉信息，而是将注意力聚焦于关键区域。类似地，神经网络中的注意力机制让模型学会\"在哪里看\"。 在自然语言处理中，注意力机制最早被用于机器翻译任务（Bahdanau et al., 2014），用于解决长序列编码的信息瓶颈问题。随后，它成为 架构的核心组件，彻底改变了 NLP 乃至整个深度学习领域的格局。后续的 和 GPT 都建立在这一基础之上。 Query-Key-Value 注意力计算的核心框架是 Query-Key-Value（QKV）模型，它将注意力过程类比为信息检索系统： **Query（查询）**：当前需要被处理的位置生成的查询向量，表示\"我在找什么\" **Key（键）**：每个位置生成的键向量，表示\"我有什么特征\" **Value（值）**：每个位置生成的值向量，表示\"我的实际内容\" 计算过程分为三步： 相似度计算 相似度计算是注意力机制的第一步。Query 与所有 Key 的点积，得到相关性得分： 点积相似度计算简单高效，但它的输出范围不受限。这也正是后续需要 Softmax 归一化的原因——将无界的得分转化为概率分布。 除了点积相似度，还有其他常见的相似度计算方式： **加性注意力**（Additive Attention）： **双线性注意力**（Bilinear Attention）： **缩放点积**（Scaled Dot-Product）： 其中缩放点积是 Transformer 使用的形式，在效果和效率之间取得了最佳平衡。 权重归一化 权重归一化通过 Softmax 将点积得分转化为概率分布： 归一化",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T03:38:45.341848+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20454006",
+  "source_fingerprint": "6432d04d34935f1d09a699437d69ac72",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20454006",
+    "a-randomized,-placebo-controlled-trial-of-diindolylmethane-for-breast-cancer-biomarker-modulation-in-patients-taking-tamoxifen"
+  ],
+  "key_phrases": [
+    "randomized",
+    "placebo",
+    "controlled",
+    "trial",
+    "diindolylmethane",
+    "breast",
+    "cancer",
+    "biomarker"
+  ],
+  "summary_1l": "Diindolylmethane (DIM), a bioactive metabolite of indole-3-carbinol found",
+  "query_hits": [],
+  "embed_text": "20454006 A randomized, placebo-controlled trial of diindolylmethane for breast cancer biomarker modulation in patients taking tamoxifen science scifact Diindolylmethane (DIM), a bioactive metabolite of indole-3-carbinol found in cruciferous vegetables, has proposed cancer chemoprevention activity in the breast. There is limited evidence of clinically relevant activity of DIM or long-term… 20454006 a-randomized,-placebo-controlled-trial-of-diindolylmethane-for-breast-cancer-biomarker-modulation-in-patients-taking-tamoxifen randomized placebo controlled trial diindolylmethane breast cancer biomarker Diindolylmethane (DIM), a bioactive metabolite of indole-3-carbinol found A randomized, placebo-controlled trial of diindolylmethane for breast cancer biomarker modulation in patients taking tamoxifen Diindolylmethane (DIM), a bioactive metabolite of indole-3-carbinol found in cruciferous vegetables, has proposed cancer chemoprevention activity in the breast. There is limited evidence of clinically relevant activity of DIM or long-term safety data of its regular use. A randomized, double-blind, placebo-controlled trial was conducted to determine the activity and safety of combined use of BioResponse DIM® (BR-DIM) with tamoxifen. Women prescribed tamoxifen (n = 130) were randomly assigned oral BR-DIM at 150 mg twice daily or placebo, for 12 months. The primary study endpoint was change in urinary 2/16α-hydroxyestrone (2/16α-OHE1) ratio. Changes in 4-hydroxyestron",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.305103+00:00"
+}

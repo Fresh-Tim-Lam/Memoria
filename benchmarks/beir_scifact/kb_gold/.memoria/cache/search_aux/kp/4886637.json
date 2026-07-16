@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4886637",
+  "source_fingerprint": "ef41eaee2828808a9786353cfe41f962",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4886637",
+    "diabetes,-metabolic-syndrome,-and-breast-cancer:-a-review-of-the-current-evidence."
+  ],
+  "key_phrases": [
+    "diabetes",
+    "metabolic",
+    "syndrome",
+    "breast",
+    "cancer",
+    "review",
+    "current",
+    "evidence"
+  ],
+  "summary_1l": "Diabetes, metabolic syndrome, and breast cancer: a review of the current evidence.",
+  "query_hits": [],
+  "embed_text": "4886637 Diabetes, metabolic syndrome, and breast cancer: a review of the current evidence. science scifact Incidences of breast cancer, type 2 diabetes, and metabolic syndrome have increased over the past decades with the obesity epidemic, especially in industrialized countries. Insulin resistance, hyperinsulinemia, and changes in the signaling… 4886637 diabetes,-metabolic-syndrome,-and-breast-cancer:-a-review-of-the-current-evidence. diabetes metabolic syndrome breast cancer review current evidence Diabetes, metabolic syndrome, and breast cancer: a review of the current evidence. Diabetes, metabolic syndrome, and breast cancer: a review of the current evidence. Incidences of breast cancer, type 2 diabetes, and metabolic syndrome have increased over the past decades with the obesity epidemic, especially in industrialized countries. Insulin resistance, hyperinsulinemia, and changes in the signaling of growth hormones and steroid hormones associated with diabetes may affect the risk of breast cancer. We reviewed epidemiologic studies of the association between type 2 diabetes and risk of breast cancer and the available evidence on the role of hormonal mediators of an association between diabetes and breast cancer. The combined evidence supports a modest association between type 2 diabetes and the risk of breast cancer, which appears to be more consistent among postmen",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.633413+00:00"
+}

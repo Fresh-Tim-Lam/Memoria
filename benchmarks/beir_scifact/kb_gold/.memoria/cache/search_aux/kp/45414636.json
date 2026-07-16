@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "45414636",
+  "source_fingerprint": "0ba5ae04e7cf2a89e04954d7d48dd112",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "45414636",
+    "requirement-of-c-myb-in-t-cell-development-and-in-mature-t-cell-function."
+  ],
+  "key_phrases": [
+    "requirement",
+    "myb",
+    "cell",
+    "development",
+    "mature",
+    "function",
+    "previous",
+    "reports"
+  ],
+  "summary_1l": "Requirement of c-myb in T cell development and in mature T cell function.",
+  "query_hits": [],
+  "embed_text": "45414636 Requirement of c-myb in T cell development and in mature T cell function. science scifact Previous reports have suggested that the protooncogene c-myb participates in T cell development in the thymus and mature T cell proliferation. We have generated two T cell-specific c-myb knockout mouse models, myb/LckCre and myb/CD4Cre. We… 45414636 requirement-of-c-myb-in-t-cell-development-and-in-mature-t-cell-function. requirement myb cell development mature function previous reports Requirement of c-myb in T cell development and in mature T cell function. Requirement of c-myb in T cell development and in mature T cell function. Previous reports have suggested that the protooncogene c-myb participates in T cell development in the thymus and mature T cell proliferation. We have generated two T cell-specific c-myb knockout mouse models, myb/LckCre and myb/CD4Cre. We have demonstrated that c-myb is required for the development of thymocytes at the DN3 stage, for survival and proliferation of double-positive thymocytes, for differentiation of single-positive CD4 and CD8 T cells, and for the proliferative responses of mature T cells. In addition, our data show that c-myb is directly involved in the formation of double-positive CD4+CD8+CD25+, CD4+CD25+, and CD8+CD25+ T cells, developmental processes that may imply a role for c-myb in autoimmune dy",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.349725+00:00"
+}

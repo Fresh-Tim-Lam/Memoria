@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1889358",
+  "source_fingerprint": "ac5fe07822da28b3c9db1ac8016d27ba",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1889358",
+    "kif3a/b:-a-heterodimeric-kinesin-superfamily-protein-that-works-as-a-microtubule-plus-end-directed-motor-for-membrane-organelle-transport"
+  ],
+  "key_phrases": [
+    "kif3a",
+    "heterodimeric",
+    "kinesin",
+    "superfamily",
+    "protein",
+    "that",
+    "works",
+    "as"
+  ],
+  "summary_1l": "We cloned a new member of the murine brain kinesin superfamily",
+  "query_hits": [],
+  "embed_text": "1889358 KIF3A/B: a heterodimeric kinesin superfamily protein that works as a microtubule plus end-directed motor for membrane organelle transport science scifact We cloned a new member of the murine brain kinesin superfamily, KIF3B, and found that its amino acid sequence is highly homologous but not identical to KIF3A, which we previously cloned and named KIF3 (47% identical). KIF3B is localized in… 1889358 kif3a/b:-a-heterodimeric-kinesin-superfamily-protein-that-works-as-a-microtubule-plus-end-directed-motor-for-membrane-organelle-transport kif3a heterodimeric kinesin superfamily protein that works as We cloned a new member of the murine brain kinesin superfamily KIF3A/B: a heterodimeric kinesin superfamily protein that works as a microtubule plus end-directed motor for membrane organelle transport We cloned a new member of the murine brain kinesin superfamily, KIF3B, and found that its amino acid sequence is highly homologous but not identical to KIF3A, which we previously cloned and named KIF3 (47% identical). KIF3B is localized in various organ tissues and developing neurons of mice and accumulates with anterogradely moving membranous organelles after ligation of nerve axons. Immunoprecipitation assay of the brain revealed that KIF3B forms a complex with KIF3A and three other high molecular weight (approximately 100 kD)-associated polypeptides, called the kinesin superfamily-associated protein 3 (KAP3). In vitro reconstruction using baculovirus",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.860501+00:00"
+}

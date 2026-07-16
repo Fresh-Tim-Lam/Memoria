@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "28338268",
+  "source_fingerprint": "27df24a2991d572197364091da7e6b6b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "28338268",
+    "dominant-optic-atrophy,-deafness,-ptosis,-ophthalmoplegia,-dystaxia,-and-myopathy.-a-new-syndrome."
+  ],
+  "key_phrases": [
+    "dominant",
+    "optic",
+    "atrophy",
+    "deafness",
+    "ptosis",
+    "ophthalmoplegia",
+    "dystaxia",
+    "myopathy"
+  ],
+  "summary_1l": "Dominant optic atrophy, deafness, ptosis, ophthalmoplegia, dystaxia, and myopathy.",
+  "query_hits": [],
+  "embed_text": "28338268 Dominant optic atrophy, deafness, ptosis, ophthalmoplegia, dystaxia, and myopathy. A new syndrome. science scifact Twenty-three members of a 96-member family exhibited an autosomal dominant disorder which has not previously been described. This disorder involves progressive optic atrophy, abnormal electroretinography without retinal pigment changes,… 28338268 dominant-optic-atrophy,-deafness,-ptosis,-ophthalmoplegia,-dystaxia,-and-myopathy.-a-new-syndrome. dominant optic atrophy deafness ptosis ophthalmoplegia dystaxia myopathy Dominant optic atrophy, deafness, ptosis, ophthalmoplegia, dystaxia, and myopathy. Dominant optic atrophy, deafness, ptosis, ophthalmoplegia, dystaxia, and myopathy. A new syndrome. Twenty-three members of a 96-member family exhibited an autosomal dominant disorder which has not previously been described. This disorder involves progressive optic atrophy, abnormal electroretinography without retinal pigment changes, and progressive sensorineural hearing loss usually evident in the first or second decade of life. In midlife, ptosis, ophthalmoplegia, dystaxia, and a nonspecific myopathy occur.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.895803+00:00"
+}

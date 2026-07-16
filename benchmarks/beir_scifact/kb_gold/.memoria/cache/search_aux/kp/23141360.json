@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23141360",
+  "source_fingerprint": "f670783dd8f47059ec46424a6d4695ae",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23141360",
+    "nature-and-anisotropy-of-cortical-forces-orienting-drosophila-tissue-morphogenesis"
+  ],
+  "key_phrases": [
+    "nature",
+    "anisotropy",
+    "cortical",
+    "forces",
+    "orienting",
+    "drosophila",
+    "tissue",
+    "morphogenesis"
+  ],
+  "summary_1l": "The morphogenesis of developing embryos and organs relies on the ability of cells to remodel their contacts with neig",
+  "query_hits": [],
+  "embed_text": "23141360 Nature and anisotropy of cortical forces orienting Drosophila tissue morphogenesis science scifact The morphogenesis of developing embryos and organs relies on the ability of cells to remodel their contacts with neighbouring cells. Using quantitative modelling and laser nano-dissection, we probed the mechanics of a morphogenetic… 23141360 nature-and-anisotropy-of-cortical-forces-orienting-drosophila-tissue-morphogenesis nature anisotropy cortical forces orienting drosophila tissue morphogenesis The morphogenesis of developing embryos and organs relies on the ability of cells to remodel their contacts with neig Nature and anisotropy of cortical forces orienting Drosophila tissue morphogenesis The morphogenesis of developing embryos and organs relies on the ability of cells to remodel their contacts with neighbouring cells. Using quantitative modelling and laser nano-dissection, we probed the mechanics of a morphogenetic process, the elongation of Drosophila melanogaster embryos, which results from polarized cell neighbour exchanges. We show that anisotropy of cortical tension at apical cell junctions is sufficient to drive tissue elongation. We estimated its value through comparisons between in silico and in vivo data using various tissue descriptors. Nano-dissection of the actomyosin network indicates that tension is anisotropically distributed and depends on myosin II accumulation. Junction rel",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.929860+00:00"
+}

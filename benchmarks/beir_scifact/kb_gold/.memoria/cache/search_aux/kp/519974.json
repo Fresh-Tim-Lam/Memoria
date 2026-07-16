@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "519974",
+  "source_fingerprint": "cd9b074fdcea8cba8f3df182cf1f161e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "519974",
+    "anktm1,-a-trp-like-channel-expressed-in-nociceptive-neurons,-is-activated-by-cold-temperatures"
+  ],
+  "key_phrases": [
+    "anktm1",
+    "trp",
+    "like",
+    "channel",
+    "expressed",
+    "nociceptive",
+    "neurons",
+    "activated"
+  ],
+  "summary_1l": "Mammals detect temperature with specialized neurons in the peripheral nervous system.",
+  "query_hits": [],
+  "embed_text": "519974 ANKTM1, a TRP-like Channel Expressed in Nociceptive Neurons, Is Activated by Cold Temperatures science scifact Mammals detect temperature with specialized neurons in the peripheral nervous system. Four TRPV-class channels have been implicated in sensing heat, and one TRPM-class channel in sensing cold. The combined range of temperatures that… 519974 anktm1,-a-trp-like-channel-expressed-in-nociceptive-neurons,-is-activated-by-cold-temperatures anktm1 trp like channel expressed nociceptive neurons activated Mammals detect temperature with specialized neurons in the peripheral nervous system. ANKTM1, a TRP-like Channel Expressed in Nociceptive Neurons, Is Activated by Cold Temperatures Mammals detect temperature with specialized neurons in the peripheral nervous system. Four TRPV-class channels have been implicated in sensing heat, and one TRPM-class channel in sensing cold. The combined range of temperatures that activate these channels covers a majority of the relevant physiological spectrum sensed by most mammals, with a significant gap in the noxious cold range. Here, we describe the characterization of ANKTM1, a cold-activated channel with a lower activation temperature compared to the cold and menthol receptor, TRPM8. ANKTM1 is a distant family member of TRP channels with very little amino acid similarity to TRPM8. It is found in a subset of nociceptive sensory neurons wh",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.439091+00:00"
+}

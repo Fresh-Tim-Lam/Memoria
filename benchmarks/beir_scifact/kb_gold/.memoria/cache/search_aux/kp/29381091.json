@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "29381091",
+  "source_fingerprint": "adb76ed4b073209b27827e1610d2c3cb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29381091",
+    "brown-and-white-adipose-tissues:-intrinsic-differences-in-gene-expression-and-response-to-cold-exposure-in-mice"
+  ],
+  "key_phrases": [
+    "brown",
+    "white",
+    "adipose",
+    "tissues",
+    "intrinsic",
+    "differences",
+    "gene",
+    "expression"
+  ],
+  "summary_1l": "Brown adipocytes dissipate energy, whereas white adipocytes are an energy storage site.",
+  "query_hits": [],
+  "embed_text": "29381091 Brown and white adipose tissues: intrinsic differences in gene expression and response to cold exposure in mice science scifact Brown adipocytes dissipate energy, whereas white adipocytes are an energy storage site. We explored the plasticity of different white adipose tissue depots in acquiring a brown phenotype by cold exposure. By comparing cold-induced genes in… 29381091 brown-and-white-adipose-tissues:-intrinsic-differences-in-gene-expression-and-response-to-cold-exposure-in-mice brown white adipose tissues intrinsic differences gene expression Brown adipocytes dissipate energy, whereas white adipocytes are an energy storage site. Brown and white adipose tissues: intrinsic differences in gene expression and response to cold exposure in mice Brown adipocytes dissipate energy, whereas white adipocytes are an energy storage site. We explored the plasticity of different white adipose tissue depots in acquiring a brown phenotype by cold exposure. By comparing cold-induced genes in white fat to those enriched in brown compared with white fat, at thermoneutrality we defined a \"brite\" transcription signature. We identified the genes, pathways, and promoter regulatory motifs associated with \"browning,\" as these represent novel targets for understanding this process. For example, neuregulin 4 was more highly expressed in brown adipose tissue and upregulated in white fat upon cold exposure, and cell studies showed that it is a",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.848144+00:00"
+}

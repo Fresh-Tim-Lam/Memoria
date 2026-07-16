@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "46926352",
+  "source_fingerprint": "c93714ca32988a71049b7f0bbc63dded",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "46926352",
+    "dendritic-cells,-t-cells-and-lymphatics:-dialogues-in-migration-and-beyond."
+  ],
+  "key_phrases": [
+    "dendritic",
+    "cells",
+    "lymphatics",
+    "dialogues",
+    "migration",
+    "beyond",
+    "immune",
+    "continuously"
+  ],
+  "summary_1l": "Dendritic cells, T cells and lymphatics: dialogues in migration and beyond.",
+  "query_hits": [],
+  "embed_text": "46926352 Dendritic cells, T cells and lymphatics: dialogues in migration and beyond. science scifact Immune cells continuously recirculate through lymph vessels en route from peripheral tissues to the blood. Leuyte trafficking into and within lymph vessels is mediated by an interply with lymphatic endothelial cells (LECs). However,… 46926352 dendritic-cells,-t-cells-and-lymphatics:-dialogues-in-migration-and-beyond. dendritic cells lymphatics dialogues migration beyond immune continuously Dendritic cells, T cells and lymphatics: dialogues in migration and beyond. Dendritic cells, T cells and lymphatics: dialogues in migration and beyond. Immune cells continuously recirculate through lymph vessels en route from peripheral tissues to the blood. Leuyte trafficking into and within lymph vessels is mediated by an interply with lymphatic endothelial cells (LECs). However, lymphatic vessels are much more than mere conduits for fluid and immune cell transport. Data accumulating during past several years indicate that LECs support T cell survival, induce tolerance to self-antigens, inhibit exaggerated T cell proliferation during immune response and maintain T cell memory. Reciprocally, leukocytes impact LEC biology: lymphatic vessel permeability depends on DCs while lymphocytes regulate LEC proliferation during inflammation. Altogether, these novel results",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.218967+00:00"
+}

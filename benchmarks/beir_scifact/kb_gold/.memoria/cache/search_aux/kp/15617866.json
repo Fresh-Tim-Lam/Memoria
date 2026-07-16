@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15617866",
+  "source_fingerprint": "e06fcd0c2250cecfd72181cba4760dc6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15617866",
+    "viral-paratransgenesis-in-the-malaria-vector-anopheles-gambiae"
+  ],
+  "key_phrases": [
+    "viral",
+    "paratransgenesis",
+    "malaria",
+    "vector",
+    "anopheles",
+    "gambiae",
+    "genetic",
+    "manipulation"
+  ],
+  "summary_1l": "Paratransgenesis, the genetic manipulation of insect symbiotic microorganisms, is being considered as a potential method to control vecto",
+  "query_hits": [],
+  "embed_text": "15617866 Viral Paratransgenesis in the Malaria Vector Anopheles gambiae science scifact Paratransgenesis, the genetic manipulation of insect symbiotic microorganisms, is being considered as a potential method to control vector-borne diseases such as malaria. The feasibility of paratransgenic malaria control has been hampered… 15617866 viral-paratransgenesis-in-the-malaria-vector-anopheles-gambiae viral paratransgenesis malaria vector anopheles gambiae genetic manipulation Paratransgenesis, the genetic manipulation of insect symbiotic microorganisms, is being considered as a potential method to control vecto Viral Paratransgenesis in the Malaria Vector Anopheles gambiae Paratransgenesis, the genetic manipulation of insect symbiotic microorganisms, is being considered as a potential method to control vector-borne diseases such as malaria. The feasibility of paratransgenic malaria control has been hampered by the lack of candidate symbiotic microorganisms for the major vector Anopheles gambiae. In other systems, densonucleosis viruses (DNVs) are attractive agents for viral paratransgenesis because they infect important vector insects, can be genetically manipulated and are transmitted to subsequent generations. However, An. gambiae has been shown to be refractory to DNV dissemination. We discovered, cloned and characterized the first known DNV (AgDNV) capable of infection and dissemination in An",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.982943+00:00"
+}

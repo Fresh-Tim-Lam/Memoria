@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "33733520",
+  "source_fingerprint": "19de1c073966a2257a40b9b164da92f3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "33733520",
+    "benzodiazepines-and-injurious-falls-in-community-dwelling-elders."
+  ],
+  "key_phrases": [
+    "benzodiazepines",
+    "injurious",
+    "falls",
+    "community",
+    "dwelling",
+    "elders",
+    "background",
+    "frequently"
+  ],
+  "summary_1l": "Benzodiazepines and injurious falls in community dwelling elders.",
+  "query_hits": [],
+  "embed_text": "33733520 Benzodiazepines and injurious falls in community dwelling elders. science scifact BACKGROUND Benzodiazepines are frequently used medications in the elderly, in whom they are associated with an increased risk of falling, with sometimes dire consequences. OBJECTIVE To estimate the impact of benzodiazepine-associated… 33733520 benzodiazepines-and-injurious-falls-in-community-dwelling-elders. benzodiazepines injurious falls community dwelling elders background frequently Benzodiazepines and injurious falls in community dwelling elders. Benzodiazepines and injurious falls in community dwelling elders. BACKGROUND Benzodiazepines are frequently used medications in the elderly, in whom they are associated with an increased risk of falling, with sometimes dire consequences. OBJECTIVE To estimate the impact of benzodiazepine-associated injurious falls in a population of elderly persons. METHOD A nested case-control study was conducted using data collected during 10 years of follow-up of the French PAQUID (Personnes Agées QUID) community-based cohort. The main outcome measure was the occurrence of an injurious fall, which was defined as a fall resulting in hospitalization, fracture, head trauma or death. Controls (3 : 1) were frequency-matched to cases. Benzodiazepine exposure was the use of benzodiazepines over the previous 2",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.674816+00:00"
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "14753395",
+  "source_fingerprint": "00ea97fce7e3bdb5d647a9f6f78c7c66",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14753395"
+  ],
+  "key_phrases": [
+    "structure",
+    "function",
+    "blood",
+    "brain",
+    "barrier",
+    "neural",
+    "signalling",
+    "within"
+  ],
+  "summary_1l": "Neural signalling within the central nervous system (CNS) requires a highly controlled microenvironment.",
+  "query_hits": [],
+  "embed_text": "14753395 Structure and function of the blood–brain barrier science scifact Neural signalling within the central nervous system (CNS) requires a highly controlled microenvironment. Cells at three key interfaces form barriers between the blood and the CNS: the blood-brain barrier (BBB), blood-CSF barrier and the… 14753395 structure function blood brain barrier neural signalling within Neural signalling within the central nervous system (CNS) requires a highly controlled microenvironment. Structure and function of the blood–brain barrier Neural signalling within the central nervous system (CNS) requires a highly controlled microenvironment. Cells at three key interfaces form barriers between the blood and the CNS: the blood-brain barrier (BBB), blood-CSF barrier and the arachnoid barrier. The BBB at the level of brain microvessel endothelium is the major site of blood-CNS exchange. The structure and function of the BBB is summarised, the physical barrier formed by the endothelial tight junctions, and the transport barrier resulting from membrane transporters and vesicular mechanisms. The roles of associated cells are outlined, especially the endfeet of astrocytic glial cells, and pericytes and microglia. The embryonic development of the BBB, and changes in pathology are des",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.602925+00:00"
+}

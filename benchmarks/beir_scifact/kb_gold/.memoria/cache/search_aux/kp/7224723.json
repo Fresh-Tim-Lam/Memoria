@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "7224723",
+  "source_fingerprint": "d19f2574de032dc63c7947f502dd75c3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7224723"
+  ],
+  "key_phrases": [
+    "hiv",
+    "infects",
+    "multipotent",
+    "progenitor",
+    "cells",
+    "causing",
+    "cell",
+    "death"
+  ],
+  "summary_1l": "HIV causes a chronic infection characterized by depletion of CD4(+) T lymphocytes and the deve",
+  "query_hits": [],
+  "embed_text": "7224723 HIV–1 Infects Multipotent Progenitor Cells Causing Cell Death and Establishing Latent Cellular Reservoirs science scifact HIV causes a chronic infection characterized by depletion of CD4(+) T lymphocytes and the development of opportunistic infections. Despite drugs that inhibit viral spread, HIV infection has been difficult to cure because of uncharacterized… 7224723 hiv infects multipotent progenitor cells causing cell death HIV causes a chronic infection characterized by depletion of CD4(+) T lymphocytes and the deve HIV–1 Infects Multipotent Progenitor Cells Causing Cell Death and Establishing Latent Cellular Reservoirs HIV causes a chronic infection characterized by depletion of CD4(+) T lymphocytes and the development of opportunistic infections. Despite drugs that inhibit viral spread, HIV infection has been difficult to cure because of uncharacterized reservoirs of infected cells that are resistant to highly active antiretroviral therapy (HAART) and the immune response. Here we used CD34(+) cells from infected people as well as in vitro studies of wild-type HIV to show infection and killing of CD34(+) multipotent hematopoietic progenitor cells (HPCs). In some HPCs, we detected latent infection that stably persisted in cell culture until viral gene expression was activated by differentiation factor",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.841097+00:00"
+}

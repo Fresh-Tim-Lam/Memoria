@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "5849439",
+  "source_fingerprint": "80bbd89c7c7f60f27cd55f7ac936d8f3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "5849439",
+    "cytochemical-analysis-of-pollen-development-in-wild-type-arabidopsis-and-a-male-sterile-mutant."
+  ],
+  "key_phrases": [
+    "cytochemical",
+    "analysis",
+    "pollen",
+    "development",
+    "wild",
+    "type",
+    "arabidopsis",
+    "male"
+  ],
+  "summary_1l": "Cytochemical Analysis of Pollen Development in Wild-Type Arabidopsis and a Male-Sterile Mutant.",
+  "query_hits": [],
+  "embed_text": "5849439 Cytochemical Analysis of Pollen Development in Wild-Type Arabidopsis and a Male-Sterile Mutant. science scifact Microsporogenesis has been examined in wild-type Arabidopsis thaliana and the nuclear male-sterile mutant BM3 by cytochemical staining. The mutant lacks adenine phosphoribosyltransferase, an enzyme of the purine salvage pathway that… 5849439 cytochemical-analysis-of-pollen-development-in-wild-type-arabidopsis-and-a-male-sterile-mutant. cytochemical analysis pollen development wild type arabidopsis male Cytochemical Analysis of Pollen Development in Wild-Type Arabidopsis and a Male-Sterile Mutant. Cytochemical Analysis of Pollen Development in Wild-Type Arabidopsis and a Male-Sterile Mutant. Microsporogenesis has been examined in wild-type Arabidopsis thaliana and the nuclear male-sterile mutant BM3 by cytochemical staining. The mutant lacks adenine phosphoribosyltransferase, an enzyme of the purine salvage pathway that converts adenine to AMP. Pollen development in the mutant began to diverge from wild type just after meiosis, as the tetrads of microspores were released from their callose walls. The first indication of abnormal pollen development in the mutant was a darker staining of the microspore wall due to an incomplete synthesis of the intine. Vacuole formation was delayed and irregular in the mutant, and the majority of the mutant microspores failed to undergo mitotic divisi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:56.311426+00:00"
+}

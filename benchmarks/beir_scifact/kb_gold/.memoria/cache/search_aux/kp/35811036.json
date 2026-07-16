@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "35811036",
+  "source_fingerprint": "63c8929aeeb51ae6764e97eefddf39a6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "35811036",
+    "embryonic-like-stem-cell-derived-from-adult-bone-marrow:-immature-morphology,-cell-surface-markers,-ultramicrostructure-and-differentiation-into-multinucleated-fibers-in-vitro."
+  ],
+  "key_phrases": [
+    "embryonic",
+    "like",
+    "stem",
+    "cell",
+    "derived",
+    "from",
+    "adult",
+    "bone"
+  ],
+  "summary_1l": "Embryonic-like stem cell derived from adult bone marrow: immature morphology, cell surface markers, ultramicrostructure and differentiation into multinucleated fibers in vitro.",
+  "query_hits": [],
+  "embed_text": "35811036 Embryonic-like stem cell derived from adult bone marrow: immature morphology, cell surface markers, ultramicrostructure and differentiation into multinucleated fibers in vitro. science scifact Embryonic-like stem cell (ELSC), expressing part of surface markers of human embryonic stem cells, may be a better candidate for cell therapy of degenerative muscular disease than mesenchymal stem cell (MSC). We isolated ELSC and MSC from… 35811036 embryonic-like-stem-cell-derived-from-adult-bone-marrow:-immature-morphology,-cell-surface-markers,-ultramicrostructure-and-differentiation-into-multinucleated-fibers-in-vitro. embryonic like stem cell derived from adult bone Embryonic-like stem cell derived from adult bone marrow: immature morphology, cell surface markers, ultramicrostructure and differentiation into multinucleated fibers in vitro. Embryonic-like stem cell derived from adult bone marrow: immature morphology, cell surface markers, ultramicrostructure and differentiation into multinucleated fibers in vitro. Embryonic-like stem cell (ELSC), expressing part of surface markers of human embryonic stem cells, may be a better candidate for cell therapy of degenerative muscular disease than mesenchymal stem cell (MSC). We isolated ELSC and MSC from bone marrow, respectively, and compared their differences in the characteristics and the capacity of myogenic differentiation. Results showed that ELSC could be isolated successfully from 3 adult bone marrow samples by using serum-free medium with 10ng/ml basic fibroblast growth factor (bFGF). At the same cell density, MSC could also be isolated from the same samples by using DMEM/",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:42.671687+00:00"
+}

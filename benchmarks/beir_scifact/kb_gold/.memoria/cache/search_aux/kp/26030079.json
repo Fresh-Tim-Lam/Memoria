@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26030079",
+  "source_fingerprint": "5580fa6221740d8ced8a54430fb40050",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26030079",
+    "differential-role-of-cbpa-and-pspa-in-modulation-of-in-vitro-cxc-chemokine-responses-of-respiratory-epithelial-cells-to-infection-with-streptococcus-pneumoniae."
+  ],
+  "key_phrases": [
+    "differential",
+    "role",
+    "cbpa",
+    "pspa",
+    "modulation",
+    "vitro",
+    "cxc",
+    "chemokine"
+  ],
+  "summary_1l": "Differential role of CbpA and PspA in modulation of in vitro CXC chemokine responses of respiratory epithelial cells to infection with Streptococcus pneumoniae.",
+  "query_hits": [],
+  "embed_text": "26030079 Differential role of CbpA and PspA in modulation of in vitro CXC chemokine responses of respiratory epithelial cells to infection with Streptococcus pneumoniae. science scifact Respiratory epithelial cells play an active part in the host response to respiratory pathogens, such as Streptococcus pneumoniae, by releasing chemokines responsible for neutrophil recruitment. In order to investigate the role of specific… 26030079 differential-role-of-cbpa-and-pspa-in-modulation-of-in-vitro-cxc-chemokine-responses-of-respiratory-epithelial-cells-to-infection-with-streptococcus-pneumoniae. differential role cbpa pspa modulation vitro cxc chemokine Differential role of CbpA and PspA in modulation of in vitro CXC chemokine responses of respiratory epithelial cells to infection with Streptococcus pneumoniae. Differential role of CbpA and PspA in modulation of in vitro CXC chemokine responses of respiratory epithelial cells to infection with Streptococcus pneumoniae. Respiratory epithelial cells play an active part in the host response to respiratory pathogens, such as Streptococcus pneumoniae, by releasing chemokines responsible for neutrophil recruitment. In order to investigate the role of specific pneumococcal virulence factors in eliciting CXC chemokine responses, type II pneumocytes (A549) and nasopharyngeal cells (Detroit-562) were infected with S. pneumoniae D39 or mutants lacking choline-binding protein A (CbpA), pneumococcal surface protein A (PspA), or specific domains thereof. In response to wild-type D39, both A549 and Detroit-562 cells showed a significant increase in CXC chemokin",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.112143+00:00"
+}

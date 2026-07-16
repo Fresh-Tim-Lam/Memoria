@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4422734",
+  "source_fingerprint": "395f6b753048e1c4ebb911c9c8a76d5c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4422734",
+    "direct-observation-of-ligand-recognition-by-t-cells"
+  ],
+  "key_phrases": [
+    "direct",
+    "observation",
+    "ligand",
+    "recognition",
+    "by",
+    "cells",
+    "activation",
+    "through"
+  ],
+  "summary_1l": "The activation of T cells through interaction of their T-cell receptors with antigenic peptide bound to major histocompatibility complex (MHC) on th",
+  "query_hits": [],
+  "embed_text": "4422734 Direct observation of ligand recognition by T cells science scifact The activation of T cells through interaction of their T-cell receptors with antigenic peptide bound to major histocompatibility complex (MHC) on the surface of antigen presenting cells (APCs) is a crucial step in adaptive immunity. Here… 4422734 direct-observation-of-ligand-recognition-by-t-cells direct observation ligand recognition by cells activation through The activation of T cells through interaction of their T-cell receptors with antigenic peptide bound to major histocompatibility complex (MHC) on th Direct observation of ligand recognition by T cells The activation of T cells through interaction of their T-cell receptors with antigenic peptide bound to major histocompatibility complex (MHC) on the surface of antigen presenting cells (APCs) is a crucial step in adaptive immunity. Here we use three-dimensional fluorescence microscopy to visualize individual peptide–I-Ek class II MHC complexes labelled with the phycobiliprotein phycoerythrin in an effort to characterize T-cell sensitivity and the requirements for forming an immunological synapse in single cells. We show that T cells expressing the CD4 antigen respond with transient calcium signalling to even a single agonist peptide–MHC ligand, and that the organization of molecules in the contact zone of the T cell and APC takes on the",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.015453+00:00"
+}

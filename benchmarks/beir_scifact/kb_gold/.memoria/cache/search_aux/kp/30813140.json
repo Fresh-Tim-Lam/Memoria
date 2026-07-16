@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "30813140",
+  "source_fingerprint": "02900bc8649fcd799d5ca76bdb566bfd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "30813140",
+    "familial-occurrence-of-chronic-tension-type-headache."
+  ],
+  "key_phrases": [
+    "familial",
+    "occurrence",
+    "chronic",
+    "tension",
+    "type",
+    "headache",
+    "ctth",
+    "assessed"
+  ],
+  "summary_1l": "Familial occurrence of chronic tension-type headache.",
+  "query_hits": [],
+  "embed_text": "30813140 Familial occurrence of chronic tension-type headache. science scifact Chronic tension-type headache (CTTH) assessed by proband report was evaluated in a family study of CTTH. A clinical interview of first-degree relatives by a physician was used as index of validity. Familial occurrence of CTTH in… 30813140 familial-occurrence-of-chronic-tension-type-headache. familial occurrence chronic tension type headache ctth assessed Familial occurrence of chronic tension-type headache. Familial occurrence of chronic tension-type headache. Chronic tension-type headache (CTTH) assessed by proband report was evaluated in a family study of CTTH. A clinical interview of first-degree relatives by a physician was used as index of validity. Familial occurrence of CTTH in first-degree relatives was also investigated. Patterns of familial aggregation of CTTH were assessed by calculating the population relative risk. A neurological resident carried out all the interviews of probands and their first-degree relatives. The operational diagnostic criteria of the International Headache Society were used. The 122 probands had 377 first-degree relatives. Sensitivity, specificity, predictive values, and chance-corrected agreement rate for the diagnosis CTTH were 68%, 86%, 53% (PVpos), 92%",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.003508+00:00"
+}

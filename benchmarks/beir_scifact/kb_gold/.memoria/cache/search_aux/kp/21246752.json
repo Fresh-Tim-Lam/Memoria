@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21246752",
+  "source_fingerprint": "34b5db238276981bb2d9dd1a629d02b5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21246752",
+    "the-psychiatric-manifestations-of-mitochondrial-disorders:-a-case-and-review-of-the-literature."
+  ],
+  "key_phrases": [
+    "psychiatric",
+    "manifestations",
+    "mitochondrial",
+    "disorders",
+    "case",
+    "review",
+    "literature",
+    "objective"
+  ],
+  "summary_1l": "The psychiatric manifestations of mitochondrial disorders: a case and review of the literature.",
+  "query_hits": [],
+  "embed_text": "21246752 The psychiatric manifestations of mitochondrial disorders: a case and review of the literature. science scifact OBJECTIVE Mitochondrial disorders are caused by gene mutations in mitochondrial or nuclear DNA and affect energy-dependent organs such as the brain. Patients with psychiatric illness, particularly those with medical comorbidities, may have… 21246752 the-psychiatric-manifestations-of-mitochondrial-disorders:-a-case-and-review-of-the-literature. psychiatric manifestations mitochondrial disorders case review literature objective The psychiatric manifestations of mitochondrial disorders: a case and review of the literature. The psychiatric manifestations of mitochondrial disorders: a case and review of the literature. OBJECTIVE Mitochondrial disorders are caused by gene mutations in mitochondrial or nuclear DNA and affect energy-dependent organs such as the brain. Patients with psychiatric illness, particularly those with medical comorbidities, may have primary mitochondrial disorders. To date, this issue has received little attention in the literature, and mitochondrial disorders are likely underdiagnosed in psychiatric patients. DATA SOURCES This article describes a patient who presented with borderline personality disorder and treatment-resistant depression and was ultimately diagnosed with mitochondrial encephalomyopathy with lactic acidosis and stroke-like episodes (MELAS) 3271. We also searched the lite",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:23.626385+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "26068103",
+  "source_fingerprint": "9eddd641474c7354ac4e3c863c6573ef",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "26068103",
+    "dual-role-of-interleukin-10-in-the-regulation-of-respiratory-syncitial-virus-(rsv)-induced-lung-inflammation."
+  ],
+  "key_phrases": [
+    "dual",
+    "role",
+    "interleukin",
+    "10",
+    "regulation",
+    "respiratory",
+    "syncitial",
+    "virus"
+  ],
+  "summary_1l": "Dual role of interleukin-10 in the regulation of respiratory syncitial virus (RSV)-induced lung inflammation.",
+  "query_hits": [],
+  "embed_text": "26068103 Dual role of interleukin-10 in the regulation of respiratory syncitial virus (RSV)-induced lung inflammation. science scifact RSV lower respiratory tract infections (LRTI) are among the most common diseases necessitating hospital admission in children. In addition to causing acute respiratory failure, RSV infections are associated with sequelae such as secondary… 26068103 dual-role-of-interleukin-10-in-the-regulation-of-respiratory-syncitial-virus-(rsv)-induced-lung-inflammation. dual role interleukin 10 regulation respiratory syncitial virus Dual role of interleukin-10 in the regulation of respiratory syncitial virus (RSV)-induced lung inflammation. Dual role of interleukin-10 in the regulation of respiratory syncitial virus (RSV)-induced lung inflammation. RSV lower respiratory tract infections (LRTI) are among the most common diseases necessitating hospital admission in children. In addition to causing acute respiratory failure, RSV infections are associated with sequelae such as secondary bacterial infections and reactive airway disease. One characteristic host response observed in severe RSV-induced LRTI and/or subsequent development of asthma is increased expression of interleukin (IL)-10. However, contradictory results have been reported regarding whether IL-10 inhibits asthmatic responses or intensifies the disease. We aimed to reconcile these discordant observations by elucidating the role of IL-10 in regulating the host respo",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:33.259573+00:00"
+}

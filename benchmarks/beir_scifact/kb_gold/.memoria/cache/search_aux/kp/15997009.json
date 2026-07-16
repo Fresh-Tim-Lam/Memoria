@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15997009",
+  "source_fingerprint": "8764d79b3bc95ca7ecd0e922187fcd70",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15997009",
+    "effect-of-duration-and-intermittency-of-rifampin-on-tuberculosis-treatment-outcomes:-a-systematic-review-and-meta-analysis"
+  ],
+  "key_phrases": [
+    "effect",
+    "duration",
+    "intermittency",
+    "rifampin",
+    "tuberculosis",
+    "treatment",
+    "outcomes",
+    "systematic"
+  ],
+  "summary_1l": "BACKGROUND Treatment regimens for active tuberculosis (TB) that are intermitt",
+  "query_hits": [],
+  "embed_text": "15997009 Effect of Duration and Intermittency of Rifampin on Tuberculosis Treatment Outcomes: A Systematic Review and Meta-Analysis science scifact BACKGROUND Treatment regimens for active tuberculosis (TB) that are intermittent, or use rifampin during only the initial phase, offer practical advantages, but their efficacy has been questioned. We conducted a systematic review of… 15997009 effect-of-duration-and-intermittency-of-rifampin-on-tuberculosis-treatment-outcomes:-a-systematic-review-and-meta-analysis effect duration intermittency rifampin tuberculosis treatment outcomes systematic BACKGROUND Treatment regimens for active tuberculosis (TB) that are intermitt Effect of Duration and Intermittency of Rifampin on Tuberculosis Treatment Outcomes: A Systematic Review and Meta-Analysis BACKGROUND Treatment regimens for active tuberculosis (TB) that are intermittent, or use rifampin during only the initial phase, offer practical advantages, but their efficacy has been questioned. We conducted a systematic review of treatment regimens for active TB, to assess the effect of duration and intermittency of rifampin use on TB treatment outcomes. METHODS AND FINDINGS PubMed, Embase, and the Cochrane CENTRAL database for clinical trials were searched for randomized controlled trials, published in English, French, or Spanish, between 1965 and June 2008. Selected studies utilized standardized treatment with rifampin-containing regimens. Studies reported bacteri",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:15.684678+00:00"
+}

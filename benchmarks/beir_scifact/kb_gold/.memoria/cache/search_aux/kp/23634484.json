@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23634484",
+  "source_fingerprint": "41f114018dca6a67ee1392e863087e8a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23634484",
+    "nuclear-hur-accumulation-through-phosphorylation-by-cdk1."
+  ],
+  "key_phrases": [
+    "nuclear",
+    "hur",
+    "accumulation",
+    "through",
+    "phosphorylation",
+    "by",
+    "cdk1",
+    "predominantly"
+  ],
+  "summary_1l": "Nuclear HuR accumulation through phosphorylation by Cdk1.",
+  "query_hits": [],
+  "embed_text": "23634484 Nuclear HuR accumulation through phosphorylation by Cdk1. science scifact A predominantly nuclear RNA-binding protein, HuR translocates to the cytoplasm in response to stress and proliferative signals, where it stabilizes or modulates the translation of target mRNAs. Here, we present evidence that HuR… 23634484 nuclear-hur-accumulation-through-phosphorylation-by-cdk1. nuclear hur accumulation through phosphorylation by cdk1 predominantly Nuclear HuR accumulation through phosphorylation by Cdk1. Nuclear HuR accumulation through phosphorylation by Cdk1. A predominantly nuclear RNA-binding protein, HuR translocates to the cytoplasm in response to stress and proliferative signals, where it stabilizes or modulates the translation of target mRNAs. Here, we present evidence that HuR phosphorylation at S202 by the G2-phase kinase Cdk1 influences its subcellular distribution. HuR was specifically phosphorylated in synchronous G2-phase cultures; its cytoplasmic levels increased by Cdk1-inhibitory interventions and declined in response to Cdk1-activating interventions. In keeping with the prominently cytoplasmic location of the nonphosphorylatable point mutant HuR(S202A), phospho-HuR(S202) was shown to be predominantly nuclear using a novel anti-phospho-HuR(S202) antibody. The enhanced cyto",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.893056+00:00"
+}

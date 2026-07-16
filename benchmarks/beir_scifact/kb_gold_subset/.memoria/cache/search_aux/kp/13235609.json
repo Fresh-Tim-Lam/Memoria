@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13235609",
+  "source_fingerprint": "940317a2689b26eded54e7c0720a572f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13235609",
+    "vegf-inhibits-tumor-cell-invasion-and-mesenchymal-transition-through-a-met/vegfr2-complex."
+  ],
+  "key_phrases": [
+    "vegf",
+    "inhibits",
+    "tumor",
+    "cell",
+    "invasion",
+    "mesenchymal",
+    "transition",
+    "through"
+  ],
+  "summary_1l": "VEGF inhibits tumor cell invasion and mesenchymal transition through a MET/VEGFR2 complex.",
+  "query_hits": [],
+  "embed_text": "13235609 VEGF inhibits tumor cell invasion and mesenchymal transition through a MET/VEGFR2 complex. science scifact Inhibition of VEGF signaling leads to a proinvasive phenotype in mouse models of glioblastoma multiforme (GBM) and in a subset of GBM patients treated with bevacizumab. Here, we demonstrate that vascular endothelial growth factor (VEGF)… 13235609 vegf-inhibits-tumor-cell-invasion-and-mesenchymal-transition-through-a-met/vegfr2-complex. vegf inhibits tumor cell invasion mesenchymal transition through VEGF inhibits tumor cell invasion and mesenchymal transition through a MET/VEGFR2 complex. VEGF inhibits tumor cell invasion and mesenchymal transition through a MET/VEGFR2 complex. Inhibition of VEGF signaling leads to a proinvasive phenotype in mouse models of glioblastoma multiforme (GBM) and in a subset of GBM patients treated with bevacizumab. Here, we demonstrate that vascular endothelial growth factor (VEGF) directly and negatively regulates tumor cell invasion through enhanced recruitment of the protein tyrosine phosphatase 1B (PTP1B) to a MET/VEGFR2 heterocomplex, thereby suppressing HGF-dependent MET phosphorylation and tumor cell migration. Consequently, VEGF blockade restores and increases MET activity in GBM cells in a hypoxia-independent manner, while inducing a program reminiscent of epithelial-to-mesenchymal transition highlighted by a T-cadherin to N-cadherin sw",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:10.562515+00:00"
+}

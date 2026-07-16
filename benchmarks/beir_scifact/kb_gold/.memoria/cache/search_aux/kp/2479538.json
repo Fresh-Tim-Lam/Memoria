@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2479538",
+  "source_fingerprint": "1e5840ac8fd821a50e4ad618d78fedf0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2479538",
+    "leaderless-genes-in-bacteria:-clue-to-the-evolution-of-translation-initiation-mechanisms-in-prokaryotes"
+  ],
+  "key_phrases": [
+    "leaderless",
+    "genes",
+    "bacteria",
+    "clue",
+    "evolution",
+    "translation",
+    "initiation",
+    "mechanisms"
+  ],
+  "summary_1l": "BACKGROUND Shine-Dalgarno (SD) signal has long been viewed as the dominant translation initiatio",
+  "query_hits": [],
+  "embed_text": "2479538 Leaderless genes in bacteria: clue to the evolution of translation initiation mechanisms in prokaryotes science scifact BACKGROUND Shine-Dalgarno (SD) signal has long been viewed as the dominant translation initiation signal in prokaryotes. Recently, leaderless genes, which lack 5'-untranslated regions (5'-UTR) on their mRNAs, have been shown abundant in… 2479538 leaderless-genes-in-bacteria:-clue-to-the-evolution-of-translation-initiation-mechanisms-in-prokaryotes leaderless genes bacteria clue evolution translation initiation mechanisms BACKGROUND Shine-Dalgarno (SD) signal has long been viewed as the dominant translation initiatio Leaderless genes in bacteria: clue to the evolution of translation initiation mechanisms in prokaryotes BACKGROUND Shine-Dalgarno (SD) signal has long been viewed as the dominant translation initiation signal in prokaryotes. Recently, leaderless genes, which lack 5'-untranslated regions (5'-UTR) on their mRNAs, have been shown abundant in archaea. However, current large-scale in silico analyses on initiation mechanisms in bacteria are mainly based on the SD-led initiation way, other than the leaderless one. The study of leaderless genes in bacteria remains open, which causes uncertain understanding of translation initiation mechanisms for prokaryotes. RESULTS Here, we study signals in translation initiation regions of all genes over 953 bacterial and 72 archaeal genomes, then make an effor",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.324418+00:00"
+}

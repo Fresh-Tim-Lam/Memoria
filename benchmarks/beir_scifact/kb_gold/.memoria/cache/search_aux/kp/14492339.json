@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14492339",
+  "source_fingerprint": "457a487c9dabe63894be43d6c8ea80ed",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14492339",
+    "blood-monocytes-consist-of-two-principal-subsets-with-distinct-migratory-properties"
+  ],
+  "key_phrases": [
+    "blood",
+    "monocytes",
+    "consist",
+    "two",
+    "principal",
+    "subsets",
+    "with",
+    "distinct"
+  ],
+  "summary_1l": "Peripheral blood monocytes are a heterogeneous population of circulating leukocytes.",
+  "query_hits": [],
+  "embed_text": "14492339 Blood monocytes consist of two principal subsets with distinct migratory properties science scifact Peripheral blood monocytes are a heterogeneous population of circulating leukocytes. Using a murine adoptive transfer system to probe monocyte homing and differentiation in vivo, we identified two functional subsets among murine blood… 14492339 blood-monocytes-consist-of-two-principal-subsets-with-distinct-migratory-properties blood monocytes consist two principal subsets with distinct Peripheral blood monocytes are a heterogeneous population of circulating leukocytes. Blood monocytes consist of two principal subsets with distinct migratory properties Peripheral blood monocytes are a heterogeneous population of circulating leukocytes. Using a murine adoptive transfer system to probe monocyte homing and differentiation in vivo, we identified two functional subsets among murine blood monocytes: a short-lived CX(3)CR1(lo)CCR2(+)Gr1(+) subset that is actively recruited to inflamed tissues and a CX(3)CR1(hi)CCR2(-)Gr1(-) subset characterized by CX(3)CR1-dependent recruitment to noninflamed tissues. Both subsets have the potential to differentiate into dendritic cells in vivo. The level of CX(3)CR1 expression also defines the two major human monocyte subsets, the CD14(+)CD16(-) and CD14(lo)CD16(+) monocytes, which share phenotype and homing potential with the",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.018863+00:00"
+}

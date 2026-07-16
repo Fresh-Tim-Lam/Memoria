@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9745001",
+  "source_fingerprint": "e463312c617b8b4f6c4562d49e5f0b85",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9745001",
+    "radioiodine-treatment-of-multinodular-non-toxic-goitre."
+  ],
+  "key_phrases": [
+    "radioiodine",
+    "treatment",
+    "multinodular",
+    "non",
+    "toxic",
+    "goitre",
+    "objective",
+    "investigate"
+  ],
+  "summary_1l": "Radioiodine treatment of multinodular non-toxic goitre.",
+  "query_hits": [],
+  "embed_text": "9745001 Radioiodine treatment of multinodular non-toxic goitre. science scifact OBJECTIVE To investigate the long term effect of radioactive iodine on thyroid function and size in patients with non-toxic multinodular goitre. DESIGN Consecutive patients with multinodular non-toxic goitre selected for radioactive iodine… 9745001 radioiodine-treatment-of-multinodular-non-toxic-goitre. radioiodine treatment multinodular non toxic goitre objective investigate Radioiodine treatment of multinodular non-toxic goitre. Radioiodine treatment of multinodular non-toxic goitre. OBJECTIVE To investigate the long term effect of radioactive iodine on thyroid function and size in patients with non-toxic multinodular goitre. DESIGN Consecutive patients with multinodular non-toxic goitre selected for radioactive iodine treatment and followed for a minimum of 12 months (median 48 months) after an intended dose of 3.7 MBq/g thyroid tissue corrected to a 100% uptake of iodine-131 in 24 hours. PATIENTS 69 patients with a growing multinodular non-toxic goitre causing local compression symptoms or cosmetic inconveniences. The treatment was chosen because of a high operative risk, previous thyroidectomy, or refusal to be operated on. MAIN OUTCOME MEASUREMENTS Standard thyroid function variables and ultrasonically determi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.678159+00:00"
+}

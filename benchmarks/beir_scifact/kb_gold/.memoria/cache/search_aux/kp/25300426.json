@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25300426",
+  "source_fingerprint": "ff357fbcd01077196b63c393e725a2c3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25300426",
+    "lif/stat3-controls-es-cell-self-renewal-and-pluripotency-by-a-myc-dependent-mechanism."
+  ],
+  "key_phrases": [
+    "lif",
+    "stat3",
+    "controls",
+    "es",
+    "cell",
+    "self",
+    "renewal",
+    "pluripotency"
+  ],
+  "summary_1l": "LIF/STAT3 controls ES cell self-renewal and pluripotency by a Myc-dependent mechanism.",
+  "query_hits": [],
+  "embed_text": "25300426 LIF/STAT3 controls ES cell self-renewal and pluripotency by a Myc-dependent mechanism. science scifact Murine ES cells can be maintained as a pluripotent, self-renewing population by LIF/STAT3-dependent signaling. The downstream effectors of this pathway have not been previously defined. In this report, we identify a key target of the LIF… 25300426 lif/stat3-controls-es-cell-self-renewal-and-pluripotency-by-a-myc-dependent-mechanism. lif stat3 controls es cell self renewal pluripotency LIF/STAT3 controls ES cell self-renewal and pluripotency by a Myc-dependent mechanism. LIF/STAT3 controls ES cell self-renewal and pluripotency by a Myc-dependent mechanism. Murine ES cells can be maintained as a pluripotent, self-renewing population by LIF/STAT3-dependent signaling. The downstream effectors of this pathway have not been previously defined. In this report, we identify a key target of the LIF self-renewal pathway by showing that STAT3 directly regulates the expression of the Myc transcription factor. Murine ES cells express elevated levels of Myc and following LIF withdrawal, Myc mRNA levels collapse and Myc protein becomes phosphorylated on threonine 58 (T58), triggering its GSK3beta dependent degradation. Maintained expression of stable Myc (T58A) renders self-renewal and maintenance of pluripotency independent of LIF. By contrast, expression of a dominant",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:31.329602+00:00"
+}

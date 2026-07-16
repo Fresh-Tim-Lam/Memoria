@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "140907540",
+  "source_fingerprint": "c7f82b1f5db48f75093593be76e1414d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "140907540",
+    "sample-size-calculation-in-epidemiological-studies"
+  ],
+  "key_phrases": [
+    "sample",
+    "size",
+    "calculation",
+    "epidemiological",
+    "studies",
+    "summary",
+    "determination",
+    "often"
+  ],
+  "summary_1l": "Summary Sample-size determination is often an important step in planning an epidemiological study.",
+  "query_hits": [],
+  "embed_text": "140907540 Sample size calculation in epidemiological studies science scifact Summary Sample-size determination is often an important step in planning an epidemiological study. There are several approaches to determining sample size. It depends on the type of the study. Descriptive, observational and randomized… 140907540 sample-size-calculation-in-epidemiological-studies sample size calculation epidemiological studies summary determination often Summary Sample-size determination is often an important step in planning an epidemiological study. Sample size calculation in epidemiological studies Summary Sample-size determination is often an important step in planning an epidemiological study. There are several approaches to determining sample size. It depends on the type of the study. Descriptive, observational and randomized controlled studies have different formulas to calculate sample size. In this article, we discuss the formulas that can help to estimate sample size in an epidemiological trial. We present a few examples from clinical practice, which may contribute to the understanding of this problem. Keywords: sample size determination Determining an appropriate sample size for a clinical trial is an essential step in the statistical design of the pro-ject. An adequate sample size helps ensure that the stu-dy will yield reli",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.059999+00:00"
+}

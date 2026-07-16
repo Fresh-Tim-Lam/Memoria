@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23581096",
+  "source_fingerprint": "e9b097079c630296b98852931e30b547",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23581096",
+    "interactions-between-sry-and-sox-genes-in-mammalian-sex-determination."
+  ],
+  "key_phrases": [
+    "interactions",
+    "between",
+    "sry",
+    "sox",
+    "genes",
+    "mammalian",
+    "sex",
+    "determination"
+  ],
+  "summary_1l": "Interactions between SRY and SOX genes in mammalian sex determination.",
+  "query_hits": [],
+  "embed_text": "23581096 Interactions between SRY and SOX genes in mammalian sex determination. science scifact The SRY gene on the mammalian Y chromosome undoubtedly acts to determine testis, but it is still quite unclear how. It was originally supposed that SRY acts directly to activate other genes in the testis-determining pathway. This paper… 23581096 interactions-between-sry-and-sox-genes-in-mammalian-sex-determination. interactions between sry sox genes mammalian sex determination Interactions between SRY and SOX genes in mammalian sex determination. Interactions between SRY and SOX genes in mammalian sex determination. The SRY gene on the mammalian Y chromosome undoubtedly acts to determine testis, but it is still quite unclear how. It was originally supposed that SRY acts directly to activate other genes in the testis-determining pathway. This paper presents an alternative hypothesis that SRY functions indirectly, by interacting with related genes SOX3 (from which SRY evolved) and SOX9 (which appears to be intimately involved in vertebrate gonad differentiation). Specifically, I propose that in females SOX3 inhibits SOX9 function, but in males, SRY inhibits SOX3 and permits SOX9 to enact its testis-determining role. This hypothesis makes testable predictions of the phenotypes of XX and XY individuals with deficiencies or overproducti",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.750933+00:00"
+}

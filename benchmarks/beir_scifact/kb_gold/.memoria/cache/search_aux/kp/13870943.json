@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13870943",
+  "source_fingerprint": "e1fc222f4e08fa836d872b246192a99d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13870943",
+    "recommended-diagnostic-criteria-for-multiple-sclerosis:-guidelines-from-the-international-panel-on-the-diagnosis-of-multiple-sclerosis."
+  ],
+  "key_phrases": [
+    "recommended",
+    "diagnostic",
+    "criteria",
+    "multiple",
+    "sclerosis",
+    "guidelines",
+    "from",
+    "international"
+  ],
+  "summary_1l": "Recommended diagnostic criteria for multiple sclerosis: guidelines from the International Panel on the diagnosis of multiple sclerosis.",
+  "query_hits": [],
+  "embed_text": "13870943 Recommended diagnostic criteria for multiple sclerosis: guidelines from the International Panel on the diagnosis of multiple sclerosis. science scifact The International Panel on MS Diagnosis presents revised diagnostic criteria for multiple sclerosis (MS). The focus remains on the objective demonstration of dissemination of lesions in both time and space. Magnetic resonance imaging is… 13870943 recommended-diagnostic-criteria-for-multiple-sclerosis:-guidelines-from-the-international-panel-on-the-diagnosis-of-multiple-sclerosis. recommended diagnostic criteria multiple sclerosis guidelines from international Recommended diagnostic criteria for multiple sclerosis: guidelines from the International Panel on the diagnosis of multiple sclerosis. Recommended diagnostic criteria for multiple sclerosis: guidelines from the International Panel on the diagnosis of multiple sclerosis. The International Panel on MS Diagnosis presents revised diagnostic criteria for multiple sclerosis (MS). The focus remains on the objective demonstration of dissemination of lesions in both time and space. Magnetic resonance imaging is integrated with dinical and other paraclinical diagnostic methods. The revised criteria facilitate the diagnosis of MS in patients with a variety of presentations, including \"monosymptomatic\" disease suggestive of MS, disease with a typical relapsing-remitting course, and disease with insidious progression, without clear attacks and remissions. Previously used terms such as \"clinically definite\" and \"probable MS\" are no lon",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.239403+00:00"
+}

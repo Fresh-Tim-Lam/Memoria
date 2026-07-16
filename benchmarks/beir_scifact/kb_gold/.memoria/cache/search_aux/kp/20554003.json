@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "20554003",
+  "source_fingerprint": "39bd0d37e191331d2def8f063d350fa3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "20554003",
+    "effects-of-thiazolidinediones-on-stroke-recovery:-a-case-matched-controlled-study"
+  ],
+  "key_phrases": [
+    "effects",
+    "thiazolidinediones",
+    "stroke",
+    "recovery",
+    "case",
+    "matched",
+    "controlled",
+    "study"
+  ],
+  "summary_1l": "Anti-inflammatory therapy decreases infarct size and enhances stroke recovery.",
+  "query_hits": [],
+  "embed_text": "20554003 Effects of Thiazolidinediones on Stroke Recovery: A Case-Matched Controlled Study science scifact Anti-inflammatory therapy decreases infarct size and enhances stroke recovery. Thiazolidinedione peroxisome proliferator-activated receptor (PPAR)gamma agonists have potent anti-inflammatory and insulin-sensitizing anti-diabetic actions.… 20554003 effects-of-thiazolidinediones-on-stroke-recovery:-a-case-matched-controlled-study effects thiazolidinediones stroke recovery case matched controlled study Anti-inflammatory therapy decreases infarct size and enhances stroke recovery. Effects of Thiazolidinediones on Stroke Recovery: A Case-Matched Controlled Study Anti-inflammatory therapy decreases infarct size and enhances stroke recovery. Thiazolidinedione peroxisome proliferator-activated receptor (PPAR)gamma agonists have potent anti-inflammatory and insulin-sensitizing anti-diabetic actions. Thirty stroke patients with type 2 diabetes admitted for acute inpatient stroke rehabilitation receiving pioglitazone or rosiglitazone were matched for age, sex, initial FIMTM score and interval post-stroke with 30 stroke patients with type 2 diabetes not receiving thiazolidinediones. Relevant outcome variables were compared for both groups. The thiazolidinedione treated group showed significantly greater mean improvement in FIMTM score compared to control group (25.6 ± 10.2",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.488543+00:00"
+}

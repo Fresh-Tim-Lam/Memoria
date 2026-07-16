@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4429388",
+  "source_fingerprint": "a1e2e19b4cb034c2bff533d341c50c10",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4429388",
+    "escrt-iii-recognition-by-vps4-atpases"
+  ],
+  "key_phrases": [
+    "escrt",
+    "iii",
+    "recognition",
+    "by",
+    "vps4",
+    "atpases",
+    "endosomal",
+    "sorting"
+  ],
+  "summary_1l": "The ESCRT (endosomal sorting complex required for transport) pathway is required for terminal membrane fission events in several important biological processes, i",
+  "query_hits": [],
+  "embed_text": "4429388 ESCRT-III recognition by VPS4 ATPases science scifact The ESCRT (endosomal sorting complex required for transport) pathway is required for terminal membrane fission events in several important biological processes, including endosomal intraluminal vesicle formation, HIV budding and… 4429388 escrt-iii-recognition-by-vps4-atpases escrt iii recognition by vps4 atpases endosomal sorting The ESCRT (endosomal sorting complex required for transport) pathway is required for terminal membrane fission events in several important biological processes, i ESCRT-III recognition by VPS4 ATPases The ESCRT (endosomal sorting complex required for transport) pathway is required for terminal membrane fission events in several important biological processes, including endosomal intraluminal vesicle formation, HIV budding and cytokinesis. VPS4 ATPases perform a key function in this pathway by recognizing membrane-associated ESCRT-III assemblies and catalysing their disassembly, possibly in conjunction with membrane fission. Here we show that the microtubule interacting and transport (MIT) domains of human VPS4A and VPS4B bind conserved sequence motifs located at the carboxy termini of the CHMP1–3 class of ESCRT-III proteins. Structures of VPS4A MIT–CHMP1A and VPS4B MIT–CHMP2B complexes reveal that the C-terminal CHMP motif forms an amphipathic helix",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.175147+00:00"
+}

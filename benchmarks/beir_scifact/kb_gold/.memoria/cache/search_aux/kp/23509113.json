@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23509113",
+  "source_fingerprint": "0fe89cde3d02be8cb268a864e4baef4a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23509113",
+    "resolution-of-acute-inflammation-in-the-lung."
+  ],
+  "key_phrases": [
+    "resolution",
+    "acute",
+    "inflammation",
+    "lung",
+    "essential",
+    "health",
+    "so",
+    "too"
+  ],
+  "summary_1l": "Resolution of acute inflammation in the lung.",
+  "query_hits": [],
+  "embed_text": "23509113 Resolution of acute inflammation in the lung. science scifact Acute inflammation in the lung is essential to health. So too is its resolution. In response to invading microbes, noxious stimuli, or tissue injury, an acute inflammatory response is mounted to protect the host. To limit inflammation and… 23509113 resolution-of-acute-inflammation-in-the-lung. resolution acute inflammation lung essential health so too Resolution of acute inflammation in the lung. Resolution of acute inflammation in the lung. Acute inflammation in the lung is essential to health. So too is its resolution. In response to invading microbes, noxious stimuli, or tissue injury, an acute inflammatory response is mounted to protect the host. To limit inflammation and prevent collateral injury of healthy, uninvolved tissue, the lung orchestrates the formation of specialized proresolving mediators, specifically lipoxins, resolvins, protectins, and maresins. These immunoresolvents are agonists for resolution that interact with specific receptors on leukocytes and structural cells to blunt further inflammation and promote catabasis. This process appears to be defective in several common lung diseases that are characterized by excess or chronic inflammation. Here, we review the",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.585588+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10812605",
+  "source_fingerprint": "e2598e3a2a9d81a4af8a74c8d80bb7f7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10812605",
+    "fibroblast-heterogeneity-in-the-cancer-wound"
+  ],
+  "key_phrases": [
+    "fibroblast",
+    "heterogeneity",
+    "cancer",
+    "wound",
+    "fibroblasts",
+    "regulate",
+    "structure",
+    "function"
+  ],
+  "summary_1l": "Fibroblasts regulate the structure and function of healthy tissues, participate transiently in tissue repair after acute inflammation, and assume an aberra",
+  "query_hits": [],
+  "embed_text": "10812605 Fibroblast heterogeneity in the cancer wound science scifact Fibroblasts regulate the structure and function of healthy tissues, participate transiently in tissue repair after acute inflammation, and assume an aberrant stimulatory role during chronic inflammatory states including cancer. Such… 10812605 fibroblast-heterogeneity-in-the-cancer-wound fibroblast heterogeneity cancer wound fibroblasts regulate structure function Fibroblasts regulate the structure and function of healthy tissues, participate transiently in tissue repair after acute inflammation, and assume an aberra Fibroblast heterogeneity in the cancer wound Fibroblasts regulate the structure and function of healthy tissues, participate transiently in tissue repair after acute inflammation, and assume an aberrant stimulatory role during chronic inflammatory states including cancer. Such cancer-associated fibroblasts (CAFs) modulate the tumor microenvironment and influence the behavior of neoplastic cells in either a tumor-promoting or tumor-inhibiting manner. These pleiotropic functions highlight the inherent plasticity of fibroblasts and may provide new avenues to understand and therapeutically intervene in malignancies. We discuss the emerging themes of CAF biology in the context of tumorigenesis and therapy.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.997934+00:00"
+}

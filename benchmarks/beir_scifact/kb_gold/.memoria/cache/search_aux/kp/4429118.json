@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4429118",
+  "source_fingerprint": "1e96c6179ab0b0f08e6a4287c6737761",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4429118",
+    "cancer-related-inflammation"
+  ],
+  "key_phrases": [
+    "cancer",
+    "related",
+    "inflammation",
+    "mediators",
+    "cellular",
+    "effectors",
+    "important",
+    "constituents"
+  ],
+  "summary_1l": "The mediators and cellular effectors of inflammation are important constituents of the local environment of tumours.",
+  "query_hits": [],
+  "embed_text": "4429118 Cancer-related inflammation science scifact The mediators and cellular effectors of inflammation are important constituents of the local environment of tumours. In some types of cancer, inflammatory conditions are present before a malignant change occurs. Conversely, in other types… 4429118 cancer-related-inflammation cancer related inflammation mediators cellular effectors important constituents The mediators and cellular effectors of inflammation are important constituents of the local environment of tumours. Cancer-related inflammation The mediators and cellular effectors of inflammation are important constituents of the local environment of tumours. In some types of cancer, inflammatory conditions are present before a malignant change occurs. Conversely, in other types of cancer, an oncogenic change induces an inflammatory microenvironment that promotes the development of tumours. Regardless of its origin, 'smouldering' inflammation in the tumour microenvironment has many tumour-promoting effects. It aids in the proliferation and survival of malignant cells, promotes angiogenesis and metastasis, subverts adaptive immune responses, and alters responses to hormones and chemotherapeutic agents. The molecular pathways of this cancer-related inflammation are now being unravelled, resulting in the",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.163058+00:00"
+}

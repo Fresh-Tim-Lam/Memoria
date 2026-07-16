@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "41133176",
+  "source_fingerprint": "b4c6984ac362f6992e78f2fde6f2ea20",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "41133176",
+    "low-antioxidant-enzyme-gene-expression-in-pancreatic-islets-compared-with-various-other-mouse-tissues."
+  ],
+  "key_phrases": [
+    "low",
+    "antioxidant",
+    "enzyme",
+    "gene",
+    "expression",
+    "pancreatic",
+    "islets",
+    "compared"
+  ],
+  "summary_1l": "Low antioxidant enzyme gene expression in pancreatic islets compared with various other mouse tissues.",
+  "query_hits": [],
+  "embed_text": "41133176 Low antioxidant enzyme gene expression in pancreatic islets compared with various other mouse tissues. science scifact Using a sensitive Northern blot hybridization technique, gene expression of superoxide dismutase (SOD), catalase, and glutathione peroxidase was studied in pancreatic islets and for comparison in various other mouse tissues (liver, kidney,… 41133176 low-antioxidant-enzyme-gene-expression-in-pancreatic-islets-compared-with-various-other-mouse-tissues. low antioxidant enzyme gene expression pancreatic islets compared Low antioxidant enzyme gene expression in pancreatic islets compared with various other mouse tissues. Low antioxidant enzyme gene expression in pancreatic islets compared with various other mouse tissues. Using a sensitive Northern blot hybridization technique, gene expression of superoxide dismutase (SOD), catalase, and glutathione peroxidase was studied in pancreatic islets and for comparison in various other mouse tissues (liver, kidney, brain, lung, skeletal muscle, heart muscle, adrenal gland, and pituitary gland). Gene expression of the antioxidant enzymes was usually in the range of +/- 50% of that in the liver. Only in pancreatic islets gene expression was substantially lower. The levels of the cytoplasmic Cu/Zn SOD and the mitochondrial Mn SOD gene expression were in the range of 30-40% of those in the liver. Glutathione peroxidase gene expression was 15%, and catalase gene expres",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:48.131181+00:00"
+}

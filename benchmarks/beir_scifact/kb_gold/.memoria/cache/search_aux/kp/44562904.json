@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "44562904",
+  "source_fingerprint": "7b54f152203dfa3f79b6e45b31f5a01c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "44562904",
+    "delays-in-the-diagnosis-of-lung-cancer."
+  ],
+  "key_phrases": [
+    "delays",
+    "diagnosis",
+    "lung",
+    "cancer",
+    "background",
+    "many",
+    "patients",
+    "with"
+  ],
+  "summary_1l": "Delays in the diagnosis of lung cancer.",
+  "query_hits": [],
+  "embed_text": "44562904 Delays in the diagnosis of lung cancer. science scifact BACKGROUND Many patients with lung cancer report delays in diagnosing their disease. This may contribute to advanced stage at diagnosis and poor long term survival. This study explores the delays experienced by patients referred to a… 44562904 delays-in-the-diagnosis-of-lung-cancer. delays diagnosis lung cancer background many patients with Delays in the diagnosis of lung cancer. Delays in the diagnosis of lung cancer. BACKGROUND Many patients with lung cancer report delays in diagnosing their disease. This may contribute to advanced stage at diagnosis and poor long term survival. This study explores the delays experienced by patients referred to a regional cancer centre with lung cancer. METHODS A prospective cohort of patients referred with newly diagnosed lung cancer were surveyed over a 3 month period to assess delays in diagnosis. Patients were asked when they first experienced symptoms, saw their doctor, what tests were done, when they saw a specialist and when they started treatment. Descriptive statistics were used to summarize the different time intervals. RESULTS 56 of 73 patients consented (RR 77%). However only 52 patients (30M, 22F) were interviewed as",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.502402+00:00"
+}

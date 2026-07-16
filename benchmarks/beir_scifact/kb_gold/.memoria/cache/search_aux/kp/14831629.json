@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14831629",
+  "source_fingerprint": "3c1624260adc0906130c7c27434a8540",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14831629",
+    "patent-ductus-arteriosus:-lack-of-evidence-for-common-treatments."
+  ],
+  "key_phrases": [
+    "patent",
+    "ductus",
+    "arteriosus",
+    "lack",
+    "evidence",
+    "common",
+    "treatments",
+    "pda"
+  ],
+  "summary_1l": "Patent ductus arteriosus: lack of evidence for common treatments.",
+  "query_hits": [],
+  "embed_text": "14831629 Patent ductus arteriosus: lack of evidence for common treatments. science scifact Patent ductus arteriosus (PDA) is a common diagnosis among extremely premature infants, especially in those with lung disease. Treatments are often used to close the PDA. Despite nearly three decades of research, the question of whether… 14831629 patent-ductus-arteriosus:-lack-of-evidence-for-common-treatments. patent ductus arteriosus lack evidence common treatments pda Patent ductus arteriosus: lack of evidence for common treatments. Patent ductus arteriosus: lack of evidence for common treatments. Patent ductus arteriosus (PDA) is a common diagnosis among extremely premature infants, especially in those with lung disease. Treatments are often used to close the PDA. Despite nearly three decades of research, the question of whether the benefits of treatments to prevent ductal patency or promote closure outweigh the risks of these treatments remains unanswered. The authors rarely use treatments designed to close the PDA. This article reviews three considerations in support of this restrained approach: rates of spontaneous closure of the ductus arteriosus; adverse effect of persistent ductal patency; and benefits and risks of treatments for closure.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:13.725737+00:00"
+}

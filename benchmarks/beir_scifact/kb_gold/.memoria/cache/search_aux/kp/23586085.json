@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23586085",
+  "source_fingerprint": "8f23717bf3d2c7780a7907344878611d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23586085",
+    "chromatin-immunoprecipitation-and-microarray-based-analysis-of-protein-location"
+  ],
+  "key_phrases": [
+    "chromatin",
+    "immunoprecipitation",
+    "microarray",
+    "based",
+    "analysis",
+    "protein",
+    "location",
+    "genome"
+  ],
+  "summary_1l": "Genome-wide location analysis, also known as ChIP-Chip, combines chromatin immunoprecipitation and DNA microarray analys",
+  "query_hits": [],
+  "embed_text": "23586085 Chromatin immunoprecipitation and microarray-based analysis of protein location science scifact Genome-wide location analysis, also known as ChIP-Chip, combines chromatin immunoprecipitation and DNA microarray analysis to identify protein-DNA interactions that occur in living cells. Protein-DNA interactions are captured in vivo by… 23586085 chromatin-immunoprecipitation-and-microarray-based-analysis-of-protein-location chromatin immunoprecipitation microarray based analysis protein location genome Genome-wide location analysis, also known as ChIP-Chip, combines chromatin immunoprecipitation and DNA microarray analys Chromatin immunoprecipitation and microarray-based analysis of protein location Genome-wide location analysis, also known as ChIP-Chip, combines chromatin immunoprecipitation and DNA microarray analysis to identify protein-DNA interactions that occur in living cells. Protein-DNA interactions are captured in vivo by chemical crosslinking. Cell lysis, DNA fragmentation and immunoaffinity purification of the desired protein will co-purify DNA fragments that are associated with that protein. The enriched DNA population is then labeled, combined with a differentially labeled reference sample and applied to DNA microarrays to detect enriched signals. Various computational and bioinformatic approaches are then applied to normalize the enriched and reference channels, to connect signals to the por",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.761155+00:00"
+}

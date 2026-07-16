@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13277623",
+  "source_fingerprint": "ce9e11ebef496392e2cf902ce75c5a6c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13277623",
+    "fbw7-ubiquitin-ligase:-a-tumour-suppressor-at-the-crossroads-of-cell-division,-growth-and-differentiation"
+  ],
+  "key_phrases": [
+    "fbw7",
+    "ubiquitin",
+    "ligase",
+    "tumour",
+    "suppressor",
+    "at",
+    "crossroads",
+    "cell"
+  ],
+  "summary_1l": "FBW7 (F-box and WD repeat domain-containing 7) is the substrate recognition component of an ev",
+  "query_hits": [],
+  "embed_text": "13277623 FBW7 ubiquitin ligase: a tumour suppressor at the crossroads of cell division, growth and differentiation science scifact FBW7 (F-box and WD repeat domain-containing 7) is the substrate recognition component of an evolutionary conserved SCF (complex of SKP1, CUL1 and F-box protein)-type ubiquitin ligase. SCFFBW7 degrades several proto-oncogenes that function… 13277623 fbw7-ubiquitin-ligase:-a-tumour-suppressor-at-the-crossroads-of-cell-division,-growth-and-differentiation fbw7 ubiquitin ligase tumour suppressor at crossroads cell FBW7 (F-box and WD repeat domain-containing 7) is the substrate recognition component of an ev FBW7 ubiquitin ligase: a tumour suppressor at the crossroads of cell division, growth and differentiation FBW7 (F-box and WD repeat domain-containing 7) is the substrate recognition component of an evolutionary conserved SCF (complex of SKP1, CUL1 and F-box protein)-type ubiquitin ligase. SCFFBW7 degrades several proto-oncogenes that function in cellular growth and division pathways, including MYC, cyclin E, Notch and JUN. FBW7 is also a tumour suppressor, the regulatory network of which is perturbed in many human malignancies. Numerous cancer-associated mutations in FBW7 and its substrates have been identified, and loss of FBW7 function causes chromosomal instability and tumorigenesis. This Review focuses on structural and functional aspects of FBW7 and its role in the development of canc",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:09.940304+00:00"
+}

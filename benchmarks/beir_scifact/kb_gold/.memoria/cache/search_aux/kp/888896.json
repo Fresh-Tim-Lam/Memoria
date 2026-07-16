@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "888896",
+  "source_fingerprint": "957722a2a17d543b77f70bf21e9d2b63",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "888896",
+    "naringenin-inhibits-allergen-induced-airway-inflammation-and-airway-responsiveness-and-inhibits-nf-kappab-activity-in-a-murine-model-of-asthma."
+  ],
+  "key_phrases": [
+    "naringenin",
+    "inhibits",
+    "allergen",
+    "induced",
+    "airway",
+    "inflammation",
+    "responsiveness",
+    "nf"
+  ],
+  "summary_1l": "Naringenin inhibits allergen-induced airway inflammation and airway responsiveness and inhibits NF-kappaB activity in a murine model of asthma.",
+  "query_hits": [],
+  "embed_text": "888896 Naringenin inhibits allergen-induced airway inflammation and airway responsiveness and inhibits NF-kappaB activity in a murine model of asthma. science scifact Naringenin, a flavonoid, has antiinflammatory and immunomodulatory properties. We investigated whether naringenin could attenuate allergen-induced airway inflammation and its possible mechanism in a murine model of asthma. Mice were… 888896 naringenin-inhibits-allergen-induced-airway-inflammation-and-airway-responsiveness-and-inhibits-nf-kappab-activity-in-a-murine-model-of-asthma. naringenin inhibits allergen induced airway inflammation responsiveness nf Naringenin inhibits allergen-induced airway inflammation and airway responsiveness and inhibits NF-kappaB activity in a murine model of asthma. Naringenin inhibits allergen-induced airway inflammation and airway responsiveness and inhibits NF-kappaB activity in a murine model of asthma. Naringenin, a flavonoid, has antiinflammatory and immunomodulatory properties. We investigated whether naringenin could attenuate allergen-induced airway inflammation and its possible mechanism in a murine model of asthma. Mice were sensitized and challenged with ovalbumin. Some mice were administered with naringenin before ovalbumin challenge. We evaluated the development of airway inflammation and airway reactivity. Interleukin (IL)4, IL13, chemokine (C-C motif) ligand (CCL)5, and CCL11 in bronchoalveolar lavage fluid and serum total IgE were detected by ELISA. IkappaBalpha degradation and inducible nitric oxide synthase (iNOS) in lungs were meas",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:03.904932+00:00"
+}

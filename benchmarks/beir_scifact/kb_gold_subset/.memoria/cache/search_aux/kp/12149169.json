@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12149169",
+  "source_fingerprint": "e56c161a02f867bc0826beddb182449e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12149169",
+    "functional-architecture-of-rna-polymerase-i"
+  ],
+  "key_phrases": [
+    "functional",
+    "architecture",
+    "rna",
+    "polymerase",
+    "synthesis",
+    "ribosomal",
+    "rrna",
+    "by"
+  ],
+  "summary_1l": "Synthesis of ribosomal RNA (rRNA) by RNA polymerase (Pol) I is the first step in ribosome biogenesis and a regulatory switch in eukaryotic cell growth.",
+  "query_hits": [],
+  "embed_text": "12149169 Functional Architecture of RNA Polymerase I science scifact Synthesis of ribosomal RNA (rRNA) by RNA polymerase (Pol) I is the first step in ribosome biogenesis and a regulatory switch in eukaryotic cell growth. Here we report the 12 A cryo-electron microscopic structure for the complete 14-subunit… 12149169 functional-architecture-of-rna-polymerase-i functional architecture rna polymerase synthesis ribosomal rrna by Synthesis of ribosomal RNA (rRNA) by RNA polymerase (Pol) I is the first step in ribosome biogenesis and a regulatory switch in eukaryotic cell growth. Functional Architecture of RNA Polymerase I Synthesis of ribosomal RNA (rRNA) by RNA polymerase (Pol) I is the first step in ribosome biogenesis and a regulatory switch in eukaryotic cell growth. Here we report the 12 A cryo-electron microscopic structure for the complete 14-subunit yeast Pol I, a homology model for the core enzyme, and the crystal structure of the subcomplex A14/43. In the resulting hybrid structure of Pol I, A14/43, the clamp, and the dock domain contribute to a unique surface interacting with promoter-specific initiation factors. The Pol I-specific subunits A49 and A34.5 form a heterodimer near the enzyme funnel that acts as a built-in elongation factor and is related to the Pol II-associated factor TFIIF. In contrast to Pol II, Pol I has a strong intrinsic 3'-RNA cleav",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:08.346670+00:00"
+}

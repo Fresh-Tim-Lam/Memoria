@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2030623",
+  "source_fingerprint": "fc9e37c17008be32f2d555f1bfe6ce15",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2030623",
+    "inhibition-of-fatty-acid-oxidation-modulates-immunosuppressive-functions-of-myeloid-derived-suppressor-cells-and-enhances-cancer-therapies"
+  ],
+  "key_phrases": [
+    "inhibition",
+    "fatty",
+    "acid",
+    "oxidation",
+    "modulates",
+    "immunosuppressive",
+    "functions",
+    "myeloid"
+  ],
+  "summary_1l": "Myeloid-derived suppressor cells (MDSC) promote tumor growth",
+  "query_hits": [],
+  "embed_text": "2030623 Inhibition of fatty acid oxidation modulates immunosuppressive functions of myeloid-derived suppressor cells and enhances cancer therapies science scifact Myeloid-derived suppressor cells (MDSC) promote tumor growth by inhibiting T-cell immunity and promoting malignant cell proliferation and migration. The therapeutic potential of blocking MDSC in tumors has been limited by their… 2030623 inhibition-of-fatty-acid-oxidation-modulates-immunosuppressive-functions-of-myeloid-derived-suppressor-cells-and-enhances-cancer-therapies inhibition fatty acid oxidation modulates immunosuppressive functions myeloid Myeloid-derived suppressor cells (MDSC) promote tumor growth Inhibition of fatty acid oxidation modulates immunosuppressive functions of myeloid-derived suppressor cells and enhances cancer therapies Myeloid-derived suppressor cells (MDSC) promote tumor growth by inhibiting T-cell immunity and promoting malignant cell proliferation and migration. The therapeutic potential of blocking MDSC in tumors has been limited by their heterogeneity, plasticity, and resistance to various chemotherapy agents. Recent studies have highlighted the role of energy metabolic pathways in the differentiation and function of immune cells; however, the metabolic characteristics regulating MDSC remain unclear. We aimed to determine the energy metabolic pathway(s) used by MDSC, establish its impact on their immunosuppressive function, and test whether its inhibition blocks",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:21.972894+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "16806763",
+  "source_fingerprint": "9c19c520bf87f7f7bbc5e9c3190d774f",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "16806763",
+    "a-long-non-coding-rna-signature-to-improve-prognosis-prediction-of-colorectal-cancer"
+  ],
+  "key_phrases": [
+    "long",
+    "non",
+    "coding",
+    "rna",
+    "signature",
+    "improve",
+    "prognosis",
+    "prediction"
+  ],
+  "summary_1l": "Increasing evidence suggests long non-coding RNAs (lncRNAs) are frequently aberrantly expressed in cancers, however",
+  "query_hits": [],
+  "embed_text": "16806763 A long non-coding RNA signature to improve prognosis prediction of colorectal cancer science scifact Increasing evidence suggests long non-coding RNAs (lncRNAs) are frequently aberrantly expressed in cancers, however, few related lncRNA signatures have been established for prediction of cancer prognosis. We aimed to develop a lncRNA… 16806763 a-long-non-coding-rna-signature-to-improve-prognosis-prediction-of-colorectal-cancer long non coding rna signature improve prognosis prediction Increasing evidence suggests long non-coding RNAs (lncRNAs) are frequently aberrantly expressed in cancers, however A long non-coding RNA signature to improve prognosis prediction of colorectal cancer Increasing evidence suggests long non-coding RNAs (lncRNAs) are frequently aberrantly expressed in cancers, however, few related lncRNA signatures have been established for prediction of cancer prognosis. We aimed to develop a lncRNA signature to improve prognosis prediction of colorectal cancer (CRC). Using a lncRNA-mining approach, we performed lncRNA expression profiling in large CRC cohorts from Gene Expression Ominus (GEO), including GSE39582 test series(N=436), internal validation series (N=117); and two independent validation series GSE14333 (N=197) and GSE17536(N=145). We established a set of six lncRNAs that were significantly correlated with the disease free survival (DFS) in the test series. Bas",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:16.865236+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "40476126",
+  "source_fingerprint": "59f242e1f57707664dc2cbc3b24dee09",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "40476126",
+    "functional-role-of-high-affinity-anandamide-transport,-as-revealed-by-selective-inhibition."
+  ],
+  "key_phrases": [
+    "functional",
+    "role",
+    "high",
+    "affinity",
+    "anandamide",
+    "transport",
+    "as",
+    "revealed"
+  ],
+  "summary_1l": "Functional role of high-affinity anandamide transport, as revealed by selective inhibition.",
+  "query_hits": [],
+  "embed_text": "40476126 Functional role of high-affinity anandamide transport, as revealed by selective inhibition. science scifact Anandamide, an endogenous ligand for central cannabinoid receptors, is released from neurons on depolarization and rapidly inactivated. Anandamide inactivation is not completely understood, but it may occur by transport into cells or by… 40476126 functional-role-of-high-affinity-anandamide-transport,-as-revealed-by-selective-inhibition. functional role high affinity anandamide transport as revealed Functional role of high-affinity anandamide transport, as revealed by selective inhibition. Functional role of high-affinity anandamide transport, as revealed by selective inhibition. Anandamide, an endogenous ligand for central cannabinoid receptors, is released from neurons on depolarization and rapidly inactivated. Anandamide inactivation is not completely understood, but it may occur by transport into cells or by enzymatic hydrolysis. The compound N-(4-hydroxyphenyl)arachidonylamide (AM404) was shown to inhibit high-affinity anandamide accumulation in rat neurons and astrocytes in vitro, an indication that this accumulation resulted from carrier-mediated transport. Although AM404 did not activate cannabinoid receptors or inhibit anandamide hydrolysis, it enhanced receptor-mediated anandamide responses in vitro and in vivo. The data indicate that carrier-mediated transport may",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:47.581954+00:00"
+}

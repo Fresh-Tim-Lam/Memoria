@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "1710116",
+  "source_fingerprint": "89f44685a77265ef72ee9ba30248e71c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "1710116",
+    "converging-intracranial-markers-of-conscious-access"
+  ],
+  "key_phrases": [
+    "converging",
+    "intracranial",
+    "markers",
+    "conscious",
+    "access",
+    "we",
+    "compared",
+    "nonconscious"
+  ],
+  "summary_1l": "We compared conscious and nonconscious processing of briefly flashed words using a visual masking procedure while recording intracranial electroence",
+  "query_hits": [],
+  "embed_text": "1710116 Converging Intracranial Markers of Conscious Access science scifact We compared conscious and nonconscious processing of briefly flashed words using a visual masking procedure while recording intracranial electroencephalogram (iEEG) in ten patients. Nonconscious processing of masked words was observed in… 1710116 converging-intracranial-markers-of-conscious-access converging intracranial markers conscious access we compared nonconscious We compared conscious and nonconscious processing of briefly flashed words using a visual masking procedure while recording intracranial electroence Converging Intracranial Markers of Conscious Access We compared conscious and nonconscious processing of briefly flashed words using a visual masking procedure while recording intracranial electroencephalogram (iEEG) in ten patients. Nonconscious processing of masked words was observed in multiple cortical areas, mostly within an early time window (<300 ms), accompanied by induced gamma-band activity, but without coherent long-distance neural activity, suggesting a quickly dissipating feedforward wave. In contrast, conscious processing of unmasked words was characterized by the convergence of four distinct neurophysiological markers: sustained voltage changes, particularly in prefrontal cortex, large increases in spectral power in the gamma band, increases in long-distance phase synchrony",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:17.310859+00:00"
+}

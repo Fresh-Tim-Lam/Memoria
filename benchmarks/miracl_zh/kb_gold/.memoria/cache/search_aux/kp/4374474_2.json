@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "kp_id": "4374474#2",
+  "source_fingerprint": "9eb415eb11636fc8159cb4a899d37eea",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "依赖类型"
+  ],
+  "aliases": [
+    "4374474#2"
+  ],
+  "key_phrases": [
+    "三角",
+    "很久以前",
+    "化学家",
+    "认识",
+    "化学键",
+    "可以",
+    "分为",
+    "三种"
+  ],
+  "summary_1l": "很久以前化学家们就认识到化学键可以分为三种典型类型：离子键、共价键和金属键。",
+  "query_hits": [],
+  "embed_text": "4374474#2 键三角 键三角 很久以前化学家们就认识到化学键可以分为三种典型类型：离子键、共价键和金属键。 依赖类型 4374474#2 三角 很久以前 化学家 认识 化学键 可以 分为 三种 很久以前化学家们就认识到化学键可以分为三种典型类型：离子键、共价键和金属键。 键三角 很久以前化学家们就认识到化学键可以分为三种典型类型：离子键、共价键和金属键。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:22:14.368023+00:00"
+}

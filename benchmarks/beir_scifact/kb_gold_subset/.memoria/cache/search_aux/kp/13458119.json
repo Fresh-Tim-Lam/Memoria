@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13458119",
+  "source_fingerprint": "ebd6cb3e930598f2b19df4a5742f4dde",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13458119",
+    "physiological-astrocytic-calcium-levels-stimulate-glutamate-release-to-modulate-adjacent-neurons."
+  ],
+  "key_phrases": [
+    "physiological",
+    "astrocytic",
+    "calcium",
+    "levels",
+    "stimulate",
+    "glutamate",
+    "release",
+    "modulate"
+  ],
+  "summary_1l": "Physiological astrocytic calcium levels stimulate glutamate release to modulate adjacent neurons.",
+  "query_hits": [],
+  "embed_text": "13458119 Physiological astrocytic calcium levels stimulate glutamate release to modulate adjacent neurons. science scifact Astrocytes can release glutamate in a calcium-dependent manner and consequently signal to adjacent neurons. Whether this glutamate release pathway is used during physiological signaling or is recruited only under pathophysiological… 13458119 physiological-astrocytic-calcium-levels-stimulate-glutamate-release-to-modulate-adjacent-neurons. physiological astrocytic calcium levels stimulate glutamate release modulate Physiological astrocytic calcium levels stimulate glutamate release to modulate adjacent neurons. Physiological astrocytic calcium levels stimulate glutamate release to modulate adjacent neurons. Astrocytes can release glutamate in a calcium-dependent manner and consequently signal to adjacent neurons. Whether this glutamate release pathway is used during physiological signaling or is recruited only under pathophysiological conditions is not well defined. One reason for this lack of understanding is the limited knowledge about the levels of calcium necessary to stimulate glutamate release from astrocytes and about how they compare with the range of physiological calcium levels in these cells. We used flash photolysis to raise internal calcium in astrocytes, while monitoring astrocytic calcium levels and glutamate, which evoked slow inward currents that were recorded electrophysiologica",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:11.044661+00:00"
+}

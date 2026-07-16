@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "45548062",
+  "source_fingerprint": "7a69b4b8d15006302d116ffa368611eb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "45548062",
+    "unmet-need-for-mental-health-care-among-u.s.-children:-variation-by-ethnicity-and-insurance-status."
+  ],
+  "key_phrases": [
+    "unmet",
+    "need",
+    "mental",
+    "health",
+    "care",
+    "among",
+    "children",
+    "variation"
+  ],
+  "summary_1l": "Unmet need for mental health care among U.",
+  "query_hits": [],
+  "embed_text": "45548062 Unmet need for mental health care among U.S. children: variation by ethnicity and insurance status. science scifact OBJECTIVE Policy discussions regarding the mental health needs of children and adolescents emphasize a lack of use of mental health services among youth, but few national estimates are available. The authors use three national data sets… 45548062 unmet-need-for-mental-health-care-among-u.s.-children:-variation-by-ethnicity-and-insurance-status. unmet need mental health care among children variation Unmet need for mental health care among U. Unmet need for mental health care among U.S. children: variation by ethnicity and insurance status. OBJECTIVE Policy discussions regarding the mental health needs of children and adolescents emphasize a lack of use of mental health services among youth, but few national estimates are available. The authors use three national data sets and examine ethnic disparities in unmet need (defined as having a need for mental health evaluation but not using any services in a 1-year period) to provide such estimates. METHOD The authors conducted secondary data analyses in three nationally representative household surveys fielded in 1996-1998: the National Health Interview Survey, the National Survey of American Families, and the Community Tracking Survey. They determined rates of mental health service",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:52.463559+00:00"
+}

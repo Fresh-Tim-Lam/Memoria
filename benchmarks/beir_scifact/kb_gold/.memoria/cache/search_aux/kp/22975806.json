@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22975806",
+  "source_fingerprint": "53d1020d6e64ff283885136513bddc61",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22975806",
+    "heterogenic-loss-of-the-wild-type-brca-allele-in-human-breast-tumorigenesis"
+  ],
+  "key_phrases": [
+    "heterogenic",
+    "loss",
+    "wild",
+    "type",
+    "brca",
+    "allele",
+    "human",
+    "breast"
+  ],
+  "summary_1l": "For individuals genetically predisposed to breast and ovarian cancer through inheritance of a mutant BRCA allele, somatic lo",
+  "query_hits": [],
+  "embed_text": "22975806 Heterogenic Loss of the Wild-Type BRCA Allele in Human Breast Tumorigenesis science scifact For individuals genetically predisposed to breast and ovarian cancer through inheritance of a mutant BRCA allele, somatic loss of heterozygosity affecting the wild-type allele is considered obligatory for cancer initiation and/or… 22975806 heterogenic-loss-of-the-wild-type-brca-allele-in-human-breast-tumorigenesis heterogenic loss wild type brca allele human breast For individuals genetically predisposed to breast and ovarian cancer through inheritance of a mutant BRCA allele, somatic lo Heterogenic Loss of the Wild-Type BRCA Allele in Human Breast Tumorigenesis For individuals genetically predisposed to breast and ovarian cancer through inheritance of a mutant BRCA allele, somatic loss of heterozygosity affecting the wild-type allele is considered obligatory for cancer initiation and/or progression. However, several lines of evidence suggest that phenotypic effects may result from BRCA haploinsufficiency. Archival fixed and embedded tissue specimens from women with germ line deleterious mutations in BRCA1 or BRCA2 were identified. After pathologic review, focal areas of normal breast epithelium, atypical ductal hyperplasia, ductal carcinoma-in-situ, and invasive ductal carcinoma were identified from 14 BRCA1-linked and 9 BRCA2-linked breast cancers. Ten BRCA-linked prophy",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.673267+00:00"
+}

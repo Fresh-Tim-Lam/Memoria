@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3203590",
+  "source_fingerprint": "929e0bce7330ae201ea312bfb66f64dd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3203590",
+    "unique-response-pathways-are-established-by-allosteric-interactions-among-nuclear-hormone-receptors"
+  ],
+  "key_phrases": [
+    "unique",
+    "response",
+    "pathways",
+    "established",
+    "by",
+    "allosteric",
+    "interactions",
+    "among"
+  ],
+  "summary_1l": "Heterodimerization is a common paradigm among eukaryotic transcription factors.",
+  "query_hits": [],
+  "embed_text": "3203590 Unique response pathways are established by allosteric interactions among nuclear hormone receptors science scifact Heterodimerization is a common paradigm among eukaryotic transcription factors. The 9-cis retinoic acid receptor (RXR) serves as a common heterodimerization partner for several nuclear receptors, including the thyroid hormone receptor… 3203590 unique-response-pathways-are-established-by-allosteric-interactions-among-nuclear-hormone-receptors unique response pathways established by allosteric interactions among Heterodimerization is a common paradigm among eukaryotic transcription factors. Unique response pathways are established by allosteric interactions among nuclear hormone receptors Heterodimerization is a common paradigm among eukaryotic transcription factors. The 9-cis retinoic acid receptor (RXR) serves as a common heterodimerization partner for several nuclear receptors, including the thyroid hormone receptor (T3R) and retinoic acid receptor (RAR). This raises the question as to whether these complexes possess dual hormonal responsiveness. We devised a strategy to examine the transcriptional properties of each receptor individually or when tethered to a heterodimeric partner. We find that the intrinsic binding properties of RXR are masked in T3R-RXR and RAR-RXR heterodimers. In contrast, RXR is active as a non-DNA-binding cofactor with the NGFI-B/Nurr1 orphan recept",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.147223+00:00"
+}

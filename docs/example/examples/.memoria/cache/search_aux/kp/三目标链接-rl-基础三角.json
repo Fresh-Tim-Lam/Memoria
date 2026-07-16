@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "kp_id": "三目标链接-rl-基础三角",
+  "source_fingerprint": "efaea57da36de9d6047fe0faa889ef2c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "三目标链接-rl-基础三角"
+  ],
+  "key_phrases": [
+    "目标",
+    "链接",
+    "rl",
+    "基础",
+    "三角",
+    "sanmubiaolianjiejichusanjiao",
+    "三目标链接（rl 基础三角）"
+  ],
+  "summary_1l": "三目标链接（RL 基础三角）",
+  "query_hits": [],
+  "embed_text": "三目标链接-rl-基础三角 ## 三目标链接（RL 基础三角） 三角 三目标链接-rl-基础三角 目标 链接 rl 基础 三角 sanmubiaolianjiejichusanjiao 三目标链接（rl 基础三角） 三目标链接（RL 基础三角） 三目标链接（RL 基础三角）",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T03:38:47.014697+00:00"
+}

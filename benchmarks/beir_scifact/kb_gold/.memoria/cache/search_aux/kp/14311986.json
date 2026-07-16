@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14311986",
+  "source_fingerprint": "8949a1e8021f268c4e7ae4924f8df8d8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14311986",
+    "the-proto-oncogene-c-maf-is-responsible-for-tissue-specific-expression-of-interleukin-4"
+  ],
+  "key_phrases": [
+    "proto",
+    "oncogene",
+    "maf",
+    "responsible",
+    "tissue",
+    "specific",
+    "expression",
+    "interleukin"
+  ],
+  "summary_1l": "The molecular basis for the distinctive cytokine expression of CD4+ T helper 1 (Th1) and T helper 2 (Th2) subset",
+  "query_hits": [],
+  "embed_text": "14311986 The Proto-Oncogene c-maf Is Responsible for Tissue-Specific Expression of Interleukin-4 science scifact The molecular basis for the distinctive cytokine expression of CD4+ T helper 1 (Th1) and T helper 2 (Th2) subsets remains elusive. Here, we report that the proto-oncogene c-maf, a basic region/leucine zipper transcription factor, controls… 14311986 the-proto-oncogene-c-maf-is-responsible-for-tissue-specific-expression-of-interleukin-4 proto oncogene maf responsible tissue specific expression interleukin The molecular basis for the distinctive cytokine expression of CD4+ T helper 1 (Th1) and T helper 2 (Th2) subset The Proto-Oncogene c-maf Is Responsible for Tissue-Specific Expression of Interleukin-4 The molecular basis for the distinctive cytokine expression of CD4+ T helper 1 (Th1) and T helper 2 (Th2) subsets remains elusive. Here, we report that the proto-oncogene c-maf, a basic region/leucine zipper transcription factor, controls tissue-specific expression of IL-4. c-Maf is expressed in Th2 but not Th1 clones and is induced during normal precursor cell differentiation along a Th2 but not Th1 lineage. c-Maf binds to a c-Maf response element (MARE) in the proximal IL-4 promoter adjacent to a site footprinted by extracts from Th2 but not Th1 clones. Ectopic expression of c-Maf transactivates the IL-4 promoter in Th1 cells, B cells, and nonlymphoid cells, a function that maps to the MARE and Th2-sp",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.533351+00:00"
+}

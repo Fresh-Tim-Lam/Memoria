@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23260700",
+  "source_fingerprint": "412ccbe9d87d6859636353f37ff7eeda",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23260700",
+    "angiopoietin-2-is-a-partial-agonist/antagonist-of-tie2-signaling-in-the-endothelium."
+  ],
+  "key_phrases": [
+    "angiopoietin",
+    "partial",
+    "agonist",
+    "antagonist",
+    "tie2",
+    "signaling",
+    "endothelium",
+    "ang2"
+  ],
+  "summary_1l": "Angiopoietin 2 is a partial agonist/antagonist of Tie2 signaling in the endothelium.",
+  "query_hits": [],
+  "embed_text": "23260700 Angiopoietin 2 is a partial agonist/antagonist of Tie2 signaling in the endothelium. science scifact Angiopoietin 2 (Ang2) was originally shown to be a competitive antagonist for Ang1 of the receptor tyrosine kinase Tie2 in endothelial cells (ECs). Since then, reports have conflicted on whether Ang2 is an agonist or antagonist of Tie2.… 23260700 angiopoietin-2-is-a-partial-agonist/antagonist-of-tie2-signaling-in-the-endothelium. angiopoietin partial agonist antagonist tie2 signaling endothelium ang2 Angiopoietin 2 is a partial agonist/antagonist of Tie2 signaling in the endothelium. Angiopoietin 2 is a partial agonist/antagonist of Tie2 signaling in the endothelium. Angiopoietin 2 (Ang2) was originally shown to be a competitive antagonist for Ang1 of the receptor tyrosine kinase Tie2 in endothelial cells (ECs). Since then, reports have conflicted on whether Ang2 is an agonist or antagonist of Tie2. Here we show that Ang2 functions as an agonist when Ang1 is absent but as a dose-dependent antagonist when Ang1 is present. Exogenous Ang2 activates Tie2 and the promigratory, prosurvival PI3K/Akt pathway in ECs but with less potency and lower affinity than exogenous Ang1. ECs produce Ang2 but not Ang1. This endogenous Ang2 maintains Tie2, phosphatidylinositol 3-kinase, and Akt activities, and it promotes EC survival, migration, and tube formation. However, when ECs are sti",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:27.119110+00:00"
+}

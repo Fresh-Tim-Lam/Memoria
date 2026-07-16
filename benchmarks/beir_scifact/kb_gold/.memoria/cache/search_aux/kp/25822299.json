@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25822299",
+  "source_fingerprint": "ee3b55e60589f3ea99ebbc7d931aabb8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25822299",
+    "effects-of-exercise-training-of-8-weeks-and-detraining-on-plasma-levels-of-endothelium-derived-factors,-endothelin-1-and-nitric-oxide,-in-healthy-young-humans."
+  ],
+  "key_phrases": [
+    "effects",
+    "exercise",
+    "training",
+    "weeks",
+    "detraining",
+    "plasma",
+    "levels",
+    "endothelium"
+  ],
+  "summary_1l": "Effects of exercise training of 8 weeks and detraining on plasma levels of endothelium-derived factors, endothelin-1 and nitric oxide, in healthy young humans.",
+  "query_hits": [],
+  "embed_text": "25822299 Effects of exercise training of 8 weeks and detraining on plasma levels of endothelium-derived factors, endothelin-1 and nitric oxide, in healthy young humans. science scifact Vascular endothelial cells produce nitric oxide (NO), which is a potent vasodilator substance and has been proposed as having antiatherosclerotic property. Vascular endothelial cells also produce endothelin-1 (ET-1), which is a potent… 25822299 effects-of-exercise-training-of-8-weeks-and-detraining-on-plasma-levels-of-endothelium-derived-factors,-endothelin-1-and-nitric-oxide,-in-healthy-young-humans. effects exercise training weeks detraining plasma levels endothelium Effects of exercise training of 8 weeks and detraining on plasma levels of endothelium-derived factors, endothelin-1 and nitric oxide, in healthy young humans. Effects of exercise training of 8 weeks and detraining on plasma levels of endothelium-derived factors, endothelin-1 and nitric oxide, in healthy young humans. Vascular endothelial cells produce nitric oxide (NO), which is a potent vasodilator substance and has been proposed as having antiatherosclerotic property. Vascular endothelial cells also produce endothelin-1 (ET-1), which is a potent vasoconstrictor peptide and has potent proliferating activity on vascular smooth muscle cells. Therefore, ET-1 has been implicated in the progression of atheromatous vascular disease. Because exercise training has been reported to produce an alteration in the function of vascular endothelial cells in animals, we hypothesized that exercise training influences the production of NO and ET-1 in humans. The",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.525666+00:00"
+}

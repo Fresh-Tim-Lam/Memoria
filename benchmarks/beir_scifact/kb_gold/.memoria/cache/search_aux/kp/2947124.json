@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2947124",
+  "source_fingerprint": "4d4e7c8d8c3417fc49fe223141ea125c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2947124",
+    "persistent-lcmv-infection-is-controlled-by-blockade-of-type-i-interferon-signaling."
+  ],
+  "key_phrases": [
+    "persistent",
+    "lcmv",
+    "infection",
+    "controlled",
+    "by",
+    "blockade",
+    "type",
+    "interferon"
+  ],
+  "summary_1l": "Persistent LCMV infection is controlled by blockade of type I interferon signaling.",
+  "query_hits": [],
+  "embed_text": "2947124 Persistent LCMV infection is controlled by blockade of type I interferon signaling. science scifact During persistent viral infections, chronic immune activation, negative immune regulator expression, an elevated interferon signature, and lymphoid tissue destruction correlate with disease progression. We demonstrated that blockade of… 2947124 persistent-lcmv-infection-is-controlled-by-blockade-of-type-i-interferon-signaling. persistent lcmv infection controlled by blockade type interferon Persistent LCMV infection is controlled by blockade of type I interferon signaling. Persistent LCMV infection is controlled by blockade of type I interferon signaling. During persistent viral infections, chronic immune activation, negative immune regulator expression, an elevated interferon signature, and lymphoid tissue destruction correlate with disease progression. We demonstrated that blockade of type I interferon (IFN-I) signaling using an IFN-I receptor neutralizing antibody reduced immune system activation, decreased expression of negative immune regulatory molecules, and restored lymphoid architecture in mice persistently infected with lymphocytic choriomeningitis virus. IFN-I blockade before and after establishment of persistent virus infection resulted in enhanced virus clearance and was CD4 T cell-dependent. Hence, we demonstrate a direct causal link between IF",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.954545+00:00"
+}

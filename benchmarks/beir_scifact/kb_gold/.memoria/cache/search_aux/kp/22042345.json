@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22042345",
+  "source_fingerprint": "17a2b3eedb2085c83a2fbbaa256175f9",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22042345",
+    "structural-analysis-of-multiprotein-complexes-by-cross-linking,-mass-spectrometry,-and-database-searching."
+  ],
+  "key_phrases": [
+    "structural",
+    "analysis",
+    "multiprotein",
+    "complexes",
+    "by",
+    "cross",
+    "linking",
+    "mass"
+  ],
+  "summary_1l": "Structural analysis of multiprotein complexes by cross-linking, mass spectrometry, and database searching.",
+  "query_hits": [],
+  "embed_text": "22042345 Structural analysis of multiprotein complexes by cross-linking, mass spectrometry, and database searching. science scifact Most protein complexes are inaccessible to high resolution structural analysis. We report the results of a combined approach of cross-linking, mass spectrometry, and bioinformatics to two human complexes containing large coiled-coil… 22042345 structural-analysis-of-multiprotein-complexes-by-cross-linking,-mass-spectrometry,-and-database-searching. structural analysis multiprotein complexes by cross linking mass Structural analysis of multiprotein complexes by cross-linking, mass spectrometry, and database searching. Structural analysis of multiprotein complexes by cross-linking, mass spectrometry, and database searching. Most protein complexes are inaccessible to high resolution structural analysis. We report the results of a combined approach of cross-linking, mass spectrometry, and bioinformatics to two human complexes containing large coiled-coil segments, the NDEL1 homodimer and the NDC80 heterotetramer. An important limitation of the cross-linking approach, so far, was the identification of cross-linked peptides from fragmentation spectra. Our novel approach overcomes the data analysis bottleneck of cross-linking and mass spectrometry. We constructed a purpose-built database to match spectra with cross-linked peptides, define a score that expresses the quality of our identification, and estimate",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:25.160618+00:00"
+}

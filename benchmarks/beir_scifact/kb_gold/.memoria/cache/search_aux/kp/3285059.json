@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3285059",
+  "source_fingerprint": "60498d5c870b83d3305793907d157f63",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3285059",
+    "lack-of-skeletal-muscle-il-6-affects-pyruvate-dehydrogenase-activity-at-rest-and-during-prolonged-exercise"
+  ],
+  "key_phrases": [
+    "lack",
+    "skeletal",
+    "muscle",
+    "il",
+    "affects",
+    "pyruvate",
+    "dehydrogenase",
+    "activity"
+  ],
+  "summary_1l": "Pyruvate dehydrogenase (PDH) plays a key role in the regulation of skeletal muscle substrate",
+  "query_hits": [],
+  "embed_text": "3285059 Lack of Skeletal Muscle IL-6 Affects Pyruvate Dehydrogenase Activity at Rest and during Prolonged Exercise science scifact Pyruvate dehydrogenase (PDH) plays a key role in the regulation of skeletal muscle substrate utilization. IL-6 is produced in skeletal muscle during exercise in a duration dependent manner and has been reported to increase whole body fatty… 3285059 lack-of-skeletal-muscle-il-6-affects-pyruvate-dehydrogenase-activity-at-rest-and-during-prolonged-exercise lack skeletal muscle il affects pyruvate dehydrogenase activity Pyruvate dehydrogenase (PDH) plays a key role in the regulation of skeletal muscle substrate Lack of Skeletal Muscle IL-6 Affects Pyruvate Dehydrogenase Activity at Rest and during Prolonged Exercise Pyruvate dehydrogenase (PDH) plays a key role in the regulation of skeletal muscle substrate utilization. IL-6 is produced in skeletal muscle during exercise in a duration dependent manner and has been reported to increase whole body fatty acid oxidation, muscle glucose uptake and decrease PDHa activity in skeletal muscle of fed mice. The aim of the present study was to examine whether muscle IL-6 contributes to exercise-induced PDH regulation in skeletal muscle. Skeletal muscle-specific IL-6 knockout (IL-6 MKO) mice and floxed littermate controls (control) completed a single bout of treadmill exercise for 10, 60 or 120 min, with rested mice of each genotype serving as basal controls.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:40.010985+00:00"
+}

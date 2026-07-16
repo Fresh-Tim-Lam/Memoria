@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7929932",
+  "source_fingerprint": "03403de3c524b03a06112c4b98b1fdcf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7929932",
+    "the-ino80-chromatin-remodeling-complex-in-transcription,-replication-and-repair."
+  ],
+  "key_phrases": [
+    "ino80",
+    "chromatin",
+    "remodeling",
+    "complex",
+    "transcription",
+    "replication",
+    "repair",
+    "atpase"
+  ],
+  "summary_1l": "The INO80 chromatin remodeling complex in transcription, replication and repair.",
+  "query_hits": [],
+  "embed_text": "7929932 The INO80 chromatin remodeling complex in transcription, replication and repair. science scifact The Ino80 ATPase is a member of the SNF2 family of ATPases and functions as an integral component of a multisubunit ATP-dependent chromatin remodeling complex. Although INO80 complexes from yeast and higher eukaryotes share a common core… 7929932 the-ino80-chromatin-remodeling-complex-in-transcription,-replication-and-repair. ino80 chromatin remodeling complex transcription replication repair atpase The INO80 chromatin remodeling complex in transcription, replication and repair. The INO80 chromatin remodeling complex in transcription, replication and repair. The Ino80 ATPase is a member of the SNF2 family of ATPases and functions as an integral component of a multisubunit ATP-dependent chromatin remodeling complex. Although INO80 complexes from yeast and higher eukaryotes share a common core of conserved subunits, the complexes have diverged substantially during evolution and have acquired new subunits with apparently species-specific functions. Recent studies have shown that the INO80 complex contributes to a wide variety of chromatin-dependent nuclear transactions, including transcription, DNA repair and DNA replication.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:01.490734+00:00"
+}

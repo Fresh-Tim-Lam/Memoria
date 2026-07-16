@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "52188256",
+  "source_fingerprint": "f7059be3418d5051845b4bb7854f35a1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "52188256",
+    "global-cancer-statistics-2018:-globocan-estimates-of-incidence-and-mortality-worldwide-for-36-cancers-in-185-countries."
+  ],
+  "key_phrases": [
+    "global",
+    "cancer",
+    "statistics",
+    "2018",
+    "globocan",
+    "estimates",
+    "incidence",
+    "mortality"
+  ],
+  "summary_1l": "Global cancer statistics 2018: GLOBOCAN estimates of incidence and mortality worldwide for 36 cancers in 185 countries.",
+  "query_hits": [],
+  "embed_text": "52188256 Global cancer statistics 2018: GLOBOCAN estimates of incidence and mortality worldwide for 36 cancers in 185 countries. science scifact This article provides a status report on the global burden of cancer worldwide using the GLOBOCAN 2018 estimates of cancer incidence and mortality produced by the International Agency for Research on Cancer, with a focus on geographic… 52188256 global-cancer-statistics-2018:-globocan-estimates-of-incidence-and-mortality-worldwide-for-36-cancers-in-185-countries. global cancer statistics 2018 globocan estimates incidence mortality Global cancer statistics 2018: GLOBOCAN estimates of incidence and mortality worldwide for 36 cancers in 185 countries. Global cancer statistics 2018: GLOBOCAN estimates of incidence and mortality worldwide for 36 cancers in 185 countries. This article provides a status report on the global burden of cancer worldwide using the GLOBOCAN 2018 estimates of cancer incidence and mortality produced by the International Agency for Research on Cancer, with a focus on geographic variability across 20 world regions. There will be an estimated 18.1 million new cancer cases (17.0 million excluding nonmelanoma skin cancer) and 9.6 million cancer deaths (9.5 million excluding nonmelanoma skin cancer) in 2018. In both sexes combined, lung cancer is the most commonly diagnosed cancer (11.6% of the total cases) and the leading cause of cancer death (18.4% of the total cancer deaths), closely followed by female breast cancer",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:54.539067+00:00"
+}

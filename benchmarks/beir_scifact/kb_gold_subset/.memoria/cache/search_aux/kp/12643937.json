@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12643937",
+  "source_fingerprint": "88a2a13959f1bedddeb7b95e42e60576",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12643937",
+    "a-genome-wide-sirna-screen-reveals-diverse-cellular-processes-and-pathways-that-mediate-genome-stability."
+  ],
+  "key_phrases": [
+    "genome",
+    "wide",
+    "sirna",
+    "screen",
+    "reveals",
+    "diverse",
+    "cellular",
+    "processes"
+  ],
+  "summary_1l": "A genome-wide siRNA screen reveals diverse cellular processes and pathways that mediate genome stability.",
+  "query_hits": [],
+  "embed_text": "12643937 A genome-wide siRNA screen reveals diverse cellular processes and pathways that mediate genome stability. science scifact Signaling pathways that respond to DNA damage are essential for the maintenance of genome stability and are linked to many diseases, including cancer. Here, a genome-wide siRNA screen was employed to identify additional genes involved in… 12643937 a-genome-wide-sirna-screen-reveals-diverse-cellular-processes-and-pathways-that-mediate-genome-stability. genome wide sirna screen reveals diverse cellular processes A genome-wide siRNA screen reveals diverse cellular processes and pathways that mediate genome stability. A genome-wide siRNA screen reveals diverse cellular processes and pathways that mediate genome stability. Signaling pathways that respond to DNA damage are essential for the maintenance of genome stability and are linked to many diseases, including cancer. Here, a genome-wide siRNA screen was employed to identify additional genes involved in genome stabilization by monitoring phosphorylation of the histone variant H2AX, an early mark of DNA damage. We identified hundreds of genes whose downregulation led to elevated levels of H2AX phosphorylation (gammaH2AX) and revealed links to cellular complexes and to genes with unclassified functions. We demonstrate a widespread role for mRNA-processing factors in preventing DNA damage, which in some cases is caused by aberrant RNA-DNA structures. Fur",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:09.285842+00:00"
+}

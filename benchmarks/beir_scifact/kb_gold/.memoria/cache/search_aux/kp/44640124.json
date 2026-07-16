@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "44640124",
+  "source_fingerprint": "213cb2f45ed6a8a88f3fda1796443804",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "44640124",
+    "redox-relevant-aspects-of-the-extracellular-matrix-and-its-cellular-contacts-via-integrins."
+  ],
+  "key_phrases": [
+    "redox",
+    "relevant",
+    "aspects",
+    "extracellular",
+    "matrix",
+    "its",
+    "cellular",
+    "contacts"
+  ],
+  "summary_1l": "Redox-relevant aspects of the extracellular matrix and its cellular contacts via integrins.",
+  "query_hits": [],
+  "embed_text": "44640124 Redox-relevant aspects of the extracellular matrix and its cellular contacts via integrins. science scifact SIGNIFICANCE The extracellular matrix (ECM) fulfills essential functions in multicellular organisms. It provides the mechanical scaffold and environmental cues to cells. Upon cell attachment, the ECM signals into the cells. In this… 44640124 redox-relevant-aspects-of-the-extracellular-matrix-and-its-cellular-contacts-via-integrins. redox relevant aspects extracellular matrix its cellular contacts Redox-relevant aspects of the extracellular matrix and its cellular contacts via integrins. Redox-relevant aspects of the extracellular matrix and its cellular contacts via integrins. SIGNIFICANCE The extracellular matrix (ECM) fulfills essential functions in multicellular organisms. It provides the mechanical scaffold and environmental cues to cells. Upon cell attachment, the ECM signals into the cells. In this process, reactive oxygen species (ROS) are physiologically used as signalizing molecules. RECENT ADVANCES ECM attachment influences the ROS-production of cells. In turn, ROS affect the production, assembly and turnover of the ECM during wound healing and matrix remodeling. Pathological changes of ROS levels lead to excess ECM production and increased tissue contraction in fibrotic disorders and desmoplastic tumors. Integrins are cell adhesion molecules which mediate cell",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.751888+00:00"
+}

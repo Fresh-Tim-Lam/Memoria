@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14149065",
+  "source_fingerprint": "b2d1d1c8a2ab93a8a4bc7679637aa85a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14149065",
+    "e-cadherin-engagement-stimulates-proliferation-via-rac1"
+  ],
+  "key_phrases": [
+    "cadherin",
+    "engagement",
+    "stimulates",
+    "proliferation",
+    "via",
+    "rac1",
+    "has",
+    "been"
+  ],
+  "summary_1l": "E-cadherin has been linked to the suppression of tumor growth and the inhibition of cell proliferation in culture.",
+  "query_hits": [],
+  "embed_text": "14149065 E-cadherin engagement stimulates proliferation via Rac1 science scifact E-cadherin has been linked to the suppression of tumor growth and the inhibition of cell proliferation in culture. We observed that progressively decreasing the seeding density of normal rat kidney-52E (NRK-52E) or MCF-10A epithelial cells… 14149065 e-cadherin-engagement-stimulates-proliferation-via-rac1 cadherin engagement stimulates proliferation via rac1 has been E-cadherin has been linked to the suppression of tumor growth and the inhibition of cell proliferation in culture. E-cadherin engagement stimulates proliferation via Rac1 E-cadherin has been linked to the suppression of tumor growth and the inhibition of cell proliferation in culture. We observed that progressively decreasing the seeding density of normal rat kidney-52E (NRK-52E) or MCF-10A epithelial cells from confluence, indeed, released cells from growth arrest. Unexpectedly, a further decrease in seeding density so that cells were isolated from neighboring cells decreased proliferation. Experiments using microengineered substrates showed that E-cadherin engagement stimulated the peak in proliferation at intermediate seeding densities, and that the proliferation arrest at high densities did not involve E-cadherin, but rather resulted from a crowding-dependent decrease in cell spreading against the",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.216967+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "27580223",
+  "source_fingerprint": "88a6ce2f2a22bebfbc9757fb211cdfd7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "27580223",
+    "lessons-learnt-from-malaria-epidemics-in-the-islamic-republic-of-iran."
+  ],
+  "key_phrases": [
+    "lessons",
+    "learnt",
+    "from",
+    "malaria",
+    "epidemics",
+    "islamic",
+    "republic",
+    "iran"
+  ],
+  "summary_1l": "Lessons learnt from malaria epidemics in the Islamic Republic of Iran.",
+  "query_hits": [],
+  "embed_text": "27580223 Lessons learnt from malaria epidemics in the Islamic Republic of Iran. science scifact The Islamic Republic of Iran is in the pre-elimination phase of malaria control, but malaria epidemics are still a concern in the south of the country. This retrospective study presents the epidemiological characteristics and predisposing… 27580223 lessons-learnt-from-malaria-epidemics-in-the-islamic-republic-of-iran. lessons learnt from malaria epidemics islamic republic iran Lessons learnt from malaria epidemics in the Islamic Republic of Iran. Lessons learnt from malaria epidemics in the Islamic Republic of Iran. The Islamic Republic of Iran is in the pre-elimination phase of malaria control, but malaria epidemics are still a concern in the south of the country. This retrospective study presents the epidemiological characteristics and predisposing factors of 60 of the malaria epidemics reported in Sistan va Baluchestan province during 2005-09. A zero-truncated negative binomial model was used to investigate the relation between predictor variables and the total number of malaria cases. Malaria epidemics occurred mainly in the southern part of the province, mostly between July and October, peaking in August. Most malaria epidemics were small-scale (68.3% were < 100 cases) and short (51.7% lasted < 1 month). Plasmodium falciparum",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.094506+00:00"
+}

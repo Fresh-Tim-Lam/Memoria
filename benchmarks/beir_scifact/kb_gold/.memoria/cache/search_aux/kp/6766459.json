@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "6766459",
+  "source_fingerprint": "26eecc4dddd8456dbf1239925b23c3ff",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "6766459"
+  ],
+  "key_phrases": [
+    "rbm3",
+    "regulates",
+    "temperature",
+    "sensitive",
+    "mir",
+    "142",
+    "5p",
+    "143"
+  ],
+  "summary_1l": "Fever is commonly used to diagnose disease and is consistently associated with inc",
+  "query_hits": [],
+  "embed_text": "6766459 RBM3 regulates temperature sensitive miR-142–5p and miR-143 (thermomiRs), which target immune genes and control fever science scifact Fever is commonly used to diagnose disease and is consistently associated with increased mortality in critically ill patients. However, the molecular controls of elevated body temperature are poorly understood. We discovered that the… 6766459 rbm3 regulates temperature sensitive mir 142 5p 143 Fever is commonly used to diagnose disease and is consistently associated with inc RBM3 regulates temperature sensitive miR-142–5p and miR-143 (thermomiRs), which target immune genes and control fever Fever is commonly used to diagnose disease and is consistently associated with increased mortality in critically ill patients. However, the molecular controls of elevated body temperature are poorly understood. We discovered that the expression of RNA-binding motif protein 3 (RBM3), known to respond to cold stress and to modulate microRNA (miRNA) expression, was reduced in 30 patients with fever, and in THP-1-derived macrophages maintained at a fever-like temperature (40 °C). Notably, RBM3 expression is reduced during fever whether or not infection is demonstrable. Reduced RBM3 expression resulted in increased expression of RBM3-targeted temperature-sensitive miRNAs, we ter",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:58.597990+00:00"
+}

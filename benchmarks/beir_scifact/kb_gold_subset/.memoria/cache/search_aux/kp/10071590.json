@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10071590",
+  "source_fingerprint": "f7a7d0ea3c74023d00dd3ab093363d3d",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10071590",
+    "acute-myopericarditis-after-multiple-vaccinations-in-an-adolescent:-case-report-and-review-of-the-literature."
+  ],
+  "key_phrases": [
+    "acute",
+    "myopericarditis",
+    "after",
+    "multiple",
+    "vaccinations",
+    "adolescent",
+    "case",
+    "report"
+  ],
+  "summary_1l": "Acute myopericarditis after multiple vaccinations in an adolescent: case report and review of the literature.",
+  "query_hits": [],
+  "embed_text": "10071590 Acute myopericarditis after multiple vaccinations in an adolescent: case report and review of the literature. science scifact We report a case of postvaccination acute myopericarditis in an adolescent. The patient presented with acute chest pain, diffuse ST-segment elevation, and elevated cardiac enzyme levels. Cardiac MRI was consistent with acute myocarditis.… 10071590 acute-myopericarditis-after-multiple-vaccinations-in-an-adolescent:-case-report-and-review-of-the-literature. acute myopericarditis after multiple vaccinations adolescent case report Acute myopericarditis after multiple vaccinations in an adolescent: case report and review of the literature. Acute myopericarditis after multiple vaccinations in an adolescent: case report and review of the literature. We report a case of postvaccination acute myopericarditis in an adolescent. The patient presented with acute chest pain, diffuse ST-segment elevation, and elevated cardiac enzyme levels. Cardiac MRI was consistent with acute myocarditis. He recovered within a few days with nonsteroidal antiinflammatory treatment and remains clinically stable, with improvement of MRI findings at the 10-week follow-up. Postvaccination cases of myopericarditis reported in the pediatric literature are also reviewed.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.260304+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "28334217",
+  "source_fingerprint": "21cf025e50c8d2fbe4a2da160c18d3f5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "28334217",
+    "targeted-inhibition-of-tumor-specific-glutaminase-diminishes-cell-autonomous-tumorigenesis."
+  ],
+  "key_phrases": [
+    "targeted",
+    "inhibition",
+    "tumor",
+    "specific",
+    "glutaminase",
+    "diminishes",
+    "cell",
+    "autonomous"
+  ],
+  "summary_1l": "Targeted inhibition of tumor-specific glutaminase diminishes cell-autonomous tumorigenesis.",
+  "query_hits": [],
+  "embed_text": "28334217 Targeted inhibition of tumor-specific glutaminase diminishes cell-autonomous tumorigenesis. science scifact Glutaminase (GLS), which converts glutamine to glutamate, plays a key role in cancer cell metabolism, growth, and proliferation. GLS is being explored as a cancer therapeutic target, but whether GLS inhibitors affect cancer cell-autonomous… 28334217 targeted-inhibition-of-tumor-specific-glutaminase-diminishes-cell-autonomous-tumorigenesis. targeted inhibition tumor specific glutaminase diminishes cell autonomous Targeted inhibition of tumor-specific glutaminase diminishes cell-autonomous tumorigenesis. Targeted inhibition of tumor-specific glutaminase diminishes cell-autonomous tumorigenesis. Glutaminase (GLS), which converts glutamine to glutamate, plays a key role in cancer cell metabolism, growth, and proliferation. GLS is being explored as a cancer therapeutic target, but whether GLS inhibitors affect cancer cell-autonomous growth or the host microenvironment or have off-target effects is unknown. Here, we report that loss of one copy of Gls blunted tumor progression in an immune-competent MYC-mediated mouse model of hepatocellular carcinoma. Compared with results in untreated animals with MYC-induced hepatocellular carcinoma, administration of the GLS-specific inhibitor bis-2-(5-phenylacetamido-1,3,4-thiadiazol-2-yl)ethyl sulfide (BPTES) prolonged survival without any apparent toxic",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.883731+00:00"
+}

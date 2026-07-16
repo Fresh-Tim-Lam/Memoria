@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23908217",
+  "source_fingerprint": "0896f499b7cd30bd93395791f036afe3",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23908217",
+    "bone-disease-in-pediatric-patients-undergoing-dialysis-with-capd-or-ccpd."
+  ],
+  "key_phrases": [
+    "bone",
+    "disease",
+    "pediatric",
+    "patients",
+    "undergoing",
+    "dialysis",
+    "with",
+    "capd"
+  ],
+  "summary_1l": "Bone disease in pediatric patients undergoing dialysis with CAPD or CCPD.",
+  "query_hits": [],
+  "embed_text": "23908217 Bone disease in pediatric patients undergoing dialysis with CAPD or CCPD. science scifact The histologic features of renal osteodystrophy and the prevalence of bone aluminum deposition in children receiving regular dialysis have not been described. Forty-four pediatric patients undergoing continuous ambulatory (CAPD) or cycling… 23908217 bone-disease-in-pediatric-patients-undergoing-dialysis-with-capd-or-ccpd. bone disease pediatric patients undergoing dialysis with capd Bone disease in pediatric patients undergoing dialysis with CAPD or CCPD. Bone disease in pediatric patients undergoing dialysis with CAPD or CCPD. The histologic features of renal osteodystrophy and the prevalence of bone aluminum deposition in children receiving regular dialysis have not been described. Forty-four pediatric patients undergoing continuous ambulatory (CAPD) or cycling (CCPD) peritoneal dialysis had bone biopsies and deferoxamine (DFO) infusion tests; all were receiving oral calcitriol. Osteitis fibrosa (OF) was found in 39%, mild lesions (M) in 25%, normal histology (NH) in 16%, aplastic lesions (AP) in 11%, and osteomalacia (OM) in 9%. Bone surface aluminum (SA) was present by histochemical staining in 10 out of 20 given aluminum-containing phosphate-binding agents and in 0 of 24 treated with calcium carbonate; chi 2 = 15.5, P less than 0.0001.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.401997+00:00"
+}

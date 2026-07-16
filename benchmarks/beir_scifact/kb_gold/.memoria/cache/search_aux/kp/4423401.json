@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "4423401",
+  "source_fingerprint": "a320472f68ebda81f692feef9bded45c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4423401"
+  ],
+  "key_phrases": [
+    "succinate",
+    "inflammatory",
+    "signal",
+    "that",
+    "induces",
+    "il",
+    "through",
+    "hif"
+  ],
+  "summary_1l": "Macrophages activated by the Gram-negative bacterial product lipopolysaccharide switch their core metabolism from oxidative phosph",
+  "query_hits": [],
+  "embed_text": "4423401 Succinate is an inflammatory signal that induces IL-1β through HIF-1α science scifact Macrophages activated by the Gram-negative bacterial product lipopolysaccharide switch their core metabolism from oxidative phosphorylation to glycolysis. Here we show that inhibition of glycolysis with 2-deoxyglucose suppresses… 4423401 succinate inflammatory signal that induces il through hif Macrophages activated by the Gram-negative bacterial product lipopolysaccharide switch their core metabolism from oxidative phosph Succinate is an inflammatory signal that induces IL-1β through HIF-1α Macrophages activated by the Gram-negative bacterial product lipopolysaccharide switch their core metabolism from oxidative phosphorylation to glycolysis. Here we show that inhibition of glycolysis with 2-deoxyglucose suppresses lipopolysaccharide-induced interleukin-1β but not tumour-necrosis factor-α in mouse macrophages. A comprehensive metabolic map of lipopolysaccharide-activated macrophages shows upregulation of glycolytic and downregulation of mitochondrial genes, which correlates directly with the expression profiles of altered metabolites. Lipopolysaccharide strongly increases the levels of the tricarboxylic-acid cycle intermediate succinate. Glutamine-dependent anerplerosis is the principal source of succinate,",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.070706+00:00"
+}

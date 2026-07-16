@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "13780287",
+  "source_fingerprint": "4431c9d8f6fd8deab9303c61ad10d2ac",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13780287",
+    "stim1-is-a-calcium-sensor-specialized-for-digital-signaling"
+  ],
+  "key_phrases": [
+    "stim1",
+    "calcium",
+    "sensor",
+    "specialized",
+    "digital",
+    "signaling",
+    "when",
+    "cells"
+  ],
+  "summary_1l": "When cells are activated by calcium-mobilizing agonists at low, physiological concentrations, the resulting calcium signals generally take t",
+  "query_hits": [],
+  "embed_text": "13780287 STIM1 Is a Calcium Sensor Specialized for Digital Signaling science scifact When cells are activated by calcium-mobilizing agonists at low, physiological concentrations, the resulting calcium signals generally take the form of repetitive regenerative discharges of stored calcium, termed calcium oscillations [1].… 13780287 stim1-is-a-calcium-sensor-specialized-for-digital-signaling stim1 calcium sensor specialized digital signaling when cells When cells are activated by calcium-mobilizing agonists at low, physiological concentrations, the resulting calcium signals generally take t STIM1 Is a Calcium Sensor Specialized for Digital Signaling When cells are activated by calcium-mobilizing agonists at low, physiological concentrations, the resulting calcium signals generally take the form of repetitive regenerative discharges of stored calcium, termed calcium oscillations [1]. These intracellular calcium oscillations have long fascinated biologists as a mode of digitized intracellular signaling. Recent work has highlighted the role of calcium influx as an essential component of calcium oscillations [2]. This influx occurs through a process known as store-operated calcium entry, which is initiated by calcium sensor proteins, STIM1 and STIM2, in the endoplasmic reticulum [3]. STIM2 is activated by changes in endoplasmic reticulum calcium near the resting level, whereas a",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:11.000546+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "31304956",
+  "source_fingerprint": "8f78658294d916e5dc632c1a8e2a8525",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "31304956",
+    "cranial-neural-crest-and-the-building-of-the-vertebrate-head"
+  ],
+  "key_phrases": [
+    "cranial",
+    "neural",
+    "crest",
+    "building",
+    "vertebrate",
+    "head",
+    "development",
+    "vertebrates"
+  ],
+  "summary_1l": "Head development in vertebrates involves a complex series of molecular and morphogenetic events that generate a coordinated pattern of cart",
+  "query_hits": [],
+  "embed_text": "31304956 Cranial neural crest and the building of the vertebrate head science scifact Head development in vertebrates involves a complex series of molecular and morphogenetic events that generate a coordinated pattern of cartilages, bones and nerves, and result in species-specific craniofacial morphologies. A specialized… 31304956 cranial-neural-crest-and-the-building-of-the-vertebrate-head cranial neural crest building vertebrate head development vertebrates Head development in vertebrates involves a complex series of molecular and morphogenetic events that generate a coordinated pattern of cart Cranial neural crest and the building of the vertebrate head Head development in vertebrates involves a complex series of molecular and morphogenetic events that generate a coordinated pattern of cartilages, bones and nerves, and result in species-specific craniofacial morphologies. A specialized cell type of neural origin, the neural crest, is central to this process, as it provides the main source of craniofacial mesenchyme. The degree of patterning information that is intrinsic to the neural crest has been recently debated, and new advances have underscored the influence of environmental signalling on the transcriptional readout that coordinates craniofacial morphogenesis in space and time.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.459746+00:00"
+}

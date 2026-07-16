@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "3155374",
+  "source_fingerprint": "49b1e6d3479318e344523ed3da1ae1e8",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3155374"
+  ],
+  "key_phrases": [
+    "phosphatidylinositol",
+    "bisphosphate",
+    "functions",
+    "as",
+    "second",
+    "messenger",
+    "that",
+    "regulates"
+  ],
+  "summary_1l": "Binding interactions between the plasma membrane and the cytoskeleton define",
+  "query_hits": [],
+  "embed_text": "3155374 Phosphatidylinositol 4,5-Bisphosphate Functions as a Second Messenger that Regulates Cytoskeleton–Plasma Membrane Adhesion science scifact Binding interactions between the plasma membrane and the cytoskeleton define cell functions such as cell shape, formation of cell processes, cell movement, and endocytosis. Here we use optical tweezers tether force measurements and show… 3155374 phosphatidylinositol bisphosphate functions as second messenger that regulates Binding interactions between the plasma membrane and the cytoskeleton define Phosphatidylinositol 4,5-Bisphosphate Functions as a Second Messenger that Regulates Cytoskeleton–Plasma Membrane Adhesion Binding interactions between the plasma membrane and the cytoskeleton define cell functions such as cell shape, formation of cell processes, cell movement, and endocytosis. Here we use optical tweezers tether force measurements and show that plasma membrane phosphatidylinositol 4,5-bisphosphate (PIP2) acts as a second messenger that regulates the adhesion energy between the cytoskeleton and the plasma membrane. Receptor stimuli that hydrolyze PIP2 lowered adhesion energy, a process that could be mimicked by expressing PH domains that sequester PIP2 or by targeting a 5'-PIP2-phosphatase to the plasma membrane to selectively lower plasma membrane PIP2 concentration. Our",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:38.686584+00:00"
+}

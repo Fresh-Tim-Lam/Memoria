@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24408040",
+  "source_fingerprint": "f25915aa3e8d21fc7232f25dfc9cf618",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24408040",
+    "heart-failure-admissions-in-adults-with-congenital-heart-disease;-risk-factors-and-prognosis."
+  ],
+  "key_phrases": [
+    "heart",
+    "failure",
+    "admissions",
+    "adults",
+    "with",
+    "congenital",
+    "disease",
+    "risk"
+  ],
+  "summary_1l": "Heart failure admissions in adults with congenital heart disease; risk factors and prognosis.",
+  "query_hits": [],
+  "embed_text": "24408040 Heart failure admissions in adults with congenital heart disease; risk factors and prognosis. science scifact BACKGROUND Heart failure (HF) is a serious complication and often the cause of death in adults with congenital heart disease (CHD). Therefore, our aims were to determine the frequency of HF-admissions, and to assess risk factors of first… 24408040 heart-failure-admissions-in-adults-with-congenital-heart-disease;-risk-factors-and-prognosis. heart failure admissions adults with congenital disease risk Heart failure admissions in adults with congenital heart disease; risk factors and prognosis. Heart failure admissions in adults with congenital heart disease; risk factors and prognosis. BACKGROUND Heart failure (HF) is a serious complication and often the cause of death in adults with congenital heart disease (CHD). Therefore, our aims were to determine the frequency of HF-admissions, and to assess risk factors of first HF-admission and of mortality after first HF-admission in adults with CHD. METHODS The Dutch CONCOR registry was linked to the Hospital Discharge Registry and National Mortality Registry to obtain data on HF-admissions and mortality. Risk factors for both HF-admission and mortality were assessed using Cox regression models. RESULTS Of 10,808 adult patients (49% male), 274 (2.5%) were admitted for HF during a median follow-up period of 21 years. The incidence of fi",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:29.435318+00:00"
+}

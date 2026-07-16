@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "15155862",
+  "source_fingerprint": "91dabcbeaa102d9737acfc4aa192be19",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "15155862",
+    "longitudinal-genome-wide-association-of-cardiovascular-disease-risk-factors-in-the-bogalusa-heart-study"
+  ],
+  "key_phrases": [
+    "longitudinal",
+    "genome",
+    "wide",
+    "association",
+    "cardiovascular",
+    "disease",
+    "risk",
+    "factors"
+  ],
+  "summary_1l": "Cardiovascular disease (CVD) is the leading cause of death worldwide.",
+  "query_hits": [],
+  "embed_text": "15155862 Longitudinal Genome-Wide Association of Cardiovascular Disease Risk Factors in the Bogalusa Heart Study science scifact Cardiovascular disease (CVD) is the leading cause of death worldwide. Recent genome-wide association (GWA) studies have pinpointed many loci associated with CVD risk factors in adults. It is unclear, however, if these loci predict trait… 15155862 longitudinal-genome-wide-association-of-cardiovascular-disease-risk-factors-in-the-bogalusa-heart-study longitudinal genome wide association cardiovascular disease risk factors Cardiovascular disease (CVD) is the leading cause of death worldwide. Longitudinal Genome-Wide Association of Cardiovascular Disease Risk Factors in the Bogalusa Heart Study Cardiovascular disease (CVD) is the leading cause of death worldwide. Recent genome-wide association (GWA) studies have pinpointed many loci associated with CVD risk factors in adults. It is unclear, however, if these loci predict trait levels at all ages, if they are associated with how a trait develops over time, or if they could be used to screen individuals who are pre-symptomatic to provide the opportunity for preventive measures before disease onset. We completed a genome-wide association study on participants in the longitudinal Bogalusa Heart Study (BHS) and have characterized the association between genetic factors and the development of CVD risk factors from childhood to adulth",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:14.156829+00:00"
+}

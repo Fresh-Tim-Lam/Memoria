@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "14121786",
+  "source_fingerprint": "dc2e2fa82cf6db339a9e91bb4378eaf1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "14121786",
+    "a-summary-of-the-effects-of-antihypertensive-medications-on-measured-blood-pressure."
+  ],
+  "key_phrases": [
+    "summary",
+    "effects",
+    "antihypertensive",
+    "medications",
+    "measured",
+    "blood",
+    "pressure",
+    "background"
+  ],
+  "summary_1l": "A summary of the effects of antihypertensive medications on measured blood pressure.",
+  "query_hits": [],
+  "embed_text": "14121786 A summary of the effects of antihypertensive medications on measured blood pressure. science scifact BACKGROUND Epidemiologic analysis of family data on blood pressure (BP) is often compromised by the effects of antihypertensive medications. A review of numerous clinical trials that investigated the effects of BP-lowering medications is… 14121786 a-summary-of-the-effects-of-antihypertensive-medications-on-measured-blood-pressure. summary effects antihypertensive medications measured blood pressure background A summary of the effects of antihypertensive medications on measured blood pressure. A summary of the effects of antihypertensive medications on measured blood pressure. BACKGROUND Epidemiologic analysis of family data on blood pressure (BP) is often compromised by the effects of antihypertensive medications. A review of numerous clinical trials that investigated the effects of BP-lowering medications is summarized here. METHODS Published clinical trials, including 137 clinical trials with monodrug therapies and 28 clinical trials of combination drug therapies with a total of 11,739 participants, were reviewed from PubMed. Six major classes/groups of antihypertensive medications were categorized by ethnicity, including angiotensin-converting enzyme (ACE) inhibitors, alpha1-blockers, cardioselective beta-blockers (beta1-blockers), calcium channel blockers, thiazide and thia",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:12.171343+00:00"
+}

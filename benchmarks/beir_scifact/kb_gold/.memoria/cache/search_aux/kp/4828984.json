@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "4828984",
+  "source_fingerprint": "8805855acd4becaeb4fb91b81921ab9e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4828984"
+  ],
+  "key_phrases": [
+    "cryo",
+    "em",
+    "structure",
+    "herpesvirus",
+    "capsid",
+    "at",
+    "3.1",
+    "structurally"
+  ],
+  "summary_1l": "Cryo-EM structure of a herpesvirus capsid at 3.",
+  "query_hits": [],
+  "embed_text": "4828984 Cryo-EM structure of a herpesvirus capsid at 3.1 Å science scifact Structurally and genetically, human herpesviruses are among the largest and most complex of viruses. Using cryo–electron microscopy (cryo-EM) with an optimized image reconstruction strategy, we report the herpes simplex virus type 2… 4828984 cryo em structure herpesvirus capsid at 3.1 structurally Cryo-EM structure of a herpesvirus capsid at 3. Cryo-EM structure of a herpesvirus capsid at 3.1 Å Structurally and genetically, human herpesviruses are among the largest and most complex of viruses. Using cryo–electron microscopy (cryo-EM) with an optimized image reconstruction strategy, we report the herpes simplex virus type 2 (HSV-2) capsid structure at 3.1 angstroms, which is built up of about 3000 proteins organized into three types of hexons (central, peripentonal, and edge), pentons, and triplexes. Both hexons and pentons contain the major capsid protein, VP5; hexons also contain a small capsid protein, VP26; and triplexes comprise VP23 and VP19C. Acting as core organizers, VP5 proteins form extensive intermolecular networks, involving multiple disulfide bonds (about 1500 in total) and noncovalent interactions, with VP26 protein",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:53.525070+00:00"
+}

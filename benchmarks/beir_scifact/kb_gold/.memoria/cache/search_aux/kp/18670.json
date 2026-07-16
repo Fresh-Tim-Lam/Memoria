@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "18670",
+  "source_fingerprint": "900f5086ae931241255e4152184d2292",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "18670",
+    "the-dna-methylome-of-human-peripheral-blood-mononuclear-cells"
+  ],
+  "key_phrases": [
+    "dna",
+    "methylome",
+    "human",
+    "peripheral",
+    "blood",
+    "mononuclear",
+    "cells",
+    "methylation"
+  ],
+  "summary_1l": "DNA methylation plays an important role in biological processes in human health and disease.",
+  "query_hits": [],
+  "embed_text": "18670 The DNA Methylome of Human Peripheral Blood Mononuclear Cells science scifact DNA methylation plays an important role in biological processes in human health and disease. Recent technological advances allow unbiased whole-genome DNA methylation (methylome) analysis to be carried out on human cells. Using… 18670 the-dna-methylome-of-human-peripheral-blood-mononuclear-cells dna methylome human peripheral blood mononuclear cells methylation DNA methylation plays an important role in biological processes in human health and disease. The DNA Methylome of Human Peripheral Blood Mononuclear Cells DNA methylation plays an important role in biological processes in human health and disease. Recent technological advances allow unbiased whole-genome DNA methylation (methylome) analysis to be carried out on human cells. Using whole-genome bisulfite sequencing at 24.7-fold coverage (12.3-fold per strand), we report a comprehensive (92.62%) methylome and analysis of the unique sequences in human peripheral blood mononuclear cells (PBMC) from the same Asian individual whose genome was deciphered in the YH project. PBMC constitute an important source for clinical blood tests world-wide. We found that 68.4% of CpG sites and <0.2% of non-CpG sites were methylated, demonstrating that non-CpG cytosine methylation is minor in human PBM",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:19.564374+00:00"
+}

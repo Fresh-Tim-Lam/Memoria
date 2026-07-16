@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "293661",
+  "source_fingerprint": "c3be4352842189e748bb078250b20882",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "293661",
+    "targeting-arginine-metabolism-pathway-to-treat-arginine-dependent-cancers."
+  ],
+  "key_phrases": [
+    "targeting",
+    "arginine",
+    "metabolism",
+    "pathway",
+    "treat",
+    "dependent",
+    "cancers",
+    "significant"
+  ],
+  "summary_1l": "Targeting arginine metabolism pathway to treat arginine-dependent cancers.",
+  "query_hits": [],
+  "embed_text": "293661 Targeting arginine metabolism pathway to treat arginine-dependent cancers. science scifact The significant disparities in metabolism between tumor and normal cells have inspired the development of metabolism-based anti-tumor therapeutics. Arginine is a semi-essential amino acid because normal cells can not only synthesize… 293661 targeting-arginine-metabolism-pathway-to-treat-arginine-dependent-cancers. targeting arginine metabolism pathway treat dependent cancers significant Targeting arginine metabolism pathway to treat arginine-dependent cancers. Targeting arginine metabolism pathway to treat arginine-dependent cancers. The significant disparities in metabolism between tumor and normal cells have inspired the development of metabolism-based anti-tumor therapeutics. Arginine is a semi-essential amino acid because normal cells can not only synthesize arginine de novo but also take up extracellular arginine. Several types of tumors have abnormalities in arginine metabolism enzymes and completely rely on extracellular arginine to support necessary biological processes. This property is referred to as arginine auxotrophy. Taking advantage of characteristic arginine auxotrophy in tumors, arginine deprivation, which is generally induced by the use of arginine deiminase (ADI) and arginase I, has been investigated as a novel strategy for ca",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.813187+00:00"
+}

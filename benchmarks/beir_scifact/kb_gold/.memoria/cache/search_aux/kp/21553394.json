@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "21553394",
+  "source_fingerprint": "5c5b794b38ff44abbb19ee16fedd37e7",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "21553394",
+    "vitamin-d-and-obesity:-current-perspectives-and-future-directions."
+  ],
+  "key_phrases": [
+    "vitamin",
+    "obesity",
+    "current",
+    "perspectives",
+    "future",
+    "directions",
+    "recent",
+    "years"
+  ],
+  "summary_1l": "Vitamin D and obesity: current perspectives and future directions.",
+  "query_hits": [],
+  "embed_text": "21553394 Vitamin D and obesity: current perspectives and future directions. science scifact In recent years, new functional roles of vitamin D beyond its traditional role in calcium homoeostasis and bone metabolism have emerged linking the fat-soluble vitamin to various non-communicable diseases. Vitamin D deficiency… 21553394 vitamin-d-and-obesity:-current-perspectives-and-future-directions. vitamin obesity current perspectives future directions recent years Vitamin D and obesity: current perspectives and future directions. Vitamin D and obesity: current perspectives and future directions. In recent years, new functional roles of vitamin D beyond its traditional role in calcium homoeostasis and bone metabolism have emerged linking the fat-soluble vitamin to various non-communicable diseases. Vitamin D deficiency (25-hydroxyvitamin D (25(OH)D) < 25-30 nmol/l) and sub-optimal status (25(OH)D < 50-100 nmol/l) are increasingly associated with unfavourable metabolic phenotypes, including insulin resistance, type 2 diabetes and CVD; conditions also commonly linked with overweight and obesity. Early studies reported poor vitamin D status in the morbidly obese. More recently, it has been observed that a graded relationship between vitamin D status and BMI, or specifically adiposity, exists in the general population.",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:24.349647+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "24705390",
+  "source_fingerprint": "7324280aa97cac8b3c340e82325875e2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "24705390",
+    "chronic-helicobacter-pylori-infections-induce-gastric-mutations-in-mice."
+  ],
+  "key_phrases": [
+    "chronic",
+    "helicobacter",
+    "pylori",
+    "infections",
+    "induce",
+    "gastric",
+    "mutations",
+    "mice"
+  ],
+  "summary_1l": "Chronic Helicobacter pylori infections induce gastric mutations in mice.",
+  "query_hits": [],
+  "embed_text": "24705390 Chronic Helicobacter pylori infections induce gastric mutations in mice. science scifact BACKGROUND & AIMS Helicobacter pylori is an important etiologic factor in the development of gastric cancer. The aim of this study was to analyze the role of H. pylori infections in the induction of mutagenic events in gastric epithelial… 24705390 chronic-helicobacter-pylori-infections-induce-gastric-mutations-in-mice. chronic helicobacter pylori infections induce gastric mutations mice Chronic Helicobacter pylori infections induce gastric mutations in mice. Chronic Helicobacter pylori infections induce gastric mutations in mice. BACKGROUND & AIMS Helicobacter pylori is an important etiologic factor in the development of gastric cancer. The aim of this study was to analyze the role of H. pylori infections in the induction of mutagenic events in gastric epithelial cells. The effect of a high-salt diet as a genotoxic risk factor was also investigated. METHODS Big Blue transgenic male mice (C57Bl/6) were inoculated with H. pylori (strain SS1) or Helicobacter felis (strain CS1) for 6 and 12 months. The frequency and spectrum of mutations at the stomach level were assessed. Inflammatory host response and inducible nitric oxide synthase (iNOS) expression by reverse-transcription polymerase chain reaction and immunohistochemistry analysis were also p",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:30.038275+00:00"
+}

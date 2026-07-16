@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3230361",
+  "source_fingerprint": "2a0900c3283efc0304b45f3b422eab65",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3230361",
+    "generation-and-characterization-of-methyl-lysine-histone-antibodies."
+  ],
+  "key_phrases": [
+    "generation",
+    "characterization",
+    "methyl",
+    "lysine",
+    "histone",
+    "antibodies",
+    "publisher",
+    "summary"
+  ],
+  "summary_1l": "Generation and characterization of methyl-lysine histone antibodies.",
+  "query_hits": [],
+  "embed_text": "3230361 Generation and characterization of methyl-lysine histone antibodies. science scifact Publisher Summary This chapter summarizes the development and characterization of rabbit polyclonal antibodies named histone that are directed against the methylated H3-K9 position. It provides protocols for peptide design, rabbit… 3230361 generation-and-characterization-of-methyl-lysine-histone-antibodies. generation characterization methyl lysine histone antibodies publisher summary Generation and characterization of methyl-lysine histone antibodies. Generation and characterization of methyl-lysine histone antibodies. Publisher Summary This chapter summarizes the development and characterization of rabbit polyclonal antibodies named histone that are directed against the methylated H3-K9 position. It provides protocols for peptide design, rabbit immunizations, and quality controls of methyl-lysine histone antibodies, followed by their in vivo characterization using indirect IF of inter-and metaphase chromatin in wild-type (wt) and mutant mouse cells that are deficient for the Suv39h histone methyltransferases (HMTases). Histone amino-termini (tails) protrude from the nucleosome core and are subject to a variety of post-translational modifications, including acetylation (on lysine residues), phosphorylation (on serine and threonine resid",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:39.369915+00:00"
+}

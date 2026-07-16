@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2078658",
+  "source_fingerprint": "164b5497380b57e81f5a74f4608e5244",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2078658",
+    "oct4-links-multiple-epigenetic-pathways-to-the-pluripotency-network"
+  ],
+  "key_phrases": [
+    "oct4",
+    "links",
+    "multiple",
+    "epigenetic",
+    "pathways",
+    "pluripotency",
+    "network",
+    "well"
+  ],
+  "summary_1l": "Oct4 is a well-known transcription factor that plays fundamental roles in stem cell self-renewal, pluripotency, and somatic cell rep",
+  "query_hits": [],
+  "embed_text": "2078658 Oct4 links multiple epigenetic pathways to the pluripotency network science scifact Oct4 is a well-known transcription factor that plays fundamental roles in stem cell self-renewal, pluripotency, and somatic cell reprogramming. However, limited information is available on Oct4-associated protein complexes and their… 2078658 oct4-links-multiple-epigenetic-pathways-to-the-pluripotency-network oct4 links multiple epigenetic pathways pluripotency network well Oct4 is a well-known transcription factor that plays fundamental roles in stem cell self-renewal, pluripotency, and somatic cell rep Oct4 links multiple epigenetic pathways to the pluripotency network Oct4 is a well-known transcription factor that plays fundamental roles in stem cell self-renewal, pluripotency, and somatic cell reprogramming. However, limited information is available on Oct4-associated protein complexes and their intrinsic protein-protein interactions that dictate Oct4's critical regulatory activities. Here we employed an improved affinity purification approach combined with mass spectrometry to purify Oct4 protein complexes in mouse embryonic stem cells (mESCs), and discovered many novel Oct4 partners important for self-renewal and pluripotency of mESCs. Notably, we found that Oct4 is associated with multiple chromatin-modifying complexes with documented as well as newly proved functional significance",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:22.952364+00:00"
+}

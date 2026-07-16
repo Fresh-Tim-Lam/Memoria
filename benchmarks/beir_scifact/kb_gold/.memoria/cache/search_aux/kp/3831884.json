@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "3831884",
+  "source_fingerprint": "aac5f4f9e3ff5023eaf11c74b7570ede",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "3831884",
+    "glutamine-supports-pancreatic-cancer-growth-through-a-kras-regulated-metabolic-pathway"
+  ],
+  "key_phrases": [
+    "glutamine",
+    "supports",
+    "pancreatic",
+    "cancer",
+    "growth",
+    "through",
+    "kras",
+    "regulated"
+  ],
+  "summary_1l": "Cancer cells have metabolic dependencies that distinguish them from their normal counterparts.",
+  "query_hits": [],
+  "embed_text": "3831884 Glutamine supports pancreatic cancer growth through a Kras-regulated metabolic pathway science scifact Cancer cells have metabolic dependencies that distinguish them from their normal counterparts. Among these dependencies is an increased use of the amino acid glutamine to fuel anabolic processes. Indeed, the spectrum of glutamine-dependent… 3831884 glutamine-supports-pancreatic-cancer-growth-through-a-kras-regulated-metabolic-pathway glutamine supports pancreatic cancer growth through kras regulated Cancer cells have metabolic dependencies that distinguish them from their normal counterparts. Glutamine supports pancreatic cancer growth through a Kras-regulated metabolic pathway Cancer cells have metabolic dependencies that distinguish them from their normal counterparts. Among these dependencies is an increased use of the amino acid glutamine to fuel anabolic processes. Indeed, the spectrum of glutamine-dependent tumours and the mechanisms whereby glutamine supports cancer metabolism remain areas of active investigation. Here we report the identification of a non-canonical pathway of glutamine use in human pancreatic ductal adenocarcinoma (PDAC) cells that is required for tumour growth. Whereas most cells use glutamate dehydrogenase (GLUD1) to convert glutamine-derived glutamate into α-ketoglutarate in the mitochondria to fuel the tricarboxylic acid cycle, PDAC relies on a dist",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.392024+00:00"
+}

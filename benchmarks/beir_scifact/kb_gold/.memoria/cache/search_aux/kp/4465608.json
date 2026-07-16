@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "4465608",
+  "source_fingerprint": "4530dd2192d8e1b0b9410cadeae33bf6",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "4465608",
+    "an-atlas-of-active-enhancers-across-human-cell-types-and-tissues"
+  ],
+  "key_phrases": [
+    "atlas",
+    "active",
+    "enhancers",
+    "across",
+    "human",
+    "cell",
+    "types",
+    "tissues"
+  ],
+  "summary_1l": "Enhancers control the correct temporal and cell-type-specific activation of gene expression in multicellular eukaryotes.",
+  "query_hits": [],
+  "embed_text": "4465608 An atlas of active enhancers across human cell types and tissues science scifact Enhancers control the correct temporal and cell-type-specific activation of gene expression in multicellular eukaryotes. Knowing their properties, regulatory activity and targets is crucial to understand the regulation of differentiation… 4465608 an-atlas-of-active-enhancers-across-human-cell-types-and-tissues atlas active enhancers across human cell types tissues Enhancers control the correct temporal and cell-type-specific activation of gene expression in multicellular eukaryotes. An atlas of active enhancers across human cell types and tissues Enhancers control the correct temporal and cell-type-specific activation of gene expression in multicellular eukaryotes. Knowing their properties, regulatory activity and targets is crucial to understand the regulation of differentiation and homeostasis. Here we use the FANTOM5 panel of samples, covering the majority of human tissues and cell types, to produce an atlas of active, in vivo-transcribed enhancers. We show that enhancers share properties with CpG-poor messenger RNA promoters but produce bidirectional, exosome-sensitive, relatively short unspliced RNAs, the generation of which is strongly related to enhancer activity. The atlas is used to compare regulatory programs between different cells at unprecedented depth, t",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:51.776380+00:00"
+}

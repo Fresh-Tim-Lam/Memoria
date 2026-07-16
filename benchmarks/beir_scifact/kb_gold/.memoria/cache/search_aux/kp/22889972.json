@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "22889972",
+  "source_fingerprint": "14684f4cb616ff441feb932720edd3b2",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "22889972",
+    "disruption-of-tumor-necrosis-factor-alpha-gene-diminishes-the-development-of-atherosclerosis-in-apoe-deficient-mice."
+  ],
+  "key_phrases": [
+    "disruption",
+    "tumor",
+    "necrosis",
+    "factor",
+    "alpha",
+    "gene",
+    "diminishes",
+    "development"
+  ],
+  "summary_1l": "Disruption of tumor necrosis factor-alpha gene diminishes the development of atherosclerosis in ApoE-deficient mice.",
+  "query_hits": [],
+  "embed_text": "22889972 Disruption of tumor necrosis factor-alpha gene diminishes the development of atherosclerosis in ApoE-deficient mice. science scifact Inflammatory cytokines, including tumor necrosis factor-alpha (TNF-alpha) have been implicated in atherogenesis. However, the precise role of TNF-alpha in atherogenesis is still unclear. To examine the effect of TNF-alpha on atherogenesis,… 22889972 disruption-of-tumor-necrosis-factor-alpha-gene-diminishes-the-development-of-atherosclerosis-in-apoe-deficient-mice. disruption tumor necrosis factor alpha gene diminishes development Disruption of tumor necrosis factor-alpha gene diminishes the development of atherosclerosis in ApoE-deficient mice. Disruption of tumor necrosis factor-alpha gene diminishes the development of atherosclerosis in ApoE-deficient mice. Inflammatory cytokines, including tumor necrosis factor-alpha (TNF-alpha) have been implicated in atherogenesis. However, the precise role of TNF-alpha in atherogenesis is still unclear. To examine the effect of TNF-alpha on atherogenesis, we generated compound-deficient mice in apolipoprotein E (apoE) and TNF-alpha (apoE-/-/TNF-alpha-/-) and compared them with apoE-/- mice. Although serum total cholesterol levels were markedly elevated in both apoE-/-/TNF-alpha-/- and apoE-/- mice compared to wild-type mice, no differences were observed between apoE-/-/TNF-alpha-/- and apoE-/- mice. The atherosclerotic plaque area in the aortic luminal surface of apoE-/-/TNF-alpha-/- mice (",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:26.450100+00:00"
+}

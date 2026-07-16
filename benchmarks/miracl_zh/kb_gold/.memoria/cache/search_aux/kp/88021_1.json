@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "kp_id": "88021#1",
+  "source_fingerprint": "bdef8885777f2cbcdc83dc8385fc1671",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "世界主要宗教",
+    "细胞分化",
+    "联合国主要机构"
+  ],
+  "aliases": [
+    "88021#1"
+  ],
+  "key_phrases": [
+    "主要",
+    "功能",
+    "氧气",
+    "空氣",
+    "运输",
+    "血液",
+    "二氧化碳",
+    "排出"
+  ],
+  "summary_1l": "肺的主要功能是将氧气从空氣运输到血液中，并将二氧化碳从血液中排出至大气中。",
+  "query_hits": [],
+  "embed_text": "88021#1 肺 肺 肺的主要功能是将氧气从空氣运输到血液中，并将二氧化碳从血液中排出至大气中。气体交换过程是在一种特殊细胞中进行的，而这些细胞是由成千上万的微小薄壁泡囊组成的，这些微小泡囊被称作\"肺泡\"。 世界主要宗教 细胞分化 联合国主要机构 88021#1 主要 功能 氧气 空氣 运输 血液 二氧化碳 排出 肺的主要功能是将氧气从空氣运输到血液中，并将二氧化碳从血液中排出至大气中。 肺 肺的主要功能是将氧气从空氣运输到血液中，并将二氧化碳从血液中排出至大气中。气体交换过程是在一种特殊细胞中进行的，而这些细胞是由成千上万的微小薄壁泡囊组成的，这些微小泡囊被称作\"肺泡\"。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:19:20.756974+00:00"
+}

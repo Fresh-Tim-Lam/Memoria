@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "25953438",
+  "source_fingerprint": "254bf7a10cc46cf33e1197c12060fa05",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "25953438",
+    "patterns-of-age-specific-mortality-in-children-in-endemic-areas-of-sub-saharan-africa."
+  ],
+  "key_phrases": [
+    "patterns",
+    "age",
+    "specific",
+    "mortality",
+    "children",
+    "endemic",
+    "areas",
+    "sub"
+  ],
+  "summary_1l": "Patterns of age-specific mortality in children in endemic areas of sub-Saharan Africa.",
+  "query_hits": [],
+  "embed_text": "25953438 Patterns of age-specific mortality in children in endemic areas of sub-Saharan Africa. science scifact Understanding of the age- and season- dependence of malaria mortality is an important prerequisite for epidemiologic models of malaria immunity. However, most studies of malaria mortality have aggregated their results into broad age groups… 25953438 patterns-of-age-specific-mortality-in-children-in-endemic-areas-of-sub-saharan-africa. patterns age specific mortality children endemic areas sub Patterns of age-specific mortality in children in endemic areas of sub-Saharan Africa. Patterns of age-specific mortality in children in endemic areas of sub-Saharan Africa. Understanding of the age- and season- dependence of malaria mortality is an important prerequisite for epidemiologic models of malaria immunity. However, most studies of malaria mortality have aggregated their results into broad age groups and across seasons, making it hard to predict the likely impact of interventions targeted at specific age groups of children. We present age-specific mortality rates for children aged < 15 years for the period of 2001-2005 in 7 demographic surveillance sites in areas of sub-Saharan Africa with stable endemic Plasmodium falciparum malaria. We use verbal autopsies (VAs) to estimate the proportion of deaths by age group due to malaria, and thus calculate malaria-specific",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:32.821022+00:00"
+}

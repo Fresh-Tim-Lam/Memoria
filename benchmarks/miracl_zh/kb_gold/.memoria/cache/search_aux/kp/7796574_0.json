@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "kp_id": "7796574#0",
+  "source_fingerprint": "fb0664035afb754d35004c1c915a8585",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [
+    "(中國)",
+    "中國政治史",
+    "中國文化史",
+    "腾讯动漫",
+    "腾讯相关争议",
+    "香港動畫"
+  ],
+  "aliases": [
+    "7796574#0"
+  ],
+  "key_phrases": [
+    "王者",
+    "荣耀",
+    "动画",
+    "一部",
+    "中國",
+    "奇幻",
+    "動畫",
+    "劇集"
+  ],
+  "summary_1l": "《王者荣耀》是一部中國奇幻動畫劇集，改編自腾讯和天美工作室群的同名電子遊戲。",
+  "query_hits": [],
+  "embed_text": "7796574#0 王者荣耀 (动画) 王者荣耀 (动画) 《王者荣耀》是一部中國奇幻動畫劇集，改編自腾讯和天美工作室群的同名電子遊戲。 (中國) 中國政治史 中國文化史 腾讯动漫 腾讯相关争议 香港動畫 7796574#0 王者 荣耀 动画 一部 中國 奇幻 動畫 劇集 《王者荣耀》是一部中國奇幻動畫劇集，改編自腾讯和天美工作室群的同名電子遊戲。 王者荣耀 (动画) 《王者荣耀》是一部中國奇幻動畫劇集，改編自腾讯和天美工作室群的同名電子遊戲。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-11T03:23:30.367566+00:00"
+}

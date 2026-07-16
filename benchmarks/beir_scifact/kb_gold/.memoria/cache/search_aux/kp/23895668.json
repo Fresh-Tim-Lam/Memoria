@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "23895668",
+  "source_fingerprint": "4b3ef7a477b6677974784987838cffbb",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "23895668",
+    "mtorc2-regulates-amino-acid-metabolism-in-cancer-by-phosphorylation-of-the-cystine-glutamate-antiporter-xct."
+  ],
+  "key_phrases": [
+    "mtorc2",
+    "regulates",
+    "amino",
+    "acid",
+    "metabolism",
+    "cancer",
+    "by",
+    "phosphorylation"
+  ],
+  "summary_1l": "mTORC2 Regulates Amino Acid Metabolism in Cancer by Phosphorylation of the Cystine-Glutamate Antiporter xCT.",
+  "query_hits": [],
+  "embed_text": "23895668 mTORC2 Regulates Amino Acid Metabolism in Cancer by Phosphorylation of the Cystine-Glutamate Antiporter xCT. science scifact Mutations in cancer reprogram amino acid metabolism to drive tumor growth, but the molecular mechanisms are not well understood. Using an unbiased proteomic screen, we identified mTORC2 as a critical regulator of amino acid metabolism in… 23895668 mtorc2-regulates-amino-acid-metabolism-in-cancer-by-phosphorylation-of-the-cystine-glutamate-antiporter-xct. mtorc2 regulates amino acid metabolism cancer by phosphorylation mTORC2 Regulates Amino Acid Metabolism in Cancer by Phosphorylation of the Cystine-Glutamate Antiporter xCT. mTORC2 Regulates Amino Acid Metabolism in Cancer by Phosphorylation of the Cystine-Glutamate Antiporter xCT. Mutations in cancer reprogram amino acid metabolism to drive tumor growth, but the molecular mechanisms are not well understood. Using an unbiased proteomic screen, we identified mTORC2 as a critical regulator of amino acid metabolism in cancer via phosphorylation of the cystine-glutamate antiporter xCT. mTORC2 phosphorylates serine 26 at the cytosolic N terminus of xCT, inhibiting its activity. Genetic inhibition of mTORC2, or pharmacologic inhibition of the mammalian target of rapamycin (mTOR) kinase, promotes glutamate secretion, cystine uptake, and incorporation into glutathione, linking growth factor receptor signaling with amino acid uptake and utilization. These results ident",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:28.350878+00:00"
+}

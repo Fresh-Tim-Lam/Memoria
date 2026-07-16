@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "7059897",
+  "source_fingerprint": "d3a9557606022eb5d9d7d28f2211d957",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "7059897",
+    "igblast:-an-immunoglobulin-variable-domain-sequence-analysis-tool"
+  ],
+  "key_phrases": [
+    "igblast",
+    "immunoglobulin",
+    "variable",
+    "domain",
+    "sequence",
+    "analysis",
+    "tool",
+    "ig"
+  ],
+  "summary_1l": "The variable domain of an immunoglobulin (IG) sequence is encoded by multiple genes, including the variable (V) gene, the diversity (D",
+  "query_hits": [],
+  "embed_text": "7059897 IgBLAST: an immunoglobulin variable domain sequence analysis tool science scifact The variable domain of an immunoglobulin (IG) sequence is encoded by multiple genes, including the variable (V) gene, the diversity (D) gene and the joining (J) gene. Analysis of IG sequences typically requires identification of each gene,… 7059897 igblast:-an-immunoglobulin-variable-domain-sequence-analysis-tool igblast immunoglobulin variable domain sequence analysis tool ig The variable domain of an immunoglobulin (IG) sequence is encoded by multiple genes, including the variable (V) gene, the diversity (D IgBLAST: an immunoglobulin variable domain sequence analysis tool The variable domain of an immunoglobulin (IG) sequence is encoded by multiple genes, including the variable (V) gene, the diversity (D) gene and the joining (J) gene. Analysis of IG sequences typically requires identification of each gene, as well as a comparison of sequence variations in the context of defined regions. General purpose tools, such as the BLAST program, have only limited use for such tasks, as the rearranged nature of an IG sequence and the variable length of each gene requires multiple rounds of BLAST searches for a single IG sequence. Additionally, manual assembly of different genes is difficult and error-prone. To address these issues and to facilitate other common tasks in analysing IG sequences, we have",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:59.378025+00:00"
+}

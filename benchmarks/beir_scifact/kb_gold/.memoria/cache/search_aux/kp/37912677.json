@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "37912677",
+  "source_fingerprint": "1d02283729fafd2e54ba14fa5b1bfccf",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "37912677",
+    "dose-response-study-on-thyrotoxic-patients-undergoing-positron-emission-tomography-and-radioiodine-therapy"
+  ],
+  "key_phrases": [
+    "dose",
+    "response",
+    "study",
+    "thyrotoxic",
+    "patients",
+    "undergoing",
+    "positron",
+    "emission"
+  ],
+  "summary_1l": "With the acknowledged problems associated with assessment of functioning thyroid mass and hen",
+  "query_hits": [],
+  "embed_text": "37912677 Dose-response study on thyrotoxic patients undergoing positron emission tomography and radioiodine therapy science scifact With the acknowledged problems associated with assessment of functioning thyroid mass and hence radiation dose, our policy had been to give 75 MBq iodine-131 at 6-monthly intervals to patients with Graves' disease until they became… 37912677 dose-response-study-on-thyrotoxic-patients-undergoing-positron-emission-tomography-and-radioiodine-therapy dose response study thyrotoxic patients undergoing positron emission With the acknowledged problems associated with assessment of functioning thyroid mass and hen Dose-response study on thyrotoxic patients undergoing positron emission tomography and radioiodine therapy With the acknowledged problems associated with assessment of functioning thyroid mass and hence radiation dose, our policy had been to give 75 MBq iodine-131 at 6-monthly intervals to patients with Graves' disease until they became euthyroid. Since positron emission tomography (PET) has been available at this hospital, the radiation dose to the thyroid has been calculated with an accuracy of ∼20%, the thyroid mass being determined from an iodine-124 PET scan. A dose-response study has been carried out on 65 patients who have received single or cumulative radiation doses of <80 Gy. The results show that patients who receive a low radiation dose (<20 Gy) at their first treatment have a",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.021888+00:00"
+}

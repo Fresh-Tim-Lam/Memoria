@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "9687772",
+  "source_fingerprint": "e6a719429ca4ee1e141c6971551a6131",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "9687772",
+    "xpg-stabilizes-tfiih,-allowing-transactivation-of-nuclear-receptors:-implications-for-cockayne-syndrome-in-xp-g/cs-patients."
+  ],
+  "key_phrases": [
+    "xpg",
+    "stabilizes",
+    "tfiih",
+    "allowing",
+    "transactivation",
+    "nuclear",
+    "receptors",
+    "implications"
+  ],
+  "summary_1l": "XPG stabilizes TFIIH, allowing transactivation of nuclear receptors: implications for Cockayne syndrome in XP-G/CS patients.",
+  "query_hits": [],
+  "embed_text": "9687772 XPG stabilizes TFIIH, allowing transactivation of nuclear receptors: implications for Cockayne syndrome in XP-G/CS patients. science scifact Mutations in the human XPG gene give rise to an inherited photosensitive disorder, xeroderma pigmentosum (XP) associated with Cockayne syndrome (XP-G/CS). The clinical features of CS in XP-G/CS patients are difficult to explain on the… 9687772 xpg-stabilizes-tfiih,-allowing-transactivation-of-nuclear-receptors:-implications-for-cockayne-syndrome-in-xp-g/cs-patients. xpg stabilizes tfiih allowing transactivation nuclear receptors implications XPG stabilizes TFIIH, allowing transactivation of nuclear receptors: implications for Cockayne syndrome in XP-G/CS patients. XPG stabilizes TFIIH, allowing transactivation of nuclear receptors: implications for Cockayne syndrome in XP-G/CS patients. Mutations in the human XPG gene give rise to an inherited photosensitive disorder, xeroderma pigmentosum (XP) associated with Cockayne syndrome (XP-G/CS). The clinical features of CS in XP-G/CS patients are difficult to explain on the basis of a defect in nucleotide excision repair (NER). We found that XPG forms a stable complex with TFIIH, which is active in transcription and NER. Mutations in XPG found in XP-G/CS patient cells that prevent the association with TFIIH also resulted in the dissociation of CAK and XPD from the core TFIIH. As a consequence, the phosphorylation and transactivation of nuclear receptors were disturbed in XP-G/CS as well as xpg(-/-) MEF cel",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:30:05.576400+00:00"
+}

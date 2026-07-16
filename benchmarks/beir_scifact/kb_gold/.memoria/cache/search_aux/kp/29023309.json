@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "29023309",
+  "source_fingerprint": "fee6c229e564864fe0d1381adb74d330",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "29023309"
+  ],
+  "key_phrases": [
+    "simian",
+    "immunodeficiency",
+    "virus",
+    "induced",
+    "mucosal",
+    "interleukin",
+    "17",
+    "deficiency"
+  ],
+  "summary_1l": "Salmonella typhimurium causes a localized enteric infection in immunocompetent in",
+  "query_hits": [],
+  "embed_text": "29023309 Simian immunodeficiency virus–induced mucosal interleukin-17 deficiency promotes Salmonella dissemination from the gut science scifact Salmonella typhimurium causes a localized enteric infection in immunocompetent individuals, whereas HIV-infected individuals develop a life-threatening bacteremia. Here we show that simian immunodeficiency virus (SIV) infection results in… 29023309 simian immunodeficiency virus induced mucosal interleukin 17 deficiency Salmonella typhimurium causes a localized enteric infection in immunocompetent in Simian immunodeficiency virus–induced mucosal interleukin-17 deficiency promotes Salmonella dissemination from the gut Salmonella typhimurium causes a localized enteric infection in immunocompetent individuals, whereas HIV-infected individuals develop a life-threatening bacteremia. Here we show that simian immunodeficiency virus (SIV) infection results in depletion of T helper type 17 (TH17) cells in the ileal mucosa of rhesus macaques, thereby impairing mucosal barrier functions to S. typhimurium dissemination. In SIV-negative macaques, the gene expression profile induced by S. typhimurium in ligated ileal loops was dominated by TH17 responses, including the expression of interleukin-17 (IL-17) and IL-22. TH17 cells were markedly depleted in SIV-infected rhesus macaques, resulting in blun",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:36.522212+00:00"
+}

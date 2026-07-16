@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "13283919",
+  "source_fingerprint": "cb9b27aacbdaa4260829625b92b3440e",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "13283919"
+  ],
+  "key_phrases": [
+    "defective",
+    "mast",
+    "cell",
+    "effector",
+    "functions",
+    "mice",
+    "lacking",
+    "cracm1"
+  ],
+  "summary_1l": "CRACM1 (also called Orai1) constitutes the pore subunit of s",
+  "query_hits": [],
+  "embed_text": "13283919 Defective mast cell effector functions in mice lacking the CRACM1 pore subunit of store-operated calcium release–activated calcium channels science scifact CRACM1 (also called Orai1) constitutes the pore subunit of store-operated calcium release–activated calcium channels. A point mutation in the gene encoding CRACM1 is associated with severe combined immunodeficiency disease in humans. Here… 13283919 defective mast cell effector functions mice lacking cracm1 CRACM1 (also called Orai1) constitutes the pore subunit of s Defective mast cell effector functions in mice lacking the CRACM1 pore subunit of store-operated calcium release–activated calcium channels CRACM1 (also called Orai1) constitutes the pore subunit of store-operated calcium release–activated calcium channels. A point mutation in the gene encoding CRACM1 is associated with severe combined immunodeficiency disease in humans. Here we generated CRACM1-deficient mice in which β-galactosidase activity 'reported' CRACM1 expression. CRACM1-deficient mice were smaller in size. Mast cells derived from CRACM1-deficient mice showed grossly defective degranulation and cytokine secretion, and the allergic reactions elicited in vivo were inhibited in CRACM1-deficient mice. We detected robust CRACM1 expression in skeletal muscles and some regions of the bra",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:09.967407+00:00"
+}

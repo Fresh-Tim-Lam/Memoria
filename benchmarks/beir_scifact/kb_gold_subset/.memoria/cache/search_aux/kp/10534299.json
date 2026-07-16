@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "10534299",
+  "source_fingerprint": "ba598f1dae552fa9658569a51e2775ed",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "10534299",
+    "fasting-activation-of-agrp-neurons-requires-nmda-receptors-and-involves-spinogenesis-and-increased-excitatory-tone"
+  ],
+  "key_phrases": [
+    "fasting",
+    "activation",
+    "agrp",
+    "neurons",
+    "requires",
+    "nmda",
+    "receptors",
+    "involves"
+  ],
+  "summary_1l": "AgRP neuron activity drives feeding and weight gain whereas that of nearby POMC neuro",
+  "query_hits": [],
+  "embed_text": "10534299 Fasting Activation of AgRP Neurons Requires NMDA Receptors and Involves Spinogenesis and Increased Excitatory Tone science scifact AgRP neuron activity drives feeding and weight gain whereas that of nearby POMC neurons does the opposite. However, the role of excitatory glutamatergic input in controlling these neurons is unknown. To address this question, we generated… 10534299 fasting-activation-of-agrp-neurons-requires-nmda-receptors-and-involves-spinogenesis-and-increased-excitatory-tone fasting activation agrp neurons requires nmda receptors involves AgRP neuron activity drives feeding and weight gain whereas that of nearby POMC neuro Fasting Activation of AgRP Neurons Requires NMDA Receptors and Involves Spinogenesis and Increased Excitatory Tone AgRP neuron activity drives feeding and weight gain whereas that of nearby POMC neurons does the opposite. However, the role of excitatory glutamatergic input in controlling these neurons is unknown. To address this question, we generated mice lacking NMDA receptors (NMDARs) on either AgRP or POMC neurons. Deletion of NMDARs from AgRP neurons markedly reduced weight, body fat and food intake whereas deletion from POMC neurons had no effect. Activation of AgRP neurons by fasting, as assessed by c-Fos, Agrp and Npy mRNA expression, AMPA receptor-mediated EPSCs, depolarization and firing rates, required NMDARs. Furthermore, AgRP but not POMC neurons have dendritic spines and incr",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:05.650381+00:00"
+}

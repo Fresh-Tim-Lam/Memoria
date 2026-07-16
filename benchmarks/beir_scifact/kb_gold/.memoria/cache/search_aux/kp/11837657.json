@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "11837657",
+  "source_fingerprint": "cd3d65a9d315d205db4bf0ac03748987",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "11837657",
+    "human-macrophages-infected-with-a-high-burden-of-esat-6-expressing-m.-tuberculosis-undergo-caspase-1--and-cathepsin-b-independent-necrosis"
+  ],
+  "key_phrases": [
+    "human",
+    "macrophages",
+    "infected",
+    "with",
+    "high",
+    "burden",
+    "esat",
+    "expressing"
+  ],
+  "summary_1l": "Human Macrophages Infected with a High Burden of ESAT-6-Expressing M.",
+  "query_hits": [],
+  "embed_text": "11837657 Human Macrophages Infected with a High Burden of ESAT-6-Expressing M. tuberculosis Undergo Caspase-1- and Cathepsin B-Independent Necrosis science scifact Mycobacterium tuberculosis (Mtb) infects lung macrophages, which instead of killing the pathogen can be manipulated by the bacilli, creating an environment suitable for intracellular replication and spread to adjacent cells. The role of… 11837657 human-macrophages-infected-with-a-high-burden-of-esat-6-expressing-m.-tuberculosis-undergo-caspase-1--and-cathepsin-b-independent-necrosis human macrophages infected with high burden esat expressing Human Macrophages Infected with a High Burden of ESAT-6-Expressing M. Human Macrophages Infected with a High Burden of ESAT-6-Expressing M. tuberculosis Undergo Caspase-1- and Cathepsin B-Independent Necrosis Mycobacterium tuberculosis (Mtb) infects lung macrophages, which instead of killing the pathogen can be manipulated by the bacilli, creating an environment suitable for intracellular replication and spread to adjacent cells. The role of host cell death during Mtb infection is debated because the bacilli have been shown to be both anti-apoptotic, keeping the host cell alive to avoid the antimicrobial effects of apoptosis, and pro-necrotic, killing the host macrophage to allow infection of neighboring cells. Since mycobacteria activate the NLRP3 inflammasome in macrophages, we investigated whether Mtb could induce one of the recently described inflammasom",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:07.181921+00:00"
+}

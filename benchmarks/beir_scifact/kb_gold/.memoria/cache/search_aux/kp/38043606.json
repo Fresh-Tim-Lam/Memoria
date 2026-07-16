@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "38043606",
+  "source_fingerprint": "a2768164c3bfba0abf2701da0d31eb77",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "38043606",
+    "mycobacterium-tuberculosis-and-the-environment-within-the-phagosome."
+  ],
+  "key_phrases": [
+    "mycobacterium",
+    "tuberculosis",
+    "environment",
+    "within",
+    "phagosome",
+    "once",
+    "across",
+    "barrier"
+  ],
+  "summary_1l": "Mycobacterium tuberculosis and the environment within the phagosome.",
+  "query_hits": [],
+  "embed_text": "38043606 Mycobacterium tuberculosis and the environment within the phagosome. science scifact Once across the barrier of the epithelium, macrophages constitute the primary defense against microbial invasion. For most microbes, the acidic, hydrolytically competent environment of the phagolysosome is sufficient to kill them. Despite… 38043606 mycobacterium-tuberculosis-and-the-environment-within-the-phagosome. mycobacterium tuberculosis environment within phagosome once across barrier Mycobacterium tuberculosis and the environment within the phagosome. Mycobacterium tuberculosis and the environment within the phagosome. Once across the barrier of the epithelium, macrophages constitute the primary defense against microbial invasion. For most microbes, the acidic, hydrolytically competent environment of the phagolysosome is sufficient to kill them. Despite our understanding of the trafficking events that regulate phagosome maturation, our appreciation of the lumenal environment within the phagosome is only now becoming elucidated through real-time functional assays. The assays quantify pH change, phagosome/lysosome fusion, proteolysis, lipolysis, and beta-galactosidase activity. This information is particularly important for understanding pathogens that successfully parasitize the endosomal/lysosomal continuum. Mycobacterium tuberculosis i",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:45.157058+00:00"
+}

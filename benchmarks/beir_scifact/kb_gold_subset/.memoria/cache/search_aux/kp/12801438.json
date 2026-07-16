@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "12801438",
+  "source_fingerprint": "a92a2946a5a7e445e3a54d98ae94368a",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "12801438",
+    "plant-products-as-antimicrobial-agents."
+  ],
+  "key_phrases": [
+    "plant",
+    "products",
+    "as",
+    "antimicrobial",
+    "agents",
+    "use",
+    "search",
+    "drugs"
+  ],
+  "summary_1l": "Plant products as antimicrobial agents.",
+  "query_hits": [],
+  "embed_text": "12801438 Plant products as antimicrobial agents. science scifact The use of and search for drugs and dietary supplements derived from plants have accelerated in recent years. Ethnopharmacologists, botanists, microbiologists, and natural-products chemists are combing the Earth for phytochemicals and… 12801438 plant-products-as-antimicrobial-agents. plant products as antimicrobial agents use search drugs Plant products as antimicrobial agents. Plant products as antimicrobial agents. The use of and search for drugs and dietary supplements derived from plants have accelerated in recent years. Ethnopharmacologists, botanists, microbiologists, and natural-products chemists are combing the Earth for phytochemicals and \"leads\" which could be developed for treatment of infectious diseases. While 25 to 50% of current pharmaceuticals are derived from plants, none are used as antimicrobials. Traditional healers have long used plants to prevent or cure infectious conditions; Western medicine is trying to duplicate their successes. Plants are rich in a wide variety of secondary metabolites, such as tannins, terpenoids, alkaloids, and flavonoids, which have been found in vitro to have antimicrobial properties. This review attempts to summari",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T13:55:09.609448+00:00"
+}

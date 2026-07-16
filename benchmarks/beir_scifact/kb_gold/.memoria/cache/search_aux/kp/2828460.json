@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kp_id": "2828460",
+  "source_fingerprint": "983e0d9e64d4ed4799e5b51ba7565306",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "2828460",
+    "developmental-heterogeneity-of-cardiac-fibroblasts-does-not-predict-pathological-proliferation-and-activation."
+  ],
+  "key_phrases": [
+    "developmental",
+    "heterogeneity",
+    "cardiac",
+    "fibroblasts",
+    "does",
+    "not",
+    "predict",
+    "pathological"
+  ],
+  "summary_1l": "Developmental heterogeneity of cardiac fibroblasts does not predict pathological proliferation and activation.",
+  "query_hits": [],
+  "embed_text": "2828460 Developmental heterogeneity of cardiac fibroblasts does not predict pathological proliferation and activation. science scifact RATIONALE Fibrosis is mediated partly by extracellular matrix-depositing fibroblasts in the heart. Although these mesenchymal cells are reported to have multiple embryonic origins, the functional consequence of this heterogeneity is… 2828460 developmental-heterogeneity-of-cardiac-fibroblasts-does-not-predict-pathological-proliferation-and-activation. developmental heterogeneity cardiac fibroblasts does not predict pathological Developmental heterogeneity of cardiac fibroblasts does not predict pathological proliferation and activation. Developmental heterogeneity of cardiac fibroblasts does not predict pathological proliferation and activation. RATIONALE Fibrosis is mediated partly by extracellular matrix-depositing fibroblasts in the heart. Although these mesenchymal cells are reported to have multiple embryonic origins, the functional consequence of this heterogeneity is unknown. OBJECTIVE We sought to validate a panel of surface markers to prospectively identify cardiac fibroblasts. We elucidated the developmental origins of cardiac fibroblasts and characterized their corresponding phenotypes. We also determined proliferation rates of each developmental subset of fibroblasts after pressure overload injury. METHODS AND RESULTS We showed that Thy1(+)CD45(-)CD31(-)CD11b(-)Ter119(-) cells constitute the majority of cardia",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-10T14:29:35.816309+00:00"
+}
